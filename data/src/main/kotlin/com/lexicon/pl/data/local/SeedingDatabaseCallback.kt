@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 /**
- * Seeds [SeedVocabulary] into a freshly-created database.
+ * Seeds the bundled vocabulary JSON asset into a freshly-created database.
  *
  * Takes a [Provider] rather than the database directly to avoid a circular dependency:
  * this callback is registered while the database is still being built, and `onCreate`
@@ -19,11 +19,12 @@ class SeedingDatabaseCallback
     constructor(
         private val databaseProvider: Provider<AppDatabase>,
         private val applicationScope: CoroutineScope,
+        private val vocabularySeedAssetLoader: VocabularySeedAssetLoader,
     ) : RoomDatabase.Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
             applicationScope.launch {
-                databaseProvider.get().wordDao().insertAll(SeedVocabulary.words)
+                databaseProvider.get().wordDao().insertAll(vocabularySeedAssetLoader.load())
             }
         }
     }
