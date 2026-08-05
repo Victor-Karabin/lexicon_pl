@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -6,16 +8,40 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+// Firebase is only wired up once each developer supplies their own google-services.json
+// (git-ignored, never committed) — see README/Lexicon.rtf for the setup note.
+val hasGoogleServicesConfig = file("google-services.json").exists()
+if (hasGoogleServicesConfig) {
+    apply(plugin = "com.google.gms.google-services")
+    apply(plugin = "com.google.firebase.crashlytics")
+}
+
+val localProperties =
+    Properties().apply {
+        val propertiesFile = rootProject.file("local.properties")
+        if (propertiesFile.exists()) propertiesFile.inputStream().use { load(it) }
+    }
+
+fun localProperty(key: String) = localProperties.getProperty(key, "")
+
 android {
     namespace = "com.lexicon.pl"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.lexicon.pl"
+        // Matches the Android app already registered in the Firebase project (google-services.json);
+        // the source package (namespace, below) is unaffected and stays com.lexicon.pl.
+        applicationId = "com.lexicon"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "0.1.0"
+
+        buildConfigField("String", "PEXELS_API_KEY", "\"${localProperty("pexels.apiKey")}\"")
+        buildConfigField("String", "PIXABAY_API_KEY", "\"${localProperty("pixabay.apiKey")}\"")
+        buildConfigField("String", "UNSPLASH_ACCESS_KEY", "\"${localProperty("unsplash.accessKey")}\"")
+        buildConfigField("String", "OPENVERSE_CLIENT_ID", "\"${localProperty("openverse.clientId")}\"")
+        buildConfigField("String", "OPENVERSE_CLIENT_SECRET", "\"${localProperty("openverse.clientSecret")}\"")
     }
 
     buildTypes {
@@ -33,6 +59,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -59,6 +86,18 @@ dependencies {
 
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
+
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.kotlinx.serialization)
+    implementation(libs.okhttp.core)
+    implementation(libs.okhttp.logging)
+    implementation(libs.kotlinx.serialization.json)
+
+    if (hasGoogleServicesConfig) {
+        implementation(platform(libs.firebase.bom))
+        implementation(libs.firebase.analytics)
+        implementation(libs.firebase.crashlytics)
+    }
 
     testImplementation(libs.bundles.unit.test)
 }

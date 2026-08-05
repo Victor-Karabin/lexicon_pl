@@ -10,9 +10,12 @@ import androidx.navigation.navArgument
 import com.lexicon.pl.presentation.common.SessionResultScreen
 import com.lexicon.pl.presentation.dictation.DictationScreen
 import com.lexicon.pl.presentation.dictationpuzzle.DictationPuzzleScreen
+import com.lexicon.pl.presentation.imagetest.ImageTestScreen
 import com.lexicon.pl.presentation.main.MainScreen
 import com.lexicon.pl.presentation.main.SplashScreen
+import com.lexicon.pl.presentation.memorycards.MemoryCardsScreen
 import com.lexicon.pl.presentation.pronunciation.PronunciationScreen
+import com.lexicon.pl.presentation.puzzle.PuzzleScreen
 import com.lexicon.pl.presentation.trueorfalse.TrueOrFalseScreen
 import com.lexicon.pl.presentation.wordbuilder.WordBuilderScreen
 import com.lexicon.pl.presentation.wordmatch.WordMatchScreen
@@ -58,6 +61,15 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
         }
         composable(LexiconDestinations.PRONUNCIATION_CHECK) {
             PronunciationScreen(onSessionComplete = onStepSessionComplete(LexiconDestinations.PRONUNCIATION_CHECK))
+        }
+        composable(LexiconDestinations.PUZZLE) {
+            PuzzleScreen(onSessionComplete = onStepSessionComplete(LexiconDestinations.PUZZLE))
+        }
+        composable(LexiconDestinations.IMAGE_TEST) {
+            ImageTestScreen(onSessionComplete = onStepSessionComplete(LexiconDestinations.IMAGE_TEST))
+        }
+        composable(LexiconDestinations.MEMORY_CARDS) {
+            MemoryCardsScreen(onSessionComplete = onStepSessionComplete(LexiconDestinations.MEMORY_CARDS))
         }
 
         composable(

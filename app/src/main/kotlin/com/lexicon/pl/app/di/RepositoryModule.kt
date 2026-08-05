@@ -1,7 +1,9 @@
 package com.lexicon.pl.app.di
 
+import com.lexicon.pl.boundary.ImageProvider
 import com.lexicon.pl.boundary.TrainingHistoryRepository
 import com.lexicon.pl.boundary.VocabularyRepository
+import com.lexicon.pl.data.repository.FallbackImageProviderImpl
 import com.lexicon.pl.data.repository.TrainingHistoryRepositoryImpl
 import com.lexicon.pl.data.repository.VocabularyRepositoryImpl
 import dagger.Binds
@@ -20,4 +22,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindTrainingHistoryRepository(impl: TrainingHistoryRepositoryImpl): TrainingHistoryRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindImageProvider(impl: FallbackImageProviderImpl): ImageProvider
 }

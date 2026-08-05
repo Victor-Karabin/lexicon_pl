@@ -8,6 +8,9 @@ object TrainingIds {
     const val TRUE_OR_FALSE = "true_or_false"
     const val WORD_MATCH = "word_match"
     const val PRONUNCIATION_CHECK = "pronunciation_check"
+    const val PUZZLE = "puzzle"
+    const val IMAGE_TEST = "image_test"
+    const val MEMORY_CARDS = "memory_cards"
 }
 
 data class TrainingCatalogEntry(val id: String, val displayName: String, val isEnabled: Boolean)
@@ -17,12 +20,12 @@ val trainingCatalog =
     listOf(
         TrainingCatalogEntry(TrainingIds.DICTATION, "Dictation", isEnabled = true),
         TrainingCatalogEntry(TrainingIds.DICTATION_PUZZLE, "Dictation Puzzle", isEnabled = true),
-        TrainingCatalogEntry("puzzle", "Puzzle", isEnabled = false),
-        TrainingCatalogEntry("image_test", "Image Test", isEnabled = false),
+        TrainingCatalogEntry(TrainingIds.PUZZLE, "Puzzle", isEnabled = true),
+        TrainingCatalogEntry(TrainingIds.IMAGE_TEST, "Image Test", isEnabled = true),
         TrainingCatalogEntry(TrainingIds.WORD_MATCH, "Word Match", isEnabled = true),
         TrainingCatalogEntry(TrainingIds.TRUE_OR_FALSE, "True or False", isEnabled = true),
         TrainingCatalogEntry(TrainingIds.PRONUNCIATION_CHECK, "Pronunciation Check", isEnabled = true),
-        TrainingCatalogEntry("memory_cards", "Memory Cards", isEnabled = false),
+        TrainingCatalogEntry(TrainingIds.MEMORY_CARDS, "Memory Cards", isEnabled = true),
         TrainingCatalogEntry("crossword", "Crossword", isEnabled = false),
         TrainingCatalogEntry(TrainingIds.WORD_BUILDER, "Word Builder", isEnabled = true),
         TrainingCatalogEntry("mix", "Mix", isEnabled = false),

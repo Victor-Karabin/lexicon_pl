@@ -46,6 +46,7 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.coil.compose)
 
     testImplementation(libs.bundles.unit.test)
 }
