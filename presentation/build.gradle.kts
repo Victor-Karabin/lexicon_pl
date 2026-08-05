@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.lexicon.pl.presentation"
+    namespace = "com.lexicon.presentation"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

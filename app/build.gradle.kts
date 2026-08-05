@@ -25,12 +25,10 @@ val localProperties =
 fun localProperty(key: String) = localProperties.getProperty(key, "")
 
 android {
-    namespace = "com.lexicon.pl"
+    namespace = "com.lexicon"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        // Matches the Android app already registered in the Firebase project (google-services.json);
-        // the source package (namespace, below) is unaffected and stays com.lexicon.pl.
         applicationId = "com.lexicon"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()

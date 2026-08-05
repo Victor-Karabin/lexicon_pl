@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.lexicon.pl.data"
+    namespace = "com.lexicon.data"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
