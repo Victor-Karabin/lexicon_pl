@@ -24,7 +24,7 @@ private enum class MainTab(val label: String) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    onDictationSelected: () -> Unit,
+    onTrainingSelected: (id: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var selectedTab by remember { mutableStateOf(MainTab.TRAININGS) }
@@ -46,7 +46,7 @@ fun MainScreen(
     ) { padding ->
         val content = Modifier.padding(padding)
         when (selectedTab) {
-            MainTab.TRAININGS -> TrainingsScreen(onDictationSelected = onDictationSelected, modifier = content)
+            MainTab.TRAININGS -> TrainingsScreen(onTrainingSelected = onTrainingSelected, modifier = content)
             MainTab.DASHBOARD -> ComingSoonScreen(MainTab.DASHBOARD.label, modifier = content)
             MainTab.VOCABULARY -> ComingSoonScreen(MainTab.VOCABULARY.label, modifier = content)
             MainTab.STATISTICS -> ComingSoonScreen(MainTab.STATISTICS.label, modifier = content)

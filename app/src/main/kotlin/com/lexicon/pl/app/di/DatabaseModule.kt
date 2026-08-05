@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.lexicon.pl.data.local.AppDatabase
 import com.lexicon.pl.data.local.SeedingDatabaseCallback
 import com.lexicon.pl.data.local.TrainingResultDao
+import com.lexicon.pl.data.local.VocabularySeedAssetLoader
 import com.lexicon.pl.data.local.WordDao
 import dagger.Module
 import dagger.Provides
@@ -32,9 +33,10 @@ object DatabaseModule {
         @ApplicationContext context: Context,
         databaseProvider: Provider<AppDatabase>,
         applicationScope: CoroutineScope,
+        vocabularySeedAssetLoader: VocabularySeedAssetLoader,
     ): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
-            .addCallback(SeedingDatabaseCallback(databaseProvider, applicationScope))
+            .addCallback(SeedingDatabaseCallback(databaseProvider, applicationScope, vocabularySeedAssetLoader))
             .build()
 
     @Provides

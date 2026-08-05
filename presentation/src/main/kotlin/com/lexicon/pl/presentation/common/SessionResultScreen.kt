@@ -1,4 +1,4 @@
-package com.lexicon.pl.presentation.dictation
+package com.lexicon.pl.presentation.common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,8 +12,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.lexicon.pl.presentation.theme.Dimens
 
+/** Shared end-of-session summary, reused by every training's result screen. */
 @Composable
-fun DictationResultScreen(
+fun SessionResultScreen(
     correct: Int,
     incorrect: Int,
     skipped: Int,

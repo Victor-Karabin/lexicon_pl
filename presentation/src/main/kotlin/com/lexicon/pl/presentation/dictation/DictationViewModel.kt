@@ -10,6 +10,8 @@ import com.lexicon.pl.interactors.dictation.StartDictationSessionRequest
 import com.lexicon.pl.interactors.dictation.StartDictationSessionUseCase
 import com.lexicon.pl.interactors.dictation.SubmitDictationAnswerRequest
 import com.lexicon.pl.interactors.dictation.SubmitDictationAnswerUseCase
+import com.lexicon.pl.presentation.common.AnswerState
+import com.lexicon.pl.presentation.common.SessionNavigationEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -36,8 +38,8 @@ class DictationViewModel
         private val _uiState = MutableStateFlow(DictationUiState())
         val uiState: StateFlow<DictationUiState> = _uiState.asStateFlow()
 
-        private val _navigationEvents = MutableSharedFlow<DictationNavigationEvent>()
-        val navigationEvents: SharedFlow<DictationNavigationEvent> = _navigationEvents.asSharedFlow()
+        private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
+        val navigationEvents: SharedFlow<SessionNavigationEvent> = _navigationEvents.asSharedFlow()
 
         private lateinit var sessionId: String
         private var steps: List<DictationStepResponse> = emptyList()
@@ -124,20 +126,20 @@ class DictationViewModel
             when (outcome) {
                 DictationStepOutcome.CORRECT -> {
                     correctCount++
-                    _uiState.update { it.copy(answerState = DictationAnswerState.CORRECT) }
+                    _uiState.update { it.copy(answerState = AnswerState.CORRECT) }
                     delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                     advanceToNextStep()
                 }
                 DictationStepOutcome.INCORRECT -> {
                     incorrectCount++
                     _uiState.update {
-                        it.copy(answerState = DictationAnswerState.INCORRECT, revealedAnswer = expectedText)
+                        it.copy(answerState = AnswerState.INCORRECT, revealedAnswer = expectedText)
                     }
                 }
                 DictationStepOutcome.SKIPPED -> {
                     skippedCount++
                     _uiState.update {
-                        it.copy(answerState = DictationAnswerState.SKIPPED, revealedAnswer = expectedText)
+                        it.copy(answerState = AnswerState.SKIPPED, revealedAnswer = expectedText)
                     }
                 }
             }
@@ -154,7 +156,7 @@ class DictationViewModel
             if (nextIndex >= steps.size) {
                 _uiState.update { it.copy(isSessionComplete = true) }
                 _navigationEvents.emit(
-                    DictationNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount),
+                    SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount),
                 )
                 return
             }

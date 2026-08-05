@@ -14,36 +14,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.lexicon.pl.presentation.theme.Dimens
 
-/** Names match "Software Development Specification" §9. Only Dictation is implemented so far. */
-private val trainingTypes =
-    listOf(
-        "Dictation" to true,
-        "Dictation Puzzle" to false,
-        "Puzzle" to false,
-        "Image Test" to false,
-        "Word Match" to false,
-        "True or False" to false,
-        "Pronunciation Check" to false,
-        "Memory Cards" to false,
-        "Crossword" to false,
-        "Word Builder" to false,
-        "Mix" to false,
-        "Custom Builder" to false,
-    )
-
 @Composable
 fun TrainingsScreen(
-    onDictationSelected: () -> Unit,
+    onTrainingSelected: (id: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(modifier = modifier.fillMaxWidth()) {
-        items(trainingTypes) { (name, enabled) ->
+        items(trainingCatalog) { entry ->
             ListItem(
                 headlineContent = {
                     Text(
-                        text = name,
+                        text = entry.displayName,
                         color =
-                            if (enabled) {
+                            if (entry.isEnabled) {
                                 MaterialTheme.colorScheme.onSurface
                             } else {
                                 MaterialTheme.colorScheme.onSurfaceVariant
@@ -51,14 +34,14 @@ fun TrainingsScreen(
                     )
                 },
                 supportingContent =
-                    if (enabled) {
+                    if (entry.isEnabled) {
                         null
                     } else {
                         { Text("Coming soon") }
                     },
                 modifier =
-                    if (enabled) {
-                        Modifier.clickable(onClick = onDictationSelected)
+                    if (entry.isEnabled) {
+                        Modifier.clickable { onTrainingSelected(entry.id) }
                     } else {
                         Modifier
                     },

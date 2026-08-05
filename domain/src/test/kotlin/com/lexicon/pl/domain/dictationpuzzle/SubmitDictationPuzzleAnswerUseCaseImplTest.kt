@@ -1,0 +1,53 @@
+package com.lexicon.pl.domain.dictationpuzzle
+
+import com.lexicon.pl.boundary.TrainingHistoryRepository
+import com.lexicon.pl.common.Clock
+import com.lexicon.pl.domain.dictation.AnswerNormalizer
+import com.lexicon.pl.interactors.dictationpuzzle.DictationPuzzleStepOutcome
+import com.lexicon.pl.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerRequest
+import io.mockk.every
+import io.mockk.mockk
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
+import org.junit.Test
+
+class SubmitDictationPuzzleAnswerUseCaseImplTest {
+    private val trainingHistoryRepository: TrainingHistoryRepository = mockk(relaxed = true)
+    private val clock: Clock = mockk { every { nowEpochMillis() } returns 1_000L }
+    private val useCase = SubmitDictationPuzzleAnswerUseCaseImpl(trainingHistoryRepository, AnswerNormalizer(), clock)
+
+    private fun request(
+        submittedText: String = "kot",
+        tipUsed: Boolean = false,
+        skipped: Boolean = false,
+    ) = SubmitDictationPuzzleAnswerRequest(
+        sessionId = "session-1",
+        stepIndex = 0,
+        vocabularyItemId = 1L,
+        expectedText = "kot",
+        submittedText = submittedText,
+        tipUsed = tipUsed,
+        skipped = skipped,
+    )
+
+    @Test
+    fun `matching tiles without tip is Correct`() =
+        runTest {
+            val response = useCase(request(submittedText = "kot"))
+            assertEquals(DictationPuzzleStepOutcome.CORRECT, response.outcome)
+        }
+
+    @Test
+    fun `tip forces Incorrect even on a matching answer`() =
+        runTest {
+            val response = useCase(request(submittedText = "kot", tipUsed = true))
+            assertEquals(DictationPuzzleStepOutcome.INCORRECT, response.outcome)
+        }
+
+    @Test
+    fun `skip is Skipped regardless of tip`() =
+        runTest {
+            val response = useCase(request(skipped = true, tipUsed = true))
+            assertEquals(DictationPuzzleStepOutcome.SKIPPED, response.outcome)
+        }
+}

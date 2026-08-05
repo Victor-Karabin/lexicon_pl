@@ -24,6 +24,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.lexicon.pl.presentation.common.AnswerState
+import com.lexicon.pl.presentation.common.SessionNavigationEvent
 import com.lexicon.pl.presentation.theme.Dimens
 import com.lexicon.pl.presentation.theme.LexiconError
 import com.lexicon.pl.presentation.theme.LexiconSuccess
@@ -40,7 +42,7 @@ fun DictationScreen(
     LaunchedEffect(Unit) {
         viewModel.navigationEvents.collect { event ->
             when (event) {
-                is DictationNavigationEvent.SessionComplete ->
+                is SessionNavigationEvent.SessionComplete ->
                     onSessionComplete(event.correct, event.incorrect, event.skipped)
             }
         }
@@ -78,17 +80,17 @@ fun DictationScreen(
 
             val fieldColors =
                 when (uiState.answerState) {
-                    DictationAnswerState.CORRECT ->
+                    AnswerState.CORRECT ->
                         OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = LexiconSuccess,
                             unfocusedBorderColor = LexiconSuccess,
                         )
-                    DictationAnswerState.INCORRECT, DictationAnswerState.SKIPPED ->
+                    AnswerState.INCORRECT, AnswerState.SKIPPED ->
                         OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = LexiconError,
                             unfocusedBorderColor = LexiconError,
                         )
-                    DictationAnswerState.UNANSWERED -> OutlinedTextFieldDefaults.colors()
+                    AnswerState.UNANSWERED -> OutlinedTextFieldDefaults.colors()
                 }
 
             OutlinedTextField(

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
 }
 
@@ -31,7 +32,11 @@ dependencies {
     ksp(libs.room.compiler)
 
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.javax.inject)
+
+    // Provides the @ApplicationContext qualifier only — no Hilt @Module lives here.
+    implementation(libs.hilt.android)
 
     testImplementation(libs.bundles.unit.test)
 }

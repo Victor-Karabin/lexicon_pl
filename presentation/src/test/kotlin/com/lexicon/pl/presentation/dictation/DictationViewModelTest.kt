@@ -9,6 +9,8 @@ import com.lexicon.pl.interactors.dictation.DictationStepResponse
 import com.lexicon.pl.interactors.dictation.StartDictationSessionUseCase
 import com.lexicon.pl.interactors.dictation.SubmitDictationAnswerResponse
 import com.lexicon.pl.interactors.dictation.SubmitDictationAnswerUseCase
+import com.lexicon.pl.presentation.common.AnswerState
+import com.lexicon.pl.presentation.common.SessionNavigationEvent
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -86,7 +88,7 @@ class DictationViewModelTest {
                 viewModel.onCheck()
                 testDispatcher.scheduler.advanceUntilIdle()
 
-                val event = awaitItem() as DictationNavigationEvent.SessionComplete
+                val event = awaitItem() as SessionNavigationEvent.SessionComplete
                 assertEquals(1, event.correct)
                 assertEquals(0, event.incorrect)
                 assertEquals(0, event.skipped)
@@ -108,7 +110,7 @@ class DictationViewModelTest {
             testDispatcher.scheduler.advanceUntilIdle()
 
             val state = viewModel.uiState.value
-            assertEquals(DictationAnswerState.INCORRECT, state.answerState)
+            assertEquals(AnswerState.INCORRECT, state.answerState)
             assertEquals("kot", state.revealedAnswer)
             assertTrue(state.awaitingNext)
             // Auto-advance only happens for Correct; Incorrect must wait for an explicit Next.
@@ -128,7 +130,7 @@ class DictationViewModelTest {
             testDispatcher.scheduler.advanceUntilIdle()
 
             val state = viewModel.uiState.value
-            assertEquals(DictationAnswerState.SKIPPED, state.answerState)
+            assertEquals(AnswerState.SKIPPED, state.answerState)
             assertEquals("kot", state.revealedAnswer)
         }
 
@@ -145,7 +147,7 @@ class DictationViewModelTest {
             val state = viewModel.uiState.value
             assertTrue(state.tipUsed)
             assertEquals("kot", state.revealedAnswer)
-            assertEquals(DictationAnswerState.UNANSWERED, state.answerState)
+            assertEquals(AnswerState.UNANSWERED, state.answerState)
             coVerify(exactly = 0) { submitUseCase(any()) }
         }
 }
