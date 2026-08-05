@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.lexicon.pl.android"
+    namespace = "com.lexicon.android"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

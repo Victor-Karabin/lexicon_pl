@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.lexicon.pl.presentation"
+    namespace = "com.lexicon.presentation"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
@@ -46,6 +46,7 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.coil.compose)
 
     testImplementation(libs.bundles.unit.test)
 }

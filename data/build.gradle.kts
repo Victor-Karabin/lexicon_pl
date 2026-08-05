@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.lexicon.pl.data"
+    namespace = "com.lexicon.data"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
@@ -34,6 +34,11 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.javax.inject)
+
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.kotlinx.serialization)
+    implementation(libs.okhttp.core)
+    implementation(libs.okhttp.logging)
 
     // Provides the @ApplicationContext qualifier only — no Hilt @Module lives here.
     implementation(libs.hilt.android)

@@ -1,0 +1,100 @@
+package com.lexicon.app.di
+
+import com.lexicon.domain.dictation.StartDictationSessionUseCaseImpl
+import com.lexicon.domain.dictation.SubmitDictationAnswerUseCaseImpl
+import com.lexicon.domain.dictationpuzzle.StartDictationPuzzleSessionUseCaseImpl
+import com.lexicon.domain.dictationpuzzle.SubmitDictationPuzzleAnswerUseCaseImpl
+import com.lexicon.domain.imagetest.StartImageTestSessionUseCaseImpl
+import com.lexicon.domain.imagetest.SubmitImageTestAnswerUseCaseImpl
+import com.lexicon.domain.memorycards.StartMemoryCardsSessionUseCaseImpl
+import com.lexicon.domain.memorycards.SubmitMemoryCardsStepResultUseCaseImpl
+import com.lexicon.domain.pronunciation.StartPronunciationSessionUseCaseImpl
+import com.lexicon.domain.pronunciation.SubmitPronunciationResultUseCaseImpl
+import com.lexicon.domain.puzzle.StartPuzzleSessionUseCaseImpl
+import com.lexicon.domain.puzzle.SubmitPuzzleAnswerUseCaseImpl
+import com.lexicon.domain.trueorfalse.StartTrueOrFalseSessionUseCaseImpl
+import com.lexicon.domain.trueorfalse.SubmitTrueOrFalseAnswerUseCaseImpl
+import com.lexicon.domain.wordbuilder.StartWordBuilderSessionUseCaseImpl
+import com.lexicon.domain.wordbuilder.SubmitWordBuilderAnswerUseCaseImpl
+import com.lexicon.domain.wordmatch.StartWordMatchSessionUseCaseImpl
+import com.lexicon.domain.wordmatch.SubmitWordMatchStepResultUseCaseImpl
+import com.lexicon.interactors.dictation.StartDictationSessionUseCase
+import com.lexicon.interactors.dictation.SubmitDictationAnswerUseCase
+import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionUseCase
+import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerUseCase
+import com.lexicon.interactors.imagetest.StartImageTestSessionUseCase
+import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
+import com.lexicon.interactors.memorycards.StartMemoryCardsSessionUseCase
+import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
+import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
+import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
+import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
+import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerUseCase
+import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
+import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
+import com.lexicon.interactors.wordbuilder.StartWordBuilderSessionUseCase
+import com.lexicon.interactors.wordbuilder.SubmitWordBuilderAnswerUseCase
+import com.lexicon.interactors.wordmatch.StartWordMatchSessionUseCase
+import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultUseCase
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class UseCaseModule {
+    @Binds
+    abstract fun bindStartDictationSessionUseCase(impl: StartDictationSessionUseCaseImpl): StartDictationSessionUseCase
+
+    @Binds
+    abstract fun bindSubmitDictationAnswerUseCase(impl: SubmitDictationAnswerUseCaseImpl): SubmitDictationAnswerUseCase
+
+    @Binds
+    abstract fun bindStartDictationPuzzleSessionUseCase(impl: StartDictationPuzzleSessionUseCaseImpl): StartDictationPuzzleSessionUseCase
+
+    @Binds
+    abstract fun bindSubmitDictationPuzzleAnswerUseCase(impl: SubmitDictationPuzzleAnswerUseCaseImpl): SubmitDictationPuzzleAnswerUseCase
+
+    @Binds
+    abstract fun bindStartWordBuilderSessionUseCase(impl: StartWordBuilderSessionUseCaseImpl): StartWordBuilderSessionUseCase
+
+    @Binds
+    abstract fun bindSubmitWordBuilderAnswerUseCase(impl: SubmitWordBuilderAnswerUseCaseImpl): SubmitWordBuilderAnswerUseCase
+
+    @Binds
+    abstract fun bindStartTrueOrFalseSessionUseCase(impl: StartTrueOrFalseSessionUseCaseImpl): StartTrueOrFalseSessionUseCase
+
+    @Binds
+    abstract fun bindSubmitTrueOrFalseAnswerUseCase(impl: SubmitTrueOrFalseAnswerUseCaseImpl): SubmitTrueOrFalseAnswerUseCase
+
+    @Binds
+    abstract fun bindStartWordMatchSessionUseCase(impl: StartWordMatchSessionUseCaseImpl): StartWordMatchSessionUseCase
+
+    @Binds
+    abstract fun bindSubmitWordMatchStepResultUseCase(impl: SubmitWordMatchStepResultUseCaseImpl): SubmitWordMatchStepResultUseCase
+
+    @Binds
+    abstract fun bindStartPronunciationSessionUseCase(impl: StartPronunciationSessionUseCaseImpl): StartPronunciationSessionUseCase
+
+    @Binds
+    abstract fun bindSubmitPronunciationResultUseCase(impl: SubmitPronunciationResultUseCaseImpl): SubmitPronunciationResultUseCase
+
+    @Binds
+    abstract fun bindStartPuzzleSessionUseCase(impl: StartPuzzleSessionUseCaseImpl): StartPuzzleSessionUseCase
+
+    @Binds
+    abstract fun bindSubmitPuzzleAnswerUseCase(impl: SubmitPuzzleAnswerUseCaseImpl): SubmitPuzzleAnswerUseCase
+
+    @Binds
+    abstract fun bindStartImageTestSessionUseCase(impl: StartImageTestSessionUseCaseImpl): StartImageTestSessionUseCase
+
+    @Binds
+    abstract fun bindSubmitImageTestAnswerUseCase(impl: SubmitImageTestAnswerUseCaseImpl): SubmitImageTestAnswerUseCase
+
+    @Binds
+    abstract fun bindStartMemoryCardsSessionUseCase(impl: StartMemoryCardsSessionUseCaseImpl): StartMemoryCardsSessionUseCase
+
+    @Binds
+    abstract fun bindSubmitMemoryCardsStepResultUseCase(impl: SubmitMemoryCardsStepResultUseCaseImpl): SubmitMemoryCardsStepResultUseCase
+}
