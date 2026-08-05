@@ -6,6 +6,9 @@ internal object LexiconDestinations {
     const val DICTATION = "dictation"
     const val DICTATION_RESULT = "dictation_result/{correct}/{incorrect}/{skipped}"
 
-    fun dictationResult(correct: Int, incorrect: Int, skipped: Int) =
-        "dictation_result/$correct/$incorrect/$skipped"
+    fun dictationResult(
+        correct: Int,
+        incorrect: Int,
+        skipped: Int,
+    ) = "dictation_result/$correct/$incorrect/$skipped"
 }

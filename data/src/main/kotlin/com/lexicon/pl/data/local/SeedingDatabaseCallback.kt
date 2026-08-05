@@ -14,15 +14,16 @@ import javax.inject.Provider
  * this callback is registered while the database is still being built, and `onCreate`
  * only fires once the instance the provider resolves to already exists.
  */
-class SeedingDatabaseCallback @Inject constructor(
-    private val databaseProvider: Provider<AppDatabase>,
-    private val applicationScope: CoroutineScope,
-) : RoomDatabase.Callback() {
-
-    override fun onCreate(db: SupportSQLiteDatabase) {
-        super.onCreate(db)
-        applicationScope.launch {
-            databaseProvider.get().wordDao().insertAll(SeedVocabulary.words)
+class SeedingDatabaseCallback
+    @Inject
+    constructor(
+        private val databaseProvider: Provider<AppDatabase>,
+        private val applicationScope: CoroutineScope,
+    ) : RoomDatabase.Callback() {
+        override fun onCreate(db: SupportSQLiteDatabase) {
+            super.onCreate(db)
+            applicationScope.launch {
+                databaseProvider.get().wordDao().insertAll(SeedVocabulary.words)
+            }
         }
     }
-}

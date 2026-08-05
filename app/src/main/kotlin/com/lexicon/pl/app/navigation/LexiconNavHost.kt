@@ -41,11 +41,12 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
 
         composable(
             route = LexiconDestinations.DICTATION_RESULT,
-            arguments = listOf(
-                navArgument("correct") { type = NavType.IntType },
-                navArgument("incorrect") { type = NavType.IntType },
-                navArgument("skipped") { type = NavType.IntType },
-            ),
+            arguments =
+                listOf(
+                    navArgument("correct") { type = NavType.IntType },
+                    navArgument("incorrect") { type = NavType.IntType },
+                    navArgument("skipped") { type = NavType.IntType },
+                ),
         ) { backStackEntry ->
             val args = backStackEntry.arguments
             DictationResultScreen(

@@ -10,5 +10,6 @@ import androidx.room.RoomDatabase
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun wordDao(): WordDao
+
     abstract fun trainingResultDao(): TrainingResultDao
 }

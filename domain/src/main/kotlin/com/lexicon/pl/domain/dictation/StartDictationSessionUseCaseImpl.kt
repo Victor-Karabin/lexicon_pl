@@ -8,19 +8,21 @@ import com.lexicon.pl.interactors.dictation.StartDictationSessionUseCase
 import java.util.UUID
 import javax.inject.Inject
 
-class StartDictationSessionUseCaseImpl @Inject constructor(
-    private val vocabularyRepository: VocabularyRepository,
-) : StartDictationSessionUseCase {
-
-    override suspend fun invoke(request: StartDictationSessionRequest): DictationSessionResponse {
-        val words = vocabularyRepository.getRandomItems(request.stepCount).map { it.toWord() }
-        val steps = words.mapIndexed { index, word ->
-            DictationStepResponse(
-                stepIndex = index,
-                vocabularyItemId = word.id,
-                expectedText = word.text,
-            )
+class StartDictationSessionUseCaseImpl
+    @Inject
+    constructor(
+        private val vocabularyRepository: VocabularyRepository,
+    ) : StartDictationSessionUseCase {
+        override suspend fun invoke(request: StartDictationSessionRequest): DictationSessionResponse {
+            val words = vocabularyRepository.getRandomItems(request.stepCount).map { it.toWord() }
+            val steps =
+                words.mapIndexed { index, word ->
+                    DictationStepResponse(
+                        stepIndex = index,
+                        vocabularyItemId = word.id,
+                        expectedText = word.text,
+                    )
+                }
+            return DictationSessionResponse(sessionId = UUID.randomUUID().toString(), steps = steps)
         }
-        return DictationSessionResponse(sessionId = UUID.randomUUID().toString(), steps = steps)
     }
-}

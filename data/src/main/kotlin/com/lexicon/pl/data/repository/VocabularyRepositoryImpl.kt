@@ -6,17 +6,18 @@ import com.lexicon.pl.data.local.WordDao
 import com.lexicon.pl.data.local.WordEntity
 import javax.inject.Inject
 
-class VocabularyRepositoryImpl @Inject constructor(
-    private val wordDao: WordDao,
-) : VocabularyRepository {
+class VocabularyRepositoryImpl
+    @Inject
+    constructor(
+        private val wordDao: WordDao,
+    ) : VocabularyRepository {
+        override suspend fun getRandomItems(count: Int): List<VocabularyItemBoundary> = wordDao.getRandom(count).map { it.toBoundary() }
 
-    override suspend fun getRandomItems(count: Int): List<VocabularyItemBoundary> =
-        wordDao.getRandom(count).map { it.toBoundary() }
-
-    private fun WordEntity.toBoundary() = VocabularyItemBoundary(
-        id = id,
-        text = text,
-        translation = translation,
-        transcription = transcription,
-    )
-}
+        private fun WordEntity.toBoundary() =
+            VocabularyItemBoundary(
+                id = id,
+                text = text,
+                translation = translation,
+                transcription = transcription,
+            )
+    }

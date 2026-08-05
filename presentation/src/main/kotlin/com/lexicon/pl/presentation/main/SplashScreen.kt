@@ -13,7 +13,10 @@ import androidx.compose.ui.Modifier
 private const val SPLASH_DELAY_MS = 500L
 
 @Composable
-fun SplashScreen(onFinished: () -> Unit, modifier: Modifier = Modifier) {
+fun SplashScreen(
+    onFinished: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     LaunchedEffect(Unit) {
         kotlinx.coroutines.delay(SPLASH_DELAY_MS)
         onFinished()

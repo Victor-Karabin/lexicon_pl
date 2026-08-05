@@ -21,7 +21,6 @@ private const val DATABASE_NAME = "lexicon.db"
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
-
     @Provides
     @Singleton
     fun provideApplicationScope(dispatchers: com.lexicon.pl.common.DispatcherProvider): CoroutineScope =
@@ -33,9 +32,10 @@ object DatabaseModule {
         @ApplicationContext context: Context,
         databaseProvider: Provider<AppDatabase>,
         applicationScope: CoroutineScope,
-    ): AppDatabase = Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
-        .addCallback(SeedingDatabaseCallback(databaseProvider, applicationScope))
-        .build()
+    ): AppDatabase =
+        Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
+            .addCallback(SeedingDatabaseCallback(databaseProvider, applicationScope))
+            .build()
 
     @Provides
     fun provideWordDao(database: AppDatabase): WordDao = database.wordDao()

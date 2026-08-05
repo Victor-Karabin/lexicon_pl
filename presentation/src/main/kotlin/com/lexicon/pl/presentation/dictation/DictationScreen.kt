@@ -76,17 +76,20 @@ fun DictationScreen(
                 Text("🔊 Listen again")
             }
 
-            val fieldColors = when (uiState.answerState) {
-                DictationAnswerState.CORRECT -> OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = LexiconSuccess,
-                    unfocusedBorderColor = LexiconSuccess,
-                )
-                DictationAnswerState.INCORRECT, DictationAnswerState.SKIPPED -> OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = LexiconError,
-                    unfocusedBorderColor = LexiconError,
-                )
-                DictationAnswerState.UNANSWERED -> OutlinedTextFieldDefaults.colors()
-            }
+            val fieldColors =
+                when (uiState.answerState) {
+                    DictationAnswerState.CORRECT ->
+                        OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = LexiconSuccess,
+                            unfocusedBorderColor = LexiconSuccess,
+                        )
+                    DictationAnswerState.INCORRECT, DictationAnswerState.SKIPPED ->
+                        OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = LexiconError,
+                            unfocusedBorderColor = LexiconError,
+                        )
+                    DictationAnswerState.UNANSWERED -> OutlinedTextFieldDefaults.colors()
+                }
 
             OutlinedTextField(
                 value = uiState.answerText,

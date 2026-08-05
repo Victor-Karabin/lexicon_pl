@@ -15,7 +15,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class AndroidModule {
-
     @Binds
     @Singleton
     abstract fun bindDispatcherProvider(impl: DefaultDispatcherProvider): DispatcherProvider

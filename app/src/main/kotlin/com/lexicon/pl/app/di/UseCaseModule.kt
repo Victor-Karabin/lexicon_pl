@@ -12,14 +12,9 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class UseCaseModule {
+    @Binds
+    abstract fun bindStartDictationSessionUseCase(impl: StartDictationSessionUseCaseImpl): StartDictationSessionUseCase
 
     @Binds
-    abstract fun bindStartDictationSessionUseCase(
-        impl: StartDictationSessionUseCaseImpl,
-    ): StartDictationSessionUseCase
-
-    @Binds
-    abstract fun bindSubmitDictationAnswerUseCase(
-        impl: SubmitDictationAnswerUseCaseImpl,
-    ): SubmitDictationAnswerUseCase
+    abstract fun bindSubmitDictationAnswerUseCase(impl: SubmitDictationAnswerUseCaseImpl): SubmitDictationAnswerUseCase
 }

@@ -23,7 +23,10 @@ private enum class MainTab(val label: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(onDictationSelected: () -> Unit, modifier: Modifier = Modifier) {
+fun MainScreen(
+    onDictationSelected: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     var selectedTab by remember { mutableStateOf(MainTab.TRAININGS) }
 
     Scaffold(
