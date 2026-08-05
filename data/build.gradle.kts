@@ -31,6 +31,7 @@ dependencies {
     ksp(libs.room.compiler)
 
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.javax.inject)
 
     testImplementation(libs.bundles.unit.test)
 }

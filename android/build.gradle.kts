@@ -26,5 +26,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
+    // Provides the @ApplicationContext qualifier and javax.inject.Inject only.
+    // No Hilt @Module lives here — those are restricted to the app module per the architecture spec.
+    implementation(libs.hilt.android)
+
     testImplementation(libs.bundles.unit.test)
 }

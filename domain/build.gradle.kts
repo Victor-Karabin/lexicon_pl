@@ -7,6 +7,7 @@ dependencies {
     implementation(projects.boundary)
     implementation(projects.common)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.javax.inject)
 
     testImplementation(libs.bundles.unit.test)
 }
