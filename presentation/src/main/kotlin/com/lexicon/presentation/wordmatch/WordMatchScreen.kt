@@ -108,11 +108,14 @@ private fun WordMatchScreenContent(
                             style = MaterialTheme.typography.labelMedium,
                         )
 
+                        val leftNumbers = uiState.leftColumn.mapIndexed { index, item -> item.vocabularyItemId to index + 1 }.toMap()
+
                         Row(modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium)) {
                             Column(modifier = Modifier.weight(1f)) {
-                                uiState.leftColumn.forEach { item ->
+                                uiState.leftColumn.forEachIndexed { index, item ->
                                     MatchTile(
                                         text = item.text,
+                                        number = index + 1,
                                         state = tileState(item.vocabularyItemId, uiState.selectedLeftId, uiState),
                                         onClick = { onLeftSelected(item.vocabularyItemId) },
                                     )
@@ -120,9 +123,11 @@ private fun WordMatchScreenContent(
                             }
                             Column(modifier = Modifier.weight(1f).padding(start = Dimens.spacingSmall)) {
                                 uiState.rightColumn.forEach { item ->
+                                    val state = tileState(item.vocabularyItemId, uiState.selectedRightId, uiState)
                                     MatchTile(
                                         text = item.text,
-                                        state = tileState(item.vocabularyItemId, uiState.selectedRightId, uiState),
+                                        number = leftNumbers[item.vocabularyItemId]?.takeIf { state == MatchTileState.MATCHED },
+                                        state = state,
                                         onClick = { onRightSelected(item.vocabularyItemId) },
                                     )
                                 }
@@ -169,17 +174,18 @@ private fun MatchTile(
     text: String,
     state: MatchTileState,
     onClick: () -> Unit,
+    number: Int? = null,
 ) {
     val background = when (state) {
         MatchTileState.MATCHED -> LexiconSuccess
         MatchTileState.INCORRECT -> LexiconError
-        MatchTileState.SELECTED -> MaterialTheme.colorScheme.primaryContainer
+        MatchTileState.SELECTED -> MaterialTheme.colorScheme.primary
         MatchTileState.DEFAULT -> MaterialTheme.colorScheme.surfaceVariant
     }
     val enabled = state == MatchTileState.DEFAULT || state == MatchTileState.SELECTED
     val textColor = when (state) {
         MatchTileState.MATCHED, MatchTileState.INCORRECT -> Color.White
-        MatchTileState.SELECTED -> MaterialTheme.colorScheme.onPrimaryContainer
+        MatchTileState.SELECTED -> MaterialTheme.colorScheme.onPrimary
         MatchTileState.DEFAULT -> MaterialTheme.colorScheme.onSurfaceVariant
     }
     Row(
@@ -190,7 +196,8 @@ private fun MatchTile(
             .clickable(enabled = enabled, onClick = onClick)
             .padding(Dimens.spacingSmall),
     ) {
-        Text(text, color = textColor)
+        val label = number?.let { "$it. $text" } ?: text
+        Text(label, color = textColor)
     }
 }
 
