@@ -92,10 +92,11 @@ class DictationPuzzleViewModel
             _uiState.update { it.copy(placedTiles = it.placedTiles + tile) }
         }
 
-        /** Undo: sends a single placed tile back to the available pool instead of clearing the whole answer. */
-        fun onPlacedTileRemoved(tile: LetterTile) {
-            if (!_uiState.value.isEditable) return
-            _uiState.update { it.copy(placedTiles = it.placedTiles.filterNot { placed -> placed.id == tile.id }) }
+        /** Removes the most recently placed tile, sending it back to the available pool. */
+        fun onUndo() {
+            val state = _uiState.value
+            if (!state.canUndo) return
+            _uiState.update { it.copy(placedTiles = it.placedTiles.dropLast(1)) }
         }
 
         fun onTipRequested() {

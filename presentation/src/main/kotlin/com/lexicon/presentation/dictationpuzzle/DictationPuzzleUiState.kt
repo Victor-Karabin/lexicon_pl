@@ -21,5 +21,6 @@ data class DictationPuzzleUiState(
     val canCheck: Boolean get() = isEditable && stepTiles.isNotEmpty() && availableTiles.isEmpty()
     val canUseTip: Boolean get() = isEditable && !tipUsed
     val canSkip: Boolean get() = isEditable
+    val canUndo: Boolean get() = isEditable && placedTiles.isNotEmpty()
     val awaitingNext: Boolean get() = answerState == AnswerState.INCORRECT || answerState == AnswerState.SKIPPED
 }

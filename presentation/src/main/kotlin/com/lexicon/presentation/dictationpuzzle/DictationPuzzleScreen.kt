@@ -66,7 +66,7 @@ fun DictationPuzzleScreen(
         uiState = uiState,
         onClose = onClose,
         onReplayAudio = viewModel::onReplayAudio,
-        onPlacedTileRemoved = viewModel::onPlacedTileRemoved,
+        onUndo = viewModel::onUndo,
         onTileSelected = viewModel::onTileSelected,
         onTipRequested = viewModel::onTipRequested,
         onSkip = viewModel::onSkip,
@@ -82,7 +82,7 @@ private fun DictationPuzzleScreenContent(
     uiState: DictationPuzzleUiState,
     onClose: () -> Unit,
     onReplayAudio: () -> Unit,
-    onPlacedTileRemoved: (LetterTile) -> Unit,
+    onUndo: () -> Unit,
     onTileSelected: (LetterTile) -> Unit,
     onTipRequested: () -> Unit,
     onSkip: () -> Unit,
@@ -129,8 +129,6 @@ private fun DictationPuzzleScreenContent(
                         modifier = Modifier.padding(top = Dimens.spacingLarge),
                     )
 
-                    // Placed letters are individually tappable so a mistake can be undone one
-                    // tile at a time, instead of only being able to clear the whole answer.
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -140,14 +138,11 @@ private fun DictationPuzzleScreenContent(
                             .border(1.dp, answerColor, LexiconShapes.small)
                             .padding(Dimens.spacingMedium),
                     ) {
-                        if (uiState.placedTiles.isEmpty()) {
-                            Text(text = " ", style = MaterialTheme.typography.headlineSmall)
-                        } else {
-                            LetterTileGrid(
-                                tiles = uiState.placedTiles,
-                                onTileSelected = onPlacedTileRemoved,
-                            )
-                        }
+                        Text(
+                            text = uiState.builtAnswer.ifEmpty { " " },
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = answerColor,
+                        )
                     }
 
                     LetterTileGrid(
@@ -185,6 +180,11 @@ private fun DictationPuzzleScreenContent(
                     modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
                     horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall, Alignment.End),
                 ) {
+                    if (uiState.canUndo) {
+                        TextButton(onClick = debounced(onClick = onUndo)) {
+                            Text(stringResource(R.string.action_undo))
+                        }
+                    }
                     if (uiState.canUseTip) {
                         TextButton(onClick = debounced(onClick = onTipRequested)) {
                             Text(stringResource(R.string.action_tip))
@@ -227,7 +227,7 @@ private fun DictationPuzzleScreenUnansweredPreview() {
                 ),
             onClose = {},
             onReplayAudio = {},
-            onPlacedTileRemoved = {},
+            onUndo = {},
             onTileSelected = {},
             onTipRequested = {},
             onSkip = {},
@@ -254,7 +254,7 @@ private fun DictationPuzzleScreenIncorrectPreview() {
                 ),
             onClose = {},
             onReplayAudio = {},
-            onPlacedTileRemoved = {},
+            onUndo = {},
             onTileSelected = {},
             onTipRequested = {},
             onSkip = {},
