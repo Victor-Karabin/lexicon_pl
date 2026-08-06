@@ -3,7 +3,7 @@ package com.lexicon.app.di
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.VocabularyRepository
-import com.lexicon.data.repository.FallbackImageProviderImpl
+import com.lexicon.data.repository.CachingImageProviderImpl
 import com.lexicon.data.repository.TrainingHistoryRepositoryImpl
 import com.lexicon.data.repository.VocabularyRepositoryImpl
 import dagger.Binds
@@ -25,5 +25,5 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindImageProvider(impl: FallbackImageProviderImpl): ImageProvider
+    abstract fun bindImageProvider(impl: CachingImageProviderImpl): ImageProvider
 }

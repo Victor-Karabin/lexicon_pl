@@ -1,7 +1,7 @@
 package com.lexicon.presentation.puzzle
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,19 +24,25 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.SubcomposeAsyncImage
+import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.LetterTileGrid
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.debounced
 import com.lexicon.presentation.common.shuffleIntoTiles
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
+import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
 
@@ -65,7 +70,7 @@ fun PuzzleScreen(
     PuzzleScreenContent(
         uiState = uiState,
         onClose = onClose,
-        onAnswerFieldCleared = viewModel::onAnswerFieldCleared,
+        onUndo = viewModel::onUndo,
         onTileSelected = viewModel::onTileSelected,
         onTipRequested = viewModel::onTipRequested,
         onSkip = viewModel::onSkip,
@@ -80,7 +85,7 @@ fun PuzzleScreen(
 private fun PuzzleScreenContent(
     uiState: PuzzleUiState,
     onClose: () -> Unit,
-    onAnswerFieldCleared: () -> Unit,
+    onUndo: () -> Unit,
     onTileSelected: (LetterTile) -> Unit,
     onTipRequested: () -> Unit,
     onSkip: () -> Unit,
@@ -90,7 +95,7 @@ private fun PuzzleScreenContent(
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = { TrainingTopBar(title = "Puzzle", onClose = onClose) },
+        topBar = { TrainingTopBar(title = stringResource(R.string.puzzle_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
             is PuzzleUiState.Loading ->
@@ -102,6 +107,7 @@ private fun PuzzleScreenContent(
                     CircularProgressIndicator()
                 }
             is PuzzleUiState.Loaded -> {
+                // Mirrors DictationScreen's state -> color mapping so both screens read consistently.
                 val answerColor = when (uiState.answerState) {
                     is AnswerState.Correct -> LexiconSuccess
                     is AnswerState.Incorrect, is AnswerState.Skipped -> LexiconError
@@ -138,8 +144,9 @@ private fun PuzzleScreenContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = Dimens.spacingMedium)
-                            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(Dimens.spacingSmall))
-                            .clickable(enabled = uiState.isEditable, onClick = onAnswerFieldCleared)
+                            .clip(LexiconShapes.small)
+                            .background(MaterialTheme.colorScheme.surfaceVariant)
+                            .border(1.dp, answerColor, LexiconShapes.small)
                             .padding(Dimens.spacingMedium),
                     ) {
                         Text(
@@ -155,9 +162,25 @@ private fun PuzzleScreenContent(
                         modifier = Modifier.padding(top = Dimens.spacingMedium),
                     )
 
+                    val statusLabel = when (uiState.answerState) {
+                        is AnswerState.Correct -> stringResource(R.string.status_correct)
+                        is AnswerState.Incorrect -> stringResource(R.string.status_incorrect)
+                        is AnswerState.Skipped -> stringResource(R.string.status_skipped)
+                        is AnswerState.Unanswered -> null
+                    }
+                    statusLabel?.let { label ->
+                        Text(
+                            text = label,
+                            color = answerColor,
+                            modifier = Modifier.padding(top = Dimens.spacingMedium),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    }
+
                     (uiState.revealedAnswer ?: uiState.tipTranslation)?.let { answer ->
                         Text(
-                            text = "Expected: $answer",
+                            text = stringResource(R.string.expected_format, answer),
                             modifier = Modifier.padding(top = Dimens.spacingSmall),
                             style = MaterialTheme.typography.bodyMedium,
                         )
@@ -167,17 +190,29 @@ private fun PuzzleScreenContent(
                         modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
                         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
                     ) {
-                        TextButton(onClick = onTipRequested, enabled = uiState.canUseTip) {
-                            Text("Tip")
+                        if (uiState.canUndo) {
+                            TextButton(onClick = debounced(onClick = onUndo)) {
+                                Text(stringResource(R.string.action_undo))
+                            }
                         }
-                        TextButton(onClick = onSkip, enabled = uiState.canSkip) {
-                            Text("Skip")
+                        if (uiState.canUseTip) {
+                            TextButton(onClick = debounced(onClick = onTipRequested)) {
+                                Text(stringResource(R.string.action_tip))
+                            }
+                        }
+                        if (uiState.canSkip) {
+                            TextButton(onClick = debounced(onClick = onSkip)) {
+                                Text(stringResource(R.string.action_skip))
+                            }
                         }
                         Button(
-                            onClick = { if (uiState.awaitingNext) onNext() else onCheck() },
+                            onClick =
+                                debounced {
+                                    if (uiState.awaitingNext) onNext() else onCheck()
+                                },
                             enabled = uiState.awaitingNext || uiState.canCheck,
                         ) {
-                            Text(if (uiState.awaitingNext) "Next" else "Check")
+                            Text(stringResource(if (uiState.awaitingNext) R.string.action_next else R.string.action_check))
                         }
                     }
                 }
@@ -190,7 +225,7 @@ private val previewTiles = shuffleIntoTiles("praca")
 
 @Preview(showBackground = true)
 @Composable
-private fun PuzzleScreenPreview() {
+private fun PuzzleScreenUnansweredPreview() {
     LexiconTheme {
         PuzzleScreenContent(
             uiState =
@@ -202,7 +237,32 @@ private fun PuzzleScreenPreview() {
                     placedTiles = previewTiles.take(2),
                 ),
             onClose = {},
-            onAnswerFieldCleared = {},
+            onUndo = {},
+            onTileSelected = {},
+            onTipRequested = {},
+            onSkip = {},
+            onCheck = {},
+            onNext = {},
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PuzzleScreenIncorrectPreview() {
+    LexiconTheme {
+        PuzzleScreenContent(
+            uiState =
+                PuzzleUiState.Loaded(
+                    stepIndex = 2,
+                    totalSteps = 10,
+                    clueText = "praca",
+                    stepTiles = previewTiles,
+                    placedTiles = previewTiles,
+                    answerState = AnswerState.Incorrect("praca"),
+                ),
+            onClose = {},
+            onUndo = {},
             onTileSelected = {},
             onTipRequested = {},
             onSkip = {},
