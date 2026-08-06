@@ -116,14 +116,14 @@ private fun WordMatchScreenContent(
                                     MatchTile(
                                         text = item.text,
                                         number = index + 1,
-                                        state = tileState(item.vocabularyItemId, uiState.selectedLeftId, uiState),
+                                        state = tileState(item.vocabularyItemId, uiState.selectedLeftId, uiState.incorrectLeftId, uiState),
                                         onClick = { onLeftSelected(item.vocabularyItemId) },
                                     )
                                 }
                             }
                             Column(modifier = Modifier.weight(1f).padding(start = Dimens.spacingSmall)) {
                                 uiState.rightColumn.forEach { item ->
-                                    val state = tileState(item.vocabularyItemId, uiState.selectedRightId, uiState)
+                                    val state = tileState(item.vocabularyItemId, uiState.selectedRightId, uiState.incorrectRightId, uiState)
                                     MatchTile(
                                         text = item.text,
                                         number = leftNumbers[item.vocabularyItemId]?.takeIf { state == MatchTileState.MATCHED },
@@ -160,11 +160,12 @@ private enum class MatchTileState { DEFAULT, SELECTED, MATCHED, INCORRECT }
 private fun tileState(
     itemId: Long,
     selectedId: Long?,
+    incorrectId: Long?,
     uiState: WordMatchUiState.Loaded,
 ): MatchTileState =
     when {
         uiState.matchedIds.contains(itemId) -> MatchTileState.MATCHED
-        uiState.incorrectFlashIds.contains(itemId) -> MatchTileState.INCORRECT
+        incorrectId == itemId -> MatchTileState.INCORRECT
         selectedId == itemId -> MatchTileState.SELECTED
         else -> MatchTileState.DEFAULT
     }

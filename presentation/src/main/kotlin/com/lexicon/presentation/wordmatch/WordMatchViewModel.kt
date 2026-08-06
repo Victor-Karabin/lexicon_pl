@@ -73,14 +73,14 @@ class WordMatchViewModel
         fun onLeftSelected(vocabularyItemId: Long) {
             val state = _uiState.value as? WordMatchUiState.Loaded ?: return
             if (!state.isInteractive || state.matchedIds.contains(vocabularyItemId)) return
-            updateLoaded { it.copy(selectedLeftId = vocabularyItemId, incorrectFlashIds = emptySet()) }
+            updateLoaded { it.copy(selectedLeftId = vocabularyItemId, incorrectLeftId = null, incorrectRightId = null) }
             tryValidateSelection()
         }
 
         fun onRightSelected(vocabularyItemId: Long) {
             val state = _uiState.value as? WordMatchUiState.Loaded ?: return
             if (!state.isInteractive || state.matchedIds.contains(vocabularyItemId)) return
-            updateLoaded { it.copy(selectedRightId = vocabularyItemId, incorrectFlashIds = emptySet()) }
+            updateLoaded { it.copy(selectedRightId = vocabularyItemId, incorrectLeftId = null, incorrectRightId = null) }
             tryValidateSelection()
         }
 
@@ -101,7 +101,8 @@ class WordMatchViewModel
                 updateLoaded {
                     it.copy(
                         incorrectAttempts = it.incorrectAttempts + 1,
-                        incorrectFlashIds = setOf(leftId, rightId),
+                        incorrectLeftId = leftId,
+                        incorrectRightId = rightId,
                         selectedLeftId = null,
                         selectedRightId = null,
                     )
