@@ -12,7 +12,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -98,19 +97,9 @@ private fun WordMatchScreenContent(
                             .fillMaxWidth()
                             .padding(Dimens.spacingMedium),
                     ) {
-                        LinearProgressIndicator(
-                            progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                            modifier = Modifier.fillMaxWidth(),
-                        )
-                        Text(
-                            text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                            modifier = Modifier.padding(top = Dimens.spacingSmall),
-                            style = MaterialTheme.typography.labelMedium,
-                        )
-
                         val leftNumbers = uiState.leftColumn.mapIndexed { index, item -> item.vocabularyItemId to index + 1 }.toMap()
 
-                        Row(modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium)) {
+                        Row(modifier = Modifier.fillMaxWidth()) {
                             Column(modifier = Modifier.weight(1f)) {
                                 uiState.leftColumn.forEachIndexed { index, item ->
                                     MatchTile(
