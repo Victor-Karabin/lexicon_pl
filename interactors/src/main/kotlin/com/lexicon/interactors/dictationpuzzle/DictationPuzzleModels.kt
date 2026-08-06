@@ -7,6 +7,8 @@ data class DictationPuzzleStepResponse(
     val vocabularyItemId: Long,
     /** Text to synthesize via TTS and to validate the tile-built answer against. */
     val expectedText: String,
+    /** Base-language meaning, shown as the Tip hint — never the learning-language answer itself. */
+    val translationText: String,
 )
 
 data class DictationPuzzleSessionResponse(

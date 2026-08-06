@@ -11,6 +11,9 @@ data class DictationPuzzleUiState(
     val stepTiles: List<LetterTile> = emptyList(),
     val placedTiles: List<LetterTile> = emptyList(),
     val answerState: AnswerState = AnswerState.UNANSWERED,
+    /** Base-language meaning shown once Tip is used, before validation. */
+    val tipTranslation: String? = null,
+    /** Correct (learning-language) answer, shown once the step is validated as Incorrect/Skipped. */
     val revealedAnswer: String? = null,
     val tipUsed: Boolean = false,
     val isSessionComplete: Boolean = false,

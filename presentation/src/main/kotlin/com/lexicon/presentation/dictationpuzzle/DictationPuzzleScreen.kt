@@ -151,6 +151,16 @@ private fun DictationPuzzleScreenContent(
                         modifier = Modifier.padding(top = Dimens.spacingMedium),
                     )
 
+                    if (uiState.isEditable) {
+                        uiState.tipTranslation?.let { hint ->
+                            Text(
+                                text = stringResource(R.string.hint_format, hint),
+                                modifier = Modifier.padding(top = Dimens.spacingSmall),
+                                style = MaterialTheme.typography.bodyMedium,
+                            )
+                        }
+                    }
+
                     val statusLabel = when (uiState.answerState) {
                         AnswerState.CORRECT -> stringResource(R.string.status_correct)
                         AnswerState.INCORRECT -> stringResource(R.string.status_incorrect)

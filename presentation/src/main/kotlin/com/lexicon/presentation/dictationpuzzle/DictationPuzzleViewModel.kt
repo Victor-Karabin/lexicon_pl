@@ -104,7 +104,7 @@ class DictationPuzzleViewModel
             if (!state.canUseTip) return
             val step = currentStepOrNull() ?: return
             tipsUsedCount++
-            _uiState.update { it.copy(tipUsed = true, revealedAnswer = step.expectedText) }
+            _uiState.update { it.copy(tipUsed = true, tipTranslation = step.translationText) }
         }
 
         fun onCheck() {

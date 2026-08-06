@@ -173,7 +173,7 @@ private fun DictationScreenContent(
                     if (uiState.isEditable) {
                         uiState.tipTranslation?.let { hint ->
                             Text(
-                                text = stringResource(R.string.dictation_hint_format, hint),
+                                text = stringResource(R.string.hint_format, hint),
                                 modifier = Modifier.padding(top = Dimens.spacingSmall),
                                 style = MaterialTheme.typography.bodyMedium,
                             )
