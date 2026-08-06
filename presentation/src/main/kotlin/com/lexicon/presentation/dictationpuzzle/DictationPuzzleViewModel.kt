@@ -11,8 +11,10 @@ import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionUseCas
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerRequest
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerUseCase
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.WordResultEntry
 import com.lexicon.presentation.common.shuffleIntoTiles
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -36,6 +38,7 @@ class DictationPuzzleViewModel
         private val submitAnswerUseCase: SubmitDictationPuzzleAnswerUseCase,
         private val speechSynthesizer: SpeechSynthesizer,
         private val dispatchers: DispatcherProvider,
+        private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow<DictationPuzzleUiState>(DictationPuzzleUiState.Loading)
         val uiState: StateFlow<DictationPuzzleUiState> = _uiState.asStateFlow()
@@ -49,6 +52,7 @@ class DictationPuzzleViewModel
         private var incorrectCount = 0
         private var skippedCount = 0
         private var tipsUsedCount = 0
+        private val wordResults = mutableListOf<WordResultEntry>()
 
         init {
             startSession()
@@ -137,27 +141,40 @@ class DictationPuzzleViewModel
                             skipped = skipped,
                         ),
                     )
-                applyOutcome(response.outcome, response.expectedText)
+                applyOutcome(response.outcome, response.expectedText, state.tipUsed)
             }
         }
 
         private suspend fun applyOutcome(
             outcome: DictationPuzzleStepOutcome,
             expectedText: String,
+            tipUsed: Boolean,
         ) {
+            val step = currentStepOrNull()
             when (outcome) {
                 DictationPuzzleStepOutcome.CORRECT -> {
                     correctCount++
+                    step?.let {
+                        wordResults += WordResultEntry(it.expectedText, it.translationText, AnswerState.Correct, tipUsed)
+                    }
                     updateLoaded { it.copy(answerState = AnswerState.Correct) }
                     delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                     advanceToNextStep()
                 }
                 DictationPuzzleStepOutcome.INCORRECT -> {
                     incorrectCount++
+                    step?.let {
+                        wordResults +=
+                            WordResultEntry(it.expectedText, it.translationText, AnswerState.Incorrect(expectedText), tipUsed)
+                    }
                     updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText)) }
                 }
                 DictationPuzzleStepOutcome.SKIPPED -> {
                     skippedCount++
+                    step?.let {
+                        wordResults +=
+                            WordResultEntry(it.expectedText, it.translationText, AnswerState.Skipped(expectedText), tipUsed)
+                    }
                     updateLoaded { it.copy(answerState = AnswerState.Skipped(expectedText)) }
                 }
             }
@@ -175,6 +192,7 @@ class DictationPuzzleViewModel
             val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
                 updateLoaded { it.copy(isSessionComplete = true) }
+                lastSessionResultsHolder.wordResults = wordResults.toList()
                 _navigationEvents.emit(
                     SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount, tipsUsedCount),
                 )
