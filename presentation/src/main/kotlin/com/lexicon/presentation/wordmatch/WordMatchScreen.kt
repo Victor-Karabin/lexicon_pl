@@ -24,10 +24,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.lexicon.presentation.R
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.debounced
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
@@ -76,7 +79,7 @@ private fun WordMatchScreenContent(
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = { TrainingTopBar(title = "Word Match", onClose = onClose) },
+        topBar = { TrainingTopBar(title = stringResource(R.string.word_match_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
             is WordMatchUiState.Loading ->
@@ -88,48 +91,62 @@ private fun WordMatchScreenContent(
                     CircularProgressIndicator()
                 }
             is WordMatchUiState.Loaded ->
-                Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
-                    LinearProgressIndicator(
-                        progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                    Text(
-                        text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                        modifier = Modifier.padding(top = Dimens.spacingSmall),
-                        style = MaterialTheme.typography.labelMedium,
-                    )
+                Column(modifier = Modifier.fillMaxSize().padding(padding)) {
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .padding(Dimens.spacingMedium),
+                    ) {
+                        LinearProgressIndicator(
+                            progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                        Text(
+                            text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
+                            modifier = Modifier.padding(top = Dimens.spacingSmall),
+                            style = MaterialTheme.typography.labelMedium,
+                        )
 
-                    Row(modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium)) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            uiState.leftColumn.forEach { item ->
-                                MatchTile(
-                                    text = item.text,
-                                    state = tileState(item.vocabularyItemId, uiState.selectedLeftId, uiState),
-                                    onClick = { onLeftSelected(item.vocabularyItemId) },
-                                )
+                        val leftNumbers = uiState.leftColumn.mapIndexed { index, item -> item.vocabularyItemId to index + 1 }.toMap()
+
+                        Row(modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium)) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                uiState.leftColumn.forEachIndexed { index, item ->
+                                    MatchTile(
+                                        text = item.text,
+                                        number = index + 1,
+                                        state = tileState(item.vocabularyItemId, uiState.selectedLeftId, uiState),
+                                        onClick = { onLeftSelected(item.vocabularyItemId) },
+                                    )
+                                }
                             }
-                        }
-                        Column(modifier = Modifier.weight(1f).padding(start = Dimens.spacingSmall)) {
-                            uiState.rightColumn.forEach { item ->
-                                MatchTile(
-                                    text = item.text,
-                                    state = tileState(item.vocabularyItemId, uiState.selectedRightId, uiState),
-                                    onClick = { onRightSelected(item.vocabularyItemId) },
-                                )
+                            Column(modifier = Modifier.weight(1f).padding(start = Dimens.spacingSmall)) {
+                                uiState.rightColumn.forEach { item ->
+                                    val state = tileState(item.vocabularyItemId, uiState.selectedRightId, uiState)
+                                    MatchTile(
+                                        text = item.text,
+                                        number = leftNumbers[item.vocabularyItemId]?.takeIf { state == MatchTileState.MATCHED },
+                                        state = state,
+                                        onClick = { onRightSelected(item.vocabularyItemId) },
+                                    )
+                                }
                             }
                         }
                     }
 
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
-                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                        modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall, Alignment.End),
                     ) {
-                        TextButton(onClick = onSkip, enabled = uiState.canSkip) {
-                            Text("Skip")
+                        if (uiState.canSkip) {
+                            TextButton(onClick = debounced(onClick = onSkip)) {
+                                Text(stringResource(R.string.action_skip))
+                            }
                         }
                         if (uiState.awaitingNext) {
-                            Button(onClick = onNext) {
-                                Text("Next")
+                            Button(onClick = debounced(onClick = onNext)) {
+                                Text(stringResource(R.string.action_next))
                             }
                         }
                     }
@@ -157,17 +174,18 @@ private fun MatchTile(
     text: String,
     state: MatchTileState,
     onClick: () -> Unit,
+    number: Int? = null,
 ) {
     val background = when (state) {
         MatchTileState.MATCHED -> LexiconSuccess
         MatchTileState.INCORRECT -> LexiconError
-        MatchTileState.SELECTED -> MaterialTheme.colorScheme.primaryContainer
+        MatchTileState.SELECTED -> MaterialTheme.colorScheme.primary
         MatchTileState.DEFAULT -> MaterialTheme.colorScheme.surfaceVariant
     }
     val enabled = state == MatchTileState.DEFAULT || state == MatchTileState.SELECTED
     val textColor = when (state) {
         MatchTileState.MATCHED, MatchTileState.INCORRECT -> Color.White
-        MatchTileState.SELECTED -> MaterialTheme.colorScheme.onPrimaryContainer
+        MatchTileState.SELECTED -> MaterialTheme.colorScheme.onPrimary
         MatchTileState.DEFAULT -> MaterialTheme.colorScheme.onSurfaceVariant
     }
     Row(
@@ -178,7 +196,8 @@ private fun MatchTile(
             .clickable(enabled = enabled, onClick = onClick)
             .padding(Dimens.spacingSmall),
     ) {
-        Text(text, color = textColor)
+        val label = number?.let { "$it. $text" } ?: text
+        Text(label, color = textColor)
     }
 }
 

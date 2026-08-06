@@ -24,4 +24,7 @@
 
     <!-- Image Test -->
     <string name="image_test_title">Image Test</string>
+
+    <!-- Word Match -->
+    <string name="word_match_title">Word Match</string>
 </resources>
