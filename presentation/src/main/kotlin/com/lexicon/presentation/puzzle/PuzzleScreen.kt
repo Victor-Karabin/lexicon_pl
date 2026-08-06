@@ -138,7 +138,11 @@ private fun PuzzleScreenContent(
                                     contentDescription = null,
                                     contentScale = ContentScale.Fit,
                                     modifier = Modifier.fillMaxSize(),
-                                    loading = { LinearProgressIndicator(modifier = Modifier.fillMaxWidth()) },
+                                    loading = {
+                                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                            CircularProgressIndicator()
+                                        }
+                                    },
                                     error = { Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall) },
                                 )
                             }
