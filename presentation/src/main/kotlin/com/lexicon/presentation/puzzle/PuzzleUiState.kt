@@ -31,6 +31,7 @@ sealed interface PuzzleUiState {
         val canCheck: Boolean get() = isEditable && stepTiles.isNotEmpty() && availableTiles.isEmpty()
         val canUseTip: Boolean get() = isEditable && !tipUsed
         val canSkip: Boolean get() = isEditable
+        val canUndo: Boolean get() = isEditable && placedTiles.isNotEmpty()
         val awaitingNext: Boolean get() = answerState is AnswerState.Incorrect || answerState is AnswerState.Skipped
     }
 }

@@ -6,6 +6,7 @@ data class PronunciationStepResponse(
     val stepIndex: Int,
     val vocabularyItemId: Long,
     val expectedText: String,
+    val clueText: String,
 )
 
 data class PronunciationSessionResponse(

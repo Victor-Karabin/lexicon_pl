@@ -9,6 +9,7 @@ import com.lexicon.interactors.puzzle.PuzzleStepResponse
 import com.lexicon.interactors.puzzle.StartPuzzleSessionRequest
 import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import java.util.UUID
 import javax.inject.Inject
@@ -21,12 +22,11 @@ class StartPuzzleSessionUseCaseImpl
     ) : StartPuzzleSessionUseCase {
         override suspend fun invoke(request: StartPuzzleSessionRequest): PuzzleSessionResponse {
             val words = vocabularyRepository.getRandomItems(request.stepCount).map { it.toWord() }
-            val steps =
-                coroutineScope {
-                    words.mapIndexed { index, word ->
-                        async { buildStep(index, word) }
-                    }.map { it.await() }
-                }
+            val steps = coroutineScope {
+                words.mapIndexed { index, word ->
+                    async { buildStep(index, word) }
+                }.awaitAll()
+            }
             return PuzzleSessionResponse(sessionId = UUID.randomUUID().toString(), steps = steps)
         }
 

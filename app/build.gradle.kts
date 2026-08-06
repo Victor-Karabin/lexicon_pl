@@ -91,6 +91,8 @@ dependencies {
     implementation(libs.okhttp.logging)
     implementation(libs.kotlinx.serialization.json)
 
+    implementation(libs.coil.compose)
+
     if (hasGoogleServicesConfig) {
         implementation(platform(libs.firebase.bom))
         implementation(libs.firebase.analytics)

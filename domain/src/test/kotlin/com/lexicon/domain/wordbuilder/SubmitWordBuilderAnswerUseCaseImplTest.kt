@@ -1,10 +1,12 @@
 package com.lexicon.domain.wordbuilder
 
 import com.lexicon.boundary.TrainingHistoryRepository
+import com.lexicon.boundary.TrainingResultBoundary
 import com.lexicon.common.Clock
 import com.lexicon.domain.dictation.AnswerNormalizer
 import com.lexicon.interactors.wordbuilder.SubmitWordBuilderAnswerRequest
 import com.lexicon.interactors.wordbuilder.WordBuilderStepOutcome
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -47,9 +49,16 @@ class SubmitWordBuilderAnswerUseCaseImplTest {
         }
 
     @Test
-    fun `tip forces Incorrect even on a matching answer`() =
+    fun `matching tiles with tip used is still Correct — tip usage doesn't affect the outcome`() =
         runTest {
             val response = useCase(request(submittedText = "kot", tipUsed = true))
-            assertEquals(WordBuilderStepOutcome.INCORRECT, response.outcome)
+            assertEquals(WordBuilderStepOutcome.CORRECT, response.outcome)
+        }
+
+    @Test
+    fun `tip usage is recorded to history regardless of outcome`() =
+        runTest {
+            useCase(request(submittedText = "kot", tipUsed = true))
+            coVerify { trainingHistoryRepository.recordResult(match<TrainingResultBoundary> { it.tipUsed }) }
         }
 }

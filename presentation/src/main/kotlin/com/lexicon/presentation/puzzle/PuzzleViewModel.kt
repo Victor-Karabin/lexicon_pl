@@ -10,8 +10,10 @@ import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerRequest
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerUseCase
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.WordResultEntry
 import com.lexicon.presentation.common.shuffleIntoTiles
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -34,6 +36,7 @@ class PuzzleViewModel
         private val startSessionUseCase: StartPuzzleSessionUseCase,
         private val submitAnswerUseCase: SubmitPuzzleAnswerUseCase,
         private val dispatchers: DispatcherProvider,
+        private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow<PuzzleUiState>(PuzzleUiState.Loading)
         val uiState: StateFlow<PuzzleUiState> = _uiState.asStateFlow()
@@ -47,6 +50,7 @@ class PuzzleViewModel
         private var incorrectCount = 0
         private var skippedCount = 0
         private var tipsUsedCount = 0
+        private val wordResults = mutableListOf<WordResultEntry>()
 
         init {
             startSession()
@@ -81,10 +85,11 @@ class PuzzleViewModel
             updateLoaded { it.copy(placedTiles = it.placedTiles + tile) }
         }
 
-        fun onAnswerFieldCleared() {
+        /** Removes the most recently placed tile, sending it back to the available pool. */
+        fun onUndo() {
             val state = _uiState.value as? PuzzleUiState.Loaded ?: return
-            if (!state.isEditable) return
-            updateLoaded { it.copy(placedTiles = emptyList()) }
+            if (!state.canUndo) return
+            updateLoaded { it.copy(placedTiles = it.placedTiles.dropLast(1)) }
         }
 
         fun onTipRequested() {
@@ -92,7 +97,7 @@ class PuzzleViewModel
             if (!state.canUseTip) return
             val step = currentStepOrNull() ?: return
             tipsUsedCount++
-            updateLoaded { it.copy(tipUsed = true, tipTranslation = step.expectedText) }
+            updateLoaded { it.copy(tipUsed = true, tipTranslation = step.clueText) }
         }
 
         fun onCheck() {
@@ -126,27 +131,40 @@ class PuzzleViewModel
                             skipped = skipped,
                         ),
                     )
-                applyOutcome(response.outcome, response.expectedText)
+                applyOutcome(response.outcome, response.expectedText, state.tipUsed)
             }
         }
 
         private suspend fun applyOutcome(
             outcome: PuzzleStepOutcome,
             expectedText: String,
+            tipUsed: Boolean,
         ) {
+            val step = currentStepOrNull()
             when (outcome) {
                 PuzzleStepOutcome.CORRECT -> {
                     correctCount++
+                    step?.let {
+                        wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Correct, tipUsed)
+                    }
                     updateLoaded { it.copy(answerState = AnswerState.Correct) }
                     delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                     advanceToNextStep()
                 }
+
                 PuzzleStepOutcome.INCORRECT -> {
                     incorrectCount++
+                    step?.let {
+                        wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Incorrect(expectedText), tipUsed)
+                    }
                     updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText)) }
                 }
+
                 PuzzleStepOutcome.SKIPPED -> {
                     skippedCount++
+                    step?.let {
+                        wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Skipped(expectedText), tipUsed)
+                    }
                     updateLoaded { it.copy(answerState = AnswerState.Skipped(expectedText)) }
                 }
             }
@@ -164,6 +182,7 @@ class PuzzleViewModel
             val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
                 updateLoaded { it.copy(isSessionComplete = true) }
+                lastSessionResultsHolder.wordResults = wordResults.toList()
                 _navigationEvents.emit(
                     SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount, tipsUsedCount),
                 )
