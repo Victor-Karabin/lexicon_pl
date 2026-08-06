@@ -8,10 +8,13 @@
     <string name="status_incorrect">✗ Incorrect</string>
     <string name="status_skipped">Skipped</string>
     <string name="expected_format">Expected: %1$s</string>
+    <string name="action_listen_again">Listen again</string>
 
     <!-- Dictation -->
     <string name="dictation_title">Dictation</string>
-    <string name="dictation_listen_again">Listen again</string>
     <string name="dictation_type_what_you_heard">Type what you heard</string>
     <string name="dictation_hint_format">Hint: %1$s</string>
+
+    <!-- Dictation Puzzle -->
+    <string name="dictation_puzzle_title">Dictation Puzzle</string>
 </resources>

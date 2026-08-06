@@ -130,7 +130,7 @@ private fun DictationScreenContent(
 
                     PlayButton(
                         onClick = onReplayAudio,
-                        label = stringResource(R.string.dictation_listen_again),
+                        label = stringResource(R.string.action_listen_again),
                         modifier = Modifier.padding(top = Dimens.spacingLarge),
                     )
 
