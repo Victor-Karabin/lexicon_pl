@@ -1,10 +1,12 @@
 package com.lexicon.domain.dictationpuzzle
 
 import com.lexicon.boundary.TrainingHistoryRepository
+import com.lexicon.boundary.TrainingResultBoundary
 import com.lexicon.common.Clock
 import com.lexicon.domain.dictation.AnswerNormalizer
 import com.lexicon.interactors.dictationpuzzle.DictationPuzzleStepOutcome
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerRequest
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -38,10 +40,22 @@ class SubmitDictationPuzzleAnswerUseCaseImplTest {
         }
 
     @Test
-    fun `tip forces Incorrect even on a matching answer`() =
+    fun `matching tiles with tip used is still Correct — tip usage doesn't affect the outcome`() =
         runTest {
             val response = useCase(request(submittedText = "kot", tipUsed = true))
-            assertEquals(DictationPuzzleStepOutcome.INCORRECT, response.outcome)
+            assertEquals(DictationPuzzleStepOutcome.CORRECT, response.outcome)
+        }
+
+    @Test
+    fun `tip usage is recorded to history regardless of outcome`() =
+        runTest {
+            useCase(request(submittedText = "kot", tipUsed = true))
+
+            coVerify {
+                trainingHistoryRepository.recordResult(
+                    match<TrainingResultBoundary> { it.tipUsed },
+                )
+            }
         }
 
     @Test
