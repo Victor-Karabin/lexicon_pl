@@ -78,61 +78,62 @@ private fun WordMatchScreenContent(
         modifier = modifier,
         topBar = { TrainingTopBar(title = "Word Match", onClose = onClose) },
     ) { padding ->
-        if (uiState.isLoading) {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(padding),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
-            Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
-                LinearProgressIndicator(
-                    progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Text(
-                    text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                    modifier = Modifier.padding(top = Dimens.spacingSmall),
-                    style = MaterialTheme.typography.labelMedium,
-                )
-
-                Row(modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium)) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        uiState.leftColumn.forEach { item ->
-                            MatchTile(
-                                text = item.text,
-                                state = tileState(item.vocabularyItemId, uiState.selectedLeftId, uiState),
-                                onClick = { onLeftSelected(item.vocabularyItemId) },
-                            )
-                        }
-                    }
-                    Column(modifier = Modifier.weight(1f).padding(start = Dimens.spacingSmall)) {
-                        uiState.rightColumn.forEach { item ->
-                            MatchTile(
-                                text = item.text,
-                                state = tileState(item.vocabularyItemId, uiState.selectedRightId, uiState),
-                                onClick = { onRightSelected(item.vocabularyItemId) },
-                            )
-                        }
-                    }
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
-                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+        when (uiState) {
+            is WordMatchUiState.Loading ->
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(padding),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
                 ) {
-                    TextButton(onClick = onSkip, enabled = uiState.canSkip) {
-                        Text("Skip")
+                    CircularProgressIndicator()
+                }
+            is WordMatchUiState.Loaded ->
+                Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
+                    LinearProgressIndicator(
+                        progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    Text(
+                        text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
+                        modifier = Modifier.padding(top = Dimens.spacingSmall),
+                        style = MaterialTheme.typography.labelMedium,
+                    )
+
+                    Row(modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium)) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            uiState.leftColumn.forEach { item ->
+                                MatchTile(
+                                    text = item.text,
+                                    state = tileState(item.vocabularyItemId, uiState.selectedLeftId, uiState),
+                                    onClick = { onLeftSelected(item.vocabularyItemId) },
+                                )
+                            }
+                        }
+                        Column(modifier = Modifier.weight(1f).padding(start = Dimens.spacingSmall)) {
+                            uiState.rightColumn.forEach { item ->
+                                MatchTile(
+                                    text = item.text,
+                                    state = tileState(item.vocabularyItemId, uiState.selectedRightId, uiState),
+                                    onClick = { onRightSelected(item.vocabularyItemId) },
+                                )
+                            }
+                        }
                     }
-                    if (uiState.awaitingNext) {
-                        Button(onClick = onNext) {
-                            Text("Next")
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                    ) {
+                        TextButton(onClick = onSkip, enabled = uiState.canSkip) {
+                            Text("Skip")
+                        }
+                        if (uiState.awaitingNext) {
+                            Button(onClick = onNext) {
+                                Text("Next")
+                            }
                         }
                     }
                 }
-            }
         }
     }
 }
@@ -142,7 +143,7 @@ private enum class MatchTileState { DEFAULT, SELECTED, MATCHED, INCORRECT }
 private fun tileState(
     itemId: Long,
     selectedId: Long?,
-    uiState: WordMatchUiState,
+    uiState: WordMatchUiState.Loaded,
 ): MatchTileState =
     when {
         uiState.matchedIds.contains(itemId) -> MatchTileState.MATCHED
@@ -198,8 +199,7 @@ private fun WordMatchScreenPreview() {
     LexiconTheme {
         WordMatchScreenContent(
             uiState =
-                WordMatchUiState(
-                    isLoading = false,
+                WordMatchUiState.Loaded(
                     stepIndex = 1,
                     totalSteps = 5,
                     leftColumn = previewLeftColumn,

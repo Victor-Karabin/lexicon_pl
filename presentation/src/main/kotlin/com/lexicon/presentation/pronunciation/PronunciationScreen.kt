@@ -101,77 +101,78 @@ private fun PronunciationScreenContent(
         modifier = modifier,
         topBar = { TrainingTopBar(title = "Pronunciation Check", onClose = onClose) },
     ) { padding ->
-        if (uiState.isLoading) {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(padding),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
-            Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
-                LinearProgressIndicator(
-                    progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Text(
-                    text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                    modifier = Modifier.padding(top = Dimens.spacingSmall),
-                    style = MaterialTheme.typography.labelMedium,
-                )
-
-                TextButton(onClick = onReplayReferenceAudio, modifier = Modifier.padding(top = Dimens.spacingLarge)) {
-                    Text("🔊 Listen to reference")
-                }
-
-                Button(
-                    onClick = onRecordRequested,
-                    enabled = uiState.canRecord,
-                    modifier = Modifier.padding(top = Dimens.spacingMedium),
+        when (uiState) {
+            is PronunciationUiState.Loading ->
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(padding),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
                 ) {
-                    Text(
-                        when (uiState.recordingState) {
-                            RecordingState.IDLE -> "🎤 Record"
-                            RecordingState.RECORDING -> "Listening…"
-                            RecordingState.PROCESSING -> "Checking…"
-                        },
-                    )
+                    CircularProgressIndicator()
                 }
-
-                uiState.recognizedText?.let { recognized ->
-                    Text(
-                        text = "Heard: $recognized",
-                        modifier = Modifier.padding(top = Dimens.spacingMedium),
-                        style = MaterialTheme.typography.bodyMedium,
+            is PronunciationUiState.Loaded ->
+                Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
+                    LinearProgressIndicator(
+                        progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
+                        modifier = Modifier.fillMaxWidth(),
                     )
-                }
-
-                uiState.revealedAnswer?.let { answer ->
                     Text(
-                        text = "Expected: $answer",
+                        text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
                         modifier = Modifier.padding(top = Dimens.spacingSmall),
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.labelMedium,
                     )
-                }
 
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
-                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-                ) {
-                    TextButton(onClick = onTipRequested, enabled = uiState.canUseTip) {
-                        Text("Tip")
+                    TextButton(onClick = onReplayReferenceAudio, modifier = Modifier.padding(top = Dimens.spacingLarge)) {
+                        Text("🔊 Listen to reference")
                     }
-                    TextButton(onClick = onSkip, enabled = uiState.canSkip) {
-                        Text("Skip")
+
+                    Button(
+                        onClick = onRecordRequested,
+                        enabled = uiState.canRecord,
+                        modifier = Modifier.padding(top = Dimens.spacingMedium),
+                    ) {
+                        Text(
+                            when (uiState.recordingState) {
+                                RecordingState.IDLE -> "🎤 Record"
+                                RecordingState.RECORDING -> "Listening…"
+                                RecordingState.PROCESSING -> "Checking…"
+                            },
+                        )
                     }
-                    if (uiState.awaitingNext) {
-                        Button(onClick = onNext) {
-                            Text("Next")
+
+                    uiState.recognizedText?.let { recognized ->
+                        Text(
+                            text = "Heard: $recognized",
+                            modifier = Modifier.padding(top = Dimens.spacingMedium),
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
+
+                    (uiState.revealedAnswer ?: uiState.tipTranslation)?.let { answer ->
+                        Text(
+                            text = "Expected: $answer",
+                            modifier = Modifier.padding(top = Dimens.spacingSmall),
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                    ) {
+                        TextButton(onClick = onTipRequested, enabled = uiState.canUseTip) {
+                            Text("Tip")
+                        }
+                        TextButton(onClick = onSkip, enabled = uiState.canSkip) {
+                            Text("Skip")
+                        }
+                        if (uiState.awaitingNext) {
+                            Button(onClick = onNext) {
+                                Text("Next")
+                            }
                         }
                     }
                 }
-            }
         }
     }
 }
@@ -182,8 +183,7 @@ private fun PronunciationScreenPreview() {
     LexiconTheme {
         PronunciationScreenContent(
             uiState =
-                PronunciationUiState(
-                    isLoading = false,
+                PronunciationUiState.Loaded(
                     stepIndex = 2,
                     totalSteps = 10,
                     recordingState = RecordingState.IDLE,

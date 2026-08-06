@@ -34,7 +34,7 @@ class MemoryCardsViewModel
         private val submitStepResultUseCase: SubmitMemoryCardsStepResultUseCase,
         private val dispatchers: DispatcherProvider,
     ) : ViewModel() {
-        private val _uiState = MutableStateFlow(MemoryCardsUiState())
+        private val _uiState = MutableStateFlow<MemoryCardsUiState>(MemoryCardsUiState.Loading)
         val uiState: StateFlow<MemoryCardsUiState> = _uiState.asStateFlow()
 
         private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
@@ -81,12 +81,12 @@ class MemoryCardsViewModel
                     )
                 }.shuffled()
             _uiState.update {
-                MemoryCardsUiState(isLoading = false, stepIndex = index, totalSteps = steps.size, cards = cards)
+                MemoryCardsUiState.Loaded(stepIndex = index, totalSteps = steps.size, cards = cards)
             }
         }
 
         fun onCardSelected(cardId: Int) {
-            val state = _uiState.value
+            val state = _uiState.value as? MemoryCardsUiState.Loaded ?: return
             val card = state.cards.firstOrNull { it.cardId == cardId } ?: return
             if (!state.isInteractive) return
             if (state.matchedItemIds.contains(card.vocabularyItemId)) return
@@ -94,7 +94,7 @@ class MemoryCardsViewModel
             if (state.flippedCardIds.size >= 2) return
 
             val flipped = state.flippedCardIds + cardId
-            _uiState.update { it.copy(flippedCardIds = flipped) }
+            updateLoaded { it.copy(flippedCardIds = flipped) }
             if (flipped.size == 2) validatePair(flipped[0], flipped[1])
         }
 
@@ -102,18 +102,18 @@ class MemoryCardsViewModel
             firstCardId: Int,
             secondCardId: Int,
         ) {
-            val state = _uiState.value
+            val state = _uiState.value as? MemoryCardsUiState.Loaded ?: return
             val first = state.cards.first { it.cardId == firstCardId }
             val second = state.cards.first { it.cardId == secondCardId }
 
             if (first.vocabularyItemId == second.vocabularyItemId) {
                 val matched = state.matchedItemIds + first.vocabularyItemId
-                _uiState.update { it.copy(matchedItemIds = matched, flippedCardIds = emptyList()) }
+                updateLoaded { it.copy(matchedItemIds = matched, flippedCardIds = emptyList()) }
                 if (matched.size == state.cards.size / 2) {
                     viewModelScope.launch(dispatchers.io) { completeStep() }
                 }
             } else {
-                _uiState.update {
+                updateLoaded {
                     it.copy(
                         incorrectAttempts = it.incorrectAttempts + 1,
                         incorrectFlashCardIds = setOf(firstCardId, secondCardId),
@@ -121,14 +121,14 @@ class MemoryCardsViewModel
                 }
                 viewModelScope.launch {
                     delay(INCORRECT_FLASH_DELAY_MS)
-                    _uiState.update { it.copy(flippedCardIds = emptyList(), incorrectFlashCardIds = emptySet()) }
+                    updateLoaded { it.copy(flippedCardIds = emptyList(), incorrectFlashCardIds = emptySet()) }
                 }
             }
         }
 
         private suspend fun completeStep() {
             val step = currentStepOrNull() ?: return
-            val state = _uiState.value
+            val state = _uiState.value as? MemoryCardsUiState.Loaded ?: return
             val response =
                 submitStepResultUseCase(
                     SubmitMemoryCardsStepResultRequest(
@@ -149,7 +149,7 @@ class MemoryCardsViewModel
         }
 
         fun onSkip() {
-            val state = _uiState.value
+            val state = _uiState.value as? MemoryCardsUiState.Loaded ?: return
             if (!state.canSkip) return
             val step = currentStepOrNull() ?: return
             viewModelScope.launch(dispatchers.io) {
@@ -163,10 +163,10 @@ class MemoryCardsViewModel
                     ),
                 )
                 skippedCount++
-                _uiState.update {
+                updateLoaded {
                     it.copy(
                         matchedItemIds = step.pairs.map { pair -> pair.vocabularyItemId }.toSet(),
-                        answerState = AnswerState.SKIPPED,
+                        answerState = AnswerState.Skipped(),
                     )
                 }
             }
@@ -174,19 +174,28 @@ class MemoryCardsViewModel
 
         /** Called from the UI's "Next" button after a Skipped step. */
         fun onNext() {
-            if (!_uiState.value.awaitingNext) return
+            val state = _uiState.value as? MemoryCardsUiState.Loaded ?: return
+            if (!state.awaitingNext) return
             viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
         }
 
         private suspend fun advanceToNextStep() {
-            val nextIndex = _uiState.value.stepIndex + 1
+            val state = _uiState.value as? MemoryCardsUiState.Loaded ?: return
+            val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
-                _uiState.update { it.copy(isSessionComplete = true) }
+                updateLoaded { it.copy(isSessionComplete = true) }
                 _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount))
                 return
             }
             openStep(nextIndex)
         }
 
-        private fun currentStepOrNull(): MemoryCardsStepResponse? = steps.getOrNull(_uiState.value.stepIndex)
+        private fun currentStepOrNull(): MemoryCardsStepResponse? {
+            val state = _uiState.value as? MemoryCardsUiState.Loaded ?: return null
+            return steps.getOrNull(state.stepIndex)
+        }
+
+        private inline fun updateLoaded(transform: (MemoryCardsUiState.Loaded) -> MemoryCardsUiState.Loaded) {
+            _uiState.update { current -> if (current is MemoryCardsUiState.Loaded) transform(current) else current }
+        }
     }

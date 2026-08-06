@@ -92,91 +92,93 @@ private fun PuzzleScreenContent(
         modifier = modifier,
         topBar = { TrainingTopBar(title = "Puzzle", onClose = onClose) },
     ) { padding ->
-        if (uiState.isLoading) {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(padding),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
-            val answerColor = when (uiState.answerState) {
-                AnswerState.CORRECT -> LexiconSuccess
-                AnswerState.INCORRECT, AnswerState.SKIPPED -> LexiconError
-                AnswerState.UNANSWERED -> MaterialTheme.colorScheme.outline
-            }
+        when (uiState) {
+            is PuzzleUiState.Loading ->
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(padding),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    CircularProgressIndicator()
+                }
+            is PuzzleUiState.Loaded -> {
+                val answerColor = when (uiState.answerState) {
+                    is AnswerState.Correct -> LexiconSuccess
+                    is AnswerState.Incorrect, is AnswerState.Skipped -> LexiconError
+                    is AnswerState.Unanswered -> MaterialTheme.colorScheme.outline
+                }
 
-            Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
-                LinearProgressIndicator(
-                    progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Text(
-                    text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                    modifier = Modifier.padding(top = Dimens.spacingSmall),
-                    style = MaterialTheme.typography.labelMedium,
-                )
+                Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
+                    LinearProgressIndicator(
+                        progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    Text(
+                        text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
+                        modifier = Modifier.padding(top = Dimens.spacingSmall),
+                        style = MaterialTheme.typography.labelMedium,
+                    )
 
-                Box(modifier = Modifier.fillMaxWidth().height(ImageHeight).padding(top = Dimens.spacingMedium)) {
-                    if (uiState.imageUrl == null) {
-                        Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall)
-                    } else {
-                        SubcomposeAsyncImage(
-                            model = uiState.imageUrl,
-                            contentDescription = null,
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier.fillMaxSize(),
-                            loading = { CircularProgressIndicator() },
-                            error = { Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall) },
+                    Box(modifier = Modifier.fillMaxWidth().height(ImageHeight).padding(top = Dimens.spacingMedium)) {
+                        if (uiState.imageUrl == null) {
+                            Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall)
+                        } else {
+                            SubcomposeAsyncImage(
+                                model = uiState.imageUrl,
+                                contentDescription = null,
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier.fillMaxSize(),
+                                loading = { CircularProgressIndicator() },
+                                error = { Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall) },
+                            )
+                        }
+                    }
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = Dimens.spacingMedium)
+                            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(Dimens.spacingSmall))
+                            .clickable(enabled = uiState.isEditable, onClick = onAnswerFieldCleared)
+                            .padding(Dimens.spacingMedium),
+                    ) {
+                        Text(
+                            text = uiState.builtAnswer.ifEmpty { " " },
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = answerColor,
                         )
                     }
-                }
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = Dimens.spacingMedium)
-                        .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(Dimens.spacingSmall))
-                        .clickable(enabled = uiState.isEditable, onClick = onAnswerFieldCleared)
-                        .padding(Dimens.spacingMedium),
-                ) {
-                    Text(
-                        text = uiState.builtAnswer.ifEmpty { " " },
-                        style = MaterialTheme.typography.headlineSmall,
-                        color = answerColor,
+                    LetterTileGrid(
+                        tiles = uiState.availableTiles,
+                        onTileSelected = onTileSelected,
+                        modifier = Modifier.padding(top = Dimens.spacingMedium),
                     )
-                }
 
-                LetterTileGrid(
-                    tiles = uiState.availableTiles,
-                    onTileSelected = onTileSelected,
-                    modifier = Modifier.padding(top = Dimens.spacingMedium),
-                )
-
-                uiState.revealedAnswer?.let { answer ->
-                    Text(
-                        text = "Expected: $answer",
-                        modifier = Modifier.padding(top = Dimens.spacingSmall),
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
-                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-                ) {
-                    TextButton(onClick = onTipRequested, enabled = uiState.canUseTip) {
-                        Text("Tip")
+                    (uiState.revealedAnswer ?: uiState.tipTranslation)?.let { answer ->
+                        Text(
+                            text = "Expected: $answer",
+                            modifier = Modifier.padding(top = Dimens.spacingSmall),
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
                     }
-                    TextButton(onClick = onSkip, enabled = uiState.canSkip) {
-                        Text("Skip")
-                    }
-                    Button(
-                        onClick = { if (uiState.awaitingNext) onNext() else onCheck() },
-                        enabled = uiState.awaitingNext || uiState.canCheck,
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
                     ) {
-                        Text(if (uiState.awaitingNext) "Next" else "Check")
+                        TextButton(onClick = onTipRequested, enabled = uiState.canUseTip) {
+                            Text("Tip")
+                        }
+                        TextButton(onClick = onSkip, enabled = uiState.canSkip) {
+                            Text("Skip")
+                        }
+                        Button(
+                            onClick = { if (uiState.awaitingNext) onNext() else onCheck() },
+                            enabled = uiState.awaitingNext || uiState.canCheck,
+                        ) {
+                            Text(if (uiState.awaitingNext) "Next" else "Check")
+                        }
                     }
                 }
             }
@@ -192,8 +194,7 @@ private fun PuzzleScreenPreview() {
     LexiconTheme {
         PuzzleScreenContent(
             uiState =
-                PuzzleUiState(
-                    isLoading = false,
+                PuzzleUiState.Loaded(
                     stepIndex = 2,
                     totalSteps = 10,
                     clueText = "praca",

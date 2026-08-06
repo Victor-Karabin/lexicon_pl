@@ -86,68 +86,69 @@ private fun ImageTestScreenContent(
         modifier = modifier,
         topBar = { TrainingTopBar(title = "Image Test", onClose = onClose) },
     ) { padding ->
-        if (uiState.isLoading) {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(padding),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
-            Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
-                LinearProgressIndicator(
-                    progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Text(
-                    text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                    modifier = Modifier.padding(top = Dimens.spacingSmall),
-                    style = MaterialTheme.typography.labelMedium,
-                )
-
-                Box(modifier = Modifier.fillMaxWidth().height(ImageHeight).padding(top = Dimens.spacingMedium)) {
-                    if (uiState.imageUrl == null) {
-                        Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall)
-                    } else {
-                        SubcomposeAsyncImage(
-                            model = uiState.imageUrl,
-                            contentDescription = null,
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier.fillMaxSize(),
-                            loading = { CircularProgressIndicator() },
-                            error = { Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall) },
-                        )
-                    }
-                }
-
-                Column(modifier = Modifier.padding(top = Dimens.spacingMedium)) {
-                    uiState.options.forEach { option ->
-                        OptionRow(
-                            text = option,
-                            isSelected = option == uiState.selectedOption,
-                            isCorrect = uiState.correctOption?.let { it == option },
-                            enabled = uiState.isEditable,
-                            onClick = { onOptionSelected(option) },
-                        )
-                    }
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
-                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+        when (uiState) {
+            is ImageTestUiState.Loading ->
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(padding),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
                 ) {
-                    TextButton(onClick = onSkip, enabled = uiState.canSkip) {
-                        Text("Skip")
+                    CircularProgressIndicator()
+                }
+            is ImageTestUiState.Loaded ->
+                Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
+                    LinearProgressIndicator(
+                        progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    Text(
+                        text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
+                        modifier = Modifier.padding(top = Dimens.spacingSmall),
+                        style = MaterialTheme.typography.labelMedium,
+                    )
+
+                    Box(modifier = Modifier.fillMaxWidth().height(ImageHeight).padding(top = Dimens.spacingMedium)) {
+                        if (uiState.imageUrl == null) {
+                            Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall)
+                        } else {
+                            SubcomposeAsyncImage(
+                                model = uiState.imageUrl,
+                                contentDescription = null,
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier.fillMaxSize(),
+                                loading = { CircularProgressIndicator() },
+                                error = { Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall) },
+                            )
+                        }
                     }
-                    Button(
-                        onClick = { if (uiState.awaitingNext) onNext() else onCheck() },
-                        enabled = uiState.awaitingNext || uiState.canCheck,
+
+                    Column(modifier = Modifier.padding(top = Dimens.spacingMedium)) {
+                        uiState.options.forEach { option ->
+                            OptionRow(
+                                text = option,
+                                isSelected = option == uiState.selectedOption,
+                                isCorrect = uiState.correctOption?.let { it == option },
+                                enabled = uiState.isEditable,
+                                onClick = { onOptionSelected(option) },
+                            )
+                        }
+                    }
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
                     ) {
-                        Text(if (uiState.awaitingNext) "Next" else "Check")
+                        TextButton(onClick = onSkip, enabled = uiState.canSkip) {
+                            Text("Skip")
+                        }
+                        Button(
+                            onClick = { if (uiState.awaitingNext) onNext() else onCheck() },
+                            enabled = uiState.awaitingNext || uiState.canCheck,
+                        ) {
+                            Text(if (uiState.awaitingNext) "Next" else "Check")
+                        }
                     }
                 }
-            }
         }
     }
 }
@@ -185,14 +186,13 @@ private fun ImageTestScreenPreview() {
     LexiconTheme {
         ImageTestScreenContent(
             uiState =
-                ImageTestUiState(
-                    isLoading = false,
+                ImageTestUiState.Loaded(
                     stepIndex = 2,
                     totalSteps = 10,
                     clueText = "praca",
                     options = listOf("work", "house", "dog", "cat", "tree", "book"),
                     selectedOption = "work",
-                    answerState = AnswerState.UNANSWERED,
+                    answerState = AnswerState.Unanswered,
                 ),
             onClose = {},
             onOptionSelected = {},

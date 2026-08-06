@@ -35,7 +35,7 @@ class PuzzleViewModel
         private val submitAnswerUseCase: SubmitPuzzleAnswerUseCase,
         private val dispatchers: DispatcherProvider,
     ) : ViewModel() {
-        private val _uiState = MutableStateFlow(PuzzleUiState())
+        private val _uiState = MutableStateFlow<PuzzleUiState>(PuzzleUiState.Loading)
         val uiState: StateFlow<PuzzleUiState> = _uiState.asStateFlow()
 
         private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
@@ -64,8 +64,7 @@ class PuzzleViewModel
         private fun openStep(index: Int) {
             val step = steps.getOrNull(index) ?: return
             _uiState.update {
-                PuzzleUiState(
-                    isLoading = false,
+                PuzzleUiState.Loaded(
                     stepIndex = index,
                     totalSteps = steps.size,
                     imageUrl = step.imageUrl,
@@ -76,33 +75,34 @@ class PuzzleViewModel
         }
 
         fun onTileSelected(tile: LetterTile) {
-            val state = _uiState.value
+            val state = _uiState.value as? PuzzleUiState.Loaded ?: return
             if (!state.isEditable) return
             if (state.placedTiles.any { it.id == tile.id }) return
-            _uiState.update { it.copy(placedTiles = it.placedTiles + tile) }
+            updateLoaded { it.copy(placedTiles = it.placedTiles + tile) }
         }
 
         fun onAnswerFieldCleared() {
-            if (!_uiState.value.isEditable) return
-            _uiState.update { it.copy(placedTiles = emptyList()) }
+            val state = _uiState.value as? PuzzleUiState.Loaded ?: return
+            if (!state.isEditable) return
+            updateLoaded { it.copy(placedTiles = emptyList()) }
         }
 
         fun onTipRequested() {
-            val state = _uiState.value
+            val state = _uiState.value as? PuzzleUiState.Loaded ?: return
             if (!state.canUseTip) return
             val step = currentStepOrNull() ?: return
             tipsUsedCount++
-            _uiState.update { it.copy(tipUsed = true, revealedAnswer = step.expectedText) }
+            updateLoaded { it.copy(tipUsed = true, tipTranslation = step.expectedText) }
         }
 
         fun onCheck() {
-            val state = _uiState.value
+            val state = _uiState.value as? PuzzleUiState.Loaded ?: return
             if (!state.canCheck) return
             submitCurrentStep(submittedText = state.builtAnswer, skipped = false)
         }
 
         fun onSkip() {
-            val state = _uiState.value
+            val state = _uiState.value as? PuzzleUiState.Loaded ?: return
             if (!state.canSkip) return
             submitCurrentStep(submittedText = "", skipped = true)
         }
@@ -112,7 +112,7 @@ class PuzzleViewModel
             skipped: Boolean,
         ) {
             val step = currentStepOrNull() ?: return
-            val state = _uiState.value
+            val state = _uiState.value as? PuzzleUiState.Loaded ?: return
             viewModelScope.launch(dispatchers.io) {
                 val response =
                     submitAnswerUseCase(
@@ -137,31 +137,33 @@ class PuzzleViewModel
             when (outcome) {
                 PuzzleStepOutcome.CORRECT -> {
                     correctCount++
-                    _uiState.update { it.copy(answerState = AnswerState.CORRECT) }
+                    updateLoaded { it.copy(answerState = AnswerState.Correct) }
                     delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                     advanceToNextStep()
                 }
                 PuzzleStepOutcome.INCORRECT -> {
                     incorrectCount++
-                    _uiState.update { it.copy(answerState = AnswerState.INCORRECT, revealedAnswer = expectedText) }
+                    updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText)) }
                 }
                 PuzzleStepOutcome.SKIPPED -> {
                     skippedCount++
-                    _uiState.update { it.copy(answerState = AnswerState.SKIPPED, revealedAnswer = expectedText) }
+                    updateLoaded { it.copy(answerState = AnswerState.Skipped(expectedText)) }
                 }
             }
         }
 
         /** Called from the UI's "Next" button after an Incorrect/Skipped step. */
         fun onNext() {
-            if (!_uiState.value.awaitingNext) return
+            val state = _uiState.value as? PuzzleUiState.Loaded ?: return
+            if (!state.awaitingNext) return
             viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
         }
 
         private suspend fun advanceToNextStep() {
-            val nextIndex = _uiState.value.stepIndex + 1
+            val state = _uiState.value as? PuzzleUiState.Loaded ?: return
+            val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
-                _uiState.update { it.copy(isSessionComplete = true) }
+                updateLoaded { it.copy(isSessionComplete = true) }
                 _navigationEvents.emit(
                     SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount, tipsUsedCount),
                 )
@@ -170,5 +172,12 @@ class PuzzleViewModel
             openStep(nextIndex)
         }
 
-        private fun currentStepOrNull(): PuzzleStepResponse? = steps.getOrNull(_uiState.value.stepIndex)
+        private fun currentStepOrNull(): PuzzleStepResponse? {
+            val state = _uiState.value as? PuzzleUiState.Loaded ?: return null
+            return steps.getOrNull(state.stepIndex)
+        }
+
+        private inline fun updateLoaded(transform: (PuzzleUiState.Loaded) -> PuzzleUiState.Loaded) {
+            _uiState.update { current -> if (current is PuzzleUiState.Loaded) transform(current) else current }
+        }
     }

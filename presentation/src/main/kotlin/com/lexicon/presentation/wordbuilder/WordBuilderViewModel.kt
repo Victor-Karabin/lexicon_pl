@@ -35,7 +35,7 @@ class WordBuilderViewModel
         private val submitAnswerUseCase: SubmitWordBuilderAnswerUseCase,
         private val dispatchers: DispatcherProvider,
     ) : ViewModel() {
-        private val _uiState = MutableStateFlow(WordBuilderUiState())
+        private val _uiState = MutableStateFlow<WordBuilderUiState>(WordBuilderUiState.Loading)
         val uiState: StateFlow<WordBuilderUiState> = _uiState.asStateFlow()
 
         private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
@@ -64,8 +64,7 @@ class WordBuilderViewModel
         private fun openStep(index: Int) {
             val step = steps.getOrNull(index) ?: return
             _uiState.update {
-                WordBuilderUiState(
-                    isLoading = false,
+                WordBuilderUiState.Loaded(
                     stepIndex = index,
                     totalSteps = steps.size,
                     clueText = step.clueText,
@@ -75,33 +74,34 @@ class WordBuilderViewModel
         }
 
         fun onTileSelected(tile: LetterTile) {
-            val state = _uiState.value
+            val state = _uiState.value as? WordBuilderUiState.Loaded ?: return
             if (!state.isEditable) return
             if (state.placedTiles.any { it.id == tile.id }) return
-            _uiState.update { it.copy(placedTiles = it.placedTiles + tile) }
+            updateLoaded { it.copy(placedTiles = it.placedTiles + tile) }
         }
 
         fun onAnswerFieldCleared() {
-            if (!_uiState.value.isEditable) return
-            _uiState.update { it.copy(placedTiles = emptyList()) }
+            val state = _uiState.value as? WordBuilderUiState.Loaded ?: return
+            if (!state.isEditable) return
+            updateLoaded { it.copy(placedTiles = emptyList()) }
         }
 
         fun onTipRequested() {
-            val state = _uiState.value
+            val state = _uiState.value as? WordBuilderUiState.Loaded ?: return
             if (!state.canUseTip) return
             val step = currentStepOrNull() ?: return
             tipsUsedCount++
-            _uiState.update { it.copy(tipUsed = true, revealedAnswer = step.expectedText) }
+            updateLoaded { it.copy(tipUsed = true, tipTranslation = step.expectedText) }
         }
 
         fun onCheck() {
-            val state = _uiState.value
+            val state = _uiState.value as? WordBuilderUiState.Loaded ?: return
             if (!state.canCheck) return
             submitCurrentStep(submittedText = state.builtAnswer, skipped = false)
         }
 
         fun onSkip() {
-            val state = _uiState.value
+            val state = _uiState.value as? WordBuilderUiState.Loaded ?: return
             if (!state.canSkip) return
             submitCurrentStep(submittedText = "", skipped = true)
         }
@@ -111,7 +111,7 @@ class WordBuilderViewModel
             skipped: Boolean,
         ) {
             val step = currentStepOrNull() ?: return
-            val state = _uiState.value
+            val state = _uiState.value as? WordBuilderUiState.Loaded ?: return
             viewModelScope.launch(dispatchers.io) {
                 val response =
                     submitAnswerUseCase(
@@ -136,31 +136,33 @@ class WordBuilderViewModel
             when (outcome) {
                 WordBuilderStepOutcome.CORRECT -> {
                     correctCount++
-                    _uiState.update { it.copy(answerState = AnswerState.CORRECT) }
+                    updateLoaded { it.copy(answerState = AnswerState.Correct) }
                     delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                     advanceToNextStep()
                 }
                 WordBuilderStepOutcome.INCORRECT -> {
                     incorrectCount++
-                    _uiState.update { it.copy(answerState = AnswerState.INCORRECT, revealedAnswer = expectedText) }
+                    updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText)) }
                 }
                 WordBuilderStepOutcome.SKIPPED -> {
                     skippedCount++
-                    _uiState.update { it.copy(answerState = AnswerState.SKIPPED, revealedAnswer = expectedText) }
+                    updateLoaded { it.copy(answerState = AnswerState.Skipped(expectedText)) }
                 }
             }
         }
 
         /** Called from the UI's "Next" button after an Incorrect/Skipped step. */
         fun onNext() {
-            if (!_uiState.value.awaitingNext) return
+            val state = _uiState.value as? WordBuilderUiState.Loaded ?: return
+            if (!state.awaitingNext) return
             viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
         }
 
         private suspend fun advanceToNextStep() {
-            val nextIndex = _uiState.value.stepIndex + 1
+            val state = _uiState.value as? WordBuilderUiState.Loaded ?: return
+            val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
-                _uiState.update { it.copy(isSessionComplete = true) }
+                updateLoaded { it.copy(isSessionComplete = true) }
                 _navigationEvents.emit(
                     SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount, tipsUsedCount),
                 )
@@ -169,5 +171,12 @@ class WordBuilderViewModel
             openStep(nextIndex)
         }
 
-        private fun currentStepOrNull(): WordBuilderStepResponse? = steps.getOrNull(_uiState.value.stepIndex)
+        private fun currentStepOrNull(): WordBuilderStepResponse? {
+            val state = _uiState.value as? WordBuilderUiState.Loaded ?: return null
+            return steps.getOrNull(state.stepIndex)
+        }
+
+        private inline fun updateLoaded(transform: (WordBuilderUiState.Loaded) -> WordBuilderUiState.Loaded) {
+            _uiState.update { current -> if (current is WordBuilderUiState.Loaded) transform(current) else current }
+        }
     }

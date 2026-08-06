@@ -94,125 +94,127 @@ private fun DictationPuzzleScreenContent(
         modifier = modifier,
         topBar = { TrainingTopBar(title = stringResource(R.string.dictation_puzzle_title), onClose = onClose) },
     ) { padding ->
-        if (uiState.isLoading) {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(padding),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
-            // Mirrors DictationScreen's state -> color mapping so both screens read consistently.
-            val answerColor = when (uiState.answerState) {
-                AnswerState.CORRECT -> LexiconSuccess
-                AnswerState.INCORRECT, AnswerState.SKIPPED -> LexiconError
-                AnswerState.UNANSWERED -> MaterialTheme.colorScheme.outline
-            }
-
-            Column(modifier = Modifier.fillMaxSize().padding(padding)) {
+        when (uiState) {
+            is DictationPuzzleUiState.Loading ->
                 Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
-                        .padding(Dimens.spacingMedium),
+                    modifier = Modifier.fillMaxSize().padding(padding),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
                 ) {
-                    ProgressDots(
-                        step = uiState.stepIndex,
-                        total = uiState.totalSteps,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
+                    CircularProgressIndicator()
+                }
+            is DictationPuzzleUiState.Loaded -> {
+                // Mirrors DictationScreen's state -> color mapping so both screens read consistently.
+                val answerColor = when (uiState.answerState) {
+                    is AnswerState.Correct -> LexiconSuccess
+                    is AnswerState.Incorrect, is AnswerState.Skipped -> LexiconError
+                    is AnswerState.Unanswered -> MaterialTheme.colorScheme.outline
+                }
 
-                    PlayButton(
-                        onClick = onReplayAudio,
-                        label = stringResource(R.string.action_listen_again),
-                        modifier = Modifier.padding(top = Dimens.spacingLarge),
-                    )
-
-                    Row(
+                Column(modifier = Modifier.fillMaxSize().padding(padding)) {
+                    Column(
                         modifier = Modifier
+                            .weight(1f)
                             .fillMaxWidth()
-                            .padding(top = Dimens.spacingMedium)
-                            .clip(LexiconShapes.small)
-                            .background(MaterialTheme.colorScheme.surfaceVariant)
-                            .border(1.dp, answerColor, LexiconShapes.small)
                             .padding(Dimens.spacingMedium),
                     ) {
-                        Text(
-                            text = uiState.builtAnswer.ifEmpty { " " },
-                            style = MaterialTheme.typography.headlineSmall,
-                            color = answerColor,
+                        ProgressDots(
+                            step = uiState.stepIndex,
+                            total = uiState.totalSteps,
+                            modifier = Modifier.fillMaxWidth(),
                         )
-                    }
 
-                    LetterTileGrid(
-                        tiles = uiState.availableTiles,
-                        onTileSelected = onTileSelected,
-                        modifier = Modifier.padding(top = Dimens.spacingMedium),
-                    )
+                        PlayButton(
+                            onClick = onReplayAudio,
+                            label = stringResource(R.string.action_listen_again),
+                            modifier = Modifier.padding(top = Dimens.spacingLarge),
+                        )
 
-                    if (uiState.isEditable) {
-                        uiState.tipTranslation?.let { hint ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = Dimens.spacingMedium)
+                                .clip(LexiconShapes.small)
+                                .background(MaterialTheme.colorScheme.surfaceVariant)
+                                .border(1.dp, answerColor, LexiconShapes.small)
+                                .padding(Dimens.spacingMedium),
+                        ) {
                             Text(
-                                text = stringResource(R.string.hint_format, hint),
+                                text = uiState.builtAnswer.ifEmpty { " " },
+                                style = MaterialTheme.typography.headlineSmall,
+                                color = answerColor,
+                            )
+                        }
+
+                        LetterTileGrid(
+                            tiles = uiState.availableTiles,
+                            onTileSelected = onTileSelected,
+                            modifier = Modifier.padding(top = Dimens.spacingMedium),
+                        )
+
+                        if (uiState.isEditable) {
+                            uiState.tipTranslation?.let { hint ->
+                                Text(
+                                    text = stringResource(R.string.hint_format, hint),
+                                    modifier = Modifier.padding(top = Dimens.spacingSmall),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                )
+                            }
+                        }
+
+                        val statusLabel = when (uiState.answerState) {
+                            is AnswerState.Correct -> stringResource(R.string.status_correct)
+                            is AnswerState.Incorrect -> stringResource(R.string.status_incorrect)
+                            is AnswerState.Skipped -> stringResource(R.string.status_skipped)
+                            is AnswerState.Unanswered -> null
+                        }
+                        statusLabel?.let { label ->
+                            Text(
+                                text = label,
+                                color = answerColor,
+                                modifier = Modifier.padding(top = Dimens.spacingMedium),
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
+
+                        uiState.revealedAnswer?.let { answer ->
+                            Text(
+                                text = stringResource(R.string.expected_format, answer),
                                 modifier = Modifier.padding(top = Dimens.spacingSmall),
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                         }
                     }
 
-                    val statusLabel = when (uiState.answerState) {
-                        AnswerState.CORRECT -> stringResource(R.string.status_correct)
-                        AnswerState.INCORRECT -> stringResource(R.string.status_incorrect)
-                        AnswerState.SKIPPED -> stringResource(R.string.status_skipped)
-                        AnswerState.UNANSWERED -> null
-                    }
-                    statusLabel?.let { label ->
-                        Text(
-                            text = label,
-                            color = answerColor,
-                            modifier = Modifier.padding(top = Dimens.spacingMedium),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                        )
-                    }
-
-                    uiState.revealedAnswer?.let { answer ->
-                        Text(
-                            text = stringResource(R.string.expected_format, answer),
-                            modifier = Modifier.padding(top = Dimens.spacingSmall),
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
-                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall, Alignment.End),
-                ) {
-                    if (uiState.canUndo) {
-                        TextButton(onClick = debounced(onClick = onUndo)) {
-                            Text(stringResource(R.string.action_undo))
-                        }
-                    }
-                    if (uiState.canUseTip) {
-                        TextButton(onClick = debounced(onClick = onTipRequested)) {
-                            Text(stringResource(R.string.action_tip))
-                        }
-                    }
-                    if (uiState.canSkip) {
-                        TextButton(onClick = debounced(onClick = onSkip)) {
-                            Text(stringResource(R.string.action_skip))
-                        }
-                    }
-                    Button(
-                        onClick =
-                            debounced {
-                                if (uiState.awaitingNext) onNext() else onCheck()
-                            },
-                        enabled = uiState.awaitingNext || uiState.canCheck,
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall, Alignment.End),
                     ) {
-                        Text(stringResource(if (uiState.awaitingNext) R.string.action_next else R.string.action_check))
+                        if (uiState.canUndo) {
+                            TextButton(onClick = debounced(onClick = onUndo)) {
+                                Text(stringResource(R.string.action_undo))
+                            }
+                        }
+                        if (uiState.canUseTip) {
+                            TextButton(onClick = debounced(onClick = onTipRequested)) {
+                                Text(stringResource(R.string.action_tip))
+                            }
+                        }
+                        if (uiState.canSkip) {
+                            TextButton(onClick = debounced(onClick = onSkip)) {
+                                Text(stringResource(R.string.action_skip))
+                            }
+                        }
+                        Button(
+                            onClick =
+                                debounced {
+                                    if (uiState.awaitingNext) onNext() else onCheck()
+                                },
+                            enabled = uiState.awaitingNext || uiState.canCheck,
+                        ) {
+                            Text(stringResource(if (uiState.awaitingNext) R.string.action_next else R.string.action_check))
+                        }
                     }
                 }
             }
@@ -228,8 +230,7 @@ private fun DictationPuzzleScreenUnansweredPreview() {
     LexiconTheme {
         DictationPuzzleScreenContent(
             uiState =
-                DictationPuzzleUiState(
-                    isLoading = false,
+                DictationPuzzleUiState.Loaded(
                     stepIndex = 2,
                     totalSteps = 10,
                     stepTiles = previewTiles,
@@ -253,14 +254,12 @@ private fun DictationPuzzleScreenIncorrectPreview() {
     LexiconTheme {
         DictationPuzzleScreenContent(
             uiState =
-                DictationPuzzleUiState(
-                    isLoading = false,
+                DictationPuzzleUiState.Loaded(
                     stepIndex = 2,
                     totalSteps = 10,
                     stepTiles = previewTiles,
                     placedTiles = previewTiles,
-                    answerState = AnswerState.INCORRECT,
-                    revealedAnswer = "praca",
+                    answerState = AnswerState.Incorrect("praca"),
                 ),
             onClose = {},
             onReplayAudio = {},

@@ -39,7 +39,7 @@ class DictationViewModel
         private val dispatchers: DispatcherProvider,
         private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
-        private val _uiState = MutableStateFlow(DictationUiState())
+        private val _uiState = MutableStateFlow<DictationUiState>(DictationUiState.Loading)
         val uiState: StateFlow<DictationUiState> = _uiState.asStateFlow()
 
         private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
@@ -63,7 +63,7 @@ class DictationViewModel
                 sessionId = response.sessionId
                 steps = response.steps
                 _uiState.update {
-                    DictationUiState(isLoading = false, stepIndex = 0, totalSteps = steps.size)
+                    DictationUiState.Loaded(stepIndex = 0, totalSteps = steps.size)
                 }
                 speakCurrentStep()
             }
@@ -79,26 +79,25 @@ class DictationViewModel
         }
 
         fun onAnswerChanged(text: String) {
-            if (!_uiState.value.isEditable) return
-            _uiState.update { it.copy(answerText = text) }
+            updateLoaded { state -> if (state.isEditable) state.copy(answerText = text) else state }
         }
 
         fun onTipRequested() {
-            val state = _uiState.value
+            val state = _uiState.value as? DictationUiState.Loaded ?: return
             if (!state.canUseTip) return
             val step = currentStepOrNull() ?: return
             tipsUsedCount++
-            _uiState.update { it.copy(tipUsed = true, tipTranslation = step.translationText) }
+            updateLoaded { it.copy(tipUsed = true, tipTranslation = step.translationText) }
         }
 
         fun onCheck() {
-            val state = _uiState.value
+            val state = _uiState.value as? DictationUiState.Loaded ?: return
             if (!state.canCheck) return
             submitCurrentStep(submittedText = state.answerText, skipped = false)
         }
 
         fun onSkip() {
-            val state = _uiState.value
+            val state = _uiState.value as? DictationUiState.Loaded ?: return
             if (!state.canSkip) return
             submitCurrentStep(submittedText = "", skipped = true)
         }
@@ -108,8 +107,8 @@ class DictationViewModel
             skipped: Boolean,
         ) {
             val step = currentStepOrNull() ?: return
-            val state = _uiState.value
-            _uiState.update { it.copy(isSubmitting = true) }
+            val state = _uiState.value as? DictationUiState.Loaded ?: return
+            updateLoaded { it.copy(isSubmitting = true) }
             viewModelScope.launch(dispatchers.io) {
                 val response =
                     submitDictationAnswer(
@@ -137,29 +136,31 @@ class DictationViewModel
                 DictationStepOutcome.CORRECT -> {
                     correctCount++
                     step?.let {
-                        wordResults += WordResultEntry(it.expectedText, it.translationText, AnswerState.CORRECT, tipUsed)
+                        wordResults += WordResultEntry(it.expectedText, it.translationText, AnswerState.Correct, tipUsed)
                     }
-                    _uiState.update { it.copy(answerState = AnswerState.CORRECT) }
+                    updateLoaded { it.copy(answerState = AnswerState.Correct) }
                     delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                     advanceToNextStep()
                 }
                 DictationStepOutcome.INCORRECT -> {
                     incorrectCount++
                     step?.let {
-                        wordResults += WordResultEntry(it.expectedText, it.translationText, AnswerState.INCORRECT, tipUsed)
+                        wordResults +=
+                            WordResultEntry(it.expectedText, it.translationText, AnswerState.Incorrect(expectedText), tipUsed)
                     }
                     // Waits for a manual Next tap, so isSubmitting must release now rather than on advance.
-                    _uiState.update {
-                        it.copy(answerState = AnswerState.INCORRECT, revealedAnswer = expectedText, isSubmitting = false)
+                    updateLoaded {
+                        it.copy(answerState = AnswerState.Incorrect(expectedText), isSubmitting = false)
                     }
                 }
                 DictationStepOutcome.SKIPPED -> {
                     skippedCount++
                     step?.let {
-                        wordResults += WordResultEntry(it.expectedText, it.translationText, AnswerState.SKIPPED, tipUsed)
+                        wordResults +=
+                            WordResultEntry(it.expectedText, it.translationText, AnswerState.Skipped(expectedText), tipUsed)
                     }
-                    _uiState.update {
-                        it.copy(answerState = AnswerState.SKIPPED, revealedAnswer = expectedText)
+                    updateLoaded {
+                        it.copy(answerState = AnswerState.Skipped(expectedText))
                     }
                     delay(SKIPPED_ANSWER_ADVANCE_DELAY_MS)
                     advanceToNextStep()
@@ -169,27 +170,36 @@ class DictationViewModel
 
         /** Called from the UI's "Next" button after an Incorrect/Skipped step. */
         fun onNext() {
-            if (!_uiState.value.awaitingNext) return
-            _uiState.update { it.copy(isSubmitting = true) }
+            val state = _uiState.value as? DictationUiState.Loaded ?: return
+            if (!state.awaitingNext) return
+            updateLoaded { it.copy(isSubmitting = true) }
             viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
         }
 
         private suspend fun advanceToNextStep() {
-            val nextIndex = _uiState.value.stepIndex + 1
+            val state = _uiState.value as? DictationUiState.Loaded ?: return
+            val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
-                _uiState.update { it.copy(isSessionComplete = true, isSubmitting = false) }
+                updateLoaded { it.copy(isSessionComplete = true, isSubmitting = false) }
                 lastSessionResultsHolder.wordResults = wordResults.toList()
                 _navigationEvents.emit(
                     SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount, tipsUsedCount),
                 )
                 return
             }
-            // A fresh DictationUiState() already defaults isSubmitting to false.
+            // A fresh Loaded() already defaults isSubmitting to false.
             _uiState.update {
-                DictationUiState(isLoading = false, stepIndex = nextIndex, totalSteps = steps.size)
+                DictationUiState.Loaded(stepIndex = nextIndex, totalSteps = steps.size)
             }
             speakCurrentStep()
         }
 
-        private fun currentStepOrNull(): DictationStepResponse? = steps.getOrNull(_uiState.value.stepIndex)
+        private fun currentStepOrNull(): DictationStepResponse? {
+            val state = _uiState.value as? DictationUiState.Loaded ?: return null
+            return steps.getOrNull(state.stepIndex)
+        }
+
+        private inline fun updateLoaded(transform: (DictationUiState.Loaded) -> DictationUiState.Loaded) {
+            _uiState.update { current -> if (current is DictationUiState.Loaded) transform(current) else current }
+        }
     }

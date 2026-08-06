@@ -33,7 +33,7 @@ class ImageTestViewModel
         private val submitAnswerUseCase: SubmitImageTestAnswerUseCase,
         private val dispatchers: DispatcherProvider,
     ) : ViewModel() {
-        private val _uiState = MutableStateFlow(ImageTestUiState())
+        private val _uiState = MutableStateFlow<ImageTestUiState>(ImageTestUiState.Loading)
         val uiState: StateFlow<ImageTestUiState> = _uiState.asStateFlow()
 
         private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
@@ -61,8 +61,7 @@ class ImageTestViewModel
         private fun openStep(index: Int) {
             val step = steps.getOrNull(index) ?: return
             _uiState.update {
-                ImageTestUiState(
-                    isLoading = false,
+                ImageTestUiState.Loaded(
                     stepIndex = index,
                     totalSteps = steps.size,
                     imageUrl = step.imageUrl,
@@ -73,18 +72,19 @@ class ImageTestViewModel
         }
 
         fun onOptionSelected(option: String) {
-            if (!_uiState.value.isEditable) return
-            _uiState.update { it.copy(selectedOption = option) }
+            val state = _uiState.value as? ImageTestUiState.Loaded ?: return
+            if (!state.isEditable) return
+            updateLoaded { it.copy(selectedOption = option) }
         }
 
         fun onCheck() {
-            val state = _uiState.value
+            val state = _uiState.value as? ImageTestUiState.Loaded ?: return
             if (!state.canCheck) return
             submitCurrentStep(selectedOption = state.selectedOption, skipped = false)
         }
 
         fun onSkip() {
-            val state = _uiState.value
+            val state = _uiState.value as? ImageTestUiState.Loaded ?: return
             if (!state.canSkip) return
             submitCurrentStep(selectedOption = null, skipped = true)
         }
@@ -117,36 +117,45 @@ class ImageTestViewModel
             when (outcome) {
                 ImageTestStepOutcome.CORRECT -> {
                     correctCount++
-                    _uiState.update { it.copy(answerState = AnswerState.CORRECT, correctOption = correctOption) }
+                    updateLoaded { it.copy(answerState = AnswerState.Correct, correctOption = correctOption) }
                     delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                     advanceToNextStep()
                 }
                 ImageTestStepOutcome.INCORRECT -> {
                     incorrectCount++
-                    _uiState.update { it.copy(answerState = AnswerState.INCORRECT, correctOption = correctOption) }
+                    updateLoaded { it.copy(answerState = AnswerState.Incorrect(), correctOption = correctOption) }
                 }
                 ImageTestStepOutcome.SKIPPED -> {
                     skippedCount++
-                    _uiState.update { it.copy(answerState = AnswerState.SKIPPED, correctOption = correctOption) }
+                    updateLoaded { it.copy(answerState = AnswerState.Skipped(), correctOption = correctOption) }
                 }
             }
         }
 
         /** Called from the UI's "Next" button after an Incorrect/Skipped step. */
         fun onNext() {
-            if (!_uiState.value.awaitingNext) return
+            val state = _uiState.value as? ImageTestUiState.Loaded ?: return
+            if (!state.awaitingNext) return
             viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
         }
 
         private suspend fun advanceToNextStep() {
-            val nextIndex = _uiState.value.stepIndex + 1
+            val state = _uiState.value as? ImageTestUiState.Loaded ?: return
+            val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
-                _uiState.update { it.copy(isSessionComplete = true) }
+                updateLoaded { it.copy(isSessionComplete = true) }
                 _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount))
                 return
             }
             openStep(nextIndex)
         }
 
-        private fun currentStepOrNull(): ImageTestStepResponse? = steps.getOrNull(_uiState.value.stepIndex)
+        private fun currentStepOrNull(): ImageTestStepResponse? {
+            val state = _uiState.value as? ImageTestUiState.Loaded ?: return null
+            return steps.getOrNull(state.stepIndex)
+        }
+
+        private inline fun updateLoaded(transform: (ImageTestUiState.Loaded) -> ImageTestUiState.Loaded) {
+            _uiState.update { current -> if (current is ImageTestUiState.Loaded) transform(current) else current }
+        }
     }
