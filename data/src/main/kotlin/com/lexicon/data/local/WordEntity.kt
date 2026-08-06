@@ -2,6 +2,7 @@ package com.lexicon.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.lexicon.boundary.VocabularyItemBoundary
 
 @Entity(tableName = "words")
 data class WordEntity(
@@ -10,3 +11,11 @@ data class WordEntity(
     val translation: String,
     val transcription: String,
 )
+
+fun WordEntity.toBoundary(): VocabularyItemBoundary =
+    VocabularyItemBoundary(
+        id = id,
+        text = text,
+        translation = translation,
+        transcription = transcription,
+    )

@@ -151,6 +151,7 @@ class PuzzleViewModel
                     delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                     advanceToNextStep()
                 }
+
                 PuzzleStepOutcome.INCORRECT -> {
                     incorrectCount++
                     step?.let {
@@ -158,6 +159,7 @@ class PuzzleViewModel
                     }
                     updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText)) }
                 }
+
                 PuzzleStepOutcome.SKIPPED -> {
                     skippedCount++
                     step?.let {
