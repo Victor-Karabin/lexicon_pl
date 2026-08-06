@@ -2,6 +2,7 @@ package com.lexicon.domain.trueorfalse
 
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.domain.dictation.Word
+import com.lexicon.domain.dictation.isPhrase
 import com.lexicon.domain.dictation.toWord
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionRequest
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
@@ -49,7 +50,7 @@ class StartTrueOrFalseSessionUseCaseImpl
             subject: Word,
             pool: List<Word>,
         ): String? =
-            pool.filter { it.id != subject.id && it.translation != subject.translation }
+            pool.filter { it.id != subject.id && it.translation != subject.translation && it.isPhrase == subject.isPhrase }
                 .randomOrNull()
                 ?.translation
     }

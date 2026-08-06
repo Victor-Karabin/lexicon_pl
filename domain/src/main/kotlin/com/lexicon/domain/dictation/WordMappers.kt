@@ -9,3 +9,6 @@ fun VocabularyItemBoundary.toWord(): Word =
         translation = translation,
         transcription = transcription,
     )
+
+/** Distinguishes single-word items from multi-word phrases/sentences, e.g. for distractor selection. */
+val Word.isPhrase: Boolean get() = text.contains(' ')
