@@ -23,8 +23,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.LetterTileGrid
@@ -139,9 +141,19 @@ private fun WordBuilderScreenContent(
                         modifier = Modifier.padding(top = Dimens.spacingMedium),
                     )
 
-                    (uiState.revealedAnswer ?: uiState.tipTranslation)?.let { answer ->
+                    if (uiState.isEditable) {
+                        uiState.tipTranslation?.let { hint ->
+                            Text(
+                                text = stringResource(R.string.hint_format, hint),
+                                modifier = Modifier.padding(top = Dimens.spacingSmall),
+                                style = MaterialTheme.typography.bodyMedium,
+                            )
+                        }
+                    }
+
+                    uiState.revealedAnswer?.let { answer ->
                         Text(
-                            text = "Expected: $answer",
+                            text = stringResource(R.string.expected_format, answer),
                             modifier = Modifier.padding(top = Dimens.spacingSmall),
                             style = MaterialTheme.typography.bodyMedium,
                         )

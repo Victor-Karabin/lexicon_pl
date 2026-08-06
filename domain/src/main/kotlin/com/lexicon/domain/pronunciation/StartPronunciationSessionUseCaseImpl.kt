@@ -18,7 +18,12 @@ class StartPronunciationSessionUseCaseImpl
             val words = vocabularyRepository.getRandomItems(request.stepCount).map { it.toWord() }
             val steps =
                 words.mapIndexed { index, word ->
-                    PronunciationStepResponse(stepIndex = index, vocabularyItemId = word.id, expectedText = word.text)
+                    PronunciationStepResponse(
+                        stepIndex = index,
+                        vocabularyItemId = word.id,
+                        expectedText = word.text,
+                        clueText = word.translation,
+                    )
                 }
             return PronunciationSessionResponse(sessionId = UUID.randomUUID().toString(), steps = steps)
         }

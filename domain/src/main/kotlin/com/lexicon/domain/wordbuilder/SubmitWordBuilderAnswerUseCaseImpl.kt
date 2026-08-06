@@ -40,10 +40,11 @@ class SubmitWordBuilderAnswerUseCaseImpl
             return SubmitWordBuilderAnswerResponse(outcome = outcome, expectedText = request.expectedText)
         }
 
+        // The step outcome reflects the input alone; tip usage is recorded separately
+        // (tipUsed above) and surfaced on the Results screen rather than forcing Incorrect here.
         private fun resolveOutcome(request: SubmitWordBuilderAnswerRequest): WordBuilderStepOutcome =
             when {
                 request.skipped -> WordBuilderStepOutcome.SKIPPED
-                request.tipUsed -> WordBuilderStepOutcome.INCORRECT
                 answerNormalizer.matches(request.expectedText, request.submittedText) -> WordBuilderStepOutcome.CORRECT
                 else -> WordBuilderStepOutcome.INCORRECT
             }

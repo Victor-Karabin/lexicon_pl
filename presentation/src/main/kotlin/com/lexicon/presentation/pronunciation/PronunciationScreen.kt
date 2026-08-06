@@ -28,9 +28,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.lexicon.presentation.R
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
@@ -148,9 +150,19 @@ private fun PronunciationScreenContent(
                         )
                     }
 
-                    (uiState.revealedAnswer ?: uiState.tipTranslation)?.let { answer ->
+                    if (uiState.isEditable) {
+                        uiState.tipTranslation?.let { hint ->
+                            Text(
+                                text = stringResource(R.string.hint_format, hint),
+                                modifier = Modifier.padding(top = Dimens.spacingSmall),
+                                style = MaterialTheme.typography.bodyMedium,
+                            )
+                        }
+                    }
+
+                    uiState.revealedAnswer?.let { answer ->
                         Text(
-                            text = "Expected: $answer",
+                            text = stringResource(R.string.expected_format, answer),
                             modifier = Modifier.padding(top = Dimens.spacingSmall),
                             style = MaterialTheme.typography.bodyMedium,
                         )

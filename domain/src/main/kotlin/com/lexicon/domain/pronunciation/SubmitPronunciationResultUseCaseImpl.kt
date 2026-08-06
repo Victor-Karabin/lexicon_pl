@@ -43,12 +43,13 @@ class SubmitPronunciationResultUseCaseImpl
             return SubmitPronunciationResultResponse(outcome = outcome, expectedText = request.expectedText)
         }
 
-        // Skip > Tip > confidence threshold when the recognizer reports one, else fall back to text matching.
+        // Skip > confidence threshold when the recognizer reports one, else fall back to text matching.
+        // The step outcome reflects the input alone; tip usage is recorded separately
+        // (tipUsed above) and surfaced on the Results screen rather than forcing Incorrect here.
         private fun resolveOutcome(request: SubmitPronunciationResultRequest): PronunciationStepOutcome {
             val confidence = request.confidence
             return when {
                 request.skipped -> PronunciationStepOutcome.SKIPPED
-                request.tipUsed -> PronunciationStepOutcome.INCORRECT
                 confidence != null ->
                     if (confidence >= RECOGNITION_CONFIDENCE_THRESHOLD) {
                         PronunciationStepOutcome.CORRECT

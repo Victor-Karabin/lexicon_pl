@@ -91,7 +91,7 @@ class WordBuilderViewModel
             if (!state.canUseTip) return
             val step = currentStepOrNull() ?: return
             tipsUsedCount++
-            updateLoaded { it.copy(tipUsed = true, tipTranslation = step.expectedText) }
+            updateLoaded { it.copy(tipUsed = true, tipTranslation = step.clueText) }
         }
 
         fun onCheck() {

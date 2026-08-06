@@ -2,11 +2,9 @@ package com.lexicon.presentation.dictation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -14,7 +12,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -33,8 +30,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
-import com.lexicon.presentation.common.debounced
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconShapes
@@ -208,30 +205,14 @@ private fun DictationScreenContent(
                         }
                     }
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
-                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall, Alignment.End),
-                    ) {
-                        if (uiState.canUseTip) {
-                            TextButton(onClick = debounced(onClick = onTipRequested)) {
-                                Text(stringResource(R.string.action_tip))
-                            }
-                        }
-                        if (uiState.canSkip) {
-                            TextButton(onClick = debounced(onClick = onSkip)) {
-                                Text(stringResource(R.string.action_skip))
-                            }
-                        }
-                        Button(
-                            onClick =
-                                debounced {
-                                    if (uiState.awaitingNext) onNext() else onCheck()
-                                },
-                            enabled = uiState.awaitingNext || uiState.canCheck,
-                        ) {
-                            Text(stringResource(if (uiState.awaitingNext) R.string.action_next else R.string.action_check))
-                        }
-                    }
+                    TrainingActionRow(
+                        onCheck = onCheck,
+                        onNext = onNext,
+                        awaitingNext = uiState.awaitingNext,
+                        checkEnabled = uiState.canCheck,
+                        onTip = onTipRequested.takeIf { uiState.canUseTip },
+                        onSkip = onSkip.takeIf { uiState.canSkip },
+                    )
                 }
         }
     }

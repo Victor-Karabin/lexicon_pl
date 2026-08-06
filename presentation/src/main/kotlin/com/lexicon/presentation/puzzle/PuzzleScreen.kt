@@ -10,14 +10,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -37,8 +35,8 @@ import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.LetterTileGrid
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
-import com.lexicon.presentation.common.debounced
 import com.lexicon.presentation.common.shuffleIntoTiles
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
@@ -114,107 +112,104 @@ private fun PuzzleScreenContent(
                     is AnswerState.Unanswered -> MaterialTheme.colorScheme.outline
                 }
 
-                Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
-                    LinearProgressIndicator(
-                        progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                    Text(
-                        text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                        modifier = Modifier.padding(top = Dimens.spacingSmall),
-                        style = MaterialTheme.typography.labelMedium,
-                    )
+                Column(modifier = Modifier.fillMaxSize().padding(padding)) {
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .padding(Dimens.spacingMedium),
+                    ) {
+                        LinearProgressIndicator(
+                            progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                        Text(
+                            text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
+                            modifier = Modifier.padding(top = Dimens.spacingSmall),
+                            style = MaterialTheme.typography.labelMedium,
+                        )
 
-                    Box(modifier = Modifier.fillMaxWidth().height(ImageHeight).padding(top = Dimens.spacingMedium)) {
-                        if (uiState.imageUrl == null) {
-                            Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall)
-                        } else {
-                            SubcomposeAsyncImage(
-                                model = uiState.imageUrl,
-                                contentDescription = null,
-                                contentScale = ContentScale.Fit,
-                                modifier = Modifier.fillMaxSize(),
-                                loading = { CircularProgressIndicator() },
-                                error = { Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall) },
+                        Box(modifier = Modifier.fillMaxWidth().height(ImageHeight).padding(top = Dimens.spacingMedium)) {
+                            if (uiState.imageUrl == null) {
+                                Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall)
+                            } else {
+                                SubcomposeAsyncImage(
+                                    model = uiState.imageUrl,
+                                    contentDescription = null,
+                                    contentScale = ContentScale.Fit,
+                                    modifier = Modifier.fillMaxSize(),
+                                    loading = { LinearProgressIndicator(modifier = Modifier.fillMaxWidth()) },
+                                    error = { Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall) },
+                                )
+                            }
+                        }
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = Dimens.spacingMedium)
+                                .clip(LexiconShapes.small)
+                                .background(MaterialTheme.colorScheme.surfaceVariant)
+                                .border(1.dp, answerColor, LexiconShapes.small)
+                                .padding(Dimens.spacingMedium),
+                        ) {
+                            Text(
+                                text = uiState.builtAnswer.ifEmpty { " " },
+                                style = MaterialTheme.typography.headlineSmall,
+                                color = answerColor,
+                            )
+                        }
+
+                        LetterTileGrid(
+                            tiles = uiState.availableTiles,
+                            onTileSelected = onTileSelected,
+                            modifier = Modifier.padding(top = Dimens.spacingMedium),
+                        )
+
+                        val statusLabel = when (uiState.answerState) {
+                            is AnswerState.Correct -> stringResource(R.string.status_correct)
+                            is AnswerState.Incorrect -> stringResource(R.string.status_incorrect)
+                            is AnswerState.Skipped -> stringResource(R.string.status_skipped)
+                            is AnswerState.Unanswered -> null
+                        }
+                        statusLabel?.let { label ->
+                            Text(
+                                text = label,
+                                color = answerColor,
+                                modifier = Modifier.padding(top = Dimens.spacingMedium),
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
+
+                        if (uiState.isEditable) {
+                            uiState.tipTranslation?.let { hint ->
+                                Text(
+                                    text = stringResource(R.string.hint_format, hint),
+                                    modifier = Modifier.padding(top = Dimens.spacingSmall),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                )
+                            }
+                        }
+
+                        uiState.revealedAnswer?.let { answer ->
+                            Text(
+                                text = stringResource(R.string.expected_format, answer),
+                                modifier = Modifier.padding(top = Dimens.spacingSmall),
+                                style = MaterialTheme.typography.bodyMedium,
                             )
                         }
                     }
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = Dimens.spacingMedium)
-                            .clip(LexiconShapes.small)
-                            .background(MaterialTheme.colorScheme.surfaceVariant)
-                            .border(1.dp, answerColor, LexiconShapes.small)
-                            .padding(Dimens.spacingMedium),
-                    ) {
-                        Text(
-                            text = uiState.builtAnswer.ifEmpty { " " },
-                            style = MaterialTheme.typography.headlineSmall,
-                            color = answerColor,
-                        )
-                    }
-
-                    LetterTileGrid(
-                        tiles = uiState.availableTiles,
-                        onTileSelected = onTileSelected,
-                        modifier = Modifier.padding(top = Dimens.spacingMedium),
+                    TrainingActionRow(
+                        onCheck = onCheck,
+                        onNext = onNext,
+                        awaitingNext = uiState.awaitingNext,
+                        checkEnabled = uiState.canCheck,
+                        onUndo = onUndo.takeIf { uiState.canUndo },
+                        onTip = onTipRequested.takeIf { uiState.canUseTip },
+                        onSkip = onSkip.takeIf { uiState.canSkip },
                     )
-
-                    val statusLabel = when (uiState.answerState) {
-                        is AnswerState.Correct -> stringResource(R.string.status_correct)
-                        is AnswerState.Incorrect -> stringResource(R.string.status_incorrect)
-                        is AnswerState.Skipped -> stringResource(R.string.status_skipped)
-                        is AnswerState.Unanswered -> null
-                    }
-                    statusLabel?.let { label ->
-                        Text(
-                            text = label,
-                            color = answerColor,
-                            modifier = Modifier.padding(top = Dimens.spacingMedium),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                        )
-                    }
-
-                    (uiState.revealedAnswer ?: uiState.tipTranslation)?.let { answer ->
-                        Text(
-                            text = stringResource(R.string.expected_format, answer),
-                            modifier = Modifier.padding(top = Dimens.spacingSmall),
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
-                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-                    ) {
-                        if (uiState.canUndo) {
-                            TextButton(onClick = debounced(onClick = onUndo)) {
-                                Text(stringResource(R.string.action_undo))
-                            }
-                        }
-                        if (uiState.canUseTip) {
-                            TextButton(onClick = debounced(onClick = onTipRequested)) {
-                                Text(stringResource(R.string.action_tip))
-                            }
-                        }
-                        if (uiState.canSkip) {
-                            TextButton(onClick = debounced(onClick = onSkip)) {
-                                Text(stringResource(R.string.action_skip))
-                            }
-                        }
-                        Button(
-                            onClick =
-                                debounced {
-                                    if (uiState.awaitingNext) onNext() else onCheck()
-                                },
-                            enabled = uiState.awaitingNext || uiState.canCheck,
-                        ) {
-                            Text(stringResource(if (uiState.awaitingNext) R.string.action_next else R.string.action_check))
-                        }
-                    }
                 }
             }
         }
