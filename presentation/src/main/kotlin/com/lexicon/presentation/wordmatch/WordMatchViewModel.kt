@@ -24,7 +24,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 400L
-private const val INCORRECT_FLASH_DELAY_MS = 300L
 
 @HiltViewModel
 class WordMatchViewModel
@@ -74,14 +73,14 @@ class WordMatchViewModel
         fun onLeftSelected(vocabularyItemId: Long) {
             val state = _uiState.value as? WordMatchUiState.Loaded ?: return
             if (!state.isInteractive || state.matchedIds.contains(vocabularyItemId)) return
-            updateLoaded { it.copy(selectedLeftId = vocabularyItemId) }
+            updateLoaded { it.copy(selectedLeftId = vocabularyItemId, incorrectFlashIds = emptySet()) }
             tryValidateSelection()
         }
 
         fun onRightSelected(vocabularyItemId: Long) {
             val state = _uiState.value as? WordMatchUiState.Loaded ?: return
             if (!state.isInteractive || state.matchedIds.contains(vocabularyItemId)) return
-            updateLoaded { it.copy(selectedRightId = vocabularyItemId) }
+            updateLoaded { it.copy(selectedRightId = vocabularyItemId, incorrectFlashIds = emptySet()) }
             tryValidateSelection()
         }
 
@@ -97,12 +96,15 @@ class WordMatchViewModel
                     viewModelScope.launch(dispatchers.io) { completeStep() }
                 }
             } else {
+                // Left as incorrect (red) until the user's next selection attempt clears it, rather
+                // than auto-resetting after a fixed delay.
                 updateLoaded {
-                    it.copy(incorrectAttempts = it.incorrectAttempts + 1, incorrectFlashIds = setOf(leftId, rightId))
-                }
-                viewModelScope.launch {
-                    delay(INCORRECT_FLASH_DELAY_MS)
-                    updateLoaded { it.copy(selectedLeftId = null, selectedRightId = null, incorrectFlashIds = emptySet()) }
+                    it.copy(
+                        incorrectAttempts = it.incorrectAttempts + 1,
+                        incorrectFlashIds = setOf(leftId, rightId),
+                        selectedLeftId = null,
+                        selectedRightId = null,
+                    )
                 }
             }
         }
