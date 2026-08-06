@@ -92,9 +92,10 @@ class DictationPuzzleViewModel
             _uiState.update { it.copy(placedTiles = it.placedTiles + tile) }
         }
 
-        fun onAnswerFieldCleared() {
+        /** Undo: sends a single placed tile back to the available pool instead of clearing the whole answer. */
+        fun onPlacedTileRemoved(tile: LetterTile) {
             if (!_uiState.value.isEditable) return
-            _uiState.update { it.copy(placedTiles = emptyList()) }
+            _uiState.update { it.copy(placedTiles = it.placedTiles.filterNot { placed -> placed.id == tile.id }) }
         }
 
         fun onTipRequested() {

@@ -2,7 +2,6 @@ package com.lexicon.presentation.dictationpuzzle
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -67,7 +66,7 @@ fun DictationPuzzleScreen(
         uiState = uiState,
         onClose = onClose,
         onReplayAudio = viewModel::onReplayAudio,
-        onAnswerFieldCleared = viewModel::onAnswerFieldCleared,
+        onPlacedTileRemoved = viewModel::onPlacedTileRemoved,
         onTileSelected = viewModel::onTileSelected,
         onTipRequested = viewModel::onTipRequested,
         onSkip = viewModel::onSkip,
@@ -83,7 +82,7 @@ private fun DictationPuzzleScreenContent(
     uiState: DictationPuzzleUiState,
     onClose: () -> Unit,
     onReplayAudio: () -> Unit,
-    onAnswerFieldCleared: () -> Unit,
+    onPlacedTileRemoved: (LetterTile) -> Unit,
     onTileSelected: (LetterTile) -> Unit,
     onTipRequested: () -> Unit,
     onSkip: () -> Unit,
@@ -130,6 +129,8 @@ private fun DictationPuzzleScreenContent(
                         modifier = Modifier.padding(top = Dimens.spacingLarge),
                     )
 
+                    // Placed letters are individually tappable so a mistake can be undone one
+                    // tile at a time, instead of only being able to clear the whole answer.
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -137,14 +138,16 @@ private fun DictationPuzzleScreenContent(
                             .clip(LexiconShapes.small)
                             .background(MaterialTheme.colorScheme.surfaceVariant)
                             .border(1.dp, answerColor, LexiconShapes.small)
-                            .clickable(enabled = uiState.isEditable, onClick = onAnswerFieldCleared)
                             .padding(Dimens.spacingMedium),
                     ) {
-                        Text(
-                            text = uiState.builtAnswer.ifEmpty { " " },
-                            style = MaterialTheme.typography.headlineSmall,
-                            color = answerColor,
-                        )
+                        if (uiState.placedTiles.isEmpty()) {
+                            Text(text = " ", style = MaterialTheme.typography.headlineSmall)
+                        } else {
+                            LetterTileGrid(
+                                tiles = uiState.placedTiles,
+                                onTileSelected = onPlacedTileRemoved,
+                            )
+                        }
                     }
 
                     LetterTileGrid(
@@ -224,7 +227,7 @@ private fun DictationPuzzleScreenUnansweredPreview() {
                 ),
             onClose = {},
             onReplayAudio = {},
-            onAnswerFieldCleared = {},
+            onPlacedTileRemoved = {},
             onTileSelected = {},
             onTipRequested = {},
             onSkip = {},
@@ -251,7 +254,7 @@ private fun DictationPuzzleScreenIncorrectPreview() {
                 ),
             onClose = {},
             onReplayAudio = {},
-            onAnswerFieldCleared = {},
+            onPlacedTileRemoved = {},
             onTileSelected = {},
             onTipRequested = {},
             onSkip = {},
