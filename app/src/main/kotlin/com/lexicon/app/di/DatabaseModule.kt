@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.lexicon.data.local.AppDatabase
 import com.lexicon.data.local.ImageUrlCacheDao
+import com.lexicon.data.local.MIGRATION_1_2
 import com.lexicon.data.local.SeedingDatabaseCallback
 import com.lexicon.data.local.TrainingResultDao
 import com.lexicon.data.local.VocabularySeedAssetLoader
@@ -38,9 +39,7 @@ object DatabaseModule {
     ): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
             .addCallback(SeedingDatabaseCallback(databaseProvider, applicationScope, vocabularySeedAssetLoader))
-            // Pre-release app; the words table is always reseeded from bundled JSON assets, so a
-            // schema bump can just drop and recreate rather than carrying a migration.
-            .fallbackToDestructiveMigration()
+            .addMigrations(MIGRATION_1_2)
             .build()
 
     @Provides
