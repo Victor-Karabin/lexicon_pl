@@ -49,6 +49,7 @@ class PronunciationViewModel
         private var correctCount = 0
         private var incorrectCount = 0
         private var skippedCount = 0
+        private var tipsUsedCount = 0
 
         init {
             startSession()
@@ -77,6 +78,7 @@ class PronunciationViewModel
             val state = _uiState.value
             if (!state.canUseTip) return
             val step = currentStepOrNull() ?: return
+            tipsUsedCount++
             _uiState.update { it.copy(tipUsed = true, revealedAnswer = step.expectedText) }
         }
 
@@ -159,7 +161,9 @@ class PronunciationViewModel
             val nextIndex = _uiState.value.stepIndex + 1
             if (nextIndex >= steps.size) {
                 _uiState.update { it.copy(isSessionComplete = true) }
-                _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount))
+                _navigationEvents.emit(
+                    SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount, tipsUsedCount),
+                )
                 return
             }
             _uiState.update { PronunciationUiState(isLoading = false, stepIndex = nextIndex, totalSteps = steps.size) }

@@ -11,7 +11,9 @@ import com.lexicon.interactors.dictation.StartDictationSessionUseCase
 import com.lexicon.interactors.dictation.SubmitDictationAnswerRequest
 import com.lexicon.interactors.dictation.SubmitDictationAnswerUseCase
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.WordResultEntry
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -24,7 +26,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 400L
+private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 500L
+private const val SKIPPED_ANSWER_ADVANCE_DELAY_MS = 700L
 
 @HiltViewModel
 class DictationViewModel
@@ -34,6 +37,7 @@ class DictationViewModel
         private val submitDictationAnswer: SubmitDictationAnswerUseCase,
         private val speechSynthesizer: SpeechSynthesizer,
         private val dispatchers: DispatcherProvider,
+        private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(DictationUiState())
         val uiState: StateFlow<DictationUiState> = _uiState.asStateFlow()
@@ -46,6 +50,8 @@ class DictationViewModel
         private var correctCount = 0
         private var incorrectCount = 0
         private var skippedCount = 0
+        private var tipsUsedCount = 0
+        private val wordResults = mutableListOf<WordResultEntry>()
 
         init {
             startSession()
@@ -81,7 +87,8 @@ class DictationViewModel
             val state = _uiState.value
             if (!state.canUseTip) return
             val step = currentStepOrNull() ?: return
-            _uiState.update { it.copy(tipUsed = true, revealedAnswer = step.expectedText) }
+            tipsUsedCount++
+            _uiState.update { it.copy(tipUsed = true, tipTranslation = step.translationText) }
         }
 
         fun onCheck() {
@@ -102,6 +109,7 @@ class DictationViewModel
         ) {
             val step = currentStepOrNull() ?: return
             val state = _uiState.value
+            _uiState.update { it.copy(isSubmitting = true) }
             viewModelScope.launch(dispatchers.io) {
                 val response =
                     submitDictationAnswer(
@@ -115,32 +123,46 @@ class DictationViewModel
                             skipped = skipped,
                         ),
                     )
-                applyOutcome(response.outcome, response.expectedText)
+                applyOutcome(response.outcome, response.expectedText, state.tipUsed)
             }
         }
 
         private suspend fun applyOutcome(
             outcome: DictationStepOutcome,
             expectedText: String,
+            tipUsed: Boolean,
         ) {
+            val step = currentStepOrNull()
             when (outcome) {
                 DictationStepOutcome.CORRECT -> {
                     correctCount++
+                    step?.let {
+                        wordResults += WordResultEntry(it.expectedText, it.translationText, AnswerState.CORRECT, tipUsed)
+                    }
                     _uiState.update { it.copy(answerState = AnswerState.CORRECT) }
                     delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                     advanceToNextStep()
                 }
                 DictationStepOutcome.INCORRECT -> {
                     incorrectCount++
+                    step?.let {
+                        wordResults += WordResultEntry(it.expectedText, it.translationText, AnswerState.INCORRECT, tipUsed)
+                    }
+                    // Waits for a manual Next tap, so isSubmitting must release now rather than on advance.
                     _uiState.update {
-                        it.copy(answerState = AnswerState.INCORRECT, revealedAnswer = expectedText)
+                        it.copy(answerState = AnswerState.INCORRECT, revealedAnswer = expectedText, isSubmitting = false)
                     }
                 }
                 DictationStepOutcome.SKIPPED -> {
                     skippedCount++
+                    step?.let {
+                        wordResults += WordResultEntry(it.expectedText, it.translationText, AnswerState.SKIPPED, tipUsed)
+                    }
                     _uiState.update {
                         it.copy(answerState = AnswerState.SKIPPED, revealedAnswer = expectedText)
                     }
+                    delay(SKIPPED_ANSWER_ADVANCE_DELAY_MS)
+                    advanceToNextStep()
                 }
             }
         }
@@ -148,18 +170,21 @@ class DictationViewModel
         /** Called from the UI's "Next" button after an Incorrect/Skipped step. */
         fun onNext() {
             if (!_uiState.value.awaitingNext) return
+            _uiState.update { it.copy(isSubmitting = true) }
             viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
         }
 
         private suspend fun advanceToNextStep() {
             val nextIndex = _uiState.value.stepIndex + 1
             if (nextIndex >= steps.size) {
-                _uiState.update { it.copy(isSessionComplete = true) }
+                _uiState.update { it.copy(isSessionComplete = true, isSubmitting = false) }
+                lastSessionResultsHolder.wordResults = wordResults.toList()
                 _navigationEvents.emit(
-                    SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount),
+                    SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount, tipsUsedCount),
                 )
                 return
             }
+            // A fresh DictationUiState() already defaults isSubmitting to false.
             _uiState.update {
                 DictationUiState(isLoading = false, stepIndex = nextIndex, totalSteps = steps.size)
             }

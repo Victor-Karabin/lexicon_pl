@@ -21,6 +21,7 @@ class StartDictationSessionUseCaseImpl
                         stepIndex = index,
                         vocabularyItemId = word.id,
                         expectedText = word.text,
+                        translationText = word.translation,
                     )
                 }
             return DictationSessionResponse(sessionId = UUID.randomUUID().toString(), steps = steps)

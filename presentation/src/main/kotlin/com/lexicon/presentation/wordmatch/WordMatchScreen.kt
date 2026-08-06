@@ -17,7 +17,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -25,16 +24,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
+import com.lexicon.presentation.theme.LexiconTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WordMatchScreen(
-    onSessionComplete: (correct: Int, incorrect: Int, skipped: Int) -> Unit,
+    onSessionComplete: (correct: Int, incorrect: Int, skipped: Int, tipsUsed: Int) -> Unit,
+    onClose: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: WordMatchViewModel = hiltViewModel(),
 ) {
@@ -44,14 +47,36 @@ fun WordMatchScreen(
         viewModel.navigationEvents.collect { event ->
             when (event) {
                 is SessionNavigationEvent.SessionComplete ->
-                    onSessionComplete(event.correct, event.incorrect, event.skipped)
+                    onSessionComplete(event.correct, event.incorrect, event.skipped, event.tipsUsed)
             }
         }
     }
 
+    WordMatchScreenContent(
+        uiState = uiState,
+        onClose = onClose,
+        onLeftSelected = viewModel::onLeftSelected,
+        onRightSelected = viewModel::onRightSelected,
+        onSkip = viewModel::onSkip,
+        onNext = viewModel::onNext,
+        modifier = modifier,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun WordMatchScreenContent(
+    uiState: WordMatchUiState,
+    onClose: () -> Unit,
+    onLeftSelected: (Long) -> Unit,
+    onRightSelected: (Long) -> Unit,
+    onSkip: () -> Unit,
+    onNext: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Scaffold(
         modifier = modifier,
-        topBar = { TopAppBar(title = { Text("Word Match") }) },
+        topBar = { TrainingTopBar(title = "Word Match", onClose = onClose) },
     ) { padding ->
         if (uiState.isLoading) {
             Column(
@@ -61,51 +86,50 @@ fun WordMatchScreen(
             ) {
                 CircularProgressIndicator()
             }
-            return@Scaffold
-        }
+        } else {
+            Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
+                LinearProgressIndicator(
+                    progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Text(
+                    text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
+                    modifier = Modifier.padding(top = Dimens.spacingSmall),
+                    style = MaterialTheme.typography.labelMedium,
+                )
 
-        Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
-            LinearProgressIndicator(
-                progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                modifier = Modifier.fillMaxWidth(),
-            )
-            Text(
-                text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                modifier = Modifier.padding(top = Dimens.spacingSmall),
-                style = MaterialTheme.typography.labelMedium,
-            )
-
-            Row(modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium)) {
-                Column(modifier = Modifier.weight(1f)) {
-                    uiState.leftColumn.forEach { item ->
-                        MatchTile(
-                            text = item.text,
-                            state = tileState(item.vocabularyItemId, uiState.selectedLeftId, uiState),
-                            onClick = { viewModel.onLeftSelected(item.vocabularyItemId) },
-                        )
+                Row(modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium)) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        uiState.leftColumn.forEach { item ->
+                            MatchTile(
+                                text = item.text,
+                                state = tileState(item.vocabularyItemId, uiState.selectedLeftId, uiState),
+                                onClick = { onLeftSelected(item.vocabularyItemId) },
+                            )
+                        }
+                    }
+                    Column(modifier = Modifier.weight(1f).padding(start = Dimens.spacingSmall)) {
+                        uiState.rightColumn.forEach { item ->
+                            MatchTile(
+                                text = item.text,
+                                state = tileState(item.vocabularyItemId, uiState.selectedRightId, uiState),
+                                onClick = { onRightSelected(item.vocabularyItemId) },
+                            )
+                        }
                     }
                 }
-                Column(modifier = Modifier.weight(1f).padding(start = Dimens.spacingSmall)) {
-                    uiState.rightColumn.forEach { item ->
-                        MatchTile(
-                            text = item.text,
-                            state = tileState(item.vocabularyItemId, uiState.selectedRightId, uiState),
-                            onClick = { viewModel.onRightSelected(item.vocabularyItemId) },
-                        )
-                    }
-                }
-            }
 
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
-                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-            ) {
-                TextButton(onClick = viewModel::onSkip, enabled = uiState.canSkip) {
-                    Text("Skip")
-                }
-                if (uiState.awaitingNext) {
-                    Button(onClick = viewModel::onNext) {
-                        Text("Next")
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                ) {
+                    TextButton(onClick = onSkip, enabled = uiState.canSkip) {
+                        Text("Skip")
+                    }
+                    if (uiState.awaitingNext) {
+                        Button(onClick = onNext) {
+                            Text("Next")
+                        }
                     }
                 }
             }
@@ -133,29 +157,61 @@ private fun MatchTile(
     state: MatchTileState,
     onClick: () -> Unit,
 ) {
-    val background =
-        when (state) {
-            MatchTileState.MATCHED -> LexiconSuccess
-            MatchTileState.INCORRECT -> LexiconError
-            MatchTileState.SELECTED -> MaterialTheme.colorScheme.primaryContainer
-            MatchTileState.DEFAULT -> MaterialTheme.colorScheme.surfaceVariant
-        }
+    val background = when (state) {
+        MatchTileState.MATCHED -> LexiconSuccess
+        MatchTileState.INCORRECT -> LexiconError
+        MatchTileState.SELECTED -> MaterialTheme.colorScheme.primaryContainer
+        MatchTileState.DEFAULT -> MaterialTheme.colorScheme.surfaceVariant
+    }
     val enabled = state == MatchTileState.DEFAULT || state == MatchTileState.SELECTED
-    val textColor =
-        when (state) {
-            MatchTileState.MATCHED, MatchTileState.INCORRECT -> Color.White
-            MatchTileState.SELECTED -> MaterialTheme.colorScheme.onPrimaryContainer
-            MatchTileState.DEFAULT -> MaterialTheme.colorScheme.onSurfaceVariant
-        }
+    val textColor = when (state) {
+        MatchTileState.MATCHED, MatchTileState.INCORRECT -> Color.White
+        MatchTileState.SELECTED -> MaterialTheme.colorScheme.onPrimaryContainer
+        MatchTileState.DEFAULT -> MaterialTheme.colorScheme.onSurfaceVariant
+    }
     Row(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(vertical = Dimens.tileVerticalSpacing)
-                .background(background, RoundedCornerShape(Dimens.spacingSmall))
-                .clickable(enabled = enabled, onClick = onClick)
-                .padding(Dimens.spacingSmall),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = Dimens.tileVerticalSpacing)
+            .background(background, RoundedCornerShape(Dimens.spacingSmall))
+            .clickable(enabled = enabled, onClick = onClick)
+            .padding(Dimens.spacingSmall),
     ) {
         Text(text, color = textColor)
+    }
+}
+
+private val previewLeftColumn = listOf(
+    WordMatchColumnItem(vocabularyItemId = 1, text = "praca"),
+    WordMatchColumnItem(vocabularyItemId = 2, text = "dom"),
+    WordMatchColumnItem(vocabularyItemId = 3, text = "kot"),
+)
+private val previewRightColumn = listOf(
+    WordMatchColumnItem(vocabularyItemId = 2, text = "house"),
+    WordMatchColumnItem(vocabularyItemId = 3, text = "cat"),
+    WordMatchColumnItem(vocabularyItemId = 1, text = "work"),
+)
+
+@Preview(showBackground = true)
+@Composable
+private fun WordMatchScreenPreview() {
+    LexiconTheme {
+        WordMatchScreenContent(
+            uiState =
+                WordMatchUiState(
+                    isLoading = false,
+                    stepIndex = 1,
+                    totalSteps = 5,
+                    leftColumn = previewLeftColumn,
+                    rightColumn = previewRightColumn,
+                    matchedIds = setOf(1),
+                    selectedLeftId = 2,
+                ),
+            onClose = {},
+            onLeftSelected = {},
+            onRightSelected = {},
+            onSkip = {},
+            onNext = {},
+        )
     }
 }

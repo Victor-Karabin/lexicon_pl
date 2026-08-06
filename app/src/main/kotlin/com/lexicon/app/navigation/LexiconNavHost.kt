@@ -37,39 +37,73 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             MainScreen(onTrainingSelected = { route -> navController.navigate(route) })
         }
 
-        fun onStepSessionComplete(fromRoute: String): (Int, Int, Int) -> Unit =
-            { correct, incorrect, skipped ->
-                navController.navigate(LexiconDestinations.sessionResult(correct, incorrect, skipped)) {
+        fun onStepSessionComplete(fromRoute: String): (Int, Int, Int, Int) -> Unit =
+            { correct, incorrect, skipped, tipsUsed ->
+                navController.navigate(LexiconDestinations.sessionResult(correct, incorrect, skipped, tipsUsed)) {
+                    popUpTo(fromRoute) { inclusive = true }
+                }
+            }
+
+        fun onClose(fromRoute: String): () -> Unit =
+            {
+                navController.navigate(LexiconDestinations.MAIN) {
                     popUpTo(fromRoute) { inclusive = true }
                 }
             }
 
         composable(LexiconDestinations.DICTATION) {
-            DictationScreen(onSessionComplete = onStepSessionComplete(LexiconDestinations.DICTATION))
+            DictationScreen(
+                onSessionComplete = onStepSessionComplete(LexiconDestinations.DICTATION),
+                onClose = onClose(LexiconDestinations.DICTATION),
+            )
         }
         composable(LexiconDestinations.DICTATION_PUZZLE) {
-            DictationPuzzleScreen(onSessionComplete = onStepSessionComplete(LexiconDestinations.DICTATION_PUZZLE))
+            DictationPuzzleScreen(
+                onSessionComplete = onStepSessionComplete(LexiconDestinations.DICTATION_PUZZLE),
+                onClose = onClose(LexiconDestinations.DICTATION_PUZZLE),
+            )
         }
         composable(LexiconDestinations.WORD_BUILDER) {
-            WordBuilderScreen(onSessionComplete = onStepSessionComplete(LexiconDestinations.WORD_BUILDER))
+            WordBuilderScreen(
+                onSessionComplete = onStepSessionComplete(LexiconDestinations.WORD_BUILDER),
+                onClose = onClose(LexiconDestinations.WORD_BUILDER),
+            )
         }
         composable(LexiconDestinations.TRUE_OR_FALSE) {
-            TrueOrFalseScreen(onSessionComplete = onStepSessionComplete(LexiconDestinations.TRUE_OR_FALSE))
+            TrueOrFalseScreen(
+                onSessionComplete = onStepSessionComplete(LexiconDestinations.TRUE_OR_FALSE),
+                onClose = onClose(LexiconDestinations.TRUE_OR_FALSE),
+            )
         }
         composable(LexiconDestinations.WORD_MATCH) {
-            WordMatchScreen(onSessionComplete = onStepSessionComplete(LexiconDestinations.WORD_MATCH))
+            WordMatchScreen(
+                onSessionComplete = onStepSessionComplete(LexiconDestinations.WORD_MATCH),
+                onClose = onClose(LexiconDestinations.WORD_MATCH),
+            )
         }
         composable(LexiconDestinations.PRONUNCIATION_CHECK) {
-            PronunciationScreen(onSessionComplete = onStepSessionComplete(LexiconDestinations.PRONUNCIATION_CHECK))
+            PronunciationScreen(
+                onSessionComplete = onStepSessionComplete(LexiconDestinations.PRONUNCIATION_CHECK),
+                onClose = onClose(LexiconDestinations.PRONUNCIATION_CHECK),
+            )
         }
         composable(LexiconDestinations.PUZZLE) {
-            PuzzleScreen(onSessionComplete = onStepSessionComplete(LexiconDestinations.PUZZLE))
+            PuzzleScreen(
+                onSessionComplete = onStepSessionComplete(LexiconDestinations.PUZZLE),
+                onClose = onClose(LexiconDestinations.PUZZLE),
+            )
         }
         composable(LexiconDestinations.IMAGE_TEST) {
-            ImageTestScreen(onSessionComplete = onStepSessionComplete(LexiconDestinations.IMAGE_TEST))
+            ImageTestScreen(
+                onSessionComplete = onStepSessionComplete(LexiconDestinations.IMAGE_TEST),
+                onClose = onClose(LexiconDestinations.IMAGE_TEST),
+            )
         }
         composable(LexiconDestinations.MEMORY_CARDS) {
-            MemoryCardsScreen(onSessionComplete = onStepSessionComplete(LexiconDestinations.MEMORY_CARDS))
+            MemoryCardsScreen(
+                onSessionComplete = onStepSessionComplete(LexiconDestinations.MEMORY_CARDS),
+                onClose = onClose(LexiconDestinations.MEMORY_CARDS),
+            )
         }
 
         composable(
@@ -79,6 +113,7 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
                     navArgument("correct") { type = NavType.IntType },
                     navArgument("incorrect") { type = NavType.IntType },
                     navArgument("skipped") { type = NavType.IntType },
+                    navArgument("tipsUsed") { type = NavType.IntType },
                 ),
         ) { backStackEntry ->
             val args = backStackEntry.arguments
@@ -86,6 +121,7 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
                 correct = args?.getInt("correct").orDefault(),
                 incorrect = args?.getInt("incorrect").orDefault(),
                 skipped = args?.getInt("skipped").orDefault(),
+                tipsUsed = args?.getInt("tipsUsed").orDefault(),
                 onDone = {
                     navController.navigate(LexiconDestinations.MAIN) {
                         popUpTo(LexiconDestinations.MAIN) { inclusive = true }
