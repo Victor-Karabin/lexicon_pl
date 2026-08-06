@@ -122,19 +122,19 @@ private fun WordResultRow(
     // Tip used takes over the status column entirely, rather than sitting alongside Correct/Incorrect.
     val color = when {
         entry.tipUsed -> MaterialTheme.colorScheme.outline
-        entry.outcome == AnswerState.CORRECT -> LexiconSuccess
-        entry.outcome == AnswerState.INCORRECT -> LexiconError
-        entry.outcome == AnswerState.SKIPPED -> LexiconWarning
+        entry.outcome is AnswerState.Correct -> LexiconSuccess
+        entry.outcome is AnswerState.Incorrect -> LexiconError
+        entry.outcome is AnswerState.Skipped -> LexiconWarning
         else -> MaterialTheme.colorScheme.outline
     }
     val statusLabel = if (entry.tipUsed) {
         "Tip used"
     } else {
         when (entry.outcome) {
-            AnswerState.CORRECT -> "Correct"
-            AnswerState.INCORRECT -> "Incorrect"
-            AnswerState.SKIPPED -> "Skipped"
-            AnswerState.UNANSWERED -> ""
+            is AnswerState.Correct -> "Correct"
+            is AnswerState.Incorrect -> "Incorrect"
+            is AnswerState.Skipped -> "Skipped"
+            is AnswerState.Unanswered -> ""
         }
     }
     Row(
@@ -170,10 +170,10 @@ private fun CountRow(
 }
 
 private val previewWordResults = listOf(
-    WordResultEntry(word = "praca", translation = "work", outcome = AnswerState.CORRECT),
-    WordResultEntry(word = "dom", translation = "house", outcome = AnswerState.INCORRECT),
-    WordResultEntry(word = "kot", translation = "cat", outcome = AnswerState.SKIPPED),
-    WordResultEntry(word = "pies", translation = "dog", outcome = AnswerState.CORRECT, tipUsed = true),
+    WordResultEntry(word = "praca", translation = "work", outcome = AnswerState.Correct),
+    WordResultEntry(word = "dom", translation = "house", outcome = AnswerState.Incorrect()),
+    WordResultEntry(word = "kot", translation = "cat", outcome = AnswerState.Skipped()),
+    WordResultEntry(word = "pies", translation = "dog", outcome = AnswerState.Correct, tipUsed = true),
 )
 
 @Preview(showBackground = true)

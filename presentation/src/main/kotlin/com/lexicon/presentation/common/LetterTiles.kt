@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -44,7 +44,7 @@ fun LetterTileGrid(
                     .clickable { onTileSelected(tile) },
                 shape = RoundedCornerShape(TileDimens.cornerRadius),
             ) {
-                Box(modifier = Modifier.wrapContentSize(), contentAlignment = Alignment.Center) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text(tile.char.toString(), style = MaterialTheme.typography.titleLarge)
                 }
             }

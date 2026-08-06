@@ -33,7 +33,7 @@ class TrueOrFalseViewModel
         private val submitAnswerUseCase: SubmitTrueOrFalseAnswerUseCase,
         private val dispatchers: DispatcherProvider,
     ) : ViewModel() {
-        private val _uiState = MutableStateFlow(TrueOrFalseUiState())
+        private val _uiState = MutableStateFlow<TrueOrFalseUiState>(TrueOrFalseUiState.Loading)
         val uiState: StateFlow<TrueOrFalseUiState> = _uiState.asStateFlow()
 
         private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
@@ -61,8 +61,7 @@ class TrueOrFalseViewModel
         private fun openStep(index: Int) {
             val step = steps.getOrNull(index) ?: return
             _uiState.update {
-                TrueOrFalseUiState(
-                    isLoading = false,
+                TrueOrFalseUiState.Loaded(
                     stepIndex = index,
                     totalSteps = steps.size,
                     word = step.word,
@@ -72,13 +71,13 @@ class TrueOrFalseViewModel
         }
 
         fun onAnswer(userAnsweredTrue: Boolean) {
-            val state = _uiState.value
+            val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
             if (!state.isEditable) return
             submitCurrentStep(userAnsweredTrue = userAnsweredTrue, skipped = false)
         }
 
         fun onSkip() {
-            val state = _uiState.value
+            val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
             if (!state.canSkip) return
             submitCurrentStep(userAnsweredTrue = null, skipped = true)
         }
@@ -111,36 +110,45 @@ class TrueOrFalseViewModel
             when (outcome) {
                 TrueOrFalseStepOutcome.CORRECT -> {
                     correctCount++
-                    _uiState.update { it.copy(answerState = AnswerState.CORRECT, userAnsweredTrue = userAnsweredTrue) }
+                    updateLoaded { it.copy(answerState = AnswerState.Correct, userAnsweredTrue = userAnsweredTrue) }
                     delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                     advanceToNextStep()
                 }
                 TrueOrFalseStepOutcome.INCORRECT -> {
                     incorrectCount++
-                    _uiState.update { it.copy(answerState = AnswerState.INCORRECT, userAnsweredTrue = userAnsweredTrue) }
+                    updateLoaded { it.copy(answerState = AnswerState.Incorrect(), userAnsweredTrue = userAnsweredTrue) }
                 }
                 TrueOrFalseStepOutcome.SKIPPED -> {
                     skippedCount++
-                    _uiState.update { it.copy(answerState = AnswerState.SKIPPED) }
+                    updateLoaded { it.copy(answerState = AnswerState.Skipped()) }
                 }
             }
         }
 
         /** Called from the UI's "Next" button after an Incorrect/Skipped step. */
         fun onNext() {
-            if (!_uiState.value.awaitingNext) return
+            val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
+            if (!state.awaitingNext) return
             viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
         }
 
         private suspend fun advanceToNextStep() {
-            val nextIndex = _uiState.value.stepIndex + 1
+            val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
+            val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
-                _uiState.update { it.copy(isSessionComplete = true) }
+                updateLoaded { it.copy(isSessionComplete = true) }
                 _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount))
                 return
             }
             openStep(nextIndex)
         }
 
-        private fun currentStepOrNull(): TrueOrFalseStepResponse? = steps.getOrNull(_uiState.value.stepIndex)
+        private fun currentStepOrNull(): TrueOrFalseStepResponse? {
+            val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return null
+            return steps.getOrNull(state.stepIndex)
+        }
+
+        private inline fun updateLoaded(transform: (TrueOrFalseUiState.Loaded) -> TrueOrFalseUiState.Loaded) {
+            _uiState.update { current -> if (current is TrueOrFalseUiState.Loaded) transform(current) else current }
+        }
     }

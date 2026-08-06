@@ -11,8 +11,10 @@ import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionUseCas
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerRequest
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerUseCase
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.WordResultEntry
 import com.lexicon.presentation.common.shuffleIntoTiles
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -36,8 +38,9 @@ class DictationPuzzleViewModel
         private val submitAnswerUseCase: SubmitDictationPuzzleAnswerUseCase,
         private val speechSynthesizer: SpeechSynthesizer,
         private val dispatchers: DispatcherProvider,
+        private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
-        private val _uiState = MutableStateFlow(DictationPuzzleUiState())
+        private val _uiState = MutableStateFlow<DictationPuzzleUiState>(DictationPuzzleUiState.Loading)
         val uiState: StateFlow<DictationPuzzleUiState> = _uiState.asStateFlow()
 
         private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
@@ -49,6 +52,7 @@ class DictationPuzzleViewModel
         private var incorrectCount = 0
         private var skippedCount = 0
         private var tipsUsedCount = 0
+        private val wordResults = mutableListOf<WordResultEntry>()
 
         init {
             startSession()
@@ -67,8 +71,7 @@ class DictationPuzzleViewModel
         private fun openStep(index: Int) {
             val step = steps.getOrNull(index) ?: return
             _uiState.update {
-                DictationPuzzleUiState(
-                    isLoading = false,
+                DictationPuzzleUiState.Loaded(
                     stepIndex = index,
                     totalSteps = steps.size,
                     stepTiles = shuffleIntoTiles(step.expectedText),
@@ -86,33 +89,35 @@ class DictationPuzzleViewModel
         }
 
         fun onTileSelected(tile: LetterTile) {
-            val state = _uiState.value
+            val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
             if (!state.isEditable) return
             if (state.placedTiles.any { it.id == tile.id }) return
-            _uiState.update { it.copy(placedTiles = it.placedTiles + tile) }
+            updateLoaded { it.copy(placedTiles = it.placedTiles + tile) }
         }
 
-        fun onAnswerFieldCleared() {
-            if (!_uiState.value.isEditable) return
-            _uiState.update { it.copy(placedTiles = emptyList()) }
+        /** Removes the most recently placed tile, sending it back to the available pool. */
+        fun onUndo() {
+            val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
+            if (!state.canUndo) return
+            updateLoaded { it.copy(placedTiles = it.placedTiles.dropLast(1)) }
         }
 
         fun onTipRequested() {
-            val state = _uiState.value
+            val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
             if (!state.canUseTip) return
             val step = currentStepOrNull() ?: return
             tipsUsedCount++
-            _uiState.update { it.copy(tipUsed = true, revealedAnswer = step.expectedText) }
+            updateLoaded { it.copy(tipUsed = true, tipTranslation = step.translationText) }
         }
 
         fun onCheck() {
-            val state = _uiState.value
+            val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
             if (!state.canCheck) return
             submitCurrentStep(submittedText = state.builtAnswer, skipped = false)
         }
 
         fun onSkip() {
-            val state = _uiState.value
+            val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
             if (!state.canSkip) return
             submitCurrentStep(submittedText = "", skipped = true)
         }
@@ -122,7 +127,7 @@ class DictationPuzzleViewModel
             skipped: Boolean,
         ) {
             val step = currentStepOrNull() ?: return
-            val state = _uiState.value
+            val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
             viewModelScope.launch(dispatchers.io) {
                 val response =
                     submitAnswerUseCase(
@@ -136,42 +141,58 @@ class DictationPuzzleViewModel
                             skipped = skipped,
                         ),
                     )
-                applyOutcome(response.outcome, response.expectedText)
+                applyOutcome(response.outcome, response.expectedText, state.tipUsed)
             }
         }
 
         private suspend fun applyOutcome(
             outcome: DictationPuzzleStepOutcome,
             expectedText: String,
+            tipUsed: Boolean,
         ) {
+            val step = currentStepOrNull()
             when (outcome) {
                 DictationPuzzleStepOutcome.CORRECT -> {
                     correctCount++
-                    _uiState.update { it.copy(answerState = AnswerState.CORRECT) }
+                    step?.let {
+                        wordResults += WordResultEntry(it.expectedText, it.translationText, AnswerState.Correct, tipUsed)
+                    }
+                    updateLoaded { it.copy(answerState = AnswerState.Correct) }
                     delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                     advanceToNextStep()
                 }
                 DictationPuzzleStepOutcome.INCORRECT -> {
                     incorrectCount++
-                    _uiState.update { it.copy(answerState = AnswerState.INCORRECT, revealedAnswer = expectedText) }
+                    step?.let {
+                        wordResults +=
+                            WordResultEntry(it.expectedText, it.translationText, AnswerState.Incorrect(expectedText), tipUsed)
+                    }
+                    updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText)) }
                 }
                 DictationPuzzleStepOutcome.SKIPPED -> {
                     skippedCount++
-                    _uiState.update { it.copy(answerState = AnswerState.SKIPPED, revealedAnswer = expectedText) }
+                    step?.let {
+                        wordResults +=
+                            WordResultEntry(it.expectedText, it.translationText, AnswerState.Skipped(expectedText), tipUsed)
+                    }
+                    updateLoaded { it.copy(answerState = AnswerState.Skipped(expectedText)) }
                 }
             }
         }
 
         /** Called from the UI's "Next" button after an Incorrect/Skipped step. */
         fun onNext() {
-            if (!_uiState.value.awaitingNext) return
+            val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
+            if (!state.awaitingNext) return
             viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
         }
 
         private suspend fun advanceToNextStep() {
-            val nextIndex = _uiState.value.stepIndex + 1
+            val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
+            val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
-                _uiState.update { it.copy(isSessionComplete = true) }
+                updateLoaded { it.copy(isSessionComplete = true) }
+                lastSessionResultsHolder.wordResults = wordResults.toList()
                 _navigationEvents.emit(
                     SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount, tipsUsedCount),
                 )
@@ -181,5 +202,12 @@ class DictationPuzzleViewModel
             speakCurrentStep()
         }
 
-        private fun currentStepOrNull(): DictationPuzzleStepResponse? = steps.getOrNull(_uiState.value.stepIndex)
+        private fun currentStepOrNull(): DictationPuzzleStepResponse? {
+            val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return null
+            return steps.getOrNull(state.stepIndex)
+        }
+
+        private inline fun updateLoaded(transform: (DictationPuzzleUiState.Loaded) -> DictationPuzzleUiState.Loaded) {
+            _uiState.update { current -> if (current is DictationPuzzleUiState.Loaded) transform(current) else current }
+        }
     }

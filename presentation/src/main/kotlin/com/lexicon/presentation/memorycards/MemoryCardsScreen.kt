@@ -83,58 +83,59 @@ private fun MemoryCardsScreenContent(
         modifier = modifier,
         topBar = { TrainingTopBar(title = "Memory Cards", onClose = onClose) },
     ) { padding ->
-        if (uiState.isLoading) {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(padding),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
-            Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
-                LinearProgressIndicator(
-                    progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Text(
-                    text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                    modifier = Modifier.padding(top = Dimens.spacingSmall),
-                    style = MaterialTheme.typography.labelMedium,
-                )
-
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(4),
-                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
-                    verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
-                    modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium),
+        when (uiState) {
+            is MemoryCardsUiState.Loading ->
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(padding),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
                 ) {
-                    items(uiState.cards, key = { it.cardId }) { card ->
-                        CardTile(
-                            card = card,
-                            isFaceUp = uiState.isFaceUp(card),
-                            isMatched = uiState.matchedItemIds.contains(card.vocabularyItemId),
-                            isIncorrectFlash = uiState.incorrectFlashCardIds.contains(card.cardId),
-                            enabled = uiState.isInteractive,
-                            onClick = { onCardSelected(card.cardId) },
-                        )
-                    }
+                    CircularProgressIndicator()
                 }
+            is MemoryCardsUiState.Loaded ->
+                Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
+                    LinearProgressIndicator(
+                        progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    Text(
+                        text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
+                        modifier = Modifier.padding(top = Dimens.spacingSmall),
+                        style = MaterialTheme.typography.labelMedium,
+                    )
 
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
-                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-                ) {
-                    TextButton(onClick = onSkip, enabled = uiState.canSkip) {
-                        Text("Skip")
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(4),
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
+                        verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
+                        modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium),
+                    ) {
+                        items(uiState.cards, key = { it.cardId }) { card ->
+                            CardTile(
+                                card = card,
+                                isFaceUp = uiState.isFaceUp(card),
+                                isMatched = uiState.matchedItemIds.contains(card.vocabularyItemId),
+                                isIncorrectFlash = uiState.incorrectFlashCardIds.contains(card.cardId),
+                                enabled = uiState.isInteractive,
+                                onClick = { onCardSelected(card.cardId) },
+                            )
+                        }
                     }
-                    if (uiState.awaitingNext) {
-                        Button(onClick = onNext) {
-                            Text("Next")
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                    ) {
+                        TextButton(onClick = onSkip, enabled = uiState.canSkip) {
+                            Text("Skip")
+                        }
+                        if (uiState.awaitingNext) {
+                            Button(onClick = onNext) {
+                                Text("Next")
+                            }
                         }
                     }
                 }
-            }
         }
     }
 }
@@ -195,8 +196,7 @@ private fun MemoryCardsScreenPreview() {
     LexiconTheme {
         MemoryCardsScreenContent(
             uiState =
-                MemoryCardsUiState(
-                    isLoading = false,
+                MemoryCardsUiState.Loaded(
                     stepIndex = 1,
                     totalSteps = 5,
                     cards = previewCards,

@@ -76,8 +76,7 @@ class DictationViewModelTest {
             val viewModel = viewModel()
             testDispatcher.scheduler.advanceUntilIdle()
 
-            val state = viewModel.uiState.value
-            assertEquals(false, state.isLoading)
+            val state = viewModel.uiState.value as DictationUiState.Loaded
             assertEquals(0, state.stepIndex)
             assertEquals(2, state.totalSteps)
             coVerify { speechSynthesizer.speak("kot") }
@@ -102,7 +101,7 @@ class DictationViewModelTest {
                 assertEquals(0, event.incorrect)
                 assertEquals(0, event.skipped)
             }
-            assertTrue(viewModel.uiState.value.isSessionComplete)
+            assertTrue((viewModel.uiState.value as DictationUiState.Loaded).isSessionComplete)
         }
 
     @Test
@@ -118,8 +117,8 @@ class DictationViewModelTest {
             viewModel.onCheck()
             testDispatcher.scheduler.advanceUntilIdle()
 
-            val state = viewModel.uiState.value
-            assertEquals(AnswerState.INCORRECT, state.answerState)
+            val state = viewModel.uiState.value as DictationUiState.Loaded
+            assertEquals(AnswerState.Incorrect("kot"), state.answerState)
             assertEquals("kot", state.revealedAnswer)
             assertTrue(state.awaitingNext)
             // Auto-advance only happens for Correct; Incorrect must wait for an explicit Next.
@@ -144,7 +143,7 @@ class DictationViewModelTest {
                 assertEquals(0, event.incorrect)
                 assertEquals(1, event.skipped)
             }
-            assertTrue(viewModel.uiState.value.isSessionComplete)
+            assertTrue((viewModel.uiState.value as DictationUiState.Loaded).isSessionComplete)
         }
 
     @Test
@@ -157,11 +156,11 @@ class DictationViewModelTest {
 
             viewModel.onTipRequested()
 
-            val state = viewModel.uiState.value
+            val state = viewModel.uiState.value as DictationUiState.Loaded
             assertTrue(state.tipUsed)
             assertEquals("cat", state.tipTranslation)
             assertEquals(null, state.revealedAnswer)
-            assertEquals(AnswerState.UNANSWERED, state.answerState)
+            assertEquals(AnswerState.Unanswered, state.answerState)
             coVerify(exactly = 0) { submitUseCase(any()) }
         }
 
@@ -198,7 +197,7 @@ class DictationViewModelTest {
             viewModel.onNext()
             testDispatcher.scheduler.advanceUntilIdle()
 
-            assertEquals(1, viewModel.uiState.value.stepIndex)
+            assertEquals(1, (viewModel.uiState.value as DictationUiState.Loaded).stepIndex)
         }
 
     @Test
@@ -217,6 +216,6 @@ class DictationViewModelTest {
             val entry = lastSessionResultsHolder.wordResults.single()
             assertEquals("kot", entry.word)
             assertEquals("cat", entry.translation)
-            assertEquals(AnswerState.CORRECT, entry.outcome)
+            assertEquals(AnswerState.Correct, entry.outcome)
         }
 }

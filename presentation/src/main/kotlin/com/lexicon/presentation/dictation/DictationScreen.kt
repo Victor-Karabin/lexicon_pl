@@ -55,8 +55,9 @@ fun DictationScreen(
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    LaunchedEffect(uiState.stepIndex, uiState.isLoading) {
-        if (!uiState.isLoading && uiState.isEditable) {
+    val loadedState = uiState as? DictationUiState.Loaded
+    LaunchedEffect(loadedState?.stepIndex, loadedState != null) {
+        if (loadedState != null && loadedState.isEditable) {
             // On the very first step, the field is composed for the first time in this same
             // recomposition, so its focus target may not be attached yet — wait a frame.
             withFrameNanos { }
@@ -106,131 +107,132 @@ private fun DictationScreenContent(
         modifier = modifier,
         topBar = { TrainingTopBar(title = stringResource(R.string.dictation_title), onClose = onClose) },
     ) { padding ->
-        if (uiState.isLoading) {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(padding),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
-            Column(modifier = Modifier.fillMaxSize().padding(padding)) {
+        when (uiState) {
+            is DictationUiState.Loading ->
                 Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
-                        .padding(Dimens.spacingMedium),
+                    modifier = Modifier.fillMaxSize().padding(padding),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
                 ) {
-                    ProgressDots(
-                        step = uiState.stepIndex,
-                        total = uiState.totalSteps,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-
-                    PlayButton(
-                        onClick = onReplayAudio,
-                        label = stringResource(R.string.dictation_listen_again),
-                        modifier = Modifier.padding(top = Dimens.spacingLarge),
-                    )
-
-                    // The field stays `enabled` even after validation (readOnly blocks typing instead),
-                    // so it always resolves via focused/unfocused colors, never the separate disabled
-                    // bucket — that mismatch was what made the border look broken.
-                    val fieldColors = when (uiState.answerState) {
-                        AnswerState.CORRECT ->
-                            OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = LexiconSuccess,
-                                unfocusedBorderColor = LexiconSuccess,
-                                focusedLabelColor = LexiconSuccess,
-                                unfocusedLabelColor = LexiconSuccess,
-                            )
-                        AnswerState.INCORRECT, AnswerState.SKIPPED ->
-                            OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = LexiconError,
-                                unfocusedBorderColor = LexiconError,
-                                focusedLabelColor = LexiconError,
-                                unfocusedLabelColor = LexiconError,
-                            )
-                        AnswerState.UNANSWERED -> OutlinedTextFieldDefaults.colors()
-                    }
-
-                    OutlinedTextField(
-                        value = uiState.answerText,
-                        onValueChange = onAnswerChanged,
-                        enabled = true,
-                        readOnly = !uiState.isEditable,
-                        singleLine = true,
-                        colors = fieldColors,
-                        shape = LexiconShapes.small,
+                    CircularProgressIndicator()
+                }
+            is DictationUiState.Loaded ->
+                Column(modifier = Modifier.fillMaxSize().padding(padding)) {
+                    Column(
                         modifier = Modifier
+                            .weight(1f)
                             .fillMaxWidth()
-                            .padding(top = Dimens.spacingMedium)
-                            .focusRequester(focusRequester),
-                        label = { Text(stringResource(R.string.dictation_type_what_you_heard)) },
-                    )
+                            .padding(Dimens.spacingMedium),
+                    ) {
+                        ProgressDots(
+                            step = uiState.stepIndex,
+                            total = uiState.totalSteps,
+                            modifier = Modifier.fillMaxWidth(),
+                        )
 
-                    if (uiState.isEditable) {
-                        uiState.tipTranslation?.let { hint ->
+                        PlayButton(
+                            onClick = onReplayAudio,
+                            label = stringResource(R.string.action_listen_again),
+                            modifier = Modifier.padding(top = Dimens.spacingLarge),
+                        )
+
+                        // The field stays `enabled` even after validation (readOnly blocks typing instead),
+                        // so it always resolves via focused/unfocused colors, never the separate disabled
+                        // bucket — that mismatch was what made the border look broken.
+                        val fieldColors = when (uiState.answerState) {
+                            is AnswerState.Correct ->
+                                OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = LexiconSuccess,
+                                    unfocusedBorderColor = LexiconSuccess,
+                                    focusedLabelColor = LexiconSuccess,
+                                    unfocusedLabelColor = LexiconSuccess,
+                                )
+                            is AnswerState.Incorrect, is AnswerState.Skipped ->
+                                OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = LexiconError,
+                                    unfocusedBorderColor = LexiconError,
+                                    focusedLabelColor = LexiconError,
+                                    unfocusedLabelColor = LexiconError,
+                                )
+                            is AnswerState.Unanswered -> OutlinedTextFieldDefaults.colors()
+                        }
+
+                        OutlinedTextField(
+                            value = uiState.answerText,
+                            onValueChange = onAnswerChanged,
+                            enabled = true,
+                            readOnly = !uiState.isEditable,
+                            singleLine = true,
+                            colors = fieldColors,
+                            shape = LexiconShapes.small,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = Dimens.spacingMedium)
+                                .focusRequester(focusRequester),
+                            label = { Text(stringResource(R.string.dictation_type_what_you_heard)) },
+                        )
+
+                        if (uiState.isEditable) {
+                            uiState.tipTranslation?.let { hint ->
+                                Text(
+                                    text = stringResource(R.string.hint_format, hint),
+                                    modifier = Modifier.padding(top = Dimens.spacingSmall),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                )
+                            }
+                        }
+
+                        val statusLabel = when (uiState.answerState) {
+                            is AnswerState.Correct -> stringResource(R.string.status_correct)
+                            is AnswerState.Incorrect -> stringResource(R.string.status_incorrect)
+                            is AnswerState.Skipped -> stringResource(R.string.status_skipped)
+                            is AnswerState.Unanswered -> null
+                        }
+                        statusLabel?.let { label ->
+                            val statusColor = if (uiState.answerState is AnswerState.Correct) LexiconSuccess else LexiconError
                             Text(
-                                text = stringResource(R.string.dictation_hint_format, hint),
+                                text = label,
+                                color = statusColor,
+                                modifier = Modifier.padding(top = Dimens.spacingMedium),
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
+
+                        uiState.revealedAnswer?.let { answer ->
+                            Text(
+                                text = stringResource(R.string.expected_format, answer),
                                 modifier = Modifier.padding(top = Dimens.spacingSmall),
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                         }
                     }
 
-                    val statusLabel = when (uiState.answerState) {
-                        AnswerState.CORRECT -> stringResource(R.string.status_correct)
-                        AnswerState.INCORRECT -> stringResource(R.string.status_incorrect)
-                        AnswerState.SKIPPED -> stringResource(R.string.status_skipped)
-                        AnswerState.UNANSWERED -> null
-                    }
-                    statusLabel?.let { label ->
-                        val statusColor = if (uiState.answerState == AnswerState.CORRECT) LexiconSuccess else LexiconError
-                        Text(
-                            text = label,
-                            color = statusColor,
-                            modifier = Modifier.padding(top = Dimens.spacingMedium),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                        )
-                    }
-
-                    uiState.revealedAnswer?.let { answer ->
-                        Text(
-                            text = stringResource(R.string.expected_format, answer),
-                            modifier = Modifier.padding(top = Dimens.spacingSmall),
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
-                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall, Alignment.End),
-                ) {
-                    if (uiState.canUseTip) {
-                        TextButton(onClick = debounced(onClick = onTipRequested)) {
-                            Text(stringResource(R.string.action_tip))
-                        }
-                    }
-                    if (uiState.canSkip) {
-                        TextButton(onClick = debounced(onClick = onSkip)) {
-                            Text(stringResource(R.string.action_skip))
-                        }
-                    }
-                    Button(
-                        onClick =
-                            debounced {
-                                if (uiState.awaitingNext) onNext() else onCheck()
-                            },
-                        enabled = uiState.awaitingNext || uiState.canCheck,
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall, Alignment.End),
                     ) {
-                        Text(stringResource(if (uiState.awaitingNext) R.string.action_next else R.string.action_check))
+                        if (uiState.canUseTip) {
+                            TextButton(onClick = debounced(onClick = onTipRequested)) {
+                                Text(stringResource(R.string.action_tip))
+                            }
+                        }
+                        if (uiState.canSkip) {
+                            TextButton(onClick = debounced(onClick = onSkip)) {
+                                Text(stringResource(R.string.action_skip))
+                            }
+                        }
+                        Button(
+                            onClick =
+                                debounced {
+                                    if (uiState.awaitingNext) onNext() else onCheck()
+                                },
+                            enabled = uiState.awaitingNext || uiState.canCheck,
+                        ) {
+                            Text(stringResource(if (uiState.awaitingNext) R.string.action_next else R.string.action_check))
+                        }
                     }
                 }
-            }
         }
     }
 }
@@ -240,7 +242,7 @@ private fun DictationScreenContent(
 private fun DictationScreenUnansweredPreview() {
     LexiconTheme {
         DictationScreenContent(
-            uiState = DictationUiState(isLoading = false, stepIndex = 2, totalSteps = 10, answerText = "prac"),
+            uiState = DictationUiState.Loaded(stepIndex = 2, totalSteps = 10, answerText = "prac"),
             onClose = {},
             onAnswerChanged = {},
             onReplayAudio = {},
@@ -258,12 +260,11 @@ private fun DictationScreenCorrectPreview() {
     LexiconTheme {
         DictationScreenContent(
             uiState =
-                DictationUiState(
-                    isLoading = false,
+                DictationUiState.Loaded(
                     stepIndex = 2,
                     totalSteps = 10,
                     answerText = "praca",
-                    answerState = AnswerState.CORRECT,
+                    answerState = AnswerState.Correct,
                 ),
             onClose = {},
             onAnswerChanged = {},
@@ -282,13 +283,11 @@ private fun DictationScreenIncorrectPreview() {
     LexiconTheme {
         DictationScreenContent(
             uiState =
-                DictationUiState(
-                    isLoading = false,
+                DictationUiState.Loaded(
                     stepIndex = 2,
                     totalSteps = 10,
                     answerText = "prace",
-                    answerState = AnswerState.INCORRECT,
-                    revealedAnswer = "praca",
+                    answerState = AnswerState.Incorrect("praca"),
                 ),
             onClose = {},
             onAnswerChanged = {},

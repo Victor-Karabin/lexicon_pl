@@ -38,7 +38,7 @@ class PronunciationViewModel
         private val speechRecognizerService: SpeechRecognizerService,
         private val dispatchers: DispatcherProvider,
     ) : ViewModel() {
-        private val _uiState = MutableStateFlow(PronunciationUiState())
+        private val _uiState = MutableStateFlow<PronunciationUiState>(PronunciationUiState.Loading)
         val uiState: StateFlow<PronunciationUiState> = _uiState.asStateFlow()
 
         private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
@@ -60,7 +60,7 @@ class PronunciationViewModel
                 val response = startSessionUseCase(StartPronunciationSessionRequest())
                 sessionId = response.sessionId
                 steps = response.steps
-                _uiState.update { PronunciationUiState(isLoading = false, stepIndex = 0, totalSteps = steps.size) }
+                _uiState.update { PronunciationUiState.Loaded(stepIndex = 0, totalSteps = steps.size) }
                 speakReferenceAudio()
             }
         }
@@ -75,31 +75,31 @@ class PronunciationViewModel
         }
 
         fun onTipRequested() {
-            val state = _uiState.value
+            val state = _uiState.value as? PronunciationUiState.Loaded ?: return
             if (!state.canUseTip) return
             val step = currentStepOrNull() ?: return
             tipsUsedCount++
-            _uiState.update { it.copy(tipUsed = true, revealedAnswer = step.expectedText) }
+            updateLoaded { it.copy(tipUsed = true, tipTranslation = step.expectedText) }
         }
 
         fun onRecordRequested() {
-            val state = _uiState.value
+            val state = _uiState.value as? PronunciationUiState.Loaded ?: return
             if (!state.canRecord) return
-            _uiState.update { it.copy(recordingState = RecordingState.RECORDING) }
+            updateLoaded { it.copy(recordingState = RecordingState.RECORDING) }
             viewModelScope.launch(dispatchers.io) {
                 try {
                     val result = speechRecognizerService.recognize()
-                    _uiState.update { it.copy(recordingState = RecordingState.PROCESSING, recognizedText = result.recognizedText) }
+                    updateLoaded { it.copy(recordingState = RecordingState.PROCESSING, recognizedText = result.recognizedText) }
                     submitCurrentStep(recognizedText = result.recognizedText, confidence = result.confidence, skipped = false)
                 } catch (failure: SpeechRecognitionFailed) {
                     // Per spec: a failed recognition doesn't complete the step — reset so the user can retry.
-                    _uiState.update { it.copy(recordingState = RecordingState.IDLE) }
+                    updateLoaded { it.copy(recordingState = RecordingState.IDLE) }
                 }
             }
         }
 
         fun onSkip() {
-            val state = _uiState.value
+            val state = _uiState.value as? PronunciationUiState.Loaded ?: return
             if (!state.canSkip) return
             submitCurrentStep(recognizedText = "", confidence = null, skipped = true)
         }
@@ -110,7 +110,7 @@ class PronunciationViewModel
             skipped: Boolean,
         ) {
             val step = currentStepOrNull() ?: return
-            val state = _uiState.value
+            val state = _uiState.value as? PronunciationUiState.Loaded ?: return
             viewModelScope.launch(dispatchers.io) {
                 val response =
                     submitResultUseCase(
@@ -136,39 +136,48 @@ class PronunciationViewModel
             when (outcome) {
                 PronunciationStepOutcome.CORRECT -> {
                     correctCount++
-                    _uiState.update { it.copy(answerState = AnswerState.CORRECT) }
+                    updateLoaded { it.copy(answerState = AnswerState.Correct) }
                     delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                     advanceToNextStep()
                 }
                 PronunciationStepOutcome.INCORRECT -> {
                     incorrectCount++
-                    _uiState.update { it.copy(answerState = AnswerState.INCORRECT, revealedAnswer = expectedText) }
+                    updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText)) }
                 }
                 PronunciationStepOutcome.SKIPPED -> {
                     skippedCount++
-                    _uiState.update { it.copy(answerState = AnswerState.SKIPPED, revealedAnswer = expectedText) }
+                    updateLoaded { it.copy(answerState = AnswerState.Skipped(expectedText)) }
                 }
             }
         }
 
         /** Called from the UI's "Next" button after an Incorrect/Skipped step. */
         fun onNext() {
-            if (!_uiState.value.awaitingNext) return
+            val state = _uiState.value as? PronunciationUiState.Loaded ?: return
+            if (!state.awaitingNext) return
             viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
         }
 
         private suspend fun advanceToNextStep() {
-            val nextIndex = _uiState.value.stepIndex + 1
+            val state = _uiState.value as? PronunciationUiState.Loaded ?: return
+            val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
-                _uiState.update { it.copy(isSessionComplete = true) }
+                updateLoaded { it.copy(isSessionComplete = true) }
                 _navigationEvents.emit(
                     SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount, tipsUsedCount),
                 )
                 return
             }
-            _uiState.update { PronunciationUiState(isLoading = false, stepIndex = nextIndex, totalSteps = steps.size) }
+            _uiState.update { PronunciationUiState.Loaded(stepIndex = nextIndex, totalSteps = steps.size) }
             speakReferenceAudio()
         }
 
-        private fun currentStepOrNull(): PronunciationStepResponse? = steps.getOrNull(_uiState.value.stepIndex)
+        private fun currentStepOrNull(): PronunciationStepResponse? {
+            val state = _uiState.value as? PronunciationUiState.Loaded ?: return null
+            return steps.getOrNull(state.stepIndex)
+        }
+
+        private inline fun updateLoaded(transform: (PronunciationUiState.Loaded) -> PronunciationUiState.Loaded) {
+            _uiState.update { current -> if (current is PronunciationUiState.Loaded) transform(current) else current }
+        }
     }

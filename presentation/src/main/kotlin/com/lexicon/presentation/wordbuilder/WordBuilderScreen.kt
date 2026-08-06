@@ -85,82 +85,84 @@ private fun WordBuilderScreenContent(
         modifier = modifier,
         topBar = { TrainingTopBar(title = "Word Builder", onClose = onClose) },
     ) { padding ->
-        if (uiState.isLoading) {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(padding),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
-            val answerColor = when (uiState.answerState) {
-                AnswerState.CORRECT -> LexiconSuccess
-                AnswerState.INCORRECT, AnswerState.SKIPPED -> LexiconError
-                AnswerState.UNANSWERED -> MaterialTheme.colorScheme.outline
-            }
-
-            Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
-                LinearProgressIndicator(
-                    progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Text(
-                    text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                    modifier = Modifier.padding(top = Dimens.spacingSmall),
-                    style = MaterialTheme.typography.labelMedium,
-                )
-
-                Text(
-                    text = uiState.clueText,
-                    modifier = Modifier.padding(top = Dimens.spacingLarge),
-                    style = MaterialTheme.typography.headlineSmall,
-                )
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = Dimens.spacingMedium)
-                        .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(Dimens.spacingSmall))
-                        .clickable(enabled = uiState.isEditable, onClick = onAnswerFieldCleared)
-                        .padding(Dimens.spacingMedium),
+        when (uiState) {
+            is WordBuilderUiState.Loading ->
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(padding),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
                 ) {
-                    Text(
-                        text = uiState.builtAnswer.ifEmpty { " " },
-                        style = MaterialTheme.typography.headlineSmall,
-                        color = answerColor,
-                    )
+                    CircularProgressIndicator()
+                }
+            is WordBuilderUiState.Loaded -> {
+                val answerColor = when (uiState.answerState) {
+                    is AnswerState.Correct -> LexiconSuccess
+                    is AnswerState.Incorrect, is AnswerState.Skipped -> LexiconError
+                    is AnswerState.Unanswered -> MaterialTheme.colorScheme.outline
                 }
 
-                LetterTileGrid(
-                    tiles = uiState.availableTiles,
-                    onTileSelected = onTileSelected,
-                    modifier = Modifier.padding(top = Dimens.spacingMedium),
-                )
-
-                uiState.revealedAnswer?.let { answer ->
+                Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
+                    LinearProgressIndicator(
+                        progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
                     Text(
-                        text = "Expected: $answer",
+                        text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
                         modifier = Modifier.padding(top = Dimens.spacingSmall),
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.labelMedium,
                     )
-                }
 
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
-                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-                ) {
-                    TextButton(onClick = onTipRequested, enabled = uiState.canUseTip) {
-                        Text("Tip")
-                    }
-                    TextButton(onClick = onSkip, enabled = uiState.canSkip) {
-                        Text("Skip")
-                    }
-                    Button(
-                        onClick = { if (uiState.awaitingNext) onNext() else onCheck() },
-                        enabled = uiState.awaitingNext || uiState.canCheck,
+                    Text(
+                        text = uiState.clueText,
+                        modifier = Modifier.padding(top = Dimens.spacingLarge),
+                        style = MaterialTheme.typography.headlineSmall,
+                    )
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = Dimens.spacingMedium)
+                            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(Dimens.spacingSmall))
+                            .clickable(enabled = uiState.isEditable, onClick = onAnswerFieldCleared)
+                            .padding(Dimens.spacingMedium),
                     ) {
-                        Text(if (uiState.awaitingNext) "Next" else "Check")
+                        Text(
+                            text = uiState.builtAnswer.ifEmpty { " " },
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = answerColor,
+                        )
+                    }
+
+                    LetterTileGrid(
+                        tiles = uiState.availableTiles,
+                        onTileSelected = onTileSelected,
+                        modifier = Modifier.padding(top = Dimens.spacingMedium),
+                    )
+
+                    (uiState.revealedAnswer ?: uiState.tipTranslation)?.let { answer ->
+                        Text(
+                            text = "Expected: $answer",
+                            modifier = Modifier.padding(top = Dimens.spacingSmall),
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                    ) {
+                        TextButton(onClick = onTipRequested, enabled = uiState.canUseTip) {
+                            Text("Tip")
+                        }
+                        TextButton(onClick = onSkip, enabled = uiState.canSkip) {
+                            Text("Skip")
+                        }
+                        Button(
+                            onClick = { if (uiState.awaitingNext) onNext() else onCheck() },
+                            enabled = uiState.awaitingNext || uiState.canCheck,
+                        ) {
+                            Text(if (uiState.awaitingNext) "Next" else "Check")
+                        }
                     }
                 }
             }
@@ -176,8 +178,7 @@ private fun WordBuilderScreenPreview() {
     LexiconTheme {
         WordBuilderScreenContent(
             uiState =
-                WordBuilderUiState(
-                    isLoading = false,
+                WordBuilderUiState.Loaded(
                     stepIndex = 2,
                     totalSteps = 10,
                     clueText = "work",

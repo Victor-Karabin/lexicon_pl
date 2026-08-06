@@ -74,71 +74,72 @@ private fun TrueOrFalseScreenContent(
         modifier = modifier,
         topBar = { TrainingTopBar(title = "True or False", onClose = onClose) },
     ) { padding ->
-        if (uiState.isLoading) {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(padding),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
-            Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
-                LinearProgressIndicator(
-                    progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Text(
-                    text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                    modifier = Modifier.padding(top = Dimens.spacingSmall),
-                    style = MaterialTheme.typography.labelMedium,
-                )
-
-                Text(
-                    text = uiState.word,
-                    modifier = Modifier.padding(top = Dimens.spacingLarge),
-                    style = MaterialTheme.typography.headlineSmall,
-                )
-                Text(
-                    text = uiState.displayedTranslation,
-                    modifier = Modifier.padding(top = Dimens.spacingSmall),
-                    style = MaterialTheme.typography.titleLarge,
-                )
-
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
-                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+        when (uiState) {
+            is TrueOrFalseUiState.Loading ->
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(padding),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
                 ) {
-                    Button(
-                        onClick = { onAnswer(true) },
-                        enabled = uiState.isEditable,
-                        colors = buttonColorsFor(selected = uiState.userAnsweredTrue == true, uiState = uiState),
-                    ) {
-                        Text("True")
-                    }
-                    Button(
-                        onClick = { onAnswer(false) },
-                        enabled = uiState.isEditable,
-                        colors = buttonColorsFor(selected = uiState.userAnsweredTrue == false, uiState = uiState),
-                    ) {
-                        Text("False")
-                    }
+                    CircularProgressIndicator()
                 }
+            is TrueOrFalseUiState.Loaded ->
+                Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
+                    LinearProgressIndicator(
+                        progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    Text(
+                        text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
+                        modifier = Modifier.padding(top = Dimens.spacingSmall),
+                        style = MaterialTheme.typography.labelMedium,
+                    )
 
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium),
-                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-                ) {
-                    TextButton(onClick = onSkip, enabled = uiState.canSkip) {
-                        Text("Skip")
+                    Text(
+                        text = uiState.word,
+                        modifier = Modifier.padding(top = Dimens.spacingLarge),
+                        style = MaterialTheme.typography.headlineSmall,
+                    )
+                    Text(
+                        text = uiState.displayedTranslation,
+                        modifier = Modifier.padding(top = Dimens.spacingSmall),
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                    ) {
+                        Button(
+                            onClick = { onAnswer(true) },
+                            enabled = uiState.isEditable,
+                            colors = buttonColorsFor(selected = uiState.userAnsweredTrue == true, uiState = uiState),
+                        ) {
+                            Text("True")
+                        }
+                        Button(
+                            onClick = { onAnswer(false) },
+                            enabled = uiState.isEditable,
+                            colors = buttonColorsFor(selected = uiState.userAnsweredTrue == false, uiState = uiState),
+                        ) {
+                            Text("False")
+                        }
                     }
-                    if (uiState.awaitingNext) {
-                        Button(onClick = onNext) {
-                            Text("Next")
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium),
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                    ) {
+                        TextButton(onClick = onSkip, enabled = uiState.canSkip) {
+                            Text("Skip")
+                        }
+                        if (uiState.awaitingNext) {
+                            Button(onClick = onNext) {
+                                Text("Next")
+                            }
                         }
                     }
                 }
-            }
         }
     }
 }
@@ -146,10 +147,10 @@ private fun TrueOrFalseScreenContent(
 @Composable
 private fun buttonColorsFor(
     selected: Boolean,
-    uiState: TrueOrFalseUiState,
+    uiState: TrueOrFalseUiState.Loaded,
 ) = when {
     !selected -> ButtonDefaults.buttonColors()
-    uiState.answerState == AnswerState.CORRECT -> ButtonDefaults.buttonColors(containerColor = LexiconSuccess)
+    uiState.answerState is AnswerState.Correct -> ButtonDefaults.buttonColors(containerColor = LexiconSuccess)
     else -> ButtonDefaults.buttonColors(containerColor = LexiconError)
 }
 
@@ -159,8 +160,7 @@ private fun TrueOrFalseScreenPreview() {
     LexiconTheme {
         TrueOrFalseScreenContent(
             uiState =
-                TrueOrFalseUiState(
-                    isLoading = false,
+                TrueOrFalseUiState.Loaded(
                     stepIndex = 2,
                     totalSteps = 10,
                     word = "praca",

@@ -34,7 +34,7 @@ class WordMatchViewModel
         private val submitStepResultUseCase: SubmitWordMatchStepResultUseCase,
         private val dispatchers: DispatcherProvider,
     ) : ViewModel() {
-        private val _uiState = MutableStateFlow(WordMatchUiState())
+        private val _uiState = MutableStateFlow<WordMatchUiState>(WordMatchUiState.Loading)
         val uiState: StateFlow<WordMatchUiState> = _uiState.asStateFlow()
 
         private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
@@ -62,8 +62,7 @@ class WordMatchViewModel
         private fun openStep(index: Int) {
             val step = steps.getOrNull(index) ?: return
             _uiState.update {
-                WordMatchUiState(
-                    isLoading = false,
+                WordMatchUiState.Loaded(
                     stepIndex = index,
                     totalSteps = steps.size,
                     leftColumn = step.pairs.map { WordMatchColumnItem(it.vocabularyItemId, it.word) }.shuffled(),
@@ -73,44 +72,44 @@ class WordMatchViewModel
         }
 
         fun onLeftSelected(vocabularyItemId: Long) {
-            val state = _uiState.value
+            val state = _uiState.value as? WordMatchUiState.Loaded ?: return
             if (!state.isInteractive || state.matchedIds.contains(vocabularyItemId)) return
-            _uiState.update { it.copy(selectedLeftId = vocabularyItemId) }
+            updateLoaded { it.copy(selectedLeftId = vocabularyItemId) }
             tryValidateSelection()
         }
 
         fun onRightSelected(vocabularyItemId: Long) {
-            val state = _uiState.value
+            val state = _uiState.value as? WordMatchUiState.Loaded ?: return
             if (!state.isInteractive || state.matchedIds.contains(vocabularyItemId)) return
-            _uiState.update { it.copy(selectedRightId = vocabularyItemId) }
+            updateLoaded { it.copy(selectedRightId = vocabularyItemId) }
             tryValidateSelection()
         }
 
         private fun tryValidateSelection() {
-            val state = _uiState.value
+            val state = _uiState.value as? WordMatchUiState.Loaded ?: return
             val leftId = state.selectedLeftId ?: return
             val rightId = state.selectedRightId ?: return
 
             if (leftId == rightId) {
                 val matched = state.matchedIds + leftId
-                _uiState.update { it.copy(matchedIds = matched, selectedLeftId = null, selectedRightId = null) }
+                updateLoaded { it.copy(matchedIds = matched, selectedLeftId = null, selectedRightId = null) }
                 if (matched.size == state.leftColumn.size) {
                     viewModelScope.launch(dispatchers.io) { completeStep() }
                 }
             } else {
-                _uiState.update {
+                updateLoaded {
                     it.copy(incorrectAttempts = it.incorrectAttempts + 1, incorrectFlashIds = setOf(leftId, rightId))
                 }
                 viewModelScope.launch {
                     delay(INCORRECT_FLASH_DELAY_MS)
-                    _uiState.update { it.copy(selectedLeftId = null, selectedRightId = null, incorrectFlashIds = emptySet()) }
+                    updateLoaded { it.copy(selectedLeftId = null, selectedRightId = null, incorrectFlashIds = emptySet()) }
                 }
             }
         }
 
         private suspend fun completeStep() {
             val step = currentStepOrNull() ?: return
-            val state = _uiState.value
+            val state = _uiState.value as? WordMatchUiState.Loaded ?: return
             val response =
                 submitStepResultUseCase(
                     SubmitWordMatchStepResultRequest(
@@ -131,7 +130,7 @@ class WordMatchViewModel
         }
 
         fun onSkip() {
-            val state = _uiState.value
+            val state = _uiState.value as? WordMatchUiState.Loaded ?: return
             if (!state.canSkip) return
             val step = currentStepOrNull() ?: return
             viewModelScope.launch(dispatchers.io) {
@@ -145,10 +144,10 @@ class WordMatchViewModel
                     ),
                 )
                 skippedCount++
-                _uiState.update {
+                updateLoaded {
                     it.copy(
                         matchedIds = step.pairs.map { pair -> pair.vocabularyItemId }.toSet(),
-                        answerState = AnswerState.SKIPPED,
+                        answerState = AnswerState.Skipped(),
                     )
                 }
             }
@@ -156,19 +155,28 @@ class WordMatchViewModel
 
         /** Called from the UI's "Next" button after a Skipped step. */
         fun onNext() {
-            if (!_uiState.value.awaitingNext) return
+            val state = _uiState.value as? WordMatchUiState.Loaded ?: return
+            if (!state.awaitingNext) return
             viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
         }
 
         private suspend fun advanceToNextStep() {
-            val nextIndex = _uiState.value.stepIndex + 1
+            val state = _uiState.value as? WordMatchUiState.Loaded ?: return
+            val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
-                _uiState.update { it.copy(isSessionComplete = true) }
+                updateLoaded { it.copy(isSessionComplete = true) }
                 _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount))
                 return
             }
             openStep(nextIndex)
         }
 
-        private fun currentStepOrNull(): WordMatchStepResponse? = steps.getOrNull(_uiState.value.stepIndex)
+        private fun currentStepOrNull(): WordMatchStepResponse? {
+            val state = _uiState.value as? WordMatchUiState.Loaded ?: return null
+            return steps.getOrNull(state.stepIndex)
+        }
+
+        private inline fun updateLoaded(transform: (WordMatchUiState.Loaded) -> WordMatchUiState.Loaded) {
+            _uiState.update { current -> if (current is WordMatchUiState.Loaded) transform(current) else current }
+        }
     }

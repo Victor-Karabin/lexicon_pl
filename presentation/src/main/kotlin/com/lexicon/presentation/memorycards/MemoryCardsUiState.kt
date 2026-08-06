@@ -10,24 +10,27 @@ data class MemoryCard(
     val text: String,
 )
 
-data class MemoryCardsUiState(
-    val isLoading: Boolean = true,
-    val stepIndex: Int = 0,
-    val totalSteps: Int = 0,
-    val cards: List<MemoryCard> = emptyList(),
-    val flippedCardIds: List<Int> = emptyList(),
-    val matchedItemIds: Set<Long> = emptySet(),
-    val incorrectFlashCardIds: Set<Int> = emptySet(),
-    val incorrectAttempts: Int = 0,
-    val answerState: AnswerState = AnswerState.UNANSWERED,
-    val isSessionComplete: Boolean = false,
-) {
-    val isInteractive: Boolean get() = answerState == AnswerState.UNANSWERED
-    val canSkip: Boolean get() = isInteractive
-    val awaitingNext: Boolean get() = answerState == AnswerState.SKIPPED
+sealed interface MemoryCardsUiState {
+    data object Loading : MemoryCardsUiState
 
-    fun isFaceUp(card: MemoryCard): Boolean =
-        matchedItemIds.contains(card.vocabularyItemId) ||
-            flippedCardIds.contains(card.cardId) ||
-            incorrectFlashCardIds.contains(card.cardId)
+    data class Loaded(
+        val stepIndex: Int = 0,
+        val totalSteps: Int = 0,
+        val cards: List<MemoryCard> = emptyList(),
+        val flippedCardIds: List<Int> = emptyList(),
+        val matchedItemIds: Set<Long> = emptySet(),
+        val incorrectFlashCardIds: Set<Int> = emptySet(),
+        val incorrectAttempts: Int = 0,
+        val answerState: AnswerState = AnswerState.Unanswered,
+        val isSessionComplete: Boolean = false,
+    ) : MemoryCardsUiState {
+        val isInteractive: Boolean get() = answerState is AnswerState.Unanswered
+        val canSkip: Boolean get() = isInteractive
+        val awaitingNext: Boolean get() = answerState is AnswerState.Skipped
+
+        fun isFaceUp(card: MemoryCard): Boolean =
+            matchedItemIds.contains(card.vocabularyItemId) ||
+                flippedCardIds.contains(card.cardId) ||
+                incorrectFlashCardIds.contains(card.cardId)
+    }
 }
