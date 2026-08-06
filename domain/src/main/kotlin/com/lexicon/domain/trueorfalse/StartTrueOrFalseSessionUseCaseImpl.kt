@@ -29,12 +29,11 @@ class StartTrueOrFalseSessionUseCaseImpl
             val steps =
                 subjects.mapIndexed { index, subject ->
                     val isCorrect = Random.nextDouble() < request.correctProbability
-                    val displayedTranslation =
-                        if (isCorrect) {
-                            subject.translation
-                        } else {
-                            pickDistractorTranslation(subject, pool) ?: subject.translation
-                        }
+                    val displayedTranslation = if (isCorrect) {
+                        subject.translation
+                    } else {
+                        pickDistractorTranslation(subject, pool) ?: subject.translation
+                    }
                     TrueOrFalseStepResponse(
                         stepIndex = index,
                         vocabularyItemId = subject.id,

@@ -39,12 +39,11 @@ class SubmitDictationAnswerUseCaseImpl
             return SubmitDictationAnswerResponse(outcome = outcome, expectedText = request.expectedText)
         }
 
-        // Skip always wins, then a used Tip always forces Incorrect even on a matching answer,
-        // per "Trainings - common.rtf" §12/§14.
+        // The step outcome reflects the input alone; tip usage is recorded separately
+        // (tipUsed above) and surfaced on the Results screen rather than forcing Incorrect here.
         private fun resolveOutcome(request: SubmitDictationAnswerRequest): DictationStepOutcome =
             when {
                 request.skipped -> DictationStepOutcome.SKIPPED
-                request.tipUsed -> DictationStepOutcome.INCORRECT
                 answerNormalizer.matches(request.expectedText, request.submittedText) -> DictationStepOutcome.CORRECT
                 else -> DictationStepOutcome.INCORRECT
             }

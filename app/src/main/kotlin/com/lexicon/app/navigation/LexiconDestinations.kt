@@ -17,11 +17,12 @@ internal object LexiconDestinations {
     const val IMAGE_TEST = TrainingIds.IMAGE_TEST
     const val MEMORY_CARDS = TrainingIds.MEMORY_CARDS
 
-    const val SESSION_RESULT = "session_result/{correct}/{incorrect}/{skipped}"
+    const val SESSION_RESULT = "session_result/{correct}/{incorrect}/{skipped}/{tipsUsed}"
 
     fun sessionResult(
         correct: Int,
         incorrect: Int,
         skipped: Int,
-    ) = "session_result/$correct/$incorrect/$skipped"
+        tipsUsed: Int,
+    ) = "session_result/$correct/$incorrect/$skipped/$tipsUsed"
 }

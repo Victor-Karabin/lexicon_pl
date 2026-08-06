@@ -29,8 +29,10 @@ class StartDictationSessionUseCaseImplTest {
             assertEquals(0, response.steps[0].stepIndex)
             assertEquals(1L, response.steps[0].vocabularyItemId)
             assertEquals("kot", response.steps[0].expectedText)
+            assertEquals("cat", response.steps[0].translationText)
             assertEquals(1, response.steps[1].stepIndex)
             assertEquals("pies", response.steps[1].expectedText)
+            assertEquals("dog", response.steps[1].translationText)
         }
 
     @Test

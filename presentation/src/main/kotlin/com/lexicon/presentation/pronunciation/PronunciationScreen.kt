@@ -18,7 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -29,15 +28,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
+import com.lexicon.presentation.theme.LexiconTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PronunciationScreen(
-    onSessionComplete: (correct: Int, incorrect: Int, skipped: Int) -> Unit,
+    onSessionComplete: (correct: Int, incorrect: Int, skipped: Int, tipsUsed: Int) -> Unit,
+    onClose: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PronunciationViewModel = hiltViewModel(),
 ) {
@@ -59,14 +62,44 @@ fun PronunciationScreen(
         viewModel.navigationEvents.collect { event ->
             when (event) {
                 is SessionNavigationEvent.SessionComplete ->
-                    onSessionComplete(event.correct, event.incorrect, event.skipped)
+                    onSessionComplete(event.correct, event.incorrect, event.skipped, event.tipsUsed)
             }
         }
     }
 
+    PronunciationScreenContent(
+        uiState = uiState,
+        onClose = onClose,
+        onReplayReferenceAudio = viewModel::onReplayReferenceAudio,
+        onRecordRequested = {
+            if (hasRecordAudioPermission) {
+                viewModel.onRecordRequested()
+            } else {
+                permissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+            }
+        },
+        onTipRequested = viewModel::onTipRequested,
+        onSkip = viewModel::onSkip,
+        onNext = viewModel::onNext,
+        modifier = modifier,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun PronunciationScreenContent(
+    uiState: PronunciationUiState,
+    onClose: () -> Unit,
+    onReplayReferenceAudio: () -> Unit,
+    onRecordRequested: () -> Unit,
+    onTipRequested: () -> Unit,
+    onSkip: () -> Unit,
+    onNext: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Scaffold(
         modifier = modifier,
-        topBar = { TopAppBar(title = { Text("Pronunciation Check") }) },
+        topBar = { TrainingTopBar(title = "Pronunciation Check", onClose = onClose) },
     ) { padding ->
         if (uiState.isLoading) {
             Column(
@@ -76,76 +109,92 @@ fun PronunciationScreen(
             ) {
                 CircularProgressIndicator()
             }
-            return@Scaffold
-        }
-
-        Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
-            LinearProgressIndicator(
-                progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                modifier = Modifier.fillMaxWidth(),
-            )
-            Text(
-                text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                modifier = Modifier.padding(top = Dimens.spacingSmall),
-                style = MaterialTheme.typography.labelMedium,
-            )
-
-            TextButton(onClick = viewModel::onReplayReferenceAudio, modifier = Modifier.padding(top = Dimens.spacingLarge)) {
-                Text("🔊 Listen to reference")
-            }
-
-            Button(
-                onClick = {
-                    if (hasRecordAudioPermission) {
-                        viewModel.onRecordRequested()
-                    } else {
-                        permissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
-                    }
-                },
-                enabled = uiState.canRecord,
-                modifier = Modifier.padding(top = Dimens.spacingMedium),
-            ) {
-                Text(
-                    when (uiState.recordingState) {
-                        RecordingState.IDLE -> "🎤 Record"
-                        RecordingState.RECORDING -> "Listening…"
-                        RecordingState.PROCESSING -> "Checking…"
-                    },
+        } else {
+            Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
+                LinearProgressIndicator(
+                    progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
+                    modifier = Modifier.fillMaxWidth(),
                 )
-            }
-
-            uiState.recognizedText?.let { recognized ->
                 Text(
-                    text = "Heard: $recognized",
-                    modifier = Modifier.padding(top = Dimens.spacingMedium),
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-            }
-
-            uiState.revealedAnswer?.let { answer ->
-                Text(
-                    text = "Expected: $answer",
+                    text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
                     modifier = Modifier.padding(top = Dimens.spacingSmall),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.labelMedium,
                 )
-            }
 
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
-                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-            ) {
-                TextButton(onClick = viewModel::onTipRequested, enabled = uiState.canUseTip) {
-                    Text("Tip")
+                TextButton(onClick = onReplayReferenceAudio, modifier = Modifier.padding(top = Dimens.spacingLarge)) {
+                    Text("🔊 Listen to reference")
                 }
-                TextButton(onClick = viewModel::onSkip, enabled = uiState.canSkip) {
-                    Text("Skip")
+
+                Button(
+                    onClick = onRecordRequested,
+                    enabled = uiState.canRecord,
+                    modifier = Modifier.padding(top = Dimens.spacingMedium),
+                ) {
+                    Text(
+                        when (uiState.recordingState) {
+                            RecordingState.IDLE -> "🎤 Record"
+                            RecordingState.RECORDING -> "Listening…"
+                            RecordingState.PROCESSING -> "Checking…"
+                        },
+                    )
                 }
-                if (uiState.awaitingNext) {
-                    Button(onClick = viewModel::onNext) {
-                        Text("Next")
+
+                uiState.recognizedText?.let { recognized ->
+                    Text(
+                        text = "Heard: $recognized",
+                        modifier = Modifier.padding(top = Dimens.spacingMedium),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+
+                uiState.revealedAnswer?.let { answer ->
+                    Text(
+                        text = "Expected: $answer",
+                        modifier = Modifier.padding(top = Dimens.spacingSmall),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                ) {
+                    TextButton(onClick = onTipRequested, enabled = uiState.canUseTip) {
+                        Text("Tip")
+                    }
+                    TextButton(onClick = onSkip, enabled = uiState.canSkip) {
+                        Text("Skip")
+                    }
+                    if (uiState.awaitingNext) {
+                        Button(onClick = onNext) {
+                            Text("Next")
+                        }
                     }
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PronunciationScreenPreview() {
+    LexiconTheme {
+        PronunciationScreenContent(
+            uiState =
+                PronunciationUiState(
+                    isLoading = false,
+                    stepIndex = 2,
+                    totalSteps = 10,
+                    recordingState = RecordingState.IDLE,
+                    recognizedText = "prace",
+                ),
+            onClose = {},
+            onReplayReferenceAudio = {},
+            onRecordRequested = {},
+            onTipRequested = {},
+            onSkip = {},
+            onNext = {},
+        )
     }
 }

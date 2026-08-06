@@ -22,7 +22,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -31,17 +30,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.SubcomposeAsyncImage
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
+import com.lexicon.presentation.theme.LexiconTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MemoryCardsScreen(
-    onSessionComplete: (correct: Int, incorrect: Int, skipped: Int) -> Unit,
+    onSessionComplete: (correct: Int, incorrect: Int, skipped: Int, tipsUsed: Int) -> Unit,
+    onClose: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: MemoryCardsViewModel = hiltViewModel(),
 ) {
@@ -51,14 +54,34 @@ fun MemoryCardsScreen(
         viewModel.navigationEvents.collect { event ->
             when (event) {
                 is SessionNavigationEvent.SessionComplete ->
-                    onSessionComplete(event.correct, event.incorrect, event.skipped)
+                    onSessionComplete(event.correct, event.incorrect, event.skipped, event.tipsUsed)
             }
         }
     }
 
+    MemoryCardsScreenContent(
+        uiState = uiState,
+        onClose = onClose,
+        onCardSelected = viewModel::onCardSelected,
+        onSkip = viewModel::onSkip,
+        onNext = viewModel::onNext,
+        modifier = modifier,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun MemoryCardsScreenContent(
+    uiState: MemoryCardsUiState,
+    onClose: () -> Unit,
+    onCardSelected: (Int) -> Unit,
+    onSkip: () -> Unit,
+    onNext: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Scaffold(
         modifier = modifier,
-        topBar = { TopAppBar(title = { Text("Memory Cards") }) },
+        topBar = { TrainingTopBar(title = "Memory Cards", onClose = onClose) },
     ) { padding ->
         if (uiState.isLoading) {
             Column(
@@ -68,48 +91,47 @@ fun MemoryCardsScreen(
             ) {
                 CircularProgressIndicator()
             }
-            return@Scaffold
-        }
+        } else {
+            Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
+                LinearProgressIndicator(
+                    progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Text(
+                    text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
+                    modifier = Modifier.padding(top = Dimens.spacingSmall),
+                    style = MaterialTheme.typography.labelMedium,
+                )
 
-        Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
-            LinearProgressIndicator(
-                progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                modifier = Modifier.fillMaxWidth(),
-            )
-            Text(
-                text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                modifier = Modifier.padding(top = Dimens.spacingSmall),
-                style = MaterialTheme.typography.labelMedium,
-            )
-
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(4),
-                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
-                verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
-                modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium),
-            ) {
-                items(uiState.cards, key = { it.cardId }) { card ->
-                    CardTile(
-                        card = card,
-                        isFaceUp = uiState.isFaceUp(card),
-                        isMatched = uiState.matchedItemIds.contains(card.vocabularyItemId),
-                        isIncorrectFlash = uiState.incorrectFlashCardIds.contains(card.cardId),
-                        enabled = uiState.isInteractive,
-                        onClick = { viewModel.onCardSelected(card.cardId) },
-                    )
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(4),
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
+                    verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
+                    modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium),
+                ) {
+                    items(uiState.cards, key = { it.cardId }) { card ->
+                        CardTile(
+                            card = card,
+                            isFaceUp = uiState.isFaceUp(card),
+                            isMatched = uiState.matchedItemIds.contains(card.vocabularyItemId),
+                            isIncorrectFlash = uiState.incorrectFlashCardIds.contains(card.cardId),
+                            enabled = uiState.isInteractive,
+                            onClick = { onCardSelected(card.cardId) },
+                        )
+                    }
                 }
-            }
 
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
-                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-            ) {
-                TextButton(onClick = viewModel::onSkip, enabled = uiState.canSkip) {
-                    Text("Skip")
-                }
-                if (uiState.awaitingNext) {
-                    Button(onClick = viewModel::onNext) {
-                        Text("Next")
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                ) {
+                    TextButton(onClick = onSkip, enabled = uiState.canSkip) {
+                        Text("Skip")
+                    }
+                    if (uiState.awaitingNext) {
+                        Button(onClick = onNext) {
+                            Text("Next")
+                        }
                     }
                 }
             }
@@ -126,19 +148,17 @@ private fun CardTile(
     enabled: Boolean,
     onClick: () -> Unit,
 ) {
-    val background =
-        when {
-            isMatched -> LexiconSuccess
-            isIncorrectFlash -> LexiconError
-            isFaceUp -> MaterialTheme.colorScheme.primaryContainer
-            else -> MaterialTheme.colorScheme.surfaceVariant
-        }
+    val background = when {
+        isMatched -> LexiconSuccess
+        isIncorrectFlash -> LexiconError
+        isFaceUp -> MaterialTheme.colorScheme.primaryContainer
+        else -> MaterialTheme.colorScheme.surfaceVariant
+    }
     Box(
-        modifier =
-            Modifier
-                .aspectRatio(1f)
-                .background(background, RoundedCornerShape(Dimens.spacingSmall))
-                .clickable(enabled = enabled && !isFaceUp, onClick = onClick),
+        modifier = Modifier
+            .aspectRatio(1f)
+            .background(background, RoundedCornerShape(Dimens.spacingSmall))
+            .clickable(enabled = enabled && !isFaceUp, onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
         if (!isFaceUp) {
@@ -155,5 +175,38 @@ private fun CardTile(
         } else {
             Text(card.text, color = Color.White)
         }
+    }
+}
+
+private val previewCards = listOf(
+    MemoryCard(cardId = 0, vocabularyItemId = 1, isImageCard = false, imageUrl = null, text = "praca"),
+    MemoryCard(cardId = 1, vocabularyItemId = 2, isImageCard = false, imageUrl = null, text = "dom"),
+    MemoryCard(cardId = 2, vocabularyItemId = 1, isImageCard = false, imageUrl = null, text = "work"),
+    MemoryCard(cardId = 3, vocabularyItemId = 2, isImageCard = false, imageUrl = null, text = "house"),
+    MemoryCard(cardId = 4, vocabularyItemId = 3, isImageCard = false, imageUrl = null, text = "kot"),
+    MemoryCard(cardId = 5, vocabularyItemId = 4, isImageCard = false, imageUrl = null, text = "pies"),
+    MemoryCard(cardId = 6, vocabularyItemId = 3, isImageCard = false, imageUrl = null, text = "cat"),
+    MemoryCard(cardId = 7, vocabularyItemId = 4, isImageCard = false, imageUrl = null, text = "dog"),
+)
+
+@Preview(showBackground = true)
+@Composable
+private fun MemoryCardsScreenPreview() {
+    LexiconTheme {
+        MemoryCardsScreenContent(
+            uiState =
+                MemoryCardsUiState(
+                    isLoading = false,
+                    stepIndex = 1,
+                    totalSteps = 5,
+                    cards = previewCards,
+                    flippedCardIds = listOf(2),
+                    matchedItemIds = setOf(1),
+                ),
+            onClose = {},
+            onCardSelected = {},
+            onSkip = {},
+            onNext = {},
+        )
     }
 }

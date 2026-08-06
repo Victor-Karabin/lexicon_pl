@@ -52,10 +52,22 @@ class SubmitDictationAnswerUseCaseImplTest {
         }
 
     @Test
-    fun `matching answer with tip used is still Incorrect`() =
+    fun `matching answer with tip used is still Correct — tip usage doesn't affect the outcome`() =
         runTest {
             val response = useCase(request(submittedText = "kot", tipUsed = true))
-            assertEquals(DictationStepOutcome.INCORRECT, response.outcome)
+            assertEquals(DictationStepOutcome.CORRECT, response.outcome)
+        }
+
+    @Test
+    fun `tip usage is recorded to history regardless of outcome`() =
+        runTest {
+            useCase(request(submittedText = "kot", tipUsed = true))
+
+            coVerify {
+                trainingHistoryRepository.recordResult(
+                    match<TrainingResultBoundary> { it.tipUsed },
+                )
+            }
         }
 
     @Test

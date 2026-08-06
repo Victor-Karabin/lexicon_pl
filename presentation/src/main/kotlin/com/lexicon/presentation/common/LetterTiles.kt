@@ -39,10 +39,9 @@ fun LetterTileGrid(
     ) {
         tiles.forEach { tile ->
             Card(
-                modifier =
-                    Modifier
-                        .size(TileDimens.size)
-                        .clickable { onTileSelected(tile) },
+                modifier = Modifier
+                    .size(TileDimens.size)
+                    .clickable { onTileSelected(tile) },
                 shape = RoundedCornerShape(TileDimens.cornerRadius),
             ) {
                 Box(modifier = Modifier.wrapContentSize(), contentAlignment = Alignment.Center) {

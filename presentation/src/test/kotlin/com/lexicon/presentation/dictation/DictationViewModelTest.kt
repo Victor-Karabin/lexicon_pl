@@ -10,6 +10,7 @@ import com.lexicon.interactors.dictation.StartDictationSessionUseCase
 import com.lexicon.interactors.dictation.SubmitDictationAnswerResponse
 import com.lexicon.interactors.dictation.SubmitDictationAnswerUseCase
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -37,13 +38,21 @@ class DictationViewModelTest {
     private val startUseCase: StartDictationSessionUseCase = mockk()
     private val submitUseCase: SubmitDictationAnswerUseCase = mockk()
     private val speechSynthesizer: SpeechSynthesizer = mockk(relaxed = true)
+    private val lastSessionResultsHolder = LastSessionResultsHolder()
+
+    private val translations = mapOf("kot" to "cat", "pies" to "dog")
 
     private fun session(vararg words: String) =
         DictationSessionResponse(
             sessionId = "session-1",
             steps =
                 words.mapIndexed { index, word ->
-                    DictationStepResponse(stepIndex = index, vocabularyItemId = index.toLong(), expectedText = word)
+                    DictationStepResponse(
+                        stepIndex = index,
+                        vocabularyItemId = index.toLong(),
+                        expectedText = word,
+                        translationText = translations.getValue(word),
+                    )
                 },
         )
 
@@ -57,7 +66,7 @@ class DictationViewModelTest {
         Dispatchers.resetMain()
     }
 
-    private fun viewModel() = DictationViewModel(startUseCase, submitUseCase, speechSynthesizer, dispatchers)
+    private fun viewModel() = DictationViewModel(startUseCase, submitUseCase, speechSynthesizer, dispatchers, lastSessionResultsHolder)
 
     @Test
     fun `loads the first step and speaks it on init`() =
@@ -118,7 +127,7 @@ class DictationViewModelTest {
         }
 
     @Test
-    fun `skip records Skipped and reveals the expected text`() =
+    fun `skip records Skipped, reveals the expected text, then auto-advances`() =
         runTest {
             coEvery { startUseCase(any()) } returns session("kot")
             coEvery { submitUseCase(any()) } returns SubmitDictationAnswerResponse(DictationStepOutcome.SKIPPED, "kot")
@@ -126,16 +135,20 @@ class DictationViewModelTest {
             val viewModel = viewModel()
             testDispatcher.scheduler.advanceUntilIdle()
 
-            viewModel.onSkip()
-            testDispatcher.scheduler.advanceUntilIdle()
+            viewModel.navigationEvents.test {
+                viewModel.onSkip()
+                testDispatcher.scheduler.advanceUntilIdle()
 
-            val state = viewModel.uiState.value
-            assertEquals(AnswerState.SKIPPED, state.answerState)
-            assertEquals("kot", state.revealedAnswer)
+                val event = awaitItem() as SessionNavigationEvent.SessionComplete
+                assertEquals(0, event.correct)
+                assertEquals(0, event.incorrect)
+                assertEquals(1, event.skipped)
+            }
+            assertTrue(viewModel.uiState.value.isSessionComplete)
         }
 
     @Test
-    fun `tip reveals the answer and marks tipUsed without submitting`() =
+    fun `tip reveals the base-language translation, not the expected answer, without submitting`() =
         runTest {
             coEvery { startUseCase(any()) } returns session("kot")
 
@@ -146,8 +159,64 @@ class DictationViewModelTest {
 
             val state = viewModel.uiState.value
             assertTrue(state.tipUsed)
-            assertEquals("kot", state.revealedAnswer)
+            assertEquals("cat", state.tipTranslation)
+            assertEquals(null, state.revealedAnswer)
             assertEquals(AnswerState.UNANSWERED, state.answerState)
             coVerify(exactly = 0) { submitUseCase(any()) }
+        }
+
+    @Test
+    fun `rapid double-tap on Check only submits once`() =
+        runTest {
+            coEvery { startUseCase(any()) } returns session("kot")
+            coEvery { submitUseCase(any()) } returns SubmitDictationAnswerResponse(DictationStepOutcome.INCORRECT, "kot")
+
+            val viewModel = viewModel()
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            viewModel.onAnswerChanged("kot")
+            viewModel.onCheck()
+            viewModel.onCheck()
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            coVerify(exactly = 1) { submitUseCase(any()) }
+        }
+
+    @Test
+    fun `rapid double-tap on Next only advances once`() =
+        runTest {
+            coEvery { startUseCase(any()) } returns session("kot", "pies")
+            coEvery { submitUseCase(any()) } returns SubmitDictationAnswerResponse(DictationStepOutcome.INCORRECT, "kot")
+
+            val viewModel = viewModel()
+            testDispatcher.scheduler.advanceUntilIdle()
+            viewModel.onAnswerChanged("wrong")
+            viewModel.onCheck()
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            viewModel.onNext()
+            viewModel.onNext()
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            assertEquals(1, viewModel.uiState.value.stepIndex)
+        }
+
+    @Test
+    fun `session completion stashes a per-word result for the Results screen`() =
+        runTest {
+            coEvery { startUseCase(any()) } returns session("kot")
+            coEvery { submitUseCase(any()) } returns SubmitDictationAnswerResponse(DictationStepOutcome.CORRECT, "kot")
+
+            val viewModel = viewModel()
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            viewModel.onAnswerChanged("kot")
+            viewModel.onCheck()
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            val entry = lastSessionResultsHolder.wordResults.single()
+            assertEquals("kot", entry.word)
+            assertEquals("cat", entry.translation)
+            assertEquals(AnswerState.CORRECT, entry.outcome)
         }
 }

@@ -19,7 +19,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -28,20 +27,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.SubcomposeAsyncImage
+import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
+import com.lexicon.presentation.theme.LexiconTheme
 
 private val ImageHeight = 180.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ImageTestScreen(
-    onSessionComplete: (correct: Int, incorrect: Int, skipped: Int) -> Unit,
+    onSessionComplete: (correct: Int, incorrect: Int, skipped: Int, tipsUsed: Int) -> Unit,
+    onClose: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ImageTestViewModel = hiltViewModel(),
 ) {
@@ -51,14 +55,36 @@ fun ImageTestScreen(
         viewModel.navigationEvents.collect { event ->
             when (event) {
                 is SessionNavigationEvent.SessionComplete ->
-                    onSessionComplete(event.correct, event.incorrect, event.skipped)
+                    onSessionComplete(event.correct, event.incorrect, event.skipped, event.tipsUsed)
             }
         }
     }
 
+    ImageTestScreenContent(
+        uiState = uiState,
+        onClose = onClose,
+        onOptionSelected = viewModel::onOptionSelected,
+        onSkip = viewModel::onSkip,
+        onCheck = viewModel::onCheck,
+        onNext = viewModel::onNext,
+        modifier = modifier,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ImageTestScreenContent(
+    uiState: ImageTestUiState,
+    onClose: () -> Unit,
+    onOptionSelected: (String) -> Unit,
+    onSkip: () -> Unit,
+    onCheck: () -> Unit,
+    onNext: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Scaffold(
         modifier = modifier,
-        topBar = { TopAppBar(title = { Text("Image Test") }) },
+        topBar = { TrainingTopBar(title = "Image Test", onClose = onClose) },
     ) { padding ->
         if (uiState.isLoading) {
             Column(
@@ -68,59 +94,58 @@ fun ImageTestScreen(
             ) {
                 CircularProgressIndicator()
             }
-            return@Scaffold
-        }
+        } else {
+            Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
+                LinearProgressIndicator(
+                    progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Text(
+                    text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
+                    modifier = Modifier.padding(top = Dimens.spacingSmall),
+                    style = MaterialTheme.typography.labelMedium,
+                )
 
-        Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
-            LinearProgressIndicator(
-                progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                modifier = Modifier.fillMaxWidth(),
-            )
-            Text(
-                text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                modifier = Modifier.padding(top = Dimens.spacingSmall),
-                style = MaterialTheme.typography.labelMedium,
-            )
-
-            Box(modifier = Modifier.fillMaxWidth().height(ImageHeight).padding(top = Dimens.spacingMedium)) {
-                if (uiState.imageUrl == null) {
-                    Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall)
-                } else {
-                    SubcomposeAsyncImage(
-                        model = uiState.imageUrl,
-                        contentDescription = null,
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier.fillMaxSize(),
-                        loading = { CircularProgressIndicator() },
-                        error = { Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall) },
-                    )
+                Box(modifier = Modifier.fillMaxWidth().height(ImageHeight).padding(top = Dimens.spacingMedium)) {
+                    if (uiState.imageUrl == null) {
+                        Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall)
+                    } else {
+                        SubcomposeAsyncImage(
+                            model = uiState.imageUrl,
+                            contentDescription = null,
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier.fillMaxSize(),
+                            loading = { CircularProgressIndicator() },
+                            error = { Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall) },
+                        )
+                    }
                 }
-            }
 
-            Column(modifier = Modifier.padding(top = Dimens.spacingMedium)) {
-                uiState.options.forEach { option ->
-                    OptionRow(
-                        text = option,
-                        isSelected = option == uiState.selectedOption,
-                        isCorrect = uiState.correctOption?.let { it == option },
-                        enabled = uiState.isEditable,
-                        onClick = { viewModel.onOptionSelected(option) },
-                    )
+                Column(modifier = Modifier.padding(top = Dimens.spacingMedium)) {
+                    uiState.options.forEach { option ->
+                        OptionRow(
+                            text = option,
+                            isSelected = option == uiState.selectedOption,
+                            isCorrect = uiState.correctOption?.let { it == option },
+                            enabled = uiState.isEditable,
+                            onClick = { onOptionSelected(option) },
+                        )
+                    }
                 }
-            }
 
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
-                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-            ) {
-                TextButton(onClick = viewModel::onSkip, enabled = uiState.canSkip) {
-                    Text("Skip")
-                }
-                Button(
-                    onClick = { if (uiState.awaitingNext) viewModel.onNext() else viewModel.onCheck() },
-                    enabled = uiState.awaitingNext || uiState.canCheck,
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
                 ) {
-                    Text(if (uiState.awaitingNext) "Next" else "Check")
+                    TextButton(onClick = onSkip, enabled = uiState.canSkip) {
+                        Text("Skip")
+                    }
+                    Button(
+                        onClick = { if (uiState.awaitingNext) onNext() else onCheck() },
+                        enabled = uiState.awaitingNext || uiState.canCheck,
+                    ) {
+                        Text(if (uiState.awaitingNext) "Next" else "Check")
+                    }
                 }
             }
         }
@@ -135,23 +160,45 @@ private fun OptionRow(
     enabled: Boolean,
     onClick: () -> Unit,
 ) {
-    val background =
-        when {
-            isCorrect == true -> LexiconSuccess
-            isCorrect == false && isSelected -> LexiconError
-            isSelected -> MaterialTheme.colorScheme.primaryContainer
-            else -> MaterialTheme.colorScheme.surfaceVariant
-        }
+    val background = when {
+        isCorrect == true -> LexiconSuccess
+        isCorrect == false && isSelected -> LexiconError
+        isSelected -> MaterialTheme.colorScheme.primaryContainer
+        else -> MaterialTheme.colorScheme.surfaceVariant
+    }
     val textColor = if (isCorrect != null || isSelected) Color.White else MaterialTheme.colorScheme.onSurfaceVariant
     Row(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(vertical = Dimens.spacingTiny)
-                .background(background, RoundedCornerShape(Dimens.spacingSmall))
-                .clickable(enabled = enabled, onClick = onClick)
-                .padding(Dimens.spacingSmall),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = Dimens.spacingTiny)
+            .background(background, RoundedCornerShape(Dimens.spacingSmall))
+            .clickable(enabled = enabled, onClick = onClick)
+            .padding(Dimens.spacingSmall),
     ) {
         Text(text, color = textColor)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ImageTestScreenPreview() {
+    LexiconTheme {
+        ImageTestScreenContent(
+            uiState =
+                ImageTestUiState(
+                    isLoading = false,
+                    stepIndex = 2,
+                    totalSteps = 10,
+                    clueText = "praca",
+                    options = listOf("work", "house", "dog", "cat", "tree", "book"),
+                    selectedOption = "work",
+                    answerState = AnswerState.UNANSWERED,
+                ),
+            onClose = {},
+            onOptionSelected = {},
+            onSkip = {},
+            onCheck = {},
+            onNext = {},
+        )
     }
 }
