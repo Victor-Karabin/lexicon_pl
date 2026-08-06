@@ -11,14 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -27,12 +25,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.SubcomposeAsyncImage
+import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
@@ -84,7 +85,7 @@ private fun ImageTestScreenContent(
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = { TrainingTopBar(title = "Image Test", onClose = onClose) },
+        topBar = { TrainingTopBar(title = stringResource(R.string.image_test_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
             is ImageTestUiState.Loading ->
@@ -96,58 +97,62 @@ private fun ImageTestScreenContent(
                     CircularProgressIndicator()
                 }
             is ImageTestUiState.Loaded ->
-                Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
-                    LinearProgressIndicator(
-                        progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                    Text(
-                        text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                        modifier = Modifier.padding(top = Dimens.spacingSmall),
-                        style = MaterialTheme.typography.labelMedium,
-                    )
-
-                    Box(modifier = Modifier.fillMaxWidth().height(ImageHeight).padding(top = Dimens.spacingMedium)) {
-                        if (uiState.imageUrl == null) {
-                            Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall)
-                        } else {
-                            SubcomposeAsyncImage(
-                                model = uiState.imageUrl,
-                                contentDescription = null,
-                                contentScale = ContentScale.Fit,
-                                modifier = Modifier.fillMaxSize(),
-                                loading = { CircularProgressIndicator() },
-                                error = { Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall) },
-                            )
-                        }
-                    }
-
-                    Column(modifier = Modifier.padding(top = Dimens.spacingMedium)) {
-                        uiState.options.forEach { option ->
-                            OptionRow(
-                                text = option,
-                                isSelected = option == uiState.selectedOption,
-                                isCorrect = uiState.correctOption?.let { it == option },
-                                enabled = uiState.isEditable,
-                                onClick = { onOptionSelected(option) },
-                            )
-                        }
-                    }
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
-                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                Column(modifier = Modifier.fillMaxSize().padding(padding)) {
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .padding(Dimens.spacingMedium),
                     ) {
-                        TextButton(onClick = onSkip, enabled = uiState.canSkip) {
-                            Text("Skip")
+                        LinearProgressIndicator(
+                            progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                        Text(
+                            text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
+                            modifier = Modifier.padding(top = Dimens.spacingSmall),
+                            style = MaterialTheme.typography.labelMedium,
+                        )
+
+                        Box(modifier = Modifier.fillMaxWidth().height(ImageHeight).padding(top = Dimens.spacingMedium)) {
+                            if (uiState.imageUrl == null) {
+                                Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall)
+                            } else {
+                                SubcomposeAsyncImage(
+                                    model = uiState.imageUrl,
+                                    contentDescription = null,
+                                    contentScale = ContentScale.Fit,
+                                    modifier = Modifier.fillMaxSize(),
+                                    loading = {
+                                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                            CircularProgressIndicator()
+                                        }
+                                    },
+                                    error = { Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall) },
+                                )
+                            }
                         }
-                        Button(
-                            onClick = { if (uiState.awaitingNext) onNext() else onCheck() },
-                            enabled = uiState.awaitingNext || uiState.canCheck,
-                        ) {
-                            Text(if (uiState.awaitingNext) "Next" else "Check")
+
+                        Column(modifier = Modifier.padding(top = Dimens.spacingMedium)) {
+                            uiState.options.forEach { option ->
+                                OptionRow(
+                                    text = option,
+                                    isSelected = option == uiState.selectedOption,
+                                    isCorrect = uiState.correctOption?.let { it == option },
+                                    enabled = uiState.isEditable,
+                                    onClick = { onOptionSelected(option) },
+                                )
+                            }
                         }
                     }
+
+                    TrainingActionRow(
+                        onCheck = onCheck,
+                        onNext = onNext,
+                        awaitingNext = uiState.awaitingNext,
+                        checkEnabled = uiState.canCheck,
+                        onSkip = onSkip.takeIf { uiState.canSkip },
+                    )
                 }
         }
     }

@@ -21,4 +21,7 @@
 
     <!-- Puzzle -->
     <string name="puzzle_title">Puzzle</string>
+
+    <!-- Image Test -->
+    <string name="image_test_title">Image Test</string>
 </resources>
