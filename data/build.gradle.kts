@@ -27,6 +27,7 @@ dependencies {
     implementation(projects.common)
     implementation(projects.android)
 
+    implementation(libs.androidx.datastore.preferences)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)

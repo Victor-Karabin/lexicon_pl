@@ -1,8 +1,12 @@
 package com.lexicon.domain.imagetest
 
+import com.lexicon.boundary.AppSettingsBoundary
 import com.lexicon.boundary.ImageProvider
+import com.lexicon.boundary.SettingsRepository
+import com.lexicon.boundary.ThemeModeBoundary
 import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.interactors.imagetest.StartImageTestSessionRequest
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -14,7 +18,11 @@ import org.junit.Test
 class StartImageTestSessionUseCaseImplTest {
     private val vocabularyRepository: VocabularyRepository = mockk()
     private val imageProvider: ImageProvider = mockk()
-    private val useCase = StartImageTestSessionUseCaseImpl(vocabularyRepository, imageProvider)
+    private val settingsRepository: SettingsRepository = mockk {
+        coEvery { getSettings() } returns AppSettingsBoundary(ThemeModeBoundary.SYSTEM, stepCount = 10)
+    }
+    private val stepCountResolver = StepCountResolver(settingsRepository)
+    private val useCase = StartImageTestSessionUseCaseImpl(vocabularyRepository, imageProvider, stepCountResolver)
 
     private val items =
         listOf(

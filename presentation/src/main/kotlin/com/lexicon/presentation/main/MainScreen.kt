@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.lexicon.presentation.settings.SettingsScreen
 
 private enum class MainTab(val label: String, val icon: ImageVector) {
     DASHBOARD("Dashboard", Icons.Default.Dashboard),
@@ -58,7 +59,7 @@ fun MainScreen(
             MainTab.DASHBOARD -> ComingSoonScreen(MainTab.DASHBOARD.label, modifier = content)
             MainTab.VOCABULARY -> ComingSoonScreen(MainTab.VOCABULARY.label, modifier = content)
             MainTab.STATISTICS -> ComingSoonScreen(MainTab.STATISTICS.label, modifier = content)
-            MainTab.SETTINGS -> ComingSoonScreen(MainTab.SETTINGS.label, modifier = content)
+            MainTab.SETTINGS -> SettingsScreen(modifier = content)
         }
     }
 }

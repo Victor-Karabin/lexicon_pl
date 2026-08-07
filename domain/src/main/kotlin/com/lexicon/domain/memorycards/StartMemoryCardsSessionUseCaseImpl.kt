@@ -4,6 +4,7 @@ import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.domain.dictation.Word
 import com.lexicon.domain.dictation.toWord
+import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.interactors.memorycards.MemoryCardsPairResponse
 import com.lexicon.interactors.memorycards.MemoryCardsSessionResponse
 import com.lexicon.interactors.memorycards.MemoryCardsStepResponse
@@ -19,11 +20,13 @@ class StartMemoryCardsSessionUseCaseImpl
     constructor(
         private val vocabularyRepository: VocabularyRepository,
         private val imageProvider: ImageProvider,
+        private val stepCountResolver: StepCountResolver,
     ) : StartMemoryCardsSessionUseCase {
         override suspend fun invoke(request: StartMemoryCardsSessionRequest): MemoryCardsSessionResponse {
+            val stepCount = stepCountResolver.resolve(request.stepCount)
             val steps =
                 coroutineScope {
-                    (0 until request.stepCount).map { stepIndex ->
+                    (0 until stepCount).map { stepIndex ->
                         async { buildStep(stepIndex, request.pairsPerStep) }
                     }.map { it.await() }
                 }

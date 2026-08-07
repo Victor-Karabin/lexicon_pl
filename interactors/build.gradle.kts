@@ -3,5 +3,8 @@ plugins {
 }
 
 dependencies {
+    // Settings are observed as a Flow by the presentation layer.
+    implementation(libs.kotlinx.coroutines.core)
+
     testImplementation(libs.bundles.unit.test)
 }

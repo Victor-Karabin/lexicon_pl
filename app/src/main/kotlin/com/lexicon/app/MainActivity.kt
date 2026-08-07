@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
 import com.lexicon.app.navigation.LexiconNavHost
-import com.lexicon.presentation.theme.LexiconTheme
+import com.lexicon.presentation.theme.LexiconAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -13,7 +13,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            LexiconTheme {
+            LexiconAppTheme {
                 LexiconNavHost(navController = rememberNavController())
             }
         }

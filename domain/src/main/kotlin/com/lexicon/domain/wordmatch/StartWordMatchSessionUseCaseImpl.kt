@@ -1,6 +1,7 @@
 package com.lexicon.domain.wordmatch
 
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.interactors.wordmatch.StartWordMatchSessionRequest
 import com.lexicon.interactors.wordmatch.StartWordMatchSessionUseCase
 import com.lexicon.interactors.wordmatch.WordMatchPairResponse
@@ -13,10 +14,11 @@ class StartWordMatchSessionUseCaseImpl
     @Inject
     constructor(
         private val vocabularyRepository: VocabularyRepository,
+        private val stepCountResolver: StepCountResolver,
     ) : StartWordMatchSessionUseCase {
         override suspend fun invoke(request: StartWordMatchSessionRequest): WordMatchSessionResponse {
             val pairs =
-                vocabularyRepository.getRandomItems(request.stepCount).map { item ->
+                vocabularyRepository.getRandomItems(stepCountResolver.resolve(request.stepCount)).map { item ->
                     WordMatchPairResponse(vocabularyItemId = item.id, word = item.text, translation = item.translation)
                 }
             val step = WordMatchStepResponse(stepIndex = 0, pairs = pairs)

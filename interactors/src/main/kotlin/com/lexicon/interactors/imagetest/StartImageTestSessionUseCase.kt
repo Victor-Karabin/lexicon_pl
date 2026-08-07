@@ -1,11 +1,11 @@
 package com.lexicon.interactors.imagetest
 
 data class StartImageTestSessionRequest(
-    val stepCount: Int = DEFAULT_STEP_COUNT,
+    /** Null uses the step count configured in Settings; pass a value only to override it. */
+    val stepCount: Int? = null,
     val optionCount: Int = DEFAULT_OPTION_COUNT,
 ) {
     companion object {
-        const val DEFAULT_STEP_COUNT = 10
         const val DEFAULT_OPTION_COUNT = 6
     }
 }

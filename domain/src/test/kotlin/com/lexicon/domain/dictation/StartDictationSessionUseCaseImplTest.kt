@@ -1,7 +1,11 @@
 package com.lexicon.domain.dictation
 
+import com.lexicon.boundary.AppSettingsBoundary
+import com.lexicon.boundary.SettingsRepository
+import com.lexicon.boundary.ThemeModeBoundary
 import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.interactors.dictation.StartDictationSessionRequest
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -11,7 +15,11 @@ import org.junit.Test
 
 class StartDictationSessionUseCaseImplTest {
     private val vocabularyRepository: VocabularyRepository = mockk()
-    private val useCase = StartDictationSessionUseCaseImpl(vocabularyRepository)
+    private val settingsRepository: SettingsRepository = mockk {
+        coEvery { getSettings() } returns AppSettingsBoundary(ThemeModeBoundary.SYSTEM, stepCount = 10)
+    }
+    private val stepCountResolver = StepCountResolver(settingsRepository)
+    private val useCase = StartDictationSessionUseCaseImpl(vocabularyRepository, stepCountResolver)
 
     @Test
     fun `builds one step per returned vocabulary item, preserving order`() =
