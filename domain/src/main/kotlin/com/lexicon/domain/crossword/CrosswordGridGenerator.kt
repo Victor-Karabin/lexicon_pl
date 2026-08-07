@@ -3,6 +3,7 @@ package com.lexicon.domain.crossword
 import com.lexicon.domain.dictation.Word
 import com.lexicon.interactors.crossword.CrosswordDirection
 import java.util.Locale
+import kotlin.random.Random
 
 internal data class PlacedWord(
     val word: Word,
@@ -18,26 +19,60 @@ internal data class CrosswordLayout(
 )
 
 /**
- * Greedy crossword layout: places the longest word first, then tries to intersect each
- * subsequent word with an already-placed word via a shared letter. A word with no possible
- * intersection is placed on its own row instead, so every requested word still appears.
+ * How many word orderings to try. A single greedy pass leaves roughly one word of eight unable to
+ * intersect anything; re-running with shuffled orders and keeping the fullest layout gets all eight
+ * placed for the large majority of puzzles. Each pass is cheap, so this stays well under a frame.
+ */
+private const val PLACEMENT_ATTEMPTS = 60
+
+/**
+ * Greedy crossword layout: places the longest word first, then intersects each subsequent word with
+ * an already-placed one on a shared letter, preferring whichever intersection keeps the grid most
+ * compact.
+ *
+ * Words that cannot legally intersect anything are dropped rather than parked on their own row —
+ * a detached run of cells floating below the puzzle isn't part of the crossword and can't be solved
+ * from its crossings. [generate] retries several orderings and keeps the layout that places the
+ * most words, so dropping stays rare.
  */
 internal object CrosswordGridGenerator {
-    fun generate(words: List<Word>): CrosswordLayout {
+    fun generate(
+        words: List<Word>,
+        random: Random = Random.Default,
+    ): CrosswordLayout {
         if (words.isEmpty()) return CrosswordLayout(emptyList(), rowCount = 0, colCount = 0)
 
-        val ordered = words.sortedByDescending { it.text.length }
+        // First pass longest-first (a long word gives later words the most crossing options);
+        // subsequent passes shuffle, since the greedy order is what decides who gets stuck.
+        var best = layOut(words.sortedByDescending { it.text.length })
+        repeat(PLACEMENT_ATTEMPTS - 1) {
+            if (best.placements.size == words.size) return best
+            val candidate = layOut(words.shuffled(random))
+            if (candidate.isPreferredOver(best)) best = candidate
+        }
+        return best
+    }
+
+    /** More words placed always wins; between equally full layouts, the tighter grid wins. */
+    private fun CrosswordLayout.isPreferredOver(other: CrosswordLayout): Boolean =
+        if (placements.size != other.placements.size) {
+            placements.size > other.placements.size
+        } else {
+            rowCount * colCount < other.rowCount * other.colCount
+        }
+
+    private fun layOut(ordered: List<Word>): CrosswordLayout {
         val grid = mutableMapOf<Cell, Char>()
         val placed = mutableListOf<PlacedWord>()
 
-        ordered.forEachIndexed { index, word ->
+        ordered.forEach { word ->
             val letters = word.text.uppercase(Locale.ROOT)
-            val placement = if (index == 0) {
+            val placement = if (placed.isEmpty()) {
                 Placement(row = 0, col = 0, direction = CrosswordDirection.ACROSS)
             } else {
-                bestIntersection(letters, placed, grid) ?: fallbackPlacement(grid)
+                bestIntersection(letters, placed, grid)
             }
-            place(word, letters, placement, grid, placed)
+            placement?.let { place(word, letters, it, grid, placed) }
         }
 
         return normalize(placed)
@@ -129,12 +164,6 @@ internal object CrosswordGridGenerator {
             grid[cellAt(placement.row, placement.col, placement.direction, i)] = letter
         }
         placed += PlacedWord(word, placement.row, placement.col, placement.direction)
-    }
-
-    /** Always below every previously placed cell, so it can never collide. */
-    private fun fallbackPlacement(grid: Map<Cell, Char>): Placement {
-        val row = (grid.keys.maxOfOrNull { it.row } ?: -2) + 2
-        return Placement(row, col = 0, direction = CrosswordDirection.ACROSS)
     }
 
     private fun cellAt(

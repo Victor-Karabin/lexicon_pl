@@ -3,7 +3,6 @@ package com.lexicon.presentation.crossword
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -41,6 +40,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.crossword.CrosswordDirection
 import com.lexicon.presentation.R
@@ -52,9 +52,18 @@ import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconTheme
 
-/** Cells shrink to fit the widest grid on screen; below this they stop being tappable/readable. */
-private val MinCellSize = 22.dp
+/**
+ * The grid never scrolls, so cells shrink until the whole puzzle fits. Layouts occasionally reach
+ * ~23 columns, which is what forces the lower bound this small.
+ */
+private val MinCellSize = 14.dp
 private val MaxCellSize = 40.dp
+
+/** Keeps the letter proportional to the cell, so it stays inside even at [MinCellSize]. */
+private const val LETTER_SIZE_RATIO = 0.5f
+
+/** Share of the screen the fixed grid may claim, leaving the rest for the scrolling clue list. */
+private const val GRID_HEIGHT_FRACTION = 0.55f
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -112,34 +121,34 @@ private fun CrosswordScreenContent(
                 }
             is CrosswordUiState.Loaded ->
                 Column(modifier = Modifier.fillMaxSize().padding(padding)) {
-                    Column(
+                    // The grid stays put so the puzzle is always visible; only the clues scroll.
+                    CrosswordGrid(
+                        uiState = uiState,
+                        onCellTapped = onCellTapped,
+                        onLetterEntered = onLetterEntered,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = Dimens.spacingMedium, vertical = Dimens.spacingSmall),
+                    )
+
+                    if (uiState.submitFailed) {
+                        Text(
+                            text = stringResource(R.string.crossword_check_failed),
+                            color = LexiconError,
+                            modifier = Modifier.padding(horizontal = Dimens.spacingMedium),
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
+
+                    ClueList(
+                        uiState = uiState,
+                        onClueSelected = onClueSelected,
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth()
                             .verticalScroll(rememberScrollState())
-                            .padding(Dimens.spacingMedium),
-                    ) {
-                        CrosswordGrid(
-                            uiState = uiState,
-                            onCellTapped = onCellTapped,
-                            onLetterEntered = onLetterEntered,
-                        )
-
-                        ClueList(
-                            uiState = uiState,
-                            onClueSelected = onClueSelected,
-                            modifier = Modifier.padding(top = Dimens.spacingMedium),
-                        )
-
-                        if (uiState.submitFailed) {
-                            Text(
-                                text = stringResource(R.string.crossword_check_failed),
-                                color = LexiconError,
-                                modifier = Modifier.padding(top = Dimens.spacingMedium),
-                                style = MaterialTheme.typography.bodyMedium,
-                            )
-                        }
-                    }
+                            .padding(horizontal = Dimens.spacingMedium),
+                    )
 
                     // No Check/Next and no Skip: filling the last cell validates and opens Results.
                     Row(
@@ -160,6 +169,7 @@ private fun CrosswordGrid(
     uiState: CrosswordUiState.Loaded,
     onCellTapped: (CrosswordCell) -> Unit,
     onLetterEntered: (CrosswordCell, String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val selectedCells = uiState.selectedWord?.occupiedCells()?.toSet().orEmpty()
     // One requester per cell so the ViewModel can walk the caret along a word as the user types.
@@ -171,18 +181,15 @@ private fun CrosswordGrid(
         uiState.focusedCell?.let { cell -> runCatching { focusRequesters[cell]?.requestFocus() } }
     }
 
-    BoxWithConstraints {
-        // Generated grids routinely run 10+ columns wide, which overflows a phone at a fixed cell
-        // size. Scale cells to the available width so the whole puzzle stays visible at once;
-        // only fall back to scrolling for the rare grid too wide even at the minimum size.
-        val cellSize = (maxWidth / uiState.colCount.coerceAtLeast(1)).coerceIn(MinCellSize, MaxCellSize)
-        val scrollModifier = if (cellSize * uiState.colCount > maxWidth) {
-            Modifier.horizontalScroll(rememberScrollState())
-        } else {
-            Modifier
-        }
+    BoxWithConstraints(modifier = modifier) {
+        // Generated grids run ~10 columns by ~11 rows, so a fixed cell size overflows a phone in
+        // both directions. The grid doesn't scroll, so size cells against whichever axis is tighter
+        // and cap the grid's share of the screen so the clue list keeps room.
+        val widthPerCell = maxWidth / uiState.colCount.coerceAtLeast(1)
+        val heightPerCell = (maxHeight * GRID_HEIGHT_FRACTION) / uiState.rowCount.coerceAtLeast(1)
+        val cellSize = minOf(widthPerCell, heightPerCell).coerceIn(MinCellSize, MaxCellSize)
 
-        Column(modifier = scrollModifier) {
+        Column {
             for (row in 0 until uiState.rowCount) {
                 Row {
                     for (col in 0 until uiState.colCount) {
@@ -244,6 +251,8 @@ private fun CrosswordCellBox(
                 color = textColor,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
+                fontSize = (size.value * LETTER_SIZE_RATIO).sp,
+                lineHeight = (size.value * LETTER_SIZE_RATIO).sp,
             ),
             keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Characters),
             cursorBrush = SolidColor(textColor),
