@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.lexicon.presentation.common.SessionResultScreen
+import com.lexicon.presentation.crossword.CrosswordScreen
 import com.lexicon.presentation.dictation.DictationScreen
 import com.lexicon.presentation.dictationpuzzle.DictationPuzzleScreen
 import com.lexicon.presentation.imagetest.ImageTestScreen
@@ -103,6 +104,12 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             MemoryCardsScreen(
                 onSessionComplete = onStepSessionComplete(LexiconDestinations.MEMORY_CARDS),
                 onClose = onClose(LexiconDestinations.MEMORY_CARDS),
+            )
+        }
+        composable(LexiconDestinations.CROSSWORD) {
+            CrosswordScreen(
+                onSessionComplete = onStepSessionComplete(LexiconDestinations.CROSSWORD),
+                onClose = onClose(LexiconDestinations.CROSSWORD),
             )
         }
 

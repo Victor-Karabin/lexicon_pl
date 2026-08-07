@@ -1,5 +1,7 @@
 package com.lexicon.app.di
 
+import com.lexicon.domain.crossword.StartCrosswordSessionUseCaseImpl
+import com.lexicon.domain.crossword.SubmitCrosswordUseCaseImpl
 import com.lexicon.domain.dictation.StartDictationSessionUseCaseImpl
 import com.lexicon.domain.dictation.SubmitDictationAnswerUseCaseImpl
 import com.lexicon.domain.dictationpuzzle.StartDictationPuzzleSessionUseCaseImpl
@@ -18,6 +20,8 @@ import com.lexicon.domain.wordbuilder.StartWordBuilderSessionUseCaseImpl
 import com.lexicon.domain.wordbuilder.SubmitWordBuilderAnswerUseCaseImpl
 import com.lexicon.domain.wordmatch.StartWordMatchSessionUseCaseImpl
 import com.lexicon.domain.wordmatch.SubmitWordMatchStepResultUseCaseImpl
+import com.lexicon.interactors.crossword.StartCrosswordSessionUseCase
+import com.lexicon.interactors.crossword.SubmitCrosswordUseCase
 import com.lexicon.interactors.dictation.StartDictationSessionUseCase
 import com.lexicon.interactors.dictation.SubmitDictationAnswerUseCase
 import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionUseCase
@@ -97,4 +101,10 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindSubmitMemoryCardsStepResultUseCase(impl: SubmitMemoryCardsStepResultUseCaseImpl): SubmitMemoryCardsStepResultUseCase
+
+    @Binds
+    abstract fun bindStartCrosswordSessionUseCase(impl: StartCrosswordSessionUseCaseImpl): StartCrosswordSessionUseCase
+
+    @Binds
+    abstract fun bindSubmitCrosswordUseCase(impl: SubmitCrosswordUseCaseImpl): SubmitCrosswordUseCase
 }
