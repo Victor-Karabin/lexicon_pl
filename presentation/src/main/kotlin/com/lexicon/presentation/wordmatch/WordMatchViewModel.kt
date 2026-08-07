@@ -9,7 +9,10 @@ import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultRequest
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultUseCase
 import com.lexicon.interactors.wordmatch.WordMatchStepOutcome
 import com.lexicon.interactors.wordmatch.WordMatchStepResponse
+import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.WordResultEntry
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -31,6 +34,7 @@ class WordMatchViewModel
         private val startSessionUseCase: StartWordMatchSessionUseCase,
         private val submitStepResultUseCase: SubmitWordMatchStepResultUseCase,
         private val dispatchers: DispatcherProvider,
+        private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow<WordMatchUiState>(WordMatchUiState.Loading)
         val uiState: StateFlow<WordMatchUiState> = _uiState.asStateFlow()
@@ -42,6 +46,7 @@ class WordMatchViewModel
         private var steps: List<WordMatchStepResponse> = emptyList()
         private var correctCount = 0
         private var incorrectCount = 0
+        private val wordResults = mutableListOf<WordResultEntry>()
 
         init {
             startSession()
@@ -120,10 +125,17 @@ class WordMatchViewModel
                         incorrectAttempts = state.incorrectAttempts,
                     ),
                 )
-            when (response.outcome) {
-                WordMatchStepOutcome.CORRECT -> correctCount++
-                WordMatchStepOutcome.INCORRECT -> incorrectCount++
+            val outcome = when (response.outcome) {
+                WordMatchStepOutcome.CORRECT -> {
+                    correctCount++
+                    AnswerState.Correct
+                }
+                WordMatchStepOutcome.INCORRECT -> {
+                    incorrectCount++
+                    AnswerState.Incorrect()
+                }
             }
+            step.pairs.forEach { pair -> wordResults += WordResultEntry(pair.word, pair.translation, outcome) }
             delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
             advanceToNextStep()
         }
@@ -133,6 +145,7 @@ class WordMatchViewModel
             val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
                 updateLoaded { it.copy(isSessionComplete = true) }
+                lastSessionResultsHolder.wordResults = wordResults.toList()
                 _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skipped = 0))
                 return
             }
