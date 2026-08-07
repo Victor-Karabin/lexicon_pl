@@ -33,4 +33,11 @@
     <string name="action_true">True</string>
     <string name="action_false">False</string>
     <string name="time_remaining_format">%1$ds</string>
+
+    <!-- Pronunciation Check -->
+    <string name="pronunciation_title">Pronunciation Check</string>
+    <string name="pronunciation_record">Record</string>
+    <string name="pronunciation_listening">Listening…</string>
+    <string name="pronunciation_checking">Checking…</string>
+    <string name="pronunciation_heard_format">Heard: %1$s</string>
 </resources>
