@@ -37,13 +37,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.crossword.CrosswordDirection
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.debounced
@@ -332,7 +332,7 @@ private val previewWords = listOf(
     ),
 )
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun CrosswordScreenPreview() {
     LexiconTheme {
@@ -354,7 +354,7 @@ private fun CrosswordScreenPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun CrosswordScreenPartiallyFilledPreview() {
     LexiconTheme {

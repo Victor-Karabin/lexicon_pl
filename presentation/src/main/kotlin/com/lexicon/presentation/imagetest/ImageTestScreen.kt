@@ -26,12 +26,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.SubcomposeAsyncImage
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
@@ -185,7 +185,7 @@ private fun OptionRow(
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun ImageTestScreenPreview() {
     LexiconTheme {
@@ -198,6 +198,55 @@ private fun ImageTestScreenPreview() {
                     options = listOf("work", "house", "dog", "cat", "tree", "book"),
                     selectedOption = "work",
                     answerState = AnswerState.Unanswered,
+                ),
+            onClose = {},
+            onOptionSelected = {},
+            onSkip = {},
+            onCheck = {},
+            onNext = {},
+        )
+    }
+}
+
+@LightDarkPreview
+@Composable
+private fun ImageTestScreenCorrectPreview() {
+    LexiconTheme {
+        ImageTestScreenContent(
+            uiState =
+                ImageTestUiState.Loaded(
+                    stepIndex = 2,
+                    totalSteps = 10,
+                    clueText = "praca",
+                    options = listOf("work", "house", "dog", "cat", "tree", "book"),
+                    selectedOption = "work",
+                    correctOption = "work",
+                    answerState = AnswerState.Correct,
+                ),
+            onClose = {},
+            onOptionSelected = {},
+            onSkip = {},
+            onCheck = {},
+            onNext = {},
+        )
+    }
+}
+
+/** The wrong pick and the right answer are highlighted differently. */
+@LightDarkPreview
+@Composable
+private fun ImageTestScreenIncorrectPreview() {
+    LexiconTheme {
+        ImageTestScreenContent(
+            uiState =
+                ImageTestUiState.Loaded(
+                    stepIndex = 2,
+                    totalSteps = 10,
+                    clueText = "praca",
+                    options = listOf("work", "house", "dog", "cat", "tree", "book"),
+                    selectedOption = "house",
+                    correctOption = "work",
+                    answerState = AnswerState.Incorrect("work"),
                 ),
             onClose = {},
             onOptionSelected = {},

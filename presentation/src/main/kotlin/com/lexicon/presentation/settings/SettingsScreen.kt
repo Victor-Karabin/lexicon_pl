@@ -23,11 +23,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.interactors.settings.ThemeMode
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
 import kotlin.math.roundToInt
@@ -133,12 +133,37 @@ private fun ThemeMode.labelRes(): Int =
         ThemeMode.DARK -> R.string.settings_theme_dark
     }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun SettingsScreenPreview() {
     LexiconTheme {
         SettingsScreenContent(
             settings = AppSettings(themeMode = ThemeMode.SYSTEM, stepCount = 10),
+            onThemeModeSelected = {},
+            onStepCountChanged = {},
+        )
+    }
+}
+
+@LightDarkPreview
+@Composable
+private fun SettingsScreenDarkSelectedPreview() {
+    LexiconTheme {
+        SettingsScreenContent(
+            settings = AppSettings(themeMode = ThemeMode.DARK, stepCount = AppSettings.MAX_STEP_COUNT),
+            onThemeModeSelected = {},
+            onStepCountChanged = {},
+        )
+    }
+}
+
+/** Slider pinned to the low end, where the value label is easiest to misread. */
+@LightDarkPreview
+@Composable
+private fun SettingsScreenMinimumStepsPreview() {
+    LexiconTheme {
+        SettingsScreenContent(
+            settings = AppSettings(themeMode = ThemeMode.LIGHT, stepCount = AppSettings.MIN_STEP_COUNT),
             onThemeModeSelected = {},
             onStepCountChanged = {},
         )

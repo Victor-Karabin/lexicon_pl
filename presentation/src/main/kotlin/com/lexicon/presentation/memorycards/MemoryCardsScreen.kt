@@ -30,9 +30,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.SubcomposeAsyncImage
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
@@ -190,7 +190,7 @@ private val previewCards = listOf(
     MemoryCard(cardId = 7, vocabularyItemId = 4, isImageCard = false, imageUrl = null, text = "dog"),
 )
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun MemoryCardsScreenPreview() {
     LexiconTheme {
@@ -202,6 +202,29 @@ private fun MemoryCardsScreenPreview() {
                     cards = previewCards,
                     flippedCardIds = listOf(2),
                     matchedItemIds = setOf(1),
+                ),
+            onClose = {},
+            onCardSelected = {},
+            onSkip = {},
+            onNext = {},
+        )
+    }
+}
+
+/** One matched pair locked face-up, plus a mismatched pair flashing before it flips back. */
+@LightDarkPreview
+@Composable
+private fun MemoryCardsScreenInProgressPreview() {
+    LexiconTheme {
+        MemoryCardsScreenContent(
+            uiState =
+                MemoryCardsUiState.Loaded(
+                    stepIndex = 2,
+                    totalSteps = 10,
+                    cards = previewCards,
+                    matchedItemIds = setOf(1),
+                    incorrectFlashCardIds = setOf(2, 3),
+                    incorrectAttempts = 1,
                 ),
             onClose = {},
             onCardSelected = {},
