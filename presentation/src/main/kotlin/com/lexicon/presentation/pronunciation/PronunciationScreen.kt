@@ -170,6 +170,13 @@ private fun PronunciationScreenContent(
                         }
 
                         if (uiState.isEditable) {
+                            uiState.tipTranslation?.let { translation ->
+                                Text(
+                                    text = stringResource(R.string.hint_format, translation),
+                                    modifier = Modifier.padding(top = Dimens.spacingSmall),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                )
+                            }
                             uiState.tipTranscription?.let { ipa ->
                                 Text(
                                     text = stringResource(R.string.pronunciation_ipa_format, ipa),
@@ -227,7 +234,7 @@ private fun PronunciationScreenUnansweredPreview() {
                 PronunciationUiState.Loaded(
                     stepIndex = 2,
                     totalSteps = 10,
-                    word = "praca",
+                    word = "work",
                     recordingState = RecordingState.IDLE,
                 ),
             onClose = {},
@@ -250,10 +257,36 @@ private fun PronunciationScreenRecordedPreview() {
                 PronunciationUiState.Loaded(
                     stepIndex = 2,
                     totalSteps = 10,
-                    word = "praca",
+                    word = "work",
                     recordingState = RecordingState.RECORDED,
                     recognizedText = "praca",
                     recordedAudioPath = "/cache/pronunciation_attempt.wav",
+                ),
+            onClose = {},
+            onRecordRequested = {},
+            onPlayRecording = {},
+            onTipRequested = {},
+            onSkip = {},
+            onCheck = {},
+            onNext = {},
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PronunciationScreenTipRevealedPreview() {
+    LexiconTheme {
+        PronunciationScreenContent(
+            uiState =
+                PronunciationUiState.Loaded(
+                    stepIndex = 2,
+                    totalSteps = 10,
+                    word = "apple",
+                    recordingState = RecordingState.IDLE,
+                    tipLevel = 2,
+                    tipTranslation = "jabłko",
+                    tipTranscription = "jabuko",
                 ),
             onClose = {},
             onRecordRequested = {},
@@ -275,7 +308,7 @@ private fun PronunciationScreenIncorrectPreview() {
                 PronunciationUiState.Loaded(
                     stepIndex = 2,
                     totalSteps = 10,
-                    word = "praca",
+                    word = "work",
                     recordingState = RecordingState.RECORDED,
                     recognizedText = "prace",
                     answerState = AnswerState.Incorrect("praca"),

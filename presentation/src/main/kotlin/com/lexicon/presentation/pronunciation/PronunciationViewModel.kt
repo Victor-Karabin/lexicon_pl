@@ -71,7 +71,7 @@ class PronunciationViewModel
                     PronunciationUiState.Loaded(
                         stepIndex = 0,
                         totalSteps = steps.size,
-                        word = steps.getOrNull(0)?.expectedText.orEmpty(),
+                        word = steps.getOrNull(0)?.clueText.orEmpty(),
                     )
                 }
                 speakReferenceAudio()
@@ -84,12 +84,17 @@ class PronunciationViewModel
             speechSynthesizer.speak(step.expectedText)
         }
 
+        /** First tap reveals the target-language word; a second tap additionally reveals its IPA transcription. */
         fun onTipRequested() {
             val state = _uiState.value as? PronunciationUiState.Loaded ?: return
             if (!state.canUseTip) return
             val step = currentStepOrNull() ?: return
-            tipsUsedCount++
-            updateLoaded { it.copy(tipUsed = true, tipTranscription = step.transcription) }
+            if (state.tipLevel == 0) {
+                tipsUsedCount++
+                updateLoaded { it.copy(tipLevel = 1, tipTranslation = step.expectedText) }
+            } else {
+                updateLoaded { it.copy(tipLevel = 2, tipTranscription = step.transcription) }
+            }
         }
 
         /** Records (or re-records, discarding any prior attempt) — does not submit; the user reviews and taps Check. */
@@ -161,19 +166,20 @@ class PronunciationViewModel
                             skipped = skipped,
                         ),
                     )
-                applyOutcome(response.outcome, response.expectedText)
+                applyOutcome(response.outcome, response.expectedText, state.tipUsed)
             }
         }
 
         private suspend fun applyOutcome(
             outcome: PronunciationStepOutcome,
             expectedText: String,
+            tipUsed: Boolean,
         ) {
             val step = currentStepOrNull()
             when (outcome) {
                 PronunciationStepOutcome.CORRECT -> {
                     correctCount++
-                    step?.let { wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Correct) }
+                    step?.let { wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Correct, tipUsed) }
                     updateLoaded { it.copy(answerState = AnswerState.Correct) }
                     delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                     advanceToNextStep()
@@ -181,14 +187,14 @@ class PronunciationViewModel
                 PronunciationStepOutcome.INCORRECT -> {
                     incorrectCount++
                     step?.let {
-                        wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Incorrect(expectedText))
+                        wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Incorrect(expectedText), tipUsed)
                     }
                     updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText), isSubmitting = false) }
                 }
                 PronunciationStepOutcome.SKIPPED -> {
                     skippedCount++
                     step?.let {
-                        wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Skipped(expectedText))
+                        wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Skipped(expectedText), tipUsed)
                     }
                     updateLoaded { it.copy(answerState = AnswerState.Skipped(expectedText), isSubmitting = false) }
                 }
@@ -217,7 +223,7 @@ class PronunciationViewModel
             }
             // A fresh Loaded() already defaults isSubmitting/recordingState/etc back to their initial values.
             _uiState.update {
-                PronunciationUiState.Loaded(stepIndex = nextIndex, totalSteps = steps.size, word = steps[nextIndex].expectedText)
+                PronunciationUiState.Loaded(stepIndex = nextIndex, totalSteps = steps.size, word = steps[nextIndex].clueText)
             }
             speakReferenceAudio()
         }
