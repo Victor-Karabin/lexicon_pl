@@ -9,7 +9,10 @@ import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerRequest
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
 import com.lexicon.interactors.trueorfalse.TrueOrFalseStepOutcome
 import com.lexicon.interactors.trueorfalse.TrueOrFalseStepResponse
+import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.WordResultEntry
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -30,6 +33,7 @@ class TrueOrFalseViewModel
         private val startSessionUseCase: StartTrueOrFalseSessionUseCase,
         private val submitAnswerUseCase: SubmitTrueOrFalseAnswerUseCase,
         private val dispatchers: DispatcherProvider,
+        private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow<TrueOrFalseUiState>(TrueOrFalseUiState.Loading)
         val uiState: StateFlow<TrueOrFalseUiState> = _uiState.asStateFlow()
@@ -42,6 +46,7 @@ class TrueOrFalseViewModel
         private var correctCount = 0
         private var incorrectCount = 0
         private var timerJob: Job? = null
+        private val wordResults = mutableListOf<WordResultEntry>()
 
         init {
             startSession()
@@ -97,15 +102,24 @@ class TrueOrFalseViewModel
                             userAnsweredTrue = userAnsweredTrue,
                         ),
                     )
-                applyOutcome(response.outcome)
+                applyOutcome(response.outcome, step)
             }
         }
 
         // No status is shown and there is no Next button — every answer advances immediately.
-        private suspend fun applyOutcome(outcome: TrueOrFalseStepOutcome) {
+        private suspend fun applyOutcome(
+            outcome: TrueOrFalseStepOutcome,
+            step: TrueOrFalseStepResponse,
+        ) {
             when (outcome) {
-                TrueOrFalseStepOutcome.CORRECT -> correctCount++
-                TrueOrFalseStepOutcome.INCORRECT -> incorrectCount++
+                TrueOrFalseStepOutcome.CORRECT -> {
+                    correctCount++
+                    wordResults += WordResultEntry(step.word, step.displayedTranslation, AnswerState.Correct)
+                }
+                TrueOrFalseStepOutcome.INCORRECT -> {
+                    incorrectCount++
+                    wordResults += WordResultEntry(step.word, step.displayedTranslation, AnswerState.Incorrect())
+                }
             }
             advanceToNextStep()
         }
@@ -128,6 +142,7 @@ class TrueOrFalseViewModel
             val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
             if (state.isSessionComplete) return
             updateLoaded { it.copy(isSessionComplete = true) }
+            lastSessionResultsHolder.wordResults = wordResults.toList()
             _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skipped = 0))
             // Cancelled last: when the timer itself calls this on natural expiry, completeSession()
             // is running inside timerJob — cancelling it earlier would abort this very coroutine

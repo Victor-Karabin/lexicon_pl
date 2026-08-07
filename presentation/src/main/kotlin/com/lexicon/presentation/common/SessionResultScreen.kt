@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -87,8 +87,8 @@ private fun SessionResultScreenContent(
 
             if (wordResults.isNotEmpty()) {
                 item { HorizontalDivider(modifier = Modifier.padding(top = Dimens.spacingMedium)) }
-                items(wordResults) { entry ->
-                    WordResultRow(entry, modifier = Modifier.padding(vertical = Dimens.spacingSmall))
+                itemsIndexed(wordResults) { index, entry ->
+                    WordResultRow(index + 1, entry, modifier = Modifier.padding(vertical = Dimens.spacingSmall))
                     HorizontalDivider()
                 }
             } else {
@@ -116,6 +116,7 @@ private fun SessionResultScreenContent(
 
 @Composable
 private fun WordResultRow(
+    order: Int,
     entry: WordResultEntry,
     modifier: Modifier = Modifier,
 ) {
@@ -142,13 +143,21 @@ private fun WordResultRow(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Column {
-            Text(entry.word, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                entry.translation,
-                style = MaterialTheme.typography.bodySmall,
+                "$order.",
+                modifier = Modifier.padding(end = Dimens.spacingSmall),
+                style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+            Column {
+                Text(entry.word, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
+                Text(
+                    entry.translation,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
         Text(statusLabel, color = color, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
     }
