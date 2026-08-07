@@ -28,6 +28,12 @@
     <!-- Word Match -->
     <string name="word_match_title">Word Match</string>
 
+    <!-- Crossword -->
+    <string name="crossword_title">Crossword</string>
+    <string name="crossword_across_format">Across · %1$d</string>
+    <string name="crossword_down_format">Down · %1$d</string>
+    <string name="crossword_check_failed">Couldn\'t save your answers. Change a letter to try again.</string>
+
     <!-- True or False -->
     <string name="true_or_false_title">True or False</string>
     <string name="action_true">True</string>

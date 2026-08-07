@@ -16,6 +16,7 @@ internal object LexiconDestinations {
     const val PUZZLE = TrainingIds.PUZZLE
     const val IMAGE_TEST = TrainingIds.IMAGE_TEST
     const val MEMORY_CARDS = TrainingIds.MEMORY_CARDS
+    const val CROSSWORD = TrainingIds.CROSSWORD
 
     const val SESSION_RESULT = "session_result/{correct}/{incorrect}/{skipped}/{tipsUsed}"
 
