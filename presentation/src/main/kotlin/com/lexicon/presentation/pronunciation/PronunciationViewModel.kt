@@ -103,7 +103,12 @@ class PronunciationViewModel
             if (!state.canRecord) return
             deleteCachedRecording(state.recordedAudioPath)
             updateLoaded {
-                it.copy(recordingState = RecordingState.RECORDING, recognizedText = null, recordedAudioPath = null)
+                it.copy(
+                    recordingState = RecordingState.RECORDING,
+                    recognizedText = null,
+                    recordedAudioPath = null,
+                    recognitionError = null,
+                )
             }
             viewModelScope.launch(dispatchers.io) {
                 try {
@@ -117,8 +122,14 @@ class PronunciationViewModel
                         )
                     }
                 } catch (failure: SpeechRecognitionFailed) {
-                    // Per spec: a failed recognition doesn't complete the step — reset so the user can retry.
-                    updateLoaded { it.copy(recordingState = RecordingState.IDLE) }
+                    // Per spec: a failed recognition doesn't complete the step — reset so the user can retry,
+                    // but surface why, since a silent reset looks indistinguishable from nothing happening.
+                    val errorType = if (failure.message?.contains("not available") == true) {
+                        RecognitionErrorType.UNAVAILABLE
+                    } else {
+                        RecognitionErrorType.FAILED
+                    }
+                    updateLoaded { it.copy(recordingState = RecordingState.IDLE, recognitionError = errorType) }
                 }
             }
         }

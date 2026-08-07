@@ -5,6 +5,9 @@ import com.lexicon.presentation.common.revealedAnswer
 
 enum class RecordingState { IDLE, RECORDING, PROCESSING, RECORDED }
 
+/** [UNAVAILABLE] means the device/emulator has no speech recognizer at all; [FAILED] is a one-off recognition miss. */
+enum class RecognitionErrorType { UNAVAILABLE, FAILED }
+
 /** Tip has two levels: 1 reveals the target-language word, 2 additionally reveals its IPA transcription. */
 const val MAX_TIP_LEVEL = 2
 
@@ -31,6 +34,8 @@ sealed interface PronunciationUiState {
         val isSessionComplete: Boolean = false,
         /** True while Check/Skip/Next is mid-flight — disables the action row so a rapid double-tap can't fire twice. */
         val isSubmitting: Boolean = false,
+        /** Set when the most recent recording attempt failed; cleared as soon as the user records again. */
+        val recognitionError: RecognitionErrorType? = null,
     ) : PronunciationUiState {
         /** Correct answer, shown once the step is validated as Incorrect/Skipped. */
         val revealedAnswer: String? get() = answerState.revealedAnswer
