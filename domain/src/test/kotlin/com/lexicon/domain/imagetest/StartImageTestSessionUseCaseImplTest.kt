@@ -53,4 +53,23 @@ class StartImageTestSessionUseCaseImplTest {
                 assertTrue(distractors.none { it == step.correctOption })
             }
         }
+
+    @Test
+    fun `distractors never mix single-word and phrase translations with the correct answer`() =
+        runTest {
+            val mixedItems =
+                items + listOf(
+                    VocabularyItemBoundary(7, "dzień dobry", "good morning", "d͡ʑɛɲ ˈdɔbrɨ"),
+                    VocabularyItemBoundary(8, "dobry wieczór", "good evening", "ˈdɔbrɨ ˈvjɛt͡ʂur"),
+                )
+            coEvery { vocabularyRepository.getRandomItems(any()) } returns mixedItems
+            coEvery { imageProvider.searchImage(any()) } returns null
+
+            val response = useCase(StartImageTestSessionRequest(stepCount = mixedItems.size, optionCount = 4))
+
+            response.steps.forEach { step ->
+                val correctIsPhrase = step.correctOption.contains(' ')
+                step.options.forEach { option -> assertEquals(correctIsPhrase, option.contains(' ')) }
+            }
+        }
 }

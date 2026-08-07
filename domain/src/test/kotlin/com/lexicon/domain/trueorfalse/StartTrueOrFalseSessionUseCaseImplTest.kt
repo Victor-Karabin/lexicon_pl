@@ -55,4 +55,20 @@ class StartTrueOrFalseSessionUseCaseImplTest {
                 assertEquals(step.displayedTranslation == subject.translation, step.isDisplayedTranslationCorrect)
             }
         }
+
+    @Test
+    fun `a distractor translation never mixes a single word with a phrase`() =
+        runTest {
+            val mixedItems =
+                items + listOf(
+                    VocabularyItemBoundary(5, "dzień dobry", "good morning", "d͡ʑɛɲ ˈdɔbrɨ"),
+                    VocabularyItemBoundary(6, "dobry wieczór", "good evening", "ˈdɔbrɨ ˈvjɛt͡ʂur"),
+                )
+            coEvery { vocabularyRepository.getRandomItems(any()) } returns mixedItems
+            val response = useCase(StartTrueOrFalseSessionRequest(stepCount = mixedItems.size, correctProbability = 0.0))
+            response.steps.forEach { step ->
+                val subject = mixedItems.first { it.id == step.vocabularyItemId }
+                assertEquals(subject.translation.contains(' '), step.displayedTranslation.contains(' '))
+            }
+        }
 }

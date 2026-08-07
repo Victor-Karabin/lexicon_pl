@@ -3,6 +3,7 @@ package com.lexicon.domain.imagetest
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.domain.dictation.Word
+import com.lexicon.domain.dictation.isPhrase
 import com.lexicon.domain.dictation.toWord
 import com.lexicon.interactors.imagetest.ImageTestSessionResponse
 import com.lexicon.interactors.imagetest.ImageTestStepResponse
@@ -44,7 +45,7 @@ class StartImageTestSessionUseCaseImpl
         ): ImageTestStepResponse {
             val distractors =
                 pool
-                    .filter { it.id != subject.id && it.translation != subject.translation }
+                    .filter { it.id != subject.id && it.translation != subject.translation && it.isPhrase == subject.isPhrase }
                     .distinctBy { it.translation }
                     .shuffled()
                     .take(optionCount - 1)
