@@ -7,7 +7,6 @@ import com.lexicon.interactors.wordmatch.StartWordMatchSessionRequest
 import com.lexicon.interactors.wordmatch.StartWordMatchSessionUseCase
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultRequest
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultUseCase
-import com.lexicon.interactors.wordmatch.WordMatchStepOutcome
 import com.lexicon.interactors.wordmatch.WordMatchStepResponse
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
@@ -47,6 +46,9 @@ class WordMatchViewModel
         private var correctCount = 0
         private var incorrectCount = 0
         private val wordResults = mutableListOf<WordResultEntry>()
+
+        /** Vocabulary items that were ever on the losing end of a mismatched pair this step. */
+        private val incorrectItemIds = mutableSetOf<Long>()
 
         init {
             startSession()
@@ -99,6 +101,8 @@ class WordMatchViewModel
                     viewModelScope.launch(dispatchers.io) { completeStep() }
                 }
             } else {
+                incorrectItemIds += leftId
+                incorrectItemIds += rightId
                 // Left as incorrect (red) until the user's next selection attempt clears it, rather
                 // than auto-resetting after a fixed delay.
                 updateLoaded {
@@ -116,26 +120,22 @@ class WordMatchViewModel
         private suspend fun completeStep() {
             val step = currentStepOrNull() ?: return
             val state = _uiState.value as? WordMatchUiState.Loaded ?: return
-            val response =
-                submitStepResultUseCase(
-                    SubmitWordMatchStepResultRequest(
-                        sessionId = sessionId,
-                        stepIndex = step.stepIndex,
-                        vocabularyItemIds = step.pairs.map { it.vocabularyItemId },
-                        incorrectAttempts = state.incorrectAttempts,
-                    ),
-                )
-            val outcome = when (response.outcome) {
-                WordMatchStepOutcome.CORRECT -> {
-                    correctCount++
-                    AnswerState.Correct
-                }
-                WordMatchStepOutcome.INCORRECT -> {
-                    incorrectCount++
-                    AnswerState.Incorrect()
-                }
+            submitStepResultUseCase(
+                SubmitWordMatchStepResultRequest(
+                    sessionId = sessionId,
+                    stepIndex = step.stepIndex,
+                    vocabularyItemIds = step.pairs.map { it.vocabularyItemId },
+                    incorrectAttempts = state.incorrectAttempts,
+                ),
+            )
+            // The Results breakdown reflects each pair's own history, not the step's overall
+            // outcome — a pair that was matched cleanly still counts as Correct even if a
+            // different pair on the board was mismatched along the way.
+            step.pairs.forEach { pair ->
+                val outcome = if (pair.vocabularyItemId in incorrectItemIds) AnswerState.Incorrect() else AnswerState.Correct
+                if (outcome == AnswerState.Correct) correctCount++ else incorrectCount++
+                wordResults += WordResultEntry(pair.word, pair.translation, outcome)
             }
-            step.pairs.forEach { pair -> wordResults += WordResultEntry(pair.word, pair.translation, outcome) }
             delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
             advanceToNextStep()
         }
