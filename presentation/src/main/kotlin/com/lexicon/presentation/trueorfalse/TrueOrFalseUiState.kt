@@ -18,7 +18,5 @@ sealed interface TrueOrFalseUiState {
         val isSessionComplete: Boolean = false,
     ) : TrueOrFalseUiState {
         val isEditable: Boolean get() = answerState is AnswerState.Unanswered && !isSessionComplete
-        val canSkip: Boolean get() = isEditable
-        val awaitingNext: Boolean get() = answerState is AnswerState.Incorrect || answerState is AnswerState.Skipped
     }
 }

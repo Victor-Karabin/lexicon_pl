@@ -1,20 +1,19 @@
 package com.lexicon.presentation.trueorfalse
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -22,7 +21,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
@@ -35,6 +36,7 @@ import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
 
 private const val LOW_TIME_WARNING_SECONDS = 10
+private val TimerSize = 72.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,8 +61,6 @@ fun TrueOrFalseScreen(
         uiState = uiState,
         onClose = onClose,
         onAnswer = viewModel::onAnswer,
-        onSkip = viewModel::onSkip,
-        onNext = viewModel::onNext,
         modifier = modifier,
     )
 }
@@ -71,8 +71,6 @@ private fun TrueOrFalseScreenContent(
     uiState: TrueOrFalseUiState,
     onClose: () -> Unit,
     onAnswer: (Boolean) -> Unit,
-    onSkip: () -> Unit,
-    onNext: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -94,87 +92,81 @@ private fun TrueOrFalseScreenContent(
                 } else {
                     MaterialTheme.colorScheme.primary
                 }
+                val statusLabel = when (uiState.answerState) {
+                    is AnswerState.Correct -> stringResource(R.string.status_correct)
+                    is AnswerState.Incorrect -> stringResource(R.string.status_incorrect)
+                    else -> null
+                }
 
-                Column(modifier = Modifier.fillMaxSize().padding(padding)) {
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Box(modifier = Modifier.size(TimerSize), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(
+                            progress = { uiState.timeRemainingSeconds / TRUE_OR_FALSE_TIME_LIMIT_SECONDS.toFloat() },
+                            color = timerColor,
+                            strokeWidth = 6.dp,
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                        Text(
+                            text = stringResource(R.string.time_remaining_format, uiState.timeRemainingSeconds),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = timerColor,
+                        )
+                    }
+
+                    Text(
+                        text = uiState.word,
+                        modifier = Modifier.padding(top = Dimens.spacingLarge),
+                        style = MaterialTheme.typography.headlineSmall,
+                    )
+                    Text(
+                        text = uiState.displayedTranslation,
+                        modifier = Modifier.padding(top = Dimens.spacingSmall),
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+
+                    statusLabel?.let { label ->
+                        val statusColor = if (uiState.answerState is AnswerState.Correct) LexiconSuccess else LexiconError
+                        Text(
+                            text = label,
+                            color = statusColor,
+                            modifier = Modifier.padding(top = Dimens.spacingMedium),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    }
+
                     Column(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth()
-                            .padding(Dimens.spacingMedium),
+                            .padding(top = Dimens.spacingLarge),
+                        verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
                     ) {
-                        LinearProgressIndicator(
-                            progress = { uiState.timeRemainingSeconds / TRUE_OR_FALSE_TIME_LIMIT_SECONDS.toFloat() },
-                            color = timerColor,
-                            modifier = Modifier.fillMaxWidth(),
-                        )
-                        Text(
-                            text = stringResource(R.string.time_remaining_format, uiState.timeRemainingSeconds),
-                            modifier = Modifier.padding(top = Dimens.spacingSmall),
-                            style = MaterialTheme.typography.labelMedium,
-                            color = timerColor,
-                        )
-
-                        Text(
-                            text = uiState.word,
-                            modifier = Modifier.padding(top = Dimens.spacingLarge),
-                            style = MaterialTheme.typography.headlineSmall,
-                        )
-                        Text(
-                            text = uiState.displayedTranslation,
-                            modifier = Modifier.padding(top = Dimens.spacingSmall),
-                            style = MaterialTheme.typography.titleLarge,
-                        )
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
-                            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                        Button(
+                            onClick = debounced { onAnswer(true) },
+                            enabled = uiState.isEditable,
+                            colors = ButtonDefaults.buttonColors(containerColor = LexiconSuccess),
+                            modifier = Modifier.weight(1f).fillMaxWidth(),
                         ) {
-                            Button(
-                                onClick = debounced { onAnswer(true) },
-                                enabled = uiState.isEditable,
-                                colors = buttonColorsFor(selected = uiState.userAnsweredTrue == true, uiState = uiState),
-                            ) {
-                                Text(stringResource(R.string.action_true))
-                            }
-                            Button(
-                                onClick = debounced { onAnswer(false) },
-                                enabled = uiState.isEditable,
-                                colors = buttonColorsFor(selected = uiState.userAnsweredTrue == false, uiState = uiState),
-                            ) {
-                                Text(stringResource(R.string.action_false))
-                            }
+                            Text(stringResource(R.string.action_true), style = MaterialTheme.typography.headlineMedium)
                         }
-                    }
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
-                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall, Alignment.End),
-                    ) {
-                        if (uiState.canSkip) {
-                            TextButton(onClick = debounced(onClick = onSkip)) {
-                                Text(stringResource(R.string.action_skip))
-                            }
-                        }
-                        if (uiState.awaitingNext) {
-                            Button(onClick = debounced(onClick = onNext)) {
-                                Text(stringResource(R.string.action_next))
-                            }
+                        Button(
+                            onClick = debounced { onAnswer(false) },
+                            enabled = uiState.isEditable,
+                            colors = ButtonDefaults.buttonColors(containerColor = LexiconError),
+                            modifier = Modifier.weight(1f).fillMaxWidth(),
+                        ) {
+                            Text(stringResource(R.string.action_false), style = MaterialTheme.typography.headlineMedium)
                         }
                     }
                 }
             }
         }
     }
-}
-
-@Composable
-private fun buttonColorsFor(
-    selected: Boolean,
-    uiState: TrueOrFalseUiState.Loaded,
-) = when {
-    !selected -> ButtonDefaults.buttonColors()
-    uiState.answerState is AnswerState.Correct -> ButtonDefaults.buttonColors(containerColor = LexiconSuccess)
-    else -> ButtonDefaults.buttonColors(containerColor = LexiconError)
 }
 
 @Preview(showBackground = true)
@@ -191,8 +183,6 @@ private fun TrueOrFalseScreenPreview() {
                 ),
             onClose = {},
             onAnswer = {},
-            onSkip = {},
-            onNext = {},
         )
     }
 }

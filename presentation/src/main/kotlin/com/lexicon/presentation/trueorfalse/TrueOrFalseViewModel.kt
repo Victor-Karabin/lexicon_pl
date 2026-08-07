@@ -26,6 +26,9 @@ import javax.inject.Inject
 
 private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 400L
 
+/** Longer than the correct-answer delay so the status label/highlight has time to register. */
+private const val INCORRECT_ANSWER_ADVANCE_DELAY_MS = 700L
+
 @HiltViewModel
 class TrueOrFalseViewModel
     @Inject
@@ -44,7 +47,6 @@ class TrueOrFalseViewModel
         private var steps: List<TrueOrFalseStepResponse> = emptyList()
         private var correctCount = 0
         private var incorrectCount = 0
-        private var skippedCount = 0
         private var timerJob: Job? = null
 
         init {
@@ -88,19 +90,6 @@ class TrueOrFalseViewModel
         fun onAnswer(userAnsweredTrue: Boolean) {
             val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
             if (!state.isEditable) return
-            submitCurrentStep(userAnsweredTrue = userAnsweredTrue, skipped = false)
-        }
-
-        fun onSkip() {
-            val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
-            if (!state.canSkip) return
-            submitCurrentStep(userAnsweredTrue = null, skipped = true)
-        }
-
-        private fun submitCurrentStep(
-            userAnsweredTrue: Boolean?,
-            skipped: Boolean,
-        ) {
             val step = currentStepOrNull() ?: return
             viewModelScope.launch(dispatchers.io) {
                 val response =
@@ -111,40 +100,30 @@ class TrueOrFalseViewModel
                             vocabularyItemId = step.vocabularyItemId,
                             isDisplayedTranslationCorrect = step.isDisplayedTranslationCorrect,
                             userAnsweredTrue = userAnsweredTrue,
-                            skipped = skipped,
                         ),
                     )
                 applyOutcome(response.outcome, userAnsweredTrue)
             }
         }
 
+        // Both outcomes auto-advance — there is no Next button to wait for a manual continue.
         private suspend fun applyOutcome(
             outcome: TrueOrFalseStepOutcome,
-            userAnsweredTrue: Boolean?,
+            userAnsweredTrue: Boolean,
         ) {
             when (outcome) {
                 TrueOrFalseStepOutcome.CORRECT -> {
                     correctCount++
                     updateLoaded { it.copy(answerState = AnswerState.Correct, userAnsweredTrue = userAnsweredTrue) }
                     delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
-                    advanceToNextStep()
                 }
                 TrueOrFalseStepOutcome.INCORRECT -> {
                     incorrectCount++
                     updateLoaded { it.copy(answerState = AnswerState.Incorrect(), userAnsweredTrue = userAnsweredTrue) }
-                }
-                TrueOrFalseStepOutcome.SKIPPED -> {
-                    skippedCount++
-                    updateLoaded { it.copy(answerState = AnswerState.Skipped()) }
+                    delay(INCORRECT_ANSWER_ADVANCE_DELAY_MS)
                 }
             }
-        }
-
-        /** Called from the UI's "Next" button after an Incorrect/Skipped step. */
-        fun onNext() {
-            val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
-            if (!state.awaitingNext) return
-            viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
+            advanceToNextStep()
         }
 
         private suspend fun advanceToNextStep() {
@@ -162,7 +141,7 @@ class TrueOrFalseViewModel
             if (state.isSessionComplete) return
             timerJob?.cancel()
             updateLoaded { it.copy(isSessionComplete = true) }
-            _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount))
+            _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skipped = 0))
         }
 
         private fun currentStepOrNull(): TrueOrFalseStepResponse? {
