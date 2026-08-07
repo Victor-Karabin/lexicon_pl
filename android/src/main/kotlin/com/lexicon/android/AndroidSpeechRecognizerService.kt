@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import android.util.Log
 import com.lexicon.common.DispatcherProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -25,6 +26,26 @@ import kotlin.coroutines.resumeWithException
 private const val AUDIO_SAMPLE_RATE_HZ = 16_000
 private const val BITS_PER_SAMPLE = 16
 private const val WAV_HEADER_SIZE = 44
+private const val TAG = "AndroidSpeechRecognizer"
+
+/** Human-readable names for the android.speech.SpeechRecognizer#ERROR_* constants, for logging. */
+private fun speechRecognizerErrorName(error: Int): String =
+    when (error) {
+        SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "ERROR_NETWORK_TIMEOUT"
+        SpeechRecognizer.ERROR_NETWORK -> "ERROR_NETWORK"
+        SpeechRecognizer.ERROR_AUDIO -> "ERROR_AUDIO"
+        SpeechRecognizer.ERROR_SERVER -> "ERROR_SERVER"
+        SpeechRecognizer.ERROR_CLIENT -> "ERROR_CLIENT"
+        SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "ERROR_SPEECH_TIMEOUT"
+        SpeechRecognizer.ERROR_NO_MATCH -> "ERROR_NO_MATCH"
+        SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "ERROR_RECOGNIZER_BUSY"
+        SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "ERROR_INSUFFICIENT_PERMISSIONS"
+        10 -> "ERROR_TOO_MANY_REQUESTS" // SpeechRecognizer.ERROR_TOO_MANY_REQUESTS, API 33+
+        11 -> "ERROR_SERVER_DISCONNECTED" // SpeechRecognizer.ERROR_SERVER_DISCONNECTED, API 33+
+        12 -> "ERROR_LANGUAGE_NOT_SUPPORTED" // SpeechRecognizer.ERROR_LANGUAGE_NOT_SUPPORTED, API 33+
+        13 -> "ERROR_LANGUAGE_UNAVAILABLE" // SpeechRecognizer.ERROR_LANGUAGE_UNAVAILABLE, API 33+
+        else -> "UNKNOWN"
+    }
 
 @Singleton
 class AndroidSpeechRecognizerService
@@ -35,6 +56,7 @@ class AndroidSpeechRecognizerService
     ) : SpeechRecognizerService {
         override suspend fun recognize(locale: Locale): SpeechRecognitionResult {
             if (!SpeechRecognizer.isRecognitionAvailable(context)) {
+                Log.w(TAG, "isRecognitionAvailable() is false — no speech recognizer service on this device/emulator image")
                 throw SpeechRecognitionFailed("Speech recognition is not available on this device")
             }
             // SpeechRecognizer must be created and driven from the main thread.
@@ -67,9 +89,11 @@ class AndroidSpeechRecognizerService
                             }
 
                             override fun onError(error: Int) {
+                                val errorName = speechRecognizerErrorName(error)
+                                Log.w(TAG, "SpeechRecognizer error: $error ($errorName) for locale ${locale.toLanguageTag()}")
                                 recognizer.destroy()
                                 if (continuation.isActive) {
-                                    continuation.resumeWithException(SpeechRecognitionFailed("Recognition error code $error"))
+                                    continuation.resumeWithException(SpeechRecognitionFailed("Recognition error $error ($errorName)"))
                                 }
                             }
 
