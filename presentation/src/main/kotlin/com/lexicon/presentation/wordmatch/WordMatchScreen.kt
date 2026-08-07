@@ -142,7 +142,7 @@ private fun MatchTile(
         MatchTileState.SELECTED -> MaterialTheme.colorScheme.primary
         MatchTileState.DEFAULT -> MaterialTheme.colorScheme.surfaceVariant
     }
-    val enabled = state == MatchTileState.DEFAULT || state == MatchTileState.SELECTED
+    val enabled = state != MatchTileState.MATCHED
     val textColor = when (state) {
         MatchTileState.MATCHED, MatchTileState.INCORRECT -> Color.White
         MatchTileState.SELECTED -> MaterialTheme.colorScheme.onPrimary
