@@ -42,9 +42,6 @@ class CrosswordViewModel
 
         private lateinit var sessionId: String
 
-        /** Held between Check and Continue so the user can review the marked grid before navigating. */
-        private var pendingResult: SessionNavigationEvent.SessionComplete? = null
-
         init {
             startSession()
         }
@@ -60,18 +57,19 @@ class CrosswordViewModel
                         col = placement.col,
                         direction = placement.direction,
                         length = placement.expectedText.length,
-                        imageUrl = placement.imageUrl,
                         clueText = placement.clueText,
                         expectedText = placement.expectedText,
                     )
                 }
+                val firstWord = words.firstOrNull()
                 _uiState.update {
                     CrosswordUiState.Loaded(
                         words = words,
                         cells = words.flatMap { it.occupiedCells() }.associateWith { CrosswordCellState() },
                         rowCount = response.rowCount,
                         colCount = response.colCount,
-                        selectedWordId = words.firstOrNull()?.vocabularyItemId,
+                        selectedWordId = firstWord?.vocabularyItemId,
+                        focusedCell = firstWord?.cellAt(0),
                     )
                 }
             }
@@ -79,18 +77,37 @@ class CrosswordViewModel
 
         fun onClueSelected(vocabularyItemId: Long) {
             updateLoaded { state ->
-                if (!state.isEditable) state else state.copy(selectedWordId = vocabularyItemId)
+                if (!state.isEditable) return@updateLoaded state
+                val word = state.words.find { it.vocabularyItemId == vocabularyItemId } ?: return@updateLoaded state
+                state.copy(
+                    selectedWordId = vocabularyItemId,
+                    focusedCell = state.firstEditableCell(word) ?: word.cellAt(0),
+                )
             }
         }
 
-        fun onCellSelected(cell: CrosswordCell) {
+        /** Tapping a cell moves the caret there; tapping one that already has a letter clears it for retyping. */
+        fun onCellTapped(cell: CrosswordCell) {
             updateLoaded { state ->
                 if (!state.isEditable) return@updateLoaded state
-                // A cell can belong to two crossing words; prefer keeping the current selection if it covers the cell.
+                val cellState = state.cells[cell] ?: return@updateLoaded state
+                // A cell can belong to two crossing words; keep the current selection if it covers the cell.
                 val current = state.selectedWord
-                if (current != null && current.occupiedCells().contains(cell)) return@updateLoaded state
-                val owner = state.words.firstOrNull { it.occupiedCells().contains(cell) } ?: return@updateLoaded state
-                state.copy(selectedWordId = owner.vocabularyItemId)
+                val owner = current?.takeIf { it.occupiedCells().contains(cell) }
+                    ?: state.words.firstOrNull { it.occupiedCells().contains(cell) }
+                    ?: return@updateLoaded state
+
+                val cleared = if (cellState.locked) {
+                    state.cells
+                } else {
+                    state.cells + (cell to cellState.copy(letter = ""))
+                }
+                state.copy(
+                    selectedWordId = owner.vocabularyItemId,
+                    focusedCell = cell,
+                    cells = cleared,
+                    submitFailed = false,
+                )
             }
         }
 
@@ -98,17 +115,27 @@ class CrosswordViewModel
             cell: CrosswordCell,
             letter: String,
         ) {
+            var completed = false
             updateLoaded { state ->
                 if (!state.isEditable) return@updateLoaded state
                 val existing = state.cells[cell] ?: return@updateLoaded state
                 if (existing.locked) return@updateLoaded state
+
                 val normalized = letter.trim().takeLast(1).uppercase(Locale.ROOT)
-                state.copy(cells = state.cells + (cell to existing.copy(letter = normalized, isIncorrect = false)))
+                val updated = state.copy(
+                    cells = state.cells + (cell to existing.copy(letter = normalized)),
+                    submitFailed = false,
+                )
+                completed = updated.isComplete
+                // Deleting should leave the caret put; only a real letter walks forward.
+                if (normalized.isEmpty()) updated else updated.copy(focusedCell = updated.cellAfter(cell))
             }
+            if (completed) submitIfComplete()
         }
 
         /** Reveals the next unrevealed letter of the selected word, or of any unfinished word if it's complete. */
         fun onTipRequested() {
+            var completed = false
             updateLoaded { state ->
                 if (!state.canUseTip) return@updateLoaded state
                 val target = state.selectedWord?.takeIf { it.revealedLetterCount < it.length }
@@ -120,18 +147,26 @@ class CrosswordViewModel
                 val letter = target.expectedText.uppercase(Locale.ROOT)[offset].toString()
                 val updatedWord = target.copy(revealedLetterCount = offset + 1)
 
-                state.copy(
+                val updated = state.copy(
                     words = state.words.map { if (it.vocabularyItemId == target.vocabularyItemId) updatedWord else it },
                     cells = state.cells + (cell to CrosswordCellState(letter = letter, locked = true)),
                     selectedWordId = target.vocabularyItemId,
                 )
+                completed = updated.isComplete
+                updated.copy(focusedCell = updated.firstEditableCell(updatedWord) ?: updated.cellAfter(cell))
             }
+            if (completed) submitIfComplete()
         }
 
-        fun onCheck() {
+        /**
+         * There is no Check button: filling the last cell validates the puzzle and opens the Result
+         * screen, where the per-word breakdown lives.
+         */
+        private fun submitIfComplete() {
             val state = _uiState.value as? CrosswordUiState.Loaded ?: return
-            if (!state.canCheck) return
+            if (!state.isComplete || !state.isEditable) return
             updateLoaded { it.copy(isSubmitting = true, submitFailed = false) }
+
             viewModelScope.launch(dispatchers.io) {
                 val submissions = state.words.map { word ->
                     CrosswordWordSubmission(
@@ -144,8 +179,8 @@ class CrosswordViewModel
                 val response = runCatching {
                     submitCrosswordUseCase(SubmitCrosswordRequest(sessionId, submissions))
                 }.getOrElse {
-                    // Leave the grid editable and let the user try Check again rather than
-                    // stranding them on a screen whose only action is permanently disabled.
+                    // Keep the grid editable so changing a letter re-triggers validation, rather
+                    // than stranding the user on a screen with nothing left to interact with.
                     updateLoaded { it.copy(isSubmitting = false, submitFailed = true) }
                     return@launch
                 }
@@ -163,49 +198,22 @@ class CrosswordViewModel
                         tipUsed = result.tipUsed,
                     )
                 }
-                pendingResult = response.wordResults.let { results ->
-                    val correct = results.count { it.outcome == CrosswordWordOutcome.CORRECT }
-                    SessionNavigationEvent.SessionComplete(
-                        correct = correct,
-                        incorrect = results.size - correct,
-                        skipped = 0,
-                        tipsUsed = results.count { it.tipUsed },
+
+                val correct = response.wordResults.count { it.outcome == CrosswordWordOutcome.CORRECT }
+                updateLoaded {
+                    it.copy(
+                        answerState = if (correct == response.wordResults.size) AnswerState.Correct else AnswerState.Incorrect(),
+                        isSubmitting = false,
+                        focusedCell = null,
                     )
                 }
-
-                markIncorrectCells(
-                    response.wordResults
-                        .filter { it.outcome == CrosswordWordOutcome.INCORRECT }
-                        .map { it.vocabularyItemId }
-                        .toSet(),
-                )
-            }
-        }
-
-        /**
-         * Called from the UI's "Next" button. Navigation is deliberately not emitted straight from
-         * [onCheck]: doing so pops this screen instantly, so the user would never actually see the
-         * incorrect cells or the revealed answers that Check just produced.
-         */
-        fun onContinue() {
-            val state = _uiState.value as? CrosswordUiState.Loaded ?: return
-            if (!state.awaitingContinue) return
-            val result = pendingResult ?: return
-            viewModelScope.launch { _navigationEvents.emit(result) }
-        }
-
-        private fun markIncorrectCells(incorrectWordIds: Set<Long>) {
-            updateLoaded { state ->
-                val incorrectCells = state.words
-                    .filter { it.vocabularyItemId in incorrectWordIds }
-                    .flatMap { it.occupiedCells() }
-                    .toSet()
-                state.copy(
-                    cells = state.cells.mapValues { (cell, cellState) ->
-                        cellState.copy(isIncorrect = cell in incorrectCells)
-                    },
-                    answerState = if (incorrectWordIds.isEmpty()) AnswerState.Correct else AnswerState.Incorrect(),
-                    isSubmitting = false,
+                _navigationEvents.emit(
+                    SessionNavigationEvent.SessionComplete(
+                        correct = correct,
+                        incorrect = response.wordResults.size - correct,
+                        skipped = 0,
+                        tipsUsed = response.wordResults.count { it.tipUsed },
+                    ),
                 )
             }
         }
@@ -214,3 +222,17 @@ class CrosswordViewModel
             _uiState.update { current -> if (current is CrosswordUiState.Loaded) transform(current) else current }
         }
     }
+
+/** Next editable cell of the selected word after [cell], skipping Tip-locked ones. */
+private fun CrosswordUiState.Loaded.cellAfter(cell: CrosswordCell): CrosswordCell? {
+    val word = selectedWord ?: return null
+    val wordCells = word.occupiedCells()
+    val index = wordCells.indexOf(cell)
+    if (index == -1) return null
+    return wordCells.drop(index + 1).firstOrNull { cells[it]?.locked == false }
+}
+
+/** First cell of [word] the user can still type into: prefer an empty one, else any unlocked one. */
+private fun CrosswordUiState.Loaded.firstEditableCell(word: CrosswordWordUi): CrosswordCell? =
+    word.occupiedCells().firstOrNull { cell -> cells[cell]?.let { !it.locked && !it.isFilled } == true }
+        ?: word.occupiedCells().firstOrNull { cell -> cells[cell]?.locked == false }

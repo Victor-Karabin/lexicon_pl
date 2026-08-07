@@ -9,9 +9,9 @@ data class CrosswordCellState(
     val letter: String = "",
     /** Revealed via Tip; locked cells can't be edited further. */
     val locked: Boolean = false,
-    /** Set after Check for every cell of a word that didn't match. */
-    val isIncorrect: Boolean = false,
-)
+) {
+    val isFilled: Boolean get() = letter.isNotEmpty()
+}
 
 data class CrosswordWordUi(
     val vocabularyItemId: Long,
@@ -19,7 +19,7 @@ data class CrosswordWordUi(
     val col: Int,
     val direction: CrosswordDirection,
     val length: Int,
-    val imageUrl: String?,
+    /** Base-language word shown as the clue. */
     val clueText: String,
     /** Target spelling to reconstruct in the grid; never shown directly. */
     val expectedText: String,
@@ -41,25 +41,23 @@ sealed interface CrosswordUiState {
         val rowCount: Int = 0,
         val colCount: Int = 0,
         val selectedWordId: Long? = null,
+        /** Cell the keyboard should be pointed at; driven by typing, tapping and Tip. */
+        val focusedCell: CrosswordCell? = null,
         val answerState: AnswerState = AnswerState.Unanswered,
-        /** True while Check is mid-flight — disables the action row so a rapid double-tap can't fire twice. */
+        /** True while validation is in flight, so a filled grid can't submit twice. */
         val isSubmitting: Boolean = false,
-        /** Set when Check couldn't be recorded; the user can retry rather than being stuck. */
+        /** Set when validation couldn't be recorded; editing a cell retries it. */
         val submitFailed: Boolean = false,
     ) : CrosswordUiState {
-        /** The grid stops accepting input once it has been checked. */
         val isChecked: Boolean get() = answerState !is AnswerState.Unanswered
         val isEditable: Boolean get() = !isChecked && !isSubmitting
-        val canCheck: Boolean get() = isEditable
         val canUseTip: Boolean get() = isEditable && words.any { it.revealedLetterCount < it.length }
 
-        /** After Check the user reviews the marked grid, then continues to the Result screen. */
-        val awaitingContinue: Boolean get() = isChecked && !isSubmitting
+        /** Every cell has a letter — the trigger for validating the puzzle automatically. */
+        val isComplete: Boolean get() = cells.isNotEmpty() && cells.values.all { it.isFilled }
+
         val selectedWord: CrosswordWordUi? get() = words.find { it.vocabularyItemId == selectedWordId }
 
         fun enteredText(word: CrosswordWordUi): String = word.occupiedCells().joinToString("") { cell -> cells[cell]?.letter.orEmpty() }
-
-        /** Correct spelling, revealed per word once the puzzle has been checked (spec §14). */
-        fun revealedAnswer(word: CrosswordWordUi): String? = word.expectedText.takeIf { isChecked }
     }
 }

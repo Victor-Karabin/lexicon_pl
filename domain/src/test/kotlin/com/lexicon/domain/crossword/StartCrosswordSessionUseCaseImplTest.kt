@@ -1,6 +1,5 @@
 package com.lexicon.domain.crossword
 
-import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.crossword.StartCrosswordSessionRequest
@@ -13,8 +12,7 @@ import org.junit.Test
 
 class StartCrosswordSessionUseCaseImplTest {
     private val vocabularyRepository: VocabularyRepository = mockk()
-    private val imageProvider: ImageProvider = mockk()
-    private val useCase = StartCrosswordSessionUseCaseImpl(vocabularyRepository, imageProvider)
+    private val useCase = StartCrosswordSessionUseCaseImpl(vocabularyRepository)
 
     private val items = listOf(
         VocabularyItemBoundary(1, "kot", "cat", "kɔt"),
@@ -28,7 +26,6 @@ class StartCrosswordSessionUseCaseImplTest {
     fun `phrases are excluded from the puzzle`() =
         runTest {
             coEvery { vocabularyRepository.getRandomItems(any()) } returns items
-            coEvery { imageProvider.searchImage(any()) } returns null
 
             val response = useCase(StartCrosswordSessionRequest(wordCount = 5))
 
@@ -40,7 +37,6 @@ class StartCrosswordSessionUseCaseImplTest {
     fun `only up to wordCount words are placed`() =
         runTest {
             coEvery { vocabularyRepository.getRandomItems(any()) } returns items
-            coEvery { imageProvider.searchImage(any()) } returns null
 
             val response = useCase(StartCrosswordSessionRequest(wordCount = 2))
 
@@ -48,13 +44,15 @@ class StartCrosswordSessionUseCaseImplTest {
         }
 
     @Test
-    fun `every placed word carries an image url when the provider finds one`() =
+    fun `each clue is the base-language translation of the word to spell`() =
         runTest {
             coEvery { vocabularyRepository.getRandomItems(any()) } returns items
-            coEvery { imageProvider.searchImage(any()) } returns "https://example.com/image.jpg"
 
             val response = useCase(StartCrosswordSessionRequest(wordCount = 3))
 
-            assertTrue(response.words.all { it.imageUrl == "https://example.com/image.jpg" })
+            val expectedClues = items.filterNot { it.text.contains(' ') }.associate { it.text to it.translation }
+            response.words.forEach { placement ->
+                assertEquals(expectedClues[placement.expectedText], placement.clueText)
+            }
         }
 }

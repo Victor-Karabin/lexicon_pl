@@ -11,17 +11,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -32,12 +28,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -46,23 +42,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.SubcomposeAsyncImage
 import com.lexicon.interactors.crossword.CrosswordDirection
 import com.lexicon.presentation.R
-import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.debounced
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconShapes
-import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
 
 /** Cells shrink to fit the widest grid on screen; below this they stop being tappable/readable. */
 private val MinCellSize = 22.dp
 private val MaxCellSize = 40.dp
-private val ClueImageSize = 96.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -87,11 +79,9 @@ fun CrosswordScreen(
         uiState = uiState,
         onClose = onClose,
         onClueSelected = viewModel::onClueSelected,
-        onCellSelected = viewModel::onCellSelected,
+        onCellTapped = viewModel::onCellTapped,
         onLetterEntered = viewModel::onLetterEntered,
         onTipRequested = viewModel::onTipRequested,
-        onCheck = viewModel::onCheck,
-        onContinue = viewModel::onContinue,
         modifier = modifier,
     )
 }
@@ -102,11 +92,9 @@ private fun CrosswordScreenContent(
     uiState: CrosswordUiState,
     onClose: () -> Unit,
     onClueSelected: (Long) -> Unit,
-    onCellSelected: (CrosswordCell) -> Unit,
+    onCellTapped: (CrosswordCell) -> Unit,
     onLetterEntered: (CrosswordCell, String) -> Unit,
     onTipRequested: () -> Unit,
-    onCheck: () -> Unit,
-    onContinue: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -133,31 +121,15 @@ private fun CrosswordScreenContent(
                     ) {
                         CrosswordGrid(
                             uiState = uiState,
-                            onCellSelected = onCellSelected,
+                            onCellTapped = onCellTapped,
                             onLetterEntered = onLetterEntered,
                         )
 
-                        ClueRow(
+                        ClueList(
                             uiState = uiState,
                             onClueSelected = onClueSelected,
                             modifier = Modifier.padding(top = Dimens.spacingMedium),
                         )
-
-                        val statusLabel = when (uiState.answerState) {
-                            is AnswerState.Correct -> stringResource(R.string.status_correct)
-                            is AnswerState.Incorrect -> stringResource(R.string.status_incorrect)
-                            else -> null
-                        }
-                        statusLabel?.let { label ->
-                            val statusColor = if (uiState.answerState is AnswerState.Correct) LexiconSuccess else LexiconError
-                            Text(
-                                text = label,
-                                color = statusColor,
-                                modifier = Modifier.padding(top = Dimens.spacingMedium),
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
-                            )
-                        }
 
                         if (uiState.submitFailed) {
                             Text(
@@ -169,22 +141,13 @@ private fun CrosswordScreenContent(
                         }
                     }
 
-                    // No Skip (single-screen training). Check turns into Next once validated, so the
-                    // marked-up grid stays on screen until the user chooses to move on.
+                    // No Check/Next and no Skip: filling the last cell validates and opens Results.
                     Row(
                         modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
                         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall, Alignment.End),
                     ) {
-                        if (!uiState.isChecked) {
-                            TextButton(onClick = debounced(onClick = onTipRequested), enabled = uiState.canUseTip) {
-                                Text(stringResource(R.string.action_tip))
-                            }
-                        }
-                        Button(
-                            onClick = debounced { if (uiState.isChecked) onContinue() else onCheck() },
-                            enabled = uiState.canCheck || uiState.awaitingContinue,
-                        ) {
-                            Text(stringResource(if (uiState.isChecked) R.string.action_next else R.string.action_check))
+                        TextButton(onClick = debounced(onClick = onTipRequested), enabled = uiState.canUseTip) {
+                            Text(stringResource(R.string.action_tip))
                         }
                     }
                 }
@@ -195,16 +158,24 @@ private fun CrosswordScreenContent(
 @Composable
 private fun CrosswordGrid(
     uiState: CrosswordUiState.Loaded,
-    onCellSelected: (CrosswordCell) -> Unit,
+    onCellTapped: (CrosswordCell) -> Unit,
     onLetterEntered: (CrosswordCell, String) -> Unit,
 ) {
     val selectedCells = uiState.selectedWord?.occupiedCells()?.toSet().orEmpty()
+    // One requester per cell so the ViewModel can walk the caret along a word as the user types.
+    val focusRequesters = remember(uiState.cells.keys) {
+        uiState.cells.keys.associateWith { FocusRequester() }
+    }
+
+    LaunchedEffect(uiState.focusedCell) {
+        uiState.focusedCell?.let { cell -> runCatching { focusRequesters[cell]?.requestFocus() } }
+    }
+
     BoxWithConstraints {
         // Generated grids routinely run 10+ columns wide, which overflows a phone at a fixed cell
         // size. Scale cells to the available width so the whole puzzle stays visible at once;
         // only fall back to scrolling for the rare grid too wide even at the minimum size.
-        val cellSize = (maxWidth / uiState.colCount.coerceAtLeast(1))
-            .coerceIn(MinCellSize, MaxCellSize)
+        val cellSize = (maxWidth / uiState.colCount.coerceAtLeast(1)).coerceIn(MinCellSize, MaxCellSize)
         val scrollModifier = if (cellSize * uiState.colCount > maxWidth) {
             Modifier.horizontalScroll(rememberScrollState())
         } else {
@@ -226,7 +197,8 @@ private fun CrosswordGrid(
                                 size = cellSize,
                                 isSelected = cell in selectedCells,
                                 enabled = uiState.isEditable,
-                                onSelected = onCellSelected,
+                                focusRequester = focusRequesters.getValue(cell),
+                                onTapped = onCellTapped,
                                 onLetterEntered = onLetterEntered,
                             )
                         }
@@ -244,16 +216,16 @@ private fun CrosswordCellBox(
     size: Dp,
     isSelected: Boolean,
     enabled: Boolean,
-    onSelected: (CrosswordCell) -> Unit,
+    focusRequester: FocusRequester,
+    onTapped: (CrosswordCell) -> Unit,
     onLetterEntered: (CrosswordCell, String) -> Unit,
 ) {
     val background = when {
-        state.isIncorrect -> LexiconError
         state.locked -> MaterialTheme.colorScheme.secondaryContainer
         isSelected -> MaterialTheme.colorScheme.primaryContainer
         else -> MaterialTheme.colorScheme.surface
     }
-    val textColor = if (state.isIncorrect) Color.White else MaterialTheme.colorScheme.onSurface
+    val textColor = MaterialTheme.colorScheme.onSurface
 
     Box(
         modifier = Modifier
@@ -278,74 +250,53 @@ private fun CrosswordCellBox(
             modifier = Modifier
                 .fillMaxSize()
                 .wrapContentHeight()
-                .onFocusChanged { if (it.isFocused) onSelected(cell) },
+                .focusRequester(focusRequester),
         )
+
+        // Sits above the field only when there's a letter to clear, so tapping a filled cell wipes
+        // it for retyping while an empty cell still gets the field's own tap handling.
+        if (state.isFilled && enabled && !state.locked) {
+            Box(modifier = Modifier.fillMaxSize().clickable { onTapped(cell) })
+        }
     }
 }
 
 @Composable
-private fun ClueRow(
+private fun ClueList(
     uiState: CrosswordUiState.Loaded,
     onClueSelected: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LazyRow(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-    ) {
-        items(uiState.words.size) { index ->
-            val word = uiState.words[index]
+    Column(modifier = modifier.fillMaxWidth()) {
+        uiState.words.forEach { word ->
             val isSelected = word.vocabularyItemId == uiState.selectedWordId
-            Column(
+            Row(
                 modifier = Modifier
-                    .width(ClueImageSize)
+                    .fillMaxWidth()
+                    .padding(vertical = Dimens.spacingTiny)
                     .background(
                         if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant,
                         LexiconShapes.small,
                     )
                     .clickable(enabled = uiState.isEditable) { onClueSelected(word.vocabularyItemId) }
                     .padding(Dimens.spacingSmall),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Box(modifier = Modifier.fillMaxWidth().height(ClueImageSize), contentAlignment = Alignment.Center) {
-                    if (word.imageUrl == null) {
-                        Text(word.clueText, style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center)
-                    } else {
-                        SubcomposeAsyncImage(
-                            model = word.imageUrl,
-                            contentDescription = null,
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier.fillMaxSize(),
-                            loading = {
-                                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                                    CircularProgressIndicator()
-                                }
-                            },
-                            error = {
-                                Text(word.clueText, style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center)
-                            },
-                        )
-                    }
-                }
+                Text(
+                    text = word.clueText,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                )
                 Text(
                     text = if (word.direction == CrosswordDirection.ACROSS) {
                         stringResource(R.string.crossword_across_format, word.length)
                     } else {
                         stringResource(R.string.crossword_down_format, word.length)
                     },
-                    style = MaterialTheme.typography.labelSmall,
-                    modifier = Modifier.padding(top = Dimens.spacingTiny),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                // Spec §14: the correct answers are revealed once the crossword has been checked.
-                uiState.revealedAnswer(word)?.let { answer ->
-                    Text(
-                        text = answer,
-                        style = MaterialTheme.typography.labelMedium,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(top = Dimens.spacingTiny),
-                    )
-                }
             }
         }
     }
@@ -358,7 +309,6 @@ private val previewWords = listOf(
         col = 0,
         direction = CrosswordDirection.ACROSS,
         length = 3,
-        imageUrl = null,
         clueText = "cat",
         expectedText = "kot",
     ),
@@ -368,7 +318,6 @@ private val previewWords = listOf(
         col = 2,
         direction = CrosswordDirection.DOWN,
         length = 3,
-        imageUrl = null,
         clueText = "track",
         expectedText = "tor",
     ),
@@ -389,11 +338,37 @@ private fun CrosswordScreenPreview() {
                 ),
             onClose = {},
             onClueSelected = {},
-            onCellSelected = {},
+            onCellTapped = {},
             onLetterEntered = { _, _ -> },
             onTipRequested = {},
-            onCheck = {},
-            onContinue = {},
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CrosswordScreenPartiallyFilledPreview() {
+    LexiconTheme {
+        CrosswordScreenContent(
+            uiState =
+                CrosswordUiState.Loaded(
+                    words = previewWords.mapIndexed { index, word ->
+                        if (index == 0) word.copy(revealedLetterCount = 1) else word
+                    },
+                    cells = previewWords.flatMap { it.occupiedCells() }.associateWith { CrosswordCellState() } +
+                        mapOf(
+                            CrosswordCell(0, 0) to CrosswordCellState(letter = "K", locked = true),
+                            CrosswordCell(0, 1) to CrosswordCellState(letter = "O"),
+                        ),
+                    rowCount = 3,
+                    colCount = 3,
+                    selectedWordId = 1,
+                ),
+            onClose = {},
+            onClueSelected = {},
+            onCellTapped = {},
+            onLetterEntered = { _, _ -> },
+            onTipRequested = {},
         )
     }
 }
