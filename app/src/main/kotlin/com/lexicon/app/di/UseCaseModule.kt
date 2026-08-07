@@ -14,6 +14,9 @@ import com.lexicon.domain.pronunciation.StartPronunciationSessionUseCaseImpl
 import com.lexicon.domain.pronunciation.SubmitPronunciationResultUseCaseImpl
 import com.lexicon.domain.puzzle.StartPuzzleSessionUseCaseImpl
 import com.lexicon.domain.puzzle.SubmitPuzzleAnswerUseCaseImpl
+import com.lexicon.domain.settings.ObserveSettingsUseCaseImpl
+import com.lexicon.domain.settings.UpdateStepCountUseCaseImpl
+import com.lexicon.domain.settings.UpdateThemeModeUseCaseImpl
 import com.lexicon.domain.trueorfalse.StartTrueOrFalseSessionUseCaseImpl
 import com.lexicon.domain.trueorfalse.SubmitTrueOrFalseAnswerUseCaseImpl
 import com.lexicon.domain.wordbuilder.StartWordBuilderSessionUseCaseImpl
@@ -34,6 +37,9 @@ import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerUseCase
+import com.lexicon.interactors.settings.ObserveSettingsUseCase
+import com.lexicon.interactors.settings.UpdateStepCountUseCase
+import com.lexicon.interactors.settings.UpdateThemeModeUseCase
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
 import com.lexicon.interactors.wordbuilder.StartWordBuilderSessionUseCase
@@ -104,6 +110,15 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindStartCrosswordSessionUseCase(impl: StartCrosswordSessionUseCaseImpl): StartCrosswordSessionUseCase
+
+    @Binds
+    abstract fun bindObserveSettingsUseCase(impl: ObserveSettingsUseCaseImpl): ObserveSettingsUseCase
+
+    @Binds
+    abstract fun bindUpdateThemeModeUseCase(impl: UpdateThemeModeUseCaseImpl): UpdateThemeModeUseCase
+
+    @Binds
+    abstract fun bindUpdateStepCountUseCase(impl: UpdateStepCountUseCaseImpl): UpdateStepCountUseCase
 
     @Binds
     abstract fun bindSubmitCrosswordUseCase(impl: SubmitCrosswordUseCaseImpl): SubmitCrosswordUseCase

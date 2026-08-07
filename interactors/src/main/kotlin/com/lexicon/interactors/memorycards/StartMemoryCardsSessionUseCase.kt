@@ -1,11 +1,11 @@
 package com.lexicon.interactors.memorycards
 
 data class StartMemoryCardsSessionRequest(
-    val stepCount: Int = DEFAULT_STEP_COUNT,
+    /** Null uses the step count configured in Settings; pass a value only to override it. */
+    val stepCount: Int? = null,
     val pairsPerStep: Int = DEFAULT_PAIRS_PER_STEP,
 ) {
     companion object {
-        const val DEFAULT_STEP_COUNT = 10
         const val DEFAULT_PAIRS_PER_STEP = 6
     }
 }

@@ -50,4 +50,13 @@
     <string name="pronunciation_ipa_format">IPA: /%1$s/</string>
     <string name="pronunciation_recognition_unavailable">Speech recognition isn\'t available on this device. Try a real device or an emulator with Google Play services and on-device speech recognition set up.</string>
     <string name="pronunciation_recognition_failed">Couldn\'t hear that clearly. Try recording again.</string>
+
+    <!-- Settings -->
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_theme_system">System</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_training">Training</string>
+    <string name="settings_step_count">Steps per session</string>
+    <string name="settings_step_count_note">Applies to new training sessions only.</string>
 </resources>

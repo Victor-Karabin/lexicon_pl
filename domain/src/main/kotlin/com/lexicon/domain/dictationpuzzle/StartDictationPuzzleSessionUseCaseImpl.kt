@@ -2,6 +2,7 @@ package com.lexicon.domain.dictationpuzzle
 
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.domain.dictation.toWord
+import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.interactors.dictationpuzzle.DictationPuzzleSessionResponse
 import com.lexicon.interactors.dictationpuzzle.DictationPuzzleStepResponse
 import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionRequest
@@ -13,9 +14,11 @@ class StartDictationPuzzleSessionUseCaseImpl
     @Inject
     constructor(
         private val vocabularyRepository: VocabularyRepository,
+        private val stepCountResolver: StepCountResolver,
     ) : StartDictationPuzzleSessionUseCase {
         override suspend fun invoke(request: StartDictationPuzzleSessionRequest): DictationPuzzleSessionResponse {
-            val words = vocabularyRepository.getRandomItems(request.stepCount).map { it.toWord() }
+            val stepCount = stepCountResolver.resolve(request.stepCount)
+            val words = vocabularyRepository.getRandomItems(stepCount).map { it.toWord() }
             val steps =
                 words.mapIndexed { index, word ->
                     DictationPuzzleStepResponse(

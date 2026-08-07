@@ -5,6 +5,7 @@ import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.domain.dictation.Word
 import com.lexicon.domain.dictation.isPhrase
 import com.lexicon.domain.dictation.toWord
+import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.interactors.imagetest.ImageTestSessionResponse
 import com.lexicon.interactors.imagetest.ImageTestStepResponse
 import com.lexicon.interactors.imagetest.StartImageTestSessionRequest
@@ -22,11 +23,13 @@ class StartImageTestSessionUseCaseImpl
     constructor(
         private val vocabularyRepository: VocabularyRepository,
         private val imageProvider: ImageProvider,
+        private val stepCountResolver: StepCountResolver,
     ) : StartImageTestSessionUseCase {
         override suspend fun invoke(request: StartImageTestSessionRequest): ImageTestSessionResponse {
-            val poolSize = maxOf(request.stepCount, request.optionCount) * POOL_MULTIPLIER
+            val stepCount = stepCountResolver.resolve(request.stepCount)
+            val poolSize = maxOf(stepCount, request.optionCount) * POOL_MULTIPLIER
             val pool = vocabularyRepository.getRandomItems(poolSize).map { it.toWord() }
-            val subjects = pool.take(request.stepCount)
+            val subjects = pool.take(stepCount)
 
             val steps =
                 coroutineScope {
