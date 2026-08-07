@@ -132,10 +132,16 @@ private fun PronunciationScreenContent(
                             modifier = Modifier.fillMaxWidth(),
                         )
 
+                        Text(
+                            text = uiState.word,
+                            modifier = Modifier.padding(top = Dimens.spacingLarge),
+                            style = MaterialTheme.typography.headlineSmall,
+                        )
+
                         PlayButton(
                             onClick = onReplayReferenceAudio,
                             label = stringResource(R.string.action_listen_again),
-                            modifier = Modifier.padding(top = Dimens.spacingLarge),
+                            modifier = Modifier.padding(top = Dimens.spacingMedium),
                         )
 
                         Button(
@@ -161,9 +167,9 @@ private fun PronunciationScreenContent(
                         }
 
                         if (uiState.isEditable) {
-                            uiState.tipTranslation?.let { hint ->
+                            uiState.tipTranscription?.let { ipa ->
                                 Text(
-                                    text = stringResource(R.string.hint_format, hint),
+                                    text = stringResource(R.string.pronunciation_ipa_format, ipa),
                                     modifier = Modifier.padding(top = Dimens.spacingSmall),
                                     style = MaterialTheme.typography.bodyMedium,
                                 )
@@ -228,6 +234,7 @@ private fun PronunciationScreenUnansweredPreview() {
                 PronunciationUiState.Loaded(
                     stepIndex = 2,
                     totalSteps = 10,
+                    word = "praca",
                     recordingState = RecordingState.IDLE,
                 ),
             onClose = {},
@@ -249,6 +256,7 @@ private fun PronunciationScreenCorrectPreview() {
                 PronunciationUiState.Loaded(
                     stepIndex = 2,
                     totalSteps = 10,
+                    word = "praca",
                     recordingState = RecordingState.IDLE,
                     recognizedText = "praca",
                     answerState = AnswerState.Correct,
@@ -272,6 +280,7 @@ private fun PronunciationScreenIncorrectPreview() {
                 PronunciationUiState.Loaded(
                     stepIndex = 2,
                     totalSteps = 10,
+                    word = "praca",
                     recordingState = RecordingState.IDLE,
                     recognizedText = "prace",
                     answerState = AnswerState.Incorrect("praca"),

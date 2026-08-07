@@ -23,6 +23,7 @@ class StartPronunciationSessionUseCaseImpl
                         vocabularyItemId = word.id,
                         expectedText = word.text,
                         clueText = word.translation,
+                        transcription = word.transcription,
                     )
                 }
             return PronunciationSessionResponse(sessionId = UUID.randomUUID().toString(), steps = steps)

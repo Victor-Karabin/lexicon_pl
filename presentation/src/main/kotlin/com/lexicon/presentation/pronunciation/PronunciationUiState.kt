@@ -11,11 +11,12 @@ sealed interface PronunciationUiState {
     data class Loaded(
         val stepIndex: Int = 0,
         val totalSteps: Int = 0,
+        val word: String = "",
         val recordingState: RecordingState = RecordingState.IDLE,
         val recognizedText: String? = null,
         val answerState: AnswerState = AnswerState.Unanswered,
-        /** Shown once Tip is used, before validation. */
-        val tipTranslation: String? = null,
+        /** IPA transcription, shown once Tip is used, before validation. */
+        val tipTranscription: String? = null,
         val tipUsed: Boolean = false,
         val isSessionComplete: Boolean = false,
     ) : PronunciationUiState {

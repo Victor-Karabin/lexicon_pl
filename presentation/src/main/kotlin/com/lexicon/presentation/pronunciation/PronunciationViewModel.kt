@@ -64,7 +64,13 @@ class PronunciationViewModel
                 val response = startSessionUseCase(StartPronunciationSessionRequest())
                 sessionId = response.sessionId
                 steps = response.steps
-                _uiState.update { PronunciationUiState.Loaded(stepIndex = 0, totalSteps = steps.size) }
+                _uiState.update {
+                    PronunciationUiState.Loaded(
+                        stepIndex = 0,
+                        totalSteps = steps.size,
+                        word = steps.getOrNull(0)?.expectedText.orEmpty(),
+                    )
+                }
                 speakReferenceAudio()
             }
         }
@@ -83,7 +89,7 @@ class PronunciationViewModel
             if (!state.canUseTip) return
             val step = currentStepOrNull() ?: return
             tipsUsedCount++
-            updateLoaded { it.copy(tipUsed = true, tipTranslation = step.clueText) }
+            updateLoaded { it.copy(tipUsed = true, tipTranscription = step.transcription) }
         }
 
         fun onRecordRequested() {
@@ -181,7 +187,9 @@ class PronunciationViewModel
                 )
                 return
             }
-            _uiState.update { PronunciationUiState.Loaded(stepIndex = nextIndex, totalSteps = steps.size) }
+            _uiState.update {
+                PronunciationUiState.Loaded(stepIndex = nextIndex, totalSteps = steps.size, word = steps[nextIndex].expectedText)
+            }
             speakReferenceAudio()
         }
 
