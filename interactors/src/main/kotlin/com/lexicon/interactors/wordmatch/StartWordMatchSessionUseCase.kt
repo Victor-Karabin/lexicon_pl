@@ -1,12 +1,12 @@
 package com.lexicon.interactors.wordmatch
 
+/** Word Match is a single step; [stepCount] is the number of pairs in it, matching every other
+ *  training's step-count parameter/default rather than introducing a Word-Match-specific knob. */
 data class StartWordMatchSessionRequest(
     val stepCount: Int = DEFAULT_STEP_COUNT,
-    val pairsPerStep: Int = DEFAULT_PAIRS_PER_STEP,
 ) {
     companion object {
         const val DEFAULT_STEP_COUNT = 10
-        const val DEFAULT_PAIRS_PER_STEP = 6
     }
 }
 

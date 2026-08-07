@@ -9,14 +9,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -30,7 +27,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
-import com.lexicon.presentation.common.debounced
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
@@ -60,8 +56,6 @@ fun WordMatchScreen(
         onClose = onClose,
         onLeftSelected = viewModel::onLeftSelected,
         onRightSelected = viewModel::onRightSelected,
-        onSkip = viewModel::onSkip,
-        onNext = viewModel::onNext,
         modifier = modifier,
     )
 }
@@ -73,8 +67,6 @@ private fun WordMatchScreenContent(
     onClose: () -> Unit,
     onLeftSelected: (Long) -> Unit,
     onRightSelected: (Long) -> Unit,
-    onSkip: () -> Unit,
-    onNext: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -91,62 +83,29 @@ private fun WordMatchScreenContent(
                     CircularProgressIndicator()
                 }
             is WordMatchUiState.Loaded ->
-                Column(modifier = Modifier.fillMaxSize().padding(padding)) {
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                            .padding(Dimens.spacingMedium),
-                    ) {
-                        LinearProgressIndicator(
-                            progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                            modifier = Modifier.fillMaxWidth(),
-                        )
-                        Text(
-                            text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                            modifier = Modifier.padding(top = Dimens.spacingSmall),
-                            style = MaterialTheme.typography.labelMedium,
-                        )
+                Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
+                    val leftNumbers = uiState.leftColumn.mapIndexed { index, item -> item.vocabularyItemId to index + 1 }.toMap()
 
-                        val leftNumbers = uiState.leftColumn.mapIndexed { index, item -> item.vocabularyItemId to index + 1 }.toMap()
-
-                        Row(modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium)) {
-                            Column(modifier = Modifier.weight(1f)) {
-                                uiState.leftColumn.forEachIndexed { index, item ->
-                                    MatchTile(
-                                        text = item.text,
-                                        number = index + 1,
-                                        state = tileState(item.vocabularyItemId, uiState.selectedLeftId, uiState),
-                                        onClick = { onLeftSelected(item.vocabularyItemId) },
-                                    )
-                                }
-                            }
-                            Column(modifier = Modifier.weight(1f).padding(start = Dimens.spacingSmall)) {
-                                uiState.rightColumn.forEach { item ->
-                                    val state = tileState(item.vocabularyItemId, uiState.selectedRightId, uiState)
-                                    MatchTile(
-                                        text = item.text,
-                                        number = leftNumbers[item.vocabularyItemId]?.takeIf { state == MatchTileState.MATCHED },
-                                        state = state,
-                                        onClick = { onRightSelected(item.vocabularyItemId) },
-                                    )
-                                }
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            uiState.leftColumn.forEachIndexed { index, item ->
+                                MatchTile(
+                                    text = item.text,
+                                    number = index + 1,
+                                    state = tileState(item.vocabularyItemId, uiState.selectedLeftId, uiState.incorrectLeftId, uiState),
+                                    onClick = { onLeftSelected(item.vocabularyItemId) },
+                                )
                             }
                         }
-                    }
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
-                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall, Alignment.End),
-                    ) {
-                        if (uiState.canSkip) {
-                            TextButton(onClick = debounced(onClick = onSkip)) {
-                                Text(stringResource(R.string.action_skip))
-                            }
-                        }
-                        if (uiState.awaitingNext) {
-                            Button(onClick = debounced(onClick = onNext)) {
-                                Text(stringResource(R.string.action_next))
+                        Column(modifier = Modifier.weight(1f).padding(start = Dimens.spacingSmall)) {
+                            uiState.rightColumn.forEach { item ->
+                                val state = tileState(item.vocabularyItemId, uiState.selectedRightId, uiState.incorrectRightId, uiState)
+                                MatchTile(
+                                    text = item.text,
+                                    number = leftNumbers[item.vocabularyItemId]?.takeIf { state == MatchTileState.MATCHED },
+                                    state = state,
+                                    onClick = { onRightSelected(item.vocabularyItemId) },
+                                )
                             }
                         }
                     }
@@ -160,11 +119,12 @@ private enum class MatchTileState { DEFAULT, SELECTED, MATCHED, INCORRECT }
 private fun tileState(
     itemId: Long,
     selectedId: Long?,
+    incorrectId: Long?,
     uiState: WordMatchUiState.Loaded,
 ): MatchTileState =
     when {
         uiState.matchedIds.contains(itemId) -> MatchTileState.MATCHED
-        uiState.incorrectFlashIds.contains(itemId) -> MatchTileState.INCORRECT
+        incorrectId == itemId -> MatchTileState.INCORRECT
         selectedId == itemId -> MatchTileState.SELECTED
         else -> MatchTileState.DEFAULT
     }
@@ -182,7 +142,7 @@ private fun MatchTile(
         MatchTileState.SELECTED -> MaterialTheme.colorScheme.primary
         MatchTileState.DEFAULT -> MaterialTheme.colorScheme.surfaceVariant
     }
-    val enabled = state == MatchTileState.DEFAULT || state == MatchTileState.SELECTED
+    val enabled = state != MatchTileState.MATCHED
     val textColor = when (state) {
         MatchTileState.MATCHED, MatchTileState.INCORRECT -> Color.White
         MatchTileState.SELECTED -> MaterialTheme.colorScheme.onPrimary
@@ -229,8 +189,6 @@ private fun WordMatchScreenPreview() {
             onClose = {},
             onLeftSelected = {},
             onRightSelected = {},
-            onSkip = {},
-            onNext = {},
         )
     }
 }

@@ -22,9 +22,7 @@ class SubmitWordMatchStepResultUseCaseImplTest {
     fun `zero incorrect attempts is Correct`() =
         runTest {
             val response =
-                useCase(
-                    SubmitWordMatchStepResultRequest("s", 0, listOf(1L, 2L), incorrectAttempts = 0, skipped = false),
-                )
+                useCase(SubmitWordMatchStepResultRequest("s", 0, listOf(1L, 2L), incorrectAttempts = 0))
             assertEquals(WordMatchStepOutcome.CORRECT, response.outcome)
         }
 
@@ -32,26 +30,14 @@ class SubmitWordMatchStepResultUseCaseImplTest {
     fun `any incorrect attempt makes the completed step Incorrect`() =
         runTest {
             val response =
-                useCase(
-                    SubmitWordMatchStepResultRequest("s", 0, listOf(1L, 2L), incorrectAttempts = 3, skipped = false),
-                )
+                useCase(SubmitWordMatchStepResultRequest("s", 0, listOf(1L, 2L), incorrectAttempts = 3))
             assertEquals(WordMatchStepOutcome.INCORRECT, response.outcome)
-        }
-
-    @Test
-    fun `skip is Skipped regardless of attempts`() =
-        runTest {
-            val response =
-                useCase(
-                    SubmitWordMatchStepResultRequest("s", 0, listOf(1L, 2L), incorrectAttempts = 0, skipped = true),
-                )
-            assertEquals(WordMatchStepOutcome.SKIPPED, response.outcome)
         }
 
     @Test
     fun `records one result row per pair, sharing the step outcome`() =
         runTest {
-            useCase(SubmitWordMatchStepResultRequest("s", 0, listOf(1L, 2L, 3L), incorrectAttempts = 0, skipped = false))
+            useCase(SubmitWordMatchStepResultRequest("s", 0, listOf(1L, 2L, 3L), incorrectAttempts = 0))
 
             coVerify(exactly = 3) {
                 trainingHistoryRepository.recordResult(
