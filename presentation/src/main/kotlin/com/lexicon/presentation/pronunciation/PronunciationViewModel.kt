@@ -2,6 +2,7 @@ package com.lexicon.presentation.pronunciation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lexicon.android.AudioPlayer
 import com.lexicon.android.SpeechRecognitionFailed
 import com.lexicon.android.SpeechRecognizerService
 import com.lexicon.android.SpeechSynthesizer
@@ -26,6 +27,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 400L
@@ -38,6 +40,7 @@ class PronunciationViewModel
         private val submitResultUseCase: SubmitPronunciationResultUseCase,
         private val speechSynthesizer: SpeechSynthesizer,
         private val speechRecognizerService: SpeechRecognizerService,
+        private val audioPlayer: AudioPlayer,
         private val dispatchers: DispatcherProvider,
         private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
@@ -75,10 +78,7 @@ class PronunciationViewModel
             }
         }
 
-        fun onReplayReferenceAudio() {
-            viewModelScope.launch(dispatchers.io) { speakReferenceAudio() }
-        }
-
+        /** Reference pronunciation auto-plays when a step opens; there is no manual replay control. */
         private suspend fun speakReferenceAudio() {
             val step = currentStepOrNull() ?: return
             speechSynthesizer.speak(step.expectedText)
@@ -92,20 +92,45 @@ class PronunciationViewModel
             updateLoaded { it.copy(tipUsed = true, tipTranscription = step.transcription) }
         }
 
+        /** Records (or re-records, discarding any prior attempt) — does not submit; the user reviews and taps Check. */
         fun onRecordRequested() {
             val state = _uiState.value as? PronunciationUiState.Loaded ?: return
             if (!state.canRecord) return
-            updateLoaded { it.copy(recordingState = RecordingState.RECORDING) }
+            deleteCachedRecording(state.recordedAudioPath)
+            updateLoaded {
+                it.copy(recordingState = RecordingState.RECORDING, recognizedText = null, recordedAudioPath = null)
+            }
             viewModelScope.launch(dispatchers.io) {
                 try {
                     val result = speechRecognizerService.recognize()
-                    updateLoaded { it.copy(recordingState = RecordingState.PROCESSING, recognizedText = result.recognizedText) }
-                    submitCurrentStep(recognizedText = result.recognizedText, confidence = result.confidence, skipped = false)
+                    updateLoaded {
+                        it.copy(
+                            recordingState = RecordingState.RECORDED,
+                            recognizedText = result.recognizedText,
+                            recognizedConfidence = result.confidence,
+                            recordedAudioPath = result.audioFilePath,
+                        )
+                    }
                 } catch (failure: SpeechRecognitionFailed) {
                     // Per spec: a failed recognition doesn't complete the step — reset so the user can retry.
                     updateLoaded { it.copy(recordingState = RecordingState.IDLE) }
                 }
             }
+        }
+
+        fun onPlayRecording() {
+            val state = _uiState.value as? PronunciationUiState.Loaded ?: return
+            val path = state.recordedAudioPath ?: return
+            if (!state.canPlayRecording) return
+            viewModelScope.launch(dispatchers.io) {
+                runCatching { audioPlayer.play(path) }
+            }
+        }
+
+        fun onCheck() {
+            val state = _uiState.value as? PronunciationUiState.Loaded ?: return
+            if (!state.canCheck) return
+            submitCurrentStep(recognizedText = state.recognizedText.orEmpty(), confidence = state.recognizedConfidence, skipped = false)
         }
 
         fun onSkip() {
@@ -121,6 +146,7 @@ class PronunciationViewModel
         ) {
             val step = currentStepOrNull() ?: return
             val state = _uiState.value as? PronunciationUiState.Loaded ?: return
+            updateLoaded { it.copy(isSubmitting = true) }
             viewModelScope.launch(dispatchers.io) {
                 val response =
                     submitResultUseCase(
@@ -157,14 +183,14 @@ class PronunciationViewModel
                     step?.let {
                         wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Incorrect(expectedText))
                     }
-                    updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText)) }
+                    updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText), isSubmitting = false) }
                 }
                 PronunciationStepOutcome.SKIPPED -> {
                     skippedCount++
                     step?.let {
                         wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Skipped(expectedText))
                     }
-                    updateLoaded { it.copy(answerState = AnswerState.Skipped(expectedText)) }
+                    updateLoaded { it.copy(answerState = AnswerState.Skipped(expectedText), isSubmitting = false) }
                 }
             }
         }
@@ -173,20 +199,23 @@ class PronunciationViewModel
         fun onNext() {
             val state = _uiState.value as? PronunciationUiState.Loaded ?: return
             if (!state.awaitingNext) return
+            updateLoaded { it.copy(isSubmitting = true) }
             viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
         }
 
         private suspend fun advanceToNextStep() {
             val state = _uiState.value as? PronunciationUiState.Loaded ?: return
+            deleteCachedRecording(state.recordedAudioPath)
             val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
-                updateLoaded { it.copy(isSessionComplete = true) }
+                updateLoaded { it.copy(isSessionComplete = true, isSubmitting = false) }
                 lastSessionResultsHolder.wordResults = wordResults.toList()
                 _navigationEvents.emit(
                     SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount, tipsUsedCount),
                 )
                 return
             }
+            // A fresh Loaded() already defaults isSubmitting/recordingState/etc back to their initial values.
             _uiState.update {
                 PronunciationUiState.Loaded(stepIndex = nextIndex, totalSteps = steps.size, word = steps[nextIndex].expectedText)
             }
@@ -196,6 +225,11 @@ class PronunciationViewModel
         private fun currentStepOrNull(): PronunciationStepResponse? {
             val state = _uiState.value as? PronunciationUiState.Loaded ?: return null
             return steps.getOrNull(state.stepIndex)
+        }
+
+        /** Best-effort cache cleanup; a leftover file here is harmless, just wasted disk space. */
+        private fun deleteCachedRecording(path: String?) {
+            path?.let { runCatching { File(it).delete() } }
         }
 
         private inline fun updateLoaded(transform: (PronunciationUiState.Loaded) -> PronunciationUiState.Loaded) {

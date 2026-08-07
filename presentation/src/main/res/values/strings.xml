@@ -38,7 +38,8 @@
     <string name="pronunciation_title">Pronunciation Check</string>
     <string name="pronunciation_record">Record</string>
     <string name="pronunciation_listening">Listening…</string>
-    <string name="pronunciation_checking">Checking…</string>
+    <string name="pronunciation_recognizing">Recognizing…</string>
     <string name="pronunciation_heard_format">Heard: %1$s</string>
+    <string name="pronunciation_play_recording">Play my recording</string>
     <string name="pronunciation_ipa_format">IPA: /%1$s/</string>
 </resources>

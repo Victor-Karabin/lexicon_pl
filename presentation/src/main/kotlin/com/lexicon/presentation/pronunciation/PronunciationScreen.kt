@@ -6,7 +6,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,7 +15,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -35,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.debounced
 import com.lexicon.presentation.theme.Dimens
@@ -78,7 +77,6 @@ fun PronunciationScreen(
     PronunciationScreenContent(
         uiState = uiState,
         onClose = onClose,
-        onReplayReferenceAudio = viewModel::onReplayReferenceAudio,
         onRecordRequested = {
             if (hasRecordAudioPermission) {
                 viewModel.onRecordRequested()
@@ -86,8 +84,10 @@ fun PronunciationScreen(
                 permissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
             }
         },
+        onPlayRecording = viewModel::onPlayRecording,
         onTipRequested = viewModel::onTipRequested,
         onSkip = viewModel::onSkip,
+        onCheck = viewModel::onCheck,
         onNext = viewModel::onNext,
         modifier = modifier,
     )
@@ -98,10 +98,11 @@ fun PronunciationScreen(
 private fun PronunciationScreenContent(
     uiState: PronunciationUiState,
     onClose: () -> Unit,
-    onReplayReferenceAudio: () -> Unit,
     onRecordRequested: () -> Unit,
+    onPlayRecording: () -> Unit,
     onTipRequested: () -> Unit,
     onSkip: () -> Unit,
+    onCheck: () -> Unit,
     onNext: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -138,12 +139,6 @@ private fun PronunciationScreenContent(
                             style = MaterialTheme.typography.headlineSmall,
                         )
 
-                        PlayButton(
-                            onClick = onReplayReferenceAudio,
-                            label = stringResource(R.string.action_listen_again),
-                            modifier = Modifier.padding(top = Dimens.spacingMedium),
-                        )
-
                         Button(
                             onClick = debounced(onClick = onRecordRequested),
                             enabled = uiState.canRecord,
@@ -151,9 +146,9 @@ private fun PronunciationScreenContent(
                         ) {
                             Text(
                                 when (uiState.recordingState) {
-                                    RecordingState.IDLE -> stringResource(R.string.pronunciation_record)
+                                    RecordingState.IDLE, RecordingState.RECORDED -> stringResource(R.string.pronunciation_record)
                                     RecordingState.RECORDING -> stringResource(R.string.pronunciation_listening)
-                                    RecordingState.PROCESSING -> stringResource(R.string.pronunciation_checking)
+                                    RecordingState.PROCESSING -> stringResource(R.string.pronunciation_recognizing)
                                 },
                             )
                         }
@@ -163,6 +158,14 @@ private fun PronunciationScreenContent(
                                 text = stringResource(R.string.pronunciation_heard_format, recognized),
                                 modifier = Modifier.padding(top = Dimens.spacingMedium),
                                 style = MaterialTheme.typography.bodyMedium,
+                            )
+                        }
+
+                        if (uiState.canPlayRecording) {
+                            PlayButton(
+                                onClick = onPlayRecording,
+                                label = stringResource(R.string.pronunciation_play_recording),
+                                modifier = Modifier.padding(top = Dimens.spacingSmall),
                             )
                         }
 
@@ -202,24 +205,14 @@ private fun PronunciationScreenContent(
                         }
                     }
 
-                    // Recording auto-submits (there's no manual Check step), so this row only ever
-                    // carries Tip/Skip plus a Next button once a step needs an explicit continue.
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
-                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall, Alignment.End),
-                    ) {
-                        TextButton(onClick = debounced(onClick = onTipRequested), enabled = uiState.canUseTip) {
-                            Text(stringResource(R.string.action_tip))
-                        }
-                        TextButton(onClick = debounced(onClick = onSkip), enabled = uiState.canSkip) {
-                            Text(stringResource(R.string.action_skip))
-                        }
-                        if (uiState.awaitingNext) {
-                            Button(onClick = debounced(onClick = onNext)) {
-                                Text(stringResource(R.string.action_next))
-                            }
-                        }
-                    }
+                    TrainingActionRow(
+                        onCheck = onCheck,
+                        onNext = onNext,
+                        awaitingNext = uiState.awaitingNext,
+                        checkEnabled = uiState.canCheck,
+                        onTip = onTipRequested.takeIf { uiState.canUseTip },
+                        onSkip = onSkip.takeIf { uiState.canSkip },
+                    )
                 }
         }
     }
@@ -238,10 +231,11 @@ private fun PronunciationScreenUnansweredPreview() {
                     recordingState = RecordingState.IDLE,
                 ),
             onClose = {},
-            onReplayReferenceAudio = {},
             onRecordRequested = {},
+            onPlayRecording = {},
             onTipRequested = {},
             onSkip = {},
+            onCheck = {},
             onNext = {},
         )
     }
@@ -249,7 +243,7 @@ private fun PronunciationScreenUnansweredPreview() {
 
 @Preview(showBackground = true)
 @Composable
-private fun PronunciationScreenCorrectPreview() {
+private fun PronunciationScreenRecordedPreview() {
     LexiconTheme {
         PronunciationScreenContent(
             uiState =
@@ -257,15 +251,16 @@ private fun PronunciationScreenCorrectPreview() {
                     stepIndex = 2,
                     totalSteps = 10,
                     word = "praca",
-                    recordingState = RecordingState.IDLE,
+                    recordingState = RecordingState.RECORDED,
                     recognizedText = "praca",
-                    answerState = AnswerState.Correct,
+                    recordedAudioPath = "/cache/pronunciation_attempt.wav",
                 ),
             onClose = {},
-            onReplayReferenceAudio = {},
             onRecordRequested = {},
+            onPlayRecording = {},
             onTipRequested = {},
             onSkip = {},
+            onCheck = {},
             onNext = {},
         )
     }
@@ -281,15 +276,16 @@ private fun PronunciationScreenIncorrectPreview() {
                     stepIndex = 2,
                     totalSteps = 10,
                     word = "praca",
-                    recordingState = RecordingState.IDLE,
+                    recordingState = RecordingState.RECORDED,
                     recognizedText = "prace",
                     answerState = AnswerState.Incorrect("praca"),
                 ),
             onClose = {},
-            onReplayReferenceAudio = {},
             onRecordRequested = {},
+            onPlayRecording = {},
             onTipRequested = {},
             onSkip = {},
+            onCheck = {},
             onNext = {},
         )
     }
