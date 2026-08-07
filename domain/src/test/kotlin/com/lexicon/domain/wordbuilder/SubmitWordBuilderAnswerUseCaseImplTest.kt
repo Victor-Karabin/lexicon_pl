@@ -1,0 +1,64 @@
+package com.lexicon.domain.wordbuilder
+
+import com.lexicon.boundary.TrainingHistoryRepository
+import com.lexicon.boundary.TrainingResultBoundary
+import com.lexicon.common.Clock
+import com.lexicon.domain.dictation.AnswerNormalizer
+import com.lexicon.interactors.wordbuilder.SubmitWordBuilderAnswerRequest
+import com.lexicon.interactors.wordbuilder.WordBuilderStepOutcome
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.mockk
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
+import org.junit.Test
+
+class SubmitWordBuilderAnswerUseCaseImplTest {
+    private val trainingHistoryRepository: TrainingHistoryRepository = mockk(relaxed = true)
+    private val clock: Clock = mockk { every { nowEpochMillis() } returns 1_000L }
+    private val useCase = SubmitWordBuilderAnswerUseCaseImpl(trainingHistoryRepository, AnswerNormalizer(), clock)
+
+    private fun request(
+        submittedText: String = "kot",
+        tipUsed: Boolean = false,
+        skipped: Boolean = false,
+    ) = SubmitWordBuilderAnswerRequest(
+        sessionId = "session-1",
+        stepIndex = 0,
+        vocabularyItemId = 1L,
+        expectedText = "kot",
+        submittedText = submittedText,
+        tipUsed = tipUsed,
+        skipped = skipped,
+    )
+
+    @Test
+    fun `diacritics must match exactly`() =
+        runTest {
+            val useCaseLocal = SubmitWordBuilderAnswerUseCaseImpl(trainingHistoryRepository, AnswerNormalizer(), clock)
+            val request = SubmitWordBuilderAnswerRequest("s", 0, 2L, "łódź", "lodz", tipUsed = false, skipped = false)
+            val response = useCaseLocal(request)
+            assertEquals(WordBuilderStepOutcome.INCORRECT, response.outcome)
+        }
+
+    @Test
+    fun `matching tiles without tip is Correct`() =
+        runTest {
+            val response = useCase(request(submittedText = "kot"))
+            assertEquals(WordBuilderStepOutcome.CORRECT, response.outcome)
+        }
+
+    @Test
+    fun `matching tiles with tip used is still Correct — tip usage doesn't affect the outcome`() =
+        runTest {
+            val response = useCase(request(submittedText = "kot", tipUsed = true))
+            assertEquals(WordBuilderStepOutcome.CORRECT, response.outcome)
+        }
+
+    @Test
+    fun `tip usage is recorded to history regardless of outcome`() =
+        runTest {
+            useCase(request(submittedText = "kot", tipUsed = true))
+            coVerify { trainingHistoryRepository.recordResult(match<TrainingResultBoundary> { it.tipUsed }) }
+        }
+}

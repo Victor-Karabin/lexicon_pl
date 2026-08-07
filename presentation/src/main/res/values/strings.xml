@@ -1,0 +1,47 @@
+<resources>
+    <!-- Shared across training screens -->
+    <string name="action_tip">Tip</string>
+    <string name="action_skip">Skip</string>
+    <string name="action_undo">Undo</string>
+    <string name="action_check">Check</string>
+    <string name="action_next">Next</string>
+    <string name="status_correct">✓ Correct</string>
+    <string name="status_incorrect">✗ Incorrect</string>
+    <string name="status_skipped">Skipped</string>
+    <string name="expected_format">Expected: %1$s</string>
+    <string name="hint_format">Hint: %1$s</string>
+    <string name="action_listen_again">Listen again</string>
+
+    <!-- Dictation -->
+    <string name="dictation_title">Dictation</string>
+    <string name="dictation_type_what_you_heard">Type what you heard</string>
+
+    <!-- Dictation Puzzle -->
+    <string name="dictation_puzzle_title">Dictation Puzzle</string>
+
+    <!-- Puzzle -->
+    <string name="puzzle_title">Puzzle</string>
+
+    <!-- Image Test -->
+    <string name="image_test_title">Image Test</string>
+
+    <!-- Word Match -->
+    <string name="word_match_title">Word Match</string>
+
+    <!-- True or False -->
+    <string name="true_or_false_title">True or False</string>
+    <string name="action_true">True</string>
+    <string name="action_false">False</string>
+    <string name="time_remaining_format">%1$ds</string>
+
+    <!-- Pronunciation Check -->
+    <string name="pronunciation_title">Pronunciation Check</string>
+    <string name="pronunciation_record">Record</string>
+    <string name="pronunciation_listening">Listening…</string>
+    <string name="pronunciation_recognizing">Recognizing…</string>
+    <string name="pronunciation_heard_format">Heard: %1$s</string>
+    <string name="pronunciation_play_recording">Play my recording</string>
+    <string name="pronunciation_ipa_format">IPA: /%1$s/</string>
+    <string name="pronunciation_recognition_unavailable">Speech recognition isn\'t available on this device. Try a real device or an emulator with Google Play services and on-device speech recognition set up.</string>
+    <string name="pronunciation_recognition_failed">Couldn\'t hear that clearly. Try recording again.</string>
+</resources>
