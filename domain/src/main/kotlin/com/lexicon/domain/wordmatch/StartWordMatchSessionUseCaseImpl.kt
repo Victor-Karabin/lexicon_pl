@@ -15,14 +15,11 @@ class StartWordMatchSessionUseCaseImpl
         private val vocabularyRepository: VocabularyRepository,
     ) : StartWordMatchSessionUseCase {
         override suspend fun invoke(request: StartWordMatchSessionRequest): WordMatchSessionResponse {
-            val steps =
-                (0 until request.stepCount).map { stepIndex ->
-                    val pairs =
-                        vocabularyRepository.getRandomItems(request.pairsPerStep).map { item ->
-                            WordMatchPairResponse(vocabularyItemId = item.id, word = item.text, translation = item.translation)
-                        }
-                    WordMatchStepResponse(stepIndex = stepIndex, pairs = pairs)
+            val pairs =
+                vocabularyRepository.getRandomItems(request.stepCount).map { item ->
+                    WordMatchPairResponse(vocabularyItemId = item.id, word = item.text, translation = item.translation)
                 }
-            return WordMatchSessionResponse(sessionId = UUID.randomUUID().toString(), steps = steps)
+            val step = WordMatchStepResponse(stepIndex = 0, pairs = pairs)
+            return WordMatchSessionResponse(sessionId = UUID.randomUUID().toString(), steps = listOf(step))
         }
     }

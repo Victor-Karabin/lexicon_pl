@@ -9,7 +9,6 @@ import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultRequest
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultUseCase
 import com.lexicon.interactors.wordmatch.WordMatchStepOutcome
 import com.lexicon.interactors.wordmatch.WordMatchStepResponse
-import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.SessionNavigationEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -43,7 +42,6 @@ class WordMatchViewModel
         private var steps: List<WordMatchStepResponse> = emptyList()
         private var correctCount = 0
         private var incorrectCount = 0
-        private var skippedCount = 0
 
         init {
             startSession()
@@ -72,14 +70,14 @@ class WordMatchViewModel
 
         fun onLeftSelected(vocabularyItemId: Long) {
             val state = _uiState.value as? WordMatchUiState.Loaded ?: return
-            if (!state.isInteractive || state.matchedIds.contains(vocabularyItemId)) return
+            if (state.matchedIds.contains(vocabularyItemId)) return
             updateLoaded { it.copy(selectedLeftId = vocabularyItemId, incorrectLeftId = null, incorrectRightId = null) }
             tryValidateSelection()
         }
 
         fun onRightSelected(vocabularyItemId: Long) {
             val state = _uiState.value as? WordMatchUiState.Loaded ?: return
-            if (!state.isInteractive || state.matchedIds.contains(vocabularyItemId)) return
+            if (state.matchedIds.contains(vocabularyItemId)) return
             updateLoaded { it.copy(selectedRightId = vocabularyItemId, incorrectLeftId = null, incorrectRightId = null) }
             tryValidateSelection()
         }
@@ -120,47 +118,14 @@ class WordMatchViewModel
                         stepIndex = step.stepIndex,
                         vocabularyItemIds = step.pairs.map { it.vocabularyItemId },
                         incorrectAttempts = state.incorrectAttempts,
-                        skipped = false,
                     ),
                 )
             when (response.outcome) {
                 WordMatchStepOutcome.CORRECT -> correctCount++
                 WordMatchStepOutcome.INCORRECT -> incorrectCount++
-                WordMatchStepOutcome.SKIPPED -> Unit
             }
             delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
             advanceToNextStep()
-        }
-
-        fun onSkip() {
-            val state = _uiState.value as? WordMatchUiState.Loaded ?: return
-            if (!state.canSkip) return
-            val step = currentStepOrNull() ?: return
-            viewModelScope.launch(dispatchers.io) {
-                submitStepResultUseCase(
-                    SubmitWordMatchStepResultRequest(
-                        sessionId = sessionId,
-                        stepIndex = step.stepIndex,
-                        vocabularyItemIds = step.pairs.map { it.vocabularyItemId },
-                        incorrectAttempts = state.incorrectAttempts,
-                        skipped = true,
-                    ),
-                )
-                skippedCount++
-                updateLoaded {
-                    it.copy(
-                        matchedIds = step.pairs.map { pair -> pair.vocabularyItemId }.toSet(),
-                        answerState = AnswerState.Skipped(),
-                    )
-                }
-            }
-        }
-
-        /** Called from the UI's "Next" button after a Skipped step. */
-        fun onNext() {
-            val state = _uiState.value as? WordMatchUiState.Loaded ?: return
-            if (!state.awaitingNext) return
-            viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
         }
 
         private suspend fun advanceToNextStep() {
@@ -168,7 +133,7 @@ class WordMatchViewModel
             val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
                 updateLoaded { it.copy(isSessionComplete = true) }
-                _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount))
+                _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skipped = 0))
                 return
             }
             openStep(nextIndex)

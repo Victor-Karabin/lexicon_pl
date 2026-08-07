@@ -1,7 +1,5 @@
 package com.lexicon.presentation.wordmatch
 
-import com.lexicon.presentation.common.AnswerState
-
 data class WordMatchColumnItem(val vocabularyItemId: Long, val text: String)
 
 sealed interface WordMatchUiState {
@@ -18,11 +16,6 @@ sealed interface WordMatchUiState {
         val incorrectLeftId: Long? = null,
         val incorrectRightId: Long? = null,
         val incorrectAttempts: Int = 0,
-        val answerState: AnswerState = AnswerState.Unanswered,
         val isSessionComplete: Boolean = false,
-    ) : WordMatchUiState {
-        val isInteractive: Boolean get() = answerState is AnswerState.Unanswered
-        val canSkip: Boolean get() = isInteractive
-        val awaitingNext: Boolean get() = answerState is AnswerState.Skipped
-    }
+    ) : WordMatchUiState
 }

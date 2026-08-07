@@ -5,7 +5,6 @@ data class SubmitWordMatchStepResultRequest(
     val stepIndex: Int,
     val vocabularyItemIds: List<Long>,
     val incorrectAttempts: Int,
-    val skipped: Boolean,
 )
 
 data class SubmitWordMatchStepResultResponse(

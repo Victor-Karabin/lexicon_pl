@@ -43,19 +43,15 @@ class SubmitWordMatchStepResultUseCaseImpl
             return SubmitWordMatchStepResultResponse(outcome = outcome)
         }
 
-        // This training has no Tip action. A step that was fully matched, even with wrong attempts along
-        // the way, still completes — but the recorded result is Incorrect if any attempt was wrong.
+        // This training has no Tip or Skip action. A step that was fully matched, even with wrong
+        // attempts along the way, still completes — but the recorded result is Incorrect if any
+        // attempt was wrong.
         private fun resolveOutcome(request: SubmitWordMatchStepResultRequest): WordMatchStepOutcome =
-            when {
-                request.skipped -> WordMatchStepOutcome.SKIPPED
-                request.incorrectAttempts == 0 -> WordMatchStepOutcome.CORRECT
-                else -> WordMatchStepOutcome.INCORRECT
-            }
+            if (request.incorrectAttempts == 0) WordMatchStepOutcome.CORRECT else WordMatchStepOutcome.INCORRECT
 
         private fun WordMatchStepOutcome.toBoundary(): TrainingResultOutcomeBoundary =
             when (this) {
                 WordMatchStepOutcome.CORRECT -> TrainingResultOutcomeBoundary.CORRECT
                 WordMatchStepOutcome.INCORRECT -> TrainingResultOutcomeBoundary.INCORRECT
-                WordMatchStepOutcome.SKIPPED -> TrainingResultOutcomeBoundary.SKIPPED
             }
     }
