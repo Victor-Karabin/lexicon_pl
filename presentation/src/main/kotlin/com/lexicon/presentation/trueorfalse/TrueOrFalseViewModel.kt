@@ -9,7 +9,6 @@ import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerRequest
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
 import com.lexicon.interactors.trueorfalse.TrueOrFalseStepOutcome
 import com.lexicon.interactors.trueorfalse.TrueOrFalseStepResponse
-import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.SessionNavigationEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -23,11 +22,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 400L
-
-/** Longer than the correct-answer delay so the status label/highlight has time to register. */
-private const val INCORRECT_ANSWER_ADVANCE_DELAY_MS = 700L
 
 @HiltViewModel
 class TrueOrFalseViewModel
@@ -91,6 +85,7 @@ class TrueOrFalseViewModel
             val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
             if (!state.isEditable) return
             val step = currentStepOrNull() ?: return
+            updateLoaded { it.copy(isSubmitting = true) }
             viewModelScope.launch(dispatchers.io) {
                 val response =
                     submitAnswerUseCase(
@@ -102,32 +97,25 @@ class TrueOrFalseViewModel
                             userAnsweredTrue = userAnsweredTrue,
                         ),
                     )
-                applyOutcome(response.outcome, userAnsweredTrue)
+                applyOutcome(response.outcome)
             }
         }
 
-        // Both outcomes auto-advance — there is no Next button to wait for a manual continue.
-        private suspend fun applyOutcome(
-            outcome: TrueOrFalseStepOutcome,
-            userAnsweredTrue: Boolean,
-        ) {
+        // No status is shown and there is no Next button — every answer advances immediately.
+        private suspend fun applyOutcome(outcome: TrueOrFalseStepOutcome) {
             when (outcome) {
-                TrueOrFalseStepOutcome.CORRECT -> {
-                    correctCount++
-                    updateLoaded { it.copy(answerState = AnswerState.Correct, userAnsweredTrue = userAnsweredTrue) }
-                    delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
-                }
-                TrueOrFalseStepOutcome.INCORRECT -> {
-                    incorrectCount++
-                    updateLoaded { it.copy(answerState = AnswerState.Incorrect(), userAnsweredTrue = userAnsweredTrue) }
-                    delay(INCORRECT_ANSWER_ADVANCE_DELAY_MS)
-                }
+                TrueOrFalseStepOutcome.CORRECT -> correctCount++
+                TrueOrFalseStepOutcome.INCORRECT -> incorrectCount++
             }
             advanceToNextStep()
         }
 
         private suspend fun advanceToNextStep() {
-            val nextIndex = (_uiState.value as? TrueOrFalseUiState.Loaded)?.stepIndex?.plus(1) ?: return
+            val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
+            // The timer may have completed the session while this step's auto-advance delay was
+            // running; don't revive the screen with a new step in that case.
+            if (state.isSessionComplete) return
+            val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
                 // Ran out of fetched items before the timer expired.
                 completeSession()
@@ -139,9 +127,12 @@ class TrueOrFalseViewModel
         private suspend fun completeSession() {
             val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
             if (state.isSessionComplete) return
-            timerJob?.cancel()
             updateLoaded { it.copy(isSessionComplete = true) }
             _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skipped = 0))
+            // Cancelled last: when the timer itself calls this on natural expiry, completeSession()
+            // is running inside timerJob — cancelling it earlier would abort this very coroutine
+            // before the emit above completes, and the Results screen would never be shown.
+            timerJob?.cancel()
         }
 
         private fun currentStepOrNull(): TrueOrFalseStepResponse? {

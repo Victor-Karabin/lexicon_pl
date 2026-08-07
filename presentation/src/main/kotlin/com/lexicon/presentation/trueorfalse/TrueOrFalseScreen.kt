@@ -3,8 +3,11 @@ package com.lexicon.presentation.trueorfalse
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -26,7 +29,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.R
-import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.debounced
@@ -36,7 +38,8 @@ import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
 
 private const val LOW_TIME_WARNING_SECONDS = 10
-private val TimerSize = 72.dp
+private val TimerSize = 100.dp
+private val AnswerButtonHeight = 120.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -92,65 +95,47 @@ private fun TrueOrFalseScreenContent(
                 } else {
                     MaterialTheme.colorScheme.primary
                 }
-                val statusLabel = when (uiState.answerState) {
-                    is AnswerState.Correct -> stringResource(R.string.status_correct)
-                    is AnswerState.Incorrect -> stringResource(R.string.status_incorrect)
-                    else -> null
-                }
-
-                Column(
-                    modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Box(modifier = Modifier.size(TimerSize), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator(
-                            progress = { uiState.timeRemainingSeconds / TRUE_OR_FALSE_TIME_LIMIT_SECONDS.toFloat() },
-                            color = timerColor,
-                            strokeWidth = 6.dp,
-                            modifier = Modifier.fillMaxSize(),
-                        )
-                        Text(
-                            text = stringResource(R.string.time_remaining_format, uiState.timeRemainingSeconds),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = timerColor,
-                        )
-                    }
-
-                    Text(
-                        text = uiState.word,
-                        modifier = Modifier.padding(top = Dimens.spacingLarge),
-                        style = MaterialTheme.typography.headlineSmall,
-                    )
-                    Text(
-                        text = uiState.displayedTranslation,
-                        modifier = Modifier.padding(top = Dimens.spacingSmall),
-                        style = MaterialTheme.typography.titleLarge,
-                    )
-
-                    statusLabel?.let { label ->
-                        val statusColor = if (uiState.answerState is AnswerState.Correct) LexiconSuccess else LexiconError
-                        Text(
-                            text = label,
-                            color = statusColor,
-                            modifier = Modifier.padding(top = Dimens.spacingMedium),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                        )
-                    }
-
+                Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
                     Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                            .padding(top = Dimens.spacingLarge),
-                        verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+                        modifier = Modifier.weight(1f).fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Box(modifier = Modifier.size(TimerSize), contentAlignment = Alignment.Center) {
+                            CircularProgressIndicator(
+                                progress = { uiState.timeRemainingSeconds / TRUE_OR_FALSE_TIME_LIMIT_SECONDS.toFloat() },
+                                color = timerColor,
+                                strokeWidth = 8.dp,
+                                modifier = Modifier.fillMaxSize(),
+                            )
+                            Text(
+                                text = stringResource(R.string.time_remaining_format, uiState.timeRemainingSeconds),
+                                style = MaterialTheme.typography.headlineSmall,
+                                fontWeight = FontWeight.Bold,
+                                color = timerColor,
+                            )
+                        }
+
+                        Text(
+                            text = uiState.word,
+                            modifier = Modifier.padding(top = Dimens.spacingLarge),
+                            style = MaterialTheme.typography.headlineSmall,
+                        )
+                        Text(
+                            text = uiState.displayedTranslation,
+                            modifier = Modifier.padding(top = Dimens.spacingSmall),
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+                    }
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth().height(AnswerButtonHeight),
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
                     ) {
                         Button(
                             onClick = debounced { onAnswer(true) },
                             enabled = uiState.isEditable,
                             colors = ButtonDefaults.buttonColors(containerColor = LexiconSuccess),
-                            modifier = Modifier.weight(1f).fillMaxWidth(),
+                            modifier = Modifier.weight(1f).fillMaxHeight(),
                         ) {
                             Text(stringResource(R.string.action_true), style = MaterialTheme.typography.headlineMedium)
                         }
@@ -158,7 +143,7 @@ private fun TrueOrFalseScreenContent(
                             onClick = debounced { onAnswer(false) },
                             enabled = uiState.isEditable,
                             colors = ButtonDefaults.buttonColors(containerColor = LexiconError),
-                            modifier = Modifier.weight(1f).fillMaxWidth(),
+                            modifier = Modifier.weight(1f).fillMaxHeight(),
                         ) {
                             Text(stringResource(R.string.action_false), style = MaterialTheme.typography.headlineMedium)
                         }
