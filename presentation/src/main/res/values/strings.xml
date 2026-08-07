@@ -27,4 +27,10 @@
 
     <!-- Word Match -->
     <string name="word_match_title">Word Match</string>
+
+    <!-- True or False -->
+    <string name="true_or_false_title">True or False</string>
+    <string name="action_true">True</string>
+    <string name="action_false">False</string>
+    <string name="time_remaining_format">%1$ds</string>
 </resources>

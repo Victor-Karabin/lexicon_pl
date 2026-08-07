@@ -28,7 +28,7 @@ class SubmitTrueOrFalseAnswerUseCaseImpl
                     stepIndex = request.stepIndex,
                     vocabularyItemId = request.vocabularyItemId,
                     expectedAnswer = request.isDisplayedTranslationCorrect.toString(),
-                    submittedAnswer = request.userAnsweredTrue?.toString().orEmpty(),
+                    submittedAnswer = request.userAnsweredTrue.toString(),
                     outcome = outcome.toBoundary(),
                     tipUsed = false,
                     completedAtEpochMillis = clock.nowEpochMillis(),
@@ -41,18 +41,17 @@ class SubmitTrueOrFalseAnswerUseCaseImpl
             )
         }
 
-        // This training has no Tip action, so the precedence is just Skip, then a straight comparison.
+        // This training has no Tip or Skip action, so it's a straight comparison.
         private fun resolveOutcome(request: SubmitTrueOrFalseAnswerRequest): TrueOrFalseStepOutcome =
-            when {
-                request.skipped -> TrueOrFalseStepOutcome.SKIPPED
-                request.userAnsweredTrue == request.isDisplayedTranslationCorrect -> TrueOrFalseStepOutcome.CORRECT
-                else -> TrueOrFalseStepOutcome.INCORRECT
+            if (request.userAnsweredTrue == request.isDisplayedTranslationCorrect) {
+                TrueOrFalseStepOutcome.CORRECT
+            } else {
+                TrueOrFalseStepOutcome.INCORRECT
             }
 
         private fun TrueOrFalseStepOutcome.toBoundary(): TrainingResultOutcomeBoundary =
             when (this) {
                 TrueOrFalseStepOutcome.CORRECT -> TrainingResultOutcomeBoundary.CORRECT
                 TrueOrFalseStepOutcome.INCORRECT -> TrainingResultOutcomeBoundary.INCORRECT
-                TrueOrFalseStepOutcome.SKIPPED -> TrainingResultOutcomeBoundary.SKIPPED
             }
     }

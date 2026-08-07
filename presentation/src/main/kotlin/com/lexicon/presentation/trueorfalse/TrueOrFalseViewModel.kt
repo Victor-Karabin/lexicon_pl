@@ -10,8 +10,11 @@ import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
 import com.lexicon.interactors.trueorfalse.TrueOrFalseStepOutcome
 import com.lexicon.interactors.trueorfalse.TrueOrFalseStepResponse
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.WordResultEntry
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,8 +26,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 400L
-
 @HiltViewModel
 class TrueOrFalseViewModel
     @Inject
@@ -32,6 +33,7 @@ class TrueOrFalseViewModel
         private val startSessionUseCase: StartTrueOrFalseSessionUseCase,
         private val submitAnswerUseCase: SubmitTrueOrFalseAnswerUseCase,
         private val dispatchers: DispatcherProvider,
+        private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow<TrueOrFalseUiState>(TrueOrFalseUiState.Loading)
         val uiState: StateFlow<TrueOrFalseUiState> = _uiState.asStateFlow()
@@ -43,7 +45,8 @@ class TrueOrFalseViewModel
         private var steps: List<TrueOrFalseStepResponse> = emptyList()
         private var correctCount = 0
         private var incorrectCount = 0
-        private var skippedCount = 0
+        private var timerJob: Job? = null
+        private val wordResults = mutableListOf<WordResultEntry>()
 
         init {
             startSession()
@@ -55,6 +58,19 @@ class TrueOrFalseViewModel
                 sessionId = response.sessionId
                 steps = response.steps
                 openStep(0)
+                startTimer()
+            }
+        }
+
+        private fun startTimer() {
+            timerJob = viewModelScope.launch {
+                var remaining = TRUE_OR_FALSE_TIME_LIMIT_SECONDS
+                while (remaining > 0) {
+                    delay(1_000)
+                    remaining--
+                    updateLoaded { it.copy(timeRemainingSeconds = remaining) }
+                }
+                completeSession()
             }
         }
 
@@ -63,7 +79,7 @@ class TrueOrFalseViewModel
             _uiState.update {
                 TrueOrFalseUiState.Loaded(
                     stepIndex = index,
-                    totalSteps = steps.size,
+                    timeRemainingSeconds = (it as? TrueOrFalseUiState.Loaded)?.timeRemainingSeconds ?: TRUE_OR_FALSE_TIME_LIMIT_SECONDS,
                     word = step.word,
                     displayedTranslation = step.displayedTranslation,
                 )
@@ -73,20 +89,8 @@ class TrueOrFalseViewModel
         fun onAnswer(userAnsweredTrue: Boolean) {
             val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
             if (!state.isEditable) return
-            submitCurrentStep(userAnsweredTrue = userAnsweredTrue, skipped = false)
-        }
-
-        fun onSkip() {
-            val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
-            if (!state.canSkip) return
-            submitCurrentStep(userAnsweredTrue = null, skipped = true)
-        }
-
-        private fun submitCurrentStep(
-            userAnsweredTrue: Boolean?,
-            skipped: Boolean,
-        ) {
             val step = currentStepOrNull() ?: return
+            updateLoaded { it.copy(isSubmitting = true) }
             viewModelScope.launch(dispatchers.io) {
                 val response =
                     submitAnswerUseCase(
@@ -96,51 +100,54 @@ class TrueOrFalseViewModel
                             vocabularyItemId = step.vocabularyItemId,
                             isDisplayedTranslationCorrect = step.isDisplayedTranslationCorrect,
                             userAnsweredTrue = userAnsweredTrue,
-                            skipped = skipped,
                         ),
                     )
-                applyOutcome(response.outcome, userAnsweredTrue)
+                applyOutcome(response.outcome, step)
             }
         }
 
+        // No status is shown and there is no Next button — every answer advances immediately.
         private suspend fun applyOutcome(
             outcome: TrueOrFalseStepOutcome,
-            userAnsweredTrue: Boolean?,
+            step: TrueOrFalseStepResponse,
         ) {
             when (outcome) {
                 TrueOrFalseStepOutcome.CORRECT -> {
                     correctCount++
-                    updateLoaded { it.copy(answerState = AnswerState.Correct, userAnsweredTrue = userAnsweredTrue) }
-                    delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
-                    advanceToNextStep()
+                    wordResults += WordResultEntry(step.word, step.displayedTranslation, AnswerState.Correct)
                 }
                 TrueOrFalseStepOutcome.INCORRECT -> {
                     incorrectCount++
-                    updateLoaded { it.copy(answerState = AnswerState.Incorrect(), userAnsweredTrue = userAnsweredTrue) }
-                }
-                TrueOrFalseStepOutcome.SKIPPED -> {
-                    skippedCount++
-                    updateLoaded { it.copy(answerState = AnswerState.Skipped()) }
+                    wordResults += WordResultEntry(step.word, step.displayedTranslation, AnswerState.Incorrect())
                 }
             }
-        }
-
-        /** Called from the UI's "Next" button after an Incorrect/Skipped step. */
-        fun onNext() {
-            val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
-            if (!state.awaitingNext) return
-            viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
+            advanceToNextStep()
         }
 
         private suspend fun advanceToNextStep() {
             val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
+            // The timer may have completed the session while this step's auto-advance delay was
+            // running; don't revive the screen with a new step in that case.
+            if (state.isSessionComplete) return
             val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
-                updateLoaded { it.copy(isSessionComplete = true) }
-                _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount))
+                // Ran out of fetched items before the timer expired.
+                completeSession()
                 return
             }
             openStep(nextIndex)
+        }
+
+        private suspend fun completeSession() {
+            val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
+            if (state.isSessionComplete) return
+            updateLoaded { it.copy(isSessionComplete = true) }
+            lastSessionResultsHolder.wordResults = wordResults.toList()
+            _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skipped = 0))
+            // Cancelled last: when the timer itself calls this on natural expiry, completeSession()
+            // is running inside timerJob — cancelling it earlier would abort this very coroutine
+            // before the emit above completes, and the Results screen would never be shown.
+            timerJob?.cancel()
         }
 
         private fun currentStepOrNull(): TrueOrFalseStepResponse? {
@@ -150,5 +157,9 @@ class TrueOrFalseViewModel
 
         private inline fun updateLoaded(transform: (TrueOrFalseUiState.Loaded) -> TrueOrFalseUiState.Loaded) {
             _uiState.update { current -> if (current is TrueOrFalseUiState.Loaded) transform(current) else current }
+        }
+
+        override fun onCleared() {
+            timerJob?.cancel()
         }
     }

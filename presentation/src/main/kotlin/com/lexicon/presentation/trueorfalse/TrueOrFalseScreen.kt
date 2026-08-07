@@ -1,35 +1,45 @@
 package com.lexicon.presentation.trueorfalse
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.R
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.debounced
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
+
+private const val LOW_TIME_WARNING_SECONDS = 10
+private val TimerSize = 100.dp
+private val AnswerButtonHeight = 120.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,8 +64,6 @@ fun TrueOrFalseScreen(
         uiState = uiState,
         onClose = onClose,
         onAnswer = viewModel::onAnswer,
-        onSkip = viewModel::onSkip,
-        onNext = viewModel::onNext,
         modifier = modifier,
     )
 }
@@ -66,13 +74,11 @@ private fun TrueOrFalseScreenContent(
     uiState: TrueOrFalseUiState,
     onClose: () -> Unit,
     onAnswer: (Boolean) -> Unit,
-    onSkip: () -> Unit,
-    onNext: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = { TrainingTopBar(title = "True or False", onClose = onClose) },
+        topBar = { TrainingTopBar(title = stringResource(R.string.true_or_false_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
             is TrueOrFalseUiState.Loading ->
@@ -83,75 +89,69 @@ private fun TrueOrFalseScreenContent(
                 ) {
                     CircularProgressIndicator()
                 }
-            is TrueOrFalseUiState.Loaded ->
+            is TrueOrFalseUiState.Loaded -> {
+                val timerColor = if (uiState.timeRemainingSeconds <= LOW_TIME_WARNING_SECONDS) {
+                    LexiconError
+                } else {
+                    MaterialTheme.colorScheme.primary
+                }
                 Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
-                    LinearProgressIndicator(
-                        progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                    Text(
-                        text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                        modifier = Modifier.padding(top = Dimens.spacingSmall),
-                        style = MaterialTheme.typography.labelMedium,
-                    )
-
-                    Text(
-                        text = uiState.word,
-                        modifier = Modifier.padding(top = Dimens.spacingLarge),
-                        style = MaterialTheme.typography.headlineSmall,
-                    )
-                    Text(
-                        text = uiState.displayedTranslation,
-                        modifier = Modifier.padding(top = Dimens.spacingSmall),
-                        style = MaterialTheme.typography.titleLarge,
-                    )
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
-                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                    Column(
+                        modifier = Modifier.weight(1f).fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        Button(
-                            onClick = { onAnswer(true) },
-                            enabled = uiState.isEditable,
-                            colors = buttonColorsFor(selected = uiState.userAnsweredTrue == true, uiState = uiState),
-                        ) {
-                            Text("True")
+                        Box(modifier = Modifier.size(TimerSize), contentAlignment = Alignment.Center) {
+                            CircularProgressIndicator(
+                                progress = { uiState.timeRemainingSeconds / TRUE_OR_FALSE_TIME_LIMIT_SECONDS.toFloat() },
+                                color = timerColor,
+                                strokeWidth = 8.dp,
+                                modifier = Modifier.fillMaxSize(),
+                            )
+                            Text(
+                                text = stringResource(R.string.time_remaining_format, uiState.timeRemainingSeconds),
+                                style = MaterialTheme.typography.headlineSmall,
+                                fontWeight = FontWeight.Bold,
+                                color = timerColor,
+                            )
                         }
-                        Button(
-                            onClick = { onAnswer(false) },
-                            enabled = uiState.isEditable,
-                            colors = buttonColorsFor(selected = uiState.userAnsweredTrue == false, uiState = uiState),
-                        ) {
-                            Text("False")
-                        }
+
+                        Text(
+                            text = uiState.word,
+                            modifier = Modifier.padding(top = Dimens.spacingLarge),
+                            style = MaterialTheme.typography.headlineSmall,
+                        )
+                        Text(
+                            text = uiState.displayedTranslation,
+                            modifier = Modifier.padding(top = Dimens.spacingSmall),
+                            style = MaterialTheme.typography.titleLarge,
+                        )
                     }
 
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium),
+                        modifier = Modifier.fillMaxWidth().height(AnswerButtonHeight),
                         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
                     ) {
-                        TextButton(onClick = onSkip, enabled = uiState.canSkip) {
-                            Text("Skip")
+                        Button(
+                            onClick = debounced { onAnswer(true) },
+                            enabled = uiState.isEditable,
+                            colors = ButtonDefaults.buttonColors(containerColor = LexiconSuccess),
+                            modifier = Modifier.weight(1f).fillMaxHeight(),
+                        ) {
+                            Text(stringResource(R.string.action_true), style = MaterialTheme.typography.headlineMedium)
                         }
-                        if (uiState.awaitingNext) {
-                            Button(onClick = onNext) {
-                                Text("Next")
-                            }
+                        Button(
+                            onClick = debounced { onAnswer(false) },
+                            enabled = uiState.isEditable,
+                            colors = ButtonDefaults.buttonColors(containerColor = LexiconError),
+                            modifier = Modifier.weight(1f).fillMaxHeight(),
+                        ) {
+                            Text(stringResource(R.string.action_false), style = MaterialTheme.typography.headlineMedium)
                         }
                     }
                 }
+            }
         }
     }
-}
-
-@Composable
-private fun buttonColorsFor(
-    selected: Boolean,
-    uiState: TrueOrFalseUiState.Loaded,
-) = when {
-    !selected -> ButtonDefaults.buttonColors()
-    uiState.answerState is AnswerState.Correct -> ButtonDefaults.buttonColors(containerColor = LexiconSuccess)
-    else -> ButtonDefaults.buttonColors(containerColor = LexiconError)
 }
 
 @Preview(showBackground = true)
@@ -162,14 +162,12 @@ private fun TrueOrFalseScreenPreview() {
             uiState =
                 TrueOrFalseUiState.Loaded(
                     stepIndex = 2,
-                    totalSteps = 10,
+                    timeRemainingSeconds = 42,
                     word = "praca",
                     displayedTranslation = "work",
                 ),
             onClose = {},
             onAnswer = {},
-            onSkip = {},
-            onNext = {},
         )
     }
 }

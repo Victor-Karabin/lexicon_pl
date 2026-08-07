@@ -17,15 +17,13 @@ class SubmitTrueOrFalseAnswerUseCaseImplTest {
 
     private fun request(
         isCorrect: Boolean,
-        userAnsweredTrue: Boolean?,
-        skipped: Boolean = false,
+        userAnsweredTrue: Boolean,
     ) = SubmitTrueOrFalseAnswerRequest(
         sessionId = "session-1",
         stepIndex = 0,
         vocabularyItemId = 1L,
         isDisplayedTranslationCorrect = isCorrect,
         userAnsweredTrue = userAnsweredTrue,
-        skipped = skipped,
     )
 
     @Test
@@ -47,12 +45,5 @@ class SubmitTrueOrFalseAnswerUseCaseImplTest {
         runTest {
             val response = useCase(request(isCorrect = false, userAnsweredTrue = true))
             assertEquals(TrueOrFalseStepOutcome.INCORRECT, response.outcome)
-        }
-
-    @Test
-    fun `skip is Skipped regardless of the pairing`() =
-        runTest {
-            val response = useCase(request(isCorrect = true, userAnsweredTrue = null, skipped = true))
-            assertEquals(TrueOrFalseStepOutcome.SKIPPED, response.outcome)
         }
 }

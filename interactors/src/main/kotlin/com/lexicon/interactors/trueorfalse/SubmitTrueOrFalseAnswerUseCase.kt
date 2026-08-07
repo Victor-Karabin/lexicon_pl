@@ -5,9 +5,7 @@ data class SubmitTrueOrFalseAnswerRequest(
     val stepIndex: Int,
     val vocabularyItemId: Long,
     val isDisplayedTranslationCorrect: Boolean,
-    /** Null when the step was skipped rather than answered. */
-    val userAnsweredTrue: Boolean?,
-    val skipped: Boolean,
+    val userAnsweredTrue: Boolean,
 )
 
 data class SubmitTrueOrFalseAnswerResponse(
