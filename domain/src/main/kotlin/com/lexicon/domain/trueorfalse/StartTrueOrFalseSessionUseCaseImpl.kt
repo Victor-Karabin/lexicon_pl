@@ -23,9 +23,9 @@ class StartTrueOrFalseSessionUseCaseImpl
         override suspend fun invoke(request: StartTrueOrFalseSessionRequest): TrueOrFalseSessionResponse {
             val pool =
                 vocabularyRepository
-                    .getRandomItems(request.stepCount * DISTRACTOR_POOL_MULTIPLIER)
+                    .getRandomItems(request.poolSize * DISTRACTOR_POOL_MULTIPLIER)
                     .map { it.toWord() }
-            val subjects = pool.take(request.stepCount)
+            val subjects = pool.take(request.poolSize)
 
             val steps =
                 subjects.mapIndexed { index, subject ->

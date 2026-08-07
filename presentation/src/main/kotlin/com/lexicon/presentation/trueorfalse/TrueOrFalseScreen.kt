@@ -21,15 +21,20 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.debounced
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
+
+private const val LOW_TIME_WARNING_SECONDS = 10
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -72,7 +77,7 @@ private fun TrueOrFalseScreenContent(
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = { TrainingTopBar(title = "True or False", onClose = onClose) },
+        topBar = { TrainingTopBar(title = stringResource(R.string.true_or_false_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
             is TrueOrFalseUiState.Loading ->
@@ -83,63 +88,81 @@ private fun TrueOrFalseScreenContent(
                 ) {
                     CircularProgressIndicator()
                 }
-            is TrueOrFalseUiState.Loaded ->
-                Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
-                    LinearProgressIndicator(
-                        progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                    Text(
-                        text = "${uiState.stepIndex + 1} / ${uiState.totalSteps}",
-                        modifier = Modifier.padding(top = Dimens.spacingSmall),
-                        style = MaterialTheme.typography.labelMedium,
-                    )
+            is TrueOrFalseUiState.Loaded -> {
+                val timerColor = if (uiState.timeRemainingSeconds <= LOW_TIME_WARNING_SECONDS) {
+                    LexiconError
+                } else {
+                    MaterialTheme.colorScheme.primary
+                }
 
-                    Text(
-                        text = uiState.word,
-                        modifier = Modifier.padding(top = Dimens.spacingLarge),
-                        style = MaterialTheme.typography.headlineSmall,
-                    )
-                    Text(
-                        text = uiState.displayedTranslation,
-                        modifier = Modifier.padding(top = Dimens.spacingSmall),
-                        style = MaterialTheme.typography.titleLarge,
-                    )
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
-                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                Column(modifier = Modifier.fillMaxSize().padding(padding)) {
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .padding(Dimens.spacingMedium),
                     ) {
-                        Button(
-                            onClick = { onAnswer(true) },
-                            enabled = uiState.isEditable,
-                            colors = buttonColorsFor(selected = uiState.userAnsweredTrue == true, uiState = uiState),
+                        LinearProgressIndicator(
+                            progress = { uiState.timeRemainingSeconds / TRUE_OR_FALSE_TIME_LIMIT_SECONDS.toFloat() },
+                            color = timerColor,
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                        Text(
+                            text = stringResource(R.string.time_remaining_format, uiState.timeRemainingSeconds),
+                            modifier = Modifier.padding(top = Dimens.spacingSmall),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = timerColor,
+                        )
+
+                        Text(
+                            text = uiState.word,
+                            modifier = Modifier.padding(top = Dimens.spacingLarge),
+                            style = MaterialTheme.typography.headlineSmall,
+                        )
+                        Text(
+                            text = uiState.displayedTranslation,
+                            modifier = Modifier.padding(top = Dimens.spacingSmall),
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
+                            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
                         ) {
-                            Text("True")
-                        }
-                        Button(
-                            onClick = { onAnswer(false) },
-                            enabled = uiState.isEditable,
-                            colors = buttonColorsFor(selected = uiState.userAnsweredTrue == false, uiState = uiState),
-                        ) {
-                            Text("False")
+                            Button(
+                                onClick = debounced { onAnswer(true) },
+                                enabled = uiState.isEditable,
+                                colors = buttonColorsFor(selected = uiState.userAnsweredTrue == true, uiState = uiState),
+                            ) {
+                                Text(stringResource(R.string.action_true))
+                            }
+                            Button(
+                                onClick = debounced { onAnswer(false) },
+                                enabled = uiState.isEditable,
+                                colors = buttonColorsFor(selected = uiState.userAnsweredTrue == false, uiState = uiState),
+                            ) {
+                                Text(stringResource(R.string.action_false))
+                            }
                         }
                     }
 
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium),
-                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                        modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall, Alignment.End),
                     ) {
-                        TextButton(onClick = onSkip, enabled = uiState.canSkip) {
-                            Text("Skip")
+                        if (uiState.canSkip) {
+                            TextButton(onClick = debounced(onClick = onSkip)) {
+                                Text(stringResource(R.string.action_skip))
+                            }
                         }
                         if (uiState.awaitingNext) {
-                            Button(onClick = onNext) {
-                                Text("Next")
+                            Button(onClick = debounced(onClick = onNext)) {
+                                Text(stringResource(R.string.action_next))
                             }
                         }
                     }
                 }
+            }
         }
     }
 }
@@ -162,7 +185,7 @@ private fun TrueOrFalseScreenPreview() {
             uiState =
                 TrueOrFalseUiState.Loaded(
                     stepIndex = 2,
-                    totalSteps = 10,
+                    timeRemainingSeconds = 42,
                     word = "praca",
                     displayedTranslation = "work",
                 ),

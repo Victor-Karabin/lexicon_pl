@@ -12,6 +12,7 @@ import com.lexicon.interactors.trueorfalse.TrueOrFalseStepResponse
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.SessionNavigationEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -44,6 +45,7 @@ class TrueOrFalseViewModel
         private var correctCount = 0
         private var incorrectCount = 0
         private var skippedCount = 0
+        private var timerJob: Job? = null
 
         init {
             startSession()
@@ -55,6 +57,19 @@ class TrueOrFalseViewModel
                 sessionId = response.sessionId
                 steps = response.steps
                 openStep(0)
+                startTimer()
+            }
+        }
+
+        private fun startTimer() {
+            timerJob = viewModelScope.launch {
+                var remaining = TRUE_OR_FALSE_TIME_LIMIT_SECONDS
+                while (remaining > 0) {
+                    delay(1_000)
+                    remaining--
+                    updateLoaded { it.copy(timeRemainingSeconds = remaining) }
+                }
+                completeSession()
             }
         }
 
@@ -63,7 +78,7 @@ class TrueOrFalseViewModel
             _uiState.update {
                 TrueOrFalseUiState.Loaded(
                     stepIndex = index,
-                    totalSteps = steps.size,
+                    timeRemainingSeconds = (it as? TrueOrFalseUiState.Loaded)?.timeRemainingSeconds ?: TRUE_OR_FALSE_TIME_LIMIT_SECONDS,
                     word = step.word,
                     displayedTranslation = step.displayedTranslation,
                 )
@@ -133,14 +148,21 @@ class TrueOrFalseViewModel
         }
 
         private suspend fun advanceToNextStep() {
-            val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
-            val nextIndex = state.stepIndex + 1
+            val nextIndex = (_uiState.value as? TrueOrFalseUiState.Loaded)?.stepIndex?.plus(1) ?: return
             if (nextIndex >= steps.size) {
-                updateLoaded { it.copy(isSessionComplete = true) }
-                _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount))
+                // Ran out of fetched items before the timer expired.
+                completeSession()
                 return
             }
             openStep(nextIndex)
+        }
+
+        private suspend fun completeSession() {
+            val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
+            if (state.isSessionComplete) return
+            timerJob?.cancel()
+            updateLoaded { it.copy(isSessionComplete = true) }
+            _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount))
         }
 
         private fun currentStepOrNull(): TrueOrFalseStepResponse? {
@@ -150,5 +172,9 @@ class TrueOrFalseViewModel
 
         private inline fun updateLoaded(transform: (TrueOrFalseUiState.Loaded) -> TrueOrFalseUiState.Loaded) {
             _uiState.update { current -> if (current is TrueOrFalseUiState.Loaded) transform(current) else current }
+        }
+
+        override fun onCleared() {
+            timerJob?.cancel()
         }
     }
