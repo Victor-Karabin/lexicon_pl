@@ -42,15 +42,24 @@ sealed interface CrosswordUiState {
         val colCount: Int = 0,
         val selectedWordId: Long? = null,
         val answerState: AnswerState = AnswerState.Unanswered,
-        val isSessionComplete: Boolean = false,
         /** True while Check is mid-flight — disables the action row so a rapid double-tap can't fire twice. */
         val isSubmitting: Boolean = false,
+        /** Set when Check couldn't be recorded; the user can retry rather than being stuck. */
+        val submitFailed: Boolean = false,
     ) : CrosswordUiState {
-        val isEditable: Boolean get() = answerState is AnswerState.Unanswered && !isSessionComplete && !isSubmitting
+        /** The grid stops accepting input once it has been checked. */
+        val isChecked: Boolean get() = answerState !is AnswerState.Unanswered
+        val isEditable: Boolean get() = !isChecked && !isSubmitting
         val canCheck: Boolean get() = isEditable
         val canUseTip: Boolean get() = isEditable && words.any { it.revealedLetterCount < it.length }
+
+        /** After Check the user reviews the marked grid, then continues to the Result screen. */
+        val awaitingContinue: Boolean get() = isChecked && !isSubmitting
         val selectedWord: CrosswordWordUi? get() = words.find { it.vocabularyItemId == selectedWordId }
 
         fun enteredText(word: CrosswordWordUi): String = word.occupiedCells().joinToString("") { cell -> cells[cell]?.letter.orEmpty() }
+
+        /** Correct spelling, revealed per word once the puzzle has been checked (spec §14). */
+        fun revealedAnswer(word: CrosswordWordUi): String? = word.expectedText.takeIf { isChecked }
     }
 }

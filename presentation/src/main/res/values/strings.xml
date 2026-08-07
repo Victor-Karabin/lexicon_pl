@@ -32,6 +32,7 @@
     <string name="crossword_title">Crossword</string>
     <string name="crossword_across_format">Across · %1$d</string>
     <string name="crossword_down_format">Down · %1$d</string>
+    <string name="crossword_check_failed">Couldn\'t save your answers. Tap Check to try again.</string>
 
     <!-- True or False -->
     <string name="true_or_false_title">True or False</string>

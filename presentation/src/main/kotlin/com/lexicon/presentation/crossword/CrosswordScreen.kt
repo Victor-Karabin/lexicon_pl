@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,6 +43,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.SubcomposeAsyncImage
@@ -57,7 +59,9 @@ import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
 
-private val CellSize = 40.dp
+/** Cells shrink to fit the widest grid on screen; below this they stop being tappable/readable. */
+private val MinCellSize = 22.dp
+private val MaxCellSize = 40.dp
 private val ClueImageSize = 96.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -87,6 +91,7 @@ fun CrosswordScreen(
         onLetterEntered = viewModel::onLetterEntered,
         onTipRequested = viewModel::onTipRequested,
         onCheck = viewModel::onCheck,
+        onContinue = viewModel::onContinue,
         modifier = modifier,
     )
 }
@@ -101,6 +106,7 @@ private fun CrosswordScreenContent(
     onLetterEntered: (CrosswordCell, String) -> Unit,
     onTipRequested: () -> Unit,
     onCheck: () -> Unit,
+    onContinue: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -152,18 +158,33 @@ private fun CrosswordScreenContent(
                                 fontWeight = FontWeight.Bold,
                             )
                         }
+
+                        if (uiState.submitFailed) {
+                            Text(
+                                text = stringResource(R.string.crossword_check_failed),
+                                color = LexiconError,
+                                modifier = Modifier.padding(top = Dimens.spacingMedium),
+                                style = MaterialTheme.typography.bodyMedium,
+                            )
+                        }
                     }
 
-                    // No Skip and no Next: this is a single-screen training that ends at Check.
+                    // No Skip (single-screen training). Check turns into Next once validated, so the
+                    // marked-up grid stays on screen until the user chooses to move on.
                     Row(
                         modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
                         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall, Alignment.End),
                     ) {
-                        TextButton(onClick = debounced(onClick = onTipRequested), enabled = uiState.canUseTip) {
-                            Text(stringResource(R.string.action_tip))
+                        if (!uiState.isChecked) {
+                            TextButton(onClick = debounced(onClick = onTipRequested), enabled = uiState.canUseTip) {
+                                Text(stringResource(R.string.action_tip))
+                            }
                         }
-                        Button(onClick = debounced(onClick = onCheck), enabled = uiState.canCheck) {
-                            Text(stringResource(R.string.action_check))
+                        Button(
+                            onClick = debounced { if (uiState.isChecked) onContinue() else onCheck() },
+                            enabled = uiState.canCheck || uiState.awaitingContinue,
+                        ) {
+                            Text(stringResource(if (uiState.isChecked) R.string.action_next else R.string.action_check))
                         }
                     }
                 }
@@ -178,23 +199,37 @@ private fun CrosswordGrid(
     onLetterEntered: (CrosswordCell, String) -> Unit,
 ) {
     val selectedCells = uiState.selectedWord?.occupiedCells()?.toSet().orEmpty()
-    Column(modifier = Modifier.horizontalScroll(rememberScrollState())) {
-        for (row in 0 until uiState.rowCount) {
-            Row {
-                for (col in 0 until uiState.colCount) {
-                    val cell = CrosswordCell(row, col)
-                    val cellState = uiState.cells[cell]
-                    if (cellState == null) {
-                        Box(modifier = Modifier.size(CellSize))
-                    } else {
-                        CrosswordCellBox(
-                            cell = cell,
-                            state = cellState,
-                            isSelected = cell in selectedCells,
-                            enabled = uiState.isEditable,
-                            onSelected = onCellSelected,
-                            onLetterEntered = onLetterEntered,
-                        )
+    BoxWithConstraints {
+        // Generated grids routinely run 10+ columns wide, which overflows a phone at a fixed cell
+        // size. Scale cells to the available width so the whole puzzle stays visible at once;
+        // only fall back to scrolling for the rare grid too wide even at the minimum size.
+        val cellSize = (maxWidth / uiState.colCount.coerceAtLeast(1))
+            .coerceIn(MinCellSize, MaxCellSize)
+        val scrollModifier = if (cellSize * uiState.colCount > maxWidth) {
+            Modifier.horizontalScroll(rememberScrollState())
+        } else {
+            Modifier
+        }
+
+        Column(modifier = scrollModifier) {
+            for (row in 0 until uiState.rowCount) {
+                Row {
+                    for (col in 0 until uiState.colCount) {
+                        val cell = CrosswordCell(row, col)
+                        val cellState = uiState.cells[cell]
+                        if (cellState == null) {
+                            Box(modifier = Modifier.size(cellSize))
+                        } else {
+                            CrosswordCellBox(
+                                cell = cell,
+                                state = cellState,
+                                size = cellSize,
+                                isSelected = cell in selectedCells,
+                                enabled = uiState.isEditable,
+                                onSelected = onCellSelected,
+                                onLetterEntered = onLetterEntered,
+                            )
+                        }
                     }
                 }
             }
@@ -206,6 +241,7 @@ private fun CrosswordGrid(
 private fun CrosswordCellBox(
     cell: CrosswordCell,
     state: CrosswordCellState,
+    size: Dp,
     isSelected: Boolean,
     enabled: Boolean,
     onSelected: (CrosswordCell) -> Unit,
@@ -221,7 +257,7 @@ private fun CrosswordCellBox(
 
     Box(
         modifier = Modifier
-            .size(CellSize)
+            .size(size)
             .padding(1.dp)
             .background(background, LexiconShapes.small)
             .border(1.dp, MaterialTheme.colorScheme.outline, LexiconShapes.small),
@@ -300,6 +336,16 @@ private fun ClueRow(
                     style = MaterialTheme.typography.labelSmall,
                     modifier = Modifier.padding(top = Dimens.spacingTiny),
                 )
+                // Spec §14: the correct answers are revealed once the crossword has been checked.
+                uiState.revealedAnswer(word)?.let { answer ->
+                    Text(
+                        text = answer,
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(top = Dimens.spacingTiny),
+                    )
+                }
             }
         }
     }
@@ -347,6 +393,7 @@ private fun CrosswordScreenPreview() {
             onLetterEntered = { _, _ -> },
             onTipRequested = {},
             onCheck = {},
+            onContinue = {},
         )
     }
 }

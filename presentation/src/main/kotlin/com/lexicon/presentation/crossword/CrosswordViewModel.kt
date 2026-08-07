@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,6 +41,9 @@ class CrosswordViewModel
         val navigationEvents: SharedFlow<SessionNavigationEvent> = _navigationEvents.asSharedFlow()
 
         private lateinit var sessionId: String
+
+        /** Held between Check and Continue so the user can review the marked grid before navigating. */
+        private var pendingResult: SessionNavigationEvent.SessionComplete? = null
 
         init {
             startSession()
@@ -98,7 +102,7 @@ class CrosswordViewModel
                 if (!state.isEditable) return@updateLoaded state
                 val existing = state.cells[cell] ?: return@updateLoaded state
                 if (existing.locked) return@updateLoaded state
-                val normalized = letter.trim().takeLast(1).uppercase()
+                val normalized = letter.trim().takeLast(1).uppercase(Locale.ROOT)
                 state.copy(cells = state.cells + (cell to existing.copy(letter = normalized, isIncorrect = false)))
             }
         }
@@ -113,7 +117,7 @@ class CrosswordViewModel
 
                 val offset = target.revealedLetterCount
                 val cell = target.cellAt(offset)
-                val letter = target.expectedText.uppercase()[offset].toString()
+                val letter = target.expectedText.uppercase(Locale.ROOT)[offset].toString()
                 val updatedWord = target.copy(revealedLetterCount = offset + 1)
 
                 state.copy(
@@ -127,7 +131,7 @@ class CrosswordViewModel
         fun onCheck() {
             val state = _uiState.value as? CrosswordUiState.Loaded ?: return
             if (!state.canCheck) return
-            updateLoaded { it.copy(isSubmitting = true) }
+            updateLoaded { it.copy(isSubmitting = true, submitFailed = false) }
             viewModelScope.launch(dispatchers.io) {
                 val submissions = state.words.map { word ->
                     CrosswordWordSubmission(
@@ -137,12 +141,14 @@ class CrosswordViewModel
                         tipUsed = word.revealedLetterCount > 0,
                     )
                 }
-                val response = submitCrosswordUseCase(SubmitCrosswordRequest(sessionId, submissions))
-
-                val incorrectIds = response.wordResults
-                    .filter { it.outcome == CrosswordWordOutcome.INCORRECT }
-                    .map { it.vocabularyItemId }
-                    .toSet()
+                val response = runCatching {
+                    submitCrosswordUseCase(SubmitCrosswordRequest(sessionId, submissions))
+                }.getOrElse {
+                    // Leave the grid editable and let the user try Check again rather than
+                    // stranding them on a screen whose only action is permanently disabled.
+                    updateLoaded { it.copy(isSubmitting = false, submitFailed = true) }
+                    return@launch
+                }
 
                 lastSessionResultsHolder.wordResults = response.wordResults.map { result ->
                     val word = state.words.first { it.vocabularyItemId == result.vocabularyItemId }
@@ -157,19 +163,35 @@ class CrosswordViewModel
                         tipUsed = result.tipUsed,
                     )
                 }
-
-                markIncorrectCells(incorrectIds)
-
-                val correctCount = response.wordResults.count { it.outcome == CrosswordWordOutcome.CORRECT }
-                _navigationEvents.emit(
+                pendingResult = response.wordResults.let { results ->
+                    val correct = results.count { it.outcome == CrosswordWordOutcome.CORRECT }
                     SessionNavigationEvent.SessionComplete(
-                        correct = correctCount,
-                        incorrect = response.wordResults.size - correctCount,
+                        correct = correct,
+                        incorrect = results.size - correct,
                         skipped = 0,
-                        tipsUsed = response.wordResults.count { it.tipUsed },
-                    ),
+                        tipsUsed = results.count { it.tipUsed },
+                    )
+                }
+
+                markIncorrectCells(
+                    response.wordResults
+                        .filter { it.outcome == CrosswordWordOutcome.INCORRECT }
+                        .map { it.vocabularyItemId }
+                        .toSet(),
                 )
             }
+        }
+
+        /**
+         * Called from the UI's "Next" button. Navigation is deliberately not emitted straight from
+         * [onCheck]: doing so pops this screen instantly, so the user would never actually see the
+         * incorrect cells or the revealed answers that Check just produced.
+         */
+        fun onContinue() {
+            val state = _uiState.value as? CrosswordUiState.Loaded ?: return
+            if (!state.awaitingContinue) return
+            val result = pendingResult ?: return
+            viewModelScope.launch { _navigationEvents.emit(result) }
         }
 
         private fun markIncorrectCells(incorrectWordIds: Set<Long>) {
@@ -183,7 +205,6 @@ class CrosswordViewModel
                         cellState.copy(isIncorrect = cell in incorrectCells)
                     },
                     answerState = if (incorrectWordIds.isEmpty()) AnswerState.Correct else AnswerState.Incorrect(),
-                    isSessionComplete = true,
                     isSubmitting = false,
                 )
             }

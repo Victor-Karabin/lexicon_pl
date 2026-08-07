@@ -39,25 +39,77 @@ class CrosswordGridGeneratorTest {
     }
 
     @Test
-    fun `intersecting words share a letter at the crossing cell`() {
-        // "kot" and "praca" share the letter 'a'... use words guaranteed to share a letter: "kot" / "tor".
+    fun `two words sharing a letter are placed crossing at that letter`() {
         val layout = CrosswordGridGenerator.generate(listOf(word(1, "kot"), word(2, "tor")))
-        val cells = layout.placements.associateWith { placed ->
-            placed.word.text.uppercase().mapIndexed { i, letter ->
-                cellFor(placed, i) to letter
-            }
-        }.values.flatten()
-        val grid = mutableMapOf<Pair<Int, Int>, Char>()
-        for ((cell, letter) in cells) {
-            val existing = grid[cell]
-            assertTrue("conflicting letters at $cell", existing == null || existing == letter)
-            grid[cell] = letter
-        }
-        // At least one cell must be shared between the two placements for them to actually intersect.
         val perWordCells = layout.placements.map { placed ->
             (0 until placed.word.text.length).map { i -> cellFor(placed, i) }.toSet()
         }
-        assertTrue(perWordCells[0].intersect(perWordCells[1]).isNotEmpty())
+        assertTrue("the two words should intersect", perWordCells[0].intersect(perWordCells[1]).isNotEmpty())
+    }
+
+    /**
+     * The core crossword invariant: reading the finished grid in either direction must only ever
+     * spell the puzzle's own answers. Words placed parallel-and-adjacent would create extra letter
+     * runs that aren't answers at all, which is what makes a grid look like a blob instead of a
+     * crossword.
+     */
+    @Test
+    fun `every maximal letter run in the grid is one of the placed words`() {
+        val vocabulary = listOf(
+            "kot", "pies", "dom", "woda", "chleb", "mleko", "szkoła", "praca",
+            "miasto", "łóżko", "słońce", "przyjaciel", "okno", "stół", "ryba",
+        )
+        // Many different subsets, since layout quality depends heavily on which letters are available.
+        repeat(50) { seed ->
+            val words = vocabulary.shuffled(kotlin.random.Random(seed.toLong())).take(8)
+                .mapIndexed { index, text -> word(index.toLong(), text) }
+            val layout = CrosswordGridGenerator.generate(words)
+
+            val grid = mutableMapOf<Pair<Int, Int>, Char>()
+            layout.placements.forEach { placed ->
+                placed.word.text.uppercase().forEachIndexed { i, letter -> grid[cellFor(placed, i)] = letter }
+            }
+            val acrossRuns = layout.placements
+                .filter { it.direction == CrosswordDirection.ACROSS }
+                .map { Triple(it.row, it.col, it.word.text.length) }
+                .toSet()
+            val downRuns = layout.placements
+                .filter { it.direction == CrosswordDirection.DOWN }
+                .map { Triple(it.row, it.col, it.word.text.length) }
+                .toSet()
+
+            maximalRuns(grid, horizontal = true).forEach { run ->
+                assertTrue("seed $seed: horizontal run $run is not a placed word", run in acrossRuns)
+            }
+            maximalRuns(grid, horizontal = false).forEach { run ->
+                assertTrue("seed $seed: vertical run $run is not a placed word", run in downRuns)
+            }
+        }
+    }
+
+    /** Maximal runs of 2+ adjacent letters, as (row, col, length) of their starting cell. */
+    private fun maximalRuns(
+        grid: Map<Pair<Int, Int>, Char>,
+        horizontal: Boolean,
+    ): List<Triple<Int, Int, Int>> {
+        if (grid.isEmpty()) return emptyList()
+        val runs = mutableListOf<Triple<Int, Int, Int>>()
+        val outer = if (horizontal) grid.keys.map { it.first } else grid.keys.map { it.second }
+        val inner = if (horizontal) grid.keys.map { it.second } else grid.keys.map { it.first }
+        for (o in outer.min()..outer.max()) {
+            var i = inner.min()
+            while (i <= inner.max()) {
+                val cell = if (horizontal) o to i else i to o
+                if (grid.containsKey(cell)) {
+                    val start = i
+                    while (grid.containsKey(if (horizontal) o to (i + 1) else (i + 1) to o)) i++
+                    val length = i - start + 1
+                    if (length >= 2) runs += if (horizontal) Triple(o, start, length) else Triple(start, o, length)
+                }
+                i++
+            }
+        }
+        return runs
     }
 
     @Test
@@ -70,10 +122,15 @@ class CrosswordGridGeneratorTest {
     }
 
     @Test
-    fun `layout is normalized so the minimum row and column are zero`() {
+    fun `layout is normalized so the minimum row and column are both zero`() {
         val layout = CrosswordGridGenerator.generate(listOf(word(1, "kot"), word(2, "tor"), word(3, "pies")))
-        assertTrue(layout.placements.all { it.row >= 0 && it.col >= 0 })
-        assertTrue(layout.placements.any { it.row == 0 } || layout.placements.any { it.col == 0 })
+        val cells = layout.placements.flatMap { placed ->
+            (0 until placed.word.text.length).map { i -> cellFor(placed, i) }
+        }
+        assertEquals(0, cells.minOf { it.first })
+        assertEquals(0, cells.minOf { it.second })
+        assertEquals(layout.rowCount, cells.maxOf { it.first } + 1)
+        assertEquals(layout.colCount, cells.maxOf { it.second } + 1)
     }
 
     private fun cellFor(

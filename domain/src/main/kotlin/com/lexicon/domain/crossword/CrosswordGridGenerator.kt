@@ -2,6 +2,7 @@ package com.lexicon.domain.crossword
 
 import com.lexicon.domain.dictation.Word
 import com.lexicon.interactors.crossword.CrosswordDirection
+import java.util.Locale
 
 internal data class PlacedWord(
     val word: Word,
@@ -30,11 +31,11 @@ internal object CrosswordGridGenerator {
         val placed = mutableListOf<PlacedWord>()
 
         ordered.forEachIndexed { index, word ->
-            val letters = word.text.uppercase()
+            val letters = word.text.uppercase(Locale.ROOT)
             val placement = if (index == 0) {
                 Placement(row = 0, col = 0, direction = CrosswordDirection.ACROSS)
             } else {
-                findIntersection(letters, placed, grid) ?: fallbackPlacement(grid)
+                bestIntersection(letters, placed, grid) ?: fallbackPlacement(grid)
             }
             place(word, letters, placement, grid, placed)
         }
@@ -46,31 +47,32 @@ internal object CrosswordGridGenerator {
 
     private data class Placement(val row: Int, val col: Int, val direction: CrosswordDirection)
 
-    private fun findIntersection(
+    /** Of all legal intersections, picks the one that keeps the overall grid most compact. */
+    private fun bestIntersection(
         letters: String,
         placed: List<PlacedWord>,
         grid: Map<Cell, Char>,
-    ): Placement? {
-        for (existing in placed) {
-            val existingLetters = existing.word.text.uppercase()
-            for (i in letters.indices) {
-                for (j in existingLetters.indices) {
-                    if (letters[i] != existingLetters[j]) continue
-                    val newDirection = if (existing.direction == CrosswordDirection.ACROSS) {
-                        CrosswordDirection.DOWN
-                    } else {
-                        CrosswordDirection.ACROSS
+    ): Placement? =
+        placed.asSequence()
+            .flatMap { existing ->
+                val existingLetters = existing.word.text.uppercase(Locale.ROOT)
+                letters.indices.asSequence().flatMap { i ->
+                    existingLetters.indices.asSequence().mapNotNull { j ->
+                        if (letters[i] != existingLetters[j]) return@mapNotNull null
+                        val newDirection = if (existing.direction == CrosswordDirection.ACROSS) {
+                            CrosswordDirection.DOWN
+                        } else {
+                            CrosswordDirection.ACROSS
+                        }
+                        val crossCell = cellAt(existing.row, existing.col, existing.direction, j)
+                        val row = if (newDirection == CrosswordDirection.DOWN) crossCell.row - i else crossCell.row
+                        val col = if (newDirection == CrosswordDirection.ACROSS) crossCell.col - i else crossCell.col
+                        Placement(row, col, newDirection)
                     }
-                    val crossCell = cellAt(existing.row, existing.col, existing.direction, j)
-                    val row = if (newDirection == CrosswordDirection.DOWN) crossCell.row - i else crossCell.row
-                    val col = if (newDirection == CrosswordDirection.ACROSS) crossCell.col - i else crossCell.col
-                    val placement = Placement(row, col, newDirection)
-                    if (canPlace(letters, placement, grid)) return placement
                 }
             }
-        }
-        return null
-    }
+            .filter { canPlace(letters, it, grid) }
+            .minByOrNull { boundingBoxAreaWith(letters, it, grid) }
 
     private fun canPlace(
         letters: String,
@@ -85,8 +87,35 @@ internal object CrosswordGridGenerator {
         return letters.withIndex().all { (i, letter) ->
             val cell = cellAt(placement.row, placement.col, placement.direction, i)
             val existing = grid[cell]
-            existing == null || existing == letter
+            when {
+                // A shared cell is a legitimate crossing as long as the letters agree.
+                existing != null -> existing == letter
+                // An unshared cell must not touch another word sideways: two words running parallel
+                // and adjacent would form letter sequences that aren't any of the puzzle's answers.
+                else -> perpendicularNeighbours(cell, placement.direction).none(grid::containsKey)
+            }
         }
+    }
+
+    private fun perpendicularNeighbours(
+        cell: Cell,
+        direction: CrosswordDirection,
+    ): List<Cell> =
+        if (direction == CrosswordDirection.ACROSS) {
+            listOf(Cell(cell.row - 1, cell.col), Cell(cell.row + 1, cell.col))
+        } else {
+            listOf(Cell(cell.row, cell.col - 1), Cell(cell.row, cell.col + 1))
+        }
+
+    private fun boundingBoxAreaWith(
+        letters: String,
+        placement: Placement,
+        grid: Map<Cell, Char>,
+    ): Int {
+        val cells = grid.keys + letters.indices.map { cellAt(placement.row, placement.col, placement.direction, it) }
+        val height = cells.maxOf { it.row } - cells.minOf { it.row } + 1
+        val width = cells.maxOf { it.col } - cells.minOf { it.col } + 1
+        return height * width
     }
 
     private fun place(
