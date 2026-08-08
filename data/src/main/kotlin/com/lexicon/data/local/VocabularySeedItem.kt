@@ -16,4 +16,5 @@ fun VocabularySeedItem.toEntity(): WordEntity =
         text = text,
         translation = translation,
         transcription = transcription,
+        searchKey = searchKeyFor(text, translation),
     )

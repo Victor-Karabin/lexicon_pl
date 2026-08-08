@@ -23,6 +23,14 @@ class VocabularySeeder
             mutex.withLock {
                 if (wordDao.count() == 0) {
                     wordDao.insertAll(vocabularySeedAssetLoader.load())
+                    return
+                }
+                // Rows a migration carried over predate the search key. Backfilling here rather
+                // than in the migration keeps the folding in one place, and keeps the user's
+                // favourites, which reseeding from scratch would discard.
+                val stale = wordDao.getWithoutSearchKey()
+                if (stale.isNotEmpty()) {
+                    wordDao.updateAll(stale.map { it.copy(searchKey = searchKeyFor(it.text, it.translation)) })
                 }
             }
         }

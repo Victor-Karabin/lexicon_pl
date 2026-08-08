@@ -1,5 +1,6 @@
 package com.lexicon.domain.presets
 
+import com.lexicon.common.foldForSearch
 import com.lexicon.interactors.presets.BrowsePresetsRequest
 import com.lexicon.interactors.presets.BrowseVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
@@ -39,28 +40,21 @@ class BrowseVocabularyPresetsUseCaseImpl
             preset: VocabularyPreset,
             request: BrowsePresetsRequest,
         ): Boolean {
-            val query = request.query.normalise()
+            val query = request.query.foldForSearch()
             if (query.isEmpty()) return true
             val haystack = listOf(
                 preset.title.resolve(request.languageTag),
                 preset.description.resolve(request.languageTag),
                 preset.category.title.resolve(request.languageTag),
             )
-            return haystack.any { query in it.normalise() }
+            return haystack.any { query in it.foldForSearch() }
         }
 
         private fun comparator(request: BrowsePresetsRequest): Comparator<VocabularyPreset> =
             when (request.sort) {
                 PresetSort.POPULARITY -> compareBy { it.popularity }
-                PresetSort.ALPHABETICAL -> compareBy { it.title.resolve(request.languageTag).normalise() }
+                PresetSort.ALPHABETICAL -> compareBy { it.title.resolve(request.languageTag).foldForSearch() }
                 PresetSort.WORD_COUNT_ASCENDING -> compareBy { it.wordCount }
                 PresetSort.WORD_COUNT_DESCENDING -> compareByDescending { it.wordCount }
             }
     }
-
-private val ACCENTS = mapOf(
-    'ą' to 'a', 'ć' to 'c', 'ę' to 'e', 'ł' to 'l', 'ń' to 'n',
-    'ó' to 'o', 'ś' to 's', 'ź' to 'z', 'ż' to 'z',
-)
-
-private fun String.normalise(): String = lowercase().map { ACCENTS[it] ?: it }.joinToString("").trim()

@@ -24,7 +24,7 @@ class VocabularySeedAssetLoaderTest {
         val words = VocabularySeedAssetLoader(context).load()
 
         assertEquals(2, words.size)
-        assertEquals(WordEntity(1, "kot", "cat", "kɔt"), words[0])
-        assertEquals(WordEntity(2, "pies", "dog", "pjɛs"), words[1])
+        assertEquals(WordEntity(1, "kot", "cat", "kɔt", searchKey = "kot cat"), words[0])
+        assertEquals(WordEntity(2, "pies", "dog", "pjɛs", searchKey = "pies dog"), words[1])
     }
 }

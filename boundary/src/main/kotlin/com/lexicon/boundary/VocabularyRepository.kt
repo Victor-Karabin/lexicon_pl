@@ -19,6 +19,16 @@ interface VocabularyRepository {
     suspend fun getItemsByIds(ids: List<Long>): List<VocabularyItemBoundary>
 
     /**
+     * Words whose Polish or English side matches [foldedQuery], which the caller must already
+     * have folded with the same rule the stored keys use. Ordered alphabetically and capped at
+     * [limit], because a two-letter query matches most of the vocabulary.
+     */
+    suspend fun search(
+        foldedQuery: String,
+        limit: Int,
+    ): List<VocabularyItemBoundary>
+
+    /**
      * Size of the study set — the favourites when there are any, the whole vocabulary
      * otherwise. This is what a training has to work with, so it is what "not enough words"
      * has to be measured against.

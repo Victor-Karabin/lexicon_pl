@@ -17,6 +17,7 @@ import com.lexicon.domain.presets.GetPresetVocabularyUseCaseImpl
 import com.lexicon.domain.presets.GetVocabularyPresetUseCaseImpl
 import com.lexicon.domain.presets.GetVocabularyPresetsUseCaseImpl
 import com.lexicon.domain.presets.ObserveFavouriteWordIdsUseCaseImpl
+import com.lexicon.domain.presets.SearchVocabularyUseCaseImpl
 import com.lexicon.domain.presets.SetPresetFavouriteUseCaseImpl
 import com.lexicon.domain.presets.ToggleWordFavouriteUseCaseImpl
 import com.lexicon.domain.pronunciation.StartPronunciationSessionUseCaseImpl
@@ -48,6 +49,7 @@ import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
+import com.lexicon.interactors.presets.SearchVocabularyUseCase
 import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
 import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
@@ -162,4 +164,7 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindCheckTrainingReadiness(impl: CheckTrainingReadinessUseCaseImpl): CheckTrainingReadinessUseCase
+
+    @Binds
+    abstract fun bindSearchVocabulary(impl: SearchVocabularyUseCaseImpl): SearchVocabularyUseCase
 }

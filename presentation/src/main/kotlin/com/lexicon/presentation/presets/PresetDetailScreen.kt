@@ -27,7 +27,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.presets.CefrLevel
@@ -119,7 +118,7 @@ private fun PresetDetailContent(
                     } else {
                         LazyColumn(contentPadding = PaddingValues(vertical = Dimens.spacingSmall)) {
                             itemsIndexed(uiState.words, key = { _, word -> word.id.value }) { index, word ->
-                                WordRow(
+                                VocabularyWordRow(
                                     word = word,
                                     onFavouriteToggled = { onWordFavouriteToggled(word.id, !word.isFavourite) },
                                 )
@@ -178,47 +177,6 @@ private fun PresetHeader(
         PresetFavouriteButton(
             state = uiState.favouriteState,
             onClick = { onFavouriteToggled(uiState.favouriteState) },
-        )
-    }
-}
-
-@Composable
-private fun WordRow(
-    word: PresetWord,
-    onFavouriteToggled: () -> Unit,
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth().padding(
-            start = Dimens.spacingMedium,
-            end = Dimens.spacingSmall,
-            top = Dimens.spacingSmall,
-            bottom = Dimens.spacingSmall,
-        ),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = word.text,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Medium,
-            )
-            Text(
-                text = word.translation,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Text(
-                text = "[${word.transcription}]",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-        FavouriteButton(
-            isFavourite = word.isFavourite,
-            contentDescription = stringResource(
-                if (word.isFavourite) R.string.favourite_remove else R.string.favourite_add,
-            ),
-            onClick = onFavouriteToggled,
         )
     }
 }

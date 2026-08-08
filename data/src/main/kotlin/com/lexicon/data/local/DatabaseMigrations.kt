@@ -39,3 +39,15 @@ val MIGRATION_3_4 =
             db.execSQL("ALTER TABLE `words` ADD COLUMN `isFavourite` INTEGER NOT NULL DEFAULT 0")
         }
     }
+
+/**
+ * Adds the search key. Unlike [MIGRATION_2_3] this keeps the rows: they now carry the user's
+ * favourites, so wiping the table to force a reseed would throw away their study set. The
+ * seeder backfills the empty keys instead.
+ */
+val MIGRATION_4_5 =
+    object : Migration(4, 5) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE `words` ADD COLUMN `searchKey` TEXT NOT NULL DEFAULT ''")
+        }
+    }

@@ -13,21 +13,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,7 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -51,6 +50,8 @@ import com.lexicon.interactors.presets.PresetCategory
 import com.lexicon.interactors.presets.PresetFavouriteState
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetSort
+import com.lexicon.interactors.presets.PresetWord
+import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
@@ -60,19 +61,26 @@ import com.lexicon.presentation.theme.LexiconTheme
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlin.time.Duration
-import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Duration.Companion.minutes
 
 private val IconBadgeSize = 44.dp
 
+/**
+ * The Vocabulary tab: curated presets, and a search over every word.
+ *
+ * One list, not two. The search box looks up words — the thing you reach for when you want to
+ * know or favourite a particular one — and the presets stay underneath it, restored untouched
+ * the moment the box is cleared.
+ */
 @Composable
-fun PresetBrowserScreen(
+fun VocabularyScreen(
     onPresetSelected: (PresetId) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: PresetBrowserViewModel = hiltViewModel(),
+    viewModel: VocabularyViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    PresetBrowserContent(
+    VocabularyContent(
         uiState = uiState,
         onQueryChanged = viewModel::onQueryChanged,
         onCategoryToggled = viewModel::onCategoryToggled,
@@ -81,13 +89,14 @@ fun PresetBrowserScreen(
         onFiltersCleared = viewModel::onFiltersCleared,
         onPresetSelected = onPresetSelected,
         onPresetFavouriteToggled = viewModel::onPresetFavouriteToggled,
+        onWordFavouriteToggled = viewModel::onWordFavouriteToggled,
         modifier = modifier,
     )
 }
 
 @Composable
-private fun PresetBrowserContent(
-    uiState: PresetBrowserUiState,
+private fun VocabularyContent(
+    uiState: VocabularyUiState,
     onQueryChanged: (String) -> Unit,
     onCategoryToggled: (String) -> Unit,
     onCefrToggled: (CefrLevel) -> Unit,
@@ -95,48 +104,81 @@ private fun PresetBrowserContent(
     onFiltersCleared: () -> Unit,
     onPresetSelected: (PresetId) -> Unit,
     onPresetFavouriteToggled: (PresetId, PresetFavouriteState) -> Unit,
+    onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when (uiState) {
-        is PresetBrowserUiState.Loading ->
+        is VocabularyUiState.Loading ->
             Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
 
-        is PresetBrowserUiState.Loaded ->
+        is VocabularyUiState.Loaded ->
             Column(modifier = modifier.fillMaxSize()) {
                 SearchRow(
                     query = uiState.query,
                     sort = uiState.sort,
+                    // Sorting orders presets, so it has nothing to order while showing words.
+                    showSort = !uiState.isSearchingWords,
                     onQueryChanged = onQueryChanged,
                     onSortSelected = onSortSelected,
                 )
-                FilterRow(
-                    uiState = uiState,
-                    onCategoryToggled = onCategoryToggled,
-                    onCefrToggled = onCefrToggled,
-                    onFiltersCleared = onFiltersCleared,
-                )
 
-                when {
-                    uiState.isEmptyCatalog -> Message(stringResource(R.string.presets_catalog_empty))
-                    uiState.isEmptyResult -> Message(stringResource(R.string.presets_no_matches))
-                    else ->
-                        LazyColumn(
-                            contentPadding = PaddingValues(Dimens.spacingMedium),
-                            verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-                        ) {
-                            items(uiState.presets, key = { it.id.value }) { preset ->
-                                val favouriteState = favouriteStateOf(preset, uiState.favouriteWordIds)
-                                PresetCard(
-                                    preset = preset,
-                                    languageTag = uiState.languageTag,
-                                    favouriteState = favouriteState,
-                                    onClick = { onPresetSelected(preset.id) },
-                                    onFavouriteToggled = { onPresetFavouriteToggled(preset.id, favouriteState) },
-                                )
-                            }
-                        }
+                if (uiState.isSearchingWords) {
+                    WordResults(uiState, onWordFavouriteToggled)
+                } else {
+                    FilterRow(uiState, onCategoryToggled, onCefrToggled, onFiltersCleared)
+                    PresetResults(uiState, onPresetSelected, onPresetFavouriteToggled)
+                }
+            }
+    }
+}
+
+@Composable
+private fun WordResults(
+    uiState: VocabularyUiState.Loaded,
+    onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
+) {
+    if (uiState.hasNoMatchingWords) {
+        Message(stringResource(R.string.vocabulary_search_no_matches, uiState.query))
+        return
+    }
+    LazyColumn(contentPadding = PaddingValues(vertical = Dimens.spacingSmall)) {
+        itemsIndexed(uiState.words, key = { _, word -> word.id.value }) { index, word ->
+            VocabularyWordRow(
+                word = word,
+                onFavouriteToggled = { onWordFavouriteToggled(word.id, !word.isFavourite) },
+            )
+            if (index < uiState.words.lastIndex) {
+                HorizontalDivider(modifier = Modifier.padding(horizontal = Dimens.spacingMedium))
+            }
+        }
+    }
+}
+
+@Composable
+private fun PresetResults(
+    uiState: VocabularyUiState.Loaded,
+    onPresetSelected: (PresetId) -> Unit,
+    onPresetFavouriteToggled: (PresetId, PresetFavouriteState) -> Unit,
+) {
+    when {
+        uiState.hasNoPresetsAtAll -> Message(stringResource(R.string.presets_catalog_empty))
+        uiState.hasNoMatchingPresets -> Message(stringResource(R.string.presets_no_matches))
+        else ->
+            LazyColumn(
+                contentPadding = PaddingValues(Dimens.spacingMedium),
+                verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+            ) {
+                items(uiState.presets, key = { it.id.value }) { preset ->
+                    val favouriteState = favouriteStateOf(preset, uiState.favouriteWordIds)
+                    PresetCard(
+                        preset = preset,
+                        languageTag = uiState.languageTag,
+                        favouriteState = favouriteState,
+                        onClick = { onPresetSelected(preset.id) },
+                        onFavouriteToggled = { onPresetFavouriteToggled(preset.id, favouriteState) },
+                    )
                 }
             }
     }
@@ -146,6 +188,7 @@ private fun PresetBrowserContent(
 private fun SearchRow(
     query: String,
     sort: PresetSort,
+    showSort: Boolean,
     onQueryChanged: (String) -> Unit,
     onSortSelected: (PresetSort) -> Unit,
 ) {
@@ -157,24 +200,15 @@ private fun SearchRow(
         ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        OutlinedTextField(
-            value = query,
-            onValueChange = onQueryChanged,
-            singleLine = true,
+        VocabularySearchField(
+            query = query,
+            placeholder = stringResource(R.string.vocabulary_search_hint),
+            onQueryChanged = onQueryChanged,
             modifier = Modifier.weight(1f),
-            placeholder = { Text(stringResource(R.string.presets_search_hint)) },
-            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-            trailingIcon = {
-                if (query.isNotEmpty()) {
-                    IconButton(onClick = { onQueryChanged("") }) {
-                        Icon(Icons.Default.Clear, contentDescription = stringResource(R.string.presets_clear_search))
-                    }
-                }
-            },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-            shape = LexiconShapes.small,
         )
-        SortMenu(sort = sort, onSortSelected = onSortSelected)
+        if (showSort) {
+            SortMenu(sort = sort, onSortSelected = onSortSelected)
+        }
     }
 }
 
@@ -208,13 +242,12 @@ private fun SortMenu(
 }
 
 /**
- * Categories and levels share one scrolling row: there are eleven categories and six
- * levels, and stacking them in a wrapping grid would push the presets themselves below
- * the fold on a phone.
+ * Categories and levels share one scrolling row: there are eleven categories and six levels,
+ * and a wrapping grid would push the presets themselves below the fold on a phone.
  */
 @Composable
 private fun FilterRow(
-    uiState: PresetBrowserUiState.Loaded,
+    uiState: VocabularyUiState.Loaded,
     onCategoryToggled: (String) -> Unit,
     onCefrToggled: (CefrLevel) -> Unit,
     onFiltersCleared: () -> Unit,
@@ -272,9 +305,7 @@ private fun PresetCard(
             horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
         ) {
             Box(
-                modifier = Modifier
-                    .size(IconBadgeSize)
-                    .background(preset.accentColor(), CircleShape),
+                modifier = Modifier.size(IconBadgeSize).background(preset.accentColor(), CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
@@ -322,7 +353,12 @@ private fun Message(text: String) {
         modifier = Modifier.fillMaxSize().padding(Dimens.spacingXl),
         contentAlignment = Alignment.Center,
     ) {
-        Text(text = text, style = MaterialTheme.typography.bodyMedium)
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = TextAlign.Center,
+        )
     }
 }
 
@@ -368,45 +404,45 @@ private fun previewPreset(
     icon = icon,
     color = color,
     popularity = 1,
-    estimatedDuration = (words * 60).seconds,
-    vocabularyIds = persistentListOf(),
-).let { preset ->
-    preset.copy(vocabularyIds = List(words) { com.lexicon.interactors.presets.VocabularyId(it.toLong()) }.toImmutableList())
-}
+    estimatedDuration = words.minutes,
+    vocabularyIds = List(words) { VocabularyId(it.toLong()) }.toImmutableList(),
+)
+
+private val previewPresets = persistentListOf(
+    previewPreset(
+        "top-100",
+        "100 most common words",
+        "The hundred words you will meet first in almost any Polish sentence.",
+        100,
+        "trending_up",
+        "#2E7D32",
+    ),
+    previewPreset(
+        "cefr-a1",
+        "A1 — Beginner",
+        "First words: greetings, family, food, numbers and the present tense.",
+        420,
+        "school",
+        "#1565C0",
+        CefrLevel.A1,
+    ),
+    previewPreset(
+        "food",
+        "Food",
+        "Meals, ingredients, fruit and vegetables.",
+        58,
+        "restaurant",
+        "#EF6C00",
+    ),
+)
 
 @LightDarkPreview
 @Composable
-private fun PresetBrowserPreview() {
+private fun VocabularyPresetsPreview() {
     LexiconTheme {
-        PresetBrowserContent(
-            uiState = PresetBrowserUiState.Loaded(
-                presets = persistentListOf(
-                    previewPreset(
-                        "top-100",
-                        "100 most common words",
-                        "The hundred words you will meet first in almost any Polish sentence.",
-                        100,
-                        "trending_up",
-                        "#2E7D32",
-                    ),
-                    previewPreset(
-                        "cefr-a1",
-                        "A1 — Beginner",
-                        "First words: greetings, family, food, numbers and the present tense.",
-                        420,
-                        "school",
-                        "#1565C0",
-                        CefrLevel.A1,
-                    ),
-                    previewPreset(
-                        "food",
-                        "Food",
-                        "Meals, ingredients, fruit and vegetables.",
-                        58,
-                        "restaurant",
-                        "#EF6C00",
-                    ),
-                ),
+        VocabularyContent(
+            uiState = VocabularyUiState.Loaded(
+                presets = previewPresets,
                 categories = persistentListOf(previewCategory),
             ),
             onQueryChanged = {},
@@ -416,18 +452,25 @@ private fun PresetBrowserPreview() {
             onFiltersCleared = {},
             onPresetSelected = {},
             onPresetFavouriteToggled = { _, _ -> },
+            onWordFavouriteToggled = { _, _ -> },
         )
     }
 }
 
 @LightDarkPreview
 @Composable
-private fun PresetBrowserNoMatchesPreview() {
+private fun VocabularyWordSearchPreview() {
     LexiconTheme {
-        PresetBrowserContent(
-            uiState = PresetBrowserUiState.Loaded(
+        VocabularyContent(
+            uiState = VocabularyUiState.Loaded(
+                query = "wod",
+                presets = previewPresets,
                 categories = persistentListOf(previewCategory),
-                query = "zzz",
+                words = persistentListOf(
+                    PresetWord(VocabularyId(1), "woda", "water", "ˈvɔda", isFavourite = true),
+                    PresetWord(VocabularyId(2), "wodospad", "waterfall", "vɔˈdɔspat"),
+                    PresetWord(VocabularyId(3), "woda mineralna", "mineral water", "ˈvɔda miɲɛˈralna"),
+                ),
             ),
             onQueryChanged = {},
             onCategoryToggled = {},
@@ -436,6 +479,25 @@ private fun PresetBrowserNoMatchesPreview() {
             onFiltersCleared = {},
             onPresetSelected = {},
             onPresetFavouriteToggled = { _, _ -> },
+            onWordFavouriteToggled = { _, _ -> },
+        )
+    }
+}
+
+@LightDarkPreview
+@Composable
+private fun VocabularyNoMatchingWordsPreview() {
+    LexiconTheme {
+        VocabularyContent(
+            uiState = VocabularyUiState.Loaded(query = "qqq", presets = previewPresets),
+            onQueryChanged = {},
+            onCategoryToggled = {},
+            onCefrToggled = {},
+            onSortSelected = {},
+            onFiltersCleared = {},
+            onPresetSelected = {},
+            onPresetFavouriteToggled = { _, _ -> },
+            onWordFavouriteToggled = { _, _ -> },
         )
     }
 }
