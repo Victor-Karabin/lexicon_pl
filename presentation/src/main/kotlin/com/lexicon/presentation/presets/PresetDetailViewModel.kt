@@ -130,8 +130,14 @@ class PresetDetailViewModel
         fun onWordDeleted(word: PresetWord) {
             viewModelScope.launch(dispatchers.io) {
                 deleteWord(word.id)
+                // The row leaves at once because it is under the user's finger, but the preset
+                // has to be re-read too: it carries the id list the heart is derived from, and a
+                // stale one still counts the deleted word, so "every word favourited" can never
+                // be true again however many times the heart is tapped.
+                val refreshed = getPreset(presetId)
                 content.update { current ->
                     current?.copy(
+                        preset = refreshed ?: current.preset,
                         words = current.words.filterNot { it.id == word.id },
                         lastDeleted = DeletedItem.Word(word.id, word.text),
                     )
@@ -143,8 +149,10 @@ class PresetDetailViewModel
             val deleted = (content.value?.lastDeleted as? DeletedItem.Word) ?: return
             viewModelScope.launch(dispatchers.io) {
                 restoreWord(deleted.id)
+                val refreshed = getPreset(presetId)
                 content.update { current ->
                     current?.copy(
+                        preset = refreshed ?: current.preset,
                         words = getPresetVocabulary(presetId).sortedForDisplay(),
                         lastDeleted = null,
                     )

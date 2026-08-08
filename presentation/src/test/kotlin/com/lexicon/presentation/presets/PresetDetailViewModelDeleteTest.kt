@@ -1,0 +1,200 @@
+package com.lexicon.presentation.presets
+
+import androidx.lifecycle.SavedStateHandle
+import com.lexicon.common.DispatcherProvider
+import com.lexicon.interactors.presets.DeleteWordUseCase
+import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
+import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
+import com.lexicon.interactors.presets.LocalizedText
+import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
+import com.lexicon.interactors.presets.PresetCategory
+import com.lexicon.interactors.presets.PresetFavouriteState
+import com.lexicon.interactors.presets.PresetId
+import com.lexicon.interactors.presets.PresetWord
+import com.lexicon.interactors.presets.RestoreWordUseCase
+import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
+import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
+import com.lexicon.interactors.presets.VocabularyId
+import com.lexicon.interactors.presets.VocabularyPreset
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.mockk
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Test
+import kotlin.time.Duration.Companion.minutes
+
+@OptIn(ExperimentalCoroutinesApi::class)
+class PresetDetailViewModelDeleteTest {
+    private val dispatcher = StandardTestDispatcher()
+
+    private val kot = PresetWord(VocabularyId(1L), "kot", "cat", "kɔt")
+    private val pies = PresetWord(VocabularyId(2L), "pies", "dog", "pjɛs")
+
+    /** Mirrors the store: a deleted word leaves the preset, so its id list shrinks with it. */
+    private var storedWords = listOf(kot, pies)
+    private val favourites = MutableStateFlow<Set<VocabularyId>>(emptySet())
+
+    private fun presetOf(words: List<PresetWord>) =
+        VocabularyPreset(
+            id = PresetId("food"),
+            title = LocalizedText(mapOf("en" to "Food")),
+            description = LocalizedText(mapOf("en" to "")),
+            category = PresetCategory("everyday-life", 3, LocalizedText(mapOf("en" to "Everyday life"))),
+            icon = null,
+            color = null,
+            popularity = 1,
+            estimatedDuration = 5.minutes,
+            vocabularyIds = words.map { it.id }.toImmutableList(),
+        )
+
+    private val getPreset: GetVocabularyPresetUseCase = mockk {
+        coEvery { this@mockk(any()) } answers { presetOf(storedWords) }
+    }
+    private val getPresetVocabulary: GetPresetVocabularyUseCase = mockk {
+        coEvery { this@mockk(any()) } answers { storedWords.toImmutableList() }
+    }
+
+    /**
+     * Real fakes rather than mocks with argument-inspecting answers. VocabularyId is a value
+     * class, so it is unboxed to a Long at the JVM boundary and mockk hands back the raw value —
+     * a comparison against the typed id then silently never matches and the fake does nothing.
+     */
+    private val deleteWord = object : DeleteWordUseCase {
+        override suspend fun invoke(id: VocabularyId) {
+            storedWords = storedWords.filterNot { it.id == id }
+        }
+    }
+
+    private val restoreWord = object : RestoreWordUseCase {
+        override suspend fun invoke(id: VocabularyId) {
+            storedWords = listOf(kot, pies)
+        }
+    }
+
+    private fun viewModel() =
+        PresetDetailViewModel(
+            savedStateHandle = SavedStateHandle(mapOf(PRESET_ID_ARG to "food")),
+            getPreset = getPreset,
+            getPresetVocabulary = getPresetVocabulary,
+            toggleWordFavourite = mockk<ToggleWordFavouriteUseCase>(relaxed = true),
+            deleteWord = deleteWord,
+            restoreWord = restoreWord,
+            setPresetFavourite = mockk<SetPresetFavouriteUseCase>(relaxed = true),
+            observeFavouriteWordIds = mockk<ObserveFavouriteWordIdsUseCase> { every { this@mockk() } returns favourites },
+            dispatchers = object : DispatcherProvider {
+                override val io: CoroutineDispatcher get() = dispatcher
+                override val default: CoroutineDispatcher get() = dispatcher
+                override val main: CoroutineDispatcher get() = dispatcher
+            },
+        )
+
+    @Before
+    fun setUp() = Dispatchers.setMain(dispatcher)
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+        storedWords = listOf(kot, pies)
+        favourites.value = emptySet()
+    }
+
+    /**
+     * The state is shared WhileSubscribed, so without a collector the flow never runs and the
+     * value stays Loading — the screen provides one, a test has to as well.
+     */
+    private fun TestScope.started(): PresetDetailViewModel =
+        viewModel().also { backgroundScope.launch(dispatcher) { it.uiState.collect { } } }
+
+    private fun loaded(viewModel: PresetDetailViewModel) = viewModel.uiState.value as PresetDetailUiState.Loaded
+
+    @Test
+    fun `a deleted word leaves the list`() =
+        runTest(dispatcher) {
+            val viewModel = started()
+            advanceUntilIdle()
+
+            viewModel.onWordDeleted(kot)
+            advanceUntilIdle()
+
+            assertEquals(listOf("pies"), loaded(viewModel).words.map { it.text })
+        }
+
+    /**
+     * Regression: only the visible rows were updated, and the preset kept the id list it was
+     * loaded with. The heart derives from that list, so it went on counting the deleted word and
+     * could never read as full again — however many times it was tapped.
+     */
+    @Test
+    fun `the preset stops counting a word that was deleted`() =
+        runTest(dispatcher) {
+            val viewModel = started()
+            advanceUntilIdle()
+
+            viewModel.onWordDeleted(kot)
+            advanceUntilIdle()
+
+            assertEquals(listOf(VocabularyId(2L)), loaded(viewModel).preset.vocabularyIds)
+        }
+
+    @Test
+    fun `favouriting what is left reads as fully favourited`() =
+        runTest(dispatcher) {
+            val viewModel = started()
+            advanceUntilIdle()
+            viewModel.onWordDeleted(kot)
+            advanceUntilIdle()
+
+            favourites.value = setOf(VocabularyId(2L))
+            advanceUntilIdle()
+
+            assertEquals(PresetFavouriteState.ALL, loaded(viewModel).favouriteState)
+        }
+
+    @Test
+    fun `undoing a deletion puts the word back into the preset`() =
+        runTest(dispatcher) {
+            val viewModel = started()
+            advanceUntilIdle()
+            viewModel.onWordDeleted(kot)
+            advanceUntilIdle()
+
+            viewModel.onUndoDelete()
+            advanceUntilIdle()
+
+            assertEquals(
+                listOf(VocabularyId(1L), VocabularyId(2L)),
+                loaded(viewModel).preset.vocabularyIds,
+            )
+            assertEquals(persistentListOf("kot", "pies"), loaded(viewModel).words.map { it.text }.toImmutableList())
+        }
+
+    /** An emptied preset is legitimately empty, not still loading. */
+    @Test
+    fun `deleting the last word leaves an empty list rather than a spinner`() =
+        runTest(dispatcher) {
+            val viewModel = started()
+            advanceUntilIdle()
+
+            viewModel.onWordDeleted(kot)
+            viewModel.onWordDeleted(pies)
+            advanceUntilIdle()
+
+            assertEquals(emptyList<String>(), loaded(viewModel).words.map { it.text })
+            assertEquals(false, loaded(viewModel).isLoadingWords)
+        }
+}

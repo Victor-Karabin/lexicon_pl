@@ -142,6 +142,9 @@ class VocabularyViewModel
         fun onWordDeleted(word: PresetWord) {
             viewModelScope.launch(dispatchers.io) {
                 deleteWord(word.id)
+                // Presets carry the id list their hearts and counts are derived from, and this
+                // word has just left every preset that listed it.
+                refreshPresets()
                 updateLoaded {
                     it.copy(
                         words = it.words.filterNot { candidate -> candidate.id == word.id }.toImmutableList(),
@@ -170,6 +173,7 @@ class VocabularyViewModel
                     is DeletedItem.Word -> {
                         restoreWord(deleted.id)
                         refreshWords()
+                        refreshPresets()
                     }
 
                     is DeletedItem.Preset -> {
