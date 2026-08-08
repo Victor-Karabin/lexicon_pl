@@ -10,6 +10,7 @@ import com.lexicon.domain.imagetest.StartImageTestSessionUseCaseImpl
 import com.lexicon.domain.imagetest.SubmitImageTestAnswerUseCaseImpl
 import com.lexicon.domain.memorycards.StartMemoryCardsSessionUseCaseImpl
 import com.lexicon.domain.memorycards.SubmitMemoryCardsStepResultUseCaseImpl
+import com.lexicon.domain.mix.StartMixSessionUseCaseImpl
 import com.lexicon.domain.pronunciation.StartPronunciationSessionUseCaseImpl
 import com.lexicon.domain.pronunciation.SubmitPronunciationResultUseCaseImpl
 import com.lexicon.domain.puzzle.StartPuzzleSessionUseCaseImpl
@@ -33,6 +34,7 @@ import com.lexicon.interactors.imagetest.StartImageTestSessionUseCase
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
 import com.lexicon.interactors.memorycards.StartMemoryCardsSessionUseCase
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
+import com.lexicon.interactors.mix.StartMixSessionUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
@@ -122,4 +124,7 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindSubmitCrosswordUseCase(impl: SubmitCrosswordUseCaseImpl): SubmitCrosswordUseCase
+
+    @Binds
+    abstract fun bindStartMixSessionUseCase(impl: StartMixSessionUseCaseImpl): StartMixSessionUseCase
 }

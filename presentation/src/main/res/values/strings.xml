@@ -59,4 +59,7 @@
     <string name="settings_training">Training</string>
     <string name="settings_step_count">Steps per session</string>
     <string name="settings_step_count_note">Applies to new training sessions only.</string>
+
+    <!-- Mix -->
+    <string name="mix_title">Mix</string>
 </resources>
