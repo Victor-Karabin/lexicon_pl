@@ -91,3 +91,19 @@ val MIGRATION_6_7 =
             db.execSQL("CREATE INDEX IF NOT EXISTS `index_preset_words_wordId` ON `preset_words` (`wordId`)")
         }
     }
+
+/**
+ * Adds the two places a user deletion is recorded. Both are needed because the two catalogues
+ * are synced differently: a word keeps its row and carries a flag, while a preset cannot — the
+ * preset tables are replaced wholesale, so its deletion has to be remembered outside them.
+ */
+val MIGRATION_7_8 =
+    object : Migration(7, 8) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE `words` ADD COLUMN `isDeleted` INTEGER NOT NULL DEFAULT 0")
+            db.execSQL(
+                "CREATE TABLE IF NOT EXISTS `deleted_presets` " +
+                    "(`presetId` TEXT NOT NULL, PRIMARY KEY(`presetId`))",
+            )
+        }
+    }

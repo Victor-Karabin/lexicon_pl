@@ -20,6 +20,12 @@ data class WordEntity(
     val searchKey: String = "",
     /** CEFR band, e.g. "A1". Empty for a row whose source did not state one. */
     val cefr: String = "",
+    /**
+     * Deleted by the user. Kept as a flag rather than a removed row because the word still
+     * exists in the bundled asset: a row that simply vanished would be re-inserted by the very
+     * next sync, and the deletion would appear to undo itself.
+     */
+    val isDeleted: Boolean = false,
 )
 
 /** The one place a word's search key is built, so stored keys and queries always agree. */

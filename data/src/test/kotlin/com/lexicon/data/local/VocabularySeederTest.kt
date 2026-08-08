@@ -40,6 +40,7 @@ class VocabularySeederTest {
     private fun tableIs(vararg words: WordEntity) {
         coEvery { wordDao.getAll() } returns words.toList()
         coEvery { wordDao.count() } returns words.size
+        coEvery { wordDao.countIncludingDeleted() } returns words.size
     }
 
     @Test
@@ -87,6 +88,25 @@ class VocabularySeederTest {
             assertEquals(listOf(2L), deleted.captured)
         }
 
+    /**
+     * A deletion has to survive the sync that would otherwise restore it: the word is still in
+     * the asset, so a reconcile that ignored the flag would put it straight back.
+     */
+    @Test
+    fun `a deleted word stays deleted when its word is refreshed`() =
+        runTest {
+            assetIs(word(1, "kot", translation = "cat"))
+            tableIs(word(1, "kot", translation = "kitten").copy(isDeleted = true))
+            coEvery { vocabularySyncStore.syncedFingerprint() } returns "stale"
+            val updated = slot<List<WordEntity>>()
+            coEvery { wordDao.updateAll(capture(updated)) } returns Unit
+
+            seeder().ensureSeeded()
+
+            assertTrue("the deletion must not be undone", updated.captured.single().isDeleted)
+            assertEquals("the correction is still taken", "cat", updated.captured.single().translation)
+        }
+
     /** Favourites are the user's, and a corpus update is not a reason to lose them. */
     @Test
     fun `a favourite survives its word being refreshed`() =
@@ -121,7 +141,7 @@ class VocabularySeederTest {
         runTest {
             coEvery { vocabularySeedAssetLoader.fingerprint() } returns "fp-2"
             coEvery { vocabularySyncStore.syncedFingerprint() } returns "fp-2"
-            coEvery { wordDao.count() } returns 2
+            coEvery { wordDao.countIncludingDeleted() } returns 2
 
             seeder().ensureSeeded()
 

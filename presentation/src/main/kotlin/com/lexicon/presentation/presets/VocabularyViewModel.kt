@@ -4,16 +4,23 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.CefrLevel
+import com.lexicon.interactors.presets.DeletePresetUseCase
+import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
 import com.lexicon.interactors.presets.PresetFavouriteState
 import com.lexicon.interactors.presets.PresetId
+import com.lexicon.interactors.presets.PresetWord
+import com.lexicon.interactors.presets.RestorePresetUseCase
+import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
 import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
 import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.presets.VocabularyId
+import com.lexicon.interactors.presets.VocabularyPreset
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,6 +42,10 @@ class VocabularyViewModel
         private val searchVocabulary: SearchVocabularyUseCase,
         private val setPresetFavourite: SetPresetFavouriteUseCase,
         private val toggleWordFavourite: ToggleWordFavouriteUseCase,
+        private val deleteWord: DeleteWordUseCase,
+        private val restoreWord: RestoreWordUseCase,
+        private val deletePreset: DeletePresetUseCase,
+        private val restorePreset: RestorePresetUseCase,
         private val observeFavouriteWordIds: ObserveFavouriteWordIdsUseCase,
         private val dispatchers: DispatcherProvider,
     ) : ViewModel() {
@@ -113,6 +124,63 @@ class VocabularyViewModel
             isFavourite: Boolean,
         ) {
             viewModelScope.launch(dispatchers.io) { toggleWordFavourite(id, isFavourite) }
+        }
+
+        /** Deletes at once, as the button says, and keeps enough to put it back. */
+        fun onWordDeleted(word: PresetWord) {
+            viewModelScope.launch(dispatchers.io) {
+                deleteWord(word.id)
+                updateLoaded {
+                    it.copy(
+                        words = it.words.filterNot { candidate -> candidate.id == word.id }.toImmutableList(),
+                        lastDeleted = DeletedItem.Word(word.id, word.text),
+                    )
+                }
+            }
+        }
+
+        fun onPresetDeleted(preset: VocabularyPreset) {
+            viewModelScope.launch(dispatchers.io) {
+                deletePreset(preset.id)
+                updateLoaded {
+                    it.copy(
+                        presets = it.presets.filterNot { candidate -> candidate.id == preset.id }.toImmutableList(),
+                        lastDeleted = DeletedItem.Preset(preset.id, preset.title.resolve(it.languageTag)),
+                    )
+                }
+            }
+        }
+
+        fun onUndoDelete() {
+            val deleted = (_uiState.value as? VocabularyUiState.Loaded)?.lastDeleted ?: return
+            viewModelScope.launch(dispatchers.io) {
+                when (deleted) {
+                    is DeletedItem.Word -> {
+                        restoreWord(deleted.id)
+                        refreshWords()
+                    }
+
+                    is DeletedItem.Preset -> {
+                        restorePreset(deleted.id)
+                        refreshPresets()
+                    }
+                }
+                updateLoaded { it.copy(lastDeleted = null) }
+            }
+        }
+
+        /** Cleared once shown, so the same message cannot be offered twice. */
+        fun onDeleteMessageShown() = updateLoaded { it.copy(lastDeleted = null) }
+
+        private suspend fun refreshPresets() {
+            val presets = getPresets()
+            updateLoaded { it.copy(presets = presets) }
+        }
+
+        private suspend fun refreshWords() {
+            val current = criteria.value
+            val results = searchVocabulary(current.query, current.levels)
+            updateLoaded { it.copy(words = results) }
         }
 
         private fun updateLoaded(transform: (VocabularyUiState.Loaded) -> VocabularyUiState.Loaded) {

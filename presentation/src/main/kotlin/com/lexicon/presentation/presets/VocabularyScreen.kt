@@ -18,16 +18,24 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,7 +56,9 @@ import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
+import com.lexicon.presentation.common.SwipeToRevealContainer
 import com.lexicon.presentation.theme.Dimens
+import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconTheme
 import kotlinx.collections.immutable.persistentListOf
@@ -57,6 +67,7 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
 private val IconBadgeSize = 44.dp
+private val DeleteActionWidth = 88.dp
 
 /**
  * The Vocabulary tab: curated presets, and a search over every word.
@@ -73,14 +84,32 @@ fun VocabularyScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
+    val snackbarHostState = remember { SnackbarHostState() }
+    val deleted = (uiState as? VocabularyUiState.Loaded)?.lastDeleted
+    val deletedMessage = deleted?.let { stringResource(R.string.vocabulary_deleted, it.label) }
+    val undoLabel = stringResource(R.string.vocabulary_undo)
+
+    LaunchedEffect(deleted) {
+        if (deletedMessage == null) return@LaunchedEffect
+        val result = snackbarHostState.showSnackbar(
+            message = deletedMessage,
+            actionLabel = undoLabel,
+            duration = SnackbarDuration.Short,
+        )
+        if (result == SnackbarResult.ActionPerformed) viewModel.onUndoDelete() else viewModel.onDeleteMessageShown()
+    }
+
     VocabularyContent(
         uiState = uiState,
+        snackbarHostState = snackbarHostState,
         onQueryChanged = viewModel::onQueryChanged,
         onCefrToggled = viewModel::onCefrToggled,
         onFiltersCleared = viewModel::onFiltersCleared,
         onPresetSelected = onPresetSelected,
         onPresetFavouriteToggled = viewModel::onPresetFavouriteToggled,
         onWordFavouriteToggled = viewModel::onWordFavouriteToggled,
+        onWordDeleted = viewModel::onWordDeleted,
+        onPresetDeleted = viewModel::onPresetDeleted,
         modifier = modifier,
     )
 }
@@ -88,12 +117,47 @@ fun VocabularyScreen(
 @Composable
 private fun VocabularyContent(
     uiState: VocabularyUiState,
+    snackbarHostState: SnackbarHostState,
     onQueryChanged: (String) -> Unit,
     onCefrToggled: (CefrLevel) -> Unit,
     onFiltersCleared: () -> Unit,
     onPresetSelected: (PresetId) -> Unit,
     onPresetFavouriteToggled: (PresetId, PresetFavouriteState) -> Unit,
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
+    onWordDeleted: (PresetWord) -> Unit,
+    onPresetDeleted: (VocabularyPreset) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Scaffold(
+        modifier = modifier,
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+    ) { padding ->
+        VocabularyBody(
+            uiState = uiState,
+            onQueryChanged = onQueryChanged,
+            onCefrToggled = onCefrToggled,
+            onFiltersCleared = onFiltersCleared,
+            onPresetSelected = onPresetSelected,
+            onPresetFavouriteToggled = onPresetFavouriteToggled,
+            onWordFavouriteToggled = onWordFavouriteToggled,
+            onWordDeleted = onWordDeleted,
+            onPresetDeleted = onPresetDeleted,
+            modifier = Modifier.padding(padding),
+        )
+    }
+}
+
+@Composable
+private fun VocabularyBody(
+    uiState: VocabularyUiState,
+    onQueryChanged: (String) -> Unit,
+    onCefrToggled: (CefrLevel) -> Unit,
+    onFiltersCleared: () -> Unit,
+    onPresetSelected: (PresetId) -> Unit,
+    onPresetFavouriteToggled: (PresetId, PresetFavouriteState) -> Unit,
+    onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
+    onWordDeleted: (PresetWord) -> Unit,
+    onPresetDeleted: (VocabularyPreset) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when (uiState) {
@@ -116,9 +180,9 @@ private fun VocabularyContent(
                 FilterRow(uiState, onCefrToggled, onFiltersCleared)
 
                 if (uiState.isSearchingWords) {
-                    WordResults(uiState, onWordFavouriteToggled)
+                    WordResults(uiState, onWordFavouriteToggled, onWordDeleted)
                 } else {
-                    PresetResults(uiState, onPresetSelected, onPresetFavouriteToggled)
+                    PresetResults(uiState, onPresetSelected, onPresetFavouriteToggled, onPresetDeleted)
                 }
             }
     }
@@ -128,6 +192,7 @@ private fun VocabularyContent(
 private fun WordResults(
     uiState: VocabularyUiState.Loaded,
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
+    onWordDeleted: (PresetWord) -> Unit,
 ) {
     if (uiState.hasNoMatchingWords) {
         Message(stringResource(R.string.vocabulary_search_no_matches, uiState.query))
@@ -135,10 +200,15 @@ private fun WordResults(
     }
     LazyColumn(contentPadding = PaddingValues(vertical = Dimens.spacingSmall)) {
         itemsIndexed(uiState.words, key = { _, word -> word.id.value }) { index, word ->
-            VocabularyWordRow(
-                word = word,
-                onFavouriteToggled = { onWordFavouriteToggled(word.id, !word.isFavourite) },
-            )
+            SwipeToRevealContainer(
+                revealWidth = DeleteActionWidth,
+                backgroundContent = { DeleteAction(onClick = { onWordDeleted(word) }) },
+            ) {
+                VocabularyWordRow(
+                    word = word,
+                    onFavouriteToggled = { onWordFavouriteToggled(word.id, !word.isFavourite) },
+                )
+            }
             if (index < uiState.words.lastIndex) {
                 HorizontalDivider(modifier = Modifier.padding(horizontal = Dimens.spacingMedium))
             }
@@ -151,6 +221,7 @@ private fun PresetResults(
     uiState: VocabularyUiState.Loaded,
     onPresetSelected: (PresetId) -> Unit,
     onPresetFavouriteToggled: (PresetId, PresetFavouriteState) -> Unit,
+    onPresetDeleted: (VocabularyPreset) -> Unit,
 ) {
     when {
         uiState.hasNoPresetsAtAll -> Message(stringResource(R.string.presets_catalog_empty))
@@ -161,13 +232,18 @@ private fun PresetResults(
             ) {
                 items(uiState.presets, key = { it.id.value }) { preset ->
                     val favouriteState = favouriteStateOf(preset, uiState.favouriteWordIds)
-                    PresetCard(
-                        preset = preset,
-                        languageTag = uiState.languageTag,
-                        favouriteState = favouriteState,
-                        onClick = { onPresetSelected(preset.id) },
-                        onFavouriteToggled = { onPresetFavouriteToggled(preset.id, favouriteState) },
-                    )
+                    SwipeToRevealContainer(
+                        revealWidth = DeleteActionWidth,
+                        backgroundContent = { DeleteAction(onClick = { onPresetDeleted(preset) }) },
+                    ) {
+                        PresetCard(
+                            preset = preset,
+                            languageTag = uiState.languageTag,
+                            favouriteState = favouriteState,
+                            onClick = { onPresetSelected(preset.id) },
+                            onFavouriteToggled = { onPresetFavouriteToggled(preset.id, favouriteState) },
+                        )
+                    }
                 }
             }
     }
@@ -271,6 +347,33 @@ private fun PresetCard(
     }
 }
 
+/**
+ * The action the swipe uncovers. A button rather than the swipe itself doing the deleting, so a
+ * gesture made by accident costs nothing.
+ */
+@Composable
+private fun DeleteAction(onClick: () -> Unit) {
+    Surface(
+        onClick = onClick,
+        color = LexiconError,
+        shape = LexiconShapes.medium,
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Icon(Icons.Default.Delete, contentDescription = null, tint = Color.White)
+            Text(
+                text = stringResource(R.string.vocabulary_delete),
+                style = MaterialTheme.typography.labelMedium,
+                color = Color.White,
+            )
+        }
+    }
+}
+
 @Composable
 private fun Message(text: String) {
     Box(
@@ -363,6 +466,9 @@ private fun VocabularyPresetsPreview() {
             onPresetSelected = {},
             onPresetFavouriteToggled = { _, _ -> },
             onWordFavouriteToggled = { _, _ -> },
+            onWordDeleted = {},
+            onPresetDeleted = {},
+            snackbarHostState = SnackbarHostState(),
         )
     }
 }
@@ -387,6 +493,9 @@ private fun VocabularyWordSearchPreview() {
             onPresetSelected = {},
             onPresetFavouriteToggled = { _, _ -> },
             onWordFavouriteToggled = { _, _ -> },
+            onWordDeleted = {},
+            onPresetDeleted = {},
+            snackbarHostState = SnackbarHostState(),
         )
     }
 }
@@ -403,6 +512,9 @@ private fun VocabularyNoMatchingWordsPreview() {
             onPresetSelected = {},
             onPresetFavouriteToggled = { _, _ -> },
             onWordFavouriteToggled = { _, _ -> },
+            onWordDeleted = {},
+            onPresetDeleted = {},
+            snackbarHostState = SnackbarHostState(),
         )
     }
 }

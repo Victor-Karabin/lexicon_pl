@@ -1,11 +1,21 @@
 package com.lexicon.presentation.presets
 
 import com.lexicon.interactors.presets.CefrLevel
+import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+
+/** What was deleted, and what to say about it. */
+sealed interface DeletedItem {
+    val label: String
+
+    data class Word(val id: VocabularyId, override val label: String) : DeletedItem
+
+    data class Preset(val id: PresetId, override val label: String) : DeletedItem
+}
 
 sealed interface VocabularyUiState {
     data object Loading : VocabularyUiState
@@ -27,6 +37,11 @@ sealed interface VocabularyUiState {
          * each card's state from one set is both cheaper and impossible to get out of step.
          */
         val favouriteWordIds: Set<VocabularyId> = emptySet(),
+        /**
+         * The last deletion, kept so it can be undone. A swipe is easy to make by accident and
+         * the item is otherwise gone for good — the deletion outlives a catalogue sync.
+         */
+        val lastDeleted: DeletedItem? = null,
     ) : VocabularyUiState {
         /**
          * Words are listed when something is typed or a level is picked; with neither, the

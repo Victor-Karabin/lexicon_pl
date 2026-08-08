@@ -53,6 +53,16 @@ class VocabularyRepositoryImpl
             return wordDao.countForStudy()
         }
 
+        override suspend fun deleteWord(id: Long) {
+            vocabularySeeder.ensureSeeded()
+            wordDao.setDeleted(id, isDeleted = true)
+        }
+
+        override suspend fun restoreWord(id: Long) {
+            vocabularySeeder.ensureSeeded()
+            wordDao.setDeleted(id, isDeleted = false)
+        }
+
         override suspend fun setFavourite(
             ids: List<Long>,
             isFavourite: Boolean,

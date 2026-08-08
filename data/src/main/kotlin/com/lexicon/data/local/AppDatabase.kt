@@ -11,8 +11,9 @@ import androidx.room.RoomDatabase
         PresetCategoryEntity::class,
         PresetEntity::class,
         PresetWordEntity::class,
+        DeletedPresetEntity::class,
     ],
-    version = 7,
+    version = 8,
     exportSchema = false,
 )
 abstract class AppDatabase : RoomDatabase() {

@@ -89,4 +89,7 @@
     <!-- The launcher label lives in the app module; this is the wordmark on the splash. -->
     <string name="splash_title">Lexicon</string>
     <string name="splash_tagline">Polish vocabulary, one session at a time</string>
+    <string name="vocabulary_delete">Delete</string>
+    <string name="vocabulary_deleted">Deleted “%1$s”</string>
+    <string name="vocabulary_undo">Undo</string>
 </resources>

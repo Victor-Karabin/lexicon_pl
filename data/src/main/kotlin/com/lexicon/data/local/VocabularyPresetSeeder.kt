@@ -32,6 +32,21 @@ class VocabularyPresetSeeder
             sync()
         }
 
+        /** Forgets a preset's deletion, so the next sync brings it back. */
+        suspend fun restore(presetId: String) {
+            presetDao.undeletePreset(presetId)
+            syncStore.setSyncedPresetFingerprint("")
+            syncedThisProcess = false
+            ensureSeeded()
+        }
+
+        /** Records the deletion first, so a sync racing it cannot put the preset back. */
+        suspend fun delete(presetId: String) {
+            presetDao.insertDeletedPreset(DeletedPresetEntity(presetId))
+            presetDao.deleteMemberships(presetId)
+            presetDao.deletePreset(presetId)
+        }
+
         suspend fun sync(): SyncOutcomeBoundary =
             mutex.withLock {
                 val fingerprint = loader.fingerprint()
@@ -42,10 +57,14 @@ class VocabularyPresetSeeder
                 }
 
                 val catalog = loader.load()
+                // Deleted presets are dropped on the way in rather than removed afterwards, so
+                // they never briefly exist — and so a re-import cannot resurrect them.
+                val deleted = presetDao.getDeletedPresetIds().toSet()
+                val presets = catalog.presets.filterNot { it.id in deleted }
                 presetDao.replaceCatalog(
                     categories = catalog.categories.map { it.toEntity() },
-                    presets = catalog.presets.map { it.toEntity() },
-                    memberships = catalog.presets.flatMap { it.toMemberships() },
+                    presets = presets.map { it.toEntity() },
+                    memberships = presets.flatMap { it.toMemberships() },
                 )
                 syncStore.setSyncedPresetFingerprint(fingerprint)
                 syncedThisProcess = true
@@ -53,10 +72,10 @@ class VocabularyPresetSeeder
                 // A replace has no meaningful update or delete count: every preset is written.
                 // Reporting them as added is the honest description of what happened.
                 SyncOutcomeBoundary(
-                    total = catalog.presets.size,
-                    added = catalog.presets.size - stored.coerceAtMost(catalog.presets.size),
-                    updated = stored.coerceAtMost(catalog.presets.size),
-                    removed = (stored - catalog.presets.size).coerceAtLeast(0),
+                    total = presets.size,
+                    added = presets.size - stored.coerceAtMost(presets.size),
+                    updated = stored.coerceAtMost(presets.size),
+                    removed = (stored - presets.size).coerceAtLeast(0),
                 )
             }
     }

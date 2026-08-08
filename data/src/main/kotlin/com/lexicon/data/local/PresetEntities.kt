@@ -44,3 +44,14 @@ data class PresetWordEntity(
     val wordId: Long,
     val position: Int,
 )
+
+/**
+ * Presets the user has deleted.
+ *
+ * A separate table because the catalogue is replaced wholesale on every sync: a flag on the
+ * preset row would be wiped by the next import and the preset would reappear.
+ */
+@Entity(tableName = "deleted_presets")
+data class DeletedPresetEntity(
+    @PrimaryKey val presetId: String,
+)

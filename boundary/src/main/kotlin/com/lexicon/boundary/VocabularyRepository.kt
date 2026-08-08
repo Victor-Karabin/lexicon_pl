@@ -44,6 +44,15 @@ interface VocabularyRepository {
     /** Every word held, favourited or not — how "is there anything to work with" is answered. */
     suspend fun countWords(): Int
 
+    /**
+     * Removes a word from the user's vocabulary. Durable across syncs: the word stays gone even
+     * though the bundled source still carries it.
+     */
+    suspend fun deleteWord(id: Long)
+
+    /** Puts a deleted word back, for undoing one. */
+    suspend fun restoreWord(id: Long)
+
     suspend fun setFavourite(
         ids: List<Long>,
         isFavourite: Boolean,

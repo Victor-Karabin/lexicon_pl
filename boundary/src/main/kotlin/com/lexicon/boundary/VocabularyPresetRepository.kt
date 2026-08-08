@@ -15,4 +15,10 @@ interface VocabularyPresetRepository {
     suspend fun getPreset(id: String): VocabularyPresetBoundary?
 
     suspend fun getCategories(): List<PresetCategoryBoundary>
+
+    /** Removes a preset. Durable across syncs, which otherwise re-import the whole catalogue. */
+    suspend fun deletePreset(id: String)
+
+    /** Puts a deleted preset back, for undoing one. */
+    suspend fun restorePreset(id: String)
 }

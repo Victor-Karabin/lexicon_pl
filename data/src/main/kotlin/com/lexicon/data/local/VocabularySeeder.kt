@@ -44,7 +44,7 @@ class VocabularySeeder
                 // The common launch: the asset has not moved since the last sync, so nothing is
                 // parsed and nothing is read. The row count is still checked, because a schema
                 // change can empty the table without the asset changing at all.
-                if (fingerprint == vocabularySyncStore.syncedFingerprint() && wordDao.count() > 0) {
+                if (fingerprint == vocabularySyncStore.syncedFingerprint() && wordDao.countIncludingDeleted() > 0) {
                     syncedThisProcess = true
                     return@withLock SyncOutcomeBoundary(total = wordDao.count(), added = 0, updated = 0, removed = 0)
                 }
@@ -73,12 +73,16 @@ class VocabularySeeder
             val removed = existing.keys - assetIds
             if (removed.isNotEmpty()) wordDao.deleteByIds(removed.toList())
 
-            // Everything else is refreshed from the asset except the favourite flag, which is
-            // the user's and not the asset's to state. Only rows that actually differ are
-            // written, so a corrected translation costs one update rather than two thousand.
+            // Everything else is refreshed from the asset except what the user decided: their
+            // favourites, and their deletions. Both are theirs and not the asset's to state, and
+            // a deletion in particular would otherwise undo itself on the very next launch. Only
+            // rows that actually differ are written, so a corrected translation costs one update
+            // rather than two thousand.
             val changed = asset.mapNotNull { incoming ->
                 val current = existing[incoming.id] ?: return@mapNotNull null
-                incoming.copy(isFavourite = current.isFavourite).takeIf { it != current }
+                incoming
+                    .copy(isFavourite = current.isFavourite, isDeleted = current.isDeleted)
+                    .takeIf { it != current }
             }
             if (changed.isNotEmpty()) wordDao.updateAll(changed)
 

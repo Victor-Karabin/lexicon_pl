@@ -27,6 +27,21 @@ interface PresetDao {
     @Query("SELECT COUNT(*) FROM presets")
     suspend fun countPresets(): Int
 
+    @Query("SELECT presetId FROM deleted_presets")
+    suspend fun getDeletedPresetIds(): List<String>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertDeletedPreset(deleted: DeletedPresetEntity)
+
+    @Query("DELETE FROM deleted_presets WHERE presetId = :presetId")
+    suspend fun undeletePreset(presetId: String)
+
+    @Query("DELETE FROM presets WHERE id = :presetId")
+    suspend fun deletePreset(presetId: String)
+
+    @Query("DELETE FROM preset_words WHERE presetId = :presetId")
+    suspend fun deleteMemberships(presetId: String)
+
     /**
      * Replaces the whole catalogue in one transaction. Presets are reference data — nothing the
      * user owns lives on these rows — so replacing is both correct and simpler than reconciling
