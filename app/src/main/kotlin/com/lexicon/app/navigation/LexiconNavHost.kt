@@ -60,22 +60,24 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
                 }
             }
 
-        fun onClose(fromRoute: String): () -> Unit =
-            {
-                navController.navigate(LexiconDestinations.MAIN) {
-                    popUpTo(fromRoute) { inclusive = true }
-                }
-            }
+        /**
+         * Pops back to the existing Main entry rather than navigating to a new one. Navigating
+         * would push a second Main on top of the first, so the back stack grew with every
+         * training opened and closed, and each new Main started over on the first tab.
+         *
+         * Takes no route, because popping to Main does not depend on where it is called from.
+         */
+        val closeToMain: () -> Unit = { navController.popBackStack(LexiconDestinations.MAIN, inclusive = false) }
 
         composable(LexiconDestinations.DICTATION) {
             TrainingGate(
                 minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
                 trainingName = trainingDisplayName(LexiconDestinations.DICTATION),
-                onClose = onClose(LexiconDestinations.DICTATION),
+                onClose = closeToMain,
             ) {
                 DictationScreen(
                     onSessionComplete = onStepSessionComplete(LexiconDestinations.DICTATION),
-                    onClose = onClose(LexiconDestinations.DICTATION),
+                    onClose = closeToMain,
                 )
             }
         }
@@ -83,11 +85,11 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             TrainingGate(
                 minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
                 trainingName = trainingDisplayName(LexiconDestinations.DICTATION_PUZZLE),
-                onClose = onClose(LexiconDestinations.DICTATION_PUZZLE),
+                onClose = closeToMain,
             ) {
                 DictationPuzzleScreen(
                     onSessionComplete = onStepSessionComplete(LexiconDestinations.DICTATION_PUZZLE),
-                    onClose = onClose(LexiconDestinations.DICTATION_PUZZLE),
+                    onClose = closeToMain,
                 )
             }
         }
@@ -95,11 +97,11 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             TrainingGate(
                 minimumWords = TrainingRequirements.TRUE_OR_FALSE,
                 trainingName = trainingDisplayName(LexiconDestinations.TRUE_OR_FALSE),
-                onClose = onClose(LexiconDestinations.TRUE_OR_FALSE),
+                onClose = closeToMain,
             ) {
                 TrueOrFalseScreen(
                     onSessionComplete = onStepSessionComplete(LexiconDestinations.TRUE_OR_FALSE),
-                    onClose = onClose(LexiconDestinations.TRUE_OR_FALSE),
+                    onClose = closeToMain,
                 )
             }
         }
@@ -107,11 +109,11 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             TrainingGate(
                 minimumWords = TrainingRequirements.WORD_MATCH,
                 trainingName = trainingDisplayName(LexiconDestinations.WORD_MATCH),
-                onClose = onClose(LexiconDestinations.WORD_MATCH),
+                onClose = closeToMain,
             ) {
                 WordMatchScreen(
                     onSessionComplete = onStepSessionComplete(LexiconDestinations.WORD_MATCH),
-                    onClose = onClose(LexiconDestinations.WORD_MATCH),
+                    onClose = closeToMain,
                 )
             }
         }
@@ -119,11 +121,11 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             TrainingGate(
                 minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
                 trainingName = trainingDisplayName(LexiconDestinations.PRONUNCIATION_CHECK),
-                onClose = onClose(LexiconDestinations.PRONUNCIATION_CHECK),
+                onClose = closeToMain,
             ) {
                 PronunciationScreen(
                     onSessionComplete = onStepSessionComplete(LexiconDestinations.PRONUNCIATION_CHECK),
-                    onClose = onClose(LexiconDestinations.PRONUNCIATION_CHECK),
+                    onClose = closeToMain,
                 )
             }
         }
@@ -131,11 +133,11 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             TrainingGate(
                 minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
                 trainingName = trainingDisplayName(LexiconDestinations.PUZZLE),
-                onClose = onClose(LexiconDestinations.PUZZLE),
+                onClose = closeToMain,
             ) {
                 PuzzleScreen(
                     onSessionComplete = onStepSessionComplete(LexiconDestinations.PUZZLE),
-                    onClose = onClose(LexiconDestinations.PUZZLE),
+                    onClose = closeToMain,
                 )
             }
         }
@@ -143,11 +145,11 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             TrainingGate(
                 minimumWords = TrainingRequirements.IMAGE_TEST,
                 trainingName = trainingDisplayName(LexiconDestinations.IMAGE_TEST),
-                onClose = onClose(LexiconDestinations.IMAGE_TEST),
+                onClose = closeToMain,
             ) {
                 ImageTestScreen(
                     onSessionComplete = onStepSessionComplete(LexiconDestinations.IMAGE_TEST),
-                    onClose = onClose(LexiconDestinations.IMAGE_TEST),
+                    onClose = closeToMain,
                 )
             }
         }
@@ -155,11 +157,11 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             TrainingGate(
                 minimumWords = TrainingRequirements.MEMORY_CARDS,
                 trainingName = trainingDisplayName(LexiconDestinations.MEMORY_CARDS),
-                onClose = onClose(LexiconDestinations.MEMORY_CARDS),
+                onClose = closeToMain,
             ) {
                 MemoryCardsScreen(
                     onSessionComplete = onStepSessionComplete(LexiconDestinations.MEMORY_CARDS),
-                    onClose = onClose(LexiconDestinations.MEMORY_CARDS),
+                    onClose = closeToMain,
                 )
             }
         }
@@ -167,11 +169,11 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             TrainingGate(
                 minimumWords = TrainingRequirements.CROSSWORD,
                 trainingName = trainingDisplayName(LexiconDestinations.CROSSWORD),
-                onClose = onClose(LexiconDestinations.CROSSWORD),
+                onClose = closeToMain,
             ) {
                 CrosswordScreen(
                     onSessionComplete = onStepSessionComplete(LexiconDestinations.CROSSWORD),
-                    onClose = onClose(LexiconDestinations.CROSSWORD),
+                    onClose = closeToMain,
                 )
             }
         }
@@ -180,11 +182,11 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             TrainingGate(
                 minimumWords = TrainingRequirements.MIX,
                 trainingName = trainingDisplayName(LexiconDestinations.MIX),
-                onClose = onClose(LexiconDestinations.MIX),
+                onClose = closeToMain,
             ) {
                 MixScreen(
                     onSessionComplete = onStepSessionComplete(LexiconDestinations.MIX),
-                    onClose = onClose(LexiconDestinations.MIX),
+                    onClose = closeToMain,
                 )
             }
         }
@@ -205,11 +207,8 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
                 incorrect = args?.getInt("incorrect").orDefault(),
                 skipped = args?.getInt("skipped").orDefault(),
                 tipsUsed = args?.getInt("tipsUsed").orDefault(),
-                onDone = {
-                    navController.navigate(LexiconDestinations.MAIN) {
-                        popUpTo(LexiconDestinations.MAIN) { inclusive = true }
-                    }
-                },
+                // Same reason as onClose: return to the Main that is already there.
+                onDone = { navController.popBackStack(LexiconDestinations.MAIN, inclusive = false) },
             )
         }
     }

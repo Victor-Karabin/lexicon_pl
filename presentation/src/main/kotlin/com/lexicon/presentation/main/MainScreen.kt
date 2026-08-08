@@ -16,7 +16,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -31,6 +32,9 @@ private enum class MainTab(val label: String, val icon: ImageVector) {
     SETTINGS("Settings", Icons.Default.Settings),
 }
 
+/** Enums are not saveable as they stand, and the name survives an ordinal being reordered. */
+private val MainTabSaver = Saver<MainTab, String>(save = { it.name }, restore = { MainTab.valueOf(it) })
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
@@ -38,7 +42,9 @@ fun MainScreen(
     onPresetSelected: (id: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var selectedTab by remember { mutableStateOf(MainTab.TRAININGS) }
+    // Saveable, not remembered: MAIN leaves composition while a training or a preset is
+    // open, so a plain remember would drop the tab and land the user back on Trainings.
+    var selectedTab by rememberSaveable(stateSaver = MainTabSaver) { mutableStateOf(MainTab.TRAININGS) }
 
     Scaffold(
         modifier = modifier,
