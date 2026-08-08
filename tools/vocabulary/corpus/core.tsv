@@ -2,41 +2,24 @@
 # Line order within this file IS the frequency rank, so inserting a word shifts everything after it.
 # Columns: polish <TAB> english <TAB> pos <TAB> cefr <TAB> topics (comma separated, may be empty)
 # pos: n v adj adv prn num prep conj part interj expr
-i	and	conj	A1
 być	to be	v	A1	daily-conversation
-w	in	prep	A1
 nie	no, not	part	A1	daily-conversation
-to	this, that	prn	A1	daily-conversation
 się	oneself	prn	A1
-na	on	prep	A1
-z	with, from	prep	A1
-że	that	conj	A1
-do	to, into	prep	A1
-a	and, but	conj	A1
-o	about	prep	A1
 ten	this	prn	A1
-ja	I	prn	A1	introductions
 mieć	to have	v	A1	daily-conversation
 ale	but	conj	A1	daily-conversation
-za	behind, for	prep	A1
 jak	how, as	adv	A1	daily-conversation
 tak	yes, so	part	A1	daily-conversation
-po	after, along	prep	A1
 który	which, who	prn	A1
-co	what	prn	A1	daily-conversation
-ty	you	prn	A1	introductions
-od	from	prep	A1
 przez	through, by	prep	A1
 móc	to be able to	v	A1	daily-conversation
 ona	she	prn	A1	introductions
-on	he	prn	A1	introductions
 przy	near, by	prep	A1	directions
 tylko	only	adv	A1	daily-conversation
 bardzo	very	adv	A1	daily-conversation
 już	already	adv	A1	time
 rok	year	n	A1	time,dates
 człowiek	person, human	n	A1	people
-my	we	prn	A1	introductions
 gdy	when	conj	A1	time
 czy	whether	part	A1	daily-conversation
 dla	for	prep	A1
@@ -54,15 +37,12 @@ wiedzieć	to know	v	A1	daily-conversation
 czas	time	n	A1	time
 oni	they	prn	A1	introductions
 ono	it	prn	A1
-bo	because	conj	A1	daily-conversation
 chcieć	to want	v	A1	daily-conversation
 teraz	now	adv	A1	time
 bez	without	prep	A1
 dobry	good	adj	A1	personality
 nowy	new	adj	A1
 tam	there	adv	A1	directions
-tu	here	adv	A1	directions
-wy	you (plural)	prn	A1	introductions
 jego	his	prn	A1
 mój	my	prn	A1	introductions
 duży	big	adj	A1	shapes
@@ -764,7 +744,6 @@ konik polny	grasshopper	n	B2	insects
 ważka	dragonfly	n	C1	insects
 ćma	moth	n	B2	insects
 gąsienica	caterpillar	n	B1	insects
-ul	beehive	n	B2	insects
 miód	honey	n	A1	food,insects
 żądło	sting	n	C1	insects
 roślina	plant	n	A2	plants,nature

@@ -58,6 +58,38 @@ class VocabularyPresetAssetTest {
     }
 
     /**
+     * Every level is offered as a filter chip, so a level with no words is a control that
+     * silently does nothing. C2 shipped empty exactly this way.
+     */
+    @Test
+    fun `every CEFR level in the shipped vocabulary has words`() {
+        val words = json.decodeFromString<List<VocabularySeedItem>>(
+            File("src/main/assets/vocabulary_pl.json").readText(),
+        )
+
+        val counts = listOf("A1", "A2", "B1", "B2", "C1", "C2")
+            .associateWith { level -> words.count { it.cefr == level } }
+
+        val empty = counts.filterValues { it == 0 }.keys
+        assertTrue("these levels would filter to nothing: $empty", empty.isEmpty())
+    }
+
+    /**
+     * One- and two-letter entries are function words, and they break the trainings built on
+     * spelling: there is no letter puzzle or crossword answer in "w".
+     */
+    @Test
+    fun `the shipped vocabulary has no one or two letter entries`() {
+        val words = json.decodeFromString<List<VocabularySeedItem>>(
+            File("src/main/assets/vocabulary_pl.json").readText(),
+        )
+
+        val tooShort = words.filter { it.text.length <= 2 }.map { it.text }
+
+        assertTrue("these are too short to train on: $tooShort", tooShort.isEmpty())
+    }
+
+    /**
      * Guards the shipped asset itself, not just the parser: the build tool validates before
      * writing, but nothing stops the file being hand-edited afterwards.
      */

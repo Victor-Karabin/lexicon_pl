@@ -219,12 +219,26 @@ training's session-start request, and is separate work.
 
 ## Dataset provenance and limits
 
-The corpus is roughly 1,770 entries: about 1,030 frequency-ranked core words plus topical
-vocabulary. Two honest caveats:
+The corpus is roughly 2,220 entries: about 1,010 frequency-ranked core words plus topical and
+upper-level vocabulary. By CEFR band: A1 689, A2 547, B1 357, B2 280, C1 198, C2 148.
+
+Entries are at least three letters. One- and two-letter words are function words — *w*, *na*,
+*że* — and they break every training built on spelling: there is no letter puzzle or crossword
+answer in a two-letter preposition. `MIN_WORD_LENGTH` in the build tool rejects them.
+
+Every band has to be non-empty, because each is offered as a filter chip and a chip that
+returns nothing is a control that silently does nothing — C2 shipped that way once. Both
+`build_assets.py` and `VocabularyPresetAssetTest` now refuse an empty band, and likewise a
+word below the minimum length.
+
+Three honest caveats:
 
 - **The frequency ranking is a curated approximation**, not a corpus-derived list. It is
   ordered to be defensible for learners, but the exact rank of any given word is an
   editorial judgement, not a measurement.
+- **The upper bands are editorial.** Assigning a word to B2 rather than C1 is a judgement,
+  not a measurement against a syllabus; the ordering between bands is meaningful, the exact
+  boundary is not.
 - **Transcriptions are rule-generated** by `g2p.py` from spelling. Polish orthography is
   close to phonemic so this is accurate for the ordinary cases it covers — digraphs,
   softening, final devoicing, voicing assimilation, penultimate stress — but it does not

@@ -35,6 +35,9 @@ ASSETS = ROOT / "data" / "src" / "main" / "assets"
 CEFR_LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"]
 POS_TAGS = {"n", "v", "adj", "adv", "prn", "num", "prep", "conj", "part", "interj", "expr"}
 
+# Below this a word carries no spelling to practise; see the check in load_words.
+MIN_WORD_LENGTH = 3
+
 # A minute per word is the usual rule of thumb for first exposure plus a review pass.
 SECONDS_PER_WORD = 60
 
@@ -73,6 +76,11 @@ def load_words() -> list[dict]:
                 raise BuildError(f"{path.name}:{number}: unknown part of speech '{pos}'")
             if cefr not in CEFR_LEVELS:
                 raise BuildError(f"{path.name}:{number}: unknown CEFR level '{cefr}'")
+            # One- and two-letter entries are function words, and they break the trainings
+            # built on spelling: a two-letter crossword answer or letter puzzle is not an
+            # exercise. Rejected here so they cannot drift back in.
+            if len(text) <= MIN_WORD_LENGTH - 1:
+                raise BuildError(f"{path.name}:{number}: '{text}' is shorter than {MIN_WORD_LENGTH} letters")
 
             # Homonyms are legitimate (bez = without / lilac), so identity is the pair.
             key = (text.lower(), translation.lower())
@@ -174,6 +182,13 @@ def validate(words: list[dict], presets: list[dict], categories: list[dict]) -> 
         if 0 < preset["wordCount"] < 6:
             problems.append(f"preset '{preset['id']}' has only {preset['wordCount']} words, too few to train")
 
+    # Every level is offered as a filter chip, so a level with no words is a control that
+    # silently does nothing — which is how C2 shipped empty.
+    by_level = {level: sum(1 for w in words if w["cefr"] == level) for level in CEFR_LEVELS}
+    for level, count in by_level.items():
+        if count == 0:
+            problems.append(f"CEFR level {level} has no words, so its filter would return nothing")
+
     return problems
 
 
@@ -208,6 +223,8 @@ def main() -> int:
 
     ranked = sum(1 for w in words if w["frequencyRank"] is not None)
     print(f"{len(words)} words ({ranked} ranked), {len(presets)} presets in {len(categories)} categories")
+    levels = {level: sum(1 for w in words if w["cefr"] == level) for level in CEFR_LEVELS}
+    print("  by level: " + ", ".join(f"{lvl} {n}" for lvl, n in levels.items()))
     smallest = min(presets, key=lambda p: p["wordCount"])
     print(f"smallest preset: {smallest['id']} ({smallest['wordCount']} words)")
     return 0
