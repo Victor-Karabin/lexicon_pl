@@ -30,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -182,15 +183,19 @@ private fun MixScreenContent(
                         StepFeedback(uiState)
                     }
 
-                    TrainingActionRow(
-                        onCheck = onCheck,
-                        onNext = onNext,
-                        awaitingNext = uiState.awaitingNext,
-                        checkEnabled = uiState.canCheck,
-                        onUndo = onUndo.takeIf { uiState.canUndo },
-                        onTip = onTipRequested.takeIf { uiState.canUseTip },
-                        onSkip = onSkip.takeIf { uiState.canSkip },
-                    )
+                    // True or False answers on tap, so before it is answered there is no primary
+                    // action to offer; showing a Check it can never enable reads as a broken step.
+                    if (uiState.hasCheckAction || uiState.awaitingNext) {
+                        TrainingActionRow(
+                            onCheck = onCheck,
+                            onNext = onNext,
+                            awaitingNext = uiState.awaitingNext,
+                            checkEnabled = uiState.canCheck,
+                            onUndo = onUndo.takeIf { uiState.canUndo },
+                            onTip = onTipRequested.takeIf { uiState.canUseTip },
+                            onSkip = onSkip.takeIf { uiState.canSkip },
+                        )
+                    }
                 }
         }
     }
@@ -272,22 +277,20 @@ private fun ColumnScope.StepContent(
                 modifier = Modifier.fillMaxWidth().height(TrueFalseButtonHeight).padding(top = Dimens.spacingMedium),
                 horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
             ) {
-                Button(
-                    onClick = debounced { onTrueOrFalseAnswer(true) },
+                TrueOrFalseButton(
+                    label = stringResource(R.string.action_true),
+                    outcome = uiState.trueOrFalseOutcomeFor(isTrueButton = true),
                     enabled = uiState.isEditable,
-                    colors = ButtonDefaults.buttonColors(containerColor = LexiconSuccess),
+                    onClick = { onTrueOrFalseAnswer(true) },
                     modifier = Modifier.weight(1f).fillMaxSize(),
-                ) {
-                    Text(stringResource(R.string.action_true), style = MaterialTheme.typography.titleLarge)
-                }
-                Button(
-                    onClick = debounced { onTrueOrFalseAnswer(false) },
+                )
+                TrueOrFalseButton(
+                    label = stringResource(R.string.action_false),
+                    outcome = uiState.trueOrFalseOutcomeFor(isTrueButton = false),
                     enabled = uiState.isEditable,
-                    colors = ButtonDefaults.buttonColors(containerColor = LexiconError),
+                    onClick = { onTrueOrFalseAnswer(false) },
                     modifier = Modifier.weight(1f).fillMaxSize(),
-                ) {
-                    Text(stringResource(R.string.action_false), style = MaterialTheme.typography.titleLarge)
-                }
+                )
             }
         }
 
@@ -318,6 +321,45 @@ private fun ColumnScope.StepContent(
                 )
             }
         }
+    }
+}
+
+/**
+ * [outcome]: true = correct, false = incorrect, null = default colour.
+ *
+ * The button is disabled once answered, so the outcome colour is repeated as the disabled colour —
+ * otherwise Material greys the container out and the result indication disappears at the moment it
+ * becomes relevant.
+ */
+@Composable
+private fun TrueOrFalseButton(
+    label: String,
+    outcome: Boolean?,
+    enabled: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val container = when (outcome) {
+        true -> LexiconSuccess
+        false -> LexiconError
+        null -> MaterialTheme.colorScheme.secondaryContainer
+    }
+    val content = when (outcome) {
+        null -> MaterialTheme.colorScheme.onSecondaryContainer
+        else -> Color.White
+    }
+    Button(
+        onClick = debounced(onClick = onClick),
+        enabled = enabled,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = container,
+            contentColor = content,
+            disabledContainerColor = container,
+            disabledContentColor = content,
+        ),
+        modifier = modifier,
+    ) {
+        Text(label, style = MaterialTheme.typography.titleLarge)
     }
 }
 
@@ -460,6 +502,38 @@ private fun MixScreenTrueOrFalseStepPreview() {
                     4,
                     com.lexicon.interactors.trueorfalse.TrueOrFalseStepResponse(4, 2L, "chleb", "bread", true),
                 ),
+            ),
+            onClose = {},
+            onAnswerChanged = {},
+            onTileSelected = {},
+            onOptionSelected = {},
+            onReplayAudio = {},
+            onRecordRequested = {},
+            onTrueOrFalseAnswer = {},
+            onUndo = {},
+            onTipRequested = {},
+            onSkip = {},
+            onCheck = {},
+            onNext = {},
+        )
+    }
+}
+
+/** Answered incorrectly: only the tapped button takes the outcome colour. */
+@LightDarkPreview
+@Composable
+private fun MixScreenTrueOrFalseAnsweredPreview() {
+    LexiconTheme {
+        MixScreenContent(
+            uiState = MixUiState.Loaded(
+                stepIndex = 4,
+                totalSteps = 10,
+                step = MixStep.TrueOrFalse(
+                    4,
+                    com.lexicon.interactors.trueorfalse.TrueOrFalseStepResponse(4, 2L, "chleb", "bread", true),
+                ),
+                answerState = AnswerState.Incorrect(),
+                answeredTrue = false,
             ),
             onClose = {},
             onAnswerChanged = {},

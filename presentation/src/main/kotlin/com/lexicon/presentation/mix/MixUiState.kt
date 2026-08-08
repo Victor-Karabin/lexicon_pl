@@ -28,6 +28,8 @@ sealed interface MixUiState {
         /** Image Test. */
         val selectedOption: String? = null,
         val correctOption: String? = null,
+        /** True or False: which button was tapped, so only that one shows the outcome colour. */
+        val answeredTrue: Boolean? = null,
         /** Pronunciation Check. */
         val recordingState: RecordingState = RecordingState.IDLE,
         val recognizedConfidence: Float? = null,
@@ -42,7 +44,10 @@ sealed interface MixUiState {
         val builtAnswer: String get() = placedTiles.joinToString("") { it.char.toString() }
         val availableTiles: List<LetterTile> get() = stepTiles.filterNot { tile -> placedTiles.any { it.id == tile.id } }
 
-        /** True or False answers on tap, so it has no Check; the rest need one. */
+        /**
+         * True or False answers on tap, so it has no Check button at all — rendering a permanently
+         * disabled one would read as the step being broken. The rest need one.
+         */
         val hasCheckAction: Boolean get() = trainingType != MixTrainingType.TRUE_OR_FALSE
 
         val canCheck: Boolean
@@ -55,7 +60,9 @@ sealed interface MixUiState {
             }
 
         val canUndo: Boolean get() = isEditable && placedTiles.isNotEmpty()
-        val canSkip: Boolean get() = isEditable
+
+        /** Skip is inherited from the originating training, and True or False has none. */
+        val canSkip: Boolean get() = isEditable && trainingType != MixTrainingType.TRUE_OR_FALSE
 
         /** Tip is inherited from the originating training, so only the ones that offer it get it. */
         val canUseTip: Boolean
@@ -72,5 +79,24 @@ sealed interface MixUiState {
 
         /** Skip auto-advances; only an incorrect answer waits for an explicit Next. */
         val awaitingNext: Boolean get() = answerState is AnswerState.Incorrect && !isSubmitting
+
+        /**
+         * Outcome colouring for one of the two True/False buttons: true = correct, false =
+         * incorrect, null = leave it in its default colour.
+         *
+         * Unlike the standalone training, where True is permanently green and False permanently
+         * red, both start neutral here and only the button actually tapped takes on a colour — so
+         * the colour reports the result rather than labelling the options.
+         */
+        fun trueOrFalseOutcomeFor(isTrueButton: Boolean): Boolean? =
+            if (answeredTrue != isTrueButton) {
+                null
+            } else {
+                when (answerState) {
+                    is AnswerState.Correct -> true
+                    is AnswerState.Incorrect -> false
+                    else -> null
+                }
+            }
     }
 }

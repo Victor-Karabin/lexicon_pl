@@ -186,7 +186,8 @@ class MixViewModel
             val state = _uiState.value as? MixUiState.Loaded ?: return
             val step = state.step as? MixStep.TrueOrFalse ?: return
             if (!state.isEditable) return
-            updateLoaded { it.copy(isSubmitting = true) }
+            // Recorded so only the tapped button takes on the outcome colour.
+            updateLoaded { it.copy(isSubmitting = true, answeredTrue = answeredTrue) }
             viewModelScope.launch(dispatchers.io) {
                 val response = submitTrueOrFalse(
                     SubmitTrueOrFalseAnswerRequest(
@@ -200,7 +201,10 @@ class MixViewModel
                 finishStep(
                     isCorrect = response.outcome == TrueOrFalseStepOutcome.CORRECT,
                     skipped = false,
-                    revealed = step.step.word,
+                    // No revealed answer: the choice was True/False, and the word is already on
+                    // screen, so an "Expected: ..." line would restate the prompt as if it were the
+                    // answer. Matches standalone True or False, which reveals nothing either.
+                    revealed = null,
                     word = step.step.word,
                     translation = step.step.displayedTranslation,
                 )
@@ -341,7 +345,7 @@ class MixViewModel
         private suspend fun finishStep(
             isCorrect: Boolean,
             skipped: Boolean,
-            revealed: String,
+            revealed: String?,
             word: String,
             translation: String,
         ) {
@@ -358,8 +362,10 @@ class MixViewModel
             }
             wordResults += WordResultEntry(word, translation, outcome, state.tipUsed)
 
-            // Incorrect waits for Next so the revealed answer can be read; the rest auto-advance.
-            updateLoaded { it.copy(answerState = outcome, isSubmitting = outcome is AnswerState.Incorrect) }
+            // Incorrect waits for a manual Next so the revealed answer can be read, which means
+            // isSubmitting has to release now: awaitingNext is gated on it, so leaving it set would
+            // hide the Next button and lock the step with nothing left to press.
+            updateLoaded { it.copy(answerState = outcome, isSubmitting = false) }
             if (outcome is AnswerState.Incorrect) return
 
             delay(if (skipped) SKIPPED_ANSWER_ADVANCE_DELAY_MS else CORRECT_ANSWER_ADVANCE_DELAY_MS)
