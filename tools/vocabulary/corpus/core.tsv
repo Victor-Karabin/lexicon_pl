@@ -1,0 +1,1034 @@
+# Core Polish vocabulary, ordered by approximate frequency in modern spoken and written use.
+# Line order within this file IS the frequency rank, so inserting a word shifts everything after it.
+# Columns: polish <TAB> english <TAB> pos <TAB> cefr <TAB> topics (comma separated, may be empty)
+# pos: n v adj adv prn num prep conj part interj expr
+i	and	conj	A1
+być	to be	v	A1	daily-conversation
+w	in	prep	A1
+nie	no, not	part	A1	daily-conversation
+to	this, that	prn	A1	daily-conversation
+się	oneself	prn	A1
+na	on	prep	A1
+z	with, from	prep	A1
+że	that	conj	A1
+do	to, into	prep	A1
+a	and, but	conj	A1
+o	about	prep	A1
+ten	this	prn	A1
+ja	I	prn	A1	introductions
+mieć	to have	v	A1	daily-conversation
+ale	but	conj	A1	daily-conversation
+za	behind, for	prep	A1
+jak	how, as	adv	A1	daily-conversation
+tak	yes, so	part	A1	daily-conversation
+po	after, along	prep	A1
+który	which, who	prn	A1
+co	what	prn	A1	daily-conversation
+ty	you	prn	A1	introductions
+od	from	prep	A1
+przez	through, by	prep	A1
+móc	to be able to	v	A1	daily-conversation
+ona	she	prn	A1	introductions
+on	he	prn	A1	introductions
+przy	near, by	prep	A1	directions
+tylko	only	adv	A1	daily-conversation
+bardzo	very	adv	A1	daily-conversation
+już	already	adv	A1	time
+rok	year	n	A1	time,dates
+człowiek	person, human	n	A1	people
+my	we	prn	A1	introductions
+gdy	when	conj	A1	time
+czy	whether	part	A1	daily-conversation
+dla	for	prep	A1
+też	also	adv	A1	daily-conversation
+jeden	one	num	A1	numbers
+wszystko	everything	prn	A1	daily-conversation
+sobie	oneself	prn	A1
+taki	such	prn	A1
+gdzie	where	adv	A1	directions
+kiedy	when	adv	A1	time
+jeszcze	still, yet	adv	A1	time
+nawet	even	adv	A2
+dzień	day	n	A1	time,dates
+wiedzieć	to know	v	A1	daily-conversation
+czas	time	n	A1	time
+oni	they	prn	A1	introductions
+ono	it	prn	A1
+bo	because	conj	A1	daily-conversation
+chcieć	to want	v	A1	daily-conversation
+teraz	now	adv	A1	time
+bez	without	prep	A1
+dobry	good	adj	A1	personality
+nowy	new	adj	A1
+tam	there	adv	A1	directions
+tu	here	adv	A1	directions
+wy	you (plural)	prn	A1	introductions
+jego	his	prn	A1
+mój	my	prn	A1	introductions
+duży	big	adj	A1	shapes
+mały	small	adj	A1	shapes
+praca	work	n	A1	work,office
+życie	life	n	A1
+dom	house, home	n	A1	home
+świat	world	n	A1	nature
+robić	to do, to make	v	A1	daily-conversation
+iść	to go (on foot)	v	A1	directions
+pod	under	prep	A1	directions
+sposób	way, manner	n	A2
+znać	to know (someone)	v	A1	daily-conversation
+dwa	two	num	A1	numbers
+razem	together	adv	A1	relationships
+inny	other	adj	A1
+mówić	to speak	v	A1	daily-conversation
+woda	water	n	A1	drinks,nature
+oko	eye	n	A1	body
+ręka	hand, arm	n	A1	body
+kobieta	woman	n	A1	people
+mężczyzna	man	n	A1	people
+dziecko	child	n	A1	family
+miejsce	place	n	A1	directions
+miasto	city	n	A1	cities
+kraj	country	n	A1	countries
+droga	road, way	n	A1	directions,transport
+głowa	head	n	A1	body
+strona	side, page	n	A2	books
+myśleć	to think	v	A1	daily-conversation
+widzieć	to see	v	A1	body
+dawać	to give	v	A1
+brać	to take	v	A1
+znaleźć	to find	v	A2
+zrobić	to do (perfective)	v	A1
+powiedzieć	to say	v	A1	daily-conversation
+dużo	a lot	adv	A1	numbers
+mało	few, little	adv	A1	numbers
+trzeba	one must	v	A2
+można	one can	v	A2
+zawsze	always	adv	A1	time
+nigdy	never	adv	A1	time
+często	often	adv	A1	time
+czasem	sometimes	adv	A1	time
+rzadko	rarely	adv	A2	time
+znowu	again	adv	A2	time
+jeśli	if	conj	A2
+więc	so, therefore	conj	A2
+dlatego	that is why	conj	A2
+ponieważ	because	conj	A2
+chociaż	although	conj	B1
+jednak	however	conj	B1
+oczywiście	of course	adv	A2	daily-conversation
+naprawdę	really	adv	A1	daily-conversation
+może	maybe	adv	A1	daily-conversation
+pewnie	probably, surely	adv	A2
+prawie	almost	adv	A2
+całkiem	quite	adv	B1
+zupełnie	completely	adv	B1
+trochę	a little	adv	A1	numbers
+więcej	more	adv	A1	numbers
+mniej	less	adv	A1	numbers
+najlepszy	the best	adj	A2
+lepszy	better	adj	A2
+gorszy	worse	adj	A2
+pierwszy	first	num	A1	numbers
+drugi	second	num	A1	numbers
+ostatni	last	adj	A1	time
+następny	next	adj	A2	time
+cały	whole	adj	A1
+każdy	each, every	prn	A1
+żaden	none	prn	A2
+kilka	several	num	A1	numbers
+wiele	many	num	A2	numbers
+sam	alone, myself	prn	A1
+dobrze	well	adv	A1	daily-conversation
+źle	badly	adv	A1	daily-conversation
+szybko	quickly	adv	A1
+wolno	slowly	adv	A1
+łatwo	easily	adv	A2
+trudno	with difficulty	adv	A2
+matka	mother	n	A1	family
+ojciec	father	n	A1	family
+syn	son	n	A1	family
+córka	daughter	n	A1	family
+brat	brother	n	A1	family
+siostra	sister	n	A1	family
+rodzina	family	n	A1	family
+przyjaciel	friend	n	A1	relationships
+mama	mum	n	A1	family
+tata	dad	n	A1	family
+noc	night	n	A1	time
+rano	morning	n	A1	time
+wieczór	evening	n	A1	time
+tydzień	week	n	A1	time,dates
+miesiąc	month	n	A1	time,dates
+godzina	hour	n	A1	time
+minuta	minute	n	A1	time
+chwila	moment	n	A2	time
+dzisiaj	today	adv	A1	time,dates
+wczoraj	yesterday	adv	A1	time,dates
+jutro	tomorrow	adv	A1	time,dates
+jedzenie	food	n	A1	food
+chleb	bread	n	A1	food
+mleko	milk	n	A1	drinks,food
+kawa	coffee	n	A1	drinks
+herbata	tea	n	A1	drinks
+piwo	beer	n	A1	drinks
+wino	wine	n	A1	drinks
+sok	juice	n	A1	drinks
+mięso	meat	n	A1	food
+ryba	fish	n	A1	food,fish
+owoc	fruit	n	A1	food
+warzywo	vegetable	n	A1	food
+jabłko	apple	n	A1	food
+ziemniak	potato	n	A1	food
+ser	cheese	n	A1	food
+jajko	egg	n	A1	food
+cukier	sugar	n	A1	food,cooking
+sól	salt	n	A1	food,cooking
+masło	butter	n	A1	food
+zupa	soup	n	A1	food,cooking
+obiad	lunch, dinner	n	A1	food
+śniadanie	breakfast	n	A1	food
+kolacja	supper	n	A1	food
+jeść	to eat	v	A1	food
+pić	to drink	v	A1	drinks
+gotować	to cook	v	A1	cooking
+kupować	to buy	v	A1	shopping
+sklep	shop	n	A1	shopping
+pieniądze	money	n	A1	shopping,finance
+cena	price	n	A1	shopping,finance
+drogi	expensive	adj	A1	shopping
+tani	cheap	adj	A1	shopping
+płacić	to pay	v	A1	shopping,finance
+kosztować	to cost	v	A1	shopping,finance
+samochód	car	n	A1	transport
+pociąg	train	n	A1	transport
+autobus	bus	n	A1	transport
+samolot	plane	n	A1	transport,airport
+rower	bicycle	n	A1	transport
+ulica	street	n	A1	directions,cities
+sklepik	corner shop	n	B1	shopping
+szkoła	school	n	A1	school
+nauczyciel	teacher	n	A1	school,professions
+uczeń	pupil	n	A1	school
+student	student	n	A1	university
+uczyć	to teach	v	A1	school
+uczyć się	to study	v	A1	studying
+książka	book	n	A1	books
+zeszyt	notebook	n	A1	classroom
+długopis	pen	n	A1	classroom
+ołówek	pencil	n	A1	classroom
+lekcja	lesson	n	A1	school,classroom
+egzamin	exam	n	A1	studying
+pytanie	question	n	A1	daily-conversation
+odpowiedź	answer	n	A1	daily-conversation
+słowo	word	n	A1
+język	language, tongue	n	A1	body
+zdanie	sentence, opinion	n	A2
+czytać	to read	v	A1	books
+pisać	to write	v	A1
+liczyć	to count	v	A1	numbers
+rozumieć	to understand	v	A1	daily-conversation
+pamiętać	to remember	v	A1
+zapomnieć	to forget	v	A1
+pomagać	to help	v	A1	daily-conversation
+pracować	to work	v	A1	work
+odpoczywać	to rest	v	A1	hobbies
+spać	to sleep	v	A1	health
+wstawać	to get up	v	A1	daily-conversation
+siadać	to sit down	v	A1
+stać	to stand	v	A1
+chodzić	to walk, to go	v	A1	directions
+jechać	to travel, to drive	v	A1	transport
+biegać	to run	v	A1	sports
+pływać	to swim	v	A1	sports
+latać	to fly	v	A1	transport
+otwierać	to open	v	A1
+zamykać	to close	v	A1
+zaczynać	to begin	v	A1
+kończyć	to finish	v	A1
+czekać	to wait	v	A1
+szukać	to look for	v	A1
+pokazywać	to show	v	A1
+słuchać	to listen	v	A1	music
+słyszeć	to hear	v	A1	body
+patrzeć	to look	v	A1	body
+kochać	to love	v	A1	relationships,emotions
+lubić	to like	v	A1	emotions
+nienawidzić	to hate	v	A2	emotions
+bać się	to be afraid	v	A1	emotions
+śmiać się	to laugh	v	A1	emotions
+płakać	to cry	v	A1	emotions
+cieszyć się	to be glad	v	A2	emotions
+martwić się	to worry	v	A2	emotions
+dziękować	to thank	v	A1	greetings
+prosić	to ask, to request	v	A1	daily-conversation
+przepraszać	to apologise	v	A1	greetings
+witać	to greet	v	A1	greetings
+żegnać	to say goodbye	v	A2	greetings
+dzwonić	to call, to ring	v	A1	smartphone
+pisać wiadomość	to write a message	expr	A2	smartphone
+spotykać	to meet	v	A1	relationships
+poznawać	to get to know	v	A1	introductions
+zapraszać	to invite	v	A2	relationships
+pomoc	help	n	A1	emergency
+problem	problem	n	A1
+sprawa	matter, affair	n	A2
+powód	reason	n	B1
+wynik	result	n	B1
+przykład	example	n	A2
+rzecz	thing	n	A1
+część	part	n	A2
+grupa	group	n	A1
+liczba	number	n	A1	numbers
+poziom	level	n	B1
+stan	state, condition	n	B1
+zmiana	change	n	A2
+możliwość	possibility	n	B1
+potrzeba	need	n	B1
+pomysł	idea	n	A2
+plan	plan	n	A1
+cel	goal	n	A2
+wybór	choice	n	B1
+decyzja	decision	n	B1
+prawo	law, right	n	A2	law
+władza	power, authority	n	B2	politics
+rząd	government	n	B1	politics
+państwo	state, country	n	A2	politics,countries
+firma	company	n	A1	business
+pracownik	employee	n	A2	work,professions
+szef	boss	n	A1	work,office
+klient	client	n	A2	business
+umowa	contract	n	B1	business
+spotkanie	meeting	n	A2	meetings
+projekt	project	n	A2	work
+zadanie	task	n	A2	work,studying
+wiadomość	message, news	n	A1	smartphone
+gazeta	newspaper	n	A1	books
+telewizja	television	n	A1	movies
+radio	radio	n	A1	music
+film	film	n	A1	movies
+muzyka	music	n	A1	music
+piosenka	song	n	A1	music
+gra	game	n	A1	games
+sport	sport	n	A1	sports
+mecz	match	n	A1	sports
+drużyna	team	n	A2	sports
+zwierzę	animal	n	A1	animals
+pies	dog	n	A1	animals
+kot	cat	n	A1	animals
+ptak	bird	n	A1	birds
+drzewo	tree	n	A1	trees,nature
+kwiat	flower	n	A1	flowers,nature
+las	forest	n	A1	forest,nature
+góra	mountain	n	A1	mountains,nature
+morze	sea	n	A1	sea,nature
+rzeka	river	n	A1	nature
+jezioro	lake	n	A1	nature
+pole	field	n	A1	nature
+niebo	sky	n	A1	nature,weather
+słońce	sun	n	A1	weather,nature
+księżyc	moon	n	A1	nature
+gwiazda	star	n	A1	nature
+deszcz	rain	n	A1	weather
+śnieg	snow	n	A1	weather
+wiatr	wind	n	A1	weather
+chmura	cloud	n	A1	weather,internet
+pogoda	weather	n	A1	weather
+ciepło	warmth, warm	adv	A1	weather
+zimno	cold	adv	A1	weather
+gorąco	hot	adv	A1	weather
+ciepły	warm	adj	A1	weather
+zimny	cold	adj	A1	weather
+gorący	hot	adj	A1	weather
+biały	white	adj	A1	colors
+czarny	black	adj	A1	colors
+czerwony	red	adj	A1	colors
+zielony	green	adj	A1	colors
+niebieski	blue	adj	A1	colors
+żółty	yellow	adj	A1	colors
+szary	grey	adj	A1	colors
+brązowy	brown	adj	A1	colors
+różowy	pink	adj	A1	colors
+pomarańczowy	orange	adj	A1	colors
+długi	long	adj	A1	shapes
+krótki	short	adj	A1	shapes
+wysoki	tall, high	adj	A1	appearance,shapes
+niski	low, short	adj	A1	appearance,shapes
+szeroki	wide	adj	A2	shapes
+wąski	narrow	adj	A2	shapes
+gruby	thick, fat	adj	A1	appearance
+cienki	thin	adj	A2	shapes
+ciężki	heavy	adj	A1
+lekki	light (weight)	adj	A1
+mocny	strong	adj	A1
+słaby	weak	adj	A1
+stary	old	adj	A1	appearance
+młody	young	adj	A1	appearance
+piękny	beautiful	adj	A1	appearance
+brzydki	ugly	adj	A1	appearance
+ładny	pretty	adj	A1	appearance
+miły	nice, kind	adj	A1	personality
+zły	bad, angry	adj	A1	personality,emotions
+wesoły	cheerful	adj	A2	personality,emotions
+smutny	sad	adj	A1	emotions
+szczęśliwy	happy	adj	A1	emotions
+zmęczony	tired	adj	A1	health,emotions
+głodny	hungry	adj	A1	food
+spragniony	thirsty	adj	A2	drinks
+chory	ill	adj	A1	health
+zdrowy	healthy	adj	A1	health
+ważny	important	adj	A1
+ciekawy	interesting, curious	adj	A1	personality
+nudny	boring	adj	A1
+łatwy	easy	adj	A1
+trudny	difficult	adj	A1
+możliwy	possible	adj	B1
+prawdziwy	true, real	adj	A2
+pewny	certain	adj	A2
+gotowy	ready	adj	A1
+wolny	free, slow	adj	A1
+zajęty	busy	adj	A1	work
+otwarty	open	adj	A1	shopping
+zamknięty	closed	adj	A1	shopping
+pusty	empty	adj	A2
+pełny	full	adj	A2
+czysty	clean	adj	A1	household
+brudny	dirty	adj	A1	household
+głowa boli	headache	expr	A2	health
+lekarz	doctor	n	A1	health,professions
+szpital	hospital	n	A1	hospital,health
+apteka	pharmacy	n	A1	pharmacy,health
+lekarstwo	medicine	n	A1	medicine,pharmacy
+ból	pain	n	A1	health
+choroba	illness	n	A1	health
+zdrowie	health	n	A1	health
+ciało	body	n	A1	body
+serce	heart	n	A1	body,emotions
+noga	leg, foot	n	A1	body
+palec	finger	n	A1	body
+ucho	ear	n	A1	body
+nos	nose	n	A1	body
+usta	mouth	n	A1	body
+ząb	tooth	n	A1	body
+włosy	hair	n	A1	body,appearance
+twarz	face	n	A1	body,appearance
+plecy	back	n	A1	body
+brzuch	belly	n	A1	body
+krew	blood	n	A2	body,medicine
+skóra	skin	n	A2	body
+kość	bone	n	A2	body
+ubranie	clothing	n	A1	clothing
+koszula	shirt	n	A1	clothing
+spodnie	trousers	n	A1	clothing
+sukienka	dress	n	A1	clothing
+spódnica	skirt	n	A1	clothing
+kurtka	jacket	n	A1	clothing
+płaszcz	coat	n	A1	clothing
+sweter	sweater	n	A1	clothing
+buty	shoes	n	A1	clothing
+czapka	cap, hat	n	A1	clothing
+szalik	scarf	n	A1	clothing
+rękawiczki	gloves	n	A2	clothing
+skarpetki	socks	n	A1	clothing
+pokój	room	n	A1	home,hotel
+kuchnia	kitchen	n	A1	home,cooking
+łazienka	bathroom	n	A1	home
+sypialnia	bedroom	n	A1	home
+salon	living room	n	A1	home
+okno	window	n	A1	home
+drzwi	door	n	A1	home
+ściana	wall	n	A1	home
+podłoga	floor	n	A1	home
+sufit	ceiling	n	A2	home
+stół	table	n	A1	home,household
+krzesło	chair	n	A1	home,household
+łóżko	bed	n	A1	home,household
+szafa	wardrobe	n	A1	home,household
+lampa	lamp	n	A1	home,household
+lodówka	fridge	n	A1	household,cooking
+kuchenka	cooker	n	A2	household,cooking
+zlew	sink	n	A2	household
+talerz	plate	n	A1	household,cooking
+kubek	mug	n	A1	household,drinks
+szklanka	glass	n	A1	household,drinks
+widelec	fork	n	A1	household,cooking
+nóż	knife	n	A1	household,cooking
+łyżka	spoon	n	A1	household,cooking
+garnek	pot	n	A2	cooking,household
+patelnia	frying pan	n	A2	cooking,household
+komputer	computer	n	A1	computer
+telefon	telephone	n	A1	smartphone
+internet	internet	n	A1	internet
+strona internetowa	website	n	A2	internet
+hasło	password	n	A2	internet,computer
+plik	file	n	A2	computer
+program	programme	n	A1	computer,programming
+ekran	screen	n	A1	computer,smartphone
+klawiatura	keyboard	n	A2	computer
+myszka	mouse	n	A2	computer
+drukarka	printer	n	A2	computer,office
+biuro	office	n	A1	office,work
+dokument	document	n	A2	office
+podpis	signature	n	B1	office
+list	letter	n	A1	office
+koperta	envelope	n	A2	office
+paczka	parcel	n	A2	shopping
+poczta	post office	n	A1	cities
+bank	bank	n	A1	finance
+konto	account	n	A2	finance
+karta	card	n	A1	finance,shopping
+gotówka	cash	n	A2	finance
+rachunek	bill	n	A2	finance,shopping
+podatek	tax	n	B1	finance
+kredyt	loan	n	B1	finance
+oszczędzać	to save (money)	v	B1	finance
+zarabiać	to earn	v	A2	finance,work
+wydawać	to spend	v	A2	finance
+lotnisko	airport	n	A1	airport,travel
+dworzec	station	n	A1	transport,travel
+przystanek	stop	n	A1	transport
+bilet	ticket	n	A1	transport,travel
+bagaż	luggage	n	A1	airport,travel
+walizka	suitcase	n	A1	travel
+paszport	passport	n	A1	airport,travel
+hotel	hotel	n	A1	hotel,travel
+recepcja	reception	n	A2	hotel
+klucz	key	n	A1	hotel,home
+rezerwacja	reservation	n	A2	hotel,travel
+wakacje	holidays	n	A1	tourism,travel
+podróż	journey	n	A1	travel,tourism
+wycieczka	trip	n	A1	tourism
+zwiedzać	to sightsee	v	A2	tourism
+mapa	map	n	A1	directions,travel
+lewo	left	adv	A1	directions
+prawo	right (direction)	adv	A1	directions
+prosto	straight ahead	adv	A1	directions
+blisko	near	adv	A1	directions
+daleko	far	adv	A1	directions
+północ	north, midnight	n	A2	directions,time
+południe	south, noon	n	A2	directions,time
+wschód	east, sunrise	n	A2	directions
+zachód	west, sunset	n	A2	directions
+policja	police	n	A1	police,emergency
+policjant	police officer	n	A1	police,professions
+straż pożarna	fire brigade	n	A2	emergency
+pogotowie	ambulance service	n	A2	emergency,hospital
+wypadek	accident	n	A2	emergency
+niebezpieczny	dangerous	adj	A2	emergency
+bezpieczny	safe	adj	A2	emergency
+ratować	to rescue	v	B1	emergency
+uwaga	attention, careful	n	A1	emergency
+sąd	court	n	B1	law
+adwokat	lawyer	n	B1	law,professions
+świadek	witness	n	B1	law
+kara	punishment, fine	n	B1	law
+wina	guilt, fault	n	B1	law
+kradzież	theft	n	B1	law,police
+przestępstwo	crime	n	B2	law,police
+wybory	election	n	B1	politics
+prezydent	president	n	A2	politics
+minister	minister	n	B1	politics
+partia	party (political)	n	B1	politics
+głosować	to vote	v	B1	politics
+obywatel	citizen	n	B1	politics
+granica	border	n	A2	countries,travel
+uniwersytet	university	n	A1	university
+wykład	lecture	n	A2	university
+profesor	professor	n	A2	university,professions
+studia	studies	n	A2	university,studying
+dyplom	diploma	n	B1	university
+stopień	degree, step	n	B1	university
+biblioteka	library	n	A1	university,books
+sala	hall, room	n	A1	classroom,university
+tablica	board	n	A2	classroom
+kreda	chalk	n	B1	classroom
+plecak	backpack	n	A1	classroom,travel
+piórnik	pencil case	n	A2	classroom
+linijka	ruler	n	A2	classroom
+gumka	eraser	n	A2	classroom
+nożyczki	scissors	n	A2	classroom,household
+przerwa	break	n	A1	school
+ocena	grade	n	A2	school,studying
+sprawdzian	test	n	A2	school,studying
+praca domowa	homework	n	A1	school,studying
+powtarzać	to repeat, to revise	v	A2	studying
+notatka	note	n	A2	studying,office
+zapisywać	to write down	v	A2	studying
+tłumaczyć	to translate, to explain	v	A2	studying
+ćwiczenie	exercise	n	A2	studying,fitness
+błąd	mistake	n	A1	studying
+poprawiać	to correct	v	A2	studying
+wiedza	knowledge	n	B1	studying
+nauka	science, learning	n	A2	studying
+zawód	profession	n	A2	professions
+inżynier	engineer	n	A2	professions
+kierowca	driver	n	A1	professions,transport
+sprzedawca	shop assistant	n	A2	professions,shopping
+kucharz	cook	n	A1	professions,cooking
+kelner	waiter	n	A1	professions,food
+fryzjer	hairdresser	n	A2	professions
+mechanik	mechanic	n	A2	professions
+rolnik	farmer	n	A2	professions
+pielęgniarka	nurse	n	A2	professions,hospital
+dentysta	dentist	n	A2	professions,health
+architekt	architect	n	B1	professions
+dziennikarz	journalist	n	B1	professions
+artysta	artist	n	A2	professions
+aktor	actor	n	A1	professions,movies
+muzyk	musician	n	A2	professions,music
+pisarz	writer	n	A2	professions,books
+naukowiec	scientist	n	B1	professions
+programista	programmer	n	A2	professions,programming
+sprzedaż	sale	n	B1	business
+zysk	profit	n	B1	business,finance
+strata	loss	n	B1	business,finance
+rynek	market	n	B1	business
+konkurencja	competition	n	B2	business
+reklama	advertisement	n	A2	business
+oferta	offer	n	A2	business
+zamówienie	order	n	A2	business,shopping
+dostawa	delivery	n	B1	business,shopping
+faktura	invoice	n	B1	business,finance
+negocjacje	negotiations	n	B2	business,meetings
+prezentacja	presentation	n	A2	meetings,office
+raport	report	n	B1	office,meetings
+protokół	minutes, protocol	n	B2	meetings
+termin	deadline, term	n	A2	work,office
+harmonogram	schedule	n	B2	work,meetings
+kalendarz	calendar	n	A1	time,office
+notes	notepad	n	A2	office
+biurko	desk	n	A1	office,household
+teczka	folder	n	A2	office
+segregator	binder	n	B1	office
+kod	code	n	A2	programming,computer
+funkcja	function	n	B1	programming
+zmienna	variable	n	B1	programming
+pętla	loop	n	B1	programming
+baza danych	database	n	B1	programming,computer
+serwer	server	n	B1	computer,internet
+sieć	network	n	A2	internet,computer
+przeglądarka	browser	n	A2	internet
+wyszukiwarka	search engine	n	A2	internet
+pobierać	to download	v	A2	internet,computer
+wysyłać	to send	v	A1	internet,smartphone
+zapisać	to save	v	A2	computer
+usuwać	to delete	v	A2	computer
+kopiować	to copy	v	A2	computer
+wklejać	to paste	v	B1	computer
+aplikacja	application	n	A2	smartphone,computer
+powiadomienie	notification	n	B1	smartphone
+ładowarka	charger	n	A2	smartphone
+bateria	battery	n	A2	smartphone
+głośnik	speaker	n	A2	smartphone,music
+słuchawki	headphones	n	A1	music,smartphone
+aparat	camera	n	A1	smartphone
+zdjęcie	photo	n	A1	smartphone,hobbies
+nagranie	recording	n	B1	music
+koncert	concert	n	A1	music
+zespół	band, team	n	A2	music,work
+instrument	instrument	n	A2	music
+gitara	guitar	n	A1	music
+pianino	piano	n	A1	music
+skrzypce	violin	n	A2	music
+bęben	drum	n	B1	music
+głos	voice	n	A1	music,body
+śpiewać	to sing	v	A1	music
+grać	to play	v	A1	music,games
+tańczyć	to dance	v	A1	hobbies
+kino	cinema	n	A1	movies
+teatr	theatre	n	A1	movies,hobbies
+scena	stage, scene	n	A2	movies
+reżyser	director	n	B1	movies,professions
+rola	role	n	A2	movies
+widz	viewer	n	B1	movies
+bilet do kina	cinema ticket	expr	A2	movies
+powieść	novel	n	B1	books
+opowiadanie	short story	n	B1	books
+wiersz	poem	n	B1	books
+autor	author	n	A2	books
+rozdział	chapter	n	A2	books
+tytuł	title	n	A1	books,movies
+okładka	cover	n	B1	books
+księgarnia	bookshop	n	A2	books,shopping
+czytelnik	reader	n	B1	books
+szachy	chess	n	A2	games
+karty	cards	n	A1	games
+kostka	dice, cube	n	A2	games,shapes
+puzzle	jigsaw	n	A2	games
+gracz	player	n	A2	games,sports
+wygrywać	to win	v	A1	games,sports
+przegrywać	to lose	v	A1	games,sports
+zasady	rules	n	A2	games,law
+piłka	ball	n	A1	sports
+piłka nożna	football	n	A1	sports
+koszykówka	basketball	n	A2	sports
+siatkówka	volleyball	n	A2	sports
+tenis	tennis	n	A1	sports
+bieganie	running	n	A2	sports,fitness
+pływanie	swimming	n	A2	sports,fitness
+narty	skis	n	A2	sports
+rower górski	mountain bike	n	B1	sports
+siłownia	gym	n	A2	fitness
+trening	training	n	A2	fitness,sports
+trener	coach	n	A2	sports,professions
+mięsień	muscle	n	B1	body,fitness
+rozgrzewka	warm-up	n	B1	fitness
+zawody	competition	n	A2	sports
+medal	medal	n	A2	sports
+puchar	cup, trophy	n	A2	sports
+stadion	stadium	n	A2	sports,cities
+kibic	fan	n	B1	sports
+hobby	hobby	n	A1	hobbies
+ogród	garden	n	A1	hobbies,home
+ogrodnictwo	gardening	n	B1	hobbies
+malować	to paint	v	A1	hobbies
+rysować	to draw	v	A1	hobbies
+szyć	to sew	v	A2	hobbies
+zbierać	to collect	v	A2	hobbies
+wędkarstwo	fishing	n	B1	hobbies,fish
+podróżować	to travel	v	A1	travel,tourism
+fotografia	photography	n	A2	hobbies
+koń	horse	n	A1	animals
+krowa	cow	n	A1	animals
+świnia	pig	n	A1	animals
+owca	sheep	n	A1	animals
+koza	goat	n	A2	animals
+kura	hen	n	A1	animals,birds
+kaczka	duck	n	A1	animals,birds
+gęś	goose	n	A2	animals,birds
+królik	rabbit	n	A1	animals
+mysz	mouse (animal)	n	A1	animals
+szczur	rat	n	A2	animals
+niedźwiedź	bear	n	A1	animals,forest
+wilk	wolf	n	A1	animals,forest
+lis	fox	n	A1	animals,forest
+zając	hare	n	A2	animals,forest
+jeleń	deer	n	A2	animals,forest
+dzik	wild boar	n	B1	animals,forest
+sarna	roe deer	n	B1	animals,forest
+wiewiórka	squirrel	n	A2	animals,forest
+jeż	hedgehog	n	B1	animals
+lew	lion	n	A1	animals
+tygrys	tiger	n	A1	animals
+słoń	elephant	n	A1	animals
+małpa	monkey	n	A1	animals
+żyrafa	giraffe	n	A2	animals
+zebra	zebra	n	A2	animals
+wąż	snake	n	A2	animals
+żaba	frog	n	A1	animals
+żółw	turtle	n	A2	animals
+jaszczurka	lizard	n	B1	animals
+wróbel	sparrow	n	B1	birds
+gołąb	pigeon	n	A2	birds
+sowa	owl	n	A2	birds,forest
+orzeł	eagle	n	A2	birds
+sokół	falcon	n	B1	birds
+bocian	stork	n	A2	birds
+jaskółka	swallow	n	B1	birds
+kruk	raven	n	B1	birds
+wrona	crow	n	B1	birds
+sikorka	tit	n	B2	birds
+dzięcioł	woodpecker	n	B2	birds,forest
+łabędź	swan	n	B1	birds
+mewa	seagull	n	B1	birds,sea
+kurczak	chicken	n	A1	birds,food
+pióro	feather, pen	n	A2	birds
+gniazdo	nest	n	B1	birds
+skrzydło	wing	n	A2	birds,body
+dziób	beak	n	B2	birds
+łosoś	salmon	n	A2	fish,food
+śledź	herring	n	A2	fish,food
+karp	carp	n	A2	fish,food
+pstrąg	trout	n	B1	fish
+dorsz	cod	n	B1	fish,food
+tuńczyk	tuna	n	A2	fish,food
+szczupak	pike	n	B2	fish
+rekin	shark	n	A2	fish,sea
+delfin	dolphin	n	A2	sea
+wieloryb	whale	n	A2	sea
+krewetka	shrimp	n	B1	fish,food
+łuska	scale (fish)	n	C1	fish
+płetwa	fin	n	B2	fish,sea
+wędka	fishing rod	n	B1	fish,hobbies
+sieć rybacka	fishing net	n	C1	fish
+mucha	fly	n	A2	insects
+komar	mosquito	n	A2	insects
+pszczoła	bee	n	A1	insects
+osa	wasp	n	A2	insects
+mrówka	ant	n	A1	insects
+motyl	butterfly	n	A1	insects
+biedronka	ladybird	n	B1	insects
+pająk	spider	n	A1	insects
+robak	worm, bug	n	A2	insects
+chrząszcz	beetle	n	B2	insects
+konik polny	grasshopper	n	B2	insects
+ważka	dragonfly	n	C1	insects
+ćma	moth	n	B2	insects
+gąsienica	caterpillar	n	B1	insects
+ul	beehive	n	B2	insects
+miód	honey	n	A1	food,insects
+żądło	sting	n	C1	insects
+roślina	plant	n	A2	plants,nature
+liść	leaf	n	A1	plants,trees
+korzeń	root	n	B1	plants
+łodyga	stem	n	B2	plants
+nasiono	seed	n	B1	plants
+trawa	grass	n	A1	plants,nature
+krzak	bush	n	B1	plants,nature
+mech	moss	n	B2	plants,forest
+grzyb	mushroom	n	A2	plants,forest,food
+paproć	fern	n	C1	plants,forest
+dąb	oak	n	A2	trees,forest
+brzoza	birch	n	A2	trees,forest
+sosna	pine	n	A2	trees,forest
+świerk	spruce	n	B1	trees,forest
+klon	maple	n	B1	trees
+wierzba	willow	n	B1	trees
+buk	beech	n	B2	trees,forest
+lipa	linden	n	B1	trees
+jabłoń	apple tree	n	B1	trees
+gałąź	branch	n	A2	trees,plants
+kora	bark	n	B2	trees
+pień	trunk	n	B1	trees
+róża	rose	n	A1	flowers
+tulipan	tulip	n	A2	flowers
+stokrotka	daisy	n	B1	flowers
+słonecznik	sunflower	n	A2	flowers
+mak	poppy	n	B1	flowers
+fiołek	violet	n	B2	flowers
+konwalia	lily of the valley	n	C1	flowers
+bez	lilac	n	B2	flowers
+narcyz	daffodil	n	B2	flowers
+goździk	carnation	n	B2	flowers
+płatek	petal	n	B1	flowers
+bukiet	bouquet	n	A2	flowers
+wazon	vase	n	A2	flowers,household
+szczyt	peak, summit	n	A2	mountains
+dolina	valley	n	A2	mountains,nature
+skała	rock	n	A2	mountains,nature
+jaskinia	cave	n	B1	mountains,nature
+wspinaczka	climbing	n	B1	mountains,sports
+szlak	trail	n	B1	mountains,tourism
+schronisko	mountain hut	n	B1	mountains,tourism
+lawina	avalanche	n	B2	mountains,emergency
+przełęcz	mountain pass	n	C1	mountains
+zbocze	slope	n	B2	mountains
+plaża	beach	n	A1	sea,tourism
+fala	wave	n	A2	sea,nature
+piasek	sand	n	A1	sea,nature
+muszla	shell	n	B1	sea
+wyspa	island	n	A2	sea,nature
+port	port	n	A2	sea,cities
+statek	ship	n	A1	sea,transport
+łódź	boat	n	A1	sea,transport
+żagiel	sail	n	B1	sea
+kotwica	anchor	n	B2	sea
+przypływ	tide	n	C1	sea
+latarnia morska	lighthouse	n	B2	sea
+burza	storm	n	A2	weather
+mgła	fog	n	A2	weather
+mróz	frost	n	A2	weather
+upał	heatwave	n	B1	weather
+grad	hail	n	B1	weather
+tęcza	rainbow	n	A2	weather,colors
+błyskawica	lightning	n	B1	weather
+grzmot	thunder	n	B1	weather
+temperatura	temperature	n	A2	weather,health
+prognoza	forecast	n	B1	weather
+pochmurno	cloudy	adv	A2	weather
+słonecznie	sunny	adv	A2	weather
+wietrznie	windy	adv	B1	weather
+wilgotny	humid	adj	B1	weather
+suchy	dry	adj	A2	weather
+mokry	wet	adj	A1	weather
+musieć	to have to	v	A1	daily-conversation
+powinien	should	v	A2	daily-conversation
+umieć	to know how to	v	A1	studying
+potrafić	to be capable of	v	A2
+woleć	to prefer	v	A2	daily-conversation
+próbować	to try	v	A1
+zostać	to stay, to become	v	A1
+stawać się	to become	v	B1
+wydawać się	to seem	v	B1
+wyglądać	to look like	v	A1	appearance
+przychodzić	to come	v	A1	directions
+wracać	to come back	v	A1	directions
+wychodzić	to go out	v	A1	directions
+wchodzić	to enter	v	A1	directions
+przynosić	to bring	v	A2
+zabierać	to take away	v	A2
+kłaść	to put, to lay	v	A2
+trzymać	to hold	v	A1
+rzucać	to throw	v	A2	sports
+ciągnąć	to pull	v	A2
+pchać	to push	v	A2
+budować	to build	v	A2
+niszczyć	to destroy	v	B1
+naprawiać	to repair	v	A2	household
+zmieniać	to change	v	A1
+sprawdzać	to check	v	A1
+wybierać	to choose	v	A1
+decydować	to decide	v	A2
+zdążyć	to make it in time	v	B1	time
+marzyć	to dream of	v	A2	emotions
+śnić	to dream	v	B1
+wierzyć	to believe	v	A2
+ufać	to trust	v	B1	relationships
+wątpić	to doubt	v	B2
+zgadzać się	to agree	v	A2	daily-conversation
+odmawiać	to refuse	v	B1
+obiecywać	to promise	v	B1	relationships
+ostrzegać	to warn	v	B1	emergency
+radzić	to advise	v	B1
+proponować	to propose	v	A2	meetings
+wyjaśniać	to explain	v	B1	studying
+opowiadać	to tell	v	A2	books
+pytać	to ask	v	A1	daily-conversation
+odpowiadać	to answer	v	A1	daily-conversation
+krzyczeć	to shout	v	A2	emotions
+szeptać	to whisper	v	B1
+milczeć	to keep silent	v	B1
+powtarzać się	to repeat oneself	v	B2
+przestawać	to stop doing	v	A2
+zostawiać	to leave behind	v	A2
+tracić	to lose	v	A2
+zyskiwać	to gain	v	B1
+dzielić	to divide, to share	v	A2	numbers
+łączyć	to join	v	A2
+oddzielać	to separate	v	B1
+mierzyć	to measure	v	A2	numbers
+ważyć	to weigh	v	A2	numbers
+liczba mnoga	plural	n	B1
+koniec	end	n	A1	time
+początek	beginning	n	A1	time
+środek	middle, means	n	A2	directions
+przód	front	n	A2	directions
+tył	back	n	A2	directions
+brzeg	edge, shore	n	A2	sea,nature
+siła	strength, force	n	A2	fitness
+ruch	movement, traffic	n	A2	transport
+szybkość	speed	n	A2	transport
+wysokość	height	n	A2	shapes
+szerokość	width	n	B1	shapes
+długość	length	n	A2	shapes
+głębokość	depth	n	B1	shapes,sea
+kształt	shape	n	A2	shapes
+kolor	colour	n	A1	colors
+dźwięk	sound	n	A2	music
+zapach	smell	n	A2	food
+smak	taste	n	A2	food
+widok	view	n	A2	tourism
+obraz	picture, painting	n	A1	hobbies
+rysunek	drawing	n	A2	hobbies
+wzór	pattern, formula	n	B1	shapes
+znak	sign	n	A2	directions
+symbol	symbol	n	B1
+numer	number	n	A1	numbers
+adres	address	n	A1	directions
+kontynent	continent	n	B1	countries
+region	region	n	B1	countries
+teren	area, ground	n	B1	nature
+przestrzeń	space	n	B1
+odcinek	stretch, episode	n	B2	movies
+warunek	condition	n	B1
+zasada	principle, rule	n	B1	law
+prawda	truth	n	A1
+kłamstwo	lie	n	A2	personality
+tajemnica	secret	n	B1
+opinia	opinion	n	B1	daily-conversation
+uwaga krytyczna	criticism	n	B2	daily-conversation
+pochwała	praise	n	B2
+nagroda	reward, prize	n	A2	sports
+prezent	present, gift	n	A1	dates
+niespodzianka	surprise	n	A2	emotions
+impreza	party	n	A1	hobbies
+zabawa	fun, party	n	A1	games
+żart	joke	n	A2	daily-conversation
+uśmiech	smile	n	A2	emotions
+łza	tear	n	B1	emotions
+sen	dream, sleep	n	A1	health
+myśl	thought	n	A2
+wyobraźnia	imagination	n	B2
+uwaga skupiona	concentration	n	B2	studying
+talent	talent	n	A2
+umiejętność	skill	n	B1	work
+doświadczenie	experience	n	B1	work
+wysiłek	effort	n	B1	fitness
+odpoczynek	rest	n	A2	health
+zmęczenie	tiredness	n	B1	health
+energia	energy	n	A2	fitness
+siła woli	willpower	n	B2	personality
+charakter	character	n	B1	personality
+zachowanie	behaviour	n	B1	personality
+zwyczaj	custom	n	B1	countries
+tradycja	tradition	n	A2	countries
+kultura	culture	n	A2	countries
+sztuka	art, play	n	A2	hobbies
+styl	style	n	A2	clothing
+moda	fashion	n	A2	clothing
+wygoda	comfort	n	B1	home
+luksus	luxury	n	B2	hotel
+jakość	quality	n	A2	shopping
+ilość	quantity	n	A2	numbers
+wartość	value	n	B1	finance
+korzyść	benefit	n	B2	business
+szkoda	damage, pity	n	A2
+ryzyko	risk	n	B1	emergency
+szansa	chance	n	A2
+sukces	success	n	A2	work
+porada	advice	n	B1	health
+instrukcja	instruction	n	B1	computer
+ostrożnie	carefully	adv	A2	emergency
+głośno	loudly	adv	A1	music
+cicho	quietly	adv	A1	music
+razem z	together with	prep	A2	relationships
+osobno	separately	adv	B1
+zwykle	usually	adv	A1	time
+nagle	suddenly	adv	A2	time
+powoli	slowly	adv	A1
+natychmiast	immediately	adv	B1	time
+wkrótce	soon	adv	A2	time
+dawno	long ago	adv	A2	time
+ostatnio	recently	adv	A2	time
+kiedyś	someday, once	adv	A2	time
+zaraz	in a moment	adv	A1	time
+później	later	adv	A1	time
+wcześniej	earlier	adv	A1	time
+najpierw	first of all	adv	A2	time
+wreszcie	finally	adv	B1	time
+przynajmniej	at least	adv	B1
+zwłaszcza	especially	adv	B1
+raczej	rather	adv	B1
+niestety	unfortunately	adv	A2	daily-conversation
+na szczęście	fortunately	adv	A2	daily-conversation
+właśnie	exactly, just	part	A2	daily-conversation
+chyba	probably	part	A1	daily-conversation
+przecież	after all	part	B1	daily-conversation
+niech	let	part	B1
+aby	in order to	conj	B1
+żeby	so that	conj	A2
+dopóki	as long as	conj	B2	time
+zanim	before	conj	B1	time
+odkąd	since	conj	B2	time
+mimo	despite	prep	B1
+według	according to	prep	B1
+wobec	towards, in view of	prep	B2
+oprócz	besides	prep	B1
+zamiast	instead of	prep	B1
+dzięki	thanks to	prep	A2
+wokół	around	prep	B1	directions
+wzdłuż	along	prep	B2	directions
+wewnątrz	inside	adv	B1	directions
+na zewnątrz	outside	adv	A2	directions
+w górę	upwards	adv	A2	directions
+w dół	downwards	adv	A2	directions
+naprzód	forward	adv	B1	directions
+wstecz	backwards	adv	B2	directions
+dokoła	all around	adv	B2	directions
+wszędzie	everywhere	adv	A2	directions
+nigdzie	nowhere	adv	A2	directions
+gdzieś	somewhere	adv	A2	directions
+ktoś	somebody	prn	A1	people
+nikt	nobody	prn	A1	people
+coś	something	prn	A1
+nic	nothing	prn	A1
+wszyscy	everyone	prn	A1	people

@@ -62,4 +62,15 @@
 
     <!-- Mix -->
     <string name="mix_title">Mix</string>
+    <string name="presets_search_hint">Search presets</string>
+    <string name="presets_clear_search">Clear search</string>
+    <string name="presets_sort">Sort</string>
+    <string name="presets_sort_popularity">Most popular</string>
+    <string name="presets_sort_alphabetical">A to Z</string>
+    <string name="presets_sort_fewest_words">Fewest words</string>
+    <string name="presets_sort_most_words">Most words</string>
+    <string name="presets_clear_filters">Clear filters</string>
+    <string name="presets_no_matches">No presets match your search.</string>
+    <string name="presets_catalog_empty">No vocabulary presets are available.</string>
+    <string name="presets_card_meta">%1$d words · %2$s · about %3$d min</string>
 </resources>

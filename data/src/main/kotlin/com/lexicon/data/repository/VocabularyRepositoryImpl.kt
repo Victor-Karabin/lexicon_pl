@@ -17,4 +17,10 @@ class VocabularyRepositoryImpl
             vocabularySeeder.ensureSeeded()
             return wordDao.getRandom(count).map { it.toBoundary() }
         }
+
+        override suspend fun getItemsByIds(ids: List<Long>): List<VocabularyItemBoundary> {
+            if (ids.isEmpty()) return emptyList()
+            vocabularySeeder.ensureSeeded()
+            return wordDao.getByIds(ids).map { it.toBoundary() }
+        }
     }

@@ -12,3 +12,21 @@ val MIGRATION_1_2 =
             )
         }
     }
+
+/**
+ * Empties the words table so the seeder refills it from the current asset.
+ *
+ * The bundled vocabulary grew from a 20-word mock to the full corpus, and presets reference
+ * words by id: an existing install that kept its old rows would show every preset resolving
+ * to nothing. The seeder already reseeds an empty table, so clearing it is the whole fix.
+ *
+ * Training history is left alone. Its rows record which word id was answered, and those ids
+ * now mean different words — the counts stay right, the per-word detail of old sessions does
+ * not. Discarding a user's whole history to avoid that would be the worse trade.
+ */
+val MIGRATION_2_3 =
+    object : Migration(2, 3) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("DELETE FROM `words`")
+        }
+    }
