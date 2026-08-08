@@ -1,41 +1,49 @@
 package com.lexicon.data.repository
 
 import com.lexicon.boundary.PresetCategoryBoundary
+import com.lexicon.boundary.SyncOutcomeBoundary
 import com.lexicon.boundary.VocabularyPresetBoundary
 import com.lexicon.boundary.VocabularyPresetRepository
-import com.lexicon.data.local.VocabularyPresetAssetLoader
+import com.lexicon.data.local.PresetDao
+import com.lexicon.data.local.VocabularyPresetSeeder
 import com.lexicon.data.local.toBoundary
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Serves the bundled catalogue, parsed once.
+ * Serves the preset catalogue from the database.
  *
- * The asset holds every preset's full id list — a megabyte-scale parse for a thousand-word
- * preset — so it is read on first use and kept, behind a mutex so a burst of concurrent
- * calls at startup cannot each trigger their own parse.
+ * Reading rows rather than re-parsing the asset means listing presets costs a query instead of
+ * decoding a megabyte of JSON, and the same store can later hold presets that never came from
+ * an asset at all — downloaded, imported or user-made.
  */
 @Singleton
 class VocabularyPresetRepositoryImpl
     @Inject
     constructor(
-        private val loader: VocabularyPresetAssetLoader,
+        private val presetDao: PresetDao,
+        private val seeder: VocabularyPresetSeeder,
     ) : VocabularyPresetRepository {
-        private val mutex = Mutex()
+        override suspend fun syncFromSource(): SyncOutcomeBoundary = seeder.sync()
 
-        @Volatile
-        private var cached: com.lexicon.boundary.VocabularyPresetCatalogBoundary? = null
-
-        private suspend fun catalog() =
-            cached ?: mutex.withLock {
-                cached ?: loader.load().toBoundary().also { cached = it }
+        override suspend fun getPresets(): List<VocabularyPresetBoundary> {
+            seeder.ensureSeeded()
+            // Memberships are fetched in one query and grouped here: a per-preset query would be
+            // 72 round trips to draw one screen.
+            val membership = presetDao.getAllMemberships().groupBy { it.presetId }
+            return presetDao.getPresets().map { preset ->
+                preset.toBoundary(membership[preset.id].orEmpty().map { it.wordId })
             }
+        }
 
-        override suspend fun getPresets(): List<VocabularyPresetBoundary> = catalog().presets
+        override suspend fun getPreset(id: String): VocabularyPresetBoundary? {
+            seeder.ensureSeeded()
+            val preset = presetDao.getPreset(id) ?: return null
+            return preset.toBoundary(presetDao.getWordIds(id))
+        }
 
-        override suspend fun getPreset(id: String): VocabularyPresetBoundary? = catalog().presets.firstOrNull { it.id == id }
-
-        override suspend fun getCategories(): List<PresetCategoryBoundary> = catalog().categories
+        override suspend fun getCategories(): List<PresetCategoryBoundary> {
+            seeder.ensureSeeded()
+            return presetDao.getCategories().map { it.toBoundary() }
+        }
     }

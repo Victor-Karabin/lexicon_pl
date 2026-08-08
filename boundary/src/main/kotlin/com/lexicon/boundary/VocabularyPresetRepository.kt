@@ -6,6 +6,9 @@ package com.lexicon.boundary
  * implementations of this one contract rather than new contracts of their own.
  */
 interface VocabularyPresetRepository {
+    /** Brings the stored catalogue in line with the bundled source, reporting what changed. */
+    suspend fun syncFromSource(): SyncOutcomeBoundary
+
     suspend fun getPresets(): List<VocabularyPresetBoundary>
 
     /** Returns null when no preset carries [id], which callers must handle. */

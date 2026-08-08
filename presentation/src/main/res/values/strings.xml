@@ -78,4 +78,12 @@
     <string name="training_not_enough_words_action">Back to trainings</string>
     <string name="vocabulary_search_hint">Search words</string>
     <string name="vocabulary_search_no_matches">No words match “%1$s”.</string>
+    <string name="sync_step_vocabulary">Vocabulary</string>
+    <string name="sync_step_presets">Presets</string>
+    <string name="sync_waiting">Waiting</string>
+    <string name="sync_in_progress">Importing…</string>
+    <string name="sync_up_to_date">%1$d, up to date</string>
+    <string name="sync_changed">%1$d · +%2$d added, %3$d updated, %4$d removed</string>
+    <string name="sync_blocked">The bundled vocabulary could not be loaded, so there is nothing to study yet.</string>
+    <string name="sync_retry">Try again</string>
 </resources>

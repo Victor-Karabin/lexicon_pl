@@ -26,6 +26,7 @@ import com.lexicon.domain.puzzle.SubmitPuzzleAnswerUseCaseImpl
 import com.lexicon.domain.settings.ObserveSettingsUseCaseImpl
 import com.lexicon.domain.settings.UpdateStepCountUseCaseImpl
 import com.lexicon.domain.settings.UpdateThemeModeUseCaseImpl
+import com.lexicon.domain.sync.SyncCatalogUseCaseImpl
 import com.lexicon.domain.training.CheckTrainingReadinessUseCaseImpl
 import com.lexicon.domain.trueorfalse.StartTrueOrFalseSessionUseCaseImpl
 import com.lexicon.domain.trueorfalse.SubmitTrueOrFalseAnswerUseCaseImpl
@@ -57,6 +58,7 @@ import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerUseCase
 import com.lexicon.interactors.settings.ObserveSettingsUseCase
 import com.lexicon.interactors.settings.UpdateStepCountUseCase
 import com.lexicon.interactors.settings.UpdateThemeModeUseCase
+import com.lexicon.interactors.sync.SyncCatalogUseCase
 import com.lexicon.interactors.training.CheckTrainingReadinessUseCase
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
@@ -162,4 +164,7 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindSearchVocabulary(impl: SearchVocabularyUseCaseImpl): SearchVocabularyUseCase
+
+    @Binds
+    abstract fun bindSyncCatalog(impl: SyncCatalogUseCaseImpl): SyncCatalogUseCase
 }

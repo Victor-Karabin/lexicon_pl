@@ -1,5 +1,6 @@
 package com.lexicon.data.repository
 
+import com.lexicon.boundary.SyncOutcomeBoundary
 import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.data.local.VocabularySeeder
@@ -42,6 +43,10 @@ class VocabularyRepositoryImpl
                     limit = limit,
                 ).map { it.toBoundary() }
         }
+
+        override suspend fun syncFromSource(): SyncOutcomeBoundary = vocabularySeeder.sync()
+
+        override suspend fun countWords(): Int = wordDao.count()
 
         override suspend fun countStudyWords(): Int {
             vocabularySeeder.ensureSeeded()
