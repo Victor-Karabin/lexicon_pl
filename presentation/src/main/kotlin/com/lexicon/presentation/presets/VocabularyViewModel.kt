@@ -3,10 +3,8 @@ package com.lexicon.presentation.presets
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
-import com.lexicon.interactors.presets.BrowsePresetsRequest
-import com.lexicon.interactors.presets.BrowseVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.CefrLevel
-import com.lexicon.interactors.presets.GetPresetCategoriesUseCase
+import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
 import com.lexicon.interactors.presets.PresetFavouriteState
 import com.lexicon.interactors.presets.PresetId
@@ -33,8 +31,7 @@ private const val QUERY_DEBOUNCE_MS = 200L
 class VocabularyViewModel
     @Inject
     constructor(
-        private val browsePresets: BrowseVocabularyPresetsUseCase,
-        private val getCategories: GetPresetCategoriesUseCase,
+        private val getPresets: GetVocabularyPresetsUseCase,
         private val searchVocabulary: SearchVocabularyUseCase,
         private val setPresetFavourite: SetPresetFavouriteUseCase,
         private val toggleWordFavourite: ToggleWordFavouriteUseCase,
@@ -49,8 +46,7 @@ class VocabularyViewModel
 
         init {
             viewModelScope.launch(dispatchers.io) {
-                _uiState.value = VocabularyUiState.Loaded(categories = getCategories())
-                refreshPresets()
+                _uiState.value = VocabularyUiState.Loaded(presets = getPresets())
             }
             viewModelScope.launch(dispatchers.io) {
                 observeFavouriteWordIds().collect { favourites ->
@@ -86,10 +82,6 @@ class VocabularyViewModel
             updateLoaded { it.copy(query = value).clearedWordsIfIdle() }
         }
 
-        /** Filters toggle rather than replace, so several categories can be combined. */
-        fun onCategoryToggled(categoryId: String) =
-            updateAndRefresh { it.copy(selectedCategoryIds = it.selectedCategoryIds.toggle(categoryId)) }
-
         /**
          * A level lists the words at it rather than narrowing the presets, so this drives the
          * search instead of the preset query.
@@ -103,7 +95,7 @@ class VocabularyViewModel
 
         fun onFiltersCleared() {
             criteria.update { it.copy(levels = emptySet()) }
-            updateAndRefresh { it.copy(selectedCategoryIds = emptySet(), selectedCefrLevels = emptySet()) }
+            updateLoaded { it.copy(selectedCefrLevels = emptySet()).clearedWordsIfIdle() }
         }
 
         /** Partly-favourited counts as off, so one tap completes the preset rather than clearing it. */
@@ -121,27 +113,6 @@ class VocabularyViewModel
             isFavourite: Boolean,
         ) {
             viewModelScope.launch(dispatchers.io) { toggleWordFavourite(id, isFavourite) }
-        }
-
-        private fun updateAndRefresh(transform: (VocabularyUiState.Loaded) -> VocabularyUiState.Loaded) {
-            updateLoaded(transform)
-            viewModelScope.launch(dispatchers.io) { refreshPresets() }
-        }
-
-        /**
-         * Re-runs the whole preset query on every change rather than narrowing the visible
-         * list: clearing a filter has to *widen* the results, which an already-narrowed list
-         * cannot do.
-         */
-        private suspend fun refreshPresets() {
-            val state = _uiState.value as? VocabularyUiState.Loaded ?: return
-            val results = browsePresets(
-                BrowsePresetsRequest(
-                    categoryIds = state.selectedCategoryIds,
-                    languageTag = state.languageTag,
-                ),
-            )
-            updateLoaded { it.copy(presets = results) }
         }
 
         private fun updateLoaded(transform: (VocabularyUiState.Loaded) -> VocabularyUiState.Loaded) {

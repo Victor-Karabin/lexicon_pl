@@ -20,24 +20,3 @@ interface GetVocabularyPresetUseCase {
 interface GetPresetVocabularyUseCase {
     suspend operator fun invoke(id: PresetId): ImmutableList<PresetWord>
 }
-
-enum class PresetSort {
-    /** The catalogue's editorial ranking. */
-    POPULARITY,
-    ALPHABETICAL,
-    WORD_COUNT_ASCENDING,
-    WORD_COUNT_DESCENDING,
-}
-
-data class BrowsePresetsRequest(
-    val query: String = "",
-    val categoryIds: Set<String> = emptySet(),
-    val sort: PresetSort = PresetSort.POPULARITY,
-    /** Resolves localized titles for both searching and alphabetical ordering. */
-    val languageTag: String = LocalizedText.DEFAULT_LANGUAGE,
-)
-
-/** Searching, filtering and sorting in one call, so the rules live in one place. */
-interface BrowseVocabularyPresetsUseCase {
-    suspend operator fun invoke(request: BrowsePresetsRequest): ImmutableList<VocabularyPreset>
-}

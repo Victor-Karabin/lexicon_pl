@@ -12,7 +12,7 @@ Presets follow the project's existing layering. Each layer knows only the one be
 
 | Layer | Package | Holds |
 | --- | --- | --- |
-| Presentation | `com.lexicon.presentation.presets` | `PresetBrowserScreen`, its ViewModel and UI state |
+| Presentation | `com.lexicon.presentation.presets` | `VocabularyScreen`, `PresetDetailScreen`, their ViewModels and UI state |
 | Interactor | `com.lexicon.interactors.presets` | `VocabularyPreset`, `PresetCategory`, `CefrLevel`, use-case contracts |
 | Domain | `com.lexicon.domain.presets` | Use-case implementations, mappers, `VocabularyPresetValidator` |
 | Boundary | `com.lexicon.boundary` | `VocabularyPresetRepository`, `VocabularyPresetBoundary` |
@@ -28,6 +28,11 @@ Two deliberate consequences of the model:
   on. Without this, the 1000-word presets would duplicate most of the corpus in memory.
 - **Localized text is resolved at the edge**, by `LocalizedText.resolve(languageTag)`, not
   at load time — so the display language can change without reloading the catalogue.
+
+`GetPresetCategoriesUseCase` currently has no caller: categories still order the preset list
+and label each card, but nothing lists them on their own since the category chips were removed.
+It is kept rather than deleted because it is correct and small, unlike the browse use case,
+which had become a filter that could never match.
 
 ## Preset format
 
@@ -167,10 +172,15 @@ Two consequences worth knowing:
 
 ## Word search
 
-The Vocabulary tab has one search box, and it searches **words**, not presets. With the box
-empty and no level picked, the preset list is shown with its category filters; typing — or
-picking a CEFR level — replaces that list with the matching words, and clearing both puts the
-presets back exactly as they were.
+The Vocabulary tab has one search box and one row of filter chips, and both select **words**.
+With the box empty and no level picked, the preset list is shown; typing — or picking a CEFR
+level — replaces that list with the matching words, and clearing both puts the presets back
+exactly as they were.
+
+Presets are not filtered, searched or sorted from the UI: the catalogue is 72 items whose
+names are on screen to scan. `BrowseVocabularyPresetsUseCase` was removed once every one of
+its narrowing parameters had become unreachable; `GetVocabularyPresetsUseCase` returns the
+list in category-then-popularity order, which is the order shown.
 
 **CEFR is a property of a word, not of a preset.** There are no A1/A2/B1 presets; instead
 every word carries its level, and the level chips list every word at the levels picked. Levels

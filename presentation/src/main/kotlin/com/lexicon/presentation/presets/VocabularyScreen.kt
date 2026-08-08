@@ -76,7 +76,6 @@ fun VocabularyScreen(
     VocabularyContent(
         uiState = uiState,
         onQueryChanged = viewModel::onQueryChanged,
-        onCategoryToggled = viewModel::onCategoryToggled,
         onCefrToggled = viewModel::onCefrToggled,
         onFiltersCleared = viewModel::onFiltersCleared,
         onPresetSelected = onPresetSelected,
@@ -90,7 +89,6 @@ fun VocabularyScreen(
 private fun VocabularyContent(
     uiState: VocabularyUiState,
     onQueryChanged: (String) -> Unit,
-    onCategoryToggled: (String) -> Unit,
     onCefrToggled: (CefrLevel) -> Unit,
     onFiltersCleared: () -> Unit,
     onPresetSelected: (PresetId) -> Unit,
@@ -115,7 +113,7 @@ private fun VocabularyContent(
                         .padding(horizontal = Dimens.spacingMedium, vertical = Dimens.spacingMedium),
                 )
 
-                FilterRow(uiState, onCategoryToggled, onCefrToggled, onFiltersCleared)
+                FilterRow(uiState, onCefrToggled, onFiltersCleared)
 
                 if (uiState.isSearchingWords) {
                     WordResults(uiState, onWordFavouriteToggled)
@@ -156,7 +154,6 @@ private fun PresetResults(
 ) {
     when {
         uiState.hasNoPresetsAtAll -> Message(stringResource(R.string.presets_catalog_empty))
-        uiState.hasNoMatchingPresets -> Message(stringResource(R.string.presets_no_matches))
         else ->
             LazyColumn(
                 contentPadding = PaddingValues(Dimens.spacingMedium),
@@ -177,13 +174,12 @@ private fun PresetResults(
 }
 
 /**
- * Categories and levels share one scrolling row: there are eleven categories and six levels,
- * and a wrapping grid would push the presets themselves below the fold on a phone.
+ * The CEFR levels, in one scrolling row. They select words rather than narrowing presets, so
+ * they stay reachable whichever list is on screen.
  */
 @Composable
 private fun FilterRow(
     uiState: VocabularyUiState.Loaded,
-    onCategoryToggled: (String) -> Unit,
     onCefrToggled: (CefrLevel) -> Unit,
     onFiltersCleared: () -> Unit,
 ) {
@@ -195,7 +191,7 @@ private fun FilterRow(
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (uiState.hasActiveFilters || uiState.selectedCefrLevels.isNotEmpty()) {
+        if (uiState.selectedCefrLevels.isNotEmpty()) {
             FilterChip(
                 selected = false,
                 onClick = onFiltersCleared,
@@ -203,23 +199,12 @@ private fun FilterRow(
                 leadingIcon = { Icon(Icons.Default.Clear, contentDescription = null) },
             )
         }
-        // Levels select words, so they stay reachable whatever the list is showing.
         CefrLevel.entries.forEach { level ->
             FilterChip(
                 selected = level in uiState.selectedCefrLevels,
                 onClick = { onCefrToggled(level) },
                 label = { Text(level.name) },
             )
-        }
-        // Categories only narrow presets, so they would do nothing beside a list of words.
-        if (!uiState.isSearchingWords) {
-            uiState.categories.forEach { category ->
-                FilterChip(
-                    selected = category.id in uiState.selectedCategoryIds,
-                    onClick = { onCategoryToggled(category.id) },
-                    label = { Text(category.title.resolve(uiState.languageTag)) },
-                )
-            }
         }
     }
 }
@@ -371,10 +356,8 @@ private fun VocabularyPresetsPreview() {
         VocabularyContent(
             uiState = VocabularyUiState.Loaded(
                 presets = previewPresets,
-                categories = persistentListOf(previewCategory),
             ),
             onQueryChanged = {},
-            onCategoryToggled = {},
             onCefrToggled = {},
             onFiltersCleared = {},
             onPresetSelected = {},
@@ -392,7 +375,6 @@ private fun VocabularyWordSearchPreview() {
             uiState = VocabularyUiState.Loaded(
                 query = "wod",
                 presets = previewPresets,
-                categories = persistentListOf(previewCategory),
                 words = persistentListOf(
                     PresetWord(VocabularyId(1), "woda", "water", "ˈvɔda", isFavourite = true, cefr = CefrLevel.A1),
                     PresetWord(VocabularyId(2), "wodospad", "waterfall", "vɔˈdɔspat", cefr = CefrLevel.B1),
@@ -400,7 +382,6 @@ private fun VocabularyWordSearchPreview() {
                 ),
             ),
             onQueryChanged = {},
-            onCategoryToggled = {},
             onCefrToggled = {},
             onFiltersCleared = {},
             onPresetSelected = {},
@@ -417,7 +398,6 @@ private fun VocabularyNoMatchingWordsPreview() {
         VocabularyContent(
             uiState = VocabularyUiState.Loaded(query = "qqq", presets = previewPresets),
             onQueryChanged = {},
-            onCategoryToggled = {},
             onCefrToggled = {},
             onFiltersCleared = {},
             onPresetSelected = {},

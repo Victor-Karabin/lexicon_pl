@@ -64,7 +64,6 @@
     <string name="mix_title">Mix</string>
     <string name="presets_clear_search">Clear search</string>
     <string name="presets_clear_filters">Clear filters</string>
-    <string name="presets_no_matches">No presets match these filters.</string>
     <string name="presets_catalog_empty">No vocabulary presets are available.</string>
     <string name="presets_card_meta">%1$d words · %2$s · about %3$d min</string>
     <string name="preset_detail_title">Preset</string>
