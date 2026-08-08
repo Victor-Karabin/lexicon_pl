@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -70,6 +72,9 @@ import kotlin.time.Duration.Companion.minutes
 private val IconBadgeSize = 44.dp
 private val DeleteActionWidth = 88.dp
 private val DeleteActionRadius = 12.dp
+
+/** A typical word row: target, translation, transcription. */
+private val DeleteActionPreviewHeight = 76.dp
 
 /**
  * The Vocabulary tab: curated presets, and a search over every word.
@@ -455,6 +460,20 @@ private val previewPresets = persistentListOf(
         "#EF6C00",
     ),
 )
+
+/**
+ * The action at the size the gesture uncovers. Worth its own preview because it is only ever
+ * on screen mid-swipe, which no screen preview can reach.
+ */
+@LightDarkPreview
+@Composable
+private fun DeleteActionPreview() {
+    LexiconTheme {
+        Box(modifier = Modifier.width(DeleteActionWidth).height(DeleteActionPreviewHeight)) {
+            DeleteAction(onClick = {})
+        }
+    }
+}
 
 @LightDarkPreview
 @Composable
