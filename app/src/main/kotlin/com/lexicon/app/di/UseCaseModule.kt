@@ -20,8 +20,6 @@ import com.lexicon.domain.settings.UpdateStepCountUseCaseImpl
 import com.lexicon.domain.settings.UpdateThemeModeUseCaseImpl
 import com.lexicon.domain.trueorfalse.StartTrueOrFalseSessionUseCaseImpl
 import com.lexicon.domain.trueorfalse.SubmitTrueOrFalseAnswerUseCaseImpl
-import com.lexicon.domain.wordbuilder.StartWordBuilderSessionUseCaseImpl
-import com.lexicon.domain.wordbuilder.SubmitWordBuilderAnswerUseCaseImpl
 import com.lexicon.domain.wordmatch.StartWordMatchSessionUseCaseImpl
 import com.lexicon.domain.wordmatch.SubmitWordMatchStepResultUseCaseImpl
 import com.lexicon.interactors.crossword.StartCrosswordSessionUseCase
@@ -44,8 +42,6 @@ import com.lexicon.interactors.settings.UpdateStepCountUseCase
 import com.lexicon.interactors.settings.UpdateThemeModeUseCase
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
-import com.lexicon.interactors.wordbuilder.StartWordBuilderSessionUseCase
-import com.lexicon.interactors.wordbuilder.SubmitWordBuilderAnswerUseCase
 import com.lexicon.interactors.wordmatch.StartWordMatchSessionUseCase
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultUseCase
 import dagger.Binds
@@ -67,12 +63,6 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindSubmitDictationPuzzleAnswerUseCase(impl: SubmitDictationPuzzleAnswerUseCaseImpl): SubmitDictationPuzzleAnswerUseCase
-
-    @Binds
-    abstract fun bindStartWordBuilderSessionUseCase(impl: StartWordBuilderSessionUseCaseImpl): StartWordBuilderSessionUseCase
-
-    @Binds
-    abstract fun bindSubmitWordBuilderAnswerUseCase(impl: SubmitWordBuilderAnswerUseCaseImpl): SubmitWordBuilderAnswerUseCase
 
     @Binds
     abstract fun bindStartTrueOrFalseSessionUseCase(impl: StartTrueOrFalseSessionUseCaseImpl): StartTrueOrFalseSessionUseCase

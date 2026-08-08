@@ -9,7 +9,6 @@ internal object LexiconDestinations {
     // Route strings match TrainingIds exactly, since TrainingsScreen navigates by passing that id up.
     const val DICTATION = TrainingIds.DICTATION
     const val DICTATION_PUZZLE = TrainingIds.DICTATION_PUZZLE
-    const val WORD_BUILDER = TrainingIds.WORD_BUILDER
     const val TRUE_OR_FALSE = TrainingIds.TRUE_OR_FALSE
     const val WORD_MATCH = TrainingIds.WORD_MATCH
     const val PRONUNCIATION_CHECK = TrainingIds.PRONUNCIATION_CHECK
