@@ -9,6 +9,9 @@ interface WordDao {
     @Query("SELECT * FROM words ORDER BY RANDOM() LIMIT :count")
     suspend fun getRandom(count: Int): List<WordEntity>
 
+    @Query("SELECT * FROM words WHERE id IN (:ids)")
+    suspend fun getByIds(ids: List<Long>): List<WordEntity>
+
     @Query("SELECT COUNT(*) FROM words")
     suspend fun count(): Int
 

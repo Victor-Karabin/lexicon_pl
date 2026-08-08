@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.lexicon.data.local.AppDatabase
 import com.lexicon.data.local.ImageUrlCacheDao
 import com.lexicon.data.local.MIGRATION_1_2
+import com.lexicon.data.local.MIGRATION_2_3
 import com.lexicon.data.local.TrainingResultDao
 import com.lexicon.data.local.WordDao
 import dagger.Module
@@ -25,7 +26,7 @@ object DatabaseModule {
         @ApplicationContext context: Context,
     ): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
-            .addMigrations(MIGRATION_1_2)
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
             .build()
 
     @Provides

@@ -3,9 +3,11 @@ package com.lexicon.app.di
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.SettingsRepository
 import com.lexicon.boundary.TrainingHistoryRepository
+import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.data.repository.CachingImageProviderImpl
 import com.lexicon.data.repository.TrainingHistoryRepositoryImpl
+import com.lexicon.data.repository.VocabularyPresetRepositoryImpl
 import com.lexicon.data.repository.VocabularyRepositoryImpl
 import com.lexicon.data.settings.SettingsRepositoryImpl
 import dagger.Binds
@@ -32,4 +34,7 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindSettingsRepository(impl: SettingsRepositoryImpl): SettingsRepository
+
+    @Binds
+    abstract fun bindVocabularyPresetRepository(impl: VocabularyPresetRepositoryImpl): VocabularyPresetRepository
 }
