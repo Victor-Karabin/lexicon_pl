@@ -4,10 +4,6 @@ import kotlinx.serialization.Serializable
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-/**
- * Called unauthenticated (public rate limit only) — last-resort fallback, so an OAuth2
- * client-credentials token flow wasn't worth building for this pass.
- */
 interface OpenverseApi {
     @GET("v1/images/")
     suspend fun search(

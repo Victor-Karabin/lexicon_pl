@@ -33,8 +33,6 @@ class VocabularyRepositoryImpl
             limit: Int,
         ): List<VocabularyItemBoundary> {
             vocabularySeeder.ensureSeeded()
-            // Room cannot make an IN clause optional, so the flag carries "no level filter"
-            // rather than an empty list, which would match nothing.
             return wordDao
                 .search(
                     foldedQuery = foldedQuery,

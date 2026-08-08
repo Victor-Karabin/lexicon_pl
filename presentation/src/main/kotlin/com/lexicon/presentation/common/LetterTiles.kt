@@ -20,13 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.lexicon.presentation.theme.LexiconTheme
 
-/**
- * One shuffled letter tile for the tap-to-build-answer mechanic shared by
- * Dictation Puzzle and Puzzle.
- */
 data class LetterTile(val id: Int, val char: Char)
 
-/** Splits [text] into one tile per character (duplicates become separate tiles) and shuffles them. */
 fun shuffleIntoTiles(text: String): List<LetterTile> = text.mapIndexed { index, char -> LetterTile(index, char) }.shuffled()
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -72,7 +67,6 @@ private fun LetterTileGridStatesPreview() {
                 verticalArrangement = Arrangement.spacedBy(TileDimens.spacing),
             ) {
                 LetterTileGrid(tiles = shuffleIntoTiles("kot"), onTileSelected = {})
-                // A long word wraps onto several rows; duplicate letters stay separate tiles.
                 LetterTileGrid(tiles = shuffleIntoTiles("przyjaciel"), onTileSelected = {})
                 LetterTileGrid(tiles = emptyList(), onTileSelected = {})
             }

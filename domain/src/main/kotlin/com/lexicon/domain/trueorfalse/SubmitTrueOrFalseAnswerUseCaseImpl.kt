@@ -41,7 +41,6 @@ class SubmitTrueOrFalseAnswerUseCaseImpl
             )
         }
 
-        // This training has no Tip or Skip action, so it's a straight comparison.
         private fun resolveOutcome(request: SubmitTrueOrFalseAnswerRequest): TrueOrFalseStepOutcome =
             if (request.userAnsweredTrue == request.isDisplayedTranslationCorrect) {
                 TrueOrFalseStepOutcome.CORRECT

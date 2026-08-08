@@ -23,25 +23,17 @@ import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconTheme
 
-/** Width that reads as one action; two would want more. */
 val DeleteActionWidth = 88.dp
 
 private val DeleteActionRadius = 12.dp
 
-/** A typical word row: target, translation, transcription. */
 private val PreviewRowHeight = 76.dp
 
-/**
- * The action the swipe uncovers. A button rather than the swipe itself doing the deleting, so a
- * gesture made by accident costs nothing.
- */
 @Composable
 fun DeleteAction(onClick: () -> Unit) {
     Surface(
         onClick = onClick,
         color = LexiconError,
-        // Rounded on the revealed edge only: the other side is butted against the row that
-        // slid away, and rounding it would leave a notch in the middle of the list.
         shape = RoundedCornerShape(topEnd = DeleteActionRadius, bottomEnd = DeleteActionRadius),
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -60,10 +52,6 @@ fun DeleteAction(onClick: () -> Unit) {
     }
 }
 
-/**
- * The action at the size the gesture uncovers. Worth its own preview because it is only ever on
- * screen mid-swipe, which no screen preview can reach.
- */
 @LightDarkPreview
 @Composable
 private fun DeleteActionPreview() {

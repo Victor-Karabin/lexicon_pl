@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 private const val TRAINING_TYPE_PRONUNCIATION_CHECK = "PRONUNCIATION_CHECK"
 
-/** Default recognition threshold per "Pronunciation Check.rtf" (configurable by the application, default 70%). */
 private const val RECOGNITION_CONFIDENCE_THRESHOLD = 0.7f
 
 class SubmitPronunciationResultUseCaseImpl
@@ -43,9 +42,6 @@ class SubmitPronunciationResultUseCaseImpl
             return SubmitPronunciationResultResponse(outcome = outcome, expectedText = request.expectedText)
         }
 
-        // Skip > confidence threshold when the recognizer reports one, else fall back to text matching.
-        // The step outcome reflects the input alone; tip usage is recorded separately
-        // (tipUsed above) and surfaced on the Results screen rather than forcing Incorrect here.
         private fun resolveOutcome(request: SubmitPronunciationResultRequest): PronunciationStepOutcome {
             val confidence = request.confidence
             return when {

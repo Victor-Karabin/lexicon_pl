@@ -7,14 +7,6 @@ import com.lexicon.interactors.pronunciation.PronunciationStepResponse
 import com.lexicon.interactors.puzzle.PuzzleStepResponse
 import com.lexicon.interactors.trueorfalse.TrueOrFalseStepResponse
 
-/**
- * Training types a Mix session can generate a step from.
- *
- * Excluded, and why:
- * - Word Match and Memory Cards are whole-board exercises rather than single-item steps; one Mix
- *   step can't meaningfully hold a grid of pairs or cards.
- * - Crossword is a single-screen training with no step workflow at all.
- */
 enum class MixTrainingType {
     DICTATION,
     DICTATION_PUZZLE,
@@ -24,15 +16,10 @@ enum class MixTrainingType {
     PRONUNCIATION_CHECK,
 }
 
-/**
- * One Mix step, carrying the originating training's own step payload so the step behaves exactly
- * like it does standalone (Mix spec §9).
- */
 sealed interface MixStep {
     val stepIndex: Int
     val trainingType: MixTrainingType
 
-    /** The item being practised, so a session can avoid repeating the same exercise on it. */
     val vocabularyItemId: Long
 
     data class Dictation(override val stepIndex: Int, val step: DictationStepResponse) : MixStep {
@@ -55,7 +42,6 @@ sealed interface MixStep {
         override val vocabularyItemId = step.vocabularyItemId
     }
 
-    /** Timerless: the countdown belongs to a standalone True or False session, not to one Mix step. */
     data class TrueOrFalse(override val stepIndex: Int, val step: TrueOrFalseStepResponse) : MixStep {
         override val trainingType = MixTrainingType.TRUE_OR_FALSE
         override val vocabularyItemId = step.vocabularyItemId

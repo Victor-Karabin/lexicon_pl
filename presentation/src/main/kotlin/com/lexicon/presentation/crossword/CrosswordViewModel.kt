@@ -86,12 +86,10 @@ class CrosswordViewModel
             }
         }
 
-        /** Tapping a cell moves the caret there; tapping one that already has a letter clears it for retyping. */
         fun onCellTapped(cell: CrosswordCell) {
             updateLoaded { state ->
                 if (!state.isEditable) return@updateLoaded state
                 val cellState = state.cells[cell] ?: return@updateLoaded state
-                // A cell can belong to two crossing words; keep the current selection if it covers the cell.
                 val current = state.selectedWord
                 val owner = current?.takeIf { it.occupiedCells().contains(cell) }
                     ?: state.words.firstOrNull { it.occupiedCells().contains(cell) }
@@ -127,13 +125,11 @@ class CrosswordViewModel
                     submitFailed = false,
                 )
                 completed = updated.isComplete
-                // Deleting should leave the caret put; only a real letter walks forward.
                 if (normalized.isEmpty()) updated else updated.copy(focusedCell = updated.cellAfter(cell))
             }
             if (completed) submitIfComplete()
         }
 
-        /** Reveals the next unrevealed letter of the selected word, or of any unfinished word if it's complete. */
         fun onTipRequested() {
             var completed = false
             updateLoaded { state ->
@@ -158,10 +154,6 @@ class CrosswordViewModel
             if (completed) submitIfComplete()
         }
 
-        /**
-         * There is no Check button: filling the last cell validates the puzzle and opens the Result
-         * screen, where the per-word breakdown lives.
-         */
         private fun submitIfComplete() {
             val state = _uiState.value as? CrosswordUiState.Loaded ?: return
             if (!state.isComplete || !state.isEditable) return
@@ -179,8 +171,6 @@ class CrosswordViewModel
                 val response = runCatching {
                     submitCrosswordUseCase(SubmitCrosswordRequest(sessionId, submissions))
                 }.getOrElse {
-                    // Keep the grid editable so changing a letter re-triggers validation, rather
-                    // than stranding the user on a screen with nothing left to interact with.
                     updateLoaded { it.copy(isSubmitting = false, submitFailed = true) }
                     return@launch
                 }
@@ -223,7 +213,6 @@ class CrosswordViewModel
         }
     }
 
-/** Next editable cell of the selected word after [cell], skipping Tip-locked ones. */
 private fun CrosswordUiState.Loaded.cellAfter(cell: CrosswordCell): CrosswordCell? {
     val word = selectedWord ?: return null
     val wordCells = word.occupiedCells()
@@ -232,7 +221,6 @@ private fun CrosswordUiState.Loaded.cellAfter(cell: CrosswordCell): CrosswordCel
     return wordCells.drop(index + 1).firstOrNull { cells[it]?.locked == false }
 }
 
-/** First cell of [word] the user can still type into: prefer an empty one, else any unlocked one. */
 private fun CrosswordUiState.Loaded.firstEditableCell(word: CrosswordWordUi): CrosswordCell? =
     word.occupiedCells().firstOrNull { cell -> cells[cell]?.let { !it.locked && !it.isFilled } == true }
         ?: word.occupiedCells().firstOrNull { cell -> cells[cell]?.locked == false }

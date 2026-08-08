@@ -7,7 +7,6 @@ data class CrosswordCell(val row: Int, val col: Int)
 
 data class CrosswordCellState(
     val letter: String = "",
-    /** Revealed via Tip; locked cells can't be edited further. */
     val locked: Boolean = false,
 ) {
     val isFilled: Boolean get() = letter.isNotEmpty()
@@ -19,11 +18,8 @@ data class CrosswordWordUi(
     val col: Int,
     val direction: CrosswordDirection,
     val length: Int,
-    /** Base-language word shown as the clue. */
     val clueText: String,
-    /** Target spelling to reconstruct in the grid; never shown directly. */
     val expectedText: String,
-    /** How many letters, from the start, have been revealed (and locked) via Tip. */
     val revealedLetterCount: Int = 0,
 )
 
@@ -41,19 +37,15 @@ sealed interface CrosswordUiState {
         val rowCount: Int = 0,
         val colCount: Int = 0,
         val selectedWordId: Long? = null,
-        /** Cell the keyboard should be pointed at; driven by typing, tapping and Tip. */
         val focusedCell: CrosswordCell? = null,
         val answerState: AnswerState = AnswerState.Unanswered,
-        /** True while validation is in flight, so a filled grid can't submit twice. */
         val isSubmitting: Boolean = false,
-        /** Set when validation couldn't be recorded; editing a cell retries it. */
         val submitFailed: Boolean = false,
     ) : CrosswordUiState {
         val isChecked: Boolean get() = answerState !is AnswerState.Unanswered
         val isEditable: Boolean get() = !isChecked && !isSubmitting
         val canUseTip: Boolean get() = isEditable && words.any { it.revealedLetterCount < it.length }
 
-        /** Every cell has a letter — the trigger for validating the puzzle automatically. */
         val isComplete: Boolean get() = cells.isNotEmpty() && cells.values.all { it.isFilled }
 
         val selectedWord: CrosswordWordUi? get() = words.find { it.vocabularyItemId == selectedWordId }

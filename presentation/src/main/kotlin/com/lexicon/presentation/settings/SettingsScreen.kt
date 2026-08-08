@@ -79,8 +79,6 @@ private fun SettingsScreenContent(
                         .padding(vertical = Dimens.spacingSmall),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    // null onClick: the whole row is the selectable target, so the button itself
-                    // must not be separately focusable for screen readers.
                     RadioButton(selected = mode == settings.themeMode, onClick = null)
                     Text(
                         text = stringResource(mode.labelRes()),
@@ -157,7 +155,6 @@ private fun SettingsScreenDarkSelectedPreview() {
     }
 }
 
-/** Slider pinned to the low end, where the value label is easiest to misread. */
 @LightDarkPreview
 @Composable
 private fun SettingsScreenMinimumStepsPreview() {

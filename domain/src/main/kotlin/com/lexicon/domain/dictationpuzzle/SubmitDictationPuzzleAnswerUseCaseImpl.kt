@@ -40,8 +40,6 @@ class SubmitDictationPuzzleAnswerUseCaseImpl
             return SubmitDictationPuzzleAnswerResponse(outcome = outcome, expectedText = request.expectedText)
         }
 
-        // The step outcome reflects the input alone; tip usage is recorded separately
-        // (tipUsed above) and surfaced on the Results screen rather than forcing Incorrect here.
         private fun resolveOutcome(request: SubmitDictationPuzzleAnswerRequest): DictationPuzzleStepOutcome =
             when {
                 request.skipped -> DictationPuzzleStepOutcome.SKIPPED

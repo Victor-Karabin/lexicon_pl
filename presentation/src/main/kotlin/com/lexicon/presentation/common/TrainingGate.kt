@@ -33,14 +33,6 @@ import com.lexicon.presentation.theme.LexiconTheme
 
 private val EmptyStateIconSize = 64.dp
 
-/**
- * Fronts a training with a check that it has enough vocabulary to run.
- *
- * A gate rather than a state inside each training: all ten fail the same way and would need
- * the same screen, and the ones that fail worst — an Image Test with two options, a session
- * of one step — cannot tell from the inside that they are degraded. Gating here also means a
- * training's own code never has to handle a session it could not build.
- */
 @Composable
 fun TrainingGate(
     minimumWords: Int,
@@ -55,8 +47,6 @@ fun TrainingGate(
     LaunchedEffect(minimumWords) { viewModel.check(minimumWords) }
 
     when (val state = readiness) {
-        // Null is "not checked yet", which is a different thing from "not ready": rendering
-        // the training before the answer arrives would start a session that has to be undone.
         null ->
             Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
@@ -106,8 +96,6 @@ internal fun NotEnoughWordsContent(
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(top = Dimens.spacingLarge),
             )
-            // Names both numbers: "needs more words" leaves the user guessing how many more,
-            // and the answer differs by training.
             Text(
                 text = stringResource(R.string.training_not_enough_words_body, trainingName, required, available),
                 style = MaterialTheme.typography.bodyMedium,

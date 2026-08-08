@@ -25,7 +25,6 @@ enum class WordCardState { NEUTRAL, CORRECT, INCORRECT }
 
 enum class WordCardSize { COMPACT, EXPANDED }
 
-/** The target word / prompt — the one visually loud element on a training step. */
 @Composable
 fun WordCard(
     word: String,
@@ -82,7 +81,6 @@ private fun WordCardStatesPreview() {
                 WordCardState.entries.forEach { state ->
                     WordCard(word = "praca", sublabel = state.name.lowercase(), state = state)
                 }
-                // Expanded sizing, and the no-sublabel case.
                 WordCard(word = "dzień dobry", size = WordCardSize.EXPANDED)
             }
         }

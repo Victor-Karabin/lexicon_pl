@@ -12,7 +12,6 @@ import java.util.UUID
 import javax.inject.Inject
 import kotlin.random.Random
 
-/** Fetches extra items beyond stepCount so every step has a candidate distractor to draw from. */
 private const val DISTRACTOR_POOL_MULTIPLIER = 2
 
 class StartTrueOrFalseSessionUseCaseImpl

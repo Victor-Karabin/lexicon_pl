@@ -24,7 +24,6 @@ class CheckTrainingReadinessUseCaseImplTest {
             assertEquals(TrainingReadiness.Ready, useCase(minimumWords = 6))
         }
 
-    /** Exactly the requirement is enough; the check is "at least", not "more than". */
     @Test
     fun `a study set exactly the size of the requirement is ready`() =
         runTest {
@@ -49,10 +48,6 @@ class CheckTrainingReadinessUseCaseImplTest {
             assertEquals(TrainingReadiness.NotEnoughWords(required = 1, available = 0), useCase(minimumWords = 1))
         }
 
-    /**
-     * The counted set is the one trainings draw from — favourites when there are any — so a
-     * large vocabulary behind a small set of hearts must still fail the check.
-     */
     @Test
     fun `readiness is measured against the study set, not the whole vocabulary`() =
         runTest {

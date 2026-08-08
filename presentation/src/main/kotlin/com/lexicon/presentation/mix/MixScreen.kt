@@ -151,7 +151,6 @@ private fun MixScreenContent(
                             modifier = Modifier.fillMaxWidth(),
                         )
 
-                        // Names the exercise, so a step change doesn't look like a glitch.
                         Text(
                             text = uiState.trainingType.label(),
                             modifier = Modifier.padding(top = Dimens.spacingSmall),
@@ -181,8 +180,6 @@ private fun MixScreenContent(
                         )
                     }
 
-                    // True or False answers on tap, so before it is answered there is no primary
-                    // action to offer; showing a Check it can never enable reads as a broken step.
                     if (uiState.hasCheckAction || uiState.awaitingNext) {
                         TrainingActionRow(
                             onCheck = onCheck,
@@ -385,7 +382,6 @@ private fun MixScreenPuzzleStepPreview() {
     }
 }
 
-/** True or False inside Mix: one question, no countdown. */
 @LightDarkPreview
 @Composable
 private fun MixScreenTrueOrFalseStepPreview() {
@@ -415,7 +411,6 @@ private fun MixScreenTrueOrFalseStepPreview() {
     }
 }
 
-/** Answered incorrectly: only the tapped button takes the outcome colour. */
 @LightDarkPreview
 @Composable
 private fun MixScreenTrueOrFalseAnsweredPreview() {

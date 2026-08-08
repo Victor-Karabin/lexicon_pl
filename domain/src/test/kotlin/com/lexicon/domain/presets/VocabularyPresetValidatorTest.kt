@@ -94,10 +94,6 @@ class VocabularyPresetValidatorTest {
         assertTrue(issues.contains(PresetValidationIssue.MissingTitle("food")))
     }
 
-    /**
-     * Callers that have not loaded the vocabulary pass an empty set; treating that as "every
-     * word is missing" would bury the real findings under one per word.
-     */
     @Test
     fun `an unknown vocabulary is not mistaken for a catalogue full of broken references`() {
         val issues = validator.validate(catalog(preset(vocabularyIds = listOf(1L, 99L))), knownVocabularyIds = emptySet())

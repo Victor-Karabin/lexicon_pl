@@ -18,11 +18,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-/**
- * Joins presets to their categories. A preset naming a category the catalogue does not
- * define is dropped rather than shown uncategorised — the validator reports it as a data
- * error, and a half-placed preset in the browser would only hide that.
- */
 class GetVocabularyPresetsUseCaseImpl
     @Inject
     constructor(
@@ -73,10 +68,6 @@ class GetVocabularyPresetUseCaseImpl
         }
     }
 
-/**
- * Resolves a preset's ids into words. The order follows the preset rather than the store,
- * so a "100 most common words" preset is delivered in frequency order.
- */
 class GetPresetVocabularyUseCaseImpl
     @Inject
     constructor(

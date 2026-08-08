@@ -22,8 +22,6 @@ class SubmitWordMatchStepResultUseCaseImpl
             val outcome = resolveOutcome(request)
             val completedAt = clock.nowEpochMillis()
 
-            // The spec's Result Recording lists vocabulary item identifiers (plural) per step;
-            // record one row per pair, all sharing the step's outcome, reusing the existing single-item shape as-is.
             request.vocabularyItemIds.forEach { vocabularyItemId ->
                 trainingHistoryRepository.recordResult(
                     TrainingResultBoundary(
@@ -43,9 +41,6 @@ class SubmitWordMatchStepResultUseCaseImpl
             return SubmitWordMatchStepResultResponse(outcome = outcome)
         }
 
-        // This training has no Tip or Skip action. A step that was fully matched, even with wrong
-        // attempts along the way, still completes — but the recorded result is Incorrect if any
-        // attempt was wrong.
         private fun resolveOutcome(request: SubmitWordMatchStepResultRequest): WordMatchStepOutcome =
             if (request.incorrectAttempts == 0) WordMatchStepOutcome.CORRECT else WordMatchStepOutcome.INCORRECT
 

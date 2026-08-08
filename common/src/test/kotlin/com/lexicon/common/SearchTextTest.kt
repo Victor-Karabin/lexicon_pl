@@ -3,11 +3,6 @@ package com.lexicon.common
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-/**
- * This folding is used in two places that must agree: the search key stored on every word,
- * and the query compared against it. A change here that is not symmetric stops search working
- * for every accented word at once, so each Polish letter is pinned individually.
- */
 class SearchTextTest {
     @Test
     fun `every Polish diacritic folds to its base letter`() {

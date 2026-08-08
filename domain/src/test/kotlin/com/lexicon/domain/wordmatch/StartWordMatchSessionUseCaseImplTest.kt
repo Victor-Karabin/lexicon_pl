@@ -47,7 +47,6 @@ class StartWordMatchSessionUseCaseImplTest {
     @Test
     fun `prefers whichever content type can fill the board`() =
         runTest {
-            // Only two phrases, so a 4-pair board has to be built from the single words.
             coEvery { vocabularyRepository.getRandomItems(any()) } returns singleWords + phrases.take(2)
 
             val pairs = useCase(StartWordMatchSessionRequest(stepCount = 4)).steps.single().pairs

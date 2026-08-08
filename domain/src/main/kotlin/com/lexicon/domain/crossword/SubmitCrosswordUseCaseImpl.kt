@@ -46,8 +46,6 @@ class SubmitCrosswordUseCaseImpl
                 CrosswordWordResult(submission.vocabularyItemId, submission.expectedText, outcome, submission.tipUsed)
             }
 
-            // Per spec: any Tip usage anywhere in the puzzle makes the whole crossword Incorrect,
-            // even if every individual word is spelled correctly.
             val isFullyCorrect = wordResults.all { it.outcome == CrosswordWordOutcome.CORRECT } &&
                 wordResults.none { it.tipUsed }
 

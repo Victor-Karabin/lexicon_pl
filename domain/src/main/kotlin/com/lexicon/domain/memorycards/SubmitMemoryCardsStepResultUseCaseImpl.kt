@@ -22,8 +22,6 @@ class SubmitMemoryCardsStepResultUseCaseImpl
             val outcome = resolveOutcome(request)
             val completedAt = clock.nowEpochMillis()
 
-            // Result Recording lists vocabulary item identifiers (plural) per step; record one row
-            // per pair, all sharing the step's outcome, same shape as Word Match.
             request.vocabularyItemIds.forEach { vocabularyItemId ->
                 trainingHistoryRepository.recordResult(
                     TrainingResultBoundary(
@@ -43,8 +41,6 @@ class SubmitMemoryCardsStepResultUseCaseImpl
             return SubmitMemoryCardsStepResultResponse(outcome = outcome)
         }
 
-        // This training has no Tip action. A step that was fully matched, even with wrong attempts
-        // along the way, still completes — but the recorded result is Incorrect if any attempt was wrong.
         private fun resolveOutcome(request: SubmitMemoryCardsStepResultRequest): MemoryCardsStepOutcome =
             when {
                 request.skipped -> MemoryCardsStepOutcome.SKIPPED

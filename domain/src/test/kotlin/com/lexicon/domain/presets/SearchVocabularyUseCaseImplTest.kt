@@ -42,10 +42,6 @@ class SearchVocabularyUseCaseImplTest {
             assertNull(useCase("woda").single().cefr)
         }
 
-    /**
-     * The stored keys are folded, so the query must be folded by the same rule. Sending the
-     * raw query is how a search silently stops matching anything with a diacritic in it.
-     */
     @Test
     fun `the query reaches the repository folded`() =
         runTest {
@@ -68,7 +64,6 @@ class SearchVocabularyUseCaseImplTest {
             assertEquals("apple", sent.captured)
         }
 
-    /** Selecting a level lists every word at it, with no query typed at all. */
     @Test
     fun `levels alone are a search, with an empty query`() =
         runTest {
@@ -95,7 +90,6 @@ class SearchVocabularyUseCaseImplTest {
             assertEquals(setOf("B1"), levels.captured)
         }
 
-    /** Neither a query nor a level is "nothing asked for" — the presets belong on screen then. */
     @Test
     fun `no query and no levels returns nothing and never reaches the repository`() =
         runTest {
@@ -110,7 +104,6 @@ class SearchVocabularyUseCaseImplTest {
             coVerify(exactly = 0) { vocabularyRepository.search(any(), any(), any()) }
         }
 
-    /** Selecting a level must show every word at it, not the first page of them. */
     @Test
     fun `the default limit is above the size of the vocabulary`() =
         runTest {

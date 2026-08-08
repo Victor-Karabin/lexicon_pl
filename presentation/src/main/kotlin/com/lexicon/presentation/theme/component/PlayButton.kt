@@ -26,11 +26,6 @@ import com.lexicon.presentation.common.debounced
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
 
-/**
- * Audio replay control — the one fully-circular element allowed outside avatars (DESIGN.md §5).
- * Same copy/behavior as the plain TextButton it refines; used in Dictation, Dictation Puzzle, and
- * Pronunciation Check.
- */
 @Composable
 fun PlayButton(
     onClick: () -> Unit,
@@ -84,7 +79,6 @@ private fun PlayButtonStatesPreview() {
             ) {
                 PlayButton(onClick = {}, label = "Listen again")
                 PlayButton(onClick = {}, label = "Listen again", playing = true)
-                // Longer label, to check the pill grows rather than clipping.
                 PlayButton(onClick = {}, label = "Play my recording")
             }
         }

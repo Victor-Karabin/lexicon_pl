@@ -44,6 +44,8 @@ import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
+import com.lexicon.interactors.presets.resolve
+import com.lexicon.interactors.presets.wordCount
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.DeleteAction
 import com.lexicon.presentation.common.DeleteActionWidth
@@ -158,8 +160,6 @@ private fun PresetDetailContent(
                                         onFavouriteToggled = { onWordFavouriteToggled(word.id, !word.isFavourite) },
                                     )
                                 }
-                                // Between rows only: a divider under the last one would read
-                                // as the start of a section that is not there.
                                 if (index < uiState.words.lastIndex) {
                                     HorizontalDivider(modifier = Modifier.padding(horizontal = Dimens.spacingMedium))
                                 }
@@ -192,7 +192,6 @@ private fun PresetHeader(
                 tint = Color.White,
             )
         }
-        // Under the icon, as on the card it was opened from.
         Text(
             text = NumberFormat.getIntegerInstance().format(preset.wordCount),
             style = MaterialTheme.typography.labelLarge,
@@ -228,7 +227,6 @@ private fun PresetHeader(
     }
 }
 
-/** Falls back to the theme when a preset carries no colour, or one that will not parse. */
 @Composable
 private fun VocabularyPreset.detailAccentColor(): Color {
     val fallback = MaterialTheme.colorScheme.primary

@@ -121,8 +121,6 @@ private fun TrueOrFalseScreenContent(
                         )
                     }
 
-                    // Constant tones: the standalone training colours the choices by what they
-                    // mean, not by the outcome, which it never displays.
                     TrueOrFalseAnswerRow(
                         trueTone = AnswerTone.POSITIVE,
                         falseTone = AnswerTone.NEGATIVE,
@@ -153,7 +151,6 @@ private fun TrueOrFalseScreenPreview() {
     }
 }
 
-/** Under the warning threshold the timer switches to the error colour. */
 @LightDarkPreview
 @Composable
 private fun TrueOrFalseScreenLowTimePreview() {

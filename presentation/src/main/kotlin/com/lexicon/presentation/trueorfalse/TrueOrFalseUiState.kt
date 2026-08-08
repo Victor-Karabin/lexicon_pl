@@ -1,6 +1,5 @@
 package com.lexicon.presentation.trueorfalse
 
-/** The user answers as many items as they can before this runs out, rather than a fixed step count. */
 const val TRUE_OR_FALSE_TIME_LIMIT_SECONDS = 60
 
 sealed interface TrueOrFalseUiState {

@@ -49,11 +49,6 @@ import javax.inject.Inject
 private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 500L
 private const val SKIPPED_ANSWER_ADVANCE_DELAY_MS = 700L
 
-/**
- * Runs a Mix session. Validation is delegated to each step's originating training use case, so a
- * step scores, records and reveals exactly as it would standalone (Mix spec §9) — this ViewModel
- * only sequences the steps and adapts the shared UI.
- */
 @HiltViewModel
 class MixViewModel
     @Inject
@@ -107,7 +102,6 @@ class MixViewModel
                     stepTiles = step.tilesOrEmpty(),
                 )
             }
-            // Both listening trainings speak the target word as the step opens.
             if (step is MixStep.Dictation) speechSynthesizer.speak(step.step.expectedText)
             if (step is MixStep.DictationPuzzle) speechSynthesizer.speak(step.step.expectedText)
             if (step is MixStep.Pronunciation) speechSynthesizer.speak(step.step.expectedText)
@@ -181,12 +175,10 @@ class MixViewModel
             }
         }
 
-        /** True or False validates on tap, matching its standalone behaviour. */
         fun onTrueOrFalseAnswer(answeredTrue: Boolean) {
             val state = _uiState.value as? MixUiState.Loaded ?: return
             val step = state.step as? MixStep.TrueOrFalse ?: return
             if (!state.isEditable) return
-            // Recorded so only the tapped button takes on the outcome colour.
             updateLoaded { it.copy(isSubmitting = true, answeredTrue = answeredTrue) }
             viewModelScope.launch(dispatchers.io) {
                 val response = submitTrueOrFalse(
@@ -201,9 +193,6 @@ class MixViewModel
                 finishStep(
                     isCorrect = response.outcome == TrueOrFalseStepOutcome.CORRECT,
                     skipped = false,
-                    // No revealed answer: the choice was True/False, and the word is already on
-                    // screen, so an "Expected: ..." line would restate the prompt as if it were the
-                    // answer. Matches standalone True or False, which reveals nothing either.
                     revealed = null,
                     word = step.step.word,
                     translation = step.step.displayedTranslation,
@@ -336,7 +325,6 @@ class MixViewModel
                         )
                     }
 
-                    // Answers on tap via onTrueOrFalseAnswer, so it never reaches Check.
                     is MixStep.TrueOrFalse -> Unit
                 }
             }
@@ -362,9 +350,6 @@ class MixViewModel
             }
             wordResults += WordResultEntry(word, translation, outcome, state.tipUsed)
 
-            // Incorrect waits for a manual Next so the revealed answer can be read, which means
-            // isSubmitting has to release now: awaitingNext is gated on it, so leaving it set would
-            // hide the Next button and lock the step with nothing left to press.
             updateLoaded { it.copy(answerState = outcome, isSubmitting = false) }
             if (outcome is AnswerState.Incorrect) return
 

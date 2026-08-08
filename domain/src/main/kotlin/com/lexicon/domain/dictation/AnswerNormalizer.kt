@@ -3,10 +3,6 @@ package com.lexicon.domain.dictation
 import java.util.Locale
 import javax.inject.Inject
 
-/**
- * Implements the Text Answer Normalization rule from
- * "Trainings - common.rtf" §26: case-insensitive, diacritics compared exactly.
- */
 class AnswerNormalizer
     @Inject
     constructor() {

@@ -14,7 +14,6 @@ import com.lexicon.interactors.presets.PresetFavouriteState
 import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.LexiconError
 
-/** A single word's heart. Filled means the word is in the study set trainings draw from. */
 @Composable
 fun FavouriteButton(
     isFavourite: Boolean,
@@ -31,13 +30,6 @@ fun FavouriteButton(
     }
 }
 
-/**
- * A preset's heart, over all of its words.
- *
- * The partly-favourited case gets its own icon rather than borrowing the empty or filled
- * one: either would claim something untrue about the other words, and this is exactly the
- * state where a user needs to know a single tap will change the rest.
- */
 @Composable
 fun PresetFavouriteButton(
     state: PresetFavouriteState,

@@ -5,10 +5,6 @@ import com.lexicon.data.local.ImageUrlCacheDao
 import com.lexicon.data.local.ImageUrlCacheEntity
 import javax.inject.Inject
 
-/**
- * Caches resolved image URLs on device, keyed by search query, so repeat sessions for the same
- * vocabulary item don't re-hit the image-provider APIs (Pexels/Pixabay/Unsplash/Openverse).
- */
 class CachingImageProviderImpl
     @Inject
     constructor(

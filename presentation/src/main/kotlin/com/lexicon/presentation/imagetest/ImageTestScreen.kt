@@ -177,7 +177,6 @@ private fun ImageTestScreenCorrectPreview() {
     }
 }
 
-/** The wrong pick and the right answer are highlighted differently. */
 @LightDarkPreview
 @Composable
 private fun ImageTestScreenIncorrectPreview() {

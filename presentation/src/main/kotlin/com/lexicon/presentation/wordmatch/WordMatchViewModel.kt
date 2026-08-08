@@ -47,7 +47,6 @@ class WordMatchViewModel
         private var incorrectCount = 0
         private val wordResults = mutableListOf<WordResultEntry>()
 
-        /** Vocabulary items that were ever on the losing end of a mismatched pair this step. */
         private val incorrectItemIds = mutableSetOf<Long>()
 
         init {
@@ -103,8 +102,6 @@ class WordMatchViewModel
             } else {
                 incorrectItemIds += leftId
                 incorrectItemIds += rightId
-                // Left as incorrect (red) until the user's next selection attempt clears it, rather
-                // than auto-resetting after a fixed delay.
                 updateLoaded {
                     it.copy(
                         incorrectAttempts = it.incorrectAttempts + 1,
@@ -128,9 +125,6 @@ class WordMatchViewModel
                     incorrectAttempts = state.incorrectAttempts,
                 ),
             )
-            // The Results breakdown reflects each pair's own history, not the step's overall
-            // outcome — a pair that was matched cleanly still counts as Correct even if a
-            // different pair on the board was mismatched along the way.
             step.pairs.forEach { pair ->
                 val outcome = if (pair.vocabularyItemId in incorrectItemIds) AnswerState.Incorrect() else AnswerState.Correct
                 if (outcome == AnswerState.Correct) correctCount++ else incorrectCount++

@@ -6,6 +6,5 @@ data class VocabularyItemBoundary(
     val translation: String,
     val transcription: String,
     val isFavourite: Boolean = false,
-    /** CEFR band as written in the data, or null when the source did not state one. */
     val cefr: String? = null,
 )

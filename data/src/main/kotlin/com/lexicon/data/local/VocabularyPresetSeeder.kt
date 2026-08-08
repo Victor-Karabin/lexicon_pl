@@ -6,14 +6,6 @@ import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * Imports the bundled preset catalogue into the database and keeps it current.
- *
- * The catalogue is replaced wholesale rather than reconciled row by row, unlike the vocabulary:
- * nothing the user owns lives on these rows — a preset's heart is stored on the words it
- * contains — so there is nothing to preserve, and a single transaction cannot leave a
- * half-written catalogue behind.
- */
 @Singleton
 class VocabularyPresetSeeder
     @Inject
@@ -32,7 +24,6 @@ class VocabularyPresetSeeder
             sync()
         }
 
-        /** Forgets a preset's deletion, so the next sync brings it back. */
         suspend fun restore(presetId: String) {
             presetDao.undeletePreset(presetId)
             syncStore.setSyncedPresetFingerprint("")
@@ -40,7 +31,6 @@ class VocabularyPresetSeeder
             ensureSeeded()
         }
 
-        /** Records the deletion first, so a sync racing it cannot put the preset back. */
         suspend fun delete(presetId: String) {
             presetDao.insertDeletedPreset(DeletedPresetEntity(presetId))
             presetDao.deleteMemberships(presetId)
@@ -57,8 +47,6 @@ class VocabularyPresetSeeder
                 }
 
                 val catalog = loader.load()
-                // Deleted presets are dropped on the way in rather than removed afterwards, so
-                // they never briefly exist — and so a re-import cannot resurrect them.
                 val deleted = presetDao.getDeletedPresetIds().toSet()
                 val presets = catalog.presets.filterNot { it.id in deleted }
                 presetDao.replaceCatalog(
@@ -69,8 +57,6 @@ class VocabularyPresetSeeder
                 syncStore.setSyncedPresetFingerprint(fingerprint)
                 syncedThisProcess = true
 
-                // A replace has no meaningful update or delete count: every preset is written.
-                // Reporting them as added is the honest description of what happened.
                 SyncOutcomeBoundary(
                     total = presets.size,
                     added = presets.size - stored.coerceAtMost(presets.size),

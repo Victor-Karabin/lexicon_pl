@@ -46,8 +46,6 @@ class SettingsRepositoryImpl
 
         private fun Preferences.toSettings(): AppSettingsBoundary =
             AppSettingsBoundary(
-                // An unrecognised stored value (e.g. an enum renamed in a later version) falls back
-                // to the default rather than crashing on the user's saved preferences.
                 themeMode = this[Keys.ThemeMode]
                     ?.let { stored -> ThemeModeBoundary.entries.firstOrNull { it.name == stored } }
                     ?: ThemeModeBoundary.SYSTEM,

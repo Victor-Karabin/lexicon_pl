@@ -34,7 +34,6 @@ import javax.inject.Inject
 sealed interface PresetDetailUiState {
     data object Loading : PresetDetailUiState
 
-    /** A preset id can outlive the preset it names — saved state, or a catalogue that changed. */
     data object NotFound : PresetDetailUiState
 
     data class Loaded(
@@ -42,13 +41,7 @@ sealed interface PresetDetailUiState {
         val words: ImmutableList<PresetWord> = persistentListOf(),
         val favouriteState: PresetFavouriteState = PresetFavouriteState.NONE,
         val languageTag: String = "en",
-        /**
-         * Tracked, not inferred from an empty list: a preset whose every word has been deleted
-         * is legitimately empty, and inferring would leave it spinning for words that are never
-         * coming.
-         */
         val isLoadingWords: Boolean = true,
-        /** The last deletion, kept so it can be undone; see [PresetDetailViewModel]. */
         val lastDeleted: DeletedItem? = null,
     ) : PresetDetailUiState
 }
@@ -71,7 +64,6 @@ class PresetDetailViewModel
     ) : ViewModel() {
         private val presetId = PresetId(savedStateHandle.get<String>(PRESET_ID_ARG).orEmpty())
 
-        /** What was loaded once; favourite state is layered on top of it as it changes. */
         private data class Content(
             val preset: VocabularyPreset?,
             val words: List<PresetWord>,
@@ -89,8 +81,6 @@ class PresetDetailViewModel
                     else ->
                         PresetDetailUiState.Loaded(
                             preset = loaded.preset,
-                            // Re-derived rather than stored, so a heart tapped here or on the
-                            // browser is reflected without reloading the word list.
                             words = loaded.words
                                 .map { it.copy(isFavourite = it.id in favourites) }
                                 .toImmutableList(),
@@ -112,8 +102,6 @@ class PresetDetailViewModel
                     content.value = Content(preset = null, words = emptyList())
                     return@launch
                 }
-                // The header shows first: resolving a thousand ids takes a query, and a header
-                // that appears at once reads better than a screen that stays blank.
                 content.value = Content(preset = preset, words = emptyList())
                 content.value = Content(
                     preset = preset,
@@ -123,17 +111,9 @@ class PresetDetailViewModel
             }
         }
 
-        /**
-         * Deletes at once, as the button says, and keeps enough to put it back. The row leaves
-         * the list immediately rather than waiting for a reload: it is under the user's finger.
-         */
         fun onWordDeleted(word: PresetWord) {
             viewModelScope.launch(dispatchers.io) {
                 deleteWord(word.id)
-                // The row leaves at once because it is under the user's finger, but the preset
-                // has to be re-read too: it carries the id list the heart is derived from, and a
-                // stale one still counts the deleted word, so "every word favourited" can never
-                // be true again however many times the heart is tapped.
                 val refreshed = getPreset(presetId)
                 content.update { current ->
                     current?.copy(
@@ -160,7 +140,6 @@ class PresetDetailViewModel
             }
         }
 
-        /** Cleared once shown, so the same message cannot be offered twice. */
         fun onDeleteMessageShown() = content.update { it?.copy(lastDeleted = null) }
 
         fun onWordFavouriteToggled(
@@ -170,7 +149,6 @@ class PresetDetailViewModel
             viewModelScope.launch(dispatchers.io) { toggleWordFavourite(id, isFavourite) }
         }
 
-        /** Partly-favourited counts as off, so one tap completes the preset rather than clearing it. */
         fun onPresetFavouriteToggled(current: PresetFavouriteState) {
             viewModelScope.launch(dispatchers.io) {
                 setPresetFavourite(presetId, current != PresetFavouriteState.ALL)
@@ -192,10 +170,6 @@ internal fun favouriteStateOf(
         else -> PresetFavouriteState.SOME
     }
 
-/**
- * Polish collation, not code-point order: ą belongs directly after a, and ł after l. Sorting
- * by raw string would scatter every accented word to the end of the list.
- */
 private val polishCollator: Collator = Collator.getInstance(Locale.forLanguageTag("pl"))
 
 internal fun List<PresetWord>.sortedForDisplay(): List<PresetWord> = sortedWith(compareBy(polishCollator) { it.text })

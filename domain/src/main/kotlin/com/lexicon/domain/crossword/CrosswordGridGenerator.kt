@@ -18,23 +18,8 @@ internal data class CrosswordLayout(
     val colCount: Int,
 )
 
-/**
- * How many word orderings to try. A single greedy pass leaves roughly one word of eight unable to
- * intersect anything; re-running with shuffled orders and keeping the fullest layout gets all eight
- * placed for the large majority of puzzles. Each pass is cheap, so this stays well under a frame.
- */
 private const val PLACEMENT_ATTEMPTS = 60
 
-/**
- * Greedy crossword layout: places the longest word first, then intersects each subsequent word with
- * an already-placed one on a shared letter, preferring whichever intersection keeps the grid most
- * compact.
- *
- * Words that cannot legally intersect anything are dropped rather than parked on their own row —
- * a detached run of cells floating below the puzzle isn't part of the crossword and can't be solved
- * from its crossings. [generate] retries several orderings and keeps the layout that places the
- * most words, so dropping stays rare.
- */
 internal object CrosswordGridGenerator {
     fun generate(
         words: List<Word>,
@@ -42,8 +27,6 @@ internal object CrosswordGridGenerator {
     ): CrosswordLayout {
         if (words.isEmpty()) return CrosswordLayout(emptyList(), rowCount = 0, colCount = 0)
 
-        // First pass longest-first (a long word gives later words the most crossing options);
-        // subsequent passes shuffle, since the greedy order is what decides who gets stuck.
         var best = layOut(words.sortedByDescending { it.text.length })
         repeat(PLACEMENT_ATTEMPTS - 1) {
             if (best.placements.size == words.size) return best
@@ -53,7 +36,6 @@ internal object CrosswordGridGenerator {
         return best
     }
 
-    /** More words placed always wins; between equally full layouts, the tighter grid wins. */
     private fun CrosswordLayout.isPreferredOver(other: CrosswordLayout): Boolean =
         if (placements.size != other.placements.size) {
             placements.size > other.placements.size
@@ -82,7 +64,6 @@ internal object CrosswordGridGenerator {
 
     private data class Placement(val row: Int, val col: Int, val direction: CrosswordDirection)
 
-    /** Of all legal intersections, picks the one that keeps the overall grid most compact. */
     private fun bestIntersection(
         letters: String,
         placed: List<PlacedWord>,
@@ -114,7 +95,6 @@ internal object CrosswordGridGenerator {
         placement: Placement,
         grid: Map<Cell, Char>,
     ): Boolean {
-        // The cells immediately before/after the word must be empty, so two words never run together.
         val before = stepBefore(placement)
         val after = cellAt(placement.row, placement.col, placement.direction, letters.length)
         if (grid.containsKey(before) || grid.containsKey(after)) return false
@@ -123,10 +103,7 @@ internal object CrosswordGridGenerator {
             val cell = cellAt(placement.row, placement.col, placement.direction, i)
             val existing = grid[cell]
             when {
-                // A shared cell is a legitimate crossing as long as the letters agree.
                 existing != null -> existing == letter
-                // An unshared cell must not touch another word sideways: two words running parallel
-                // and adjacent would form letter sequences that aren't any of the puzzle's answers.
                 else -> perpendicularNeighbours(cell, placement.direction).none(grid::containsKey)
             }
         }

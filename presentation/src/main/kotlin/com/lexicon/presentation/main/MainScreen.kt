@@ -32,7 +32,6 @@ private enum class MainTab(val label: String, val icon: ImageVector) {
     SETTINGS("Settings", Icons.Default.Settings),
 }
 
-/** Enums are not saveable as they stand, and the name survives an ordinal being reordered. */
 private val MainTabSaver = Saver<MainTab, String>(save = { it.name }, restore = { MainTab.valueOf(it) })
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,8 +41,6 @@ fun MainScreen(
     onPresetSelected: (id: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    // Saveable, not remembered: MAIN leaves composition while a training or a preset is
-    // open, so a plain remember would drop the tab and land the user back on Trainings.
     var selectedTab by rememberSaveable(stateSaver = MainTabSaver) { mutableStateOf(MainTab.TRAININGS) }
 
     Scaffold(

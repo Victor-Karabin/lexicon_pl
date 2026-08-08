@@ -13,13 +13,6 @@ import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * Serves the preset catalogue from the database.
- *
- * Reading rows rather than re-parsing the asset means listing presets costs a query instead of
- * decoding a megabyte of JSON, and the same store can later hold presets that never came from
- * an asset at all — downloaded, imported or user-made.
- */
 @Singleton
 class VocabularyPresetRepositoryImpl
     @Inject
@@ -31,8 +24,6 @@ class VocabularyPresetRepositoryImpl
 
         override suspend fun getPresets(): List<VocabularyPresetBoundary> {
             seeder.ensureSeeded()
-            // Memberships are fetched in one query and grouped here: a per-preset query would be
-            // 72 round trips to draw one screen.
             val membership = presetDao.getAllMemberships().groupBy { it.presetId }
             return presetDao.getPresets().map { preset ->
                 preset.toBoundary(membership[preset.id].orEmpty().map { it.wordId })

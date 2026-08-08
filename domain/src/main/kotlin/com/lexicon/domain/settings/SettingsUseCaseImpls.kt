@@ -31,7 +31,6 @@ class UpdateStepCountUseCaseImpl
     constructor(
         private val settingsRepository: SettingsRepository,
     ) : UpdateStepCountUseCase {
-        // Clamped here rather than in the UI so any caller gets a storable value.
         override suspend fun invoke(stepCount: Int) =
             settingsRepository.setStepCount(
                 stepCount.coerceIn(AppSettings.MIN_STEP_COUNT, AppSettings.MAX_STEP_COUNT),

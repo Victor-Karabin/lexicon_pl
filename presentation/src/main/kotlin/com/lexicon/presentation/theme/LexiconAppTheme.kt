@@ -8,10 +8,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.settings.ThemeMode
 import com.lexicon.presentation.settings.SettingsViewModel
 
-/**
- * [LexiconTheme] driven by the user's saved appearance preference. Wraps the whole app so a change
- * on the Settings screen recolours every screen immediately.
- */
 @Composable
 fun LexiconAppTheme(
     viewModel: SettingsViewModel = hiltViewModel(),

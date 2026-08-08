@@ -78,13 +78,11 @@ class PronunciationViewModel
             }
         }
 
-        /** Reference pronunciation auto-plays when a step opens; there is no manual replay control. */
         private suspend fun speakReferenceAudio() {
             val step = currentStepOrNull() ?: return
             speechSynthesizer.speak(step.expectedText)
         }
 
-        /** First tap reveals the target-language word; a second tap additionally reveals its IPA transcription. */
         fun onTipRequested() {
             val state = _uiState.value as? PronunciationUiState.Loaded ?: return
             if (!state.canUseTip) return
@@ -97,7 +95,6 @@ class PronunciationViewModel
             }
         }
 
-        /** Records (or re-records, discarding any prior attempt) — does not submit; the user reviews and taps Check. */
         fun onRecordRequested() {
             val state = _uiState.value as? PronunciationUiState.Loaded ?: return
             if (!state.canRecord) return
@@ -122,8 +119,6 @@ class PronunciationViewModel
                         )
                     }
                 } catch (failure: SpeechRecognitionFailed) {
-                    // Per spec: a failed recognition doesn't complete the step — reset so the user can retry,
-                    // but surface why, since a silent reset looks indistinguishable from nothing happening.
                     val errorType = if (failure.message?.contains("not available") == true) {
                         RecognitionErrorType.UNAVAILABLE
                     } else {
@@ -212,7 +207,6 @@ class PronunciationViewModel
             }
         }
 
-        /** Called from the UI's "Next" button after an Incorrect/Skipped step. */
         fun onNext() {
             val state = _uiState.value as? PronunciationUiState.Loaded ?: return
             if (!state.awaitingNext) return
@@ -232,7 +226,6 @@ class PronunciationViewModel
                 )
                 return
             }
-            // A fresh Loaded() already defaults isSubmitting/recordingState/etc back to their initial values.
             _uiState.update {
                 PronunciationUiState.Loaded(stepIndex = nextIndex, totalSteps = steps.size, word = steps[nextIndex].clueText)
             }
@@ -244,7 +237,6 @@ class PronunciationViewModel
             return steps.getOrNull(state.stepIndex)
         }
 
-        /** Best-effort cache cleanup; a leftover file here is harmless, just wasted disk space. */
         private fun deleteCachedRecording(path: String?) {
             path?.let { runCatching { File(it).delete() } }
         }

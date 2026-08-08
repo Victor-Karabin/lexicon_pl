@@ -7,7 +7,6 @@ data class PronunciationStepResponse(
     val vocabularyItemId: Long,
     val expectedText: String,
     val clueText: String,
-    /** IPA phonetic transcription, revealed via Tip to help with pronunciation. */
     val transcription: String,
 )
 

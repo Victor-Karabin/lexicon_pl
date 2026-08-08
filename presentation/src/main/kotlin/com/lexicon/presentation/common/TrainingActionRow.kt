@@ -18,10 +18,6 @@ import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
 
-/**
- * Shared Undo/Tip/Skip/Check-or-Next action row for the Tip-capable trainings (Dictation,
- * Dictation Puzzle, Puzzle). Pass null for [onUndo], [onTip], or [onSkip] to hide that button.
- */
 @Composable
 fun TrainingActionRow(
     onCheck: () -> Unit,

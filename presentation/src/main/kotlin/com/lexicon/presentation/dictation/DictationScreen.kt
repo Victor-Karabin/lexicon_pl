@@ -55,8 +55,6 @@ fun DictationScreen(
     val loadedState = uiState as? DictationUiState.Loaded
     LaunchedEffect(loadedState?.stepIndex, loadedState != null) {
         if (loadedState != null && loadedState.isEditable) {
-            // On the very first step, the field is composed for the first time in this same
-            // recomposition, so its focus target may not be attached yet — wait a frame.
             withFrameNanos { }
             runCatching { focusRequester.requestFocus() }
             keyboardController?.show()
@@ -133,9 +131,6 @@ private fun DictationScreenContent(
                             modifier = Modifier.padding(top = Dimens.spacingLarge),
                         )
 
-                        // The field stays `enabled` even after validation (readOnly blocks typing instead),
-                        // so it always resolves via focused/unfocused colors, never the separate disabled
-                        // bucket — that mismatch was what made the border look broken.
                         val fieldColors = when (uiState.answerState) {
                             is AnswerState.Correct ->
                                 OutlinedTextFieldDefaults.colors(

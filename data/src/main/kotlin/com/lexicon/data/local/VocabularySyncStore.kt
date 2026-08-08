@@ -18,12 +18,6 @@ private val Context.vocabularySyncDataStore: DataStore<Preferences> by
 private val SyncedFingerprint = stringPreferencesKey("synced_asset_fingerprint")
 private val SyncedPresetFingerprint = stringPreferencesKey("synced_preset_fingerprint")
 
-/**
- * Remembers which version of each bundled asset the database was last brought in line with.
- *
- * Kept outside the database on purpose: it describes the table rather than belonging to it, and
- * a schema change that wipes the words must not also convince the app that it is up to date.
- */
 @Singleton
 class VocabularySyncStore
     @Inject

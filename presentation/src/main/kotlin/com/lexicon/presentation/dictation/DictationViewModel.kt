@@ -148,7 +148,6 @@ class DictationViewModel
                         wordResults +=
                             WordResultEntry(it.expectedText, it.translationText, AnswerState.Incorrect(expectedText), tipUsed)
                     }
-                    // Waits for a manual Next tap, so isSubmitting must release now rather than on advance.
                     updateLoaded {
                         it.copy(answerState = AnswerState.Incorrect(expectedText), isSubmitting = false)
                     }
@@ -168,7 +167,6 @@ class DictationViewModel
             }
         }
 
-        /** Called from the UI's "Next" button after an Incorrect/Skipped step. */
         fun onNext() {
             val state = _uiState.value as? DictationUiState.Loaded ?: return
             if (!state.awaitingNext) return
@@ -187,7 +185,6 @@ class DictationViewModel
                 )
                 return
             }
-            // A fresh Loaded() already defaults isSubmitting to false.
             _uiState.update {
                 DictationUiState.Loaded(stepIndex = nextIndex, totalSteps = steps.size)
             }

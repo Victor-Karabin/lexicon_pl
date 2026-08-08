@@ -7,11 +7,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-/**
- * Pins the requirements to the parameters they come from. Restating a number here that the
- * training later changed is exactly the failure these guard against — the gate would pass and
- * the training would still be unrunnable.
- */
 class TrainingRequirementsTest {
     @Test
     fun `Image Test needs enough words to fill every option`() {
@@ -28,7 +23,6 @@ class TrainingRequirementsTest {
         assertEquals(StartCrosswordSessionRequest.DEFAULT_WORD_COUNT, TrainingRequirements.CROSSWORD)
     }
 
-    /** Mix delegates to its step types, so it cannot be easier to start than the hardest one. */
     @Test
     fun `Mix is at least as demanding as the step types it contains`() {
         assertTrue(TrainingRequirements.MIX >= TrainingRequirements.IMAGE_TEST)
@@ -36,7 +30,6 @@ class TrainingRequirementsTest {
         assertTrue(TrainingRequirements.MIX >= TrainingRequirements.SINGLE_WORD_STEP)
     }
 
-    /** True or False needs a second word to draw a wrong translation from. */
     @Test
     fun `True or False needs more than one word`() {
         assertTrue(TrainingRequirements.TRUE_OR_FALSE > 1)

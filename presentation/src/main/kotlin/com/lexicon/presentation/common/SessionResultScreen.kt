@@ -28,7 +28,6 @@ import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.LexiconWarning
 import kotlin.math.roundToInt
 
-/** Shared end-of-session summary, reused by every training's result screen. */
 @Composable
 fun SessionResultScreen(
     correct: Int,
@@ -119,7 +118,6 @@ private fun WordResultRow(
     entry: WordResultEntry,
     modifier: Modifier = Modifier,
 ) {
-    // Tip used takes over the status column entirely, rather than sitting alongside Correct/Incorrect.
     val color = when {
         entry.tipUsed -> MaterialTheme.colorScheme.outline
         entry.outcome is AnswerState.Correct -> LexiconSuccess

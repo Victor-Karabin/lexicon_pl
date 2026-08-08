@@ -95,7 +95,6 @@ class DictationPuzzleViewModel
             updateLoaded { it.copy(placedTiles = it.placedTiles + tile) }
         }
 
-        /** Removes the most recently placed tile, sending it back to the available pool. */
         fun onUndo() {
             val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
             if (!state.canUndo) return
@@ -180,7 +179,6 @@ class DictationPuzzleViewModel
             }
         }
 
-        /** Called from the UI's "Next" button after an Incorrect/Skipped step. */
         fun onNext() {
             val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
             if (!state.awaitingNext) return

@@ -21,8 +21,6 @@ class SearchVocabularyUseCaseImpl
             limit: Int,
         ): ImmutableList<PresetWord> {
             val folded = query.foldForSearch()
-            // Neither a query nor a level means nothing was asked for. Returning the whole
-            // vocabulary here would replace the preset list the moment the screen opened.
             if (folded.isEmpty() && levels.isEmpty()) return persistentListOf()
 
             return vocabularyRepository

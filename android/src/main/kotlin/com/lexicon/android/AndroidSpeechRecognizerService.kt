@@ -22,13 +22,11 @@ import javax.inject.Singleton
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-/** Sample rate the platform's [SpeechRecognizer] streams raw audio at via [RecognitionListener.onBufferReceived]. */
 private const val AUDIO_SAMPLE_RATE_HZ = 16_000
 private const val BITS_PER_SAMPLE = 16
 private const val WAV_HEADER_SIZE = 44
 private const val TAG = "AndroidSpeechRecognizer"
 
-/** Human-readable names for the android.speech.SpeechRecognizer#ERROR_* constants, for logging. */
 private fun speechRecognizerErrorName(error: Int): String =
     when (error) {
         SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "ERROR_NETWORK_TIMEOUT"
@@ -59,7 +57,6 @@ class AndroidSpeechRecognizerService
                 Log.w(TAG, "isRecognitionAvailable() is false — no speech recognizer service on this device/emulator image")
                 throw SpeechRecognitionFailed("Speech recognition is not available on this device")
             }
-            // SpeechRecognizer must be created and driven from the main thread.
             return withContext(dispatchers.main) {
                 suspendCancellableCoroutine { continuation ->
                     val recognizer = SpeechRecognizer.createSpeechRecognizer(context)
@@ -68,8 +65,6 @@ class AndroidSpeechRecognizerService
                             putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
                             putExtra(RecognizerIntent.EXTRA_LANGUAGE, locale.toLanguageTag())
                         }
-                    // Raw PCM streamed in parallel with recognition, kept only so the user can play back
-                    // what they said — not guaranteed on every device/OS version.
                     val recordedAudio = ByteArrayOutputStream()
 
                     recognizer.setRecognitionListener(
@@ -124,7 +119,6 @@ class AndroidSpeechRecognizerService
             }
         }
 
-        /** Wraps the raw PCM stream in a canonical WAV header and caches it. Returns null for an empty capture. */
         private fun writeWavFile(pcmData: ByteArray): String? {
             if (pcmData.isEmpty()) return null
             val file = File(context.cacheDir, "pronunciation_attempt_${System.currentTimeMillis()}.wav")

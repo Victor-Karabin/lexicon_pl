@@ -65,10 +65,6 @@ class VocabularyPresetUseCasesImplTest {
             assertEquals(listOf("greetings", "food", "birds"), presets.map { it.id.value })
         }
 
-    /**
-     * A preset whose category is missing cannot be placed in the browser at all; the
-     * validator reports it as a data fault, and showing it half-placed would only mask that.
-     */
     @Test
     fun `a preset naming an undefined category is dropped rather than shown uncategorised`() =
         runTest {
@@ -91,7 +87,6 @@ class VocabularyPresetUseCasesImplTest {
             assertNull(GetVocabularyPresetUseCaseImpl(presetRepository)(PresetId("missing")))
         }
 
-    /** "100 most common words" is only meaningful if it arrives in frequency order. */
     @Test
     fun `preset vocabulary follows the preset's own order, not the store's`() =
         runTest {

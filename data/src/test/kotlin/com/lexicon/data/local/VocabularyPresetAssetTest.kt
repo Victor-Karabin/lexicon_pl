@@ -36,7 +36,6 @@ class VocabularyPresetAssetTest {
         assertEquals(3, catalog.categories.single().order)
     }
 
-    /** A pack built by an older app version must keep loading after the format grows. */
     @Test
     fun `a preset missing every optional field still parses`() {
         val raw = """{"presets": [{"id": "minimal", "category": "everyday-life"}]}"""
@@ -47,7 +46,6 @@ class VocabularyPresetAssetTest {
         assertTrue(preset.vocabularyIds.isEmpty())
     }
 
-    /** And a pack built by a *newer* one must not fail on fields this version has never seen. */
     @Test
     fun `unknown fields are ignored rather than rejected`() {
         val raw = """
@@ -57,10 +55,6 @@ class VocabularyPresetAssetTest {
         assertNotNull(json.decodeFromString<VocabularyPresetCatalogAsset>(raw))
     }
 
-    /**
-     * Every level is offered as a filter chip, so a level with no words is a control that
-     * silently does nothing. C2 shipped empty exactly this way.
-     */
     @Test
     fun `every CEFR level in the shipped vocabulary has words`() {
         val words = json.decodeFromString<List<VocabularySeedItem>>(
@@ -74,10 +68,6 @@ class VocabularyPresetAssetTest {
         assertTrue("these levels would filter to nothing: $empty", empty.isEmpty())
     }
 
-    /**
-     * One- and two-letter entries are function words, and they break the trainings built on
-     * spelling: there is no letter puzzle or crossword answer in "w".
-     */
     @Test
     fun `the shipped vocabulary has no one or two letter entries`() {
         val words = json.decodeFromString<List<VocabularySeedItem>>(
@@ -89,10 +79,6 @@ class VocabularyPresetAssetTest {
         assertTrue("these are too short to train on: $tooShort", tooShort.isEmpty())
     }
 
-    /**
-     * Guards the shipped asset itself, not just the parser: the build tool validates before
-     * writing, but nothing stops the file being hand-edited afterwards.
-     */
     @Test
     fun `the bundled catalogue parses and every preset is usable`() {
         val file = File("src/main/assets/vocabulary_presets.json")

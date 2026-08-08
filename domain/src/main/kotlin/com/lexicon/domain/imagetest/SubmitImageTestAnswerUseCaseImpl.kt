@@ -38,7 +38,6 @@ class SubmitImageTestAnswerUseCaseImpl
             return SubmitImageTestAnswerResponse(outcome = outcome, correctOption = request.correctOption)
         }
 
-        // This training has no Tip action, so the precedence is just Skip, then a straight comparison.
         private fun resolveOutcome(request: SubmitImageTestAnswerRequest): ImageTestStepOutcome =
             when {
                 request.skipped -> ImageTestStepOutcome.SKIPPED

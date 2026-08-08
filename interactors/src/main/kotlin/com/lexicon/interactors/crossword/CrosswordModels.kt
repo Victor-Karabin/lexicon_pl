@@ -4,9 +4,7 @@ enum class CrosswordDirection { ACROSS, DOWN }
 
 data class CrosswordWordPlacement(
     val vocabularyItemId: Long,
-    /** Target-language text to spell out; never shown directly. Always a single word — phrases are excluded. */
     val expectedText: String,
-    /** Base-language word shown as the clue. */
     val clueText: String,
     val row: Int,
     val col: Int,

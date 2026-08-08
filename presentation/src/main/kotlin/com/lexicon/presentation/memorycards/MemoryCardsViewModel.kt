@@ -172,7 +172,6 @@ class MemoryCardsViewModel
             }
         }
 
-        /** Called from the UI's "Next" button after a Skipped step. */
         fun onNext() {
             val state = _uiState.value as? MemoryCardsUiState.Loaded ?: return
             if (!state.awaitingNext) return

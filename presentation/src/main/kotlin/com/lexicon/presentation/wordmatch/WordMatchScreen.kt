@@ -193,7 +193,6 @@ private fun WordMatchScreenPreview() {
     }
 }
 
-/** A mismatched pair stays highlighted until the next attempt, on both columns at once. */
 @LightDarkPreview
 @Composable
 private fun WordMatchScreenIncorrectPreview() {
@@ -216,7 +215,6 @@ private fun WordMatchScreenIncorrectPreview() {
     }
 }
 
-/** Every pair matched — the board just before the session completes. */
 @LightDarkPreview
 @Composable
 private fun WordMatchScreenAllMatchedPreview() {

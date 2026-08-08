@@ -40,8 +40,6 @@ class SubmitPuzzleAnswerUseCaseImpl
             return SubmitPuzzleAnswerResponse(outcome = outcome, expectedText = request.expectedText)
         }
 
-        // The step outcome reflects the input alone; tip usage is recorded separately
-        // (tipUsed above) and surfaced on the Results screen rather than forcing Incorrect here.
         private fun resolveOutcome(request: SubmitPuzzleAnswerRequest): PuzzleStepOutcome =
             when {
                 request.skipped -> PuzzleStepOutcome.SKIPPED

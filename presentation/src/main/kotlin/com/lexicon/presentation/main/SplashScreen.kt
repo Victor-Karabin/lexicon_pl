@@ -44,6 +44,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.sync.CatalogSyncStatus
 import com.lexicon.interactors.sync.SyncStepStatus
+import com.lexicon.interactors.sync.isBlocked
+import com.lexicon.interactors.sync.isFinished
+import com.lexicon.interactors.sync.wasAlreadyCurrent
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkFontScalePreview
 import com.lexicon.presentation.common.LightDarkPreview
@@ -68,8 +71,6 @@ fun SplashScreen(
 ) {
     val status by viewModel.status.collectAsState()
 
-    // Leaves as soon as the catalogue is ready. A blocked sync stays put: there is nothing
-    // behind this screen to show without vocabulary.
     LaunchedEffect(status.isFinished, status.isBlocked) {
         if (status.isFinished && !status.isBlocked) onFinished()
     }
@@ -94,8 +95,6 @@ private fun SplashContent(
 
         StatusCard(status = status, modifier = Modifier.widthIn(max = StatusCardMaxWidth))
 
-        // Reserved rather than conditional, so the card does not jump up the screen when the
-        // retry appears — the layout should not move while the user is reading it.
         AnimatedVisibility(visible = status.isBlocked, enter = fadeIn(), exit = fadeOut()) {
             Column(
                 modifier = Modifier.padding(top = Dimens.spacingLarge),
@@ -162,8 +161,6 @@ private fun StatusCard(
             Spacer(modifier = Modifier.height(Dimens.spacingMedium))
             SyncStepRow(stringResource(R.string.sync_step_presets), status.presets)
 
-            // One bar for the whole job, so the wait has a visible end. Animated so a step
-            // finishing reads as progress rather than a jump.
             val progress by animateFloatAsState(
                 targetValue = status.completedFraction(),
                 label = "sync progress",
@@ -177,7 +174,6 @@ private fun StatusCard(
     }
 }
 
-/** One line per step, each carrying its own state so a slow step is not mistaken for a stuck one. */
 @Composable
 private fun SyncStepRow(
     label: String,
@@ -188,9 +184,6 @@ private fun SyncStepRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
     ) {
-        // Crossfaded because these swap while the user is looking at them, and a popping icon
-        // reads as a glitch rather than a state change. Faded on the icon kind rather than the
-        // status itself, so a count changing does not restart the animation.
         Crossfade(targetState = status.icon(), label = "step icon") { icon ->
             Box(modifier = Modifier.size(StatusIconSize), contentAlignment = Alignment.Center) {
                 when (icon) {
@@ -244,7 +237,6 @@ private fun SyncStepStatus.icon(): StepIcon =
         is SyncStepStatus.Failed -> StepIcon.FAILED
     }
 
-/** Says what actually happened: "up to date" and "imported 2,219" are different waits. */
 @Composable
 private fun statusDetail(status: SyncStepStatus): String? =
     when (status) {
@@ -265,7 +257,6 @@ private fun statusDetail(status: SyncStepStatus): String? =
             }
     }
 
-/** Grouped by the reader's locale: "2,219" is a count, "2219" is a serial number. */
 private fun Int.grouped(): String = NumberFormat.getIntegerInstance().format(this)
 
 private fun CatalogSyncStatus.completedFraction(): Float {

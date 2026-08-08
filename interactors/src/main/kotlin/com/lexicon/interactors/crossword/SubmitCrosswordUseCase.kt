@@ -5,9 +5,7 @@ enum class CrosswordWordOutcome { CORRECT, INCORRECT }
 data class CrosswordWordSubmission(
     val vocabularyItemId: Long,
     val expectedText: String,
-    /** Letters currently filled into this word's cells, including any Tip-revealed ones. */
     val submittedText: String,
-    /** Whether at least one of this word's letters was revealed via Tip. */
     val tipUsed: Boolean,
 )
 
@@ -25,7 +23,6 @@ data class CrosswordWordResult(
 
 data class SubmitCrosswordResponse(
     val wordResults: List<CrosswordWordResult>,
-    /** Correct only when every word is correct and no Tip was used anywhere in the puzzle. */
     val isFullyCorrect: Boolean,
 )
 

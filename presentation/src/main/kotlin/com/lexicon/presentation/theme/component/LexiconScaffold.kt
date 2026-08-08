@@ -19,11 +19,6 @@ import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
 
-/**
- * Shared training-step shell: close + title, progress slot, content slot, action row slot.
- * Formalizes the Scaffold + TrainingTopBar structure duplicated across every training screen —
- * not yet wired into any of them; each screen still builds this shape inline.
- */
 @Composable
 fun LexiconScaffold(
     title: String,
@@ -83,7 +78,6 @@ private fun LexiconScaffoldPreview() {
     }
 }
 
-/** The slots are optional; this is the bare shell with neither progress nor actions. */
 @LightDarkPreview
 @Composable
 private fun LexiconScaffoldContentOnlyPreview() {

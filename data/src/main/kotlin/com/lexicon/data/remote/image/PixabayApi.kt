@@ -8,7 +8,6 @@ interface PixabayApi {
     @GET("api/")
     suspend fun search(
         @Query("q") query: String,
-        // Pixabay requires per_page in [3, 200] even when only the first hit is used.
         @Query("per_page") perPage: Int = 3,
     ): PixabaySearchResponse
 }

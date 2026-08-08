@@ -26,11 +26,6 @@ import com.lexicon.presentation.theme.LexiconTheme
 
 enum class ProgressDotsVariant { BAR, DOTS }
 
-/**
- * Session progress, shown under the title bar on every multi-step training (not Crossword).
- * [ProgressDotsVariant.BAR] matches the current app (LinearProgressIndicator-style bar + counter);
- * [ProgressDotsVariant.DOTS] is DESIGN.md §8.3's bubble-mode treatment, not yet used anywhere.
- */
 @Composable
 fun ProgressDots(
     step: Int,
@@ -100,14 +95,12 @@ private fun ProgressDotsStatesPreview() {
                 modifier = Modifier.padding(Dimens.spacingMedium),
                 verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             ) {
-                // First, middle and last step, where the bar fill and dot emphasis differ most.
                 listOf(0, 4, 9).forEach { step ->
                     ProgressDots(step = step, total = 10, modifier = Modifier.fillMaxWidth())
                 }
                 listOf(0, 4, 9).forEach { step ->
                     ProgressDots(step = step, total = 10, variant = ProgressDotsVariant.DOTS)
                 }
-                // Single-step session: the bar should be fully filled, not empty.
                 ProgressDots(step = 0, total = 1, modifier = Modifier.fillMaxWidth())
             }
         }

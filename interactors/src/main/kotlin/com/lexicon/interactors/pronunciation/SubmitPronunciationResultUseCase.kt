@@ -5,9 +5,7 @@ data class SubmitPronunciationResultRequest(
     val stepIndex: Int,
     val vocabularyItemId: Long,
     val expectedText: String,
-    /** Empty when the step was skipped rather than answered. */
     val recognizedText: String,
-    /** 0f-1f confidence from the recognizer, when available. */
     val confidence: Float?,
     val tipUsed: Boolean,
     val skipped: Boolean,

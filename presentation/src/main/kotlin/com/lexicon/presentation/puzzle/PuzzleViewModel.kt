@@ -85,7 +85,6 @@ class PuzzleViewModel
             updateLoaded { it.copy(placedTiles = it.placedTiles + tile) }
         }
 
-        /** Removes the most recently placed tile, sending it back to the available pool. */
         fun onUndo() {
             val state = _uiState.value as? PuzzleUiState.Loaded ?: return
             if (!state.canUndo) return
@@ -170,7 +169,6 @@ class PuzzleViewModel
             }
         }
 
-        /** Called from the UI's "Next" button after an Incorrect/Skipped step. */
         fun onNext() {
             val state = _uiState.value as? PuzzleUiState.Loaded ?: return
             if (!state.awaitingNext) return

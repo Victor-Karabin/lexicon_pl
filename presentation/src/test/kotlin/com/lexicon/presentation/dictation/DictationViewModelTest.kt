@@ -121,7 +121,6 @@ class DictationViewModelTest {
             assertEquals(AnswerState.Incorrect("kot"), state.answerState)
             assertEquals("kot", state.revealedAnswer)
             assertTrue(state.awaitingNext)
-            // Auto-advance only happens for Correct; Incorrect must wait for an explicit Next.
             assertEquals(0, state.stepIndex)
         }
 

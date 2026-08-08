@@ -6,7 +6,6 @@ internal object LexiconDestinations {
     const val SPLASH = "splash"
     const val MAIN = "main"
 
-    // Route strings match TrainingIds exactly, since TrainingsScreen navigates by passing that id up.
     const val DICTATION = TrainingIds.DICTATION
     const val DICTATION_PUZZLE = TrainingIds.DICTATION_PUZZLE
     const val TRUE_OR_FALSE = TrainingIds.TRUE_OR_FALSE

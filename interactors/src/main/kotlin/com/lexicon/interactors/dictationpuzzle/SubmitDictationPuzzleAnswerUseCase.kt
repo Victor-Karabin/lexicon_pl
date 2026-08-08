@@ -5,7 +5,6 @@ data class SubmitDictationPuzzleAnswerRequest(
     val stepIndex: Int,
     val vocabularyItemId: Long,
     val expectedText: String,
-    /** Empty when the step was skipped rather than answered. */
     val submittedText: String,
     val tipUsed: Boolean,
     val skipped: Boolean,

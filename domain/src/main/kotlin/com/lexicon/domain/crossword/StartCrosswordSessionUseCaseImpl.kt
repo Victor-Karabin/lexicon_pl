@@ -10,7 +10,6 @@ import com.lexicon.interactors.crossword.StartCrosswordSessionUseCase
 import java.util.UUID
 import javax.inject.Inject
 
-/** Large enough to reliably find [StartCrosswordSessionRequest.wordCount] single-word (non-phrase) items. */
 private const val CANDIDATE_POOL_SIZE = 200
 
 class StartCrosswordSessionUseCaseImpl
@@ -19,7 +18,6 @@ class StartCrosswordSessionUseCaseImpl
         private val vocabularyRepository: VocabularyRepository,
     ) : StartCrosswordSessionUseCase {
         override suspend fun invoke(request: StartCrosswordSessionRequest): CrosswordSessionResponse {
-            // Crossword cells hold one letter each, so multi-word phrases can't be placed in the grid.
             val words = vocabularyRepository.getRandomItems(CANDIDATE_POOL_SIZE)
                 .map { it.toWord() }
                 .filterNot { it.isPhrase }

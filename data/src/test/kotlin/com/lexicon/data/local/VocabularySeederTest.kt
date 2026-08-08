@@ -55,11 +55,6 @@ class VocabularySeederTest {
             coVerify { wordDao.insertAll(match { it.size == 2 }) }
         }
 
-    /**
-     * The bug this class exists for: the corpus grew from 1,767 to 2,219 words and installs
-     * that were already seeded received none of them, so the levels those words filled stayed
-     * empty on every device but a fresh one.
-     */
     @Test
     fun `words added to the asset reach an already-seeded table`() =
         runTest {
@@ -88,10 +83,6 @@ class VocabularySeederTest {
             assertEquals(listOf(2L), deleted.captured)
         }
 
-    /**
-     * A deletion has to survive the sync that would otherwise restore it: the word is still in
-     * the asset, so a reconcile that ignored the flag would put it straight back.
-     */
     @Test
     fun `a deleted word stays deleted when its word is refreshed`() =
         runTest {
@@ -107,7 +98,6 @@ class VocabularySeederTest {
             assertEquals("the correction is still taken", "cat", updated.captured.single().translation)
         }
 
-    /** Favourites are the user's, and a corpus update is not a reason to lose them. */
     @Test
     fun `a favourite survives its word being refreshed`() =
         runTest {
@@ -148,10 +138,6 @@ class VocabularySeederTest {
             coVerify(exactly = 0) { vocabularySeedAssetLoader.load() }
         }
 
-    /**
-     * A schema change can empty the table without the asset moving, and the stored fingerprint
-     * would otherwise report everything as up to date for ever.
-     */
     @Test
     fun `an emptied table is reseeded even when the asset has not changed`() =
         runTest {

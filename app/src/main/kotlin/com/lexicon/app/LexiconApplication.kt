@@ -9,8 +9,6 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class LexiconApplication : Application(), ImageLoaderFactory {
-    // Vocabulary item images (Puzzle, Image Test, Memory Cards) come from external providers over
-    // the network; an explicit disk cache keeps a repeated session from re-fetching the same image.
     override fun newImageLoader(): ImageLoader =
         ImageLoader.Builder(this)
             .memoryCache {

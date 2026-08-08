@@ -34,10 +34,6 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class StartMixSessionUseCaseImplTest {
-    /**
-     * Ids increment per call so each request yields a fresh item, mirroring the real trainings,
-     * which draw their vocabulary at random rather than returning the same word every time.
-     */
     private var nextId = 0L
 
     private fun id() = ++nextId
@@ -125,7 +121,6 @@ class StartMixSessionUseCaseImplTest {
             assertTrue(steps.map { it.trainingType }.all { it in allowed })
         }
 
-    /** The countdown belongs to a standalone True or False session; a Mix step is one question. */
     @Test
     fun `True or False steps are requested one at a time, so no timed pool is built`() =
         runTest {
@@ -151,8 +146,6 @@ class StartMixSessionUseCaseImplTest {
     @Test
     fun `the same word is never asked twice under the same training type`() =
         runTest {
-            // A small vocabulary the trainings keep re-drawing from, which is exactly when
-            // repetition shows up: a large one hides it behind chance.
             val pool = listOf(1L, 2L, 3L)
             var draw = 0
             coEvery { startDictation(any()) } answers {
@@ -165,7 +158,6 @@ class StartMixSessionUseCaseImplTest {
             assertEquals("an exercise was repeated within the session", exercises.distinct(), exercises)
         }
 
-    /** Mix's whole point is seeing a word from different angles, so only the pairing is unique. */
     @Test
     fun `the same word may still be asked under a different training type`() =
         runTest {
@@ -181,7 +173,6 @@ class StartMixSessionUseCaseImplTest {
             assertEquals(types, steps.map { it.trainingType }.toSet())
         }
 
-    /** A vocabulary too small to fill the session yields a shorter one instead of looping forever. */
     @Test
     fun `a training stuck on one word contributes a single step`() =
         runTest {

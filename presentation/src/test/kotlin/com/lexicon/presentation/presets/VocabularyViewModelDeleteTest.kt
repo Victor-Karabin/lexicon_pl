@@ -99,11 +99,6 @@ class VocabularyViewModelDeleteTest {
             vocabularyIds = wordIds.map(::VocabularyId).toImmutableList(),
         )
 
-    /**
-     * Regression: the browser fetched its presets once, so a word deleted on the detail screen
-     * left it showing a preset that still counted the word — its heart could never read as full
-     * again. The list is observed now, so a change made anywhere reaches it.
-     */
     @Test
     fun `the preset list reflects a word deleted somewhere else`() =
         runTest(dispatcher) {
@@ -130,7 +125,6 @@ class VocabularyViewModelDeleteTest {
             coVerify(exactly = 1) { deleteWord(VocabularyId(1L)) }
         }
 
-    /** The row has to go at once; waiting for a re-query would leave it under the finger. */
     @Test
     fun `a deleted word leaves the list immediately`() =
         runTest(dispatcher) {
@@ -175,7 +169,6 @@ class VocabularyViewModelDeleteTest {
             assertEquals(listOf("kot", "pies"), loaded(viewModel.uiState.value).words.map { it.text })
         }
 
-    /** Cleared once shown, or the same undo would be offered again on the next state change. */
     @Test
     fun `the undo is cleared once its message has been shown`() =
         runTest(dispatcher) {

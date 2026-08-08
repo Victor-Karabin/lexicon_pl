@@ -55,6 +55,8 @@ import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
+import com.lexicon.interactors.presets.resolve
+import com.lexicon.interactors.presets.wordCount
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.DeleteAction
 import com.lexicon.presentation.common.DeleteActionWidth
@@ -71,13 +73,6 @@ import kotlin.time.Duration.Companion.minutes
 
 private val IconBadgeSize = 44.dp
 
-/**
- * The Vocabulary tab: curated presets, and a search over every word.
- *
- * One list, not two. The search box looks up words — the thing you reach for when you want to
- * know or favourite a particular one — and the presets stay underneath it, restored untouched
- * the moment the box is cleared.
- */
 @Composable
 fun VocabularyScreen(
     onPresetSelected: (PresetId) -> Unit,
@@ -133,8 +128,6 @@ private fun VocabularyContent(
     Scaffold(
         modifier = modifier,
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        // This sits inside the main Scaffold, which has already inset its content. Left to its
-        // default this one adds the status bar a second time, as blank space above the search.
         contentWindowInsets = WindowInsets(0),
     ) { padding ->
         VocabularyBody(
@@ -255,10 +248,6 @@ private fun PresetResults(
     }
 }
 
-/**
- * The CEFR levels, in one scrolling row. They select words rather than narrowing presets, so
- * they stay reachable whichever list is on screen.
- */
 @Composable
 private fun FilterRow(
     uiState: VocabularyUiState.Loaded,
@@ -310,9 +299,6 @@ private fun PresetCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
         ) {
-            // The count sits under the icon rather than in the line below the description,
-            // where it competed with the category and duration for the same glance. It is the
-            // one number worth comparing between presets.
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Box(
                     modifier = Modifier.size(IconBadgeSize).background(preset.accentColor(), CircleShape),
@@ -383,7 +369,6 @@ private fun Message(text: String) {
     }
 }
 
-/** Falls back to the theme when a preset carries no colour, or one that will not parse. */
 @Composable
 private fun VocabularyPreset.accentColor(): Color {
     val fallback = MaterialTheme.colorScheme.primary
@@ -394,7 +379,6 @@ private fun VocabularyPreset.accentColor(): Color {
 
 private fun Duration.readableMinutes(): Int = inWholeMinutes.toInt().coerceAtLeast(1)
 
-/** Grouped by the reader's locale: "1,000" is a count, "1000" is a serial number. */
 private fun Int.grouped(): String = NumberFormat.getIntegerInstance().format(this)
 
 private val previewCategory = PresetCategory(

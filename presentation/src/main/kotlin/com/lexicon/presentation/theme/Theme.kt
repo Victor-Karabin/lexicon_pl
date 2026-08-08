@@ -19,9 +19,6 @@ fun LexiconTheme(
 ) {
     val colorScheme = if (darkTheme) DarkColors else LightColors
     MaterialTheme(colorScheme = colorScheme) {
-        // Paints the background itself rather than leaving it to each screen. Screens built on
-        // Scaffold happened to get one; anything else — the splash, a bare Column — showed the
-        // window background through, which is a fixed light colour and does not follow the theme.
         Surface(modifier = Modifier.fillMaxSize(), color = colorScheme.background, content = content)
     }
 }

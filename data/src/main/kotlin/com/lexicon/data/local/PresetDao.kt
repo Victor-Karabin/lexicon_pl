@@ -18,13 +18,6 @@ interface PresetDao {
     @Query("SELECT * FROM presets WHERE id = :id")
     suspend fun getPreset(id: String): PresetEntity?
 
-    /**
-     * Joined against the words so a deleted one leaves the preset it was in.
-     *
-     * Without the join a preset keeps counting a word the user removed, and since a deleted
-     * word can never appear among the favourites, "every word favourited" becomes unreachable —
-     * the preset's heart sticks at partly-filled however many times it is tapped.
-     */
     @Query(
         """
         SELECT pw.wordId FROM preset_words pw
@@ -35,12 +28,6 @@ interface PresetDao {
     )
     suspend fun getWordIds(presetId: String): List<Long>
 
-    /**
-     * Emits whenever the catalogue changes, including when a word is deleted or restored: Room
-     * invalidates on every table the query touches, and this one touches all three. Without it
-     * a screen that read the presets once goes on showing a preset that still counts a word the
-     * user removed.
-     */
     @Query(
         """
         SELECT pw.* FROM preset_words pw
@@ -52,7 +39,6 @@ interface PresetDao {
     )
     fun observeMemberships(): Flow<List<PresetWordEntity>>
 
-    /** One query for every membership, so listing presets is not one query per preset. */
     @Query(
         """
         SELECT pw.* FROM preset_words pw
@@ -81,11 +67,6 @@ interface PresetDao {
     @Query("DELETE FROM preset_words WHERE presetId = :presetId")
     suspend fun deleteMemberships(presetId: String)
 
-    /**
-     * Replaces the whole catalogue in one transaction. Presets are reference data — nothing the
-     * user owns lives on these rows — so replacing is both correct and simpler than reconciling
-     * row by row, and a half-written catalogue can never be observed.
-     */
     @Transaction
     suspend fun replaceCatalog(
         categories: List<PresetCategoryEntity>,

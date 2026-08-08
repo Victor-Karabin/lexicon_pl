@@ -3,7 +3,6 @@ package com.lexicon.presentation.theme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.unit.dp
 
-/** Corner-radius scale from the design handoff (DESIGN.md §5). Flat/tonal — no shadows outside [elevationRaised]. */
 object LexiconShapes {
     val small = RoundedCornerShape(8.dp) // chips, tiles
     val medium = RoundedCornerShape(16.dp) // cards, sheets

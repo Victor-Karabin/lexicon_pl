@@ -63,13 +63,6 @@ import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material.icons.filled.Yard
 import androidx.compose.ui.graphics.vector.ImageVector
 
-/**
- * Maps the icon names carried in preset data to drawable vectors.
- *
- * Compose has no way to look an icon up by name, so this table is the one place where
- * adding a preset can require a code change — and only when it wants an icon nothing else
- * uses. An unmapped name falls back rather than failing, so a new preset always renders.
- */
 private val PRESET_ICONS: Map<String, ImageVector> = mapOf(
     "account_balance" to Icons.Default.AccountBalance,
     "auto_stories" to Icons.Default.Bookmarks,

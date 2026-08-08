@@ -30,9 +30,6 @@ class SyncCatalogUseCaseImpl
                 status = status.copy(vocabulary = vocabulary)
                 emit(status)
 
-                // Words first, and presets only if there are words: a preset is a list of word
-                // ids, so importing one over an empty vocabulary yields a catalogue of presets
-                // that all resolve to nothing.
                 if (vocabulary is SyncStepStatus.Failed && !vocabulary.canContinue) {
                     emit(status.copy(presets = SyncStepStatus.Failed(SKIPPED, canContinue = false)))
                     return@flow
@@ -51,11 +48,6 @@ class SyncCatalogUseCaseImpl
                 )
             }
 
-        /**
-         * A step that throws is reported rather than propagated: the splash has to say what went
-         * wrong, and a store that already holds rows can still be used with what it has —
-         * a stale catalogue is not a broken app.
-         */
         private suspend fun step(
             sync: suspend () -> SyncOutcomeBoundary,
             storeHasData: suspend () -> Boolean,

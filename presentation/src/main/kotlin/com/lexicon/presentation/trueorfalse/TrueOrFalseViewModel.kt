@@ -106,7 +106,6 @@ class TrueOrFalseViewModel
             }
         }
 
-        // No status is shown and there is no Next button — every answer advances immediately.
         private suspend fun applyOutcome(
             outcome: TrueOrFalseStepOutcome,
             step: TrueOrFalseStepResponse,
@@ -126,12 +125,9 @@ class TrueOrFalseViewModel
 
         private suspend fun advanceToNextStep() {
             val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
-            // The timer may have completed the session while this step's auto-advance delay was
-            // running; don't revive the screen with a new step in that case.
             if (state.isSessionComplete) return
             val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
-                // Ran out of fetched items before the timer expired.
                 completeSession()
                 return
             }
@@ -144,9 +140,6 @@ class TrueOrFalseViewModel
             updateLoaded { it.copy(isSessionComplete = true) }
             lastSessionResultsHolder.wordResults = wordResults.toList()
             _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skipped = 0))
-            // Cancelled last: when the timer itself calls this on natural expiry, completeSession()
-            // is running inside timerJob — cancelling it earlier would abort this very coroutine
-            // before the emit above completes, and the Results screen would never be shown.
             timerJob?.cancel()
         }
 

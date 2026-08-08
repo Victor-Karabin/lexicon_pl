@@ -6,9 +6,7 @@ data class ImageTestStepResponse(
     val stepIndex: Int,
     val vocabularyItemId: Long,
     val imageUrl: String?,
-    /** Shown instead of the image when it's missing or fails to load. */
     val clueText: String,
-    /** Shuffled, includes exactly one correct translation among the distractors. */
     val options: List<String>,
     val correctOption: String,
 )

@@ -60,13 +60,6 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
                 }
             }
 
-        /**
-         * Pops back to the existing Main entry rather than navigating to a new one. Navigating
-         * would push a second Main on top of the first, so the back stack grew with every
-         * training opened and closed, and each new Main started over on the first tab.
-         *
-         * Takes no route, because popping to Main does not depend on where it is called from.
-         */
         val closeToMain: () -> Unit = { navController.popBackStack(LexiconDestinations.MAIN, inclusive = false) }
 
         composable(LexiconDestinations.DICTATION) {
@@ -207,7 +200,6 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
                 incorrect = args?.getInt("incorrect").orDefault(),
                 skipped = args?.getInt("skipped").orDefault(),
                 tipsUsed = args?.getInt("tipsUsed").orDefault(),
-                // Same reason as onClose: return to the Main that is already there.
                 onDone = { navController.popBackStack(LexiconDestinations.MAIN, inclusive = false) },
             )
         }

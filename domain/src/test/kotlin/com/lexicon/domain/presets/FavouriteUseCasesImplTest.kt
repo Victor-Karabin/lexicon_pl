@@ -50,10 +50,6 @@ class FavouriteUseCasesImplTest {
             coVerify { vocabularyRepository.setFavourite(listOf(7L), false) }
         }
 
-    /**
-     * One write, not one per word: a thousand-word preset would otherwise emit a thousand
-     * updates and make every observer redraw on each.
-     */
     @Test
     fun `favouriting a preset writes all of its words in a single call`() =
         runTest {

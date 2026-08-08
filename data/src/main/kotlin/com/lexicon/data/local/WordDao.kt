@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WordDao {
-    /** The study set is exactly the favourited words; nothing else is ever trained on. */
     @Query("SELECT * FROM words WHERE isFavourite = 1 AND isDeleted = 0 ORDER BY RANDOM() LIMIT :count")
     suspend fun getRandomForStudy(count: Int): List<WordEntity>
 
@@ -24,14 +23,9 @@ interface WordDao {
     @Query("SELECT id FROM words WHERE isFavourite = 1 AND isDeleted = 0")
     fun observeFavouriteIds(): Flow<List<Long>>
 
-    /** Mirrors [getRandomForStudy]'s pool, so the two can never disagree. */
     @Query("SELECT COUNT(*) FROM words WHERE isFavourite = 1 AND isDeleted = 0")
     suspend fun countForStudy(): Int
 
-    /**
-     * [foldedQuery] must already be folded; matching a raw query against a folded column is
-     * how a search for "zolw" silently stops finding "żółw".
-     */
     @Query(
         """
         SELECT * FROM words
@@ -61,7 +55,6 @@ interface WordDao {
     @Query("SELECT COUNT(*) FROM words WHERE isDeleted = 0")
     suspend fun count(): Int
 
-    /** Includes deleted rows: the reconcile has to see them to keep them deleted. */
     @Query("SELECT COUNT(*) FROM words")
     suspend fun countIncludingDeleted(): Int
 

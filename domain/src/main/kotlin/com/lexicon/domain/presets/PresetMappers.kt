@@ -15,10 +15,6 @@ import kotlin.time.Duration.Companion.seconds
 
 fun PresetCategoryBoundary.toCategory(): PresetCategory = PresetCategory(id = id, order = order, title = LocalizedText(title))
 
-/**
- * An unrecognised CEFR value degrades to null rather than throwing: a data file written
- * against a newer scale should cost a filter, not the whole catalogue.
- */
 fun VocabularyPresetBoundary.toPreset(category: PresetCategory): VocabularyPreset =
     VocabularyPreset(
         id = PresetId(id),

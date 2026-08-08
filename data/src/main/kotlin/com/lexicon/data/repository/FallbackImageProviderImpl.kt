@@ -7,7 +7,6 @@ import com.lexicon.data.remote.image.PixabayImageSource
 import com.lexicon.data.remote.image.UnsplashImageSource
 import javax.inject.Inject
 
-/** Tries each image source in order, falling through to the next on no result or failure. */
 class FallbackImageProviderImpl
     @Inject
     constructor(

@@ -22,10 +22,6 @@ class ToggleWordFavouriteUseCaseImpl
         ) = vocabularyRepository.setFavourite(listOf(id.value), isFavourite)
     }
 
-/**
- * Applies the whole preset in one write rather than word by word: a thousand-word preset
- * would otherwise emit a thousand updates, and every observer would redraw on each one.
- */
 class SetPresetFavouriteUseCaseImpl
     @Inject
     constructor(

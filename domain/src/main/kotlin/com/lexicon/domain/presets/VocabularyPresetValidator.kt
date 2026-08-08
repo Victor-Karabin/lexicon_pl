@@ -2,7 +2,6 @@ package com.lexicon.domain.presets
 
 import com.lexicon.boundary.VocabularyPresetCatalogBoundary
 
-/** Everything that can be wrong with a preset catalogue, named so a report is actionable. */
 sealed interface PresetValidationIssue {
     data class DuplicatePresetId(val id: String) : PresetValidationIssue
 
@@ -19,14 +18,6 @@ sealed interface PresetValidationIssue {
     data class MissingTitle(val presetId: String) : PresetValidationIssue
 }
 
-/**
- * Checks a catalogue against the rules the format promises.
- *
- * The build tool runs the same checks before an asset is written, so shipped data is
- * already valid; this exists for catalogues that did not come from the build tool —
- * downloaded packs, imported files, anything user-supplied later. Reporting every issue
- * rather than throwing on the first lets a bad import be explained in full.
- */
 class VocabularyPresetValidator {
     fun validate(
         catalog: VocabularyPresetCatalogBoundary,
@@ -51,8 +42,6 @@ class VocabularyPresetValidator {
             preset.vocabularyIds.duplicates { it }.forEach {
                 issues += PresetValidationIssue.DuplicateWordInPreset(preset.id, it)
             }
-            // Only checked when the vocabulary is known: an empty set means "not loaded yet",
-            // and reporting every word as missing would be noise rather than a finding.
             if (knownVocabularyIds.isNotEmpty()) {
                 val missing = preset.vocabularyIds.filterNot { it in knownVocabularyIds }
                 if (missing.isNotEmpty()) {

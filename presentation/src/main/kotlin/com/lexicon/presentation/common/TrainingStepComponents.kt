@@ -35,18 +35,10 @@ import com.lexicon.presentation.theme.component.AnswerChip
 import com.lexicon.presentation.theme.component.AnswerChipState
 import com.lexicon.presentation.theme.component.AnswerChipVariant
 
-/**
- * The pieces a training step is assembled from. They live here rather than in each screen because
- * Mix re-renders the same steps inside its own session: a copy per screen drifts, and the same
- * exercise then looks different depending on how it was reached.
- */
-
 private val ClueImageHeight = 180.dp
 
-/** Tall enough that the answer pair reads as the step's primary action, without dominating it. */
 private val AnswerButtonHeight = 88.dp
 
-/** The one place answer outcomes turn into colour, so every screen reads the same. */
 @Composable
 fun answerStateColor(answerState: AnswerState): Color =
     when (answerState) {
@@ -55,10 +47,6 @@ fun answerStateColor(answerState: AnswerState): Color =
         is AnswerState.Unanswered -> MaterialTheme.colorScheme.outline
     }
 
-/**
- * The answer assembled from letter tiles. Blank text keeps the box at its natural height, so the
- * layout doesn't jump as the first tile is placed.
- */
 @Composable
 fun BuiltAnswerField(
     answer: String,
@@ -82,11 +70,6 @@ fun BuiltAnswerField(
     }
 }
 
-/**
- * The image a step is asked about. [fallbackText] stands in whenever there is no image or it fails
- * to load, so a step stays answerable instead of showing an empty frame (Puzzle spec: fall back to
- * the base text).
- */
 @Composable
 fun ClueImage(
     imageUrl: String?,
@@ -113,10 +96,6 @@ fun ClueImage(
     }
 }
 
-/**
- * The single-select answer options of a multiple-choice step. A non-null [correctOption] means the
- * step has been checked, which is what turns the options from selectable into graded.
- */
 @Composable
 fun AnswerOptionList(
     options: List<String>,
@@ -145,7 +124,6 @@ fun AnswerOptionList(
     }
 }
 
-/** How an answer button is coloured: by what it means, not by a raw colour. */
 enum class AnswerTone {
     POSITIVE,
     NEGATIVE,
@@ -153,7 +131,6 @@ enum class AnswerTone {
     ;
 
     companion object {
-        /** null — no outcome yet — leaves the button neutral. */
         fun of(isCorrect: Boolean?): AnswerTone =
             when (isCorrect) {
                 true -> POSITIVE
@@ -163,11 +140,6 @@ enum class AnswerTone {
     }
 }
 
-/**
- * True or False's answer pair. It belongs in a screen's bottom slot rather than inline with the
- * word: these buttons are the step's primary action, and the standalone training places them within
- * thumb reach, so a Mix step has to sit there too or the same exercise moves around.
- */
 @Composable
 fun TrueOrFalseAnswerRow(
     trueTone: AnswerTone,
@@ -197,11 +169,6 @@ fun TrueOrFalseAnswerRow(
     }
 }
 
-/**
- * The disabled colours repeat the enabled ones: the button is disabled the moment it is answered,
- * and Material would otherwise grey the container out exactly when its colour starts carrying the
- * result.
- */
 @Composable
 private fun AnswerToneButton(
     label: String,
@@ -234,7 +201,6 @@ private fun AnswerToneButton(
     }
 }
 
-/** Renders nothing until the step is answered, which is when there is a status worth naming. */
 @Composable
 fun AnswerStatusLabel(
     answerState: AnswerState,

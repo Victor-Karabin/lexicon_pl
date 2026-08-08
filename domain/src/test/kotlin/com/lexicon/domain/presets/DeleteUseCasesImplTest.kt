@@ -29,7 +29,6 @@ class DeleteUseCasesImplTest {
             coVerify(exactly = 1) { vocabularyRepository.restoreWord(7L) }
         }
 
-    /** A preset is a list of words, not an owner of them: removing it must not remove words. */
     @Test
     fun `deleting a preset leaves the words it listed alone`() =
         runTest {

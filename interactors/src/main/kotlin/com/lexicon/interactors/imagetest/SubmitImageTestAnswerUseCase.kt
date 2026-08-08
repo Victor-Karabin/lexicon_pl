@@ -5,7 +5,6 @@ data class SubmitImageTestAnswerRequest(
     val stepIndex: Int,
     val vocabularyItemId: Long,
     val correctOption: String,
-    /** Null when the step was skipped rather than answered. */
     val selectedOption: String?,
     val skipped: Boolean,
 )
@@ -15,7 +14,6 @@ data class SubmitImageTestAnswerResponse(
     val correctOption: String,
 )
 
-/** This training has no Tip action per spec. */
 interface SubmitImageTestAnswerUseCase {
     suspend operator fun invoke(request: SubmitImageTestAnswerRequest): SubmitImageTestAnswerResponse
 }

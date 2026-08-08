@@ -22,14 +22,8 @@ import java.util.UUID
 import javax.inject.Inject
 import kotlin.random.Random
 
-/** Retries per step when the drawn item would repeat an exercise already in the session. */
 private const val MAX_ATTEMPTS_PER_STEP = 12
 
-/**
- * Builds each step by asking the originating training for a one-step session, so generation —
- * distractors, images, letter tiles, true/false pairing — is the training's own logic rather than a
- * reimplementation that could drift from it (Mix spec §9).
- */
 class StartMixSessionUseCaseImpl
     @Inject
     constructor(
@@ -46,9 +40,6 @@ class StartMixSessionUseCaseImpl
             val types = request.trainingTypes.ifEmpty { MixTrainingType.entries.toSet() }
             val assignments = assignTrainingTypes(types, stepCount)
 
-            // Built one at a time rather than in parallel: each step has to see what the session
-            // already contains to avoid repeating an exercise, and the underlying trainings each
-            // pick their vocabulary independently and at random.
             val used = mutableSetOf<Pair<MixTrainingType, Long>>()
             val steps = mutableListOf<MixStep>()
             assignments.forEach { type ->
@@ -58,14 +49,6 @@ class StartMixSessionUseCaseImpl
             return MixSessionResponse(sessionId = UUID.randomUUID().toString(), steps = steps)
         }
 
-        /**
-         * Asks for a step until it lands on a vocabulary item this training type hasn't already
-         * used. The same word may still appear under a *different* exercise, which is the point of
-         * Mix; what is avoided is being asked the identical question twice.
-         *
-         * Gives up after [MAX_ATTEMPTS_PER_STEP] so a vocabulary too small to fill the session
-         * yields a shorter one instead of looping.
-         */
         private suspend fun distinctStep(
             stepIndex: Int,
             type: MixTrainingType,
@@ -78,11 +61,6 @@ class StartMixSessionUseCaseImpl
             return null
         }
 
-        /**
-         * Spec §8: every enabled type should appear at least once when there are enough steps, and
-         * the same type shouldn't repeat excessively. Seeding one of each and shuffling gives both,
-         * without needing a distribution algorithm the spec leaves open.
-         */
         private fun assignTrainingTypes(
             types: Set<MixTrainingType>,
             stepCount: Int,
@@ -93,7 +71,6 @@ class StartMixSessionUseCaseImpl
             return (seeded + remainder).shuffled()
         }
 
-        /** A type that can't produce a step (e.g. no vocabulary left) is dropped rather than retried — spec §13. */
         private suspend fun buildStep(
             stepIndex: Int,
             type: MixTrainingType,
@@ -115,8 +92,6 @@ class StartMixSessionUseCaseImpl
                     startImageTest(StartImageTestSessionRequest(stepCount = 1)).steps.firstOrNull()
                         ?.let { MixStep.ImageTest(stepIndex, it) }
 
-                // poolSize 1: a Mix step is a single question, with none of the standalone
-                // training's countdown or answer-as-many-as-you-can pool.
                 MixTrainingType.TRUE_OR_FALSE ->
                     startTrueOrFalse(StartTrueOrFalseSessionRequest(poolSize = 1)).steps.firstOrNull()
                         ?.let { MixStep.TrueOrFalse(stepIndex, it) }

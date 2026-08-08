@@ -40,11 +40,6 @@ class CrosswordGridGeneratorTest {
         assertTrue(words.map { it.id }.containsAll(placedIds))
     }
 
-    /**
-     * Every word must be reachable from the first one through shared cells. A word that can't
-     * intersect anything is dropped rather than parked on its own row: a detached run of cells
-     * floating below the puzzle isn't part of the crossword and can't be solved from its crossings.
-     */
     @Test
     fun `all placed words form a single connected crossword`() {
         val vocabulary = listOf(
@@ -59,7 +54,6 @@ class CrosswordGridGeneratorTest {
             val cellsPerWord = layout.placements.map { placed ->
                 (0 until placed.word.text.length).map { i -> cellFor(placed, i) }.toSet()
             }
-            // Flood-fill from the first word through words that share at least one cell.
             val reached = mutableSetOf(0)
             var grew = true
             while (grew) {
@@ -84,19 +78,12 @@ class CrosswordGridGeneratorTest {
         assertTrue("the two words should intersect", perWordCells[0].intersect(perWordCells[1]).isNotEmpty())
     }
 
-    /**
-     * The core crossword invariant: reading the finished grid in either direction must only ever
-     * spell the puzzle's own answers. Words placed parallel-and-adjacent would create extra letter
-     * runs that aren't answers at all, which is what makes a grid look like a blob instead of a
-     * crossword.
-     */
     @Test
     fun `every maximal letter run in the grid is one of the placed words`() {
         val vocabulary = listOf(
             "kot", "pies", "dom", "woda", "chleb", "mleko", "szkoła", "praca",
             "miasto", "łóżko", "słońce", "przyjaciel", "okno", "stół", "ryba",
         )
-        // Many different subsets, since layout quality depends heavily on which letters are available.
         repeat(50) { seed ->
             val words = vocabulary.shuffled(kotlin.random.Random(seed.toLong())).take(8)
                 .mapIndexed { index, text -> word(index.toLong(), text) }
@@ -124,7 +111,6 @@ class CrosswordGridGeneratorTest {
         }
     }
 
-    /** Maximal runs of 2+ adjacent letters, as (row, col, length) of their starting cell. */
     private fun maximalRuns(
         grid: Map<Pair<Int, Int>, Char>,
         horizontal: Boolean,
@@ -151,8 +137,6 @@ class CrosswordGridGeneratorTest {
 
     @Test
     fun `a word that shares no letter with the puzzle is dropped rather than left floating`() {
-        // "pies" has no letter in common with "kot", so there is nowhere to cross it. Placing it
-        // anyway would leave a detached run of cells that isn't reachable from any crossing.
         val layout = CrosswordGridGenerator.generate(listOf(word(1, "kot"), word(2, "pies")))
         assertEquals(listOf(1L), layout.placements.map { it.word.id })
     }

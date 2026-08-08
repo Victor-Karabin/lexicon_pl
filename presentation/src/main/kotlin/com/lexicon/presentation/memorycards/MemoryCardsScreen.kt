@@ -211,7 +211,6 @@ private fun MemoryCardsScreenPreview() {
     }
 }
 
-/** One matched pair locked face-up, plus a mismatched pair flashing before it flips back. */
 @LightDarkPreview
 @Composable
 private fun MemoryCardsScreenInProgressPreview() {

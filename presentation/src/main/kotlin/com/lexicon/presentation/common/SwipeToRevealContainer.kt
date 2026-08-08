@@ -26,32 +26,15 @@ import androidx.compose.ui.unit.IntOffset
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
-/** Fraction of the reveal that has to be dragged for it to settle open rather than snap back. */
 private const val REVEAL_THRESHOLD = 0.4f
 
-/** A flick faster than this settles the row regardless of how far it travelled, in px/second. */
 private const val FLING_VELOCITY = 400f
 
-/**
- * Slides its foreground aside to reveal something behind it — a row's actions, without those
- * actions taking up room in the row.
- *
- * Deliberately a reveal rather than a swipe-to-dismiss: the gesture uncovers a button and the
- * button does the work, so a destructive action still takes a deliberate tap. A swipe that
- * deleted on its own would make an accidental brush unrecoverable.
- *
- * Built on `draggable` over a plain `Animatable` rather than `AnchoredDraggableState`. The
- * offset here is only ever a number between two known values, and the anchored API owns its own
- * initialisation — its offset is unset until anchors have been applied in layout. A row whose
- * offset never leaves that state simply never moves: nothing is drawn wrong and nothing is
- * thrown, the swipe just does nothing, which is the hardest kind of failure to see.
- */
 @Composable
 fun SwipeToRevealContainer(
     revealWidth: Dp,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    /** Collapses the row from outside — after the revealed action has been taken, say. */
     collapseSignal: Any? = null,
     backgroundContent: @Composable BoxScope.() -> Unit,
     foregroundContent: @Composable () -> Unit,
@@ -59,17 +42,12 @@ fun SwipeToRevealContainer(
     val revealPx = with(LocalDensity.current) { revealWidth.toPx() }
     val scope = rememberCoroutineScope()
 
-    // Negative: the foreground travels left, uncovering the background on the right.
     val offsetX = remember { Animatable(0f) }
 
     LaunchedEffect(collapseSignal) {
         if (collapseSignal != null) offsetX.animateTo(0f)
     }
 
-    // The box takes its height from the foreground, and the background is matched to it.
-    // Not IntrinsicSize.Min with a fillMaxHeight child: that asks every modifier in the
-    // foreground to answer an intrinsic-height query, and any that answers zero collapses the
-    // background to nothing — invisible, with the row above it still looking perfectly normal.
     Box(modifier = modifier.fillMaxWidth()) {
         Box(
             modifier = Modifier.matchParentSize(),
@@ -101,9 +79,7 @@ fun SwipeToRevealContainer(
                         offsetX.animateTo(target)
                     },
                 )
-                // Opaque, or the action behind shows through the row still covering it.
                 .background(MaterialTheme.colorScheme.background)
-                // Swallows taps so a press on the row cannot reach the action behind it.
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,

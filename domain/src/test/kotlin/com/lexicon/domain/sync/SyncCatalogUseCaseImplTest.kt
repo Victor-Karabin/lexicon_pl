@@ -3,8 +3,12 @@ package com.lexicon.domain.sync
 import com.lexicon.boundary.SyncOutcomeBoundary
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.boundary.wasAlreadyCurrent
 import com.lexicon.interactors.sync.CatalogSyncStatus
 import com.lexicon.interactors.sync.SyncStepStatus
+import com.lexicon.interactors.sync.isBlocked
+import com.lexicon.interactors.sync.isFinished
+import com.lexicon.interactors.sync.wasAlreadyCurrent
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -41,7 +45,6 @@ class SyncCatalogUseCaseImplTest {
             assertFalse(final.isBlocked)
         }
 
-    /** The screen exists to show progress, so each step has to be visible before it finishes. */
     @Test
     fun `each step is reported in progress before it completes`() =
         runTest {
@@ -65,10 +68,6 @@ class SyncCatalogUseCaseImplTest {
             assertTrue(vocabulary.wasAlreadyCurrent)
         }
 
-    /**
-     * A preset is a list of word ids, so importing presets over an empty vocabulary would
-     * produce a catalogue whose every entry resolves to nothing.
-     */
     @Test
     fun `presets are skipped when the vocabulary could not be loaded at all`() =
         runTest {
@@ -82,7 +81,6 @@ class SyncCatalogUseCaseImplTest {
             coVerify(exactly = 0) { presetRepository.syncFromSource() }
         }
 
-    /** A failed refresh over a store that already holds words is stale data, not a dead app. */
     @Test
     fun `a failed vocabulary sync still lets the app continue when words are already stored`() =
         runTest {

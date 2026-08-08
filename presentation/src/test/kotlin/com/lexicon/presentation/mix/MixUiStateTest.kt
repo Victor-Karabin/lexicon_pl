@@ -30,10 +30,6 @@ class MixUiStateTest {
         isSubmitting = isSubmitting,
     )
 
-    /**
-     * Regression: an incorrect answer left isSubmitting set, and awaitingNext is gated on it, so
-     * Next never appeared and every other control was disabled — the step soft-locked.
-     */
     @Test
     fun `an incorrect step offers Next once submission has settled`() {
         val state = puzzleState(answerState = AnswerState.Incorrect("praca"), isSubmitting = false)

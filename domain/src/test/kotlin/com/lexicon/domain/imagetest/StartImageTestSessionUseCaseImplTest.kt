@@ -82,14 +82,9 @@ class StartImageTestSessionUseCaseImplTest {
             }
         }
 
-    /**
-     * Regression: with only a couple of phrases in the vocabulary, a phrase subject had no
-     * same-type distractors left and the step degenerated to a single option.
-     */
     @Test
     fun `every step is filled to the requested option count even though phrases are scarce`() =
         runTest {
-            // Phrases first, so the naive "take the first item" subject choice lands on one.
             val scarcePhrases = listOf(
                 VocabularyItemBoundary(90, "dzien dobry", "good morning", "d"),
                 VocabularyItemBoundary(91, "gdzie jest dworzec", "where is the station", "g"),
@@ -106,11 +101,6 @@ class StartImageTestSessionUseCaseImplTest {
             }
         }
 
-    /**
-     * Regression: options were built from the base language, so the step showed an image and six
-     * English words — asking nothing of someone learning Polish. The answer is the target word;
-     * the base word is only the clue that stands in when the image can't load.
-     */
     @Test
     fun `options are target-language words, not base-language ones`() =
         runTest {
@@ -127,7 +117,6 @@ class StartImageTestSessionUseCaseImplTest {
             }
         }
 
-    /** The image is searched by the base word, which is what an image service can actually match. */
     @Test
     fun `images are still searched by the base word`() =
         runTest {

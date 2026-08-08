@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontWeight
 import com.lexicon.presentation.theme.LexiconTheme
 
-/** Shared top bar for every training screen: a title plus a close action back to the home screen. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrainingTopBar(
@@ -37,7 +36,6 @@ private fun TrainingTopBarStatesPreview() {
         Surface {
             Column {
                 TrainingTopBar(title = "Dictation", onClose = {})
-                // Longest title in the catalog, to check it isn't truncated.
                 TrainingTopBar(title = "Pronunciation Check", onClose = {})
             }
         }

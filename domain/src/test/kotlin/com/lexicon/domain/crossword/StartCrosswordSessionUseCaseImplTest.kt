@@ -30,8 +30,6 @@ class StartCrosswordSessionUseCaseImplTest {
             val response = useCase(StartCrosswordSessionRequest(wordCount = 5))
 
             assertTrue(response.words.none { it.expectedText.contains(' ') })
-            // Only the single-word items are eligible; some may still be dropped when they can't
-            // be crossed into the grid, so this is a subset rather than an exact match.
             assertTrue(response.words.isNotEmpty())
             assertTrue(response.words.map { it.vocabularyItemId }.all { it in setOf(1L, 2L, 3L) })
         }

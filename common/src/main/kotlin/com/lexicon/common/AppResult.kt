@@ -1,6 +1,5 @@
 package com.lexicon.common
 
-/** Explicit success/failure wrapper for operations that cross a module boundary. */
 sealed interface AppResult<out T> {
     data class Success<T>(val value: T) : AppResult<T>
 

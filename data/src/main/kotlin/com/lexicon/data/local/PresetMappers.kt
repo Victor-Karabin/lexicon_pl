@@ -11,7 +11,6 @@ private val localizedText = MapSerializer(String.serializer(), String.serializer
 
 internal fun Map<String, String>.encodeLocalized(): String = json.encodeToString(localizedText, this)
 
-/** A column that will not parse degrades to no text rather than taking the screen down. */
 internal fun String.decodeLocalized(): Map<String, String> =
     runCatching { json.decodeFromString(localizedText, this) }.getOrDefault(emptyMap())
 
@@ -48,7 +47,5 @@ fun VocabularyPresetAsset.toEntity(): PresetEntity =
 
 fun VocabularyPresetAsset.toMemberships(): List<PresetWordEntity> =
     vocabularyIds
-        // Distinct because the primary key is (presetId, wordId): a duplicate id in the asset
-        // would otherwise abort the whole import rather than being ignored.
         .distinct()
         .mapIndexed { index, wordId -> PresetWordEntity(presetId = id, wordId = wordId, position = index) }

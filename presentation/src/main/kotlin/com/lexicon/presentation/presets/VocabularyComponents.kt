@@ -24,11 +24,6 @@ import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconShapes
 
-/**
- * The pieces the Vocabulary tab is built from, shared by preset browsing, preset detail and
- * word search so a word looks the same however it was found.
- */
-
 @Composable
 fun VocabularySearchField(
     query: String,
@@ -55,7 +50,6 @@ fun VocabularySearchField(
     )
 }
 
-/** A single vocabulary entry: target word, translation, transcription, and its heart. */
 @Composable
 fun VocabularyWordRow(
     word: PresetWord,

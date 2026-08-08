@@ -30,10 +30,6 @@ enum class AnswerChipState { UNSELECTED, SELECTED, CORRECT, INCORRECT }
 
 enum class AnswerChipVariant { CHIP, ROW }
 
-/**
- * A selectable answer option — chip (puzzle/letter tile) or full-width row (option list, e.g.
- * Image Test's six options). Min touch target is 48dp per DESIGN.md §9.
- */
 @Composable
 fun AnswerChip(
     label: String,

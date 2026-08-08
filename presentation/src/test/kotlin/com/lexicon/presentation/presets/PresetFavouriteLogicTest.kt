@@ -38,17 +38,11 @@ class PresetFavouriteLogicTest {
         assertEquals(PresetFavouriteState.ALL, favouriteStateOf(preset(1, 2, 3), favourites(1, 2, 3)))
     }
 
-    /** The state a boolean cannot express, and the one where a tap changes the most. */
     @Test
     fun `a partly favourited preset reads as partial, not as full or empty`() {
         assertEquals(PresetFavouriteState.SOME, favouriteStateOf(preset(1, 2, 3), favourites(2)))
     }
 
-    /**
-     * Regression: a deleted word stayed in the preset's id list while being excluded from the
-     * favourites, so "all favourited" became unreachable and the heart stuck at partly-filled
-     * however many times it was tapped. A deleted word has to leave the preset it was in.
-     */
     @Test
     fun `a preset reads as full once its remaining words are favourited`() {
         val afterDeletingWordThree = preset(1, 2)
@@ -75,10 +69,6 @@ class PresetFavouriteLogicTest {
         assertEquals(listOf("chleb", "mleko", "zupa"), sorted.map { it.text })
     }
 
-    /**
-     * Polish collation, not code-point order: sorting raw strings puts every accented word
-     * after z, so ćma and łódź would end up at the bottom of the list instead of in place.
-     */
     @Test
     fun `accented letters sort next to their base letter, not after z`() {
         val sorted = listOf(word("zupa"), word("ćma"), word("cebula"), word("łódź"), word("lampa"))

@@ -45,7 +45,6 @@ class PresetDetailViewModelDeleteTest {
     private val kot = PresetWord(VocabularyId(1L), "kot", "cat", "kɔt")
     private val pies = PresetWord(VocabularyId(2L), "pies", "dog", "pjɛs")
 
-    /** Mirrors the store: a deleted word leaves the preset, so its id list shrinks with it. */
     private var storedWords = listOf(kot, pies)
     private val favourites = MutableStateFlow<Set<VocabularyId>>(emptySet())
 
@@ -69,11 +68,6 @@ class PresetDetailViewModelDeleteTest {
         coEvery { this@mockk(any()) } answers { storedWords.toImmutableList() }
     }
 
-    /**
-     * Real fakes rather than mocks with argument-inspecting answers. VocabularyId is a value
-     * class, so it is unboxed to a Long at the JVM boundary and mockk hands back the raw value —
-     * a comparison against the typed id then silently never matches and the fake does nothing.
-     */
     private val deleteWord = object : DeleteWordUseCase {
         override suspend fun invoke(id: VocabularyId) {
             storedWords = storedWords.filterNot { it.id == id }
@@ -113,10 +107,6 @@ class PresetDetailViewModelDeleteTest {
         favourites.value = emptySet()
     }
 
-    /**
-     * The state is shared WhileSubscribed, so without a collector the flow never runs and the
-     * value stays Loading — the screen provides one, a test has to as well.
-     */
     private fun TestScope.started(): PresetDetailViewModel =
         viewModel().also { backgroundScope.launch(dispatcher) { it.uiState.collect { } } }
 
@@ -134,11 +124,6 @@ class PresetDetailViewModelDeleteTest {
             assertEquals(listOf("pies"), loaded(viewModel).words.map { it.text })
         }
 
-    /**
-     * Regression: only the visible rows were updated, and the preset kept the id list it was
-     * loaded with. The heart derives from that list, so it went on counting the deleted word and
-     * could never read as full again — however many times it was tapped.
-     */
     @Test
     fun `the preset stops counting a word that was deleted`() =
         runTest(dispatcher) {
@@ -183,7 +168,6 @@ class PresetDetailViewModelDeleteTest {
             assertEquals(persistentListOf("kot", "pies"), loaded(viewModel).words.map { it.text }.toImmutableList())
         }
 
-    /** An emptied preset is legitimately empty, not still loading. */
     @Test
     fun `deleting the last word leaves an empty list rather than a spinner`() =
         runTest(dispatcher) {

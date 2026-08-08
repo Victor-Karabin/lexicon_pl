@@ -19,7 +19,6 @@ class TrainingGateViewModel
         private val checkReadiness: CheckTrainingReadinessUseCase,
         private val dispatchers: DispatcherProvider,
     ) : ViewModel() {
-        /** Null until the check completes; see [TrainingGate] for why that is not "not ready". */
         private val _readiness = MutableStateFlow<TrainingReadiness?>(null)
         val readiness: StateFlow<TrainingReadiness?> = _readiness.asStateFlow()
 

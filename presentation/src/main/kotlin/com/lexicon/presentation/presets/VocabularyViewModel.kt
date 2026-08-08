@@ -18,6 +18,7 @@ import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
 import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
+import com.lexicon.interactors.presets.resolve
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -51,17 +52,11 @@ class VocabularyViewModel
         private val _uiState = MutableStateFlow<VocabularyUiState>(VocabularyUiState.Loading)
         val uiState: StateFlow<VocabularyUiState> = _uiState.asStateFlow()
 
-        /** Query and levels together, so either changing re-runs the same search. */
         private val criteria = MutableStateFlow(SearchCriteria())
 
         init {
-            // Collected rather than fetched once: a word deleted on the detail screen changes
-            // what every preset contains, and a list read at startup would still be showing the
-            // old contents when the user comes back to it.
             viewModelScope.launch(dispatchers.io) {
                 observePresets().collect { presets ->
-                    // Merged rather than assigned: input can arrive before the first emission,
-                    // and replacing the state wholesale would silently discard it.
                     _uiState.update { current ->
                         if (current is VocabularyUiState.Loaded) {
                             current.copy(presets = presets)
@@ -79,14 +74,6 @@ class VocabularyViewModel
             observeQuery()
         }
 
-        /**
-         * Debounced so a query is not run per keystroke.
-         *
-         * Every value is collected, including the initial empty one: dropping the first assumes
-         * this collector starts before anything can change the criteria, and a change that
-         * arrives first is then dropped instead — the search silently never runs. An empty
-         * criteria costs nothing anyway, since the use case answers it without a query.
-         */
         @OptIn(FlowPreview::class)
         private fun observeQuery() {
             viewModelScope.launch(dispatchers.io) {
@@ -104,15 +91,9 @@ class VocabularyViewModel
 
         fun onQueryChanged(value: String) {
             criteria.update { it.copy(query = value) }
-            // Applied immediately rather than after the debounce, so the list switches to
-            // words on the first keystroke instead of lagging a fifth of a second behind.
             updateLoaded { it.copy(query = value).clearedWordsIfIdle() }
         }
 
-        /**
-         * A level lists the words at it rather than narrowing the presets, so this drives the
-         * search instead of the preset query.
-         */
         fun onCefrToggled(level: CefrLevel) {
             val updated = (_uiState.value as? VocabularyUiState.Loaded)
                 ?.selectedCefrLevels?.toggle(level) ?: return
@@ -125,7 +106,6 @@ class VocabularyViewModel
             updateLoaded { it.copy(selectedCefrLevels = emptySet()).clearedWordsIfIdle() }
         }
 
-        /** Partly-favourited counts as off, so one tap completes the preset rather than clearing it. */
         fun onPresetFavouriteToggled(
             id: PresetId,
             current: PresetFavouriteState,
@@ -142,7 +122,6 @@ class VocabularyViewModel
             viewModelScope.launch(dispatchers.io) { toggleWordFavourite(id, isFavourite) }
         }
 
-        /** Deletes at once, as the button says, and keeps enough to put it back. */
         fun onWordDeleted(word: PresetWord) {
             viewModelScope.launch(dispatchers.io) {
                 deleteWord(word.id)
@@ -176,15 +155,12 @@ class VocabularyViewModel
                         refreshWords()
                     }
 
-                    // No refresh: restoring re-imports the catalogue, and the observed list
-                    // reports it.
                     is DeletedItem.Preset -> restorePreset(deleted.id)
                 }
                 updateLoaded { it.copy(lastDeleted = null) }
             }
         }
 
-        /** Cleared once shown, so the same message cannot be offered twice. */
         fun onDeleteMessageShown() = updateLoaded { it.copy(lastDeleted = null) }
 
         private suspend fun refreshWords() {
@@ -205,6 +181,5 @@ private data class SearchCriteria(
 
 private fun <T> Set<T>.toggle(value: T): Set<T> = if (value in this) this - value else this + value
 
-/** Drops stale results the moment nothing is being asked for, so the presets are not covered. */
 private fun VocabularyUiState.Loaded.clearedWordsIfIdle(): VocabularyUiState.Loaded =
     if (isSearchingWords) copy(isSearching = true) else copy(isSearching = false, words = persistentListOf())

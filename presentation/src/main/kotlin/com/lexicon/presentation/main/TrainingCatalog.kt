@@ -1,6 +1,5 @@
 package com.lexicon.presentation.main
 
-/** Canonical training identifiers, shared with the app module's navigation routes. */
 object TrainingIds {
     const val DICTATION = "dictation"
     const val DICTATION_PUZZLE = "dictation_puzzle"
@@ -16,7 +15,6 @@ object TrainingIds {
 
 data class TrainingCatalogEntry(val id: String, val displayName: String, val isEnabled: Boolean)
 
-/** Names match "Software Development Specification" §9. */
 val trainingCatalog =
     listOf(
         TrainingCatalogEntry(TrainingIds.DICTATION, "Dictation", isEnabled = true),
@@ -32,5 +30,4 @@ val trainingCatalog =
         TrainingCatalogEntry("custom_builder", "Custom Builder", isEnabled = false),
     )
 
-/** Falls back to the id so an unlisted route still gets a heading rather than a blank one. */
 fun trainingDisplayName(id: String): String = trainingCatalog.firstOrNull { it.id == id }?.displayName ?: id

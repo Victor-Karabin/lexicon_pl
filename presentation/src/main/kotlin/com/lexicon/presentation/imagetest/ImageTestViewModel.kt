@@ -132,7 +132,6 @@ class ImageTestViewModel
             }
         }
 
-        /** Called from the UI's "Next" button after an Incorrect/Skipped step. */
         fun onNext() {
             val state = _uiState.value as? ImageTestUiState.Loaded ?: return
             if (!state.awaitingNext) return
