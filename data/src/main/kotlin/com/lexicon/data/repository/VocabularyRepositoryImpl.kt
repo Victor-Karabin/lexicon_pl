@@ -26,6 +26,11 @@ class VocabularyRepositoryImpl
             return wordDao.getByIds(ids).map { it.toBoundary() }
         }
 
+        override suspend fun countStudyWords(): Int {
+            vocabularySeeder.ensureSeeded()
+            return wordDao.countForStudy()
+        }
+
         override suspend fun setFavourite(
             ids: List<Long>,
             isFavourite: Boolean,

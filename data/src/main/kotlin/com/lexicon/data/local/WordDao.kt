@@ -32,6 +32,15 @@ interface WordDao {
     @Query("SELECT id FROM words WHERE isFavourite = 1")
     fun observeFavouriteIds(): Flow<List<Long>>
 
+    /** Mirrors [getRandomForStudy]'s choice of pool, so the two can never disagree. */
+    @Query(
+        """
+        SELECT COUNT(*) FROM words
+        WHERE isFavourite = 1 OR (SELECT COUNT(*) FROM words WHERE isFavourite = 1) = 0
+        """,
+    )
+    suspend fun countForStudy(): Int
+
     @Query("SELECT COUNT(*) FROM words")
     suspend fun count(): Int
 

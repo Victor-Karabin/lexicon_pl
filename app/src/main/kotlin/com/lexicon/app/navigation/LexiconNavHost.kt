@@ -8,12 +8,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.lexicon.presentation.common.SessionResultScreen
+import com.lexicon.presentation.common.TrainingGate
+import com.lexicon.presentation.common.TrainingRequirements
 import com.lexicon.presentation.crossword.CrosswordScreen
 import com.lexicon.presentation.dictation.DictationScreen
 import com.lexicon.presentation.dictationpuzzle.DictationPuzzleScreen
 import com.lexicon.presentation.imagetest.ImageTestScreen
 import com.lexicon.presentation.main.MainScreen
 import com.lexicon.presentation.main.SplashScreen
+import com.lexicon.presentation.main.trainingDisplayName
 import com.lexicon.presentation.memorycards.MemoryCardsScreen
 import com.lexicon.presentation.mix.MixScreen
 import com.lexicon.presentation.presets.PRESET_ID_ARG
@@ -65,65 +68,125 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             }
 
         composable(LexiconDestinations.DICTATION) {
-            DictationScreen(
-                onSessionComplete = onStepSessionComplete(LexiconDestinations.DICTATION),
+            TrainingGate(
+                minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
+                trainingName = trainingDisplayName(LexiconDestinations.DICTATION),
                 onClose = onClose(LexiconDestinations.DICTATION),
-            )
+            ) {
+                DictationScreen(
+                    onSessionComplete = onStepSessionComplete(LexiconDestinations.DICTATION),
+                    onClose = onClose(LexiconDestinations.DICTATION),
+                )
+            }
         }
         composable(LexiconDestinations.DICTATION_PUZZLE) {
-            DictationPuzzleScreen(
-                onSessionComplete = onStepSessionComplete(LexiconDestinations.DICTATION_PUZZLE),
+            TrainingGate(
+                minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
+                trainingName = trainingDisplayName(LexiconDestinations.DICTATION_PUZZLE),
                 onClose = onClose(LexiconDestinations.DICTATION_PUZZLE),
-            )
+            ) {
+                DictationPuzzleScreen(
+                    onSessionComplete = onStepSessionComplete(LexiconDestinations.DICTATION_PUZZLE),
+                    onClose = onClose(LexiconDestinations.DICTATION_PUZZLE),
+                )
+            }
         }
         composable(LexiconDestinations.TRUE_OR_FALSE) {
-            TrueOrFalseScreen(
-                onSessionComplete = onStepSessionComplete(LexiconDestinations.TRUE_OR_FALSE),
+            TrainingGate(
+                minimumWords = TrainingRequirements.TRUE_OR_FALSE,
+                trainingName = trainingDisplayName(LexiconDestinations.TRUE_OR_FALSE),
                 onClose = onClose(LexiconDestinations.TRUE_OR_FALSE),
-            )
+            ) {
+                TrueOrFalseScreen(
+                    onSessionComplete = onStepSessionComplete(LexiconDestinations.TRUE_OR_FALSE),
+                    onClose = onClose(LexiconDestinations.TRUE_OR_FALSE),
+                )
+            }
         }
         composable(LexiconDestinations.WORD_MATCH) {
-            WordMatchScreen(
-                onSessionComplete = onStepSessionComplete(LexiconDestinations.WORD_MATCH),
+            TrainingGate(
+                minimumWords = TrainingRequirements.WORD_MATCH,
+                trainingName = trainingDisplayName(LexiconDestinations.WORD_MATCH),
                 onClose = onClose(LexiconDestinations.WORD_MATCH),
-            )
+            ) {
+                WordMatchScreen(
+                    onSessionComplete = onStepSessionComplete(LexiconDestinations.WORD_MATCH),
+                    onClose = onClose(LexiconDestinations.WORD_MATCH),
+                )
+            }
         }
         composable(LexiconDestinations.PRONUNCIATION_CHECK) {
-            PronunciationScreen(
-                onSessionComplete = onStepSessionComplete(LexiconDestinations.PRONUNCIATION_CHECK),
+            TrainingGate(
+                minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
+                trainingName = trainingDisplayName(LexiconDestinations.PRONUNCIATION_CHECK),
                 onClose = onClose(LexiconDestinations.PRONUNCIATION_CHECK),
-            )
+            ) {
+                PronunciationScreen(
+                    onSessionComplete = onStepSessionComplete(LexiconDestinations.PRONUNCIATION_CHECK),
+                    onClose = onClose(LexiconDestinations.PRONUNCIATION_CHECK),
+                )
+            }
         }
         composable(LexiconDestinations.PUZZLE) {
-            PuzzleScreen(
-                onSessionComplete = onStepSessionComplete(LexiconDestinations.PUZZLE),
+            TrainingGate(
+                minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
+                trainingName = trainingDisplayName(LexiconDestinations.PUZZLE),
                 onClose = onClose(LexiconDestinations.PUZZLE),
-            )
+            ) {
+                PuzzleScreen(
+                    onSessionComplete = onStepSessionComplete(LexiconDestinations.PUZZLE),
+                    onClose = onClose(LexiconDestinations.PUZZLE),
+                )
+            }
         }
         composable(LexiconDestinations.IMAGE_TEST) {
-            ImageTestScreen(
-                onSessionComplete = onStepSessionComplete(LexiconDestinations.IMAGE_TEST),
+            TrainingGate(
+                minimumWords = TrainingRequirements.IMAGE_TEST,
+                trainingName = trainingDisplayName(LexiconDestinations.IMAGE_TEST),
                 onClose = onClose(LexiconDestinations.IMAGE_TEST),
-            )
+            ) {
+                ImageTestScreen(
+                    onSessionComplete = onStepSessionComplete(LexiconDestinations.IMAGE_TEST),
+                    onClose = onClose(LexiconDestinations.IMAGE_TEST),
+                )
+            }
         }
         composable(LexiconDestinations.MEMORY_CARDS) {
-            MemoryCardsScreen(
-                onSessionComplete = onStepSessionComplete(LexiconDestinations.MEMORY_CARDS),
+            TrainingGate(
+                minimumWords = TrainingRequirements.MEMORY_CARDS,
+                trainingName = trainingDisplayName(LexiconDestinations.MEMORY_CARDS),
                 onClose = onClose(LexiconDestinations.MEMORY_CARDS),
-            )
+            ) {
+                MemoryCardsScreen(
+                    onSessionComplete = onStepSessionComplete(LexiconDestinations.MEMORY_CARDS),
+                    onClose = onClose(LexiconDestinations.MEMORY_CARDS),
+                )
+            }
         }
         composable(LexiconDestinations.CROSSWORD) {
-            CrosswordScreen(
-                onSessionComplete = onStepSessionComplete(LexiconDestinations.CROSSWORD),
+            TrainingGate(
+                minimumWords = TrainingRequirements.CROSSWORD,
+                trainingName = trainingDisplayName(LexiconDestinations.CROSSWORD),
                 onClose = onClose(LexiconDestinations.CROSSWORD),
-            )
+            ) {
+                CrosswordScreen(
+                    onSessionComplete = onStepSessionComplete(LexiconDestinations.CROSSWORD),
+                    onClose = onClose(LexiconDestinations.CROSSWORD),
+                )
+            }
         }
 
         composable(LexiconDestinations.MIX) {
-            MixScreen(
-                onSessionComplete = onStepSessionComplete(LexiconDestinations.MIX),
+            TrainingGate(
+                minimumWords = TrainingRequirements.MIX,
+                trainingName = trainingDisplayName(LexiconDestinations.MIX),
                 onClose = onClose(LexiconDestinations.MIX),
-            )
+            ) {
+                MixScreen(
+                    onSessionComplete = onStepSessionComplete(LexiconDestinations.MIX),
+                    onClose = onClose(LexiconDestinations.MIX),
+                )
+            }
         }
 
         composable(

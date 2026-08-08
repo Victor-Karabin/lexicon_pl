@@ -159,9 +159,12 @@ single call; word by word, a thousand-word preset would emit a thousand updates.
 
 Two consequences worth knowing:
 
-- Favouriting **very few** words degrades trainings rather than breaking them. Image Test
-  needs six distinct same-type options and falls back to whatever the pool holds, so a study
-  set of three words yields three options.
+- Favouriting **very few** words no longer degrades trainings silently. Every training is
+  fronted by `TrainingGate`, which checks the study-set size against that training's minimum
+  (`TrainingRequirements`) and shows a "not enough words" screen naming both numbers instead
+  of starting a session it cannot build. Before this, an Image Test with three favourites ran
+  with three options, and a training with none spun forever — `openStep(0)` returns early on
+  an empty session, so the screen never left Loading.
 - `getRandomForStudy` is plain SQL, and the project has no Robolectric or instrumentation
   setup, so **the favourites-else-all rule is not covered by a unit test**. Everything above
   it — the use cases, the tri-state derivation, the sorting — is.

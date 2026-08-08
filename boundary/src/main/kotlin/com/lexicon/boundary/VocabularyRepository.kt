@@ -18,6 +18,13 @@ interface VocabularyRepository {
      */
     suspend fun getItemsByIds(ids: List<Long>): List<VocabularyItemBoundary>
 
+    /**
+     * Size of the study set — the favourites when there are any, the whole vocabulary
+     * otherwise. This is what a training has to work with, so it is what "not enough words"
+     * has to be measured against.
+     */
+    suspend fun countStudyWords(): Int
+
     suspend fun setFavourite(
         ids: List<Long>,
         isFavourite: Boolean,

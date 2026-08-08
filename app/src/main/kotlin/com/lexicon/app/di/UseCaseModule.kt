@@ -26,6 +26,7 @@ import com.lexicon.domain.puzzle.SubmitPuzzleAnswerUseCaseImpl
 import com.lexicon.domain.settings.ObserveSettingsUseCaseImpl
 import com.lexicon.domain.settings.UpdateStepCountUseCaseImpl
 import com.lexicon.domain.settings.UpdateThemeModeUseCaseImpl
+import com.lexicon.domain.training.CheckTrainingReadinessUseCaseImpl
 import com.lexicon.domain.trueorfalse.StartTrueOrFalseSessionUseCaseImpl
 import com.lexicon.domain.trueorfalse.SubmitTrueOrFalseAnswerUseCaseImpl
 import com.lexicon.domain.wordmatch.StartWordMatchSessionUseCaseImpl
@@ -56,6 +57,7 @@ import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerUseCase
 import com.lexicon.interactors.settings.ObserveSettingsUseCase
 import com.lexicon.interactors.settings.UpdateStepCountUseCase
 import com.lexicon.interactors.settings.UpdateThemeModeUseCase
+import com.lexicon.interactors.training.CheckTrainingReadinessUseCase
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
 import com.lexicon.interactors.wordmatch.StartWordMatchSessionUseCase
@@ -157,4 +159,7 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindObserveFavouriteWordIds(impl: ObserveFavouriteWordIdsUseCaseImpl): ObserveFavouriteWordIdsUseCase
+
+    @Binds
+    abstract fun bindCheckTrainingReadiness(impl: CheckTrainingReadinessUseCaseImpl): CheckTrainingReadinessUseCase
 }

@@ -79,4 +79,8 @@
     <string name="favourite_remove">Remove from study set</string>
     <string name="favourite_preset_add">Add every word to study set</string>
     <string name="favourite_preset_remove">Remove every word from study set</string>
+    <string name="training_not_enough_words_title">Not enough words</string>
+    <string name="training_not_enough_words_body">%1$s needs at least %2$d words, and your study set has %3$d.</string>
+    <string name="training_not_enough_words_hint">Add words to your study set with the heart button in the Vocabulary tab, or clear your hearts to study the whole vocabulary.</string>
+    <string name="training_not_enough_words_action">Back to trainings</string>
 </resources>
