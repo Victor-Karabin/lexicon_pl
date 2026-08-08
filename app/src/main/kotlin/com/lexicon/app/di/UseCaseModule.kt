@@ -18,6 +18,7 @@ import com.lexicon.domain.presets.GetPresetVocabularyUseCaseImpl
 import com.lexicon.domain.presets.GetVocabularyPresetUseCaseImpl
 import com.lexicon.domain.presets.GetVocabularyPresetsUseCaseImpl
 import com.lexicon.domain.presets.ObserveFavouriteWordIdsUseCaseImpl
+import com.lexicon.domain.presets.ObserveVocabularyPresetsUseCaseImpl
 import com.lexicon.domain.presets.RestorePresetUseCaseImpl
 import com.lexicon.domain.presets.RestoreWordUseCaseImpl
 import com.lexicon.domain.presets.SearchVocabularyUseCaseImpl
@@ -54,6 +55,7 @@ import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
+import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.RestorePresetUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
@@ -187,4 +189,7 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindRestorePreset(impl: RestorePresetUseCaseImpl): RestorePresetUseCase
+
+    @Binds
+    abstract fun bindObserveVocabularyPresets(impl: ObserveVocabularyPresetsUseCaseImpl): ObserveVocabularyPresetsUseCase
 }

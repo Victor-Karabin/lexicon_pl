@@ -6,8 +6,8 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.DeletePresetUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
-import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
+import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.PresetFavouriteState
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetWord
@@ -37,7 +37,7 @@ private const val QUERY_DEBOUNCE_MS = 200L
 class VocabularyViewModel
     @Inject
     constructor(
-        private val getPresets: GetVocabularyPresetsUseCase,
+        private val observePresets: ObserveVocabularyPresetsUseCase,
         private val searchVocabulary: SearchVocabularyUseCase,
         private val setPresetFavourite: SetPresetFavouriteUseCase,
         private val toggleWordFavourite: ToggleWordFavouriteUseCase,
@@ -55,15 +55,19 @@ class VocabularyViewModel
         private val criteria = MutableStateFlow(SearchCriteria())
 
         init {
+            // Collected rather than fetched once: a word deleted on the detail screen changes
+            // what every preset contains, and a list read at startup would still be showing the
+            // old contents when the user comes back to it.
             viewModelScope.launch(dispatchers.io) {
-                val presets = getPresets()
-                // Merged rather than assigned: input can arrive before this returns, and
-                // replacing the state wholesale would silently discard it.
-                _uiState.update { current ->
-                    if (current is VocabularyUiState.Loaded) {
-                        current.copy(presets = presets)
-                    } else {
-                        VocabularyUiState.Loaded(presets = presets)
+                observePresets().collect { presets ->
+                    // Merged rather than assigned: input can arrive before the first emission,
+                    // and replacing the state wholesale would silently discard it.
+                    _uiState.update { current ->
+                        if (current is VocabularyUiState.Loaded) {
+                            current.copy(presets = presets)
+                        } else {
+                            VocabularyUiState.Loaded(presets = presets)
+                        }
                     }
                 }
             }
@@ -142,9 +146,6 @@ class VocabularyViewModel
         fun onWordDeleted(word: PresetWord) {
             viewModelScope.launch(dispatchers.io) {
                 deleteWord(word.id)
-                // Presets carry the id list their hearts and counts are derived from, and this
-                // word has just left every preset that listed it.
-                refreshPresets()
                 updateLoaded {
                     it.copy(
                         words = it.words.filterNot { candidate -> candidate.id == word.id }.toImmutableList(),
@@ -173,13 +174,11 @@ class VocabularyViewModel
                     is DeletedItem.Word -> {
                         restoreWord(deleted.id)
                         refreshWords()
-                        refreshPresets()
                     }
 
-                    is DeletedItem.Preset -> {
-                        restorePreset(deleted.id)
-                        refreshPresets()
-                    }
+                    // No refresh: restoring re-imports the catalogue, and the observed list
+                    // reports it.
+                    is DeletedItem.Preset -> restorePreset(deleted.id)
                 }
                 updateLoaded { it.copy(lastDeleted = null) }
             }
@@ -187,11 +186,6 @@ class VocabularyViewModel
 
         /** Cleared once shown, so the same message cannot be offered twice. */
         fun onDeleteMessageShown() = updateLoaded { it.copy(lastDeleted = null) }
-
-        private suspend fun refreshPresets() {
-            val presets = getPresets()
-            updateLoaded { it.copy(presets = presets) }
-        }
 
         private suspend fun refreshWords() {
             val current = criteria.value

@@ -1,5 +1,7 @@
 package com.lexicon.boundary
 
+import kotlinx.coroutines.flow.Flow
+
 /**
  * Where presets come from. Deliberately says nothing about *which* source: the bundled
  * asset today, and downloaded packs, user-created or community presets later, are all
@@ -10,6 +12,9 @@ interface VocabularyPresetRepository {
     suspend fun syncFromSource(): SyncOutcomeBoundary
 
     suspend fun getPresets(): List<VocabularyPresetBoundary>
+
+    /** Emits on every change, so a list built from these cannot go stale behind the user. */
+    fun observePresets(): Flow<List<VocabularyPresetBoundary>>
 
     /** Returns null when no preset carries [id], which callers must handle. */
     suspend fun getPreset(id: String): VocabularyPresetBoundary?

@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PresetDao {
@@ -33,6 +34,23 @@ interface PresetDao {
         """,
     )
     suspend fun getWordIds(presetId: String): List<Long>
+
+    /**
+     * Emits whenever the catalogue changes, including when a word is deleted or restored: Room
+     * invalidates on every table the query touches, and this one touches all three. Without it
+     * a screen that read the presets once goes on showing a preset that still counts a word the
+     * user removed.
+     */
+    @Query(
+        """
+        SELECT pw.* FROM preset_words pw
+        INNER JOIN words w ON w.id = pw.wordId
+        INNER JOIN presets p ON p.id = pw.presetId
+        WHERE w.isDeleted = 0
+        ORDER BY pw.presetId, pw.position
+        """,
+    )
+    fun observeMemberships(): Flow<List<PresetWordEntity>>
 
     /** One query for every membership, so listing presets is not one query per preset. */
     @Query(

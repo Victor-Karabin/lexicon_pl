@@ -3,8 +3,11 @@ package com.lexicon.presentation.presets
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.DeletePresetUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
-import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
+import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
+import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
+import com.lexicon.interactors.presets.PresetCategory
+import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.RestorePresetUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
@@ -12,6 +15,7 @@ import com.lexicon.interactors.presets.SearchVocabularyUseCase
 import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
 import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.presets.VocabularyId
+import com.lexicon.interactors.presets.VocabularyPreset
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -21,6 +25,7 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -33,6 +38,7 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import kotlin.time.Duration.Companion.minutes
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class VocabularyViewModelDeleteTest {
@@ -46,8 +52,9 @@ class VocabularyViewModelDeleteTest {
     }
     private val deleteWord: DeleteWordUseCase = mockk(relaxed = true)
     private val restoreWord: RestoreWordUseCase = mockk(relaxed = true)
-    private val getPresets: GetVocabularyPresetsUseCase = mockk {
-        coEvery { this@mockk() } returns persistentListOf()
+    private val presets = MutableStateFlow(persistentListOf<VocabularyPreset>())
+    private val observePresets: ObserveVocabularyPresetsUseCase = mockk {
+        every { this@mockk() } returns presets
     }
     private val observeFavourites: ObserveFavouriteWordIdsUseCase = mockk {
         every { this@mockk() } returns flowOf(emptySet())
@@ -55,7 +62,7 @@ class VocabularyViewModelDeleteTest {
 
     private fun viewModel() =
         VocabularyViewModel(
-            getPresets = getPresets,
+            observePresets = observePresets,
             searchVocabulary = searchVocabulary,
             setPresetFavourite = mockk<SetPresetFavouriteUseCase>(relaxed = true),
             toggleWordFavourite = mockk<ToggleWordFavouriteUseCase>(relaxed = true),
@@ -78,6 +85,38 @@ class VocabularyViewModelDeleteTest {
     fun tearDown() = Dispatchers.resetMain()
 
     private fun loaded(state: VocabularyUiState) = state as VocabularyUiState.Loaded
+
+    private fun preset(vararg wordIds: Long) =
+        VocabularyPreset(
+            id = PresetId("food"),
+            title = LocalizedText(mapOf("en" to "Food")),
+            description = LocalizedText(mapOf("en" to "")),
+            category = PresetCategory("everyday-life", 3, LocalizedText(mapOf("en" to "Everyday life"))),
+            icon = null,
+            color = null,
+            popularity = 1,
+            estimatedDuration = 5.minutes,
+            vocabularyIds = wordIds.map(::VocabularyId).toImmutableList(),
+        )
+
+    /**
+     * Regression: the browser fetched its presets once, so a word deleted on the detail screen
+     * left it showing a preset that still counted the word — its heart could never read as full
+     * again. The list is observed now, so a change made anywhere reaches it.
+     */
+    @Test
+    fun `the preset list reflects a word deleted somewhere else`() =
+        runTest(dispatcher) {
+            val viewModel = viewModel()
+            presets.value = persistentListOf(preset(1L, 2L))
+            advanceUntilIdle()
+
+            presets.value = persistentListOf(preset(2L))
+            advanceUntilIdle()
+
+            val listed = (viewModel.uiState.value as VocabularyUiState.Loaded).presets.single()
+            assertEquals(listOf(VocabularyId(2L)), listed.vocabularyIds)
+        }
 
     @Test
     fun `deleting a word asks for it to be deleted`() =
