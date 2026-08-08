@@ -17,11 +17,32 @@ interface PresetDao {
     @Query("SELECT * FROM presets WHERE id = :id")
     suspend fun getPreset(id: String): PresetEntity?
 
-    @Query("SELECT wordId FROM preset_words WHERE presetId = :presetId ORDER BY position")
+    /**
+     * Joined against the words so a deleted one leaves the preset it was in.
+     *
+     * Without the join a preset keeps counting a word the user removed, and since a deleted
+     * word can never appear among the favourites, "every word favourited" becomes unreachable —
+     * the preset's heart sticks at partly-filled however many times it is tapped.
+     */
+    @Query(
+        """
+        SELECT pw.wordId FROM preset_words pw
+        INNER JOIN words w ON w.id = pw.wordId
+        WHERE pw.presetId = :presetId AND w.isDeleted = 0
+        ORDER BY pw.position
+        """,
+    )
     suspend fun getWordIds(presetId: String): List<Long>
 
     /** One query for every membership, so listing presets is not one query per preset. */
-    @Query("SELECT * FROM preset_words ORDER BY presetId, position")
+    @Query(
+        """
+        SELECT pw.* FROM preset_words pw
+        INNER JOIN words w ON w.id = pw.wordId
+        WHERE w.isDeleted = 0
+        ORDER BY pw.presetId, pw.position
+        """,
+    )
     suspend fun getAllMemberships(): List<PresetWordEntity>
 
     @Query("SELECT COUNT(*) FROM presets")

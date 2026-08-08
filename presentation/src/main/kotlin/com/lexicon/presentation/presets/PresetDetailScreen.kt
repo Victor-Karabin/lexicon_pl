@@ -249,6 +249,7 @@ private fun PresetDetailPreview() {
                     PresetWord(VocabularyId(4), "ziemniak", "potato", "ˈʑɛmɲak"),
                 ),
                 favouriteState = PresetFavouriteState.SOME,
+                isLoadingWords = false,
             ),
             onClose = {},
             onWordFavouriteToggled = { _, _ -> },

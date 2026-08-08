@@ -42,12 +42,15 @@ sealed interface PresetDetailUiState {
         val words: ImmutableList<PresetWord> = persistentListOf(),
         val favouriteState: PresetFavouriteState = PresetFavouriteState.NONE,
         val languageTag: String = "en",
+        /**
+         * Tracked, not inferred from an empty list: a preset whose every word has been deleted
+         * is legitimately empty, and inferring would leave it spinning for words that are never
+         * coming.
+         */
+        val isLoadingWords: Boolean = true,
         /** The last deletion, kept so it can be undone; see [PresetDetailViewModel]. */
         val lastDeleted: DeletedItem? = null,
-    ) : PresetDetailUiState {
-        /** The preset arrives before its words do, so the list has its own loading state. */
-        val isLoadingWords: Boolean get() = words.isEmpty()
-    }
+    ) : PresetDetailUiState
 }
 
 const val PRESET_ID_ARG = "presetId"
@@ -72,6 +75,7 @@ class PresetDetailViewModel
         private data class Content(
             val preset: VocabularyPreset?,
             val words: List<PresetWord>,
+            val wordsLoaded: Boolean = false,
             val lastDeleted: DeletedItem? = null,
         )
 
@@ -91,6 +95,7 @@ class PresetDetailViewModel
                                 .map { it.copy(isFavourite = it.id in favourites) }
                                 .toImmutableList(),
                             favouriteState = favouriteStateOf(loaded.preset, favourites),
+                            isLoadingWords = !loaded.wordsLoaded,
                             lastDeleted = loaded.lastDeleted,
                         )
                 }
@@ -110,7 +115,11 @@ class PresetDetailViewModel
                 // The header shows first: resolving a thousand ids takes a query, and a header
                 // that appears at once reads better than a screen that stays blank.
                 content.value = Content(preset = preset, words = emptyList())
-                content.value = Content(preset = preset, words = getPresetVocabulary(presetId).sortedForDisplay())
+                content.value = Content(
+                    preset = preset,
+                    words = getPresetVocabulary(presetId).sortedForDisplay(),
+                    wordsLoaded = true,
+                )
             }
         }
 
