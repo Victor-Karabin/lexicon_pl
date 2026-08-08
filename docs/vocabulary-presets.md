@@ -171,10 +171,17 @@ Two consequences worth knowing:
 
 ## Word search
 
-The Vocabulary tab has two sections: **Presets** and **Words**. Word search matches either
-language — "apple", "jabłko" and "jablko" all find the same entry — and each result carries
-the same heart as the preset detail screen, so search is also how you add a single word to
-the study set.
+The Vocabulary tab has one search box, and it searches **words**, not presets. With the box
+empty the preset list is shown, with its category/CEFR filters and sort; typing replaces that
+list with the matching words and clearing the box puts it back exactly as it was.
+
+Matching is by either language — "apple", "jabłko" and "jablko" all find the same entry — and
+each result carries the same heart as the preset detail screen, so search is also how you add
+a single word to the study set.
+
+Presets are narrowed by the filter chips rather than by typing. A preset list is 77 items with
+names you can see; a vocabulary is 1,767 words you cannot, so the box is worth more pointed at
+the words.
 
 Matching is done in SQLite against a stored `searchKey` column holding both languages folded
 together (lower case, Polish diacritics stripped). The alternative — folding every row at
