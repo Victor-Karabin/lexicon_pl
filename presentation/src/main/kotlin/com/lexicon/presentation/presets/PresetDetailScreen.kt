@@ -19,10 +19,16 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,7 +43,10 @@ import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.DeleteAction
+import com.lexicon.presentation.common.DeleteActionWidth
 import com.lexicon.presentation.common.LightDarkPreview
+import com.lexicon.presentation.common.SwipeToRevealContainer
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
@@ -55,11 +64,28 @@ fun PresetDetailScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
+    val snackbarHostState = remember { SnackbarHostState() }
+    val deleted = (uiState as? PresetDetailUiState.Loaded)?.lastDeleted
+    val deletedMessage = deleted?.let { stringResource(R.string.vocabulary_deleted, it.label) }
+    val undoLabel = stringResource(R.string.vocabulary_undo)
+
+    LaunchedEffect(deleted) {
+        if (deletedMessage == null) return@LaunchedEffect
+        val result = snackbarHostState.showSnackbar(
+            message = deletedMessage,
+            actionLabel = undoLabel,
+            duration = SnackbarDuration.Short,
+        )
+        if (result == SnackbarResult.ActionPerformed) viewModel.onUndoDelete() else viewModel.onDeleteMessageShown()
+    }
+
     PresetDetailContent(
         uiState = uiState,
+        snackbarHostState = snackbarHostState,
         onClose = onClose,
         onWordFavouriteToggled = viewModel::onWordFavouriteToggled,
         onPresetFavouriteToggled = viewModel::onPresetFavouriteToggled,
+        onWordDeleted = viewModel::onWordDeleted,
         modifier = modifier,
     )
 }
@@ -68,9 +94,11 @@ fun PresetDetailScreen(
 @Composable
 private fun PresetDetailContent(
     uiState: PresetDetailUiState,
+    snackbarHostState: SnackbarHostState,
     onClose: () -> Unit,
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
     onPresetFavouriteToggled: (PresetFavouriteState) -> Unit,
+    onWordDeleted: (PresetWord) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val title = when (uiState) {
@@ -81,6 +109,7 @@ private fun PresetDetailContent(
     Scaffold(
         modifier = modifier,
         topBar = { TrainingTopBar(title = title, onClose = onClose) },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
     ) { padding ->
         when (uiState) {
             is PresetDetailUiState.Loading ->
@@ -117,10 +146,15 @@ private fun PresetDetailContent(
                     } else {
                         LazyColumn(contentPadding = PaddingValues(vertical = Dimens.spacingSmall)) {
                             itemsIndexed(uiState.words, key = { _, word -> word.id.value }) { index, word ->
-                                VocabularyWordRow(
-                                    word = word,
-                                    onFavouriteToggled = { onWordFavouriteToggled(word.id, !word.isFavourite) },
-                                )
+                                SwipeToRevealContainer(
+                                    revealWidth = DeleteActionWidth,
+                                    backgroundContent = { DeleteAction(onClick = { onWordDeleted(word) }) },
+                                ) {
+                                    VocabularyWordRow(
+                                        word = word,
+                                        onFavouriteToggled = { onWordFavouriteToggled(word.id, !word.isFavourite) },
+                                    )
+                                }
                                 // Between rows only: a divider under the last one would read
                                 // as the start of a section that is not there.
                                 if (index < uiState.words.lastIndex) {
@@ -219,6 +253,8 @@ private fun PresetDetailPreview() {
             onClose = {},
             onWordFavouriteToggled = { _, _ -> },
             onPresetFavouriteToggled = {},
+            onWordDeleted = {},
+            snackbarHostState = SnackbarHostState(),
         )
     }
 }
@@ -232,6 +268,8 @@ private fun PresetDetailLoadingWordsPreview() {
             onClose = {},
             onWordFavouriteToggled = { _, _ -> },
             onPresetFavouriteToggled = {},
+            onWordDeleted = {},
+            snackbarHostState = SnackbarHostState(),
         )
     }
 }
@@ -245,6 +283,8 @@ private fun PresetDetailNotFoundPreview() {
             onClose = {},
             onWordFavouriteToggled = { _, _ -> },
             onPresetFavouriteToggled = {},
+            onWordDeleted = {},
+            snackbarHostState = SnackbarHostState(),
         )
     }
 }

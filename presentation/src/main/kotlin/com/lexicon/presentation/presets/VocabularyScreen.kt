@@ -9,19 +9,15 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
@@ -58,10 +54,11 @@ import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.DeleteAction
+import com.lexicon.presentation.common.DeleteActionWidth
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SwipeToRevealContainer
 import com.lexicon.presentation.theme.Dimens
-import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconTheme
 import kotlinx.collections.immutable.persistentListOf
@@ -70,11 +67,6 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
 private val IconBadgeSize = 44.dp
-private val DeleteActionWidth = 88.dp
-private val DeleteActionRadius = 12.dp
-
-/** A typical word row: target, translation, transcription. */
-private val DeleteActionPreviewHeight = 76.dp
 
 /**
  * The Vocabulary tab: curated presets, and a search over every word.
@@ -354,35 +346,6 @@ private fun PresetCard(
     }
 }
 
-/**
- * The action the swipe uncovers. A button rather than the swipe itself doing the deleting, so a
- * gesture made by accident costs nothing.
- */
-@Composable
-private fun DeleteAction(onClick: () -> Unit) {
-    Surface(
-        onClick = onClick,
-        color = LexiconError,
-        // Rounded on the revealed edge only: the other side is butted against the row that
-        // slid away, and rounding it would leave a notch in the middle of the list.
-        shape = RoundedCornerShape(topEnd = DeleteActionRadius, bottomEnd = DeleteActionRadius),
-        modifier = Modifier.fillMaxSize(),
-    ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-        ) {
-            Icon(Icons.Default.Delete, contentDescription = null, tint = Color.White)
-            Text(
-                text = stringResource(R.string.vocabulary_delete),
-                style = MaterialTheme.typography.labelMedium,
-                color = Color.White,
-            )
-        }
-    }
-}
-
 @Composable
 private fun Message(text: String) {
     Box(
@@ -460,20 +423,6 @@ private val previewPresets = persistentListOf(
         "#EF6C00",
     ),
 )
-
-/**
- * The action at the size the gesture uncovers. Worth its own preview because it is only ever
- * on screen mid-swipe, which no screen preview can reach.
- */
-@LightDarkPreview
-@Composable
-private fun DeleteActionPreview() {
-    LexiconTheme {
-        Box(modifier = Modifier.width(DeleteActionWidth).height(DeleteActionPreviewHeight)) {
-            DeleteAction(onClick = {})
-        }
-    }
-}
 
 @LightDarkPreview
 @Composable

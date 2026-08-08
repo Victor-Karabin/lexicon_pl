@@ -4,12 +4,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
+import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
 import com.lexicon.interactors.presets.PresetFavouriteState
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetWord
+import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
 import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.presets.VocabularyId
@@ -23,6 +25,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.text.Collator
 import java.util.Locale
@@ -39,6 +42,8 @@ sealed interface PresetDetailUiState {
         val words: ImmutableList<PresetWord> = persistentListOf(),
         val favouriteState: PresetFavouriteState = PresetFavouriteState.NONE,
         val languageTag: String = "en",
+        /** The last deletion, kept so it can be undone; see [PresetDetailViewModel]. */
+        val lastDeleted: DeletedItem? = null,
     ) : PresetDetailUiState {
         /** The preset arrives before its words do, so the list has its own loading state. */
         val isLoadingWords: Boolean get() = words.isEmpty()
@@ -55,6 +60,8 @@ class PresetDetailViewModel
         private val getPreset: GetVocabularyPresetUseCase,
         private val getPresetVocabulary: GetPresetVocabularyUseCase,
         private val toggleWordFavourite: ToggleWordFavouriteUseCase,
+        private val deleteWord: DeleteWordUseCase,
+        private val restoreWord: RestoreWordUseCase,
         private val setPresetFavourite: SetPresetFavouriteUseCase,
         observeFavouriteWordIds: ObserveFavouriteWordIdsUseCase,
         private val dispatchers: DispatcherProvider,
@@ -62,7 +69,11 @@ class PresetDetailViewModel
         private val presetId = PresetId(savedStateHandle.get<String>(PRESET_ID_ARG).orEmpty())
 
         /** What was loaded once; favourite state is layered on top of it as it changes. */
-        private data class Content(val preset: VocabularyPreset?, val words: List<PresetWord>)
+        private data class Content(
+            val preset: VocabularyPreset?,
+            val words: List<PresetWord>,
+            val lastDeleted: DeletedItem? = null,
+        )
 
         private val content = MutableStateFlow<Content?>(null)
 
@@ -80,6 +91,7 @@ class PresetDetailViewModel
                                 .map { it.copy(isFavourite = it.id in favourites) }
                                 .toImmutableList(),
                             favouriteState = favouriteStateOf(loaded.preset, favourites),
+                            lastDeleted = loaded.lastDeleted,
                         )
                 }
             }.stateIn(
@@ -101,6 +113,38 @@ class PresetDetailViewModel
                 content.value = Content(preset = preset, words = getPresetVocabulary(presetId).sortedForDisplay())
             }
         }
+
+        /**
+         * Deletes at once, as the button says, and keeps enough to put it back. The row leaves
+         * the list immediately rather than waiting for a reload: it is under the user's finger.
+         */
+        fun onWordDeleted(word: PresetWord) {
+            viewModelScope.launch(dispatchers.io) {
+                deleteWord(word.id)
+                content.update { current ->
+                    current?.copy(
+                        words = current.words.filterNot { it.id == word.id },
+                        lastDeleted = DeletedItem.Word(word.id, word.text),
+                    )
+                }
+            }
+        }
+
+        fun onUndoDelete() {
+            val deleted = (content.value?.lastDeleted as? DeletedItem.Word) ?: return
+            viewModelScope.launch(dispatchers.io) {
+                restoreWord(deleted.id)
+                content.update { current ->
+                    current?.copy(
+                        words = getPresetVocabulary(presetId).sortedForDisplay(),
+                        lastDeleted = null,
+                    )
+                }
+            }
+        }
+
+        /** Cleared once shown, so the same message cannot be offered twice. */
+        fun onDeleteMessageShown() = content.update { it?.copy(lastDeleted = null) }
 
         fun onWordFavouriteToggled(
             id: VocabularyId,
