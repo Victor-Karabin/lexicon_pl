@@ -82,8 +82,11 @@
     <string name="sync_step_presets">Presets</string>
     <string name="sync_waiting">Waiting</string>
     <string name="sync_in_progress">Importing…</string>
-    <string name="sync_up_to_date">%1$d, up to date</string>
-    <string name="sync_changed">%1$d · +%2$d added, %3$d updated, %4$d removed</string>
+    <string name="sync_up_to_date">%1$s ready</string>
+    <string name="sync_changed">%1$s ready · %2$s added, %3$s updated, %4$s removed</string>
     <string name="sync_blocked">The bundled vocabulary could not be loaded, so there is nothing to study yet.</string>
     <string name="sync_retry">Try again</string>
+    <!-- The launcher label lives in the app module; this is the wordmark on the splash. -->
+    <string name="splash_title">Lexicon</string>
+    <string name="splash_tagline">Polish vocabulary, one session at a time</string>
 </resources>
