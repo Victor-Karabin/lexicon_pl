@@ -7,11 +7,8 @@ import com.lexicon.interactors.presets.BrowsePresetsRequest
 import com.lexicon.interactors.presets.BrowseVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.GetPresetCategoriesUseCase
-import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
-import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetSort
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,7 +22,6 @@ class PresetBrowserViewModel
     constructor(
         private val browsePresets: BrowseVocabularyPresetsUseCase,
         private val getCategories: GetPresetCategoriesUseCase,
-        private val getPresetVocabulary: GetPresetVocabularyUseCase,
         private val dispatchers: DispatcherProvider,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow<PresetBrowserUiState>(PresetBrowserUiState.Loading)
@@ -47,44 +43,6 @@ class PresetBrowserViewModel
             updateAndRefresh { it.copy(selectedCategoryIds = it.selectedCategoryIds.toggle(categoryId)) }
 
         fun onCefrToggled(level: CefrLevel) = updateAndRefresh { it.copy(selectedCefrLevels = it.selectedCefrLevels.toggle(level)) }
-
-        /**
-         * Shows the preset immediately and fills in its words when they arrive: resolving a
-         * thousand ids takes a query, and an empty sheet that appears at once reads better
-         * than a tap that seems to do nothing.
-         */
-        fun onPresetOpened(id: PresetId) {
-            val preset = (_uiState.value as? PresetBrowserUiState.Loaded)
-                ?.presets?.firstOrNull { it.id == id } ?: return
-            _uiState.update {
-                if (it is PresetBrowserUiState.Loaded) {
-                    it.copy(openedPreset = preset, openedPresetWords = persistentListOf())
-                } else {
-                    it
-                }
-            }
-            viewModelScope.launch(dispatchers.io) {
-                val words = getPresetVocabulary(id)
-                _uiState.update { state ->
-                    // The sheet may have been dismissed, or another preset opened, while
-                    // this was loading; only apply the words if they still belong on screen.
-                    if (state is PresetBrowserUiState.Loaded && state.openedPreset?.id == id) {
-                        state.copy(openedPresetWords = words)
-                    } else {
-                        state
-                    }
-                }
-            }
-        }
-
-        fun onPresetClosed() =
-            _uiState.update {
-                if (it is PresetBrowserUiState.Loaded) {
-                    it.copy(openedPreset = null, openedPresetWords = persistentListOf())
-                } else {
-                    it
-                }
-            }
 
         fun onFiltersCleared() =
             updateAndRefresh {

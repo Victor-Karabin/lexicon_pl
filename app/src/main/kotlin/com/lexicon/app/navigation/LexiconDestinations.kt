@@ -18,6 +18,10 @@ internal object LexiconDestinations {
     const val MIX = TrainingIds.MIX
     const val CROSSWORD = TrainingIds.CROSSWORD
 
+    const val PRESET_DETAIL = "preset/{presetId}"
+
+    fun presetDetail(presetId: String) = "preset/$presetId"
+
     const val SESSION_RESULT = "session_result/{correct}/{incorrect}/{skipped}/{tipsUsed}"
 
     fun sessionResult(

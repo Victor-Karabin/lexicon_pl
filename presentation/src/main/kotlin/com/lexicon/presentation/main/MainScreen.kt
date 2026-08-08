@@ -35,6 +35,7 @@ private enum class MainTab(val label: String, val icon: ImageVector) {
 @Composable
 fun MainScreen(
     onTrainingSelected: (id: String) -> Unit,
+    onPresetSelected: (id: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var selectedTab by remember { mutableStateOf(MainTab.TRAININGS) }
@@ -58,7 +59,7 @@ fun MainScreen(
         when (selectedTab) {
             MainTab.TRAININGS -> TrainingsScreen(onTrainingSelected = onTrainingSelected, modifier = content)
             MainTab.DASHBOARD -> ComingSoonScreen(MainTab.DASHBOARD.label, modifier = content)
-            MainTab.VOCABULARY -> PresetBrowserScreen(modifier = content)
+            MainTab.VOCABULARY -> PresetBrowserScreen(onPresetSelected = { onPresetSelected(it.value) }, modifier = content)
             MainTab.PLAN -> ComingSoonScreen(MainTab.PLAN.label, modifier = content)
             MainTab.SETTINGS -> SettingsScreen(modifier = content)
         }

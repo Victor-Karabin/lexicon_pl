@@ -16,6 +16,8 @@ import com.lexicon.presentation.main.MainScreen
 import com.lexicon.presentation.main.SplashScreen
 import com.lexicon.presentation.memorycards.MemoryCardsScreen
 import com.lexicon.presentation.mix.MixScreen
+import com.lexicon.presentation.presets.PRESET_ID_ARG
+import com.lexicon.presentation.presets.PresetDetailScreen
 import com.lexicon.presentation.pronunciation.PronunciationScreen
 import com.lexicon.presentation.puzzle.PuzzleScreen
 import com.lexicon.presentation.trueorfalse.TrueOrFalseScreen
@@ -35,7 +37,17 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
         }
 
         composable(LexiconDestinations.MAIN) {
-            MainScreen(onTrainingSelected = { route -> navController.navigate(route) })
+            MainScreen(
+                onTrainingSelected = { route -> navController.navigate(route) },
+                onPresetSelected = { id -> navController.navigate(LexiconDestinations.presetDetail(id)) },
+            )
+        }
+
+        composable(
+            route = LexiconDestinations.PRESET_DETAIL,
+            arguments = listOf(navArgument(PRESET_ID_ARG) { type = NavType.StringType }),
+        ) {
+            PresetDetailScreen(onClose = { navController.popBackStack() })
         }
 
         fun onStepSessionComplete(fromRoute: String): (Int, Int, Int, Int) -> Unit =

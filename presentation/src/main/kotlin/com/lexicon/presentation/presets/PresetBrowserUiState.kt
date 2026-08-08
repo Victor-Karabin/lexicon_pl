@@ -3,7 +3,6 @@ package com.lexicon.presentation.presets
 import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.PresetCategory
 import com.lexicon.interactors.presets.PresetSort
-import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyPreset
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -19,9 +18,6 @@ sealed interface PresetBrowserUiState {
         val selectedCefrLevels: Set<CefrLevel> = emptySet(),
         val sort: PresetSort = PresetSort.POPULARITY,
         val languageTag: String = "en",
-        val openedPreset: VocabularyPreset? = null,
-        /** Empty while the words are still being resolved, which is why the sheet shows a spinner. */
-        val openedPresetWords: ImmutableList<PresetWord> = persistentListOf(),
     ) : PresetBrowserUiState {
         val hasActiveFilters: Boolean
             get() = selectedCategoryIds.isNotEmpty() || selectedCefrLevels.isNotEmpty() || query.isNotBlank()

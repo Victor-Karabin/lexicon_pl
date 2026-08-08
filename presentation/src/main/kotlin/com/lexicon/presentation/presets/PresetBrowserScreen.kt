@@ -23,12 +23,10 @@ import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -52,14 +50,12 @@ import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetCategory
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetSort
-import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyPreset
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconTheme
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlin.time.Duration
@@ -69,6 +65,7 @@ private val IconBadgeSize = 44.dp
 
 @Composable
 fun PresetBrowserScreen(
+    onPresetSelected: (PresetId) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PresetBrowserViewModel = hiltViewModel(),
 ) {
@@ -81,8 +78,7 @@ fun PresetBrowserScreen(
         onCefrToggled = viewModel::onCefrToggled,
         onSortSelected = viewModel::onSortSelected,
         onFiltersCleared = viewModel::onFiltersCleared,
-        onPresetSelected = viewModel::onPresetOpened,
-        onPresetClosed = viewModel::onPresetClosed,
+        onPresetSelected = onPresetSelected,
         modifier = modifier,
     )
 }
@@ -96,7 +92,6 @@ private fun PresetBrowserContent(
     onSortSelected: (PresetSort) -> Unit,
     onFiltersCleared: () -> Unit,
     onPresetSelected: (PresetId) -> Unit,
-    onPresetClosed: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when (uiState) {
@@ -137,74 +132,7 @@ private fun PresetBrowserContent(
                             }
                         }
                 }
-
-                uiState.openedPreset?.let { preset ->
-                    PresetDetailSheet(
-                        preset = preset,
-                        words = uiState.openedPresetWords,
-                        languageTag = uiState.languageTag,
-                        onDismiss = onPresetClosed,
-                    )
-                }
             }
-    }
-}
-
-/**
- * The preset's actual contents. Presets are chosen on trust otherwise — a name and a word
- * count say nothing about whether the words are the ones you need.
- */
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun PresetDetailSheet(
-    preset: VocabularyPreset,
-    words: ImmutableList<PresetWord>,
-    languageTag: String,
-    onDismiss: () -> Unit,
-) {
-    ModalBottomSheet(onDismissRequest = onDismiss) {
-        Column(modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.spacingMedium)) {
-            Text(
-                text = preset.title.resolve(languageTag),
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.SemiBold,
-            )
-            Text(
-                text = preset.description.resolve(languageTag),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(top = Dimens.spacingSmall),
-            )
-
-            if (words.isEmpty()) {
-                Box(
-                    modifier = Modifier.fillMaxWidth().padding(Dimens.spacingXl),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    CircularProgressIndicator()
-                }
-            } else {
-                LazyColumn(
-                    modifier = Modifier.padding(top = Dimens.spacingMedium),
-                    verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-                    contentPadding = PaddingValues(bottom = Dimens.spacingXl),
-                ) {
-                    items(words, key = { it.id.value }) { word ->
-                        Column {
-                            Text(
-                                text = word.text,
-                                style = MaterialTheme.typography.titleSmall,
-                            )
-                            Text(
-                                text = "${word.translation}  ·  [${word.transcription}]",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                    }
-                }
-            }
-        }
     }
 }
 
@@ -477,7 +405,6 @@ private fun PresetBrowserPreview() {
             onSortSelected = {},
             onFiltersCleared = {},
             onPresetSelected = {},
-            onPresetClosed = {},
         )
     }
 }
@@ -497,7 +424,6 @@ private fun PresetBrowserNoMatchesPreview() {
             onSortSelected = {},
             onFiltersCleared = {},
             onPresetSelected = {},
-            onPresetClosed = {},
         )
     }
 }
