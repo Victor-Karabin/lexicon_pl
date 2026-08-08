@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -31,17 +30,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.SubcomposeAsyncImage
 import com.lexicon.interactors.mix.MixStep
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.AnswerOptionList
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.AnswerStatusLabel
+import com.lexicon.presentation.common.BuiltAnswerField
+import com.lexicon.presentation.common.ClueImage
 import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.LetterTileGrid
 import com.lexicon.presentation.common.LightDarkPreview
@@ -55,14 +55,10 @@ import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
-import com.lexicon.presentation.theme.component.AnswerChip
-import com.lexicon.presentation.theme.component.AnswerChipState
-import com.lexicon.presentation.theme.component.AnswerChipVariant
 import com.lexicon.presentation.theme.component.PlayButton
 import com.lexicon.presentation.theme.component.ProgressDots
 import com.lexicon.presentation.theme.component.WordCard
 
-private val ImageHeight = 180.dp
 private val TrueFalseButtonHeight = 96.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -234,7 +230,11 @@ private fun ColumnScope.StepContent(
                 label = stringResource(R.string.action_listen_again),
                 modifier = Modifier.padding(top = Dimens.spacingLarge),
             )
-            BuiltAnswer(uiState)
+            BuiltAnswerField(
+                answer = uiState.builtAnswer,
+                answerState = uiState.answerState,
+                modifier = Modifier.padding(top = Dimens.spacingMedium),
+            )
             LetterTileGrid(
                 tiles = uiState.availableTiles,
                 onTileSelected = onTileSelected,
@@ -243,8 +243,16 @@ private fun ColumnScope.StepContent(
         }
 
         is MixStep.Puzzle -> {
-            ClueImage(imageUrl = step.step.imageUrl, fallbackText = step.step.clueText)
-            BuiltAnswer(uiState)
+            ClueImage(
+                imageUrl = step.step.imageUrl,
+                fallbackText = step.step.clueText,
+                modifier = Modifier.padding(top = Dimens.spacingMedium),
+            )
+            BuiltAnswerField(
+                answer = uiState.builtAnswer,
+                answerState = uiState.answerState,
+                modifier = Modifier.padding(top = Dimens.spacingMedium),
+            )
             LetterTileGrid(
                 tiles = uiState.availableTiles,
                 onTileSelected = onTileSelected,
@@ -253,18 +261,19 @@ private fun ColumnScope.StepContent(
         }
 
         is MixStep.ImageTest -> {
-            ClueImage(imageUrl = step.step.imageUrl, fallbackText = step.step.clueText)
-            Column(modifier = Modifier.padding(top = Dimens.spacingMedium)) {
-                step.step.options.forEach { option ->
-                    AnswerChip(
-                        label = option,
-                        state = optionState(uiState, option),
-                        variant = AnswerChipVariant.ROW,
-                        onClick = { onOptionSelected(option) }.takeIf { uiState.isEditable },
-                        modifier = Modifier.padding(vertical = Dimens.spacingTiny),
-                    )
-                }
-            }
+            ClueImage(
+                imageUrl = step.step.imageUrl,
+                fallbackText = step.step.clueText,
+                modifier = Modifier.padding(top = Dimens.spacingMedium),
+            )
+            AnswerOptionList(
+                options = step.step.options,
+                selectedOption = uiState.selectedOption,
+                correctOption = uiState.correctOption,
+                enabled = uiState.isEditable,
+                onOptionSelected = onOptionSelected,
+                modifier = Modifier.padding(top = Dimens.spacingMedium),
+            )
         }
 
         is MixStep.TrueOrFalse -> {
@@ -364,56 +373,12 @@ private fun TrueOrFalseButton(
 }
 
 @Composable
-private fun BuiltAnswer(uiState: MixUiState.Loaded) {
-    Text(
-        text = uiState.builtAnswer.ifEmpty { " " },
-        modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium),
-        style = MaterialTheme.typography.headlineSmall,
-    )
-}
-
-@Composable
-private fun ClueImage(
-    imageUrl: String?,
-    fallbackText: String,
-) {
-    Box(modifier = Modifier.fillMaxWidth().height(ImageHeight).padding(top = Dimens.spacingMedium)) {
-        if (imageUrl == null) {
-            Text(fallbackText, style = MaterialTheme.typography.headlineSmall)
-        } else {
-            SubcomposeAsyncImage(
-                model = imageUrl,
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier.fillMaxSize(),
-                loading = {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator()
-                    }
-                },
-                error = { Text(fallbackText, style = MaterialTheme.typography.headlineSmall) },
-            )
-        }
-    }
-}
-
-@Composable
 private fun StepFeedback(uiState: MixUiState.Loaded) {
-    val statusLabel = when (uiState.answerState) {
-        is AnswerState.Correct -> stringResource(R.string.status_correct)
-        is AnswerState.Incorrect -> stringResource(R.string.status_incorrect)
-        is AnswerState.Skipped -> stringResource(R.string.status_skipped)
-        is AnswerState.Unanswered -> null
-    }
-    statusLabel?.let { label ->
-        Text(
-            text = label,
-            color = if (uiState.answerState is AnswerState.Correct) LexiconSuccess else LexiconError,
-            modifier = Modifier.padding(top = Dimens.spacingMedium),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-        )
-    }
+    AnswerStatusLabel(
+        answerState = uiState.answerState,
+        modifier = Modifier.padding(top = Dimens.spacingMedium),
+    )
+
     if (uiState.isEditable) {
         uiState.tipText?.let { hint ->
             Text(
@@ -431,17 +396,6 @@ private fun StepFeedback(uiState: MixUiState.Loaded) {
         )
     }
 }
-
-private fun optionState(
-    uiState: MixUiState.Loaded,
-    option: String,
-): AnswerChipState =
-    when {
-        uiState.correctOption == option -> AnswerChipState.CORRECT
-        uiState.correctOption != null && uiState.selectedOption == option -> AnswerChipState.INCORRECT
-        uiState.selectedOption == option -> AnswerChipState.SELECTED
-        else -> AnswerChipState.UNSELECTED
-    }
 
 @Composable
 private fun com.lexicon.interactors.mix.MixTrainingType.label(): String =

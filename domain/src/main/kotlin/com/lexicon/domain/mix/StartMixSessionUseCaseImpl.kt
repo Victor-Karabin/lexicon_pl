@@ -18,12 +18,12 @@ import com.lexicon.interactors.puzzle.StartPuzzleSessionRequest
 import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionRequest
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
 import java.util.UUID
 import javax.inject.Inject
 import kotlin.random.Random
+
+/** Retries per step when the drawn item would repeat an exercise already in the session. */
+private const val MAX_ATTEMPTS_PER_STEP = 12
 
 /**
  * Builds each step by asking the originating training for a one-step session, so generation —
@@ -46,11 +46,36 @@ class StartMixSessionUseCaseImpl
             val types = request.trainingTypes.ifEmpty { MixTrainingType.entries.toSet() }
             val assignments = assignTrainingTypes(types, stepCount)
 
-            val steps = coroutineScope {
-                assignments.mapIndexed { index, type -> async { buildStep(index, type) } }.awaitAll()
-            }.filterNotNull()
+            // Built one at a time rather than in parallel: each step has to see what the session
+            // already contains to avoid repeating an exercise, and the underlying trainings each
+            // pick their vocabulary independently and at random.
+            val used = mutableSetOf<Pair<MixTrainingType, Long>>()
+            val steps = mutableListOf<MixStep>()
+            assignments.forEach { type ->
+                distinctStep(stepIndex = steps.size, type = type, used = used)?.let { steps += it }
+            }
 
             return MixSessionResponse(sessionId = UUID.randomUUID().toString(), steps = steps)
+        }
+
+        /**
+         * Asks for a step until it lands on a vocabulary item this training type hasn't already
+         * used. The same word may still appear under a *different* exercise, which is the point of
+         * Mix; what is avoided is being asked the identical question twice.
+         *
+         * Gives up after [MAX_ATTEMPTS_PER_STEP] so a vocabulary too small to fill the session
+         * yields a shorter one instead of looping.
+         */
+        private suspend fun distinctStep(
+            stepIndex: Int,
+            type: MixTrainingType,
+            used: MutableSet<Pair<MixTrainingType, Long>>,
+        ): MixStep? {
+            repeat(MAX_ATTEMPTS_PER_STEP) {
+                val candidate = buildStep(stepIndex, type) ?: return null
+                if (used.add(type to candidate.vocabularyItemId)) return candidate
+            }
+            return null
         }
 
         /**

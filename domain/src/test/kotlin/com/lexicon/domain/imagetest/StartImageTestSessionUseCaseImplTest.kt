@@ -80,4 +80,28 @@ class StartImageTestSessionUseCaseImplTest {
                 step.options.forEach { option -> assertEquals(correctIsPhrase, option.contains(' ')) }
             }
         }
+
+    /**
+     * Regression: with only a couple of phrases in the vocabulary, a phrase subject had no
+     * same-type distractors left and the step degenerated to a single option.
+     */
+    @Test
+    fun `every step is filled to the requested option count even though phrases are scarce`() =
+        runTest {
+            // Phrases first, so the naive "take the first item" subject choice lands on one.
+            val scarcePhrases = listOf(
+                VocabularyItemBoundary(90, "dzien dobry", "good morning", "d"),
+                VocabularyItemBoundary(91, "gdzie jest dworzec", "where is the station", "g"),
+            ) + items
+            coEvery { vocabularyRepository.getRandomItems(any()) } returns scarcePhrases
+            coEvery { imageProvider.searchImage(any()) } returns null
+
+            repeat(5) {
+                val response = useCase(StartImageTestSessionRequest(stepCount = 1, optionCount = 6))
+
+                response.steps.forEach { step ->
+                    assertEquals("a one-option step is trivially guessable", 6, step.options.size)
+                }
+            }
+        }
 }

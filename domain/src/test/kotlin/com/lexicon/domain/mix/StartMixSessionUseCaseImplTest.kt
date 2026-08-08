@@ -34,29 +34,43 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class StartMixSessionUseCaseImplTest {
+    /**
+     * Ids increment per call so each request yields a fresh item, mirroring the real trainings,
+     * which draw their vocabulary at random rather than returning the same word every time.
+     */
+    private var nextId = 0L
+
+    private fun id() = ++nextId
+
     private val startDictation: StartDictationSessionUseCase = mockk {
-        coEvery { this@mockk(any()) } returns
-            DictationSessionResponse("d", listOf(DictationStepResponse(0, 1L, "kot", "cat")))
+        coEvery { this@mockk(any()) } answers {
+            DictationSessionResponse("d", listOf(DictationStepResponse(0, id(), "kot", "cat")))
+        }
     }
     private val startDictationPuzzle: StartDictationPuzzleSessionUseCase = mockk {
-        coEvery { this@mockk(any()) } returns
-            DictationPuzzleSessionResponse("dp", listOf(DictationPuzzleStepResponse(0, 2L, "pies", "dog")))
+        coEvery { this@mockk(any()) } answers {
+            DictationPuzzleSessionResponse("dp", listOf(DictationPuzzleStepResponse(0, id(), "pies", "dog")))
+        }
     }
     private val startPuzzle: StartPuzzleSessionUseCase = mockk {
-        coEvery { this@mockk(any()) } returns
-            PuzzleSessionResponse("p", listOf(PuzzleStepResponse(0, 3L, "dom", null, "house")))
+        coEvery { this@mockk(any()) } answers {
+            PuzzleSessionResponse("p", listOf(PuzzleStepResponse(0, id(), "dom", null, "house")))
+        }
     }
     private val startImageTest: StartImageTestSessionUseCase = mockk {
-        coEvery { this@mockk(any()) } returns
-            ImageTestSessionResponse("i", listOf(ImageTestStepResponse(0, 4L, null, "woda", listOf("water"), "water")))
+        coEvery { this@mockk(any()) } answers {
+            ImageTestSessionResponse("i", listOf(ImageTestStepResponse(0, id(), null, "woda", listOf("water"), "water")))
+        }
     }
     private val startTrueOrFalse: StartTrueOrFalseSessionUseCase = mockk {
-        coEvery { this@mockk(any()) } returns
-            TrueOrFalseSessionResponse("t", listOf(TrueOrFalseStepResponse(0, 5L, "chleb", "bread", true)))
+        coEvery { this@mockk(any()) } answers {
+            TrueOrFalseSessionResponse("t", listOf(TrueOrFalseStepResponse(0, id(), "chleb", "bread", true)))
+        }
     }
     private val startPronunciation: StartPronunciationSessionUseCase = mockk {
-        coEvery { this@mockk(any()) } returns
-            PronunciationSessionResponse("pr", listOf(PronunciationStepResponse(0, 6L, "mleko", "milk", "ˈmlɛkɔ")))
+        coEvery { this@mockk(any()) } answers {
+            PronunciationSessionResponse("pr", listOf(PronunciationStepResponse(0, id(), "mleko", "milk", "ˈmlɛkɔ")))
+        }
     }
     private val settingsRepository: SettingsRepository = mockk {
         coEvery { getSettings() } returns AppSettingsBoundary(ThemeModeBoundary.SYSTEM, stepCount = 10)
@@ -132,5 +146,50 @@ class StartMixSessionUseCaseImplTest {
             val steps = useCase(StartMixSessionRequest(stepCount = 4, trainingTypes = setOf(MixTrainingType.DICTATION))).steps
 
             assertTrue(steps.isEmpty())
+        }
+
+    @Test
+    fun `the same word is never asked twice under the same training type`() =
+        runTest {
+            // A small vocabulary the trainings keep re-drawing from, which is exactly when
+            // repetition shows up: a large one hides it behind chance.
+            val pool = listOf(1L, 2L, 3L)
+            var draw = 0
+            coEvery { startDictation(any()) } answers {
+                DictationSessionResponse("d", listOf(DictationStepResponse(0, pool[draw++ % pool.size], "kot", "cat")))
+            }
+
+            val steps = useCase(StartMixSessionRequest(stepCount = 30, trainingTypes = setOf(MixTrainingType.DICTATION))).steps
+
+            val exercises = steps.map { it.trainingType to it.vocabularyItemId }
+            assertEquals("an exercise was repeated within the session", exercises.distinct(), exercises)
+        }
+
+    /** Mix's whole point is seeing a word from different angles, so only the pairing is unique. */
+    @Test
+    fun `the same word may still be asked under a different training type`() =
+        runTest {
+            coEvery { startDictation(any()) } returns
+                DictationSessionResponse("d", listOf(DictationStepResponse(0, 99L, "kot", "cat")))
+            coEvery { startPuzzle(any()) } returns
+                PuzzleSessionResponse("p", listOf(PuzzleStepResponse(0, 99L, "kot", null, "cat")))
+
+            val types = setOf(MixTrainingType.DICTATION, MixTrainingType.PUZZLE)
+            val steps = useCase(StartMixSessionRequest(stepCount = 2, trainingTypes = types)).steps
+
+            assertEquals(2, steps.size)
+            assertEquals(types, steps.map { it.trainingType }.toSet())
+        }
+
+    /** A vocabulary too small to fill the session yields a shorter one instead of looping forever. */
+    @Test
+    fun `a training stuck on one word contributes a single step`() =
+        runTest {
+            coEvery { startDictation(any()) } returns
+                DictationSessionResponse("d", listOf(DictationStepResponse(0, 7L, "kot", "cat")))
+
+            val steps = useCase(StartMixSessionRequest(stepCount = 5, trainingTypes = setOf(MixTrainingType.DICTATION))).steps
+
+            assertEquals(1, steps.size)
         }
 }

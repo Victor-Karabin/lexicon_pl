@@ -1,16 +1,10 @@
 package com.lexicon.presentation.imagetest
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
@@ -23,24 +17,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.SubcomposeAsyncImage
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.AnswerOptionList
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.ClueImage
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
-import com.lexicon.presentation.theme.LexiconError
-import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
-
-private val ImageHeight = 180.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -114,36 +102,20 @@ private fun ImageTestScreenContent(
                             style = MaterialTheme.typography.labelMedium,
                         )
 
-                        Box(modifier = Modifier.fillMaxWidth().height(ImageHeight).padding(top = Dimens.spacingMedium)) {
-                            if (uiState.imageUrl == null) {
-                                Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall)
-                            } else {
-                                SubcomposeAsyncImage(
-                                    model = uiState.imageUrl,
-                                    contentDescription = null,
-                                    contentScale = ContentScale.Fit,
-                                    modifier = Modifier.fillMaxSize(),
-                                    loading = {
-                                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                                            CircularProgressIndicator()
-                                        }
-                                    },
-                                    error = { Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall) },
-                                )
-                            }
-                        }
+                        ClueImage(
+                            imageUrl = uiState.imageUrl,
+                            fallbackText = uiState.clueText,
+                            modifier = Modifier.padding(top = Dimens.spacingMedium),
+                        )
 
-                        Column(modifier = Modifier.padding(top = Dimens.spacingMedium)) {
-                            uiState.options.forEach { option ->
-                                OptionRow(
-                                    text = option,
-                                    isSelected = option == uiState.selectedOption,
-                                    isCorrect = uiState.correctOption?.let { it == option },
-                                    enabled = uiState.isEditable,
-                                    onClick = { onOptionSelected(option) },
-                                )
-                            }
-                        }
+                        AnswerOptionList(
+                            options = uiState.options,
+                            selectedOption = uiState.selectedOption,
+                            correctOption = uiState.correctOption,
+                            enabled = uiState.isEditable,
+                            onOptionSelected = onOptionSelected,
+                            modifier = Modifier.padding(top = Dimens.spacingMedium),
+                        )
                     }
 
                     TrainingActionRow(
@@ -155,33 +127,6 @@ private fun ImageTestScreenContent(
                     )
                 }
         }
-    }
-}
-
-@Composable
-private fun OptionRow(
-    text: String,
-    isSelected: Boolean,
-    isCorrect: Boolean?,
-    enabled: Boolean,
-    onClick: () -> Unit,
-) {
-    val background = when {
-        isCorrect == true -> LexiconSuccess
-        isCorrect == false && isSelected -> LexiconError
-        isSelected -> MaterialTheme.colorScheme.primaryContainer
-        else -> MaterialTheme.colorScheme.surfaceVariant
-    }
-    val textColor = if (isCorrect != null || isSelected) Color.White else MaterialTheme.colorScheme.onSurfaceVariant
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = Dimens.spacingTiny)
-            .background(background, RoundedCornerShape(Dimens.spacingSmall))
-            .clickable(enabled = enabled, onClick = onClick)
-            .padding(Dimens.spacingSmall),
-    ) {
-        Text(text, color = textColor)
     }
 }
 

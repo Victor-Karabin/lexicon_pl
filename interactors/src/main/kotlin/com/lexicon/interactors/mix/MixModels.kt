@@ -32,29 +32,38 @@ sealed interface MixStep {
     val stepIndex: Int
     val trainingType: MixTrainingType
 
+    /** The item being practised, so a session can avoid repeating the same exercise on it. */
+    val vocabularyItemId: Long
+
     data class Dictation(override val stepIndex: Int, val step: DictationStepResponse) : MixStep {
         override val trainingType = MixTrainingType.DICTATION
+        override val vocabularyItemId = step.vocabularyItemId
     }
 
     data class DictationPuzzle(override val stepIndex: Int, val step: DictationPuzzleStepResponse) : MixStep {
         override val trainingType = MixTrainingType.DICTATION_PUZZLE
+        override val vocabularyItemId = step.vocabularyItemId
     }
 
     data class Puzzle(override val stepIndex: Int, val step: PuzzleStepResponse) : MixStep {
         override val trainingType = MixTrainingType.PUZZLE
+        override val vocabularyItemId = step.vocabularyItemId
     }
 
     data class ImageTest(override val stepIndex: Int, val step: ImageTestStepResponse) : MixStep {
         override val trainingType = MixTrainingType.IMAGE_TEST
+        override val vocabularyItemId = step.vocabularyItemId
     }
 
     /** Timerless: the countdown belongs to a standalone True or False session, not to one Mix step. */
     data class TrueOrFalse(override val stepIndex: Int, val step: TrueOrFalseStepResponse) : MixStep {
         override val trainingType = MixTrainingType.TRUE_OR_FALSE
+        override val vocabularyItemId = step.vocabularyItemId
     }
 
     data class Pronunciation(override val stepIndex: Int, val step: PronunciationStepResponse) : MixStep {
         override val trainingType = MixTrainingType.PRONUNCIATION_CHECK
+        override val vocabularyItemId = step.vocabularyItemId
     }
 }
 
