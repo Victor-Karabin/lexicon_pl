@@ -21,7 +21,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.lexicon.presentation.presets.PresetBrowserScreen
+import com.lexicon.presentation.presets.VocabularyScreen
 import com.lexicon.presentation.settings.SettingsScreen
 
 private enum class MainTab(val label: String, val icon: ImageVector) {
@@ -65,7 +65,7 @@ fun MainScreen(
         when (selectedTab) {
             MainTab.TRAININGS -> TrainingsScreen(onTrainingSelected = onTrainingSelected, modifier = content)
             MainTab.DASHBOARD -> ComingSoonScreen(MainTab.DASHBOARD.label, modifier = content)
-            MainTab.VOCABULARY -> PresetBrowserScreen(onPresetSelected = { onPresetSelected(it.value) }, modifier = content)
+            MainTab.VOCABULARY -> VocabularyScreen(onPresetSelected = { onPresetSelected(it.value) }, modifier = content)
             MainTab.PLAN -> ComingSoonScreen(MainTab.PLAN.label, modifier = content)
             MainTab.SETTINGS -> SettingsScreen(modifier = content)
         }

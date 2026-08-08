@@ -3,6 +3,7 @@ package com.lexicon.data.local
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -40,6 +41,23 @@ interface WordDao {
         """,
     )
     suspend fun countForStudy(): Int
+
+    /**
+     * [foldedQuery] must already be folded; matching a raw query against a folded column is
+     * how a search for "zolw" silently stops finding "żółw".
+     */
+    @Query("SELECT * FROM words WHERE searchKey LIKE '%' || :foldedQuery || '%' ORDER BY text LIMIT :limit")
+    suspend fun search(
+        foldedQuery: String,
+        limit: Int,
+    ): List<WordEntity>
+
+    /** Rows carried over by a migration have no key yet; see [VocabularySeeder]. */
+    @Query("SELECT * FROM words WHERE searchKey = ''")
+    suspend fun getWithoutSearchKey(): List<WordEntity>
+
+    @Update
+    suspend fun updateAll(words: List<WordEntity>)
 
     @Query("SELECT COUNT(*) FROM words")
     suspend fun count(): Int

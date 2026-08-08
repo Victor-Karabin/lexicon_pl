@@ -3,6 +3,7 @@ package com.lexicon.data.local
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.lexicon.boundary.VocabularyItemBoundary
+import com.lexicon.common.foldForSearch
 
 @Entity(tableName = "words")
 data class WordEntity(
@@ -12,7 +13,18 @@ data class WordEntity(
     val transcription: String,
     /** Marks a word as chosen for study; see [WordDao.getRandomForStudy]. */
     val isFavourite: Boolean = false,
+    /**
+     * Both languages folded into one column, so a search is a single LIKE rather than a scan
+     * that has to fold every row it looks at. Derived, never authored — see [searchKeyFor].
+     */
+    val searchKey: String = "",
 )
+
+/** The one place a word's search key is built, so stored keys and queries always agree. */
+fun searchKeyFor(
+    text: String,
+    translation: String,
+): String = "${text.foldForSearch()} ${translation.foldForSearch()}"
 
 fun WordEntity.toBoundary(): VocabularyItemBoundary =
     VocabularyItemBoundary(

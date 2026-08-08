@@ -26,6 +26,15 @@ class VocabularyRepositoryImpl
             return wordDao.getByIds(ids).map { it.toBoundary() }
         }
 
+        override suspend fun search(
+            foldedQuery: String,
+            limit: Int,
+        ): List<VocabularyItemBoundary> {
+            if (foldedQuery.isBlank()) return emptyList()
+            vocabularySeeder.ensureSeeded()
+            return wordDao.search(foldedQuery, limit).map { it.toBoundary() }
+        }
+
         override suspend fun countStudyWords(): Int {
             vocabularySeeder.ensureSeeded()
             return wordDao.countForStudy()
