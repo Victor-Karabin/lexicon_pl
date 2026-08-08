@@ -6,96 +6,169 @@ import io.mockk.mockk
 import io.mockk.slot
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class VocabularySeederTest {
-    private val wordDao: WordDao = mockk()
+    private val wordDao: WordDao = mockk(relaxed = true)
     private val vocabularySeedAssetLoader: VocabularySeedAssetLoader = mockk()
-    private val seeder = VocabularySeeder(wordDao, vocabularySeedAssetLoader)
+    private val vocabularySyncStore: VocabularySyncStore = mockk(relaxed = true)
+
+    private fun seeder() = VocabularySeeder(wordDao, vocabularySeedAssetLoader, vocabularySyncStore)
+
+    private fun word(
+        id: Long,
+        text: String,
+        translation: String = "x",
+        cefr: String = "A1",
+        isFavourite: Boolean = false,
+    ) = WordEntity(
+        id = id,
+        text = text,
+        translation = translation,
+        transcription = "",
+        isFavourite = isFavourite,
+        searchKey = searchKeyFor(text, translation),
+        cefr = cefr,
+    )
+
+    private fun assetIs(vararg words: WordEntity) {
+        coEvery { vocabularySeedAssetLoader.fingerprint() } returns "fp-${words.size}"
+        coEvery { vocabularySeedAssetLoader.load() } returns words.toList()
+    }
+
+    private fun tableIs(vararg words: WordEntity) {
+        coEvery { wordDao.getAll() } returns words.toList()
+        coEvery { wordDao.count() } returns words.size
+    }
 
     @Test
-    fun `seeds from assets when the words table is empty`() =
+    fun `an empty table is seeded from the asset`() =
         runTest {
-            coEvery { wordDao.count() } returns 0
-            val words = listOf(WordEntity(id = 1, text = "kot", translation = "cat", transcription = "kot"))
-            coEvery { vocabularySeedAssetLoader.load() } returns words
-            coEvery { wordDao.insertAll(words) } returns Unit
+            assetIs(word(1, "kot"), word(2, "pies"))
+            tableIs()
+            coEvery { vocabularySyncStore.syncedFingerprint() } returns null
 
-            seeder.ensureSeeded()
+            seeder().ensureSeeded()
 
-            coVerify { wordDao.insertAll(words) }
-        }
-
-    @Test
-    fun `does not reseed when the words table already has data`() =
-        runTest {
-            coEvery { wordDao.count() } returns 42
-            coEvery { wordDao.getWithoutSearchKey() } returns emptyList()
-            coEvery { wordDao.getWithoutCefr() } returns emptyList()
-
-            seeder.ensureSeeded()
-
-            coVerify(exactly = 0) { vocabularySeedAssetLoader.load() }
-            coVerify(exactly = 0) { wordDao.insertAll(any()) }
+            coVerify { wordDao.insertAll(match { it.size == 2 }) }
         }
 
     /**
-     * Rows carried across the search-key migration arrive with an empty key. Backfilling them
-     * here rather than reseeding is what keeps the user's favourites, which live on the same rows.
+     * The bug this class exists for: the corpus grew from 1,767 to 2,219 words and installs
+     * that were already seeded received none of them, so the levels those words filled stayed
+     * empty on every device but a fresh one.
      */
     @Test
-    fun `backfills search keys for rows that predate the column`() =
+    fun `words added to the asset reach an already-seeded table`() =
         runTest {
-            coEvery { wordDao.count() } returns 2
-            val stale = listOf(
-                WordEntity(id = 1, text = "żółw", translation = "turtle", transcription = "ʐuwf"),
-                WordEntity(id = 2, text = "kot", translation = "cat", transcription = "kɔt"),
-            )
-            coEvery { wordDao.getWithoutSearchKey() } returns stale
-            coEvery { wordDao.getWithoutCefr() } returns emptyList()
-            val updated = slot<List<WordEntity>>()
-            coEvery { wordDao.updateAll(capture(updated)) } returns Unit
+            assetIs(word(1, "kot"), word(2, "pies"), word(3, "dom"))
+            tableIs(word(1, "kot"), word(2, "pies"))
+            coEvery { vocabularySyncStore.syncedFingerprint() } returns "stale"
+            val inserted = slot<List<WordEntity>>()
+            coEvery { wordDao.insertAll(capture(inserted)) } returns Unit
 
-            seeder.ensureSeeded()
+            seeder().ensureSeeded()
 
-            assertEquals(listOf("zolw turtle", "kot cat"), updated.captured.map { it.searchKey })
-            coVerify(exactly = 0) { vocabularySeedAssetLoader.load() }
+            assertEquals(listOf(3L), inserted.captured.map { it.id })
         }
 
     @Test
-    fun `leaves rows alone when every search key and level is already present`() =
+    fun `words dropped from the asset are removed from the table`() =
         runTest {
-            coEvery { wordDao.count() } returns 42
-            coEvery { wordDao.getWithoutSearchKey() } returns emptyList()
-            coEvery { wordDao.getWithoutCefr() } returns emptyList()
+            assetIs(word(1, "kot"))
+            tableIs(word(1, "kot"), word(2, "w"))
+            coEvery { vocabularySyncStore.syncedFingerprint() } returns "stale"
+            val deleted = slot<List<Long>>()
+            coEvery { wordDao.deleteByIds(capture(deleted)) } returns Unit
 
-            seeder.ensureSeeded()
+            seeder().ensureSeeded()
+
+            assertEquals(listOf(2L), deleted.captured)
+        }
+
+    /** Favourites are the user's, and a corpus update is not a reason to lose them. */
+    @Test
+    fun `a favourite survives its word being refreshed`() =
+        runTest {
+            assetIs(word(1, "kot", translation = "cat"))
+            tableIs(word(1, "kot", translation = "kitten", isFavourite = true))
+            coEvery { vocabularySyncStore.syncedFingerprint() } returns "stale"
+            val updated = slot<List<WordEntity>>()
+            coEvery { wordDao.updateAll(capture(updated)) } returns Unit
+
+            seeder().ensureSeeded()
+
+            val row = updated.captured.single()
+            assertEquals("the corrected translation must be taken", "cat", row.translation)
+            assertTrue("the heart must not be", row.isFavourite)
+        }
+
+    @Test
+    fun `rows that already match the asset are not rewritten`() =
+        runTest {
+            assetIs(word(1, "kot"), word(2, "pies"))
+            tableIs(word(1, "kot"), word(2, "pies", isFavourite = true))
+            coEvery { vocabularySyncStore.syncedFingerprint() } returns "stale"
+
+            seeder().ensureSeeded()
 
             coVerify(exactly = 0) { wordDao.updateAll(any()) }
         }
 
+    @Test
+    fun `an unchanged asset is never parsed`() =
+        runTest {
+            coEvery { vocabularySeedAssetLoader.fingerprint() } returns "fp-2"
+            coEvery { vocabularySyncStore.syncedFingerprint() } returns "fp-2"
+            coEvery { wordDao.count() } returns 2
+
+            seeder().ensureSeeded()
+
+            coVerify(exactly = 0) { vocabularySeedAssetLoader.load() }
+        }
+
     /**
-     * A level cannot be derived from the row the way a search key can, so it is read back out
-     * of the asset by id — which is why this backfill loads the asset and the other does not.
+     * A schema change can empty the table without the asset moving, and the stored fingerprint
+     * would otherwise report everything as up to date for ever.
      */
     @Test
-    fun `backfills CEFR levels from the asset for rows that predate the column`() =
+    fun `an emptied table is reseeded even when the asset has not changed`() =
         runTest {
-            coEvery { wordDao.count() } returns 2
-            coEvery { wordDao.getWithoutSearchKey() } returns emptyList()
-            coEvery { wordDao.getWithoutCefr() } returns listOf(
-                WordEntity(id = 1, text = "kot", translation = "cat", transcription = "kɔt", searchKey = "kot cat"),
-                WordEntity(id = 9, text = "gone", translation = "gone", transcription = "", searchKey = "gone gone"),
-            )
-            coEvery { vocabularySeedAssetLoader.load() } returns listOf(
-                WordEntity(id = 1, text = "kot", translation = "cat", transcription = "kɔt", cefr = "A1"),
-            )
-            val updated = slot<List<WordEntity>>()
-            coEvery { wordDao.updateAll(capture(updated)) } returns Unit
+            assetIs(word(1, "kot"))
+            tableIs()
+            coEvery { vocabularySeedAssetLoader.fingerprint() } returns "fp-1"
+            coEvery { vocabularySyncStore.syncedFingerprint() } returns "fp-1"
+
+            seeder().ensureSeeded()
+
+            coVerify { wordDao.insertAll(match { it.size == 1 }) }
+        }
+
+    @Test
+    fun `the sync runs once per process, not once per call`() =
+        runTest {
+            assetIs(word(1, "kot"))
+            tableIs(word(1, "kot"))
+            coEvery { vocabularySyncStore.syncedFingerprint() } returns "stale"
+            val seeder = seeder()
 
             seeder.ensureSeeded()
+            seeder.ensureSeeded()
+            seeder.ensureSeeded()
 
-            assertEquals(listOf(1L), updated.captured.map { it.id })
-            assertEquals("A1", updated.captured.single().cefr)
+            coVerify(exactly = 1) { vocabularySeedAssetLoader.load() }
+        }
+
+    @Test
+    fun `the new fingerprint is recorded once the table matches`() =
+        runTest {
+            assetIs(word(1, "kot"))
+            tableIs(word(1, "kot"))
+            coEvery { vocabularySyncStore.syncedFingerprint() } returns "stale"
+
+            seeder().ensureSeeded()
+
+            coVerify { vocabularySyncStore.setSyncedFingerprint("fp-1") }
         }
 }
