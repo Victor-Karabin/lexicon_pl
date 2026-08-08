@@ -11,13 +11,15 @@ data class WordEntity(
     val text: String,
     val translation: String,
     val transcription: String,
-    /** Marks a word as chosen for study; see [WordDao.getRandomForStudy]. */
+    /** Marks a word for study. Trainings draw from these and nothing else. */
     val isFavourite: Boolean = false,
     /**
      * Both languages folded into one column, so a search is a single LIKE rather than a scan
      * that has to fold every row it looks at. Derived, never authored — see [searchKeyFor].
      */
     val searchKey: String = "",
+    /** CEFR band, e.g. "A1". Empty for a row whose source did not state one. */
+    val cefr: String = "",
 )
 
 /** The one place a word's search key is built, so stored keys and queries always agree. */
@@ -33,4 +35,5 @@ fun WordEntity.toBoundary(): VocabularyItemBoundary =
         translation = translation,
         transcription = transcription,
         isFavourite = isFavourite,
+        cefr = cefr.ifEmpty { null },
     )

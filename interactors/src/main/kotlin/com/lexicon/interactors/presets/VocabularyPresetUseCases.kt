@@ -32,7 +32,6 @@ enum class PresetSort {
 data class BrowsePresetsRequest(
     val query: String = "",
     val categoryIds: Set<String> = emptySet(),
-    val cefrLevels: Set<CefrLevel> = emptySet(),
     val sort: PresetSort = PresetSort.POPULARITY,
     /** Resolves localized titles for both searching and alphabetical ordering. */
     val languageTag: String = LocalizedText.DEFAULT_LANGUAGE,

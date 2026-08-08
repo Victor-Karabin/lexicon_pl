@@ -22,7 +22,6 @@ class VocabularyPresetValidatorTest {
         description = mapOf("en" to "Meals."),
         icon = null,
         color = null,
-        cefr = null,
         popularity = 1,
         estimatedSeconds = 180,
         vocabularyIds = vocabularyIds,

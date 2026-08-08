@@ -29,7 +29,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetCategory
 import com.lexicon.interactors.presets.PresetFavouriteState
@@ -165,7 +164,7 @@ private fun PresetHeader(
                 text = stringResource(
                     R.string.presets_card_meta,
                     preset.wordCount,
-                    preset.cefr?.name ?: preset.category.title.resolve(uiState.languageTag),
+                    preset.category.title.resolve(uiState.languageTag),
                     preset.estimatedDuration.inWholeMinutes.toInt().coerceAtLeast(1),
                 ),
                 style = MaterialTheme.typography.labelMedium,
@@ -195,7 +194,6 @@ private val previewPreset = VocabularyPreset(
     title = LocalizedText(mapOf("en" to "Food")),
     description = LocalizedText(mapOf("en" to "Meals, ingredients, fruit and vegetables.")),
     category = PresetCategory("everyday-life", 3, LocalizedText(mapOf("en" to "Everyday life"))),
-    cefr = CefrLevel.A1,
     icon = "restaurant",
     color = "#EF6C00",
     popularity = 17,

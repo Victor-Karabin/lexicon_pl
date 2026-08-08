@@ -110,8 +110,6 @@ def select_ids(rule: str, arg: str, words: list[dict]) -> list[int]:
     if rule == "frequency":
         ranked = [w for w in words if w["frequencyRank"] is not None]
         return [w["id"] for w in sorted(ranked, key=lambda w: w["frequencyRank"])[: int(arg)]]
-    if rule == "cefr":
-        return [w["id"] for w in words if w["cefr"] == arg]
     if rule == "topic":
         return [w["id"] for w in words if arg in w["topics"]]
     raise BuildError(f"unknown selection rule '{rule}'")
@@ -137,7 +135,6 @@ def load_presets(words: list[dict], categories: list[dict]) -> list[dict]:
                 "description": {"en": d_en, "pl": d_pl},
                 "icon": icon,
                 "color": color,
-                "cefr": arg if rule == "cefr" else None,
                 "popularity": int(popularity),
                 "estimatedSeconds": len(ids) * SECONDS_PER_WORD,
                 "wordCount": len(ids),

@@ -2,6 +2,7 @@ package com.lexicon.domain.presets
 
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.foldForSearch
+import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
 import kotlinx.collections.immutable.ImmutableList
@@ -16,13 +17,17 @@ class SearchVocabularyUseCaseImpl
     ) : SearchVocabularyUseCase {
         override suspend fun invoke(
             query: String,
+            levels: Set<CefrLevel>,
             limit: Int,
         ): ImmutableList<PresetWord> {
-            // An empty query means "nothing typed yet", not "every word": dumping 1,700 rows
-            // into the list would bury the search box that is about to be used.
             val folded = query.foldForSearch()
-            if (folded.isEmpty()) return persistentListOf()
+            // Neither a query nor a level means nothing was asked for. Returning the whole
+            // vocabulary here would replace the preset list the moment the screen opened.
+            if (folded.isEmpty() && levels.isEmpty()) return persistentListOf()
 
-            return vocabularyRepository.search(folded, limit).map { it.toPresetWord() }.toImmutableList()
+            return vocabularyRepository
+                .search(folded, levels.mapTo(mutableSetOf()) { it.name }, limit)
+                .map { it.toPresetWord() }
+                .toImmutableList()
         }
     }

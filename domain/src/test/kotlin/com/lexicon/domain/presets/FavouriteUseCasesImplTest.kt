@@ -23,7 +23,6 @@ class FavouriteUseCasesImplTest {
         description = emptyMap(),
         icon = null,
         color = null,
-        cefr = null,
         popularity = 1,
         estimatedSeconds = 180,
         vocabularyIds = listOf(1L, 2L, 3L),

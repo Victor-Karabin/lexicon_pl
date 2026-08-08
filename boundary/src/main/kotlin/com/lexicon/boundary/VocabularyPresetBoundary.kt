@@ -13,7 +13,6 @@ data class VocabularyPresetBoundary(
     val description: Map<String, String>,
     val icon: String?,
     val color: String?,
-    val cefr: String?,
     val popularity: Int,
     val estimatedSeconds: Long,
     val vocabularyIds: List<Long>,

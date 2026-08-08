@@ -1,7 +1,6 @@
 package com.lexicon.domain.presets
 
 import com.lexicon.interactors.presets.BrowsePresetsRequest
-import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetCategory
@@ -27,7 +26,6 @@ class BrowseVocabularyPresetsUseCaseImplTest {
         title: String,
         category: PresetCategory = everyday,
         words: Int = 20,
-        cefr: CefrLevel? = null,
         popularity: Int = 1,
         description: String = "",
         titlePl: String = title,
@@ -36,7 +34,6 @@ class BrowseVocabularyPresetsUseCaseImplTest {
         title = LocalizedText(mapOf("en" to title, "pl" to titlePl)),
         description = LocalizedText(mapOf("en" to description)),
         category = category,
-        cefr = cefr,
         icon = null,
         color = null,
         popularity = popularity,
@@ -47,8 +44,8 @@ class BrowseVocabularyPresetsUseCaseImplTest {
     private val catalog = listOf(
         preset("food", "Food", words = 58, popularity = 17, description = "Meals and ingredients."),
         preset("birds", "Birds", nature, words = 21, popularity = 37, titlePl = "Ptaki"),
-        preset("cefr-a1", "A1 — Beginner", words = 500, cefr = CefrLevel.A1, popularity = 5),
-        preset("cefr-b2", "B2 — Upper intermediate", words = 90, cefr = CefrLevel.B2, popularity = 8),
+        preset("greetings", "Greetings", words = 20, popularity = 5),
+        preset("numbers", "Numbers", words = 90, popularity = 8),
         preset("zebra", "Zebra crossings", nature, words = 7, popularity = 99),
     )
 
@@ -126,14 +123,6 @@ class BrowseVocabularyPresetsUseCaseImplTest {
         }
 
     @Test
-    fun `filtering by CEFR keeps only presets carrying that level`() =
-        runTest {
-            val results = useCase(BrowsePresetsRequest(cefrLevels = setOf(CefrLevel.A1)))
-
-            assertEquals(listOf("cefr-a1"), results.map { it.id.value })
-        }
-
-    @Test
     fun `filters and search narrow together`() =
         runTest {
             val results = useCase(BrowsePresetsRequest(query = "zebra", categoryIds = setOf("everyday-life")))
@@ -146,7 +135,7 @@ class BrowseVocabularyPresetsUseCaseImplTest {
         runTest {
             val results = useCase(BrowsePresetsRequest())
 
-            assertEquals(listOf("cefr-a1", "cefr-b2", "food", "birds", "zebra"), results.map { it.id.value })
+            assertEquals(listOf("greetings", "numbers", "food", "birds", "zebra"), results.map { it.id.value })
         }
 
     @Test
@@ -154,7 +143,7 @@ class BrowseVocabularyPresetsUseCaseImplTest {
         runTest {
             val results = useCase(BrowsePresetsRequest(sort = PresetSort.ALPHABETICAL))
 
-            assertEquals(listOf("cefr-a1", "cefr-b2", "birds", "food", "zebra"), results.map { it.id.value })
+            assertEquals(listOf("birds", "food", "greetings", "numbers", "zebra"), results.map { it.id.value })
         }
 
     @Test
@@ -163,8 +152,8 @@ class BrowseVocabularyPresetsUseCaseImplTest {
             val ascending = useCase(BrowsePresetsRequest(sort = PresetSort.WORD_COUNT_ASCENDING))
             val descending = useCase(BrowsePresetsRequest(sort = PresetSort.WORD_COUNT_DESCENDING))
 
-            assertEquals(listOf(7, 21, 58, 90, 500), ascending.map { it.wordCount })
-            assertEquals(listOf(500, 90, 58, 21, 7), descending.map { it.wordCount })
+            assertEquals(listOf(7, 20, 21, 58, 90), ascending.map { it.wordCount })
+            assertEquals(listOf(90, 58, 21, 20, 7), descending.map { it.wordCount })
         }
 
     @Test

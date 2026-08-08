@@ -31,8 +31,8 @@ val MIGRATION_2_3 =
         }
     }
 
-/** Adds the favourite flag. Existing rows default to not favourited, which keeps trainings
- * drawing from the whole vocabulary until the user marks something. */
+/** Adds the favourite flag. Existing rows default to not favourited, so a user has to choose
+ * a study set before training — see [com.lexicon.boundary.VocabularyRepository.getRandomItems]. */
 val MIGRATION_3_4 =
     object : Migration(3, 4) {
         override fun migrate(db: SupportSQLiteDatabase) {
@@ -49,5 +49,17 @@ val MIGRATION_4_5 =
     object : Migration(4, 5) {
         override fun migrate(db: SupportSQLiteDatabase) {
             db.execSQL("ALTER TABLE `words` ADD COLUMN `searchKey` TEXT NOT NULL DEFAULT ''")
+        }
+    }
+
+/**
+ * Adds the CEFR band. Like [MIGRATION_4_5] this keeps the rows and lets the seeder backfill
+ * them, because they carry the user's favourites. Unlike the search key the level cannot be
+ * derived from the row itself, so the backfill reads it back out of the bundled asset.
+ */
+val MIGRATION_5_6 =
+    object : Migration(5, 6) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE `words` ADD COLUMN `cefr` TEXT NOT NULL DEFAULT ''")
         }
     }

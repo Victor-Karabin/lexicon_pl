@@ -63,11 +63,6 @@
     <!-- Mix -->
     <string name="mix_title">Mix</string>
     <string name="presets_clear_search">Clear search</string>
-    <string name="presets_sort">Sort</string>
-    <string name="presets_sort_popularity">Most popular</string>
-    <string name="presets_sort_alphabetical">A to Z</string>
-    <string name="presets_sort_fewest_words">Fewest words</string>
-    <string name="presets_sort_most_words">Most words</string>
     <string name="presets_clear_filters">Clear filters</string>
     <string name="presets_no_matches">No presets match these filters.</string>
     <string name="presets_catalog_empty">No vocabulary presets are available.</string>
@@ -80,7 +75,7 @@
     <string name="favourite_preset_remove">Remove every word from study set</string>
     <string name="training_not_enough_words_title">Not enough words</string>
     <string name="training_not_enough_words_body">%1$s needs at least %2$d words, and your study set has %3$d.</string>
-    <string name="training_not_enough_words_hint">Add words to your study set with the heart button in the Vocabulary tab, or clear your hearts to study the whole vocabulary.</string>
+    <string name="training_not_enough_words_hint">Add words to your study set with the heart button in the Vocabulary tab.</string>
     <string name="training_not_enough_words_action">Back to trainings</string>
     <string name="vocabulary_search_hint">Search words</string>
     <string name="vocabulary_search_no_matches">No words match “%1$s”.</string>

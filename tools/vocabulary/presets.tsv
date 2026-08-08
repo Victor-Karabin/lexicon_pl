@@ -1,16 +1,11 @@
 # Vocabulary presets. Columns:
 #   id, category, select_type, select_arg, popularity, icon, color, title_en, title_pl, desc_en, desc_pl
-# select_type: frequency (arg = how many of the most common words) | cefr (arg = level) | topic (arg = tag)
+# select_type: frequency (arg = how many of the most common words) | topic (arg = tag)
 # popularity: editorial ranking used by the "most popular" sort; lower comes first.
 top-100	frequency	frequency	100	1	trending_up	#2E7D32	100 most common words	100 najczęstszych słów	The hundred words you will meet first in almost any Polish sentence.	Sto słów, które spotkasz w niemal każdym polskim zdaniu.
 top-250	frequency	frequency	250	2	trending_up	#2E7D32	250 most common words	250 najczęstszych słów	Enough everyday vocabulary to follow the shape of a simple conversation.	Słownictwo wystarczające, by nadążyć za prostą rozmową.
 top-500	frequency	frequency	500	3	trending_up	#2E7D32	500 most common words	500 najczęstszych słów	The core of spoken Polish, covering most of what you hear day to day.	Rdzeń mówionej polszczyzny, obecny w codziennych rozmowach.
 top-1000	frequency	frequency	1000	4	trending_up	#2E7D32	1000 most common words	1000 najczęstszych słów	A working everyday vocabulary for reading and conversation.	Praktyczne słownictwo do czytania i rozmowy.
-cefr-a1	cefr	cefr	A1	5	school	#1565C0	A1 — Beginner	A1 — Początkujący	First words: greetings, family, food, numbers and the present tense.	Pierwsze słowa: powitania, rodzina, jedzenie, liczby.
-cefr-a2	cefr	cefr	A2	6	school	#1565C0	A2 — Elementary	A2 — Podstawowy	Everyday routines, shopping, travel and simple opinions.	Codzienne sytuacje, zakupy, podróże i proste opinie.
-cefr-b1	cefr	cefr	B1	7	school	#1565C0	B1 — Intermediate	B1 — Średnio zaawansowany	Work, study and abstract everyday topics.	Praca, nauka i bardziej abstrakcyjne tematy.
-cefr-b2	cefr	cefr	B2	8	school	#1565C0	B2 — Upper intermediate	B2 — Wyższy średni	Precise vocabulary for argument, detail and specialist contexts.	Precyzyjne słownictwo do argumentacji i tematów fachowych.
-cefr-c1	cefr	cefr	C1	9	school	#1565C0	C1 — Advanced	C1 — Zaawansowany	Low-frequency and specialist words for confident, nuanced use.	Rzadsze i fachowe słowa dla swobodnego, niuansowego języka.
 greetings	everyday-life	topic	greetings	10	waving_hand	#EF6C00	Greetings	Powitania	Hello, goodbye, thank you — the phrases every conversation starts with.	Cześć, do widzenia, dziękuję — od tego zaczyna się rozmowa.
 introductions	everyday-life	topic	introductions	11	person_add	#EF6C00	Introductions	Przedstawianie się	Saying who you are, where you are from and what you do.	Kim jesteś, skąd pochodzisz i czym się zajmujesz.
 daily-conversation	everyday-life	topic	daily-conversation	12	chat	#EF6C00	Daily conversation	Codzienna rozmowa	The connectors and fillers that hold spoken Polish together.	Zwroty i spójniki, które spajają mówioną polszczyznę.

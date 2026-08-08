@@ -19,7 +19,7 @@ class VocabularyPresetAssetTest {
               "presets": [{
                 "id": "food", "category": "everyday-life",
                 "title": {"en": "Food"}, "description": {"en": "Meals."},
-                "icon": "restaurant", "color": "#EF6C00", "cefr": "A1",
+                "icon": "restaurant", "color": "#EF6C00",
                 "popularity": 17, "estimatedSeconds": 3480, "vocabularyIds": [1, 2, 3]
               }]
             }
@@ -31,7 +31,6 @@ class VocabularyPresetAssetTest {
         assertEquals("food", preset.id)
         assertEquals("everyday-life", preset.categoryId)
         assertEquals("Food", preset.title["en"])
-        assertEquals("A1", preset.cefr)
         assertEquals(3480L, preset.estimatedSeconds)
         assertEquals(listOf(1L, 2L, 3L), preset.vocabularyIds)
         assertEquals(3, catalog.categories.single().order)
@@ -45,7 +44,6 @@ class VocabularyPresetAssetTest {
         val preset = json.decodeFromString<VocabularyPresetCatalogAsset>(raw).toBoundary().presets.single()
 
         assertNull(preset.icon)
-        assertNull(preset.cefr)
         assertTrue(preset.vocabularyIds.isEmpty())
     }
 

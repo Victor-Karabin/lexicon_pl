@@ -143,14 +143,10 @@ resulting ids, rather than embedding words in the preset.
 
 ## Favourites — the study set
 
-A word can be marked with a heart, on its own row in the detail screen or in bulk from a
-preset's heart. **Trainings draw from the favourited words when there are any, and from the
-whole vocabulary otherwise.** That fallback is what makes the feature safe to offer: without
-it, a user who has favourited nothing — everyone on first run — would have no words to train
-on.
-
-The choice is made in one SQL statement (`WordDao.getRandomForStudy`) rather than by reading
-a count and then querying, so it cannot race a heart being toggled between the two.
+A word can be marked with a heart, on its own row in the detail screen, from search results,
+or in bulk from a preset's heart. **Trainings draw from the favourited words and nothing
+else.** A user who has favourited nothing therefore has nothing to train on, which is what
+`TrainingGate` exists to explain rather than leave as an empty session.
 
 A preset's heart is tri-state — `NONE`, `SOME`, `ALL` — because a preset can be partly
 favourited and a boolean would have to lie about that. Partly-favourited counts as off, so
@@ -166,14 +162,19 @@ Two consequences worth knowing:
   with three options, and a training with none spun forever — `openStep(0)` returns early on
   an empty session, so the screen never left Loading.
 - `getRandomForStudy` is plain SQL, and the project has no Robolectric or instrumentation
-  setup, so **the favourites-else-all rule is not covered by a unit test**. Everything above
-  it — the use cases, the tri-state derivation, the sorting — is.
+  setup, so **the study-set query itself is not covered by a unit test**. Everything above it
+  — the use cases, the tri-state derivation, the sorting — is.
 
 ## Word search
 
 The Vocabulary tab has one search box, and it searches **words**, not presets. With the box
-empty the preset list is shown, with its category/CEFR filters and sort; typing replaces that
-list with the matching words and clearing the box puts it back exactly as it was.
+empty and no level picked, the preset list is shown with its category filters; typing — or
+picking a CEFR level — replaces that list with the matching words, and clearing both puts the
+presets back exactly as they were.
+
+**CEFR is a property of a word, not of a preset.** There are no A1/A2/B1 presets; instead
+every word carries its level, and the level chips list every word at the levels picked. Levels
+and the query narrow together.
 
 Matching is by either language — "apple", "jabłko" and "jablko" all find the same entry — and
 each result carries the same heart as the preset detail screen, so search is also how you add

@@ -1,6 +1,5 @@
 # Preset categories. Columns: id <TAB> order <TAB> title_en <TAB> title_pl
 frequency	1	Frequency	Częstotliwość
-cefr	2	CEFR levels	Poziomy CEFR
 everyday-life	3	Everyday life	Życie codzienne
 people	4	People	Ludzie
 nature	5	Nature	Przyroda

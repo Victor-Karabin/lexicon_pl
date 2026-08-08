@@ -25,7 +25,6 @@ class BrowseVocabularyPresetsUseCaseImpl
         override suspend fun invoke(request: BrowsePresetsRequest): ImmutableList<VocabularyPreset> {
             val filtered = getPresets()
                 .filter { request.categoryIds.isEmpty() || it.category.id in request.categoryIds }
-                .filter { request.cefrLevels.isEmpty() || it.cefr in request.cefrLevels }
                 .filter { matches(it, request) }
 
             return filtered.sortedWith(comparator(request)).toImmutableList()

@@ -18,22 +18,16 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,7 +43,6 @@ import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetCategory
 import com.lexicon.interactors.presets.PresetFavouriteState
 import com.lexicon.interactors.presets.PresetId
-import com.lexicon.interactors.presets.PresetSort
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
@@ -85,7 +78,6 @@ fun VocabularyScreen(
         onQueryChanged = viewModel::onQueryChanged,
         onCategoryToggled = viewModel::onCategoryToggled,
         onCefrToggled = viewModel::onCefrToggled,
-        onSortSelected = viewModel::onSortSelected,
         onFiltersCleared = viewModel::onFiltersCleared,
         onPresetSelected = onPresetSelected,
         onPresetFavouriteToggled = viewModel::onPresetFavouriteToggled,
@@ -100,7 +92,6 @@ private fun VocabularyContent(
     onQueryChanged: (String) -> Unit,
     onCategoryToggled: (String) -> Unit,
     onCefrToggled: (CefrLevel) -> Unit,
-    onSortSelected: (PresetSort) -> Unit,
     onFiltersCleared: () -> Unit,
     onPresetSelected: (PresetId) -> Unit,
     onPresetFavouriteToggled: (PresetId, PresetFavouriteState) -> Unit,
@@ -115,19 +106,20 @@ private fun VocabularyContent(
 
         is VocabularyUiState.Loaded ->
             Column(modifier = modifier.fillMaxSize()) {
-                SearchRow(
+                VocabularySearchField(
                     query = uiState.query,
-                    sort = uiState.sort,
-                    // Sorting orders presets, so it has nothing to order while showing words.
-                    showSort = !uiState.isSearchingWords,
+                    placeholder = stringResource(R.string.vocabulary_search_hint),
                     onQueryChanged = onQueryChanged,
-                    onSortSelected = onSortSelected,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = Dimens.spacingMedium, vertical = Dimens.spacingMedium),
                 )
+
+                FilterRow(uiState, onCategoryToggled, onCefrToggled, onFiltersCleared)
 
                 if (uiState.isSearchingWords) {
                     WordResults(uiState, onWordFavouriteToggled)
                 } else {
-                    FilterRow(uiState, onCategoryToggled, onCefrToggled, onFiltersCleared)
                     PresetResults(uiState, onPresetSelected, onPresetFavouriteToggled)
                 }
             }
@@ -184,63 +176,6 @@ private fun PresetResults(
     }
 }
 
-@Composable
-private fun SearchRow(
-    query: String,
-    sort: PresetSort,
-    showSort: Boolean,
-    onQueryChanged: (String) -> Unit,
-    onSortSelected: (PresetSort) -> Unit,
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth().padding(
-            start = Dimens.spacingMedium,
-            end = Dimens.spacingSmall,
-            top = Dimens.spacingMedium,
-        ),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        VocabularySearchField(
-            query = query,
-            placeholder = stringResource(R.string.vocabulary_search_hint),
-            onQueryChanged = onQueryChanged,
-            modifier = Modifier.weight(1f),
-        )
-        if (showSort) {
-            SortMenu(sort = sort, onSortSelected = onSortSelected)
-        }
-    }
-}
-
-@Composable
-private fun SortMenu(
-    sort: PresetSort,
-    onSortSelected: (PresetSort) -> Unit,
-) {
-    var expanded by remember { mutableStateOf(false) }
-    Box {
-        IconButton(onClick = { expanded = true }) {
-            Icon(Icons.Default.Sort, contentDescription = stringResource(R.string.presets_sort))
-        }
-        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            PresetSort.entries.forEach { option ->
-                DropdownMenuItem(
-                    text = {
-                        Text(
-                            text = stringResource(option.labelRes()),
-                            fontWeight = if (option == sort) FontWeight.Bold else FontWeight.Normal,
-                        )
-                    },
-                    onClick = {
-                        onSortSelected(option)
-                        expanded = false
-                    },
-                )
-            }
-        }
-    }
-}
-
 /**
  * Categories and levels share one scrolling row: there are eleven categories and six levels,
  * and a wrapping grid would push the presets themselves below the fold on a phone.
@@ -260,7 +195,7 @@ private fun FilterRow(
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (uiState.hasActiveFilters) {
+        if (uiState.hasActiveFilters || uiState.selectedCefrLevels.isNotEmpty()) {
             FilterChip(
                 selected = false,
                 onClick = onFiltersCleared,
@@ -268,6 +203,7 @@ private fun FilterRow(
                 leadingIcon = { Icon(Icons.Default.Clear, contentDescription = null) },
             )
         }
+        // Levels select words, so they stay reachable whatever the list is showing.
         CefrLevel.entries.forEach { level ->
             FilterChip(
                 selected = level in uiState.selectedCefrLevels,
@@ -275,12 +211,15 @@ private fun FilterRow(
                 label = { Text(level.name) },
             )
         }
-        uiState.categories.forEach { category ->
-            FilterChip(
-                selected = category.id in uiState.selectedCategoryIds,
-                onClick = { onCategoryToggled(category.id) },
-                label = { Text(category.title.resolve(uiState.languageTag)) },
-            )
+        // Categories only narrow presets, so they would do nothing beside a list of words.
+        if (!uiState.isSearchingWords) {
+            uiState.categories.forEach { category ->
+                FilterChip(
+                    selected = category.id in uiState.selectedCategoryIds,
+                    onClick = { onCategoryToggled(category.id) },
+                    label = { Text(category.title.resolve(uiState.languageTag)) },
+                )
+            }
         }
     }
 }
@@ -333,7 +272,7 @@ private fun PresetCard(
                     text = stringResource(
                         R.string.presets_card_meta,
                         preset.wordCount,
-                        preset.cefr?.name ?: preset.category.title.resolve(languageTag),
+                        preset.category.title.resolve(languageTag),
                         preset.estimatedDuration.readableMinutes(),
                     ),
                     style = MaterialTheme.typography.labelMedium,
@@ -373,14 +312,6 @@ private fun VocabularyPreset.accentColor(): Color {
 
 private fun Duration.readableMinutes(): Int = inWholeMinutes.toInt().coerceAtLeast(1)
 
-private fun PresetSort.labelRes(): Int =
-    when (this) {
-        PresetSort.POPULARITY -> R.string.presets_sort_popularity
-        PresetSort.ALPHABETICAL -> R.string.presets_sort_alphabetical
-        PresetSort.WORD_COUNT_ASCENDING -> R.string.presets_sort_fewest_words
-        PresetSort.WORD_COUNT_DESCENDING -> R.string.presets_sort_most_words
-    }
-
 private val previewCategory = PresetCategory(
     id = "everyday-life",
     order = 3,
@@ -394,13 +325,11 @@ private fun previewPreset(
     words: Int,
     icon: String,
     color: String,
-    cefr: CefrLevel? = null,
 ) = VocabularyPreset(
     id = PresetId(id),
     title = LocalizedText(mapOf("en" to title)),
     description = LocalizedText(mapOf("en" to description)),
     category = previewCategory,
-    cefr = cefr,
     icon = icon,
     color = color,
     popularity = 1,
@@ -418,13 +347,12 @@ private val previewPresets = persistentListOf(
         "#2E7D32",
     ),
     previewPreset(
-        "cefr-a1",
-        "A1 — Beginner",
-        "First words: greetings, family, food, numbers and the present tense.",
-        420,
-        "school",
-        "#1565C0",
-        CefrLevel.A1,
+        "greetings",
+        "Greetings",
+        "Hello, goodbye, thank you — the phrases every conversation starts with.",
+        20,
+        "waving_hand",
+        "#EF6C00",
     ),
     previewPreset(
         "food",
@@ -448,7 +376,6 @@ private fun VocabularyPresetsPreview() {
             onQueryChanged = {},
             onCategoryToggled = {},
             onCefrToggled = {},
-            onSortSelected = {},
             onFiltersCleared = {},
             onPresetSelected = {},
             onPresetFavouriteToggled = { _, _ -> },
@@ -467,15 +394,14 @@ private fun VocabularyWordSearchPreview() {
                 presets = previewPresets,
                 categories = persistentListOf(previewCategory),
                 words = persistentListOf(
-                    PresetWord(VocabularyId(1), "woda", "water", "ˈvɔda", isFavourite = true),
-                    PresetWord(VocabularyId(2), "wodospad", "waterfall", "vɔˈdɔspat"),
-                    PresetWord(VocabularyId(3), "woda mineralna", "mineral water", "ˈvɔda miɲɛˈralna"),
+                    PresetWord(VocabularyId(1), "woda", "water", "ˈvɔda", isFavourite = true, cefr = CefrLevel.A1),
+                    PresetWord(VocabularyId(2), "wodospad", "waterfall", "vɔˈdɔspat", cefr = CefrLevel.B1),
+                    PresetWord(VocabularyId(3), "woda mineralna", "mineral water", "ˈvɔda miɲɛˈralna", cefr = CefrLevel.A1),
                 ),
             ),
             onQueryChanged = {},
             onCategoryToggled = {},
             onCefrToggled = {},
-            onSortSelected = {},
             onFiltersCleared = {},
             onPresetSelected = {},
             onPresetFavouriteToggled = { _, _ -> },
@@ -493,7 +419,6 @@ private fun VocabularyNoMatchingWordsPreview() {
             onQueryChanged = {},
             onCategoryToggled = {},
             onCefrToggled = {},
-            onSortSelected = {},
             onFiltersCleared = {},
             onPresetSelected = {},
             onPresetFavouriteToggled = { _, _ -> },

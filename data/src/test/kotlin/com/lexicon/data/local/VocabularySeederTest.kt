@@ -31,6 +31,7 @@ class VocabularySeederTest {
         runTest {
             coEvery { wordDao.count() } returns 42
             coEvery { wordDao.getWithoutSearchKey() } returns emptyList()
+            coEvery { wordDao.getWithoutCefr() } returns emptyList()
 
             seeder.ensureSeeded()
 
@@ -51,6 +52,7 @@ class VocabularySeederTest {
                 WordEntity(id = 2, text = "kot", translation = "cat", transcription = "kɔt"),
             )
             coEvery { wordDao.getWithoutSearchKey() } returns stale
+            coEvery { wordDao.getWithoutCefr() } returns emptyList()
             val updated = slot<List<WordEntity>>()
             coEvery { wordDao.updateAll(capture(updated)) } returns Unit
 
@@ -61,13 +63,39 @@ class VocabularySeederTest {
         }
 
     @Test
-    fun `leaves rows alone when every search key is already present`() =
+    fun `leaves rows alone when every search key and level is already present`() =
         runTest {
             coEvery { wordDao.count() } returns 42
             coEvery { wordDao.getWithoutSearchKey() } returns emptyList()
+            coEvery { wordDao.getWithoutCefr() } returns emptyList()
 
             seeder.ensureSeeded()
 
             coVerify(exactly = 0) { wordDao.updateAll(any()) }
+        }
+
+    /**
+     * A level cannot be derived from the row the way a search key can, so it is read back out
+     * of the asset by id — which is why this backfill loads the asset and the other does not.
+     */
+    @Test
+    fun `backfills CEFR levels from the asset for rows that predate the column`() =
+        runTest {
+            coEvery { wordDao.count() } returns 2
+            coEvery { wordDao.getWithoutSearchKey() } returns emptyList()
+            coEvery { wordDao.getWithoutCefr() } returns listOf(
+                WordEntity(id = 1, text = "kot", translation = "cat", transcription = "kɔt", searchKey = "kot cat"),
+                WordEntity(id = 9, text = "gone", translation = "gone", transcription = "", searchKey = "gone gone"),
+            )
+            coEvery { vocabularySeedAssetLoader.load() } returns listOf(
+                WordEntity(id = 1, text = "kot", translation = "cat", transcription = "kɔt", cefr = "A1"),
+            )
+            val updated = slot<List<WordEntity>>()
+            coEvery { wordDao.updateAll(capture(updated)) } returns Unit
+
+            seeder.ensureSeeded()
+
+            assertEquals(listOf(1L), updated.captured.map { it.id })
+            assertEquals("A1", updated.captured.single().cefr)
         }
 }

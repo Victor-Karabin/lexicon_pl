@@ -2,12 +2,14 @@ package com.lexicon.domain.presets
 
 import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.interactors.presets.CefrLevel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.slot
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -16,19 +18,28 @@ class SearchVocabularyUseCaseImplTest {
     private val useCase = SearchVocabularyUseCaseImpl(vocabularyRepository)
 
     private fun repositoryReturns(vararg items: VocabularyItemBoundary) {
-        coEvery { vocabularyRepository.search(any(), any()) } returns items.toList()
+        coEvery { vocabularyRepository.search(any(), any(), any()) } returns items.toList()
     }
 
     @Test
-    fun `results are mapped into words`() =
+    fun `results are mapped into words, level included`() =
         runTest {
-            repositoryReturns(VocabularyItemBoundary(1L, "woda", "water", "ˈvɔda", isFavourite = true))
+            repositoryReturns(VocabularyItemBoundary(1L, "woda", "water", "ˈvɔda", isFavourite = true, cefr = "A1"))
 
-            val results = useCase("woda")
+            val word = useCase("woda").single()
 
-            assertEquals(listOf("woda"), results.map { it.text })
-            assertEquals(listOf("water"), results.map { it.translation })
-            assertTrue("the favourite flag has to survive the mapping", results.single().isFavourite)
+            assertEquals("woda", word.text)
+            assertEquals("water", word.translation)
+            assertEquals(CefrLevel.A1, word.cefr)
+            assertTrue("the favourite flag has to survive the mapping", word.isFavourite)
+        }
+
+    @Test
+    fun `a level the app does not know degrades to null rather than failing`() =
+        runTest {
+            repositoryReturns(VocabularyItemBoundary(1L, "woda", "water", "ˈvɔda", cefr = "D3"))
+
+            assertNull(useCase("woda").single().cefr)
         }
 
     /**
@@ -39,7 +50,7 @@ class SearchVocabularyUseCaseImplTest {
     fun `the query reaches the repository folded`() =
         runTest {
             val sent = slot<String>()
-            coEvery { vocabularyRepository.search(capture(sent), any()) } returns emptyList()
+            coEvery { vocabularyRepository.search(capture(sent), any(), any()) } returns emptyList()
 
             useCase("ŻÓŁW")
 
@@ -50,38 +61,64 @@ class SearchVocabularyUseCaseImplTest {
     fun `case and surrounding spaces do not change the query`() =
         runTest {
             val sent = slot<String>()
-            coEvery { vocabularyRepository.search(capture(sent), any()) } returns emptyList()
+            coEvery { vocabularyRepository.search(capture(sent), any(), any()) } returns emptyList()
 
             useCase("  Apple  ")
 
             assertEquals("apple", sent.captured)
         }
 
-    /** An empty search box means "nothing typed yet", not "return the whole vocabulary". */
+    /** Selecting a level lists every word at it, with no query typed at all. */
     @Test
-    fun `an empty query returns nothing and never reaches the repository`() =
+    fun `levels alone are a search, with an empty query`() =
         runTest {
-            val results = useCase("")
+            val query = slot<String>()
+            val levels = slot<Set<String>>()
+            coEvery { vocabularyRepository.search(capture(query), capture(levels), any()) } returns emptyList()
 
-            assertTrue(results.isEmpty())
-            coVerify(exactly = 0) { vocabularyRepository.search(any(), any()) }
+            useCase(levels = setOf(CefrLevel.A1, CefrLevel.A2))
+
+            assertEquals("", query.captured)
+            assertEquals(setOf("A1", "A2"), levels.captured)
+        }
+
+    @Test
+    fun `a query and levels narrow together`() =
+        runTest {
+            val query = slot<String>()
+            val levels = slot<Set<String>>()
+            coEvery { vocabularyRepository.search(capture(query), capture(levels), any()) } returns emptyList()
+
+            useCase("wod", setOf(CefrLevel.B1))
+
+            assertEquals("wod", query.captured)
+            assertEquals(setOf("B1"), levels.captured)
+        }
+
+    /** Neither a query nor a level is "nothing asked for" — the presets belong on screen then. */
+    @Test
+    fun `no query and no levels returns nothing and never reaches the repository`() =
+        runTest {
+            assertTrue(useCase().isEmpty())
+            coVerify(exactly = 0) { vocabularyRepository.search(any(), any(), any()) }
         }
 
     @Test
     fun `a query of only spaces is treated as empty`() =
         runTest {
             assertTrue(useCase("   ").isEmpty())
-            coVerify(exactly = 0) { vocabularyRepository.search(any(), any()) }
+            coVerify(exactly = 0) { vocabularyRepository.search(any(), any(), any()) }
         }
 
+    /** Selecting a level must show every word at it, not the first page of them. */
     @Test
-    fun `the limit is passed through so a broad query cannot return everything`() =
+    fun `the default limit is above the size of the vocabulary`() =
         runTest {
             val limit = slot<Int>()
-            coEvery { vocabularyRepository.search(any(), capture(limit)) } returns emptyList()
+            coEvery { vocabularyRepository.search(any(), any(), capture(limit)) } returns emptyList()
 
-            useCase("a", limit = 25)
+            useCase(levels = setOf(CefrLevel.A1))
 
-            assertEquals(25, limit.captured)
+            assertTrue("a level must not be truncated, got ${limit.captured}", limit.captured >= 2_000)
         }
 }

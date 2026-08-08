@@ -2,7 +2,6 @@ package com.lexicon.presentation.presets
 
 import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.PresetCategory
-import com.lexicon.interactors.presets.PresetSort
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
@@ -23,7 +22,6 @@ sealed interface VocabularyUiState {
         val categories: ImmutableList<PresetCategory> = persistentListOf(),
         val selectedCategoryIds: Set<String> = emptySet(),
         val selectedCefrLevels: Set<CefrLevel> = emptySet(),
-        val sort: PresetSort = PresetSort.POPULARITY,
         val words: ImmutableList<PresetWord> = persistentListOf(),
         val isSearching: Boolean = false,
         val languageTag: String = "en",
@@ -33,11 +31,14 @@ sealed interface VocabularyUiState {
          */
         val favouriteWordIds: Set<VocabularyId> = emptySet(),
     ) : VocabularyUiState {
-        /** Anything typed switches the list to words; an empty box means presets. */
-        val isSearchingWords: Boolean get() = query.isNotBlank()
+        /**
+         * Words are listed when something is typed or a level is picked; with neither, the
+         * screen is a preset browser.
+         */
+        val isSearchingWords: Boolean get() = query.isNotBlank() || selectedCefrLevels.isNotEmpty()
 
-        val hasActiveFilters: Boolean
-            get() = selectedCategoryIds.isNotEmpty() || selectedCefrLevels.isNotEmpty()
+        /** Only categories narrow the presets; levels belong to the words. */
+        val hasActiveFilters: Boolean get() = selectedCategoryIds.isNotEmpty()
 
         /** Only "no matches" once a search has settled, or it flashes between keystrokes. */
         val hasNoMatchingWords: Boolean get() = isSearchingWords && !isSearching && words.isEmpty()
