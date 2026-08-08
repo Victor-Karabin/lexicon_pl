@@ -10,6 +10,7 @@ object TrainingIds {
     const val PUZZLE = "puzzle"
     const val IMAGE_TEST = "image_test"
     const val MEMORY_CARDS = "memory_cards"
+    const val MIX = "mix"
     const val CROSSWORD = "crossword"
 }
 
@@ -27,6 +28,6 @@ val trainingCatalog =
         TrainingCatalogEntry(TrainingIds.PRONUNCIATION_CHECK, "Pronunciation Check", isEnabled = true),
         TrainingCatalogEntry(TrainingIds.MEMORY_CARDS, "Memory Cards", isEnabled = true),
         TrainingCatalogEntry(TrainingIds.CROSSWORD, "Crossword", isEnabled = true),
-        TrainingCatalogEntry("mix", "Mix", isEnabled = false),
+        TrainingCatalogEntry(TrainingIds.MIX, "Mix", isEnabled = true),
         TrainingCatalogEntry("custom_builder", "Custom Builder", isEnabled = false),
     )

@@ -15,6 +15,7 @@ import com.lexicon.presentation.imagetest.ImageTestScreen
 import com.lexicon.presentation.main.MainScreen
 import com.lexicon.presentation.main.SplashScreen
 import com.lexicon.presentation.memorycards.MemoryCardsScreen
+import com.lexicon.presentation.mix.MixScreen
 import com.lexicon.presentation.pronunciation.PronunciationScreen
 import com.lexicon.presentation.puzzle.PuzzleScreen
 import com.lexicon.presentation.trueorfalse.TrueOrFalseScreen
@@ -103,6 +104,13 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             CrosswordScreen(
                 onSessionComplete = onStepSessionComplete(LexiconDestinations.CROSSWORD),
                 onClose = onClose(LexiconDestinations.CROSSWORD),
+            )
+        }
+
+        composable(LexiconDestinations.MIX) {
+            MixScreen(
+                onSessionComplete = onStepSessionComplete(LexiconDestinations.MIX),
+                onClose = onClose(LexiconDestinations.MIX),
             )
         }
 
