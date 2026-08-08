@@ -4,7 +4,6 @@ package com.lexicon.presentation.main
 object TrainingIds {
     const val DICTATION = "dictation"
     const val DICTATION_PUZZLE = "dictation_puzzle"
-    const val WORD_BUILDER = "word_builder"
     const val TRUE_OR_FALSE = "true_or_false"
     const val WORD_MATCH = "word_match"
     const val PRONUNCIATION_CHECK = "pronunciation_check"
@@ -28,7 +27,6 @@ val trainingCatalog =
         TrainingCatalogEntry(TrainingIds.PRONUNCIATION_CHECK, "Pronunciation Check", isEnabled = true),
         TrainingCatalogEntry(TrainingIds.MEMORY_CARDS, "Memory Cards", isEnabled = true),
         TrainingCatalogEntry(TrainingIds.CROSSWORD, "Crossword", isEnabled = true),
-        TrainingCatalogEntry(TrainingIds.WORD_BUILDER, "Word Builder", isEnabled = true),
         TrainingCatalogEntry("mix", "Mix", isEnabled = false),
         TrainingCatalogEntry("custom_builder", "Custom Builder", isEnabled = false),
     )

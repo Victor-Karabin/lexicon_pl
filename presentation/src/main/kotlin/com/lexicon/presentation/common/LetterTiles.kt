@@ -22,7 +22,7 @@ import com.lexicon.presentation.theme.LexiconTheme
 
 /**
  * One shuffled letter tile for the tap-to-build-answer mechanic shared by
- * Dictation Puzzle, Word Builder, and (later) Puzzle.
+ * Dictation Puzzle and Puzzle.
  */
 data class LetterTile(val id: Int, val char: Char)
 

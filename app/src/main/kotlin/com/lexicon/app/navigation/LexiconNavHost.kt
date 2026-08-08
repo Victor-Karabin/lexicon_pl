@@ -18,7 +18,6 @@ import com.lexicon.presentation.memorycards.MemoryCardsScreen
 import com.lexicon.presentation.pronunciation.PronunciationScreen
 import com.lexicon.presentation.puzzle.PuzzleScreen
 import com.lexicon.presentation.trueorfalse.TrueOrFalseScreen
-import com.lexicon.presentation.wordbuilder.WordBuilderScreen
 import com.lexicon.presentation.wordmatch.WordMatchScreen
 
 @Composable
@@ -62,12 +61,6 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             DictationPuzzleScreen(
                 onSessionComplete = onStepSessionComplete(LexiconDestinations.DICTATION_PUZZLE),
                 onClose = onClose(LexiconDestinations.DICTATION_PUZZLE),
-            )
-        }
-        composable(LexiconDestinations.WORD_BUILDER) {
-            WordBuilderScreen(
-                onSessionComplete = onStepSessionComplete(LexiconDestinations.WORD_BUILDER),
-                onClose = onClose(LexiconDestinations.WORD_BUILDER),
             )
         }
         composable(LexiconDestinations.TRUE_OR_FALSE) {
