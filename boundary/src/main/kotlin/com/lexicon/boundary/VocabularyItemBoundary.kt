@@ -5,4 +5,5 @@ data class VocabularyItemBoundary(
     val text: String,
     val translation: String,
     val transcription: String,
+    val isFavourite: Boolean = false,
 )

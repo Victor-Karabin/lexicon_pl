@@ -75,4 +75,8 @@
     <string name="presets_card_meta">%1$d words · %2$s · about %3$d min</string>
     <string name="preset_detail_title">Preset</string>
     <string name="preset_detail_not_found">This preset is no longer available.</string>
+    <string name="favourite_add">Add to study set</string>
+    <string name="favourite_remove">Remove from study set</string>
+    <string name="favourite_preset_add">Add every word to study set</string>
+    <string name="favourite_preset_remove">Remove every word from study set</string>
 </resources>

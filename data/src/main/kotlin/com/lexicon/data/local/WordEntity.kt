@@ -10,6 +10,8 @@ data class WordEntity(
     val text: String,
     val translation: String,
     val transcription: String,
+    /** Marks a word as chosen for study; see [WordDao.getRandomForStudy]. */
+    val isFavourite: Boolean = false,
 )
 
 fun WordEntity.toBoundary(): VocabularyItemBoundary =
@@ -18,4 +20,5 @@ fun WordEntity.toBoundary(): VocabularyItemBoundary =
         text = text,
         translation = translation,
         transcription = transcription,
+        isFavourite = isFavourite,
     )

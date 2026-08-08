@@ -30,3 +30,12 @@ val MIGRATION_2_3 =
             db.execSQL("DELETE FROM `words`")
         }
     }
+
+/** Adds the favourite flag. Existing rows default to not favourited, which keeps trainings
+ * drawing from the whole vocabulary until the user marks something. */
+val MIGRATION_3_4 =
+    object : Migration(3, 4) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE `words` ADD COLUMN `isFavourite` INTEGER NOT NULL DEFAULT 0")
+        }
+    }

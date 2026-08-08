@@ -141,6 +141,31 @@ The one assumption to preserve: a preset references vocabulary **by id**. A sour
 brings its own words must first insert them into the vocabulary store and reference the
 resulting ids, rather than embedding words in the preset.
 
+## Favourites — the study set
+
+A word can be marked with a heart, on its own row in the detail screen or in bulk from a
+preset's heart. **Trainings draw from the favourited words when there are any, and from the
+whole vocabulary otherwise.** That fallback is what makes the feature safe to offer: without
+it, a user who has favourited nothing — everyone on first run — would have no words to train
+on.
+
+The choice is made in one SQL statement (`WordDao.getRandomForStudy`) rather than by reading
+a count and then querying, so it cannot race a heart being toggled between the two.
+
+A preset's heart is tri-state — `NONE`, `SOME`, `ALL` — because a preset can be partly
+favourited and a boolean would have to lie about that. Partly-favourited counts as off, so
+one tap completes the preset rather than clearing it. The bulk toggle writes every word in a
+single call; word by word, a thousand-word preset would emit a thousand updates.
+
+Two consequences worth knowing:
+
+- Favouriting **very few** words degrades trainings rather than breaking them. Image Test
+  needs six distinct same-type options and falls back to whatever the pool holds, so a study
+  set of three words yields three options.
+- `getRandomForStudy` is plain SQL, and the project has no Robolectric or instrumentation
+  setup, so **the favourites-else-all rule is not covered by a unit test**. Everything above
+  it — the use cases, the tri-state derivation, the sorting — is.
+
 ## Consuming presets
 
 `GetPresetVocabularyUseCase` is the integration point. It returns a preset's words in the

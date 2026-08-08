@@ -39,4 +39,5 @@ fun VocabularyItemBoundary.toPresetWord(): PresetWord =
         text = text,
         translation = translation,
         transcription = transcription,
+        isFavourite = isFavourite,
     )

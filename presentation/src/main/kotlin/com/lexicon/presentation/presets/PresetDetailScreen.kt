@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetCategory
+import com.lexicon.interactors.presets.PresetFavouriteState
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyId
@@ -56,7 +57,13 @@ fun PresetDetailScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    PresetDetailContent(uiState = uiState, onClose = onClose, modifier = modifier)
+    PresetDetailContent(
+        uiState = uiState,
+        onClose = onClose,
+        onWordFavouriteToggled = viewModel::onWordFavouriteToggled,
+        onPresetFavouriteToggled = viewModel::onPresetFavouriteToggled,
+        modifier = modifier,
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,6 +71,8 @@ fun PresetDetailScreen(
 private fun PresetDetailContent(
     uiState: PresetDetailUiState,
     onClose: () -> Unit,
+    onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
+    onPresetFavouriteToggled: (PresetFavouriteState) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val title = when (uiState) {
@@ -97,7 +106,7 @@ private fun PresetDetailContent(
 
             is PresetDetailUiState.Loaded ->
                 Column(modifier = Modifier.fillMaxSize().padding(padding)) {
-                    PresetHeader(uiState)
+                    PresetHeader(uiState, onPresetFavouriteToggled)
                     HorizontalDivider()
 
                     if (uiState.isLoadingWords) {
@@ -108,12 +117,17 @@ private fun PresetDetailContent(
                             CircularProgressIndicator()
                         }
                     } else {
-                        LazyColumn(
-                            contentPadding = PaddingValues(Dimens.spacingMedium),
-                            verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
-                        ) {
-                            items(uiState.words, key = { it.id.value }) { word ->
-                                WordRow(word)
+                        LazyColumn(contentPadding = PaddingValues(vertical = Dimens.spacingSmall)) {
+                            itemsIndexed(uiState.words, key = { _, word -> word.id.value }) { index, word ->
+                                WordRow(
+                                    word = word,
+                                    onFavouriteToggled = { onWordFavouriteToggled(word.id, !word.isFavourite) },
+                                )
+                                // Between rows only: a divider under the last one would read
+                                // as the start of a section that is not there.
+                                if (index < uiState.words.lastIndex) {
+                                    HorizontalDivider(modifier = Modifier.padding(horizontal = Dimens.spacingMedium))
+                                }
                             }
                         }
                     }
@@ -123,11 +137,15 @@ private fun PresetDetailContent(
 }
 
 @Composable
-private fun PresetHeader(uiState: PresetDetailUiState.Loaded) {
+private fun PresetHeader(
+    uiState: PresetDetailUiState.Loaded,
+    onFavouriteToggled: (PresetFavouriteState) -> Unit,
+) {
     val preset = uiState.preset
     Row(
         modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             modifier = Modifier.size(DetailIconSize).background(preset.detailAccentColor(), CircleShape),
@@ -139,7 +157,7 @@ private fun PresetHeader(uiState: PresetDetailUiState.Loaded) {
                 tint = Color.White,
             )
         }
-        Column {
+        Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = preset.description.resolve(uiState.languageTag),
                 style = MaterialTheme.typography.bodyMedium,
@@ -156,26 +174,51 @@ private fun PresetHeader(uiState: PresetDetailUiState.Loaded) {
                 modifier = Modifier.padding(top = Dimens.spacingSmall),
             )
         }
+
+        PresetFavouriteButton(
+            state = uiState.favouriteState,
+            onClick = { onFavouriteToggled(uiState.favouriteState) },
+        )
     }
 }
 
 @Composable
-private fun WordRow(word: PresetWord) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Text(
-            text = word.text,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Medium,
-        )
-        Text(
-            text = word.translation,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        Text(
-            text = "[${word.transcription}]",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+private fun WordRow(
+    word: PresetWord,
+    onFavouriteToggled: () -> Unit,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(
+            start = Dimens.spacingMedium,
+            end = Dimens.spacingSmall,
+            top = Dimens.spacingSmall,
+            bottom = Dimens.spacingSmall,
+        ),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = word.text,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Medium,
+            )
+            Text(
+                text = word.translation,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                text = "[${word.transcription}]",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        FavouriteButton(
+            isFavourite = word.isFavourite,
+            contentDescription = stringResource(
+                if (word.isFavourite) R.string.favourite_remove else R.string.favourite_add,
+            ),
+            onClick = onFavouriteToggled,
         )
     }
 }
@@ -210,13 +253,16 @@ private fun PresetDetailPreview() {
             uiState = PresetDetailUiState.Loaded(
                 preset = previewPreset,
                 words = persistentListOf(
-                    PresetWord(VocabularyId(1), "chleb", "bread", "xlɛp"),
-                    PresetWord(VocabularyId(2), "mleko", "milk", "ˈmlɛkɔ"),
-                    PresetWord(VocabularyId(3), "jabłko", "apple", "ˈjabwkɔ"),
+                    PresetWord(VocabularyId(1), "chleb", "bread", "xlɛp", isFavourite = true),
+                    PresetWord(VocabularyId(2), "jabłko", "apple", "ˈjabwkɔ"),
+                    PresetWord(VocabularyId(3), "mleko", "milk", "ˈmlɛkɔ", isFavourite = true),
                     PresetWord(VocabularyId(4), "ziemniak", "potato", "ˈʑɛmɲak"),
                 ),
+                favouriteState = PresetFavouriteState.SOME,
             ),
             onClose = {},
+            onWordFavouriteToggled = { _, _ -> },
+            onPresetFavouriteToggled = {},
         )
     }
 }
@@ -225,7 +271,12 @@ private fun PresetDetailPreview() {
 @Composable
 private fun PresetDetailLoadingWordsPreview() {
     LexiconTheme {
-        PresetDetailContent(uiState = PresetDetailUiState.Loaded(preset = previewPreset), onClose = {})
+        PresetDetailContent(
+            uiState = PresetDetailUiState.Loaded(preset = previewPreset),
+            onClose = {},
+            onWordFavouriteToggled = { _, _ -> },
+            onPresetFavouriteToggled = {},
+        )
     }
 }
 
@@ -233,6 +284,11 @@ private fun PresetDetailLoadingWordsPreview() {
 @Composable
 private fun PresetDetailNotFoundPreview() {
     LexiconTheme {
-        PresetDetailContent(uiState = PresetDetailUiState.NotFound, onClose = {})
+        PresetDetailContent(
+            uiState = PresetDetailUiState.NotFound,
+            onClose = {},
+            onWordFavouriteToggled = { _, _ -> },
+            onPresetFavouriteToggled = {},
+        )
     }
 }

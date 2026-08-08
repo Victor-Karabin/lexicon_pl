@@ -31,6 +31,8 @@ data class PresetWord(
     val text: String,
     val translation: String,
     val transcription: String,
+    /** Favourited words are the ones trainings draw from; see [ToggleWordFavouriteUseCase]. */
+    val isFavourite: Boolean = false,
 )
 
 data class PresetCategory(

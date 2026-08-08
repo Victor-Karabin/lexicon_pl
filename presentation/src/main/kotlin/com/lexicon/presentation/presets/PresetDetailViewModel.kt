@@ -6,16 +6,26 @@ import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
+import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
+import com.lexicon.interactors.presets.PresetFavouriteState
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetWord
+import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
+import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
+import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.text.Collator
+import java.util.Locale
 import javax.inject.Inject
 
 sealed interface PresetDetailUiState {
@@ -27,6 +37,7 @@ sealed interface PresetDetailUiState {
     data class Loaded(
         val preset: VocabularyPreset,
         val words: ImmutableList<PresetWord> = persistentListOf(),
+        val favouriteState: PresetFavouriteState = PresetFavouriteState.NONE,
         val languageTag: String = "en",
     ) : PresetDetailUiState {
         /** The preset arrives before its words do, so the list has its own loading state. */
@@ -43,27 +54,87 @@ class PresetDetailViewModel
         savedStateHandle: SavedStateHandle,
         private val getPreset: GetVocabularyPresetUseCase,
         private val getPresetVocabulary: GetPresetVocabularyUseCase,
+        private val toggleWordFavourite: ToggleWordFavouriteUseCase,
+        private val setPresetFavourite: SetPresetFavouriteUseCase,
+        observeFavouriteWordIds: ObserveFavouriteWordIdsUseCase,
         private val dispatchers: DispatcherProvider,
     ) : ViewModel() {
         private val presetId = PresetId(savedStateHandle.get<String>(PRESET_ID_ARG).orEmpty())
 
-        private val _uiState = MutableStateFlow<PresetDetailUiState>(PresetDetailUiState.Loading)
-        val uiState: StateFlow<PresetDetailUiState> = _uiState.asStateFlow()
+        /** What was loaded once; favourite state is layered on top of it as it changes. */
+        private data class Content(val preset: VocabularyPreset?, val words: List<PresetWord>)
+
+        private val content = MutableStateFlow<Content?>(null)
+
+        val uiState: StateFlow<PresetDetailUiState> =
+            combine(content, observeFavouriteWordIds()) { loaded, favourites ->
+                when {
+                    loaded == null -> PresetDetailUiState.Loading
+                    loaded.preset == null -> PresetDetailUiState.NotFound
+                    else ->
+                        PresetDetailUiState.Loaded(
+                            preset = loaded.preset,
+                            // Re-derived rather than stored, so a heart tapped here or on the
+                            // browser is reflected without reloading the word list.
+                            words = loaded.words
+                                .map { it.copy(isFavourite = it.id in favourites) }
+                                .toImmutableList(),
+                            favouriteState = favouriteStateOf(loaded.preset, favourites),
+                        )
+                }
+            }.stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS),
+                initialValue = PresetDetailUiState.Loading,
+            )
 
         init {
             viewModelScope.launch(dispatchers.io) {
                 val preset = getPreset(presetId)
                 if (preset == null) {
-                    _uiState.value = PresetDetailUiState.NotFound
+                    content.value = Content(preset = null, words = emptyList())
                     return@launch
                 }
-                // Header first, words after: resolving a thousand ids takes a query, and a
-                // header that appears at once reads better than a screen that stays blank.
-                _uiState.value = PresetDetailUiState.Loaded(preset = preset)
-                _uiState.value = PresetDetailUiState.Loaded(
-                    preset = preset,
-                    words = getPresetVocabulary(presetId),
-                )
+                // The header shows first: resolving a thousand ids takes a query, and a header
+                // that appears at once reads better than a screen that stays blank.
+                content.value = Content(preset = preset, words = emptyList())
+                content.value = Content(preset = preset, words = getPresetVocabulary(presetId).sortedForDisplay())
             }
         }
+
+        fun onWordFavouriteToggled(
+            id: VocabularyId,
+            isFavourite: Boolean,
+        ) {
+            viewModelScope.launch(dispatchers.io) { toggleWordFavourite(id, isFavourite) }
+        }
+
+        /** Partly-favourited counts as off, so one tap completes the preset rather than clearing it. */
+        fun onPresetFavouriteToggled(current: PresetFavouriteState) {
+            viewModelScope.launch(dispatchers.io) {
+                setPresetFavourite(presetId, current != PresetFavouriteState.ALL)
+            }
+        }
+
+        private companion object {
+            const val STOP_TIMEOUT_MS = 5_000L
+        }
     }
+
+internal fun favouriteStateOf(
+    preset: VocabularyPreset,
+    favourites: Set<VocabularyId>,
+): PresetFavouriteState =
+    when {
+        preset.vocabularyIds.none { it in favourites } -> PresetFavouriteState.NONE
+        preset.vocabularyIds.all { it in favourites } -> PresetFavouriteState.ALL
+        else -> PresetFavouriteState.SOME
+    }
+
+/**
+ * Polish collation, not code-point order: ą belongs directly after a, and ł after l. Sorting
+ * by raw string would scatter every accented word to the end of the list.
+ */
+private val polishCollator: Collator = Collator.getInstance(Locale.forLanguageTag("pl"))
+
+internal fun List<PresetWord>.sortedForDisplay(): List<PresetWord> = sortedWith(compareBy(polishCollator) { it.text })

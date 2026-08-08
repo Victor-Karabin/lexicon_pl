@@ -16,6 +16,9 @@ import com.lexicon.domain.presets.GetPresetCategoriesUseCaseImpl
 import com.lexicon.domain.presets.GetPresetVocabularyUseCaseImpl
 import com.lexicon.domain.presets.GetVocabularyPresetUseCaseImpl
 import com.lexicon.domain.presets.GetVocabularyPresetsUseCaseImpl
+import com.lexicon.domain.presets.ObserveFavouriteWordIdsUseCaseImpl
+import com.lexicon.domain.presets.SetPresetFavouriteUseCaseImpl
+import com.lexicon.domain.presets.ToggleWordFavouriteUseCaseImpl
 import com.lexicon.domain.pronunciation.StartPronunciationSessionUseCaseImpl
 import com.lexicon.domain.pronunciation.SubmitPronunciationResultUseCaseImpl
 import com.lexicon.domain.puzzle.StartPuzzleSessionUseCaseImpl
@@ -43,6 +46,9 @@ import com.lexicon.interactors.presets.GetPresetCategoriesUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
+import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
+import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
+import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
@@ -142,4 +148,13 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindBrowseVocabularyPresets(impl: BrowseVocabularyPresetsUseCaseImpl): BrowseVocabularyPresetsUseCase
+
+    @Binds
+    abstract fun bindToggleWordFavourite(impl: ToggleWordFavouriteUseCaseImpl): ToggleWordFavouriteUseCase
+
+    @Binds
+    abstract fun bindSetPresetFavourite(impl: SetPresetFavouriteUseCaseImpl): SetPresetFavouriteUseCase
+
+    @Binds
+    abstract fun bindObserveFavouriteWordIds(impl: ObserveFavouriteWordIdsUseCaseImpl): ObserveFavouriteWordIdsUseCase
 }

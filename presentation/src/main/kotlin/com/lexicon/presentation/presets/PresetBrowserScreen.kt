@@ -48,6 +48,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetCategory
+import com.lexicon.interactors.presets.PresetFavouriteState
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetSort
 import com.lexicon.interactors.presets.VocabularyPreset
@@ -79,6 +80,7 @@ fun PresetBrowserScreen(
         onSortSelected = viewModel::onSortSelected,
         onFiltersCleared = viewModel::onFiltersCleared,
         onPresetSelected = onPresetSelected,
+        onPresetFavouriteToggled = viewModel::onPresetFavouriteToggled,
         modifier = modifier,
     )
 }
@@ -92,6 +94,7 @@ private fun PresetBrowserContent(
     onSortSelected: (PresetSort) -> Unit,
     onFiltersCleared: () -> Unit,
     onPresetSelected: (PresetId) -> Unit,
+    onPresetFavouriteToggled: (PresetId, PresetFavouriteState) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when (uiState) {
@@ -124,10 +127,13 @@ private fun PresetBrowserContent(
                             verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
                         ) {
                             items(uiState.presets, key = { it.id.value }) { preset ->
+                                val favouriteState = favouriteStateOf(preset, uiState.favouriteWordIds)
                                 PresetCard(
                                     preset = preset,
                                     languageTag = uiState.languageTag,
+                                    favouriteState = favouriteState,
                                     onClick = { onPresetSelected(preset.id) },
+                                    onFavouriteToggled = { onPresetFavouriteToggled(preset.id, favouriteState) },
                                 )
                             }
                         }
@@ -250,7 +256,9 @@ private fun FilterRow(
 private fun PresetCard(
     preset: VocabularyPreset,
     languageTag: String,
+    favouriteState: PresetFavouriteState,
     onClick: () -> Unit,
+    onFavouriteToggled: () -> Unit,
 ) {
     Surface(
         onClick = onClick,
@@ -302,6 +310,8 @@ private fun PresetCard(
                     modifier = Modifier.padding(top = Dimens.spacingSmall),
                 )
             }
+
+            PresetFavouriteButton(state = favouriteState, onClick = onFavouriteToggled)
         }
     }
 }
@@ -405,6 +415,7 @@ private fun PresetBrowserPreview() {
             onSortSelected = {},
             onFiltersCleared = {},
             onPresetSelected = {},
+            onPresetFavouriteToggled = { _, _ -> },
         )
     }
 }
@@ -424,6 +435,7 @@ private fun PresetBrowserNoMatchesPreview() {
             onSortSelected = {},
             onFiltersCleared = {},
             onPresetSelected = {},
+            onPresetFavouriteToggled = { _, _ -> },
         )
     }
 }

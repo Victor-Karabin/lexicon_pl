@@ -3,6 +3,7 @@ package com.lexicon.presentation.presets
 import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.PresetCategory
 import com.lexicon.interactors.presets.PresetSort
+import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -18,6 +19,11 @@ sealed interface PresetBrowserUiState {
         val selectedCefrLevels: Set<CefrLevel> = emptySet(),
         val sort: PresetSort = PresetSort.POPULARITY,
         val languageTag: String = "en",
+        /**
+         * The whole set rather than a flag per preset: presets overlap heavily, so deriving
+         * each card's state from one set is both cheaper and impossible to get out of step.
+         */
+        val favouriteWordIds: Set<VocabularyId> = emptySet(),
     ) : PresetBrowserUiState {
         val hasActiveFilters: Boolean
             get() = selectedCategoryIds.isNotEmpty() || selectedCefrLevels.isNotEmpty() || query.isNotBlank()
