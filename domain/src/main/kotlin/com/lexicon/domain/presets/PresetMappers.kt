@@ -25,7 +25,6 @@ fun VocabularyPresetBoundary.toPreset(category: PresetCategory): VocabularyPrese
         title = LocalizedText(title),
         description = LocalizedText(description),
         category = category,
-        cefr = cefr?.let { value -> CefrLevel.entries.firstOrNull { it.name == value } },
         icon = icon,
         color = color,
         popularity = popularity,
@@ -40,4 +39,5 @@ fun VocabularyItemBoundary.toPresetWord(): PresetWord =
         translation = translation,
         transcription = transcription,
         isFavourite = isFavourite,
+        cefr = cefr?.let { value -> CefrLevel.entries.firstOrNull { it.name == value } },
     )

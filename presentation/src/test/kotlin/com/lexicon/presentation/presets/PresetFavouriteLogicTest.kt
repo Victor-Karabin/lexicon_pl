@@ -19,7 +19,6 @@ class PresetFavouriteLogicTest {
             title = LocalizedText(mapOf("en" to "Food")),
             description = LocalizedText(mapOf("en" to "")),
             category = PresetCategory("everyday-life", 3, LocalizedText(mapOf("en" to "Everyday life"))),
-            cefr = null,
             icon = null,
             color = null,
             popularity = 1,

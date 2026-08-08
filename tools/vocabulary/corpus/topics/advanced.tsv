@@ -43,3 +43,149 @@ zgoła	quite, entirely	adv	C1
 osobliwy	peculiar	adj	C1
 przewrotny	perverse	adj	C1	personality
 uwarunkowanie	determinant	n	C1	studying
+domniemanie	presumption	n	C1	law
+domena	domain	n	C1	work
+przesłanie	message, moral	n	C1	books
+konotacja	connotation	n	C1	books
+implikacja	implication	n	C1	studying
+korelacja	correlation	n	C1	studying
+proporcja	proportion	n	C1	numbers
+dysproporcja	disproportion	n	C1	politics
+nierówność	inequality	n	C1	politics
+sprawiedliwość	justice	n	C1	law
+niesprawiedliwość	injustice	n	C1	law
+praworządność	rule of law	n	C1	politics
+suwerenność	sovereignty	n	C1	politics
+autonomia	autonomy	n	C1	politics
+kompetencja	competence, remit	n	C1	work
+uprawnienie	authorisation	n	C1	law
+przywilej	privilege	n	C1	law
+ustępstwo	concession	n	C1	politics
+kompromis	compromise	n	C1	meetings
+rozejm	truce	n	C1	politics
+porozumienie	agreement	n	C1	business
+sprzeciw	objection	n	C1	meetings
+zastrzeżenie	reservation, proviso	n	C1	law
+poprawka	amendment	n	C1	politics
+załącznik	annex	n	C1	office
+klauzula	clause	n	C1	law
+przepis prawny	legal provision	n	C1	law
+wykładnia	interpretation	n	C1	law
+precedens	precedent	n	C1	law
+odwołanie	appeal	n	C1	law
+egzekucja	enforcement	n	C1	law
+windykacja	debt collection	n	C1	finance
+niewypłacalność	insolvency	n	C1	finance
+upadłość	bankruptcy	n	C1	business
+restrukturyzacja	restructuring	n	C1	business
+konsolidacja	consolidation	n	C1	business
+dywersyfikacja	diversification	n	C1	finance
+rentowność	profitability	n	C1	finance
+płynność	liquidity	n	C1	finance
+amortyzacja	depreciation	n	C1	finance
+prognoza finansowa	financial forecast	n	C1	finance
+wskaźnik	indicator	n	C1	business
+miernik	measure, metric	n	C1	business
+odchylenie	deviation	n	C1	studying
+tolerancja błędu	margin of error	n	C1	studying
+przybliżenie	approximation	n	C1	numbers
+uściślenie	refinement	n	C1	studying
+sprostowanie	correction, retraction	n	C1	books
+uzupełnienie	supplement	n	C1	books
+przypis	footnote	n	C1	books
+bibliografia	bibliography	n	C1	university
+cytat	quotation	n	C1	books
+parafraza	paraphrase	n	C1	books
+plagiat	plagiarism	n	C1	university
+recenzja naukowa	peer review	n	C1	university
+rozprawa naukowa	dissertation	n	C1	university
+konspekt	outline	n	C1	studying
+teza	thesis, claim	n	C1	university
+antyteza	antithesis	n	C1	books
+paradoks	paradox	n	C1	books
+metafora	metaphor	n	C1	books
+alegoria	allegory	n	C1	books
+ironia	irony	n	C1	books
+sarkazm	sarcasm	n	C1	daily-conversation
+aluzja	allusion	n	C1	books
+insynuacja	insinuation	n	C1	politics
+oszczerstwo	slander	n	C1	law
+zniesławienie	defamation	n	C1	law
+sprostowanie prasowe	press correction	n	C1	politics
+wiarygodne źródło	credible source	n	C1	studying
+dezinformacja	disinformation	n	C1	politics,internet
+propaganda	propaganda	n	C1	politics
+manipulacja	manipulation	n	C1	politics
+perswazja	persuasion	n	C1	meetings
+retoryka	rhetoric	n	C1	politics
+elokwencja	eloquence	n	C1	personality
+erudycja	erudition	n	C1	personality
+dociekliwość	inquisitiveness	n	C1	personality
+przenikliwość	perceptiveness	n	C1	personality
+rozwaga	deliberation	n	C1	personality
+roztropność	prudence	n	C1	personality
+przezorność	foresight	n	C1	personality
+zapobiegliwość	providence	n	C1	personality
+determinacja	determination	n	C1	personality
+konsekwencja w działaniu	consistency	n	C1	personality
+wytrwałość	perseverance	n	C1	personality
+zawziętość	doggedness	n	C1	personality
+zuchwałość	audacity	n	C1	personality
+bezczelność	insolence	n	C1	personality
+arogancja	arrogance	n	C1	personality
+pycha	hubris	n	C1	personality
+próżność	vanity	n	C1	personality
+pokora	humility	n	C1	personality
+skromność	modesty	n	C1	personality
+wyrozumiałość	forbearance	n	C1	personality
+pobłażliwość	leniency	n	C1	personality
+surowość	severity	n	C1	personality
+bezstronność	impartiality	n	C1	law
+stronniczość	bias	n	C1	law,politics
+uprzedzenie	prejudice	n	C1	personality
+tolerancja	tolerance	n	C1	politics
+nietolerancja	intolerance	n	C1	politics
+obłuda	hypocrisy	n	C1	personality
+szczerość	sincerity	n	C1	personality
+zawiść	envy	n	C1	emotions
+wyrzuty sumienia	remorse	n	C1	emotions
+ukojenie	solace	n	C1	emotions
+udręka	torment	n	C1	emotions
+przygnębienie	dejection	n	C1	emotions,health
+euforia	euphoria	n	C1	emotions
+niepokój	unease	n	C1	emotions,health
+lęk	anxiety	n	C1	health,emotions
+przerażenie	terror	n	C1	emotions
+zdumienie	astonishment	n	C1	emotions
+osłupienie	stupefaction	n	C1	emotions
+zażenowanie	embarrassment	n	C1	emotions
+nadmienić	to mention	v	C1	meetings
+przytoczyć	to cite	v	C1	books
+powołać się	to invoke, to refer to	v	C1	law
+uzasadnić	to justify	v	C1	law
+sprecyzować	to specify	v	C1	meetings
+sformułować	to formulate	v	C1	office
+zredagować	to edit, to draft	v	C1	books
+streścić	to summarise	v	C1	studying
+zinterpretować	to interpret	v	C1	books
+zakwestionować	to question, to challenge	v	C1	law
+obalić	to refute	v	C1	university
+zbagatelizować	to trivialise	v	C1	meetings
+wyolbrzymić	to exaggerate	v	C1	daily-conversation
+przecenić	to overestimate	v	C1	business
+niedocenić	to underestimate	v	C1	business
+docenić	to appreciate	v	C1	relationships
+uwzględnić	to take into account	v	C1	meetings
+pominąć	to omit	v	C1	studying
+wyodrębnić	to isolate, to single out	v	C1	studying
+scharakteryzować	to characterise	v	C1	university
+zilustrować	to illustrate	v	C1	university
+zobrazować	to depict	v	C1	books
+odzwierciedlać	to reflect	v	C1	books
+świadczyć o	to attest to	v	C1	law
+sugerować	to suggest	v	C1	meetings
+implikować	to imply	v	C1	studying
+wykluczać	to rule out	v	C1	medicine
+dopuszczać	to permit	v	C1	law
+warunkować	to condition	v	C1	studying
+determinować	to determine	v	C1	university

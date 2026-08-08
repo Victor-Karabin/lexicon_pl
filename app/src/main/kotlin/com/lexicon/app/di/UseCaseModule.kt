@@ -11,7 +11,6 @@ import com.lexicon.domain.imagetest.SubmitImageTestAnswerUseCaseImpl
 import com.lexicon.domain.memorycards.StartMemoryCardsSessionUseCaseImpl
 import com.lexicon.domain.memorycards.SubmitMemoryCardsStepResultUseCaseImpl
 import com.lexicon.domain.mix.StartMixSessionUseCaseImpl
-import com.lexicon.domain.presets.BrowseVocabularyPresetsUseCaseImpl
 import com.lexicon.domain.presets.GetPresetCategoriesUseCaseImpl
 import com.lexicon.domain.presets.GetPresetVocabularyUseCaseImpl
 import com.lexicon.domain.presets.GetVocabularyPresetUseCaseImpl
@@ -43,7 +42,6 @@ import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
 import com.lexicon.interactors.memorycards.StartMemoryCardsSessionUseCase
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
 import com.lexicon.interactors.mix.StartMixSessionUseCase
-import com.lexicon.interactors.presets.BrowseVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.GetPresetCategoriesUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
@@ -149,9 +147,6 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindGetPresetVocabulary(impl: GetPresetVocabularyUseCaseImpl): GetPresetVocabularyUseCase
-
-    @Binds
-    abstract fun bindBrowseVocabularyPresets(impl: BrowseVocabularyPresetsUseCaseImpl): BrowseVocabularyPresetsUseCase
 
     @Binds
     abstract fun bindToggleWordFavourite(impl: ToggleWordFavouriteUseCaseImpl): ToggleWordFavouriteUseCase

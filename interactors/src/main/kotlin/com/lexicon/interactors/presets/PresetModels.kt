@@ -33,6 +33,8 @@ data class PresetWord(
     val transcription: String,
     /** Favourited words are the ones trainings draw from; see [ToggleWordFavouriteUseCase]. */
     val isFavourite: Boolean = false,
+    /** The word's own CEFR band, which is what the level filter selects on. */
+    val cefr: CefrLevel? = null,
 )
 
 data class PresetCategory(
@@ -51,7 +53,6 @@ data class VocabularyPreset(
     val title: LocalizedText,
     val description: LocalizedText,
     val category: PresetCategory,
-    val cefr: CefrLevel?,
     val icon: String?,
     val color: String?,
     val popularity: Int,

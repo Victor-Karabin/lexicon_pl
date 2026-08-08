@@ -5,7 +5,6 @@ import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyPresetBoundary
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
-import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.PresetId
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -20,7 +19,6 @@ class VocabularyPresetUseCasesImplTest {
     private fun preset(
         id: String,
         categoryId: String = "everyday-life",
-        cefr: String? = null,
         popularity: Int = 1,
         vocabularyIds: List<Long> = listOf(3L, 1L, 2L),
     ) = VocabularyPresetBoundary(
@@ -30,7 +28,6 @@ class VocabularyPresetUseCasesImplTest {
         description = mapOf("en" to ""),
         icon = null,
         color = null,
-        cefr = cefr,
         popularity = popularity,
         estimatedSeconds = 180,
         vocabularyIds = vocabularyIds,
@@ -78,22 +75,6 @@ class VocabularyPresetUseCasesImplTest {
             coEvery { presetRepository.getPresets() } returns listOf(preset("orphan", categoryId = "invented"))
 
             assertTrue(GetVocabularyPresetsUseCaseImpl(presetRepository)().isEmpty())
-        }
-
-    @Test
-    fun `a CEFR value the app does not know degrades to null instead of failing`() =
-        runTest {
-            coEvery { presetRepository.getPresets() } returns listOf(preset("future", cefr = "D3"))
-
-            assertNull(GetVocabularyPresetsUseCaseImpl(presetRepository)().single().cefr)
-        }
-
-    @Test
-    fun `a recognised CEFR value is carried through`() =
-        runTest {
-            coEvery { presetRepository.getPresets() } returns listOf(preset("a1", cefr = "A1"))
-
-            assertEquals(CefrLevel.A1, GetVocabularyPresetsUseCaseImpl(presetRepository)().single().cefr)
         }
 
     @Test

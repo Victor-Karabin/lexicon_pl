@@ -12,7 +12,7 @@ Presets follow the project's existing layering. Each layer knows only the one be
 
 | Layer | Package | Holds |
 | --- | --- | --- |
-| Presentation | `com.lexicon.presentation.presets` | `PresetBrowserScreen`, its ViewModel and UI state |
+| Presentation | `com.lexicon.presentation.presets` | `VocabularyScreen`, `PresetDetailScreen`, their ViewModels and UI state |
 | Interactor | `com.lexicon.interactors.presets` | `VocabularyPreset`, `PresetCategory`, `CefrLevel`, use-case contracts |
 | Domain | `com.lexicon.domain.presets` | Use-case implementations, mappers, `VocabularyPresetValidator` |
 | Boundary | `com.lexicon.boundary` | `VocabularyPresetRepository`, `VocabularyPresetBoundary` |
@@ -28,6 +28,11 @@ Two deliberate consequences of the model:
   on. Without this, the 1000-word presets would duplicate most of the corpus in memory.
 - **Localized text is resolved at the edge**, by `LocalizedText.resolve(languageTag)`, not
   at load time — so the display language can change without reloading the catalogue.
+
+`GetPresetCategoriesUseCase` currently has no caller: categories still order the preset list
+and label each card, but nothing lists them on their own since the category chips were removed.
+It is kept rather than deleted because it is correct and small, unlike the browse use case,
+which had become a filter that could never match.
 
 ## Preset format
 
@@ -143,14 +148,10 @@ resulting ids, rather than embedding words in the preset.
 
 ## Favourites — the study set
 
-A word can be marked with a heart, on its own row in the detail screen or in bulk from a
-preset's heart. **Trainings draw from the favourited words when there are any, and from the
-whole vocabulary otherwise.** That fallback is what makes the feature safe to offer: without
-it, a user who has favourited nothing — everyone on first run — would have no words to train
-on.
-
-The choice is made in one SQL statement (`WordDao.getRandomForStudy`) rather than by reading
-a count and then querying, so it cannot race a heart being toggled between the two.
+A word can be marked with a heart, on its own row in the detail screen, from search results,
+or in bulk from a preset's heart. **Trainings draw from the favourited words and nothing
+else.** A user who has favourited nothing therefore has nothing to train on, which is what
+`TrainingGate` exists to explain rather than leave as an empty session.
 
 A preset's heart is tri-state — `NONE`, `SOME`, `ALL` — because a preset can be partly
 favourited and a boolean would have to lie about that. Partly-favourited counts as off, so
@@ -166,14 +167,24 @@ Two consequences worth knowing:
   with three options, and a training with none spun forever — `openStep(0)` returns early on
   an empty session, so the screen never left Loading.
 - `getRandomForStudy` is plain SQL, and the project has no Robolectric or instrumentation
-  setup, so **the favourites-else-all rule is not covered by a unit test**. Everything above
-  it — the use cases, the tri-state derivation, the sorting — is.
+  setup, so **the study-set query itself is not covered by a unit test**. Everything above it
+  — the use cases, the tri-state derivation, the sorting — is.
 
 ## Word search
 
-The Vocabulary tab has one search box, and it searches **words**, not presets. With the box
-empty the preset list is shown, with its category/CEFR filters and sort; typing replaces that
-list with the matching words and clearing the box puts it back exactly as it was.
+The Vocabulary tab has one search box and one row of filter chips, and both select **words**.
+With the box empty and no level picked, the preset list is shown; typing — or picking a CEFR
+level — replaces that list with the matching words, and clearing both puts the presets back
+exactly as they were.
+
+Presets are not filtered, searched or sorted from the UI: the catalogue is 72 items whose
+names are on screen to scan. `BrowseVocabularyPresetsUseCase` was removed once every one of
+its narrowing parameters had become unreachable; `GetVocabularyPresetsUseCase` returns the
+list in category-then-popularity order, which is the order shown.
+
+**CEFR is a property of a word, not of a preset.** There are no A1/A2/B1 presets; instead
+every word carries its level, and the level chips list every word at the levels picked. Levels
+and the query narrow together.
 
 Matching is by either language — "apple", "jabłko" and "jablko" all find the same entry — and
 each result carries the same heart as the preset detail screen, so search is also how you add
@@ -208,12 +219,26 @@ training's session-start request, and is separate work.
 
 ## Dataset provenance and limits
 
-The corpus is roughly 1,770 entries: about 1,030 frequency-ranked core words plus topical
-vocabulary. Two honest caveats:
+The corpus is roughly 2,220 entries: about 1,010 frequency-ranked core words plus topical and
+upper-level vocabulary. By CEFR band: A1 689, A2 547, B1 357, B2 280, C1 198, C2 148.
+
+Entries are at least three letters. One- and two-letter words are function words — *w*, *na*,
+*że* — and they break every training built on spelling: there is no letter puzzle or crossword
+answer in a two-letter preposition. `MIN_WORD_LENGTH` in the build tool rejects them.
+
+Every band has to be non-empty, because each is offered as a filter chip and a chip that
+returns nothing is a control that silently does nothing — C2 shipped that way once. Both
+`build_assets.py` and `VocabularyPresetAssetTest` now refuse an empty band, and likewise a
+word below the minimum length.
+
+Three honest caveats:
 
 - **The frequency ranking is a curated approximation**, not a corpus-derived list. It is
   ordered to be defensible for learners, but the exact rank of any given word is an
   editorial judgement, not a measurement.
+- **The upper bands are editorial.** Assigning a word to B2 rather than C1 is a judgement,
+  not a measurement against a syllabus; the ordering between bands is meaningful, the exact
+  boundary is not.
 - **Transcriptions are rule-generated** by `g2p.py` from spelling. Polish orthography is
   close to phonemic so this is accurate for the ordinary cases it covers — digraphs,
   softening, final devoicing, voicing assimilation, penultimate stress — but it does not

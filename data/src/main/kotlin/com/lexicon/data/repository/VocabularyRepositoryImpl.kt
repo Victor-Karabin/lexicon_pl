@@ -28,11 +28,19 @@ class VocabularyRepositoryImpl
 
         override suspend fun search(
             foldedQuery: String,
+            levels: Set<String>,
             limit: Int,
         ): List<VocabularyItemBoundary> {
-            if (foldedQuery.isBlank()) return emptyList()
             vocabularySeeder.ensureSeeded()
-            return wordDao.search(foldedQuery, limit).map { it.toBoundary() }
+            // Room cannot make an IN clause optional, so the flag carries "no level filter"
+            // rather than an empty list, which would match nothing.
+            return wordDao
+                .search(
+                    foldedQuery = foldedQuery,
+                    levels = levels.toList(),
+                    ignoreLevels = if (levels.isEmpty()) 1 else 0,
+                    limit = limit,
+                ).map { it.toBoundary() }
         }
 
         override suspend fun countStudyWords(): Int {

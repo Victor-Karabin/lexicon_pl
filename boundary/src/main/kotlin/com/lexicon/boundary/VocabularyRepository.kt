@@ -5,10 +5,10 @@ import kotlinx.coroutines.flow.Flow
 interface VocabularyRepository {
     /**
      * Returns up to [count] distinct vocabulary items in random order, drawn from the study
-     * set: the favourited words when there are any, and the whole vocabulary otherwise.
+     * set — the favourited words, and only those.
      *
-     * The fallback is what makes favouriting safe to offer. Without it, a user who has
-     * favourited nothing — which is everyone on first run — would have no words to train on.
+     * A user who has favourited nothing therefore has nothing to train on, which is why every
+     * training is fronted by a readiness check rather than left to start an empty session.
      */
     suspend fun getRandomItems(count: Int): List<VocabularyItemBoundary>
 
@@ -20,18 +20,18 @@ interface VocabularyRepository {
 
     /**
      * Words whose Polish or English side matches [foldedQuery], which the caller must already
-     * have folded with the same rule the stored keys use. Ordered alphabetically and capped at
-     * [limit], because a two-letter query matches most of the vocabulary.
+     * have folded with the same rule the stored keys use, narrowed to [levels] when any are
+     * given. An empty [levels] means every level rather than none. Ordered alphabetically.
      */
     suspend fun search(
         foldedQuery: String,
+        levels: Set<String>,
         limit: Int,
     ): List<VocabularyItemBoundary>
 
     /**
-     * Size of the study set — the favourites when there are any, the whole vocabulary
-     * otherwise. This is what a training has to work with, so it is what "not enough words"
-     * has to be measured against.
+     * Size of the study set. This is what a training has to work with, so it is what "not
+     * enough words" is measured against.
      */
     suspend fun countStudyWords(): Int
 

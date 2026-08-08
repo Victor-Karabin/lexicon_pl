@@ -7,7 +7,6 @@ dobranoc	good night	expr	A1	greetings
 do widzenia	goodbye	expr	A1	greetings
 do zobaczenia	see you	expr	A1	greetings
 na razie	see you later	expr	A1	greetings
-pa	bye	interj	A1	greetings
 proszę	please, here you are	part	A1	greetings,daily-conversation
 dziękuję	thank you	expr	A1	greetings
 przepraszam	sorry, excuse me	expr	A1	greetings

@@ -83,7 +83,7 @@ fun VocabularyWordRow(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Text(
-                text = "[${word.transcription}]",
+                text = word.cefr?.let { "[${word.transcription}]  ·  ${it.name}" } ?: "[${word.transcription}]",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
