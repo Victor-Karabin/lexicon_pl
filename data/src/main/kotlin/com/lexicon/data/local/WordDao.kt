@@ -48,16 +48,14 @@ interface WordDao {
         limit: Int,
     ): List<WordEntity>
 
-    /** Rows carried over by a migration have no level yet; see [VocabularySeeder]. */
-    @Query("SELECT * FROM words WHERE cefr = ''")
-    suspend fun getWithoutCefr(): List<WordEntity>
-
-    /** Rows carried over by a migration have no key yet; see [VocabularySeeder]. */
-    @Query("SELECT * FROM words WHERE searchKey = ''")
-    suspend fun getWithoutSearchKey(): List<WordEntity>
-
     @Update
     suspend fun updateAll(words: List<WordEntity>)
+
+    @Query("SELECT * FROM words")
+    suspend fun getAll(): List<WordEntity>
+
+    @Query("DELETE FROM words WHERE id IN (:ids)")
+    suspend fun deleteByIds(ids: List<Long>)
 
     @Query("SELECT COUNT(*) FROM words")
     suspend fun count(): Int

@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 private const val VOCABULARY_ASSET_PATH = "vocabulary_pl.json"
 
-/** Reads the bundled mock vocabulary from assets. Replace with a real source once one exists. */
+/** Reads the bundled vocabulary from assets. */
 class VocabularySeedAssetLoader
     @Inject
     constructor(
@@ -15,8 +15,13 @@ class VocabularySeedAssetLoader
     ) {
         private val json = Json { ignoreUnknownKeys = true }
 
-        fun load(): List<WordEntity> {
-            val raw = context.assets.open(VOCABULARY_ASSET_PATH).bufferedReader().use { it.readText() }
-            return json.decodeFromString<List<VocabularySeedItem>>(raw).map { it.toEntity() }
-        }
+        fun load(): List<WordEntity> = json.decodeFromString<List<VocabularySeedItem>>(readAsset()).map { it.toEntity() }
+
+        /**
+         * Identifies the asset's contents without parsing it. Reading 300 KB is cheap; turning
+         * it into 2,000 objects is not, and on most launches the answer is "unchanged".
+         */
+        fun fingerprint(): String = readAsset().let { "${it.length}:${it.hashCode()}" }
+
+        private fun readAsset(): String = context.assets.open(VOCABULARY_ASSET_PATH).bufferedReader().use { it.readText() }
     }

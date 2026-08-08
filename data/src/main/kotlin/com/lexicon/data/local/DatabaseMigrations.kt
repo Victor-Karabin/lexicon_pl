@@ -43,7 +43,7 @@ val MIGRATION_3_4 =
 /**
  * Adds the search key. Unlike [MIGRATION_2_3] this keeps the rows: they now carry the user's
  * favourites, so wiping the table to force a reseed would throw away their study set. The
- * seeder backfills the empty keys instead.
+ * seeder fills the column in when it next reconciles the table against the asset.
  */
 val MIGRATION_4_5 =
     object : Migration(4, 5) {
@@ -53,9 +53,8 @@ val MIGRATION_4_5 =
     }
 
 /**
- * Adds the CEFR band. Like [MIGRATION_4_5] this keeps the rows and lets the seeder backfill
- * them, because they carry the user's favourites. Unlike the search key the level cannot be
- * derived from the row itself, so the backfill reads it back out of the bundled asset.
+ * Adds the CEFR band. Like [MIGRATION_4_5] this keeps the rows, because they carry the user's
+ * favourites, and lets the seeder fill the column in from the asset when it next reconciles.
  */
 val MIGRATION_5_6 =
     object : Migration(5, 6) {

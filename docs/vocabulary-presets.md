@@ -202,9 +202,16 @@ The folding lives in `common.foldForSearch`, used by the stored key, the query, 
 search. That shared location is the point: a key folded one way and a query folded another
 never match, and the failure is silent.
 
-Rows carried across `MIGRATION_4_5` arrive with an empty key and are backfilled by
-`VocabularySeeder` on next use. Backfilling rather than reseeding is deliberate — the rows now
-carry the user's favourites, which a reseed would discard.
+`VocabularySeeder` keeps the table in line with the asset rather than only filling an empty
+one. On launch it fingerprints the asset; if that differs from the last synced value it inserts
+new words, deletes words the asset has dropped, and refreshes the rest — **preserving the
+favourite flag**, which is the user's and not the asset's to state. Unchanged assets cost a file
+read and no parse.
+
+This is not an optimisation, it is the difference between shipping a corpus update and not:
+before it, an install seeded once never received another word, so the 452 words added for the
+upper CEFR bands reached only fresh installs and the C2 filter stayed empty on every existing
+device.
 
 ## Consuming presets
 
