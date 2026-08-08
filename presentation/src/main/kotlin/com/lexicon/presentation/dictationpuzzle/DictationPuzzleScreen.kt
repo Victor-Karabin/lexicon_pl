@@ -22,13 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.LetterTileGrid
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
@@ -202,7 +202,7 @@ private fun DictationPuzzleScreenContent(
 
 private val previewTiles = shuffleIntoTiles("praca")
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun DictationPuzzleScreenUnansweredPreview() {
     LexiconTheme {
@@ -226,7 +226,7 @@ private fun DictationPuzzleScreenUnansweredPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun DictationPuzzleScreenIncorrectPreview() {
     LexiconTheme {

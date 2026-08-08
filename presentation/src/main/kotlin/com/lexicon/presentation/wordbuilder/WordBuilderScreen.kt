@@ -24,12 +24,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.LetterTileGrid
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.shuffleIntoTiles
@@ -184,7 +184,7 @@ private fun WordBuilderScreenContent(
 
 private val previewTiles = shuffleIntoTiles("praca")
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun WordBuilderScreenPreview() {
     LexiconTheme {

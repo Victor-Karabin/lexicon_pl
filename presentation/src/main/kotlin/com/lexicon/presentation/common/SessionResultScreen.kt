@@ -20,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
@@ -185,7 +184,7 @@ private val previewWordResults = listOf(
     WordResultEntry(word = "pies", translation = "dog", outcome = AnswerState.Correct, tipUsed = true),
 )
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun SessionResultScreenWordListPreview() {
     LexiconTheme {
@@ -200,7 +199,7 @@ private fun SessionResultScreenWordListPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun SessionResultScreenCountsOnlyPreview() {
     LexiconTheme {

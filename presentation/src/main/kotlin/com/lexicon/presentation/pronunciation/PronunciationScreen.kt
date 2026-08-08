@@ -27,11 +27,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
@@ -237,7 +237,7 @@ private fun PronunciationScreenContent(
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun PronunciationScreenUnansweredPreview() {
     LexiconTheme {
@@ -260,7 +260,7 @@ private fun PronunciationScreenUnansweredPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun PronunciationScreenRecordedPreview() {
     LexiconTheme {
@@ -285,7 +285,7 @@ private fun PronunciationScreenRecordedPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun PronunciationScreenTipRevealedPreview() {
     LexiconTheme {
@@ -311,7 +311,7 @@ private fun PronunciationScreenTipRevealedPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun PronunciationScreenIncorrectPreview() {
     LexiconTheme {

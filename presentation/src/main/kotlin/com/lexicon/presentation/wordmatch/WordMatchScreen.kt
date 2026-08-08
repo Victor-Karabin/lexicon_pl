@@ -22,9 +22,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
@@ -172,7 +172,7 @@ private val previewRightColumn = listOf(
     WordMatchColumnItem(vocabularyItemId = 1, text = "work"),
 )
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun WordMatchScreenPreview() {
     LexiconTheme {
@@ -185,6 +185,50 @@ private fun WordMatchScreenPreview() {
                     rightColumn = previewRightColumn,
                     matchedIds = setOf(1),
                     selectedLeftId = 2,
+                ),
+            onClose = {},
+            onLeftSelected = {},
+            onRightSelected = {},
+        )
+    }
+}
+
+/** A mismatched pair stays highlighted until the next attempt, on both columns at once. */
+@LightDarkPreview
+@Composable
+private fun WordMatchScreenIncorrectPreview() {
+    LexiconTheme {
+        WordMatchScreenContent(
+            uiState =
+                WordMatchUiState.Loaded(
+                    stepIndex = 1,
+                    totalSteps = 5,
+                    leftColumn = previewLeftColumn,
+                    rightColumn = previewRightColumn,
+                    incorrectLeftId = 2,
+                    incorrectRightId = 3,
+                    incorrectAttempts = 1,
+                ),
+            onClose = {},
+            onLeftSelected = {},
+            onRightSelected = {},
+        )
+    }
+}
+
+/** Every pair matched — the board just before the session completes. */
+@LightDarkPreview
+@Composable
+private fun WordMatchScreenAllMatchedPreview() {
+    LexiconTheme {
+        WordMatchScreenContent(
+            uiState =
+                WordMatchUiState.Loaded(
+                    stepIndex = 1,
+                    totalSteps = 5,
+                    leftColumn = previewLeftColumn,
+                    rightColumn = previewRightColumn,
+                    matchedIds = setOf(1, 2, 3),
                 ),
             onClose = {},
             onLeftSelected = {},

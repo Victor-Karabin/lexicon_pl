@@ -25,10 +25,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.debounced
@@ -154,7 +154,7 @@ private fun TrueOrFalseScreenContent(
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun TrueOrFalseScreenPreview() {
     LexiconTheme {
@@ -165,6 +165,25 @@ private fun TrueOrFalseScreenPreview() {
                     timeRemainingSeconds = 42,
                     word = "praca",
                     displayedTranslation = "work",
+                ),
+            onClose = {},
+            onAnswer = {},
+        )
+    }
+}
+
+/** Under the warning threshold the timer switches to the error colour. */
+@LightDarkPreview
+@Composable
+private fun TrueOrFalseScreenLowTimePreview() {
+    LexiconTheme {
+        TrueOrFalseScreenContent(
+            uiState =
+                TrueOrFalseUiState.Loaded(
+                    stepIndex = 24,
+                    timeRemainingSeconds = 5,
+                    word = "przyjaciel",
+                    displayedTranslation = "friend",
                 ),
             onClose = {},
             onAnswer = {},
