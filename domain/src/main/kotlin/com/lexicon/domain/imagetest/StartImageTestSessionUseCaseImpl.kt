@@ -48,8 +48,8 @@ class StartImageTestSessionUseCaseImpl
         }
 
         /**
-         * Only picks subjects whose own content type has enough distinct translations to fill the
-         * options. Vocabularies typically hold far fewer phrases than single words, so a phrase
+         * Only picks subjects whose own content type has enough distinct options to fill the
+         * answers. Vocabularies typically hold far fewer phrases than single words, so a phrase
          * subject would otherwise produce a step with one or two options — trivially guessable.
          * Falls back to the whole pool when no content type qualifies, which is the best available
          * rather than no step at all.
@@ -60,10 +60,17 @@ class StartImageTestSessionUseCaseImpl
         ): List<Word> =
             pool.groupBy { it.isPhrase }
                 .values
-                .filter { sameType -> sameType.distinctBy(Word::translation).size >= optionCount }
+                .filter { sameType -> sameType.distinctBy(Word::text).size >= optionCount }
                 .flatten()
                 .ifEmpty { pool }
 
+        /**
+         * The options are target-language words: the point is recognising what the image is called
+         * in the language being learnt, so offering base-language options would ask nothing.
+         *
+         * For the same reason the fallback clue is the base word — the target word is the answer,
+         * and showing it when the image fails to load would give the step away.
+         */
         private suspend fun buildStep(
             index: Int,
             subject: Word,
@@ -72,20 +79,20 @@ class StartImageTestSessionUseCaseImpl
         ): ImageTestStepResponse {
             val distractors =
                 pool
-                    .filter { it.id != subject.id && it.translation != subject.translation && it.isPhrase == subject.isPhrase }
-                    .distinctBy { it.translation }
+                    .filter { it.id != subject.id && it.text != subject.text && it.isPhrase == subject.isPhrase }
+                    .distinctBy { it.text }
                     .shuffled()
                     .take(optionCount - 1)
-                    .map { it.translation }
-            val options = (distractors + subject.translation).shuffled()
+                    .map { it.text }
+            val options = (distractors + subject.text).shuffled()
 
             return ImageTestStepResponse(
                 stepIndex = index,
                 vocabularyItemId = subject.id,
                 imageUrl = imageProvider.searchImage(subject.translation),
-                clueText = subject.text,
+                clueText = subject.translation,
                 options = options,
-                correctOption = subject.translation,
+                correctOption = subject.text,
             )
         }
     }

@@ -309,8 +309,8 @@ class MixViewModel
                             response.outcome == ImageTestStepOutcome.CORRECT,
                             skipped,
                             response.correctOption,
-                            step.step.clueText,
                             step.step.correctOption,
+                            step.step.clueText,
                         )
                     }
 

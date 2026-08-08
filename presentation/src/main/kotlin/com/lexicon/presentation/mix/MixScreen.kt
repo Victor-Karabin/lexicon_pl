@@ -7,13 +7,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -29,10 +26,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.mix.MixStep
@@ -40,6 +35,7 @@ import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerOptionList
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.AnswerStatusLabel
+import com.lexicon.presentation.common.AnswerTone
 import com.lexicon.presentation.common.BuiltAnswerField
 import com.lexicon.presentation.common.ClueImage
 import com.lexicon.presentation.common.LetterTile
@@ -48,18 +44,15 @@ import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.TrueOrFalseAnswerRow
 import com.lexicon.presentation.common.debounced
 import com.lexicon.presentation.common.shuffleIntoTiles
 import com.lexicon.presentation.pronunciation.RecordingState
 import com.lexicon.presentation.theme.Dimens
-import com.lexicon.presentation.theme.LexiconError
-import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.PlayButton
 import com.lexicon.presentation.theme.component.ProgressDots
 import com.lexicon.presentation.theme.component.WordCard
-
-private val TrueFalseButtonHeight = 96.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -173,10 +166,19 @@ private fun MixScreenContent(
                             onOptionSelected = onOptionSelected,
                             onReplayAudio = onReplayAudio,
                             onRecordRequested = onRecordRequested,
-                            onTrueOrFalseAnswer = onTrueOrFalseAnswer,
                         )
 
                         StepFeedback(uiState)
+                    }
+
+                    if (uiState.step is MixStep.TrueOrFalse) {
+                        TrueOrFalseAnswerRow(
+                            trueTone = AnswerTone.of(uiState.trueOrFalseOutcomeFor(isTrueButton = true)),
+                            falseTone = AnswerTone.of(uiState.trueOrFalseOutcomeFor(isTrueButton = false)),
+                            enabled = uiState.isEditable,
+                            onAnswer = onTrueOrFalseAnswer,
+                            modifier = Modifier.padding(horizontal = Dimens.spacingMedium),
+                        )
                     }
 
                     // True or False answers on tap, so before it is answered there is no primary
@@ -205,7 +207,6 @@ private fun ColumnScope.StepContent(
     onOptionSelected: (String) -> Unit,
     onReplayAudio: () -> Unit,
     onRecordRequested: () -> Unit,
-    onTrueOrFalseAnswer: (Boolean) -> Unit,
 ) {
     when (val step = uiState.step) {
         is MixStep.Dictation -> {
@@ -276,32 +277,12 @@ private fun ColumnScope.StepContent(
             )
         }
 
-        is MixStep.TrueOrFalse -> {
+        is MixStep.TrueOrFalse ->
             WordCard(
                 word = step.step.word,
                 sublabel = step.step.displayedTranslation,
                 modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge),
             )
-            Row(
-                modifier = Modifier.fillMaxWidth().height(TrueFalseButtonHeight).padding(top = Dimens.spacingMedium),
-                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-            ) {
-                TrueOrFalseButton(
-                    label = stringResource(R.string.action_true),
-                    outcome = uiState.trueOrFalseOutcomeFor(isTrueButton = true),
-                    enabled = uiState.isEditable,
-                    onClick = { onTrueOrFalseAnswer(true) },
-                    modifier = Modifier.weight(1f).fillMaxSize(),
-                )
-                TrueOrFalseButton(
-                    label = stringResource(R.string.action_false),
-                    outcome = uiState.trueOrFalseOutcomeFor(isTrueButton = false),
-                    enabled = uiState.isEditable,
-                    onClick = { onTrueOrFalseAnswer(false) },
-                    modifier = Modifier.weight(1f).fillMaxSize(),
-                )
-            }
-        }
 
         is MixStep.Pronunciation -> {
             Text(
@@ -330,45 +311,6 @@ private fun ColumnScope.StepContent(
                 )
             }
         }
-    }
-}
-
-/**
- * [outcome]: true = correct, false = incorrect, null = default colour.
- *
- * The button is disabled once answered, so the outcome colour is repeated as the disabled colour —
- * otherwise Material greys the container out and the result indication disappears at the moment it
- * becomes relevant.
- */
-@Composable
-private fun TrueOrFalseButton(
-    label: String,
-    outcome: Boolean?,
-    enabled: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val container = when (outcome) {
-        true -> LexiconSuccess
-        false -> LexiconError
-        null -> MaterialTheme.colorScheme.secondaryContainer
-    }
-    val content = when (outcome) {
-        null -> MaterialTheme.colorScheme.onSecondaryContainer
-        else -> Color.White
-    }
-    Button(
-        onClick = debounced(onClick = onClick),
-        enabled = enabled,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = container,
-            contentColor = content,
-            disabledContainerColor = container,
-            disabledContentColor = content,
-        ),
-        modifier = modifier,
-    ) {
-        Text(label, style = MaterialTheme.typography.titleLarge)
     }
 }
 
@@ -488,6 +430,43 @@ private fun MixScreenTrueOrFalseAnsweredPreview() {
                 ),
                 answerState = AnswerState.Incorrect(),
                 answeredTrue = false,
+            ),
+            onClose = {},
+            onAnswerChanged = {},
+            onTileSelected = {},
+            onOptionSelected = {},
+            onReplayAudio = {},
+            onRecordRequested = {},
+            onTrueOrFalseAnswer = {},
+            onUndo = {},
+            onTipRequested = {},
+            onSkip = {},
+            onCheck = {},
+            onNext = {},
+        )
+    }
+}
+
+@LightDarkPreview
+@Composable
+private fun MixScreenImageTestStepPreview() {
+    LexiconTheme {
+        MixScreenContent(
+            uiState = MixUiState.Loaded(
+                stepIndex = 1,
+                totalSteps = 10,
+                step = MixStep.ImageTest(
+                    1,
+                    com.lexicon.interactors.imagetest.ImageTestStepResponse(
+                        stepIndex = 1,
+                        vocabularyItemId = 3L,
+                        imageUrl = null,
+                        clueText = "house",
+                        options = listOf("kot", "dom", "woda", "chleb"),
+                        correctOption = "dom",
+                    ),
+                ),
+                selectedOption = "dom",
             ),
             onClose = {},
             onAnswerChanged = {},

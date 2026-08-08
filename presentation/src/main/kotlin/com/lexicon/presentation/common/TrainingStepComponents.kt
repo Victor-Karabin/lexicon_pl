@@ -2,13 +2,17 @@ package com.lexicon.presentation.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -38,6 +42,9 @@ import com.lexicon.presentation.theme.component.AnswerChipVariant
  */
 
 private val ClueImageHeight = 180.dp
+
+/** Tall enough that the answer pair reads as the step's primary action, without dominating it. */
+private val AnswerButtonHeight = 88.dp
 
 /** The one place answer outcomes turn into colour, so every screen reads the same. */
 @Composable
@@ -135,6 +142,95 @@ fun AnswerOptionList(
                 modifier = Modifier.padding(vertical = Dimens.spacingTiny),
             )
         }
+    }
+}
+
+/** How an answer button is coloured: by what it means, not by a raw colour. */
+enum class AnswerTone {
+    POSITIVE,
+    NEGATIVE,
+    NEUTRAL,
+    ;
+
+    companion object {
+        /** null — no outcome yet — leaves the button neutral. */
+        fun of(isCorrect: Boolean?): AnswerTone =
+            when (isCorrect) {
+                true -> POSITIVE
+                false -> NEGATIVE
+                null -> NEUTRAL
+            }
+    }
+}
+
+/**
+ * True or False's answer pair. It belongs in a screen's bottom slot rather than inline with the
+ * word: these buttons are the step's primary action, and the standalone training places them within
+ * thumb reach, so a Mix step has to sit there too or the same exercise moves around.
+ */
+@Composable
+fun TrueOrFalseAnswerRow(
+    trueTone: AnswerTone,
+    falseTone: AnswerTone,
+    enabled: Boolean,
+    onAnswer: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier.fillMaxWidth().height(AnswerButtonHeight),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+    ) {
+        AnswerToneButton(
+            label = stringResource(R.string.action_true),
+            tone = trueTone,
+            enabled = enabled,
+            onClick = { onAnswer(true) },
+            modifier = Modifier.weight(1f).fillMaxHeight(),
+        )
+        AnswerToneButton(
+            label = stringResource(R.string.action_false),
+            tone = falseTone,
+            enabled = enabled,
+            onClick = { onAnswer(false) },
+            modifier = Modifier.weight(1f).fillMaxHeight(),
+        )
+    }
+}
+
+/**
+ * The disabled colours repeat the enabled ones: the button is disabled the moment it is answered,
+ * and Material would otherwise grey the container out exactly when its colour starts carrying the
+ * result.
+ */
+@Composable
+private fun AnswerToneButton(
+    label: String,
+    tone: AnswerTone,
+    enabled: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val container = when (tone) {
+        AnswerTone.POSITIVE -> LexiconSuccess
+        AnswerTone.NEGATIVE -> LexiconError
+        AnswerTone.NEUTRAL -> MaterialTheme.colorScheme.secondaryContainer
+    }
+    val content = when (tone) {
+        AnswerTone.NEUTRAL -> MaterialTheme.colorScheme.onSecondaryContainer
+        else -> Color.White
+    }
+    Button(
+        onClick = debounced(onClick = onClick),
+        enabled = enabled,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = container,
+            contentColor = content,
+            disabledContainerColor = container,
+            disabledContentColor = content,
+        ),
+        modifier = modifier,
+    ) {
+        Text(label, style = MaterialTheme.typography.headlineMedium)
     }
 }
 
