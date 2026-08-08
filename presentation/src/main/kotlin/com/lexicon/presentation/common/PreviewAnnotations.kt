@@ -15,7 +15,14 @@ import androidx.compose.ui.tooling.preview.Preview
  * anything subtle.
  */
 @Preview(name = "light", showBackground = true)
-@Preview(name = "dark", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(
+    name = "dark",
+    showBackground = true,
+    // Without this the dark preview is drawn on white, which hides the very thing it is for:
+    // a screen that never paints a background looks fine against white and wrong on a device.
+    backgroundColor = PREVIEW_DARK_BACKGROUND,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+)
 annotation class LightDarkPreview
 
 /**
@@ -25,3 +32,6 @@ annotation class LightDarkPreview
 @LightDarkPreview
 @Preview(name = "large font", showBackground = true, fontScale = 2.0f)
 annotation class LightDarkFontScalePreview
+
+/** Material's dark surface; only a preview backdrop, so it does not belong in the palette. */
+const val PREVIEW_DARK_BACKGROUND: Long = 0xFF121212

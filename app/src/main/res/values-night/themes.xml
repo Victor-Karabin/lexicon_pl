@@ -1,0 +1,7 @@
+<resources>
+    <!--
+      The window behind Compose. Without a night variant the launch window is white, so a
+      dark-theme device flashes white before the first frame is drawn.
+    -->
+    <style name="Theme.Lexicon" parent="android:Theme.Material.NoActionBar" />
+</resources>
