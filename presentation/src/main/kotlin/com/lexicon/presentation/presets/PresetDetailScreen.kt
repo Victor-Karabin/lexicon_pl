@@ -32,7 +32,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.presets.LocalizedText
@@ -52,6 +54,7 @@ import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import java.text.NumberFormat
 import kotlin.time.Duration.Companion.minutes
 
 private val DetailIconSize = 56.dp
@@ -189,6 +192,18 @@ private fun PresetHeader(
                 tint = Color.White,
             )
         }
+        // Under the icon, as on the card it was opened from.
+        Text(
+            text = NumberFormat.getIntegerInstance().format(preset.wordCount),
+            style = MaterialTheme.typography.labelLarge,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.padding(top = Dimens.spacingSmall),
+        )
+        Text(
+            text = pluralStringResource(R.plurals.presets_word_count_label, preset.wordCount),
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = preset.description.resolve(uiState.languageTag),
@@ -197,7 +212,6 @@ private fun PresetHeader(
             Text(
                 text = stringResource(
                     R.string.presets_card_meta,
-                    preset.wordCount,
                     preset.category.title.resolve(uiState.languageTag),
                     preset.estimatedDuration.inWholeMinutes.toInt().coerceAtLeast(1),
                 ),

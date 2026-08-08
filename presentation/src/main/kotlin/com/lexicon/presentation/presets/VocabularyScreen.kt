@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -39,6 +40,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -63,6 +65,7 @@ import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconTheme
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import java.text.NumberFormat
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
@@ -130,6 +133,9 @@ private fun VocabularyContent(
     Scaffold(
         modifier = modifier,
         snackbarHost = { SnackbarHost(snackbarHostState) },
+        // This sits inside the main Scaffold, which has already inset its content. Left to its
+        // default this one adds the status bar a second time, as blank space above the search.
+        contentWindowInsets = WindowInsets(0),
     ) { padding ->
         VocabularyBody(
             uiState = uiState,
@@ -173,7 +179,8 @@ private fun VocabularyBody(
                     onQueryChanged = onQueryChanged,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = Dimens.spacingMedium, vertical = Dimens.spacingMedium),
+                        .padding(horizontal = Dimens.spacingMedium)
+                        .padding(top = Dimens.spacingSmall),
                 )
 
                 FilterRow(uiState, onCefrToggled, onFiltersCleared)
@@ -303,14 +310,30 @@ private fun PresetCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
         ) {
-            Box(
-                modifier = Modifier.size(IconBadgeSize).background(preset.accentColor(), CircleShape),
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(
-                    imageVector = presetIconFor(preset.icon),
-                    contentDescription = null,
-                    tint = Color.White,
+            // The count sits under the icon rather than in the line below the description,
+            // where it competed with the category and duration for the same glance. It is the
+            // one number worth comparing between presets.
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Box(
+                    modifier = Modifier.size(IconBadgeSize).background(preset.accentColor(), CircleShape),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(
+                        imageVector = presetIconFor(preset.icon),
+                        contentDescription = null,
+                        tint = Color.White,
+                    )
+                }
+                Text(
+                    text = preset.wordCount.grouped(),
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.padding(top = Dimens.spacingSmall),
+                )
+                Text(
+                    text = pluralStringResource(R.plurals.presets_word_count_label, preset.wordCount),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
 
@@ -331,7 +354,6 @@ private fun PresetCard(
                 Text(
                     text = stringResource(
                         R.string.presets_card_meta,
-                        preset.wordCount,
                         preset.category.title.resolve(languageTag),
                         preset.estimatedDuration.readableMinutes(),
                     ),
@@ -371,6 +393,9 @@ private fun VocabularyPreset.accentColor(): Color {
 }
 
 private fun Duration.readableMinutes(): Int = inWholeMinutes.toInt().coerceAtLeast(1)
+
+/** Grouped by the reader's locale: "1,000" is a count, "1000" is a serial number. */
+private fun Int.grouped(): String = NumberFormat.getIntegerInstance().format(this)
 
 private val previewCategory = PresetCategory(
     id = "everyday-life",
