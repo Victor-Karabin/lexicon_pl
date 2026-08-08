@@ -16,9 +16,10 @@ private val Context.vocabularySyncDataStore: DataStore<Preferences> by
     preferencesDataStore(name = "lexicon_vocabulary_sync")
 
 private val SyncedFingerprint = stringPreferencesKey("synced_asset_fingerprint")
+private val SyncedPresetFingerprint = stringPreferencesKey("synced_preset_fingerprint")
 
 /**
- * Remembers which version of the bundled asset the words table was last brought in line with.
+ * Remembers which version of each bundled asset the database was last brought in line with.
  *
  * Kept outside the database on purpose: it describes the table rather than belonging to it, and
  * a schema change that wipes the words must not also convince the app that it is up to date.
@@ -33,5 +34,11 @@ class VocabularySyncStore
 
         suspend fun setSyncedFingerprint(fingerprint: String) {
             context.vocabularySyncDataStore.edit { it[SyncedFingerprint] = fingerprint }
+        }
+
+        suspend fun syncedPresetFingerprint(): String? = context.vocabularySyncDataStore.data.map { it[SyncedPresetFingerprint] }.first()
+
+        suspend fun setSyncedPresetFingerprint(fingerprint: String) {
+            context.vocabularySyncDataStore.edit { it[SyncedPresetFingerprint] = fingerprint }
         }
     }

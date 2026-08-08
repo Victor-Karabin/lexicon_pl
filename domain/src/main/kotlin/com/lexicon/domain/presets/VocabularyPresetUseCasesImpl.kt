@@ -6,6 +6,7 @@ import com.lexicon.interactors.presets.GetPresetCategoriesUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
+import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.PresetCategory
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetWord
@@ -13,6 +14,8 @@ import com.lexicon.interactors.presets.VocabularyPreset
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 /**
@@ -32,6 +35,21 @@ class GetVocabularyPresetsUseCaseImpl
                 .sortedWith(compareBy({ it.category.order }, { it.popularity }))
                 .toImmutableList()
         }
+    }
+
+class ObserveVocabularyPresetsUseCaseImpl
+    @Inject
+    constructor(
+        private val repository: VocabularyPresetRepository,
+    ) : ObserveVocabularyPresetsUseCase {
+        override fun invoke(): Flow<ImmutableList<VocabularyPreset>> =
+            repository.observePresets().map { presets ->
+                val categories = repository.getCategories().associate { it.id to it.toCategory() }
+                presets
+                    .mapNotNull { preset -> categories[preset.categoryId]?.let(preset::toPreset) }
+                    .sortedWith(compareBy({ it.category.order }, { it.popularity }))
+                    .toImmutableList()
+            }
     }
 
 class GetPresetCategoriesUseCaseImpl

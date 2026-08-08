@@ -9,6 +9,9 @@ import com.lexicon.data.local.MIGRATION_2_3
 import com.lexicon.data.local.MIGRATION_3_4
 import com.lexicon.data.local.MIGRATION_4_5
 import com.lexicon.data.local.MIGRATION_5_6
+import com.lexicon.data.local.MIGRATION_6_7
+import com.lexicon.data.local.MIGRATION_7_8
+import com.lexicon.data.local.PresetDao
 import com.lexicon.data.local.TrainingResultDao
 import com.lexicon.data.local.WordDao
 import dagger.Module
@@ -29,7 +32,7 @@ object DatabaseModule {
         @ApplicationContext context: Context,
     ): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
-            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8)
             .build()
 
     @Provides
@@ -40,4 +43,7 @@ object DatabaseModule {
 
     @Provides
     fun provideImageUrlCacheDao(database: AppDatabase): ImageUrlCacheDao = database.imageUrlCacheDao()
+
+    @Provides
+    fun providePresetDao(database: AppDatabase): PresetDao = database.presetDao()
 }

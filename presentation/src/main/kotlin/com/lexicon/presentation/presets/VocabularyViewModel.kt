@@ -4,23 +4,29 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.CefrLevel
-import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
+import com.lexicon.interactors.presets.DeletePresetUseCase
+import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
+import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.PresetFavouriteState
 import com.lexicon.interactors.presets.PresetId
+import com.lexicon.interactors.presets.PresetWord
+import com.lexicon.interactors.presets.RestorePresetUseCase
+import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
 import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
 import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.presets.VocabularyId
+import com.lexicon.interactors.presets.VocabularyPreset
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,10 +37,14 @@ private const val QUERY_DEBOUNCE_MS = 200L
 class VocabularyViewModel
     @Inject
     constructor(
-        private val getPresets: GetVocabularyPresetsUseCase,
+        private val observePresets: ObserveVocabularyPresetsUseCase,
         private val searchVocabulary: SearchVocabularyUseCase,
         private val setPresetFavourite: SetPresetFavouriteUseCase,
         private val toggleWordFavourite: ToggleWordFavouriteUseCase,
+        private val deleteWord: DeleteWordUseCase,
+        private val restoreWord: RestoreWordUseCase,
+        private val deletePreset: DeletePresetUseCase,
+        private val restorePreset: RestorePresetUseCase,
         private val observeFavouriteWordIds: ObserveFavouriteWordIdsUseCase,
         private val dispatchers: DispatcherProvider,
     ) : ViewModel() {
@@ -45,8 +55,21 @@ class VocabularyViewModel
         private val criteria = MutableStateFlow(SearchCriteria())
 
         init {
+            // Collected rather than fetched once: a word deleted on the detail screen changes
+            // what every preset contains, and a list read at startup would still be showing the
+            // old contents when the user comes back to it.
             viewModelScope.launch(dispatchers.io) {
-                _uiState.value = VocabularyUiState.Loaded(presets = getPresets())
+                observePresets().collect { presets ->
+                    // Merged rather than assigned: input can arrive before the first emission,
+                    // and replacing the state wholesale would silently discard it.
+                    _uiState.update { current ->
+                        if (current is VocabularyUiState.Loaded) {
+                            current.copy(presets = presets)
+                        } else {
+                            VocabularyUiState.Loaded(presets = presets)
+                        }
+                    }
+                }
             }
             viewModelScope.launch(dispatchers.io) {
                 observeFavouriteWordIds().collect { favourites ->
@@ -57,13 +80,17 @@ class VocabularyViewModel
         }
 
         /**
-         * Debounced so a query is not run per keystroke. `drop(1)` skips the initial empty
-         * value, which would otherwise run a search before anything is typed.
+         * Debounced so a query is not run per keystroke.
+         *
+         * Every value is collected, including the initial empty one: dropping the first assumes
+         * this collector starts before anything can change the criteria, and a change that
+         * arrives first is then dropped instead — the search silently never runs. An empty
+         * criteria costs nothing anyway, since the use case answers it without a query.
          */
         @OptIn(FlowPreview::class)
         private fun observeQuery() {
             viewModelScope.launch(dispatchers.io) {
-                criteria.drop(1).debounce(QUERY_DEBOUNCE_MS).collect { current ->
+                criteria.debounce(QUERY_DEBOUNCE_MS).collect { current ->
                     searchJob?.cancel()
                     searchJob = viewModelScope.launch(dispatchers.io) {
                         val results = searchVocabulary(current.query, current.levels)
@@ -113,6 +140,57 @@ class VocabularyViewModel
             isFavourite: Boolean,
         ) {
             viewModelScope.launch(dispatchers.io) { toggleWordFavourite(id, isFavourite) }
+        }
+
+        /** Deletes at once, as the button says, and keeps enough to put it back. */
+        fun onWordDeleted(word: PresetWord) {
+            viewModelScope.launch(dispatchers.io) {
+                deleteWord(word.id)
+                updateLoaded {
+                    it.copy(
+                        words = it.words.filterNot { candidate -> candidate.id == word.id }.toImmutableList(),
+                        lastDeleted = DeletedItem.Word(word.id, word.text),
+                    )
+                }
+            }
+        }
+
+        fun onPresetDeleted(preset: VocabularyPreset) {
+            viewModelScope.launch(dispatchers.io) {
+                deletePreset(preset.id)
+                updateLoaded {
+                    it.copy(
+                        presets = it.presets.filterNot { candidate -> candidate.id == preset.id }.toImmutableList(),
+                        lastDeleted = DeletedItem.Preset(preset.id, preset.title.resolve(it.languageTag)),
+                    )
+                }
+            }
+        }
+
+        fun onUndoDelete() {
+            val deleted = (_uiState.value as? VocabularyUiState.Loaded)?.lastDeleted ?: return
+            viewModelScope.launch(dispatchers.io) {
+                when (deleted) {
+                    is DeletedItem.Word -> {
+                        restoreWord(deleted.id)
+                        refreshWords()
+                    }
+
+                    // No refresh: restoring re-imports the catalogue, and the observed list
+                    // reports it.
+                    is DeletedItem.Preset -> restorePreset(deleted.id)
+                }
+                updateLoaded { it.copy(lastDeleted = null) }
+            }
+        }
+
+        /** Cleared once shown, so the same message cannot be offered twice. */
+        fun onDeleteMessageShown() = updateLoaded { it.copy(lastDeleted = null) }
+
+        private suspend fun refreshWords() {
+            val current = criteria.value
+            val results = searchVocabulary(current.query, current.levels)
+            updateLoaded { it.copy(words = results) }
         }
 
         private fun updateLoaded(transform: (VocabularyUiState.Loaded) -> VocabularyUiState.Loaded) {

@@ -4,6 +4,12 @@ import kotlinx.coroutines.flow.Flow
 
 interface VocabularyRepository {
     /**
+     * Brings the store in line with the bundled source, reporting what changed. Called once at
+     * startup rather than lazily, so nothing later has to wonder whether the words are current.
+     */
+    suspend fun syncFromSource(): SyncOutcomeBoundary
+
+    /**
      * Returns up to [count] distinct vocabulary items in random order, drawn from the study
      * set — the favourited words, and only those.
      *
@@ -34,6 +40,18 @@ interface VocabularyRepository {
      * enough words" is measured against.
      */
     suspend fun countStudyWords(): Int
+
+    /** Every word held, favourited or not — how "is there anything to work with" is answered. */
+    suspend fun countWords(): Int
+
+    /**
+     * Removes a word from the user's vocabulary. Durable across syncs: the word stays gone even
+     * though the bundled source still carries it.
+     */
+    suspend fun deleteWord(id: Long)
+
+    /** Puts a deleted word back, for undoing one. */
+    suspend fun restoreWord(id: Long)
 
     suspend fun setFavourite(
         ids: List<Long>,

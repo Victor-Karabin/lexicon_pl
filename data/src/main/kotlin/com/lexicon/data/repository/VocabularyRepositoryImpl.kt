@@ -1,5 +1,6 @@
 package com.lexicon.data.repository
 
+import com.lexicon.boundary.SyncOutcomeBoundary
 import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.data.local.VocabularySeeder
@@ -43,9 +44,23 @@ class VocabularyRepositoryImpl
                 ).map { it.toBoundary() }
         }
 
+        override suspend fun syncFromSource(): SyncOutcomeBoundary = vocabularySeeder.sync()
+
+        override suspend fun countWords(): Int = wordDao.count()
+
         override suspend fun countStudyWords(): Int {
             vocabularySeeder.ensureSeeded()
             return wordDao.countForStudy()
+        }
+
+        override suspend fun deleteWord(id: Long) {
+            vocabularySeeder.ensureSeeded()
+            wordDao.setDeleted(id, isDeleted = true)
+        }
+
+        override suspend fun restoreWord(id: Long) {
+            vocabularySeeder.ensureSeeded()
+            wordDao.setDeleted(id, isDeleted = false)
         }
 
         override suspend fun setFavourite(

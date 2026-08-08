@@ -11,11 +11,16 @@ import com.lexicon.domain.imagetest.SubmitImageTestAnswerUseCaseImpl
 import com.lexicon.domain.memorycards.StartMemoryCardsSessionUseCaseImpl
 import com.lexicon.domain.memorycards.SubmitMemoryCardsStepResultUseCaseImpl
 import com.lexicon.domain.mix.StartMixSessionUseCaseImpl
+import com.lexicon.domain.presets.DeletePresetUseCaseImpl
+import com.lexicon.domain.presets.DeleteWordUseCaseImpl
 import com.lexicon.domain.presets.GetPresetCategoriesUseCaseImpl
 import com.lexicon.domain.presets.GetPresetVocabularyUseCaseImpl
 import com.lexicon.domain.presets.GetVocabularyPresetUseCaseImpl
 import com.lexicon.domain.presets.GetVocabularyPresetsUseCaseImpl
 import com.lexicon.domain.presets.ObserveFavouriteWordIdsUseCaseImpl
+import com.lexicon.domain.presets.ObserveVocabularyPresetsUseCaseImpl
+import com.lexicon.domain.presets.RestorePresetUseCaseImpl
+import com.lexicon.domain.presets.RestoreWordUseCaseImpl
 import com.lexicon.domain.presets.SearchVocabularyUseCaseImpl
 import com.lexicon.domain.presets.SetPresetFavouriteUseCaseImpl
 import com.lexicon.domain.presets.ToggleWordFavouriteUseCaseImpl
@@ -26,6 +31,7 @@ import com.lexicon.domain.puzzle.SubmitPuzzleAnswerUseCaseImpl
 import com.lexicon.domain.settings.ObserveSettingsUseCaseImpl
 import com.lexicon.domain.settings.UpdateStepCountUseCaseImpl
 import com.lexicon.domain.settings.UpdateThemeModeUseCaseImpl
+import com.lexicon.domain.sync.SyncCatalogUseCaseImpl
 import com.lexicon.domain.training.CheckTrainingReadinessUseCaseImpl
 import com.lexicon.domain.trueorfalse.StartTrueOrFalseSessionUseCaseImpl
 import com.lexicon.domain.trueorfalse.SubmitTrueOrFalseAnswerUseCaseImpl
@@ -42,11 +48,16 @@ import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
 import com.lexicon.interactors.memorycards.StartMemoryCardsSessionUseCase
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
 import com.lexicon.interactors.mix.StartMixSessionUseCase
+import com.lexicon.interactors.presets.DeletePresetUseCase
+import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetPresetCategoriesUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
+import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
+import com.lexicon.interactors.presets.RestorePresetUseCase
+import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
 import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
 import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
@@ -57,6 +68,7 @@ import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerUseCase
 import com.lexicon.interactors.settings.ObserveSettingsUseCase
 import com.lexicon.interactors.settings.UpdateStepCountUseCase
 import com.lexicon.interactors.settings.UpdateThemeModeUseCase
+import com.lexicon.interactors.sync.SyncCatalogUseCase
 import com.lexicon.interactors.training.CheckTrainingReadinessUseCase
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
@@ -162,4 +174,22 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindSearchVocabulary(impl: SearchVocabularyUseCaseImpl): SearchVocabularyUseCase
+
+    @Binds
+    abstract fun bindSyncCatalog(impl: SyncCatalogUseCaseImpl): SyncCatalogUseCase
+
+    @Binds
+    abstract fun bindDeleteWord(impl: DeleteWordUseCaseImpl): DeleteWordUseCase
+
+    @Binds
+    abstract fun bindRestoreWord(impl: RestoreWordUseCaseImpl): RestoreWordUseCase
+
+    @Binds
+    abstract fun bindDeletePreset(impl: DeletePresetUseCaseImpl): DeletePresetUseCase
+
+    @Binds
+    abstract fun bindRestorePreset(impl: RestorePresetUseCaseImpl): RestorePresetUseCase
+
+    @Binds
+    abstract fun bindObserveVocabularyPresets(impl: ObserveVocabularyPresetsUseCaseImpl): ObserveVocabularyPresetsUseCase
 }

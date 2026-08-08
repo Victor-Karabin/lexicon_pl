@@ -36,6 +36,9 @@ which had become a filter that could never match.
 
 ## Preset format
 
+The assets are the **build-time source**, not the runtime one. Both are imported into the
+database at startup, and everything afterwards reads rows — see *Startup sync* below.
+
 The app reads two generated assets from `data/src/main/assets/`:
 
 - `vocabulary_pl.json` — every word, with `id`, `text`, `translation`, `transcription`,
@@ -120,12 +123,39 @@ import can be explained in full. Issues are typed (`PresetValidationIssue`), not
 `VocabularyPresetAssetTest` re-checks the shipped asset from the test suite, because the
 build tool cannot stop the file being hand-edited afterwards.
 
+## Startup sync
+
+`SyncCatalogUseCase` runs on the splash screen and reports each step as it goes, because on a
+first launch it writes thousands of rows and a splash that says nothing for that long is
+indistinguishable from one that has hung. The screen shows, per step, whether it is waiting,
+importing, already current with a count, or failed with a reason.
+
+Vocabulary is synced first and presets only if it succeeded: a preset is a list of word ids, so
+importing one over an empty vocabulary produces a catalogue whose every entry resolves to
+nothing.
+
+The two stores are kept current differently, and the difference is the point:
+
+| | Vocabulary | Presets |
+| --- | --- | --- |
+| Strategy | reconcile row by row | replace wholesale |
+| Why | rows carry the user's favourites, which are not the asset's to overwrite | nothing user-owned lives on them — a preset's heart is stored on its words |
+
+Both skip their work when a fingerprint of the asset matches the last synced value, so an
+unchanged asset costs a file read and no JSON parse. Row counts are still checked, because a
+schema change can empty a table without the asset moving at all.
+
+A failed sync blocks startup only when it leaves the app with nothing usable. Over a store that
+already holds rows it is a stale catalogue, not a broken app, and stranding the user on a splash
+screen over something they cannot fix would be the worse outcome.
+
 ## Repository responsibilities
 
 `VocabularyPresetRepository` answers three questions — all presets, one preset by id, all
-categories — and says nothing about where they come from. `VocabularyPresetRepositoryImpl`
-reads the bundled asset, parses it once and caches it behind a mutex: the asset holds every
-preset's full id list, so a concurrent burst at startup must not each trigger their own parse.
+categories — plus `syncFromSource`, and says nothing about where they come from.
+`VocabularyPresetRepositoryImpl` reads them from the database. Memberships are fetched in one
+query and grouped in memory rather than one query per preset, which would be 72 round trips to
+draw one screen.
 
 The repository does **not** validate, sort, filter or localize. Those belong to the domain
 layer, so that every source gets the same treatment.

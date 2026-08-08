@@ -44,6 +44,18 @@ class PresetFavouriteLogicTest {
         assertEquals(PresetFavouriteState.SOME, favouriteStateOf(preset(1, 2, 3), favourites(2)))
     }
 
+    /**
+     * Regression: a deleted word stayed in the preset's id list while being excluded from the
+     * favourites, so "all favourited" became unreachable and the heart stuck at partly-filled
+     * however many times it was tapped. A deleted word has to leave the preset it was in.
+     */
+    @Test
+    fun `a preset reads as full once its remaining words are favourited`() {
+        val afterDeletingWordThree = preset(1, 2)
+
+        assertEquals(PresetFavouriteState.ALL, favouriteStateOf(afterDeletingWordThree, favourites(1, 2)))
+    }
+
     @Test
     fun `favourites outside the preset do not make it look favourited`() {
         assertEquals(PresetFavouriteState.NONE, favouriteStateOf(preset(1, 2), favourites(8, 9)))

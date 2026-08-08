@@ -62,3 +62,48 @@ val MIGRATION_5_6 =
             db.execSQL("ALTER TABLE `words` ADD COLUMN `cefr` TEXT NOT NULL DEFAULT ''")
         }
     }
+
+/**
+ * Adds the preset catalogue tables. Nothing is copied in here: the seeder fills them from the
+ * asset on the next launch, which is the same path a first install takes.
+ */
+val MIGRATION_6_7 =
+    object : Migration(6, 7) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                "CREATE TABLE IF NOT EXISTS `preset_categories` " +
+                    "(`id` TEXT NOT NULL, `sortOrder` INTEGER NOT NULL, `titleJson` TEXT NOT NULL, " +
+                    "PRIMARY KEY(`id`))",
+            )
+            db.execSQL(
+                "CREATE TABLE IF NOT EXISTS `presets` " +
+                    "(`id` TEXT NOT NULL, `categoryId` TEXT NOT NULL, `titleJson` TEXT NOT NULL, " +
+                    "`descriptionJson` TEXT NOT NULL, `icon` TEXT, `color` TEXT, " +
+                    "`popularity` INTEGER NOT NULL, `estimatedSeconds` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+            )
+            db.execSQL("CREATE INDEX IF NOT EXISTS `index_presets_categoryId` ON `presets` (`categoryId`)")
+            db.execSQL(
+                "CREATE TABLE IF NOT EXISTS `preset_words` " +
+                    "(`presetId` TEXT NOT NULL, `wordId` INTEGER NOT NULL, `position` INTEGER NOT NULL, " +
+                    "PRIMARY KEY(`presetId`, `wordId`))",
+            )
+            db.execSQL("CREATE INDEX IF NOT EXISTS `index_preset_words_presetId` ON `preset_words` (`presetId`)")
+            db.execSQL("CREATE INDEX IF NOT EXISTS `index_preset_words_wordId` ON `preset_words` (`wordId`)")
+        }
+    }
+
+/**
+ * Adds the two places a user deletion is recorded. Both are needed because the two catalogues
+ * are synced differently: a word keeps its row and carries a flag, while a preset cannot — the
+ * preset tables are replaced wholesale, so its deletion has to be remembered outside them.
+ */
+val MIGRATION_7_8 =
+    object : Migration(7, 8) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE `words` ADD COLUMN `isDeleted` INTEGER NOT NULL DEFAULT 0")
+            db.execSQL(
+                "CREATE TABLE IF NOT EXISTS `deleted_presets` " +
+                    "(`presetId` TEXT NOT NULL, PRIMARY KEY(`presetId`))",
+            )
+        }
+    }
