@@ -4,11 +4,13 @@ import androidx.compose.animation.core.exponentialDecay
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.AnchoredDraggableState
 import androidx.compose.foundation.gestures.DraggableAnchors
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.anchoredDraggable
 import androidx.compose.foundation.gestures.animateTo
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -85,11 +87,20 @@ fun SwipeToRevealContainer(
 
         Box(
             modifier = Modifier
-                .offset { IntOffset(state.requireOffset().roundToInt(), 0) }
+                // offset, not requireOffset: the latter throws until the first layout has run,
+                // which is the frame this row is composed in.
+                .offset { IntOffset(state.offset.takeIf { !it.isNaN() }?.roundToInt() ?: 0, 0) }
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .anchoredDraggable(state, Orientation.Horizontal, enabled = enabled)
-                .background(MaterialTheme.colorScheme.background),
+                .background(MaterialTheme.colorScheme.background)
+                // Swallows taps so a press on the row cannot reach the action behind it, and
+                // so tapping an open row does not delete what is under the finger.
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = {},
+                ),
             contentAlignment = Alignment.CenterStart,
         ) {
             foregroundContent()

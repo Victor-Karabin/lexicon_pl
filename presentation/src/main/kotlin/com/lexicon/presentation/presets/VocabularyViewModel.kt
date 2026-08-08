@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -57,7 +56,16 @@ class VocabularyViewModel
 
         init {
             viewModelScope.launch(dispatchers.io) {
-                _uiState.value = VocabularyUiState.Loaded(presets = getPresets())
+                val presets = getPresets()
+                // Merged rather than assigned: input can arrive before this returns, and
+                // replacing the state wholesale would silently discard it.
+                _uiState.update { current ->
+                    if (current is VocabularyUiState.Loaded) {
+                        current.copy(presets = presets)
+                    } else {
+                        VocabularyUiState.Loaded(presets = presets)
+                    }
+                }
             }
             viewModelScope.launch(dispatchers.io) {
                 observeFavouriteWordIds().collect { favourites ->
@@ -68,13 +76,17 @@ class VocabularyViewModel
         }
 
         /**
-         * Debounced so a query is not run per keystroke. `drop(1)` skips the initial empty
-         * value, which would otherwise run a search before anything is typed.
+         * Debounced so a query is not run per keystroke.
+         *
+         * Every value is collected, including the initial empty one: dropping the first assumes
+         * this collector starts before anything can change the criteria, and a change that
+         * arrives first is then dropped instead — the search silently never runs. An empty
+         * criteria costs nothing anyway, since the use case answers it without a query.
          */
         @OptIn(FlowPreview::class)
         private fun observeQuery() {
             viewModelScope.launch(dispatchers.io) {
-                criteria.drop(1).debounce(QUERY_DEBOUNCE_MS).collect { current ->
+                criteria.debounce(QUERY_DEBOUNCE_MS).collect { current ->
                     searchJob?.cancel()
                     searchJob = viewModelScope.launch(dispatchers.io) {
                         val results = searchVocabulary(current.query, current.levels)

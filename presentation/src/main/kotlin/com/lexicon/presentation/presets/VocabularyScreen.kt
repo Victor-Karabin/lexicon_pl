@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Delete
@@ -68,6 +69,7 @@ import kotlin.time.Duration.Companion.minutes
 
 private val IconBadgeSize = 44.dp
 private val DeleteActionWidth = 88.dp
+private val DeleteActionRadius = 12.dp
 
 /**
  * The Vocabulary tab: curated presets, and a search over every word.
@@ -356,7 +358,9 @@ private fun DeleteAction(onClick: () -> Unit) {
     Surface(
         onClick = onClick,
         color = LexiconError,
-        shape = LexiconShapes.medium,
+        // Rounded on the revealed edge only: the other side is butted against the row that
+        // slid away, and rounding it would leave a notch in the middle of the list.
+        shape = RoundedCornerShape(topEnd = DeleteActionRadius, bottomEnd = DeleteActionRadius),
         modifier = Modifier.fillMaxSize(),
     ) {
         Column(
