@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -54,6 +55,7 @@ fun VocabularySearchField(
 fun VocabularyWordRow(
     word: PresetWord,
     onFavouriteToggled: () -> Unit,
+    onPronounce: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -80,6 +82,13 @@ fun VocabularyWordRow(
                 text = word.cefr?.let { "[${word.transcription}]  ·  ${it.name}" } ?: "[${word.transcription}]",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        IconButton(onClick = onPronounce) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.VolumeUp,
+                contentDescription = stringResource(R.string.word_pronounce, word.text),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
         FavouriteButton(

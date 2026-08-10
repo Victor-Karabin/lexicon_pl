@@ -76,6 +76,7 @@ class VocabularyViewModelDeleteTest {
                 override val default: CoroutineDispatcher get() = dispatcher
                 override val main: CoroutineDispatcher get() = dispatcher
             },
+            speechSynthesizer = mockk(relaxed = true),
         )
 
     @Before

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.android.AudioPlayer
 import com.lexicon.android.LessonAudioLibrary
+import com.lexicon.android.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
@@ -60,6 +61,7 @@ class LessonViewModel
         private val audioPlayer: AudioPlayer,
         observeFavouriteWordIds: ObserveFavouriteWordIdsUseCase,
         private val dispatchers: DispatcherProvider,
+        private val speechSynthesizer: SpeechSynthesizer,
     ) : ViewModel() {
         private val lessonId = LessonId(savedStateHandle.get<String>(LESSON_ID_ARG).orEmpty())
 
@@ -108,6 +110,13 @@ class LessonViewModel
             viewModelScope.launch(dispatchers.io) {
                 val path = audioLibrary.pathOrNull(file) ?: return@launch
                 runCatching { audioPlayer.play(path) }
+            }
+        }
+
+        /** Reads the Polish out loud; the translation is not what a learner needs to hear. */
+        fun onPronounceWord(word: PresetWord) {
+            viewModelScope.launch(dispatchers.io) {
+                runCatching { speechSynthesizer.speak(word.text) }
             }
         }
 

@@ -105,6 +105,7 @@ fun VocabularyScreen(
         onPresetSelected = onPresetSelected,
         onPresetFavouriteToggled = viewModel::onPresetFavouriteToggled,
         onWordFavouriteToggled = viewModel::onWordFavouriteToggled,
+        onPronounceWord = viewModel::onPronounceWord,
         onWordDeleted = viewModel::onWordDeleted,
         onPresetDeleted = viewModel::onPresetDeleted,
         modifier = modifier,
@@ -121,6 +122,7 @@ private fun VocabularyContent(
     onPresetSelected: (PresetId) -> Unit,
     onPresetFavouriteToggled: (PresetId, PresetFavouriteState) -> Unit,
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
+    onPronounceWord: (PresetWord) -> Unit,
     onWordDeleted: (PresetWord) -> Unit,
     onPresetDeleted: (VocabularyPreset) -> Unit,
     modifier: Modifier = Modifier,
@@ -138,6 +140,7 @@ private fun VocabularyContent(
             onPresetSelected = onPresetSelected,
             onPresetFavouriteToggled = onPresetFavouriteToggled,
             onWordFavouriteToggled = onWordFavouriteToggled,
+            onPronounceWord = onPronounceWord,
             onWordDeleted = onWordDeleted,
             onPresetDeleted = onPresetDeleted,
             modifier = Modifier.padding(padding),
@@ -154,6 +157,7 @@ private fun VocabularyBody(
     onPresetSelected: (PresetId) -> Unit,
     onPresetFavouriteToggled: (PresetId, PresetFavouriteState) -> Unit,
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
+    onPronounceWord: (PresetWord) -> Unit,
     onWordDeleted: (PresetWord) -> Unit,
     onPresetDeleted: (VocabularyPreset) -> Unit,
     modifier: Modifier = Modifier,
@@ -179,7 +183,7 @@ private fun VocabularyBody(
                 FilterRow(uiState, onCefrToggled, onFiltersCleared)
 
                 if (uiState.isSearchingWords) {
-                    WordResults(uiState, onWordFavouriteToggled, onWordDeleted)
+                    WordResults(uiState, onWordFavouriteToggled, onPronounceWord, onWordDeleted)
                 } else {
                     PresetResults(uiState, onPresetSelected, onPresetFavouriteToggled, onPresetDeleted)
                 }
@@ -191,6 +195,7 @@ private fun VocabularyBody(
 private fun WordResults(
     uiState: VocabularyUiState.Loaded,
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
+    onPronounceWord: (PresetWord) -> Unit,
     onWordDeleted: (PresetWord) -> Unit,
 ) {
     if (uiState.hasNoMatchingWords) {
@@ -206,6 +211,7 @@ private fun WordResults(
                 VocabularyWordRow(
                     word = word,
                     onFavouriteToggled = { onWordFavouriteToggled(word.id, !word.isFavourite) },
+                    onPronounce = { onPronounceWord(word) },
                 )
             }
             if (index < uiState.words.lastIndex) {
@@ -447,6 +453,7 @@ private fun VocabularyPresetsPreview() {
             onPresetSelected = {},
             onPresetFavouriteToggled = { _, _ -> },
             onWordFavouriteToggled = { _, _ -> },
+            onPronounceWord = {},
             onWordDeleted = {},
             onPresetDeleted = {},
             snackbarHostState = SnackbarHostState(),
@@ -474,6 +481,7 @@ private fun VocabularyWordSearchPreview() {
             onPresetSelected = {},
             onPresetFavouriteToggled = { _, _ -> },
             onWordFavouriteToggled = { _, _ -> },
+            onPronounceWord = {},
             onWordDeleted = {},
             onPresetDeleted = {},
             snackbarHostState = SnackbarHostState(),
@@ -493,6 +501,7 @@ private fun VocabularyNoMatchingWordsPreview() {
             onPresetSelected = {},
             onPresetFavouriteToggled = { _, _ -> },
             onWordFavouriteToggled = { _, _ -> },
+            onPronounceWord = {},
             onWordDeleted = {},
             onPresetDeleted = {},
             snackbarHostState = SnackbarHostState(),

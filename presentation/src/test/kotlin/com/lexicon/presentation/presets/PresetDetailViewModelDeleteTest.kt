@@ -1,6 +1,7 @@
 package com.lexicon.presentation.presets
 
 import androidx.lifecycle.SavedStateHandle
+import com.lexicon.android.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
@@ -17,6 +18,7 @@ import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.collections.immutable.persistentListOf
@@ -80,6 +82,8 @@ class PresetDetailViewModelDeleteTest {
         }
     }
 
+    private val speechSynthesizer: SpeechSynthesizer = mockk(relaxed = true)
+
     private fun viewModel() =
         PresetDetailViewModel(
             savedStateHandle = SavedStateHandle(mapOf(PRESET_ID_ARG to "food")),
@@ -95,6 +99,7 @@ class PresetDetailViewModelDeleteTest {
                 override val default: CoroutineDispatcher get() = dispatcher
                 override val main: CoroutineDispatcher get() = dispatcher
             },
+            speechSynthesizer = speechSynthesizer,
         )
 
     @Before
@@ -111,6 +116,19 @@ class PresetDetailViewModelDeleteTest {
         viewModel().also { backgroundScope.launch(dispatcher) { it.uiState.collect { } } }
 
     private fun loaded(viewModel: PresetDetailViewModel) = viewModel.uiState.value as PresetDetailUiState.Loaded
+
+    @Test
+    fun `pronouncing a word speaks the Polish, not the translation`() =
+        runTest {
+            val viewModel = viewModel()
+            advanceUntilIdle()
+
+            viewModel.onPronounceWord(PresetWord(VocabularyId(1), "chleb", "bread", "xlɛp"))
+            advanceUntilIdle()
+
+            coVerify { speechSynthesizer.speak("chleb") }
+            coVerify(exactly = 0) { speechSynthesizer.speak("bread") }
+        }
 
     @Test
     fun `a deleted word leaves the list`() =
