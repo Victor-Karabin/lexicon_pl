@@ -14,17 +14,6 @@
           "courseId": "krok-a1",
           "number": 1,
           "title": "PIERWSZY DZIEŃ W SZKOLE",
-          "communication": [
-            "powitania, pożegnania",
-            "przedstawianie się"
-          ],
-          "vocabularyTopics": [
-            "podstawowe zwroty"
-          ],
-          "grammar": [
-            "alfabet",
-            "liczebniki 0-10"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -177,17 +166,6 @@
           "courseId": "krok-a1",
           "number": 2,
           "title": "CZEŚĆ, SKĄD JESTEŚ?",
-          "communication": [
-            "Co słychać? Skąd jesteś?",
-            "Gdzie mieszkasz?"
-          ],
-          "vocabularyTopics": [
-            "dane osobowe",
-            "czasownik: być; liczebniki 11-29"
-          ],
-          "grammar": [
-            "zaimki osobowe; koniugacja -m,-sz"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -359,18 +337,6 @@
           "courseId": "krok-a1",
           "number": 3,
           "title": "MAMI, KTO TO JEST?",
-          "communication": [
-            "Kto to jest? Co to jest?",
-            "Czy to jest…?"
-          ],
-          "vocabularyTopics": [
-            "rzeczy w klasie, kolory",
-            "podstawowe przymiotniki"
-          ],
-          "grammar": [
-            "ten, ta, to",
-            "mianownik l. poj. rzeczowników i przymiotników"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -469,16 +435,6 @@
           "courseId": "krok-a1",
           "number": 4,
           "title": "JAKI JESTEŚ?",
-          "communication": [
-            "prezentacja siebie i innych"
-          ],
-          "vocabularyTopics": [
-            "opis osoby",
-            "przymiotniki"
-          ],
-          "grammar": [
-            "koniugacja -ę,-isz/-ysz"
-          ],
           "sections": [
             {
               "letter": "C",
@@ -542,18 +498,6 @@
           "courseId": "krok-a1",
           "number": 5,
           "title": "JESTEŚ INSTRUKTOREM TANGA?",
-          "communication": [
-            "Kim jesteś? Czym się interesujesz?",
-            "Ile masz lat?"
-          ],
-          "vocabularyTopics": [
-            "zawody",
-            "zainteresowania"
-          ],
-          "grammar": [
-            "narzędnik l.poj.; liczebniki 20-100",
-            "formy: rok, lat, lata"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -654,18 +598,6 @@
           "courseId": "krok-a1",
           "number": 6,
           "title": "CO ROBISZ? NUDZĘ SIĘ!",
-          "communication": [
-            "Co lubisz robić?",
-            "wyrażanie posiadania"
-          ],
-          "vocabularyTopics": [
-            "podstawowe czasowniki",
-            "hobby, sport"
-          ],
-          "grammar": [
-            "koniugacje: -m, -sz; -ę, -esz; -ę, -isz / -ysz",
-            "zaimki: mój, twój"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -805,18 +737,6 @@
           "courseId": "krok-a1",
           "number": 7,
           "title": "MAŁE ZAKUPY",
-          "communication": [
-            "Ile kosztuje?",
-            "zakupy"
-          ],
-          "vocabularyTopics": [
-            "kiosk",
-            "galeria handlowa"
-          ],
-          "grammar": [
-            "biernik l. poj. rzeczowników i przymiotników",
-            "liczebniki 100-1000"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -913,18 +833,6 @@
           "courseId": "krok-a1",
           "number": 8,
           "title": "MAMI, JESTEŚ GŁODNA?",
-          "communication": [
-            "Co lubisz jeść? Z czym jesz kanapkę?",
-            "wyrażanie preferencji"
-          ],
-          "vocabularyTopics": [
-            "posiłki",
-            "jedzenie"
-          ],
-          "grammar": [
-            "narzędnik l.mn. rzeczowników i przymiotników",
-            "przymiotniki odrzeczownikowe"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -1025,17 +933,6 @@
           "courseId": "krok-a1",
           "number": 9,
           "title": "LUBISZ MARCHEWKĘ?",
-          "communication": [
-            "zakupy"
-          ],
-          "vocabularyTopics": [
-            "owoce, warzywa",
-            "supermarket"
-          ],
-          "grammar": [
-            "mianownik i biernik",
-            "l.mn. rzeczowników niemęskoosobowych"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -1165,17 +1062,6 @@
           "courseId": "krok-a1",
           "number": 10,
           "title": "UWIELBIAM POLSKIE JEDZENIE!",
-          "communication": [
-            "kawiarnia",
-            "restauracja"
-          ],
-          "vocabularyTopics": [
-            "dania, potrawy, desery"
-          ],
-          "grammar": [
-            "dopełniacz l. poj. - negacja",
-            "zaimki osobowe w narzędniku"
-          ],
           "sections": [
             {
               "letter": "B",
@@ -1245,17 +1131,6 @@
           "courseId": "krok-a1",
           "number": 11,
           "title": "RODZINA",
-          "communication": [
-            "Czyj? Czyja? Czyje?",
-            "Jak często? Kiedy?"
-          ],
-          "vocabularyTopics": [
-            "rodzina",
-            "pory dnia; zawsze, zwykle ...nigdy"
-          ],
-          "grammar": [
-            "zaimki dzierżawcze"
-          ],
           "sections": [
             {
               "letter": "B",
@@ -1395,17 +1270,6 @@
           "courseId": "krok-a1",
           "number": 12,
           "title": "CO ROBISZ W PONIEDZIAŁEK O ÓSMEJ?",
-          "communication": [
-            "umawianie się na spotkanie",
-            "zapraszanie"
-          ],
-          "vocabularyTopics": [
-            "godziny",
-            "dni tygodnia"
-          ],
-          "grammar": [
-            "liczebniki porządkowe 1-24"
-          ],
           "sections": [
             {
               "letter": "B",
@@ -1492,16 +1356,6 @@
           "courseId": "krok-a1",
           "number": 13,
           "title": "GDZIE BYŁAŚ MAMI? BYŁAM W KINIE",
-          "communication": [
-            "Co robiłeś? Co robiłaś?"
-          ],
-          "vocabularyTopics": [
-            "spędzanie wolnego czasu"
-          ],
-          "grammar": [
-            "czas przeszły",
-            "czasowniki: jeść, pójść"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -1587,16 +1441,6 @@
           "courseId": "krok-a1",
           "number": 14,
           "title": "Z PRZEWODNIKIEM PO KRAKOWIE",
-          "communication": [
-            "pytanie o drogę"
-          ],
-          "vocabularyTopics": [
-            "obiekty w mieście"
-          ],
-          "grammar": [
-            "czasowniki: iść /chodzić, jechać/jeździć",
-            "zaimki osobowe w bierniku"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -1673,18 +1517,6 @@
           "courseId": "krok-a1",
           "number": 15,
           "title": "KARTON CZY PUDEŁKO?",
-          "communication": [
-            "zakupy",
-            "wyrażanie prośby"
-          ],
-          "vocabularyTopics": [
-            "ilości i miary",
-            "opakowania, poczta"
-          ],
-          "grammar": [
-            "dopełniacz l. mn. rzeczowników i przymiotników",
-            "zaimki osobowe w dopełniaczu, rekcja liczebników"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -1847,17 +1679,6 @@
           "courseId": "krok-a1",
           "number": 16,
           "title": "CO MA BYĆ, TO BĘDZIE",
-          "communication": [
-            "plany na przyszłość"
-          ],
-          "vocabularyTopics": [
-            "pogoda, pory roku",
-            "miesiące, andrzejki"
-          ],
-          "grammar": [
-            "przysłówek",
-            "czas przyszły prosty"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -1951,17 +1772,6 @@
           "courseId": "krok-a1",
           "number": 17,
           "title": "PLOTKI, PLOTKI. KTO Z KIM I O CZYM?",
-          "communication": [
-            "Podoba ci się?",
-            "wyrażanie uczuć i opinii"
-          ],
-          "vocabularyTopics": [
-            "samopoczucie"
-          ],
-          "grammar": [
-            "lubić / podobać się",
-            "deklinacja zaimków osobowych"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -2067,18 +1877,6 @@
           "courseId": "krok-a1",
           "number": 18,
           "title": "POKAŻ MI SWOJE MIESZKANIE, A POWIEM CI KIM JESTEŚ",
-          "communication": [
-            "Gdzie to jest?",
-            "opis mieszkania"
-          ],
-          "vocabularyTopics": [
-            "mieszkanie, pomieszczenia i sprzęty",
-            "lokalizacja przedmiotów"
-          ],
-          "grammar": [
-            "miejscownik l.poj. i l. mn.",
-            "przyimki: na, w, przy, o, po"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -2150,16 +1948,6 @@
           "courseId": "krok-a1",
           "number": 19,
           "title": "WSZĘDZIE DOBRZE, ALE W DOMU NAJLEPIEJ",
-          "communication": [
-            "szukanie i wynajmowanie",
-            "mieszkania"
-          ],
-          "vocabularyTopics": [
-            "lokalizacja przedmiotów"
-          ],
-          "grammar": [
-            "przyimki statyczne"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -2262,16 +2050,6 @@
           "courseId": "krok-a1",
           "number": 20,
           "title": "PODRÓŻE KSZTAŁCĄ",
-          "communication": [
-            "dworzec PKP"
-          ],
-          "vocabularyTopics": [
-            "kierunki geograficzne",
-            "atrakcje turystyczne w Polsce"
-          ],
-          "grammar": [
-            "przyimki statyczne i dynamiczne"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -2346,18 +2124,6 @@
           "courseId": "krok-a1",
           "number": 21,
           "title": "KIEDY TO BYŁO?",
-          "communication": [
-            "Kiedy? W którym roku?",
-            "życzenia"
-          ],
-          "vocabularyTopics": [
-            "pary aspektowe",
-            "biografia"
-          ],
-          "grammar": [
-            "aspekt w czasie przeszłym",
-            "daty"
-          ],
           "sections": [
             {
               "letter": "B",
@@ -2458,16 +2224,6 @@
           "courseId": "krok-a1",
           "number": 22,
           "title": "DOKĄD POJEDZIEMY NA WEEKEND?",
-          "communication": [
-            "Co robisz w weekend?",
-            "telefonowanie"
-          ],
-          "vocabularyTopics": [
-            "plany na weekend"
-          ],
-          "grammar": [
-            "aspekt w czasie przyszłym"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -2576,18 +2332,6 @@
           "courseId": "krok-a1",
           "number": 23,
           "title": "ZA MAŁE? ZA DUŻE? W SAM RAZ!",
-          "communication": [
-            "zakupy",
-            "komplementy"
-          ],
-          "vocabularyTopics": [
-            "ubrania",
-            "materiały i wzory"
-          ],
-          "grammar": [
-            "stopniowanie przymiotników",
-            "konstrukcje: mieć na sobie/nosić + biernik"
-          ],
           "sections": [
             {
               "letter": "B",
@@ -2690,17 +2434,6 @@
           "courseId": "krok-a1",
           "number": 24,
           "title": "JAK CIĘ WIDZĄ, TAK CIĘ PISZĄ",
-          "communication": [
-            "u fryzjera, w studio fitness",
-            "wyrażanie aprobaty i dezaprobaty"
-          ],
-          "vocabularyTopics": [
-            "wygląd zewnętrzny",
-            "części ciała"
-          ],
-          "grammar": [
-            "stopniowanie przysłówków"
-          ],
           "sections": [
             {
               "letter": "A",
@@ -2795,16 +2528,6 @@
           "courseId": "krok-a1",
           "number": 25,
           "title": "ANI RĘKĄ, ANI NOGĄ…",
-          "communication": [
-            "u lekarza, u dentysty",
-            "dawanie rad"
-          ],
-          "vocabularyTopics": [
-            "idiomy związane z częściami ciała"
-          ],
-          "grammar": [
-            "czasownik: powinien"
-          ],
           "sections": [
             {
               "letter": "B",
@@ -2905,18 +2628,6 @@
           "courseId": "krok-a1",
           "number": 26,
           "title": "SAME PROBLEMY!",
-          "communication": [
-            "wymiana informacji",
-            "prośby, reklamacje"
-          ],
-          "vocabularyTopics": [
-            "usługi",
-            "wypadek, kradzież"
-          ],
-          "grammar": [
-            "tryb przypuszczający czasowników:",
-            "móc, chcieć"
-          ],
           "sections": [
             {
               "letter": "A",

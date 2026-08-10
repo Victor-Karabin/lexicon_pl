@@ -18,9 +18,6 @@ fun LessonAsset.toEntity(): LessonEntity =
         courseId = courseId,
         number = number,
         title = title,
-        communicationJson = communication.encodeList(),
-        vocabularyTopicsJson = vocabularyTopics.encodeList(),
-        grammarJson = grammar.encodeList(),
     )
 
 fun LessonAsset.toSectionEntities(): List<LessonSectionEntity> =
@@ -58,9 +55,6 @@ fun LessonEntity.toBoundary(
         courseId = courseId,
         number = number,
         title = title,
-        communication = communicationJson.decodeList(),
-        vocabularyTopics = vocabularyTopicsJson.decodeList(),
-        grammar = grammarJson.decodeList(),
         sections = sections.map { LessonSectionBoundary(letter = it.letter, title = it.title) },
         vocabularyIds = wordIds,
         audio = audio.map {

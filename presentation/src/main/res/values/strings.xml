@@ -98,9 +98,6 @@
     <string name="course_progress">%1$d of %2$d lessons done</string>
     <string name="course_lesson_number">Lesson %1$d</string>
     <string name="course_lesson_locked">Finish the lesson before this one to open it.</string>
-    <string name="lesson_communication">Communication</string>
-    <string name="lesson_vocabulary_topics">Vocabulary</string>
-    <string name="lesson_grammar">Grammar</string>
     <string name="lesson_sections">In this lesson</string>
     <string name="lesson_words">New words</string>
     <string name="lesson_audio">Audio</string>

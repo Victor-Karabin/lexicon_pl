@@ -18,9 +18,6 @@ data class LessonEntity(
     val courseId: String,
     val number: Int,
     val title: String,
-    val communicationJson: String,
-    val vocabularyTopicsJson: String,
-    val grammarJson: String,
 )
 
 @Entity(

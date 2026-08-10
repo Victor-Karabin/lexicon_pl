@@ -123,9 +123,6 @@ private fun LessonContent(
                     contentPadding = PaddingValues(bottom = Dimens.spacingXl),
                 ) {
                     lessonHeader(uiState.lesson, onTrainLesson, onCompletedToggled)
-                    syllabusBlock(R.string.lesson_communication, uiState.lesson.communication)
-                    syllabusBlock(R.string.lesson_vocabulary_topics, uiState.lesson.vocabularyTopics)
-                    syllabusBlock(R.string.lesson_grammar, uiState.lesson.grammar)
                     sectionsBlock(uiState.lesson.sections)
                     wordsBlock(uiState, onWordFavouriteToggled)
                     audioBlock(uiState, onPlayAudio)
@@ -174,30 +171,6 @@ private fun LazyListScope.lessonHeader(
                         if (lesson.isCompleted) R.string.lesson_mark_incomplete else R.string.lesson_mark_complete,
                     ),
                     modifier = Modifier.padding(start = Dimens.spacingSmall),
-                )
-            }
-        }
-    }
-}
-
-private fun LazyListScope.syllabusBlock(
-    titleRes: Int,
-    entries: List<String>,
-) {
-    if (entries.isEmpty()) return
-    item {
-        Column(modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.spacingMedium)) {
-            Text(
-                text = stringResource(titleRes),
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(top = Dimens.spacingMedium),
-            )
-            entries.forEach { entry ->
-                Text(
-                    text = entry,
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(top = Dimens.spacingSmall),
                 )
             }
         }
@@ -356,9 +329,6 @@ private val previewLesson = Lesson(
     courseId = CourseId("krok-a1"),
     number = 1,
     title = "PIERWSZY DZIEŃ W SZKOLE",
-    communication = persistentListOf("powitania, pożegnania", "przedstawianie się"),
-    vocabularyTopics = persistentListOf("podstawowe zwroty"),
-    grammar = persistentListOf("alfabet", "liczebniki 0-10"),
     sections = persistentListOf(
         LessonSection("A", "SEKRETARIAT - PREZENTACJA"),
         LessonSection("B", "ALFABET"),

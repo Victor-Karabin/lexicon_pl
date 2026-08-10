@@ -2,23 +2,17 @@ package com.lexicon.data.local
 
 import com.lexicon.boundary.PresetCategoryBoundary
 import com.lexicon.boundary.VocabularyPresetBoundary
-import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 
 private val json = Json { ignoreUnknownKeys = true }
 private val localizedText = MapSerializer(String.serializer(), String.serializer())
-private val textList = ListSerializer(String.serializer())
 
 internal fun Map<String, String>.encodeLocalized(): String = json.encodeToString(localizedText, this)
 
 internal fun String.decodeLocalized(): Map<String, String> =
     runCatching { json.decodeFromString(localizedText, this) }.getOrDefault(emptyMap())
-
-internal fun List<String>.encodeList(): String = json.encodeToString(textList, this)
-
-internal fun String.decodeList(): List<String> = runCatching { json.decodeFromString(textList, this) }.getOrDefault(emptyList())
 
 fun PresetCategoryEntity.toBoundary(): PresetCategoryBoundary =
     PresetCategoryBoundary(id = id, order = sortOrder, title = titleJson.decodeLocalized())
