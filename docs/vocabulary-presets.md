@@ -256,8 +256,13 @@ training's session-start request, and is separate work.
 
 ## Dataset provenance and limits
 
-The corpus is roughly 2,220 entries: about 1,010 frequency-ranked core words plus topical and
-upper-level vocabulary. By CEFR band: A1 689, A2 547, B1 357, B2 280, C1 198, C2 148.
+The corpus is roughly 2,370 entries: about 1,010 frequency-ranked core words plus topical,
+upper-level and phrase vocabulary. By CEFR band: A1 737, A2 605, B1 392, B2 286, C1 203, C2 148.
+
+259 entries are multi-word, of which 179 are spoken phrases — what a learner actually says,
+rather than compounds that merely happen to contain a space. They live in
+`corpus/topics/phrases.tsv`. Phrases are excluded from Crossword, and never mixed with single
+words inside one Image Test or Word Match step, because a phrase is a different kind of answer.
 
 Entries are at least three letters. One- and two-letter words are function words — *w*, *na*,
 *że* — and they break every training built on spelling: there is no letter puzzle or crossword
