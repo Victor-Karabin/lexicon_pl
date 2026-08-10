@@ -23,7 +23,7 @@ class StartWordMatchSessionUseCaseImpl
     ) : StartWordMatchSessionUseCase {
         override suspend fun invoke(request: StartWordMatchSessionRequest): WordMatchSessionResponse {
             val pairCount = stepCountResolver.resolve(request.stepCount)
-            val pool = vocabularyRepository.getRandomItems(pairCount * POOL_MULTIPLIER).map { it.toWord() }
+            val pool = vocabularyRepository.getRandomItems(pairCount * POOL_MULTIPLIER, request.vocabularyIds).map { it.toWord() }
 
             val pairs = sameContentTypePairs(pool, pairCount).map { word ->
                 WordMatchPairResponse(vocabularyItemId = word.id, word = word.text, translation = word.translation)

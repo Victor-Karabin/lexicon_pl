@@ -1,5 +1,6 @@
 package com.lexicon.presentation.mix
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.android.SpeechRecognitionFailed
@@ -33,6 +34,7 @@ import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.WordResultEntry
 import com.lexicon.presentation.common.shuffleIntoTiles
+import com.lexicon.presentation.common.trainingVocabularyIds
 import com.lexicon.presentation.pronunciation.RecordingState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -53,6 +55,7 @@ private const val SKIPPED_ANSWER_ADVANCE_DELAY_MS = 700L
 class MixViewModel
     @Inject
     constructor(
+        savedStateHandle: SavedStateHandle,
         private val startMixSession: StartMixSessionUseCase,
         private val submitDictation: SubmitDictationAnswerUseCase,
         private val submitDictationPuzzle: SubmitDictationPuzzleAnswerUseCase,
@@ -65,6 +68,8 @@ class MixViewModel
         private val dispatchers: DispatcherProvider,
         private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
+        private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
+
         private val _uiState = MutableStateFlow<MixUiState>(MixUiState.Loading)
         val uiState: StateFlow<MixUiState> = _uiState.asStateFlow()
 
@@ -85,7 +90,7 @@ class MixViewModel
 
         private fun startSession() {
             viewModelScope.launch(dispatchers.io) {
-                val response = startMixSession(StartMixSessionRequest())
+                val response = startMixSession(StartMixSessionRequest(vocabularyIds = vocabularyIds))
                 sessionId = response.sessionId
                 steps = response.steps
                 openStep(0)

@@ -17,6 +17,7 @@ private val Context.vocabularySyncDataStore: DataStore<Preferences> by
 
 private val SyncedFingerprint = stringPreferencesKey("synced_asset_fingerprint")
 private val SyncedPresetFingerprint = stringPreferencesKey("synced_preset_fingerprint")
+private val SyncedCourseFingerprint = stringPreferencesKey("synced_course_fingerprint")
 
 @Singleton
 class VocabularySyncStore
@@ -34,5 +35,11 @@ class VocabularySyncStore
 
         suspend fun setSyncedPresetFingerprint(fingerprint: String) {
             context.vocabularySyncDataStore.edit { it[SyncedPresetFingerprint] = fingerprint }
+        }
+
+        suspend fun syncedCourseFingerprint(): String? = context.vocabularySyncDataStore.data.map { it[SyncedCourseFingerprint] }.first()
+
+        suspend fun setSyncedCourseFingerprint(fingerprint: String) {
+            context.vocabularySyncDataStore.edit { it[SyncedCourseFingerprint] = fingerprint }
         }
     }

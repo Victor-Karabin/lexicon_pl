@@ -12,8 +12,14 @@ import androidx.room.RoomDatabase
         PresetEntity::class,
         PresetWordEntity::class,
         DeletedPresetEntity::class,
+        CourseEntity::class,
+        LessonEntity::class,
+        LessonSectionEntity::class,
+        LessonWordEntity::class,
+        LessonAudioEntity::class,
+        LessonProgressEntity::class,
     ],
-    version = 8,
+    version = 9,
     exportSchema = false,
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -24,4 +30,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun imageUrlCacheDao(): ImageUrlCacheDao
 
     abstract fun presetDao(): PresetDao
+
+    abstract fun courseDao(): CourseDao
 }

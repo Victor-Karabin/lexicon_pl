@@ -11,6 +11,17 @@ interface WordDao {
     @Query("SELECT * FROM words WHERE isFavourite = 1 AND isDeleted = 0 ORDER BY RANDOM() LIMIT :count")
     suspend fun getRandomForStudy(count: Int): List<WordEntity>
 
+    /**
+     * A session over a fixed subset — a course lesson. Unlike [getRandomForStudy] this
+     * ignores the favourite flag: choosing the lesson is itself the choice of what to
+     * study, so it would be surprising to have to heart every word first.
+     */
+    @Query("SELECT * FROM words WHERE id IN (:ids) AND isDeleted = 0 ORDER BY RANDOM() LIMIT :count")
+    suspend fun getRandomFromIds(
+        ids: List<Long>,
+        count: Int,
+    ): List<WordEntity>
+
     @Query("SELECT * FROM words WHERE id IN (:ids) AND isDeleted = 0")
     suspend fun getByIds(ids: List<Long>): List<WordEntity>
 

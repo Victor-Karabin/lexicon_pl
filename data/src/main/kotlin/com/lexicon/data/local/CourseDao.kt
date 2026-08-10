@@ -1,0 +1,116 @@
+package com.lexicon.data.local
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Transaction
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface CourseDao {
+    @Query("SELECT * FROM courses ORDER BY sortOrder")
+    fun observeCourses(): Flow<List<CourseEntity>>
+
+    @Query("SELECT * FROM lessons ORDER BY courseId, number")
+    fun observeLessons(): Flow<List<LessonEntity>>
+
+    @Query("SELECT * FROM lesson_progress")
+    fun observeProgress(): Flow<List<LessonProgressEntity>>
+
+    @Query("SELECT * FROM lessons WHERE id = :lessonId")
+    suspend fun getLesson(lessonId: String): LessonEntity?
+
+    @Query("SELECT * FROM lesson_sections WHERE lessonId = :lessonId ORDER BY position")
+    suspend fun getSections(lessonId: String): List<LessonSectionEntity>
+
+    @Query("SELECT * FROM lesson_audio WHERE lessonId = :lessonId ORDER BY source, position")
+    suspend fun getAudio(lessonId: String): List<LessonAudioEntity>
+
+    @Query("SELECT * FROM lesson_progress WHERE lessonId = :lessonId")
+    suspend fun getProgress(lessonId: String): LessonProgressEntity?
+
+    /**
+     * Words a lesson introduces, skipping any the learner has deleted, the way
+     * [PresetDao.getWordIds] does for presets.
+     */
+    @Query(
+        """
+        SELECT lv.wordId FROM lesson_vocabulary lv
+        INNER JOIN words w ON w.id = lv.wordId
+        WHERE lv.lessonId = :lessonId AND w.isDeleted = 0
+        ORDER BY lv.position
+        """,
+    )
+    suspend fun getWordIds(lessonId: String): List<Long>
+
+    @Query(
+        """
+        SELECT lv.* FROM lesson_vocabulary lv
+        INNER JOIN words w ON w.id = lv.wordId
+        WHERE w.isDeleted = 0
+        ORDER BY lv.lessonId, lv.position
+        """,
+    )
+    fun observeLessonWords(): Flow<List<LessonWordEntity>>
+
+    @Query("SELECT COUNT(*) FROM lessons")
+    suspend fun countLessons(): Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertProgress(progress: LessonProgressEntity)
+
+    /**
+     * Replaces the whole book-derived catalogue. Progress is a separate table and
+     * is deliberately not touched: it is the learner's, not the asset's.
+     */
+    @Transaction
+    suspend fun replaceCatalog(
+        courses: List<CourseEntity>,
+        lessons: List<LessonEntity>,
+        sections: List<LessonSectionEntity>,
+        words: List<LessonWordEntity>,
+        audio: List<LessonAudioEntity>,
+    ) {
+        clearAudio()
+        clearLessonWords()
+        clearSections()
+        clearLessons()
+        clearCourses()
+        insertCourses(courses)
+        insertLessons(lessons)
+        insertSections(sections)
+        insertLessonWords(words)
+        insertAudio(audio)
+    }
+
+    @Query("DELETE FROM lesson_audio")
+    suspend fun clearAudio()
+
+    @Query("DELETE FROM lesson_vocabulary")
+    suspend fun clearLessonWords()
+
+    @Query("DELETE FROM lesson_sections")
+    suspend fun clearSections()
+
+    @Query("DELETE FROM lessons")
+    suspend fun clearLessons()
+
+    @Query("DELETE FROM courses")
+    suspend fun clearCourses()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCourses(courses: List<CourseEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertLessons(lessons: List<LessonEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSections(sections: List<LessonSectionEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertLessonWords(words: List<LessonWordEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAudio(audio: List<LessonAudioEntity>)
+}
