@@ -167,7 +167,6 @@ def build_lesson(
         "courseId": course["id"],
         "number": lesson["number"],
         "title": lesson["title"],
-        "sections": lesson["sections"],
         "vocabularyIds": vocabulary_ids,
         "audio": lesson_audio(coursebook_tracks, lesson["number"], remote),
         "workbookAudio": lesson_audio(workbook_tracks, lesson["number"], remote),

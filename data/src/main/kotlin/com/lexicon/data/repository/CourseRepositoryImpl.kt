@@ -60,7 +60,6 @@ class CourseRepositoryImpl
             seeder.ensureSeeded()
             val lesson = courseDao.getLesson(lessonId) ?: return null
             return lesson.toBoundary(
-                sections = courseDao.getSections(lessonId),
                 wordIds = courseDao.getWordIds(lessonId),
                 audio = courseDao.getAudio(lessonId),
                 isCompleted = courseDao.getProgress(lessonId)?.isCompleted == true,

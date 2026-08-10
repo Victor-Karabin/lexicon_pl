@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
@@ -45,7 +44,6 @@ import com.lexicon.interactors.course.Lesson
 import com.lexicon.interactors.course.LessonAudio
 import com.lexicon.interactors.course.LessonAudioSource
 import com.lexicon.interactors.course.LessonId
-import com.lexicon.interactors.course.LessonSection
 import com.lexicon.interactors.course.label
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyId
@@ -127,7 +125,6 @@ private fun LessonContent(
                     contentPadding = PaddingValues(bottom = Dimens.spacingXl),
                 ) {
                     lessonHeader(uiState.lesson, onTrainLesson, onCompletedToggled)
-                    sectionsBlock(uiState.lesson.sections)
                     wordsBlock(uiState, onWordFavouriteToggled, onPronounceWord)
                     audioBlock(uiState, onPlayAudio)
                 }
@@ -177,28 +174,6 @@ private fun LazyListScope.lessonHeader(
                     modifier = Modifier.padding(start = Dimens.spacingSmall),
                 )
             }
-        }
-    }
-}
-
-private fun LazyListScope.sectionsBlock(sections: List<LessonSection>) {
-    if (sections.isEmpty()) return
-    item { SectionHeading(stringResource(R.string.lesson_sections)) }
-    items(sections, key = { it.letter }) { section ->
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(
-                horizontal = Dimens.spacingMedium,
-                vertical = Dimens.spacingSmall,
-            ),
-            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
-        ) {
-            Text(
-                text = section.letter,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.SemiBold,
-            )
-            Text(text = section.title, style = MaterialTheme.typography.bodyMedium)
         }
     }
 }
@@ -350,10 +325,6 @@ private val previewLesson = Lesson(
     courseId = CourseId("krok-a1"),
     number = 1,
     title = "PIERWSZY DZIEŃ W SZKOLE",
-    sections = persistentListOf(
-        LessonSection("A", "SEKRETARIAT - PREZENTACJA"),
-        LessonSection("B", "ALFABET"),
-    ),
     vocabularyIds = listOf(1L, 2L, 3L).map(::VocabularyId).toImmutableList(),
     audio = persistentListOf(
         LessonAudio("a1_coursebook_101a1.mp3", LessonAudioSource.COURSEBOOK, "A", 1, null, "drive-id"),

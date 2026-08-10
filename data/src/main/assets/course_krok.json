@@ -14,24 +14,6 @@
           "courseId": "krok-a1",
           "number": 1,
           "title": "PIERWSZY DZIEŃ W SZKOLE",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "SEKRETARIAT - PREZENTACJA"
-            },
-            {
-              "letter": "D",
-              "title": "PRZERWA"
-            },
-            {
-              "letter": "E",
-              "title": "NIE ROZUMIEM."
-            },
-            {
-              "letter": "F",
-              "title": "LICZEBNIKI"
-            }
-          ],
           "vocabularyIds": [
             8,
             2,
@@ -185,28 +167,6 @@
           "courseId": "krok-a1",
           "number": 2,
           "title": "CZEŚĆ, SKĄD JESTEŚ?",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "DANE PERSONALNE"
-            },
-            {
-              "letter": "B",
-              "title": "CO SŁYCHAĆ?"
-            },
-            {
-              "letter": "C",
-              "title": "GDZIE ONA JEST?"
-            },
-            {
-              "letter": "E",
-              "title": "LICZEBNIKI"
-            },
-            {
-              "letter": "F",
-              "title": "DLACZEGO UCZYSZ SIĘ"
-            }
-          ],
           "vocabularyIds": [
             1886,
             1774,
@@ -377,20 +337,6 @@
           "courseId": "krok-a1",
           "number": 3,
           "title": "MAMI, KTO TO JEST?",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "KTO…? CO…?"
-            },
-            {
-              "letter": "B",
-              "title": "CZY…?"
-            },
-            {
-              "letter": "C",
-              "title": "MIANOWNIK"
-            }
-          ],
           "vocabularyIds": [
             40,
             340,
@@ -486,12 +432,6 @@
           "courseId": "krok-a1",
           "number": 4,
           "title": "JAKI JESTEŚ?",
-          "sections": [
-            {
-              "letter": "C",
-              "title": "JAKI ON JEST?"
-            }
-          ],
           "vocabularyIds": [
             14,
             101,
@@ -555,20 +495,6 @@
           "courseId": "krok-a1",
           "number": 5,
           "title": "JESTEŚ INSTRUKTOREM TANGA?",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "KTO TO JEST? JAKI ON JEST?"
-            },
-            {
-              "letter": "B",
-              "title": "LICZEBNIKI 20-100"
-            },
-            {
-              "letter": "D",
-              "title": "KIM ONA JEST?"
-            }
-          ],
           "vocabularyIds": [
             129,
             1920,
@@ -666,16 +592,6 @@
           "courseId": "krok-a1",
           "number": 6,
           "title": "CO ROBISZ? NUDZĘ SIĘ!",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "MAMI W DOMU"
-            },
-            {
-              "letter": "B",
-              "title": "CO LUBICIE ROBIĆ?"
-            }
-          ],
           "vocabularyIds": [
             2383,
             2384,
@@ -823,16 +739,6 @@
           "courseId": "krok-a1",
           "number": 7,
           "title": "MAŁE ZAKUPY",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "BIERNIK"
-            },
-            {
-              "letter": "C",
-              "title": "GALERIA HANDLOWA"
-            }
-          ],
           "vocabularyIds": [
             329,
             328,
@@ -929,20 +835,6 @@
           "courseId": "krok-a1",
           "number": 8,
           "title": "MAMI, JESTEŚ GŁODNA?",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "MAMI JE ŚNIADANIE"
-            },
-            {
-              "letter": "C",
-              "title": "OBIAD ....................................."
-            },
-            {
-              "letter": "D",
-              "title": "KOLACJA"
-            }
-          ],
           "vocabularyIds": [
             351,
             2390,
@@ -1040,24 +932,6 @@
           "courseId": "krok-a1",
           "number": 9,
           "title": "LUBISZ MARCHEWKĘ?",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "OWOCE I WARZYWA"
-            },
-            {
-              "letter": "C",
-              "title": "MIANOWNIK LICZBA MNOGA"
-            },
-            {
-              "letter": "D",
-              "title": "GOTOWANIE"
-            },
-            {
-              "letter": "E",
-              "title": "SUPERMARKET"
-            }
-          ],
           "vocabularyIds": [
             2393,
             2394,
@@ -1184,16 +1058,6 @@
           "courseId": "krok-a1",
           "number": 10,
           "title": "UWIELBIAM POLSKIE JEDZENIE!",
-          "sections": [
-            {
-              "letter": "B",
-              "title": "A MOŻE RURKA Z KREMEM?"
-            },
-            {
-              "letter": "C",
-              "title": "NARESZCIE WEEKEND!"
-            }
-          ],
           "vocabularyIds": [
             2399,
             2400,
@@ -1260,24 +1124,6 @@
           "courseId": "krok-a1",
           "number": 11,
           "title": "RODZINA",
-          "sections": [
-            {
-              "letter": "B",
-              "title": "CZYJ? CZYJA? CZYJE?"
-            },
-            {
-              "letter": "C",
-              "title": "RANO CZY WIECZOREM?"
-            },
-            {
-              "letter": "D",
-              "title": "JAK CZĘSTO?"
-            },
-            {
-              "letter": "E",
-              "title": "TWOJE DRZEWO"
-            }
-          ],
           "vocabularyIds": [
             2403,
             2404,
@@ -1416,16 +1262,6 @@
           "courseId": "krok-a1",
           "number": 12,
           "title": "CO ROBISZ W PONIEDZIAŁEK O ÓSMEJ?",
-          "sections": [
-            {
-              "letter": "B",
-              "title": "O KTÓREJ GODZINIE?"
-            },
-            {
-              "letter": "D",
-              "title": "RUTYNA"
-            }
-          ],
           "vocabularyIds": [
             1587,
             2408,
@@ -1512,20 +1348,6 @@
           "courseId": "krok-a1",
           "number": 13,
           "title": "GDZIE BYŁAŚ MAMI? BYŁAM W KINIE",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "„ZAKOPANE, ZAKOPANE, SŁOŃCE"
-            },
-            {
-              "letter": "B",
-              "title": "CHCIAŁEM DOBRZE!"
-            },
-            {
-              "letter": "C",
-              "title": "JADŁAŚ JUŻ OBIAD?"
-            }
-          ],
           "vocabularyIds": [
             1982,
             2409,
@@ -1605,16 +1427,6 @@
           "courseId": "krok-a1",
           "number": 14,
           "title": "Z PRZEWODNIKIEM PO KRAKOWIE",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "UCZYMY SIĘ"
-            },
-            {
-              "letter": "B",
-              "title": "ZWIEDZAMY"
-            }
-          ],
           "vocabularyIds": [
             2321,
             2415,
@@ -1688,24 +1500,6 @@
           "courseId": "krok-a1",
           "number": 15,
           "title": "KARTON CZY PUDEŁKO?",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "PUSZKI, PACZKI I PUDEŁKA"
-            },
-            {
-              "letter": "B",
-              "title": "ZAKUPY NA PIKNIK"
-            },
-            {
-              "letter": "D",
-              "title": "CZY POMOŻESZ MI?"
-            },
-            {
-              "letter": "E",
-              "title": "ZAIMKI"
-            }
-          ],
           "vocabularyIds": [
             2420,
             2421,
@@ -1870,24 +1664,6 @@
           "courseId": "krok-a1",
           "number": 16,
           "title": "CO MA BYĆ, TO BĘDZIE",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "PARASOL NOŚ"
-            },
-            {
-              "letter": "B",
-              "title": "MIESIĄC STYCZEŃ"
-            },
-            {
-              "letter": "C",
-              "title": "DZIECI NAJMILSZE"
-            },
-            {
-              "letter": "D",
-              "title": "W DZIEŃ ŚWIĘTEGO ANDRZEJA"
-            }
-          ],
           "vocabularyIds": [
             255,
             2428,
@@ -1972,24 +1748,6 @@
           "courseId": "krok-a1",
           "number": 17,
           "title": "PLOTKI, PLOTKI. KTO Z KIM I O CZYM?",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "CO O TYM MYŚLISZ?"
-            },
-            {
-              "letter": "B",
-              "title": "PODOBA CI SIĘ?"
-            },
-            {
-              "letter": "C",
-              "title": "CO O NIM MYŚLISZ?"
-            },
-            {
-              "letter": "D",
-              "title": "CO MU KUPIĆ?"
-            }
-          ],
           "vocabularyIds": [
             2433,
             2434,
@@ -2088,20 +1846,6 @@
           "courseId": "krok-a1",
           "number": 18,
           "title": "POKAŻ MI SWOJE MIESZKANIE, A POWIEM CI KIM JESTEŚ",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "CIASNE, ALE WŁASNE!"
-            },
-            {
-              "letter": "B",
-              "title": "GDZIE ON JEST?"
-            },
-            {
-              "letter": "C",
-              "title": "MARZĘ"
-            }
-          ],
           "vocabularyIds": [
             2438,
             2439,
@@ -2165,20 +1909,6 @@
           "courseId": "krok-a1",
           "number": 19,
           "title": "WSZĘDZIE DOBRZE, ALE W DOMU NAJLEPIEJ",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "NIE MAM GDZIE MIESZKAĆ"
-            },
-            {
-              "letter": "B",
-              "title": "W POSZUKIWANIU"
-            },
-            {
-              "letter": "C",
-              "title": "PRZEPROWADZKA"
-            }
-          ],
           "vocabularyIds": [
             2444,
             2445,
@@ -2279,20 +2009,6 @@
           "courseId": "krok-a1",
           "number": 20,
           "title": "PODRÓŻE KSZTAŁCĄ",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "DOKĄD MOŻNA POJECHAĆ"
-            },
-            {
-              "letter": "B",
-              "title": "DWORZEC PKP"
-            },
-            {
-              "letter": "C",
-              "title": "GDZIE JESTEŚ?"
-            }
-          ],
           "vocabularyIds": [
             2448,
             509,
@@ -2360,20 +2076,6 @@
           "courseId": "krok-a1",
           "number": 21,
           "title": "KIEDY TO BYŁO?",
-          "sections": [
-            {
-              "letter": "B",
-              "title": "STO LAT"
-            },
-            {
-              "letter": "C",
-              "title": "W KTÓRYM ROKU?"
-            },
-            {
-              "letter": "D",
-              "title": "MAMI, CO ROBIŁAŚ?"
-            }
-          ],
           "vocabularyIds": [
             2451,
             2452
@@ -2472,16 +2174,6 @@
           "courseId": "krok-a1",
           "number": 22,
           "title": "DOKĄD POJEDZIEMY NA WEEKEND?",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "RÓŻNE ASPEKTY PRZYSZŁOŚCI"
-            },
-            {
-              "letter": "C",
-              "title": "LWÓW"
-            }
-          ],
           "vocabularyIds": [
             2453,
             2454,
@@ -2593,12 +2285,6 @@
           "courseId": "krok-a1",
           "number": 23,
           "title": "ZA MAŁE? ZA DUŻE? W SAM RAZ!",
-          "sections": [
-            {
-              "letter": "B",
-              "title": "ZA KRÓTKIE?"
-            }
-          ],
           "vocabularyIds": [
             2460,
             395,
@@ -2708,24 +2394,6 @@
           "courseId": "krok-a1",
           "number": 24,
           "title": "JAK CIĘ WIDZĄ, TAK CIĘ PISZĄ",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "U FRYZJERA"
-            },
-            {
-              "letter": "B",
-              "title": "WYGLĄD ZEWNĘTRZNY"
-            },
-            {
-              "letter": "C",
-              "title": "W ZDROWYM CIELE"
-            },
-            {
-              "letter": "D",
-              "title": "STOPNIOWANIE"
-            }
-          ],
           "vocabularyIds": [
             2465,
             2466,
@@ -2812,24 +2480,6 @@
           "courseId": "krok-a1",
           "number": 25,
           "title": "ANI RĘKĄ, ANI NOGĄ…",
-          "sections": [
-            {
-              "letter": "B",
-              "title": "ZDROWIE"
-            },
-            {
-              "letter": "C",
-              "title": "PRZYPADEK MAMI"
-            },
-            {
-              "letter": "E",
-              "title": "PRZYPADEK ANGELI"
-            },
-            {
-              "letter": "F",
-              "title": "PRZYPADEK TOMA"
-            }
-          ],
           "vocabularyIds": [
             2218,
             2469,
@@ -2923,16 +2573,6 @@
           "courseId": "krok-a1",
           "number": 26,
           "title": "SAME PROBLEMY!",
-          "sections": [
-            {
-              "letter": "A",
-              "title": "MAM TYLE"
-            },
-            {
-              "letter": "C",
-              "title": "WYPADEK"
-            }
-          ],
           "vocabularyIds": [
             2471,
             2472,

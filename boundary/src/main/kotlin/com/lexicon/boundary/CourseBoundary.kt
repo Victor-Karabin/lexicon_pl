@@ -22,15 +22,9 @@ data class LessonBoundary(
     val courseId: String,
     val number: Int,
     val title: String,
-    val sections: List<LessonSectionBoundary>,
     val vocabularyIds: List<Long>,
     val audio: List<LessonAudioBoundary>,
     val isCompleted: Boolean,
-)
-
-data class LessonSectionBoundary(
-    val letter: String,
-    val title: String,
 )
 
 data class LessonAudioBoundary(

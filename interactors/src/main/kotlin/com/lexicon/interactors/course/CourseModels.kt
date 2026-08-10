@@ -32,15 +32,9 @@ data class Lesson(
     val courseId: CourseId,
     val number: Int,
     val title: String,
-    val sections: ImmutableList<LessonSection>,
     val vocabularyIds: ImmutableList<VocabularyId>,
     val audio: ImmutableList<LessonAudio>,
     val isCompleted: Boolean,
-)
-
-data class LessonSection(
-    val letter: String,
-    val title: String,
 )
 
 data class LessonAudio(

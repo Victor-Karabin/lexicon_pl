@@ -14,8 +14,8 @@ Every lesson opens on a page laid out the same way:
                                           nowe słowa
 
 so the opener yields the title, the three syllabus columns and the new-word
-list. The rest of the lesson yields its A/B/C sections and the audio tags
-(101A1, 126C9) that tie an exercise to a track.
+list. The rest of the lesson yields the audio tags (101A1, 126C9) that tie an exercise
+to a track.
 
 pdftotext -layout keeps horizontal position, which is what makes the three
 columns recoverable: the header row fixes each column's left edge, and every
@@ -56,7 +56,6 @@ MAX_WORDS_PER_ENTRY = 4
 OCR_NOISE = re.compile(r"\.{3,}|_{3,}")
 COLUMN_HEADERS = ("komunikacja", "słownictwo", "gramatyka")
 NEW_WORDS_MARKER = "nowe słowa"
-SECTION_HEADER = re.compile(r"^\s{2,}([A-H])\s{3,}(\S.*?)\s*$", re.M)
 AUDIO_TAG = re.compile(r"\b([12])(\d{2})([A-H])(\d{1,2})\b")
 PAGE_FOOTER = re.compile(r"download this book from|^\s*_?\d+\s*$")
 
@@ -244,16 +243,6 @@ def split_new_words(chunks: list[str]) -> list[str]:
     return words
 
 
-def parse_sections(body: str) -> list[dict]:
-    sections: dict[str, str] = {}
-    for match in SECTION_HEADER.finditer(body):
-        letter, title = match.group(1), clean(AUDIO_TAG.sub("", match.group(2)))
-        if not title or not is_title_line(title):
-            continue
-        sections.setdefault(letter, title)
-    return [{"letter": letter, "title": sections[letter]} for letter in sorted(sections)]
-
-
 def audio_tags(body: str) -> list[str]:
     return sorted({f"{m.group(1)}{m.group(2)}{m.group(3)}{m.group(4)}" for m in AUDIO_TAG.finditer(body)})
 
@@ -294,7 +283,6 @@ def extract_book(book: str) -> list[dict]:
         lesson["book"] = book
         lesson["firstPage"] = start + 1
         lesson["lastPage"] = end
-        lesson["sections"] = parse_sections(body)
         lesson["audioTags"] = audio_tags(body)
         lessons.append(lesson)
 

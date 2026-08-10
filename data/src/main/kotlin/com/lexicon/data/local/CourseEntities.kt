@@ -21,18 +21,6 @@ data class LessonEntity(
 )
 
 @Entity(
-    tableName = "lesson_sections",
-    primaryKeys = ["lessonId", "letter"],
-    indices = [Index("lessonId")],
-)
-data class LessonSectionEntity(
-    val lessonId: String,
-    val letter: String,
-    val title: String,
-    val position: Int,
-)
-
-@Entity(
     tableName = "lesson_vocabulary",
     primaryKeys = ["lessonId", "wordId"],
     indices = [Index("lessonId"), Index("wordId")],

@@ -2,7 +2,6 @@ package com.lexicon.data.local
 
 import com.lexicon.boundary.LessonAudioBoundary
 import com.lexicon.boundary.LessonBoundary
-import com.lexicon.boundary.LessonSectionBoundary
 
 /** Where a track came from, so the lesson screen can label the workbook's separately. */
 object LessonAudioSource {
@@ -19,11 +18,6 @@ fun LessonAsset.toEntity(): LessonEntity =
         number = number,
         title = title,
     )
-
-fun LessonAsset.toSectionEntities(): List<LessonSectionEntity> =
-    sections.mapIndexed { index, section ->
-        LessonSectionEntity(lessonId = id, letter = section.letter, title = section.title, position = index)
-    }
 
 fun LessonAsset.toWordEntities(): List<LessonWordEntity> =
     vocabularyIds
@@ -46,7 +40,6 @@ fun LessonAsset.toAudioEntities(): List<LessonAudioEntity> =
         }
 
 fun LessonEntity.toBoundary(
-    sections: List<LessonSectionEntity>,
     wordIds: List<Long>,
     audio: List<LessonAudioEntity>,
     isCompleted: Boolean,
@@ -56,7 +49,6 @@ fun LessonEntity.toBoundary(
         courseId = courseId,
         number = number,
         title = title,
-        sections = sections.map { LessonSectionBoundary(letter = it.letter, title = it.title) },
         vocabularyIds = wordIds,
         audio = audio.map {
             LessonAudioBoundary(

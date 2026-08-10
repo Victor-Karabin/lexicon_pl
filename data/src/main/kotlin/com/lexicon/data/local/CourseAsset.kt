@@ -22,16 +22,9 @@ data class LessonAsset(
     val courseId: String,
     val number: Int,
     val title: String,
-    val sections: List<LessonSectionAsset> = emptyList(),
     val vocabularyIds: List<Long> = emptyList(),
     val audio: List<LessonAudioAsset> = emptyList(),
     val workbookAudio: List<LessonAudioAsset> = emptyList(),
-)
-
-@Serializable
-data class LessonSectionAsset(
-    val letter: String,
-    val title: String,
 )
 
 @Serializable
