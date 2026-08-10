@@ -72,6 +72,7 @@ fun LessonScreen(
         onTrainLesson = onTrainLesson,
         onCompletedToggled = viewModel::onCompletedToggled,
         onWordFavouriteToggled = viewModel::onWordFavouriteToggled,
+        onPronounceWord = viewModel::onPronounceWord,
         onPlayAudio = viewModel::onPlayAudio,
         modifier = modifier,
     )
@@ -85,6 +86,7 @@ private fun LessonContent(
     onTrainLesson: (List<Long>) -> Unit,
     onCompletedToggled: (Boolean) -> Unit,
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
+    onPronounceWord: (PresetWord) -> Unit,
     onPlayAudio: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -124,7 +126,7 @@ private fun LessonContent(
                 ) {
                     lessonHeader(uiState.lesson, onTrainLesson, onCompletedToggled)
                     sectionsBlock(uiState.lesson.sections)
-                    wordsBlock(uiState, onWordFavouriteToggled)
+                    wordsBlock(uiState, onWordFavouriteToggled, onPronounceWord)
                     audioBlock(uiState, onPlayAudio)
                 }
         }
@@ -202,6 +204,7 @@ private fun LazyListScope.sectionsBlock(sections: List<LessonSection>) {
 private fun LazyListScope.wordsBlock(
     uiState: LessonUiState.Loaded,
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
+    onPronounceWord: (PresetWord) -> Unit,
 ) {
     item { SectionHeading(stringResource(R.string.lesson_words)) }
     if (uiState.isLoadingWords) {
@@ -219,6 +222,7 @@ private fun LazyListScope.wordsBlock(
         VocabularyWordRow(
             word = word,
             onFavouriteToggled = { onWordFavouriteToggled(word.id, !word.isFavourite) },
+            onPronounce = { onPronounceWord(word) },
         )
         if (index < uiState.words.lastIndex) {
             HorizontalDivider(modifier = Modifier.padding(horizontal = Dimens.spacingMedium))
@@ -360,6 +364,7 @@ private fun LessonPreview() {
             onTrainLesson = {},
             onCompletedToggled = {},
             onWordFavouriteToggled = { _, _ -> },
+            onPronounceWord = {},
             onPlayAudio = {},
         )
     }
@@ -375,6 +380,7 @@ private fun LessonNotFoundPreview() {
             onTrainLesson = {},
             onCompletedToggled = {},
             onWordFavouriteToggled = { _, _ -> },
+            onPronounceWord = {},
             onPlayAudio = {},
         )
     }

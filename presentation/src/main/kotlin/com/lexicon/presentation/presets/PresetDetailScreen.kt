@@ -89,6 +89,7 @@ fun PresetDetailScreen(
         snackbarHostState = snackbarHostState,
         onClose = onClose,
         onWordFavouriteToggled = viewModel::onWordFavouriteToggled,
+        onPronounceWord = viewModel::onPronounceWord,
         onPresetFavouriteToggled = viewModel::onPresetFavouriteToggled,
         onWordDeleted = viewModel::onWordDeleted,
         modifier = modifier,
@@ -102,6 +103,7 @@ private fun PresetDetailContent(
     snackbarHostState: SnackbarHostState,
     onClose: () -> Unit,
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
+    onPronounceWord: (PresetWord) -> Unit,
     onPresetFavouriteToggled: (PresetFavouriteState) -> Unit,
     onWordDeleted: (PresetWord) -> Unit,
     modifier: Modifier = Modifier,
@@ -158,6 +160,7 @@ private fun PresetDetailContent(
                                     VocabularyWordRow(
                                         word = word,
                                         onFavouriteToggled = { onWordFavouriteToggled(word.id, !word.isFavourite) },
+                                        onPronounce = { onPronounceWord(word) },
                                     )
                                 }
                                 if (index < uiState.words.lastIndex) {
@@ -265,6 +268,7 @@ private fun PresetDetailPreview() {
             ),
             onClose = {},
             onWordFavouriteToggled = { _, _ -> },
+            onPronounceWord = {},
             onPresetFavouriteToggled = {},
             onWordDeleted = {},
             snackbarHostState = SnackbarHostState(),
@@ -280,6 +284,7 @@ private fun PresetDetailLoadingWordsPreview() {
             uiState = PresetDetailUiState.Loaded(preset = previewPreset),
             onClose = {},
             onWordFavouriteToggled = { _, _ -> },
+            onPronounceWord = {},
             onPresetFavouriteToggled = {},
             onWordDeleted = {},
             snackbarHostState = SnackbarHostState(),
@@ -295,6 +300,7 @@ private fun PresetDetailNotFoundPreview() {
             uiState = PresetDetailUiState.NotFound,
             onClose = {},
             onWordFavouriteToggled = { _, _ -> },
+            onPronounceWord = {},
             onPresetFavouriteToggled = {},
             onWordDeleted = {},
             snackbarHostState = SnackbarHostState(),

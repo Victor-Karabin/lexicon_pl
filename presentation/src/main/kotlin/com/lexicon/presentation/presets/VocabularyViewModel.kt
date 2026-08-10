@@ -2,6 +2,7 @@ package com.lexicon.presentation.presets
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lexicon.android.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.DeletePresetUseCase
@@ -48,6 +49,7 @@ class VocabularyViewModel
         private val restorePreset: RestorePresetUseCase,
         private val observeFavouriteWordIds: ObserveFavouriteWordIdsUseCase,
         private val dispatchers: DispatcherProvider,
+        private val speechSynthesizer: SpeechSynthesizer,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow<VocabularyUiState>(VocabularyUiState.Loading)
         val uiState: StateFlow<VocabularyUiState> = _uiState.asStateFlow()
@@ -112,6 +114,13 @@ class VocabularyViewModel
         ) {
             viewModelScope.launch(dispatchers.io) {
                 setPresetFavourite(id, current != PresetFavouriteState.ALL)
+            }
+        }
+
+        /** Reads the Polish out loud; the translation is not what a learner needs to hear. */
+        fun onPronounceWord(word: PresetWord) {
+            viewModelScope.launch(dispatchers.io) {
+                runCatching { speechSynthesizer.speak(word.text) }
             }
         }
 

@@ -3,6 +3,7 @@ package com.lexicon.presentation.presets
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lexicon.android.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
@@ -61,6 +62,7 @@ class PresetDetailViewModel
         private val setPresetFavourite: SetPresetFavouriteUseCase,
         observeFavouriteWordIds: ObserveFavouriteWordIdsUseCase,
         private val dispatchers: DispatcherProvider,
+        private val speechSynthesizer: SpeechSynthesizer,
     ) : ViewModel() {
         private val presetId = PresetId(savedStateHandle.get<String>(PRESET_ID_ARG).orEmpty())
 
@@ -141,6 +143,13 @@ class PresetDetailViewModel
         }
 
         fun onDeleteMessageShown() = content.update { it?.copy(lastDeleted = null) }
+
+        /** Reads the Polish out loud; the translation is not what a learner needs to hear. */
+        fun onPronounceWord(word: PresetWord) {
+            viewModelScope.launch(dispatchers.io) {
+                runCatching { speechSynthesizer.speak(word.text) }
+            }
+        }
 
         fun onWordFavouriteToggled(
             id: VocabularyId,
