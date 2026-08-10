@@ -16,9 +16,17 @@ class VocabularyRepositoryImpl
         private val wordDao: WordDao,
         private val vocabularySeeder: VocabularySeeder,
     ) : VocabularyRepository {
-        override suspend fun getRandomItems(count: Int): List<VocabularyItemBoundary> {
+        override suspend fun getRandomItems(
+            count: Int,
+            restrictToIds: List<Long>,
+        ): List<VocabularyItemBoundary> {
             vocabularySeeder.ensureSeeded()
-            return wordDao.getRandomForStudy(count).map { it.toBoundary() }
+            val words = if (restrictToIds.isEmpty()) {
+                wordDao.getRandomForStudy(count)
+            } else {
+                wordDao.getRandomFromIds(restrictToIds, count)
+            }
+            return words.map { it.toBoundary() }
         }
 
         override suspend fun getItemsByIds(ids: List<Long>): List<VocabularyItemBoundary> {

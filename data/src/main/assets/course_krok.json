@@ -1,0 +1,2738 @@
+{
+  "courses": [
+    {
+      "id": "krok-a1",
+      "order": 1,
+      "level": "A1",
+      "title": {
+        "en": "Polski krok po kroku 1",
+        "pl": "Polski krok po kroku 1"
+      },
+      "lessons": [
+        {
+          "id": "krok-a1-01",
+          "courseId": "krok-a1",
+          "number": 1,
+          "title": "PIERWSZY DZIEŃ W SZKOLE",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "SEKRETARIAT - PREZENTACJA"
+            },
+            {
+              "letter": "D",
+              "title": "PRZERWA"
+            },
+            {
+              "letter": "E",
+              "title": "NIE ROZUMIEM."
+            },
+            {
+              "letter": "F",
+              "title": "LICZEBNIKI"
+            }
+          ],
+          "vocabularyIds": [
+            8,
+            2,
+            1880,
+            1881,
+            1882,
+            1732,
+            1379,
+            2372
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_101a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_101a2.mp3",
+              "section": "A",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_101a3.mp3",
+              "section": "A",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_101b2.mp3",
+              "section": "B",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_101b3.mp3",
+              "section": "B",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_101b4.mp3",
+              "section": "B",
+              "task": 4,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_101C2.mp3",
+              "section": "C",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_101f1.mp3",
+              "section": "F",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_101f3.mp3",
+              "section": "F",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_101g1.mp3",
+              "section": "G",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_101g1-2.mp3",
+              "section": "G",
+              "task": 1,
+              "part": "2"
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_01_L01_cwiczenie2.mp3",
+              "section": null,
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_02_L01_cwiczenie4.mp3",
+              "section": null,
+              "task": 4,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_03_L01_cwiczenie6.mp3",
+              "section": null,
+              "task": 6,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_04_L01_cwiczenie9.mp3",
+              "section": null,
+              "task": 9,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_05_L01_cwiczenie11.mp3",
+              "section": null,
+              "task": 11,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_06_L01_cwiczenie14.mp3",
+              "section": null,
+              "task": 14,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_07_L01_cwiczenie15.mp3",
+              "section": null,
+              "task": 15,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_08_L01_cwiczenie16.mp3",
+              "section": null,
+              "task": 16,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-02",
+          "courseId": "krok-a1",
+          "number": 2,
+          "title": "CZEŚĆ, SKĄD JESTEŚ?",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "DANE PERSONALNE"
+            },
+            {
+              "letter": "B",
+              "title": "CO SŁYCHAĆ?"
+            },
+            {
+              "letter": "C",
+              "title": "GDZIE ONA JEST?"
+            },
+            {
+              "letter": "E",
+              "title": "LICZEBNIKI"
+            },
+            {
+              "letter": "F",
+              "title": "DLACZEGO UCZYSZ SIĘ"
+            }
+          ],
+          "vocabularyIds": [
+            1886,
+            1774,
+            2373,
+            2374,
+            2375,
+            209,
+            2376,
+            2377,
+            2378,
+            36,
+            2379
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_102a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_102a1-2.mp3",
+              "section": "A",
+              "task": 1,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_102b1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_102b1-2.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_102b1-3.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "3"
+            },
+            {
+              "file": "a1_coursebook_102b3.mp3",
+              "section": "B",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_102c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_102d1.mp3",
+              "section": "D",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_102d1-2.mp3",
+              "section": "D",
+              "task": 1,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_102d2.mp3",
+              "section": "D",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_102e1.mp3",
+              "section": "E",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_0102e3.mp3",
+              "section": "E",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_102f1.mp3",
+              "section": "F",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_102f1-2.mp3",
+              "section": "F",
+              "task": 1,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_102g1.mp3",
+              "section": "G",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_102g1-2.mp3",
+              "section": "G",
+              "task": 1,
+              "part": "2"
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_09_L02_cwiczenie2.mp3",
+              "section": null,
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_10_L02_cwiczenie4.mp3",
+              "section": null,
+              "task": 4,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_11_L02_cwiczenie13.mp3",
+              "section": null,
+              "task": 13,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_12_L02_cwiczenie14.mp3",
+              "section": null,
+              "task": 14,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_13_L02_cwiczenie17.mp3",
+              "section": null,
+              "task": 17,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-03",
+          "courseId": "krok-a1",
+          "number": 3,
+          "title": "MAMI, KTO TO JEST?",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "KTO…? CO…?"
+            },
+            {
+              "letter": "B",
+              "title": "CZY…?"
+            },
+            {
+              "letter": "C",
+              "title": "MIANOWNIK"
+            }
+          ],
+          "vocabularyIds": [
+            40,
+            340,
+            39,
+            346,
+            44,
+            45
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_103a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_103a1-2.mp3",
+              "section": "A",
+              "task": 1,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_103a2.mp3",
+              "section": "A",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_103a4.mp3",
+              "section": "A",
+              "task": 4,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_103c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_103c3.mp3",
+              "section": "C",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_103c3-2.mp3",
+              "section": "C",
+              "task": 3,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_103c3-3.mp3",
+              "section": "C",
+              "task": 3,
+              "part": "3"
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_14_L03_cwiczenie1.mp3",
+              "section": null,
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_15_L03_cwiczenie2.mp3",
+              "section": null,
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_16_L03_cwiczenie13.mp3",
+              "section": null,
+              "task": 13,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-04",
+          "courseId": "krok-a1",
+          "number": 4,
+          "title": "JAKI JESTEŚ?",
+          "sections": [
+            {
+              "letter": "C",
+              "title": "JAKI ON JEST?"
+            }
+          ],
+          "vocabularyIds": [
+            14,
+            101,
+            71,
+            236,
+            2380,
+            920,
+            199,
+            356,
+            979
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_104a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_104a2.mp3",
+              "section": "A",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_104c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_104c3.mp3",
+              "section": "C",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_104c6.mp3",
+              "section": "C",
+              "task": 6,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_17_L04_cwiczenie8.mp3",
+              "section": null,
+              "task": 8,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-05",
+          "courseId": "krok-a1",
+          "number": 5,
+          "title": "JESTEŚ INSTRUKTOREM TANGA?",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "KTO TO JEST? JAKI ON JEST?"
+            },
+            {
+              "letter": "B",
+              "title": "LICZEBNIKI 20-100"
+            },
+            {
+              "letter": "D",
+              "title": "KIM ONA JEST?"
+            }
+          ],
+          "vocabularyIds": [
+            129,
+            1920,
+            1921,
+            125,
+            2381,
+            98,
+            2382,
+            554
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_105a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_105b1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_105b4-1.mp3",
+              "section": "B",
+              "task": 4,
+              "part": "1"
+            },
+            {
+              "file": "a1_coursebook_105b4-2.mp3",
+              "section": "B",
+              "task": 4,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_105c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_105d1.mp3",
+              "section": "D",
+              "task": 1,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_18_L05_cwiczenie1.mp3",
+              "section": null,
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_19_L05_cwiczenie4.mp3",
+              "section": null,
+              "task": 4,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_20_L05_cwiczenie5.mp3",
+              "section": null,
+              "task": 5,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_21_L05_cwiczenie8.mp3",
+              "section": null,
+              "task": 8,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_22_L05_cwiczenie14.mp3",
+              "section": null,
+              "task": 14,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-06",
+          "courseId": "krok-a1",
+          "number": 6,
+          "title": "CO ROBISZ? NUDZĘ SIĘ!",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "MAMI W DOMU"
+            },
+            {
+              "letter": "B",
+              "title": "CO LUBICIE ROBIĆ?"
+            }
+          ],
+          "vocabularyIds": [
+            2383,
+            2384,
+            131,
+            132,
+            126,
+            127,
+            128,
+            225,
+            2385
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_106a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_106a1-2.mp3",
+              "section": "A",
+              "task": 1,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_106a1-3.mp3",
+              "section": "A",
+              "task": 1,
+              "part": "3"
+            },
+            {
+              "file": "a1_coursebook_106a1-4.mp3",
+              "section": "A",
+              "task": 1,
+              "part": "4"
+            },
+            {
+              "file": "a1_coursebook_106b2.mp3",
+              "section": "B",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_106b3.mp3",
+              "section": "B",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_106b4.mp3",
+              "section": "B",
+              "task": 4,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_106b5.mp3",
+              "section": "B",
+              "task": 5,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_23_L06_cwiczenie1_1.mp3",
+              "section": null,
+              "task": 1,
+              "part": "1"
+            },
+            {
+              "file": "a1_workbook_24_L06_cwiczenie1_2.mp3",
+              "section": null,
+              "task": 1,
+              "part": "2"
+            },
+            {
+              "file": "a1_workbook_25_L06_cwiczenie1_3.mp3",
+              "section": null,
+              "task": 1,
+              "part": "3"
+            },
+            {
+              "file": "a1_workbook_26_L06_cwiczenie1_4.mp3",
+              "section": null,
+              "task": 1,
+              "part": "4"
+            },
+            {
+              "file": "a1_workbook_27_L06_cwiczenie2_a.mp3",
+              "section": null,
+              "task": 2,
+              "part": "a"
+            },
+            {
+              "file": "a1_workbook_28_L06_cwiczenie2_b.mp3",
+              "section": null,
+              "task": 2,
+              "part": "b"
+            },
+            {
+              "file": "a1_workbook_29_L06_cwiczenie2_c.mp3",
+              "section": null,
+              "task": 2,
+              "part": "c"
+            },
+            {
+              "file": "a1_workbook_30_L06_cwiczenie2_d.mp3",
+              "section": null,
+              "task": 2,
+              "part": "d"
+            },
+            {
+              "file": "a1_workbook_31_L06_cwiczenie8.mp3",
+              "section": null,
+              "task": 8,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_32_L06_cwiczenie9.mp3",
+              "section": null,
+              "task": 9,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-07",
+          "courseId": "krok-a1",
+          "number": 7,
+          "title": "MAŁE ZAKUPY",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "BIERNIK"
+            },
+            {
+              "letter": "C",
+              "title": "GALERIA HANDLOWA"
+            }
+          ],
+          "vocabularyIds": [
+            329,
+            328,
+            364,
+            365,
+            174,
+            175,
+            2386,
+            2387,
+            177,
+            176,
+            2388,
+            172,
+            2389,
+            1601
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_107a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_107b1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_107b6.mp3",
+              "section": "B",
+              "task": 6,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_107c2-a.mp3",
+              "section": "C",
+              "task": 2,
+              "part": "a"
+            },
+            {
+              "file": "a1_coursebook_107c2-b.mp3",
+              "section": "C",
+              "task": 2,
+              "part": "b"
+            },
+            {
+              "file": "a1_coursebook_107c2-c.mp3",
+              "section": "C",
+              "task": 2,
+              "part": "c"
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_33_L07_cwiczenie1.mp3",
+              "section": null,
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_34_L07_cwiczenie2.mp3",
+              "section": null,
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_35_L07_cwiczenie10.mp3",
+              "section": null,
+              "task": 10,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_36_L07_cwiczenie11.mp3",
+              "section": null,
+              "task": 11,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-08",
+          "courseId": "krok-a1",
+          "number": 8,
+          "title": "MAMI, JESTEŚ GŁODNA?",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "MAMI JE ŚNIADANIE"
+            },
+            {
+              "letter": "C",
+              "title": "OBIAD ....................................."
+            },
+            {
+              "letter": "D",
+              "title": "KOLACJA"
+            }
+          ],
+          "vocabularyIds": [
+            351,
+            2390,
+            1889,
+            211,
+            29,
+            16,
+            2391,
+            2392
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_108a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_108a2.mp3",
+              "section": "A",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_108a4.mp3",
+              "section": "A",
+              "task": 4,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_108a7mp3.mp3",
+              "section": "A",
+              "task": 7,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_108a9.mp3",
+              "section": "A",
+              "task": 9,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_108b1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_108c2.mp3",
+              "section": "C",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_108c3.mp3",
+              "section": "C",
+              "task": 3,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_37_L08_cwiczenie2.mp3",
+              "section": null,
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_38_L08_cwiczenie7.mp3",
+              "section": null,
+              "task": 7,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_39_L08_cwiczenie12.mp3",
+              "section": null,
+              "task": 12,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-09",
+          "courseId": "krok-a1",
+          "number": 9,
+          "title": "LUBISZ MARCHEWKĘ?",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "OWOCE I WARZYWA"
+            },
+            {
+              "letter": "C",
+              "title": "MIANOWNIK LICZBA MNOGA"
+            },
+            {
+              "letter": "D",
+              "title": "GOTOWANIE"
+            },
+            {
+              "letter": "E",
+              "title": "SUPERMARKET"
+            }
+          ],
+          "vocabularyIds": [
+            2393,
+            2394,
+            2395,
+            2396,
+            2397,
+            715,
+            714,
+            2398,
+            718
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_109a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_109b1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_109b2.mp3",
+              "section": "B",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_109b3.mp3",
+              "section": "B",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_109b4.mp3",
+              "section": "B",
+              "task": 4,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_109b4-2.mp3",
+              "section": "B",
+              "task": 4,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_109b4-3.mp3",
+              "section": "B",
+              "task": 4,
+              "part": "3"
+            },
+            {
+              "file": "a1_coursebook_109d1.mp3",
+              "section": "D",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_109e1.mp3",
+              "section": "E",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_109e1-2.mp3",
+              "section": "E",
+              "task": 1,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_109e1-3.mp3",
+              "section": "E",
+              "task": 1,
+              "part": "3"
+            },
+            {
+              "file": "a1_coursebook_109e1-4.mp3",
+              "section": "E",
+              "task": 1,
+              "part": "4"
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_40_L09_cwiczenie5.mp3",
+              "section": null,
+              "task": 5,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_41_L09_cwiczenie7.mp3",
+              "section": null,
+              "task": 7,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_42_L09_cwiczenie12.mp3",
+              "section": null,
+              "task": 12,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-10",
+          "courseId": "krok-a1",
+          "number": 10,
+          "title": "UWIELBIAM POLSKIE JEDZENIE!",
+          "sections": [
+            {
+              "letter": "B",
+              "title": "A MOŻE RURKA Z KREMEM?"
+            },
+            {
+              "letter": "C",
+              "title": "NARESZCIE WEEKEND!"
+            }
+          ],
+          "vocabularyIds": [
+            2399,
+            2400,
+            2401,
+            1228,
+            2402
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_110a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_110a3.mp3",
+              "section": "A",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_110b1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_110c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_110c3.mp3",
+              "section": "C",
+              "task": 3,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_43_L10_cwiczenie3.mp3",
+              "section": null,
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_44_L10_cwiczenie11.mp3",
+              "section": null,
+              "task": 11,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-11",
+          "courseId": "krok-a1",
+          "number": 11,
+          "title": "RODZINA",
+          "sections": [
+            {
+              "letter": "B",
+              "title": "CZYJ? CZYJA? CZYJE?"
+            },
+            {
+              "letter": "C",
+              "title": "RANO CZY WIECZOREM?"
+            },
+            {
+              "letter": "D",
+              "title": "JAK CZĘSTO?"
+            },
+            {
+              "letter": "E",
+              "title": "TWOJE DRZEWO"
+            }
+          ],
+          "vocabularyIds": [
+            2403,
+            2404,
+            1934,
+            2405,
+            2406,
+            77,
+            2407
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_111a1-1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": "1"
+            },
+            {
+              "file": "a1_coursebook_111a1-2.mp3",
+              "section": "A",
+              "task": 1,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_111a1-3.mp3",
+              "section": "A",
+              "task": 1,
+              "part": "3"
+            },
+            {
+              "file": "a1_coursebook_111a1-4.mp3",
+              "section": "A",
+              "task": 1,
+              "part": "4"
+            },
+            {
+              "file": "a1_coursebook_111a1-5.mp3",
+              "section": "A",
+              "task": 1,
+              "part": "5"
+            },
+            {
+              "file": "a1_coursebook_111a2.mp3",
+              "section": "A",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_111a2-b.mp3",
+              "section": "A",
+              "task": 2,
+              "part": "b"
+            },
+            {
+              "file": "a1_coursebook_111a2-c.mp3",
+              "section": "A",
+              "task": 2,
+              "part": "c"
+            },
+            {
+              "file": "a1_coursebook_111a2-d.mp3",
+              "section": "A",
+              "task": 2,
+              "part": "d"
+            },
+            {
+              "file": "a1_coursebook_111a2-e.mp3",
+              "section": "A",
+              "task": 2,
+              "part": "e"
+            },
+            {
+              "file": "a1_coursebook_111a6.mp3",
+              "section": "A",
+              "task": 6,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_111b1-a.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "a"
+            },
+            {
+              "file": "a1_coursebook_111b1-b.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "b"
+            },
+            {
+              "file": "a1_coursebook_111b1-c.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "c"
+            },
+            {
+              "file": "a1_coursebook_111d1.mp3",
+              "section": "D",
+              "task": 1,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_45_L11_cwiczenie2.mp3",
+              "section": null,
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_46_L11_cwiczenie12.mp3",
+              "section": null,
+              "task": 12,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-12",
+          "courseId": "krok-a1",
+          "number": 12,
+          "title": "CO ROBISZ W PONIEDZIAŁEK O ÓSMEJ?",
+          "sections": [
+            {
+              "letter": "B",
+              "title": "O KTÓREJ GODZINIE?"
+            },
+            {
+              "letter": "D",
+              "title": "RUTYNA"
+            }
+          ],
+          "vocabularyIds": [
+            1587,
+            2408,
+            138,
+            1306
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_112a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_112a2.mp3",
+              "section": "A",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_112a5.mp3",
+              "section": "A",
+              "task": 5,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_112b1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_112b3.mp3",
+              "section": "B",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_112b4.mp3",
+              "section": "B",
+              "task": 4,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_47_L12_cwiczenie1.mp3",
+              "section": null,
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_48_L12_cwiczenie2.mp3",
+              "section": null,
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_49_L12_cwiczenie6.mp3",
+              "section": null,
+              "task": 6,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_50_L12_cwiczenie12.mp3",
+              "section": null,
+              "task": 12,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-13",
+          "courseId": "krok-a1",
+          "number": 13,
+          "title": "GDZIE BYŁAŚ MAMI? BYŁAM W KINIE",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "„ZAKOPANE, ZAKOPANE, SŁOŃCE"
+            },
+            {
+              "letter": "B",
+              "title": "CHCIAŁEM DOBRZE!"
+            },
+            {
+              "letter": "C",
+              "title": "JADŁAŚ JUŻ OBIAD?"
+            }
+          ],
+          "vocabularyIds": [
+            1982,
+            2409,
+            2410,
+            2411,
+            2412,
+            2413,
+            349,
+            208,
+            1946,
+            978,
+            2414
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_113a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_113a4.mp3",
+              "section": "A",
+              "task": 4,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_113a8.mp3",
+              "section": "A",
+              "task": 8,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_113b1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_113c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_51_L13_cwiczenie2.mp3",
+              "section": null,
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_52_L13_cwiczenie3.mp3",
+              "section": null,
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_53_L13_cwiczenie7.mp3",
+              "section": null,
+              "task": 7,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-14",
+          "courseId": "krok-a1",
+          "number": 14,
+          "title": "Z PRZEWODNIKIEM PO KRAKOWIE",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "UCZYMY SIĘ"
+            },
+            {
+              "letter": "B",
+              "title": "ZWIEDZAMY"
+            }
+          ],
+          "vocabularyIds": [
+            2321,
+            2415,
+            2416,
+            1279,
+            2417,
+            2363,
+            2418,
+            476,
+            2419,
+            915,
+            482,
+            481
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_114a1-1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": "1"
+            },
+            {
+              "file": "a1_coursebook_114a1-2.mp3",
+              "section": "A",
+              "task": 1,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_114b3.mp3",
+              "section": "B",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_114b4.mp3",
+              "section": "B",
+              "task": 4,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_114c2.mp3",
+              "section": "C",
+              "task": 2,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_54_L14_cwiczenie4.mp3",
+              "section": null,
+              "task": 4,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_55_L14_cwiczenie8.mp3",
+              "section": null,
+              "task": 8,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-15",
+          "courseId": "krok-a1",
+          "number": 15,
+          "title": "KARTON CZY PUDEŁKO?",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "PUSZKI, PACZKI I PUDEŁKA"
+            },
+            {
+              "letter": "B",
+              "title": "ZAKUPY NA PIKNIK"
+            },
+            {
+              "letter": "D",
+              "title": "CZY POMOŻESZ MI?"
+            },
+            {
+              "letter": "E",
+              "title": "ZAIMKI"
+            }
+          ],
+          "vocabularyIds": [
+            2420,
+            2421,
+            2422,
+            2423,
+            2239,
+            2424,
+            2425,
+            2426,
+            2427,
+            1853,
+            233,
+            225
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_115a4.mp3",
+              "section": "A",
+              "task": 4,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_115a5.mp3",
+              "section": "A",
+              "task": 5,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_115b1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_115b3-1.mp3",
+              "section": "B",
+              "task": 3,
+              "part": "1"
+            },
+            {
+              "file": "a1_coursebook_115b3-2.mp3",
+              "section": "B",
+              "task": 3,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_115b3-3.mp3",
+              "section": "B",
+              "task": 3,
+              "part": "3"
+            },
+            {
+              "file": "a1_coursebook_115b4.mp3",
+              "section": "B",
+              "task": 4,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_115b5.mp3",
+              "section": "B",
+              "task": 5,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_115b6.mp3",
+              "section": "B",
+              "task": 6,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_115c2-1.mp3",
+              "section": "C",
+              "task": 2,
+              "part": "1"
+            },
+            {
+              "file": "a1_coursebook_115c2-2.mp3",
+              "section": "C",
+              "task": 2,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_115c2-3.mp3",
+              "section": "C",
+              "task": 2,
+              "part": "3"
+            },
+            {
+              "file": "a1_coursebook_115c2-4.mp3",
+              "section": "C",
+              "task": 2,
+              "part": "4"
+            },
+            {
+              "file": "a1_coursebook_115c2-5.mp3",
+              "section": "C",
+              "task": 2,
+              "part": "5"
+            },
+            {
+              "file": "a1_coursebook_115e1.mp3",
+              "section": "E",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_115e1-2.mp3",
+              "section": "E",
+              "task": 1,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_115e1-3.mp3",
+              "section": "E",
+              "task": 1,
+              "part": "3"
+            },
+            {
+              "file": "a1_coursebook_115e1-4.mp3",
+              "section": "E",
+              "task": 1,
+              "part": "4"
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_56_L15_cwiczenie4.mp3",
+              "section": null,
+              "task": 4,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_57_L15_cwiczenie5.mp3",
+              "section": null,
+              "task": 5,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-16",
+          "courseId": "krok-a1",
+          "number": 16,
+          "title": "CO MA BYĆ, TO BĘDZIE",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "PARASOL NOŚ"
+            },
+            {
+              "letter": "B",
+              "title": "MIESIĄC STYCZEŃ"
+            },
+            {
+              "letter": "C",
+              "title": "DZIECI NAJMILSZE"
+            },
+            {
+              "letter": "D",
+              "title": "W DZIEŃ ŚWIĘTEGO ANDRZEJA"
+            }
+          ],
+          "vocabularyIds": [
+            255,
+            2428,
+            137,
+            311,
+            811,
+            2429,
+            2430,
+            2431,
+            2432
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_116a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_116a4.mp3",
+              "section": "A",
+              "task": 4,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_116a5.mp3",
+              "section": "A",
+              "task": 5,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_116a8.mp3",
+              "section": "A",
+              "task": 8,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_116c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_58_L16_cwiczenie1.mp3",
+              "section": null,
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_59_L16_cwiczenie8.mp3",
+              "section": null,
+              "task": 8,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_60_L16_cwiczenie9.mp3",
+              "section": null,
+              "task": 9,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_61_L16_cwiczenie15.mp3",
+              "section": null,
+              "task": 15,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-17",
+          "courseId": "krok-a1",
+          "number": 17,
+          "title": "PLOTKI, PLOTKI. KTO Z KIM I O CZYM?",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "CO O TYM MYŚLISZ?"
+            },
+            {
+              "letter": "B",
+              "title": "PODOBA CI SIĘ?"
+            },
+            {
+              "letter": "C",
+              "title": "CO O NIM MYŚLISZ?"
+            },
+            {
+              "letter": "D",
+              "title": "CO MU KUPIĆ?"
+            }
+          ],
+          "vocabularyIds": [
+            2433,
+            2434,
+            827,
+            2435,
+            2436,
+            2437,
+            1269,
+            1261,
+            397
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_117a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_117a2.mp3",
+              "section": "A",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_117b1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_117c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_117d1.mp3",
+              "section": "D",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_117d2.mp3",
+              "section": "D",
+              "task": 2,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_62_L17_cwiczenie2.mp3",
+              "section": null,
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_63_L17_cwiczenie5.mp3",
+              "section": null,
+              "task": 5,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_64_L17_cwiczenie12_a.mp3",
+              "section": null,
+              "task": 12,
+              "part": "a"
+            },
+            {
+              "file": "a1_workbook_65_L17_cwiczenie12_b.mp3",
+              "section": null,
+              "task": 12,
+              "part": "b"
+            },
+            {
+              "file": "a1_workbook_66_L17_cwiczenie12_c.mp3",
+              "section": null,
+              "task": 12,
+              "part": "c"
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-18",
+          "courseId": "krok-a1",
+          "number": 18,
+          "title": "POKAŻ MI SWOJE MIESZKANIE, A POWIEM CI KIM JESTEŚ",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "CIASNE, ALE WŁASNE!"
+            },
+            {
+              "letter": "B",
+              "title": "GDZIE ON JEST?"
+            },
+            {
+              "letter": "C",
+              "title": "MARZĘ"
+            }
+          ],
+          "vocabularyIds": [
+            2438,
+            2439,
+            2440,
+            2441,
+            2442,
+            2443,
+            1278,
+            1277,
+            406
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_118a2.mp3",
+              "section": "A",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_118c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_118c4.mp3",
+              "section": "C",
+              "task": 4,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_67_L18_cwiczenie8.mp3",
+              "section": null,
+              "task": 8,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_68_L18_cwiczenie9.mp3",
+              "section": null,
+              "task": 9,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_69_L18_cwiczenie11.mp3",
+              "section": null,
+              "task": 11,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-19",
+          "courseId": "krok-a1",
+          "number": 19,
+          "title": "WSZĘDZIE DOBRZE, ALE W DOMU NAJLEPIEJ",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "NIE MAM GDZIE MIESZKAĆ"
+            },
+            {
+              "letter": "B",
+              "title": "W POSZUKIWANIU"
+            },
+            {
+              "letter": "C",
+              "title": "PRZEPROWADZKA"
+            }
+          ],
+          "vocabularyIds": [
+            2444,
+            2445,
+            2446,
+            2447
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_119a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_119a2.mp3",
+              "section": "A",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_119b1-1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "1"
+            },
+            {
+              "file": "a1_coursebook_119b1-2.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_119b1-3.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "3"
+            },
+            {
+              "file": "a1_coursebook_119b1-4.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "4"
+            },
+            {
+              "file": "a1_coursebook_119b3.mp3",
+              "section": "B",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_119b7.mp3",
+              "section": "B",
+              "task": 7,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_119c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_119c2.mp3",
+              "section": "C",
+              "task": 2,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_70_L19_cwiczenie8.mp3",
+              "section": null,
+              "task": 8,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_71_L19_cwiczenie12.mp3",
+              "section": null,
+              "task": 12,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-20",
+          "courseId": "krok-a1",
+          "number": 20,
+          "title": "PODRÓŻE KSZTAŁCĄ",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "DOKĄD MOŻNA POJECHAĆ"
+            },
+            {
+              "letter": "B",
+              "title": "DWORZEC PKP"
+            },
+            {
+              "letter": "C",
+              "title": "GDZIE JESTEŚ?"
+            }
+          ],
+          "vocabularyIds": [
+            2448,
+            509,
+            871,
+            2449,
+            475,
+            2450
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_120b2-a.mp3",
+              "section": "B",
+              "task": 2,
+              "part": "a"
+            },
+            {
+              "file": "a1_coursebook_120b2-b.mp3",
+              "section": "B",
+              "task": 2,
+              "part": "b"
+            },
+            {
+              "file": "a1_coursebook_120c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_72_L20_cwiczenie4.mp3",
+              "section": null,
+              "task": 4,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_73_L20_cwiczenie7.mp3",
+              "section": null,
+              "task": 7,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_74_L20_cwiczenie8.mp3",
+              "section": null,
+              "task": 8,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_75_L20_cwiczenie10.mp3",
+              "section": null,
+              "task": 10,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-21",
+          "courseId": "krok-a1",
+          "number": 21,
+          "title": "KIEDY TO BYŁO?",
+          "sections": [
+            {
+              "letter": "B",
+              "title": "STO LAT"
+            },
+            {
+              "letter": "C",
+              "title": "W KTÓRYM ROKU?"
+            },
+            {
+              "letter": "D",
+              "title": "MAMI, CO ROBIŁAŚ?"
+            }
+          ],
+          "vocabularyIds": [
+            2451,
+            2452
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_121a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_121a2.mp3",
+              "section": "A",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_121a3.mp3",
+              "section": "A",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_121b1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_121b2.mp3",
+              "section": "B",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_121b3.mp3",
+              "section": "B",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_121c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_121c2.mp3",
+              "section": "C",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_121c3.mp3",
+              "section": "C",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_121d1.mp3",
+              "section": "D",
+              "task": 1,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_76_L21_cwiczenie4.mp3",
+              "section": null,
+              "task": 4,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_77_L21_cwiczenie5.mp3",
+              "section": null,
+              "task": 5,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-22",
+          "courseId": "krok-a1",
+          "number": 22,
+          "title": "DOKĄD POJEDZIEMY NA WEEKEND?",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "RÓŻNE ASPEKTY PRZYSZŁOŚCI"
+            },
+            {
+              "letter": "C",
+              "title": "LWÓW"
+            }
+          ],
+          "vocabularyIds": [
+            2453,
+            2454,
+            680,
+            2455,
+            2456,
+            2457,
+            2458,
+            2459
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_122a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_122a3.mp3",
+              "section": "A",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_122a3-2.mp3",
+              "section": "A",
+              "task": 3,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_122a6.mp3",
+              "section": "A",
+              "task": 6,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_0122b1-1mp3.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "1"
+            },
+            {
+              "file": "a1_coursebook_122b1-2.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_122b1-3.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "3"
+            },
+            {
+              "file": "a1_coursebook_122b1-4.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "4"
+            },
+            {
+              "file": "a1_coursebook_122b1-5.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "5"
+            },
+            {
+              "file": "a1_coursebook_122b5.mp3",
+              "section": "B",
+              "task": 5,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_122c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_78_L22_cwiczenie11.mp3",
+              "section": null,
+              "task": 11,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_79_L22_cwiczenie12.mp3",
+              "section": null,
+              "task": 12,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-23",
+          "courseId": "krok-a1",
+          "number": 23,
+          "title": "ZA MAŁE? ZA DUŻE? W SAM RAZ!",
+          "sections": [
+            {
+              "letter": "B",
+              "title": "ZA KRÓTKIE?"
+            }
+          ],
+          "vocabularyIds": [
+            2460,
+            395,
+            2461,
+            2462,
+            2463,
+            2464
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_123a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_123a2-1.mp3",
+              "section": "A",
+              "task": 2,
+              "part": "1"
+            },
+            {
+              "file": "a1_coursebook_123a2-2.mp3",
+              "section": "A",
+              "task": 2,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_123aa2-3.mp3",
+              "section": "A",
+              "task": 2,
+              "part": "3"
+            },
+            {
+              "file": "a1_coursebook_123a2-4.mp3",
+              "section": "A",
+              "task": 2,
+              "part": "4"
+            },
+            {
+              "file": "a1_coursebook_123a2-5.mp3",
+              "section": "A",
+              "task": 2,
+              "part": "5"
+            },
+            {
+              "file": "a1_coursebook_123b1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_123b2-2.mp3",
+              "section": "B",
+              "task": 2,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_123b5.mp3",
+              "section": "B",
+              "task": 5,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_123b11.mp3",
+              "section": "B",
+              "task": 11,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_123c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_80_L23_cwiczenie3.mp3",
+              "section": null,
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_81_L23_cwiczenie13.mp3",
+              "section": null,
+              "task": 13,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-24",
+          "courseId": "krok-a1",
+          "number": 24,
+          "title": "JAK CIĘ WIDZĄ, TAK CIĘ PISZĄ",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "U FRYZJERA"
+            },
+            {
+              "letter": "B",
+              "title": "WYGLĄD ZEWNĘTRZNY"
+            },
+            {
+              "letter": "C",
+              "title": "W ZDROWYM CIELE"
+            },
+            {
+              "letter": "D",
+              "title": "STOPNIOWANIE"
+            }
+          ],
+          "vocabularyIds": [
+            2465,
+            2466,
+            2467,
+            2468
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_124a1.mp3",
+              "section": "A",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_124a2.mp3",
+              "section": "A",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_124b1-1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "1"
+            },
+            {
+              "file": "a1_coursebook_124b1-2.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_124b1-3.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "3"
+            },
+            {
+              "file": "a1_coursebook_124b1-4.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "4"
+            },
+            {
+              "file": "a1_coursebook_124c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_124c6.mp3",
+              "section": "C",
+              "task": 6,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_82_L24_cwiczenie7.mp3",
+              "section": null,
+              "task": 7,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_83_L24_cwiczenie9.mp3",
+              "section": null,
+              "task": 9,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-25",
+          "courseId": "krok-a1",
+          "number": 25,
+          "title": "ANI RĘKĄ, ANI NOGĄ…",
+          "sections": [
+            {
+              "letter": "B",
+              "title": "ZDROWIE"
+            },
+            {
+              "letter": "C",
+              "title": "PRZYPADEK MAMI"
+            },
+            {
+              "letter": "E",
+              "title": "PRZYPADEK ANGELI"
+            },
+            {
+              "letter": "F",
+              "title": "PRZYPADEK TOMA"
+            }
+          ],
+          "vocabularyIds": [
+            2218,
+            2469,
+            819,
+            2470
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_125b1-1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "1"
+            },
+            {
+              "file": "a1_coursebook_125b1-2.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_125b1-3.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "3"
+            },
+            {
+              "file": "a1_coursebook_125c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_125c3.mp3",
+              "section": "C",
+              "task": 3,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_125d1.mp3",
+              "section": "D",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_125d2.mp3",
+              "section": "D",
+              "task": 2,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_125e2.mp3",
+              "section": "E",
+              "task": 2,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_84_L25_cwiczenie6.mp3",
+              "section": null,
+              "task": 6,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_85_L25_cwiczenie8.mp3",
+              "section": null,
+              "task": 8,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_86_L25_cwiczenie10.mp3",
+              "section": null,
+              "task": 10,
+              "part": null
+            }
+          ]
+        },
+        {
+          "id": "krok-a1-26",
+          "courseId": "krok-a1",
+          "number": 26,
+          "title": "SAME PROBLEMY!",
+          "sections": [
+            {
+              "letter": "A",
+              "title": "MAM TYLE"
+            },
+            {
+              "letter": "C",
+              "title": "WYPADEK"
+            }
+          ],
+          "vocabularyIds": [
+            2471,
+            2472,
+            2249,
+            491,
+            2473,
+            2474,
+            2475,
+            2476,
+            2477
+          ],
+          "audio": [
+            {
+              "file": "a1_coursebook_126a2-1.mp3",
+              "section": "A",
+              "task": 2,
+              "part": "1"
+            },
+            {
+              "file": "a1_coursebook_126a2-2.mp3",
+              "section": "A",
+              "task": 2,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_126a2-3.mp3",
+              "section": "A",
+              "task": 2,
+              "part": "3"
+            },
+            {
+              "file": "a1_coursebook_126a2-4.mp3",
+              "section": "A",
+              "task": 2,
+              "part": "4"
+            },
+            {
+              "file": "a1_coursebook_126a2-5.mp3",
+              "section": "A",
+              "task": 2,
+              "part": "5"
+            },
+            {
+              "file": "a1_coursebook_126a2-6.mp3",
+              "section": "A",
+              "task": 2,
+              "part": "6"
+            },
+            {
+              "file": "a1_coursebook_126b1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_126b1-2.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "2"
+            },
+            {
+              "file": "a1_coursebook_126c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_126c7.mp3",
+              "section": "C",
+              "task": 7,
+              "part": null
+            },
+            {
+              "file": "a1_coursebook_126c9.mp3",
+              "section": "C",
+              "task": 9,
+              "part": null
+            }
+          ],
+          "workbookAudio": [
+            {
+              "file": "a1_workbook_87_L26_cwiczenie6.mp3",
+              "section": null,
+              "task": 6,
+              "part": null
+            },
+            {
+              "file": "a1_workbook_88_L26_cwiczenie9.mp3",
+              "section": null,
+              "task": 9,
+              "part": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 package com.lexicon.presentation.dictation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.android.SpeechSynthesizer
@@ -14,6 +15,7 @@ import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.WordResultEntry
+import com.lexicon.presentation.common.trainingVocabularyIds
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -33,12 +35,15 @@ private const val SKIPPED_ANSWER_ADVANCE_DELAY_MS = 700L
 class DictationViewModel
     @Inject
     constructor(
+        savedStateHandle: SavedStateHandle,
         private val startDictationSession: StartDictationSessionUseCase,
         private val submitDictationAnswer: SubmitDictationAnswerUseCase,
         private val speechSynthesizer: SpeechSynthesizer,
         private val dispatchers: DispatcherProvider,
         private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
+        private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
+
         private val _uiState = MutableStateFlow<DictationUiState>(DictationUiState.Loading)
         val uiState: StateFlow<DictationUiState> = _uiState.asStateFlow()
 
@@ -59,7 +64,7 @@ class DictationViewModel
 
         private fun startSession() {
             viewModelScope.launch(dispatchers.io) {
-                val response = startDictationSession(StartDictationSessionRequest())
+                val response = startDictationSession(StartDictationSessionRequest(vocabularyIds = vocabularyIds))
                 sessionId = response.sessionId
                 steps = response.steps
                 _uiState.update {

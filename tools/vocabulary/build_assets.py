@@ -120,6 +120,8 @@ def select_ids(rule: str, arg: str, words: list[dict]) -> list[int]:
         return [w["id"] for w in sorted(ranked, key=lambda w: w["frequencyRank"])[: int(arg)]]
     if rule == "topic":
         return [w["id"] for w in words if arg in w["topics"]]
+    if rule == "pos":
+        return [w["id"] for w in words if w["partOfSpeech"] == arg]
     raise BuildError(f"unknown selection rule '{rule}'")
 
 

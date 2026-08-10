@@ -46,6 +46,7 @@ import com.lexicon.interactors.sync.CatalogSyncStatus
 import com.lexicon.interactors.sync.SyncStepStatus
 import com.lexicon.interactors.sync.isBlocked
 import com.lexicon.interactors.sync.isFinished
+import com.lexicon.interactors.sync.steps
 import com.lexicon.interactors.sync.wasAlreadyCurrent
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkFontScalePreview
@@ -160,6 +161,8 @@ private fun StatusCard(
             SyncStepRow(stringResource(R.string.sync_step_vocabulary), status.vocabulary)
             Spacer(modifier = Modifier.height(Dimens.spacingMedium))
             SyncStepRow(stringResource(R.string.sync_step_presets), status.presets)
+            Spacer(modifier = Modifier.height(Dimens.spacingMedium))
+            SyncStepRow(stringResource(R.string.sync_step_course), status.course)
 
             val progress by animateFloatAsState(
                 targetValue = status.completedFraction(),
@@ -260,10 +263,8 @@ private fun statusDetail(status: SyncStepStatus): String? =
 private fun Int.grouped(): String = NumberFormat.getIntegerInstance().format(this)
 
 private fun CatalogSyncStatus.completedFraction(): Float {
-    val settled = listOf(vocabulary, presets).count {
-        it is SyncStepStatus.Complete || it is SyncStepStatus.Failed
-    }
-    return settled / 2f
+    val settled = steps.count { it is SyncStepStatus.Complete || it is SyncStepStatus.Failed }
+    return settled.toFloat() / steps.size
 }
 
 @LightDarkPreview
@@ -272,7 +273,7 @@ private fun SplashImportingPreview() {
     LexiconTheme {
         SplashContent(
             status = CatalogSyncStatus(
-                vocabulary = SyncStepStatus.Complete(total = 2219, added = 2219, updated = 0, removed = 0),
+                vocabulary = SyncStepStatus.Complete(total = 2477, added = 2477, updated = 0, removed = 0),
                 presets = SyncStepStatus.InProgress,
             ),
             onRetry = {},
@@ -286,8 +287,9 @@ private fun SplashUpToDatePreview() {
     LexiconTheme {
         SplashContent(
             status = CatalogSyncStatus(
-                vocabulary = SyncStepStatus.Complete(total = 2219, added = 0, updated = 0, removed = 0),
-                presets = SyncStepStatus.Complete(total = 72, added = 0, updated = 0, removed = 0),
+                vocabulary = SyncStepStatus.Complete(total = 2477, added = 0, updated = 0, removed = 0),
+                presets = SyncStepStatus.Complete(total = 73, added = 0, updated = 0, removed = 0),
+                course = SyncStepStatus.Complete(total = 26, added = 0, updated = 0, removed = 0),
             ),
             onRetry = {},
         )
@@ -310,6 +312,7 @@ private fun SplashFailedPreview() {
             status = CatalogSyncStatus(
                 vocabulary = SyncStepStatus.Failed("vocabulary_pl.json not found", canContinue = false),
                 presets = SyncStepStatus.Failed("Skipped because the vocabulary could not be loaded", false),
+                course = SyncStepStatus.Failed("Skipped because the vocabulary could not be loaded", false),
             ),
             onRetry = {},
         )

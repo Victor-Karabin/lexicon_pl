@@ -1,5 +1,6 @@
 package com.lexicon.presentation.dictationpuzzle
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.android.SpeechSynthesizer
@@ -16,6 +17,7 @@ import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.WordResultEntry
 import com.lexicon.presentation.common.shuffleIntoTiles
+import com.lexicon.presentation.common.trainingVocabularyIds
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -34,12 +36,15 @@ private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 400L
 class DictationPuzzleViewModel
     @Inject
     constructor(
+        savedStateHandle: SavedStateHandle,
         private val startSessionUseCase: StartDictationPuzzleSessionUseCase,
         private val submitAnswerUseCase: SubmitDictationPuzzleAnswerUseCase,
         private val speechSynthesizer: SpeechSynthesizer,
         private val dispatchers: DispatcherProvider,
         private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
+        private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
+
         private val _uiState = MutableStateFlow<DictationPuzzleUiState>(DictationPuzzleUiState.Loading)
         val uiState: StateFlow<DictationPuzzleUiState> = _uiState.asStateFlow()
 
@@ -60,7 +65,7 @@ class DictationPuzzleViewModel
 
         private fun startSession() {
             viewModelScope.launch(dispatchers.io) {
-                val response = startSessionUseCase(StartDictationPuzzleSessionRequest())
+                val response = startSessionUseCase(StartDictationPuzzleSessionRequest(vocabularyIds = vocabularyIds))
                 sessionId = response.sessionId
                 steps = response.steps
                 openStep(0)

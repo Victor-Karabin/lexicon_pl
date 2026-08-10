@@ -27,7 +27,7 @@ class StartMemoryCardsSessionUseCaseImpl
             val steps =
                 coroutineScope {
                     (0 until stepCount).map { stepIndex ->
-                        async { buildStep(stepIndex, request.pairsPerStep) }
+                        async { buildStep(stepIndex, request.pairsPerStep, request.vocabularyIds) }
                     }.map { it.await() }
                 }
             return MemoryCardsSessionResponse(sessionId = UUID.randomUUID().toString(), steps = steps)
@@ -36,8 +36,9 @@ class StartMemoryCardsSessionUseCaseImpl
         private suspend fun buildStep(
             stepIndex: Int,
             pairsPerStep: Int,
+            vocabularyIds: List<Long>,
         ): MemoryCardsStepResponse {
-            val words = vocabularyRepository.getRandomItems(pairsPerStep).map { it.toWord() }
+            val words = vocabularyRepository.getRandomItems(pairsPerStep, vocabularyIds).map { it.toWord() }
             val pairs =
                 coroutineScope {
                     words.map { word -> async { buildPair(word) } }.map { it.await() }

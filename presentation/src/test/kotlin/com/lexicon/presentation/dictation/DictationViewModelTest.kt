@@ -1,20 +1,25 @@
 package com.lexicon.presentation.dictation
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.lexicon.android.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.dictation.DictationSessionResponse
 import com.lexicon.interactors.dictation.DictationStepOutcome
 import com.lexicon.interactors.dictation.DictationStepResponse
+import com.lexicon.interactors.dictation.StartDictationSessionRequest
 import com.lexicon.interactors.dictation.StartDictationSessionUseCase
 import com.lexicon.interactors.dictation.SubmitDictationAnswerResponse
 import com.lexicon.interactors.dictation.SubmitDictationAnswerUseCase
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.TRAINING_WORDS_ARG
+import com.lexicon.presentation.common.asTrainingWordsArgument
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.slot
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -66,7 +71,39 @@ class DictationViewModelTest {
         Dispatchers.resetMain()
     }
 
-    private fun viewModel() = DictationViewModel(startUseCase, submitUseCase, speechSynthesizer, dispatchers, lastSessionResultsHolder)
+    private fun viewModel(vocabularyIds: List<Long> = emptyList()) =
+        DictationViewModel(
+            SavedStateHandle(mapOf(TRAINING_WORDS_ARG to vocabularyIds.asTrainingWordsArgument())),
+            startUseCase,
+            submitUseCase,
+            speechSynthesizer,
+            dispatchers,
+            lastSessionResultsHolder,
+        )
+
+    @Test
+    fun `a lesson's word list reaches the session request`() =
+        runTest {
+            val request = slot<StartDictationSessionRequest>()
+            coEvery { startUseCase(capture(request)) } returns session("kot", "pies")
+
+            viewModel(vocabularyIds = listOf(7L, 11L, 13L))
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            assertEquals(listOf(7L, 11L, 13L), request.captured.vocabularyIds)
+        }
+
+    @Test
+    fun `an unscoped training draws from the whole study set`() =
+        runTest {
+            val request = slot<StartDictationSessionRequest>()
+            coEvery { startUseCase(capture(request)) } returns session("kot", "pies")
+
+            viewModel()
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            assertEquals(emptyList<Long>(), request.captured.vocabularyIds)
+        }
 
     @Test
     fun `loads the first step and speaks it on init`() =

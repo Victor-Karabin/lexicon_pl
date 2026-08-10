@@ -21,6 +21,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.lexicon.presentation.course.CourseScreen
 import com.lexicon.presentation.presets.VocabularyScreen
 import com.lexicon.presentation.settings.SettingsScreen
 
@@ -39,6 +40,7 @@ private val MainTabSaver = Saver<MainTab, String>(save = { it.name }, restore = 
 fun MainScreen(
     onTrainingSelected: (id: String) -> Unit,
     onPresetSelected: (id: String) -> Unit,
+    onLessonSelected: (id: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var selectedTab by rememberSaveable(stateSaver = MainTabSaver) { mutableStateOf(MainTab.TRAININGS) }
@@ -63,7 +65,7 @@ fun MainScreen(
             MainTab.TRAININGS -> TrainingsScreen(onTrainingSelected = onTrainingSelected, modifier = content)
             MainTab.DASHBOARD -> ComingSoonScreen(MainTab.DASHBOARD.label, modifier = content)
             MainTab.VOCABULARY -> VocabularyScreen(onPresetSelected = { onPresetSelected(it.value) }, modifier = content)
-            MainTab.PLAN -> ComingSoonScreen(MainTab.PLAN.label, modifier = content)
+            MainTab.PLAN -> CourseScreen(onLessonSelected = { onLessonSelected(it.value) }, modifier = content)
             MainTab.SETTINGS -> SettingsScreen(modifier = content)
         }
     }

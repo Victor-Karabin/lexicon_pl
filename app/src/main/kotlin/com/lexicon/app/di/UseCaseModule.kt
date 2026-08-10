@@ -1,5 +1,9 @@
 package com.lexicon.app.di
 
+import com.lexicon.domain.course.GetLessonUseCaseImpl
+import com.lexicon.domain.course.GetLessonVocabularyUseCaseImpl
+import com.lexicon.domain.course.ObserveCoursesUseCaseImpl
+import com.lexicon.domain.course.SetLessonCompletedUseCaseImpl
 import com.lexicon.domain.crossword.StartCrosswordSessionUseCaseImpl
 import com.lexicon.domain.crossword.SubmitCrosswordUseCaseImpl
 import com.lexicon.domain.dictation.StartDictationSessionUseCaseImpl
@@ -37,6 +41,10 @@ import com.lexicon.domain.trueorfalse.StartTrueOrFalseSessionUseCaseImpl
 import com.lexicon.domain.trueorfalse.SubmitTrueOrFalseAnswerUseCaseImpl
 import com.lexicon.domain.wordmatch.StartWordMatchSessionUseCaseImpl
 import com.lexicon.domain.wordmatch.SubmitWordMatchStepResultUseCaseImpl
+import com.lexicon.interactors.course.GetLessonUseCase
+import com.lexicon.interactors.course.GetLessonVocabularyUseCase
+import com.lexicon.interactors.course.ObserveCoursesUseCase
+import com.lexicon.interactors.course.SetLessonCompletedUseCase
 import com.lexicon.interactors.crossword.StartCrosswordSessionUseCase
 import com.lexicon.interactors.crossword.SubmitCrosswordUseCase
 import com.lexicon.interactors.dictation.StartDictationSessionUseCase
@@ -192,4 +200,16 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindObserveVocabularyPresets(impl: ObserveVocabularyPresetsUseCaseImpl): ObserveVocabularyPresetsUseCase
+
+    @Binds
+    abstract fun bindObserveCourses(impl: ObserveCoursesUseCaseImpl): ObserveCoursesUseCase
+
+    @Binds
+    abstract fun bindGetLesson(impl: GetLessonUseCaseImpl): GetLessonUseCase
+
+    @Binds
+    abstract fun bindGetLessonVocabulary(impl: GetLessonVocabularyUseCaseImpl): GetLessonVocabularyUseCase
+
+    @Binds
+    abstract fun bindSetLessonCompleted(impl: SetLessonCompletedUseCaseImpl): SetLessonCompletedUseCase
 }

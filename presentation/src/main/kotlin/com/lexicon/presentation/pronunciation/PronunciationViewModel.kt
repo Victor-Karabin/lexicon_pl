@@ -1,5 +1,6 @@
 package com.lexicon.presentation.pronunciation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.android.AudioPlayer
@@ -17,6 +18,7 @@ import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.WordResultEntry
+import com.lexicon.presentation.common.trainingVocabularyIds
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -36,6 +38,7 @@ private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 400L
 class PronunciationViewModel
     @Inject
     constructor(
+        savedStateHandle: SavedStateHandle,
         private val startSessionUseCase: StartPronunciationSessionUseCase,
         private val submitResultUseCase: SubmitPronunciationResultUseCase,
         private val speechSynthesizer: SpeechSynthesizer,
@@ -44,6 +47,8 @@ class PronunciationViewModel
         private val dispatchers: DispatcherProvider,
         private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
+        private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
+
         private val _uiState = MutableStateFlow<PronunciationUiState>(PronunciationUiState.Loading)
         val uiState: StateFlow<PronunciationUiState> = _uiState.asStateFlow()
 
@@ -64,7 +69,7 @@ class PronunciationViewModel
 
         private fun startSession() {
             viewModelScope.launch(dispatchers.io) {
-                val response = startSessionUseCase(StartPronunciationSessionRequest())
+                val response = startSessionUseCase(StartPronunciationSessionRequest(vocabularyIds = vocabularyIds))
                 sessionId = response.sessionId
                 steps = response.steps
                 _uiState.update {
