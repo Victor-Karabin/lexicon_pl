@@ -271,7 +271,8 @@ private fun LazyListScope.audioBlock(
         }
     }
     tracks.groupBy { it.source }.forEach { (source, group) ->
-        item(key = source) {
+        // The key has to survive saved state, which rules out the enum itself.
+        item(key = source.name) {
             AudioGroup(
                 source = source,
                 tracks = group,
