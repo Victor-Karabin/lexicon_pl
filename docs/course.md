@@ -24,11 +24,11 @@ shippable variant would be.
 
 ## What the sources actually give us
 
-| Source | Text quality | What we take |
-| --- | --- | --- |
-| A1 coursebook | native PDF text, exact | 26 lessons: title, syllabus, sections, new words, audio tags |
-| A2 coursebook | 155-page scan, re-OCR'd | lesson titles and new words only |
-| A1 workbook | image-only scan | audio only |
+| Source | Text quality | What we take | Shipped |
+| --- | --- | --- | --- |
+| A1 coursebook | native PDF text, exact | 26 lessons: title, syllabus, sections, new words, audio tags | yes |
+| A2 coursebook | 155-page scan, re-OCR'd | 23 lesson titles; word lists unreliable | **no — see below** |
+| A1 workbook | image-only scan | audio only | audio only |
 
 The A2 coursebook ships with an embedded OCR layer from I.R.I.S. that replaces
 about one letter in ten with a Cyrillic look-alike (`о` for `o`, `р` for `p`), so
@@ -38,6 +38,22 @@ reads as Polish and re-runs them with orientation detection.
 
 Audio: **488 tracks, 454 MB** — 220 with the A1 coursebook, 180 with A2, 88 with
 the A1 workbook.
+
+### Why A2 is not shipped
+
+`extract_krok.py` recovers all 23 A2 lessons and their titles, and the ordering is
+corroborated by the A2/B1 workbook's own table of contents. The word lists are the
+problem: they are printed in coloured bold on a coloured band, which the scan reads
+badly. Headwords come back misspelled — `niepefnosprawny`, `zatoba`, `repreSje`,
+`tryb dorazny` — and only **35 of 222** match the corpus.
+
+Authoring English glosses on top of misspelled Polish would teach the misspelling,
+which is worse than having no A2. So A2 is gated off in `COURSES` in
+`build_course.py` until its word lists are transcribed. That work is mechanical and
+already has a home: lessons 6, 12, 19 and 21 are done this way in
+`lesson_overrides.tsv`, transcribed from the rendered page band. The remaining 19
+lessons need the same treatment, then their new words authored into
+`zz-krok.tsv`.
 
 ## Pipeline
 
@@ -139,11 +155,12 @@ are simply disabled and the screen says so.
 
 ## Caveats
 
-- **A2 has no syllabus or section data.** The scan does not support it. Its
-  lessons carry a title and a word list.
+- **Only A1 ships**, for the reason above. The Plan tab shows 26 lessons, not 49.
+- **A2 has no syllabus or section data** even once its words are transcribed — the
+  scan does not preserve the column layout that makes those recoverable in A1.
 - **A2 lesson numbering comes from opener order.** `extract_krok.py` fails the
   build if it does not find exactly 23 openers, which is what makes the ordering
   safe to trust.
 - **The A1 workbook contributes audio only.** Its PDF has no text layer at all.
-- Book-derived English glosses in `zz-krok.tsv` are authored, not sourced, so they
-  are the usual sense of the word rather than the one the lesson intends.
+- English glosses in `zz-krok.tsv` are authored, not sourced, so they give the
+  usual sense of the word rather than the one the lesson intends.

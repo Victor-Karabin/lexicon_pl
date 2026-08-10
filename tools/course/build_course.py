@@ -54,6 +54,14 @@ COURSES = [
         "order": 2,
         "level": "A2",
         "title": {"en": "Polski krok po kroku 2", "pl": "Polski krok po kroku 2"},
+        # Not shipped yet. extract_krok.py recovers all 23 A2 lessons and their
+        # titles, but the new-word lists are printed in coloured bold on a coloured
+        # band, which the scan reads badly: headwords come back misspelled
+        # ("niepefnosprawny", "zatoba", "repreSje") and only 35 of 222 match the
+        # corpus. Shipping those would teach misspelled Polish, so A2 waits until
+        # its word lists are transcribed into lesson_overrides.tsv the way lessons
+        # 6, 12, 19 and 21 already are.
+        "include": False,
     },
 ]
 
@@ -182,6 +190,10 @@ def build(report_missing: bool) -> int:
     missing: list[tuple[str, int, str]] = []
     courses = []
     for course in COURSES:
+        if not course.get("include", True):
+            print(f"{course['id']}: not shipped yet (see COURSES in this file)")
+            continue
+
         lessons = lessons_by_book.get(course["book"])
         if not lessons:
             print(f"{course['id']}: no extracted lessons, skipping")

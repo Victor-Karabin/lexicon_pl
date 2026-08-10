@@ -29,17 +29,31 @@ import json
 import re
 import sys
 from itertools import combinations
+from pathlib import Path
 
 from krok_paths import CACHE_DIR, is_ocr_source, pages
 
 LESSON_MARKER = re.compile(r"Lekcja[_ ](\d{1,2})")
 
 # OCR renders the same marker as "Lekcia 02" or drops the number altogether, so the
-# OCR path matches loosely and reconciles the numbering afterwards.
-OCR_LESSON_MARKER = re.compile(r"\bLek[cs][ijl]?a\b\s*(\d{0,2})", re.I)
+# OCR path matches loosely and reconciles the numbering afterwards. It stays
+# case-sensitive because "lekcja" is also an ordinary word: a page reading "lekcja
+# języka na uniwersytecie" is not a lesson opener.
+OCR_LESSON_MARKER = re.compile(r"\bLek[cs][ijl]?a\b\s*(\d{0,2})")
+
+# The marker is printed on a line of its own, so anything much longer is prose that
+# happens to contain the word.
+MARKER_LINE_SLACK = 3
 
 # A run with this many commas is a word list rather than a sentence.
 MIN_COMMAS_IN_WORD_LIST = 3
+
+# ...and every entry on it is a word or a short phrase. Prose also has commas, and a
+# lesson whose opener carries no word list at all would otherwise take a paragraph.
+MAX_WORDS_PER_ENTRY = 4
+
+# tesseract renders the books' dotted fill-in rules as long runs of noise.
+OCR_NOISE = re.compile(r"\.{3,}|_{3,}")
 COLUMN_HEADERS = ("komunikacja", "słownictwo", "gramatyka")
 NEW_WORDS_MARKER = "nowe słowa"
 SECTION_HEADER = re.compile(r"^\s{2,}([A-H])\s{3,}(\S.*?)\s*$", re.M)
@@ -47,6 +61,8 @@ AUDIO_TAG = re.compile(r"\b([12])(\d{2})([A-H])(\d{1,2})\b")
 PAGE_FOOTER = re.compile(r"download this book from|^\s*_?\d+\s*$")
 
 EXPECTED_LESSONS = {"a1_coursebook": 26, "a2_coursebook": 23}
+
+OVERRIDES = Path(__file__).parent / "lesson_overrides.tsv"
 
 UPPERCASE_LETTERS = set("ABCDEFGHIJKLMNOPRSTUWXYZĄĆĘŁŃÓŚŹŻ")
 
@@ -113,6 +129,19 @@ def assign_columns(runs: list[tuple[int, str]], columns: list[tuple[str, int]]) 
     return [(columns[c][0], runs[i][1]) for i, c in enumerate(best)]
 
 
+def is_marker_line(line: str) -> bool:
+    """A line that is the lesson label itself, not prose containing the word."""
+    match = OCR_LESSON_MARKER.search(line)
+    return match is not None and len(line.strip()) <= len(match.group()) + MARKER_LINE_SLACK
+
+
+def looks_like_word_list(line: str) -> bool:
+    if line.count(",") < MIN_COMMAS_IN_WORD_LIST or OCR_NOISE.search(line):
+        return False
+    entries = [part.strip() for part in line.split(",") if part.strip()]
+    return bool(entries) and all(len(entry.split()) <= MAX_WORDS_PER_ENTRY for entry in entries)
+
+
 def parse_ocr_opener(page: str) -> dict | None:
     """A lesson opener read from an OCR transcript rather than a laid-out PDF.
 
@@ -122,7 +151,7 @@ def parse_ocr_opener(page: str) -> dict | None:
     it is one comma-separated run, which survives OCR intact.
     """
     lines = page.split("\n")
-    marker = next((i for i, line in enumerate(lines) if OCR_LESSON_MARKER.search(line)), None)
+    marker = next((i for i, line in enumerate(lines) if is_marker_line(line)), None)
     if marker is None:
         return None
 
@@ -131,7 +160,7 @@ def parse_ocr_opener(page: str) -> dict | None:
     for line in lines[marker + 1 :]:
         if NEW_WORDS_MARKER in line.lower():
             break
-        if line.count(",") >= MIN_COMMAS_IN_WORD_LIST:
+        if looks_like_word_list(line):
             new_words.append(clean(line.rstrip("|").strip()))
 
     return {
@@ -229,6 +258,27 @@ def audio_tags(body: str) -> list[str]:
     return sorted({f"{m.group(1)}{m.group(2)}{m.group(3)}{m.group(4)}" for m in AUDIO_TAG.finditer(body)})
 
 
+def load_overrides() -> dict[tuple[str, int], dict[str, str]]:
+    """Hand-corrected titles and word lists, keyed by (book, lesson number)."""
+    overrides: dict[tuple[str, int], dict[str, str]] = {}
+    for line in OVERRIDES.read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.startswith("#"):
+            continue
+        book, number, field, value = line.split("\t")
+        overrides.setdefault((book, int(number)), {})[field] = value
+    return overrides
+
+
+def apply_override(
+    lesson: dict,
+    override: dict[str, str],
+) -> None:
+    if "title" in override:
+        lesson["title"] = override["title"]
+    if "words" in override:
+        lesson["newWords"] = split_new_words([override["words"]])
+
+
 def extract_book(book: str) -> list[dict]:
     parse = parse_ocr_opener if is_ocr_source(book) else parse_opener
     book_pages = pages(book)
@@ -251,9 +301,11 @@ def extract_book(book: str) -> list[dict]:
     # Openers come in book order, so position is a more reliable number than an OCR
     # digit. Trusting it is only safe when every opener was found, which the count
     # check below is there to establish.
+    overrides = load_overrides()
     for position, lesson in enumerate(lessons, start=1):
         lesson["ocrNumber"] = lesson["number"]
         lesson["number"] = position
+        apply_override(lesson, overrides.get((book, position), {}))
 
     expected = EXPECTED_LESSONS.get(book)
     if expected and len(lessons) != expected:

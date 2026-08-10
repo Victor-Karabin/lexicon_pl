@@ -1,0 +1,16 @@
+# Corrections to what the extractor reads, for the A2 scan where OCR loses a lesson.
+#
+# The A2 new-word list is printed in coloured bold on a coloured band, which tesseract
+# reads unreliably and sometimes drops entirely; four lessons came back with no words
+# at all. Those lists were transcribed from the rendered pages by hand. Titles are
+# corrected where OCR mangled a letter or picked up a stray mark.
+#
+# Columns: book <TAB> lesson number <TAB> field (title|words) <TAB> value
+# "words" is comma separated, exactly as the book prints it.
+a2_coursebook	3	title	TEATR ŻYWYCH FOTOGRAFII
+a2_coursebook	6	words	bezprzewodowy, użytkownik, hasło, wagary, egzamin dojrzałości, uciekać, wymagania
+a2_coursebook	12	title	WJAZD CZY WYJAZD?
+a2_coursebook	12	words	odcięty od, okolica, dokonać formalności, uniknąć czegoś, ledwie, błoto, nierzetelność
+a2_coursebook	16	title	PRZYGODY, PRZEŻYCIA, WSPOMNIENIA
+a2_coursebook	19	words	gospodarstwo, spadek, odziedziczyć, nawyk, oddalać się, karmić, odśnieżać
+a2_coursebook	21	words	ściągnąć coś z Internetu, złamać prawo, odbywać się, nadużycie, przestępstwo, niewinny, loża
