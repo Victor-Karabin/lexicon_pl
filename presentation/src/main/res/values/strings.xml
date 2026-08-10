@@ -104,6 +104,8 @@
     <string name="lesson_audio">Audio</string>
     <string name="lesson_audio_missing">Recordings are not on this device.</string>
     <string name="lesson_audio_workbook">Workbook</string>
+    <string name="lesson_audio_play">Play %1$s</string>
+    <string name="lesson_audio_pause">Pause %1$s</string>
     <string name="lesson_train">Train this lesson</string>
     <string name="lesson_mark_complete">Mark as done</string>
     <string name="lesson_mark_incomplete">Mark as not done</string>

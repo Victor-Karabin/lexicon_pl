@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material3.AssistChip
@@ -297,6 +298,7 @@ private fun AudioGroup(
                     track = track,
                     isEnabled = uiState.isPlayable(track),
                     isDownloading = uiState.downloadingAudio == track.file,
+                    isPlaying = uiState.playingAudio == track.file,
                     onClick = { onPlayAudio(track) },
                 )
             }
@@ -310,6 +312,7 @@ private fun AudioChip(
     track: LessonAudio,
     isEnabled: Boolean,
     isDownloading: Boolean,
+    isPlaying: Boolean,
     onClick: () -> Unit,
 ) {
     AssistChip(
@@ -317,17 +320,26 @@ private fun AudioChip(
         enabled = isEnabled && !isDownloading,
         label = { Text(text = track.label, style = MaterialTheme.typography.labelMedium) },
         leadingIcon = {
-            if (isDownloading) {
-                CircularProgressIndicator(
-                    strokeWidth = 2.dp,
-                    modifier = Modifier.size(AssistChipDefaults.IconSize),
-                )
-            } else {
-                Icon(
-                    imageVector = Icons.Default.PlayArrow,
-                    contentDescription = null,
-                    modifier = Modifier.size(AssistChipDefaults.IconSize),
-                )
+            when {
+                isDownloading ->
+                    CircularProgressIndicator(
+                        strokeWidth = 2.dp,
+                        modifier = Modifier.size(AssistChipDefaults.IconSize),
+                    )
+
+                isPlaying ->
+                    Icon(
+                        imageVector = Icons.Default.Pause,
+                        contentDescription = stringResource(R.string.lesson_audio_pause, track.label),
+                        modifier = Modifier.size(AssistChipDefaults.IconSize),
+                    )
+
+                else ->
+                    Icon(
+                        imageVector = Icons.Default.PlayArrow,
+                        contentDescription = stringResource(R.string.lesson_audio_play, track.label),
+                        modifier = Modifier.size(AssistChipDefaults.IconSize),
+                    )
             }
         },
     )

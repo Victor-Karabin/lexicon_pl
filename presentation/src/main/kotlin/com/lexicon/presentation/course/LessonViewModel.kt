@@ -3,8 +3,8 @@ package com.lexicon.presentation.course
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.AudioPlayer
 import com.lexicon.android.LessonAudioLibrary
+import com.lexicon.android.LessonAudioPlayer
 import com.lexicon.android.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.course.GetLessonUseCase
@@ -43,6 +43,8 @@ sealed interface LessonUiState {
         val availableAudio: Set<String> = emptySet(),
         /** The track currently being fetched, so its chip can show progress. */
         val downloadingAudio: String? = null,
+        /** The track currently playing, so its chip offers pause instead of play. */
+        val playingAudio: String? = null,
     ) : LessonUiState
 }
 
@@ -67,7 +69,7 @@ class LessonViewModel
         private val setLessonCompleted: SetLessonCompletedUseCase,
         private val toggleWordFavourite: ToggleWordFavouriteUseCase,
         private val audioLibrary: LessonAudioLibrary,
-        private val audioPlayer: AudioPlayer,
+        private val audioPlayer: LessonAudioPlayer,
         observeFavouriteWordIds: ObserveFavouriteWordIdsUseCase,
         private val dispatchers: DispatcherProvider,
         private val speechSynthesizer: SpeechSynthesizer,
@@ -85,7 +87,7 @@ class LessonViewModel
         private val content = MutableStateFlow<Content?>(null)
 
         val uiState: StateFlow<LessonUiState> =
-            combine(content, observeFavouriteWordIds()) { loaded, favourites ->
+            combine(content, observeFavouriteWordIds(), audioPlayer.playingFile) { loaded, favourites, playing ->
                 when {
                     loaded == null -> LessonUiState.Loading
                     loaded.lesson == null -> LessonUiState.NotFound
@@ -98,6 +100,7 @@ class LessonViewModel
                             isLoadingWords = !loaded.wordsLoaded,
                             availableAudio = loaded.availableAudio,
                             downloadingAudio = loaded.downloadingAudio,
+                            playingAudio = playing,
                         )
                 }
             }.stateIn(
@@ -117,7 +120,13 @@ class LessonViewModel
             }
         }
 
+        /** Tapping the track that is playing pauses it; anything else starts from the top. */
         fun onPlayAudio(track: LessonAudio) {
+            if (audioPlayer.playingFile.value == track.file) {
+                audioPlayer.pause()
+                return
+            }
+
             viewModelScope.launch(dispatchers.io) {
                 val cached = audioLibrary.localPathOrNull(track.file)
                 if (cached == null) content.update { it?.copy(downloadingAudio = track.file) }
@@ -129,8 +138,13 @@ class LessonViewModel
                         availableAudio = if (path == null) it.availableAudio else it.availableAudio + track.file,
                     )
                 }
-                if (path != null) runCatching { audioPlayer.play(path) }
+                if (path != null) runCatching { audioPlayer.play(track.file, path) }
             }
+        }
+
+        override fun onCleared() {
+            // The player outlives this screen, so leaving the lesson has to silence it.
+            audioPlayer.stop()
         }
 
         /** Reads the Polish out loud; the translation is not what a learner needs to hear. */
