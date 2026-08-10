@@ -5,7 +5,15 @@ import kotlinx.coroutines.flow.Flow
 interface VocabularyRepository {
     suspend fun syncFromSource(): SyncOutcomeBoundary
 
-    suspend fun getRandomItems(count: Int): List<VocabularyItemBoundary>
+    /**
+     * Random words to build a session from. [restrictToIds] narrows the draw to a
+     * subset — a course lesson's own words — and an empty list means the whole
+     * study set.
+     */
+    suspend fun getRandomItems(
+        count: Int,
+        restrictToIds: List<Long> = emptyList(),
+    ): List<VocabularyItemBoundary>
 
     suspend fun getItemsByIds(ids: List<Long>): List<VocabularyItemBoundary>
 

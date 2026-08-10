@@ -18,7 +18,7 @@ class StartDictationPuzzleSessionUseCaseImpl
     ) : StartDictationPuzzleSessionUseCase {
         override suspend fun invoke(request: StartDictationPuzzleSessionRequest): DictationPuzzleSessionResponse {
             val stepCount = stepCountResolver.resolve(request.stepCount)
-            val words = vocabularyRepository.getRandomItems(stepCount).map { it.toWord() }
+            val words = vocabularyRepository.getRandomItems(stepCount, request.vocabularyIds).map { it.toWord() }
             val steps =
                 words.mapIndexed { index, word ->
                     DictationPuzzleStepResponse(

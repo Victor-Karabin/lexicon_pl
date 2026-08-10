@@ -1,5 +1,6 @@
 package com.lexicon.presentation.memorycards
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
@@ -11,6 +12,7 @@ import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultRequest
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.trainingVocabularyIds
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -30,10 +32,13 @@ private const val INCORRECT_FLASH_DELAY_MS = 600L
 class MemoryCardsViewModel
     @Inject
     constructor(
+        savedStateHandle: SavedStateHandle,
         private val startSessionUseCase: StartMemoryCardsSessionUseCase,
         private val submitStepResultUseCase: SubmitMemoryCardsStepResultUseCase,
         private val dispatchers: DispatcherProvider,
     ) : ViewModel() {
+        private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
+
         private val _uiState = MutableStateFlow<MemoryCardsUiState>(MemoryCardsUiState.Loading)
         val uiState: StateFlow<MemoryCardsUiState> = _uiState.asStateFlow()
 
@@ -52,7 +57,7 @@ class MemoryCardsViewModel
 
         private fun startSession() {
             viewModelScope.launch(dispatchers.io) {
-                val response = startSessionUseCase(StartMemoryCardsSessionRequest())
+                val response = startSessionUseCase(StartMemoryCardsSessionRequest(vocabularyIds = vocabularyIds))
                 sessionId = response.sessionId
                 steps = response.steps
                 openStep(0)

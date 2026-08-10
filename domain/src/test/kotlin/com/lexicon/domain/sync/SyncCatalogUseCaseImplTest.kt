@@ -1,5 +1,6 @@
 package com.lexicon.domain.sync
 
+import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.SyncOutcomeBoundary
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
@@ -22,7 +23,8 @@ import org.junit.Test
 class SyncCatalogUseCaseImplTest {
     private val vocabularyRepository: VocabularyRepository = mockk(relaxed = true)
     private val presetRepository: VocabularyPresetRepository = mockk(relaxed = true)
-    private val useCase = SyncCatalogUseCaseImpl(vocabularyRepository, presetRepository)
+    private val courseRepository: CourseRepository = mockk(relaxed = true)
+    private val useCase = SyncCatalogUseCaseImpl(vocabularyRepository, presetRepository, courseRepository)
 
     private fun outcome(
         total: Int,

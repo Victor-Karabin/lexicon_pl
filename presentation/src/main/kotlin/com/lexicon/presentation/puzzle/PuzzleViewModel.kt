@@ -1,5 +1,6 @@
 package com.lexicon.presentation.puzzle
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
@@ -15,6 +16,7 @@ import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.WordResultEntry
 import com.lexicon.presentation.common.shuffleIntoTiles
+import com.lexicon.presentation.common.trainingVocabularyIds
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -33,11 +35,14 @@ private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 400L
 class PuzzleViewModel
     @Inject
     constructor(
+        savedStateHandle: SavedStateHandle,
         private val startSessionUseCase: StartPuzzleSessionUseCase,
         private val submitAnswerUseCase: SubmitPuzzleAnswerUseCase,
         private val dispatchers: DispatcherProvider,
         private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
+        private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
+
         private val _uiState = MutableStateFlow<PuzzleUiState>(PuzzleUiState.Loading)
         val uiState: StateFlow<PuzzleUiState> = _uiState.asStateFlow()
 
@@ -58,7 +63,7 @@ class PuzzleViewModel
 
         private fun startSession() {
             viewModelScope.launch(dispatchers.io) {
-                val response = startSessionUseCase(StartPuzzleSessionRequest())
+                val response = startSessionUseCase(StartPuzzleSessionRequest(vocabularyIds = vocabularyIds))
                 sessionId = response.sessionId
                 steps = response.steps
                 openStep(0)

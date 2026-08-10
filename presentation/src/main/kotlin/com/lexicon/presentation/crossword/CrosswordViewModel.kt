@@ -1,5 +1,6 @@
 package com.lexicon.presentation.crossword
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
@@ -13,6 +14,7 @@ import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.WordResultEntry
+import com.lexicon.presentation.common.trainingVocabularyIds
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,11 +31,14 @@ import javax.inject.Inject
 class CrosswordViewModel
     @Inject
     constructor(
+        savedStateHandle: SavedStateHandle,
         private val startSessionUseCase: StartCrosswordSessionUseCase,
         private val submitCrosswordUseCase: SubmitCrosswordUseCase,
         private val dispatchers: DispatcherProvider,
         private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
+        private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
+
         private val _uiState = MutableStateFlow<CrosswordUiState>(CrosswordUiState.Loading)
         val uiState: StateFlow<CrosswordUiState> = _uiState.asStateFlow()
 
@@ -48,7 +53,7 @@ class CrosswordViewModel
 
         private fun startSession() {
             viewModelScope.launch(dispatchers.io) {
-                val response = startSessionUseCase(StartCrosswordSessionRequest())
+                val response = startSessionUseCase(StartCrosswordSessionRequest(vocabularyIds = vocabularyIds))
                 sessionId = response.sessionId
                 val words = response.words.map { placement ->
                     CrosswordWordUi(

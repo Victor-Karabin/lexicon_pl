@@ -26190,5 +26190,1172 @@
   "topics": [
    "directions"
   ]
+ },
+ {
+  "id": 2372,
+  "text": "proszę powtórzyć",
+  "translation": "please repeat",
+  "transcription": "ˈprɔʂɛ̃ pɔˈftuʐɨt͡ɕ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation",
+   "classroom"
+  ]
+ },
+ {
+  "id": 2373,
+  "text": "wszystko dobrze",
+  "translation": "all good",
+  "transcription": "ˈfʂɨstkɔ ˈdɔbʐɛ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2374,
+  "text": "dlaczego",
+  "translation": "why",
+  "transcription": "dlaˈt͡ʂɛgɔ",
+  "partOfSpeech": "adv",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2375,
+  "text": "uczyć się polskiego",
+  "translation": "to learn Polish",
+  "transcription": "ˈut͡ʂɨt͡ɕ ɕɛ̃ pɔˈlskjɛgɔ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "studying"
+  ]
+ },
+ {
+  "id": 2376,
+  "text": "mój chłopak",
+  "translation": "my boyfriend",
+  "transcription": "muj ˈxwɔpak",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "relationships"
+  ]
+ },
+ {
+  "id": 2377,
+  "text": "moja dziewczyna",
+  "translation": "my girlfriend",
+  "transcription": "ˈmɔja d͡ʑɛˈft͡ʂɨna",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "relationships"
+  ]
+ },
+ {
+  "id": 2378,
+  "text": "moje hobby",
+  "translation": "my hobby",
+  "transcription": "ˈmɔjɛ ˈxɔbbɨ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "hobbies"
+  ]
+ },
+ {
+  "id": 2379,
+  "text": "bezokolicznik",
+  "translation": "infinitive",
+  "transcription": "bɛzɔkɔˈlit͡ʂɲik",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "studying"
+  ]
+ },
+ {
+  "id": 2380,
+  "text": "mieć rację",
+  "translation": "to be right",
+  "transcription": "mjɛt͡ɕ ˈrat͡sjɛ̃",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2381,
+  "text": "oscypek",
+  "translation": "smoked sheep cheese",
+  "transcription": "ɔˈst͡sɨpɛk",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ]
+ },
+ {
+  "id": 2382,
+  "text": "pół",
+  "translation": "half",
+  "transcription": "puw",
+  "partOfSpeech": "num",
+  "cefr": "A1",
+  "topics": [
+   "numbers"
+  ]
+ },
+ {
+  "id": 2383,
+  "text": "gospodarz",
+  "translation": "host",
+  "transcription": "gɔˈspɔdaʂ",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "people"
+  ]
+ },
+ {
+  "id": 2384,
+  "text": "gospodyni",
+  "translation": "hostess",
+  "transcription": "gɔspɔˈdɨɲi",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "people"
+  ]
+ },
+ {
+  "id": 2385,
+  "text": "nudzić się",
+  "translation": "to be bored",
+  "transcription": "ˈnud͡ʑit͡ɕ ɕɛ̃",
+  "partOfSpeech": "v",
+  "cefr": "A1",
+  "topics": [
+   "emotions"
+  ]
+ },
+ {
+  "id": 2386,
+  "text": "bogaty",
+  "translation": "rich",
+  "transcription": "bɔˈgatɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A1",
+  "topics": [
+   "personality"
+  ]
+ },
+ {
+  "id": 2387,
+  "text": "biedny",
+  "translation": "poor",
+  "transcription": "ˈbjɛdnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A1",
+  "topics": [
+   "personality"
+  ]
+ },
+ {
+  "id": 2388,
+  "text": "polecać",
+  "translation": "to recommend",
+  "transcription": "pɔˈlɛt͡sat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "A2",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2389,
+  "text": "kantor",
+  "translation": "currency exchange",
+  "transcription": "ˈkantɔr",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "finance"
+  ]
+ },
+ {
+  "id": 2390,
+  "text": "zaspany",
+  "translation": "sleepy",
+  "transcription": "zaˈspanɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2391,
+  "text": "chętnie",
+  "translation": "willingly",
+  "transcription": "ˈxɛ̃tɲɛ",
+  "partOfSpeech": "adv",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2392,
+  "text": "mieć ochotę na",
+  "translation": "to feel like",
+  "transcription": "mjɛt͡ɕ ɔˈxɔtɛ̃ na",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2393,
+  "text": "suszony",
+  "translation": "dried",
+  "transcription": "suˈʂɔnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ]
+ },
+ {
+  "id": 2394,
+  "text": "świeży",
+  "translation": "fresh",
+  "transcription": "ˈʑvjɛʐɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ]
+ },
+ {
+  "id": 2395,
+  "text": "miękki",
+  "translation": "soft",
+  "transcription": "ˈmjɛ̃kki",
+  "partOfSpeech": "adj",
+  "cefr": "A1",
+  "topics": [
+   "shapes"
+  ]
+ },
+ {
+  "id": 2396,
+  "text": "twardy",
+  "translation": "hard",
+  "transcription": "ˈdvardɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A1",
+  "topics": [
+   "shapes"
+  ]
+ },
+ {
+  "id": 2397,
+  "text": "doniczka",
+  "translation": "flower pot",
+  "transcription": "dɔˈɲit͡ʂka",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "home"
+  ]
+ },
+ {
+  "id": 2398,
+  "text": "węgorz",
+  "translation": "eel",
+  "transcription": "ˈvɛ̃gɔʂ",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "fish"
+  ]
+ },
+ {
+  "id": 2399,
+  "text": "uwielbiać",
+  "translation": "to adore",
+  "transcription": "uˈvjɛlbjat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "A2",
+  "topics": [
+   "emotions"
+  ]
+ },
+ {
+  "id": 2400,
+  "text": "zamawiać",
+  "translation": "to order",
+  "transcription": "zaˈmavjat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "A1",
+  "topics": [
+   "shopping"
+  ]
+ },
+ {
+  "id": 2401,
+  "text": "zapiekanka",
+  "translation": "baked baguette",
+  "transcription": "zapjɛˈkanka",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ]
+ },
+ {
+  "id": 2402,
+  "text": "coś dobrze brzmi",
+  "translation": "that sounds good",
+  "transcription": "t͡sɔɕ ˈdɔbʐɛ bʐmi",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2403,
+  "text": "rozwiedziona",
+  "translation": "divorced",
+  "transcription": "rɔzvjɛˈd͡ʑɔna",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "family"
+  ]
+ },
+ {
+  "id": 2404,
+  "text": "nie żyje",
+  "translation": "has passed away",
+  "transcription": "ɲɛ ˈʐɨjɛ",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "family"
+  ]
+ },
+ {
+  "id": 2405,
+  "text": "drzewo genealogiczne",
+  "translation": "family tree",
+  "transcription": "ˈdʐɛvɔ gɛnɛalɔˈgit͡ʂnɛ",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "family"
+  ]
+ },
+ {
+  "id": 2406,
+  "text": "rozmawiać",
+  "translation": "to talk",
+  "transcription": "rɔˈzmavjat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2407,
+  "text": "stuprocentowy",
+  "translation": "hundred per cent",
+  "transcription": "stuprɔt͡sɛˈntɔvɨ",
+  "partOfSpeech": "adj",
+  "cefr": "B1",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2408,
+  "text": "umówić się",
+  "translation": "to arrange to meet",
+  "transcription": "uˈmuvit͡ɕ ɕɛ̃",
+  "partOfSpeech": "v",
+  "cefr": "A2",
+  "topics": [
+   "meetings"
+  ]
+ },
+ {
+  "id": 2409,
+  "text": "odbierać telefon",
+  "translation": "to answer the phone",
+  "transcription": "ɔˈdbjɛrat͡ɕ tɛˈlɛfɔn",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "smartphone"
+  ]
+ },
+ {
+  "id": 2410,
+  "text": "mieć zasięg",
+  "translation": "to have signal",
+  "transcription": "mjɛt͡ɕ ˈzaɕɛ̃k",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "smartphone"
+  ]
+ },
+ {
+  "id": 2411,
+  "text": "marzenie",
+  "translation": "dream",
+  "transcription": "maˈʐɛɲɛ",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "emotions"
+  ]
+ },
+ {
+  "id": 2412,
+  "text": "odpisywać",
+  "translation": "to write back",
+  "transcription": "ɔtpiˈsɨvat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "A2",
+  "topics": [
+   "smartphone"
+  ]
+ },
+ {
+  "id": 2413,
+  "text": "szczęście",
+  "translation": "happiness",
+  "transcription": "ˈʂt͡ʂɛ̃ɕt͡ɕɛ",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "emotions"
+  ]
+ },
+ {
+  "id": 2414,
+  "text": "jednocześnie",
+  "translation": "at the same time",
+  "transcription": "jɛdnɔˈt͡ʂɛɕɲɛ",
+  "partOfSpeech": "adv",
+  "cefr": "B1",
+  "topics": [
+   "time"
+  ]
+ },
+ {
+  "id": 2415,
+  "text": "światło",
+  "translation": "light",
+  "transcription": "ˈʑvjatwɔ",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "home"
+  ]
+ },
+ {
+  "id": 2416,
+  "text": "światła",
+  "translation": "traffic lights",
+  "transcription": "ˈʑvjatwa",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "directions"
+  ]
+ },
+ {
+  "id": 2417,
+  "text": "krzyż",
+  "translation": "cross",
+  "transcription": "gʐɨʂ",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "shapes"
+  ]
+ },
+ {
+  "id": 2418,
+  "text": "krzyżówka",
+  "translation": "crossword",
+  "transcription": "gʐɨˈʐufka",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "games"
+  ]
+ },
+ {
+  "id": 2419,
+  "text": "wygrać",
+  "translation": "to win",
+  "transcription": "ˈvɨgrat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "A1",
+  "topics": [
+   "games"
+  ]
+ },
+ {
+  "id": 2420,
+  "text": "plasterek",
+  "translation": "slice",
+  "transcription": "plaˈstɛrɛk",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ]
+ },
+ {
+  "id": 2421,
+  "text": "zapałki",
+  "translation": "matches",
+  "transcription": "zaˈpawki",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "household"
+  ]
+ },
+ {
+  "id": 2422,
+  "text": "zgrzewka",
+  "translation": "shrink-wrapped pack",
+  "transcription": "ˈzgʐɛfka",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "shopping"
+  ]
+ },
+ {
+  "id": 2423,
+  "text": "bochenek",
+  "translation": "loaf",
+  "transcription": "bɔˈxɛnɛk",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ]
+ },
+ {
+  "id": 2424,
+  "text": "wybierać się",
+  "translation": "to be setting off",
+  "transcription": "vɨˈbjɛrat͡ɕ ɕɛ̃",
+  "partOfSpeech": "v",
+  "cefr": "A2",
+  "topics": [
+   "travel"
+  ]
+ },
+ {
+  "id": 2425,
+  "text": "nie cierpieć",
+  "translation": "to detest",
+  "transcription": "ɲɛ ˈt͡ɕɛrpjɛt͡ɕ",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "emotions"
+  ]
+ },
+ {
+  "id": 2426,
+  "text": "zmyślać",
+  "translation": "to make things up",
+  "transcription": "ˈzmɨɕlat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "B1",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2427,
+  "text": "zależeć od",
+  "translation": "to depend on",
+  "transcription": "zaˈlɛʐɛt͡ɕ ɔt",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2428,
+  "text": "pora roku",
+  "translation": "season",
+  "transcription": "ˈpɔra ˈrɔku",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "weather"
+  ]
+ },
+ {
+  "id": 2429,
+  "text": "przysłowie",
+  "translation": "proverb",
+  "transcription": "bʐɨˈswɔvjɛ",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "books"
+  ]
+ },
+ {
+  "id": 2430,
+  "text": "zaczynać się",
+  "translation": "to begin",
+  "transcription": "zaˈt͡ʂɨnat͡ɕ ɕɛ̃",
+  "partOfSpeech": "v",
+  "cefr": "A1",
+  "topics": [
+   "time"
+  ]
+ },
+ {
+  "id": 2431,
+  "text": "kończyć się",
+  "translation": "to end",
+  "transcription": "ˈkɔɲt͡ʂɨt͡ɕ ɕɛ̃",
+  "partOfSpeech": "v",
+  "cefr": "A1",
+  "topics": [
+   "time"
+  ]
+ },
+ {
+  "id": 2432,
+  "text": "mieć nadzieję",
+  "translation": "to hope",
+  "transcription": "mjɛt͡ɕ naˈd͡ʑɛjɛ̃",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "emotions"
+  ]
+ },
+ {
+  "id": 2433,
+  "text": "modny",
+  "translation": "fashionable",
+  "transcription": "ˈmɔdnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "clothing"
+  ]
+ },
+ {
+  "id": 2434,
+  "text": "marudny",
+  "translation": "grumpy",
+  "transcription": "maˈrudnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "B1",
+  "topics": [
+   "personality"
+  ]
+ },
+ {
+  "id": 2435,
+  "text": "plotki",
+  "translation": "gossip",
+  "transcription": "ˈplɔtki",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2436,
+  "text": "plotkować",
+  "translation": "to gossip",
+  "transcription": "plɔˈtkɔvat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "B1",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2437,
+  "text": "strasznie",
+  "translation": "terribly",
+  "transcription": "ˈstraʂɲɛ",
+  "partOfSpeech": "adv",
+  "cefr": "A2",
+  "topics": [
+   "emotions"
+  ]
+ },
+ {
+  "id": 2438,
+  "text": "piętro",
+  "translation": "floor",
+  "transcription": "ˈpjɛ̃trɔ",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "home"
+  ]
+ },
+ {
+  "id": 2439,
+  "text": "mebel",
+  "translation": "piece of furniture",
+  "transcription": "ˈmɛbɛl",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "home"
+  ]
+ },
+ {
+  "id": 2440,
+  "text": "parter",
+  "translation": "ground floor",
+  "transcription": "ˈpartɛr",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "home"
+  ]
+ },
+ {
+  "id": 2441,
+  "text": "kamienica",
+  "translation": "tenement house",
+  "transcription": "kamjɛˈɲit͡sa",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "home"
+  ]
+ },
+ {
+  "id": 2442,
+  "text": "kominek",
+  "translation": "fireplace",
+  "transcription": "kɔˈminɛk",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "home"
+  ]
+ },
+ {
+  "id": 2443,
+  "text": "spiżarnia",
+  "translation": "pantry",
+  "transcription": "spiˈʐarɲa",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "home"
+  ]
+ },
+ {
+  "id": 2444,
+  "text": "przeprowadzać się",
+  "translation": "to move house",
+  "transcription": "bʐɛprɔˈvad͡zat͡ɕ ɕɛ̃",
+  "partOfSpeech": "v",
+  "cefr": "A2",
+  "topics": [
+   "home"
+  ]
+ },
+ {
+  "id": 2445,
+  "text": "zaspać",
+  "translation": "to oversleep",
+  "transcription": "ˈzaspat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "A2",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2446,
+  "text": "zdarzać się",
+  "translation": "to happen",
+  "transcription": "ˈzdaʐat͡ɕ ɕɛ̃",
+  "partOfSpeech": "v",
+  "cefr": "A2",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2447,
+  "text": "jeśli chodzi o",
+  "translation": "as far as ... goes",
+  "transcription": "ˈjɛɕli ˈxɔd͡ʑi ɔ",
+  "partOfSpeech": "expr",
+  "cefr": "B1",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2448,
+  "text": "graniczyć",
+  "translation": "to border",
+  "transcription": "graˈɲit͡ʂɨt͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "B1",
+  "topics": [
+   "countries"
+  ]
+ },
+ {
+  "id": 2449,
+  "text": "połączenie",
+  "translation": "connection",
+  "transcription": "pɔwɔ̃ˈt͡ʂɛɲɛ",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "transport"
+  ]
+ },
+ {
+  "id": 2450,
+  "text": "średniowiecze",
+  "translation": "the Middle Ages",
+  "transcription": "ɕrɛdɲɔˈvjɛt͡ʂɛ",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "cities"
+  ]
+ },
+ {
+  "id": 2451,
+  "text": "obchodzić urodziny",
+  "translation": "to celebrate a birthday",
+  "transcription": "ɔˈbxɔd͡ʑit͡ɕ urɔˈd͡ʑinɨ",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "dates"
+  ]
+ },
+ {
+  "id": 2452,
+  "text": "komunizm",
+  "translation": "communism",
+  "transcription": "kɔˈmuɲizm",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "politics"
+  ]
+ },
+ {
+  "id": 2453,
+  "text": "kieliszek",
+  "translation": "small glass",
+  "transcription": "kjɛˈliʂɛk",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "drinks"
+  ]
+ },
+ {
+  "id": 2454,
+  "text": "zostawać",
+  "translation": "to stay",
+  "transcription": "zɔˈstavat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "A2",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2455,
+  "text": "zejść",
+  "translation": "to come down",
+  "transcription": "zɛjɕt͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "A2",
+  "topics": [
+   "directions"
+  ]
+ },
+ {
+  "id": 2456,
+  "text": "należeć",
+  "translation": "to belong",
+  "transcription": "naˈlɛʐɛt͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "A2",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2457,
+  "text": "zabór",
+  "translation": "partition",
+  "transcription": "ˈzabur",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "politics"
+  ]
+ },
+ {
+  "id": 2458,
+  "text": "pod względem",
+  "translation": "in terms of",
+  "transcription": "pɔt ˈvzglɛ̃dɛm",
+  "partOfSpeech": "expr",
+  "cefr": "B1",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2459,
+  "text": "międzywojenny",
+  "translation": "interwar",
+  "transcription": "mjɛ̃d͡zɨvɔˈjɛnnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "B2",
+  "topics": [
+   "politics"
+  ]
+ },
+ {
+  "id": 2460,
+  "text": "ciuch",
+  "translation": "rag",
+  "transcription": "t͡ɕux",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "clothing"
+  ]
+ },
+ {
+  "id": 2461,
+  "text": "nosić",
+  "translation": "to wear",
+  "transcription": "ˈnɔɕit͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "A1",
+  "topics": [
+   "clothing"
+  ]
+ },
+ {
+  "id": 2462,
+  "text": "mieć na sobie",
+  "translation": "to be wearing",
+  "transcription": "mjɛt͡ɕ na ˈsɔbjɛ",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "clothing"
+  ]
+ },
+ {
+  "id": 2463,
+  "text": "olśniewający",
+  "translation": "dazzling",
+  "transcription": "ɔlɕɲɛvaˈjɔ̃t͡sɨ",
+  "partOfSpeech": "adj",
+  "cefr": "B2",
+  "topics": [
+   "appearance"
+  ]
+ },
+ {
+  "id": 2464,
+  "text": "kiepski",
+  "translation": "lousy",
+  "transcription": "ˈkjɛpski",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2465,
+  "text": "strzyżenie",
+  "translation": "haircut",
+  "transcription": "zdʐɨˈʐɛɲɛ",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "appearance"
+  ]
+ },
+ {
+  "id": 2466,
+  "text": "pozwolić na",
+  "translation": "to allow",
+  "transcription": "pɔˈzvɔlit͡ɕ na",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2467,
+  "text": "wygląd zewnętrzny",
+  "translation": "outward appearance",
+  "transcription": "ˈvɨglɔ̃t zɛˈvnɛ̃dʐnɨ",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "appearance"
+  ]
+ },
+ {
+  "id": 2468,
+  "text": "części ciała",
+  "translation": "parts of the body",
+  "transcription": "ˈt͡ʂɛ̃ɕt͡ɕi ˈt͡ɕawa",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "body"
+  ]
+ },
+ {
+  "id": 2469,
+  "text": "zażywać",
+  "translation": "to take medicine",
+  "transcription": "zaˈʐɨvat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "B1",
+  "topics": [
+   "medicine"
+  ]
+ },
+ {
+  "id": 2470,
+  "text": "przypadek",
+  "translation": "case",
+  "transcription": "bʐɨˈpadɛk",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2471,
+  "text": "sprawa do załatwienia",
+  "translation": "errand",
+  "transcription": "ˈsprava dɔ zawaˈdvjɛɲa",
+  "partOfSpeech": "expr",
+  "cefr": "B1",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2472,
+  "text": "usługi",
+  "translation": "services",
+  "transcription": "uˈswugi",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "work"
+  ]
+ },
+ {
+  "id": 2473,
+  "text": "doładować kartę",
+  "translation": "to top up a card",
+  "transcription": "dɔwaˈdɔvat͡ɕ ˈkartɛ̃",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "smartphone"
+  ]
+ },
+ {
+  "id": 2474,
+  "text": "korzystać",
+  "translation": "to make use of",
+  "transcription": "kɔˈʐɨstat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "A2",
+  "topics": [
+   "daily-conversation"
+  ]
+ },
+ {
+  "id": 2475,
+  "text": "zepsuć się",
+  "translation": "to break down",
+  "transcription": "ˈzɛpsut͡ɕ ɕɛ̃",
+  "partOfSpeech": "v",
+  "cefr": "A2",
+  "topics": [
+   "emergency"
+  ]
+ },
+ {
+  "id": 2476,
+  "text": "naprawić",
+  "translation": "to repair",
+  "transcription": "naˈpravit͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "A1",
+  "topics": [
+   "household"
+  ]
+ },
+ {
+  "id": 2477,
+  "text": "nieodpowiedzialny",
+  "translation": "irresponsible",
+  "transcription": "ɲɛɔtpɔvjɛˈd͡ʑalnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "B1",
+  "topics": [
+   "personality"
+  ]
  }
 ]

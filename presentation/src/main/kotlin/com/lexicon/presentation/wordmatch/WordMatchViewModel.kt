@@ -1,5 +1,6 @@
 package com.lexicon.presentation.wordmatch
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
@@ -12,6 +13,7 @@ import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.WordResultEntry
+import com.lexicon.presentation.common.trainingVocabularyIds
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -30,11 +32,14 @@ private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 400L
 class WordMatchViewModel
     @Inject
     constructor(
+        savedStateHandle: SavedStateHandle,
         private val startSessionUseCase: StartWordMatchSessionUseCase,
         private val submitStepResultUseCase: SubmitWordMatchStepResultUseCase,
         private val dispatchers: DispatcherProvider,
         private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
+        private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
+
         private val _uiState = MutableStateFlow<WordMatchUiState>(WordMatchUiState.Loading)
         val uiState: StateFlow<WordMatchUiState> = _uiState.asStateFlow()
 
@@ -55,7 +60,7 @@ class WordMatchViewModel
 
         private fun startSession() {
             viewModelScope.launch(dispatchers.io) {
-                val response = startSessionUseCase(StartWordMatchSessionRequest())
+                val response = startSessionUseCase(StartWordMatchSessionRequest(vocabularyIds = vocabularyIds))
                 sessionId = response.sessionId
                 steps = response.steps
                 openStep(0)

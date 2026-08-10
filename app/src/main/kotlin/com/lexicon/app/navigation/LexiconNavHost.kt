@@ -1,6 +1,7 @@
 package com.lexicon.app.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -8,8 +9,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.lexicon.presentation.common.SessionResultScreen
+import com.lexicon.presentation.common.TRAINING_WORDS_ARG
 import com.lexicon.presentation.common.TrainingGate
 import com.lexicon.presentation.common.TrainingRequirements
+import com.lexicon.presentation.course.LESSON_ID_ARG
+import com.lexicon.presentation.course.LessonScreen
 import com.lexicon.presentation.crossword.CrosswordScreen
 import com.lexicon.presentation.dictation.DictationScreen
 import com.lexicon.presentation.dictationpuzzle.DictationPuzzleScreen
@@ -43,6 +47,7 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             MainScreen(
                 onTrainingSelected = { route -> navController.navigate(route) },
                 onPresetSelected = { id -> navController.navigate(LexiconDestinations.presetDetail(id)) },
+                onLessonSelected = { id -> navController.navigate(LexiconDestinations.lesson(id)) },
             )
         }
 
@@ -53,135 +58,106 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             PresetDetailScreen(onClose = { navController.popBackStack() })
         }
 
-        fun onStepSessionComplete(fromRoute: String): (Int, Int, Int, Int) -> Unit =
+        composable(
+            route = LexiconDestinations.LESSON,
+            arguments = listOf(navArgument(LESSON_ID_ARG) { type = NavType.StringType }),
+        ) {
+            LessonScreen(
+                onClose = { navController.popBackStack() },
+                onTrainLesson = { wordIds ->
+                    navController.navigate(LexiconDestinations.scopedTraining(LexiconDestinations.MIX, wordIds))
+                },
+            )
+        }
+
+        fun onStepSessionComplete(training: String): (Int, Int, Int, Int) -> Unit =
             { correct, incorrect, skipped, tipsUsed ->
                 navController.navigate(LexiconDestinations.sessionResult(correct, incorrect, skipped, tipsUsed)) {
-                    popUpTo(fromRoute) { inclusive = true }
+                    popUpTo(LexiconDestinations.trainingRoute(training)) { inclusive = true }
                 }
             }
 
         val closeToMain: () -> Unit = { navController.popBackStack(LexiconDestinations.MAIN, inclusive = false) }
 
-        composable(LexiconDestinations.DICTATION) {
-            TrainingGate(
-                minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
-                trainingName = trainingDisplayName(LexiconDestinations.DICTATION),
-                onClose = closeToMain,
-            ) {
-                DictationScreen(
-                    onSessionComplete = onStepSessionComplete(LexiconDestinations.DICTATION),
-                    onClose = closeToMain,
-                )
-            }
+        trainingDestination(
+            training = LexiconDestinations.DICTATION,
+            minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
+            onClose = closeToMain,
+            onComplete = onStepSessionComplete(LexiconDestinations.DICTATION),
+        ) { onComplete ->
+            DictationScreen(onSessionComplete = onComplete, onClose = closeToMain)
         }
-        composable(LexiconDestinations.DICTATION_PUZZLE) {
-            TrainingGate(
-                minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
-                trainingName = trainingDisplayName(LexiconDestinations.DICTATION_PUZZLE),
-                onClose = closeToMain,
-            ) {
-                DictationPuzzleScreen(
-                    onSessionComplete = onStepSessionComplete(LexiconDestinations.DICTATION_PUZZLE),
-                    onClose = closeToMain,
-                )
-            }
+        trainingDestination(
+            training = LexiconDestinations.DICTATION_PUZZLE,
+            minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
+            onClose = closeToMain,
+            onComplete = onStepSessionComplete(LexiconDestinations.DICTATION_PUZZLE),
+        ) { onComplete ->
+            DictationPuzzleScreen(onSessionComplete = onComplete, onClose = closeToMain)
         }
-        composable(LexiconDestinations.TRUE_OR_FALSE) {
-            TrainingGate(
-                minimumWords = TrainingRequirements.TRUE_OR_FALSE,
-                trainingName = trainingDisplayName(LexiconDestinations.TRUE_OR_FALSE),
-                onClose = closeToMain,
-            ) {
-                TrueOrFalseScreen(
-                    onSessionComplete = onStepSessionComplete(LexiconDestinations.TRUE_OR_FALSE),
-                    onClose = closeToMain,
-                )
-            }
+        trainingDestination(
+            training = LexiconDestinations.TRUE_OR_FALSE,
+            minimumWords = TrainingRequirements.TRUE_OR_FALSE,
+            onClose = closeToMain,
+            onComplete = onStepSessionComplete(LexiconDestinations.TRUE_OR_FALSE),
+        ) { onComplete ->
+            TrueOrFalseScreen(onSessionComplete = onComplete, onClose = closeToMain)
         }
-        composable(LexiconDestinations.WORD_MATCH) {
-            TrainingGate(
-                minimumWords = TrainingRequirements.WORD_MATCH,
-                trainingName = trainingDisplayName(LexiconDestinations.WORD_MATCH),
-                onClose = closeToMain,
-            ) {
-                WordMatchScreen(
-                    onSessionComplete = onStepSessionComplete(LexiconDestinations.WORD_MATCH),
-                    onClose = closeToMain,
-                )
-            }
+        trainingDestination(
+            training = LexiconDestinations.WORD_MATCH,
+            minimumWords = TrainingRequirements.WORD_MATCH,
+            onClose = closeToMain,
+            onComplete = onStepSessionComplete(LexiconDestinations.WORD_MATCH),
+        ) { onComplete ->
+            WordMatchScreen(onSessionComplete = onComplete, onClose = closeToMain)
         }
-        composable(LexiconDestinations.PRONUNCIATION_CHECK) {
-            TrainingGate(
-                minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
-                trainingName = trainingDisplayName(LexiconDestinations.PRONUNCIATION_CHECK),
-                onClose = closeToMain,
-            ) {
-                PronunciationScreen(
-                    onSessionComplete = onStepSessionComplete(LexiconDestinations.PRONUNCIATION_CHECK),
-                    onClose = closeToMain,
-                )
-            }
+        trainingDestination(
+            training = LexiconDestinations.PRONUNCIATION_CHECK,
+            minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
+            onClose = closeToMain,
+            onComplete = onStepSessionComplete(LexiconDestinations.PRONUNCIATION_CHECK),
+        ) { onComplete ->
+            PronunciationScreen(onSessionComplete = onComplete, onClose = closeToMain)
         }
-        composable(LexiconDestinations.PUZZLE) {
-            TrainingGate(
-                minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
-                trainingName = trainingDisplayName(LexiconDestinations.PUZZLE),
-                onClose = closeToMain,
-            ) {
-                PuzzleScreen(
-                    onSessionComplete = onStepSessionComplete(LexiconDestinations.PUZZLE),
-                    onClose = closeToMain,
-                )
-            }
+        trainingDestination(
+            training = LexiconDestinations.PUZZLE,
+            minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
+            onClose = closeToMain,
+            onComplete = onStepSessionComplete(LexiconDestinations.PUZZLE),
+        ) { onComplete ->
+            PuzzleScreen(onSessionComplete = onComplete, onClose = closeToMain)
         }
-        composable(LexiconDestinations.IMAGE_TEST) {
-            TrainingGate(
-                minimumWords = TrainingRequirements.IMAGE_TEST,
-                trainingName = trainingDisplayName(LexiconDestinations.IMAGE_TEST),
-                onClose = closeToMain,
-            ) {
-                ImageTestScreen(
-                    onSessionComplete = onStepSessionComplete(LexiconDestinations.IMAGE_TEST),
-                    onClose = closeToMain,
-                )
-            }
+        trainingDestination(
+            training = LexiconDestinations.IMAGE_TEST,
+            minimumWords = TrainingRequirements.IMAGE_TEST,
+            onClose = closeToMain,
+            onComplete = onStepSessionComplete(LexiconDestinations.IMAGE_TEST),
+        ) { onComplete ->
+            ImageTestScreen(onSessionComplete = onComplete, onClose = closeToMain)
         }
-        composable(LexiconDestinations.MEMORY_CARDS) {
-            TrainingGate(
-                minimumWords = TrainingRequirements.MEMORY_CARDS,
-                trainingName = trainingDisplayName(LexiconDestinations.MEMORY_CARDS),
-                onClose = closeToMain,
-            ) {
-                MemoryCardsScreen(
-                    onSessionComplete = onStepSessionComplete(LexiconDestinations.MEMORY_CARDS),
-                    onClose = closeToMain,
-                )
-            }
+        trainingDestination(
+            training = LexiconDestinations.MEMORY_CARDS,
+            minimumWords = TrainingRequirements.MEMORY_CARDS,
+            onClose = closeToMain,
+            onComplete = onStepSessionComplete(LexiconDestinations.MEMORY_CARDS),
+        ) { onComplete ->
+            MemoryCardsScreen(onSessionComplete = onComplete, onClose = closeToMain)
         }
-        composable(LexiconDestinations.CROSSWORD) {
-            TrainingGate(
-                minimumWords = TrainingRequirements.CROSSWORD,
-                trainingName = trainingDisplayName(LexiconDestinations.CROSSWORD),
-                onClose = closeToMain,
-            ) {
-                CrosswordScreen(
-                    onSessionComplete = onStepSessionComplete(LexiconDestinations.CROSSWORD),
-                    onClose = closeToMain,
-                )
-            }
+        trainingDestination(
+            training = LexiconDestinations.CROSSWORD,
+            minimumWords = TrainingRequirements.CROSSWORD,
+            onClose = closeToMain,
+            onComplete = onStepSessionComplete(LexiconDestinations.CROSSWORD),
+        ) { onComplete ->
+            CrosswordScreen(onSessionComplete = onComplete, onClose = closeToMain)
         }
-
-        composable(LexiconDestinations.MIX) {
-            TrainingGate(
-                minimumWords = TrainingRequirements.MIX,
-                trainingName = trainingDisplayName(LexiconDestinations.MIX),
-                onClose = closeToMain,
-            ) {
-                MixScreen(
-                    onSessionComplete = onStepSessionComplete(LexiconDestinations.MIX),
-                    onClose = closeToMain,
-                )
-            }
+        trainingDestination(
+            training = LexiconDestinations.MIX,
+            minimumWords = TrainingRequirements.MIX,
+            onClose = closeToMain,
+            onComplete = onStepSessionComplete(LexiconDestinations.MIX),
+        ) { onComplete ->
+            MixScreen(onSessionComplete = onComplete, onClose = closeToMain)
         }
 
         composable(
@@ -202,6 +178,38 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
                 tipsUsed = args?.getInt("tipsUsed").orDefault(),
                 onDone = { navController.popBackStack(LexiconDestinations.MAIN, inclusive = false) },
             )
+        }
+    }
+}
+
+/**
+ * A training destination: the shared not-enough-words gate, plus the optional word
+ * list a course lesson uses to narrow the session.
+ */
+private fun NavGraphBuilder.trainingDestination(
+    training: String,
+    minimumWords: Int,
+    onClose: () -> Unit,
+    onComplete: (Int, Int, Int, Int) -> Unit,
+    screen: @Composable (onComplete: (Int, Int, Int, Int) -> Unit) -> Unit,
+) {
+    composable(
+        route = LexiconDestinations.trainingRoute(training),
+        arguments = listOf(
+            navArgument(TRAINING_WORDS_ARG) {
+                type = NavType.StringType
+                defaultValue = ""
+            },
+        ),
+    ) { backStackEntry ->
+        val scopedWords = backStackEntry.arguments?.getString(TRAINING_WORDS_ARG).orEmpty()
+        TrainingGate(
+            // A lesson brings its own words, so the study-set size is not what gates it.
+            minimumWords = if (scopedWords.isEmpty()) minimumWords else 0,
+            trainingName = trainingDisplayName(training),
+            onClose = onClose,
+        ) {
+            screen(onComplete)
         }
     }
 }

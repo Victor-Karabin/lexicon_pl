@@ -3,6 +3,7 @@ package com.lexicon.app.di
 import android.content.Context
 import androidx.room.Room
 import com.lexicon.data.local.AppDatabase
+import com.lexicon.data.local.CourseDao
 import com.lexicon.data.local.ImageUrlCacheDao
 import com.lexicon.data.local.PresetDao
 import com.lexicon.data.local.TrainingResultDao
@@ -39,4 +40,7 @@ object DatabaseModule {
 
     @Provides
     fun providePresetDao(database: AppDatabase): PresetDao = database.presetDao()
+
+    @Provides
+    fun provideCourseDao(database: AppDatabase): CourseDao = database.courseDao()
 }

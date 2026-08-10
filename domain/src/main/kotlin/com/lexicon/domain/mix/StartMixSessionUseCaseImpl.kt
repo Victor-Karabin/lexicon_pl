@@ -43,7 +43,12 @@ class StartMixSessionUseCaseImpl
             val used = mutableSetOf<Pair<MixTrainingType, Long>>()
             val steps = mutableListOf<MixStep>()
             assignments.forEach { type ->
-                distinctStep(stepIndex = steps.size, type = type, used = used)?.let { steps += it }
+                distinctStep(
+                    stepIndex = steps.size,
+                    type = type,
+                    used = used,
+                    vocabularyIds = request.vocabularyIds,
+                )?.let { steps += it }
             }
 
             return MixSessionResponse(sessionId = UUID.randomUUID().toString(), steps = steps)
@@ -53,9 +58,10 @@ class StartMixSessionUseCaseImpl
             stepIndex: Int,
             type: MixTrainingType,
             used: MutableSet<Pair<MixTrainingType, Long>>,
+            vocabularyIds: List<Long>,
         ): MixStep? {
             repeat(MAX_ATTEMPTS_PER_STEP) {
-                val candidate = buildStep(stepIndex, type) ?: return null
+                val candidate = buildStep(stepIndex, type, vocabularyIds) ?: return null
                 if (used.add(type to candidate.vocabularyItemId)) return candidate
             }
             return null
@@ -74,30 +80,33 @@ class StartMixSessionUseCaseImpl
         private suspend fun buildStep(
             stepIndex: Int,
             type: MixTrainingType,
+            vocabularyIds: List<Long>,
         ): MixStep? =
             when (type) {
                 MixTrainingType.DICTATION ->
-                    startDictation(StartDictationSessionRequest(stepCount = 1)).steps.firstOrNull()
+                    startDictation(StartDictationSessionRequest(stepCount = 1, vocabularyIds = vocabularyIds)).steps.firstOrNull()
                         ?.let { MixStep.Dictation(stepIndex, it) }
 
                 MixTrainingType.DICTATION_PUZZLE ->
-                    startDictationPuzzle(StartDictationPuzzleSessionRequest(stepCount = 1)).steps.firstOrNull()
+                    startDictationPuzzle(
+                        StartDictationPuzzleSessionRequest(stepCount = 1, vocabularyIds = vocabularyIds),
+                    ).steps.firstOrNull()
                         ?.let { MixStep.DictationPuzzle(stepIndex, it) }
 
                 MixTrainingType.PUZZLE ->
-                    startPuzzle(StartPuzzleSessionRequest(stepCount = 1)).steps.firstOrNull()
+                    startPuzzle(StartPuzzleSessionRequest(stepCount = 1, vocabularyIds = vocabularyIds)).steps.firstOrNull()
                         ?.let { MixStep.Puzzle(stepIndex, it) }
 
                 MixTrainingType.IMAGE_TEST ->
-                    startImageTest(StartImageTestSessionRequest(stepCount = 1)).steps.firstOrNull()
+                    startImageTest(StartImageTestSessionRequest(stepCount = 1, vocabularyIds = vocabularyIds)).steps.firstOrNull()
                         ?.let { MixStep.ImageTest(stepIndex, it) }
 
                 MixTrainingType.TRUE_OR_FALSE ->
-                    startTrueOrFalse(StartTrueOrFalseSessionRequest(poolSize = 1)).steps.firstOrNull()
+                    startTrueOrFalse(StartTrueOrFalseSessionRequest(poolSize = 1, vocabularyIds = vocabularyIds)).steps.firstOrNull()
                         ?.let { MixStep.TrueOrFalse(stepIndex, it) }
 
                 MixTrainingType.PRONUNCIATION_CHECK ->
-                    startPronunciation(StartPronunciationSessionRequest(stepCount = 1)).steps.firstOrNull()
+                    startPronunciation(StartPronunciationSessionRequest(stepCount = 1, vocabularyIds = vocabularyIds)).steps.firstOrNull()
                         ?.let { MixStep.Pronunciation(stepIndex, it) }
             }
     }

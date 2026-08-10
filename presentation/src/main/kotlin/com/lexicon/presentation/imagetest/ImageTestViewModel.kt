@@ -1,5 +1,6 @@
 package com.lexicon.presentation.imagetest
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
@@ -11,6 +12,7 @@ import com.lexicon.interactors.imagetest.SubmitImageTestAnswerRequest
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.trainingVocabularyIds
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -29,10 +31,13 @@ private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 400L
 class ImageTestViewModel
     @Inject
     constructor(
+        savedStateHandle: SavedStateHandle,
         private val startSessionUseCase: StartImageTestSessionUseCase,
         private val submitAnswerUseCase: SubmitImageTestAnswerUseCase,
         private val dispatchers: DispatcherProvider,
     ) : ViewModel() {
+        private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
+
         private val _uiState = MutableStateFlow<ImageTestUiState>(ImageTestUiState.Loading)
         val uiState: StateFlow<ImageTestUiState> = _uiState.asStateFlow()
 
@@ -51,7 +56,7 @@ class ImageTestViewModel
 
         private fun startSession() {
             viewModelScope.launch(dispatchers.io) {
-                val response = startSessionUseCase(StartImageTestSessionRequest())
+                val response = startSessionUseCase(StartImageTestSessionRequest(vocabularyIds = vocabularyIds))
                 sessionId = response.sessionId
                 steps = response.steps
                 openStep(0)
