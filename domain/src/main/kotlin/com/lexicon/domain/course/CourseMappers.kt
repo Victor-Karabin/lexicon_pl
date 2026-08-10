@@ -61,4 +61,5 @@ fun LessonAudioBoundary.toAudio(): LessonAudio =
         section = section,
         task = task,
         part = part,
+        remoteId = remoteId,
     )

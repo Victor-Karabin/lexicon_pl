@@ -26,6 +26,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
+    // Lesson recordings are fetched over plain HTTP; the shared client is provided by the app module.
+    implementation(libs.okhttp.core)
+
     // Provides the @ApplicationContext qualifier and javax.inject.Inject only.
     // No Hilt @Module lives here — those are restricted to the app module per the architecture spec.
     implementation(libs.hilt.android)

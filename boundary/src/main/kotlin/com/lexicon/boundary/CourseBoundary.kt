@@ -39,4 +39,5 @@ data class LessonAudioBoundary(
     val section: String?,
     val task: Int,
     val part: String?,
+    val remoteId: String?,
 )

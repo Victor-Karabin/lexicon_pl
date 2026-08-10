@@ -37,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.course.CourseId
 import com.lexicon.interactors.course.Lesson
@@ -87,7 +88,7 @@ private fun LessonContent(
     onCompletedToggled: (Boolean) -> Unit,
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
     onPronounceWord: (PresetWord) -> Unit,
-    onPlayAudio: (String) -> Unit,
+    onPlayAudio: (LessonAudio) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val title = when (uiState) {
@@ -232,30 +233,15 @@ private fun LazyListScope.wordsBlock(
 
 private fun LazyListScope.audioBlock(
     uiState: LessonUiState.Loaded,
-    onPlayAudio: (String) -> Unit,
+    onPlayAudio: (LessonAudio) -> Unit,
 ) {
     val tracks = uiState.lesson.audio
     if (tracks.isEmpty()) return
     item { SectionHeading(stringResource(R.string.lesson_audio)) }
-    if (!uiState.hasAudio) {
-        item {
-            Text(
-                text = stringResource(R.string.lesson_audio_missing),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.spacingMedium),
-            )
-        }
-    }
     tracks.groupBy { it.source }.forEach { (source, group) ->
         // The key has to survive saved state, which rules out the enum itself.
         item(key = source.name) {
-            AudioGroup(
-                source = source,
-                tracks = group,
-                availableFiles = uiState.availableAudio,
-                onPlayAudio = onPlayAudio,
-            )
+            AudioGroup(source = source, tracks = group, uiState = uiState, onPlayAudio = onPlayAudio)
         }
     }
 }
@@ -280,14 +266,24 @@ private fun SectionHeading(text: String) {
 private fun AudioGroup(
     source: LessonAudioSource,
     tracks: List<LessonAudio>,
-    availableFiles: Set<String>,
-    onPlayAudio: (String) -> Unit,
+    uiState: LessonUiState.Loaded,
+    onPlayAudio: (LessonAudio) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.spacingMedium)) {
         if (source == LessonAudioSource.WORKBOOK) {
             Text(
                 text = stringResource(R.string.lesson_audio_workbook),
                 style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(bottom = Dimens.spacingSmall),
+            )
+        }
+        // The workbook recordings are not in the shared folder, so a group can be
+        // entirely unplayable; saying so beats a row of dead chips.
+        if (tracks.none { uiState.isPlayable(it) }) {
+            Text(
+                text = stringResource(R.string.lesson_audio_missing),
+                style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(bottom = Dimens.spacingSmall),
             )
@@ -299,8 +295,9 @@ private fun AudioGroup(
             tracks.forEach { track ->
                 AudioChip(
                     track = track,
-                    isAvailable = track.file in availableFiles,
-                    onClick = { onPlayAudio(track.file) },
+                    isEnabled = uiState.isPlayable(track),
+                    isDownloading = uiState.downloadingAudio == track.file,
+                    onClick = { onPlayAudio(track) },
                 )
             }
         }
@@ -311,19 +308,27 @@ private fun AudioGroup(
 @Composable
 private fun AudioChip(
     track: LessonAudio,
-    isAvailable: Boolean,
+    isEnabled: Boolean,
+    isDownloading: Boolean,
     onClick: () -> Unit,
 ) {
     AssistChip(
         onClick = onClick,
-        enabled = isAvailable,
+        enabled = isEnabled && !isDownloading,
         label = { Text(text = track.label, style = MaterialTheme.typography.labelMedium) },
         leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.PlayArrow,
-                contentDescription = null,
-                modifier = Modifier.size(AssistChipDefaults.IconSize),
-            )
+            if (isDownloading) {
+                CircularProgressIndicator(
+                    strokeWidth = 2.dp,
+                    modifier = Modifier.size(AssistChipDefaults.IconSize),
+                )
+            } else {
+                Icon(
+                    imageVector = Icons.Default.PlayArrow,
+                    contentDescription = null,
+                    modifier = Modifier.size(AssistChipDefaults.IconSize),
+                )
+            }
         },
     )
 }
@@ -339,9 +344,9 @@ private val previewLesson = Lesson(
     ),
     vocabularyIds = listOf(1L, 2L, 3L).map(::VocabularyId).toImmutableList(),
     audio = persistentListOf(
-        LessonAudio("a1_coursebook_101a1.mp3", LessonAudioSource.COURSEBOOK, "A", 1, null),
-        LessonAudio("a1_coursebook_101b2.mp3", LessonAudioSource.COURSEBOOK, "B", 2, null),
-        LessonAudio("a1_workbook_01_L01_cwiczenie2.mp3", LessonAudioSource.WORKBOOK, null, 2, null),
+        LessonAudio("a1_coursebook_101a1.mp3", LessonAudioSource.COURSEBOOK, "A", 1, null, "drive-id"),
+        LessonAudio("a1_coursebook_101b2.mp3", LessonAudioSource.COURSEBOOK, "B", 2, null, "drive-id"),
+        LessonAudio("a1_workbook_01_L01_cwiczenie2.mp3", LessonAudioSource.WORKBOOK, null, 2, null, null),
     ),
     isCompleted = false,
 )

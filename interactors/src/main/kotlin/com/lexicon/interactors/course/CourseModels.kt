@@ -49,6 +49,7 @@ data class LessonAudio(
     val section: String?,
     val task: Int,
     val part: String?,
+    val remoteId: String?,
 )
 
 enum class LessonAudioSource { COURSEBOOK, WORKBOOK }

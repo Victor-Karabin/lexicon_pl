@@ -56,6 +56,8 @@ data class LessonAudioEntity(
     val task: Int,
     val part: String?,
     val position: Int,
+    /** Google Drive file id, when the track can be fetched rather than side-loaded. */
+    val remoteId: String?,
 )
 
 /**

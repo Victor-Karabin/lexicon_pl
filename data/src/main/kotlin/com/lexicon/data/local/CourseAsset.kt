@@ -40,4 +40,5 @@ data class LessonAudioAsset(
     val section: String? = null,
     val task: Int = 0,
     val part: String? = null,
+    val remoteId: String? = null,
 )

@@ -41,6 +41,7 @@ fun LessonAsset.toAudioEntities(): List<LessonAudioEntity> =
                 task = track.task,
                 part = track.part,
                 position = index,
+                remoteId = track.remoteId,
             )
         }
 
@@ -64,6 +65,7 @@ fun LessonEntity.toBoundary(
                 section = it.section,
                 task = it.task,
                 part = it.part,
+                remoteId = it.remoteId,
             )
         },
         isCompleted = isCompleted,
