@@ -96,6 +96,7 @@ written by hand:
 | `frequency` | a count, e.g. `250` | the N most frequent words in `core.tsv` |
 | `cefr` | `A1`…`C2` | every word tagged with that level |
 | `topic` | a tag, e.g. `food` | every word carrying that topic tag |
+| `pos` | a part of speech, e.g. `expr` | every word of that kind — how the Phrases preset is built |
 
 To add **vocabulary**, append to `corpus/core.tsv` (if it belongs in the frequency ranking)
 or a file under `corpus/topics/`, then rebuild. Columns are `polish, english, pos, cefr,
@@ -258,6 +259,11 @@ training's session-start request, and is separate work.
 
 The corpus is roughly 2,370 entries: about 1,010 frequency-ranked core words plus topical,
 upper-level and phrase vocabulary. By CEFR band: A1 737, A2 605, B1 392, B2 286, C1 203, C2 148.
+
+The **Phrases** preset gathers all 184 of them by part of speech rather than by tag, so a phrase
+added to the corpus joins it without anyone remembering to label it. Five members are single
+words — *dziękuję*, *przepraszam*, *dobranoc*, *powodzenia*, *smacznego* — which are utterances
+rather than vocabulary, and belong there for the same reason the rest do.
 
 259 entries are multi-word, of which 179 are spoken phrases — what a learner actually says,
 rather than compounds that merely happen to contain a space. They live in

@@ -44,6 +44,7 @@ import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material.icons.filled.Pin
 import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.Public
+import androidx.compose.material.icons.filled.RecordVoiceOver
 import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.Sailing
 import androidx.compose.material.icons.filled.Savings
@@ -114,6 +115,7 @@ private val PRESET_ICONS: Map<String, ImageVector> = mapOf(
     "pin" to Icons.Default.Pin,
     "psychology" to Icons.Default.Psychology,
     "public" to Icons.Default.Public,
+    "record_voice_over" to Icons.Default.RecordVoiceOver,
     "restaurant" to Icons.Default.Restaurant,
     "sailing" to Icons.Default.Sailing,
     "savings" to Icons.Default.Savings,
