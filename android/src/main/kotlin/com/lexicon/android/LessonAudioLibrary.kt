@@ -3,10 +3,13 @@ package com.lexicon.android
 import android.content.Context
 import com.lexicon.common.DispatcherProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.File
+import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -32,6 +35,11 @@ class LessonAudioLibrary
         private val directory: File?
             get() = context.getExternalFilesDir(AUDIO_DIRECTORY)
 
+        // One mutex per file, so two callers racing to play the same not-yet-cached
+        // track serialize onto a single download instead of both writing the same
+        // .part file.
+        private val downloadMutexes = ConcurrentHashMap<String, Mutex>()
+
         fun localPathOrNull(file: String): String? = directory?.resolve(file)?.takeIf { it.isFile }?.absolutePath
 
         fun availableFiles(): Set<String> = directory?.list()?.toSet().orEmpty()
@@ -47,7 +55,12 @@ class LessonAudioLibrary
         ): String? {
             localPathOrNull(file)?.let { return it }
             if (remoteId == null) return null
-            return download(file, remoteId)
+            return downloadMutexes.getOrPut(file) { Mutex() }.withLock {
+                // Re-check: another caller may have finished downloading this file
+                // while this one waited for the lock.
+                localPathOrNull(file)?.let { return@withLock it }
+                download(file, remoteId)
+            }
         }
 
         private suspend fun download(

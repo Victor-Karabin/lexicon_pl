@@ -39,7 +39,6 @@ data class LessonAudioAsset(
 @Serializable
 data class LessonExerciseAsset(
     val id: String,
-    val tag: String,
     val type: String,
     val instruction: String,
     val audioFile: String? = null,

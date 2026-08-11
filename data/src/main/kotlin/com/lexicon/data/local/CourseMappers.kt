@@ -64,7 +64,6 @@ fun LessonAsset.toExerciseEntities(): List<LessonExerciseEntity> =
         LessonExerciseEntity(
             id = exercise.id,
             lessonId = id,
-            tag = exercise.tag,
             type = exercise.type,
             instruction = exercise.instruction,
             audioFile = exercise.audioFile,

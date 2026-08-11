@@ -62,7 +62,6 @@ data class LessonProgressEntity(
 data class LessonExerciseEntity(
     @PrimaryKey val id: String,
     val lessonId: String,
-    val tag: String,
     val type: String,
     val instruction: String,
     val audioFile: String?,

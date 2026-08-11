@@ -189,7 +189,6 @@ def build_lesson(
         "exercises": [
             {
                 "id": f"{course['id']}-{lesson['number']:02d}-{e['tag']}",
-                "tag": e["tag"],
                 "type": e["type"],
                 "instruction": e["instruction"],
                 "audioFile": next(
