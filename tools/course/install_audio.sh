@@ -25,7 +25,8 @@ python3 "$HERE/extract_audio.py" --unpack
 
 echo "Pushing to $TARGET"
 adb shell mkdir -p "$TARGET"
-for book in "$CACHE"/*/; do
+# Coursebooks only: the app no longer references the workbook recordings.
+for book in "$CACHE"/*_coursebook/; do
   echo "  $(basename "$book")"
   adb push "$book". "$TARGET/" >/dev/null
 done

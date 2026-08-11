@@ -21,18 +21,6 @@ data class LessonEntity(
 )
 
 @Entity(
-    tableName = "lesson_sections",
-    primaryKeys = ["lessonId", "letter"],
-    indices = [Index("lessonId")],
-)
-data class LessonSectionEntity(
-    val lessonId: String,
-    val letter: String,
-    val title: String,
-    val position: Int,
-)
-
-@Entity(
     tableName = "lesson_vocabulary",
     primaryKeys = ["lessonId", "wordId"],
     indices = [Index("lessonId"), Index("wordId")],
@@ -51,11 +39,12 @@ data class LessonWordEntity(
 data class LessonAudioEntity(
     val lessonId: String,
     val file: String,
-    val source: String,
     val section: String?,
     val task: Int,
     val part: String?,
     val position: Int,
+    /** Google Drive file id, when the track can be fetched rather than side-loaded. */
+    val remoteId: String?,
 )
 
 /**
@@ -67,4 +56,33 @@ data class LessonProgressEntity(
     @PrimaryKey val lessonId: String,
     val isCompleted: Boolean,
     val completedAt: Long?,
+)
+
+@Entity(tableName = "lesson_exercises", indices = [Index("lessonId")])
+data class LessonExerciseEntity(
+    @PrimaryKey val id: String,
+    val lessonId: String,
+    val type: String,
+    val instruction: String,
+    val audioFile: String?,
+    val position: Int,
+)
+
+/**
+ * One question of an exercise. The columns a row uses depend on its exercise's
+ * type; [itemsJson] would have been the alternative, but keeping the answer in a
+ * column is what lets the build fail on an exercise with no answers.
+ */
+@Entity(
+    tableName = "lesson_exercise_items",
+    primaryKeys = ["exerciseId", "position"],
+    indices = [Index("exerciseId")],
+)
+data class LessonExerciseItemEntity(
+    val exerciseId: String,
+    val position: Int,
+    val label: String?,
+    val prompt: String?,
+    val optionsJson: String,
+    val answersJson: String,
 )

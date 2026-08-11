@@ -22,21 +22,31 @@ data class LessonBoundary(
     val courseId: String,
     val number: Int,
     val title: String,
-    val sections: List<LessonSectionBoundary>,
     val vocabularyIds: List<Long>,
     val audio: List<LessonAudioBoundary>,
+    val exercises: List<LessonExerciseBoundary>,
     val isCompleted: Boolean,
-)
-
-data class LessonSectionBoundary(
-    val letter: String,
-    val title: String,
 )
 
 data class LessonAudioBoundary(
     val file: String,
-    val source: String,
     val section: String?,
     val task: Int,
     val part: String?,
+    val remoteId: String?,
+)
+
+data class LessonExerciseBoundary(
+    val id: String,
+    val type: String,
+    val instruction: String,
+    val audioFile: String?,
+    val items: List<ExerciseItemBoundary>,
+)
+
+data class ExerciseItemBoundary(
+    val label: String?,
+    val prompt: String?,
+    val options: List<String>,
+    val answers: List<String>,
 )

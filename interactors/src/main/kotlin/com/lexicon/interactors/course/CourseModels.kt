@@ -32,26 +32,19 @@ data class Lesson(
     val courseId: CourseId,
     val number: Int,
     val title: String,
-    val sections: ImmutableList<LessonSection>,
     val vocabularyIds: ImmutableList<VocabularyId>,
     val audio: ImmutableList<LessonAudio>,
+    val exercises: ImmutableList<LessonExercise>,
     val isCompleted: Boolean,
-)
-
-data class LessonSection(
-    val letter: String,
-    val title: String,
 )
 
 data class LessonAudio(
     val file: String,
-    val source: LessonAudioSource,
     val section: String?,
     val task: Int,
     val part: String?,
+    val remoteId: String?,
 )
-
-enum class LessonAudioSource { COURSEBOOK, WORKBOOK }
 
 val Course.completedCount: Int get() = lessons.count { it.isCompleted }
 
@@ -62,4 +55,56 @@ val LessonAudio.label: String
         section?.let { append(it) }
         append(task)
         part?.let { append('.').append(it) }
+    }
+
+/**
+ * An exercise from the book. Each kind asks something different of the learner,
+ * so they are separate types rather than one shape with unused fields.
+ */
+sealed interface LessonExercise {
+    val id: String
+    val instruction: String
+    val audioFile: String?
+
+    /** Listen and read along; there is nothing to mark. */
+    data class Repeat(
+        override val id: String,
+        override val instruction: String,
+        override val audioFile: String?,
+        val words: ImmutableList<String>,
+    ) : LessonExercise
+
+    /** Listen, then pick which of two near-identical words was said. */
+    data class MinimalPair(
+        override val id: String,
+        override val instruction: String,
+        override val audioFile: String?,
+        val items: ImmutableList<MinimalPairItem>,
+    ) : LessonExercise
+
+    /** Listen, then type what belongs in each blank. */
+    data class GapFill(
+        override val id: String,
+        override val instruction: String,
+        override val audioFile: String?,
+        val items: ImmutableList<GapFillItem>,
+    ) : LessonExercise
+}
+
+data class MinimalPairItem(
+    val label: String,
+    val options: ImmutableList<String>,
+    val answer: String,
+)
+
+data class GapFillItem(
+    val prompt: String,
+    val answers: ImmutableList<String>,
+)
+
+val LessonExercise.questionCount: Int
+    get() = when (this) {
+        is LessonExercise.Repeat -> words.size
+        is LessonExercise.MinimalPair -> items.size
+        is LessonExercise.GapFill -> items.sumOf { it.answers.size }
     }

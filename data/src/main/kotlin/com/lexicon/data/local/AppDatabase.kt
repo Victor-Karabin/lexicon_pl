@@ -14,12 +14,13 @@ import androidx.room.RoomDatabase
         DeletedPresetEntity::class,
         CourseEntity::class,
         LessonEntity::class,
-        LessonSectionEntity::class,
         LessonWordEntity::class,
         LessonAudioEntity::class,
         LessonProgressEntity::class,
+        LessonExerciseEntity::class,
+        LessonExerciseItemEntity::class,
     ],
-    version = 10,
+    version = 15,
     exportSchema = false,
 )
 abstract class AppDatabase : RoomDatabase() {

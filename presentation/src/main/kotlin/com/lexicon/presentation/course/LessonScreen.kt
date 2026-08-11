@@ -1,5 +1,6 @@
 package com.lexicon.presentation.course
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material3.AssistChip
@@ -35,16 +37,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.course.CourseId
 import com.lexicon.interactors.course.Lesson
 import com.lexicon.interactors.course.LessonAudio
-import com.lexicon.interactors.course.LessonAudioSource
+import com.lexicon.interactors.course.LessonExercise
 import com.lexicon.interactors.course.LessonId
-import com.lexicon.interactors.course.LessonSection
 import com.lexicon.interactors.course.label
+import com.lexicon.interactors.course.questionCount
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.presentation.R
@@ -61,6 +65,7 @@ import kotlinx.collections.immutable.toImmutableList
 fun LessonScreen(
     onClose: () -> Unit,
     onTrainLesson: (List<Long>) -> Unit,
+    onExerciseSelected: (LessonExercise) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LessonViewModel = hiltViewModel(),
 ) {
@@ -74,6 +79,7 @@ fun LessonScreen(
         onWordFavouriteToggled = viewModel::onWordFavouriteToggled,
         onPronounceWord = viewModel::onPronounceWord,
         onPlayAudio = viewModel::onPlayAudio,
+        onExerciseSelected = onExerciseSelected,
         modifier = modifier,
     )
 }
@@ -87,7 +93,8 @@ private fun LessonContent(
     onCompletedToggled: (Boolean) -> Unit,
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
     onPronounceWord: (PresetWord) -> Unit,
-    onPlayAudio: (String) -> Unit,
+    onPlayAudio: (LessonAudio) -> Unit,
+    onExerciseSelected: (LessonExercise) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val title = when (uiState) {
@@ -125,7 +132,7 @@ private fun LessonContent(
                     contentPadding = PaddingValues(bottom = Dimens.spacingXl),
                 ) {
                     lessonHeader(uiState.lesson, onTrainLesson, onCompletedToggled)
-                    sectionsBlock(uiState.lesson.sections)
+                    exercisesBlock(uiState.lesson.exercises, onExerciseSelected)
                     wordsBlock(uiState, onWordFavouriteToggled, onPronounceWord)
                     audioBlock(uiState, onPlayAudio)
                 }
@@ -179,25 +186,44 @@ private fun LazyListScope.lessonHeader(
     }
 }
 
-private fun LazyListScope.sectionsBlock(sections: List<LessonSection>) {
-    if (sections.isEmpty()) return
-    item { SectionHeading(stringResource(R.string.lesson_sections)) }
-    items(sections, key = { it.letter }) { section ->
+private fun LazyListScope.exercisesBlock(
+    exercises: List<LessonExercise>,
+    onExerciseSelected: (LessonExercise) -> Unit,
+) {
+    if (exercises.isEmpty()) return
+    item { SectionHeading(stringResource(R.string.exercises_heading)) }
+    items(exercises, key = { it.id }) { exercise ->
         Row(
-            modifier = Modifier.fillMaxWidth().padding(
-                horizontal = Dimens.spacingMedium,
-                vertical = Dimens.spacingSmall,
-            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onExerciseSelected(exercise) }
+                .padding(Dimens.spacingMedium),
+            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
         ) {
-            Text(
-                text = section.letter,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.SemiBold,
+            Icon(
+                imageVector = Icons.Default.PlayArrow,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
             )
-            Text(text = section.title, style = MaterialTheme.typography.bodyMedium)
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = exercise.instruction,
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Medium,
+                )
+                Text(
+                    text = pluralStringResource(
+                        R.plurals.exercise_question_count,
+                        exercise.questionCount,
+                        exercise.questionCount,
+                    ),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
+        HorizontalDivider(modifier = Modifier.padding(horizontal = Dimens.spacingMedium))
     }
 }
 
@@ -232,32 +258,12 @@ private fun LazyListScope.wordsBlock(
 
 private fun LazyListScope.audioBlock(
     uiState: LessonUiState.Loaded,
-    onPlayAudio: (String) -> Unit,
+    onPlayAudio: (LessonAudio) -> Unit,
 ) {
     val tracks = uiState.lesson.audio
     if (tracks.isEmpty()) return
     item { SectionHeading(stringResource(R.string.lesson_audio)) }
-    if (!uiState.hasAudio) {
-        item {
-            Text(
-                text = stringResource(R.string.lesson_audio_missing),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.spacingMedium),
-            )
-        }
-    }
-    tracks.groupBy { it.source }.forEach { (source, group) ->
-        // The key has to survive saved state, which rules out the enum itself.
-        item(key = source.name) {
-            AudioGroup(
-                source = source,
-                tracks = group,
-                availableFiles = uiState.availableAudio,
-                onPlayAudio = onPlayAudio,
-            )
-        }
-    }
+    item { AudioTracks(tracks = tracks, uiState = uiState, onPlayAudio = onPlayAudio) }
 }
 
 @Composable
@@ -277,17 +283,18 @@ private fun SectionHeading(text: String) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun AudioGroup(
-    source: LessonAudioSource,
+private fun AudioTracks(
     tracks: List<LessonAudio>,
-    availableFiles: Set<String>,
-    onPlayAudio: (String) -> Unit,
+    uiState: LessonUiState.Loaded,
+    onPlayAudio: (LessonAudio) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.spacingMedium)) {
-        if (source == LessonAudioSource.WORKBOOK) {
+        // Nothing playable means neither side-loaded nor fetchable; saying so beats
+        // a row of dead chips.
+        if (tracks.none { uiState.isPlayable(it) }) {
             Text(
-                text = stringResource(R.string.lesson_audio_workbook),
-                style = MaterialTheme.typography.labelMedium,
+                text = stringResource(R.string.lesson_audio_missing),
+                style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(bottom = Dimens.spacingSmall),
             )
@@ -299,8 +306,10 @@ private fun AudioGroup(
             tracks.forEach { track ->
                 AudioChip(
                     track = track,
-                    isAvailable = track.file in availableFiles,
-                    onClick = { onPlayAudio(track.file) },
+                    isEnabled = uiState.isPlayable(track),
+                    isDownloading = uiState.downloadingAudio == track.file,
+                    isPlaying = uiState.playingAudio == track.file,
+                    onClick = { onPlayAudio(track) },
                 )
             }
         }
@@ -311,19 +320,37 @@ private fun AudioGroup(
 @Composable
 private fun AudioChip(
     track: LessonAudio,
-    isAvailable: Boolean,
+    isEnabled: Boolean,
+    isDownloading: Boolean,
+    isPlaying: Boolean,
     onClick: () -> Unit,
 ) {
     AssistChip(
         onClick = onClick,
-        enabled = isAvailable,
+        enabled = isEnabled && !isDownloading,
         label = { Text(text = track.label, style = MaterialTheme.typography.labelMedium) },
         leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.PlayArrow,
-                contentDescription = null,
-                modifier = Modifier.size(AssistChipDefaults.IconSize),
-            )
+            when {
+                isDownloading ->
+                    CircularProgressIndicator(
+                        strokeWidth = 2.dp,
+                        modifier = Modifier.size(AssistChipDefaults.IconSize),
+                    )
+
+                isPlaying ->
+                    Icon(
+                        imageVector = Icons.Default.Pause,
+                        contentDescription = stringResource(R.string.lesson_audio_pause, track.label),
+                        modifier = Modifier.size(AssistChipDefaults.IconSize),
+                    )
+
+                else ->
+                    Icon(
+                        imageVector = Icons.Default.PlayArrow,
+                        contentDescription = stringResource(R.string.lesson_audio_play, track.label),
+                        modifier = Modifier.size(AssistChipDefaults.IconSize),
+                    )
+            }
         },
     )
 }
@@ -333,15 +360,11 @@ private val previewLesson = Lesson(
     courseId = CourseId("krok-a1"),
     number = 1,
     title = "PIERWSZY DZIEŃ W SZKOLE",
-    sections = persistentListOf(
-        LessonSection("A", "SEKRETARIAT - PREZENTACJA"),
-        LessonSection("B", "ALFABET"),
-    ),
     vocabularyIds = listOf(1L, 2L, 3L).map(::VocabularyId).toImmutableList(),
+    exercises = persistentListOf(),
     audio = persistentListOf(
-        LessonAudio("a1_coursebook_101a1.mp3", LessonAudioSource.COURSEBOOK, "A", 1, null),
-        LessonAudio("a1_coursebook_101b2.mp3", LessonAudioSource.COURSEBOOK, "B", 2, null),
-        LessonAudio("a1_workbook_01_L01_cwiczenie2.mp3", LessonAudioSource.WORKBOOK, null, 2, null),
+        LessonAudio("a1_coursebook_101a1.mp3", "A", 1, null, "drive-id"),
+        LessonAudio("a1_coursebook_101b2.mp3", "B", 2, null, null),
     ),
     isCompleted = false,
 )
@@ -366,6 +389,7 @@ private fun LessonPreview() {
             onWordFavouriteToggled = { _, _ -> },
             onPronounceWord = {},
             onPlayAudio = {},
+            onExerciseSelected = {},
         )
     }
 }
@@ -382,6 +406,7 @@ private fun LessonNotFoundPreview() {
             onWordFavouriteToggled = { _, _ -> },
             onPronounceWord = {},
             onPlayAudio = {},
+            onExerciseSelected = {},
         )
     }
 }

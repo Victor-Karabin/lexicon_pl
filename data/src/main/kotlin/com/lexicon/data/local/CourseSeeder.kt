@@ -38,9 +38,10 @@ class CourseSeeder
                 courseDao.replaceCatalog(
                     courses = catalog.courses.map { it.toEntity() },
                     lessons = lessons.map { it.toEntity() },
-                    sections = lessons.flatMap { it.toSectionEntities() },
                     words = lessons.flatMap { it.toWordEntities() },
                     audio = lessons.flatMap { it.toAudioEntities() },
+                    exercises = lessons.flatMap { it.toExerciseEntities() },
+                    exerciseItems = lessons.flatMap { it.toExerciseItemEntities() },
                 )
                 syncStore.setSyncedCourseFingerprint(fingerprint)
                 syncedThisProcess = true

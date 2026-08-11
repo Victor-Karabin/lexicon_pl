@@ -21,10 +21,20 @@ interface CourseDao {
     @Query("SELECT * FROM lessons WHERE id = :lessonId")
     suspend fun getLesson(lessonId: String): LessonEntity?
 
-    @Query("SELECT * FROM lesson_sections WHERE lessonId = :lessonId ORDER BY position")
-    suspend fun getSections(lessonId: String): List<LessonSectionEntity>
+    @Query("SELECT * FROM lesson_exercises WHERE lessonId = :lessonId ORDER BY position")
+    suspend fun getExercises(lessonId: String): List<LessonExerciseEntity>
 
-    @Query("SELECT * FROM lesson_audio WHERE lessonId = :lessonId ORDER BY source, position")
+    @Query(
+        """
+        SELECT i.* FROM lesson_exercise_items i
+        INNER JOIN lesson_exercises e ON e.id = i.exerciseId
+        WHERE e.lessonId = :lessonId
+        ORDER BY i.exerciseId, i.position
+        """,
+    )
+    suspend fun getExerciseItems(lessonId: String): List<LessonExerciseItemEntity>
+
+    @Query("SELECT * FROM lesson_audio WHERE lessonId = :lessonId ORDER BY position")
     suspend fun getAudio(lessonId: String): List<LessonAudioEntity>
 
     @Query("SELECT * FROM lesson_progress WHERE lessonId = :lessonId")
@@ -68,30 +78,36 @@ interface CourseDao {
     suspend fun replaceCatalog(
         courses: List<CourseEntity>,
         lessons: List<LessonEntity>,
-        sections: List<LessonSectionEntity>,
         words: List<LessonWordEntity>,
         audio: List<LessonAudioEntity>,
+        exercises: List<LessonExerciseEntity>,
+        exerciseItems: List<LessonExerciseItemEntity>,
     ) {
+        clearExerciseItems()
+        clearExercises()
         clearAudio()
         clearLessonWords()
-        clearSections()
         clearLessons()
         clearCourses()
         insertCourses(courses)
         insertLessons(lessons)
-        insertSections(sections)
         insertLessonWords(words)
         insertAudio(audio)
+        insertExercises(exercises)
+        insertExerciseItems(exerciseItems)
     }
+
+    @Query("DELETE FROM lesson_exercise_items")
+    suspend fun clearExerciseItems()
+
+    @Query("DELETE FROM lesson_exercises")
+    suspend fun clearExercises()
 
     @Query("DELETE FROM lesson_audio")
     suspend fun clearAudio()
 
     @Query("DELETE FROM lesson_vocabulary")
     suspend fun clearLessonWords()
-
-    @Query("DELETE FROM lesson_sections")
-    suspend fun clearSections()
 
     @Query("DELETE FROM lessons")
     suspend fun clearLessons()
@@ -106,11 +122,14 @@ interface CourseDao {
     suspend fun insertLessons(lessons: List<LessonEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSections(sections: List<LessonSectionEntity>)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLessonWords(words: List<LessonWordEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAudio(audio: List<LessonAudioEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertExercises(exercises: List<LessonExerciseEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertExerciseItems(items: List<LessonExerciseItemEntity>)
 }

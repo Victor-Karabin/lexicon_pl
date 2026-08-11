@@ -111,13 +111,48 @@ def resolve_word(word: str, index: dict[str, int], forms: dict[str, list[str]]) 
     return [word_id] if word_id is not None else None
 
 
-def lesson_audio(tracks: list[dict], lesson_number: int) -> list[dict]:
+def load_exercises() -> dict[int, list[dict]]:
+    """Exercises from extract_exercises.py, grouped by lesson number."""
+    path = CACHE_DIR / "exercises.json"
+    if not path.exists():
+        print("no exercises.json; lessons will ship without exercises")
+        return {}
+    grouped: dict[int, list[dict]] = {}
+    for exercise in json.loads(path.read_text(encoding="utf-8")):
+        grouped.setdefault(exercise["lesson"], []).append(exercise)
+    return grouped
+
+
+def load_remote_manifest() -> dict[str, str]:
+    """Drive ids from fetch_drive_manifest.py, or nothing if it has not been run."""
+    path = CACHE_DIR / "drive_manifest.json"
+    if not path.exists():
+        print("no drive_manifest.json; audio will be side-load-only")
+        return {}
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def audio_tag_of(track: dict) -> str:
+    """The 101A3-style label a track carries, rebuilt from how it was filed."""
+    return f"1{track['lesson']:02d}{track['section'] or ''}{track['task']}"
+
+
+def lesson_audio(
+    tracks: list[dict],
+    lesson_number: int,
+    remote: dict[str, str],
+) -> list[dict]:
+    """Tracks for one lesson, each carrying its Drive id when the folder has it.
+
+    A track with no id is side-load-only: the workbook recordings are not shared.
+    """
     return [
         {
             "file": track["file"],
             "section": track["section"],
             "task": track["task"],
             "part": track["part"],
+            "remoteId": remote.get(track["file"]),
         }
         for track in tracks
         if track["lesson"] == lesson_number
@@ -130,7 +165,8 @@ def build_lesson(
     index: dict[str, int],
     forms: dict[str, list[str]],
     coursebook_tracks: list[dict],
-    workbook_tracks: list[dict],
+    remote: dict[str, str],
+    exercises: dict[int, list[dict]],
     missing: list[tuple[str, int, str]],
 ) -> dict:
     vocabulary_ids: list[int] = []
@@ -148,10 +184,20 @@ def build_lesson(
         "courseId": course["id"],
         "number": lesson["number"],
         "title": lesson["title"],
-        "sections": lesson["sections"],
         "vocabularyIds": vocabulary_ids,
-        "audio": lesson_audio(coursebook_tracks, lesson["number"]),
-        "workbookAudio": lesson_audio(workbook_tracks, lesson["number"]),
+        "audio": lesson_audio(coursebook_tracks, lesson["number"], remote),
+        "exercises": [
+            {
+                "id": f"{course['id']}-{lesson['number']:02d}-{e['tag']}",
+                "type": e["type"],
+                "instruction": e["instruction"],
+                "audioFile": next(
+                    (t["file"] for t in coursebook_tracks if audio_tag_of(t) == e["tag"]), None
+                ),
+                "items": e["items"],
+            }
+            for e in exercises.get(lesson["number"], [])
+        ],
     }
 
 
@@ -181,6 +227,8 @@ def validate(courses: list[dict]) -> None:
 def build(report_missing: bool) -> int:
     lessons_by_book = load_json(CACHE_DIR / "lessons.json")
     audio_by_book = load_json(CACHE_DIR / "audio_manifest.json")
+    remote = load_remote_manifest()
+    exercises = load_exercises()
     index = vocabulary_index()
     forms = word_forms()
 
@@ -197,7 +245,6 @@ def build(report_missing: bool) -> int:
             continue
 
         coursebook_tracks = audio_by_book.get(course["book"], [])
-        workbook_tracks = audio_by_book.get(course["workbook"], []) if course["workbook"] else []
         courses.append(
             {
                 "id": course["id"],
@@ -205,7 +252,9 @@ def build(report_missing: bool) -> int:
                 "level": course["level"],
                 "title": course["title"],
                 "lessons": [
-                    build_lesson(course, lesson, index, forms, coursebook_tracks, workbook_tracks, missing)
+                    build_lesson(
+                        course, lesson, index, forms, coursebook_tracks, remote, exercises, missing
+                    )
                     for lesson in lessons
                 ],
             }
@@ -226,8 +275,26 @@ def build(report_missing: bool) -> int:
 
     total_lessons = sum(len(c["lessons"]) for c in courses)
     total_words = sum(len(l["vocabularyIds"]) for c in courses for l in c["lessons"])
-    total_audio = sum(len(l["audio"]) + len(l["workbookAudio"]) for c in courses for l in c["lessons"])
-    print(f"{len(courses)} courses, {total_lessons} lessons, {total_words} word links, {total_audio} tracks")
+    total_audio = sum(len(l["audio"]) for c in courses for l in c["lessons"])
+    fetchable = sum(
+        1 for c in courses for l in c["lessons"] for t in l["audio"] if t["remoteId"]
+    )
+    # A listening exercise whose tag names no recording cannot be run, so it is
+    # dropped here rather than shipped as a dead entry.
+    dropped = 0
+    for course in courses:
+        for lesson in course["lessons"]:
+            playable = [e for e in lesson["exercises"] if e["audioFile"]]
+            dropped += len(lesson["exercises"]) - len(playable)
+            lesson["exercises"] = playable
+
+    total_exercises = sum(len(l["exercises"]) for c in courses for l in c["lessons"])
+    print(
+        f"{len(courses)} courses, {total_lessons} lessons, {total_words} word links, "
+        f"{total_audio} tracks ({fetchable} fetchable), {total_exercises} exercises"
+    )
+    if dropped:
+        print(f"  {dropped} exercises dropped: their audio tag names no recording")
     if missing:
         print(f"warning: {len(missing)} lesson words are not in the corpus (--report-missing to list them)")
     print(f"-> {COURSE_ASSET.relative_to(REPO_ROOT)}")
