@@ -28,6 +28,9 @@ BOOK_SOURCES = {
     "a1_coursebook": "Iwona Stempek - Krok po Kroku Polski A1 - 2010.pdf",
     "a2_coursebook": f"{TEXTBOOK_ZIP}!Iwona Stempek - Krok po Kroku Polski A2 - 2012.pdf",
     "a1_workbook": "Krok_po_Kroku_1_Zeszyt_cwiczen/Krok po Kroku 1. Zeszyt cwiczen.pdf",
+    # e-polish.eu's course material for the A1 coursebook: one exercise per page,
+    # answers filled in, and a transkrypty block restating them as plain text.
+    "a1_answers": "pdfcoffee.com_polski-krok-po-kroku-a1-podrcznik-odpowiedzi-by-stempek-i-pdf-free.pdf",
 }
 
 AUDIO_ARCHIVES = {
