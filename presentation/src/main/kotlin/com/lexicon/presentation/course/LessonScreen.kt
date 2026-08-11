@@ -1,5 +1,6 @@
 package com.lexicon.presentation.course
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
@@ -35,6 +37,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -42,8 +45,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.course.CourseId
 import com.lexicon.interactors.course.Lesson
 import com.lexicon.interactors.course.LessonAudio
+import com.lexicon.interactors.course.LessonExercise
 import com.lexicon.interactors.course.LessonId
 import com.lexicon.interactors.course.label
+import com.lexicon.interactors.course.questionCount
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.presentation.R
@@ -60,6 +65,7 @@ import kotlinx.collections.immutable.toImmutableList
 fun LessonScreen(
     onClose: () -> Unit,
     onTrainLesson: (List<Long>) -> Unit,
+    onExerciseSelected: (LessonExercise) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LessonViewModel = hiltViewModel(),
 ) {
@@ -73,6 +79,7 @@ fun LessonScreen(
         onWordFavouriteToggled = viewModel::onWordFavouriteToggled,
         onPronounceWord = viewModel::onPronounceWord,
         onPlayAudio = viewModel::onPlayAudio,
+        onExerciseSelected = onExerciseSelected,
         modifier = modifier,
     )
 }
@@ -87,6 +94,7 @@ private fun LessonContent(
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
     onPronounceWord: (PresetWord) -> Unit,
     onPlayAudio: (LessonAudio) -> Unit,
+    onExerciseSelected: (LessonExercise) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val title = when (uiState) {
@@ -124,6 +132,7 @@ private fun LessonContent(
                     contentPadding = PaddingValues(bottom = Dimens.spacingXl),
                 ) {
                     lessonHeader(uiState.lesson, onTrainLesson, onCompletedToggled)
+                    exercisesBlock(uiState.lesson.exercises, onExerciseSelected)
                     wordsBlock(uiState, onWordFavouriteToggled, onPronounceWord)
                     audioBlock(uiState, onPlayAudio)
                 }
@@ -174,6 +183,47 @@ private fun LazyListScope.lessonHeader(
                 )
             }
         }
+    }
+}
+
+private fun LazyListScope.exercisesBlock(
+    exercises: List<LessonExercise>,
+    onExerciseSelected: (LessonExercise) -> Unit,
+) {
+    if (exercises.isEmpty()) return
+    item { SectionHeading(stringResource(R.string.exercises_heading)) }
+    items(exercises, key = { it.id }) { exercise ->
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onExerciseSelected(exercise) }
+                .padding(Dimens.spacingMedium),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+        ) {
+            Icon(
+                imageVector = Icons.Default.PlayArrow,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+            )
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = exercise.instruction,
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Medium,
+                )
+                Text(
+                    text = pluralStringResource(
+                        R.plurals.exercise_question_count,
+                        exercise.questionCount,
+                        exercise.questionCount,
+                    ),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+        HorizontalDivider(modifier = Modifier.padding(horizontal = Dimens.spacingMedium))
     }
 }
 
@@ -311,6 +361,7 @@ private val previewLesson = Lesson(
     number = 1,
     title = "PIERWSZY DZIEŃ W SZKOLE",
     vocabularyIds = listOf(1L, 2L, 3L).map(::VocabularyId).toImmutableList(),
+    exercises = persistentListOf(),
     audio = persistentListOf(
         LessonAudio("a1_coursebook_101a1.mp3", "A", 1, null, "drive-id"),
         LessonAudio("a1_coursebook_101b2.mp3", "B", 2, null, null),
@@ -338,6 +389,7 @@ private fun LessonPreview() {
             onWordFavouriteToggled = { _, _ -> },
             onPronounceWord = {},
             onPlayAudio = {},
+            onExerciseSelected = {},
         )
     }
 }
@@ -354,6 +406,7 @@ private fun LessonNotFoundPreview() {
             onWordFavouriteToggled = { _, _ -> },
             onPronounceWord = {},
             onPlayAudio = {},
+            onExerciseSelected = {},
         )
     }
 }

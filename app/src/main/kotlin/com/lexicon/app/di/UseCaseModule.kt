@@ -1,5 +1,6 @@
 package com.lexicon.app.di
 
+import com.lexicon.domain.course.CheckExerciseAnswerUseCaseImpl
 import com.lexicon.domain.course.GetLessonUseCaseImpl
 import com.lexicon.domain.course.GetLessonVocabularyUseCaseImpl
 import com.lexicon.domain.course.ObserveCoursesUseCaseImpl
@@ -41,6 +42,7 @@ import com.lexicon.domain.trueorfalse.StartTrueOrFalseSessionUseCaseImpl
 import com.lexicon.domain.trueorfalse.SubmitTrueOrFalseAnswerUseCaseImpl
 import com.lexicon.domain.wordmatch.StartWordMatchSessionUseCaseImpl
 import com.lexicon.domain.wordmatch.SubmitWordMatchStepResultUseCaseImpl
+import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
 import com.lexicon.interactors.course.ObserveCoursesUseCase
@@ -212,4 +214,7 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindSetLessonCompleted(impl: SetLessonCompletedUseCaseImpl): SetLessonCompletedUseCase
+
+    @Binds
+    abstract fun bindCheckExerciseAnswer(impl: CheckExerciseAnswerUseCaseImpl): CheckExerciseAnswerUseCase
 }

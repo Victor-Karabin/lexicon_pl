@@ -111,6 +111,18 @@ def resolve_word(word: str, index: dict[str, int], forms: dict[str, list[str]]) 
     return [word_id] if word_id is not None else None
 
 
+def load_exercises() -> dict[int, list[dict]]:
+    """Exercises from extract_exercises.py, grouped by lesson number."""
+    path = CACHE_DIR / "exercises.json"
+    if not path.exists():
+        print("no exercises.json; lessons will ship without exercises")
+        return {}
+    grouped: dict[int, list[dict]] = {}
+    for exercise in json.loads(path.read_text(encoding="utf-8")):
+        grouped.setdefault(exercise["lesson"], []).append(exercise)
+    return grouped
+
+
 def load_remote_manifest() -> dict[str, str]:
     """Drive ids from fetch_drive_manifest.py, or nothing if it has not been run."""
     path = CACHE_DIR / "drive_manifest.json"
@@ -118,6 +130,11 @@ def load_remote_manifest() -> dict[str, str]:
         print("no drive_manifest.json; audio will be side-load-only")
         return {}
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def audio_tag_of(track: dict) -> str:
+    """The 101A3-style label a track carries, rebuilt from how it was filed."""
+    return f"1{track['lesson']:02d}{track['section'] or ''}{track['task']}"
 
 
 def lesson_audio(
@@ -149,6 +166,7 @@ def build_lesson(
     forms: dict[str, list[str]],
     coursebook_tracks: list[dict],
     remote: dict[str, str],
+    exercises: dict[int, list[dict]],
     missing: list[tuple[str, int, str]],
 ) -> dict:
     vocabulary_ids: list[int] = []
@@ -168,6 +186,19 @@ def build_lesson(
         "title": lesson["title"],
         "vocabularyIds": vocabulary_ids,
         "audio": lesson_audio(coursebook_tracks, lesson["number"], remote),
+        "exercises": [
+            {
+                "id": f"{course['id']}-{lesson['number']:02d}-{e['tag']}",
+                "tag": e["tag"],
+                "type": e["type"],
+                "instruction": e["instruction"],
+                "audioFile": next(
+                    (t["file"] for t in coursebook_tracks if audio_tag_of(t) == e["tag"]), None
+                ),
+                "items": e["items"],
+            }
+            for e in exercises.get(lesson["number"], [])
+        ],
     }
 
 
@@ -198,6 +229,7 @@ def build(report_missing: bool) -> int:
     lessons_by_book = load_json(CACHE_DIR / "lessons.json")
     audio_by_book = load_json(CACHE_DIR / "audio_manifest.json")
     remote = load_remote_manifest()
+    exercises = load_exercises()
     index = vocabulary_index()
     forms = word_forms()
 
@@ -221,7 +253,9 @@ def build(report_missing: bool) -> int:
                 "level": course["level"],
                 "title": course["title"],
                 "lessons": [
-                    build_lesson(course, lesson, index, forms, coursebook_tracks, remote, missing)
+                    build_lesson(
+                        course, lesson, index, forms, coursebook_tracks, remote, exercises, missing
+                    )
                     for lesson in lessons
                 ],
             }
@@ -246,10 +280,22 @@ def build(report_missing: bool) -> int:
     fetchable = sum(
         1 for c in courses for l in c["lessons"] for t in l["audio"] if t["remoteId"]
     )
+    # A listening exercise whose tag names no recording cannot be run, so it is
+    # dropped here rather than shipped as a dead entry.
+    dropped = 0
+    for course in courses:
+        for lesson in course["lessons"]:
+            playable = [e for e in lesson["exercises"] if e["audioFile"]]
+            dropped += len(lesson["exercises"]) - len(playable)
+            lesson["exercises"] = playable
+
+    total_exercises = sum(len(l["exercises"]) for c in courses for l in c["lessons"])
     print(
         f"{len(courses)} courses, {total_lessons} lessons, {total_words} word links, "
-        f"{total_audio} tracks ({fetchable} fetchable)"
+        f"{total_audio} tracks ({fetchable} fetchable), {total_exercises} exercises"
     )
+    if dropped:
+        print(f"  {dropped} exercises dropped: their audio tag names no recording")
     if missing:
         print(f"warning: {len(missing)} lesson words are not in the corpus (--report-missing to list them)")
     print(f"-> {COURSE_ASSET.relative_to(REPO_ROOT)}")

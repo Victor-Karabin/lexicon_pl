@@ -17,8 +17,10 @@ import androidx.room.RoomDatabase
         LessonWordEntity::class,
         LessonAudioEntity::class,
         LessonProgressEntity::class,
+        LessonExerciseEntity::class,
+        LessonExerciseItemEntity::class,
     ],
-    version = 13,
+    version = 14,
     exportSchema = false,
 )
 abstract class AppDatabase : RoomDatabase() {

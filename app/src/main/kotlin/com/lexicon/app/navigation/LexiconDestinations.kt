@@ -39,6 +39,13 @@ internal object LexiconDestinations {
 
     fun lesson(lessonId: String) = "lesson/$lessonId"
 
+    const val EXERCISE = "lesson/{lessonId}/exercise/{exerciseId}"
+
+    fun exercise(
+        lessonId: String,
+        exerciseId: String,
+    ) = "lesson/$lessonId/exercise/$exerciseId"
+
     const val SESSION_RESULT = "session_result/{correct}/{incorrect}/{skipped}/{tipsUsed}"
 
     fun sessionResult(

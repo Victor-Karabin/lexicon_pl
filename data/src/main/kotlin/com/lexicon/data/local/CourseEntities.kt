@@ -57,3 +57,33 @@ data class LessonProgressEntity(
     val isCompleted: Boolean,
     val completedAt: Long?,
 )
+
+@Entity(tableName = "lesson_exercises", indices = [Index("lessonId")])
+data class LessonExerciseEntity(
+    @PrimaryKey val id: String,
+    val lessonId: String,
+    val tag: String,
+    val type: String,
+    val instruction: String,
+    val audioFile: String?,
+    val position: Int,
+)
+
+/**
+ * One question of an exercise. The columns a row uses depend on its exercise's
+ * type; [itemsJson] would have been the alternative, but keeping the answer in a
+ * column is what lets the build fail on an exercise with no answers.
+ */
+@Entity(
+    tableName = "lesson_exercise_items",
+    primaryKeys = ["exerciseId", "position"],
+    indices = [Index("exerciseId")],
+)
+data class LessonExerciseItemEntity(
+    val exerciseId: String,
+    val position: Int,
+    val label: String?,
+    val prompt: String?,
+    val optionsJson: String,
+    val answersJson: String,
+)

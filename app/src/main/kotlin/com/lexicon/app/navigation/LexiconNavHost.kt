@@ -12,6 +12,8 @@ import com.lexicon.presentation.common.SessionResultScreen
 import com.lexicon.presentation.common.TRAINING_WORDS_ARG
 import com.lexicon.presentation.common.TrainingGate
 import com.lexicon.presentation.common.TrainingRequirements
+import com.lexicon.presentation.course.EXERCISE_ID_ARG
+import com.lexicon.presentation.course.ExerciseScreen
 import com.lexicon.presentation.course.LESSON_ID_ARG
 import com.lexicon.presentation.course.LessonScreen
 import com.lexicon.presentation.crossword.CrosswordScreen
@@ -62,12 +64,26 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             route = LexiconDestinations.LESSON,
             arguments = listOf(navArgument(LESSON_ID_ARG) { type = NavType.StringType }),
         ) {
+            val lessonId = it.arguments?.getString(LESSON_ID_ARG).orEmpty()
             LessonScreen(
                 onClose = { navController.popBackStack() },
+                onExerciseSelected = { exercise ->
+                    navController.navigate(LexiconDestinations.exercise(lessonId, exercise.id))
+                },
                 onTrainLesson = { wordIds ->
                     navController.navigate(LexiconDestinations.scopedTraining(LexiconDestinations.MIX, wordIds))
                 },
             )
+        }
+
+        composable(
+            route = LexiconDestinations.EXERCISE,
+            arguments = listOf(
+                navArgument(LESSON_ID_ARG) { type = NavType.StringType },
+                navArgument(EXERCISE_ID_ARG) { type = NavType.StringType },
+            ),
+        ) {
+            ExerciseScreen(onClose = { navController.popBackStack() })
         }
 
         fun onStepSessionComplete(training: String): (Int, Int, Int, Int) -> Unit =

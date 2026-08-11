@@ -24,6 +24,7 @@ data class LessonBoundary(
     val title: String,
     val vocabularyIds: List<Long>,
     val audio: List<LessonAudioBoundary>,
+    val exercises: List<LessonExerciseBoundary>,
     val isCompleted: Boolean,
 )
 
@@ -33,4 +34,19 @@ data class LessonAudioBoundary(
     val task: Int,
     val part: String?,
     val remoteId: String?,
+)
+
+data class LessonExerciseBoundary(
+    val id: String,
+    val type: String,
+    val instruction: String,
+    val audioFile: String?,
+    val items: List<ExerciseItemBoundary>,
+)
+
+data class ExerciseItemBoundary(
+    val label: String?,
+    val prompt: String?,
+    val options: List<String>,
+    val answers: List<String>,
 )

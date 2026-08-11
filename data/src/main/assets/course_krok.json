@@ -102,6 +102,220 @@
               "part": "2",
               "remoteId": "1l8BxCSxzRFLklei2aFDoFf9OqP4X2hUu"
             }
+          ],
+          "exercises": [
+            {
+              "id": "krok-a1-01-101A3",
+              "tag": "101A3",
+              "type": "gap_fill",
+              "instruction": "Proszę posłuchać i uzupełnić.",
+              "audioFile": "a1_coursebook_101a3.mp3",
+              "items": [
+                {
+                  "prompt": "Dzień dobry. ___ się Mami Takada.",
+                  "answers": [
+                    "Nazywam"
+                  ]
+                },
+                {
+                  "prompt": "___ mi miło.",
+                  "answers": [
+                    "Bardzo"
+                  ]
+                },
+                {
+                  "prompt": "Miło ___ .",
+                  "answers": [
+                    "mi"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "krok-a1-01-101B4",
+              "tag": "101B4",
+              "type": "minimal_pair",
+              "instruction": "Co mówi lektor?",
+              "audioFile": "a1_coursebook_101b4.mp3",
+              "items": [
+                {
+                  "label": "a",
+                  "options": [
+                    "krzywy",
+                    "grzyby"
+                  ],
+                  "answer": "krzywy"
+                },
+                {
+                  "label": "b",
+                  "options": [
+                    "sześć",
+                    "cześć"
+                  ],
+                  "answer": "cześć"
+                },
+                {
+                  "label": "c",
+                  "options": [
+                    "dziewięć",
+                    "dziesięć"
+                  ],
+                  "answer": "dziewięć"
+                },
+                {
+                  "label": "d",
+                  "options": [
+                    "szybko",
+                    "sitko"
+                  ],
+                  "answer": "szybko"
+                },
+                {
+                  "label": "e",
+                  "options": [
+                    "grzeczny",
+                    "grzeszny"
+                  ],
+                  "answer": "grzeszny"
+                },
+                {
+                  "label": "f",
+                  "options": [
+                    "jeden",
+                    "żaden"
+                  ],
+                  "answer": "żaden"
+                },
+                {
+                  "label": "g",
+                  "options": [
+                    "prasować",
+                    "pracować"
+                  ],
+                  "answer": "pracować"
+                },
+                {
+                  "label": "h",
+                  "options": [
+                    "cudy",
+                    "cudzy"
+                  ],
+                  "answer": "cudzy"
+                },
+                {
+                  "label": "i",
+                  "options": [
+                    "ładny",
+                    "łatwy"
+                  ],
+                  "answer": "ładny"
+                },
+                {
+                  "label": "j",
+                  "options": [
+                    "drugi",
+                    "długi"
+                  ],
+                  "answer": "długi"
+                },
+                {
+                  "label": "k",
+                  "options": [
+                    "mały",
+                    "małe"
+                  ],
+                  "answer": "mały"
+                },
+                {
+                  "label": "l",
+                  "options": [
+                    "zimno",
+                    "ciemno"
+                  ],
+                  "answer": "ciemno"
+                },
+                {
+                  "label": "m",
+                  "options": [
+                    "ze",
+                    "że"
+                  ],
+                  "answer": "że"
+                },
+                {
+                  "label": "n",
+                  "options": [
+                    "młoda",
+                    "moda"
+                  ],
+                  "answer": "młoda"
+                },
+                {
+                  "label": "o",
+                  "options": [
+                    "chata",
+                    "kata"
+                  ],
+                  "answer": "kata"
+                },
+                {
+                  "label": "p",
+                  "options": [
+                    "wódka",
+                    "łódka"
+                  ],
+                  "answer": "łódka"
+                },
+                {
+                  "label": "r",
+                  "options": [
+                    "sen",
+                    "syn"
+                  ],
+                  "answer": "sen"
+                },
+                {
+                  "label": "s",
+                  "options": [
+                    "kaseta",
+                    "gazeta"
+                  ],
+                  "answer": "kaseta"
+                },
+                {
+                  "label": "t",
+                  "options": [
+                    "chart",
+                    "żart"
+                  ],
+                  "answer": "chart"
+                },
+                {
+                  "label": "u",
+                  "options": [
+                    "tom",
+                    "dom"
+                  ],
+                  "answer": "dom"
+                },
+                {
+                  "label": "w",
+                  "options": [
+                    "proszę",
+                    "prosię"
+                  ],
+                  "answer": "proszę"
+                },
+                {
+                  "label": "y",
+                  "options": [
+                    "Chiny",
+                    "siny"
+                  ],
+                  "answer": "siny"
+                }
+              ]
+            }
           ]
         },
         {
@@ -235,7 +449,8 @@
               "part": "2",
               "remoteId": "1UawO4BS6l0OqpjDqbXFNXIhjg8AOG80B"
             }
-          ]
+          ],
+          "exercises": []
         },
         {
           "id": "krok-a1-03",
@@ -307,7 +522,8 @@
               "part": "3",
               "remoteId": "1Xh4bdiXpLvsO3RL6JDxeSQxyRo3u_gEe"
             }
-          ]
+          ],
+          "exercises": []
         },
         {
           "id": "krok-a1-04",
@@ -361,7 +577,8 @@
               "part": null,
               "remoteId": "19vRU0qJgB8C7GVEoptbKAoQlaoAaFZ31"
             }
-          ]
+          ],
+          "exercises": []
         },
         {
           "id": "krok-a1-05",
@@ -421,7 +638,8 @@
               "part": null,
               "remoteId": "1R-PhSHszF2k0Bt6JwvNKUHMeDjf-yFEx"
             }
-          ]
+          ],
+          "exercises": []
         },
         {
           "id": "krok-a1-06",
@@ -496,6 +714,23 @@
               "part": null,
               "remoteId": "1K2hqyAhIyRzJ2NGYEONbej1LTE1zhZut"
             }
+          ],
+          "exercises": [
+            {
+              "id": "krok-a1-06-106A2",
+              "tag": "106A2",
+              "type": "gap_fill",
+              "instruction": "Proszę posłuchać i uzupełnić.",
+              "audioFile": null,
+              "items": [
+                {
+                  "prompt": "Nie bardzo, tylko ryż. Moja mama gotuje bardzo dobrze. Ja nie ___",
+                  "answers": [
+                    "lubię."
+                  ]
+                }
+              ]
+            }
           ]
         },
         {
@@ -561,6 +796,29 @@
               "task": 2,
               "part": "c",
               "remoteId": "1pOy1hZskmip52Og4s5W8hNh2myc-z0hP"
+            }
+          ],
+          "exercises": [
+            {
+              "id": "krok-a1-07-107C2",
+              "tag": "107C2",
+              "type": "gap_fill",
+              "instruction": "Proszę posłuchać i uzupełnić.",
+              "audioFile": "a1_coursebook_107c2-a.mp3",
+              "items": [
+                {
+                  "prompt": "W Empiku. A kosmetyki w ___",
+                  "answers": [
+                    "drogerii."
+                  ]
+                },
+                {
+                  "prompt": "To ___ samoobsługowy. Ty sama decydujesz, co kupujesz, a tam jest kasa;",
+                  "answers": [
+                    "sklep"
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -635,6 +893,29 @@
               "task": 3,
               "part": null,
               "remoteId": "1LBY8o4CkDeGcP_CmvYQ7ysMmAYsmsm10"
+            }
+          ],
+          "exercises": [
+            {
+              "id": "krok-a1-08-108A4",
+              "tag": "108A4",
+              "type": "gap_fill",
+              "instruction": "Proszę posłuchać i uzupełnić.",
+              "audioFile": "a1_coursebook_108a4.mp3",
+              "items": [
+                {
+                  "prompt": "Aha. Wolę ___",
+                  "answers": [
+                    "ciemny A co to jest?"
+                  ]
+                },
+                {
+                  "prompt": "Ja jem ciemny chleb z ___ bo chcę być szczupła.",
+                  "answers": [
+                    "margaryną,"
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -739,6 +1020,53 @@
               "part": "4",
               "remoteId": "1z7Yb6JCD2oBKumBpOvUom4lFVVEVJHes"
             }
+          ],
+          "exercises": [
+            {
+              "id": "krok-a1-09-109B4",
+              "tag": "109B4",
+              "type": "gap_fill",
+              "instruction": "Proszę posłuchać i uzupełnić.",
+              "audioFile": "a1_coursebook_109b4.mp3",
+              "items": [
+                {
+                  "prompt": "___",
+                  "answers": [
+                    "Mami, co kupujemy?"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "krok-a1-09-109B4",
+              "tag": "109B4",
+              "type": "gap_fill",
+              "instruction": "Proszę posłuchać i uzupełnić.",
+              "audioFile": "a1_coursebook_109b4.mp3",
+              "items": [
+                {
+                  "prompt": "___",
+                  "answers": [
+                    "Poproszę czosnek, cztery pomidory, dwie żółte papryki i dwie czerwone."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "krok-a1-09-109B4",
+              "tag": "109B4",
+              "type": "gap_fill",
+              "instruction": "Proszę posłuchać i uzupełnić.",
+              "audioFile": "a1_coursebook_109b4.mp3",
+              "items": [
+                {
+                  "prompt": "___",
+                  "answers": [
+                    "„Mami: Poproszę marchewkę."
+                  ]
+                }
+              ]
+            }
           ]
         },
         {
@@ -789,7 +1117,8 @@
               "part": null,
               "remoteId": "1zIJzsexAS0KuXGObjSl4tkAOZJZZmFBq"
             }
-          ]
+          ],
+          "exercises": []
         },
         {
           "id": "krok-a1-11",
@@ -911,7 +1240,8 @@
               "part": null,
               "remoteId": "1iMfDKP-9QqmmndqZZK563acaA9kWToBq"
             }
-          ]
+          ],
+          "exercises": []
         },
         {
           "id": "krok-a1-12",
@@ -967,7 +1297,8 @@
               "part": null,
               "remoteId": "1Q-XYQhG3cAFhrJSg7kPWYKIkhDAsjz5m"
             }
-          ]
+          ],
+          "exercises": []
         },
         {
           "id": "krok-a1-13",
@@ -1022,6 +1353,23 @@
               "task": 1,
               "part": null,
               "remoteId": "1y3PKXhoFjPZTNaNGYQ_48ztOU9WJwp6U"
+            }
+          ],
+          "exercises": [
+            {
+              "id": "krok-a1-13-113A8",
+              "tag": "113A8",
+              "type": "gap_fill",
+              "instruction": "Proszę posłuchać i uzupełnić.",
+              "audioFile": "a1_coursebook_113a8.mp3",
+              "items": [
+                {
+                  "prompt": "Javier! Nareszcie jesteś! Gdzie ___ ?",
+                  "answers": [
+                    "byłeś"
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -1080,7 +1428,8 @@
               "part": null,
               "remoteId": "1ke5BnfN8yd9rWM9A4QkakVvZcSf70IW4"
             }
-          ]
+          ],
+          "exercises": []
         },
         {
           "id": "krok-a1-15",
@@ -1228,6 +1577,23 @@
               "part": "4",
               "remoteId": "15qrMPPWh7lJOeKq_l5iYQGDnm6NcT5X1"
             }
+          ],
+          "exercises": [
+            {
+              "id": "krok-a1-15-115B2",
+              "tag": "115B2",
+              "type": "gap_fill",
+              "instruction": "Proszę posłuchać i uzupełnić.",
+              "audioFile": null,
+              "items": [
+                {
+                  "prompt": "___",
+                  "answers": [
+                    "Cześć Sylwia! Jedziesz z nami na piknik? Taka piękna pogoda, wreszcie mamy złotą polską jesień."
+                  ]
+                }
+              ]
+            }
           ]
         },
         {
@@ -1282,7 +1648,8 @@
               "part": null,
               "remoteId": "1admyr7Qu7mpKWKE4jNujuM2QLDeKkxqU"
             }
-          ]
+          ],
+          "exercises": []
         },
         {
           "id": "krok-a1-17",
@@ -1343,6 +1710,35 @@
               "part": null,
               "remoteId": "1GEnZ2OVpDh83XVVV0KR1k3Icj_8RWHSL"
             }
+          ],
+          "exercises": [
+            {
+              "id": "krok-a1-17-117A2",
+              "tag": "117A2",
+              "type": "gap_fill",
+              "instruction": "Proszę posłuchać i uzupełnić.",
+              "audioFile": "a1_coursebook_117a2.mp3",
+              "items": [
+                {
+                  "prompt": "A ten sweter? Nie podoba ___ się?",
+                  "answers": [
+                    "ci"
+                  ]
+                },
+                {
+                  "prompt": "Nie bardzo, grubo w ___ wyglądam.",
+                  "answers": [
+                    "nim"
+                  ]
+                },
+                {
+                  "prompt": "Coś ty?! Bardzo ładnie wyglądasz. Chciałabym mieć taką figurę jak ___ .",
+                  "answers": [
+                    "ty"
+                  ]
+                }
+              ]
+            }
           ]
         },
         {
@@ -1383,7 +1779,8 @@
               "part": null,
               "remoteId": "1MbChXMqlgiPCumFoa_wMT6jX-rPNocyg"
             }
-          ]
+          ],
+          "exercises": []
         },
         {
           "id": "krok-a1-19",
@@ -1467,7 +1864,8 @@
               "part": null,
               "remoteId": "1hyHHUo9pa-6Rs0aM8DTZlR8u-XyAxyuC"
             }
-          ]
+          ],
+          "exercises": []
         },
         {
           "id": "krok-a1-20",
@@ -1504,7 +1902,8 @@
               "part": null,
               "remoteId": "1AhR8SdSUZSYQp5nRQPU72gnwJ5MAyWnS"
             }
-          ]
+          ],
+          "exercises": []
         },
         {
           "id": "krok-a1-21",
@@ -1586,7 +1985,8 @@
               "part": null,
               "remoteId": "1J2B8Y01AJAb441BaJ_T9MlfYNjDCmcMH"
             }
-          ]
+          ],
+          "exercises": []
         },
         {
           "id": "krok-a1-22",
@@ -1681,6 +2081,23 @@
               "part": null,
               "remoteId": "1I5CrFahogFcM-KQk9ZUFvbWyMYS_hHMR"
             }
+          ],
+          "exercises": [
+            {
+              "id": "krok-a1-22-122B1",
+              "tag": "122B1",
+              "type": "gap_fill",
+              "instruction": "Proszę posłuchać i uzupełnić.",
+              "audioFile": "a1_coursebook_0122b1-1mp3.mp3",
+              "items": [
+                {
+                  "prompt": "Dzień dobry. Nie ma jej. Poszły z Karoliną na zakupy. Czy coś przekazać ___",
+                  "answers": [
+                    "?"
+                  ]
+                }
+              ]
+            }
           ]
         },
         {
@@ -1774,7 +2191,8 @@
               "part": null,
               "remoteId": "1DZjYpyFnC6ekfWAgKcQnl0WElopWOZUU"
             }
-          ]
+          ],
+          "exercises": []
         },
         {
           "id": "krok-a1-24",
@@ -1844,7 +2262,8 @@
               "part": null,
               "remoteId": "1QqwIZaChr4kcISzAz9f3ilYna67jqOeM"
             }
-          ]
+          ],
+          "exercises": []
         },
         {
           "id": "krok-a1-25",
@@ -1914,7 +2333,8 @@
               "part": null,
               "remoteId": "1Pqj2_xaeuvzk3hr6ySj7EO63Rt9OtFBZ"
             }
-          ]
+          ],
+          "exercises": []
         },
         {
           "id": "krok-a1-26",
@@ -2009,6 +2429,35 @@
               "task": 9,
               "part": null,
               "remoteId": "1fVM5F8g-WltzSzBRcHV03NxpqBJb2-_h"
+            }
+          ],
+          "exercises": [
+            {
+              "id": "krok-a1-26-126C9",
+              "tag": "126C9",
+              "type": "gap_fill",
+              "instruction": "Proszę posłuchać i uzupełnić.",
+              "audioFile": "a1_coursebook_126c9.mp3",
+              "items": [
+                {
+                  "prompt": "Ktoś ukradł mi ___",
+                  "answers": [
+                    "portfel."
+                  ]
+                },
+                {
+                  "prompt": "___",
+                  "answers": [
+                    "Słucham pana?"
+                  ]
+                },
+                {
+                  "prompt": "Dziękuję bardzo, to cenna informa ___",
+                  "answers": [
+                    "cja. Proszę jeszcze wypełnić ten formularz."
+                  ]
+                }
+              ]
             }
           ]
         }

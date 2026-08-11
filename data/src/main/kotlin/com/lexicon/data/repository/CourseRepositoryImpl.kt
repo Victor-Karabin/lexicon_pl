@@ -3,6 +3,7 @@ package com.lexicon.data.repository
 import com.lexicon.boundary.CourseBoundary
 import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.LessonBoundary
+import com.lexicon.boundary.LessonExerciseBoundary
 import com.lexicon.boundary.LessonSummaryBoundary
 import com.lexicon.boundary.SyncOutcomeBoundary
 import com.lexicon.data.local.CourseDao
@@ -62,8 +63,14 @@ class CourseRepositoryImpl
             return lesson.toBoundary(
                 wordIds = courseDao.getWordIds(lessonId),
                 audio = courseDao.getAudio(lessonId),
+                exercises = exercisesFor(lessonId),
                 isCompleted = courseDao.getProgress(lessonId)?.isCompleted == true,
             )
+        }
+
+        private suspend fun exercisesFor(lessonId: String): List<LessonExerciseBoundary> {
+            val items = courseDao.getExerciseItems(lessonId).groupBy { it.exerciseId }
+            return courseDao.getExercises(lessonId).map { it.toBoundary(items[it.id].orEmpty()) }
         }
 
         override suspend fun getLessonWordIds(lessonId: String): List<Long> {

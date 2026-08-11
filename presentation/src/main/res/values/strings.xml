@@ -107,7 +107,19 @@
     <string name="lesson_train">Train this lesson</string>
     <string name="lesson_mark_complete">Mark as done</string>
     <string name="lesson_mark_incomplete">Mark as not done</string>
+    <string name="exercise_play">Play</string>
+    <string name="exercise_pause">Pause</string>
+    <string name="exercise_check">Check</string>
+    <string name="exercise_try_again">Try again</string>
+    <string name="exercise_score">%1$d of %2$d correct</string>
+    <string name="exercises_heading">Exercises</string>
+    <string name="exercise_repeat_hint">Listen, then say each word out loud.</string>
+    <string name="exercise_audio_unavailable">This recording could not be loaded.</string>
     <string name="lesson_not_found">This lesson is no longer in the course.</string>
+    <plurals name="exercise_question_count">
+        <item quantity="one">%1$d question</item>
+        <item quantity="other">%1$d questions</item>
+    </plurals>
     <plurals name="presets_word_count_label">
         <item quantity="one">word</item>
         <item quantity="other">words</item>

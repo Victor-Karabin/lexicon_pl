@@ -54,7 +54,7 @@ class CourseSeederTest {
             val outcome = seeder().sync()
 
             assertEquals(2, outcome.total)
-            coVerify { courseDao.replaceCatalog(any(), match { it.size == 2 }, any(), any()) }
+            coVerify { courseDao.replaceCatalog(any(), match { it.size == 2 }, any(), any(), any(), any()) }
         }
 
     @Test
@@ -64,7 +64,7 @@ class CourseSeederTest {
             coEvery { courseDao.countLessons() } returns 2
             coEvery { syncStore.syncedCourseFingerprint() } returns "stale"
             val lessons = slot<List<LessonEntity>>()
-            coEvery { courseDao.replaceCatalog(any(), capture(lessons), any(), any()) } returns Unit
+            coEvery { courseDao.replaceCatalog(any(), capture(lessons), any(), any(), any(), any()) } returns Unit
 
             seeder().sync()
 
@@ -81,7 +81,7 @@ class CourseSeederTest {
             val outcome = seeder().sync()
 
             assertEquals(0, outcome.added)
-            coVerify(exactly = 0) { courseDao.replaceCatalog(any(), any(), any(), any()) }
+            coVerify(exactly = 0) { courseDao.replaceCatalog(any(), any(), any(), any(), any(), any()) }
         }
 
     /**
@@ -107,7 +107,7 @@ class CourseSeederTest {
             coEvery { courseDao.countLessons() } returns 0
             coEvery { syncStore.syncedCourseFingerprint() } returns null
             val words = slot<List<LessonWordEntity>>()
-            coEvery { courseDao.replaceCatalog(any(), any(), capture(words), any()) } returns Unit
+            coEvery { courseDao.replaceCatalog(any(), any(), capture(words), any(), any(), any()) } returns Unit
 
             seeder().sync()
 

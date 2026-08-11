@@ -21,6 +21,19 @@ interface CourseDao {
     @Query("SELECT * FROM lessons WHERE id = :lessonId")
     suspend fun getLesson(lessonId: String): LessonEntity?
 
+    @Query("SELECT * FROM lesson_exercises WHERE lessonId = :lessonId ORDER BY position")
+    suspend fun getExercises(lessonId: String): List<LessonExerciseEntity>
+
+    @Query(
+        """
+        SELECT i.* FROM lesson_exercise_items i
+        INNER JOIN lesson_exercises e ON e.id = i.exerciseId
+        WHERE e.lessonId = :lessonId
+        ORDER BY i.exerciseId, i.position
+        """,
+    )
+    suspend fun getExerciseItems(lessonId: String): List<LessonExerciseItemEntity>
+
     @Query("SELECT * FROM lesson_audio WHERE lessonId = :lessonId ORDER BY position")
     suspend fun getAudio(lessonId: String): List<LessonAudioEntity>
 
@@ -67,7 +80,11 @@ interface CourseDao {
         lessons: List<LessonEntity>,
         words: List<LessonWordEntity>,
         audio: List<LessonAudioEntity>,
+        exercises: List<LessonExerciseEntity>,
+        exerciseItems: List<LessonExerciseItemEntity>,
     ) {
+        clearExerciseItems()
+        clearExercises()
         clearAudio()
         clearLessonWords()
         clearLessons()
@@ -76,7 +93,15 @@ interface CourseDao {
         insertLessons(lessons)
         insertLessonWords(words)
         insertAudio(audio)
+        insertExercises(exercises)
+        insertExerciseItems(exerciseItems)
     }
+
+    @Query("DELETE FROM lesson_exercise_items")
+    suspend fun clearExerciseItems()
+
+    @Query("DELETE FROM lesson_exercises")
+    suspend fun clearExercises()
 
     @Query("DELETE FROM lesson_audio")
     suspend fun clearAudio()
@@ -101,4 +126,10 @@ interface CourseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAudio(audio: List<LessonAudioEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertExercises(exercises: List<LessonExerciseEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertExerciseItems(items: List<LessonExerciseItemEntity>)
 }

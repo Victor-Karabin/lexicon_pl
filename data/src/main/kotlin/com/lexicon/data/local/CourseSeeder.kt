@@ -40,6 +40,8 @@ class CourseSeeder
                     lessons = lessons.map { it.toEntity() },
                     words = lessons.flatMap { it.toWordEntities() },
                     audio = lessons.flatMap { it.toAudioEntities() },
+                    exercises = lessons.flatMap { it.toExerciseEntities() },
+                    exerciseItems = lessons.flatMap { it.toExerciseItemEntities() },
                 )
                 syncStore.setSyncedCourseFingerprint(fingerprint)
                 syncedThisProcess = true
