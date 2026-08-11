@@ -8,14 +8,11 @@ import com.lexicon.interactors.course.Course
 import com.lexicon.interactors.course.CourseId
 import com.lexicon.interactors.course.Lesson
 import com.lexicon.interactors.course.LessonAudio
-import com.lexicon.interactors.course.LessonAudioSource
 import com.lexicon.interactors.course.LessonId
 import com.lexicon.interactors.course.LessonSummary
 import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.VocabularyId
 import kotlinx.collections.immutable.toImmutableList
-
-private const val WORKBOOK_SOURCE = "workbook"
 
 fun CourseBoundary.toCourse(): Course =
     Course(
@@ -52,7 +49,6 @@ fun LessonBoundary.toLesson(): Lesson =
 fun LessonAudioBoundary.toAudio(): LessonAudio =
     LessonAudio(
         file = file,
-        source = if (source == WORKBOOK_SOURCE) LessonAudioSource.WORKBOOK else LessonAudioSource.COURSEBOOK,
         section = section,
         task = task,
         part = part,

@@ -39,7 +39,6 @@ data class LessonWordEntity(
 data class LessonAudioEntity(
     val lessonId: String,
     val file: String,
-    val source: String,
     val section: String?,
     val task: Int,
     val part: String?,

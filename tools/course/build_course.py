@@ -148,7 +148,6 @@ def build_lesson(
     index: dict[str, int],
     forms: dict[str, list[str]],
     coursebook_tracks: list[dict],
-    workbook_tracks: list[dict],
     remote: dict[str, str],
     missing: list[tuple[str, int, str]],
 ) -> dict:
@@ -169,7 +168,6 @@ def build_lesson(
         "title": lesson["title"],
         "vocabularyIds": vocabulary_ids,
         "audio": lesson_audio(coursebook_tracks, lesson["number"], remote),
-        "workbookAudio": lesson_audio(workbook_tracks, lesson["number"], remote),
     }
 
 
@@ -216,7 +214,6 @@ def build(report_missing: bool) -> int:
             continue
 
         coursebook_tracks = audio_by_book.get(course["book"], [])
-        workbook_tracks = audio_by_book.get(course["workbook"], []) if course["workbook"] else []
         courses.append(
             {
                 "id": course["id"],
@@ -224,9 +221,7 @@ def build(report_missing: bool) -> int:
                 "level": course["level"],
                 "title": course["title"],
                 "lessons": [
-                    build_lesson(
-                        course, lesson, index, forms, coursebook_tracks, workbook_tracks, remote, missing
-                    )
+                    build_lesson(course, lesson, index, forms, coursebook_tracks, remote, missing)
                     for lesson in lessons
                 ],
             }
@@ -247,9 +242,9 @@ def build(report_missing: bool) -> int:
 
     total_lessons = sum(len(c["lessons"]) for c in courses)
     total_words = sum(len(l["vocabularyIds"]) for c in courses for l in c["lessons"])
-    total_audio = sum(len(l["audio"]) + len(l["workbookAudio"]) for c in courses for l in c["lessons"])
+    total_audio = sum(len(l["audio"]) for c in courses for l in c["lessons"])
     fetchable = sum(
-        1 for c in courses for l in c["lessons"] for t in l["audio"] + l["workbookAudio"] if t["remoteId"]
+        1 for c in courses for l in c["lessons"] for t in l["audio"] if t["remoteId"]
     )
     print(
         f"{len(courses)} courses, {total_lessons} lessons, {total_words} word links, "

@@ -24,7 +24,6 @@ data class LessonAsset(
     val title: String,
     val vocabularyIds: List<Long> = emptyList(),
     val audio: List<LessonAudioAsset> = emptyList(),
-    val workbookAudio: List<LessonAudioAsset> = emptyList(),
 )
 
 @Serializable

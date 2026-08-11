@@ -3,12 +3,6 @@ package com.lexicon.data.local
 import com.lexicon.boundary.LessonAudioBoundary
 import com.lexicon.boundary.LessonBoundary
 
-/** Where a track came from, so the lesson screen can label the workbook's separately. */
-object LessonAudioSource {
-    const val COURSEBOOK = "coursebook"
-    const val WORKBOOK = "workbook"
-}
-
 fun CourseAsset.toEntity(): CourseEntity = CourseEntity(id = id, sortOrder = order, level = level, titleJson = title.encodeLocalized())
 
 fun LessonAsset.toEntity(): LessonEntity =
@@ -25,12 +19,11 @@ fun LessonAsset.toWordEntities(): List<LessonWordEntity> =
         .mapIndexed { index, wordId -> LessonWordEntity(lessonId = id, wordId = wordId, position = index) }
 
 fun LessonAsset.toAudioEntities(): List<LessonAudioEntity> =
-    (audio.map { it to LessonAudioSource.COURSEBOOK } + workbookAudio.map { it to LessonAudioSource.WORKBOOK })
-        .mapIndexed { index, (track, source) ->
+    audio
+        .mapIndexed { index, track ->
             LessonAudioEntity(
                 lessonId = id,
                 file = track.file,
-                source = source,
                 section = track.section,
                 task = track.task,
                 part = track.part,
@@ -53,7 +46,6 @@ fun LessonEntity.toBoundary(
         audio = audio.map {
             LessonAudioBoundary(
                 file = it.file,
-                source = it.source,
                 section = it.section,
                 task = it.task,
                 part = it.part,

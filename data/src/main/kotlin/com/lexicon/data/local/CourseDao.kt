@@ -21,7 +21,7 @@ interface CourseDao {
     @Query("SELECT * FROM lessons WHERE id = :lessonId")
     suspend fun getLesson(lessonId: String): LessonEntity?
 
-    @Query("SELECT * FROM lesson_audio WHERE lessonId = :lessonId ORDER BY source, position")
+    @Query("SELECT * FROM lesson_audio WHERE lessonId = :lessonId ORDER BY position")
     suspend fun getAudio(lessonId: String): List<LessonAudioEntity>
 
     @Query("SELECT * FROM lesson_progress WHERE lessonId = :lessonId")

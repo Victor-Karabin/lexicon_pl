@@ -29,7 +29,6 @@ data class LessonBoundary(
 
 data class LessonAudioBoundary(
     val file: String,
-    val source: String,
     val section: String?,
     val task: Int,
     val part: String?,

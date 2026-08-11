@@ -42,7 +42,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.course.CourseId
 import com.lexicon.interactors.course.Lesson
 import com.lexicon.interactors.course.LessonAudio
-import com.lexicon.interactors.course.LessonAudioSource
 import com.lexicon.interactors.course.LessonId
 import com.lexicon.interactors.course.label
 import com.lexicon.interactors.presets.PresetWord
@@ -214,12 +213,7 @@ private fun LazyListScope.audioBlock(
     val tracks = uiState.lesson.audio
     if (tracks.isEmpty()) return
     item { SectionHeading(stringResource(R.string.lesson_audio)) }
-    tracks.groupBy { it.source }.forEach { (source, group) ->
-        // The key has to survive saved state, which rules out the enum itself.
-        item(key = source.name) {
-            AudioGroup(source = source, tracks = group, uiState = uiState, onPlayAudio = onPlayAudio)
-        }
-    }
+    item { AudioTracks(tracks = tracks, uiState = uiState, onPlayAudio = onPlayAudio) }
 }
 
 @Composable
@@ -239,23 +233,14 @@ private fun SectionHeading(text: String) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun AudioGroup(
-    source: LessonAudioSource,
+private fun AudioTracks(
     tracks: List<LessonAudio>,
     uiState: LessonUiState.Loaded,
     onPlayAudio: (LessonAudio) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.spacingMedium)) {
-        if (source == LessonAudioSource.WORKBOOK) {
-            Text(
-                text = stringResource(R.string.lesson_audio_workbook),
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(bottom = Dimens.spacingSmall),
-            )
-        }
-        // The workbook recordings are not in the shared folder, so a group can be
-        // entirely unplayable; saying so beats a row of dead chips.
+        // Nothing playable means neither side-loaded nor fetchable; saying so beats
+        // a row of dead chips.
         if (tracks.none { uiState.isPlayable(it) }) {
             Text(
                 text = stringResource(R.string.lesson_audio_missing),
@@ -327,9 +312,8 @@ private val previewLesson = Lesson(
     title = "PIERWSZY DZIEŃ W SZKOLE",
     vocabularyIds = listOf(1L, 2L, 3L).map(::VocabularyId).toImmutableList(),
     audio = persistentListOf(
-        LessonAudio("a1_coursebook_101a1.mp3", LessonAudioSource.COURSEBOOK, "A", 1, null, "drive-id"),
-        LessonAudio("a1_coursebook_101b2.mp3", LessonAudioSource.COURSEBOOK, "B", 2, null, "drive-id"),
-        LessonAudio("a1_workbook_01_L01_cwiczenie2.mp3", LessonAudioSource.WORKBOOK, null, 2, null, null),
+        LessonAudio("a1_coursebook_101a1.mp3", "A", 1, null, "drive-id"),
+        LessonAudio("a1_coursebook_101b2.mp3", "B", 2, null, null),
     ),
     isCompleted = false,
 )

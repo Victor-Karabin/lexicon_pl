@@ -102,64 +102,6 @@
               "part": "2",
               "remoteId": "1l8BxCSxzRFLklei2aFDoFf9OqP4X2hUu"
             }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_01_L01_cwiczenie2.mp3",
-              "section": null,
-              "task": 2,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_02_L01_cwiczenie4.mp3",
-              "section": null,
-              "task": 4,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_03_L01_cwiczenie6.mp3",
-              "section": null,
-              "task": 6,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_04_L01_cwiczenie9.mp3",
-              "section": null,
-              "task": 9,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_05_L01_cwiczenie11.mp3",
-              "section": null,
-              "task": 11,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_06_L01_cwiczenie14.mp3",
-              "section": null,
-              "task": 14,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_07_L01_cwiczenie15.mp3",
-              "section": null,
-              "task": 15,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_08_L01_cwiczenie16.mp3",
-              "section": null,
-              "task": 16,
-              "part": null,
-              "remoteId": null
-            }
           ]
         },
         {
@@ -293,43 +235,6 @@
               "part": "2",
               "remoteId": "1UawO4BS6l0OqpjDqbXFNXIhjg8AOG80B"
             }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_09_L02_cwiczenie2.mp3",
-              "section": null,
-              "task": 2,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_10_L02_cwiczenie4.mp3",
-              "section": null,
-              "task": 4,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_11_L02_cwiczenie13.mp3",
-              "section": null,
-              "task": 13,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_12_L02_cwiczenie14.mp3",
-              "section": null,
-              "task": 14,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_13_L02_cwiczenie17.mp3",
-              "section": null,
-              "task": 17,
-              "part": null,
-              "remoteId": null
-            }
           ]
         },
         {
@@ -402,29 +307,6 @@
               "part": "3",
               "remoteId": "1Xh4bdiXpLvsO3RL6JDxeSQxyRo3u_gEe"
             }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_14_L03_cwiczenie1.mp3",
-              "section": null,
-              "task": 1,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_15_L03_cwiczenie2.mp3",
-              "section": null,
-              "task": 2,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_16_L03_cwiczenie13.mp3",
-              "section": null,
-              "task": 13,
-              "part": null,
-              "remoteId": null
-            }
           ]
         },
         {
@@ -478,15 +360,6 @@
               "task": 6,
               "part": null,
               "remoteId": "19vRU0qJgB8C7GVEoptbKAoQlaoAaFZ31"
-            }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_17_L04_cwiczenie8.mp3",
-              "section": null,
-              "task": 8,
-              "part": null,
-              "remoteId": null
             }
           ]
         },
@@ -547,43 +420,6 @@
               "task": 1,
               "part": null,
               "remoteId": "1R-PhSHszF2k0Bt6JwvNKUHMeDjf-yFEx"
-            }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_18_L05_cwiczenie1.mp3",
-              "section": null,
-              "task": 1,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_19_L05_cwiczenie4.mp3",
-              "section": null,
-              "task": 4,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_20_L05_cwiczenie5.mp3",
-              "section": null,
-              "task": 5,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_21_L05_cwiczenie8.mp3",
-              "section": null,
-              "task": 8,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_22_L05_cwiczenie14.mp3",
-              "section": null,
-              "task": 14,
-              "part": null,
-              "remoteId": null
             }
           ]
         },
@@ -660,78 +496,6 @@
               "part": null,
               "remoteId": "1K2hqyAhIyRzJ2NGYEONbej1LTE1zhZut"
             }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_23_L06_cwiczenie1_1.mp3",
-              "section": null,
-              "task": 1,
-              "part": "1",
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_24_L06_cwiczenie1_2.mp3",
-              "section": null,
-              "task": 1,
-              "part": "2",
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_25_L06_cwiczenie1_3.mp3",
-              "section": null,
-              "task": 1,
-              "part": "3",
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_26_L06_cwiczenie1_4.mp3",
-              "section": null,
-              "task": 1,
-              "part": "4",
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_27_L06_cwiczenie2_a.mp3",
-              "section": null,
-              "task": 2,
-              "part": "a",
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_28_L06_cwiczenie2_b.mp3",
-              "section": null,
-              "task": 2,
-              "part": "b",
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_29_L06_cwiczenie2_c.mp3",
-              "section": null,
-              "task": 2,
-              "part": "c",
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_30_L06_cwiczenie2_d.mp3",
-              "section": null,
-              "task": 2,
-              "part": "d",
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_31_L06_cwiczenie8.mp3",
-              "section": null,
-              "task": 8,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_32_L06_cwiczenie9.mp3",
-              "section": null,
-              "task": 9,
-              "part": null,
-              "remoteId": null
-            }
           ]
         },
         {
@@ -797,36 +561,6 @@
               "task": 2,
               "part": "c",
               "remoteId": "1pOy1hZskmip52Og4s5W8hNh2myc-z0hP"
-            }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_33_L07_cwiczenie1.mp3",
-              "section": null,
-              "task": 1,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_34_L07_cwiczenie2.mp3",
-              "section": null,
-              "task": 2,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_35_L07_cwiczenie10.mp3",
-              "section": null,
-              "task": 10,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_36_L07_cwiczenie11.mp3",
-              "section": null,
-              "task": 11,
-              "part": null,
-              "remoteId": null
             }
           ]
         },
@@ -901,29 +635,6 @@
               "task": 3,
               "part": null,
               "remoteId": "1LBY8o4CkDeGcP_CmvYQ7ysMmAYsmsm10"
-            }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_37_L08_cwiczenie2.mp3",
-              "section": null,
-              "task": 2,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_38_L08_cwiczenie7.mp3",
-              "section": null,
-              "task": 7,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_39_L08_cwiczenie12.mp3",
-              "section": null,
-              "task": 12,
-              "part": null,
-              "remoteId": null
             }
           ]
         },
@@ -1028,29 +739,6 @@
               "part": "4",
               "remoteId": "1z7Yb6JCD2oBKumBpOvUom4lFVVEVJHes"
             }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_40_L09_cwiczenie5.mp3",
-              "section": null,
-              "task": 5,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_41_L09_cwiczenie7.mp3",
-              "section": null,
-              "task": 7,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_42_L09_cwiczenie12.mp3",
-              "section": null,
-              "task": 12,
-              "part": null,
-              "remoteId": null
-            }
           ]
         },
         {
@@ -1100,22 +788,6 @@
               "task": 3,
               "part": null,
               "remoteId": "1zIJzsexAS0KuXGObjSl4tkAOZJZZmFBq"
-            }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_43_L10_cwiczenie3.mp3",
-              "section": null,
-              "task": 3,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_44_L10_cwiczenie11.mp3",
-              "section": null,
-              "task": 11,
-              "part": null,
-              "remoteId": null
             }
           ]
         },
@@ -1239,22 +911,6 @@
               "part": null,
               "remoteId": "1iMfDKP-9QqmmndqZZK563acaA9kWToBq"
             }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_45_L11_cwiczenie2.mp3",
-              "section": null,
-              "task": 2,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_46_L11_cwiczenie12.mp3",
-              "section": null,
-              "task": 12,
-              "part": null,
-              "remoteId": null
-            }
           ]
         },
         {
@@ -1310,36 +966,6 @@
               "task": 4,
               "part": null,
               "remoteId": "1Q-XYQhG3cAFhrJSg7kPWYKIkhDAsjz5m"
-            }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_47_L12_cwiczenie1.mp3",
-              "section": null,
-              "task": 1,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_48_L12_cwiczenie2.mp3",
-              "section": null,
-              "task": 2,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_49_L12_cwiczenie6.mp3",
-              "section": null,
-              "task": 6,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_50_L12_cwiczenie12.mp3",
-              "section": null,
-              "task": 12,
-              "part": null,
-              "remoteId": null
             }
           ]
         },
@@ -1397,29 +1023,6 @@
               "part": null,
               "remoteId": "1y3PKXhoFjPZTNaNGYQ_48ztOU9WJwp6U"
             }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_51_L13_cwiczenie2.mp3",
-              "section": null,
-              "task": 2,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_52_L13_cwiczenie3.mp3",
-              "section": null,
-              "task": 3,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_53_L13_cwiczenie7.mp3",
-              "section": null,
-              "task": 7,
-              "part": null,
-              "remoteId": null
-            }
           ]
         },
         {
@@ -1476,22 +1079,6 @@
               "task": 2,
               "part": null,
               "remoteId": "1ke5BnfN8yd9rWM9A4QkakVvZcSf70IW4"
-            }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_54_L14_cwiczenie4.mp3",
-              "section": null,
-              "task": 4,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_55_L14_cwiczenie8.mp3",
-              "section": null,
-              "task": 8,
-              "part": null,
-              "remoteId": null
             }
           ]
         },
@@ -1641,22 +1228,6 @@
               "part": "4",
               "remoteId": "15qrMPPWh7lJOeKq_l5iYQGDnm6NcT5X1"
             }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_56_L15_cwiczenie4.mp3",
-              "section": null,
-              "task": 4,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_57_L15_cwiczenie5.mp3",
-              "section": null,
-              "task": 5,
-              "part": null,
-              "remoteId": null
-            }
           ]
         },
         {
@@ -1710,36 +1281,6 @@
               "task": 1,
               "part": null,
               "remoteId": "1admyr7Qu7mpKWKE4jNujuM2QLDeKkxqU"
-            }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_58_L16_cwiczenie1.mp3",
-              "section": null,
-              "task": 1,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_59_L16_cwiczenie8.mp3",
-              "section": null,
-              "task": 8,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_60_L16_cwiczenie9.mp3",
-              "section": null,
-              "task": 9,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_61_L16_cwiczenie15.mp3",
-              "section": null,
-              "task": 15,
-              "part": null,
-              "remoteId": null
             }
           ]
         },
@@ -1802,43 +1343,6 @@
               "part": null,
               "remoteId": "1GEnZ2OVpDh83XVVV0KR1k3Icj_8RWHSL"
             }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_62_L17_cwiczenie2.mp3",
-              "section": null,
-              "task": 2,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_63_L17_cwiczenie5.mp3",
-              "section": null,
-              "task": 5,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_64_L17_cwiczenie12_a.mp3",
-              "section": null,
-              "task": 12,
-              "part": "a",
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_65_L17_cwiczenie12_b.mp3",
-              "section": null,
-              "task": 12,
-              "part": "b",
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_66_L17_cwiczenie12_c.mp3",
-              "section": null,
-              "task": 12,
-              "part": "c",
-              "remoteId": null
-            }
           ]
         },
         {
@@ -1878,29 +1382,6 @@
               "task": 4,
               "part": null,
               "remoteId": "1MbChXMqlgiPCumFoa_wMT6jX-rPNocyg"
-            }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_67_L18_cwiczenie8.mp3",
-              "section": null,
-              "task": 8,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_68_L18_cwiczenie9.mp3",
-              "section": null,
-              "task": 9,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_69_L18_cwiczenie11.mp3",
-              "section": null,
-              "task": 11,
-              "part": null,
-              "remoteId": null
             }
           ]
         },
@@ -1986,22 +1467,6 @@
               "part": null,
               "remoteId": "1hyHHUo9pa-6Rs0aM8DTZlR8u-XyAxyuC"
             }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_70_L19_cwiczenie8.mp3",
-              "section": null,
-              "task": 8,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_71_L19_cwiczenie12.mp3",
-              "section": null,
-              "task": 12,
-              "part": null,
-              "remoteId": null
-            }
           ]
         },
         {
@@ -2038,36 +1503,6 @@
               "task": 1,
               "part": null,
               "remoteId": "1AhR8SdSUZSYQp5nRQPU72gnwJ5MAyWnS"
-            }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_72_L20_cwiczenie4.mp3",
-              "section": null,
-              "task": 4,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_73_L20_cwiczenie7.mp3",
-              "section": null,
-              "task": 7,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_74_L20_cwiczenie8.mp3",
-              "section": null,
-              "task": 8,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_75_L20_cwiczenie10.mp3",
-              "section": null,
-              "task": 10,
-              "part": null,
-              "remoteId": null
             }
           ]
         },
@@ -2150,22 +1585,6 @@
               "task": 1,
               "part": null,
               "remoteId": "1J2B8Y01AJAb441BaJ_T9MlfYNjDCmcMH"
-            }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_76_L21_cwiczenie4.mp3",
-              "section": null,
-              "task": 4,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_77_L21_cwiczenie5.mp3",
-              "section": null,
-              "task": 5,
-              "part": null,
-              "remoteId": null
             }
           ]
         },
@@ -2262,22 +1681,6 @@
               "part": null,
               "remoteId": "1I5CrFahogFcM-KQk9ZUFvbWyMYS_hHMR"
             }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_78_L22_cwiczenie11.mp3",
-              "section": null,
-              "task": 11,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_79_L22_cwiczenie12.mp3",
-              "section": null,
-              "task": 12,
-              "part": null,
-              "remoteId": null
-            }
           ]
         },
         {
@@ -2371,22 +1774,6 @@
               "part": null,
               "remoteId": "1DZjYpyFnC6ekfWAgKcQnl0WElopWOZUU"
             }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_80_L23_cwiczenie3.mp3",
-              "section": null,
-              "task": 3,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_81_L23_cwiczenie13.mp3",
-              "section": null,
-              "task": 13,
-              "part": null,
-              "remoteId": null
-            }
           ]
         },
         {
@@ -2457,22 +1844,6 @@
               "part": null,
               "remoteId": "1QqwIZaChr4kcISzAz9f3ilYna67jqOeM"
             }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_82_L24_cwiczenie7.mp3",
-              "section": null,
-              "task": 7,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_83_L24_cwiczenie9.mp3",
-              "section": null,
-              "task": 9,
-              "part": null,
-              "remoteId": null
-            }
           ]
         },
         {
@@ -2542,29 +1913,6 @@
               "task": 2,
               "part": null,
               "remoteId": "1Pqj2_xaeuvzk3hr6ySj7EO63Rt9OtFBZ"
-            }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_84_L25_cwiczenie6.mp3",
-              "section": null,
-              "task": 6,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_85_L25_cwiczenie8.mp3",
-              "section": null,
-              "task": 8,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_86_L25_cwiczenie10.mp3",
-              "section": null,
-              "task": 10,
-              "part": null,
-              "remoteId": null
             }
           ]
         },
@@ -2661,22 +2009,6 @@
               "task": 9,
               "part": null,
               "remoteId": "1fVM5F8g-WltzSzBRcHV03NxpqBJb2-_h"
-            }
-          ],
-          "workbookAudio": [
-            {
-              "file": "a1_workbook_87_L26_cwiczenie6.mp3",
-              "section": null,
-              "task": 6,
-              "part": null,
-              "remoteId": null
-            },
-            {
-              "file": "a1_workbook_88_L26_cwiczenie9.mp3",
-              "section": null,
-              "task": 9,
-              "part": null,
-              "remoteId": null
             }
           ]
         }

@@ -39,14 +39,11 @@ data class Lesson(
 
 data class LessonAudio(
     val file: String,
-    val source: LessonAudioSource,
     val section: String?,
     val task: Int,
     val part: String?,
     val remoteId: String?,
 )
-
-enum class LessonAudioSource { COURSEBOOK, WORKBOOK }
 
 val Course.completedCount: Int get() = lessons.count { it.isCompleted }
 
