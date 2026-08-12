@@ -28,6 +28,11 @@ class LessonAudioPlayer
         private var player: MediaPlayer? = null
         private var loadedFile: String? = null
 
+        // play()/pause()/stop() can all be called from different callers at once (a
+        // tap racing an onCleared(), or two tracks racing each other), and MediaPlayer
+        // is not thread-safe — guards every access to player/loadedFile.
+        private val lock = Any()
+
         private val _playingFile = MutableStateFlow<String?>(null)
         val playingFile: StateFlow<String?> = _playingFile.asStateFlow()
 
@@ -36,24 +41,28 @@ class LessonAudioPlayer
             path: String,
         ) {
             withContext(dispatchers.io) {
-                if (loadedFile != file) reset(file, path)
-                player?.run {
-                    seekTo(0)
-                    start()
+                synchronized(lock) {
+                    if (loadedFile != file) reset(file, path)
+                    player?.run {
+                        seekTo(0)
+                        start()
+                    }
                 }
                 _playingFile.value = file
             }
         }
 
         fun pause() {
-            runCatching { player?.takeIf { it.isPlaying }?.pause() }
+            synchronized(lock) { runCatching { player?.takeIf { it.isPlaying }?.pause() } }
             _playingFile.value = null
         }
 
         fun stop() {
-            runCatching { player?.release() }
-            player = null
-            loadedFile = null
+            synchronized(lock) {
+                runCatching { player?.release() }
+                player = null
+                loadedFile = null
+            }
             _playingFile.value = null
         }
 

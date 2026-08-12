@@ -10,8 +10,11 @@ class CheckTrainingReadinessUseCaseImpl
     constructor(
         private val vocabularyRepository: VocabularyRepository,
     ) : CheckTrainingReadinessUseCase {
-        override suspend fun invoke(minimumWords: Int): TrainingReadiness {
-            val available = vocabularyRepository.countStudyWords()
+        override suspend fun invoke(
+            minimumWords: Int,
+            excludePhrases: Boolean,
+        ): TrainingReadiness {
+            val available = vocabularyRepository.countStudyWords(excludePhrases)
             return if (available >= minimumWords) {
                 TrainingReadiness.Ready
             } else {

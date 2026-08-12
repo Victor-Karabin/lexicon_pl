@@ -23,7 +23,8 @@ interface VocabularyRepository {
         limit: Int,
     ): List<VocabularyItemBoundary>
 
-    suspend fun countStudyWords(): Int
+    /** [excludePhrases] narrows the count to single words — what Crossword can place. */
+    suspend fun countStudyWords(excludePhrases: Boolean = false): Int
 
     suspend fun countWords(): Int
 

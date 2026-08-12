@@ -46,7 +46,8 @@ class SubmitCrosswordUseCaseImpl
                 CrosswordWordResult(submission.vocabularyItemId, submission.expectedText, outcome, submission.tipUsed)
             }
 
-            val isFullyCorrect = wordResults.all { it.outcome == CrosswordWordOutcome.CORRECT } &&
+            val isFullyCorrect = wordResults.isNotEmpty() &&
+                wordResults.all { it.outcome == CrosswordWordOutcome.CORRECT } &&
                 wordResults.none { it.tipUsed }
 
             return SubmitCrosswordResponse(wordResults = wordResults, isFullyCorrect = isFullyCorrect)

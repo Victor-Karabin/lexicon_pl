@@ -39,12 +39,13 @@ fun TrainingGate(
     trainingName: String,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
+    excludePhrases: Boolean = false,
     viewModel: TrainingGateViewModel = hiltViewModel(),
     content: @Composable () -> Unit,
 ) {
     val readiness by viewModel.readiness.collectAsState()
 
-    LaunchedEffect(minimumWords) { viewModel.check(minimumWords) }
+    LaunchedEffect(minimumWords, excludePhrases) { viewModel.check(minimumWords, excludePhrases) }
 
     when (val state = readiness) {
         null ->

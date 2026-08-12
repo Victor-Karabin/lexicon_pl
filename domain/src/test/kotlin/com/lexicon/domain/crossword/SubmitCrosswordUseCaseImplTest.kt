@@ -66,6 +66,13 @@ class SubmitCrosswordUseCaseImplTest {
         }
 
     @Test
+    fun `an empty word list is not fully correct — vacuous truth would otherwise mark it complete`() =
+        runTest {
+            val response = useCase(SubmitCrosswordRequest(sessionId = "session-1", words = emptyList()))
+            assertFalse(response.isFullyCorrect)
+        }
+
+    @Test
     fun `comparison is case-insensitive with whitespace trimmed`() =
         runTest {
             val response = useCase(

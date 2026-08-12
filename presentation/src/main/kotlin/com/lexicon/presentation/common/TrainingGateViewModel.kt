@@ -22,9 +22,12 @@ class TrainingGateViewModel
         private val _readiness = MutableStateFlow<TrainingReadiness?>(null)
         val readiness: StateFlow<TrainingReadiness?> = _readiness.asStateFlow()
 
-        fun check(minimumWords: Int) {
+        fun check(
+            minimumWords: Int,
+            excludePhrases: Boolean = false,
+        ) {
             viewModelScope.launch(dispatchers.io) {
-                _readiness.value = checkReadiness(minimumWords)
+                _readiness.value = checkReadiness(minimumWords, excludePhrases)
             }
         }
     }

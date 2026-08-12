@@ -3,6 +3,7 @@ package com.lexicon.data.local
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
@@ -34,8 +35,14 @@ interface WordDao {
     @Query("SELECT id FROM words WHERE isFavourite = 1 AND isDeleted = 0")
     fun observeFavouriteIds(): Flow<List<Long>>
 
-    @Query("SELECT COUNT(*) FROM words WHERE isFavourite = 1 AND isDeleted = 0")
-    suspend fun countForStudy(): Int
+    @Query(
+        """
+        SELECT COUNT(*) FROM words
+        WHERE isFavourite = 1 AND isDeleted = 0
+          AND (:excludePhrases = 0 OR text NOT LIKE '% %')
+        """,
+    )
+    suspend fun countForStudy(excludePhrases: Int): Int
 
     @Query(
         """
@@ -77,4 +84,19 @@ interface WordDao {
 
     @Insert
     suspend fun insertAll(words: List<WordEntity>)
+
+    /**
+     * Applies a seed-asset diff as one write: an interrupted app process can no
+     * longer leave the added/removed/changed rows partially committed.
+     */
+    @Transaction
+    suspend fun reconcile(
+        added: List<WordEntity>,
+        removedIds: List<Long>,
+        changed: List<WordEntity>,
+    ) {
+        insertAll(added)
+        if (removedIds.isNotEmpty()) deleteByIds(removedIds)
+        if (changed.isNotEmpty()) updateAll(changed)
+    }
 }

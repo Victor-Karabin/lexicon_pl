@@ -12,8 +12,11 @@ class CheckTrainingReadinessUseCaseImplTest {
     private val vocabularyRepository: VocabularyRepository = mockk()
     private val useCase = CheckTrainingReadinessUseCaseImpl(vocabularyRepository)
 
-    private fun withStudySetOf(count: Int) {
-        coEvery { vocabularyRepository.countStudyWords() } returns count
+    private fun withStudySetOf(
+        count: Int,
+        excludePhrases: Boolean = false,
+    ) {
+        coEvery { vocabularyRepository.countStudyWords(excludePhrases) } returns count
     }
 
     @Test
@@ -56,5 +59,16 @@ class CheckTrainingReadinessUseCaseImplTest {
             val readiness = useCase(minimumWords = 8)
 
             assertEquals(TrainingReadiness.NotEnoughWords(required = 8, available = 3), readiness)
+        }
+
+    @Test
+    fun `excludePhrases narrows the count Crossword-side, not the default check`() =
+        runTest {
+            withStudySetOf(count = 4, excludePhrases = true)
+
+            assertEquals(
+                TrainingReadiness.NotEnoughWords(required = 8, available = 4),
+                useCase(minimumWords = 8, excludePhrases = true),
+            )
         }
 }

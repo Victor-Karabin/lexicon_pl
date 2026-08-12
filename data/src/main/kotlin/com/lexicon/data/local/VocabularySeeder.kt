@@ -49,18 +49,14 @@ class VocabularySeeder
 
             val assetIds = asset.mapTo(mutableSetOf()) { it.id }
             val added = asset.filter { it.id !in existing }
-            wordDao.insertAll(added)
-
             val removed = existing.keys - assetIds
-            if (removed.isNotEmpty()) wordDao.deleteByIds(removed.toList())
-
             val changed = asset.mapNotNull { incoming ->
                 val current = existing[incoming.id] ?: return@mapNotNull null
                 incoming
                     .copy(isFavourite = current.isFavourite, isDeleted = current.isDeleted)
                     .takeIf { it != current }
             }
-            if (changed.isNotEmpty()) wordDao.updateAll(changed)
+            wordDao.reconcile(added = added, removedIds = removed.toList(), changed = changed)
 
             return SyncOutcomeBoundary(
                 total = asset.size,

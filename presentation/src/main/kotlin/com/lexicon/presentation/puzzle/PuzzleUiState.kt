@@ -28,6 +28,8 @@ sealed interface PuzzleUiState {
         val canUseTip: Boolean get() = isEditable && !tipUsed
         val canSkip: Boolean get() = isEditable
         val canUndo: Boolean get() = isEditable && placedTiles.isNotEmpty()
-        val awaitingNext: Boolean get() = answerState is AnswerState.Incorrect || answerState is AnswerState.Skipped
+
+        // Skip auto-advances, same as Correct; only Incorrect waits for a manual Next.
+        val awaitingNext: Boolean get() = answerState is AnswerState.Incorrect
     }
 }
