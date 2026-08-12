@@ -61,12 +61,12 @@ class VocabularySeederTest {
             assetIs(word(1, "kot"), word(2, "pies"), word(3, "dom"))
             tableIs(word(1, "kot"), word(2, "pies"))
             coEvery { vocabularySyncStore.syncedFingerprint() } returns "stale"
-            val inserted = slot<List<WordEntity>>()
-            coEvery { wordDao.insertAll(capture(inserted)) } returns Unit
+            val added = slot<List<WordEntity>>()
+            coEvery { wordDao.reconcile(capture(added), any(), any()) } returns Unit
 
             seeder().ensureSeeded()
 
-            assertEquals(listOf(3L), inserted.captured.map { it.id })
+            assertEquals(listOf(3L), added.captured.map { it.id })
         }
 
     @Test
@@ -75,12 +75,12 @@ class VocabularySeederTest {
             assetIs(word(1, "kot"))
             tableIs(word(1, "kot"), word(2, "w"))
             coEvery { vocabularySyncStore.syncedFingerprint() } returns "stale"
-            val deleted = slot<List<Long>>()
-            coEvery { wordDao.deleteByIds(capture(deleted)) } returns Unit
+            val removedIds = slot<List<Long>>()
+            coEvery { wordDao.reconcile(any(), capture(removedIds), any()) } returns Unit
 
             seeder().ensureSeeded()
 
-            assertEquals(listOf(2L), deleted.captured)
+            assertEquals(listOf(2L), removedIds.captured)
         }
 
     @Test
@@ -89,13 +89,13 @@ class VocabularySeederTest {
             assetIs(word(1, "kot", translation = "cat"))
             tableIs(word(1, "kot", translation = "kitten").copy(isDeleted = true))
             coEvery { vocabularySyncStore.syncedFingerprint() } returns "stale"
-            val updated = slot<List<WordEntity>>()
-            coEvery { wordDao.updateAll(capture(updated)) } returns Unit
+            val changed = slot<List<WordEntity>>()
+            coEvery { wordDao.reconcile(any(), any(), capture(changed)) } returns Unit
 
             seeder().ensureSeeded()
 
-            assertTrue("the deletion must not be undone", updated.captured.single().isDeleted)
-            assertEquals("the correction is still taken", "cat", updated.captured.single().translation)
+            assertTrue("the deletion must not be undone", changed.captured.single().isDeleted)
+            assertEquals("the correction is still taken", "cat", changed.captured.single().translation)
         }
 
     @Test
@@ -104,12 +104,12 @@ class VocabularySeederTest {
             assetIs(word(1, "kot", translation = "cat"))
             tableIs(word(1, "kot", translation = "kitten", isFavourite = true))
             coEvery { vocabularySyncStore.syncedFingerprint() } returns "stale"
-            val updated = slot<List<WordEntity>>()
-            coEvery { wordDao.updateAll(capture(updated)) } returns Unit
+            val changed = slot<List<WordEntity>>()
+            coEvery { wordDao.reconcile(any(), any(), capture(changed)) } returns Unit
 
             seeder().ensureSeeded()
 
-            val row = updated.captured.single()
+            val row = changed.captured.single()
             assertEquals("the corrected translation must be taken", "cat", row.translation)
             assertTrue("the heart must not be", row.isFavourite)
         }
@@ -120,9 +120,26 @@ class VocabularySeederTest {
             assetIs(word(1, "kot"), word(2, "pies"))
             tableIs(word(1, "kot"), word(2, "pies", isFavourite = true))
             coEvery { vocabularySyncStore.syncedFingerprint() } returns "stale"
+            val changed = slot<List<WordEntity>>()
+            coEvery { wordDao.reconcile(any(), any(), capture(changed)) } returns Unit
 
             seeder().ensureSeeded()
 
+            assertTrue(changed.captured.isEmpty())
+        }
+
+    @Test
+    fun `the diff is applied as a single reconcile call, not separate writes`() =
+        runTest {
+            assetIs(word(1, "kot"), word(3, "dom"))
+            tableIs(word(1, "kot"), word(2, "w"))
+            coEvery { vocabularySyncStore.syncedFingerprint() } returns "stale"
+
+            seeder().ensureSeeded()
+
+            coVerify(exactly = 1) { wordDao.reconcile(any(), any(), any()) }
+            coVerify(exactly = 0) { wordDao.insertAll(any()) }
+            coVerify(exactly = 0) { wordDao.deleteByIds(any()) }
             coVerify(exactly = 0) { wordDao.updateAll(any()) }
         }
 

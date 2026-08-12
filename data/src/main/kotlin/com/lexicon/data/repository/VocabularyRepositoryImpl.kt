@@ -54,9 +54,9 @@ class VocabularyRepositoryImpl
 
         override suspend fun countWords(): Int = wordDao.count()
 
-        override suspend fun countStudyWords(): Int {
+        override suspend fun countStudyWords(excludePhrases: Boolean): Int {
             vocabularySeeder.ensureSeeded()
-            return wordDao.countForStudy()
+            return wordDao.countForStudy(excludePhrases = if (excludePhrases) 1 else 0)
         }
 
         override suspend fun deleteWord(id: Long) {

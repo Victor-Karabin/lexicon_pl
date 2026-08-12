@@ -224,6 +224,9 @@ private fun NavGraphBuilder.trainingDestination(
             minimumWords = if (scopedWords.isEmpty()) minimumWords else 0,
             trainingName = trainingDisplayName(training),
             onClose = onClose,
+            // Crossword can only place single words, so phrases in the study set
+            // don't count toward whether there are enough words to start it.
+            excludePhrases = training == LexiconDestinations.CROSSWORD,
         ) {
             screen(onComplete)
         }

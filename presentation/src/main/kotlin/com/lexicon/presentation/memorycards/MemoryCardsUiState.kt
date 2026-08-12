@@ -26,7 +26,9 @@ sealed interface MemoryCardsUiState {
     ) : MemoryCardsUiState {
         val isInteractive: Boolean get() = answerState is AnswerState.Unanswered
         val canSkip: Boolean get() = isInteractive
-        val awaitingNext: Boolean get() = answerState is AnswerState.Skipped
+
+        // Skip auto-advances, same as a completed match; Memory Cards never waits for a manual Next.
+        val awaitingNext: Boolean get() = false
 
         fun isFaceUp(card: MemoryCard): Boolean =
             matchedItemIds.contains(card.vocabularyItemId) ||

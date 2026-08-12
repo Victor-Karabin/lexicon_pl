@@ -11,6 +11,7 @@ import com.lexicon.interactors.memorycards.StartMemoryCardsSessionUseCase
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultRequest
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.trainingVocabularyIds
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,6 +28,7 @@ import javax.inject.Inject
 
 private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 400L
 private const val INCORRECT_FLASH_DELAY_MS = 600L
+private const val SKIPPED_ANSWER_ADVANCE_DELAY_MS = 700L
 
 @HiltViewModel
 class MemoryCardsViewModel
@@ -36,6 +38,7 @@ class MemoryCardsViewModel
         private val startSessionUseCase: StartMemoryCardsSessionUseCase,
         private val submitStepResultUseCase: SubmitMemoryCardsStepResultUseCase,
         private val dispatchers: DispatcherProvider,
+        private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
         private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
 
@@ -174,6 +177,8 @@ class MemoryCardsViewModel
                         answerState = AnswerState.Skipped(),
                     )
                 }
+                delay(SKIPPED_ANSWER_ADVANCE_DELAY_MS)
+                advanceToNextStep()
             }
         }
 
@@ -188,6 +193,10 @@ class MemoryCardsViewModel
             val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
                 updateLoaded { it.copy(isSessionComplete = true) }
+                // Memory Cards has no per-word translation to show on the Results screen's
+                // breakdown, so the holder is cleared rather than left showing a previous
+                // (unrelated) training's word list.
+                lastSessionResultsHolder.wordResults = emptyList()
                 _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount))
                 return
             }

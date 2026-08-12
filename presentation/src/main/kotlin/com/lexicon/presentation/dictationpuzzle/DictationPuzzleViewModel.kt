@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 400L
+private const val SKIPPED_ANSWER_ADVANCE_DELAY_MS = 700L
 
 @HiltViewModel
 class DictationPuzzleViewModel
@@ -180,6 +181,8 @@ class DictationPuzzleViewModel
                             WordResultEntry(it.expectedText, it.translationText, AnswerState.Skipped(expectedText), tipUsed)
                     }
                     updateLoaded { it.copy(answerState = AnswerState.Skipped(expectedText)) }
+                    delay(SKIPPED_ANSWER_ADVANCE_DELAY_MS)
+                    advanceToNextStep()
                 }
             }
         }

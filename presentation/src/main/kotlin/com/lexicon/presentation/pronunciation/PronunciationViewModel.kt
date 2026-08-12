@@ -33,6 +33,7 @@ import java.io.File
 import javax.inject.Inject
 
 private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 400L
+private const val SKIPPED_ANSWER_ADVANCE_DELAY_MS = 700L
 
 @HiltViewModel
 class PronunciationViewModel
@@ -208,6 +209,8 @@ class PronunciationViewModel
                         wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Skipped(expectedText), tipUsed)
                     }
                     updateLoaded { it.copy(answerState = AnswerState.Skipped(expectedText), isSubmitting = false) }
+                    delay(SKIPPED_ANSWER_ADVANCE_DELAY_MS)
+                    advanceToNextStep()
                 }
             }
         }

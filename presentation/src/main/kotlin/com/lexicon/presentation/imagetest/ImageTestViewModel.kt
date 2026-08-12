@@ -11,7 +11,9 @@ import com.lexicon.interactors.imagetest.StartImageTestSessionUseCase
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerRequest
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.WordResultEntry
 import com.lexicon.presentation.common.trainingVocabularyIds
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -26,6 +28,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 400L
+private const val SKIPPED_ANSWER_ADVANCE_DELAY_MS = 700L
 
 @HiltViewModel
 class ImageTestViewModel
@@ -35,6 +38,7 @@ class ImageTestViewModel
         private val startSessionUseCase: StartImageTestSessionUseCase,
         private val submitAnswerUseCase: SubmitImageTestAnswerUseCase,
         private val dispatchers: DispatcherProvider,
+        private val lastSessionResultsHolder: LastSessionResultsHolder,
     ) : ViewModel() {
         private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
 
@@ -49,6 +53,7 @@ class ImageTestViewModel
         private var correctCount = 0
         private var incorrectCount = 0
         private var skippedCount = 0
+        private val wordResults = mutableListOf<WordResultEntry>()
 
         init {
             startSession()
@@ -111,28 +116,34 @@ class ImageTestViewModel
                             skipped = skipped,
                         ),
                     )
-                applyOutcome(response.outcome, response.correctOption)
+                applyOutcome(step, response.outcome, response.correctOption)
             }
         }
 
         private suspend fun applyOutcome(
+            step: ImageTestStepResponse,
             outcome: ImageTestStepOutcome,
             correctOption: String,
         ) {
             when (outcome) {
                 ImageTestStepOutcome.CORRECT -> {
                     correctCount++
+                    wordResults += WordResultEntry(correctOption, step.clueText, AnswerState.Correct)
                     updateLoaded { it.copy(answerState = AnswerState.Correct, correctOption = correctOption) }
                     delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                     advanceToNextStep()
                 }
                 ImageTestStepOutcome.INCORRECT -> {
                     incorrectCount++
+                    wordResults += WordResultEntry(correctOption, step.clueText, AnswerState.Incorrect(correctOption))
                     updateLoaded { it.copy(answerState = AnswerState.Incorrect(), correctOption = correctOption) }
                 }
                 ImageTestStepOutcome.SKIPPED -> {
                     skippedCount++
+                    wordResults += WordResultEntry(correctOption, step.clueText, AnswerState.Skipped(correctOption))
                     updateLoaded { it.copy(answerState = AnswerState.Skipped(), correctOption = correctOption) }
+                    delay(SKIPPED_ANSWER_ADVANCE_DELAY_MS)
+                    advanceToNextStep()
                 }
             }
         }
@@ -148,6 +159,7 @@ class ImageTestViewModel
             val nextIndex = state.stepIndex + 1
             if (nextIndex >= steps.size) {
                 updateLoaded { it.copy(isSessionComplete = true) }
+                lastSessionResultsHolder.wordResults = wordResults.toList()
                 _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount))
                 return
             }
