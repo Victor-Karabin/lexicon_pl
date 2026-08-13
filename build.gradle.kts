@@ -20,6 +20,16 @@ subprojects {
     // detekt only discovers src/main|test/kotlin on its own, so a multiplatform module's
     // commonMain/androidMain/iosMain/androidUnitTest would silently go unanalysed —
     // NO-SOURCE rather than a failure. Point it at whatever source dirs actually exist.
+    // A multiplatform module's source sets pull in the KSP output directory, and
+    // Room's generated *_Impl.kt is not written to anyone's style rules.
+    plugins.withId("org.jlleitschuh.gradle.ktlint") {
+        extensions.configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+            filter {
+                exclude { it.file.path.contains("${File.separator}build${File.separator}generated${File.separator}") }
+            }
+        }
+    }
+
     plugins.withId("io.gitlab.arturbosch.detekt") {
         extensions.configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
             source.setFrom(

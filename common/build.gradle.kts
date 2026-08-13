@@ -11,7 +11,8 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.kotlinx.coroutines.core)
+            // DispatcherProvider exposes CoroutineDispatcher, so consumers need it too.
+            api(libs.kotlinx.coroutines.core)
         }
         androidUnitTest.dependencies {
             implementation(libs.bundles.unit.test)

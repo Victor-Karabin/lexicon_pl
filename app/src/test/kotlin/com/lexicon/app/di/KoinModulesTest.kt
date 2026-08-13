@@ -2,6 +2,8 @@ package com.lexicon.app.di
 
 import android.content.Context
 import androidx.lifecycle.SavedStateHandle
+import com.lexicon.data.di.dataAndroidModule
+import com.lexicon.data.di.dataModule
 import org.junit.Test
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.dsl.module
@@ -21,7 +23,7 @@ class KoinModulesTest {
     @Test
     fun `every Koin module's dependency graph resolves`() {
         module {
-            includes(androidModule, databaseModule, networkModule, repositoryModule, useCaseModule, viewModelModule)
+            includes(androidModule, networkModule, dataModule, dataAndroidModule, useCaseModule, viewModelModule)
         }.verify(extraTypes = listOf(Context::class, SavedStateHandle::class))
     }
 }
