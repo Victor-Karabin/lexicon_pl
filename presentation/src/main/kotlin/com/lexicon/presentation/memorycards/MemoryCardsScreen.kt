@@ -30,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.SubcomposeAsyncImage
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -39,6 +38,7 @@ import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,7 +46,7 @@ fun MemoryCardsScreen(
     onSessionComplete: (correct: Int, incorrect: Int, skipped: Int, tipsUsed: Int) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: MemoryCardsViewModel = hiltViewModel(),
+    viewModel: MemoryCardsViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
 

@@ -18,7 +18,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerOptionList
 import com.lexicon.presentation.common.AnswerState
@@ -29,6 +28,7 @@ import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +36,7 @@ fun ImageTestScreen(
     onSessionComplete: (correct: Int, incorrect: Int, skipped: Int, tipsUsed: Int) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: ImageTestViewModel = hiltViewModel(),
+    viewModel: ImageTestViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
 

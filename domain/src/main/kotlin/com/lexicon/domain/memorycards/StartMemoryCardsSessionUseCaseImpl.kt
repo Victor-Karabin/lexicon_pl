@@ -13,44 +13,41 @@ import com.lexicon.interactors.memorycards.StartMemoryCardsSessionUseCase
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import java.util.UUID
-import javax.inject.Inject
 
-class StartMemoryCardsSessionUseCaseImpl
-    @Inject
-    constructor(
-        private val vocabularyRepository: VocabularyRepository,
-        private val imageProvider: ImageProvider,
-        private val stepCountResolver: StepCountResolver,
-    ) : StartMemoryCardsSessionUseCase {
-        override suspend fun invoke(request: StartMemoryCardsSessionRequest): MemoryCardsSessionResponse {
-            val stepCount = stepCountResolver.resolve(request.stepCount)
-            val steps =
-                coroutineScope {
-                    (0 until stepCount).map { stepIndex ->
-                        async { buildStep(stepIndex, request.pairsPerStep, request.vocabularyIds) }
-                    }.map { it.await() }
-                }
-            return MemoryCardsSessionResponse(sessionId = UUID.randomUUID().toString(), steps = steps)
-        }
-
-        private suspend fun buildStep(
-            stepIndex: Int,
-            pairsPerStep: Int,
-            vocabularyIds: List<Long>,
-        ): MemoryCardsStepResponse {
-            val words = vocabularyRepository.getRandomItems(pairsPerStep, vocabularyIds).map { it.toWord() }
-            val pairs =
-                coroutineScope {
-                    words.map { word -> async { buildPair(word) } }.map { it.await() }
-                }
-            return MemoryCardsStepResponse(stepIndex = stepIndex, pairs = pairs)
-        }
-
-        private suspend fun buildPair(word: Word): MemoryCardsPairResponse =
-            MemoryCardsPairResponse(
-                vocabularyItemId = word.id,
-                imageUrl = imageProvider.searchImage(word.translation),
-                imageFallbackText = word.text,
-                text = word.translation,
-            )
+class StartMemoryCardsSessionUseCaseImpl(
+    private val vocabularyRepository: VocabularyRepository,
+    private val imageProvider: ImageProvider,
+    private val stepCountResolver: StepCountResolver,
+) : StartMemoryCardsSessionUseCase {
+    override suspend fun invoke(request: StartMemoryCardsSessionRequest): MemoryCardsSessionResponse {
+        val stepCount = stepCountResolver.resolve(request.stepCount)
+        val steps =
+            coroutineScope {
+                (0 until stepCount).map { stepIndex ->
+                    async { buildStep(stepIndex, request.pairsPerStep, request.vocabularyIds) }
+                }.map { it.await() }
+            }
+        return MemoryCardsSessionResponse(sessionId = UUID.randomUUID().toString(), steps = steps)
     }
+
+    private suspend fun buildStep(
+        stepIndex: Int,
+        pairsPerStep: Int,
+        vocabularyIds: List<Long>,
+    ): MemoryCardsStepResponse {
+        val words = vocabularyRepository.getRandomItems(pairsPerStep, vocabularyIds).map { it.toWord() }
+        val pairs =
+            coroutineScope {
+                words.map { word -> async { buildPair(word) } }.map { it.await() }
+            }
+        return MemoryCardsStepResponse(stepIndex = stepIndex, pairs = pairs)
+    }
+
+    private suspend fun buildPair(word: Word): MemoryCardsPairResponse =
+        MemoryCardsPairResponse(
+            vocabularyItemId = word.id,
+            imageUrl = imageProvider.searchImage(word.translation),
+            imageFallbackText = word.text,
+            text = word.translation,
+        )
+}

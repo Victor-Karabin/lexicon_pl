@@ -20,12 +20,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.LexiconWarning
+import org.koin.androidx.compose.koinViewModel
 import kotlin.math.roundToInt
 
 @Composable
@@ -36,7 +36,7 @@ fun SessionResultScreen(
     tipsUsed: Int,
     onDone: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: SessionResultViewModel = hiltViewModel(),
+    viewModel: SessionResultViewModel = koinViewModel(),
 ) {
     SessionResultScreenContent(
         correct = correct,

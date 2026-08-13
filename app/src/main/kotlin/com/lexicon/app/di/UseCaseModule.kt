@@ -7,6 +7,7 @@ import com.lexicon.domain.course.ObserveCoursesUseCaseImpl
 import com.lexicon.domain.course.SetLessonCompletedUseCaseImpl
 import com.lexicon.domain.crossword.StartCrosswordSessionUseCaseImpl
 import com.lexicon.domain.crossword.SubmitCrosswordUseCaseImpl
+import com.lexicon.domain.dictation.AnswerNormalizer
 import com.lexicon.domain.dictation.StartDictationSessionUseCaseImpl
 import com.lexicon.domain.dictation.SubmitDictationAnswerUseCaseImpl
 import com.lexicon.domain.dictationpuzzle.StartDictationPuzzleSessionUseCaseImpl
@@ -34,6 +35,7 @@ import com.lexicon.domain.pronunciation.SubmitPronunciationResultUseCaseImpl
 import com.lexicon.domain.puzzle.StartPuzzleSessionUseCaseImpl
 import com.lexicon.domain.puzzle.SubmitPuzzleAnswerUseCaseImpl
 import com.lexicon.domain.settings.ObserveSettingsUseCaseImpl
+import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.domain.settings.UpdateStepCountUseCaseImpl
 import com.lexicon.domain.settings.UpdateThemeModeUseCaseImpl
 import com.lexicon.domain.sync.SyncCatalogUseCaseImpl
@@ -84,137 +86,54 @@ import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
 import com.lexicon.interactors.wordmatch.StartWordMatchSessionUseCase
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultUseCase
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.factoryOf
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class UseCaseModule {
-    @Binds
-    abstract fun bindStartDictationSessionUseCase(impl: StartDictationSessionUseCaseImpl): StartDictationSessionUseCase
+val useCaseModule = module {
+    factoryOf(::AnswerNormalizer)
+    factoryOf(::StepCountResolver)
 
-    @Binds
-    abstract fun bindSubmitDictationAnswerUseCase(impl: SubmitDictationAnswerUseCaseImpl): SubmitDictationAnswerUseCase
-
-    @Binds
-    abstract fun bindStartDictationPuzzleSessionUseCase(impl: StartDictationPuzzleSessionUseCaseImpl): StartDictationPuzzleSessionUseCase
-
-    @Binds
-    abstract fun bindSubmitDictationPuzzleAnswerUseCase(impl: SubmitDictationPuzzleAnswerUseCaseImpl): SubmitDictationPuzzleAnswerUseCase
-
-    @Binds
-    abstract fun bindStartTrueOrFalseSessionUseCase(impl: StartTrueOrFalseSessionUseCaseImpl): StartTrueOrFalseSessionUseCase
-
-    @Binds
-    abstract fun bindSubmitTrueOrFalseAnswerUseCase(impl: SubmitTrueOrFalseAnswerUseCaseImpl): SubmitTrueOrFalseAnswerUseCase
-
-    @Binds
-    abstract fun bindStartWordMatchSessionUseCase(impl: StartWordMatchSessionUseCaseImpl): StartWordMatchSessionUseCase
-
-    @Binds
-    abstract fun bindSubmitWordMatchStepResultUseCase(impl: SubmitWordMatchStepResultUseCaseImpl): SubmitWordMatchStepResultUseCase
-
-    @Binds
-    abstract fun bindStartPronunciationSessionUseCase(impl: StartPronunciationSessionUseCaseImpl): StartPronunciationSessionUseCase
-
-    @Binds
-    abstract fun bindSubmitPronunciationResultUseCase(impl: SubmitPronunciationResultUseCaseImpl): SubmitPronunciationResultUseCase
-
-    @Binds
-    abstract fun bindStartPuzzleSessionUseCase(impl: StartPuzzleSessionUseCaseImpl): StartPuzzleSessionUseCase
-
-    @Binds
-    abstract fun bindSubmitPuzzleAnswerUseCase(impl: SubmitPuzzleAnswerUseCaseImpl): SubmitPuzzleAnswerUseCase
-
-    @Binds
-    abstract fun bindStartImageTestSessionUseCase(impl: StartImageTestSessionUseCaseImpl): StartImageTestSessionUseCase
-
-    @Binds
-    abstract fun bindSubmitImageTestAnswerUseCase(impl: SubmitImageTestAnswerUseCaseImpl): SubmitImageTestAnswerUseCase
-
-    @Binds
-    abstract fun bindStartMemoryCardsSessionUseCase(impl: StartMemoryCardsSessionUseCaseImpl): StartMemoryCardsSessionUseCase
-
-    @Binds
-    abstract fun bindSubmitMemoryCardsStepResultUseCase(impl: SubmitMemoryCardsStepResultUseCaseImpl): SubmitMemoryCardsStepResultUseCase
-
-    @Binds
-    abstract fun bindStartCrosswordSessionUseCase(impl: StartCrosswordSessionUseCaseImpl): StartCrosswordSessionUseCase
-
-    @Binds
-    abstract fun bindObserveSettingsUseCase(impl: ObserveSettingsUseCaseImpl): ObserveSettingsUseCase
-
-    @Binds
-    abstract fun bindUpdateThemeModeUseCase(impl: UpdateThemeModeUseCaseImpl): UpdateThemeModeUseCase
-
-    @Binds
-    abstract fun bindUpdateStepCountUseCase(impl: UpdateStepCountUseCaseImpl): UpdateStepCountUseCase
-
-    @Binds
-    abstract fun bindSubmitCrosswordUseCase(impl: SubmitCrosswordUseCaseImpl): SubmitCrosswordUseCase
-
-    @Binds
-    abstract fun bindStartMixSessionUseCase(impl: StartMixSessionUseCaseImpl): StartMixSessionUseCase
-
-    @Binds
-    abstract fun bindGetVocabularyPresets(impl: GetVocabularyPresetsUseCaseImpl): GetVocabularyPresetsUseCase
-
-    @Binds
-    abstract fun bindGetPresetCategories(impl: GetPresetCategoriesUseCaseImpl): GetPresetCategoriesUseCase
-
-    @Binds
-    abstract fun bindGetVocabularyPreset(impl: GetVocabularyPresetUseCaseImpl): GetVocabularyPresetUseCase
-
-    @Binds
-    abstract fun bindGetPresetVocabulary(impl: GetPresetVocabularyUseCaseImpl): GetPresetVocabularyUseCase
-
-    @Binds
-    abstract fun bindToggleWordFavourite(impl: ToggleWordFavouriteUseCaseImpl): ToggleWordFavouriteUseCase
-
-    @Binds
-    abstract fun bindSetPresetFavourite(impl: SetPresetFavouriteUseCaseImpl): SetPresetFavouriteUseCase
-
-    @Binds
-    abstract fun bindObserveFavouriteWordIds(impl: ObserveFavouriteWordIdsUseCaseImpl): ObserveFavouriteWordIdsUseCase
-
-    @Binds
-    abstract fun bindCheckTrainingReadiness(impl: CheckTrainingReadinessUseCaseImpl): CheckTrainingReadinessUseCase
-
-    @Binds
-    abstract fun bindSearchVocabulary(impl: SearchVocabularyUseCaseImpl): SearchVocabularyUseCase
-
-    @Binds
-    abstract fun bindSyncCatalog(impl: SyncCatalogUseCaseImpl): SyncCatalogUseCase
-
-    @Binds
-    abstract fun bindDeleteWord(impl: DeleteWordUseCaseImpl): DeleteWordUseCase
-
-    @Binds
-    abstract fun bindRestoreWord(impl: RestoreWordUseCaseImpl): RestoreWordUseCase
-
-    @Binds
-    abstract fun bindDeletePreset(impl: DeletePresetUseCaseImpl): DeletePresetUseCase
-
-    @Binds
-    abstract fun bindRestorePreset(impl: RestorePresetUseCaseImpl): RestorePresetUseCase
-
-    @Binds
-    abstract fun bindObserveVocabularyPresets(impl: ObserveVocabularyPresetsUseCaseImpl): ObserveVocabularyPresetsUseCase
-
-    @Binds
-    abstract fun bindObserveCourses(impl: ObserveCoursesUseCaseImpl): ObserveCoursesUseCase
-
-    @Binds
-    abstract fun bindGetLesson(impl: GetLessonUseCaseImpl): GetLessonUseCase
-
-    @Binds
-    abstract fun bindGetLessonVocabulary(impl: GetLessonVocabularyUseCaseImpl): GetLessonVocabularyUseCase
-
-    @Binds
-    abstract fun bindSetLessonCompleted(impl: SetLessonCompletedUseCaseImpl): SetLessonCompletedUseCase
-
-    @Binds
-    abstract fun bindCheckExerciseAnswer(impl: CheckExerciseAnswerUseCaseImpl): CheckExerciseAnswerUseCase
+    factoryOf(::StartDictationSessionUseCaseImpl) { bind<StartDictationSessionUseCase>() }
+    factoryOf(::SubmitDictationAnswerUseCaseImpl) { bind<SubmitDictationAnswerUseCase>() }
+    factoryOf(::StartDictationPuzzleSessionUseCaseImpl) { bind<StartDictationPuzzleSessionUseCase>() }
+    factoryOf(::SubmitDictationPuzzleAnswerUseCaseImpl) { bind<SubmitDictationPuzzleAnswerUseCase>() }
+    factoryOf(::StartTrueOrFalseSessionUseCaseImpl) { bind<StartTrueOrFalseSessionUseCase>() }
+    factoryOf(::SubmitTrueOrFalseAnswerUseCaseImpl) { bind<SubmitTrueOrFalseAnswerUseCase>() }
+    factoryOf(::StartWordMatchSessionUseCaseImpl) { bind<StartWordMatchSessionUseCase>() }
+    factoryOf(::SubmitWordMatchStepResultUseCaseImpl) { bind<SubmitWordMatchStepResultUseCase>() }
+    factoryOf(::StartPronunciationSessionUseCaseImpl) { bind<StartPronunciationSessionUseCase>() }
+    factoryOf(::SubmitPronunciationResultUseCaseImpl) { bind<SubmitPronunciationResultUseCase>() }
+    factoryOf(::StartPuzzleSessionUseCaseImpl) { bind<StartPuzzleSessionUseCase>() }
+    factoryOf(::SubmitPuzzleAnswerUseCaseImpl) { bind<SubmitPuzzleAnswerUseCase>() }
+    factoryOf(::StartImageTestSessionUseCaseImpl) { bind<StartImageTestSessionUseCase>() }
+    factoryOf(::SubmitImageTestAnswerUseCaseImpl) { bind<SubmitImageTestAnswerUseCase>() }
+    factoryOf(::StartMemoryCardsSessionUseCaseImpl) { bind<StartMemoryCardsSessionUseCase>() }
+    factoryOf(::SubmitMemoryCardsStepResultUseCaseImpl) { bind<SubmitMemoryCardsStepResultUseCase>() }
+    factoryOf(::StartCrosswordSessionUseCaseImpl) { bind<StartCrosswordSessionUseCase>() }
+    factoryOf(::SubmitCrosswordUseCaseImpl) { bind<SubmitCrosswordUseCase>() }
+    factoryOf(::ObserveSettingsUseCaseImpl) { bind<ObserveSettingsUseCase>() }
+    factoryOf(::UpdateThemeModeUseCaseImpl) { bind<UpdateThemeModeUseCase>() }
+    factoryOf(::UpdateStepCountUseCaseImpl) { bind<UpdateStepCountUseCase>() }
+    factoryOf(::StartMixSessionUseCaseImpl) { bind<StartMixSessionUseCase>() }
+    factoryOf(::GetVocabularyPresetsUseCaseImpl) { bind<GetVocabularyPresetsUseCase>() }
+    factoryOf(::GetPresetCategoriesUseCaseImpl) { bind<GetPresetCategoriesUseCase>() }
+    factoryOf(::GetVocabularyPresetUseCaseImpl) { bind<GetVocabularyPresetUseCase>() }
+    factoryOf(::GetPresetVocabularyUseCaseImpl) { bind<GetPresetVocabularyUseCase>() }
+    factoryOf(::ToggleWordFavouriteUseCaseImpl) { bind<ToggleWordFavouriteUseCase>() }
+    factoryOf(::SetPresetFavouriteUseCaseImpl) { bind<SetPresetFavouriteUseCase>() }
+    factoryOf(::ObserveFavouriteWordIdsUseCaseImpl) { bind<ObserveFavouriteWordIdsUseCase>() }
+    factoryOf(::CheckTrainingReadinessUseCaseImpl) { bind<CheckTrainingReadinessUseCase>() }
+    factoryOf(::SearchVocabularyUseCaseImpl) { bind<SearchVocabularyUseCase>() }
+    factoryOf(::SyncCatalogUseCaseImpl) { bind<SyncCatalogUseCase>() }
+    factoryOf(::DeleteWordUseCaseImpl) { bind<DeleteWordUseCase>() }
+    factoryOf(::RestoreWordUseCaseImpl) { bind<RestoreWordUseCase>() }
+    factoryOf(::DeletePresetUseCaseImpl) { bind<DeletePresetUseCase>() }
+    factoryOf(::RestorePresetUseCaseImpl) { bind<RestorePresetUseCase>() }
+    factoryOf(::ObserveVocabularyPresetsUseCaseImpl) { bind<ObserveVocabularyPresetsUseCase>() }
+    factoryOf(::ObserveCoursesUseCaseImpl) { bind<ObserveCoursesUseCase>() }
+    factoryOf(::GetLessonUseCaseImpl) { bind<GetLessonUseCase>() }
+    factoryOf(::GetLessonVocabularyUseCaseImpl) { bind<GetLessonVocabularyUseCase>() }
+    factoryOf(::SetLessonCompletedUseCaseImpl) { bind<SetLessonCompletedUseCase>() }
+    factoryOf(::CheckExerciseAnswerUseCaseImpl) { bind<CheckExerciseAnswerUseCase>() }
 }

@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.compose)
 }
 
@@ -42,9 +40,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
 
-    implementation(libs.hilt.android)
-    implementation(libs.hilt.navigation.compose)
-    ksp(libs.hilt.compiler)
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.androidx.compose)
 
     implementation(libs.kotlinx.coroutines.core)
     api(libs.kotlinx.collections.immutable)

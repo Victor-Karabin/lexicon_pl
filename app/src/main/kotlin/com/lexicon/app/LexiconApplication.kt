@@ -5,10 +5,26 @@ import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
-import dagger.hilt.android.HiltAndroidApp
+import com.lexicon.app.di.androidModule
+import com.lexicon.app.di.databaseModule
+import com.lexicon.app.di.networkModule
+import com.lexicon.app.di.repositoryModule
+import com.lexicon.app.di.useCaseModule
+import com.lexicon.app.di.viewModelModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
-@HiltAndroidApp
 class LexiconApplication : Application(), ImageLoaderFactory {
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidLogger()
+            androidContext(this@LexiconApplication)
+            modules(androidModule, databaseModule, networkModule, repositoryModule, useCaseModule, viewModelModule)
+        }
+    }
+
     override fun newImageLoader(): ImageLoader =
         ImageLoader.Builder(this)
             .memoryCache {

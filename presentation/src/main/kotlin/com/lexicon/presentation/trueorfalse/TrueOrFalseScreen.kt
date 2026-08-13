@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerTone
 import com.lexicon.presentation.common.LightDarkPreview
@@ -31,6 +30,7 @@ import com.lexicon.presentation.common.TrueOrFalseAnswerRow
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconTheme
+import org.koin.androidx.compose.koinViewModel
 
 private const val LOW_TIME_WARNING_SECONDS = 10
 private val TimerSize = 100.dp
@@ -41,7 +41,7 @@ fun TrueOrFalseScreen(
     onSessionComplete: (correct: Int, incorrect: Int, skipped: Int, tipsUsed: Int) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: TrueOrFalseViewModel = hiltViewModel(),
+    viewModel: TrueOrFalseViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
 

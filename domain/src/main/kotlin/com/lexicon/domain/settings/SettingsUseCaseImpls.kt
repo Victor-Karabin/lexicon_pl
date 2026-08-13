@@ -8,31 +8,24 @@ import com.lexicon.interactors.settings.UpdateStepCountUseCase
 import com.lexicon.interactors.settings.UpdateThemeModeUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class ObserveSettingsUseCaseImpl
-    @Inject
-    constructor(
-        private val settingsRepository: SettingsRepository,
-    ) : ObserveSettingsUseCase {
-        override fun invoke(): Flow<AppSettings> = settingsRepository.observeSettings().map { it.toAppSettings() }
-    }
+class ObserveSettingsUseCaseImpl(
+    private val settingsRepository: SettingsRepository,
+) : ObserveSettingsUseCase {
+    override fun invoke(): Flow<AppSettings> = settingsRepository.observeSettings().map { it.toAppSettings() }
+}
 
-class UpdateThemeModeUseCaseImpl
-    @Inject
-    constructor(
-        private val settingsRepository: SettingsRepository,
-    ) : UpdateThemeModeUseCase {
-        override suspend fun invoke(themeMode: ThemeMode) = settingsRepository.setThemeMode(themeMode.toBoundary())
-    }
+class UpdateThemeModeUseCaseImpl(
+    private val settingsRepository: SettingsRepository,
+) : UpdateThemeModeUseCase {
+    override suspend fun invoke(themeMode: ThemeMode) = settingsRepository.setThemeMode(themeMode.toBoundary())
+}
 
-class UpdateStepCountUseCaseImpl
-    @Inject
-    constructor(
-        private val settingsRepository: SettingsRepository,
-    ) : UpdateStepCountUseCase {
-        override suspend fun invoke(stepCount: Int) =
-            settingsRepository.setStepCount(
-                stepCount.coerceIn(AppSettings.MIN_STEP_COUNT, AppSettings.MAX_STEP_COUNT),
-            )
-    }
+class UpdateStepCountUseCaseImpl(
+    private val settingsRepository: SettingsRepository,
+) : UpdateStepCountUseCase {
+    override suspend fun invoke(stepCount: Int) =
+        settingsRepository.setStepCount(
+            stepCount.coerceIn(AppSettings.MIN_STEP_COUNT, AppSettings.MAX_STEP_COUNT),
+        )
+}

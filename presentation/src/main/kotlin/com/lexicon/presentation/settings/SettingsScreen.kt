@@ -23,19 +23,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.interactors.settings.ThemeMode
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
+import org.koin.androidx.compose.koinViewModel
 import kotlin.math.roundToInt
 
 @Composable
 fun SettingsScreen(
     modifier: Modifier = Modifier,
-    viewModel: SettingsViewModel = hiltViewModel(),
+    viewModel: SettingsViewModel = koinViewModel(),
 ) {
     val settings by viewModel.uiState.collectAsState()
 

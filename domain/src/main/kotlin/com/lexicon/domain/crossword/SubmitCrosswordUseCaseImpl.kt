@@ -10,52 +10,49 @@ import com.lexicon.interactors.crossword.CrosswordWordResult
 import com.lexicon.interactors.crossword.SubmitCrosswordRequest
 import com.lexicon.interactors.crossword.SubmitCrosswordResponse
 import com.lexicon.interactors.crossword.SubmitCrosswordUseCase
-import javax.inject.Inject
 
 private const val TRAINING_TYPE_CROSSWORD = "CROSSWORD"
 
-class SubmitCrosswordUseCaseImpl
-    @Inject
-    constructor(
-        private val trainingHistoryRepository: TrainingHistoryRepository,
-        private val answerNormalizer: AnswerNormalizer,
-        private val clock: Clock,
-    ) : SubmitCrosswordUseCase {
-        override suspend fun invoke(request: SubmitCrosswordRequest): SubmitCrosswordResponse {
-            val completedAt = clock.nowEpochMillis()
+class SubmitCrosswordUseCaseImpl(
+    private val trainingHistoryRepository: TrainingHistoryRepository,
+    private val answerNormalizer: AnswerNormalizer,
+    private val clock: Clock,
+) : SubmitCrosswordUseCase {
+    override suspend fun invoke(request: SubmitCrosswordRequest): SubmitCrosswordResponse {
+        val completedAt = clock.nowEpochMillis()
 
-            val wordResults = request.words.mapIndexed { index, submission ->
-                val outcome = if (answerNormalizer.matches(submission.expectedText, submission.submittedText)) {
-                    CrosswordWordOutcome.CORRECT
-                } else {
-                    CrosswordWordOutcome.INCORRECT
-                }
-                trainingHistoryRepository.recordResult(
-                    TrainingResultBoundary(
-                        sessionId = request.sessionId,
-                        trainingType = TRAINING_TYPE_CROSSWORD,
-                        stepIndex = index,
-                        vocabularyItemId = submission.vocabularyItemId,
-                        expectedAnswer = submission.expectedText,
-                        submittedAnswer = submission.submittedText,
-                        outcome = outcome.toBoundary(),
-                        tipUsed = submission.tipUsed,
-                        completedAtEpochMillis = completedAt,
-                    ),
-                )
-                CrosswordWordResult(submission.vocabularyItemId, submission.expectedText, outcome, submission.tipUsed)
+        val wordResults = request.words.mapIndexed { index, submission ->
+            val outcome = if (answerNormalizer.matches(submission.expectedText, submission.submittedText)) {
+                CrosswordWordOutcome.CORRECT
+            } else {
+                CrosswordWordOutcome.INCORRECT
             }
-
-            val isFullyCorrect = wordResults.isNotEmpty() &&
-                wordResults.all { it.outcome == CrosswordWordOutcome.CORRECT } &&
-                wordResults.none { it.tipUsed }
-
-            return SubmitCrosswordResponse(wordResults = wordResults, isFullyCorrect = isFullyCorrect)
+            trainingHistoryRepository.recordResult(
+                TrainingResultBoundary(
+                    sessionId = request.sessionId,
+                    trainingType = TRAINING_TYPE_CROSSWORD,
+                    stepIndex = index,
+                    vocabularyItemId = submission.vocabularyItemId,
+                    expectedAnswer = submission.expectedText,
+                    submittedAnswer = submission.submittedText,
+                    outcome = outcome.toBoundary(),
+                    tipUsed = submission.tipUsed,
+                    completedAtEpochMillis = completedAt,
+                ),
+            )
+            CrosswordWordResult(submission.vocabularyItemId, submission.expectedText, outcome, submission.tipUsed)
         }
 
-        private fun CrosswordWordOutcome.toBoundary(): TrainingResultOutcomeBoundary =
-            when (this) {
-                CrosswordWordOutcome.CORRECT -> TrainingResultOutcomeBoundary.CORRECT
-                CrosswordWordOutcome.INCORRECT -> TrainingResultOutcomeBoundary.INCORRECT
-            }
+        val isFullyCorrect = wordResults.isNotEmpty() &&
+            wordResults.all { it.outcome == CrosswordWordOutcome.CORRECT } &&
+            wordResults.none { it.tipUsed }
+
+        return SubmitCrosswordResponse(wordResults = wordResults, isFullyCorrect = isFullyCorrect)
     }
+
+    private fun CrosswordWordOutcome.toBoundary(): TrainingResultOutcomeBoundary =
+        when (this) {
+            CrosswordWordOutcome.CORRECT -> TrainingResultOutcomeBoundary.CORRECT
+            CrosswordWordOutcome.INCORRECT -> TrainingResultOutcomeBoundary.INCORRECT
+        }
+}

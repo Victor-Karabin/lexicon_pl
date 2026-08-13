@@ -8,26 +8,23 @@ import com.lexicon.interactors.dictationpuzzle.DictationPuzzleStepResponse
 import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionRequest
 import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionUseCase
 import java.util.UUID
-import javax.inject.Inject
 
-class StartDictationPuzzleSessionUseCaseImpl
-    @Inject
-    constructor(
-        private val vocabularyRepository: VocabularyRepository,
-        private val stepCountResolver: StepCountResolver,
-    ) : StartDictationPuzzleSessionUseCase {
-        override suspend fun invoke(request: StartDictationPuzzleSessionRequest): DictationPuzzleSessionResponse {
-            val stepCount = stepCountResolver.resolve(request.stepCount)
-            val words = vocabularyRepository.getRandomItems(stepCount, request.vocabularyIds).map { it.toWord() }
-            val steps =
-                words.mapIndexed { index, word ->
-                    DictationPuzzleStepResponse(
-                        stepIndex = index,
-                        vocabularyItemId = word.id,
-                        expectedText = word.text,
-                        translationText = word.translation,
-                    )
-                }
-            return DictationPuzzleSessionResponse(sessionId = UUID.randomUUID().toString(), steps = steps)
-        }
+class StartDictationPuzzleSessionUseCaseImpl(
+    private val vocabularyRepository: VocabularyRepository,
+    private val stepCountResolver: StepCountResolver,
+) : StartDictationPuzzleSessionUseCase {
+    override suspend fun invoke(request: StartDictationPuzzleSessionRequest): DictationPuzzleSessionResponse {
+        val stepCount = stepCountResolver.resolve(request.stepCount)
+        val words = vocabularyRepository.getRandomItems(stepCount, request.vocabularyIds).map { it.toWord() }
+        val steps =
+            words.mapIndexed { index, word ->
+                DictationPuzzleStepResponse(
+                    stepIndex = index,
+                    vocabularyItemId = word.id,
+                    expectedText = word.text,
+                    translationText = word.translation,
+                )
+            }
+        return DictationPuzzleSessionResponse(sessionId = UUID.randomUUID().toString(), steps = steps)
     }
+}

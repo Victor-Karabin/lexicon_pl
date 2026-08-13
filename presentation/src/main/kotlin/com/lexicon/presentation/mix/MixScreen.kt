@@ -29,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.mix.MixStep
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerOptionList
@@ -53,6 +52,7 @@ import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.PlayButton
 import com.lexicon.presentation.theme.component.ProgressDots
 import com.lexicon.presentation.theme.component.WordCard
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,7 +60,7 @@ fun MixScreen(
     onSessionComplete: (correct: Int, incorrect: Int, skipped: Int, tipsUsed: Int) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: MixViewModel = hiltViewModel(),
+    viewModel: MixViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current

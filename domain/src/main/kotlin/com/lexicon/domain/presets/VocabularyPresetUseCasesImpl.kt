@@ -16,67 +16,56 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class GetVocabularyPresetsUseCaseImpl
-    @Inject
-    constructor(
-        private val repository: VocabularyPresetRepository,
-    ) : GetVocabularyPresetsUseCase {
-        override suspend fun invoke(): ImmutableList<VocabularyPreset> {
+class GetVocabularyPresetsUseCaseImpl(
+    private val repository: VocabularyPresetRepository,
+) : GetVocabularyPresetsUseCase {
+    override suspend fun invoke(): ImmutableList<VocabularyPreset> {
+        val categories = repository.getCategories().associate { it.id to it.toCategory() }
+        return repository.getPresets()
+            .mapNotNull { preset -> categories[preset.categoryId]?.let(preset::toPreset) }
+            .sortedWith(compareBy({ it.category.order }, { it.popularity }))
+            .toImmutableList()
+    }
+}
+
+class ObserveVocabularyPresetsUseCaseImpl(
+    private val repository: VocabularyPresetRepository,
+) : ObserveVocabularyPresetsUseCase {
+    override fun invoke(): Flow<ImmutableList<VocabularyPreset>> =
+        repository.observePresets().map { presets ->
             val categories = repository.getCategories().associate { it.id to it.toCategory() }
-            return repository.getPresets()
+            presets
                 .mapNotNull { preset -> categories[preset.categoryId]?.let(preset::toPreset) }
                 .sortedWith(compareBy({ it.category.order }, { it.popularity }))
                 .toImmutableList()
         }
-    }
+}
 
-class ObserveVocabularyPresetsUseCaseImpl
-    @Inject
-    constructor(
-        private val repository: VocabularyPresetRepository,
-    ) : ObserveVocabularyPresetsUseCase {
-        override fun invoke(): Flow<ImmutableList<VocabularyPreset>> =
-            repository.observePresets().map { presets ->
-                val categories = repository.getCategories().associate { it.id to it.toCategory() }
-                presets
-                    .mapNotNull { preset -> categories[preset.categoryId]?.let(preset::toPreset) }
-                    .sortedWith(compareBy({ it.category.order }, { it.popularity }))
-                    .toImmutableList()
-            }
-    }
+class GetPresetCategoriesUseCaseImpl(
+    private val repository: VocabularyPresetRepository,
+) : GetPresetCategoriesUseCase {
+    override suspend fun invoke(): ImmutableList<PresetCategory> =
+        repository.getCategories().map { it.toCategory() }.sortedBy { it.order }.toImmutableList()
+}
 
-class GetPresetCategoriesUseCaseImpl
-    @Inject
-    constructor(
-        private val repository: VocabularyPresetRepository,
-    ) : GetPresetCategoriesUseCase {
-        override suspend fun invoke(): ImmutableList<PresetCategory> =
-            repository.getCategories().map { it.toCategory() }.sortedBy { it.order }.toImmutableList()
+class GetVocabularyPresetUseCaseImpl(
+    private val repository: VocabularyPresetRepository,
+) : GetVocabularyPresetUseCase {
+    override suspend fun invoke(id: PresetId): VocabularyPreset? {
+        val preset = repository.getPreset(id.value) ?: return null
+        val category = repository.getCategories().firstOrNull { it.id == preset.categoryId } ?: return null
+        return preset.toPreset(category.toCategory())
     }
+}
 
-class GetVocabularyPresetUseCaseImpl
-    @Inject
-    constructor(
-        private val repository: VocabularyPresetRepository,
-    ) : GetVocabularyPresetUseCase {
-        override suspend fun invoke(id: PresetId): VocabularyPreset? {
-            val preset = repository.getPreset(id.value) ?: return null
-            val category = repository.getCategories().firstOrNull { it.id == preset.categoryId } ?: return null
-            return preset.toPreset(category.toCategory())
-        }
+class GetPresetVocabularyUseCaseImpl(
+    private val presetRepository: VocabularyPresetRepository,
+    private val vocabularyRepository: VocabularyRepository,
+) : GetPresetVocabularyUseCase {
+    override suspend fun invoke(id: PresetId): ImmutableList<PresetWord> {
+        val preset = presetRepository.getPreset(id.value) ?: return persistentListOf()
+        val byId = vocabularyRepository.getItemsByIds(preset.vocabularyIds).associateBy { it.id }
+        return preset.vocabularyIds.mapNotNull { byId[it]?.toPresetWord() }.toImmutableList()
     }
-
-class GetPresetVocabularyUseCaseImpl
-    @Inject
-    constructor(
-        private val presetRepository: VocabularyPresetRepository,
-        private val vocabularyRepository: VocabularyRepository,
-    ) : GetPresetVocabularyUseCase {
-        override suspend fun invoke(id: PresetId): ImmutableList<PresetWord> {
-            val preset = presetRepository.getPreset(id.value) ?: return persistentListOf()
-            val byId = vocabularyRepository.getItemsByIds(preset.vocabularyIds).associateBy { it.id }
-            return preset.vocabularyIds.mapNotNull { byId[it]?.toPresetWord() }.toImmutableList()
-        }
-    }
+}

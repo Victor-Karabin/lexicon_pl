@@ -6,41 +6,41 @@ import com.lexicon.boundary.SettingsRepository
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.data.local.CourseAssetLoader
+import com.lexicon.data.local.CourseSeeder
+import com.lexicon.data.local.VocabularyPresetAssetLoader
+import com.lexicon.data.local.VocabularyPresetSeeder
+import com.lexicon.data.local.VocabularySeedAssetLoader
+import com.lexicon.data.local.VocabularySeeder
+import com.lexicon.data.local.VocabularySyncStore
 import com.lexicon.data.repository.CachingImageProviderImpl
 import com.lexicon.data.repository.CourseRepositoryImpl
+import com.lexicon.data.repository.FallbackImageProviderImpl
 import com.lexicon.data.repository.TrainingHistoryRepositoryImpl
 import com.lexicon.data.repository.VocabularyPresetRepositoryImpl
 import com.lexicon.data.repository.VocabularyRepositoryImpl
 import com.lexicon.data.settings.SettingsRepositoryImpl
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class RepositoryModule {
-    @Binds
-    @Singleton
-    abstract fun bindVocabularyRepository(impl: VocabularyRepositoryImpl): VocabularyRepository
+val repositoryModule = module {
+    singleOf(::VocabularyRepositoryImpl) { bind<VocabularyRepository>() }
+    singleOf(::TrainingHistoryRepositoryImpl) { bind<TrainingHistoryRepository>() }
+    singleOf(::CachingImageProviderImpl) { bind<ImageProvider>() }
+    singleOf(::SettingsRepositoryImpl) { bind<SettingsRepository>() }
+    factoryOf(::VocabularyPresetRepositoryImpl) { bind<VocabularyPresetRepository>() }
+    singleOf(::CourseRepositoryImpl) { bind<CourseRepository>() }
 
-    @Binds
-    @Singleton
-    abstract fun bindTrainingHistoryRepository(impl: TrainingHistoryRepositoryImpl): TrainingHistoryRepository
+    factoryOf(::FallbackImageProviderImpl)
 
-    @Binds
-    @Singleton
-    abstract fun bindImageProvider(impl: CachingImageProviderImpl): ImageProvider
+    factoryOf(::VocabularySeedAssetLoader)
+    factoryOf(::VocabularyPresetAssetLoader)
+    factoryOf(::CourseAssetLoader)
 
-    @Binds
-    @Singleton
-    abstract fun bindSettingsRepository(impl: SettingsRepositoryImpl): SettingsRepository
-
-    @Binds
-    abstract fun bindVocabularyPresetRepository(impl: VocabularyPresetRepositoryImpl): VocabularyPresetRepository
-
-    @Binds
-    @Singleton
-    abstract fun bindCourseRepository(impl: CourseRepositoryImpl): CourseRepository
+    singleOf(::VocabularySyncStore)
+    singleOf(::VocabularySeeder)
+    singleOf(::VocabularyPresetSeeder)
+    singleOf(::CourseSeeder)
 }
