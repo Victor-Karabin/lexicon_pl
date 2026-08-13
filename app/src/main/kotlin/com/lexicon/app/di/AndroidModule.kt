@@ -1,6 +1,8 @@
 package com.lexicon.app.di
 
 import com.lexicon.android.AndroidAudioPlayer
+import com.lexicon.android.AndroidLessonAudioLibrary
+import com.lexicon.android.AndroidLessonAudioPlayer
 import com.lexicon.android.AndroidSpeechRecognizerService
 import com.lexicon.android.AndroidSpeechSynthesizer
 import com.lexicon.android.AudioPlayer
@@ -17,8 +19,6 @@ val androidModule = module {
     singleOf(::AndroidSpeechRecognizerService) { bind<SpeechRecognizerService>() }
     singleOf(::AndroidAudioPlayer) { bind<AudioPlayer>() }
 
-    // Not yet behind an interface (see the KMP migration plan's Phase 4) — bound by
-    // concrete type in the meantime.
-    singleOf(::LessonAudioLibrary)
-    singleOf(::LessonAudioPlayer)
+    singleOf(::AndroidLessonAudioLibrary) { bind<LessonAudioLibrary>() }
+    singleOf(::AndroidLessonAudioPlayer) { bind<LessonAudioPlayer>() }
 }
