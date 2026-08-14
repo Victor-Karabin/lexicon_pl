@@ -63,6 +63,7 @@ private val IconBadgeSize = 44.dp
 @Composable
 fun VocabularyScreen(
     onPresetSelected: (PresetId) -> Unit,
+    onEditWord: (VocabularyId) -> Unit,
     onAddWord: () -> Unit,
     onAddPreset: () -> Unit,
     modifier: Modifier = Modifier,
@@ -99,6 +100,7 @@ fun VocabularyScreen(
         onWordDeleted = viewModel::onWordDeleted,
         onChangePresets = viewModel::onChangePresetsRequested,
         onPresetDeleted = viewModel::onPresetDeleted,
+        onEditWord = onEditWord,
         onAddWord = onAddWord,
         onAddPreset = onAddPreset,
         modifier = modifier,
@@ -127,6 +129,7 @@ private fun VocabularyContent(
     onWordDeleted: (PresetWord) -> Unit,
     onChangePresets: (PresetWord) -> Unit,
     onPresetDeleted: (VocabularyPreset) -> Unit,
+    onEditWord: (VocabularyId) -> Unit,
     onAddWord: () -> Unit,
     onAddPreset: () -> Unit,
     modifier: Modifier = Modifier,
@@ -149,6 +152,7 @@ private fun VocabularyContent(
             onWordDeleted = onWordDeleted,
             onChangePresets = onChangePresets,
             onPresetDeleted = onPresetDeleted,
+            onEditWord = onEditWord,
             modifier = Modifier.padding(padding),
         )
     }
@@ -167,6 +171,7 @@ private fun VocabularyBody(
     onWordDeleted: (PresetWord) -> Unit,
     onChangePresets: (PresetWord) -> Unit,
     onPresetDeleted: (VocabularyPreset) -> Unit,
+    onEditWord: (VocabularyId) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when (uiState) {
@@ -190,7 +195,7 @@ private fun VocabularyBody(
                 FilterRow(uiState, onCefrToggled, onFiltersCleared)
 
                 if (uiState.isSearchingWords) {
-                    WordResults(uiState, onWordFavouriteToggled, onPronounceWord, onWordDeleted, onChangePresets)
+                    WordResults(uiState, onWordFavouriteToggled, onPronounceWord, onWordDeleted, onChangePresets, onEditWord)
                 } else {
                     PresetResults(uiState, onPresetSelected, onPresetFavouriteToggled, onPresetDeleted)
                 }
@@ -205,6 +210,7 @@ private fun WordResults(
     onPronounceWord: (PresetWord) -> Unit,
     onWordDeleted: (PresetWord) -> Unit,
     onChangePresets: (PresetWord) -> Unit,
+    onEditWord: (VocabularyId) -> Unit,
 ) {
     if (uiState.hasNoMatchingWords) {
         Message(stringResource(R.string.vocabulary_search_no_matches, uiState.query))
@@ -217,6 +223,7 @@ private fun WordResults(
             onPronounce = onPronounceWord,
             onChangePresets = onChangePresets,
             onDelete = onWordDeleted,
+            onEdit = { onEditWord(it.id) },
         )
     }
 }
@@ -394,6 +401,7 @@ private fun VocabularyPresetsPreview() {
             onWordDeleted = {},
             onChangePresets = {},
             onPresetDeleted = {},
+            onEditWord = {},
             onAddWord = {},
             onAddPreset = {},
             snackbarHostState = SnackbarHostState(),
@@ -425,6 +433,7 @@ private fun VocabularyWordSearchPreview() {
             onWordDeleted = {},
             onChangePresets = {},
             onPresetDeleted = {},
+            onEditWord = {},
             onAddWord = {},
             onAddPreset = {},
             snackbarHostState = SnackbarHostState(),
@@ -448,6 +457,7 @@ private fun VocabularyNoMatchingWordsPreview() {
             onWordDeleted = {},
             onChangePresets = {},
             onPresetDeleted = {},
+            onEditWord = {},
             onAddWord = {},
             onAddPreset = {},
             snackbarHostState = SnackbarHostState(),

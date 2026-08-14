@@ -23,6 +23,7 @@ fun LazyListScope.wordRows(
     onPronounce: (PresetWord) -> Unit,
     onChangePresets: (PresetWord) -> Unit,
     onDelete: (PresetWord) -> Unit,
+    onEdit: (PresetWord) -> Unit,
 ) {
     itemsIndexed(words, key = { _, word -> word.id.value }) { index, word ->
         SwipeToRevealContainer(
@@ -38,6 +39,7 @@ fun LazyListScope.wordRows(
                 word = word,
                 onFavouriteToggled = { onFavouriteToggled(word.id, !word.isFavourite) },
                 onPronounce = { onPronounce(word) },
+                onClick = { onEdit(word) },
             )
         }
         if (index < words.lastIndex) {

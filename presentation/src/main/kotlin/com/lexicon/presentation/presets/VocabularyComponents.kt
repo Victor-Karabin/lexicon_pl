@@ -1,5 +1,6 @@
 package com.lexicon.presentation.presets
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -72,10 +73,13 @@ fun VocabularyWordRow(
     word: PresetWord,
     onFavouriteToggled: () -> Unit,
     onPronounce: () -> Unit,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth().padding(
+        // The whole row opens the word for editing, save for the two buttons at its
+        // end, which keep their own taps.
+        modifier = modifier.fillMaxWidth().clickable(onClick = onClick).padding(
             start = Dimens.spacingMedium,
             end = Dimens.spacingSmall,
             top = Dimens.spacingSmall,

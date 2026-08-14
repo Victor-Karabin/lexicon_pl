@@ -38,8 +38,21 @@ interface VocabularyRepository {
         transcription: String,
     ): VocabularyItemBoundary
 
+    /**
+     * Rewrites a word the learner edited and returns it. A shipped word becomes
+     * theirs in the process, so the seed asset stops rewriting it.
+     */
+    suspend fun updateWord(
+        id: Long,
+        text: String,
+        translation: String,
+        transcription: String,
+    ): VocabularyItemBoundary
+
     /** An existing word with the same Polish text, so the same one is not added twice. */
     suspend fun findWordByText(text: String): VocabularyItemBoundary?
+
+    suspend fun getWord(id: Long): VocabularyItemBoundary?
 
     suspend fun deleteWord(id: Long)
 

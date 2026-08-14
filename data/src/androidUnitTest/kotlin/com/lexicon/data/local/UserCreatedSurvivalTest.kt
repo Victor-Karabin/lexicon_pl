@@ -144,6 +144,37 @@ class UserCreatedSurvivalTest {
         }
 
     @Test
+    fun `a shipped word the learner edited is neither rewritten nor re-inserted`() =
+        runTest {
+            val wordDao: WordDao = mockk(relaxed = true)
+            val loader: VocabularySeedAssetLoader = mockk()
+            val syncStore: VocabularySyncStore = mockk(relaxed = true)
+
+            // Id 1 ships as woda/water; the learner has edited it, so it now counts
+            // as theirs and keeps the asset's id.
+            val shipped = WordEntity(id = 1, text = "woda", translation = "water", transcription = "ˈvɔda")
+            val edited = shipped.copy(translation = "drinking water", isUserCreated = true)
+
+            coEvery { loader.fingerprint() } returns "new"
+            coEvery { syncStore.syncedFingerprint() } returns "old"
+            coEvery { loader.load() } returns listOf(shipped)
+            coEvery { wordDao.getAll() } returns listOf(edited)
+            coEvery { wordDao.countIncludingDeleted() } returns 1
+
+            VocabularySeeder(wordDao, loader, syncStore).sync()
+
+            val added = slot<List<WordEntity>>()
+            val changed = slot<List<WordEntity>>()
+            val removed = slot<List<Long>>()
+            coVerify { wordDao.reconcile(capture(added), capture(removed), capture(changed)) }
+            // Re-inserting would collide on the primary key it still holds.
+            assertTrue("the asset's copy was inserted over the edit", added.captured.isEmpty())
+            // Rewriting would undo the edit.
+            assertTrue("the edit was overwritten from the asset", changed.captured.isEmpty())
+            assertFalse("the edited word was deleted", 1L in removed.captured)
+        }
+
+    @Test
     fun `a hand-added word gets an id the asset can never reach`() {
         // The asset numbers from 1 upward, so ids below zero stay clear of it however
         // much the corpus grows.

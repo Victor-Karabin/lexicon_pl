@@ -96,7 +96,14 @@ private fun CreateWordContent(
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = { TrainingTopBar(title = stringResource(R.string.create_word_title), onClose = onClose) },
+        topBar = {
+            TrainingTopBar(
+                title = stringResource(
+                    if (uiState.isEditing) R.string.edit_word_title else R.string.create_word_title,
+                ),
+                onClose = onClose,
+            )
+        },
         // Pinned: the preset chips run to many rows, and Save should not be a scroll
         // away from the fields that enable it.
         bottomBar = {

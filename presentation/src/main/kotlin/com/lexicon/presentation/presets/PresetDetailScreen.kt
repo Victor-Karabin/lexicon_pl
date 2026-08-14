@@ -45,6 +45,7 @@ import kotlin.time.Duration.Companion.minutes
 @Composable
 fun PresetDetailScreen(
     onClose: () -> Unit,
+    onEditWord: (VocabularyId) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PresetDetailViewModel = koinViewModel(),
 ) {
@@ -75,6 +76,7 @@ fun PresetDetailScreen(
         onPresetFavouriteToggled = viewModel::onPresetFavouriteToggled,
         onWordDeleted = viewModel::onWordDeleted,
         onChangePresets = viewModel::onChangePresetsRequested,
+        onEditWord = onEditWord,
         modifier = modifier,
     )
 
@@ -98,6 +100,7 @@ private fun PresetDetailContent(
     onPresetFavouriteToggled: (PresetFavouriteState) -> Unit,
     onWordDeleted: (PresetWord) -> Unit,
     onChangePresets: (PresetWord) -> Unit,
+    onEditWord: (VocabularyId) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val title = when (uiState) {
@@ -150,6 +153,7 @@ private fun PresetDetailContent(
                                 onPronounce = onPronounceWord,
                                 onChangePresets = onChangePresets,
                                 onDelete = onWordDeleted,
+                                onEdit = { onEditWord(it.id) },
                             )
                         }
                     }
@@ -208,6 +212,7 @@ private fun PresetDetailPreview() {
             onPresetFavouriteToggled = {},
             onWordDeleted = {},
             onChangePresets = {},
+            onEditWord = {},
             snackbarHostState = SnackbarHostState(),
         )
     }
@@ -225,6 +230,7 @@ private fun PresetDetailLoadingWordsPreview() {
             onPresetFavouriteToggled = {},
             onWordDeleted = {},
             onChangePresets = {},
+            onEditWord = {},
             snackbarHostState = SnackbarHostState(),
         )
     }
@@ -242,6 +248,7 @@ private fun PresetDetailNotFoundPreview() {
             onPresetFavouriteToggled = {},
             onWordDeleted = {},
             onChangePresets = {},
+            onEditWord = {},
             snackbarHostState = SnackbarHostState(),
         )
     }

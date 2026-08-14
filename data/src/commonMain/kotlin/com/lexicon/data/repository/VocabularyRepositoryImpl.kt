@@ -72,9 +72,31 @@ class VocabularyRepositoryImpl(
         return word.toBoundary()
     }
 
+    override suspend fun updateWord(
+        id: Long,
+        text: String,
+        translation: String,
+        transcription: String,
+    ): VocabularyItemBoundary {
+        vocabularySeeder.ensureSeeded()
+        wordDao.updateWord(
+            id = id,
+            text = text,
+            translation = translation,
+            transcription = transcription,
+            searchKey = searchKeyFor(text, translation),
+        )
+        return checkNotNull(wordDao.findById(id)) { "word $id vanished while being edited" }.toBoundary()
+    }
+
     override suspend fun findWordByText(text: String): VocabularyItemBoundary? {
         vocabularySeeder.ensureSeeded()
         return wordDao.findByText(text)?.toBoundary()
+    }
+
+    override suspend fun getWord(id: Long): VocabularyItemBoundary? {
+        vocabularySeeder.ensureSeeded()
+        return wordDao.findById(id)?.toBoundary()
     }
 
     override suspend fun countWords(): Int = wordDao.count()

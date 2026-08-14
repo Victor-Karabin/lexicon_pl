@@ -112,6 +112,8 @@
     <string name="create_preset_saved">Added “%1$s”</string>
 
     <string name="create_word_title">New word</string>
+    <string name="edit_word_title">Edit word</string>
+    <string name="edit_word_missing">This word is no longer in your vocabulary.</string>
     <string name="create_word_base">English</string>
     <string name="create_word_translation">Polish</string>
     <string name="create_word_image">Picture</string>

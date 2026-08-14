@@ -64,6 +64,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun LessonScreen(
     onClose: () -> Unit,
+    onEditWord: (VocabularyId) -> Unit,
     onTrainLesson: (List<Long>) -> Unit,
     onExerciseSelected: (LessonExercise) -> Unit,
     modifier: Modifier = Modifier,
@@ -78,6 +79,7 @@ fun LessonScreen(
         onCompletedToggled = viewModel::onCompletedToggled,
         onWordFavouriteToggled = viewModel::onWordFavouriteToggled,
         onPronounceWord = viewModel::onPronounceWord,
+        onEditWord = onEditWord,
         onPlayAudio = viewModel::onPlayAudio,
         onExerciseSelected = onExerciseSelected,
         modifier = modifier,
@@ -93,6 +95,7 @@ private fun LessonContent(
     onCompletedToggled: (Boolean) -> Unit,
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
     onPronounceWord: (PresetWord) -> Unit,
+    onEditWord: (VocabularyId) -> Unit,
     onPlayAudio: (LessonAudio) -> Unit,
     onExerciseSelected: (LessonExercise) -> Unit,
     modifier: Modifier = Modifier,
@@ -133,7 +136,7 @@ private fun LessonContent(
                 ) {
                     lessonHeader(uiState.lesson, onTrainLesson, onCompletedToggled)
                     exercisesBlock(uiState.lesson.exercises, onExerciseSelected)
-                    wordsBlock(uiState, onWordFavouriteToggled, onPronounceWord)
+                    wordsBlock(uiState, onWordFavouriteToggled, onPronounceWord, onEditWord)
                     audioBlock(uiState, onPlayAudio)
                 }
         }
@@ -231,6 +234,7 @@ private fun LazyListScope.wordsBlock(
     uiState: LessonUiState.Loaded,
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
     onPronounceWord: (PresetWord) -> Unit,
+    onEditWord: (VocabularyId) -> Unit,
 ) {
     item { SectionHeading(stringResource(R.string.lesson_words)) }
     if (uiState.isLoadingWords) {
@@ -249,6 +253,7 @@ private fun LazyListScope.wordsBlock(
             word = word,
             onFavouriteToggled = { onWordFavouriteToggled(word.id, !word.isFavourite) },
             onPronounce = { onPronounceWord(word) },
+            onClick = { onEditWord(word.id) },
         )
         if (index < uiState.words.lastIndex) {
             HorizontalDivider(modifier = Modifier.padding(horizontal = Dimens.spacingMedium))
@@ -388,6 +393,7 @@ private fun LessonPreview() {
             onCompletedToggled = {},
             onWordFavouriteToggled = { _, _ -> },
             onPronounceWord = {},
+            onEditWord = {},
             onPlayAudio = {},
             onExerciseSelected = {},
         )
@@ -405,6 +411,7 @@ private fun LessonNotFoundPreview() {
             onCompletedToggled = {},
             onWordFavouriteToggled = { _, _ -> },
             onPronounceWord = {},
+            onEditWord = {},
             onPlayAudio = {},
             onExerciseSelected = {},
         )

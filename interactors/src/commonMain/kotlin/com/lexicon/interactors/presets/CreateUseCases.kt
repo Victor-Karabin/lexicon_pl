@@ -33,6 +33,28 @@ interface CreateWordUseCase {
     ): Result<PresetWord>
 }
 
+/**
+ * Rewrites a word the learner edited.
+ *
+ * [presetIds] is the full set the word should end up in, not a set to add: the form
+ * shows every preset with the current ones lit, so leaving one is as ordinary as
+ * joining one. Only the difference is written.
+ */
+interface UpdateWordUseCase {
+    suspend operator fun invoke(
+        id: VocabularyId,
+        text: String,
+        translation: String,
+        imageUrl: String? = null,
+        presetIds: List<PresetId> = emptyList(),
+    ): Result<PresetWord>
+}
+
+/** The word behind an id, for the form that edits it. */
+interface GetWordUseCase {
+    suspend operator fun invoke(id: VocabularyId): PresetWord?
+}
+
 interface CreatePresetUseCase {
     suspend operator fun invoke(
         title: String,

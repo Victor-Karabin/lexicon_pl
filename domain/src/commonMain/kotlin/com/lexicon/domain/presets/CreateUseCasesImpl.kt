@@ -8,6 +8,7 @@ import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.polishTranscription
 import com.lexicon.interactors.presets.CreatePresetUseCase
 import com.lexicon.interactors.presets.CreateWordUseCase
+import com.lexicon.interactors.presets.GetWordUseCase
 import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetDraftException
 import com.lexicon.interactors.presets.PresetDraftProblem
@@ -15,6 +16,7 @@ import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.SearchImageCandidatesUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
+import com.lexicon.interactors.presets.UpdateWordUseCase
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
 import com.lexicon.interactors.presets.WordDraftException
@@ -64,6 +66,60 @@ class CreateWordUseCaseImpl(
 
         return Result.success(word.toPresetWord())
     }
+}
+
+class UpdateWordUseCaseImpl(
+    private val vocabularyRepository: VocabularyRepository,
+    private val presetRepository: VocabularyPresetRepository,
+    private val imageProvider: ImageProvider,
+) : UpdateWordUseCase {
+    override suspend fun invoke(
+        id: VocabularyId,
+        text: String,
+        translation: String,
+        imageUrl: String?,
+        presetIds: List<PresetId>,
+    ): Result<PresetWord> {
+        val polish = text.trim()
+        val english = translation.trim()
+
+        if (polish.isEmpty()) return Result.failure(WordDraftException(WordDraftProblem.MISSING_TEXT))
+        if (english.isEmpty()) return Result.failure(WordDraftException(WordDraftProblem.MISSING_TRANSLATION))
+        // A word is allowed to keep its own spelling; it is only a clash if some
+        // other word already has it.
+        val clash = vocabularyRepository.findWordByText(polish)
+        if (clash != null && clash.id != id.value) {
+            return Result.failure(WordDraftException(WordDraftProblem.ALREADY_EXISTS))
+        }
+
+        val word = vocabularyRepository.updateWord(
+            id = id.value,
+            text = polish,
+            translation = english,
+            transcription = polishTranscription(polish),
+        )
+
+        // Only the difference is written: setWordInPreset records an override per
+        // call, and rewriting all seventy-odd would bury the handful that changed.
+        val wanted = presetIds.mapTo(mutableSetOf()) { it.value }
+        val current = presetRepository.getPresetIdsForWord(id.value).toSet()
+        for (presetId in wanted - current) {
+            presetRepository.setWordInPreset(presetId = presetId, wordId = id.value, isMember = true)
+        }
+        for (presetId in current - wanted) {
+            presetRepository.setWordInPreset(presetId = presetId, wordId = id.value, isMember = false)
+        }
+
+        if (!imageUrl.isNullOrBlank()) imageProvider.pinImage(query = english, imageUrl = imageUrl)
+
+        return Result.success(word.toPresetWord())
+    }
+}
+
+class GetWordUseCaseImpl(
+    private val vocabularyRepository: VocabularyRepository,
+) : GetWordUseCase {
+    override suspend fun invoke(id: VocabularyId): PresetWord? = vocabularyRepository.getWord(id.value)?.toPresetWord()
 }
 
 class CreatePresetUseCaseImpl(

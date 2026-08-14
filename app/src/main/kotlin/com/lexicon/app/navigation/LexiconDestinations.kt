@@ -3,6 +3,7 @@ package com.lexicon.app.navigation
 import com.lexicon.presentation.common.TRAINING_WORDS_ARG
 import com.lexicon.presentation.common.asTrainingWordsArgument
 import com.lexicon.presentation.main.TrainingIds
+import com.lexicon.presentation.presets.WORD_ID_ARG
 
 internal object LexiconDestinations {
     const val SPLASH = "splash"
@@ -37,6 +38,10 @@ internal object LexiconDestinations {
 
     const val CREATE_WORD = "create/word"
     const val CREATE_PRESET = "create/preset"
+
+    const val EDIT_WORD = "word/{$WORD_ID_ARG}/edit"
+
+    fun editWord(wordId: Long) = "word/$wordId/edit"
 
     const val LESSON = "lesson/{lessonId}"
 

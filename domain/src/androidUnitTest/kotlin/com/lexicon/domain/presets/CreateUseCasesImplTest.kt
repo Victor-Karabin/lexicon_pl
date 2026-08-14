@@ -11,6 +11,7 @@ import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.presets.PresetDraftException
 import com.lexicon.interactors.presets.PresetDraftProblem
 import com.lexicon.interactors.presets.PresetId
+import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.WordDraftException
 import com.lexicon.interactors.presets.WordDraftProblem
 import io.mockk.coEvery
@@ -28,6 +29,7 @@ class CreateUseCasesImplTest {
     private val imageProvider: ImageProvider = mockk(relaxed = true)
 
     private val createWord = CreateWordUseCaseImpl(vocabularyRepository, presetRepository, imageProvider)
+    private val updateWord = UpdateWordUseCaseImpl(vocabularyRepository, presetRepository, imageProvider)
 
     private val stored = VocabularyItemBoundary(
         id = -1,
@@ -100,6 +102,52 @@ class CreateUseCasesImplTest {
             createWord(text = "smok", translation = "dragon", imageUrl = null)
 
             coVerify(exactly = 0) { imageProvider.pinImage(any(), any()) }
+        }
+
+    @Test
+    fun `an edit keeps the word's own spelling without calling it a clash`() =
+        runTest {
+            // findWordByText returns this very word, which is not a duplicate of itself.
+            coEvery { vocabularyRepository.findWordByText("smok") } returns stored
+            coEvery { vocabularyRepository.updateWord(any(), any(), any(), any()) } returns stored
+            coEvery { presetRepository.getPresetIdsForWord(any()) } returns emptyList()
+
+            val result = updateWord(id = VocabularyId(-1), text = "smok", translation = "dragon")
+
+            assertTrue(result.isSuccess)
+            coVerify { vocabularyRepository.updateWord(-1, "smok", "dragon", "smɔk") }
+        }
+
+    @Test
+    fun `an edit onto another word's spelling is refused`() =
+        runTest {
+            coEvery { vocabularyRepository.findWordByText("woda") } returns stored.copy(id = 42)
+
+            val result = updateWord(id = VocabularyId(-1), text = "woda", translation = "water")
+
+            assertEquals(WordDraftProblem.ALREADY_EXISTS, (result.exceptionOrNull() as WordDraftException).problem)
+            coVerify(exactly = 0) { vocabularyRepository.updateWord(any(), any(), any(), any()) }
+        }
+
+    @Test
+    fun `only the presets that changed are written`() =
+        runTest {
+            coEvery { vocabularyRepository.findWordByText(any()) } returns null
+            coEvery { vocabularyRepository.updateWord(any(), any(), any(), any()) } returns stored
+            coEvery { presetRepository.getPresetIdsForWord(-1) } returns listOf("animals", "fantasy")
+
+            // Keeps animals, leaves fantasy, joins myths.
+            updateWord(
+                id = VocabularyId(-1),
+                text = "smok",
+                translation = "dragon",
+                presetIds = listOf(PresetId("animals"), PresetId("myths")),
+            )
+
+            coVerify(exactly = 1) { presetRepository.setWordInPreset("myths", -1, true) }
+            coVerify(exactly = 1) { presetRepository.setWordInPreset("fantasy", -1, false) }
+            // Untouched, so no override row for it.
+            coVerify(exactly = 0) { presetRepository.setWordInPreset("animals", -1, any()) }
         }
 
     @Test

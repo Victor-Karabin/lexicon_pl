@@ -41,6 +41,7 @@ fun MainScreen(
     onTrainingSelected: (id: String) -> Unit,
     onPresetSelected: (id: String) -> Unit,
     onLessonSelected: (id: String) -> Unit,
+    onEditWord: (id: Long) -> Unit,
     onAddWord: () -> Unit,
     onAddPreset: () -> Unit,
     modifier: Modifier = Modifier,
@@ -69,6 +70,7 @@ fun MainScreen(
             MainTab.VOCABULARY ->
                 VocabularyScreen(
                     onPresetSelected = { onPresetSelected(it.value) },
+                    onEditWord = { onEditWord(it.value) },
                     onAddWord = onAddWord,
                     onAddPreset = onAddPreset,
                     modifier = content,
