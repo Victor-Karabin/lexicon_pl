@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.map
 private val SyncedFingerprint = stringPreferencesKey("synced_asset_fingerprint")
 private val SyncedPresetFingerprint = stringPreferencesKey("synced_preset_fingerprint")
 private val SyncedCourseFingerprint = stringPreferencesKey("synced_course_fingerprint")
+private val SyncedProgramFingerprint = stringPreferencesKey("synced_program_fingerprint")
 
 class VocabularySyncStore(
     private val dataStore: DataStore<Preferences>,
@@ -30,5 +31,11 @@ class VocabularySyncStore(
 
     suspend fun setSyncedCourseFingerprint(fingerprint: String) {
         dataStore.edit { it[SyncedCourseFingerprint] = fingerprint }
+    }
+
+    suspend fun syncedProgramFingerprint(): String? = dataStore.data.map { it[SyncedProgramFingerprint] }.first()
+
+    suspend fun setSyncedProgramFingerprint(fingerprint: String) {
+        dataStore.edit { it[SyncedProgramFingerprint] = fingerprint }
     }
 }

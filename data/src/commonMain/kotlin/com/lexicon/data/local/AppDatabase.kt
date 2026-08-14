@@ -24,8 +24,13 @@ import androidx.room.RoomDatabaseConstructor
         LessonExerciseItemEntity::class,
         WordReviewEntity::class,
         StudyDayEntity::class,
+        ProgramEntity::class,
+        ProgramEnrolmentEntity::class,
+        ProgramDayEntity::class,
+        ProgramMilestoneEntity::class,
+        ProgramRewardEntity::class,
     ],
-    version = 18,
+    version = 19,
     exportSchema = false,
 )
 @ConstructedBy(AppDatabaseConstructor::class)
@@ -43,6 +48,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun wordReviewDao(): WordReviewDao
 
     abstract fun studyDayDao(): StudyDayDao
+
+    abstract fun programDao(): ProgramDao
 }
 
 /**

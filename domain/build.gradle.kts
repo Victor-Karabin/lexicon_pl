@@ -3,6 +3,9 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
+    // The engine parses a program's configuration, which arrives from the data layer
+    // as an opaque string precisely so that only this layer has to know its shape.
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {

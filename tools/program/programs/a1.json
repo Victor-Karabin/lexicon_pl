@@ -1,0 +1,77 @@
+{
+  "id": "a1-essentials",
+  "level": "A1",
+  "order": 1,
+  "title": { "en": "Polish A1", "pl": "Polski A1" },
+  "description": {
+    "en": "The thousand words that carry ordinary Polish, in twelve weeks.",
+    "pl": "Tysiąc słów, które niosą codzienną polszczyznę, w dwanaście tygodni."
+  },
+  "difficulty": "BEGINNER",
+  "estimatedDays": 84,
+  "visibility": "PUBLIC",
+  "config": {
+    "goals": [
+      { "id": "master-1000", "type": "VOCABULARY", "target": 1000, "deadlineDays": 84, "required": true },
+      { "id": "retention-90", "type": "RETENTION", "target": 90, "required": true }
+    ],
+    "scope": {
+      "include": [{ "type": "PRESET", "value": "top-1000" }],
+      "ordering": "FREQUENCY"
+    },
+    "strategy": "MIXED",
+    "dailyPlan": {
+      "newWords": 10,
+      "reviewWords": 20,
+      "minMinutes": 20,
+      "activities": [
+        { "id": "learn", "type": "LEARN", "target": 10, "required": true, "estimatedMinutes": 7, "priority": 1,
+          "trainings": ["memory_cards", "word_match"] },
+        { "id": "review", "type": "REVIEW", "target": 20, "required": true, "estimatedMinutes": 8, "priority": 2,
+          "trainings": ["dictation", "true_or_false", "puzzle"] },
+        { "id": "say-it", "type": "PRONOUNCE", "target": 5, "required": true, "estimatedMinutes": 3, "priority": 3,
+          "trainings": ["pronunciation_check"] },
+        { "id": "write-it", "type": "WRITE", "target": 5, "required": true, "estimatedMinutes": 4, "priority": 4,
+          "trainings": ["dictation_puzzle", "crossword"] }
+      ],
+      "weekend": {
+        "newWords": 0,
+        "reviewWords": 40,
+        "minMinutes": 25,
+        "activities": [
+          { "id": "weekend-review", "type": "REVIEW", "target": 40, "required": true, "estimatedMinutes": 15, "priority": 1,
+            "trainings": ["mix"] },
+          { "id": "weekend-challenge", "type": "CHALLENGE", "target": 1, "required": false, "estimatedMinutes": 10, "priority": 2,
+            "trainings": ["crossword"] }
+        ]
+      }
+    },
+    "milestones": [
+      { "id": "m-100", "title": { "en": "First hundred" }, "conditions": [{ "type": "VOCABULARY", "target": 100 }] },
+      { "id": "m-250", "title": { "en": "Two fifty" }, "conditions": [{ "type": "VOCABULARY", "target": 250 }] },
+      { "id": "m-500", "title": { "en": "Halfway" }, "conditions": [{ "type": "VOCABULARY", "target": 500 }] },
+      { "id": "m-750", "title": { "en": "Three quarters" }, "conditions": [{ "type": "VOCABULARY", "target": 750 }] },
+      { "id": "m-1000", "title": { "en": "A thousand words" },
+        "conditions": [{ "type": "VOCABULARY", "target": 1000 }, { "type": "RETENTION", "target": 85 }] }
+    ],
+    "progress": { "vocabulary": 40, "milestones": 20, "retention": 20, "consistency": 20 },
+    "review": { "dailyLimit": 60, "masteredIntervalDays": 21, "failedFirst": true },
+    "adaptation": [
+      { "id": "ease-off", "trigger": "LOW_ACCURACY", "threshold": 60, "action": "DECREASE_NEW_WORDS", "amount": 5 },
+      { "id": "push-on", "trigger": "HIGH_ACCURACY", "threshold": 95, "action": "INCREASE_NEW_WORDS", "amount": 3 },
+      { "id": "catch-up", "trigger": "REVIEW_BACKLOG", "threshold": 60, "action": "PAUSE_NEW_WORDS", "amount": 1 },
+      { "id": "welcome-back", "trigger": "MISSED_WEEK", "threshold": 7, "action": "EXTEND_DURATION", "amount": 7 }
+    ],
+    "rewards": [
+      { "id": "r-first-day", "trigger": "DAILY_GOAL", "threshold": 1, "type": "BADGE", "title": { "en": "First day done" }, "icon": "star" },
+      { "id": "r-week", "trigger": "STREAK", "threshold": 7, "type": "BADGE", "title": { "en": "A week running" }, "icon": "flag" },
+      { "id": "r-month", "trigger": "STREAK", "threshold": 30, "type": "TROPHY", "title": { "en": "A month running" }, "icon": "trending_up" },
+      { "id": "r-done", "trigger": "PROGRAM_COMPLETED", "type": "CERTIFICATE", "title": { "en": "Polish A1" }, "icon": "school" }
+    ],
+    "completion": {
+      "conditions": [{ "type": "VOCABULARY", "target": 1000 }, { "type": "RETENTION", "target": 90 }],
+      "requireAllGoals": true,
+      "requireAllMilestones": true
+    }
+  }
+}

@@ -75,6 +75,80 @@ private val MIGRATION_17_18 = object : Migration(17, 18) {
 }
 
 /**
+ * Adds the program catalogue and the learner's state within it.
+ *
+ * Only the catalogue is refilled from the asset; enrolments, generated days,
+ * milestones and rewards are the learner's record of working through a program and
+ * exist nowhere else.
+ */
+private val MIGRATION_18_19 = object : Migration(18, 19) {
+    override fun migrate(connection: SQLiteConnection) {
+        connection.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS programs (
+                id TEXT NOT NULL PRIMARY KEY,
+                level TEXT NOT NULL,
+                sortOrder INTEGER NOT NULL,
+                titleJson TEXT NOT NULL,
+                descriptionJson TEXT NOT NULL,
+                difficulty TEXT NOT NULL,
+                estimatedDays INTEGER NOT NULL,
+                visibility TEXT NOT NULL,
+                configJson TEXT NOT NULL,
+                isUserCreated INTEGER NOT NULL DEFAULT 0
+            )
+            """.trimIndent(),
+        )
+        connection.execSQL("CREATE INDEX IF NOT EXISTS index_programs_level ON programs (level)")
+        connection.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS program_enrolment (
+                programId TEXT NOT NULL PRIMARY KEY,
+                startedAtEpochDay INTEGER NOT NULL,
+                status TEXT NOT NULL,
+                completedAtEpochDay INTEGER
+            )
+            """.trimIndent(),
+        )
+        connection.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS program_day (
+                programId TEXT NOT NULL,
+                epochDay INTEGER NOT NULL,
+                activitiesJson TEXT NOT NULL,
+                appliedRulesJson TEXT NOT NULL,
+                isComplete INTEGER NOT NULL,
+                PRIMARY KEY (programId, epochDay)
+            )
+            """.trimIndent(),
+        )
+        connection.execSQL("CREATE INDEX IF NOT EXISTS index_program_day_programId ON program_day (programId)")
+        connection.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS program_milestone (
+                programId TEXT NOT NULL,
+                milestoneId TEXT NOT NULL,
+                achievedAtEpochDay INTEGER NOT NULL,
+                PRIMARY KEY (programId, milestoneId)
+            )
+            """.trimIndent(),
+        )
+        connection.execSQL("CREATE INDEX IF NOT EXISTS index_program_milestone_programId ON program_milestone (programId)")
+        connection.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS program_reward (
+                programId TEXT NOT NULL,
+                rewardId TEXT NOT NULL,
+                grantedAtEpochDay INTEGER NOT NULL,
+                PRIMARY KEY (programId, rewardId)
+            )
+            """.trimIndent(),
+        )
+        connection.execSQL("CREATE INDEX IF NOT EXISTS index_program_reward_programId ON program_reward (programId)")
+    }
+}
+
+/**
  * Anything older than 16 still falls back to a destructive migration and is refilled
  * by the seeders (see CourseSeeder, VocabularySeeder, VocabularyPresetSeeder) — the
  * schema moved freely up to that point and writing migrations back through it would
@@ -87,6 +161,6 @@ private val MIGRATION_17_18 = object : Migration(17, 18) {
 fun AppDatabaseBuilderFactory.buildAppDatabase(): AppDatabase =
     create()
         .setDriver(BundledSQLiteDriver())
-        .addMigrations(MIGRATION_16_17, MIGRATION_17_18)
+        .addMigrations(MIGRATION_16_17, MIGRATION_17_18, MIGRATION_18_19)
         .fallbackToDestructiveMigration(dropAllTables = true)
         .build()
