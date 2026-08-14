@@ -38,6 +38,11 @@ import com.lexicon.domain.presets.SetWordPresetMembershipUseCaseImpl
 import com.lexicon.domain.presets.ToggleWordFavouriteUseCaseImpl
 import com.lexicon.domain.presets.TranslateWordUseCaseImpl
 import com.lexicon.domain.presets.UpdateWordUseCaseImpl
+import com.lexicon.domain.program.EnrolInProgramUseCaseImpl
+import com.lexicon.domain.program.GetProgramUseCaseImpl
+import com.lexicon.domain.program.LeaveProgramUseCaseImpl
+import com.lexicon.domain.program.ObserveActiveEnrolmentUseCaseImpl
+import com.lexicon.domain.program.ObserveProgramsUseCaseImpl
 import com.lexicon.domain.pronunciation.StartPronunciationSessionUseCaseImpl
 import com.lexicon.domain.pronunciation.SubmitPronunciationResultUseCaseImpl
 import com.lexicon.domain.puzzle.StartPuzzleSessionUseCaseImpl
@@ -89,6 +94,11 @@ import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
+import com.lexicon.interactors.program.EnrolInProgramUseCase
+import com.lexicon.interactors.program.GetProgramUseCase
+import com.lexicon.interactors.program.LeaveProgramUseCase
+import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
+import com.lexicon.interactors.program.ObserveProgramsUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
@@ -140,6 +150,11 @@ val domainModule = module {
     factoryOf(::SetPresetFavouriteUseCaseImpl) { bind<SetPresetFavouriteUseCase>() }
     factoryOf(::GetWordPresetMembershipsUseCaseImpl) { bind<GetWordPresetMembershipsUseCase>() }
     factoryOf(::SetWordPresetMembershipUseCaseImpl) { bind<SetWordPresetMembershipUseCase>() }
+    factoryOf(::ObserveProgramsUseCaseImpl) { bind<ObserveProgramsUseCase>() }
+    factoryOf(::GetProgramUseCaseImpl) { bind<GetProgramUseCase>() }
+    factoryOf(::ObserveActiveEnrolmentUseCaseImpl) { bind<ObserveActiveEnrolmentUseCase>() }
+    factoryOf(::EnrolInProgramUseCaseImpl) { bind<EnrolInProgramUseCase>() }
+    factoryOf(::LeaveProgramUseCaseImpl) { bind<LeaveProgramUseCase>() }
     factoryOf(::CreateWordUseCaseImpl) { bind<CreateWordUseCase>() }
     factoryOf(::UpdateWordUseCaseImpl) { bind<UpdateWordUseCase>() }
     factoryOf(::GetWordUseCaseImpl) { bind<GetWordUseCase>() }

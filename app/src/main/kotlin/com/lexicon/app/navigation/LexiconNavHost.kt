@@ -32,6 +32,8 @@ import com.lexicon.presentation.presets.CreateWordScreen
 import com.lexicon.presentation.presets.PRESET_ID_ARG
 import com.lexicon.presentation.presets.PresetDetailScreen
 import com.lexicon.presentation.presets.WORD_ID_ARG
+import com.lexicon.presentation.program.PROGRAM_ID_ARG
+import com.lexicon.presentation.program.ProgramScreen
 import com.lexicon.presentation.pronunciation.PronunciationScreen
 import com.lexicon.presentation.puzzle.PuzzleScreen
 import com.lexicon.presentation.trueorfalse.TrueOrFalseScreen
@@ -55,6 +57,7 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
                 onTrainingSelected = { route -> navController.navigate(route) },
                 onPresetSelected = { id -> navController.navigate(LexiconDestinations.presetDetail(id)) },
                 onCourseSelected = { id -> navController.navigate(LexiconDestinations.course(id)) },
+                onProgramSelected = { id -> navController.navigate(LexiconDestinations.program(id)) },
                 onEditWord = { id -> navController.navigate(LexiconDestinations.editWord(id)) },
                 onAddWord = { navController.navigate(LexiconDestinations.CREATE_WORD) },
                 onAddPreset = { navController.navigate(LexiconDestinations.CREATE_PRESET) },
@@ -95,6 +98,13 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
                 onClose = { navController.popBackStack() },
                 onEditWord = { id -> navController.navigate(LexiconDestinations.editWord(id.value)) },
             )
+        }
+
+        composable(
+            route = LexiconDestinations.PROGRAM,
+            arguments = listOf(navArgument(PROGRAM_ID_ARG) { type = NavType.StringType }),
+        ) {
+            ProgramScreen(onClose = { navController.popBackStack() })
         }
 
         composable(

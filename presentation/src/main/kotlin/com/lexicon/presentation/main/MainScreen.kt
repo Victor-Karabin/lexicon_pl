@@ -21,7 +21,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.lexicon.presentation.course.CourseScreen
+import com.lexicon.presentation.course.PlanScreen
 import com.lexicon.presentation.presets.VocabularyScreen
 import com.lexicon.presentation.settings.SettingsScreen
 
@@ -41,6 +41,7 @@ fun MainScreen(
     onTrainingSelected: (id: String) -> Unit,
     onPresetSelected: (id: String) -> Unit,
     onCourseSelected: (id: String) -> Unit,
+    onProgramSelected: (id: String) -> Unit,
     onEditWord: (id: Long) -> Unit,
     onAddWord: () -> Unit,
     onAddPreset: () -> Unit,
@@ -75,7 +76,12 @@ fun MainScreen(
                     onAddPreset = onAddPreset,
                     modifier = content,
                 )
-            MainTab.PLAN -> CourseScreen(onCourseSelected = { onCourseSelected(it.value) }, modifier = content)
+            MainTab.PLAN ->
+                PlanScreen(
+                    onCourseSelected = { onCourseSelected(it.value) },
+                    onProgramSelected = { onProgramSelected(it.value) },
+                    modifier = content,
+                )
             MainTab.SETTINGS -> SettingsScreen(modifier = content)
         }
     }

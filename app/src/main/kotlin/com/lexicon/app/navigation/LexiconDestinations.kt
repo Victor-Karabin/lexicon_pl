@@ -5,6 +5,7 @@ import com.lexicon.presentation.common.asTrainingWordsArgument
 import com.lexicon.presentation.course.COURSE_ID_ARG
 import com.lexicon.presentation.main.TrainingIds
 import com.lexicon.presentation.presets.WORD_ID_ARG
+import com.lexicon.presentation.program.PROGRAM_ID_ARG
 
 internal object LexiconDestinations {
     const val SPLASH = "splash"
@@ -43,6 +44,10 @@ internal object LexiconDestinations {
     const val EDIT_WORD = "word/{$WORD_ID_ARG}/edit"
 
     fun editWord(wordId: Long) = "word/$wordId/edit"
+
+    const val PROGRAM = "program/{$PROGRAM_ID_ARG}"
+
+    fun program(programId: String) = "program/$programId"
 
     const val COURSE = "course/{$COURSE_ID_ARG}"
 

@@ -32,6 +32,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.course.Course
 import com.lexicon.interactors.course.CourseId
@@ -40,6 +41,9 @@ import com.lexicon.interactors.course.LessonSummary
 import com.lexicon.interactors.course.completedCount
 import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.resolve
+import com.lexicon.interactors.program.Program
+import com.lexicon.interactors.program.ProgramId
+import com.lexicon.interactors.program.TargetType
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.theme.Dimens
@@ -54,28 +58,35 @@ private val StatusIconSize = 24.dp
 private const val LOCKED_ALPHA = 0.45f
 
 @Composable
-fun CourseScreen(
+fun PlanScreen(
     onCourseSelected: (CourseId) -> Unit,
+    onProgramSelected: (ProgramId) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: CourseViewModel = koinViewModel(),
+    viewModel: PlanViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    CourseContent(uiState = uiState, onCourseSelected = onCourseSelected, modifier = modifier)
+    PlanContent(
+        uiState = uiState,
+        onCourseSelected = onCourseSelected,
+        onProgramSelected = onProgramSelected,
+        modifier = modifier,
+    )
 }
 
 @Composable
-private fun CourseContent(
-    uiState: CourseUiState,
+private fun PlanContent(
+    uiState: PlanUiState,
     onCourseSelected: (CourseId) -> Unit,
+    onProgramSelected: (ProgramId) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when {
-        uiState is CourseUiState.Loading ->
+        uiState is PlanUiState.Loading ->
             Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
 
-        uiState is CourseUiState.Loaded && uiState.isEmpty ->
+        uiState is PlanUiState.Loaded && uiState.isEmpty ->
             Box(
                 modifier = modifier.fillMaxSize().padding(Dimens.spacingXl),
                 contentAlignment = Alignment.Center,
@@ -87,25 +98,141 @@ private fun CourseContent(
                 )
             }
 
-        uiState is CourseUiState.Loaded ->
-            // One tile per course rather than every lesson of every course laid out
-            // end to end: a course is twenty-odd lessons, and the tab is meant to
-            // show what there is to work through, not all of it at once.
+        uiState is PlanUiState.Loaded ->
+            // A tile apiece, for both kinds of thing. A course is twenty-odd lessons
+            // and a program is twelve weeks of them; the tab shows what there is to
+            // work through, not all of it at once.
             LazyColumn(
                 modifier = modifier.fillMaxSize(),
                 contentPadding = PaddingValues(Dimens.spacingMedium),
                 verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
             ) {
-                items(uiState.courses, key = { it.id.value }) { course ->
-                    CourseTile(
-                        course = course,
-                        languageTag = uiState.languageTag,
-                        onClick = { onCourseSelected(course.id) },
-                    )
+                if (uiState.programs.isNotEmpty()) {
+                    item(key = "programs-heading") { SectionHeading(stringResource(R.string.plan_programs)) }
+                    items(uiState.programs, key = { it.id.value }) { program ->
+                        ProgramTile(
+                            program = program,
+                            languageTag = uiState.languageTag,
+                            isActive = uiState.activeEnrolment?.programId == program.id,
+                            onClick = { onProgramSelected(program.id) },
+                        )
+                    }
+                }
+
+                if (uiState.courses.any { it.lessons.isNotEmpty() }) {
+                    item(key = "courses-heading") { SectionHeading(stringResource(R.string.plan_courses)) }
+                    items(uiState.courses, key = { it.id.value }) { course ->
+                        CourseTile(
+                            course = course,
+                            languageTag = uiState.languageTag,
+                            onClick = { onCourseSelected(course.id) },
+                        )
+                    }
                 }
             }
     }
 }
+
+@Composable
+private fun SectionHeading(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.titleSmall,
+        fontWeight = FontWeight.SemiBold,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = Modifier.padding(top = Dimens.spacingSmall, bottom = Dimens.spacingTiny),
+    )
+}
+
+/**
+ * A program as a card: what it is aiming at and how long it should take, with the
+ * one being worked through marked as such.
+ *
+ * The same shape as the course tile below it, because from the tab's point of view
+ * they are the same kind of offer — something to work through, opened by a tap.
+ */
+@Composable
+private fun ProgramTile(
+    program: Program,
+    languageTag: String,
+    isActive: Boolean,
+    onClick: () -> Unit,
+) {
+    Surface(
+        onClick = onClick,
+        shape = LexiconShapes.medium,
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = program.level,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    if (isActive) {
+                        Text(
+                            text = stringResource(R.string.plan_program_active),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.SemiBold,
+                        )
+                    }
+                }
+                Text(
+                    text = program.title.resolve(languageTag),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                Text(
+                    text = program.description.resolve(languageTag),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(top = Dimens.spacingTiny),
+                )
+                program.summaryLine()?.let { summary ->
+                    Text(
+                        text = summary,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(top = Dimens.spacingSmall),
+                    )
+                }
+            }
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+/** The program in a line: what it is for, and how long it asks for. */
+@Composable
+private fun Program.summaryLine(): String? {
+    val words = config.goals.firstOrNull { it.type == TargetType.VOCABULARY }?.target
+    val weeks = if (estimatedDays > 0) estimatedDays / DAYS_PER_WEEK else 0
+    return when {
+        words != null && weeks > 0 -> stringResource(R.string.plan_program_summary, words, weeks)
+        words != null -> stringResource(R.string.plan_program_words, words)
+        weeks > 0 -> stringResource(R.string.plan_program_weeks, weeks)
+        else -> null
+    }
+}
+
+private const val DAYS_PER_WEEK = 7
 
 /**
  * A course as a card on the Plan tab, the way a preset appears in the Vocabulary
@@ -262,19 +389,24 @@ internal fun previewCourse(): Course =
 
 @LightDarkPreview
 @Composable
-private fun CoursePreview() {
+private fun PlanPreview() {
     LexiconTheme {
-        CourseContent(
-            uiState = CourseUiState.Loaded(courses = persistentListOf(previewCourse())),
+        PlanContent(
+            uiState = PlanUiState.Loaded(courses = persistentListOf(previewCourse())),
             onCourseSelected = {},
+            onProgramSelected = {},
         )
     }
 }
 
 @LightDarkPreview
 @Composable
-private fun CourseEmptyPreview() {
+private fun PlanEmptyPreview() {
     LexiconTheme {
-        CourseContent(uiState = CourseUiState.Loaded(courses = persistentListOf()), onCourseSelected = {})
+        PlanContent(
+            uiState = PlanUiState.Loaded(courses = persistentListOf()),
+            onCourseSelected = {},
+            onProgramSelected = {},
+        )
     }
 }

@@ -4,9 +4,9 @@ import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionResultViewModel
 import com.lexicon.presentation.common.TrainingGateViewModel
 import com.lexicon.presentation.course.CourseDetailViewModel
-import com.lexicon.presentation.course.CourseViewModel
 import com.lexicon.presentation.course.ExerciseViewModel
 import com.lexicon.presentation.course.LessonViewModel
+import com.lexicon.presentation.course.PlanViewModel
 import com.lexicon.presentation.crossword.CrosswordViewModel
 import com.lexicon.presentation.dictation.DictationViewModel
 import com.lexicon.presentation.dictationpuzzle.DictationPuzzleViewModel
@@ -18,6 +18,7 @@ import com.lexicon.presentation.presets.CreatePresetViewModel
 import com.lexicon.presentation.presets.CreateWordViewModel
 import com.lexicon.presentation.presets.PresetDetailViewModel
 import com.lexicon.presentation.presets.VocabularyViewModel
+import com.lexicon.presentation.program.ProgramViewModel
 import com.lexicon.presentation.pronunciation.PronunciationViewModel
 import com.lexicon.presentation.puzzle.PuzzleViewModel
 import com.lexicon.presentation.settings.SettingsViewModel
@@ -32,7 +33,8 @@ val viewModelModule = module {
 
     viewModelOf(::SessionResultViewModel)
     viewModelOf(::TrainingGateViewModel)
-    viewModelOf(::CourseViewModel)
+    viewModelOf(::PlanViewModel)
+    viewModelOf(::ProgramViewModel)
     viewModelOf(::CourseDetailViewModel)
     viewModelOf(::ExerciseViewModel)
     viewModelOf(::LessonViewModel)
