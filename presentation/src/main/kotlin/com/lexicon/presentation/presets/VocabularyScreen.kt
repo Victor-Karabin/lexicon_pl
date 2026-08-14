@@ -46,7 +46,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetCategory
@@ -67,6 +66,7 @@ import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconTheme
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import org.koin.androidx.compose.koinViewModel
 import java.text.NumberFormat
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
@@ -77,7 +77,7 @@ private val IconBadgeSize = 44.dp
 fun VocabularyScreen(
     onPresetSelected: (PresetId) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: VocabularyViewModel = hiltViewModel(),
+    viewModel: VocabularyViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
 

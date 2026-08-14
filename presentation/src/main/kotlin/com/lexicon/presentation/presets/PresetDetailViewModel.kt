@@ -17,7 +17,6 @@ import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
 import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -30,7 +29,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.text.Collator
 import java.util.Locale
-import javax.inject.Inject
 
 sealed interface PresetDetailUiState {
     data object Loading : PresetDetailUiState
@@ -49,125 +47,122 @@ sealed interface PresetDetailUiState {
 
 const val PRESET_ID_ARG = "presetId"
 
-@HiltViewModel
-class PresetDetailViewModel
-    @Inject
-    constructor(
-        savedStateHandle: SavedStateHandle,
-        private val getPreset: GetVocabularyPresetUseCase,
-        private val getPresetVocabulary: GetPresetVocabularyUseCase,
-        private val toggleWordFavourite: ToggleWordFavouriteUseCase,
-        private val deleteWord: DeleteWordUseCase,
-        private val restoreWord: RestoreWordUseCase,
-        private val setPresetFavourite: SetPresetFavouriteUseCase,
-        observeFavouriteWordIds: ObserveFavouriteWordIdsUseCase,
-        private val dispatchers: DispatcherProvider,
-        private val speechSynthesizer: SpeechSynthesizer,
-    ) : ViewModel() {
-        private val presetId = PresetId(savedStateHandle.get<String>(PRESET_ID_ARG).orEmpty())
+class PresetDetailViewModel(
+    savedStateHandle: SavedStateHandle,
+    private val getPreset: GetVocabularyPresetUseCase,
+    private val getPresetVocabulary: GetPresetVocabularyUseCase,
+    private val toggleWordFavourite: ToggleWordFavouriteUseCase,
+    private val deleteWord: DeleteWordUseCase,
+    private val restoreWord: RestoreWordUseCase,
+    private val setPresetFavourite: SetPresetFavouriteUseCase,
+    observeFavouriteWordIds: ObserveFavouriteWordIdsUseCase,
+    private val dispatchers: DispatcherProvider,
+    private val speechSynthesizer: SpeechSynthesizer,
+) : ViewModel() {
+    private val presetId = PresetId(savedStateHandle.get<String>(PRESET_ID_ARG).orEmpty())
 
-        private data class Content(
-            val preset: VocabularyPreset?,
-            val words: List<PresetWord>,
-            val wordsLoaded: Boolean = false,
-            val lastDeleted: DeletedItem? = null,
+    private data class Content(
+        val preset: VocabularyPreset?,
+        val words: List<PresetWord>,
+        val wordsLoaded: Boolean = false,
+        val lastDeleted: DeletedItem? = null,
+    )
+
+    private val content = MutableStateFlow<Content?>(null)
+
+    val uiState: StateFlow<PresetDetailUiState> =
+        combine(content, observeFavouriteWordIds()) { loaded, favourites ->
+            when {
+                loaded == null -> PresetDetailUiState.Loading
+                loaded.preset == null -> PresetDetailUiState.NotFound
+                else ->
+                    PresetDetailUiState.Loaded(
+                        preset = loaded.preset,
+                        words = loaded.words
+                            .map { it.copy(isFavourite = it.id in favourites) }
+                            .toImmutableList(),
+                        favouriteState = favouriteStateOf(loaded.preset, favourites),
+                        isLoadingWords = !loaded.wordsLoaded,
+                        lastDeleted = loaded.lastDeleted,
+                    )
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS),
+            initialValue = PresetDetailUiState.Loading,
         )
 
-        private val content = MutableStateFlow<Content?>(null)
-
-        val uiState: StateFlow<PresetDetailUiState> =
-            combine(content, observeFavouriteWordIds()) { loaded, favourites ->
-                when {
-                    loaded == null -> PresetDetailUiState.Loading
-                    loaded.preset == null -> PresetDetailUiState.NotFound
-                    else ->
-                        PresetDetailUiState.Loaded(
-                            preset = loaded.preset,
-                            words = loaded.words
-                                .map { it.copy(isFavourite = it.id in favourites) }
-                                .toImmutableList(),
-                            favouriteState = favouriteStateOf(loaded.preset, favourites),
-                            isLoadingWords = !loaded.wordsLoaded,
-                            lastDeleted = loaded.lastDeleted,
-                        )
-                }
-            }.stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS),
-                initialValue = PresetDetailUiState.Loading,
+    init {
+        viewModelScope.launch(dispatchers.io) {
+            val preset = getPreset(presetId)
+            if (preset == null) {
+                content.value = Content(preset = null, words = emptyList())
+                return@launch
+            }
+            content.value = Content(preset = preset, words = emptyList())
+            content.value = Content(
+                preset = preset,
+                words = getPresetVocabulary(presetId).sortedForDisplay(),
+                wordsLoaded = true,
             )
+        }
+    }
 
-        init {
-            viewModelScope.launch(dispatchers.io) {
-                val preset = getPreset(presetId)
-                if (preset == null) {
-                    content.value = Content(preset = null, words = emptyList())
-                    return@launch
-                }
-                content.value = Content(preset = preset, words = emptyList())
-                content.value = Content(
-                    preset = preset,
-                    words = getPresetVocabulary(presetId).sortedForDisplay(),
-                    wordsLoaded = true,
+    fun onWordDeleted(word: PresetWord) {
+        viewModelScope.launch(dispatchers.io) {
+            deleteWord(word.id)
+            val refreshed = getPreset(presetId)
+            content.update { current ->
+                current?.copy(
+                    preset = refreshed ?: current.preset,
+                    words = current.words.filterNot { it.id == word.id },
+                    lastDeleted = DeletedItem.Word(word.id, word.text),
                 )
             }
         }
+    }
 
-        fun onWordDeleted(word: PresetWord) {
-            viewModelScope.launch(dispatchers.io) {
-                deleteWord(word.id)
-                val refreshed = getPreset(presetId)
-                content.update { current ->
-                    current?.copy(
-                        preset = refreshed ?: current.preset,
-                        words = current.words.filterNot { it.id == word.id },
-                        lastDeleted = DeletedItem.Word(word.id, word.text),
-                    )
-                }
+    fun onUndoDelete() {
+        val deleted = (content.value?.lastDeleted as? DeletedItem.Word) ?: return
+        viewModelScope.launch(dispatchers.io) {
+            restoreWord(deleted.id)
+            val refreshed = getPreset(presetId)
+            content.update { current ->
+                current?.copy(
+                    preset = refreshed ?: current.preset,
+                    words = getPresetVocabulary(presetId).sortedForDisplay(),
+                    lastDeleted = null,
+                )
             }
-        }
-
-        fun onUndoDelete() {
-            val deleted = (content.value?.lastDeleted as? DeletedItem.Word) ?: return
-            viewModelScope.launch(dispatchers.io) {
-                restoreWord(deleted.id)
-                val refreshed = getPreset(presetId)
-                content.update { current ->
-                    current?.copy(
-                        preset = refreshed ?: current.preset,
-                        words = getPresetVocabulary(presetId).sortedForDisplay(),
-                        lastDeleted = null,
-                    )
-                }
-            }
-        }
-
-        fun onDeleteMessageShown() = content.update { it?.copy(lastDeleted = null) }
-
-        /** Reads the Polish out loud; the translation is not what a learner needs to hear. */
-        fun onPronounceWord(word: PresetWord) {
-            viewModelScope.launch(dispatchers.io) {
-                runCatching { speechSynthesizer.speak(word.text) }
-            }
-        }
-
-        fun onWordFavouriteToggled(
-            id: VocabularyId,
-            isFavourite: Boolean,
-        ) {
-            viewModelScope.launch(dispatchers.io) { toggleWordFavourite(id, isFavourite) }
-        }
-
-        fun onPresetFavouriteToggled(current: PresetFavouriteState) {
-            viewModelScope.launch(dispatchers.io) {
-                setPresetFavourite(presetId, current != PresetFavouriteState.ALL)
-            }
-        }
-
-        private companion object {
-            const val STOP_TIMEOUT_MS = 5_000L
         }
     }
+
+    fun onDeleteMessageShown() = content.update { it?.copy(lastDeleted = null) }
+
+    /** Reads the Polish out loud; the translation is not what a learner needs to hear. */
+    fun onPronounceWord(word: PresetWord) {
+        viewModelScope.launch(dispatchers.io) {
+            runCatching { speechSynthesizer.speak(word.text) }
+        }
+    }
+
+    fun onWordFavouriteToggled(
+        id: VocabularyId,
+        isFavourite: Boolean,
+    ) {
+        viewModelScope.launch(dispatchers.io) { toggleWordFavourite(id, isFavourite) }
+    }
+
+    fun onPresetFavouriteToggled(current: PresetFavouriteState) {
+        viewModelScope.launch(dispatchers.io) {
+            setPresetFavourite(presetId, current != PresetFavouriteState.ALL)
+        }
+    }
+
+    private companion object {
+        const val STOP_TIMEOUT_MS = 5_000L
+    }
+}
 
 internal fun favouriteStateOf(
     preset: VocabularyPreset,

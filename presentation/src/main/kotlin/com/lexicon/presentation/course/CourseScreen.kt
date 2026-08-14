@@ -33,7 +33,6 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.course.Course
 import com.lexicon.interactors.course.CourseId
 import com.lexicon.interactors.course.LessonId
@@ -48,6 +47,7 @@ import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import org.koin.androidx.compose.koinViewModel
 
 private val StatusIconSize = 24.dp
 private const val LOCKED_ALPHA = 0.45f
@@ -56,7 +56,7 @@ private const val LOCKED_ALPHA = 0.45f
 fun CourseScreen(
     onLessonSelected: (LessonId) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: CourseViewModel = hiltViewModel(),
+    viewModel: CourseViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     CourseContent(uiState = uiState, onLessonSelected = onLessonSelected, modifier = modifier)

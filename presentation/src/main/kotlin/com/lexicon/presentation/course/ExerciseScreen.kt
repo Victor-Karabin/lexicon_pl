@@ -24,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.course.LessonExercise
 import com.lexicon.interactors.course.questionCount
 import com.lexicon.presentation.R
@@ -32,12 +31,13 @@ import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.AnswerStatusLabel
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ExerciseScreen(
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: ExerciseViewModel = hiltViewModel(),
+    viewModel: ExerciseViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
 

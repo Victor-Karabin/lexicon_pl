@@ -20,7 +20,6 @@ import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
 import com.lexicon.interactors.presets.resolve
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.FlowPreview
@@ -31,157 +30,153 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 private const val QUERY_DEBOUNCE_MS = 200L
 
-@HiltViewModel
-class VocabularyViewModel
-    @Inject
-    constructor(
-        private val observePresets: ObserveVocabularyPresetsUseCase,
-        private val searchVocabulary: SearchVocabularyUseCase,
-        private val setPresetFavourite: SetPresetFavouriteUseCase,
-        private val toggleWordFavourite: ToggleWordFavouriteUseCase,
-        private val deleteWord: DeleteWordUseCase,
-        private val restoreWord: RestoreWordUseCase,
-        private val deletePreset: DeletePresetUseCase,
-        private val restorePreset: RestorePresetUseCase,
-        private val observeFavouriteWordIds: ObserveFavouriteWordIdsUseCase,
-        private val dispatchers: DispatcherProvider,
-        private val speechSynthesizer: SpeechSynthesizer,
-    ) : ViewModel() {
-        private val _uiState = MutableStateFlow<VocabularyUiState>(VocabularyUiState.Loading)
-        val uiState: StateFlow<VocabularyUiState> = _uiState.asStateFlow()
+class VocabularyViewModel(
+    private val observePresets: ObserveVocabularyPresetsUseCase,
+    private val searchVocabulary: SearchVocabularyUseCase,
+    private val setPresetFavourite: SetPresetFavouriteUseCase,
+    private val toggleWordFavourite: ToggleWordFavouriteUseCase,
+    private val deleteWord: DeleteWordUseCase,
+    private val restoreWord: RestoreWordUseCase,
+    private val deletePreset: DeletePresetUseCase,
+    private val restorePreset: RestorePresetUseCase,
+    private val observeFavouriteWordIds: ObserveFavouriteWordIdsUseCase,
+    private val dispatchers: DispatcherProvider,
+    private val speechSynthesizer: SpeechSynthesizer,
+) : ViewModel() {
+    private val _uiState = MutableStateFlow<VocabularyUiState>(VocabularyUiState.Loading)
+    val uiState: StateFlow<VocabularyUiState> = _uiState.asStateFlow()
 
-        private val criteria = MutableStateFlow(SearchCriteria())
+    private val criteria = MutableStateFlow(SearchCriteria())
 
-        init {
-            viewModelScope.launch(dispatchers.io) {
-                observePresets().collect { presets ->
-                    _uiState.update { current ->
-                        if (current is VocabularyUiState.Loaded) {
-                            current.copy(presets = presets)
-                        } else {
-                            VocabularyUiState.Loaded(presets = presets)
-                        }
-                    }
-                }
-            }
-            viewModelScope.launch(dispatchers.io) {
-                observeFavouriteWordIds().collect { favourites ->
-                    updateLoaded { it.copy(favouriteWordIds = favourites) }
-                }
-            }
-            observeQuery()
-        }
-
-        @OptIn(FlowPreview::class)
-        private fun observeQuery() {
-            viewModelScope.launch(dispatchers.io) {
-                criteria.debounce(QUERY_DEBOUNCE_MS).collect { current ->
-                    searchJob?.cancel()
-                    searchJob = viewModelScope.launch(dispatchers.io) {
-                        val results = searchVocabulary(current.query, current.levels)
-                        updateLoaded { it.copy(words = results, isSearching = false) }
+    init {
+        viewModelScope.launch(dispatchers.io) {
+            observePresets().collect { presets ->
+                _uiState.update { current ->
+                    if (current is VocabularyUiState.Loaded) {
+                        current.copy(presets = presets)
+                    } else {
+                        VocabularyUiState.Loaded(presets = presets)
                     }
                 }
             }
         }
-
-        private var searchJob: Job? = null
-
-        fun onQueryChanged(value: String) {
-            criteria.update { it.copy(query = value) }
-            updateLoaded { it.copy(query = value).clearedWordsIfIdle() }
-        }
-
-        fun onCefrToggled(level: CefrLevel) {
-            val updated = (_uiState.value as? VocabularyUiState.Loaded)
-                ?.selectedCefrLevels?.toggle(level) ?: return
-            criteria.update { it.copy(levels = updated) }
-            updateLoaded { it.copy(selectedCefrLevels = updated).clearedWordsIfIdle() }
-        }
-
-        fun onFiltersCleared() {
-            criteria.update { it.copy(levels = emptySet()) }
-            updateLoaded { it.copy(selectedCefrLevels = emptySet()).clearedWordsIfIdle() }
-        }
-
-        fun onPresetFavouriteToggled(
-            id: PresetId,
-            current: PresetFavouriteState,
-        ) {
-            viewModelScope.launch(dispatchers.io) {
-                setPresetFavourite(id, current != PresetFavouriteState.ALL)
+        viewModelScope.launch(dispatchers.io) {
+            observeFavouriteWordIds().collect { favourites ->
+                updateLoaded { it.copy(favouriteWordIds = favourites) }
             }
         }
+        observeQuery()
+    }
 
-        /** Reads the Polish out loud; the translation is not what a learner needs to hear. */
-        fun onPronounceWord(word: PresetWord) {
-            viewModelScope.launch(dispatchers.io) {
-                runCatching { speechSynthesizer.speak(word.text) }
-            }
-        }
-
-        fun onWordFavouriteToggled(
-            id: VocabularyId,
-            isFavourite: Boolean,
-        ) {
-            viewModelScope.launch(dispatchers.io) { toggleWordFavourite(id, isFavourite) }
-        }
-
-        fun onWordDeleted(word: PresetWord) {
-            viewModelScope.launch(dispatchers.io) {
-                deleteWord(word.id)
-                updateLoaded {
-                    it.copy(
-                        words = it.words.filterNot { candidate -> candidate.id == word.id }.toImmutableList(),
-                        lastDeleted = DeletedItem.Word(word.id, word.text),
-                    )
+    @OptIn(FlowPreview::class)
+    private fun observeQuery() {
+        viewModelScope.launch(dispatchers.io) {
+            criteria.debounce(QUERY_DEBOUNCE_MS).collect { current ->
+                searchJob?.cancel()
+                searchJob = viewModelScope.launch(dispatchers.io) {
+                    val results = searchVocabulary(current.query, current.levels)
+                    updateLoaded { it.copy(words = results, isSearching = false) }
                 }
             }
-        }
-
-        fun onPresetDeleted(preset: VocabularyPreset) {
-            viewModelScope.launch(dispatchers.io) {
-                deletePreset(preset.id)
-                updateLoaded {
-                    it.copy(
-                        presets = it.presets.filterNot { candidate -> candidate.id == preset.id }.toImmutableList(),
-                        lastDeleted = DeletedItem.Preset(preset.id, preset.title.resolve(it.languageTag)),
-                    )
-                }
-            }
-        }
-
-        fun onUndoDelete() {
-            val deleted = (_uiState.value as? VocabularyUiState.Loaded)?.lastDeleted ?: return
-            viewModelScope.launch(dispatchers.io) {
-                when (deleted) {
-                    is DeletedItem.Word -> {
-                        restoreWord(deleted.id)
-                        refreshWords()
-                    }
-
-                    is DeletedItem.Preset -> restorePreset(deleted.id)
-                }
-                updateLoaded { it.copy(lastDeleted = null) }
-            }
-        }
-
-        fun onDeleteMessageShown() = updateLoaded { it.copy(lastDeleted = null) }
-
-        private suspend fun refreshWords() {
-            val current = criteria.value
-            val results = searchVocabulary(current.query, current.levels)
-            updateLoaded { it.copy(words = results) }
-        }
-
-        private fun updateLoaded(transform: (VocabularyUiState.Loaded) -> VocabularyUiState.Loaded) {
-            _uiState.update { if (it is VocabularyUiState.Loaded) transform(it) else it }
         }
     }
+
+    private var searchJob: Job? = null
+
+    fun onQueryChanged(value: String) {
+        criteria.update { it.copy(query = value) }
+        updateLoaded { it.copy(query = value).clearedWordsIfIdle() }
+    }
+
+    fun onCefrToggled(level: CefrLevel) {
+        val updated = (_uiState.value as? VocabularyUiState.Loaded)
+            ?.selectedCefrLevels?.toggle(level) ?: return
+        criteria.update { it.copy(levels = updated) }
+        updateLoaded { it.copy(selectedCefrLevels = updated).clearedWordsIfIdle() }
+    }
+
+    fun onFiltersCleared() {
+        criteria.update { it.copy(levels = emptySet()) }
+        updateLoaded { it.copy(selectedCefrLevels = emptySet()).clearedWordsIfIdle() }
+    }
+
+    fun onPresetFavouriteToggled(
+        id: PresetId,
+        current: PresetFavouriteState,
+    ) {
+        viewModelScope.launch(dispatchers.io) {
+            setPresetFavourite(id, current != PresetFavouriteState.ALL)
+        }
+    }
+
+    /** Reads the Polish out loud; the translation is not what a learner needs to hear. */
+    fun onPronounceWord(word: PresetWord) {
+        viewModelScope.launch(dispatchers.io) {
+            runCatching { speechSynthesizer.speak(word.text) }
+        }
+    }
+
+    fun onWordFavouriteToggled(
+        id: VocabularyId,
+        isFavourite: Boolean,
+    ) {
+        viewModelScope.launch(dispatchers.io) { toggleWordFavourite(id, isFavourite) }
+    }
+
+    fun onWordDeleted(word: PresetWord) {
+        viewModelScope.launch(dispatchers.io) {
+            deleteWord(word.id)
+            updateLoaded {
+                it.copy(
+                    words = it.words.filterNot { candidate -> candidate.id == word.id }.toImmutableList(),
+                    lastDeleted = DeletedItem.Word(word.id, word.text),
+                )
+            }
+        }
+    }
+
+    fun onPresetDeleted(preset: VocabularyPreset) {
+        viewModelScope.launch(dispatchers.io) {
+            deletePreset(preset.id)
+            updateLoaded {
+                it.copy(
+                    presets = it.presets.filterNot { candidate -> candidate.id == preset.id }.toImmutableList(),
+                    lastDeleted = DeletedItem.Preset(preset.id, preset.title.resolve(it.languageTag)),
+                )
+            }
+        }
+    }
+
+    fun onUndoDelete() {
+        val deleted = (_uiState.value as? VocabularyUiState.Loaded)?.lastDeleted ?: return
+        viewModelScope.launch(dispatchers.io) {
+            when (deleted) {
+                is DeletedItem.Word -> {
+                    restoreWord(deleted.id)
+                    refreshWords()
+                }
+
+                is DeletedItem.Preset -> restorePreset(deleted.id)
+            }
+            updateLoaded { it.copy(lastDeleted = null) }
+        }
+    }
+
+    fun onDeleteMessageShown() = updateLoaded { it.copy(lastDeleted = null) }
+
+    private suspend fun refreshWords() {
+        val current = criteria.value
+        val results = searchVocabulary(current.query, current.levels)
+        updateLoaded { it.copy(words = results) }
+    }
+
+    private fun updateLoaded(transform: (VocabularyUiState.Loaded) -> VocabularyUiState.Loaded) {
+        _uiState.update { if (it is VocabularyUiState.Loaded) transform(it) else it }
+    }
+}
 
 private data class SearchCriteria(
     val query: String = "",

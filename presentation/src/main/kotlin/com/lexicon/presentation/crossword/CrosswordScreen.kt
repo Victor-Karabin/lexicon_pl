@@ -40,7 +40,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.crossword.CrosswordDirection
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
@@ -51,6 +50,7 @@ import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconTheme
+import org.koin.androidx.compose.koinViewModel
 
 private val MinCellSize = 14.dp
 private val MaxCellSize = 40.dp
@@ -65,7 +65,7 @@ fun CrosswordScreen(
     onSessionComplete: (correct: Int, incorrect: Int, skipped: Int, tipsUsed: Int) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: CrosswordViewModel = hiltViewModel(),
+    viewModel: CrosswordViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
 

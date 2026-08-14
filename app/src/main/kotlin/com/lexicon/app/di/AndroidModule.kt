@@ -1,41 +1,24 @@
 package com.lexicon.app.di
 
 import com.lexicon.android.AndroidAudioPlayer
+import com.lexicon.android.AndroidLessonAudioLibrary
+import com.lexicon.android.AndroidLessonAudioPlayer
 import com.lexicon.android.AndroidSpeechRecognizerService
 import com.lexicon.android.AndroidSpeechSynthesizer
 import com.lexicon.android.AudioPlayer
-import com.lexicon.android.DefaultDispatcherProvider
+import com.lexicon.android.LessonAudioLibrary
+import com.lexicon.android.LessonAudioPlayer
 import com.lexicon.android.SpeechRecognizerService
 import com.lexicon.android.SpeechSynthesizer
-import com.lexicon.android.SystemClock
-import com.lexicon.common.Clock
-import com.lexicon.common.DispatcherProvider
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class AndroidModule {
-    @Binds
-    @Singleton
-    abstract fun bindDispatcherProvider(impl: DefaultDispatcherProvider): DispatcherProvider
+val androidModule = module {
+    singleOf(::AndroidSpeechSynthesizer) { bind<SpeechSynthesizer>() }
+    singleOf(::AndroidSpeechRecognizerService) { bind<SpeechRecognizerService>() }
+    singleOf(::AndroidAudioPlayer) { bind<AudioPlayer>() }
 
-    @Binds
-    @Singleton
-    abstract fun bindClock(impl: SystemClock): Clock
-
-    @Binds
-    @Singleton
-    abstract fun bindSpeechSynthesizer(impl: AndroidSpeechSynthesizer): SpeechSynthesizer
-
-    @Binds
-    @Singleton
-    abstract fun bindSpeechRecognizerService(impl: AndroidSpeechRecognizerService): SpeechRecognizerService
-
-    @Binds
-    @Singleton
-    abstract fun bindAudioPlayer(impl: AndroidAudioPlayer): AudioPlayer
+    singleOf(::AndroidLessonAudioLibrary) { bind<LessonAudioLibrary>() }
+    singleOf(::AndroidLessonAudioPlayer) { bind<LessonAudioPlayer>() }
 }

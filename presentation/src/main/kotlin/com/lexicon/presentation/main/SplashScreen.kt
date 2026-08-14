@@ -41,7 +41,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.sync.CatalogSyncStatus
 import com.lexicon.interactors.sync.SyncStepStatus
 import com.lexicon.interactors.sync.isBlocked
@@ -56,6 +55,7 @@ import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
+import org.koin.androidx.compose.koinViewModel
 import java.text.NumberFormat
 
 private val BrandBadgeSize = 88.dp
@@ -68,7 +68,7 @@ private const val PENDING_ALPHA = 0.45f
 fun SplashScreen(
     onFinished: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: SplashViewModel = hiltViewModel(),
+    viewModel: SplashViewModel = koinViewModel(),
 ) {
     val status by viewModel.status.collectAsState()
 

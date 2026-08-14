@@ -25,11 +25,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.interactors.training.TrainingReadiness
 import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
+import org.koin.androidx.compose.koinViewModel
 
 private val EmptyStateIconSize = 64.dp
 
@@ -40,7 +40,7 @@ fun TrainingGate(
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
     excludePhrases: Boolean = false,
-    viewModel: TrainingGateViewModel = hiltViewModel(),
+    viewModel: TrainingGateViewModel = koinViewModel(),
     content: @Composable () -> Unit,
 ) {
     val readiness by viewModel.readiness.collectAsState()
