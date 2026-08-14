@@ -3,13 +3,18 @@ package com.lexicon.app.navigation
 import com.lexicon.presentation.common.TRAINING_WORDS_ARG
 import com.lexicon.presentation.common.asTrainingWordsArgument
 import com.lexicon.presentation.course.COURSE_ID_ARG
+import com.lexicon.presentation.main.MainTab
 import com.lexicon.presentation.main.TrainingIds
 import com.lexicon.presentation.presets.WORD_ID_ARG
 import com.lexicon.presentation.program.PROGRAM_ID_ARG
 
 internal object LexiconDestinations {
     const val SPLASH = "splash"
-    const val MAIN = "main"
+    const val MAIN_TAB_ARG = "tab"
+
+    const val MAIN = "main?$MAIN_TAB_ARG={$MAIN_TAB_ARG}"
+
+    fun main(tab: MainTab? = null) = "main?$MAIN_TAB_ARG=${tab?.name.orEmpty()}"
 
     const val DICTATION = TrainingIds.DICTATION
     const val DICTATION_PUZZLE = TrainingIds.DICTATION_PUZZLE

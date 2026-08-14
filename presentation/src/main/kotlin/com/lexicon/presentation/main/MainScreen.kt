@@ -26,7 +26,7 @@ import com.lexicon.presentation.dashboard.DashboardScreen
 import com.lexicon.presentation.presets.VocabularyScreen
 import com.lexicon.presentation.settings.SettingsScreen
 
-private enum class MainTab(val label: String, val icon: ImageVector) {
+enum class MainTab(val label: String, val icon: ImageVector) {
     DASHBOARD("Dashboard", Icons.Default.Dashboard),
     TRAININGS("Trainings", Icons.Default.School),
     VOCABULARY("Vocabulary", Icons.AutoMirrored.Filled.MenuBook),
@@ -48,8 +48,11 @@ fun MainScreen(
     onAddWord: () -> Unit,
     onAddPreset: () -> Unit,
     modifier: Modifier = Modifier,
+    // Which tab to land on. A training that could not start sends the learner here
+    // to build up their study set, and landing back on Trainings would be a loop.
+    initialTab: MainTab = MainTab.TRAININGS,
 ) {
-    var selectedTab by rememberSaveable(stateSaver = MainTabSaver) { mutableStateOf(MainTab.TRAININGS) }
+    var selectedTab by rememberSaveable(stateSaver = MainTabSaver) { mutableStateOf(initialTab) }
 
     Scaffold(
         modifier = modifier,

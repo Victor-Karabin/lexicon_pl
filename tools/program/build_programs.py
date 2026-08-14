@@ -59,6 +59,19 @@ TRAININGS = {
     "pronunciation_check", "puzzle", "image_test", "memory_cards", "mix", "crossword",
 }
 
+# Trainings a program may not use, and why: both take the word list a program chose
+# and practise something else.
+#
+# Memory Cards draws pairsPerStep words at random from whatever it is given
+# (StartMemoryCardsSessionUseCaseImpl), so handing it today's ten words does not mean
+# the learner meets those ten. Crossword needs eight words it can place in a grid and
+# cannot place phrases, of which the corpus has 293, so part of a list can silently
+# go untaught.
+#
+# A program counts words as learned on the strength of what was answered, so a
+# training that quietly practises a different set makes that count a lie.
+NOT_FOR_PROGRAMS = {"memory_cards", "crossword"}
+
 PROGRESS_WEIGHT_TOTAL = 100
 
 
@@ -121,6 +134,12 @@ def validate_activities(activities: list, where: str) -> None:
         for training in activity.get("trainings", []):
             if training not in TRAININGS:
                 raise BuildError(f"{where}.{ident}: no training {training!r}; expected one of {sorted(TRAININGS)}")
+            if training in NOT_FOR_PROGRAMS:
+                raise BuildError(
+                    f"{where}.{ident}: {training!r} cannot be used by a program — it practises a different "
+                    f"set of words than the one it is given, so the program's count of what was learned "
+                    f"would not be true. Excluded: {sorted(NOT_FOR_PROGRAMS)}"
+                )
         if not activity.get("trainings"):
             raise BuildError(f"{where}.{ident}: no trainings, so nothing can satisfy it")
         if activity.get("target", 1) <= 0:

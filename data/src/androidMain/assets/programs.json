@@ -54,8 +54,8 @@
               "estimatedMinutes": 7,
               "priority": 1,
               "trainings": [
-                "memory_cards",
-                "word_match"
+                "word_match",
+                "true_or_false"
               ]
             },
             {
@@ -96,7 +96,7 @@
                 "estimatedMinutes": 10,
                 "priority": 2,
                 "trainings": [
-                  "crossword"
+                  "image_test"
                 ]
               }
             ]

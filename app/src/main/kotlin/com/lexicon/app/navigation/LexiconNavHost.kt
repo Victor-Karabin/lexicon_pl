@@ -23,6 +23,7 @@ import com.lexicon.presentation.dictation.DictationScreen
 import com.lexicon.presentation.dictationpuzzle.DictationPuzzleScreen
 import com.lexicon.presentation.imagetest.ImageTestScreen
 import com.lexicon.presentation.main.MainScreen
+import com.lexicon.presentation.main.MainTab
 import com.lexicon.presentation.main.SplashScreen
 import com.lexicon.presentation.main.trainingDisplayName
 import com.lexicon.presentation.memorycards.MemoryCardsScreen
@@ -45,15 +46,27 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
         composable(LexiconDestinations.SPLASH) {
             SplashScreen(
                 onFinished = {
-                    navController.navigate(LexiconDestinations.MAIN) {
+                    navController.navigate(LexiconDestinations.main()) {
                         popUpTo(LexiconDestinations.SPLASH) { inclusive = true }
                     }
                 },
             )
         }
 
-        composable(LexiconDestinations.MAIN) {
+        composable(
+            route = LexiconDestinations.MAIN,
+            arguments = listOf(
+                navArgument(LexiconDestinations.MAIN_TAB_ARG) {
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+            ),
+        ) { entry ->
+            val requestedTab = entry.arguments
+                ?.getString(LexiconDestinations.MAIN_TAB_ARG)
+                ?.let { name -> MainTab.entries.firstOrNull { it.name == name } }
             MainScreen(
+                initialTab = requestedTab ?: MainTab.TRAININGS,
                 onTrainingSelected = { route -> navController.navigate(route) },
                 onPresetSelected = { id -> navController.navigate(LexiconDestinations.presetDetail(id)) },
                 onCourseSelected = { id -> navController.navigate(LexiconDestinations.course(id)) },
@@ -158,10 +171,19 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
 
         val closeToMain: () -> Unit = { navController.popBackStack(LexiconDestinations.MAIN, inclusive = false) }
 
+        // Replaces the tab host rather than stacking another: the learner is being
+        // sent to build up their study set, not deeper into the app.
+        val goToVocabulary: () -> Unit = {
+            navController.navigate(LexiconDestinations.main(MainTab.VOCABULARY)) {
+                popUpTo(LexiconDestinations.MAIN) { inclusive = true }
+            }
+        }
+
         trainingDestination(
             training = LexiconDestinations.DICTATION,
             minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
             onClose = closeToMain,
+            onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.DICTATION),
         ) { onComplete ->
             DictationScreen(onSessionComplete = onComplete, onClose = closeToMain)
@@ -170,6 +192,7 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             training = LexiconDestinations.DICTATION_PUZZLE,
             minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
             onClose = closeToMain,
+            onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.DICTATION_PUZZLE),
         ) { onComplete ->
             DictationPuzzleScreen(onSessionComplete = onComplete, onClose = closeToMain)
@@ -178,6 +201,7 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             training = LexiconDestinations.TRUE_OR_FALSE,
             minimumWords = TrainingRequirements.TRUE_OR_FALSE,
             onClose = closeToMain,
+            onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.TRUE_OR_FALSE),
         ) { onComplete ->
             TrueOrFalseScreen(onSessionComplete = onComplete, onClose = closeToMain)
@@ -186,6 +210,7 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             training = LexiconDestinations.WORD_MATCH,
             minimumWords = TrainingRequirements.WORD_MATCH,
             onClose = closeToMain,
+            onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.WORD_MATCH),
         ) { onComplete ->
             WordMatchScreen(onSessionComplete = onComplete, onClose = closeToMain)
@@ -194,6 +219,7 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             training = LexiconDestinations.PRONUNCIATION_CHECK,
             minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
             onClose = closeToMain,
+            onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.PRONUNCIATION_CHECK),
         ) { onComplete ->
             PronunciationScreen(onSessionComplete = onComplete, onClose = closeToMain)
@@ -202,6 +228,7 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             training = LexiconDestinations.PUZZLE,
             minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
             onClose = closeToMain,
+            onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.PUZZLE),
         ) { onComplete ->
             PuzzleScreen(onSessionComplete = onComplete, onClose = closeToMain)
@@ -210,6 +237,7 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             training = LexiconDestinations.IMAGE_TEST,
             minimumWords = TrainingRequirements.IMAGE_TEST,
             onClose = closeToMain,
+            onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.IMAGE_TEST),
         ) { onComplete ->
             ImageTestScreen(onSessionComplete = onComplete, onClose = closeToMain)
@@ -218,6 +246,7 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             training = LexiconDestinations.MEMORY_CARDS,
             minimumWords = TrainingRequirements.MEMORY_CARDS,
             onClose = closeToMain,
+            onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.MEMORY_CARDS),
         ) { onComplete ->
             MemoryCardsScreen(onSessionComplete = onComplete, onClose = closeToMain)
@@ -226,6 +255,7 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             training = LexiconDestinations.CROSSWORD,
             minimumWords = TrainingRequirements.CROSSWORD,
             onClose = closeToMain,
+            onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.CROSSWORD),
         ) { onComplete ->
             CrosswordScreen(onSessionComplete = onComplete, onClose = closeToMain)
@@ -234,6 +264,7 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             training = LexiconDestinations.MIX,
             minimumWords = TrainingRequirements.MIX,
             onClose = closeToMain,
+            onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.MIX),
         ) { onComplete ->
             MixScreen(onSessionComplete = onComplete, onClose = closeToMain)
@@ -269,6 +300,7 @@ private fun NavGraphBuilder.trainingDestination(
     training: String,
     minimumWords: Int,
     onClose: () -> Unit,
+    onGoToVocabulary: () -> Unit,
     onComplete: (Int, Int, Int, Int) -> Unit,
     screen: @Composable (onComplete: (Int, Int, Int, Int) -> Unit) -> Unit,
 ) {
@@ -287,6 +319,7 @@ private fun NavGraphBuilder.trainingDestination(
             minimumWords = if (scopedWords.isEmpty()) minimumWords else 0,
             trainingName = trainingDisplayName(training),
             onClose = onClose,
+            onGoToVocabulary = onGoToVocabulary,
             // Crossword can only place single words, so phrases in the study set
             // don't count toward whether there are enough words to start it.
             excludePhrases = training == LexiconDestinations.CROSSWORD,

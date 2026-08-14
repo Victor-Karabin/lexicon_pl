@@ -15,6 +15,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -38,6 +39,7 @@ fun TrainingGate(
     minimumWords: Int,
     trainingName: String,
     onClose: () -> Unit,
+    onGoToVocabulary: () -> Unit,
     modifier: Modifier = Modifier,
     excludePhrases: Boolean = false,
     viewModel: TrainingGateViewModel = koinViewModel(),
@@ -59,6 +61,7 @@ fun TrainingGate(
                 required = state.required,
                 available = state.available,
                 onClose = onClose,
+                onGoToVocabulary = onGoToVocabulary,
                 modifier = modifier,
             )
 
@@ -73,6 +76,7 @@ internal fun NotEnoughWordsContent(
     required: Int,
     available: Int,
     onClose: () -> Unit,
+    onGoToVocabulary: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -111,7 +115,11 @@ internal fun NotEnoughWordsContent(
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(top = Dimens.spacingSmall),
             )
-            Button(onClick = onClose, modifier = Modifier.padding(top = Dimens.spacingXl)) {
+            // The hint above says where the words come from; this is the way there.
+            Button(onClick = onGoToVocabulary, modifier = Modifier.padding(top = Dimens.spacingXl)) {
+                Text(stringResource(R.string.training_go_to_vocabulary))
+            }
+            TextButton(onClick = onClose, modifier = Modifier.padding(top = Dimens.spacingSmall)) {
                 Text(stringResource(R.string.training_not_enough_words_action))
             }
         }
@@ -122,7 +130,13 @@ internal fun NotEnoughWordsContent(
 @Composable
 private fun NotEnoughWordsPreview() {
     LexiconTheme {
-        NotEnoughWordsContent(trainingName = "Image Test", required = 6, available = 2, onClose = {})
+        NotEnoughWordsContent(
+            trainingName = "Image Test",
+            required = 6,
+            available = 2,
+            onClose = {},
+            onGoToVocabulary = {},
+        )
     }
 }
 
@@ -130,6 +144,12 @@ private fun NotEnoughWordsPreview() {
 @Composable
 private fun NotEnoughWordsEmptyStudySetPreview() {
     LexiconTheme {
-        NotEnoughWordsContent(trainingName = "Crossword", required = 8, available = 0, onClose = {})
+        NotEnoughWordsContent(
+            trainingName = "Crossword",
+            required = 8,
+            available = 0,
+            onClose = {},
+            onGoToVocabulary = {},
+        )
     }
 }
