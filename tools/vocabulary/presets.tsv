@@ -2,10 +2,10 @@
 #   id, category, select_type, select_arg, popularity, icon, color, title_en, title_pl, desc_en, desc_pl
 # select_type: frequency (arg = how many of the most common words) | topic (arg = tag) | pos (arg = part of speech)
 # popularity: editorial ranking used by the "most popular" sort; lower comes first.
-top-100	frequency	frequency	100	1	trending_up	#2E7D32	100 most common words	100 najczęstszych słów	The hundred words you will meet first in almost any Polish sentence.	Sto słów, które spotkasz w niemal każdym polskim zdaniu.
-top-250	frequency	frequency	250	2	trending_up	#2E7D32	250 most common words	250 najczęstszych słów	Enough everyday vocabulary to follow the shape of a simple conversation.	Słownictwo wystarczające, by nadążyć za prostą rozmową.
-top-500	frequency	frequency	500	3	trending_up	#2E7D32	500 most common words	500 najczęstszych słów	The core of spoken Polish, covering most of what you hear day to day.	Rdzeń mówionej polszczyzny, obecny w codziennych rozmowach.
-top-1000	frequency	frequency	1000	4	trending_up	#2E7D32	1000 most common words	1000 najczęstszych słów	A working everyday vocabulary for reading and conversation.	Praktyczne słownictwo do czytania i rozmowy.
+top-100	frequency	frequency	100	1	trending_up	#2E7D32	Top 100	Top 100	The hundred words you will meet first in almost any Polish sentence.	Sto słów, które spotkasz w niemal każdym polskim zdaniu.
+top-250	frequency	frequency	250	2	trending_up	#2E7D32	Top 250	Top 250	Enough everyday vocabulary to follow the shape of a simple conversation.	Słownictwo wystarczające, by nadążyć za prostą rozmową.
+top-500	frequency	frequency	500	3	trending_up	#2E7D32	Top 500	Top 500	The core of spoken Polish, covering most of what you hear day to day.	Rdzeń mówionej polszczyzny, obecny w codziennych rozmowach.
+top-1000	frequency	frequency	1000	4	trending_up	#2E7D32	Top 1000	Top 1000	A working everyday vocabulary for reading and conversation.	Praktyczne słownictwo do czytania i rozmowy.
 phrases	everyday-life	pos	expr	5	record_voice_over	#EF6C00	Phrases	Zwroty	What you actually say: asking, ordering, apologising and finding your way.	To, co naprawdę mówisz: pytania, zamówienia, przeprosiny i pytanie o drogę.
 greetings	everyday-life	topic	greetings	10	waving_hand	#EF6C00	Greetings	Powitania	Hello, goodbye, thank you — the phrases every conversation starts with.	Cześć, do widzenia, dziękuję — od tego zaczyna się rozmowa.
 introductions	everyday-life	topic	introductions	11	person_add	#EF6C00	Introductions	Przedstawianie się	Saying who you are, where you are from and what you do.	Kim jesteś, skąd pochodzisz i czym się zajmujesz.

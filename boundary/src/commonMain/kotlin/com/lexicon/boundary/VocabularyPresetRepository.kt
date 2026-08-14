@@ -16,4 +16,13 @@ interface VocabularyPresetRepository {
     suspend fun deletePreset(id: String)
 
     suspend fun restorePreset(id: String)
+
+    /** The presets a word currently belongs to; a word can be in any number of them. */
+    suspend fun getPresetIdsForWord(wordId: Long): List<String>
+
+    suspend fun setWordInPreset(
+        presetId: String,
+        wordId: Long,
+        isMember: Boolean,
+    )
 }

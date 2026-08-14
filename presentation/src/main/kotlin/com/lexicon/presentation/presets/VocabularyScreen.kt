@@ -1,6 +1,5 @@
 package com.lexicon.presentation.presets
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,17 +10,13 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -39,12 +34,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.LocalizedText
@@ -54,8 +45,6 @@ import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
-import com.lexicon.interactors.presets.resolve
-import com.lexicon.interactors.presets.wordCount
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.DeleteAction
 import com.lexicon.presentation.common.DeleteActionWidth
@@ -67,8 +56,6 @@ import com.lexicon.presentation.theme.LexiconTheme
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import org.koin.androidx.compose.koinViewModel
-import java.text.NumberFormat
-import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
 private val IconBadgeSize = 44.dp
@@ -80,6 +67,7 @@ fun VocabularyScreen(
     viewModel: VocabularyViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val changePresets by viewModel.changePresetsState.collectAsState()
 
     val snackbarHostState = remember { SnackbarHostState() }
     val deleted = (uiState as? VocabularyUiState.Loaded)?.lastDeleted
@@ -107,9 +95,18 @@ fun VocabularyScreen(
         onWordFavouriteToggled = viewModel::onWordFavouriteToggled,
         onPronounceWord = viewModel::onPronounceWord,
         onWordDeleted = viewModel::onWordDeleted,
+        onChangePresets = viewModel::onChangePresetsRequested,
         onPresetDeleted = viewModel::onPresetDeleted,
         modifier = modifier,
     )
+
+    changePresets?.let { state ->
+        ChangePresetsSheet(
+            state = state,
+            onToggle = viewModel::onPresetMembershipToggled,
+            onDismiss = viewModel::onChangePresetsDismissed,
+        )
+    }
 }
 
 @Composable
@@ -124,6 +121,7 @@ private fun VocabularyContent(
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
     onPronounceWord: (PresetWord) -> Unit,
     onWordDeleted: (PresetWord) -> Unit,
+    onChangePresets: (PresetWord) -> Unit,
     onPresetDeleted: (VocabularyPreset) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -142,6 +140,7 @@ private fun VocabularyContent(
             onWordFavouriteToggled = onWordFavouriteToggled,
             onPronounceWord = onPronounceWord,
             onWordDeleted = onWordDeleted,
+            onChangePresets = onChangePresets,
             onPresetDeleted = onPresetDeleted,
             modifier = Modifier.padding(padding),
         )
@@ -159,6 +158,7 @@ private fun VocabularyBody(
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
     onPronounceWord: (PresetWord) -> Unit,
     onWordDeleted: (PresetWord) -> Unit,
+    onChangePresets: (PresetWord) -> Unit,
     onPresetDeleted: (VocabularyPreset) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -183,7 +183,7 @@ private fun VocabularyBody(
                 FilterRow(uiState, onCefrToggled, onFiltersCleared)
 
                 if (uiState.isSearchingWords) {
-                    WordResults(uiState, onWordFavouriteToggled, onPronounceWord, onWordDeleted)
+                    WordResults(uiState, onWordFavouriteToggled, onPronounceWord, onWordDeleted, onChangePresets)
                 } else {
                     PresetResults(uiState, onPresetSelected, onPresetFavouriteToggled, onPresetDeleted)
                 }
@@ -197,27 +197,20 @@ private fun WordResults(
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
     onPronounceWord: (PresetWord) -> Unit,
     onWordDeleted: (PresetWord) -> Unit,
+    onChangePresets: (PresetWord) -> Unit,
 ) {
     if (uiState.hasNoMatchingWords) {
         Message(stringResource(R.string.vocabulary_search_no_matches, uiState.query))
         return
     }
     LazyColumn(contentPadding = PaddingValues(vertical = Dimens.spacingSmall)) {
-        itemsIndexed(uiState.words, key = { _, word -> word.id.value }) { index, word ->
-            SwipeToRevealContainer(
-                revealWidth = DeleteActionWidth,
-                backgroundContent = { DeleteAction(onClick = { onWordDeleted(word) }) },
-            ) {
-                VocabularyWordRow(
-                    word = word,
-                    onFavouriteToggled = { onWordFavouriteToggled(word.id, !word.isFavourite) },
-                    onPronounce = { onPronounceWord(word) },
-                )
-            }
-            if (index < uiState.words.lastIndex) {
-                HorizontalDivider(modifier = Modifier.padding(horizontal = Dimens.spacingMedium))
-            }
-        }
+        wordRows(
+            words = uiState.words,
+            onFavouriteToggled = onWordFavouriteToggled,
+            onPronounce = onPronounceWord,
+            onChangePresets = onChangePresets,
+            onDelete = onWordDeleted,
+        )
     }
 }
 
@@ -300,63 +293,12 @@ private fun PresetCard(
         color = MaterialTheme.colorScheme.surfaceContainerHigh,
         modifier = Modifier.fillMaxWidth(),
     ) {
-        Row(
-            modifier = Modifier.padding(Dimens.spacingMedium),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
-        ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Box(
-                    modifier = Modifier.size(IconBadgeSize).background(preset.accentColor(), CircleShape),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Icon(
-                        imageVector = presetIconFor(preset.icon),
-                        contentDescription = null,
-                        tint = Color.White,
-                    )
-                }
-                Text(
-                    text = preset.wordCount.grouped(),
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(top = Dimens.spacingSmall),
-                )
-                Text(
-                    text = pluralStringResource(R.plurals.presets_word_count_label, preset.wordCount),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = preset.title.resolve(languageTag),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
-                )
-                Text(
-                    text = preset.description.resolve(languageTag),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(top = Dimens.spacingTiny),
-                )
-                Text(
-                    text = stringResource(
-                        R.string.presets_card_meta,
-                        preset.category.title.resolve(languageTag),
-                        preset.estimatedDuration.readableMinutes(),
-                    ),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(top = Dimens.spacingSmall),
-                )
-            }
-
-            PresetFavouriteButton(state = favouriteState, onClick = onFavouriteToggled)
-        }
+        PresetSummary(
+            preset = preset,
+            languageTag = languageTag,
+            favouriteState = favouriteState,
+            onFavouriteToggled = onFavouriteToggled,
+        )
     }
 }
 
@@ -374,18 +316,6 @@ private fun Message(text: String) {
         )
     }
 }
-
-@Composable
-private fun VocabularyPreset.accentColor(): Color {
-    val fallback = MaterialTheme.colorScheme.primary
-    val hex = color?.removePrefix("#") ?: return fallback
-    val parsed = hex.toLongOrNull(radix = 16) ?: return fallback
-    return Color(parsed or 0xFF000000L)
-}
-
-private fun Duration.readableMinutes(): Int = inWholeMinutes.toInt().coerceAtLeast(1)
-
-private fun Int.grouped(): String = NumberFormat.getIntegerInstance().format(this)
 
 private val previewCategory = PresetCategory(
     id = "everyday-life",
@@ -455,6 +385,7 @@ private fun VocabularyPresetsPreview() {
             onWordFavouriteToggled = { _, _ -> },
             onPronounceWord = {},
             onWordDeleted = {},
+            onChangePresets = {},
             onPresetDeleted = {},
             snackbarHostState = SnackbarHostState(),
         )
@@ -483,6 +414,7 @@ private fun VocabularyWordSearchPreview() {
             onWordFavouriteToggled = { _, _ -> },
             onPronounceWord = {},
             onWordDeleted = {},
+            onChangePresets = {},
             onPresetDeleted = {},
             snackbarHostState = SnackbarHostState(),
         )
@@ -503,6 +435,7 @@ private fun VocabularyNoMatchingWordsPreview() {
             onWordFavouriteToggled = { _, _ -> },
             onPronounceWord = {},
             onWordDeleted = {},
+            onChangePresets = {},
             onPresetDeleted = {},
             snackbarHostState = SnackbarHostState(),
         )

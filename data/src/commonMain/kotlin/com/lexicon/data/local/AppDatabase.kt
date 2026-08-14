@@ -14,6 +14,7 @@ import androidx.room.RoomDatabaseConstructor
         PresetEntity::class,
         PresetWordEntity::class,
         DeletedPresetEntity::class,
+        PresetWordOverrideEntity::class,
         CourseEntity::class,
         LessonEntity::class,
         LessonWordEntity::class,
@@ -22,7 +23,7 @@ import androidx.room.RoomDatabaseConstructor
         LessonExerciseEntity::class,
         LessonExerciseItemEntity::class,
     ],
-    version = 15,
+    version = 16,
     exportSchema = false,
 )
 @ConstructedBy(AppDatabaseConstructor::class)

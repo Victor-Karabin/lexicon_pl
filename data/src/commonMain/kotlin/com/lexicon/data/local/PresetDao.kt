@@ -49,6 +49,49 @@ interface PresetDao {
     )
     suspend fun getAllMemberships(): List<PresetWordEntity>
 
+    @Query(
+        """
+        SELECT pw.presetId FROM preset_words pw
+        INNER JOIN presets p ON p.id = pw.presetId
+        WHERE pw.wordId = :wordId
+        """,
+    )
+    suspend fun getPresetIdsForWord(wordId: Long): List<String>
+
+    /** Appends to the end of the preset, so a hand-added word lands last rather than mid-list. */
+    @Query("SELECT COALESCE(MAX(position), -1) + 1 FROM preset_words WHERE presetId = :presetId")
+    suspend fun nextPosition(presetId: String): Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMembership(membership: PresetWordEntity)
+
+    @Query("DELETE FROM preset_words WHERE presetId = :presetId AND wordId = :wordId")
+    suspend fun deleteMembership(
+        presetId: String,
+        wordId: Long,
+    )
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertOverride(override: PresetWordOverrideEntity)
+
+    @Query("SELECT * FROM preset_word_overrides")
+    suspend fun getOverrides(): List<PresetWordOverrideEntity>
+
+    /** Puts one word into (or out of) a preset, remembering the choice across re-seeds. */
+    @Transaction
+    suspend fun setWordInPreset(
+        presetId: String,
+        wordId: Long,
+        isMember: Boolean,
+    ) {
+        if (isMember) {
+            insertMembership(PresetWordEntity(presetId = presetId, wordId = wordId, position = nextPosition(presetId)))
+        } else {
+            deleteMembership(presetId, wordId)
+        }
+        upsertOverride(PresetWordOverrideEntity(presetId = presetId, wordId = wordId, isMember = isMember))
+    }
+
     @Query("SELECT COUNT(*) FROM presets")
     suspend fun countPresets(): Int
 
@@ -79,6 +122,31 @@ interface PresetDao {
         insertCategories(categories)
         insertPresets(presets)
         insertMemberships(memberships)
+        reapplyOverrides(presets.mapTo(mutableSetOf()) { it.id })
+    }
+
+    /**
+     * Replays the learner's own membership edits over the freshly-seeded catalogue,
+     * which the insert above has just reset to what the asset ships.
+     *
+     * An override for a preset the catalogue no longer has is dropped: the preset is
+     * gone, so the edit has nothing left to apply to.
+     */
+    private suspend fun reapplyOverrides(livePresetIds: Set<String>) {
+        for (override in getOverrides()) {
+            if (override.presetId !in livePresetIds) continue
+            if (override.isMember) {
+                insertMembership(
+                    PresetWordEntity(
+                        presetId = override.presetId,
+                        wordId = override.wordId,
+                        position = nextPosition(override.presetId),
+                    ),
+                )
+            } else {
+                deleteMembership(override.presetId, override.wordId)
+            }
+        }
     }
 
     @Query("DELETE FROM preset_words")

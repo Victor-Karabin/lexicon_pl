@@ -84,3 +84,7 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+# Throwaway iOS smoke-test app: build output only, the project itself is tracked.
+iosSmokeTest/build/
+.kotlin/

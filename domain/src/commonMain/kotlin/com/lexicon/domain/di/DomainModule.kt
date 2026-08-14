@@ -23,12 +23,14 @@ import com.lexicon.domain.presets.GetPresetCategoriesUseCaseImpl
 import com.lexicon.domain.presets.GetPresetVocabularyUseCaseImpl
 import com.lexicon.domain.presets.GetVocabularyPresetUseCaseImpl
 import com.lexicon.domain.presets.GetVocabularyPresetsUseCaseImpl
+import com.lexicon.domain.presets.GetWordPresetMembershipsUseCaseImpl
 import com.lexicon.domain.presets.ObserveFavouriteWordIdsUseCaseImpl
 import com.lexicon.domain.presets.ObserveVocabularyPresetsUseCaseImpl
 import com.lexicon.domain.presets.RestorePresetUseCaseImpl
 import com.lexicon.domain.presets.RestoreWordUseCaseImpl
 import com.lexicon.domain.presets.SearchVocabularyUseCaseImpl
 import com.lexicon.domain.presets.SetPresetFavouriteUseCaseImpl
+import com.lexicon.domain.presets.SetWordPresetMembershipUseCaseImpl
 import com.lexicon.domain.presets.ToggleWordFavouriteUseCaseImpl
 import com.lexicon.domain.pronunciation.StartPronunciationSessionUseCaseImpl
 import com.lexicon.domain.pronunciation.SubmitPronunciationResultUseCaseImpl
@@ -66,12 +68,14 @@ import com.lexicon.interactors.presets.GetPresetCategoriesUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
+import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
 import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.RestorePresetUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
 import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
+import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
@@ -122,6 +126,8 @@ val domainModule = module {
     factoryOf(::GetPresetVocabularyUseCaseImpl) { bind<GetPresetVocabularyUseCase>() }
     factoryOf(::ToggleWordFavouriteUseCaseImpl) { bind<ToggleWordFavouriteUseCase>() }
     factoryOf(::SetPresetFavouriteUseCaseImpl) { bind<SetPresetFavouriteUseCase>() }
+    factoryOf(::GetWordPresetMembershipsUseCaseImpl) { bind<GetWordPresetMembershipsUseCase>() }
+    factoryOf(::SetWordPresetMembershipUseCaseImpl) { bind<SetWordPresetMembershipUseCase>() }
     factoryOf(::ObserveFavouriteWordIdsUseCaseImpl) { bind<ObserveFavouriteWordIdsUseCase>() }
     factoryOf(::CheckTrainingReadinessUseCaseImpl) { bind<CheckTrainingReadinessUseCase>() }
     factoryOf(::SearchVocabularyUseCaseImpl) { bind<SearchVocabularyUseCase>() }
