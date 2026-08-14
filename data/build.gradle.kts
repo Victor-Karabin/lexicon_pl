@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
@@ -7,7 +9,13 @@ plugins {
 }
 
 kotlin {
-    androidTarget()
+    androidTarget {
+        // Java is pinned to 17 below; Kotlin otherwise follows the JDK running
+        // Gradle, which is 21 in Android Studio and fails the target check.
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
     iosArm64()
     iosSimulatorArm64()
     iosX64()
