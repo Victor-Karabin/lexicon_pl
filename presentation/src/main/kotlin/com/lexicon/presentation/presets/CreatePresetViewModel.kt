@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 data class CreatePresetUiState(
     val name: String = "",
     val description: String = "",
-    val icon: String = PRESET_ICON_CHOICES.first(),
-    val color: String = PRESET_COLOR_CHOICES.first(),
+    val icon: String = DEFAULT_PRESET_ICON,
+    val color: String = DEFAULT_PRESET_COLOR,
     val isSaving: Boolean = false,
     val problem: PresetDraftProblem? = null,
     /** Set once the preset is stored; the screen closes on it. */

@@ -56,8 +56,9 @@ class CreateUseCasesImplTest {
             )
 
             assertTrue(result.isSuccess)
-            // Trimmed on the way in, so a stray space does not become part of the word.
-            coVerify { vocabularyRepository.createWord("smok", "dragon", "") }
+            // Trimmed on the way in, so a stray space does not become part of the word,
+            // and the pronunciation is worked out from the spelling rather than asked for.
+            coVerify { vocabularyRepository.createWord("smok", "dragon", "smɔk") }
             // Duplicates in the chip selection must not double-insert.
             coVerify(exactly = 1) { presetRepository.setWordInPreset("fantasy", -1, true) }
             coVerify(exactly = 1) { presetRepository.setWordInPreset("animals", -1, true) }

@@ -5,6 +5,7 @@ import com.lexicon.boundary.TranslationDirection
 import com.lexicon.boundary.Translator
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.common.polishTranscription
 import com.lexicon.interactors.presets.CreatePresetUseCase
 import com.lexicon.interactors.presets.CreateWordUseCase
 import com.lexicon.interactors.presets.LocalizedText
@@ -33,7 +34,6 @@ class CreateWordUseCaseImpl(
     override suspend fun invoke(
         text: String,
         translation: String,
-        transcription: String,
         imageUrl: String?,
         presetIds: List<PresetId>,
     ): Result<PresetWord> {
@@ -49,7 +49,9 @@ class CreateWordUseCaseImpl(
         val word = vocabularyRepository.createWord(
             text = polish,
             translation = english,
-            transcription = transcription.trim(),
+            // Derived rather than asked for, so a hand-added word reads the same way
+            // in the list and the trainings as every shipped one.
+            transcription = polishTranscription(polish),
         )
 
         for (presetId in presetIds.distinct()) {

@@ -53,6 +53,7 @@ import kotlin.time.Duration.Companion.seconds
 private val SwatchSize = 44.dp
 private val IconChoiceSize = 48.dp
 private val SelectedBorderWidth = 3.dp
+private val SaveBarElevation = 3.dp
 
 @Composable
 fun CreatePresetScreen(
@@ -93,6 +94,21 @@ private fun CreatePresetContent(
     Scaffold(
         modifier = modifier,
         topBar = { TrainingTopBar(title = stringResource(R.string.create_preset_title), onClose = onClose) },
+        // Pinned rather than sitting under the choices: there are well over a
+        // hundred icons to scroll past, and Save should never be a journey away.
+        bottomBar = {
+            Surface(color = MaterialTheme.colorScheme.surface, tonalElevation = SaveBarElevation) {
+                Button(
+                    onClick = onSave,
+                    enabled = uiState.canSave,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Dimens.spacingMedium),
+                ) {
+                    Text(stringResource(R.string.create_save))
+                }
+            }
+        },
     ) { padding ->
         Column(
             modifier = Modifier
@@ -141,14 +157,6 @@ private fun CreatePresetContent(
 
             SectionLabel(stringResource(R.string.create_preset_color))
             ColorChoices(selected = uiState.color, onSelected = onColorSelected)
-
-            Button(
-                onClick = onSave,
-                enabled = uiState.canSave,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(stringResource(R.string.create_save))
-            }
         }
     }
 }

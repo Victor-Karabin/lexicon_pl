@@ -31,7 +31,6 @@ private const val TYPING_SETTLE_MS = 600L
 data class CreateWordUiState(
     val text: String = "",
     val translation: String = "",
-    val transcription: String = "",
     val memberships: ImmutableList<PresetMembership> = persistentListOf(),
     val imageCandidates: ImmutableList<String> = persistentListOf(),
     val selectedImage: String? = null,
@@ -80,8 +79,6 @@ class CreateWordViewModel(
         scheduleImageSearch(translation)
     }
 
-    fun onTranscriptionChanged(transcription: String) = _uiState.update { it.copy(transcription = transcription) }
-
     fun onImageSelected(url: String) = _uiState.update { it.copy(selectedImage = if (it.selectedImage == url) null else url) }
 
     fun onPresetToggled(
@@ -125,7 +122,6 @@ class CreateWordViewModel(
             createWord(
                 text = state.text,
                 translation = state.translation,
-                transcription = state.transcription,
                 imageUrl = state.selectedImage,
                 presetIds = state.memberships.filter { it.isMember }.map { it.preset.id },
             ).fold(

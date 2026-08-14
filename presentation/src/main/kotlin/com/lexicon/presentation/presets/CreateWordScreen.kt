@@ -52,6 +52,7 @@ import org.koin.androidx.compose.koinViewModel
 import kotlin.time.Duration.Companion.minutes
 
 private val CandidateSize = 104.dp
+private val SaveBarElevation = 3.dp
 private val SelectedBorder = 3.dp
 private val ImageRowHeight = 112.dp
 
@@ -73,7 +74,6 @@ fun CreateWordScreen(
         onClose = onClose,
         onTextChanged = viewModel::onTextChanged,
         onTranslationChanged = viewModel::onTranslationChanged,
-        onTranscriptionChanged = viewModel::onTranscriptionChanged,
         onImageSelected = viewModel::onImageSelected,
         onMoreImages = viewModel::onMoreImages,
         onPresetToggled = viewModel::onPresetToggled,
@@ -88,7 +88,6 @@ private fun CreateWordContent(
     onClose: () -> Unit,
     onTextChanged: (String) -> Unit,
     onTranslationChanged: (String) -> Unit,
-    onTranscriptionChanged: (String) -> Unit,
     onImageSelected: (String) -> Unit,
     onMoreImages: () -> Unit,
     onPresetToggled: (PresetId, Boolean) -> Unit,
@@ -98,6 +97,21 @@ private fun CreateWordContent(
     Scaffold(
         modifier = modifier,
         topBar = { TrainingTopBar(title = stringResource(R.string.create_word_title), onClose = onClose) },
+        // Pinned: the preset chips run to many rows, and Save should not be a scroll
+        // away from the fields that enable it.
+        bottomBar = {
+            Surface(color = MaterialTheme.colorScheme.surface, tonalElevation = SaveBarElevation) {
+                Button(
+                    onClick = onSave,
+                    enabled = uiState.canSave,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Dimens.spacingMedium),
+                ) {
+                    Text(stringResource(R.string.create_save))
+                }
+            }
+        },
     ) { padding ->
         Column(
             modifier = Modifier
@@ -146,16 +160,6 @@ private fun CreateWordContent(
                 shape = LexiconShapes.small,
             )
 
-            OutlinedTextField(
-                value = uiState.transcription,
-                onValueChange = onTranscriptionChanged,
-                label = { Text(stringResource(R.string.create_word_transcription)) },
-                placeholder = { Text(stringResource(R.string.create_word_transcription_hint)) },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth(),
-                shape = LexiconShapes.small,
-            )
-
             ImageSection(uiState, onImageSelected, onMoreImages)
 
             if (uiState.memberships.isNotEmpty()) {
@@ -165,14 +169,6 @@ private fun CreateWordContent(
                     languageTag = uiState.languageTag,
                     onToggle = onPresetToggled,
                 )
-            }
-
-            Button(
-                onClick = onSave,
-                enabled = uiState.canSave,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(stringResource(R.string.create_save))
             }
         }
     }
@@ -311,7 +307,6 @@ private fun CreateWordPreview() {
             uiState = CreateWordUiState(
                 text = "woda",
                 translation = "water",
-                transcription = "ˈvɔda",
                 memberships = listOf(
                     previewMembership("food", "Food", isMember = true),
                     previewMembership("nature", "Nature", isMember = false),
@@ -322,7 +317,6 @@ private fun CreateWordPreview() {
             onClose = {},
             onTextChanged = {},
             onTranslationChanged = {},
-            onTranscriptionChanged = {},
             onImageSelected = {},
             onMoreImages = {},
             onPresetToggled = { _, _ -> },
@@ -340,7 +334,6 @@ private fun CreateWordEmptyPreview() {
             onClose = {},
             onTextChanged = {},
             onTranslationChanged = {},
-            onTranscriptionChanged = {},
             onImageSelected = {},
             onMoreImages = {},
             onPresetToggled = { _, _ -> },
@@ -363,7 +356,6 @@ private fun CreateWordDuplicatePreview() {
             onClose = {},
             onTextChanged = {},
             onTranslationChanged = {},
-            onTranscriptionChanged = {},
             onImageSelected = {},
             onMoreImages = {},
             onPresetToggled = { _, _ -> },
