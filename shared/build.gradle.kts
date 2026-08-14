@@ -19,6 +19,16 @@ kotlin {
             baseName = "Shared"
             isStatic = true
             xcf.add(this)
+
+            // api() above puts these on the compile classpath and links them in, but
+            // that alone keeps them out of the generated Objective-C header: only
+            // exported dependencies get declarations Swift can name. Without this the
+            // framework exposes SharedSmokeTest and initKoinIos and nothing else.
+            export(projects.boundary)
+            export(projects.common)
+            export(projects.interactors)
+            export(projects.domain)
+            export(projects.data)
         }
     }
 
