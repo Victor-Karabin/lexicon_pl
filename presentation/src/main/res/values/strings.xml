@@ -65,7 +65,6 @@
     <string name="presets_clear_search">Clear search</string>
     <string name="presets_clear_filters">Clear filters</string>
     <string name="presets_catalog_empty">No vocabulary presets are available.</string>
-    <string name="presets_card_meta">%1$s · about %2$d min</string>
     <string name="preset_detail_title">Preset</string>
     <string name="preset_detail_not_found">This preset is no longer available.</string>
     <string name="word_pronounce">Play “%1$s”</string>

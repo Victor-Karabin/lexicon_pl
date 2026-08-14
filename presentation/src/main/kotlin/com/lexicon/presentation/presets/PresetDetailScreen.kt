@@ -1,21 +1,14 @@
 package com.lexicon.presentation.presets
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -30,11 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetCategory
 import com.lexicon.interactors.presets.PresetFavouriteState
@@ -42,8 +31,6 @@ import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
-import com.lexicon.interactors.presets.resolve
-import com.lexicon.interactors.presets.wordCount
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
@@ -52,10 +39,7 @@ import com.lexicon.presentation.theme.LexiconTheme
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import org.koin.androidx.compose.koinViewModel
-import java.text.NumberFormat
 import kotlin.time.Duration.Companion.minutes
-
-private val DetailIconSize = 56.dp
 
 @Composable
 fun PresetDetailScreen(
@@ -115,8 +99,10 @@ private fun PresetDetailContent(
     onChangePresets: (PresetWord) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    // Once loaded the header carries the preset's name, the way its card does in the
+    // Vocabulary tab, so the bar would only be repeating it.
     val title = when (uiState) {
-        is PresetDetailUiState.Loaded -> uiState.preset.title.resolve(uiState.languageTag)
+        is PresetDetailUiState.Loaded -> ""
         else -> stringResource(R.string.preset_detail_title)
     }
 
@@ -178,63 +164,14 @@ private fun PresetHeader(
     uiState: PresetDetailUiState.Loaded,
     onFavouriteToggled: (PresetFavouriteState) -> Unit,
 ) {
-    val preset = uiState.preset
-    Row(
-        modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
-        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Box(
-            modifier = Modifier.size(DetailIconSize).background(preset.detailAccentColor(), CircleShape),
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(
-                imageVector = presetIconFor(preset.icon),
-                contentDescription = null,
-                tint = Color.White,
-            )
-        }
-        Text(
-            text = NumberFormat.getIntegerInstance().format(preset.wordCount),
-            style = MaterialTheme.typography.labelLarge,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(top = Dimens.spacingSmall),
-        )
-        Text(
-            text = pluralStringResource(R.plurals.presets_word_count_label, preset.wordCount),
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = preset.description.resolve(uiState.languageTag),
-                style = MaterialTheme.typography.bodyMedium,
-            )
-            Text(
-                text = stringResource(
-                    R.string.presets_card_meta,
-                    preset.category.title.resolve(uiState.languageTag),
-                    preset.estimatedDuration.inWholeMinutes.toInt().coerceAtLeast(1),
-                ),
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(top = Dimens.spacingSmall),
-            )
-        }
-
-        PresetFavouriteButton(
-            state = uiState.favouriteState,
-            onClick = { onFavouriteToggled(uiState.favouriteState) },
-        )
-    }
-}
-
-@Composable
-private fun VocabularyPreset.detailAccentColor(): Color {
-    val fallback = MaterialTheme.colorScheme.primary
-    val hex = color?.removePrefix("#") ?: return fallback
-    val parsed = hex.toLongOrNull(radix = 16) ?: return fallback
-    return Color(parsed or 0xFF000000L)
+    // Bare: the card's rounded surface belongs to a list of presets, not to the one
+    // preset you are already inside.
+    PresetSummary(
+        preset = uiState.preset,
+        languageTag = uiState.languageTag,
+        favouriteState = uiState.favouriteState,
+        onFavouriteToggled = { onFavouriteToggled(uiState.favouriteState) },
+    )
 }
 
 private val previewPreset = VocabularyPreset(
