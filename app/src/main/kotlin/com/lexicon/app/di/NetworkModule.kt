@@ -14,6 +14,8 @@ import com.lexicon.data.remote.image.UnsplashApi
 import com.lexicon.data.remote.image.UnsplashImageSource
 import com.lexicon.data.remote.translate.DeepLApi
 import com.lexicon.data.remote.translate.DeepLTranslator
+import com.lexicon.data.remote.translate.MyMemoryApi
+import com.lexicon.data.remote.translate.MyMemoryTranslator
 import com.lexicon.data.repository.CorpusTranslatorImpl
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
@@ -29,6 +31,7 @@ private const val PIXABAY_BASE_URL = "https://pixabay.com/"
 private const val UNSPLASH_BASE_URL = "https://api.unsplash.com/"
 private const val OPENVERSE_BASE_URL = "https://api.openverse.org/"
 private const val DEEPL_BASE_URL = "https://api-free.deepl.com/"
+private const val MYMEMORY_BASE_URL = "https://api.mymemory.translated.net/"
 
 private fun headerInterceptor(
     name: String,
@@ -100,11 +103,17 @@ val networkModule = module {
         retrofit(DEEPL_BASE_URL, client, get()).create(DeepLApi::class.java)
     }
 
-    // Corpus first: free, instant and offline. DeepL only if a key was configured.
+    single { retrofit(MYMEMORY_BASE_URL, get(), get()).create(MyMemoryApi::class.java) }
+
+    // Corpus first: free, instant and offline, and right about the words it knows.
+    // Then DeepL if a key was configured, since it reads Polish best. MyMemory last
+    // and always, so the field still fills itself in on a checkout with no keys —
+    // which is every checkout until somebody signs up for one.
     factory<List<Translator>>(translatorChainQualifier) {
         buildList {
             add(get<CorpusTranslatorImpl>())
             if (hasDeepLKey) add(get<DeepLTranslator>())
+            add(get<MyMemoryTranslator>())
         }
     }
 
@@ -113,6 +122,7 @@ val networkModule = module {
     factoryOf(::UnsplashImageSource)
     factoryOf(::OpenverseImageSource)
     factoryOf(::DeepLTranslator)
+    factoryOf(::MyMemoryTranslator)
 }
 
 /**

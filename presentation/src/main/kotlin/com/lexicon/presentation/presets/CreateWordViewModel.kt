@@ -61,6 +61,11 @@ class CreateWordViewModel(
     /** How many candidates have already been offered, so More asks past them. */
     private var shownImages = 0
 
+    // Which sides this filled in rather than the learner. Only these may be replaced
+    // when the word they were translated from changes.
+    private var textWasFilledIn = false
+    private var translationWasFilledIn = false
+
     init {
         viewModelScope.launch {
             val presets = getPresets().map { PresetMembership(preset = it, isMember = false) }
@@ -69,11 +74,13 @@ class CreateWordViewModel(
     }
 
     fun onTextChanged(text: String) {
+        textWasFilledIn = false
         _uiState.update { it.copy(text = text, problem = null) }
         scheduleTranslation(from = text, toPolish = false)
     }
 
     fun onTranslationChanged(translation: String) {
+        translationWasFilledIn = false
         _uiState.update { it.copy(translation = translation, problem = null) }
         scheduleTranslation(from = translation, toPolish = true)
         scheduleImageSearch(translation)
@@ -139,15 +146,24 @@ class CreateWordViewModel(
     }
 
     /**
-     * Fills the opposite field in once typing settles, and only while it is still
-     * empty — a suggestion should never overwrite something the learner wrote, and by
-     * the time a slow translation returns they may well have typed it themselves.
+     * Fills the opposite field in once typing settles.
+     *
+     * What was written by hand is never overwritten, but what this filled in before
+     * is: it was the translation of a word that has since been edited, so leaving it
+     * would show a Polish word belonging to English that is no longer there. It is
+     * cleared as soon as the other side changes rather than at the end of the round
+     * trip, so a stale pairing is never on screen while the new one is fetched.
      */
     private fun scheduleTranslation(
         from: String,
         toPolish: Boolean,
     ) {
         translateJob?.cancel()
+
+        val wasFilledIn = if (toPolish) textWasFilledIn else translationWasFilledIn
+        if (wasFilledIn) {
+            _uiState.update { if (toPolish) it.copy(text = "") else it.copy(translation = "") }
+        }
         if (from.isBlank()) return
         val target = { state: CreateWordUiState -> if (toPolish) state.text else state.translation }
         if (target(_uiState.value).isNotBlank()) return
@@ -156,12 +172,18 @@ class CreateWordViewModel(
             delay(TYPING_SETTLE_MS)
             _uiState.update { it.copy(isTranslating = true) }
             val translated = translateWord(from, toPolish = toPolish)
+            // Decided before the update rather than inside it: update retries its
+            // block under contention, and these flags must be set exactly once.
+            val fills = translated != null && target(_uiState.value).isBlank()
+
+            if (fills) {
+                if (toPolish) textWasFilledIn = true else translationWasFilledIn = true
+            }
             _uiState.update { state ->
                 when {
-                    translated == null -> state.copy(isTranslating = false)
-                    target(state).isNotBlank() -> state.copy(isTranslating = false)
-                    toPolish -> state.copy(text = translated, isTranslating = false)
-                    else -> state.copy(translation = translated, isTranslating = false)
+                    !fills -> state.copy(isTranslating = false)
+                    toPolish -> state.copy(text = translated.orEmpty(), isTranslating = false)
+                    else -> state.copy(translation = translated.orEmpty(), isTranslating = false)
                 }
             }
             // The English side may have just been filled in, which is what pictures

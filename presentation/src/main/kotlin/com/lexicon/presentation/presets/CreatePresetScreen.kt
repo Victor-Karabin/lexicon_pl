@@ -41,6 +41,7 @@ import com.lexicon.interactors.presets.PresetFavouriteState
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.VocabularyPreset
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.ExpandableFlowRow
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
@@ -50,10 +51,11 @@ import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
 import kotlin.time.Duration.Companion.seconds
 
+private const val COLOR_LINES = 3
+
 private val SwatchSize = 44.dp
 private val IconChoiceSize = 48.dp
 private val SelectedBorderWidth = 3.dp
-private val SaveBarElevation = 3.dp
 
 @Composable
 fun CreatePresetScreen(
@@ -97,16 +99,14 @@ private fun CreatePresetContent(
         // Pinned rather than sitting under the choices: there are well over a
         // hundred icons to scroll past, and Save should never be a journey away.
         bottomBar = {
-            Surface(color = MaterialTheme.colorScheme.surface, tonalElevation = SaveBarElevation) {
-                Button(
-                    onClick = onSave,
-                    enabled = uiState.canSave,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(Dimens.spacingMedium),
-                ) {
-                    Text(stringResource(R.string.create_save))
-                }
+            Button(
+                onClick = onSave,
+                enabled = uiState.canSave,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimens.spacingMedium),
+            ) {
+                Text(stringResource(R.string.create_save))
             }
         },
     ) { padding ->
@@ -204,17 +204,12 @@ private fun IconChoices(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ColorChoices(
     selected: String,
     onSelected: (String) -> Unit,
 ) {
-    FlowRow(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-    ) {
+    ExpandableFlowRow(collapsedLines = COLOR_LINES) {
         PRESET_COLOR_CHOICES.forEach { hex ->
             val isSelected = hex == selected
             Box(
