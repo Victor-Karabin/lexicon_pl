@@ -5,8 +5,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,20 +15,19 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -51,6 +48,7 @@ import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
 import kotlin.time.Duration.Companion.seconds
 
+private const val ICON_LINES = 3
 private const val COLOR_LINES = 3
 
 private val SwatchSize = 44.dp
@@ -95,11 +93,31 @@ private fun CreatePresetContent(
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = { TrainingTopBar(title = stringResource(R.string.create_preset_title), onClose = onClose) },
+        topBar = {
+            Column {
+                TrainingTopBar(title = stringResource(R.string.create_preset_title), onClose = onClose)
+                // The preset as it will look in the list, built from the same block
+                // the list itself uses. Pinned under the bar rather than scrolling
+                // with the form: it is what the choices below are being made against,
+                // so it has to stay in view while they are made.
+                Surface(
+                    shape = LexiconShapes.medium,
+                    color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                    modifier = Modifier.padding(horizontal = Dimens.spacingMedium, vertical = Dimens.spacingSmall),
+                ) {
+                    PresetSummary(
+                        preset = uiState.asPreview(),
+                        languageTag = LocalizedText.DEFAULT_LANGUAGE,
+                        favouriteState = PresetFavouriteState.NONE,
+                        onFavouriteToggled = {},
+                    )
+                }
+            }
+        },
         // Pinned rather than sitting under the choices: there are well over a
         // hundred icons to scroll past, and Save should never be a journey away.
         bottomBar = {
-            Button(
+            TextButton(
                 onClick = onSave,
                 enabled = uiState.canSave,
                 modifier = Modifier
@@ -118,17 +136,6 @@ private fun CreatePresetContent(
                 .padding(Dimens.spacingMedium),
             verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
         ) {
-            // The preset as it will look in the list, built from the same block the
-            // list itself uses, so what is being chosen is visible while choosing it.
-            Surface(shape = LexiconShapes.medium, color = MaterialTheme.colorScheme.surfaceContainerHigh) {
-                PresetSummary(
-                    preset = uiState.asPreview(),
-                    languageTag = LocalizedText.DEFAULT_LANGUAGE,
-                    favouriteState = PresetFavouriteState.NONE,
-                    onFavouriteToggled = {},
-                )
-            }
-
             OutlinedTextField(
                 value = uiState.name,
                 onValueChange = onNameChanged,
@@ -170,7 +177,6 @@ private fun SectionLabel(text: String) {
     )
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun IconChoices(
     selected: String,
@@ -178,11 +184,7 @@ private fun IconChoices(
     onSelected: (String) -> Unit,
 ) {
     val accentColor = accent.toAccentColor(MaterialTheme.colorScheme.primary)
-    FlowRow(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-    ) {
+    ExpandableFlowRow(collapsedLines = ICON_LINES) {
         PRESET_ICON_CHOICES.forEach { icon ->
             val isSelected = icon == selected
             Box(
@@ -197,7 +199,7 @@ private fun IconChoices(
                 Icon(
                     imageVector = presetIconFor(icon),
                     contentDescription = icon,
-                    tint = if (isSelected) Color.White else MaterialTheme.colorScheme.onSurfaceVariant,
+                    tint = if (isSelected) onAccentColor(accentColor) else MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }
@@ -225,7 +227,13 @@ private fun ColorChoices(
                     ).selectable(selected = isSelected, onClick = { onSelected(hex) }),
                 contentAlignment = Alignment.Center,
             ) {
-                if (isSelected) Icon(Icons.Default.Check, contentDescription = null, tint = Color.White)
+                if (isSelected) {
+                    Icon(
+                        Icons.Default.Check,
+                        contentDescription = null,
+                        tint = onAccentColor(hex.toAccentColor(MaterialTheme.colorScheme.primary)),
+                    )
+                }
             }
         }
     }
