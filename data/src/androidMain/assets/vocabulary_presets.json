@@ -86,8 +86,8 @@
    "id": "top-100",
    "category": "frequency",
    "title": {
-    "en": "100 most common words",
-    "pl": "100 najczęstszych słów"
+    "en": "Top 100",
+    "pl": "Top 100"
    },
    "description": {
     "en": "The hundred words you will meet first in almost any Polish sentence.",
@@ -205,8 +205,8 @@
    "id": "top-250",
    "category": "frequency",
    "title": {
-    "en": "250 most common words",
-    "pl": "250 najczęstszych słów"
+    "en": "Top 250",
+    "pl": "Top 250"
    },
    "description": {
     "en": "Enough everyday vocabulary to follow the shape of a simple conversation.",
@@ -474,8 +474,8 @@
    "id": "top-500",
    "category": "frequency",
    "title": {
-    "en": "500 most common words",
-    "pl": "500 najczęstszych słów"
+    "en": "Top 500",
+    "pl": "Top 500"
    },
    "description": {
     "en": "The core of spoken Polish, covering most of what you hear day to day.",
@@ -993,8 +993,8 @@
    "id": "top-1000",
    "category": "frequency",
    "title": {
-    "en": "1000 most common words",
-    "pl": "1000 najczęstszych słów"
+    "en": "Top 1000",
+    "pl": "Top 1000"
    },
    "description": {
     "en": "A working everyday vocabulary for reading and conversation.",

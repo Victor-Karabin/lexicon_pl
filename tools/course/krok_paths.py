@@ -19,7 +19,7 @@ OCR_DIR = CACHE_DIR / "ocr"
 TEXT_DIR = CACHE_DIR / "text"
 AUDIO_DIR = CACHE_DIR / "audio"
 
-ASSET_DIR = REPO_ROOT / "data" / "src" / "main" / "assets"
+ASSET_DIR = REPO_ROOT / "data" / "src" / "androidMain" / "assets"
 COURSE_ASSET = ASSET_DIR / "course_krok.json"
 
 TEXTBOOK_ZIP = "Krok_po_Kroku_Polski_A1_A2_textbooks.zip"

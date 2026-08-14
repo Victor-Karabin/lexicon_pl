@@ -10,8 +10,8 @@ Reads
     tools/vocabulary/presets.tsv            preset metadata and selection rules
 
 Writes
-    data/src/main/assets/vocabulary_pl.json
-    data/src/main/assets/vocabulary_presets.json
+    data/src/androidMain/assets/vocabulary_pl.json
+    data/src/androidMain/assets/vocabulary_presets.json
 
 Selection rules resolve to explicit id lists at build time, so the app only ever reads
 a list of ids and never re-implements "what counts as A2" or "what counts as top 500".
@@ -30,7 +30,7 @@ from g2p import transcribe  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 TOOLS = ROOT / "tools" / "vocabulary"
-ASSETS = ROOT / "data" / "src" / "main" / "assets"
+ASSETS = ROOT / "data" / "src" / "androidMain" / "assets"
 
 CEFR_LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"]
 POS_TAGS = {"n", "v", "adj", "adv", "prn", "num", "prep", "conj", "part", "interj", "expr"}

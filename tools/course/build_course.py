@@ -6,10 +6,10 @@ Run from anywhere:  python3 tools/course/build_course.py
 Reads
     krok/.cache/lessons.json          extract_krok.py output
     krok/.cache/audio_manifest.json   extract_audio.py output
-    data/src/main/assets/vocabulary_pl.json
+    data/src/androidMain/assets/vocabulary_pl.json
 
 Writes
-    data/src/main/assets/course_krok.json
+    data/src/androidMain/assets/course_krok.json
 
 Lesson vocabulary is stored as ids into the existing corpus, never as its own
 copy of the words: a lesson gets its transcription, CEFR band and translation
@@ -32,7 +32,7 @@ from pathlib import Path
 
 from krok_paths import CACHE_DIR, COURSE_ASSET, REPO_ROOT
 
-VOCABULARY_ASSET = REPO_ROOT / "data" / "src" / "main" / "assets" / "vocabulary_pl.json"
+VOCABULARY_ASSET = REPO_ROOT / "data" / "src" / "androidMain" / "assets" / "vocabulary_pl.json"
 WORD_FORMS = Path(__file__).parent / "word_forms.tsv"
 
 POLISH_DIACRITICS = {"ą": "a", "ć": "c", "ę": "e", "ł": "l", "ń": "n", "ó": "o", "ś": "s", "ź": "z", "ż": "z"}
