@@ -96,6 +96,35 @@ interface WordDao {
     @Query("SELECT * FROM words WHERE text = :text COLLATE NOCASE LIMIT 1")
     suspend fun findByText(text: String): WordEntity?
 
+    @Query("SELECT * FROM words WHERE id = :id")
+    suspend fun findById(id: Long): WordEntity?
+
+    /**
+     * Rewrites a word the learner edited, and marks it theirs.
+     *
+     * A shipped word becomes user-created the moment it is edited: [VocabularySeeder]
+     * rewrites every word it still considers the asset's from the asset, so without
+     * this the edit would last only until the next catalogue update.
+     */
+    @Query(
+        """
+        UPDATE words
+        SET text = :text,
+            translation = :translation,
+            transcription = :transcription,
+            searchKey = :searchKey,
+            isUserCreated = 1
+        WHERE id = :id
+        """,
+    )
+    suspend fun updateWord(
+        id: Long,
+        text: String,
+        translation: String,
+        transcription: String,
+        searchKey: String,
+    )
+
     /**
      * Applies a seed-asset diff as one write: an interrupted app process can no
      * longer leave the added/removed/changed rows partially committed.

@@ -13,11 +13,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -43,6 +43,7 @@ import com.lexicon.interactors.presets.resolve
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.theme.Dimens
+import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
 import kotlinx.collections.immutable.persistentListOf
@@ -54,18 +55,18 @@ private const val LOCKED_ALPHA = 0.45f
 
 @Composable
 fun CourseScreen(
-    onLessonSelected: (LessonId) -> Unit,
+    onCourseSelected: (CourseId) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CourseViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    CourseContent(uiState = uiState, onLessonSelected = onLessonSelected, modifier = modifier)
+    CourseContent(uiState = uiState, onCourseSelected = onCourseSelected, modifier = modifier)
 }
 
 @Composable
 private fun CourseContent(
     uiState: CourseUiState,
-    onLessonSelected: (LessonId) -> Unit,
+    onCourseSelected: (CourseId) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when {
@@ -87,40 +88,103 @@ private fun CourseContent(
             }
 
         uiState is CourseUiState.Loaded ->
+            // One tile per course rather than every lesson of every course laid out
+            // end to end: a course is twenty-odd lessons, and the tab is meant to
+            // show what there is to work through, not all of it at once.
             LazyColumn(
                 modifier = modifier.fillMaxSize(),
-                contentPadding = PaddingValues(bottom = Dimens.spacingLarge),
+                contentPadding = PaddingValues(Dimens.spacingMedium),
+                verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
             ) {
-                uiState.courses.forEach { course ->
-                    item(key = course.id.value) {
-                        CourseHeader(course = course, languageTag = uiState.languageTag)
-                    }
-                    items(course.lessons, key = { it.id.value }) { lesson ->
-                        LessonRow(lesson = lesson, onClick = { onLessonSelected(lesson.id) })
-                        HorizontalDivider(modifier = Modifier.padding(horizontal = Dimens.spacingMedium))
-                    }
+                items(uiState.courses, key = { it.id.value }) { course ->
+                    CourseTile(
+                        course = course,
+                        languageTag = uiState.languageTag,
+                        onClick = { onCourseSelected(course.id) },
+                    )
                 }
             }
     }
 }
 
+/**
+ * A course as a card on the Plan tab, the way a preset appears in the Vocabulary
+ * tab. Its lessons live one tap away, on the course's own screen.
+ */
 @Composable
-private fun CourseHeader(
+private fun CourseTile(
     course: Course,
     languageTag: String,
+    onClick: () -> Unit,
+) {
+    Surface(
+        onClick = onClick,
+        shape = LexiconShapes.medium,
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = course.level,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Text(
+                    text = course.title.resolve(languageTag),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                Text(
+                    text = stringResource(R.string.course_progress, course.completedCount, course.lessons.size),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = Dimens.spacingTiny),
+                )
+                LinearProgressIndicator(
+                    progress = { course.completedFraction() },
+                    modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingSmall),
+                )
+            }
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+/**
+ * A course's progress, above its lessons.
+ *
+ * [showTitle] is off on the course's own screen, where the top bar names it already
+ * and repeating it reads as a mistake.
+ */
+@Composable
+internal fun CourseHeader(
+    course: Course,
+    languageTag: String,
+    showTitle: Boolean = true,
 ) {
     Surface(color = MaterialTheme.colorScheme.surfaceContainerHigh) {
         Column(modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium)) {
-            Text(
-                text = course.title.resolve(languageTag),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold,
-            )
+            if (showTitle) {
+                Text(
+                    text = course.title.resolve(languageTag),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            }
             Text(
                 text = stringResource(R.string.course_progress, course.completedCount, course.lessons.size),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(top = Dimens.spacingSmall),
+                modifier = Modifier.padding(top = if (showTitle) Dimens.spacingSmall else 0.dp),
             )
             LinearProgressIndicator(
                 progress = { course.completedFraction() },
@@ -131,7 +195,7 @@ private fun CourseHeader(
 }
 
 @Composable
-private fun LessonRow(
+internal fun LessonRow(
     lesson: LessonSummary,
     onClick: () -> Unit,
 ) {
@@ -180,9 +244,9 @@ private fun LessonStatusIcon(lesson: LessonSummary) {
     )
 }
 
-private fun Course.completedFraction(): Float = if (lessons.isEmpty()) 0f else completedCount.toFloat() / lessons.size
+internal fun Course.completedFraction(): Float = if (lessons.isEmpty()) 0f else completedCount.toFloat() / lessons.size
 
-private fun previewCourse(): Course =
+internal fun previewCourse(): Course =
     Course(
         id = CourseId("krok-a1"),
         order = 1,
@@ -202,7 +266,7 @@ private fun CoursePreview() {
     LexiconTheme {
         CourseContent(
             uiState = CourseUiState.Loaded(courses = persistentListOf(previewCourse())),
-            onLessonSelected = {},
+            onCourseSelected = {},
         )
     }
 }
@@ -211,6 +275,6 @@ private fun CoursePreview() {
 @Composable
 private fun CourseEmptyPreview() {
     LexiconTheme {
-        CourseContent(uiState = CourseUiState.Loaded(courses = persistentListOf()), onLessonSelected = {})
+        CourseContent(uiState = CourseUiState.Loaded(courses = persistentListOf()), onCourseSelected = {})
     }
 }

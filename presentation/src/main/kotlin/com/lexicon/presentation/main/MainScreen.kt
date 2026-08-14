@@ -40,7 +40,8 @@ private val MainTabSaver = Saver<MainTab, String>(save = { it.name }, restore = 
 fun MainScreen(
     onTrainingSelected: (id: String) -> Unit,
     onPresetSelected: (id: String) -> Unit,
-    onLessonSelected: (id: String) -> Unit,
+    onCourseSelected: (id: String) -> Unit,
+    onEditWord: (id: Long) -> Unit,
     onAddWord: () -> Unit,
     onAddPreset: () -> Unit,
     modifier: Modifier = Modifier,
@@ -69,11 +70,12 @@ fun MainScreen(
             MainTab.VOCABULARY ->
                 VocabularyScreen(
                     onPresetSelected = { onPresetSelected(it.value) },
+                    onEditWord = { onEditWord(it.value) },
                     onAddWord = onAddWord,
                     onAddPreset = onAddPreset,
                     modifier = content,
                 )
-            MainTab.PLAN -> CourseScreen(onLessonSelected = { onLessonSelected(it.value) }, modifier = content)
+            MainTab.PLAN -> CourseScreen(onCourseSelected = { onCourseSelected(it.value) }, modifier = content)
             MainTab.SETTINGS -> SettingsScreen(modifier = content)
         }
     }

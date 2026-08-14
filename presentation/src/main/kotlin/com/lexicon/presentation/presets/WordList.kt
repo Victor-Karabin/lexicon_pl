@@ -23,10 +23,16 @@ fun LazyListScope.wordRows(
     onPronounce: (PresetWord) -> Unit,
     onChangePresets: (PresetWord) -> Unit,
     onDelete: (PresetWord) -> Unit,
+    onEdit: (PresetWord) -> Unit,
+    selection: WordSelection,
 ) {
     itemsIndexed(words, key = { _, word -> word.id.value }) { index, word ->
         SwipeToRevealContainer(
             revealWidth = WordRowActionsWidth,
+            // Swiping a row aside to reach its actions makes no sense while rows are
+            // being ticked, and the two gestures would be reading the same drag.
+            enabled = !selection.isActive,
+            collapseSignal = selection.isActive,
             backgroundContent = {
                 WordRowActions(
                     onChangePresets = { onChangePresets(word) },
@@ -38,6 +44,10 @@ fun LazyListScope.wordRows(
                 word = word,
                 onFavouriteToggled = { onFavouriteToggled(word.id, !word.isFavourite) },
                 onPronounce = { onPronounce(word) },
+                onClick = { if (selection.isActive) selection.toggle(word.id) else onEdit(word) },
+                isSelecting = selection.isActive,
+                isSelected = selection.contains(word.id),
+                onLongClick = { selection.toggle(word.id) },
             )
         }
         if (index < words.lastIndex) {

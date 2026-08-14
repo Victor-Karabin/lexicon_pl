@@ -1,13 +1,18 @@
 package com.lexicon.presentation.presets
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.interactors.presets.CreateWordUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
+import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
+import com.lexicon.interactors.presets.GetWordUseCase
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetMembership
 import com.lexicon.interactors.presets.SearchImageCandidatesUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
+import com.lexicon.interactors.presets.UpdateWordUseCase
+import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.WordDraftException
 import com.lexicon.interactors.presets.WordDraftProblem
 import kotlinx.collections.immutable.ImmutableList
@@ -28,7 +33,13 @@ import kotlinx.coroutines.launch
  */
 private const val TYPING_SETTLE_MS = 600L
 
+/** Route argument naming the word to edit; absent when writing a new one. */
+const val WORD_ID_ARG = "wordId"
+
 data class CreateWordUiState(
+    val isEditing: Boolean = false,
+    /** The word being edited is gone — deleted from another screen. */
+    val isMissing: Boolean = false,
     val text: String = "",
     val translation: String = "",
     val memberships: ImmutableList<PresetMembership> = persistentListOf(),
@@ -47,12 +58,20 @@ data class CreateWordUiState(
 }
 
 class CreateWordViewModel(
+    savedStateHandle: SavedStateHandle,
     private val createWord: CreateWordUseCase,
+    private val updateWord: UpdateWordUseCase,
+    private val getWord: GetWordUseCase,
     private val translateWord: TranslateWordUseCase,
     private val searchImageCandidates: SearchImageCandidatesUseCase,
     private val getPresets: GetVocabularyPresetsUseCase,
+    private val getWordPresetMemberships: GetWordPresetMembershipsUseCase,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(CreateWordUiState())
+    /** Absent when writing a new word, present when editing one that exists. */
+    private val editing: VocabularyId? =
+        savedStateHandle.get<String>(WORD_ID_ARG)?.toLongOrNull()?.let(::VocabularyId)
+
+    private val _uiState = MutableStateFlow(CreateWordUiState(isEditing = editing != null))
     val uiState: StateFlow<CreateWordUiState> = _uiState.asStateFlow()
 
     private var translateJob: Job? = null
@@ -68,9 +87,36 @@ class CreateWordViewModel(
 
     init {
         viewModelScope.launch {
-            val presets = getPresets().map { PresetMembership(preset = it, isMember = false) }
-            _uiState.update { it.copy(memberships = presets.toImmutableList()) }
+            if (editing != null) load(editing) else loadPresetsForNewWord()
         }
+    }
+
+    private suspend fun loadPresetsForNewWord() {
+        val presets = getPresets().map { PresetMembership(preset = it, isMember = false) }
+        _uiState.update { it.copy(memberships = presets.toImmutableList()) }
+    }
+
+    /**
+     * Fills the form in from the stored word.
+     *
+     * Written straight into the state rather than through onTextChanged, which would
+     * read as typing: it would schedule a translation of what is already translated,
+     * and clear the picture that is already chosen.
+     */
+    private suspend fun load(id: VocabularyId) {
+        val word = getWord(id)
+        if (word == null) {
+            _uiState.update { it.copy(isMissing = true) }
+            return
+        }
+        _uiState.update {
+            it.copy(
+                text = word.text,
+                translation = word.translation,
+                memberships = getWordPresetMemberships(id),
+            )
+        }
+        loadImagesFor(word.translation)
     }
 
     fun onTextChanged(text: String) {
@@ -125,13 +171,27 @@ class CreateWordViewModel(
         if (!state.canSave) return
         _uiState.update { it.copy(isSaving = true, problem = null) }
 
+        val presetIds = state.memberships.filter { it.isMember }.map { it.preset.id }
         viewModelScope.launch {
-            createWord(
-                text = state.text,
-                translation = state.translation,
-                imageUrl = state.selectedImage,
-                presetIds = state.memberships.filter { it.isMember }.map { it.preset.id },
-            ).fold(
+            val result = if (editing != null) {
+                // The full set the word should end up in, not just the additions:
+                // unlighting a chip has to take it out.
+                updateWord(
+                    id = editing,
+                    text = state.text,
+                    translation = state.translation,
+                    imageUrl = state.selectedImage,
+                    presetIds = presetIds,
+                )
+            } else {
+                createWord(
+                    text = state.text,
+                    translation = state.translation,
+                    imageUrl = state.selectedImage,
+                    presetIds = presetIds,
+                )
+            }
+            result.fold(
                 onSuccess = { word -> _uiState.update { it.copy(isSaving = false, savedWord = word.text) } },
                 onFailure = { error ->
                     _uiState.update {
@@ -189,6 +249,17 @@ class CreateWordViewModel(
             // The English side may have just been filled in, which is what pictures
             // are searched by.
             if (!toPolish) scheduleImageSearch(_uiState.value.translation)
+        }
+    }
+
+    /** Straight away, with no settle delay: nothing is being typed. */
+    private suspend fun loadImagesFor(query: String) {
+        if (query.isBlank()) return
+        _uiState.update { it.copy(isLoadingImages = true) }
+        val candidates = searchImageCandidates(query)
+        shownImages = candidates.size
+        _uiState.update {
+            it.copy(imageCandidates = candidates, isLoadingImages = false, hasSearchedImages = true)
         }
     }
 

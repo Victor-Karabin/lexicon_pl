@@ -36,17 +36,23 @@ class VocabularySeeder(
 
     private suspend fun reconcile(): SyncOutcomeBoundary {
         val asset = vocabularySeedAssetLoader.load()
-        // A word the learner wrote is in no asset, so the diff below would read it as
-        // one the asset had dropped and delete it. It is not the asset's to reconcile.
-        val existing = wordDao.getAll().filterNot { it.isUserCreated }.associateBy { it.id }
+        val all = wordDao.getAll()
+        // A word the learner wrote, or edited and so took over, is not the asset's to
+        // reconcile: the diff below would otherwise read it as one the asset had
+        // dropped and delete it, or rewrite the edit back to what ships.
+        val existing = all.filterNot { it.isUserCreated }.associateBy { it.id }
 
-        if (existing.isEmpty()) {
+        if (all.isEmpty()) {
             wordDao.insertAll(asset)
             return SyncOutcomeBoundary(total = asset.size, added = asset.size, updated = 0, removed = 0)
         }
 
         val assetIds = asset.mapTo(mutableSetOf()) { it.id }
-        val added = asset.filter { it.id !in existing }
+        // Against every id on file, not just the ones above: an edited shipped word
+        // keeps its id and drops out of `existing`, and inserting the asset's copy
+        // over it would collide on the primary key.
+        val onFile = all.mapTo(mutableSetOf()) { it.id }
+        val added = asset.filter { it.id !in onFile }
         val removed = existing.keys - assetIds
         val changed = asset.mapNotNull { incoming ->
             val current = existing[incoming.id] ?: return@mapNotNull null

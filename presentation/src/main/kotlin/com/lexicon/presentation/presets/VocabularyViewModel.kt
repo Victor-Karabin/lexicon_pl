@@ -170,12 +170,31 @@ class VocabularyViewModel(
         }
     }
 
+    /** Everything ticked, in one go, with one undo covering the lot. */
+    fun onSelectedWordsDeleted(ids: Set<VocabularyId>) {
+        if (ids.isEmpty()) return
+        viewModelScope.launch(dispatchers.io) {
+            ids.forEach { deleteWord(it) }
+            updateLoaded {
+                it.copy(
+                    words = it.words.filterNot { candidate -> candidate.id in ids }.toImmutableList(),
+                    lastDeleted = DeletedItem.Words(ids.toList()),
+                )
+            }
+        }
+    }
+
     fun onUndoDelete() {
         val deleted = (_uiState.value as? VocabularyUiState.Loaded)?.lastDeleted ?: return
         viewModelScope.launch(dispatchers.io) {
             when (deleted) {
                 is DeletedItem.Word -> {
                     restoreWord(deleted.id)
+                    refreshWords()
+                }
+
+                is DeletedItem.Words -> {
+                    deleted.ids.forEach { restoreWord(it) }
                     refreshWords()
                 }
 

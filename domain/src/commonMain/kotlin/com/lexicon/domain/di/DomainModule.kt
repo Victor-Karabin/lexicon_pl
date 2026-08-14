@@ -26,6 +26,7 @@ import com.lexicon.domain.presets.GetPresetVocabularyUseCaseImpl
 import com.lexicon.domain.presets.GetVocabularyPresetUseCaseImpl
 import com.lexicon.domain.presets.GetVocabularyPresetsUseCaseImpl
 import com.lexicon.domain.presets.GetWordPresetMembershipsUseCaseImpl
+import com.lexicon.domain.presets.GetWordUseCaseImpl
 import com.lexicon.domain.presets.ObserveFavouriteWordIdsUseCaseImpl
 import com.lexicon.domain.presets.ObserveVocabularyPresetsUseCaseImpl
 import com.lexicon.domain.presets.RestorePresetUseCaseImpl
@@ -36,6 +37,7 @@ import com.lexicon.domain.presets.SetPresetFavouriteUseCaseImpl
 import com.lexicon.domain.presets.SetWordPresetMembershipUseCaseImpl
 import com.lexicon.domain.presets.ToggleWordFavouriteUseCaseImpl
 import com.lexicon.domain.presets.TranslateWordUseCaseImpl
+import com.lexicon.domain.presets.UpdateWordUseCaseImpl
 import com.lexicon.domain.pronunciation.StartPronunciationSessionUseCaseImpl
 import com.lexicon.domain.pronunciation.SubmitPronunciationResultUseCaseImpl
 import com.lexicon.domain.puzzle.StartPuzzleSessionUseCaseImpl
@@ -75,6 +77,7 @@ import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
+import com.lexicon.interactors.presets.GetWordUseCase
 import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
 import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.RestorePresetUseCase
@@ -85,6 +88,7 @@ import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
+import com.lexicon.interactors.presets.UpdateWordUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
@@ -137,6 +141,8 @@ val domainModule = module {
     factoryOf(::GetWordPresetMembershipsUseCaseImpl) { bind<GetWordPresetMembershipsUseCase>() }
     factoryOf(::SetWordPresetMembershipUseCaseImpl) { bind<SetWordPresetMembershipUseCase>() }
     factoryOf(::CreateWordUseCaseImpl) { bind<CreateWordUseCase>() }
+    factoryOf(::UpdateWordUseCaseImpl) { bind<UpdateWordUseCase>() }
+    factoryOf(::GetWordUseCaseImpl) { bind<GetWordUseCase>() }
     factoryOf(::CreatePresetUseCaseImpl) { bind<CreatePresetUseCase>() }
     factoryOf(::TranslateWordUseCaseImpl) { bind<TranslateWordUseCase>() }
     factoryOf(::SearchImageCandidatesUseCaseImpl) { bind<SearchImageCandidatesUseCase>() }

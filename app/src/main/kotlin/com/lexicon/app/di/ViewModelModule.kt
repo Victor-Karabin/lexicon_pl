@@ -3,6 +3,7 @@ package com.lexicon.app.di
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionResultViewModel
 import com.lexicon.presentation.common.TrainingGateViewModel
+import com.lexicon.presentation.course.CourseDetailViewModel
 import com.lexicon.presentation.course.CourseViewModel
 import com.lexicon.presentation.course.ExerciseViewModel
 import com.lexicon.presentation.course.LessonViewModel
@@ -32,6 +33,7 @@ val viewModelModule = module {
     viewModelOf(::SessionResultViewModel)
     viewModelOf(::TrainingGateViewModel)
     viewModelOf(::CourseViewModel)
+    viewModelOf(::CourseDetailViewModel)
     viewModelOf(::ExerciseViewModel)
     viewModelOf(::LessonViewModel)
     viewModelOf(::CrosswordViewModel)

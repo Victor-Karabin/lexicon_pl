@@ -23,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetCategory
@@ -45,15 +46,22 @@ import kotlin.time.Duration.Companion.minutes
 @Composable
 fun PresetDetailScreen(
     onClose: () -> Unit,
+    onEditWord: (VocabularyId) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PresetDetailViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val changePresets by viewModel.changePresetsState.collectAsState()
 
+    val selection = rememberWordSelection()
+
     val snackbarHostState = remember { SnackbarHostState() }
     val deleted = (uiState as? PresetDetailUiState.Loaded)?.lastDeleted
-    val deletedMessage = deleted?.let { stringResource(R.string.vocabulary_deleted, it.label) }
+    val deletedMessage = when (deleted) {
+        null -> null
+        is DeletedItem.Words -> pluralStringResource(R.plurals.vocabulary_deleted_words, deleted.ids.size, deleted.ids.size)
+        else -> stringResource(R.string.vocabulary_deleted, deleted.label)
+    }
     val undoLabel = stringResource(R.string.vocabulary_undo)
 
     LaunchedEffect(deleted) {
@@ -75,6 +83,12 @@ fun PresetDetailScreen(
         onPresetFavouriteToggled = viewModel::onPresetFavouriteToggled,
         onWordDeleted = viewModel::onWordDeleted,
         onChangePresets = viewModel::onChangePresetsRequested,
+        onEditWord = onEditWord,
+        selection = selection,
+        onDeleteSelected = {
+            viewModel.onSelectedWordsDeleted(selection.selected)
+            selection.clear()
+        },
         modifier = modifier,
     )
 
@@ -98,6 +112,9 @@ private fun PresetDetailContent(
     onPresetFavouriteToggled: (PresetFavouriteState) -> Unit,
     onWordDeleted: (PresetWord) -> Unit,
     onChangePresets: (PresetWord) -> Unit,
+    onEditWord: (VocabularyId) -> Unit,
+    selection: WordSelection,
+    onDeleteSelected: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val title = when (uiState) {
@@ -132,6 +149,13 @@ private fun PresetDetailContent(
 
             is PresetDetailUiState.Loaded ->
                 Column(modifier = Modifier.fillMaxSize().padding(padding)) {
+                    if (selection.isActive) {
+                        WordSelectionBar(
+                            count = selection.count,
+                            onDelete = onDeleteSelected,
+                            onCancel = selection::clear,
+                        )
+                    }
                     PresetHeader(uiState, onPresetFavouriteToggled)
                     HorizontalDivider()
 
@@ -150,6 +174,8 @@ private fun PresetDetailContent(
                                 onPronounce = onPronounceWord,
                                 onChangePresets = onChangePresets,
                                 onDelete = onWordDeleted,
+                                onEdit = { onEditWord(it.id) },
+                                selection = selection,
                             )
                         }
                     }
@@ -208,6 +234,9 @@ private fun PresetDetailPreview() {
             onPresetFavouriteToggled = {},
             onWordDeleted = {},
             onChangePresets = {},
+            onEditWord = {},
+            selection = WordSelection(),
+            onDeleteSelected = {},
             snackbarHostState = SnackbarHostState(),
         )
     }
@@ -225,6 +254,9 @@ private fun PresetDetailLoadingWordsPreview() {
             onPresetFavouriteToggled = {},
             onWordDeleted = {},
             onChangePresets = {},
+            onEditWord = {},
+            selection = WordSelection(),
+            onDeleteSelected = {},
             snackbarHostState = SnackbarHostState(),
         )
     }
@@ -242,6 +274,9 @@ private fun PresetDetailNotFoundPreview() {
             onPresetFavouriteToggled = {},
             onWordDeleted = {},
             onChangePresets = {},
+            onEditWord = {},
+            selection = WordSelection(),
+            onDeleteSelected = {},
             snackbarHostState = SnackbarHostState(),
         )
     }

@@ -150,6 +150,22 @@ class PresetDetailViewModel(
         }
     }
 
+    /** Everything ticked, in one go, with one undo covering the lot. */
+    fun onSelectedWordsDeleted(ids: Set<VocabularyId>) {
+        if (ids.isEmpty()) return
+        viewModelScope.launch(dispatchers.io) {
+            ids.forEach { deleteWord(it) }
+            val refreshed = getPreset(presetId)
+            content.update { current ->
+                current?.copy(
+                    preset = refreshed ?: current.preset,
+                    words = current.words.filterNot { it.id in ids },
+                    lastDeleted = DeletedItem.Words(ids.toList()),
+                )
+            }
+        }
+    }
+
     fun onUndoDelete() {
         val deleted = (content.value?.lastDeleted as? DeletedItem.Word) ?: return
         viewModelScope.launch(dispatchers.io) {
