@@ -116,14 +116,59 @@ interface PresetDao {
         presets: List<PresetEntity>,
         memberships: List<PresetWordEntity>,
     ) {
+        // Read the learner's own presets out before the wipe and write them back
+        // after: the clears below are what reset the shipped catalogue to the asset,
+        // and a hand-made preset is in neither the asset nor, afterwards, the table.
+        val userPresets = getUserPresets()
+        val userMemberships = userPresets.flatMap { getMembershipsOf(it.id) }
+
         clearMemberships()
         clearPresets()
         clearCategories()
         insertCategories(categories)
         insertPresets(presets)
         insertMemberships(memberships)
-        reapplyOverrides(presets.mapTo(mutableSetOf()) { it.id })
+
+        if (userPresets.isNotEmpty()) {
+            insertCategories(listOf(userPresetCategory()))
+            insertPresets(userPresets)
+            insertMemberships(userMemberships)
+        }
+
+        // Overrides may name a hand-made preset, so this runs once both catalogues
+        // are back in place.
+        reapplyOverrides((presets + userPresets).mapTo(mutableSetOf()) { it.id })
     }
+
+    @Query("SELECT * FROM presets WHERE isUserCreated = 1")
+    suspend fun getUserPresets(): List<PresetEntity>
+
+    @Query("SELECT * FROM preset_words WHERE presetId = :presetId ORDER BY position")
+    suspend fun getMembershipsOf(presetId: String): List<PresetWordEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPreset(preset: PresetEntity)
+
+    /** Creates a preset of the learner's own, with the words they picked for it. */
+    @Transaction
+    suspend fun createUserPreset(
+        preset: PresetEntity,
+        wordIds: List<Long>,
+    ) {
+        insertCategories(listOf(userPresetCategory()))
+        insertPreset(preset)
+        insertMemberships(
+            wordIds.mapIndexed { index, wordId ->
+                PresetWordEntity(presetId = preset.id, wordId = wordId, position = index)
+            },
+        )
+    }
+
+    @Query("SELECT COUNT(*) FROM presets WHERE isUserCreated = 1")
+    suspend fun countUserPresets(): Int
+
+    @Query("SELECT COUNT(*) FROM presets WHERE id = :id")
+    suspend fun countPresetsWithId(id: String): Int
 
     /**
      * Replays the learner's own membership edits over the freshly-seeded catalogue,

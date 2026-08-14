@@ -8,7 +8,7 @@ interface PixabayApi {
     @GET("api/")
     suspend fun search(
         @Query("q") query: String,
-        @Query("per_page") perPage: Int = 3,
+        @Query("per_page") perPage: Int = IMAGE_CANDIDATE_COUNT,
     ): PixabaySearchResponse
 }
 

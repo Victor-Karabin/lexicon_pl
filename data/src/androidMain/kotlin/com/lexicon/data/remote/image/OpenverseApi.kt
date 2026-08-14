@@ -8,7 +8,7 @@ interface OpenverseApi {
     @GET("v1/images/")
     suspend fun search(
         @Query("q") query: String,
-        @Query("page_size") pageSize: Int = 1,
+        @Query("page_size") pageSize: Int = IMAGE_CANDIDATE_COUNT,
     ): OpenverseSearchResponse
 }
 

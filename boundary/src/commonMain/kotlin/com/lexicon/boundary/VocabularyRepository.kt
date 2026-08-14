@@ -28,6 +28,19 @@ interface VocabularyRepository {
 
     suspend fun countWords(): Int
 
+    /**
+     * Stores a word of the learner's own and returns it. Its id is allocated below
+     * the asset's range so it cannot collide with a word a later release ships.
+     */
+    suspend fun createWord(
+        text: String,
+        translation: String,
+        transcription: String,
+    ): VocabularyItemBoundary
+
+    /** An existing word with the same Polish text, so the same one is not added twice. */
+    suspend fun findWordByText(text: String): VocabularyItemBoundary?
+
     suspend fun deleteWord(id: Long)
 
     suspend fun restoreWord(id: Long)

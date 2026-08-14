@@ -13,6 +13,18 @@ interface VocabularyPresetRepository {
 
     suspend fun getCategories(): List<PresetCategoryBoundary>
 
+    /**
+     * Stores a preset of the learner's own, filed under its own category so it sorts
+     * above the shipped ones, and returns it.
+     */
+    suspend fun createPreset(
+        title: Map<String, String>,
+        description: Map<String, String>,
+        icon: String?,
+        color: String?,
+        wordIds: List<Long>,
+    ): VocabularyPresetBoundary
+
     suspend fun deletePreset(id: String)
 
     suspend fun restorePreset(id: String)

@@ -41,6 +41,8 @@ fun MainScreen(
     onTrainingSelected: (id: String) -> Unit,
     onPresetSelected: (id: String) -> Unit,
     onLessonSelected: (id: String) -> Unit,
+    onAddWord: () -> Unit,
+    onAddPreset: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var selectedTab by rememberSaveable(stateSaver = MainTabSaver) { mutableStateOf(MainTab.TRAININGS) }
@@ -64,7 +66,13 @@ fun MainScreen(
         when (selectedTab) {
             MainTab.TRAININGS -> TrainingsScreen(onTrainingSelected = onTrainingSelected, modifier = content)
             MainTab.DASHBOARD -> ComingSoonScreen(MainTab.DASHBOARD.label, modifier = content)
-            MainTab.VOCABULARY -> VocabularyScreen(onPresetSelected = { onPresetSelected(it.value) }, modifier = content)
+            MainTab.VOCABULARY ->
+                VocabularyScreen(
+                    onPresetSelected = { onPresetSelected(it.value) },
+                    onAddWord = onAddWord,
+                    onAddPreset = onAddPreset,
+                    modifier = content,
+                )
             MainTab.PLAN -> CourseScreen(onLessonSelected = { onLessonSelected(it.value) }, modifier = content)
             MainTab.SETTINGS -> SettingsScreen(modifier = content)
         }

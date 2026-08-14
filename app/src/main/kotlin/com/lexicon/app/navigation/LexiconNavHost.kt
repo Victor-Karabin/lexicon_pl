@@ -25,6 +25,8 @@ import com.lexicon.presentation.main.SplashScreen
 import com.lexicon.presentation.main.trainingDisplayName
 import com.lexicon.presentation.memorycards.MemoryCardsScreen
 import com.lexicon.presentation.mix.MixScreen
+import com.lexicon.presentation.presets.CreatePresetScreen
+import com.lexicon.presentation.presets.CreateWordScreen
 import com.lexicon.presentation.presets.PRESET_ID_ARG
 import com.lexicon.presentation.presets.PresetDetailScreen
 import com.lexicon.presentation.pronunciation.PronunciationScreen
@@ -50,6 +52,24 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
                 onTrainingSelected = { route -> navController.navigate(route) },
                 onPresetSelected = { id -> navController.navigate(LexiconDestinations.presetDetail(id)) },
                 onLessonSelected = { id -> navController.navigate(LexiconDestinations.lesson(id)) },
+                onAddWord = { navController.navigate(LexiconDestinations.CREATE_WORD) },
+                onAddPreset = { navController.navigate(LexiconDestinations.CREATE_PRESET) },
+            )
+        }
+
+        composable(LexiconDestinations.CREATE_WORD) {
+            CreateWordScreen(
+                onClose = { navController.popBackStack() },
+                // Straight back to the list, which re-reads on resume and so already
+                // shows the new word.
+                onCreated = { navController.popBackStack() },
+            )
+        }
+
+        composable(LexiconDestinations.CREATE_PRESET) {
+            CreatePresetScreen(
+                onClose = { navController.popBackStack() },
+                onCreated = { navController.popBackStack() },
             )
         }
 

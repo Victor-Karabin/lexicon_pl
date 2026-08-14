@@ -3,8 +3,11 @@ package com.lexicon.data.remote.image
 class OpenverseImageSource(
     private val api: OpenverseApi,
 ) : RemoteImageSource {
-    override suspend fun searchImageUrl(query: String): String? =
+    override suspend fun searchImageUrls(
+        query: String,
+        count: Int,
+    ): List<String> =
         runCatching {
-            api.search(query).results.firstOrNull()?.url
-        }.getOrNull()
+            api.search(query, pageSize = count).results.map { it.url }
+        }.getOrDefault(emptyList())
 }

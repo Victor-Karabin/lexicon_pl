@@ -35,6 +35,9 @@ internal object LexiconDestinations {
 
     fun presetDetail(presetId: String) = "preset/$presetId"
 
+    const val CREATE_WORD = "create/word"
+    const val CREATE_PRESET = "create/preset"
+
     const val LESSON = "lesson/{lessonId}"
 
     fun lesson(lessonId: String) = "lesson/$lessonId"

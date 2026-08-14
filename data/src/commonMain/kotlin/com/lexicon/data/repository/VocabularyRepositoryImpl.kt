@@ -5,6 +5,9 @@ import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.data.local.VocabularySeeder
 import com.lexicon.data.local.WordDao
+import com.lexicon.data.local.WordEntity
+import com.lexicon.data.local.nextUserWordId
+import com.lexicon.data.local.searchKeyFor
 import com.lexicon.data.local.toBoundary
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -48,6 +51,31 @@ class VocabularyRepositoryImpl(
     }
 
     override suspend fun syncFromSource(): SyncOutcomeBoundary = vocabularySeeder.sync()
+
+    override suspend fun createWord(
+        text: String,
+        translation: String,
+        transcription: String,
+    ): VocabularyItemBoundary {
+        // Seeding first so the id below is chosen against the full table rather than
+        // an empty one, which would hand out an id the seed is about to claim.
+        vocabularySeeder.ensureSeeded()
+        val word = WordEntity(
+            id = nextUserWordId(wordDao.lowestId()),
+            text = text,
+            translation = translation,
+            transcription = transcription,
+            searchKey = searchKeyFor(text, translation),
+            isUserCreated = true,
+        )
+        wordDao.insert(word)
+        return word.toBoundary()
+    }
+
+    override suspend fun findWordByText(text: String): VocabularyItemBoundary? {
+        vocabularySeeder.ensureSeeded()
+        return wordDao.findByText(text)?.toBoundary()
+    }
 
     override suspend fun countWords(): Int = wordDao.count()
 

@@ -5,11 +5,18 @@ import com.lexicon.boundary.SyncOutcomeBoundary
 import com.lexicon.boundary.VocabularyPresetBoundary
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.data.local.PresetDao
+import com.lexicon.data.local.PresetEntity
+import com.lexicon.data.local.USER_PRESET_CATEGORY_ID
 import com.lexicon.data.local.VocabularyPresetSeeder
+import com.lexicon.data.local.encodeLocalized
 import com.lexicon.data.local.toBoundary
+import com.lexicon.data.local.userPresetId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+
+/** The title a preset's id is slugged from; ids are ASCII, so the English one. */
+private const val SLUG_LANGUAGE = "en"
 
 class VocabularyPresetRepositoryImpl(
     private val presetDao: PresetDao,
@@ -40,6 +47,41 @@ class VocabularyPresetRepositoryImpl(
         seeder.ensureSeeded()
         val preset = presetDao.getPreset(id) ?: return null
         return preset.toBoundary(presetDao.getWordIds(id))
+    }
+
+    override suspend fun createPreset(
+        title: Map<String, String>,
+        description: Map<String, String>,
+        icon: String?,
+        color: String?,
+        wordIds: List<Long>,
+    ): VocabularyPresetBoundary {
+        seeder.ensureSeeded()
+        val preset = PresetEntity(
+            id = freeUserPresetId(title[SLUG_LANGUAGE] ?: title.values.firstOrNull().orEmpty()),
+            categoryId = USER_PRESET_CATEGORY_ID,
+            titleJson = title.encodeLocalized(),
+            descriptionJson = description.encodeLocalized(),
+            icon = icon,
+            color = color,
+            // Sorted last within My presets, so a new one lands at the end of the
+            // group rather than reshuffling the ones already there.
+            popularity = presetDao.countUserPresets(),
+            estimatedSeconds = 0,
+            isUserCreated = true,
+        )
+        presetDao.createUserPreset(preset, wordIds.distinct())
+        return preset.toBoundary(wordIds.distinct())
+    }
+
+    /** Counts up from the plain slug until it reaches an id no preset already holds. */
+    private suspend fun freeUserPresetId(title: String): String {
+        var suffix = 0
+        while (true) {
+            val candidate = userPresetId(title, suffix)
+            if (presetDao.countPresetsWithId(candidate) == 0) return candidate
+            suffix++
+        }
     }
 
     override suspend fun deletePreset(id: String) {

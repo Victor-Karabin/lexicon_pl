@@ -21,4 +21,34 @@ class FallbackImageProviderImpl(
         }
         return null
     }
+
+    /**
+     * Pools every source rather than stopping at the first that answers, which is
+     * what [searchImage] does. Choosing between four pictures of the same thing from
+     * one stock library is a poorer choice than four from four, and asking again for
+     * [skip] more only turns up something new if there is a deeper pool to draw on.
+     */
+    override suspend fun searchImages(
+        query: String,
+        count: Int,
+        skip: Int,
+    ): List<String> {
+        val wanted = skip + count
+        val pooled = LinkedHashSet<String>()
+        for (source in sources) {
+            source.searchImageUrls(query, wanted).forEach { url ->
+                if (url.isNotBlank()) pooled += url
+            }
+            // Sources are ordered by preference, so stop as soon as the better ones
+            // have covered the ask rather than calling every API every time.
+            if (pooled.size >= wanted) break
+        }
+        return pooled.drop(skip).take(count)
+    }
+
+    /** Nothing to pin against: this provider has no store. [CachingImageProviderImpl] has. */
+    override suspend fun pinImage(
+        query: String,
+        imageUrl: String,
+    ) = Unit
 }

@@ -3,8 +3,11 @@ package com.lexicon.data.remote.image
 class PexelsImageSource(
     private val api: PexelsApi,
 ) : RemoteImageSource {
-    override suspend fun searchImageUrl(query: String): String? =
+    override suspend fun searchImageUrls(
+        query: String,
+        count: Int,
+    ): List<String> =
         runCatching {
-            api.search(query).photos.firstOrNull()?.src?.medium
-        }.getOrNull()
+            api.search(query, perPage = count).photos.map { it.src.medium }
+        }.getOrDefault(emptyList())
 }

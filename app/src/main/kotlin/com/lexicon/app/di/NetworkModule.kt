@@ -2,6 +2,8 @@ package com.lexicon.app.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.lexicon.BuildConfig
+import com.lexicon.boundary.Translator
+import com.lexicon.data.di.translatorChainQualifier
 import com.lexicon.data.remote.image.OpenverseApi
 import com.lexicon.data.remote.image.OpenverseImageSource
 import com.lexicon.data.remote.image.PexelsApi
@@ -10,6 +12,9 @@ import com.lexicon.data.remote.image.PixabayApi
 import com.lexicon.data.remote.image.PixabayImageSource
 import com.lexicon.data.remote.image.UnsplashApi
 import com.lexicon.data.remote.image.UnsplashImageSource
+import com.lexicon.data.remote.translate.DeepLApi
+import com.lexicon.data.remote.translate.DeepLTranslator
+import com.lexicon.data.repository.CorpusTranslatorImpl
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
@@ -23,6 +28,7 @@ private const val PEXELS_BASE_URL = "https://api.pexels.com/"
 private const val PIXABAY_BASE_URL = "https://pixabay.com/"
 private const val UNSPLASH_BASE_URL = "https://api.unsplash.com/"
 private const val OPENVERSE_BASE_URL = "https://api.openverse.org/"
+private const val DEEPL_BASE_URL = "https://api-free.deepl.com/"
 
 private fun headerInterceptor(
     name: String,
@@ -86,8 +92,33 @@ val networkModule = module {
 
     single { retrofit(OPENVERSE_BASE_URL, get(), get()).create(OpenverseApi::class.java) }
 
+    single {
+        val client =
+            get<OkHttpClient>().newBuilder()
+                .addInterceptor(headerInterceptor("Authorization", "DeepL-Auth-Key ${BuildConfig.DEEPL_API_KEY}"))
+                .build()
+        retrofit(DEEPL_BASE_URL, client, get()).create(DeepLApi::class.java)
+    }
+
+    // Corpus first: free, instant and offline. DeepL only if a key was configured.
+    factory<List<Translator>>(translatorChainQualifier) {
+        buildList {
+            add(get<CorpusTranslatorImpl>())
+            if (hasDeepLKey) add(get<DeepLTranslator>())
+        }
+    }
+
     factoryOf(::PexelsImageSource)
     factoryOf(::PixabayImageSource)
     factoryOf(::UnsplashImageSource)
     factoryOf(::OpenverseImageSource)
+    factoryOf(::DeepLTranslator)
 }
+
+/**
+ * Whether a DeepL key was configured. Without one the translator is left out of the
+ * chain entirely rather than added and left to fail: every auto-fill would otherwise
+ * spend a round trip earning a 403, and a build with no key is the normal state for
+ * anyone who has not signed up for one.
+ */
+val hasDeepLKey: Boolean get() = BuildConfig.DEEPL_API_KEY.isNotBlank()
