@@ -19,7 +19,7 @@ actual class AppDatabaseBuilderFactory {
                 directory = NSDocumentDirectory,
                 inDomain = NSUserDomainMask,
                 appropriateForURL = null,
-                create = false,
+                create = true,
                 error = null,
             )
         return requireNotNull(documents?.path) { "No documents directory to open $DATABASE_NAME in" } + "/" + DATABASE_NAME

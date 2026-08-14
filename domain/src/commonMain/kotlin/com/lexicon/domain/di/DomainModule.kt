@@ -1,4 +1,4 @@
-package com.lexicon.app.di
+package com.lexicon.domain.di
 
 import com.lexicon.domain.course.CheckExerciseAnswerUseCaseImpl
 import com.lexicon.domain.course.GetLessonUseCaseImpl
@@ -90,7 +90,7 @@ import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
-val useCaseModule = module {
+val domainModule = module {
     factoryOf(::AnswerNormalizer)
     factoryOf(::StepCountResolver)
 

@@ -11,11 +11,16 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.interactors)
-            implementation(projects.boundary)
-            implementation(projects.common)
+            // api: domainModule binds the use-case interfaces, so consumers see them.
+            api(projects.interactors)
+            api(projects.boundary)
+            api(projects.common)
             implementation(libs.kotlinx.coroutines.core)
             api(libs.kotlinx.collections.immutable)
+
+            // The domain layer owns the wiring of its own use cases.
+            api(project.dependencies.platform(libs.koin.bom))
+            api(libs.koin.core)
         }
         androidUnitTest.dependencies {
             implementation(libs.bundles.unit.test)

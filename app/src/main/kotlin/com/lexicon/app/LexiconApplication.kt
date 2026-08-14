@@ -7,10 +7,10 @@ import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import com.lexicon.app.di.androidModule
 import com.lexicon.app.di.networkModule
-import com.lexicon.app.di.useCaseModule
 import com.lexicon.app.di.viewModelModule
 import com.lexicon.data.di.dataAndroidModule
 import com.lexicon.data.di.dataModule
+import com.lexicon.domain.di.domainModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -21,7 +21,7 @@ class LexiconApplication : Application(), ImageLoaderFactory {
         startKoin {
             androidLogger()
             androidContext(this@LexiconApplication)
-            modules(androidModule, networkModule, dataModule, dataAndroidModule, useCaseModule, viewModelModule)
+            modules(androidModule, networkModule, dataModule, dataAndroidModule, domainModule, viewModelModule)
         }
     }
 

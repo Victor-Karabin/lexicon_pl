@@ -16,7 +16,7 @@ actual class DataStorePathResolver {
                 directory = NSDocumentDirectory,
                 inDomain = NSUserDomainMask,
                 appropriateForURL = null,
-                create = false,
+                create = true,
                 error = null,
             )
         return requireNotNull(documents?.path) { "No documents directory to open $name in" } + "/" + name + DATA_STORE_FILE_SUFFIX
