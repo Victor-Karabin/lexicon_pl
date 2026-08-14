@@ -2,6 +2,7 @@ package com.lexicon.app.navigation
 
 import com.lexicon.presentation.common.TRAINING_WORDS_ARG
 import com.lexicon.presentation.common.asTrainingWordsArgument
+import com.lexicon.presentation.course.COURSE_ID_ARG
 import com.lexicon.presentation.main.TrainingIds
 import com.lexicon.presentation.presets.WORD_ID_ARG
 
@@ -42,6 +43,10 @@ internal object LexiconDestinations {
     const val EDIT_WORD = "word/{$WORD_ID_ARG}/edit"
 
     fun editWord(wordId: Long) = "word/$wordId/edit"
+
+    const val COURSE = "course/{$COURSE_ID_ARG}"
+
+    fun course(courseId: String) = "course/$courseId"
 
     const val LESSON = "lesson/{lessonId}"
 

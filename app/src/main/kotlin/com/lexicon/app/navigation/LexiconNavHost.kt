@@ -12,6 +12,8 @@ import com.lexicon.presentation.common.SessionResultScreen
 import com.lexicon.presentation.common.TRAINING_WORDS_ARG
 import com.lexicon.presentation.common.TrainingGate
 import com.lexicon.presentation.common.TrainingRequirements
+import com.lexicon.presentation.course.COURSE_ID_ARG
+import com.lexicon.presentation.course.CourseDetailScreen
 import com.lexicon.presentation.course.EXERCISE_ID_ARG
 import com.lexicon.presentation.course.ExerciseScreen
 import com.lexicon.presentation.course.LESSON_ID_ARG
@@ -52,7 +54,7 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             MainScreen(
                 onTrainingSelected = { route -> navController.navigate(route) },
                 onPresetSelected = { id -> navController.navigate(LexiconDestinations.presetDetail(id)) },
-                onLessonSelected = { id -> navController.navigate(LexiconDestinations.lesson(id)) },
+                onCourseSelected = { id -> navController.navigate(LexiconDestinations.course(id)) },
                 onEditWord = { id -> navController.navigate(LexiconDestinations.editWord(id)) },
                 onAddWord = { navController.navigate(LexiconDestinations.CREATE_WORD) },
                 onAddPreset = { navController.navigate(LexiconDestinations.CREATE_PRESET) },
@@ -92,6 +94,16 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             PresetDetailScreen(
                 onClose = { navController.popBackStack() },
                 onEditWord = { id -> navController.navigate(LexiconDestinations.editWord(id.value)) },
+            )
+        }
+
+        composable(
+            route = LexiconDestinations.COURSE,
+            arguments = listOf(navArgument(COURSE_ID_ARG) { type = NavType.StringType }),
+        ) {
+            CourseDetailScreen(
+                onClose = { navController.popBackStack() },
+                onLessonSelected = { id -> navController.navigate(LexiconDestinations.lesson(id.value)) },
             )
         }
 
