@@ -86,6 +86,16 @@ class PresetDetailViewModelDeleteTest {
 
     private val speechSynthesizer: SpeechSynthesizer = mockk(relaxed = true)
 
+    private val setWordPresetMembership = object : SetWordPresetMembershipUseCase {
+        override suspend fun invoke(
+            presetId: PresetId,
+            wordId: VocabularyId,
+            isMember: Boolean,
+        ) {
+            storedWords = if (isMember) storedWords else storedWords.filterNot { it.id == wordId }
+        }
+    }
+
     private fun viewModel() =
         PresetDetailViewModel(
             savedStateHandle = SavedStateHandle(mapOf(PRESET_ID_ARG to "food")),
@@ -97,7 +107,7 @@ class PresetDetailViewModelDeleteTest {
             setPresetFavourite = mockk<SetPresetFavouriteUseCase>(relaxed = true),
             observeFavouriteWordIds = mockk<ObserveFavouriteWordIdsUseCase> { every { this@mockk() } returns favourites },
             getWordPresetMemberships = mockk<GetWordPresetMembershipsUseCase>(relaxed = true),
-            setWordPresetMembership = mockk<SetWordPresetMembershipUseCase>(relaxed = true),
+            setWordPresetMembership = setWordPresetMembership,
             dispatchers = object : DispatcherProvider {
                 override val io: CoroutineDispatcher get() = dispatcher
                 override val default: CoroutineDispatcher get() = dispatcher
@@ -132,6 +142,34 @@ class PresetDetailViewModelDeleteTest {
 
             coVerify { speechSynthesizer.speak("chleb") }
             coVerify(exactly = 0) { speechSynthesizer.speak("bread") }
+        }
+
+    @Test
+    fun `a word unticked from this preset leaves the list, without waiting for a reopen`() =
+        runTest(dispatcher) {
+            val viewModel = started()
+            advanceUntilIdle()
+
+            viewModel.onChangePresetsRequested(kot)
+            advanceUntilIdle()
+            viewModel.onPresetMembershipToggled(PresetId("food"), isMember = false)
+            advanceUntilIdle()
+
+            assertEquals(listOf("pies"), loaded(viewModel).words.map { it.text })
+        }
+
+    @Test
+    fun `the header count follows a word being untangled from the preset`() =
+        runTest(dispatcher) {
+            val viewModel = started()
+            advanceUntilIdle()
+
+            viewModel.onChangePresetsRequested(kot)
+            advanceUntilIdle()
+            viewModel.onPresetMembershipToggled(PresetId("food"), isMember = false)
+            advanceUntilIdle()
+
+            assertEquals(1, loaded(viewModel).preset.vocabularyIds.size)
         }
 
     @Test

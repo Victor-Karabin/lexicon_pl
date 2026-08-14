@@ -40,6 +40,11 @@ class ChangePresetsController(
     private val ioContext: CoroutineContext,
     private val getMemberships: GetWordPresetMembershipsUseCase,
     private val setMembership: SetWordPresetMembershipUseCase,
+    /**
+     * Called once a change is persisted, for screens whose own contents depend on
+     * membership — a preset's word list loses the word the moment it is unticked.
+     */
+    private val onChanged: suspend () -> Unit = {},
 ) {
     private val _state = MutableStateFlow<ChangePresetsUiState?>(null)
     val state: StateFlow<ChangePresetsUiState?> = _state.asStateFlow()
@@ -74,6 +79,9 @@ class ChangePresetsController(
                     .toImmutableList(),
             )
         }
-        scope.launch(ioContext) { setMembership(presetId, wordId, isMember) }
+        scope.launch(ioContext) {
+            setMembership(presetId, wordId, isMember)
+            onChanged()
+        }
     }
 }
