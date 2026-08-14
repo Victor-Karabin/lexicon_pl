@@ -58,6 +58,11 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
                 onPresetSelected = { id -> navController.navigate(LexiconDestinations.presetDetail(id)) },
                 onCourseSelected = { id -> navController.navigate(LexiconDestinations.course(id)) },
                 onProgramSelected = { id -> navController.navigate(LexiconDestinations.program(id)) },
+                // A program hands back a training and the words for it; the route
+                // that carries a word list to a training already exists for lessons.
+                onStartTraining = { training, wordIds ->
+                    navController.navigate(LexiconDestinations.scopedTraining(training, wordIds))
+                },
                 onEditWord = { id -> navController.navigate(LexiconDestinations.editWord(id)) },
                 onAddWord = { navController.navigate(LexiconDestinations.CREATE_WORD) },
                 onAddPreset = { navController.navigate(LexiconDestinations.CREATE_PRESET) },

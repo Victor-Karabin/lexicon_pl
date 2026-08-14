@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.lexicon.presentation.course.PlanScreen
+import com.lexicon.presentation.dashboard.DashboardScreen
 import com.lexicon.presentation.presets.VocabularyScreen
 import com.lexicon.presentation.settings.SettingsScreen
 
@@ -42,6 +43,7 @@ fun MainScreen(
     onPresetSelected: (id: String) -> Unit,
     onCourseSelected: (id: String) -> Unit,
     onProgramSelected: (id: String) -> Unit,
+    onStartTraining: (training: String, wordIds: List<Long>) -> Unit,
     onEditWord: (id: Long) -> Unit,
     onAddWord: () -> Unit,
     onAddPreset: () -> Unit,
@@ -67,7 +69,12 @@ fun MainScreen(
         val content = Modifier.padding(padding)
         when (selectedTab) {
             MainTab.TRAININGS -> TrainingsScreen(onTrainingSelected = onTrainingSelected, modifier = content)
-            MainTab.DASHBOARD -> ComingSoonScreen(MainTab.DASHBOARD.label, modifier = content)
+            MainTab.DASHBOARD ->
+                DashboardScreen(
+                    onStartTraining = { training, words -> onStartTraining(training, words.map { it.value }) },
+                    onGoToPlan = { selectedTab = MainTab.PLAN },
+                    modifier = content,
+                )
             MainTab.VOCABULARY ->
                 VocabularyScreen(
                     onPresetSelected = { onPresetSelected(it.value) },

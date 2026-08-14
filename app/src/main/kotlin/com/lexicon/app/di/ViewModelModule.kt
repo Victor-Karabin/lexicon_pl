@@ -8,6 +8,7 @@ import com.lexicon.presentation.course.ExerciseViewModel
 import com.lexicon.presentation.course.LessonViewModel
 import com.lexicon.presentation.course.PlanViewModel
 import com.lexicon.presentation.crossword.CrosswordViewModel
+import com.lexicon.presentation.dashboard.DashboardViewModel
 import com.lexicon.presentation.dictation.DictationViewModel
 import com.lexicon.presentation.dictationpuzzle.DictationPuzzleViewModel
 import com.lexicon.presentation.imagetest.ImageTestViewModel
@@ -35,6 +36,7 @@ val viewModelModule = module {
     viewModelOf(::TrainingGateViewModel)
     viewModelOf(::PlanViewModel)
     viewModelOf(::ProgramViewModel)
+    viewModelOf(::DashboardViewModel)
     viewModelOf(::CourseDetailViewModel)
     viewModelOf(::ExerciseViewModel)
     viewModelOf(::LessonViewModel)

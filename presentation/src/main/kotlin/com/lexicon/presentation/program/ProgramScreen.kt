@@ -160,7 +160,6 @@ private fun ProgramDetail(
                 R.string.program_daily_summary,
                 config.dailyPlan.newWords,
                 config.dailyPlan.reviewWords,
-                config.dailyPlan.minMinutes,
             ),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -177,22 +176,11 @@ private fun ProgramDetail(
 
 @Composable
 private fun ActivityRow(activity: ActivityConfig) {
-    Row(
+    Text(
+        text = activityLabel(activity),
+        style = MaterialTheme.typography.bodyMedium,
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = activityLabel(activity),
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.weight(1f),
-        )
-        Text(
-            text = stringResource(R.string.program_minutes, activity.estimatedMinutes),
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-    }
+    )
 }
 
 @Composable

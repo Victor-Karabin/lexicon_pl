@@ -39,10 +39,14 @@ import com.lexicon.domain.presets.ToggleWordFavouriteUseCaseImpl
 import com.lexicon.domain.presets.TranslateWordUseCaseImpl
 import com.lexicon.domain.presets.UpdateWordUseCaseImpl
 import com.lexicon.domain.program.EnrolInProgramUseCaseImpl
+import com.lexicon.domain.program.GetProgramProgressUseCaseImpl
 import com.lexicon.domain.program.GetProgramUseCaseImpl
+import com.lexicon.domain.program.GetStudyStreakUseCaseImpl
 import com.lexicon.domain.program.LeaveProgramUseCaseImpl
 import com.lexicon.domain.program.ObserveActiveEnrolmentUseCaseImpl
 import com.lexicon.domain.program.ObserveProgramsUseCaseImpl
+import com.lexicon.domain.program.ResolveProgramScopeUseCaseImpl
+import com.lexicon.domain.program.StartProgramSessionUseCaseImpl
 import com.lexicon.domain.pronunciation.StartPronunciationSessionUseCaseImpl
 import com.lexicon.domain.pronunciation.SubmitPronunciationResultUseCaseImpl
 import com.lexicon.domain.puzzle.StartPuzzleSessionUseCaseImpl
@@ -95,10 +99,14 @@ import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
 import com.lexicon.interactors.program.EnrolInProgramUseCase
+import com.lexicon.interactors.program.GetProgramProgressUseCase
 import com.lexicon.interactors.program.GetProgramUseCase
+import com.lexicon.interactors.program.GetStudyStreakUseCase
 import com.lexicon.interactors.program.LeaveProgramUseCase
 import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
 import com.lexicon.interactors.program.ObserveProgramsUseCase
+import com.lexicon.interactors.program.ResolveProgramScopeUseCase
+import com.lexicon.interactors.program.StartProgramSessionUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
@@ -155,6 +163,10 @@ val domainModule = module {
     factoryOf(::ObserveActiveEnrolmentUseCaseImpl) { bind<ObserveActiveEnrolmentUseCase>() }
     factoryOf(::EnrolInProgramUseCaseImpl) { bind<EnrolInProgramUseCase>() }
     factoryOf(::LeaveProgramUseCaseImpl) { bind<LeaveProgramUseCase>() }
+    factoryOf(::ResolveProgramScopeUseCaseImpl) { bind<ResolveProgramScopeUseCase>() }
+    factoryOf(::StartProgramSessionUseCaseImpl) { bind<StartProgramSessionUseCase>() }
+    factoryOf(::GetProgramProgressUseCaseImpl) { bind<GetProgramProgressUseCase>() }
+    factoryOf(::GetStudyStreakUseCaseImpl) { bind<GetStudyStreakUseCase>() }
     factoryOf(::CreateWordUseCaseImpl) { bind<CreateWordUseCase>() }
     factoryOf(::UpdateWordUseCaseImpl) { bind<UpdateWordUseCase>() }
     factoryOf(::GetWordUseCaseImpl) { bind<GetWordUseCase>() }

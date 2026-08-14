@@ -70,29 +70,6 @@
                 "true_or_false",
                 "puzzle"
               ]
-            },
-            {
-              "id": "say-it",
-              "type": "PRONOUNCE",
-              "target": 5,
-              "required": true,
-              "estimatedMinutes": 3,
-              "priority": 3,
-              "trainings": [
-                "pronunciation_check"
-              ]
-            },
-            {
-              "id": "write-it",
-              "type": "WRITE",
-              "target": 5,
-              "required": true,
-              "estimatedMinutes": 4,
-              "priority": 4,
-              "trainings": [
-                "dictation_puzzle",
-                "crossword"
-              ]
             }
           ],
           "weekend": {

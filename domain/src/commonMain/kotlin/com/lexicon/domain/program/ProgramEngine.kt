@@ -1,0 +1,219 @@
+package com.lexicon.domain.program
+
+import com.lexicon.boundary.ProgramRepository
+import com.lexicon.boundary.ReviewScheduleRepository
+import com.lexicon.boundary.StudyRecordRepository
+import com.lexicon.boundary.TrainingHistoryRepository
+import com.lexicon.boundary.VocabularyPresetRepository
+import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.common.Clock
+import com.lexicon.interactors.presets.VocabularyId
+import com.lexicon.interactors.program.ActivityType
+import com.lexicon.interactors.program.GetProgramProgressUseCase
+import com.lexicon.interactors.program.GetProgramUseCase
+import com.lexicon.interactors.program.Program
+import com.lexicon.interactors.program.ProgramId
+import com.lexicon.interactors.program.ProgramProgress
+import com.lexicon.interactors.program.ProgramSession
+import com.lexicon.interactors.program.ProgressMetric
+import com.lexicon.interactors.program.ProgressMetricType
+import com.lexicon.interactors.program.ResolveProgramScopeUseCase
+import com.lexicon.interactors.program.ScopeOrdering
+import com.lexicon.interactors.program.ScopeSourceType
+import com.lexicon.interactors.program.StartProgramSessionUseCase
+import com.lexicon.interactors.program.TargetType
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
+
+private const val MILLIS_PER_DAY = 86_400_000L
+private const val RETENTION_WINDOW_DAYS = 30
+private const val PERCENT = 100
+
+/**
+ * Turns a program's declared sources into the words it may draw on.
+ *
+ * Every source maps onto data that already exists, which is what lets a program be
+ * written against presets, favourites, a CEFR band or a lesson without any of them
+ * knowing about programs.
+ */
+class ResolveProgramScopeUseCaseImpl(
+    private val vocabulary: VocabularyRepository,
+    private val presets: VocabularyPresetRepository,
+) : ResolveProgramScopeUseCase {
+    override suspend fun invoke(program: Program): ImmutableList<VocabularyId> {
+        val scope = program.config.scope
+
+        // A set, because two sources may well overlap — top-1000 and Food share
+        // plenty — and a word offered twice would be taught twice.
+        val included = linkedSetOf<Long>()
+        scope.include.forEach { included += wordIdsOf(it.type, it.value) }
+        scope.exclude.forEach { included -= wordIdsOf(it.type, it.value).toSet() }
+
+        val ordered = when (scope.ordering) {
+            // The corpus is numbered by frequency, so its own order is that order.
+            ScopeOrdering.FREQUENCY, ScopeOrdering.AS_LISTED -> included.toList()
+            ScopeOrdering.DIFFICULTY -> included.sorted()
+            ScopeOrdering.ALPHABETICAL -> included.toList()
+            ScopeOrdering.RANDOM -> included.shuffled()
+        }
+
+        val cap = scope.maxWords
+        return ordered
+            .let { if (cap != null) it.take(cap) else it }
+            .map(::VocabularyId)
+            .toImmutableList()
+    }
+
+    private suspend fun wordIdsOf(
+        type: ScopeSourceType,
+        value: String,
+    ): List<Long> =
+        when (type) {
+            ScopeSourceType.PRESET -> presets.getPreset(value)?.vocabularyIds.orEmpty()
+            ScopeSourceType.FAVOURITES -> vocabulary.favouriteWordIds()
+            ScopeSourceType.CEFR_LEVEL -> vocabulary.wordIdsForLevel(value)
+            ScopeSourceType.ALL -> vocabulary.allWordIds()
+            // Lessons carry their own word lists, which the course layer owns. Nothing
+            // ships a lesson-scoped program yet, so this stays empty rather than
+            // pulling the course repository in for a caller that does not exist.
+            ScopeSourceType.LESSON -> emptyList()
+        }
+}
+
+/**
+ * What to work on next.
+ *
+ * Reviews first while any are due, then new words from the scope — the order the
+ * strategy asks for, with the review backlog winning by default because a backlog
+ * left to grow is what turns a hundred half-known words into a wall.
+ */
+class StartProgramSessionUseCaseImpl(
+    private val getProgram: GetProgramUseCase,
+    private val resolveScope: ResolveProgramScopeUseCase,
+    private val reviews: ReviewScheduleRepository,
+    private val clock: Clock,
+) : StartProgramSessionUseCase {
+    override suspend fun invoke(id: ProgramId): ProgramSession? {
+        val program = getProgram(id) ?: return null
+        val plan = program.config.dailyPlan
+        val scope = resolveScope(program).map { it.value }
+        if (scope.isEmpty()) return null
+
+        val inScope = scope.toSet()
+        val due = reviews
+            .dueWordIds(clock.todayEpochDay(), program.config.review.dailyLimit)
+            .filter { it in inScope }
+
+        val reviewActivity = plan.activities.firstOrNull { it.type == ActivityType.REVIEW }
+        if (due.isNotEmpty() && reviewActivity != null) {
+            return reviewActivity.session(program, due.take(plan.reviewWords.orAll()))
+        }
+
+        // Nothing due: meet the next words the learner has not seen.
+        val learnActivity = plan.activities.firstOrNull { it.type == ActivityType.LEARN }
+            ?: plan.activities.firstOrNull()
+            ?: return null
+        val fresh = scope.filter { reviews.schedule(it) == null }.take(plan.newWords.orAll())
+
+        // Everything in scope has been seen and nothing is due yet, so there is
+        // genuinely nothing to do today — better said plainly than by inventing work.
+        val words = fresh.ifEmpty { return null }
+        return learnActivity.session(program, words)
+    }
+
+    private fun Int.orAll(): Int = if (this <= 0) Int.MAX_VALUE else this
+
+    private fun com.lexicon.interactors.program.ActivityConfig.session(
+        program: Program,
+        wordIds: List<Long>,
+    ): ProgramSession? {
+        val training = trainings.firstOrNull() ?: return null
+        return ProgramSession(
+            programId = program.id,
+            activityId = id,
+            activityType = type,
+            training = training,
+            wordIds = wordIds.map(::VocabularyId).toImmutableList(),
+        )
+    }
+}
+
+/**
+ * How far through a program the learner is.
+ *
+ * Each configured weight becomes one metric, reported separately so a screen can
+ * show what is moving and what is not rather than one number that explains nothing.
+ * A weight of zero is left out entirely.
+ */
+class GetProgramProgressUseCaseImpl(
+    private val programs: ProgramRepository,
+    private val reviews: ReviewScheduleRepository,
+    private val history: TrainingHistoryRepository,
+    private val study: StudyRecordRepository,
+    private val clock: Clock,
+) : GetProgramProgressUseCase {
+    override suspend fun invoke(program: Program): ProgramProgress {
+        val weights = program.config.progress
+        val metrics = mutableListOf<ProgressMetric>()
+
+        if (weights.vocabulary > 0) {
+            val target = program.config.goals
+                .firstOrNull { it.type == TargetType.VOCABULARY }
+                ?.target
+                ?: 0
+            metrics += ProgressMetric(
+                type = ProgressMetricType.VOCABULARY,
+                current = reviews.countMastered(program.config.review.masteredIntervalDays.toLong()),
+                target = target,
+                weight = weights.vocabulary,
+            )
+        }
+
+        if (weights.milestones > 0) {
+            metrics += ProgressMetric(
+                type = ProgressMetricType.MILESTONES,
+                current = programs.milestones(program.id.value).size,
+                target = program.config.milestones.size,
+                weight = weights.milestones,
+            )
+        }
+
+        if (weights.retention > 0) {
+            val now = clock.nowEpochMillis()
+            val retention = history.retentionBetween(now - RETENTION_WINDOW_DAYS * MILLIS_PER_DAY, now)
+            val target = program.config.goals.firstOrNull { it.type == TargetType.RETENTION }?.target ?: PERCENT
+            metrics += ProgressMetric(
+                type = ProgressMetricType.RETENTION,
+                current = (retention.fraction * PERCENT).toInt(),
+                target = target,
+                weight = weights.retention,
+            )
+        }
+
+        if (weights.consistency > 0) {
+            val enrolment = programs.enrolment(program.id.value)
+            val today = clock.todayEpochDay()
+            // Days on the program so far, counting today, against days actually
+            // studied in that window.
+            val elapsed = enrolment?.let { (today - it.startedAtEpochDay + 1).toInt() } ?: 0
+            val studied = enrolment?.let {
+                study.daysBetween(it.startedAtEpochDay, today).count { day -> day.answers > 0 }
+            } ?: 0
+            metrics += ProgressMetric(
+                type = ProgressMetricType.CONSISTENCY,
+                current = studied,
+                target = elapsed.coerceAtLeast(1),
+                weight = weights.consistency,
+            )
+        }
+
+        return ProgramProgress(programId = program.id, metrics = metrics.toImmutableList())
+    }
+}
+
+class GetStudyStreakUseCaseImpl(
+    private val study: StudyRecordRepository,
+    private val clock: Clock,
+) : com.lexicon.interactors.program.GetStudyStreakUseCase {
+    override suspend fun invoke(): Int = study.currentStreak(clock.todayEpochDay())
+}

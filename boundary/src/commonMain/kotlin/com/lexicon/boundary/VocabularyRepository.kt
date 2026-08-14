@@ -64,4 +64,11 @@ interface VocabularyRepository {
     )
 
     fun observeFavouriteIds(): Flow<Set<Long>>
+
+    /** Every word still in the vocabulary, in corpus order — most frequent first. */
+    suspend fun allWordIds(): List<Long>
+
+    suspend fun wordIdsForLevel(level: String): List<Long>
+
+    suspend fun favouriteWordIds(): List<Long>
 }

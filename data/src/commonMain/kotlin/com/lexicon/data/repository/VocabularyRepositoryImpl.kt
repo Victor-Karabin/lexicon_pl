@@ -94,6 +94,21 @@ class VocabularyRepositoryImpl(
         return wordDao.findByText(text)?.toBoundary()
     }
 
+    override suspend fun allWordIds(): List<Long> {
+        vocabularySeeder.ensureSeeded()
+        return wordDao.allWordIds()
+    }
+
+    override suspend fun wordIdsForLevel(level: String): List<Long> {
+        vocabularySeeder.ensureSeeded()
+        return wordDao.wordIdsForLevel(level)
+    }
+
+    override suspend fun favouriteWordIds(): List<Long> {
+        vocabularySeeder.ensureSeeded()
+        return wordDao.favouriteWordIds()
+    }
+
     override suspend fun getWord(id: Long): VocabularyItemBoundary? {
         vocabularySeeder.ensureSeeded()
         return wordDao.findById(id)?.toBoundary()

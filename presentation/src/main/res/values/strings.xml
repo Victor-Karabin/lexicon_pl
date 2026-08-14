@@ -129,6 +129,19 @@
     <string name="create_word_saved">Added “%1$s”</string>
     <string name="create_translating">Translating…</string>
 
+    <string name="dashboard_no_program">No program yet. Pick one on the Plan tab and it will show up here.</string>
+    <string name="dashboard_go_to_plan">Go to Plan</string>
+    <string name="dashboard_continuing">Continuing</string>
+    <string name="dashboard_overall">%1$d%% through</string>
+    <string name="dashboard_streak">%1$d days running</string>
+    <string name="dashboard_nothing_due">Nothing due today — everything in this program is either learned or not yet ready to come back.</string>
+    <string name="dashboard_continue">Continue</string>
+    <string name="dashboard_metric_vocabulary">Words mastered</string>
+    <string name="dashboard_metric_milestones">Milestones</string>
+    <string name="dashboard_metric_retention">Retention</string>
+    <string name="dashboard_metric_consistency">Days studied</string>
+    <string name="dashboard_metric_study_time">Study time</string>
+    <string name="dashboard_metric_accuracy">Accuracy</string>
     <string name="plan_programs">Programs</string>
     <string name="plan_courses">Courses</string>
     <string name="plan_program_active">In progress</string>
@@ -140,8 +153,7 @@
     <string name="program_each_day">Each day</string>
     <string name="program_milestones">Milestones</string>
     <string name="program_duration">About %1$d weeks</string>
-    <string name="program_daily_summary">%1$d new words, %2$d reviews, about %3$d minutes</string>
-    <string name="program_minutes">%1$d min</string>
+    <string name="program_daily_summary">%1$d new words, %2$d reviews</string>
     <string name="program_start">Start this program</string>
     <string name="program_leave">In progress · tap to stop</string>
     <string name="program_goal_words">Master %1$d words</string>
@@ -152,8 +164,8 @@
     <string name="program_goal_lessons">Finish %1$d lessons</string>
     <string name="program_activity_learn">Learn %1$d new words</string>
     <string name="program_activity_review">Review %1$d words</string>
-    <string name="program_activity_pronounce">Say %1$d words out loud</string>
     <string name="program_activity_listen">Listen to %1$d words</string>
+    <string name="program_activity_pronounce">Say %1$d words out loud</string>
     <string name="program_activity_write">Write %1$d words</string>
     <string name="program_activity_mixed">Mixed practice, %1$d words</string>
     <string name="program_activity_challenge">Daily challenge</string>
