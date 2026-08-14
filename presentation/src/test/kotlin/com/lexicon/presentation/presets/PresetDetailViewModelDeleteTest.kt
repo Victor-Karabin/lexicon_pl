@@ -6,6 +6,7 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
+import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
 import com.lexicon.interactors.presets.PresetCategory
@@ -14,6 +15,7 @@ import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
+import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
@@ -94,6 +96,8 @@ class PresetDetailViewModelDeleteTest {
             restoreWord = restoreWord,
             setPresetFavourite = mockk<SetPresetFavouriteUseCase>(relaxed = true),
             observeFavouriteWordIds = mockk<ObserveFavouriteWordIdsUseCase> { every { this@mockk() } returns favourites },
+            getWordPresetMemberships = mockk<GetWordPresetMembershipsUseCase>(relaxed = true),
+            setWordPresetMembership = mockk<SetWordPresetMembershipUseCase>(relaxed = true),
             dispatchers = object : DispatcherProvider {
                 override val io: CoroutineDispatcher get() = dispatcher
                 override val default: CoroutineDispatcher get() = dispatcher

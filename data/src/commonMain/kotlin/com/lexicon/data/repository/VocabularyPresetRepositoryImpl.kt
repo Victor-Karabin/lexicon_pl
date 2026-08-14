@@ -49,6 +49,20 @@ class VocabularyPresetRepositoryImpl(
 
     override suspend fun restorePreset(id: String) = seeder.restore(id)
 
+    override suspend fun getPresetIdsForWord(wordId: Long): List<String> {
+        seeder.ensureSeeded()
+        return presetDao.getPresetIdsForWord(wordId)
+    }
+
+    override suspend fun setWordInPreset(
+        presetId: String,
+        wordId: Long,
+        isMember: Boolean,
+    ) {
+        seeder.ensureSeeded()
+        presetDao.setWordInPreset(presetId, wordId, isMember)
+    }
+
     override suspend fun getCategories(): List<PresetCategoryBoundary> {
         seeder.ensureSeeded()
         return presetDao.getCategories().map { it.toBoundary() }

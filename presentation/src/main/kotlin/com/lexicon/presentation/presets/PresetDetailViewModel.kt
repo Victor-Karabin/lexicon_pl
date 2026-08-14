@@ -8,12 +8,14 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
+import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
 import com.lexicon.interactors.presets.PresetFavouriteState
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
+import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
@@ -56,6 +58,8 @@ class PresetDetailViewModel(
     private val restoreWord: RestoreWordUseCase,
     private val setPresetFavourite: SetPresetFavouriteUseCase,
     observeFavouriteWordIds: ObserveFavouriteWordIdsUseCase,
+    getWordPresetMemberships: GetWordPresetMembershipsUseCase,
+    setWordPresetMembership: SetWordPresetMembershipUseCase,
     private val dispatchers: DispatcherProvider,
     private val speechSynthesizer: SpeechSynthesizer,
 ) : ViewModel() {
@@ -69,6 +73,22 @@ class PresetDetailViewModel(
     )
 
     private val content = MutableStateFlow<Content?>(null)
+
+    private val changePresets =
+        ChangePresetsController(viewModelScope, dispatchers.io, getWordPresetMemberships, setWordPresetMembership)
+    val changePresetsState = changePresets.state
+
+    fun onChangePresetsRequested(word: PresetWord) {
+        val languageTag = (uiState.value as? PresetDetailUiState.Loaded)?.languageTag ?: return
+        changePresets.open(word, languageTag)
+    }
+
+    fun onChangePresetsDismissed() = changePresets.dismiss()
+
+    fun onPresetMembershipToggled(
+        presetId: PresetId,
+        isMember: Boolean,
+    ) = changePresets.toggle(presetId, isMember)
 
     val uiState: StateFlow<PresetDetailUiState> =
         combine(content, observeFavouriteWordIds()) { loaded, favourites ->

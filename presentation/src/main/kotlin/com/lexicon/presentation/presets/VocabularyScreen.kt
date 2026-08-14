@@ -14,14 +14,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -80,6 +78,7 @@ fun VocabularyScreen(
     viewModel: VocabularyViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val changePresets by viewModel.changePresetsState.collectAsState()
 
     val snackbarHostState = remember { SnackbarHostState() }
     val deleted = (uiState as? VocabularyUiState.Loaded)?.lastDeleted
@@ -107,9 +106,18 @@ fun VocabularyScreen(
         onWordFavouriteToggled = viewModel::onWordFavouriteToggled,
         onPronounceWord = viewModel::onPronounceWord,
         onWordDeleted = viewModel::onWordDeleted,
+        onChangePresets = viewModel::onChangePresetsRequested,
         onPresetDeleted = viewModel::onPresetDeleted,
         modifier = modifier,
     )
+
+    changePresets?.let { state ->
+        ChangePresetsSheet(
+            state = state,
+            onToggle = viewModel::onPresetMembershipToggled,
+            onDismiss = viewModel::onChangePresetsDismissed,
+        )
+    }
 }
 
 @Composable
@@ -124,6 +132,7 @@ private fun VocabularyContent(
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
     onPronounceWord: (PresetWord) -> Unit,
     onWordDeleted: (PresetWord) -> Unit,
+    onChangePresets: (PresetWord) -> Unit,
     onPresetDeleted: (VocabularyPreset) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -142,6 +151,7 @@ private fun VocabularyContent(
             onWordFavouriteToggled = onWordFavouriteToggled,
             onPronounceWord = onPronounceWord,
             onWordDeleted = onWordDeleted,
+            onChangePresets = onChangePresets,
             onPresetDeleted = onPresetDeleted,
             modifier = Modifier.padding(padding),
         )
@@ -159,6 +169,7 @@ private fun VocabularyBody(
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
     onPronounceWord: (PresetWord) -> Unit,
     onWordDeleted: (PresetWord) -> Unit,
+    onChangePresets: (PresetWord) -> Unit,
     onPresetDeleted: (VocabularyPreset) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -183,7 +194,7 @@ private fun VocabularyBody(
                 FilterRow(uiState, onCefrToggled, onFiltersCleared)
 
                 if (uiState.isSearchingWords) {
-                    WordResults(uiState, onWordFavouriteToggled, onPronounceWord, onWordDeleted)
+                    WordResults(uiState, onWordFavouriteToggled, onPronounceWord, onWordDeleted, onChangePresets)
                 } else {
                     PresetResults(uiState, onPresetSelected, onPresetFavouriteToggled, onPresetDeleted)
                 }
@@ -197,27 +208,20 @@ private fun WordResults(
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
     onPronounceWord: (PresetWord) -> Unit,
     onWordDeleted: (PresetWord) -> Unit,
+    onChangePresets: (PresetWord) -> Unit,
 ) {
     if (uiState.hasNoMatchingWords) {
         Message(stringResource(R.string.vocabulary_search_no_matches, uiState.query))
         return
     }
     LazyColumn(contentPadding = PaddingValues(vertical = Dimens.spacingSmall)) {
-        itemsIndexed(uiState.words, key = { _, word -> word.id.value }) { index, word ->
-            SwipeToRevealContainer(
-                revealWidth = DeleteActionWidth,
-                backgroundContent = { DeleteAction(onClick = { onWordDeleted(word) }) },
-            ) {
-                VocabularyWordRow(
-                    word = word,
-                    onFavouriteToggled = { onWordFavouriteToggled(word.id, !word.isFavourite) },
-                    onPronounce = { onPronounceWord(word) },
-                )
-            }
-            if (index < uiState.words.lastIndex) {
-                HorizontalDivider(modifier = Modifier.padding(horizontal = Dimens.spacingMedium))
-            }
-        }
+        wordRows(
+            words = uiState.words,
+            onFavouriteToggled = onWordFavouriteToggled,
+            onPronounce = onPronounceWord,
+            onChangePresets = onChangePresets,
+            onDelete = onWordDeleted,
+        )
     }
 }
 
@@ -455,6 +459,7 @@ private fun VocabularyPresetsPreview() {
             onWordFavouriteToggled = { _, _ -> },
             onPronounceWord = {},
             onWordDeleted = {},
+            onChangePresets = {},
             onPresetDeleted = {},
             snackbarHostState = SnackbarHostState(),
         )
@@ -483,6 +488,7 @@ private fun VocabularyWordSearchPreview() {
             onWordFavouriteToggled = { _, _ -> },
             onPronounceWord = {},
             onWordDeleted = {},
+            onChangePresets = {},
             onPresetDeleted = {},
             snackbarHostState = SnackbarHostState(),
         )
@@ -503,6 +509,7 @@ private fun VocabularyNoMatchingWordsPreview() {
             onWordFavouriteToggled = { _, _ -> },
             onPronounceWord = {},
             onWordDeleted = {},
+            onChangePresets = {},
             onPresetDeleted = {},
             snackbarHostState = SnackbarHostState(),
         )

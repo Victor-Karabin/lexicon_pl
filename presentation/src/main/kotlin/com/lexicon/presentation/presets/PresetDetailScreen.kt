@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -46,10 +45,7 @@ import com.lexicon.interactors.presets.VocabularyPreset
 import com.lexicon.interactors.presets.resolve
 import com.lexicon.interactors.presets.wordCount
 import com.lexicon.presentation.R
-import com.lexicon.presentation.common.DeleteAction
-import com.lexicon.presentation.common.DeleteActionWidth
 import com.lexicon.presentation.common.LightDarkPreview
-import com.lexicon.presentation.common.SwipeToRevealContainer
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
@@ -68,6 +64,7 @@ fun PresetDetailScreen(
     viewModel: PresetDetailViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val changePresets by viewModel.changePresetsState.collectAsState()
 
     val snackbarHostState = remember { SnackbarHostState() }
     val deleted = (uiState as? PresetDetailUiState.Loaded)?.lastDeleted
@@ -92,8 +89,17 @@ fun PresetDetailScreen(
         onPronounceWord = viewModel::onPronounceWord,
         onPresetFavouriteToggled = viewModel::onPresetFavouriteToggled,
         onWordDeleted = viewModel::onWordDeleted,
+        onChangePresets = viewModel::onChangePresetsRequested,
         modifier = modifier,
     )
+
+    changePresets?.let { state ->
+        ChangePresetsSheet(
+            state = state,
+            onToggle = viewModel::onPresetMembershipToggled,
+            onDismiss = viewModel::onChangePresetsDismissed,
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -106,6 +112,7 @@ private fun PresetDetailContent(
     onPronounceWord: (PresetWord) -> Unit,
     onPresetFavouriteToggled: (PresetFavouriteState) -> Unit,
     onWordDeleted: (PresetWord) -> Unit,
+    onChangePresets: (PresetWord) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val title = when (uiState) {
@@ -152,21 +159,13 @@ private fun PresetDetailContent(
                         }
                     } else {
                         LazyColumn(contentPadding = PaddingValues(vertical = Dimens.spacingSmall)) {
-                            itemsIndexed(uiState.words, key = { _, word -> word.id.value }) { index, word ->
-                                SwipeToRevealContainer(
-                                    revealWidth = DeleteActionWidth,
-                                    backgroundContent = { DeleteAction(onClick = { onWordDeleted(word) }) },
-                                ) {
-                                    VocabularyWordRow(
-                                        word = word,
-                                        onFavouriteToggled = { onWordFavouriteToggled(word.id, !word.isFavourite) },
-                                        onPronounce = { onPronounceWord(word) },
-                                    )
-                                }
-                                if (index < uiState.words.lastIndex) {
-                                    HorizontalDivider(modifier = Modifier.padding(horizontal = Dimens.spacingMedium))
-                                }
-                            }
+                            wordRows(
+                                words = uiState.words,
+                                onFavouriteToggled = onWordFavouriteToggled,
+                                onPronounce = onPronounceWord,
+                                onChangePresets = onChangePresets,
+                                onDelete = onWordDeleted,
+                            )
                         }
                     }
                 }
@@ -271,6 +270,7 @@ private fun PresetDetailPreview() {
             onPronounceWord = {},
             onPresetFavouriteToggled = {},
             onWordDeleted = {},
+            onChangePresets = {},
             snackbarHostState = SnackbarHostState(),
         )
     }
@@ -287,6 +287,7 @@ private fun PresetDetailLoadingWordsPreview() {
             onPronounceWord = {},
             onPresetFavouriteToggled = {},
             onWordDeleted = {},
+            onChangePresets = {},
             snackbarHostState = SnackbarHostState(),
         )
     }
@@ -303,6 +304,7 @@ private fun PresetDetailNotFoundPreview() {
             onPronounceWord = {},
             onPresetFavouriteToggled = {},
             onWordDeleted = {},
+            onChangePresets = {},
             snackbarHostState = SnackbarHostState(),
         )
     }

@@ -7,6 +7,7 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.DeletePresetUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
+import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
 import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.PresetFavouriteState
@@ -16,6 +17,7 @@ import com.lexicon.interactors.presets.RestorePresetUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
 import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
+import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
@@ -43,6 +45,8 @@ class VocabularyViewModel(
     private val deletePreset: DeletePresetUseCase,
     private val restorePreset: RestorePresetUseCase,
     private val observeFavouriteWordIds: ObserveFavouriteWordIdsUseCase,
+    getWordPresetMemberships: GetWordPresetMembershipsUseCase,
+    setWordPresetMembership: SetWordPresetMembershipUseCase,
     private val dispatchers: DispatcherProvider,
     private val speechSynthesizer: SpeechSynthesizer,
 ) : ViewModel() {
@@ -50,6 +54,22 @@ class VocabularyViewModel(
     val uiState: StateFlow<VocabularyUiState> = _uiState.asStateFlow()
 
     private val criteria = MutableStateFlow(SearchCriteria())
+
+    private val changePresets =
+        ChangePresetsController(viewModelScope, dispatchers.io, getWordPresetMemberships, setWordPresetMembership)
+    val changePresetsState = changePresets.state
+
+    fun onChangePresetsRequested(word: PresetWord) {
+        val languageTag = (_uiState.value as? VocabularyUiState.Loaded)?.languageTag ?: return
+        changePresets.open(word, languageTag)
+    }
+
+    fun onChangePresetsDismissed() = changePresets.dismiss()
+
+    fun onPresetMembershipToggled(
+        presetId: PresetId,
+        isMember: Boolean,
+    ) = changePresets.toggle(presetId, isMember)
 
     init {
         viewModelScope.launch(dispatchers.io) {

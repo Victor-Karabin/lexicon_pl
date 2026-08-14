@@ -92,6 +92,8 @@
     <string name="splash_title">Lexicon</string>
     <string name="splash_tagline">Polish vocabulary, one session at a time</string>
     <string name="vocabulary_delete">Delete</string>
+    <string name="word_change_presets">Presets</string>
+    <string name="word_change_presets_title">Presets for “%1$s”</string>
     <string name="vocabulary_deleted">Deleted “%1$s”</string>
     <string name="vocabulary_undo">Undo</string>
     <string name="course_title">Course</string>
@@ -116,6 +118,10 @@
     <string name="exercise_repeat_hint">Listen, then say each word out loud.</string>
     <string name="exercise_audio_unavailable">This recording could not be loaded.</string>
     <string name="lesson_not_found">This lesson is no longer in the course.</string>
+    <plurals name="word_change_presets_count">
+        <item quantity="one">In %1$d preset. A word can be in several.</item>
+        <item quantity="other">In %1$d presets. A word can be in several.</item>
+    </plurals>
     <plurals name="exercise_question_count">
         <item quantity="one">%1$d question</item>
         <item quantity="other">%1$d questions</item>
