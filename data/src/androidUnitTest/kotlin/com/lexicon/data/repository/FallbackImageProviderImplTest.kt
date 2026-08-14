@@ -70,4 +70,56 @@ class FallbackImageProviderImplTest {
         runTest {
             assertNull(FallbackImageProviderImpl(emptyList()).searchImage("kot"))
         }
+
+    @Test
+    fun `candidates are pooled across sources rather than taken from the first that answers`() =
+        runTest {
+            coEvery { pexels.searchImageUrls("kot", any()) } returns listOf("a", "b")
+            coEvery { pixabay.searchImageUrls("kot", any()) } returns listOf("c", "d")
+
+            val result = provider.searchImages("kot", count = 3)
+
+            // Four pictures from two libraries beat three from one.
+            assertEquals(listOf("a", "b", "c"), result)
+        }
+
+    @Test
+    fun `asking again offers what has not been shown yet`() =
+        runTest {
+            coEvery { pexels.searchImageUrls("kot", any()) } returns listOf("a", "b", "c", "d", "e", "f")
+
+            assertEquals(listOf("a", "b", "c"), provider.searchImages("kot", count = 3))
+            assertEquals(listOf("d", "e", "f"), provider.searchImages("kot", count = 3, skip = 3))
+        }
+
+    @Test
+    fun `the same picture from two libraries is only offered once`() =
+        runTest {
+            coEvery { pexels.searchImageUrls("kot", any()) } returns listOf("a", "b")
+            coEvery { pixabay.searchImageUrls("kot", any()) } returns listOf("b", "c")
+
+            assertEquals(listOf("a", "b", "c"), provider.searchImages("kot", count = 3))
+        }
+
+    @Test
+    fun `sources past the ones that filled the ask are left alone`() =
+        runTest {
+            coEvery { pexels.searchImageUrls("kot", any()) } returns listOf("a", "b", "c")
+
+            provider.searchImages("kot", count = 3)
+
+            coVerify(exactly = 0) { pixabay.searchImageUrls(any(), any()) }
+        }
+
+    @Test
+    fun `running out of pictures is a short list rather than a failure`() =
+        runTest {
+            coEvery { pexels.searchImageUrls(any(), any()) } returns emptyList()
+            coEvery { pixabay.searchImageUrls(any(), any()) } returns listOf("a")
+            coEvery { unsplash.searchImageUrls(any(), any()) } returns emptyList()
+            coEvery { openverse.searchImageUrls(any(), any()) } returns emptyList()
+
+            assertEquals(listOf("a"), provider.searchImages("kot", count = 3))
+            assertEquals(emptyList<String>(), provider.searchImages("kot", count = 3, skip = 3))
+        }
 }

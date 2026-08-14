@@ -4,6 +4,7 @@ import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.SettingsRepository
 import com.lexicon.boundary.TrainingHistoryRepository
+import com.lexicon.boundary.Translator
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.Clock
@@ -25,8 +26,10 @@ import com.lexicon.data.local.VocabularySyncStore
 import com.lexicon.data.local.buildAppDatabase
 import com.lexicon.data.local.createDataStore
 import com.lexicon.data.repository.CachingImageProviderImpl
+import com.lexicon.data.repository.CorpusTranslatorImpl
 import com.lexicon.data.repository.CourseRepositoryImpl
 import com.lexicon.data.repository.FallbackImageProviderImpl
+import com.lexicon.data.repository.FallbackTranslatorImpl
 import com.lexicon.data.repository.TrainingHistoryRepositoryImpl
 import com.lexicon.data.repository.VocabularyPresetRepositoryImpl
 import com.lexicon.data.repository.VocabularyRepositoryImpl
@@ -39,6 +42,13 @@ import org.koin.dsl.module
 
 internal val settingsDataStoreQualifier = named(SETTINGS_STORE_NAME)
 internal val vocabularySyncDataStoreQualifier = named(VOCABULARY_SYNC_STORE_NAME)
+
+/**
+ * The ordered translators [FallbackTranslatorImpl] works through. Qualified because
+ * that class is itself bound as a [Translator]: without it the list and the thing
+ * built from the list are both reachable as the same type.
+ */
+val translatorChainQualifier = named("translator-chain")
 
 /**
  * Everything in the data layer that is the same on every platform. What is not —
@@ -71,6 +81,11 @@ val dataModule = module {
 
     // The source list itself is platform-supplied; the fallback logic is not.
     singleOf(::FallbackImageProviderImpl)
+
+    // Same split for translation: the corpus lookup works anywhere, while which
+    // remote service is configured is the platform's business.
+    singleOf(::CorpusTranslatorImpl)
+    single<Translator> { FallbackTranslatorImpl(get(translatorChainQualifier)) }
 
     factoryOf(::VocabularySeedAssetLoader)
     factoryOf(::VocabularyPresetAssetLoader)

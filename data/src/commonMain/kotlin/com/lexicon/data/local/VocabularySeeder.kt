@@ -36,7 +36,9 @@ class VocabularySeeder(
 
     private suspend fun reconcile(): SyncOutcomeBoundary {
         val asset = vocabularySeedAssetLoader.load()
-        val existing = wordDao.getAll().associateBy { it.id }
+        // A word the learner wrote is in no asset, so the diff below would read it as
+        // one the asset had dropped and delete it. It is not the asset's to reconcile.
+        val existing = wordDao.getAll().filterNot { it.isUserCreated }.associateBy { it.id }
 
         if (existing.isEmpty()) {
             wordDao.insertAll(asset)

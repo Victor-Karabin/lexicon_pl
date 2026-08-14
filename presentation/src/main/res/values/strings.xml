@@ -95,6 +95,37 @@
     <string name="word_change_presets_title">Presets for “%1$s”</string>
     <string name="vocabulary_deleted">Deleted “%1$s”</string>
     <string name="vocabulary_undo">Undo</string>
+    <!-- Adding a word or a preset by hand. -->
+    <string name="vocabulary_add">Add</string>
+    <string name="vocabulary_add_word">Add word</string>
+    <string name="vocabulary_add_preset">Add preset</string>
+    <string name="create_save">Save</string>
+
+    <string name="create_preset_title">New preset</string>
+    <string name="create_preset_name">Name</string>
+    <string name="create_preset_description">Description (optional)</string>
+    <string name="create_preset_icon">Icon</string>
+    <string name="create_preset_color">Colour</string>
+    <string name="create_preset_name_missing">Give the preset a name.</string>
+    <string name="create_preset_saved">Added “%1$s”</string>
+
+    <string name="create_word_title">New word</string>
+    <string name="create_word_base">English</string>
+    <string name="create_word_translation">Polish</string>
+    <string name="create_word_transcription">Pronunciation (optional)</string>
+    <string name="create_word_transcription_hint">ˈvɔda</string>
+    <string name="create_word_image">Picture</string>
+    <string name="create_word_image_more">More</string>
+    <string name="create_word_image_none">Type a word to look for a picture.</string>
+    <string name="create_word_image_empty">No pictures were found for this word.</string>
+    <string name="create_word_image_selected">Selected picture</string>
+    <string name="create_word_presets">Presets (optional)</string>
+    <string name="create_word_text_missing">Type the Polish word.</string>
+    <string name="create_word_translation_missing">Type the English word.</string>
+    <string name="create_word_exists">“%1$s” is already in your vocabulary.</string>
+    <string name="create_word_saved">Added “%1$s”</string>
+    <string name="create_translating">Translating…</string>
+
     <string name="course_title">Course</string>
     <string name="course_empty">The course could not be loaded.</string>
     <string name="course_progress">%1$d of %2$d lessons done</string>

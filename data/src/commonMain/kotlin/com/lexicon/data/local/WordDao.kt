@@ -85,6 +85,17 @@ interface WordDao {
     @Insert
     suspend fun insertAll(words: List<WordEntity>)
 
+    @Insert
+    suspend fun insert(word: WordEntity)
+
+    /** Lowest id in the table, which [nextUserWordId] counts down from. */
+    @Query("SELECT MIN(id) FROM words")
+    suspend fun lowestId(): Long?
+
+    /** An existing word with the same Polish text, so the same word is not added twice. */
+    @Query("SELECT * FROM words WHERE text = :text COLLATE NOCASE LIMIT 1")
+    suspend fun findByText(text: String): WordEntity?
+
     /**
      * Applies a seed-asset diff as one write: an interrupted app process can no
      * longer leave the added/removed/changed rows partially committed.

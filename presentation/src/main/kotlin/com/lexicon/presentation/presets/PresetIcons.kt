@@ -137,3 +137,48 @@ private val PRESET_ICONS: Map<String, ImageVector> = mapOf(
 )
 
 fun presetIconFor(name: String?): ImageVector = PRESET_ICONS[name] ?: Icons.Default.Category
+
+/**
+ * The icons offered when making a preset — a readable shortlist rather than all
+ * sixty-odd above, which map many names onto the same drawing (three of them are
+ * [Icons.Default.Bookmarks]) and would show up as duplicates in a picker.
+ */
+val PRESET_ICON_CHOICES: List<String> = listOf(
+    "category",
+    "favorite",
+    "chat",
+    "restaurant",
+    "home",
+    "school",
+    "flight",
+    "shopping_cart",
+    "pets",
+    "music_note",
+    "fitness_center",
+    "local_cafe",
+    "family_restroom",
+    "business_center",
+    "computer",
+    "sports_soccer",
+    "local_florist",
+    "wb_sunny",
+    "movie",
+    "public",
+)
+
+/**
+ * The colours offered when making a preset: the ten the shipped catalogue already
+ * uses, so a hand-made preset sits alongside the others rather than standing out.
+ */
+val PRESET_COLOR_CHOICES: List<String> = listOf(
+    "#2E7D32",
+    "#EF6C00",
+    "#0277BD",
+    "#6A1B9A",
+    "#AD1457",
+    "#00695C",
+    "#4527A0",
+    "#5D4037",
+    "#37474F",
+    "#455A64",
+)

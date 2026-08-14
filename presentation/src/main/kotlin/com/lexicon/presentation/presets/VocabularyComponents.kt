@@ -51,6 +51,22 @@ fun VocabularySearchField(
     )
 }
 
+/**
+ * The transcription and CEFR band under a word, or null when it has neither.
+ *
+ * Every shipped word has both. A word the learner added has no band and may have no
+ * transcription, and empty brackets read as something having gone wrong rather than
+ * as something simply not being there.
+ */
+private fun PresetWord.detailLine(): String? {
+    val phonetic = transcription.takeIf { it.isNotBlank() }?.let { "[$it]" }
+    val band = cefr?.name
+    return when {
+        phonetic != null && band != null -> "$phonetic  ·  $band"
+        else -> phonetic ?: band
+    }
+}
+
 @Composable
 fun VocabularyWordRow(
     word: PresetWord,
@@ -78,11 +94,13 @@ fun VocabularyWordRow(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            Text(
-                text = word.cefr?.let { "[${word.transcription}]  ·  ${it.name}" } ?: "[${word.transcription}]",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+            word.detailLine()?.let { detail ->
+                Text(
+                    text = detail,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
         IconButton(onClick = onPronounce) {
             Icon(

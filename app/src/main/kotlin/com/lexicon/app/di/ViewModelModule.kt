@@ -13,6 +13,8 @@ import com.lexicon.presentation.imagetest.ImageTestViewModel
 import com.lexicon.presentation.main.SplashViewModel
 import com.lexicon.presentation.memorycards.MemoryCardsViewModel
 import com.lexicon.presentation.mix.MixViewModel
+import com.lexicon.presentation.presets.CreatePresetViewModel
+import com.lexicon.presentation.presets.CreateWordViewModel
 import com.lexicon.presentation.presets.PresetDetailViewModel
 import com.lexicon.presentation.presets.VocabularyViewModel
 import com.lexicon.presentation.pronunciation.PronunciationViewModel
@@ -40,6 +42,8 @@ val viewModelModule = module {
     viewModelOf(::MemoryCardsViewModel)
     viewModelOf(::MixViewModel)
     viewModelOf(::PresetDetailViewModel)
+    viewModelOf(::CreateWordViewModel)
+    viewModelOf(::CreatePresetViewModel)
     viewModelOf(::VocabularyViewModel)
     viewModelOf(::PronunciationViewModel)
     viewModelOf(::PuzzleViewModel)

@@ -8,7 +8,7 @@ interface UnsplashApi {
     @GET("search/photos")
     suspend fun search(
         @Query("query") query: String,
-        @Query("per_page") perPage: Int = 1,
+        @Query("per_page") perPage: Int = IMAGE_CANDIDATE_COUNT,
     ): UnsplashSearchResponse
 }
 

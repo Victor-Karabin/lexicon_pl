@@ -80,24 +80,37 @@ fun ChangePresetsSheet(
                     CircularProgressIndicator()
                 }
             } else {
-                PresetChips(state.memberships, state.languageTag, onToggle)
+                PresetChips(
+                    memberships = state.memberships,
+                    languageTag = state.languageTag,
+                    onToggle = onToggle,
+                    // The sheet scrolls; the form it is shared with does not.
+                    modifier = Modifier
+                        .heightIn(max = SheetMaxHeight)
+                        .verticalScroll(rememberScrollState()),
+                )
             }
         }
     }
 }
 
+/**
+ * Presets as a grid of chips, a lit one meaning the word is in it.
+ *
+ * Shared with the new-word form, where the same question is asked of a word that
+ * does not exist yet — so this knows nothing about persisting a choice, only about
+ * showing one.
+ */
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
-private fun PresetChips(
+fun PresetChips(
     memberships: List<PresetMembership>,
     languageTag: String,
     onToggle: (PresetId, Boolean) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     FlowRow(
-        modifier = Modifier
-            .fillMaxWidth()
-            .heightIn(max = SheetMaxHeight)
-            .verticalScroll(rememberScrollState()),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
     ) {

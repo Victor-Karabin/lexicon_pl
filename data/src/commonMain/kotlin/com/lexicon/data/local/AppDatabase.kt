@@ -23,7 +23,7 @@ import androidx.room.RoomDatabaseConstructor
         LessonExerciseEntity::class,
         LessonExerciseItemEntity::class,
     ],
-    version = 16,
+    version = 17,
     exportSchema = false,
 )
 @ConstructedBy(AppDatabaseConstructor::class)

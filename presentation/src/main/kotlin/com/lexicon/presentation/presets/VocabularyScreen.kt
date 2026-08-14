@@ -63,6 +63,8 @@ private val IconBadgeSize = 44.dp
 @Composable
 fun VocabularyScreen(
     onPresetSelected: (PresetId) -> Unit,
+    onAddWord: () -> Unit,
+    onAddPreset: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: VocabularyViewModel = koinViewModel(),
 ) {
@@ -97,6 +99,8 @@ fun VocabularyScreen(
         onWordDeleted = viewModel::onWordDeleted,
         onChangePresets = viewModel::onChangePresetsRequested,
         onPresetDeleted = viewModel::onPresetDeleted,
+        onAddWord = onAddWord,
+        onAddPreset = onAddPreset,
         modifier = modifier,
     )
 
@@ -123,11 +127,14 @@ private fun VocabularyContent(
     onWordDeleted: (PresetWord) -> Unit,
     onChangePresets: (PresetWord) -> Unit,
     onPresetDeleted: (VocabularyPreset) -> Unit,
+    onAddWord: () -> Unit,
+    onAddPreset: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier,
         snackbarHost = { SnackbarHost(snackbarHostState) },
+        floatingActionButton = { AddFab(onAddWord = onAddWord, onAddPreset = onAddPreset) },
         contentWindowInsets = WindowInsets(0),
     ) { padding ->
         VocabularyBody(
@@ -387,6 +394,8 @@ private fun VocabularyPresetsPreview() {
             onWordDeleted = {},
             onChangePresets = {},
             onPresetDeleted = {},
+            onAddWord = {},
+            onAddPreset = {},
             snackbarHostState = SnackbarHostState(),
         )
     }
@@ -416,6 +425,8 @@ private fun VocabularyWordSearchPreview() {
             onWordDeleted = {},
             onChangePresets = {},
             onPresetDeleted = {},
+            onAddWord = {},
+            onAddPreset = {},
             snackbarHostState = SnackbarHostState(),
         )
     }
@@ -437,6 +448,8 @@ private fun VocabularyNoMatchingWordsPreview() {
             onWordDeleted = {},
             onChangePresets = {},
             onPresetDeleted = {},
+            onAddWord = {},
+            onAddPreset = {},
             snackbarHostState = SnackbarHostState(),
         )
     }

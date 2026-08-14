@@ -104,10 +104,15 @@ fun PresetSummary(
 private const val DESCRIPTION_MAX_LINES = 2
 
 @Composable
-internal fun VocabularyPreset.accentColor(): Color {
-    val fallback = MaterialTheme.colorScheme.primary
-    val hex = color?.removePrefix("#") ?: return fallback
-    val parsed = hex.toLongOrNull(radix = 16) ?: return fallback
+internal fun VocabularyPreset.accentColor(): Color = color.toAccentColor(MaterialTheme.colorScheme.primary)
+
+/**
+ * A `#RRGGBB` from the catalogue as a colour, opaque, falling back when it is
+ * absent or malformed. Shared with the colour picker in the new-preset form, which
+ * asks the same question of a swatch that has no preset behind it yet.
+ */
+internal fun String?.toAccentColor(fallback: Color): Color {
+    val parsed = this?.removePrefix("#")?.toLongOrNull(radix = 16) ?: return fallback
     return Color(parsed or 0xFF000000L)
 }
 
