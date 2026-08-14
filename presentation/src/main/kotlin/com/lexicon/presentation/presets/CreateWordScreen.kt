@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -51,8 +50,9 @@ import kotlinx.collections.immutable.toImmutableList
 import org.koin.androidx.compose.koinViewModel
 import kotlin.time.Duration.Companion.minutes
 
+private const val PRESET_CHIP_LINES = 2
+
 private val CandidateSize = 104.dp
-private val SaveBarElevation = 3.dp
 private val SelectedBorder = 3.dp
 private val ImageRowHeight = 112.dp
 
@@ -100,16 +100,14 @@ private fun CreateWordContent(
         // Pinned: the preset chips run to many rows, and Save should not be a scroll
         // away from the fields that enable it.
         bottomBar = {
-            Surface(color = MaterialTheme.colorScheme.surface, tonalElevation = SaveBarElevation) {
-                Button(
-                    onClick = onSave,
-                    enabled = uiState.canSave,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(Dimens.spacingMedium),
-                ) {
-                    Text(stringResource(R.string.create_save))
-                }
+            TextButton(
+                onClick = onSave,
+                enabled = uiState.canSave,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimens.spacingMedium),
+            ) {
+                Text(stringResource(R.string.create_save))
             }
         },
     ) { padding ->
@@ -168,6 +166,7 @@ private fun CreateWordContent(
                     memberships = uiState.memberships,
                     languageTag = uiState.languageTag,
                     onToggle = onPresetToggled,
+                    collapsedLines = PRESET_CHIP_LINES,
                 )
             }
         }

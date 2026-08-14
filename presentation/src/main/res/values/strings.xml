@@ -11,6 +11,8 @@
     <string name="expected_format">Expected: %1$s</string>
     <string name="hint_format">Hint: %1$s</string>
     <string name="action_listen_again">Listen again</string>
+    <string name="action_more">More</string>
+    <string name="action_less">Less</string>
 
     <!-- Dictation -->
     <string name="dictation_title">Dictation</string>

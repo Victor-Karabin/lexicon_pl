@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -56,14 +57,15 @@ fun PresetSummary(
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            val accent = preset.accentColor()
             Box(
-                modifier = Modifier.size(IconBadgeSize).background(preset.accentColor(), CircleShape),
+                modifier = Modifier.size(IconBadgeSize).background(accent, CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     imageVector = presetIconFor(preset.icon),
                     contentDescription = null,
-                    tint = Color.White,
+                    tint = onAccentColor(accent),
                 )
             }
             Text(
@@ -115,5 +117,18 @@ internal fun String?.toAccentColor(fallback: Color): Color {
     val parsed = this?.removePrefix("#")?.toLongOrNull(radix = 16) ?: return fallback
     return Color(parsed or 0xFF000000L)
 }
+
+/**
+ * Black or white, whichever can be read on [accent].
+ *
+ * The icon used to be white whatever it sat on, which is fine for the dark colours
+ * the catalogue ships and illegible on a yellow — so the palette could not offer
+ * one. Choosing the ink instead of restricting the paint is what lets the warm end
+ * of the palette exist at all.
+ */
+internal fun onAccentColor(accent: Color): Color = if (accent.luminance() > LIGHT_ACCENT_THRESHOLD) Color.Black else Color.White
+
+/** Above this, white-on-colour drops under about 3:1 and black wins. */
+private const val LIGHT_ACCENT_THRESHOLD = 0.34f
 
 internal fun Int.grouped(): String = NumberFormat.getIntegerInstance().format(this)

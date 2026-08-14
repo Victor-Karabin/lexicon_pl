@@ -1,10 +1,7 @@
 package com.lexicon.presentation.presets
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -33,6 +30,7 @@ import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetMembership
 import com.lexicon.interactors.presets.resolve
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.ExpandableFlowRow
 import com.lexicon.presentation.theme.Dimens
 
 private val SheetMaxHeight = 420.dp
@@ -100,19 +98,25 @@ fun ChangePresetsSheet(
  * Shared with the new-word form, where the same question is asked of a word that
  * does not exist yet — so this knows nothing about persisting a choice, only about
  * showing one.
+ *
+ * [collapsedLines] keeps seventy-odd chips from burying the rest of a form; the
+ * sheet, which has nothing below them, passes null and shows the lot.
  */
-@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PresetChips(
     memberships: List<PresetMembership>,
     languageTag: String,
     onToggle: (PresetId, Boolean) -> Unit,
     modifier: Modifier = Modifier,
+    collapsedLines: Int? = null,
 ) {
-    FlowRow(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+    ExpandableFlowRow(
+        // Int.MAX_VALUE rather than a branch here: no indicator is drawn unless a
+        // row is actually hidden, so "all of them" needs no special case.
+        collapsedLines = collapsedLines ?: Int.MAX_VALUE,
+        modifier = modifier,
+        verticalSpacing = ChipRowSpacing,
     ) {
         memberships.forEach { membership ->
             FilterChip(
@@ -132,3 +136,6 @@ fun PresetChips(
         }
     }
 }
+
+/** Chips carry their own padding, so the rows sit closer than the usual spacing. */
+private val ChipRowSpacing = 2.dp
