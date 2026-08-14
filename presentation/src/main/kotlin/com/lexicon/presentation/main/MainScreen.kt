@@ -2,9 +2,9 @@ package com.lexicon.presentation.main
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.EventNote
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Dashboard
-import androidx.compose.material.icons.filled.EventNote
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,7 +29,7 @@ private enum class MainTab(val label: String, val icon: ImageVector) {
     DASHBOARD("Dashboard", Icons.Default.Dashboard),
     TRAININGS("Trainings", Icons.Default.School),
     VOCABULARY("Vocabulary", Icons.AutoMirrored.Filled.MenuBook),
-    PLAN("Plan", Icons.Default.EventNote),
+    PLAN("Plan", Icons.AutoMirrored.Filled.EventNote),
     SETTINGS("Settings", Icons.Default.Settings),
 }
 
