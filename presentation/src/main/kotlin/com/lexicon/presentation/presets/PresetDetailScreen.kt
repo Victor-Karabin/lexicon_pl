@@ -31,6 +31,7 @@ import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
+import com.lexicon.interactors.presets.resolve
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
@@ -99,10 +100,8 @@ private fun PresetDetailContent(
     onChangePresets: (PresetWord) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    // Once loaded the header carries the preset's name, the way its card does in the
-    // Vocabulary tab, so the bar would only be repeating it.
     val title = when (uiState) {
-        is PresetDetailUiState.Loaded -> ""
+        is PresetDetailUiState.Loaded -> uiState.preset.title.resolve(uiState.languageTag)
         else -> stringResource(R.string.preset_detail_title)
     }
 
@@ -164,13 +163,14 @@ private fun PresetHeader(
     uiState: PresetDetailUiState.Loaded,
     onFavouriteToggled: (PresetFavouriteState) -> Unit,
 ) {
-    // Bare: the card's rounded surface belongs to a list of presets, not to the one
-    // preset you are already inside.
+    // Bare, and without the name: the card's rounded surface belongs to a list of
+    // presets rather than the one you are already inside, and the bar names it.
     PresetSummary(
         preset = uiState.preset,
         languageTag = uiState.languageTag,
         favouriteState = uiState.favouriteState,
         onFavouriteToggled = { onFavouriteToggled(uiState.favouriteState) },
+        showTitle = false,
     )
 }
 

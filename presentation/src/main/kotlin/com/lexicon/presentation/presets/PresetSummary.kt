@@ -38,6 +38,8 @@ private val IconBadgeSize = 44.dp
  * bare at the top of the preset's own screen. Only the surface around it differs, so
  * only that is left to the caller; the two had already drifted apart on icon size,
  * text styles and number formatting before this was shared.
+ *
+ * [showTitle] is off on the preset's own screen, where the top bar names it already.
  */
 @Composable
 fun PresetSummary(
@@ -46,6 +48,7 @@ fun PresetSummary(
     favouriteState: PresetFavouriteState,
     onFavouriteToggled: () -> Unit,
     modifier: Modifier = Modifier,
+    showTitle: Boolean = true,
 ) {
     Row(
         modifier = modifier.fillMaxWidth().padding(Dimens.spacingMedium),
@@ -77,11 +80,13 @@ fun PresetSummary(
         }
 
         Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = preset.title.resolve(languageTag),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold,
-            )
+            if (showTitle) {
+                Text(
+                    text = preset.title.resolve(languageTag),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            }
             Text(
                 text = preset.description.resolve(languageTag),
                 style = MaterialTheme.typography.bodySmall,
