@@ -1,6 +1,7 @@
 package com.lexicon.presentation.presets
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -68,6 +70,7 @@ private fun PresetWord.detailLine(): String? {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun VocabularyWordRow(
     word: PresetWord,
@@ -75,18 +78,35 @@ fun VocabularyWordRow(
     onPronounce: () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    isSelecting: Boolean = false,
+    isSelected: Boolean = false,
+    onLongClick: (() -> Unit)? = null,
 ) {
     Row(
         // The whole row opens the word for editing, save for the two buttons at its
-        // end, which keep their own taps.
-        modifier = modifier.fillMaxWidth().clickable(onClick = onClick).padding(
-            start = Dimens.spacingMedium,
-            end = Dimens.spacingSmall,
-            top = Dimens.spacingSmall,
-            bottom = Dimens.spacingSmall,
-        ),
+        // end, which keep their own taps. While words are being picked out to delete,
+        // that same tap ticks the box instead — opening an editor mid-selection is
+        // never what was meant.
+        modifier = modifier
+            .fillMaxWidth()
+            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
+            .padding(
+                start = if (isSelecting) Dimens.spacingSmall else Dimens.spacingMedium,
+                end = Dimens.spacingSmall,
+                top = Dimens.spacingSmall,
+                bottom = Dimens.spacingSmall,
+            ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        if (isSelecting) {
+            Checkbox(
+                checked = isSelected,
+                // The row already handles the tap; a checkbox with its own would let
+                // the two fight over a press that lands on the box itself.
+                onCheckedChange = null,
+                modifier = Modifier.padding(end = Dimens.spacingSmall),
+            )
+        }
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = word.text,

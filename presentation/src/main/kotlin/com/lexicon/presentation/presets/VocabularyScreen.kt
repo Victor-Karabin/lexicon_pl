@@ -34,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -72,9 +73,15 @@ fun VocabularyScreen(
     val uiState by viewModel.uiState.collectAsState()
     val changePresets by viewModel.changePresetsState.collectAsState()
 
+    val selection = rememberWordSelection()
+
     val snackbarHostState = remember { SnackbarHostState() }
     val deleted = (uiState as? VocabularyUiState.Loaded)?.lastDeleted
-    val deletedMessage = deleted?.let { stringResource(R.string.vocabulary_deleted, it.label) }
+    val deletedMessage = when (deleted) {
+        null -> null
+        is DeletedItem.Words -> pluralStringResource(R.plurals.vocabulary_deleted_words, deleted.ids.size, deleted.ids.size)
+        else -> stringResource(R.string.vocabulary_deleted, deleted.label)
+    }
     val undoLabel = stringResource(R.string.vocabulary_undo)
 
     LaunchedEffect(deleted) {
@@ -103,6 +110,11 @@ fun VocabularyScreen(
         onEditWord = onEditWord,
         onAddWord = onAddWord,
         onAddPreset = onAddPreset,
+        selection = selection,
+        onDeleteSelected = {
+            viewModel.onSelectedWordsDeleted(selection.selected)
+            selection.clear()
+        },
         modifier = modifier,
     )
 
@@ -132,29 +144,44 @@ private fun VocabularyContent(
     onEditWord: (VocabularyId) -> Unit,
     onAddWord: () -> Unit,
     onAddPreset: () -> Unit,
+    selection: WordSelection,
+    onDeleteSelected: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier,
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        floatingActionButton = { AddFab(onAddWord = onAddWord, onAddPreset = onAddPreset) },
+        // The add button would be a strange thing to offer while words are being
+        // picked out to remove.
+        floatingActionButton = {
+            if (!selection.isActive) AddFab(onAddWord = onAddWord, onAddPreset = onAddPreset)
+        },
         contentWindowInsets = WindowInsets(0),
     ) { padding ->
-        VocabularyBody(
-            uiState = uiState,
-            onQueryChanged = onQueryChanged,
-            onCefrToggled = onCefrToggled,
-            onFiltersCleared = onFiltersCleared,
-            onPresetSelected = onPresetSelected,
-            onPresetFavouriteToggled = onPresetFavouriteToggled,
-            onWordFavouriteToggled = onWordFavouriteToggled,
-            onPronounceWord = onPronounceWord,
-            onWordDeleted = onWordDeleted,
-            onChangePresets = onChangePresets,
-            onPresetDeleted = onPresetDeleted,
-            onEditWord = onEditWord,
-            modifier = Modifier.padding(padding),
-        )
+        Column(modifier = Modifier.padding(padding)) {
+            if (selection.isActive) {
+                WordSelectionBar(
+                    count = selection.count,
+                    onDelete = onDeleteSelected,
+                    onCancel = selection::clear,
+                )
+            }
+            VocabularyBody(
+                uiState = uiState,
+                onQueryChanged = onQueryChanged,
+                onCefrToggled = onCefrToggled,
+                onFiltersCleared = onFiltersCleared,
+                onPresetSelected = onPresetSelected,
+                onPresetFavouriteToggled = onPresetFavouriteToggled,
+                onWordFavouriteToggled = onWordFavouriteToggled,
+                onPronounceWord = onPronounceWord,
+                onWordDeleted = onWordDeleted,
+                onChangePresets = onChangePresets,
+                onPresetDeleted = onPresetDeleted,
+                onEditWord = onEditWord,
+                selection = selection,
+            )
+        }
     }
 }
 
@@ -172,6 +199,7 @@ private fun VocabularyBody(
     onChangePresets: (PresetWord) -> Unit,
     onPresetDeleted: (VocabularyPreset) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
+    selection: WordSelection,
     modifier: Modifier = Modifier,
 ) {
     when (uiState) {
@@ -195,7 +223,7 @@ private fun VocabularyBody(
                 FilterRow(uiState, onCefrToggled, onFiltersCleared)
 
                 if (uiState.isSearchingWords) {
-                    WordResults(uiState, onWordFavouriteToggled, onPronounceWord, onWordDeleted, onChangePresets, onEditWord)
+                    WordResults(uiState, onWordFavouriteToggled, onPronounceWord, onWordDeleted, onChangePresets, onEditWord, selection)
                 } else {
                     PresetResults(uiState, onPresetSelected, onPresetFavouriteToggled, onPresetDeleted)
                 }
@@ -211,6 +239,7 @@ private fun WordResults(
     onWordDeleted: (PresetWord) -> Unit,
     onChangePresets: (PresetWord) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
+    selection: WordSelection,
 ) {
     if (uiState.hasNoMatchingWords) {
         Message(stringResource(R.string.vocabulary_search_no_matches, uiState.query))
@@ -224,6 +253,7 @@ private fun WordResults(
             onChangePresets = onChangePresets,
             onDelete = onWordDeleted,
             onEdit = { onEditWord(it.id) },
+            selection = selection,
         )
     }
 }
@@ -404,6 +434,8 @@ private fun VocabularyPresetsPreview() {
             onEditWord = {},
             onAddWord = {},
             onAddPreset = {},
+            selection = WordSelection(),
+            onDeleteSelected = {},
             snackbarHostState = SnackbarHostState(),
         )
     }
@@ -436,6 +468,8 @@ private fun VocabularyWordSearchPreview() {
             onEditWord = {},
             onAddWord = {},
             onAddPreset = {},
+            selection = WordSelection(),
+            onDeleteSelected = {},
             snackbarHostState = SnackbarHostState(),
         )
     }
@@ -460,6 +494,8 @@ private fun VocabularyNoMatchingWordsPreview() {
             onEditWord = {},
             onAddWord = {},
             onAddPreset = {},
+            selection = WordSelection(),
+            onDeleteSelected = {},
             snackbarHostState = SnackbarHostState(),
         )
     }

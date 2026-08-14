@@ -13,6 +13,9 @@ sealed interface DeletedItem {
 
     data class Word(val id: VocabularyId, override val label: String) : DeletedItem
 
+    /** Several at once, from the selection bar. [label] is unused; the count is. */
+    data class Words(val ids: List<VocabularyId>, override val label: String = "") : DeletedItem
+
     data class Preset(val id: PresetId, override val label: String) : DeletedItem
 }
 
