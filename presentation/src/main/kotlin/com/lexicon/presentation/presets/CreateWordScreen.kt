@@ -1,5 +1,6 @@
 package com.lexicon.presentation.presets
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -37,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -54,9 +56,11 @@ import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconTheme
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import org.koin.androidx.compose.koinViewModel
+import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.minutes
 
 private const val PRESET_CHIP_LINES = 2
@@ -211,12 +215,19 @@ private fun ImageSection(
         }
     }
 
+    val scroll = rememberScrollState()
+    RevealNewCandidates(
+        candidates = uiState.imageCandidates,
+        scroll = scroll,
+        leadingTiles = 1 + uiState.ownImages.size,
+    )
+
     // The row is never empty: adding a picture is always on offer, so the + leads it
     // whether or not a search has run or found anything.
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .horizontalScroll(rememberScrollState()),
+            .horizontalScroll(scroll),
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
     ) {
         AddImageTile(onPicked = onOwnImageAdded)
@@ -257,6 +268,37 @@ private fun ImageSection(
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+    }
+}
+
+/**
+ * Brings a fresh batch of pictures into view.
+ *
+ * More appends past the right edge, where the whole point of asking for more is not
+ * visible. The row scrolls so the first of the new ones sits at the left, which shows
+ * the batch rather than only its last picture.
+ *
+ * Appending is told from replacing by whether the pictures already shown are still the
+ * start of the list: More keeps them and adds after, a new search throws them away. A
+ * replaced list scrolls back to the beginning, since being left in the middle of a run
+ * of pictures that are now different is worse than not scrolling at all.
+ */
+@Composable
+private fun RevealNewCandidates(
+    candidates: ImmutableList<String>,
+    scroll: ScrollState,
+    leadingTiles: Int,
+) {
+    val tileWidth = with(LocalDensity.current) { (CandidateSize + Dimens.spacingSmall).toPx() }
+    var shown by remember { mutableStateOf<List<String>>(emptyList()) }
+
+    LaunchedEffect(candidates) {
+        val appended = candidates.size > shown.size && candidates.take(shown.size) == shown
+        when {
+            appended -> scroll.animateScrollTo(((leadingTiles + shown.size) * tileWidth).roundToInt())
+            candidates != shown -> scroll.scrollTo(0)
+        }
+        shown = candidates
     }
 }
 
