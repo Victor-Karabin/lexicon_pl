@@ -33,11 +33,13 @@ import com.lexicon.presentation.presets.CreateWordScreen
 import com.lexicon.presentation.presets.PRESET_ID_ARG
 import com.lexicon.presentation.presets.PresetDetailScreen
 import com.lexicon.presentation.presets.WORD_ID_ARG
+import com.lexicon.presentation.program.CreateProgramScreen
 import com.lexicon.presentation.program.PROGRAM_ID_ARG
-import com.lexicon.presentation.program.ProgramScreen
+import com.lexicon.presentation.program.WordCardsScreen
 import com.lexicon.presentation.pronunciation.PronunciationScreen
 import com.lexicon.presentation.puzzle.PuzzleScreen
 import com.lexicon.presentation.trueorfalse.TrueOrFalseScreen
+import com.lexicon.presentation.wordcard.WordCardScreen
 import com.lexicon.presentation.wordmatch.WordMatchScreen
 
 @Composable
@@ -70,15 +72,18 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
                 onTrainingSelected = { route -> navController.navigate(route) },
                 onPresetSelected = { id -> navController.navigate(LexiconDestinations.presetDetail(id)) },
                 onCourseSelected = { id -> navController.navigate(LexiconDestinations.course(id)) },
-                onProgramSelected = { id -> navController.navigate(LexiconDestinations.program(id)) },
+                // A program is its settings: tapping it opens the form that wrote it.
+                onProgramSelected = { id -> navController.navigate(LexiconDestinations.editProgram(id)) },
                 // A program hands back a training and the words for it; the route
                 // that carries a word list to a training already exists for lessons.
                 onStartTraining = { training, wordIds ->
                     navController.navigate(LexiconDestinations.scopedTraining(training, wordIds))
                 },
+                onOpenCards = { id -> navController.navigate(LexiconDestinations.programCards(id)) },
                 onEditWord = { id -> navController.navigate(LexiconDestinations.editWord(id)) },
                 onAddWord = { navController.navigate(LexiconDestinations.CREATE_WORD) },
                 onAddPreset = { navController.navigate(LexiconDestinations.CREATE_PRESET) },
+                onCreateProgram = { navController.navigate(LexiconDestinations.CREATE_PROGRAM) },
             )
         }
 
@@ -101,6 +106,37 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             )
         }
 
+        composable(LexiconDestinations.CREATE_PROGRAM) {
+            CreateProgramScreen(
+                onClose = { navController.popBackStack() },
+                // Nothing starred yet: the study set is built in the Vocabulary tab,
+                // and saying so is less use than going there.
+                onGoToVocabulary = {
+                    navController.navigate(LexiconDestinations.main(MainTab.VOCABULARY)) {
+                        popUpTo(LexiconDestinations.MAIN) { inclusive = true }
+                    }
+                },
+                // Back to the Plan tab, which re-reads on resume and so already shows
+                // the new program among the others.
+                onCreated = { navController.popBackStack() },
+            )
+        }
+
+        composable(
+            route = LexiconDestinations.EDIT_PROGRAM,
+            arguments = listOf(navArgument(PROGRAM_ID_ARG) { type = NavType.StringType }),
+        ) {
+            CreateProgramScreen(
+                onClose = { navController.popBackStack() },
+                onGoToVocabulary = {
+                    navController.navigate(LexiconDestinations.main(MainTab.VOCABULARY)) {
+                        popUpTo(LexiconDestinations.MAIN) { inclusive = true }
+                    }
+                },
+                onCreated = { navController.popBackStack() },
+            )
+        }
+
         composable(LexiconDestinations.CREATE_PRESET) {
             CreatePresetScreen(
                 onClose = { navController.popBackStack() },
@@ -119,10 +155,23 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
         }
 
         composable(
-            route = LexiconDestinations.PROGRAM,
+            route = LexiconDestinations.PROGRAM_CARDS,
             arguments = listOf(navArgument(PROGRAM_ID_ARG) { type = NavType.StringType }),
         ) {
-            ProgramScreen(onClose = { navController.popBackStack() })
+            WordCardsScreen(
+                onClose = { navController.popBackStack() },
+                // Straight from the last card into the day's first training. The deck
+                // comes off the stack with it, so leaving the training lands on the
+                // Dashboard rather than back on cards already met.
+                onStartTraining = { training, wordIds ->
+                    val route = LexiconDestinations.scopedTraining(training, wordIds.map { id -> id.value })
+                    navController.navigate(route) {
+                        popUpTo(LexiconDestinations.PROGRAM_CARDS) { inclusive = true }
+                    }
+                },
+                onFinished = { navController.popBackStack() },
+                onEditWord = { id -> navController.navigate(LexiconDestinations.editWord(id.value)) },
+            )
         }
 
         composable(
@@ -259,6 +308,30 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
             onComplete = onStepSessionComplete(LexiconDestinations.CROSSWORD),
         ) { onComplete ->
             CrosswordScreen(onSessionComplete = onComplete, onClose = closeToMain)
+        }
+        // Word Card has no result to report, so it does not go through the
+        // completion plumbing every other training ends on: it just closes.
+        composable(
+            route = LexiconDestinations.trainingRoute(LexiconDestinations.WORD_CARD),
+            arguments = listOf(
+                navArgument(TRAINING_WORDS_ARG) {
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+            ),
+        ) { entry ->
+            val scopedWords = entry.arguments?.getString(TRAINING_WORDS_ARG).orEmpty()
+            TrainingGate(
+                minimumWords = if (scopedWords.isEmpty()) TrainingRequirements.SINGLE_WORD_STEP else 0,
+                trainingName = trainingDisplayName(LexiconDestinations.WORD_CARD),
+                onClose = closeToMain,
+                onGoToVocabulary = goToVocabulary,
+            ) {
+                WordCardScreen(
+                    onClose = closeToMain,
+                    onEditWord = { id -> navController.navigate(LexiconDestinations.editWord(id)) },
+                )
+            }
         }
         trainingDestination(
             training = LexiconDestinations.MIX,

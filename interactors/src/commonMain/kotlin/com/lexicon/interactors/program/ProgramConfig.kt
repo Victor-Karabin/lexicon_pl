@@ -43,8 +43,8 @@ enum class TargetType {
     /** Consecutive days studied. */
     STREAK,
 
-    /** Percentage, 0-100. */
-    RETENTION,
+    /** Correct answers as a percentage, 0-100. */
+    ACCURACY,
 }
 
 @Serializable
@@ -114,7 +114,18 @@ data class DailyPlanConfig(
     val maxWords: Int? = null,
     val activities: List<ActivityConfig> = emptyList(),
     val weekend: WeekendPlanConfig? = null,
+    /**
+     * The day's turns at the trainings, in the order they come.
+     *
+     * Written out rather than derived: a training appears as many times as the day
+     * should work through it, so how long a day is and what is in it are the one
+     * decision they look like.
+     */
+    val queue: List<String> = emptyList(),
 )
+
+/** How many turns at a training the day asks for, which is what the learner counts down. */
+val DailyPlanConfig.trainingsADay: Int get() = queue.size
 
 @Serializable
 data class WeekendPlanConfig(
@@ -152,7 +163,6 @@ data class ProgramCondition(
 data class ProgressWeights(
     val vocabulary: Int = 100,
     val milestones: Int = 0,
-    val retention: Int = 0,
     val consistency: Int = 0,
     val studyTime: Int = 0,
     val accuracy: Int = 0,

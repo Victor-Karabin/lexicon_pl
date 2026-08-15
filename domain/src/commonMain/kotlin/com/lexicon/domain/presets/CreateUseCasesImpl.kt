@@ -173,6 +173,16 @@ class TranslateWordUseCaseImpl(
     }
 }
 
+class GetPinnedImageUseCaseImpl(
+    private val imageProvider: ImageProvider,
+) : com.lexicon.interactors.presets.GetPinnedImageUseCase {
+    override suspend fun invoke(translation: String): String? {
+        val trimmed = translation.trim()
+        if (trimmed.isEmpty()) return null
+        return runCatching { imageProvider.searchImage(trimmed) }.getOrNull()
+    }
+}
+
 class SearchImageCandidatesUseCaseImpl(
     private val imageProvider: ImageProvider,
 ) : SearchImageCandidatesUseCase {

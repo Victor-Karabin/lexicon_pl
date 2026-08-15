@@ -61,15 +61,19 @@ class TrainingHistoryRepositoryImpl(
         )
 
         val todayEpochDay = clock.todayEpochDay()
-        val quality = result.recallQuality()
-        val nextState = (existing?.toState() ?: ReviewState())
-            .next(quality, todayEpochDay, ReviewSettings())
-        wordReviewDao.upsert(nextState.toEntity(result.vocabularyItemId, result.completedAtEpochMillis))
+        // A word merely shown moves no schedule: the interval a word earns is earned
+        // by answering, and advancing it here would make a glance look like recall.
+        val seen = result.outcome == TrainingResultOutcomeBoundary.SEEN
+        if (!seen) {
+            val nextState = (existing?.toState() ?: ReviewState())
+                .next(result.recallQuality(), todayEpochDay, ReviewSettings())
+            wordReviewDao.upsert(nextState.toEntity(result.vocabularyItemId, result.completedAtEpochMillis))
+        }
 
         studyDayDao.record(
             epochDay = todayEpochDay,
             addedSeconds = secondsSincePreviousAnswer(result.completedAtEpochMillis, previousAnswerAtEpochMillis),
-            wasNew = !wasReview,
+            wasNew = !wasReview && !seen,
             wasCorrect = result.outcome == TrainingResultOutcomeBoundary.CORRECT,
         )
     }
@@ -95,17 +99,9 @@ class TrainingHistoryRepositoryImpl(
         toEpochMillis: Long,
     ): AccuracyBoundary =
         AccuracyBoundary(
-            answers = trainingResultDao.countBetween(fromEpochMillis, toEpochMillis),
+            // Shown-only steps are not answers, so they belong in neither half of it.
+            answers = trainingResultDao.countAnswersBetween(SEEN, fromEpochMillis, toEpochMillis),
             correct = trainingResultDao.countCorrectBetween(CORRECT, fromEpochMillis, toEpochMillis),
-        )
-
-    override suspend fun retentionBetween(
-        fromEpochMillis: Long,
-        toEpochMillis: Long,
-    ): AccuracyBoundary =
-        AccuracyBoundary(
-            answers = trainingResultDao.countReviewsBetween(fromEpochMillis, toEpochMillis),
-            correct = trainingResultDao.countCorrectReviewsBetween(CORRECT, fromEpochMillis, toEpochMillis),
         )
 
     override suspend fun countSessionsBetween(
@@ -113,11 +109,18 @@ class TrainingHistoryRepositoryImpl(
         toEpochMillis: Long,
     ): Int = trainingResultDao.countSessionsBetween(fromEpochMillis, toEpochMillis)
 
+    override suspend fun countSessionsOfTrainingBetween(
+        trainingType: String,
+        fromEpochMillis: Long,
+        toEpochMillis: Long,
+    ): Int = trainingResultDao.countSessionsOfTrainingBetween(trainingType, fromEpochMillis, toEpochMillis)
+
     override suspend fun resultsForWord(wordId: Long): List<TrainingResultBoundary> =
         trainingResultDao.forWord(wordId).map { it.toBoundary() }
 
     private companion object {
         val CORRECT = TrainingResultOutcomeBoundary.CORRECT.name
+        val SEEN = TrainingResultOutcomeBoundary.SEEN.name
     }
 }
 
@@ -130,6 +133,8 @@ private fun TrainingResultBoundary.recallQuality(): RecallQuality =
         TrainingResultOutcomeBoundary.CORRECT -> if (tipUsed) RecallQuality.HESITANT else RecallQuality.PERFECT
         TrainingResultOutcomeBoundary.SKIPPED -> RecallQuality.SKIPPED
         TrainingResultOutcomeBoundary.INCORRECT -> RecallQuality.FORGOTTEN
+        // Never reached: a seen word skips the schedule entirely.
+        TrainingResultOutcomeBoundary.SEEN -> RecallQuality.SKIPPED
     }
 
 private fun TrainingResultEntity.toBoundary(): TrainingResultBoundary =

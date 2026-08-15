@@ -44,9 +44,11 @@ fun MainScreen(
     onCourseSelected: (id: String) -> Unit,
     onProgramSelected: (id: String) -> Unit,
     onStartTraining: (training: String, wordIds: List<Long>) -> Unit,
+    onOpenCards: (programId: String) -> Unit,
     onEditWord: (id: Long) -> Unit,
     onAddWord: () -> Unit,
     onAddPreset: () -> Unit,
+    onCreateProgram: () -> Unit,
     modifier: Modifier = Modifier,
     // Which tab to land on. A training that could not start sends the learner here
     // to build up their study set, and landing back on Trainings would be a loop.
@@ -75,6 +77,7 @@ fun MainScreen(
             MainTab.DASHBOARD ->
                 DashboardScreen(
                     onStartTraining = { training, words -> onStartTraining(training, words.map { it.value }) },
+                    onOpenCards = onOpenCards,
                     onGoToPlan = { selectedTab = MainTab.PLAN },
                     modifier = content,
                 )
@@ -90,6 +93,7 @@ fun MainScreen(
                 PlanScreen(
                     onCourseSelected = { onCourseSelected(it.value) },
                     onProgramSelected = { onProgramSelected(it.value) },
+                    onCreateProgram = onCreateProgram,
                     modifier = content,
                 )
             MainTab.SETTINGS -> SettingsScreen(modifier = content)

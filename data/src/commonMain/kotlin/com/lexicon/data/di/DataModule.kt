@@ -19,8 +19,6 @@ import com.lexicon.data.local.AppDatabaseBuilderFactory
 import com.lexicon.data.local.CourseAssetLoader
 import com.lexicon.data.local.CourseSeeder
 import com.lexicon.data.local.DataStorePathResolver
-import com.lexicon.data.local.ProgramAssetLoader
-import com.lexicon.data.local.ProgramSeeder
 import com.lexicon.data.local.SETTINGS_STORE_NAME
 import com.lexicon.data.local.VOCABULARY_SYNC_STORE_NAME
 import com.lexicon.data.local.VocabularyPresetAssetLoader
@@ -104,11 +102,9 @@ val dataModule = module {
     factoryOf(::VocabularySeedAssetLoader)
     factoryOf(::VocabularyPresetAssetLoader)
     factoryOf(::CourseAssetLoader)
-    factoryOf(::ProgramAssetLoader)
 
     single { VocabularySyncStore(get(vocabularySyncDataStoreQualifier)) }
     singleOf(::VocabularySeeder)
     singleOf(::VocabularyPresetSeeder)
     singleOf(::CourseSeeder)
-    singleOf(::ProgramSeeder)
 }

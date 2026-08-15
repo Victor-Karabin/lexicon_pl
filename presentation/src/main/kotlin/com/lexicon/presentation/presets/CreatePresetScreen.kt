@@ -19,7 +19,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -44,6 +43,7 @@ import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconTheme
+import com.lexicon.presentation.theme.component.GradientTile
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
 import kotlin.time.Duration.Companion.seconds
@@ -100,15 +100,17 @@ private fun CreatePresetContent(
                 // the list itself uses. Pinned under the bar rather than scrolling
                 // with the form: it is what the choices below are being made against,
                 // so it has to stay in view while they are made.
-                Surface(
-                    shape = LexiconShapes.medium,
-                    color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                val preview = uiState.asPreview()
+                val skin = presetTileSkin(preview)
+                GradientTile(
+                    skin = skin,
                     modifier = Modifier.padding(horizontal = Dimens.spacingMedium, vertical = Dimens.spacingSmall),
                 ) {
                     PresetSummary(
-                        preset = uiState.asPreview(),
+                        preset = preview,
                         languageTag = LocalizedText.DEFAULT_LANGUAGE,
                         favouriteState = PresetFavouriteState.NONE,
+                        skin = skin,
                         onFavouriteToggled = {},
                     )
                 }

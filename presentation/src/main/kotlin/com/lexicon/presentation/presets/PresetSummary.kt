@@ -1,15 +1,11 @@
 package com.lexicon.presentation.presets
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,9 +23,25 @@ import com.lexicon.interactors.presets.resolve
 import com.lexicon.interactors.presets.wordCount
 import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.Dimens
+import com.lexicon.presentation.theme.component.Medallion
+import com.lexicon.presentation.theme.component.MedallionIcon
+import com.lexicon.presentation.theme.component.StatChip
+import com.lexicon.presentation.theme.component.TileSkin
+import com.lexicon.presentation.theme.component.accentTileSkin
+import com.lexicon.presentation.theme.component.muted
 import java.text.NumberFormat
 
-private val IconBadgeSize = 44.dp
+private val PresetMedallionSize = 48.dp
+
+/**
+ * The coat a preset's tile wears: built from the colour the preset itself carries,
+ * so a list of them is told apart by colour before it is read.
+ */
+@Composable
+fun presetTileSkin(preset: VocabularyPreset): TileSkin {
+    val accent = preset.accentColor()
+    return accentTileSkin(accent = accent, onAccent = onAccentColor(accent))
+}
 
 /**
  * How a preset introduces itself: its icon and word count, what it is, and whether
@@ -47,59 +59,49 @@ fun PresetSummary(
     preset: VocabularyPreset,
     languageTag: String,
     favouriteState: PresetFavouriteState,
+    skin: TileSkin,
     onFavouriteToggled: () -> Unit,
     modifier: Modifier = Modifier,
     showTitle: Boolean = true,
 ) {
-    Row(
-        modifier = modifier.fillMaxWidth().padding(Dimens.spacingMedium),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            val accent = preset.accentColor()
-            Box(
-                modifier = Modifier.size(IconBadgeSize).background(accent, CircleShape),
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(
-                    imageVector = presetIconFor(preset.icon),
-                    contentDescription = null,
-                    tint = onAccentColor(accent),
-                )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+        ) {
+            Medallion(skin = skin, size = PresetMedallionSize) {
+                MedallionIcon(presetIconFor(preset.icon), skin)
             }
-            Text(
-                text = preset.wordCount.grouped(),
-                style = MaterialTheme.typography.labelLarge,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(top = Dimens.spacingSmall),
-            )
-            Text(
-                text = pluralStringResource(R.plurals.presets_word_count_label, preset.wordCount),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
 
-        Column(modifier = Modifier.weight(1f)) {
-            if (showTitle) {
+            Column(modifier = Modifier.weight(1f)) {
+                if (showTitle) {
+                    Text(
+                        text = preset.title.resolve(languageTag),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold,
+                        color = skin.onTile,
+                    )
+                }
                 Text(
-                    text = preset.title.resolve(languageTag),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
+                    text = preset.description.resolve(languageTag),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = skin.muted(),
+                    maxLines = DESCRIPTION_MAX_LINES,
+                    overflow = TextOverflow.Ellipsis,
                 )
             }
-            Text(
-                text = preset.description.resolve(languageTag),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = DESCRIPTION_MAX_LINES,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(top = Dimens.spacingTiny),
-            )
+
+            PresetFavouriteButton(state = favouriteState, onClick = onFavouriteToggled)
         }
 
-        PresetFavouriteButton(state = favouriteState, onClick = onFavouriteToggled)
+        StatChip(
+            icon = Icons.Default.Translate,
+            text = "${preset.wordCount.grouped()} ${pluralStringResource(R.plurals.presets_word_count_label, preset.wordCount)}",
+            skin = skin,
+        )
     }
 }
 

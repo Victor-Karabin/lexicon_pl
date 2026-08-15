@@ -9,6 +9,9 @@ interface ProgramRepository {
 
     suspend fun getProgram(id: String): ProgramBoundary?
 
+    /** Stores a program the learner wrote, new or rewritten. */
+    suspend fun saveProgram(program: ProgramBoundary)
+
     // ---- enrolment
 
     suspend fun enrolment(programId: String): ProgramEnrolmentBoundary?

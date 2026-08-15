@@ -26,7 +26,9 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
 private const val MILLIS_PER_DAY = 86_400_000L
-private const val RETENTION_WINDOW_DAYS = 30
+
+/** Recent enough to reflect how the learner is doing now, long enough to be steady. */
+private const val ACCURACY_WINDOW_DAYS = 30
 private const val PERCENT = 100
 
 /**
@@ -113,7 +115,8 @@ class StartProgramSessionUseCaseImpl(
         val learnActivity = plan.activities.firstOrNull { it.type == ActivityType.LEARN }
             ?: plan.activities.firstOrNull()
             ?: return null
-        val fresh = scope.filter { reviews.schedule(it) == null }.take(plan.newWords.orAll())
+        val met = reviews.scheduledWordIds()
+        val fresh = scope.filterNot { it in met }.take(plan.newWords.orAll())
 
         // Everything in scope has been seen and nothing is due yet, so there is
         // genuinely nothing to do today — better said plainly than by inventing work.
@@ -178,15 +181,14 @@ class GetProgramProgressUseCaseImpl(
             )
         }
 
-        if (weights.retention > 0) {
+        if (weights.accuracy > 0) {
             val now = clock.nowEpochMillis()
-            val retention = history.retentionBetween(now - RETENTION_WINDOW_DAYS * MILLIS_PER_DAY, now)
-            val target = program.config.goals.firstOrNull { it.type == TargetType.RETENTION }?.target ?: PERCENT
+            val accuracy = history.accuracyBetween(now - ACCURACY_WINDOW_DAYS * MILLIS_PER_DAY, now)
             metrics += ProgressMetric(
-                type = ProgressMetricType.RETENTION,
-                current = (retention.fraction * PERCENT).toInt(),
-                target = target,
-                weight = weights.retention,
+                type = ProgressMetricType.ACCURACY,
+                current = (accuracy.fraction * PERCENT).toInt(),
+                target = PERCENT,
+                weight = weights.accuracy,
             )
         }
 

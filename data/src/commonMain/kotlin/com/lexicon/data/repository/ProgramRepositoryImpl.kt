@@ -11,32 +11,31 @@ import com.lexicon.data.local.ProgramDayEntity
 import com.lexicon.data.local.ProgramEnrolmentEntity
 import com.lexicon.data.local.ProgramMilestoneEntity
 import com.lexicon.data.local.ProgramRewardEntity
-import com.lexicon.data.local.ProgramSeeder
 import com.lexicon.data.local.toBoundary
+import com.lexicon.data.local.toUserEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 
 private const val ACTIVE = "ACTIVE"
 
+/**
+ * Programs are written by the learner, not shipped.
+ *
+ * Nothing seeds this table: there is no catalogue asset behind it, so what is here
+ * is what was built on the Plan tab and nothing else.
+ */
 class ProgramRepositoryImpl(
     private val programDao: ProgramDao,
-    private val seeder: ProgramSeeder,
 ) : ProgramRepository {
-    override suspend fun getPrograms(): List<ProgramBoundary> {
-        seeder.ensureSeeded()
-        return programDao.getPrograms().map { it.toBoundary() }
-    }
+    override suspend fun getPrograms(): List<ProgramBoundary> = programDao.getPrograms().map { it.toBoundary() }
 
     override fun observePrograms(): Flow<List<ProgramBoundary>> =
-        programDao
-            .observePrograms()
-            .onStart { seeder.ensureSeeded() }
-            .map { programs -> programs.map { it.toBoundary() } }
+        programDao.observePrograms().map { programs -> programs.map { it.toBoundary() } }
 
-    override suspend fun getProgram(id: String): ProgramBoundary? {
-        seeder.ensureSeeded()
-        return programDao.getProgram(id)?.toBoundary()
+    override suspend fun getProgram(id: String): ProgramBoundary? = programDao.getProgram(id)?.toBoundary()
+
+    override suspend fun saveProgram(program: ProgramBoundary) {
+        programDao.insertPrograms(listOf(program.toUserEntity()))
     }
 
     override suspend fun enrolment(programId: String): ProgramEnrolmentBoundary? = programDao.enrolment(programId)?.toBoundary()

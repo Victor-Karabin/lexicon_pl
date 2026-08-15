@@ -19,11 +19,13 @@ import com.lexicon.presentation.presets.CreatePresetViewModel
 import com.lexicon.presentation.presets.CreateWordViewModel
 import com.lexicon.presentation.presets.PresetDetailViewModel
 import com.lexicon.presentation.presets.VocabularyViewModel
-import com.lexicon.presentation.program.ProgramViewModel
+import com.lexicon.presentation.program.CreateProgramViewModel
+import com.lexicon.presentation.program.WordCardsViewModel
 import com.lexicon.presentation.pronunciation.PronunciationViewModel
 import com.lexicon.presentation.puzzle.PuzzleViewModel
 import com.lexicon.presentation.settings.SettingsViewModel
 import com.lexicon.presentation.trueorfalse.TrueOrFalseViewModel
+import com.lexicon.presentation.wordcard.WordCardViewModel
 import com.lexicon.presentation.wordmatch.WordMatchViewModel
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
@@ -35,8 +37,10 @@ val viewModelModule = module {
     viewModelOf(::SessionResultViewModel)
     viewModelOf(::TrainingGateViewModel)
     viewModelOf(::PlanViewModel)
-    viewModelOf(::ProgramViewModel)
     viewModelOf(::DashboardViewModel)
+    viewModelOf(::WordCardsViewModel)
+    viewModelOf(::CreateProgramViewModel)
+    viewModelOf(::WordCardViewModel)
     viewModelOf(::CourseDetailViewModel)
     viewModelOf(::ExerciseViewModel)
     viewModelOf(::LessonViewModel)

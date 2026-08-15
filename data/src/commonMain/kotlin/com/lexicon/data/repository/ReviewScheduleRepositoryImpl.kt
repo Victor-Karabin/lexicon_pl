@@ -24,6 +24,8 @@ class ReviewScheduleRepositoryImpl(
             )
         }
 
+    override suspend fun scheduledWordIds(): Set<Long> = wordReviewDao.allScheduledWordIds().toSet()
+
     override suspend fun countLearned(): Int = wordReviewDao.countLearned()
 
     override suspend fun countMastered(masteredIntervalDays: Long): Int = wordReviewDao.countMastered(masteredIntervalDays)

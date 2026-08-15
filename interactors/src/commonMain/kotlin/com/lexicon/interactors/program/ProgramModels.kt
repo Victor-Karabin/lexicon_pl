@@ -74,7 +74,7 @@ data class ProgressMetric(
     val fraction: Double get() = if (target <= 0) 1.0 else (current.toDouble() / target).coerceIn(0.0, 1.0)
 }
 
-enum class ProgressMetricType { VOCABULARY, MILESTONES, RETENTION, CONSISTENCY, STUDY_TIME, ACCURACY }
+enum class ProgressMetricType { VOCABULARY, MILESTONES, CONSISTENCY, STUDY_TIME, ACCURACY }
 
 data class ProgramProgress(
     val programId: ProgramId,

@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -69,29 +68,6 @@ interface ProgramDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun grantReward(reward: ProgramRewardEntity)
-
-    // ---- seeding
-
-    /**
-     * Replaces the shipped catalogue, keeping the learner's own programs.
-     *
-     * Enrolments, days, milestones and rewards are keyed by program id and are never
-     * touched here, so a re-seed cannot lose them — the same reasoning that keeps
-     * preset_word_overrides alive across a catalogue rewrite.
-     */
-    @Transaction
-    suspend fun replaceCatalog(programs: List<ProgramEntity>) {
-        val mine = getUserPrograms()
-        clearShippedPrograms()
-        insertPrograms(programs)
-        if (mine.isNotEmpty()) insertPrograms(mine)
-    }
-
-    @Query("SELECT * FROM programs WHERE isUserCreated = 1")
-    suspend fun getUserPrograms(): List<ProgramEntity>
-
-    @Query("DELETE FROM programs WHERE isUserCreated = 0")
-    suspend fun clearShippedPrograms()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPrograms(programs: List<ProgramEntity>)

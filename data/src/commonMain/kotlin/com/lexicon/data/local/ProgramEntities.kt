@@ -23,11 +23,12 @@ data class ProgramEntity(
     val visibility: String,
     val configJson: String,
     /**
-     * Made by the learner rather than shipped. Nothing writes this yet — programs
-     * are authored as JSON — but it is here so the seeder's carve-out and a future
-     * editor need no migration.
+     * Always true now: every program is written by the learner, since nothing ships
+     * a catalogue any more. Kept because dropping a column is a schema change, and
+     * this database takes the destructive fallback — it would cost the learner
+     * everything to remove a flag that costs nothing to leave.
      */
-    val isUserCreated: Boolean = false,
+    val isUserCreated: Boolean = true,
 )
 
 /** That the learner is working through a program, and since when. */

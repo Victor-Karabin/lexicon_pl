@@ -17,7 +17,7 @@ expect class AppDatabaseBuilderFactory {
 /**
  * The schema is still moving, so there are no migrations: a version bump drops
  * every table and the seeders refill what they can (see CourseSeeder,
- * VocabularySeeder, VocabularyPresetSeeder, ProgramSeeder).
+ * VocabularySeeder, VocabularyPresetSeeder).
  *
  * What the seeders cannot refill goes with it — favourites, deleted words,
  * membership overrides, hand-written words and presets, training history, review

@@ -15,16 +15,13 @@ interface TrainingHistoryRepository {
         toEpochMillis: Long,
     ): AccuracyBoundary
 
-    /**
-     * Accuracy over words that had already been learned. Retention, as distinct from
-     * accuracy, which a run of first exposures can flatter.
-     */
-    suspend fun retentionBetween(
+    suspend fun countSessionsBetween(
         fromEpochMillis: Long,
         toEpochMillis: Long,
-    ): AccuracyBoundary
+    ): Int
 
-    suspend fun countSessionsBetween(
+    suspend fun countSessionsOfTrainingBetween(
+        trainingType: String,
         fromEpochMillis: Long,
         toEpochMillis: Long,
     ): Int

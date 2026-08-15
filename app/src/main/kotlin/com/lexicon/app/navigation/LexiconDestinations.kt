@@ -25,6 +25,7 @@ internal object LexiconDestinations {
     const val IMAGE_TEST = TrainingIds.IMAGE_TEST
     const val MEMORY_CARDS = TrainingIds.MEMORY_CARDS
     const val MIX = TrainingIds.MIX
+    const val WORD_CARD = TrainingIds.WORD_CARD
     const val CROSSWORD = TrainingIds.CROSSWORD
 
     /**
@@ -45,14 +46,18 @@ internal object LexiconDestinations {
 
     const val CREATE_WORD = "create/word"
     const val CREATE_PRESET = "create/preset"
+    const val CREATE_PROGRAM = "create/program"
+    const val EDIT_PROGRAM = "edit/program/{programId}"
+
+    fun editProgram(id: String): String = "edit/program/$id"
 
     const val EDIT_WORD = "word/{$WORD_ID_ARG}/edit"
 
     fun editWord(wordId: Long) = "word/$wordId/edit"
 
-    const val PROGRAM = "program/{$PROGRAM_ID_ARG}"
+    const val PROGRAM_CARDS = "program/{$PROGRAM_ID_ARG}/cards"
 
-    fun program(programId: String) = "program/$programId"
+    fun programCards(programId: String) = "program/$programId/cards"
 
     const val COURSE = "course/{$COURSE_ID_ARG}"
 

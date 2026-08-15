@@ -6,7 +6,8 @@ import com.lexicon.boundary.ProgramEnrolmentBoundary
 import com.lexicon.boundary.ProgramMilestoneBoundary
 import com.lexicon.boundary.ProgramRewardBoundary
 
-fun ProgramAsset.toEntity(): ProgramEntity =
+/** A program on its way to the table that keeps it. */
+fun ProgramBoundary.toUserEntity(): ProgramEntity =
     ProgramEntity(
         id = id,
         level = level,
@@ -16,7 +17,8 @@ fun ProgramAsset.toEntity(): ProgramEntity =
         difficulty = difficulty,
         estimatedDays = estimatedDays,
         visibility = visibility,
-        configJson = config.toString(),
+        configJson = configJson,
+        isUserCreated = true,
     )
 
 fun ProgramEntity.toBoundary(): ProgramBoundary =

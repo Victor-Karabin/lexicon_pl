@@ -43,6 +43,14 @@ interface ReviewScheduleRepository {
 
     suspend fun schedule(wordId: Long): WordScheduleBoundary?
 
+    /**
+     * Every word that has a schedule, in one query.
+     *
+     * Picking the next unseen words means asking "which of these thousand has been
+     * met?", and asking it a word at a time is a thousand round trips for one answer.
+     */
+    suspend fun scheduledWordIds(): Set<Long>
+
     /** Words answered at least once. */
     suspend fun countLearned(): Int
 
