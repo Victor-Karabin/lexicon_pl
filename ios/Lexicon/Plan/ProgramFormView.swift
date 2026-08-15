@@ -129,7 +129,9 @@ struct ProgramFormView: View {
     }
 
     private func queueRow(_ i: Int, skin: TileSkin) -> some View {
-        Tile(skin: skin) {
+        // Tighter than a card: the queue is six of these one under another, and the
+        // point of the list is seeing the whole day's order at once.
+        Tile(skin: skin, padding: Spacing.small) {
             HStack(spacing: Spacing.medium) {
                 Image(systemName: "line.3.horizontal")
                     .foregroundStyle(draggedFrom == i ? skin.onTile : skin.onTile.muted)

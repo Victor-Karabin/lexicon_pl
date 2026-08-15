@@ -454,6 +454,9 @@ private fun QueueRow(
 
     GradientTile(
         skin = skin,
+        // Tighter than a card: the queue is six of these one under another, and the
+        // point of the list is seeing the whole day's order at once.
+        padding = Dimens.spacingSmall,
         modifier = modifier.semantics {
             customActions = listOf(
                 CustomAccessibilityAction(moveEarlier) {

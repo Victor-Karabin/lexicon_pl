@@ -112,12 +112,17 @@ fun TileSkin.muted(): Color = onTile.copy(alpha = TILE_MUTED_ALPHA)
 /**
  * The card everything sits in: rounded, swept with colour, and tappable when there is
  * somewhere to go.
+ *
+ * [padding] is the one thing worth varying. A tile that is a card — a program, a
+ * preset — wants room around it, but a tile used as a row in a list of them wants as
+ * little as it can have, or six of them will not fit on a screen.
  */
 @Composable
 fun GradientTile(
     skin: TileSkin,
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
+    padding: Dp = Dimens.spacingMedium,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val body: @Composable () -> Unit = {
@@ -125,8 +130,8 @@ fun GradientTile(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Brush.linearGradient(skin.sweep))
-                .padding(Dimens.spacingMedium),
-            verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+                .padding(padding),
+            verticalArrangement = Arrangement.spacedBy(padding),
             content = content,
         )
     }

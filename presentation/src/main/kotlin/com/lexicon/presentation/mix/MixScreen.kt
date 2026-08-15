@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -143,7 +145,11 @@ private fun MixScreenContent(
             is MixUiState.Loaded ->
                 Column(modifier = Modifier.fillMaxSize().padding(padding)) {
                     Column(
-                        modifier = Modifier.weight(1f).fillMaxWidth().padding(Dimens.spacingMedium),
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .verticalScroll(rememberScrollState())
+                            .padding(Dimens.spacingMedium),
                     ) {
                         ProgressDots(
                             step = uiState.stepIndex,

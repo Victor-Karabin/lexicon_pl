@@ -64,18 +64,26 @@ struct TrainingScaffold<Content: View, Actions: View>: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
 
-            content
+            // Scrolls: a step's clue, its options and the verdict under them are as
+            // tall as their content, and a short screen or a large text size can put
+            // the last option under the fold with no way to reach it. The actions stay
+            // pinned below, where they are always the same distance from a thumb.
+            ScrollView {
+                VStack(spacing: Spacing.medium) {
+                    content
 
-            if state.isAnswered {
-                VStack(spacing: Spacing.tiny) {
-                    Text(state.label).foregroundStyle(state.tint).font(.headline)
-                    if let expected = state.expected {
-                        Text("Expected: \(expected)").font(.callout).foregroundStyle(.secondary)
+                    if state.isAnswered {
+                        VStack(spacing: Spacing.tiny) {
+                            Text(state.label).foregroundStyle(state.tint).font(.headline)
+                            if let expected = state.expected {
+                                Text("Expected: \(expected)").font(.callout).foregroundStyle(.secondary)
+                            }
+                        }
                     }
                 }
+                .frame(maxWidth: .infinity)
             }
 
-            Spacer()
             actions
         }
         .padding(Spacing.medium)
@@ -95,7 +103,7 @@ struct SessionResultView: View {
             Tile(skin: skin) {
                 Text("\(tally.accuracy)%").font(.system(size: 44, weight: .bold)).foregroundStyle(skin.onTile)
                 Text("answered correctly").font(.callout).foregroundStyle(skin.onTile.muted)
-                HStack(spacing: Spacing.small) {
+                FlowLayout(spacing: Spacing.small) {
                     StatChip(systemName: "checkmark", text: "\(tally.correct)", skin: skin)
                     if tally.incorrect > 0 {
                         StatChip(systemName: "xmark", text: "\(tally.incorrect)", skin: skin)

@@ -51,16 +51,21 @@ struct TileSkin {
 
 /// The card everything sits in: rounded, swept with colour, tappable when there is
 /// somewhere to go.
+///
+/// `padding` is the one thing worth varying. A tile that is a card — a program, a
+/// preset — wants room around it, but a tile used as a row in a list of them wants as
+/// little as it can have, or six of them will not fit on a screen.
 struct Tile<Content: View>: View {
     let skin: TileSkin
+    var padding: CGFloat = Spacing.medium
     @ViewBuilder var content: Content
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Spacing.medium) {
+        VStack(alignment: .leading, spacing: padding) {
             content
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(Spacing.medium)
+        .padding(padding)
         .background(
             LinearGradient(colors: skin.sweep, startPoint: .topLeading, endPoint: .bottomTrailing)
         )
