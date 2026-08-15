@@ -17,7 +17,7 @@ struct RootView: View {
             if hasSynced {
                 TabView {
                     DashboardView()
-                        .tabItem { Label("Today", systemImage: "square.grid.2x2") }
+                        .tabItem { Label("Home", systemImage: "square.grid.2x2") }
                     TrainingsView()
                         .tabItem { Label("Trainings", systemImage: "graduationcap") }
                     VocabularyView()

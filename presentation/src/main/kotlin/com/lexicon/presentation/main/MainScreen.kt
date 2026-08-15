@@ -32,7 +32,7 @@ import com.lexicon.presentation.settings.SettingsScreen
  * a second line and break mid-word.
  */
 enum class MainTab(val label: String, val icon: ImageVector) {
-    DASHBOARD("Today", Icons.Default.Dashboard),
+    DASHBOARD("Home", Icons.Default.Dashboard),
     TRAININGS("Trainings", Icons.Default.School),
     VOCABULARY("Words", Icons.AutoMirrored.Filled.MenuBook),
     PLAN("Plan", Icons.AutoMirrored.Filled.EventNote),
@@ -57,7 +57,7 @@ fun MainScreen(
     modifier: Modifier = Modifier,
     // Which tab to land on. A training that could not start sends the learner here
     // to build up their study set, and landing back on Trainings would be a loop.
-    initialTab: MainTab = MainTab.TRAININGS,
+    initialTab: MainTab = MainTab.DASHBOARD,
 ) {
     var selectedTab by rememberSaveable(stateSaver = MainTabSaver) { mutableStateOf(initialTab) }
 

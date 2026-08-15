@@ -68,7 +68,7 @@ fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
                 ?.getString(LexiconDestinations.MAIN_TAB_ARG)
                 ?.let { name -> MainTab.entries.firstOrNull { it.name == name } }
             MainScreen(
-                initialTab = requestedTab ?: MainTab.TRAININGS,
+                initialTab = requestedTab ?: MainTab.DASHBOARD,
                 onTrainingSelected = { route -> navController.navigate(route) },
                 onPresetSelected = { id -> navController.navigate(LexiconDestinations.presetDetail(id)) },
                 onCourseSelected = { id -> navController.navigate(LexiconDestinations.course(id)) },
