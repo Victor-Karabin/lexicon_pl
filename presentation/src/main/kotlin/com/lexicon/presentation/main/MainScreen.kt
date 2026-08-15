@@ -26,10 +26,15 @@ import com.lexicon.presentation.dashboard.DashboardScreen
 import com.lexicon.presentation.presets.VocabularyScreen
 import com.lexicon.presentation.settings.SettingsScreen
 
+/**
+ * Labels are kept short on purpose. Five tabs split a portrait phone into slots of
+ * about seventy dp, and "Dashboard" and "Vocabulary" do not fit one — they wrap onto
+ * a second line and break mid-word.
+ */
 enum class MainTab(val label: String, val icon: ImageVector) {
-    DASHBOARD("Dashboard", Icons.Default.Dashboard),
+    DASHBOARD("Today", Icons.Default.Dashboard),
     TRAININGS("Trainings", Icons.Default.School),
-    VOCABULARY("Vocabulary", Icons.AutoMirrored.Filled.MenuBook),
+    VOCABULARY("Words", Icons.AutoMirrored.Filled.MenuBook),
     PLAN("Plan", Icons.AutoMirrored.Filled.EventNote),
     SETTINGS("Settings", Icons.Default.Settings),
 }

@@ -2,6 +2,12 @@ import SwiftUI
 import Shared
 
 /// The five tabs, in the order Android has them.
+///
+/// Two of the labels are shorter than the screens they open. Five tabs on a 375pt
+/// phone leaves each about seventy points, and "Dashboard" and "Vocabulary" fill it
+/// edge to edge before Dynamic Type is turned up at all. The screens keep their full
+/// names in their navigation titles — it is only the tab that is abbreviated, which
+/// is the ordinary way round on iOS.
 struct RootView: View {
     @StateObject private var settings = SettingsStore()
     @State private var hasSynced = false
@@ -11,11 +17,11 @@ struct RootView: View {
             if hasSynced {
                 TabView {
                     DashboardView()
-                        .tabItem { Label("Dashboard", systemImage: "square.grid.2x2") }
+                        .tabItem { Label("Today", systemImage: "square.grid.2x2") }
                     TrainingsView()
                         .tabItem { Label("Trainings", systemImage: "graduationcap") }
                     VocabularyView()
-                        .tabItem { Label("Vocabulary", systemImage: "book") }
+                        .tabItem { Label("Words", systemImage: "book") }
                     PlanView()
                         .tabItem { Label("Plan", systemImage: "calendar") }
                     SettingsView()

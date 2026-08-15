@@ -27,7 +27,7 @@ struct ProgramFormView: View {
                 ProgressView()
             } else if favourites == 0 {
                 VStack(spacing: Spacing.large) {
-                    Text("Nothing starred yet. Add words to your study set in the Vocabulary tab first.")
+                    Text("Nothing starred yet. Add words to your study set in the Words tab first.")
                         .multilineTextAlignment(.center)
                         .foregroundStyle(.secondary)
                 }
