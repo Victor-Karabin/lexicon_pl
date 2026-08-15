@@ -94,3 +94,11 @@ struct TrainingHost: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
+
+#Preview("Trainings") {
+    TrainingsView()
+}
+
+#Preview("Trainings · dark") {
+    TrainingsView().preferredColorScheme(.dark)
+}

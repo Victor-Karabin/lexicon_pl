@@ -167,3 +167,37 @@ struct WordRow: View {
         .padding(.vertical, Spacing.small)
     }
 }
+
+#Preview("Word rows") {
+    LightDark(title: "Word rows") {
+        VStack(spacing: 0) {
+            WordRow(
+                word: PresetWord(
+                    id: VocabularyId(value: 1),
+                    text: "woda",
+                    translation: "water",
+                    transcription: "ˈvɔda",
+                    isFavourite: true,
+                    cefr: CefrLevel.a1
+                ),
+                isFavourite: true,
+                onFavourite: {}
+            )
+            Divider()
+            // No transcription: the brackets have to disappear with it rather than
+            // leaving an empty pair, which is what they did on Android once.
+            WordRow(
+                word: PresetWord(
+                    id: VocabularyId(value: 2),
+                    text: "dzień dobry",
+                    translation: "good morning",
+                    transcription: "",
+                    isFavourite: false,
+                    cefr: CefrLevel.a1
+                ),
+                isFavourite: false,
+                onFavourite: {}
+            )
+        }
+    }
+}
