@@ -6,14 +6,16 @@ XCFramework the `:shared` Gradle module produces.
 
 ## Running it
 
-The app links `../shared/build/XCFrameworks/release/Shared.xcframework`, which does
-not exist in a clean checkout. Xcode builds it as the target's first build phase,
-but the very first build has to be told to make it, because `xcodebuild` resolves
-the framework reference before any phase runs:
+Once, on a clean checkout:
 
 ```bash
-./gradlew :shared:assembleSharedReleaseXCFramework
+ios/bootstrap.sh
 ```
+
+That builds the `Shared` XCFramework and writes the API keys out of
+`local.properties`. Build phases do both on every build afterwards, but the first
+build needs them already there: `xcodebuild` resolves the framework reference and
+the source file list before any phase runs.
 
 Then open `ios/Lexicon.xcodeproj`, or from the command line:
 
@@ -49,13 +51,7 @@ group, so a new `.swift` file under `Lexicon/` needs no project edit.
 
 ## What is not here yet
 
-- **Pictures and remote translation.** `dataIosModule` binds no `RemoteImageSource`
-  and only the offline translator: the image and DeepL clients are Retrofit-based
-  and Android-only. Image Test, Puzzle, Memory Cards and Word Card therefore fall
-  back to their text clues, and the new-word form fills the Polish side in from the
-  corpus only. A Ktor or NSURLSession implementation in `iosMain` is what closes
-  this, and needs no change above the data layer.
-- **Lesson audio.** The recordings are fetched and played by the Android-only
-  `:android` module; the lesson screen here shows the words and can train over them,
-  but has no player.
-- **Selection and swipe actions** in the vocabulary list, and the create-preset form.
+- **DeepL.** Translation goes corpus first, then MyMemory, which needs no key.
+  Android also tries DeepL; adding it here is another `RemoteImageSource`-shaped
+  class in `iosMain`.
+- **Unsplash**, for the same reason — Pexels, Pixabay and Openverse are wired.

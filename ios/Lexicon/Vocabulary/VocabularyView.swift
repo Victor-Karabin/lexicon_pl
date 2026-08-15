@@ -28,9 +28,33 @@ struct VocabularyView: View {
                             .padding(.top, Spacing.xl)
                     } else {
                         ForEach(model.words, id: \.id.value) { word in
-                            WordRow(word: word, isFavourite: model.isFavourite(word)) {
-                                Task { await model.toggleFavourite(word) }
+                            NavigationLink {
+                                WordFormView(wordId: word.id.value)
+                            } label: {
+                                HStack(spacing: Spacing.small) {
+                                    if model.isSelecting {
+                                        Image(systemName: model.isSelected(word) ? "checkmark.circle.fill" : "circle")
+                                            .foregroundStyle(model.isSelected(word) ? Palette.accentDeep : .secondary)
+                                    }
+                                    WordRow(word: word, isFavourite: model.isFavourite(word)) {
+                                        Task { await model.toggleFavourite(word) }
+                                    }
+                                }
                             }
+                            .buttonStyle(.plain)
+                            // Long-press to start selecting, exactly as on Android.
+                            .onLongPressGesture { model.startSelecting(word) }
+                            .simultaneousGesture(TapGesture().onEnded {
+                                if model.isSelecting { model.toggleSelected(word) }
+                            })
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {
+                                    Task { await model.delete(word) }
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
+                            Divider()
                         }
                     }
                 }
@@ -41,7 +65,25 @@ struct VocabularyView: View {
             .navigationTitle("Vocabulary")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink { WordFormView(wordId: nil) } label: { Image(systemName: "plus") }
+                    if model.isSelecting {
+                        Button(role: .destructive) {
+                            Task { await model.deleteSelected() }
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    } else {
+                        Menu {
+                            NavigationLink { WordFormView(wordId: nil) } label: { Label("Add word", systemImage: "text.badge.plus") }
+                            NavigationLink { PresetFormView() } label: { Label("Add preset", systemImage: "folder.badge.plus") }
+                        } label: {
+                            Image(systemName: "plus")
+                        }
+                    }
+                }
+                ToolbarItem(placement: .topBarLeading) {
+                    if model.isSelecting {
+                        Button("Stop selecting") { model.stopSelecting() }
+                    }
                 }
             }
             .task { await model.load() }

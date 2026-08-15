@@ -86,6 +86,24 @@ struct LessonView: View {
                     }
                 }
 
+                if let lesson, !lesson.audio.isEmpty {
+                    Text("Recordings").font(.subheadline.weight(.semibold))
+                    FlowLayout(spacing: Spacing.small) {
+                        ForEach(lesson.audio, id: \.file) { track in
+                            AsyncButton {
+                                await LessonAudio.shared.play(file: track.file, remoteId: track.remoteId)
+                            } label: {
+                                Label(track.label, systemImage: "play.circle")
+                                    .font(.caption)
+                                    .padding(.horizontal, Spacing.small)
+                                    .padding(.vertical, Spacing.tiny)
+                                    .overlay(Capsule().stroke(Color.secondary.opacity(0.4)))
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+
                 Text("New words").font(.subheadline.weight(.semibold))
                 ForEach(words, id: \.id.value) { word in
                     WordRow(word: word, isFavourite: word.isFavourite) {

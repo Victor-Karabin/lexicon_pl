@@ -54,6 +54,47 @@ final class VocabularyModel: ObservableObject {
     }
 
     func name(of level: CefrLevel) -> String { level.name }
+
+    // ---- selecting several words at once
+
+    @Published private(set) var selected: Set<Int64> = []
+    @Published private(set) var isSelecting = false
+
+    func isSelected(_ word: PresetWord) -> Bool { selected.contains(word.id.value) }
+
+    func startSelecting(_ word: PresetWord) {
+        isSelecting = true
+        selected = [word.id.value]
+    }
+
+    func toggleSelected(_ word: PresetWord) {
+        if selected.contains(word.id.value) {
+            selected.remove(word.id.value)
+        } else {
+            selected.insert(word.id.value)
+        }
+        // Unselecting the last one leaves selection mode, so the list does not sit
+        // in a mode with nothing selected.
+        if selected.isEmpty { isSelecting = false }
+    }
+
+    func stopSelecting() {
+        isSelecting = false
+        selected = []
+    }
+
+    func delete(_ word: PresetWord) async {
+        try? await deps.deleteWord.invoke(id: word.id)
+        await search()
+    }
+
+    func deleteSelected() async {
+        for id in selected {
+            try? await deps.deleteWord.invoke(id: VocabularyId(value: id))
+        }
+        stopSelecting()
+        await search()
+    }
 }
 
 extension VocabularyPreset {
@@ -80,9 +121,11 @@ extension VocabularyPreset {
         return luminance > 0.34 ? .black : .white
     }
 
+    var symbolName: String { VocabularyPreset.symbolName(forIcon: icon) }
+
     /// The catalogue's icon names are Material's; these are the SF Symbols nearest to
     /// them, so a preset looks like itself on both platforms.
-    var symbolName: String {
+    static func symbolName(forIcon icon: String?) -> String {
         switch icon {
         case "restaurant", "local_pizza", "bakery_dining", "set_meal", "egg": return "fork.knife"
         case "trending_up": return "chart.line.uptrend.xyaxis"
