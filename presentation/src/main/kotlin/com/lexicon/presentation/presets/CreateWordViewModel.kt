@@ -37,6 +37,9 @@ private const val TYPING_SETTLE_MS = 600L
 /** Route argument naming the word to edit; absent when writing a new one. */
 const val WORD_ID_ARG = "wordId"
 
+/** A picture out of the app's own files, rather than one off the web. */
+internal fun String.isOwnImage(): Boolean = startsWith("file:")
+
 data class CreateWordUiState(
     val isEditing: Boolean = false,
     /** The word being edited is gone — deleted from another screen. */
@@ -45,6 +48,13 @@ data class CreateWordUiState(
     val translation: String = "",
     val memberships: ImmutableList<PresetMembership> = persistentListOf(),
     val imageCandidates: ImmutableList<String> = persistentListOf(),
+    /**
+     * Pictures the learner supplied rather than ones the search found.
+     *
+     * Kept apart because they outlive a search: retyping the word fetches new
+     * candidates, and a photograph somebody went and took is not a candidate.
+     */
+    val ownImages: ImmutableList<String> = persistentListOf(),
     val selectedImage: String? = null,
     val languageTag: String = "en",
     val isTranslating: Boolean = false,
@@ -135,6 +145,20 @@ class CreateWordViewModel(
     }
 
     fun onImageSelected(url: String) = _uiState.update { it.copy(selectedImage = if (it.selectedImage == url) null else url) }
+
+    /**
+     * A picture from the learner's library or camera.
+     *
+     * Chosen as well as added: they went and found this one, so asking them to tap it
+     * again would be asking twice.
+     */
+    fun onOwnImageAdded(url: String) =
+        _uiState.update { state ->
+            state.copy(
+                ownImages = (listOf(url) + state.ownImages).distinct().toImmutableList(),
+                selectedImage = url,
+            )
+        }
 
     fun onPresetToggled(
         presetId: PresetId,
@@ -269,7 +293,8 @@ class CreateWordViewModel(
         _uiState.update { it.copy(isLoadingImages = true) }
         val candidates = searchImageCandidates(query)
         shownImages = candidates.size
-        val withPinned = if (pinned.isNullOrBlank()) {
+        val isOwn = pinned != null && pinned.isOwnImage()
+        val withPinned = if (pinned.isNullOrBlank() || isOwn) {
             candidates
         } else {
             (listOf(pinned) + candidates).distinct().toImmutableList()
@@ -277,6 +302,7 @@ class CreateWordViewModel(
         _uiState.update {
             it.copy(
                 imageCandidates = withPinned,
+                ownImages = if (isOwn) persistentListOf(pinned!!) else it.ownImages,
                 selectedImage = pinned,
                 isLoadingImages = false,
                 hasSearchedImages = true,
@@ -289,7 +315,11 @@ class CreateWordViewModel(
         shownImages = 0
         if (query.isBlank()) {
             _uiState.update {
-                it.copy(imageCandidates = persistentListOf(), selectedImage = null, hasSearchedImages = false)
+                it.copy(
+                    imageCandidates = persistentListOf(),
+                    selectedImage = it.selectedImage.takeIf { url -> url in it.ownImages },
+                    hasSearchedImages = false,
+                )
             }
             return
         }
@@ -302,8 +332,9 @@ class CreateWordViewModel(
             _uiState.update {
                 it.copy(
                     imageCandidates = candidates,
-                    // The old pick belonged to a different word.
-                    selectedImage = null,
+                    // The old pick belonged to a different word — unless the learner
+                    // supplied it, in which case it was never about the search.
+                    selectedImage = it.selectedImage.takeIf { url -> url in it.ownImages },
                     isLoadingImages = false,
                     hasSearchedImages = true,
                 )

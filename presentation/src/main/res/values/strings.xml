@@ -121,6 +121,9 @@
     <string name="create_word_base">English</string>
     <string name="create_word_translation">Polish</string>
     <string name="create_word_image">Picture</string>
+    <string name="create_word_image_add">Add a picture of your own</string>
+    <string name="create_word_image_from_library">Choose a photo</string>
+    <string name="create_word_image_from_camera">Take a photo</string>
     <string name="create_word_image_more">More</string>
     <string name="create_word_image_none">Type a word to look for a picture.</string>
     <string name="create_word_image_empty">No pictures were found for this word.</string>
