@@ -111,7 +111,10 @@ struct StatChip: View {
     var body: some View {
         HStack(spacing: Spacing.tiny) {
             Image(systemName: systemName).font(.caption2)
-            Text(text).font(.caption)
+            // One line, always. A chip is one short fact; given less width than it
+            // wants it would wrap, and a chip narrower than its longest word wraps
+            // per letter — a column of characters where a phrase should be.
+            Text(text).font(.caption).lineLimit(1).fixedSize(horizontal: true, vertical: false)
         }
         .foregroundStyle(skin.onTile)
         .padding(.horizontal, Spacing.small)

@@ -138,19 +138,21 @@ class CreateProgramViewModel(
             state.copy(queue = (state.queue.toMutableList().apply { removeAt(index) }).toImmutableList())
         }
 
-    fun onMoveEarlier(index: Int) = move(index, -1)
-
-    fun onMoveLater(index: Int) = move(index, 1)
-
-    /** By position, not by name: the same training can sit in the queue more than once. */
-    private fun move(
+    /**
+     * Takes the turn at [from] out and puts it back in at [to].
+     *
+     * By position, not by name: the same training can sit in the queue more than once,
+     * and moving one of them must not move the others. Removed and re-inserted rather
+     * than swapped, because a drag passes over every position between the two and a
+     * swap would leave the ones it passed in the wrong order.
+     */
+    fun onMove(
         from: Int,
-        by: Int,
+        to: Int,
     ) = _uiState.update { state ->
-        val to = from + by
         if (from !in state.queue.indices || to !in state.queue.indices) return@update state
         val queue = state.queue.toMutableList()
-        queue[from] = queue[to].also { queue[to] = queue[from] }
+        queue.add(to, queue.removeAt(from))
         state.copy(queue = queue.toImmutableList())
     }
 

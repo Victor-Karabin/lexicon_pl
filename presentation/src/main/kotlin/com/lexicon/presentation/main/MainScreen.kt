@@ -21,6 +21,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextOverflow
 import com.lexicon.presentation.course.PlanScreen
 import com.lexicon.presentation.dashboard.DashboardScreen
 import com.lexicon.presentation.presets.VocabularyScreen
@@ -70,7 +71,11 @@ fun MainScreen(
                         selected = tab == selectedTab,
                         onClick = { selectedTab = tab },
                         icon = { Icon(imageVector = tab.icon, contentDescription = null) },
-                        label = { Text(tab.label) },
+                        // One line, whatever the text size. A tab is a fifth of the
+                        // bar and cannot grow; left to wrap, "Trainings" becomes
+                        // "Trainin / gs" at a large font scale. A clipped word still
+                        // names the tab, and the icon above it is unchanged.
+                        label = { Text(tab.label, maxLines = 1, overflow = TextOverflow.Ellipsis) },
                     )
                 }
             }

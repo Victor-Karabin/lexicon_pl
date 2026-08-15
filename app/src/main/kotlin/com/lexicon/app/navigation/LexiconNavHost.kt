@@ -1,6 +1,7 @@
 package com.lexicon.app.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -43,8 +44,15 @@ import com.lexicon.presentation.wordcard.WordCardScreen
 import com.lexicon.presentation.wordmatch.WordMatchScreen
 
 @Composable
-fun LexiconNavHost(navController: NavHostController = rememberNavController()) {
-    NavHost(navController = navController, startDestination = LexiconDestinations.SPLASH) {
+fun LexiconNavHost(
+    navController: NavHostController = rememberNavController(),
+    modifier: Modifier = Modifier,
+) {
+    NavHost(
+        navController = navController,
+        startDestination = LexiconDestinations.SPLASH,
+        modifier = modifier,
+    ) {
         composable(LexiconDestinations.SPLASH) {
             SplashScreen(
                 onFinished = {

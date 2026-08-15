@@ -183,6 +183,7 @@
     <string name="create_program_no_favourites">Nothing starred yet. Add words to your study set in the Words tab first.</string>
     <string name="create_program_move_earlier">Move earlier</string>
     <string name="create_program_move_later">Move later</string>
+    <string name="create_program_reorder">Drag to reorder</string>
     <string name="create_program_remove_turn">Remove this turn</string>
     <string name="create_program_saved">Added “%1$s”</string>
     <string name="plan_courses">Courses</string>

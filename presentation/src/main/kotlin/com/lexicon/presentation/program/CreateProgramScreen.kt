@@ -1,5 +1,6 @@
 package com.lexicon.presentation.program
 
+import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,8 +15,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.DragHandle
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
@@ -32,12 +32,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.semantics.customActions
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
@@ -50,9 +63,12 @@ import com.lexicon.presentation.theme.component.Medallion
 import com.lexicon.presentation.theme.component.MedallionText
 import com.lexicon.presentation.theme.component.StatChip
 import com.lexicon.presentation.theme.component.TileSkin
+import com.lexicon.presentation.theme.component.muted
 import com.lexicon.presentation.theme.component.tileSkin
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
+import kotlin.math.roundToInt
 
 private val QueueMedallionSize = 32.dp
 private val MoveIconSize = 20.dp
@@ -83,8 +99,7 @@ fun CreateProgramScreen(
         onReviewWordsChanged = viewModel::onReviewWordsChanged,
         onTrainingAdded = viewModel::onTrainingAdded,
         onTurnRemoved = viewModel::onTurnRemoved,
-        onMoveEarlier = viewModel::onMoveEarlier,
-        onMoveLater = viewModel::onMoveLater,
+        onMove = viewModel::onMove,
         onSave = { viewModel.onSave(name = name, description = description) },
         onEnrolToggled = viewModel::onEnrolToggled,
         modifier = modifier,
@@ -100,8 +115,7 @@ private fun CreateProgramContent(
     onReviewWordsChanged: (Int) -> Unit,
     onTrainingAdded: (String) -> Unit,
     onTurnRemoved: (Int) -> Unit,
-    onMoveEarlier: (Int) -> Unit,
-    onMoveLater: (Int) -> Unit,
+    onMove: (from: Int, to: Int) -> Unit,
     onSave: () -> Unit,
     onEnrolToggled: () -> Unit,
     modifier: Modifier = Modifier,
@@ -212,18 +226,12 @@ private fun CreateProgramContent(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                uiState.queue.forEachIndexed { index, training ->
-                    QueueRow(
-                        position = index + 1,
-                        training = training,
-                        isFirst = index == 0,
-                        isLast = index == uiState.queue.lastIndex,
-                        skin = skin,
-                        onMoveEarlier = { onMoveEarlier(index) },
-                        onMoveLater = { onMoveLater(index) },
-                        onRemove = { onTurnRemoved(index) },
-                    )
-                }
+                QueueList(
+                    queue = uiState.queue,
+                    skin = skin,
+                    onMove = onMove,
+                    onRemove = onTurnRemoved,
+                )
             }
         }
     }
@@ -329,22 +337,145 @@ private fun TrainingPicker(onAdd: (String) -> Unit) {
     }
 }
 
+/**
+ * The day's turns, in order, rearranged by dragging one to where it should go.
+ *
+ * The list does not reorder while a finger is down. The dragged row follows it and the
+ * rows it has passed slide out of its way, but the queue itself is only rewritten when
+ * the finger lifts — reordering underneath a live gesture means the row's index changes
+ * mid-drag, which restarts the gesture and drops the drag.
+ *
+ * Held together by one measured row height, which the rows are: after the arrows went,
+ * a row is a medallion, a name and a cross, and it is one line on any phone.
+ */
+@Composable
+private fun QueueList(
+    queue: ImmutableList<String>,
+    skin: TileSkin,
+    onMove: (from: Int, to: Int) -> Unit,
+    onRemove: (Int) -> Unit,
+) {
+    var draggedFrom by remember { mutableStateOf<Int?>(null) }
+    var dragOffset by remember { mutableFloatStateOf(0f) }
+    var rowHeight by remember { mutableIntStateOf(0) }
+
+    val gap = with(LocalDensity.current) { Dimens.spacingSmall.toPx() }
+    val step = rowHeight + gap
+
+    // Where the dragged row would land if the finger lifted now.
+    val landing = draggedFrom?.let { from -> landingFor(from, dragOffset, step, queue.lastIndex) }
+
+    val from = draggedFrom
+
+    Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
+        queue.forEachIndexed { index, training ->
+            val isDragged = from == index
+            // Everything between the row's home and where it is headed shuffles up or
+            // down by one, which is what shows the learner where it will land.
+            val shift = when {
+                from == null || landing == null || isDragged -> 0f
+                landing > from && index in (from + 1)..landing -> -step
+                landing < from && index in landing until from -> step
+                else -> 0f
+            }
+
+            QueueRow(
+                position = index + 1,
+                training = training,
+                skin = skin,
+                isDragged = isDragged,
+                onMoveEarlier = { onMove(index, index - 1) },
+                onMoveLater = { onMove(index, index + 1) },
+                onRemove = { onRemove(index) },
+                modifier = Modifier
+                    .onSizeChanged { rowHeight = it.height }
+                    .zIndex(if (isDragged) 1f else 0f)
+                    .graphicsLayer { translationY = if (isDragged) dragOffset else shift }
+                    .pointerInput(index) {
+                        detectDragGesturesAfterLongPress(
+                            onDragStart = {
+                                draggedFrom = index
+                                dragOffset = 0f
+                            },
+                            onDrag = { change, drag ->
+                                change.consume()
+                                dragOffset += drag.y
+                            },
+                            onDragEnd = {
+                                // Worked out here rather than read from `landing`
+                                // above: the gesture block outlives the composition
+                                // that started it, so anything computed up there is
+                                // whatever it was before the drag began. The two
+                                // states are read live.
+                                val to = landingFor(index, dragOffset, rowHeight + gap, queue.lastIndex)
+                                if (to != index) onMove(index, to)
+                                draggedFrom = null
+                                dragOffset = 0f
+                            },
+                            onDragCancel = {
+                                draggedFrom = null
+                                dragOffset = 0f
+                            },
+                        )
+                    },
+            )
+        }
+    }
+}
+
+/** How many rows up or down the finger has carried a row, clamped to the queue. */
+private fun landingFor(
+    from: Int,
+    offset: Float,
+    step: Float,
+    lastIndex: Int,
+): Int = if (step <= 0f) from else (from + (offset / step).roundToInt()).coerceIn(0, lastIndex)
+
+/**
+ * One turn at a training: which turn it is, what it is, and the cross that drops it.
+ *
+ * Moving it is a drag rather than a pair of arrows, so the row carries a handle to say
+ * so and nothing else. The two arrows it replaced are kept as accessibility actions,
+ * because a long press and a drag is not an instruction a screen reader can follow.
+ */
 @Composable
 private fun QueueRow(
     position: Int,
     training: String,
-    isFirst: Boolean,
-    isLast: Boolean,
     skin: TileSkin,
+    isDragged: Boolean,
     onMoveEarlier: () -> Unit,
     onMoveLater: () -> Unit,
     onRemove: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    GradientTile(skin = skin) {
+    val moveEarlier = stringResource(R.string.create_program_move_earlier)
+    val moveLater = stringResource(R.string.create_program_move_later)
+
+    GradientTile(
+        skin = skin,
+        modifier = modifier.semantics {
+            customActions = listOf(
+                CustomAccessibilityAction(moveEarlier) {
+                    onMoveEarlier()
+                    true
+                },
+                CustomAccessibilityAction(moveLater) {
+                    onMoveLater()
+                    true
+                },
+            )
+        },
+    ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            Icon(
+                imageVector = Icons.Default.DragHandle,
+                contentDescription = stringResource(R.string.create_program_reorder),
+                tint = if (isDragged) skin.onTile else skin.muted(),
+            )
             Medallion(skin = skin, size = QueueMedallionSize) { MedallionText("$position", skin) }
             Text(
                 text = trainingDisplayName(training),
@@ -352,20 +483,6 @@ private fun QueueRow(
                 color = skin.onTile,
                 modifier = Modifier.weight(1f),
             )
-            IconButton(onClick = onMoveEarlier, enabled = !isFirst) {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowUp,
-                    contentDescription = stringResource(R.string.create_program_move_earlier),
-                    tint = skin.onTile,
-                )
-            }
-            IconButton(onClick = onMoveLater, enabled = !isLast) {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowDown,
-                    contentDescription = stringResource(R.string.create_program_move_later),
-                    tint = skin.onTile,
-                )
-            }
             IconButton(onClick = onRemove) {
                 Icon(
                     imageVector = Icons.Default.Close,
@@ -394,8 +511,7 @@ private fun CreateProgramNoFavouritesPreview() {
             onReviewWordsChanged = {},
             onTrainingAdded = {},
             onTurnRemoved = {},
-            onMoveEarlier = {},
-            onMoveLater = {},
+            onMove = { _, _ -> },
             onSave = {},
             onEnrolToggled = {},
         )
@@ -418,8 +534,7 @@ private fun CreateProgramPreview() {
             onReviewWordsChanged = {},
             onTrainingAdded = {},
             onTurnRemoved = {},
-            onMoveEarlier = {},
-            onMoveLater = {},
+            onMove = { _, _ -> },
             onSave = {},
             onEnrolToggled = {},
         )
