@@ -14,7 +14,7 @@ struct ProgramFormView: View {
 
     @State private var favourites = 0
     @State private var newWords = 10
-    @State private var reviewWords = 20
+    @State private var reviewWords = 10
     @State private var queue: [String] = []
     @State private var isEnrolled = false
     @State private var loaded = false
@@ -129,6 +129,13 @@ struct ProgramFormView: View {
         }
     }
 
+    /// A slider, unless there is nothing to slide.
+    ///
+    /// A study set smaller than the floor leaves a range with one value in it, and
+    /// SwiftUI's Slider treats that as fatal rather than as a disabled control. The
+    /// number on its own is what that case actually means: this is the amount, and
+    /// there is no choice to make about it.
+    @ViewBuilder
     private func slider(_ title: String, value: Binding<Int>, range: ClosedRange<Int>) -> some View {
         VStack(alignment: .leading) {
             HStack {
@@ -136,11 +143,17 @@ struct ProgramFormView: View {
                 Spacer()
                 Text("\(value.wrappedValue)").bold()
             }
-            Slider(
-                value: Binding(get: { Double(value.wrappedValue) }, set: { value.wrappedValue = Int($0.rounded()) }),
-                in: Double(range.lowerBound)...Double(range.upperBound),
-                step: 1
-            )
+            if range.upperBound > range.lowerBound {
+                Slider(
+                    value: Binding(get: { Double(value.wrappedValue) }, set: { value.wrappedValue = Int($0.rounded()) }),
+                    in: Double(range.lowerBound)...Double(range.upperBound),
+                    step: 1
+                )
+            } else {
+                Text("Every word in your study set.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
         }
     }
 
@@ -155,8 +168,8 @@ struct ProgramFormView: View {
         favourites = Int((try? await deps.countFavourites.invoke()) as? Int32 ?? 0)
         if let programId, let program = try? await deps.getProgram.invoke(id: programId) {
             let plan = program.config.dailyPlan
-            newWords = max(Int(plan.newWords), minimumNewWords)
-            reviewWords = Int(plan.reviewWords)
+            newWords = min(max(Int(plan.newWords), minimumNewWords), max(favourites, minimumNewWords))
+            reviewWords = min(Int(plan.reviewWords), max(favourites, minimumNewWords))
             queue = plan.queue
             let active = try? await deps.observeActiveEnrolmentFirst()
             isEnrolled = active?.programId.value == programId.value

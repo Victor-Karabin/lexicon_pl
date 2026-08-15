@@ -65,6 +65,7 @@ import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.interactors.settings.ObserveSettingsUseCase
 import com.lexicon.interactors.settings.UpdateStepCountUseCase
 import com.lexicon.interactors.settings.UpdateThemeModeUseCase
+import com.lexicon.interactors.sync.CatalogSyncStatus
 import com.lexicon.interactors.sync.SyncCatalogUseCase
 import com.lexicon.interactors.training.CheckTrainingReadinessUseCase
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
@@ -183,6 +184,15 @@ object IosDependencies : KoinComponent {
     // A Kotlin Flow reaches Swift as an opaque type with no way to collect it, so
     // each one the app watches is wrapped in a callback here. The returned handle is
     // what a SwiftUI view cancels when it goes away.
+
+    /**
+     * The catalogue import, step by step.
+     *
+     * [SyncCatalogUseCase] is a flow rather than a suspend function — it reports each
+     * step as it lands — so calling `invoke()` and not collecting it does nothing at
+     * all, silently. This is the only way to run it from Swift.
+     */
+    fun watchCatalogSync(onEach: (CatalogSyncStatus) -> Unit): Cancellable = syncCatalog().watch(onEach)
 
     fun watchSettings(onEach: (AppSettings) -> Unit): Cancellable = observeSettings().watch(onEach)
 
