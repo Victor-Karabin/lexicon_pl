@@ -91,5 +91,8 @@ iosSmokeTest/build/
 
 # Xcode's derived data for the iOS app, produced by the build.
 ios/build/
+# Xcode's record of which windows and tabs you had open. It belongs to one machine
+# and rewrites itself whenever Xcode opens, so tracked it is modified forever.
+ios/**/xcuserdata/
 # Written by the iOS build from local.properties; holds API keys.
 ios/Lexicon/Support/Keys.generated.swift
