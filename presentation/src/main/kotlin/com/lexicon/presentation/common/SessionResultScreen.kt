@@ -2,6 +2,7 @@ package com.lexicon.presentation.common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,6 +34,7 @@ import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.LexiconWarning
 import com.lexicon.presentation.theme.component.GradientTile
 import com.lexicon.presentation.theme.component.StatChip
+import com.lexicon.presentation.theme.component.TileChips
 import com.lexicon.presentation.theme.component.muted
 import com.lexicon.presentation.theme.component.tileSkin
 import org.koin.androidx.compose.koinViewModel
@@ -59,7 +61,7 @@ fun SessionResultScreen(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 private fun SessionResultScreenContent(
     correct: Int,
@@ -96,7 +98,7 @@ private fun SessionResultScreenContent(
                         style = MaterialTheme.typography.bodyMedium,
                         color = skin.muted(),
                     )
-                    Row(horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
+                    TileChips {
                         StatChip(
                             icon = Icons.Default.Check,
                             text = "$correct",

@@ -5,6 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.FlowRowScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,6 +25,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.lexicon.presentation.theme.Dimens
@@ -108,12 +112,17 @@ fun TileSkin.muted(): Color = onTile.copy(alpha = TILE_MUTED_ALPHA)
 /**
  * The card everything sits in: rounded, swept with colour, and tappable when there is
  * somewhere to go.
+ *
+ * [padding] is the one thing worth varying. A tile that is a card — a program, a
+ * preset — wants room around it, but a tile used as a row in a list of them wants as
+ * little as it can have, or six of them will not fit on a screen.
  */
 @Composable
 fun GradientTile(
     skin: TileSkin,
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
+    padding: Dp = Dimens.spacingMedium,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val body: @Composable () -> Unit = {
@@ -121,8 +130,8 @@ fun GradientTile(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Brush.linearGradient(skin.sweep))
-                .padding(Dimens.spacingMedium),
-            verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+                .padding(padding),
+            verticalArrangement = Arrangement.spacedBy(padding),
             content = content,
         )
     }
@@ -210,7 +219,39 @@ fun StatChip(
                 tint = skin.onTile,
                 modifier = Modifier.size(StatIconSize),
             )
-            Text(text = text, style = MaterialTheme.typography.labelSmall, color = skin.onTile)
+            Text(
+                text = text,
+                style = MaterialTheme.typography.labelSmall,
+                color = skin.onTile,
+                // A chip is one short fact and stays on one line. Given less width than
+                // it wants it would otherwise wrap, and a chip narrower than its longest
+                // word wraps *per letter* — a column of single characters where a phrase
+                // should be. Truncating says the same thing and keeps the tile readable.
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
         }
     }
+}
+
+/**
+ * The strip of chips along the bottom of a tile.
+ *
+ * Flowed rather than in a row: three chips fit across a wide phone and do not fit a
+ * narrow one at a large text size, and the row has no way to say so — it shares out
+ * what is left and each chip shrinks until its text is a column of letters. Flowing
+ * moves the chip that will not fit onto a line of its own instead.
+ */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun TileChips(
+    modifier: Modifier = Modifier,
+    content: @Composable FlowRowScope.() -> Unit,
+) {
+    FlowRow(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+        content = content,
+    )
 }

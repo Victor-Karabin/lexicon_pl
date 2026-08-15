@@ -19,6 +19,12 @@ struct ProgramFormView: View {
     @State private var isEnrolled = false
     @State private var loaded = false
 
+    /// Which row is under the finger, how far it has been carried, and how tall a row
+    /// is — everything the reorder needs and nothing that outlives the gesture.
+    @State private var draggedFrom: Int?
+    @State private var dragOffset: CGFloat = 0
+    @State private var rowHeight: CGFloat = 0
+
     private let minimumNewWords = 10
 
     var body: some View {
@@ -27,7 +33,7 @@ struct ProgramFormView: View {
                 ProgressView()
             } else if favourites == 0 {
                 VStack(spacing: Spacing.large) {
-                    Text("Nothing starred yet. Add words to your study set in the Vocabulary tab first.")
+                    Text("Nothing starred yet. Add words to your study set in the Words tab first.")
                         .multilineTextAlignment(.center)
                         .foregroundStyle(.secondary)
                 }
@@ -79,7 +85,16 @@ struct ProgramFormView: View {
                         .font(.caption).foregroundStyle(.secondary)
                     ForEach(queue.indices, id: \.self) { i in
                         queueRow(i, skin: skin)
+                            .background(
+                                GeometryReader { proxy in
+                                    Color.clear.preference(key: RowHeightKey.self, value: proxy.size.height)
+                                }
+                            )
+                            .offset(y: rowShift(i))
+                            .zIndex(draggedFrom == i ? 1 : 0)
+                            .gesture(reorder(i))
                     }
+                    .onPreferenceChange(RowHeightKey.self) { rowHeight = $0 }
                 }
             }
             .padding(Spacing.medium)
@@ -114,19 +129,63 @@ struct ProgramFormView: View {
     }
 
     private func queueRow(_ i: Int, skin: TileSkin) -> some View {
-        Tile(skin: skin) {
+        // Tighter than a card: the queue is six of these one under another, and the
+        // point of the list is seeing the whole day's order at once.
+        Tile(skin: skin, padding: Spacing.small) {
             HStack(spacing: Spacing.medium) {
+                Image(systemName: "line.3.horizontal")
+                    .foregroundStyle(draggedFrom == i ? skin.onTile : skin.onTile.muted)
                 Medallion(skin: skin, size: 32) { MedallionText(text: "\(i + 1)", skin: skin) }
                 Text(TrainingCatalog.entry(id: queue[i])?.name ?? queue[i]).foregroundStyle(skin.onTile)
                 Spacer()
-                Button { move(i, by: -1) } label: { Image(systemName: "chevron.up") }
-                    .disabled(i == 0)
-                Button { move(i, by: 1) } label: { Image(systemName: "chevron.down") }
-                    .disabled(i == queue.count - 1)
                 Button { queue.remove(at: i) } label: { Image(systemName: "xmark") }
             }
             .foregroundStyle(skin.onTile)
         }
+        // The arrows this replaced are kept as accessibility actions: press and drag is
+        // not an instruction VoiceOver can carry out.
+        .accessibilityAction(named: "Move earlier") { move(i, by: -1) }
+        .accessibilityAction(named: "Move later") { move(i, by: 1) }
+    }
+
+    /// The spacing the queue rows sit at, and so the distance one drag step covers.
+    private var step: CGFloat { rowHeight + Spacing.medium }
+
+    /// Where the dragged row would land if the finger lifted now.
+    private func landing(_ from: Int) -> Int {
+        guard step > 0, !queue.isEmpty else { return from }
+        return min(max(from + Int((dragOffset / step).rounded()), 0), queue.count - 1)
+    }
+
+    /// The dragged row follows the finger; the rows it has passed step out of its way.
+    private func rowShift(_ i: Int) -> CGFloat {
+        guard let from = draggedFrom else { return 0 }
+        if i == from { return dragOffset }
+        let to = landing(from)
+        if to > from, i > from, i <= to { return -step }
+        if to < from, i >= to, i < from { return step }
+        return 0
+    }
+
+    /// Press, then drag. The queue itself is only rewritten on release: reordering
+    /// under a live gesture changes the row's index, which ends the gesture with the
+    /// finger still down.
+    private func reorder(_ i: Int) -> some Gesture {
+        LongPressGesture(minimumDuration: 0.3)
+            .sequenced(before: DragGesture())
+            .onChanged { value in
+                guard case .second(true, let drag?) = value else { return }
+                if draggedFrom == nil { draggedFrom = i }
+                dragOffset = drag.translation.height
+            }
+            .onEnded { _ in
+                if let from = draggedFrom {
+                    let to = landing(from)
+                    if to != from { move(from, by: to - from) }
+                }
+                draggedFrom = nil
+                dragOffset = 0
+            }
     }
 
     /// A slider, unless there is nothing to slide.
@@ -157,11 +216,16 @@ struct ProgramFormView: View {
         }
     }
 
-    /// By position, not by name: the same training can sit in the queue more than once.
+    /// Takes the turn at `from` out and puts it back in at `from + by`.
+    ///
+    /// By position, not by name: the same training can sit in the queue more than once,
+    /// and moving one of them must not move the others. Removed and re-inserted rather
+    /// than swapped, because a drag passes over every position between the two and a
+    /// swap would leave the ones it passed in the wrong order.
     private func move(_ from: Int, by: Int) {
         let to = from + by
         guard queue.indices.contains(from), queue.indices.contains(to) else { return }
-        queue.swapAt(from, to)
+        withAnimation(.snappy) { queue.insert(queue.remove(at: from), at: to) }
     }
 
     private func load() async {
@@ -227,5 +291,15 @@ struct FlowLayout: Layout {
             x += size.width + spacing
             lineHeight = max(lineHeight, size.height)
         }
+    }
+}
+
+
+/// The height of a queue row, which every row shares and one drag step spans.
+private struct RowHeightKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = max(value, nextValue())
     }
 }

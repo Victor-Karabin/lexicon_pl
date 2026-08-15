@@ -12,6 +12,10 @@ struct WordFormView: View {
     @State private var text = ""
     @State private var translation = ""
     @State private var images: [String] = []
+    /// Pictures the learner supplied rather than ones the search found. Kept apart
+    /// because they outlive a search: retyping the word fetches new candidates, and a
+    /// photograph somebody went and took is not a candidate.
+    @State private var ownImages: [String] = []
     @State private var chosenImage: String?
     @State private var problem: String?
     @State private var textWasFilledIn = false
@@ -30,29 +34,36 @@ struct WordFormView: View {
                     .onChange(of: text) { _, _ in textWasFilledIn = false }
             }
             Section("Picture") {
+                // The row is never empty: adding a picture is always on offer, so the
+                // + leads it whether or not a search has run or found anything.
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: Spacing.small) {
+                        AddImageTile { url in
+                            // Chosen as well as added: they went and found this one,
+                            // so asking them to tap it again would be asking twice.
+                            ownImages = ([url] + ownImages).uniqued()
+                            chosenImage = url
+                        }
+                        ForEach(ownImages + images, id: \.self) { url in
+                            AsyncImage(url: URL(string: url)) { image in
+                                image.resizable().scaledToFill()
+                            } placeholder: {
+                                Color.secondary.opacity(0.2)
+                            }
+                            .frame(width: 96, height: 96)
+                            .clipShape(RoundedRectangle(cornerRadius: Radius.small))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: Radius.small)
+                                    .stroke(chosenImage == url ? Palette.accentDeep : .clear, lineWidth: 3)
+                            )
+                            .onTapGesture { chosenImage = url }
+                        }
+                    }
+                }
                 if images.isEmpty {
                     Text("Type a word to look for a picture.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                } else {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: Spacing.small) {
-                            ForEach(images, id: \.self) { url in
-                                AsyncImage(url: URL(string: url)) { image in
-                                    image.resizable().scaledToFill()
-                                } placeholder: {
-                                    Color.secondary.opacity(0.2)
-                                }
-                                .frame(width: 96, height: 96)
-                                .clipShape(RoundedRectangle(cornerRadius: Radius.small))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: Radius.small)
-                                        .stroke(chosenImage == url ? Palette.accentDeep : .clear, lineWidth: 3)
-                                )
-                                .onTapGesture { chosenImage = url }
-                            }
-                        }
-                    }
                 }
             }
             if let problem {
@@ -77,6 +88,7 @@ struct WordFormView: View {
         // The picture the word already has is the one the trainings show, so it is
         // the one that arrives already chosen.
         chosenImage = try? await deps.getPinnedImage.invoke(translation: word.translation)
+        if let pinned = chosenImage, isOwnImage(pinned) { ownImages = [pinned] }
         await lookUpImages(for: word.translation)
     }
 
@@ -96,6 +108,8 @@ struct WordFormView: View {
 
     private func lookUpImages(for query: String) async {
         images = (try? await deps.searchImageCandidates.invoke(query: query, skip: 0)) ?? []
+        // A picture the learner supplied was never about the search, so a new one
+        // neither replaces it nor unpicks it.
         if chosenImage == nil { chosenImage = images.first }
     }
 
@@ -121,5 +135,14 @@ struct WordFormView: View {
         } catch {
             problem = "That word could not be saved. Check both fields are filled in."
         }
+    }
+}
+
+
+private extension Array where Element: Hashable {
+    /// First occurrence wins, so the newest picture stays at the front of the row.
+    func uniqued() -> [Element] {
+        var seen = Set<Element>()
+        return filter { seen.insert($0).inserted }
     }
 }

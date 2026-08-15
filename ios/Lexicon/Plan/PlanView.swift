@@ -63,7 +63,9 @@ struct PlanView: View {
                 Spacer()
                 Image(systemName: active ? "play.fill" : "chevron.right").foregroundStyle(skin.onTile.muted)
             }
-            HStack(spacing: Spacing.small) {
+            // Flowed rather than in a row: three chips fit across a wide phone and do
+            // not fit a narrow one at a large text size, and a row has no way to say so.
+            FlowLayout(spacing: Spacing.small) {
                 if let words = program.config.goals.first(where: { $0.type == .vocabulary })?.target {
                     StatChip(systemName: "character.book.closed", text: "\(words) words", skin: skin)
                 }

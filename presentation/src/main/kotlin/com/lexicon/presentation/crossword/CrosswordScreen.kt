@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -54,6 +55,9 @@ import org.koin.androidx.compose.koinViewModel
 
 private val MinCellSize = 14.dp
 private val MaxCellSize = 40.dp
+
+/** How much of a cell its rounded corner takes, so a small cell stays a square. */
+private const val CELL_CORNER_FRACTION = 0.2f
 
 private const val LETTER_SIZE_RATIO = 0.5f
 
@@ -222,12 +226,17 @@ private fun CrosswordCellBox(
     }
     val textColor = MaterialTheme.colorScheme.onSurface
 
+    // Rounded in proportion to the cell rather than by a fixed radius: a dense grid
+    // squeezes cells down to about fourteen dp, and the theme's small corner is wider
+    // than half of that, so every square came out drawn as a circle.
+    val corner = RoundedCornerShape(size * CELL_CORNER_FRACTION)
+
     Box(
         modifier = Modifier
             .size(size)
             .padding(1.dp)
-            .background(background, LexiconShapes.small)
-            .border(1.dp, MaterialTheme.colorScheme.outline, LexiconShapes.small),
+            .background(background, corner)
+            .border(1.dp, MaterialTheme.colorScheme.outline, corner),
         contentAlignment = Alignment.Center,
     ) {
         BasicTextField(

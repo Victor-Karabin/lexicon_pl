@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -69,6 +70,7 @@ import com.lexicon.presentation.theme.component.Medallion
 import com.lexicon.presentation.theme.component.MedallionIcon
 import com.lexicon.presentation.theme.component.MedallionText
 import com.lexicon.presentation.theme.component.StatChip
+import com.lexicon.presentation.theme.component.TileChips
 import com.lexicon.presentation.theme.component.muted
 import com.lexicon.presentation.theme.component.tileSkin
 import kotlinx.collections.immutable.persistentListOf
@@ -184,6 +186,7 @@ private fun SectionHeading(text: String) {
  * tile says what that figure is before the learner taps. The one under way is filled
  * rather than merely labelled, so the tab can be read at a glance.
  */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ProgramTile(
     program: Program,
@@ -233,7 +236,7 @@ private fun ProgramTile(
 
         // What a day of it actually costs, which is the thing worth knowing before
         // starting rather than after.
-        Row(horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
+        TileChips {
             program.config.goals
                 .firstOrNull { it.type == TargetType.VOCABULARY }
                 ?.let { goal ->

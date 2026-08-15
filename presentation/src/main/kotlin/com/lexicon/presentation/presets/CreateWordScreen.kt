@@ -9,12 +9,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.PhotoCamera
+import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -25,6 +31,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -75,6 +84,7 @@ fun CreateWordScreen(
         onTextChanged = viewModel::onTextChanged,
         onTranslationChanged = viewModel::onTranslationChanged,
         onImageSelected = viewModel::onImageSelected,
+        onOwnImageAdded = viewModel::onOwnImageAdded,
         onMoreImages = viewModel::onMoreImages,
         onPresetToggled = viewModel::onPresetToggled,
         onSave = viewModel::onSave,
@@ -89,6 +99,7 @@ private fun CreateWordContent(
     onTextChanged: (String) -> Unit,
     onTranslationChanged: (String) -> Unit,
     onImageSelected: (String) -> Unit,
+    onOwnImageAdded: (String) -> Unit,
     onMoreImages: () -> Unit,
     onPresetToggled: (PresetId, Boolean) -> Unit,
     onSave: () -> Unit,
@@ -165,7 +176,7 @@ private fun CreateWordContent(
                 shape = LexiconShapes.small,
             )
 
-            ImageSection(uiState, onImageSelected, onMoreImages)
+            ImageSection(uiState, onImageSelected, onOwnImageAdded, onMoreImages)
 
             if (uiState.memberships.isNotEmpty()) {
                 SectionHeading(stringResource(R.string.create_word_presets))
@@ -184,6 +195,7 @@ private fun CreateWordContent(
 private fun ImageSection(
     uiState: CreateWordUiState,
     onImageSelected: (String) -> Unit,
+    onOwnImageAdded: (String) -> Unit,
     onMoreImages: () -> Unit,
 ) {
     Row(
@@ -199,47 +211,101 @@ private fun ImageSection(
         }
     }
 
-    when {
-        uiState.imageCandidates.isEmpty() && uiState.isLoadingImages ->
+    // The row is never empty: adding a picture is always on offer, so the + leads it
+    // whether or not a search has run or found anything.
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .horizontalScroll(rememberScrollState()),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+    ) {
+        AddImageTile(onPicked = onOwnImageAdded)
+
+        uiState.ownImages.forEach { url ->
+            ImageCandidate(
+                url = url,
+                isSelected = url == uiState.selectedImage,
+                onClick = { onImageSelected(url) },
+            )
+        }
+        uiState.imageCandidates.forEach { url ->
+            ImageCandidate(
+                url = url,
+                isSelected = url == uiState.selectedImage,
+                onClick = { onImageSelected(url) },
+            )
+        }
+        if (uiState.isLoadingImages) {
             Box(
-                modifier = Modifier.fillMaxWidth().height(ImageRowHeight),
+                modifier = Modifier.size(CandidateSize),
                 contentAlignment = Alignment.Center,
             ) { CircularProgressIndicator() }
+        }
+    }
 
-        uiState.imageCandidates.isEmpty() ->
-            Text(
-                text = stringResource(
-                    if (uiState.hasSearchedImages) {
-                        R.string.create_word_image_empty
-                    } else {
-                        R.string.create_word_image_none
-                    },
-                ),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+    // Said under the row rather than in place of it, now that the row always has the
+    // + in it.
+    if (uiState.imageCandidates.isEmpty() && !uiState.isLoadingImages) {
+        Text(
+            text = stringResource(
+                if (uiState.hasSearchedImages) {
+                    R.string.create_word_image_empty
+                } else {
+                    R.string.create_word_image_none
+                },
+            ),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
 
-        else ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-            ) {
-                uiState.imageCandidates.forEach { url ->
-                    ImageCandidate(
-                        url = url,
-                        isSelected = url == uiState.selectedImage,
-                        onClick = { onImageSelected(url) },
-                    )
-                }
-                if (uiState.isLoadingImages) {
-                    Box(
-                        modifier = Modifier.size(CandidateSize),
-                        contentAlignment = Alignment.Center,
-                    ) { CircularProgressIndicator() }
-                }
+/**
+ * The tile that adds a picture of the learner's own, first in the row and always there.
+ *
+ * Two sources behind one tile: which of the library or the camera a picture comes from
+ * is a detail of getting one, not a choice worth two tiles in a row of pictures.
+ */
+@Composable
+private fun AddImageTile(onPicked: (String) -> Unit) {
+    var isChoosing by remember { mutableStateOf(false) }
+    val picker = rememberOwnImagePicker(onPicked = onPicked)
+
+    Box {
+        Surface(
+            shape = LexiconShapes.small,
+            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            modifier = Modifier
+                .size(CandidateSize)
+                .clickable { isChoosing = true },
+        ) {
+            Box(contentAlignment = Alignment.Center) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(R.string.create_word_image_add),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
+        }
+
+        DropdownMenu(expanded = isChoosing, onDismissRequest = { isChoosing = false }) {
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.create_word_image_from_library)) },
+                leadingIcon = { Icon(Icons.Default.PhotoLibrary, contentDescription = null) },
+                onClick = {
+                    isChoosing = false
+                    picker.pickFromLibrary()
+                },
+            )
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.create_word_image_from_camera)) },
+                leadingIcon = { Icon(Icons.Default.PhotoCamera, contentDescription = null) },
+                onClick = {
+                    isChoosing = false
+                    picker.takePhoto()
+                },
+            )
+        }
     }
 }
 
@@ -324,6 +390,7 @@ private fun CreateWordPreview() {
             onTextChanged = {},
             onTranslationChanged = {},
             onImageSelected = {},
+            onOwnImageAdded = {},
             onMoreImages = {},
             onPresetToggled = { _, _ -> },
             onSave = {},
@@ -341,6 +408,7 @@ private fun CreateWordEmptyPreview() {
             onTextChanged = {},
             onTranslationChanged = {},
             onImageSelected = {},
+            onOwnImageAdded = {},
             onMoreImages = {},
             onPresetToggled = { _, _ -> },
             onSave = {},
@@ -363,6 +431,7 @@ private fun CreateWordDuplicatePreview() {
             onTextChanged = {},
             onTranslationChanged = {},
             onImageSelected = {},
+            onOwnImageAdded = {},
             onMoreImages = {},
             onPresetToggled = { _, _ -> },
             onSave = {},

@@ -78,8 +78,8 @@
     <string name="favourite_preset_remove">Remove every word from study set</string>
     <string name="training_not_enough_words_title">Not enough words</string>
     <string name="training_not_enough_words_body">%1$s needs at least %2$d words, and your study set has %3$d.</string>
-    <string name="training_not_enough_words_hint">Add words to your study set with the heart button in the Vocabulary tab.</string>
-    <string name="training_go_to_vocabulary">Go to Vocabulary</string>
+    <string name="training_not_enough_words_hint">Add words to your study set with the heart button in the Words tab.</string>
+    <string name="training_go_to_vocabulary">Go to Words</string>
     <string name="training_not_enough_words_action">Back to trainings</string>
     <string name="vocabulary_search_hint">Search words</string>
     <string name="vocabulary_search_no_matches">No words match “%1$s”.</string>
@@ -121,6 +121,9 @@
     <string name="create_word_base">English</string>
     <string name="create_word_translation">Polish</string>
     <string name="create_word_image">Picture</string>
+    <string name="create_word_image_add">Add a picture of your own</string>
+    <string name="create_word_image_from_library">Choose a photo</string>
+    <string name="create_word_image_from_camera">Take a photo</string>
     <string name="create_word_image_more">More</string>
     <string name="create_word_image_none">Type a word to look for a picture.</string>
     <string name="create_word_image_empty">No pictures were found for this word.</string>
@@ -180,9 +183,10 @@
     <string name="create_program_needs_training">Add at least one training to save.</string>
     <string name="create_program_queue_note">%1$d turns a day, in this order</string>
     <string name="create_program_scope">Over the words in your study set</string>
-    <string name="create_program_no_favourites">Nothing starred yet. Add words to your study set in the Vocabulary tab first.</string>
+    <string name="create_program_no_favourites">Nothing starred yet. Add words to your study set in the Words tab first.</string>
     <string name="create_program_move_earlier">Move earlier</string>
     <string name="create_program_move_later">Move later</string>
+    <string name="create_program_reorder">Drag to reorder</string>
     <string name="create_program_remove_turn">Remove this turn</string>
     <string name="create_program_saved">Added “%1$s”</string>
     <string name="plan_courses">Courses</string>
