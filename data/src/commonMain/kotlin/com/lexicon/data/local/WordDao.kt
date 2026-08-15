@@ -100,6 +100,22 @@ interface WordDao {
     suspend fun findById(id: Long): WordEntity?
 
     /**
+     * Ids a program's vocabulary scope can draw on, in corpus order.
+     *
+     * Ordered by id rather than alphabetically because the corpus is numbered by
+     * frequency: the lower the id, the more often the word turns up, which is the
+     * order a beginner should meet them in.
+     */
+    @Query("SELECT id FROM words WHERE isDeleted = 0 ORDER BY id")
+    suspend fun allWordIds(): List<Long>
+
+    @Query("SELECT id FROM words WHERE isDeleted = 0 AND cefr = :level ORDER BY id")
+    suspend fun wordIdsForLevel(level: String): List<Long>
+
+    @Query("SELECT id FROM words WHERE isDeleted = 0 AND isFavourite = 1 ORDER BY id")
+    suspend fun favouriteWordIds(): List<Long>
+
+    /**
      * Rewrites a word the learner edited, and marks it theirs.
      *
      * A shipped word becomes user-created the moment it is edited: [VocabularySeeder]

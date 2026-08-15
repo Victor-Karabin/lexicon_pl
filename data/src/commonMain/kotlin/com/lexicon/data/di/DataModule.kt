@@ -2,7 +2,10 @@ package com.lexicon.data.di
 
 import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.ImageProvider
+import com.lexicon.boundary.ProgramRepository
+import com.lexicon.boundary.ReviewScheduleRepository
 import com.lexicon.boundary.SettingsRepository
+import com.lexicon.boundary.StudyRecordRepository
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.Translator
 import com.lexicon.boundary.VocabularyPresetRepository
@@ -30,6 +33,9 @@ import com.lexicon.data.repository.CorpusTranslatorImpl
 import com.lexicon.data.repository.CourseRepositoryImpl
 import com.lexicon.data.repository.FallbackImageProviderImpl
 import com.lexicon.data.repository.FallbackTranslatorImpl
+import com.lexicon.data.repository.ProgramRepositoryImpl
+import com.lexicon.data.repository.ReviewScheduleRepositoryImpl
+import com.lexicon.data.repository.StudyRecordRepositoryImpl
 import com.lexicon.data.repository.TrainingHistoryRepositoryImpl
 import com.lexicon.data.repository.VocabularyPresetRepositoryImpl
 import com.lexicon.data.repository.VocabularyRepositoryImpl
@@ -68,12 +74,18 @@ val dataModule = module {
     factory { get<AppDatabase>().imageUrlCacheDao() }
     factory { get<AppDatabase>().presetDao() }
     factory { get<AppDatabase>().courseDao() }
+    factory { get<AppDatabase>().wordReviewDao() }
+    factory { get<AppDatabase>().studyDayDao() }
+    factory { get<AppDatabase>().programDao() }
 
     single(settingsDataStoreQualifier) { get<DataStorePathResolver>().createDataStore(SETTINGS_STORE_NAME) }
     single(vocabularySyncDataStoreQualifier) { get<DataStorePathResolver>().createDataStore(VOCABULARY_SYNC_STORE_NAME) }
 
     singleOf(::VocabularyRepositoryImpl) { bind<VocabularyRepository>() }
     singleOf(::TrainingHistoryRepositoryImpl) { bind<TrainingHistoryRepository>() }
+    singleOf(::ReviewScheduleRepositoryImpl) { bind<ReviewScheduleRepository>() }
+    singleOf(::StudyRecordRepositoryImpl) { bind<StudyRecordRepository>() }
+    factoryOf(::ProgramRepositoryImpl) { bind<ProgramRepository>() }
     singleOf(::CachingImageProviderImpl) { bind<ImageProvider>() }
     single<SettingsRepository> { SettingsRepositoryImpl(get(settingsDataStoreQualifier)) }
     factoryOf(::VocabularyPresetRepositoryImpl) { bind<VocabularyPresetRepository>() }

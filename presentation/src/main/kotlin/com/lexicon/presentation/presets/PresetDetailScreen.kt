@@ -38,6 +38,7 @@ import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
+import com.lexicon.presentation.theme.component.GradientTile
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import org.koin.androidx.compose.koinViewModel
@@ -189,15 +190,19 @@ private fun PresetHeader(
     uiState: PresetDetailUiState.Loaded,
     onFavouriteToggled: (PresetFavouriteState) -> Unit,
 ) {
-    // Bare, and without the name: the card's rounded surface belongs to a list of
-    // presets rather than the one you are already inside, and the bar names it.
-    PresetSummary(
-        preset = uiState.preset,
-        languageTag = uiState.languageTag,
-        favouriteState = uiState.favouriteState,
-        onFavouriteToggled = { onFavouriteToggled(uiState.favouriteState) },
-        showTitle = false,
-    )
+    // Without the name, which the bar carries already, but in the preset's own
+    // colour so the screen is recognisably the tile that was tapped.
+    val skin = presetTileSkin(uiState.preset)
+    GradientTile(skin = skin) {
+        PresetSummary(
+            preset = uiState.preset,
+            languageTag = uiState.languageTag,
+            favouriteState = uiState.favouriteState,
+            skin = skin,
+            onFavouriteToggled = { onFavouriteToggled(uiState.favouriteState) },
+            showTitle = false,
+        )
+    }
 }
 
 private val previewPreset = VocabularyPreset(

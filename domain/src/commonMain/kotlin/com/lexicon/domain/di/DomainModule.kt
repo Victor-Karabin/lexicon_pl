@@ -21,6 +21,7 @@ import com.lexicon.domain.presets.CreatePresetUseCaseImpl
 import com.lexicon.domain.presets.CreateWordUseCaseImpl
 import com.lexicon.domain.presets.DeletePresetUseCaseImpl
 import com.lexicon.domain.presets.DeleteWordUseCaseImpl
+import com.lexicon.domain.presets.GetPinnedImageUseCaseImpl
 import com.lexicon.domain.presets.GetPresetCategoriesUseCaseImpl
 import com.lexicon.domain.presets.GetPresetVocabularyUseCaseImpl
 import com.lexicon.domain.presets.GetVocabularyPresetUseCaseImpl
@@ -38,6 +39,21 @@ import com.lexicon.domain.presets.SetWordPresetMembershipUseCaseImpl
 import com.lexicon.domain.presets.ToggleWordFavouriteUseCaseImpl
 import com.lexicon.domain.presets.TranslateWordUseCaseImpl
 import com.lexicon.domain.presets.UpdateWordUseCaseImpl
+import com.lexicon.domain.program.CountFavouritesUseCaseImpl
+import com.lexicon.domain.program.CreateProgramUseCaseImpl
+import com.lexicon.domain.program.EnrolInProgramUseCaseImpl
+import com.lexicon.domain.program.GetProgramDayUseCaseImpl
+import com.lexicon.domain.program.GetProgramProgressUseCaseImpl
+import com.lexicon.domain.program.GetProgramUseCaseImpl
+import com.lexicon.domain.program.GetStudyStreakUseCaseImpl
+import com.lexicon.domain.program.GetWordCardsUseCaseImpl
+import com.lexicon.domain.program.LeaveProgramUseCaseImpl
+import com.lexicon.domain.program.MarkCardsSeenUseCaseImpl
+import com.lexicon.domain.program.ObserveActiveEnrolmentUseCaseImpl
+import com.lexicon.domain.program.ObserveProgramsUseCaseImpl
+import com.lexicon.domain.program.ResolveProgramScopeUseCaseImpl
+import com.lexicon.domain.program.StartProgramSessionUseCaseImpl
+import com.lexicon.domain.program.UpdateProgramUseCaseImpl
 import com.lexicon.domain.pronunciation.StartPronunciationSessionUseCaseImpl
 import com.lexicon.domain.pronunciation.SubmitPronunciationResultUseCaseImpl
 import com.lexicon.domain.puzzle.StartPuzzleSessionUseCaseImpl
@@ -50,6 +66,8 @@ import com.lexicon.domain.sync.SyncCatalogUseCaseImpl
 import com.lexicon.domain.training.CheckTrainingReadinessUseCaseImpl
 import com.lexicon.domain.trueorfalse.StartTrueOrFalseSessionUseCaseImpl
 import com.lexicon.domain.trueorfalse.SubmitTrueOrFalseAnswerUseCaseImpl
+import com.lexicon.domain.wordcard.RecordWordCardSeenUseCaseImpl
+import com.lexicon.domain.wordcard.StartWordCardSessionUseCaseImpl
 import com.lexicon.domain.wordmatch.StartWordMatchSessionUseCaseImpl
 import com.lexicon.domain.wordmatch.SubmitWordMatchStepResultUseCaseImpl
 import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
@@ -72,6 +90,7 @@ import com.lexicon.interactors.presets.CreatePresetUseCase
 import com.lexicon.interactors.presets.CreateWordUseCase
 import com.lexicon.interactors.presets.DeletePresetUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
+import com.lexicon.interactors.presets.GetPinnedImageUseCase
 import com.lexicon.interactors.presets.GetPresetCategoriesUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
@@ -89,6 +108,21 @@ import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
+import com.lexicon.interactors.program.CountFavouritesUseCase
+import com.lexicon.interactors.program.CreateProgramUseCase
+import com.lexicon.interactors.program.EnrolInProgramUseCase
+import com.lexicon.interactors.program.GetProgramDayUseCase
+import com.lexicon.interactors.program.GetProgramProgressUseCase
+import com.lexicon.interactors.program.GetProgramUseCase
+import com.lexicon.interactors.program.GetStudyStreakUseCase
+import com.lexicon.interactors.program.GetWordCardsUseCase
+import com.lexicon.interactors.program.LeaveProgramUseCase
+import com.lexicon.interactors.program.MarkCardsSeenUseCase
+import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
+import com.lexicon.interactors.program.ObserveProgramsUseCase
+import com.lexicon.interactors.program.ResolveProgramScopeUseCase
+import com.lexicon.interactors.program.StartProgramSessionUseCase
+import com.lexicon.interactors.program.UpdateProgramUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
@@ -100,6 +134,8 @@ import com.lexicon.interactors.sync.SyncCatalogUseCase
 import com.lexicon.interactors.training.CheckTrainingReadinessUseCase
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
+import com.lexicon.interactors.wordcard.RecordWordCardSeenUseCase
+import com.lexicon.interactors.wordcard.StartWordCardSessionUseCase
 import com.lexicon.interactors.wordmatch.StartWordMatchSessionUseCase
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultUseCase
 import org.koin.core.module.dsl.bind
@@ -140,12 +176,30 @@ val domainModule = module {
     factoryOf(::SetPresetFavouriteUseCaseImpl) { bind<SetPresetFavouriteUseCase>() }
     factoryOf(::GetWordPresetMembershipsUseCaseImpl) { bind<GetWordPresetMembershipsUseCase>() }
     factoryOf(::SetWordPresetMembershipUseCaseImpl) { bind<SetWordPresetMembershipUseCase>() }
+    factoryOf(::ObserveProgramsUseCaseImpl) { bind<ObserveProgramsUseCase>() }
+    factoryOf(::GetProgramUseCaseImpl) { bind<GetProgramUseCase>() }
+    factoryOf(::ObserveActiveEnrolmentUseCaseImpl) { bind<ObserveActiveEnrolmentUseCase>() }
+    factoryOf(::EnrolInProgramUseCaseImpl) { bind<EnrolInProgramUseCase>() }
+    factoryOf(::LeaveProgramUseCaseImpl) { bind<LeaveProgramUseCase>() }
+    factoryOf(::ResolveProgramScopeUseCaseImpl) { bind<ResolveProgramScopeUseCase>() }
+    factoryOf(::StartProgramSessionUseCaseImpl) { bind<StartProgramSessionUseCase>() }
+    factoryOf(::GetProgramProgressUseCaseImpl) { bind<GetProgramProgressUseCase>() }
+    factoryOf(::GetStudyStreakUseCaseImpl) { bind<GetStudyStreakUseCase>() }
+    factoryOf(::CreateProgramUseCaseImpl) { bind<CreateProgramUseCase>() }
+    factoryOf(::UpdateProgramUseCaseImpl) { bind<UpdateProgramUseCase>() }
+    factoryOf(::StartWordCardSessionUseCaseImpl) { bind<StartWordCardSessionUseCase>() }
+    factoryOf(::RecordWordCardSeenUseCaseImpl) { bind<RecordWordCardSeenUseCase>() }
+    factoryOf(::CountFavouritesUseCaseImpl) { bind<CountFavouritesUseCase>() }
+    factoryOf(::GetProgramDayUseCaseImpl) { bind<GetProgramDayUseCase>() }
+    factoryOf(::MarkCardsSeenUseCaseImpl) { bind<MarkCardsSeenUseCase>() }
+    factoryOf(::GetWordCardsUseCaseImpl) { bind<GetWordCardsUseCase>() }
     factoryOf(::CreateWordUseCaseImpl) { bind<CreateWordUseCase>() }
     factoryOf(::UpdateWordUseCaseImpl) { bind<UpdateWordUseCase>() }
     factoryOf(::GetWordUseCaseImpl) { bind<GetWordUseCase>() }
     factoryOf(::CreatePresetUseCaseImpl) { bind<CreatePresetUseCase>() }
     factoryOf(::TranslateWordUseCaseImpl) { bind<TranslateWordUseCase>() }
     factoryOf(::SearchImageCandidatesUseCaseImpl) { bind<SearchImageCandidatesUseCase>() }
+    factoryOf(::GetPinnedImageUseCaseImpl) { bind<GetPinnedImageUseCase>() }
     factoryOf(::ObserveFavouriteWordIdsUseCaseImpl) { bind<ObserveFavouriteWordIdsUseCase>() }
     factoryOf(::CheckTrainingReadinessUseCaseImpl) { bind<CheckTrainingReadinessUseCase>() }
     factoryOf(::SearchVocabularyUseCaseImpl) { bind<SearchVocabularyUseCase>() }

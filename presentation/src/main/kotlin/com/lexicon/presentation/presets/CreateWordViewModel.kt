@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.interactors.presets.CreateWordUseCase
+import com.lexicon.interactors.presets.GetPinnedImageUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.GetWordUseCase
@@ -66,6 +67,7 @@ class CreateWordViewModel(
     private val searchImageCandidates: SearchImageCandidatesUseCase,
     private val getPresets: GetVocabularyPresetsUseCase,
     private val getWordPresetMemberships: GetWordPresetMembershipsUseCase,
+    private val getPinnedImage: GetPinnedImageUseCase,
 ) : ViewModel() {
     /** Absent when writing a new word, present when editing one that exists. */
     private val editing: VocabularyId? =
@@ -116,7 +118,7 @@ class CreateWordViewModel(
                 memberships = getWordPresetMemberships(id),
             )
         }
-        loadImagesFor(word.translation)
+        loadImagesFor(word.translation, pinned = getPinnedImage(word.translation))
     }
 
     fun onTextChanged(text: String) {
@@ -252,14 +254,33 @@ class CreateWordViewModel(
         }
     }
 
-    /** Straight away, with no settle delay: nothing is being typed. */
-    private suspend fun loadImagesFor(query: String) {
+    /**
+     * Straight away, with no settle delay: nothing is being typed.
+     *
+     * [pinned] is the picture the word already has. It is put at the front and marked
+     * as chosen, and it may well not be among the fresh search results — the search
+     * is live and the choice was made whenever the word was last saved.
+     */
+    private suspend fun loadImagesFor(
+        query: String,
+        pinned: String? = null,
+    ) {
         if (query.isBlank()) return
         _uiState.update { it.copy(isLoadingImages = true) }
         val candidates = searchImageCandidates(query)
         shownImages = candidates.size
+        val withPinned = if (pinned.isNullOrBlank()) {
+            candidates
+        } else {
+            (listOf(pinned) + candidates).distinct().toImmutableList()
+        }
         _uiState.update {
-            it.copy(imageCandidates = candidates, isLoadingImages = false, hasSearchedImages = true)
+            it.copy(
+                imageCandidates = withPinned,
+                selectedImage = pinned,
+                isLoadingImages = false,
+                hasSearchedImages = true,
+            )
         }
     }
 

@@ -1,6 +1,11 @@
 package com.lexicon.presentation.presets
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Chat
+import androidx.compose.material.icons.automirrored.filled.DirectionsBike
+import androidx.compose.material.icons.automirrored.filled.DirectionsRun
+import androidx.compose.material.icons.automirrored.filled.MenuBook
+import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.AcUnit
 import androidx.compose.material.icons.filled.Accessibility
 import androidx.compose.material.icons.filled.AccountBalance
@@ -26,7 +31,6 @@ import androidx.compose.material.icons.filled.Casino
 import androidx.compose.material.icons.filled.Category
 import androidx.compose.material.icons.filled.Celebration
 import androidx.compose.material.icons.filled.Chair
-import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Checkroom
 import androidx.compose.material.icons.filled.ChildCare
 import androidx.compose.material.icons.filled.CleaningServices
@@ -35,10 +39,8 @@ import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.Computer
 import androidx.compose.material.icons.filled.Construction
 import androidx.compose.material.icons.filled.CreditCard
-import androidx.compose.material.icons.filled.DirectionsBike
 import androidx.compose.material.icons.filled.DirectionsBus
 import androidx.compose.material.icons.filled.DirectionsCar
-import androidx.compose.material.icons.filled.DirectionsRun
 import androidx.compose.material.icons.filled.Diversity3
 import androidx.compose.material.icons.filled.DownhillSkiing
 import androidx.compose.material.icons.filled.Edit
@@ -89,7 +91,6 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Luggage
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Medication
-import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Mood
 import androidx.compose.material.icons.filled.Movie
 import androidx.compose.material.icons.filled.MusicNote
@@ -138,7 +139,6 @@ import androidx.compose.material.icons.filled.Thunderstorm
 import androidx.compose.material.icons.filled.Tour
 import androidx.compose.material.icons.filled.Train
 import androidx.compose.material.icons.filled.Translate
-import androidx.compose.material.icons.filled.TrendingUp
 import androidx.compose.material.icons.filled.TwoWheeler
 import androidx.compose.material.icons.filled.Umbrella
 import androidx.compose.material.icons.filled.Watch
@@ -183,7 +183,7 @@ private val PRESET_ICONS: Map<String, ImageVector> = mapOf(
     "category" to Icons.Default.Category,
     "celebration" to Icons.Default.Celebration,
     "chair" to Icons.Default.Chair,
-    "chat" to Icons.Default.Chat,
+    "chat" to Icons.AutoMirrored.Filled.Chat,
     "checkroom" to Icons.Default.Checkroom,
     "child_care" to Icons.Default.ChildCare,
     "cleaning_services" to Icons.Default.CleaningServices,
@@ -192,10 +192,10 @@ private val PRESET_ICONS: Map<String, ImageVector> = mapOf(
     "computer" to Icons.Default.Computer,
     "construction" to Icons.Default.Construction,
     "credit_card" to Icons.Default.CreditCard,
-    "directions_bike" to Icons.Default.DirectionsBike,
+    "directions_bike" to Icons.AutoMirrored.Filled.DirectionsBike,
     "directions_bus" to Icons.Default.DirectionsBus,
     "directions_car" to Icons.Default.DirectionsCar,
-    "directions_run" to Icons.Default.DirectionsRun,
+    "directions_run" to Icons.AutoMirrored.Filled.DirectionsRun,
     "diversity3" to Icons.Default.Diversity3,
     "downhill_skiing" to Icons.Default.DownhillSkiing,
     "edit" to Icons.Default.Edit,
@@ -246,7 +246,7 @@ private val PRESET_ICONS: Map<String, ImageVector> = mapOf(
     "luggage" to Icons.Default.Luggage,
     "map" to Icons.Default.Map,
     "medication" to Icons.Default.Medication,
-    "menu_book" to Icons.Default.MenuBook,
+    "menu_book" to Icons.AutoMirrored.Filled.MenuBook,
     "mood" to Icons.Default.Mood,
     "movie" to Icons.Default.Movie,
     "music_note" to Icons.Default.MusicNote,
@@ -295,7 +295,7 @@ private val PRESET_ICONS: Map<String, ImageVector> = mapOf(
     "tour" to Icons.Default.Tour,
     "train" to Icons.Default.Train,
     "translate" to Icons.Default.Translate,
-    "trending_up" to Icons.Default.TrendingUp,
+    "trending_up" to Icons.AutoMirrored.Filled.TrendingUp,
     "two_wheeler" to Icons.Default.TwoWheeler,
     "umbrella" to Icons.Default.Umbrella,
     "watch" to Icons.Default.Watch,

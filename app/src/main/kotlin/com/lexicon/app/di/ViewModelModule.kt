@@ -4,10 +4,11 @@ import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionResultViewModel
 import com.lexicon.presentation.common.TrainingGateViewModel
 import com.lexicon.presentation.course.CourseDetailViewModel
-import com.lexicon.presentation.course.CourseViewModel
 import com.lexicon.presentation.course.ExerciseViewModel
 import com.lexicon.presentation.course.LessonViewModel
+import com.lexicon.presentation.course.PlanViewModel
 import com.lexicon.presentation.crossword.CrosswordViewModel
+import com.lexicon.presentation.dashboard.DashboardViewModel
 import com.lexicon.presentation.dictation.DictationViewModel
 import com.lexicon.presentation.dictationpuzzle.DictationPuzzleViewModel
 import com.lexicon.presentation.imagetest.ImageTestViewModel
@@ -18,10 +19,13 @@ import com.lexicon.presentation.presets.CreatePresetViewModel
 import com.lexicon.presentation.presets.CreateWordViewModel
 import com.lexicon.presentation.presets.PresetDetailViewModel
 import com.lexicon.presentation.presets.VocabularyViewModel
+import com.lexicon.presentation.program.CreateProgramViewModel
+import com.lexicon.presentation.program.WordCardsViewModel
 import com.lexicon.presentation.pronunciation.PronunciationViewModel
 import com.lexicon.presentation.puzzle.PuzzleViewModel
 import com.lexicon.presentation.settings.SettingsViewModel
 import com.lexicon.presentation.trueorfalse.TrueOrFalseViewModel
+import com.lexicon.presentation.wordcard.WordCardViewModel
 import com.lexicon.presentation.wordmatch.WordMatchViewModel
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
@@ -32,7 +36,11 @@ val viewModelModule = module {
 
     viewModelOf(::SessionResultViewModel)
     viewModelOf(::TrainingGateViewModel)
-    viewModelOf(::CourseViewModel)
+    viewModelOf(::PlanViewModel)
+    viewModelOf(::DashboardViewModel)
+    viewModelOf(::WordCardsViewModel)
+    viewModelOf(::CreateProgramViewModel)
+    viewModelOf(::WordCardViewModel)
     viewModelOf(::CourseDetailViewModel)
     viewModelOf(::ExerciseViewModel)
     viewModelOf(::LessonViewModel)

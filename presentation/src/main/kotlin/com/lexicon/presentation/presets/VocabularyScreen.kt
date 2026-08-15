@@ -24,7 +24,6 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -52,8 +51,8 @@ import com.lexicon.presentation.common.DeleteActionWidth
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SwipeToRevealContainer
 import com.lexicon.presentation.theme.Dimens
-import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconTheme
+import com.lexicon.presentation.theme.component.GradientTile
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import org.koin.androidx.compose.koinViewModel
@@ -331,16 +330,13 @@ private fun PresetCard(
     onClick: () -> Unit,
     onFavouriteToggled: () -> Unit,
 ) {
-    Surface(
-        onClick = onClick,
-        shape = LexiconShapes.medium,
-        color = MaterialTheme.colorScheme.surfaceContainerHigh,
-        modifier = Modifier.fillMaxWidth(),
-    ) {
+    val skin = presetTileSkin(preset)
+    GradientTile(skin = skin, onClick = onClick) {
         PresetSummary(
             preset = preset,
             languageTag = languageTag,
             favouriteState = favouriteState,
+            skin = skin,
             onFavouriteToggled = onFavouriteToggled,
         )
     }
