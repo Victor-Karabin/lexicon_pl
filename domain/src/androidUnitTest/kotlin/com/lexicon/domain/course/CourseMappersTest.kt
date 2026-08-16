@@ -110,16 +110,71 @@ class CourseMappersTest {
     }
 
     @Test
-    fun `gap fill exercise drops an item with no prompt or no answers`() {
+    fun `gap fill exercise drops an item with no prompt`() {
         val exercise = boundary(
             type = "gap_fill",
             items = listOf(
                 ExerciseItemBoundary(label = null, prompt = null, options = emptyList(), answers = listOf("Nazywam")),
-                ExerciseItemBoundary(label = null, prompt = "Dzień ___", options = emptyList(), answers = emptyList()),
             ),
         ).toExercise() as LessonExercise.GapFill
 
         assertEquals(emptyList<Any>(), exercise.items)
+    }
+
+    @Test
+    fun `gap fill exercise keeps a line with nothing missing, which a dialogue opens with`() {
+        val exercise = boundary(
+            type = "gap_fill",
+            items = listOf(
+                ExerciseItemBoundary(
+                    label = "Sekretarka",
+                    prompt = "Dzień dobry. Jestem Agnieszka Polańska.",
+                    options = emptyList(),
+                    answers = emptyList(),
+                ),
+            ),
+        ).toExercise() as LessonExercise.GapFill
+
+        val item = exercise.items.single()
+        assertEquals("Sekretarka", item.speaker)
+        assertEquals(emptyList<Any>(), item.answers)
+    }
+
+    @Test
+    fun `letter fill exercise drops a word with more gaps than letters to fill them`() {
+        val exercise = boundary(
+            type = "letter_fill",
+            items = listOf(
+                ExerciseItemBoundary(label = "a", prompt = "j_d_n", options = emptyList(), answers = listOf("e")),
+                ExerciseItemBoundary(label = "b", prompt = "_wa", options = emptyList(), answers = listOf("d")),
+            ),
+        ).toExercise() as LessonExercise.LetterFill
+
+        assertEquals("dwa", exercise.items.single().answer)
+    }
+
+    @Test
+    fun `a match prompt naming a drawing reads as an icon rather than as words`() {
+        val exercise = boundary(
+            type = "match",
+            items = listOf(
+                ExerciseItemBoundary(
+                    label = "1",
+                    prompt = "icon:repeat",
+                    options = emptyList(),
+                    answers = listOf("proszę powtórzyć"),
+                ),
+                ExerciseItemBoundary(
+                    label = "2",
+                    prompt = "Co to znaczy „dom”?",
+                    options = emptyList(),
+                    answers = listOf("Nie wiem."),
+                ),
+            ),
+        ).toExercise() as LessonExercise.Match
+
+        assertEquals("repeat", exercise.items.first().iconName)
+        assertNull(exercise.items.last().iconName)
     }
 
     @Test

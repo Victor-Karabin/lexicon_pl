@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 sealed interface ExerciseUiState {
     data object Loading : ExerciseUiState
@@ -31,11 +32,33 @@ sealed interface ExerciseUiState {
         val exercise: LessonExercise,
         /** One entry per question: the chosen option, or the text typed per blank. */
         val responses: ImmutableList<ImmutableList<String>> = persistentListOf(),
+        /**
+         * Whether each of those answers was right, laid out the same way and empty
+         * until there has been a marking. Per answer rather than per question so a
+         * line with three blanks can show which one of them was wrong.
+         */
+        val correctness: ImmutableList<ImmutableList<Boolean>> = persistentListOf(),
         val answerState: AnswerState = AnswerState.Unanswered,
         val correctCount: Int = 0,
         val isPlaying: Boolean = false,
         val isAudioMissing: Boolean = false,
-    ) : ExerciseUiState
+        /** The left-hand item waiting for something to pair with, on a matching exercise. */
+        val selectedPrompt: Int? = null,
+    ) : ExerciseUiState {
+        /**
+         * The right-hand column of a matching exercise: every answer there is, in an
+         * order that is not the prompts' order — otherwise the pairing is given away
+         * by the layout. Shuffled from the exercise's own id, so it is the same
+         * column every time this exercise is opened.
+         */
+        val choices: ImmutableList<String>
+            get() = (exercise as? LessonExercise.Match)
+                ?.items
+                ?.map { it.answer }
+                ?.shuffled(Random(exercise.id.hashCode()))
+                ?.toImmutableList()
+                ?: persistentListOf()
+    }
 }
 
 const val EXERCISE_ID_ARG = "exerciseId"
@@ -56,9 +79,11 @@ class ExerciseViewModel(
         /** The lesson track this exercise plays, which carries the Drive id. */
         val remoteId: String? = null,
         val responses: List<List<String>> = emptyList(),
+        val correctness: List<List<Boolean>> = emptyList(),
         val answerState: AnswerState = AnswerState.Unanswered,
         val correctCount: Int = 0,
         val isAudioMissing: Boolean = false,
+        val selectedPrompt: Int? = null,
     )
 
     private val content = MutableStateFlow<Content?>(null)
@@ -72,10 +97,12 @@ class ExerciseViewModel(
                     ExerciseUiState.Loaded(
                         exercise = loaded.exercise,
                         responses = loaded.responses.map { it.toImmutableList() }.toImmutableList(),
+                        correctness = loaded.correctness.map { it.toImmutableList() }.toImmutableList(),
                         answerState = loaded.answerState,
                         correctCount = loaded.correctCount,
                         isPlaying = playing != null && playing == loaded.exercise.audioFile,
                         isAudioMissing = loaded.isAudioMissing,
+                        selectedPrompt = loaded.selectedPrompt,
                     )
             }
         }.stateIn(
@@ -124,21 +151,47 @@ class ExerciseViewModel(
         value: String,
     ) = updateResponse(index, gap, value)
 
+    /**
+     * Pairs the chosen left-hand item with a right-hand one.
+     *
+     * A right-hand answer belongs to one prompt at a time, so giving it to another
+     * takes it away from the first rather than leaving it in two places.
+     */
+    fun onMatchChoiceSelected(choice: String) {
+        val current = content.value ?: return
+        val prompt = current.selectedPrompt ?: return
+        val responses = current.responses.mapIndexed { index, row ->
+            when {
+                index == prompt -> listOf(choice)
+                row.firstOrNull() == choice -> listOf("")
+                else -> row
+            }
+        }
+        content.update { it?.copy(responses = responses, selectedPrompt = null) }
+    }
+
+    fun onMatchPromptSelected(index: Int) {
+        content.update { it?.copy(selectedPrompt = if (it.selectedPrompt == index) null else index) }
+    }
+
     /** Marks every question at once: the exercise is a page of the book, not a step. */
     fun onCheck() {
         val current = content.value ?: return
         val exercise = current.exercise ?: return
 
-        val correct = expectedAnswers(exercise).withIndex().sumOf { (index, expected) ->
-            expected.withIndex().count { (gap, answer) ->
+        val correctness = expectedAnswers(exercise).mapIndexed { index, expected ->
+            expected.mapIndexed { gap, answer ->
                 checkAnswer(answer, current.responses.getOrNull(index)?.getOrNull(gap).orEmpty())
             }
         }
-        val total = expectedAnswers(exercise).sumOf { it.size }
+        val correct = correctness.sumOf { row -> row.count { it } }
+        val total = correctness.sumOf { it.size }
         content.update {
             it?.copy(
+                correctness = correctness,
                 correctCount = correct,
                 answerState = if (correct == total) AnswerState.Correct else AnswerState.Incorrect(),
+                selectedPrompt = null,
             )
         }
     }
@@ -147,8 +200,10 @@ class ExerciseViewModel(
         content.update {
             it?.copy(
                 responses = blankResponses(it.exercise),
+                correctness = emptyList(),
                 answerState = AnswerState.Unanswered,
                 correctCount = 0,
+                selectedPrompt = null,
             )
         }
     }
@@ -182,6 +237,9 @@ internal fun expectedAnswers(exercise: LessonExercise): List<List<String>> =
         is LessonExercise.Repeat -> emptyList()
         is LessonExercise.MinimalPair -> exercise.items.map { listOf(it.answer) }
         is LessonExercise.GapFill -> exercise.items.map { it.answers }
+        is LessonExercise.Transcribe -> exercise.items.map { listOf(it.answer) }
+        is LessonExercise.Match -> exercise.items.map { listOf(it.answer) }
+        is LessonExercise.LetterFill -> exercise.items.map { it.letters }
     }
 
 private fun blankResponses(exercise: LessonExercise?): List<List<String>> =

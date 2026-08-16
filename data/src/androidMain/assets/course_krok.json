@@ -106,34 +106,205 @@
           "exercises": [
             {
               "id": "krok-a1-01-101A3",
-              "tag": "101A3",
               "type": "gap_fill",
-              "instruction": "Proszę posłuchać i uzupełnić.",
+              "instruction": "Proszę posłuchać i uzupełnić dialogi.",
               "audioFile": "a1_coursebook_101a3.mp3",
               "items": [
                 {
-                  "prompt": "Dzień dobry. ___ się Mami Takada.",
+                  "label": "Sekretarka",
+                  "prompt": "Dzień dobry. Jestem Agnieszka Polańska.",
+                  "answers": []
+                },
+                {
+                  "label": "Studentka",
+                  "prompt": "___ dobry. ___ się Mami Takada.",
                   "answers": [
+                    "Dzień",
                     "Nazywam"
                   ]
                 },
                 {
+                  "label": "Sekretarka",
                   "prompt": "___ mi miło.",
                   "answers": [
                     "Bardzo"
                   ]
                 },
                 {
+                  "label": "Studentka",
                   "prompt": "Miło ___ .",
                   "answers": [
                     "mi"
                   ]
+                },
+                {
+                  "label": "Student",
+                  "prompt": "Cześć, ___ Tom, a ty?",
+                  "answers": [
+                    "jestem"
+                  ]
+                },
+                {
+                  "label": "Studentka",
+                  "prompt": "___ , jestem Mami.",
+                  "answers": [
+                    "Cześć"
+                  ]
+                },
+                {
+                  "label": "Student",
+                  "prompt": "___ mi.",
+                  "answers": [
+                    "Miło"
+                  ]
+                },
+                {
+                  "label": "Studentka",
+                  "prompt": "Bardzo ___ miło.",
+                  "answers": [
+                    "mi"
+                  ]
                 }
-              ]
+              ],
+              "handAuthored": true
+            },
+            {
+              "id": "krok-a1-01-101B2",
+              "type": "repeat",
+              "instruction": "Proszę powtórzyć.",
+              "audioFile": "a1_coursebook_101b2.mp3",
+              "items": [
+                {
+                  "text": "być"
+                },
+                {
+                  "text": "dym"
+                },
+                {
+                  "text": "dziecko"
+                },
+                {
+                  "text": "jak"
+                },
+                {
+                  "text": "żakiet"
+                },
+                {
+                  "text": "książka"
+                },
+                {
+                  "text": "rower"
+                },
+                {
+                  "text": "Rzym"
+                },
+                {
+                  "text": "rzadko"
+                },
+                {
+                  "text": "szybko"
+                },
+                {
+                  "text": "silny"
+                },
+                {
+                  "text": "drzewo"
+                },
+                {
+                  "text": "drżeć"
+                },
+                {
+                  "text": "fotografia"
+                },
+                {
+                  "text": "bank"
+                },
+                {
+                  "text": "restauracja"
+                },
+                {
+                  "text": "program"
+                },
+                {
+                  "text": "interesujący"
+                },
+                {
+                  "text": "kino"
+                },
+                {
+                  "text": "teatr"
+                },
+                {
+                  "text": "plan"
+                },
+                {
+                  "text": "projekt"
+                },
+                {
+                  "text": "komputer"
+                }
+              ],
+              "handAuthored": true
+            },
+            {
+              "id": "krok-a1-01-101B3",
+              "type": "transcribe",
+              "instruction": "Co mówi lektor?",
+              "audioFile": "a1_coursebook_101b3.mp3",
+              "items": [
+                {
+                  "label": "a",
+                  "answers": [
+                    "cześć"
+                  ]
+                },
+                {
+                  "label": "b",
+                  "answers": [
+                    "szkoła"
+                  ]
+                },
+                {
+                  "label": "c",
+                  "answers": [
+                    "dziękuję"
+                  ]
+                },
+                {
+                  "label": "d",
+                  "answers": [
+                    "przepraszam"
+                  ]
+                },
+                {
+                  "label": "e",
+                  "answers": [
+                    "powtórzyć"
+                  ]
+                },
+                {
+                  "label": "f",
+                  "answers": [
+                    "sześć"
+                  ]
+                },
+                {
+                  "label": "g",
+                  "answers": [
+                    "dziewięć"
+                  ]
+                },
+                {
+                  "label": "h",
+                  "answers": [
+                    "gdzie"
+                  ]
+                }
+              ],
+              "handAuthored": true
             },
             {
               "id": "krok-a1-01-101B4",
-              "tag": "101B4",
               "type": "minimal_pair",
               "instruction": "Co mówi lektor?",
               "audioFile": "a1_coursebook_101b4.mp3",
@@ -314,7 +485,161 @@
                   ],
                   "answer": "siny"
                 }
-              ]
+              ],
+              "handAuthored": true
+            },
+            {
+              "id": "krok-a1-01-101E3",
+              "type": "match",
+              "instruction": "Proszę dopasować.",
+              "audioFile": null,
+              "items": [
+                {
+                  "label": "1",
+                  "prompt": "icon:repeat",
+                  "answers": [
+                    "proszę powtórzyć"
+                  ]
+                },
+                {
+                  "label": "2",
+                  "prompt": "icon:spell",
+                  "answers": [
+                    "proszę przeliterować"
+                  ]
+                },
+                {
+                  "label": "3",
+                  "prompt": "icon:read",
+                  "answers": [
+                    "proszę przeczytać"
+                  ]
+                },
+                {
+                  "label": "4",
+                  "prompt": "icon:write",
+                  "answers": [
+                    "proszę napisać"
+                  ]
+                }
+              ],
+              "handAuthored": true
+            },
+            {
+              "id": "krok-a1-01-101E4",
+              "type": "match",
+              "instruction": "Co pasuje?",
+              "audioFile": null,
+              "items": [
+                {
+                  "label": "1",
+                  "prompt": "Proszę przeliterować „dom”.",
+                  "answers": [
+                    "„d-o-m”"
+                  ]
+                },
+                {
+                  "label": "2",
+                  "prompt": "Proszę powtórzyć „dziękuję”.",
+                  "answers": [
+                    "Dziękuję."
+                  ]
+                },
+                {
+                  "label": "3",
+                  "prompt": "Proszę powtórzyć „szkoła”.",
+                  "answers": [
+                    "Szkoła."
+                  ]
+                },
+                {
+                  "label": "4",
+                  "prompt": "Co to znaczy „dziękuję”?",
+                  "answers": [
+                    "Thank you."
+                  ]
+                },
+                {
+                  "label": "5",
+                  "prompt": "Co to znaczy „dom”?",
+                  "answers": [
+                    "Nie wiem."
+                  ]
+                },
+                {
+                  "label": "6",
+                  "prompt": "Proszę przeczytać „dom”.",
+                  "answers": [
+                    "Dom."
+                  ]
+                }
+              ],
+              "handAuthored": true
+            },
+            {
+              "id": "krok-a1-01-101F2",
+              "type": "letter_fill",
+              "instruction": "Proszę uzupełnić.",
+              "audioFile": null,
+              "items": [
+                {
+                  "label": "a",
+                  "prompt": "j_d_n",
+                  "answers": [
+                    "e",
+                    "e"
+                  ]
+                },
+                {
+                  "label": "b",
+                  "prompt": "_wa",
+                  "answers": [
+                    "d"
+                  ]
+                },
+                {
+                  "label": "c",
+                  "prompt": "t_z_",
+                  "answers": [
+                    "r",
+                    "y"
+                  ]
+                },
+                {
+                  "label": "d",
+                  "prompt": "__tery",
+                  "answers": [
+                    "c",
+                    "z"
+                  ]
+                },
+                {
+                  "label": "e",
+                  "prompt": "sze__",
+                  "answers": [
+                    "ś",
+                    "ć"
+                  ]
+                },
+                {
+                  "label": "f",
+                  "prompt": "si_d_m",
+                  "answers": [
+                    "e",
+                    "e"
+                  ]
+                },
+                {
+                  "label": "g",
+                  "prompt": "d__esię_",
+                  "answers": [
+                    "z",
+                    "i",
+                    "ć"
+                  ]
+                }
+              ],
+              "handAuthored": true
             }
           ]
         },
@@ -718,7 +1043,6 @@
           "exercises": [
             {
               "id": "krok-a1-06-106A2",
-              "tag": "106A2",
               "type": "gap_fill",
               "instruction": "Proszę posłuchać i uzupełnić.",
               "audioFile": null,
@@ -729,7 +1053,8 @@
                     "lubię."
                   ]
                 }
-              ]
+              ],
+              "handAuthored": false
             }
           ]
         },
@@ -801,7 +1126,6 @@
           "exercises": [
             {
               "id": "krok-a1-07-107C2",
-              "tag": "107C2",
               "type": "gap_fill",
               "instruction": "Proszę posłuchać i uzupełnić.",
               "audioFile": "a1_coursebook_107c2-a.mp3",
@@ -818,7 +1142,8 @@
                     "sklep"
                   ]
                 }
-              ]
+              ],
+              "handAuthored": false
             }
           ]
         },
@@ -898,7 +1223,6 @@
           "exercises": [
             {
               "id": "krok-a1-08-108A4",
-              "tag": "108A4",
               "type": "gap_fill",
               "instruction": "Proszę posłuchać i uzupełnić.",
               "audioFile": "a1_coursebook_108a4.mp3",
@@ -915,7 +1239,8 @@
                     "margaryną,"
                   ]
                 }
-              ]
+              ],
+              "handAuthored": false
             }
           ]
         },
@@ -1024,7 +1349,6 @@
           "exercises": [
             {
               "id": "krok-a1-09-109B4",
-              "tag": "109B4",
               "type": "gap_fill",
               "instruction": "Proszę posłuchać i uzupełnić.",
               "audioFile": "a1_coursebook_109b4.mp3",
@@ -1035,11 +1359,11 @@
                     "Mami, co kupujemy?"
                   ]
                 }
-              ]
+              ],
+              "handAuthored": false
             },
             {
               "id": "krok-a1-09-109B4",
-              "tag": "109B4",
               "type": "gap_fill",
               "instruction": "Proszę posłuchać i uzupełnić.",
               "audioFile": "a1_coursebook_109b4.mp3",
@@ -1050,11 +1374,11 @@
                     "Poproszę czosnek, cztery pomidory, dwie żółte papryki i dwie czerwone."
                   ]
                 }
-              ]
+              ],
+              "handAuthored": false
             },
             {
               "id": "krok-a1-09-109B4",
-              "tag": "109B4",
               "type": "gap_fill",
               "instruction": "Proszę posłuchać i uzupełnić.",
               "audioFile": "a1_coursebook_109b4.mp3",
@@ -1065,7 +1389,8 @@
                     "„Mami: Poproszę marchewkę."
                   ]
                 }
-              ]
+              ],
+              "handAuthored": false
             }
           ]
         },
@@ -1358,7 +1683,6 @@
           "exercises": [
             {
               "id": "krok-a1-13-113A8",
-              "tag": "113A8",
               "type": "gap_fill",
               "instruction": "Proszę posłuchać i uzupełnić.",
               "audioFile": "a1_coursebook_113a8.mp3",
@@ -1369,7 +1693,8 @@
                     "byłeś"
                   ]
                 }
-              ]
+              ],
+              "handAuthored": false
             }
           ]
         },
@@ -1581,7 +1906,6 @@
           "exercises": [
             {
               "id": "krok-a1-15-115B2",
-              "tag": "115B2",
               "type": "gap_fill",
               "instruction": "Proszę posłuchać i uzupełnić.",
               "audioFile": null,
@@ -1592,7 +1916,8 @@
                     "Cześć Sylwia! Jedziesz z nami na piknik? Taka piękna pogoda, wreszcie mamy złotą polską jesień."
                   ]
                 }
-              ]
+              ],
+              "handAuthored": false
             }
           ]
         },
@@ -1714,7 +2039,6 @@
           "exercises": [
             {
               "id": "krok-a1-17-117A2",
-              "tag": "117A2",
               "type": "gap_fill",
               "instruction": "Proszę posłuchać i uzupełnić.",
               "audioFile": "a1_coursebook_117a2.mp3",
@@ -1737,7 +2061,8 @@
                     "ty"
                   ]
                 }
-              ]
+              ],
+              "handAuthored": false
             }
           ]
         },
@@ -2085,7 +2410,6 @@
           "exercises": [
             {
               "id": "krok-a1-22-122B1",
-              "tag": "122B1",
               "type": "gap_fill",
               "instruction": "Proszę posłuchać i uzupełnić.",
               "audioFile": "a1_coursebook_0122b1-1mp3.mp3",
@@ -2096,7 +2420,8 @@
                     "?"
                   ]
                 }
-              ]
+              ],
+              "handAuthored": false
             }
           ]
         },
@@ -2434,7 +2759,6 @@
           "exercises": [
             {
               "id": "krok-a1-26-126C9",
-              "tag": "126C9",
               "type": "gap_fill",
               "instruction": "Proszę posłuchać i uzupełnić.",
               "audioFile": "a1_coursebook_126c9.mp3",
@@ -2457,7 +2781,8 @@
                     "cja. Proszę jeszcze wypełnić ten formularz."
                   ]
                 }
-              ]
+              ],
+              "handAuthored": false
             }
           ]
         }
