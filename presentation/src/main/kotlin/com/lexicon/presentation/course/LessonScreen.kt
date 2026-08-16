@@ -4,25 +4,19 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
-import androidx.compose.material3.AssistChip
-import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,13 +34,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.course.CourseId
 import com.lexicon.interactors.course.Lesson
-import com.lexicon.interactors.course.LessonAudio
 import com.lexicon.interactors.course.LessonExercise
 import com.lexicon.interactors.course.LessonId
-import com.lexicon.interactors.course.label
 import com.lexicon.interactors.course.questionCount
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyId
@@ -80,7 +71,6 @@ fun LessonScreen(
         onWordFavouriteToggled = viewModel::onWordFavouriteToggled,
         onPronounceWord = viewModel::onPronounceWord,
         onEditWord = onEditWord,
-        onPlayAudio = viewModel::onPlayAudio,
         onExerciseSelected = onExerciseSelected,
         modifier = modifier,
     )
@@ -96,7 +86,6 @@ private fun LessonContent(
     onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
     onPronounceWord: (PresetWord) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
-    onPlayAudio: (LessonAudio) -> Unit,
     onExerciseSelected: (LessonExercise) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -137,7 +126,6 @@ private fun LessonContent(
                     lessonHeader(uiState.lesson, onTrainLesson, onCompletedToggled)
                     exercisesBlock(uiState.lesson.exercises, onExerciseSelected)
                     wordsBlock(uiState, onWordFavouriteToggled, onPronounceWord, onEditWord)
-                    audioBlock(uiState, onPlayAudio)
                 }
         }
     }
@@ -261,16 +249,6 @@ private fun LazyListScope.wordsBlock(
     }
 }
 
-private fun LazyListScope.audioBlock(
-    uiState: LessonUiState.Loaded,
-    onPlayAudio: (LessonAudio) -> Unit,
-) {
-    val tracks = uiState.lesson.audio
-    if (tracks.isEmpty()) return
-    item { SectionHeading(stringResource(R.string.lesson_audio)) }
-    item { AudioTracks(tracks = tracks, uiState = uiState, onPlayAudio = onPlayAudio) }
-}
-
 @Composable
 private fun SectionHeading(text: String) {
     Text(
@@ -286,80 +264,6 @@ private fun SectionHeading(text: String) {
     )
 }
 
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun AudioTracks(
-    tracks: List<LessonAudio>,
-    uiState: LessonUiState.Loaded,
-    onPlayAudio: (LessonAudio) -> Unit,
-) {
-    Column(modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.spacingMedium)) {
-        // Nothing playable means neither side-loaded nor fetchable; saying so beats
-        // a row of dead chips.
-        if (tracks.none { uiState.isPlayable(it) }) {
-            Text(
-                text = stringResource(R.string.lesson_audio_missing),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(bottom = Dimens.spacingSmall),
-            )
-        }
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-            verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-        ) {
-            tracks.forEach { track ->
-                AudioChip(
-                    track = track,
-                    isEnabled = uiState.isPlayable(track),
-                    isDownloading = uiState.downloadingAudio == track.file,
-                    isPlaying = uiState.playingAudio == track.file,
-                    onClick = { onPlayAudio(track) },
-                )
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun AudioChip(
-    track: LessonAudio,
-    isEnabled: Boolean,
-    isDownloading: Boolean,
-    isPlaying: Boolean,
-    onClick: () -> Unit,
-) {
-    AssistChip(
-        onClick = onClick,
-        enabled = isEnabled && !isDownloading,
-        label = { Text(text = track.label, style = MaterialTheme.typography.labelMedium) },
-        leadingIcon = {
-            when {
-                isDownloading ->
-                    CircularProgressIndicator(
-                        strokeWidth = 2.dp,
-                        modifier = Modifier.size(AssistChipDefaults.IconSize),
-                    )
-
-                isPlaying ->
-                    Icon(
-                        imageVector = Icons.Default.Pause,
-                        contentDescription = stringResource(R.string.lesson_audio_pause, track.label),
-                        modifier = Modifier.size(AssistChipDefaults.IconSize),
-                    )
-
-                else ->
-                    Icon(
-                        imageVector = Icons.Default.PlayArrow,
-                        contentDescription = stringResource(R.string.lesson_audio_play, track.label),
-                        modifier = Modifier.size(AssistChipDefaults.IconSize),
-                    )
-            }
-        },
-    )
-}
-
 private val previewLesson = Lesson(
     id = LessonId("krok-a1-01"),
     courseId = CourseId("krok-a1"),
@@ -367,10 +271,7 @@ private val previewLesson = Lesson(
     title = "PIERWSZY DZIEŃ W SZKOLE",
     vocabularyIds = listOf(1L, 2L, 3L).map(::VocabularyId).toImmutableList(),
     exercises = persistentListOf(),
-    audio = persistentListOf(
-        LessonAudio("a1_coursebook_101a1.mp3", "A", 1, null, "drive-id"),
-        LessonAudio("a1_coursebook_101b2.mp3", "B", 2, null, null),
-    ),
+    audio = persistentListOf(),
     isCompleted = false,
 )
 
@@ -394,7 +295,6 @@ private fun LessonPreview() {
             onWordFavouriteToggled = { _, _ -> },
             onPronounceWord = {},
             onEditWord = {},
-            onPlayAudio = {},
             onExerciseSelected = {},
         )
     }
@@ -412,7 +312,6 @@ private fun LessonNotFoundPreview() {
             onWordFavouriteToggled = { _, _ -> },
             onPronounceWord = {},
             onEditWord = {},
-            onPlayAudio = {},
             onExerciseSelected = {},
         )
     }
