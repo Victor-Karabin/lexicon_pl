@@ -20,6 +20,7 @@ import com.lexicon.presentation.presets.CreateWordViewModel
 import com.lexicon.presentation.presets.PresetDetailViewModel
 import com.lexicon.presentation.presets.VocabularyViewModel
 import com.lexicon.presentation.program.CreateProgramViewModel
+import com.lexicon.presentation.program.ProgramRunViewModel
 import com.lexicon.presentation.program.WordCardsViewModel
 import com.lexicon.presentation.pronunciation.PronunciationViewModel
 import com.lexicon.presentation.puzzle.PuzzleViewModel
@@ -40,6 +41,7 @@ val viewModelModule = module {
     viewModelOf(::DashboardViewModel)
     viewModelOf(::WordCardsViewModel)
     viewModelOf(::CreateProgramViewModel)
+    viewModelOf(::ProgramRunViewModel)
     viewModelOf(::WordCardViewModel)
     viewModelOf(::CourseDetailViewModel)
     viewModelOf(::ExerciseViewModel)

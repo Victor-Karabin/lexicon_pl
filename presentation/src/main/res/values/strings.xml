@@ -164,6 +164,11 @@
     <string name="training_word_card_blurb">Read the word, its picture and how it sounds</string>
     <string name="training_mix_blurb">A little of every training</string>
     <string name="training_coming_soon">Coming soon</string>
+    <string name="result_done">Done</string>
+    <string name="result_next_training">Next training</string>
+    <string name="day_complete_title">Today is done</string>
+    <string name="day_complete_body">Every training in today\'s queue is finished. Come back tomorrow for the next lot.</string>
+    <string name="day_complete_done">Back to Home</string>
     <string name="result_accuracy">answered correctly</string>
     <string name="plan_programs">Programs</string>
     <string name="plan_program_create">Build your own</string>

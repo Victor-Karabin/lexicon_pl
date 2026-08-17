@@ -48,6 +48,7 @@ fun SessionResultScreen(
     tipsUsed: Int,
     onDone: () -> Unit,
     modifier: Modifier = Modifier,
+    isProgramRun: Boolean = false,
     viewModel: SessionResultViewModel = koinViewModel(),
 ) {
     SessionResultScreenContent(
@@ -57,6 +58,7 @@ fun SessionResultScreen(
         tipsUsed = tipsUsed,
         wordResults = viewModel.wordResults,
         onDone = onDone,
+        isProgramRun = isProgramRun,
         modifier = modifier,
     )
 }
@@ -71,6 +73,7 @@ private fun SessionResultScreenContent(
     wordResults: List<WordResultEntry>,
     onDone: () -> Unit,
     modifier: Modifier = Modifier,
+    isProgramRun: Boolean = false,
 ) {
     val totalSteps = correct + incorrect + skipped
     val accuracyPercent = if (totalSteps > 0) (correct * 100f / totalSteps).roundToInt() else 0
@@ -128,7 +131,11 @@ private fun SessionResultScreenContent(
                     onClick = onDone,
                     modifier = Modifier.fillMaxWidth().padding(vertical = Dimens.spacingLarge),
                 ) {
-                    Text("Done")
+                    Text(
+                        stringResource(
+                            if (isProgramRun) R.string.result_next_training else R.string.result_done,
+                        ),
+                    )
                 }
             }
         }
