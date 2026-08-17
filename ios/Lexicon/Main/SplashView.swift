@@ -1,8 +1,6 @@
 import SwiftUI
 import Shared
 
-/// The catalogues are imported before anything can be studied, and the import says
-/// what it is doing rather than showing a spinner over an empty app.
 struct SplashView: View {
     let onFinished: () -> Void
 
@@ -61,8 +59,7 @@ struct SplashView: View {
                 if let complete = state as? SyncStepStatusComplete {
                     Text("\(complete.total) ready").font(.caption).foregroundStyle(.secondary)
                 }
-                // The reason is what says which of the three actually broke, so it
-                // belongs on screen rather than only in a log nobody reads.
+
                 if let failed = state as? SyncStepStatusFailed {
                     Text(failed.reason).font(.caption).foregroundStyle(Palette.failure)
                 }

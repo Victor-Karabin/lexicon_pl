@@ -37,12 +37,6 @@ class ObserveActiveEnrolmentUseCaseImpl(
     override fun invoke(): Flow<ProgramEnrolment?> = repository.observeActiveEnrolment().map { it?.toEnrolment() }
 }
 
-/**
- * Starts a program, standing down whatever was active.
- *
- * Only one runs at a time, so enrolling in a second abandons the first rather than
- * leaving two programs both claiming today.
- */
 class EnrolInProgramUseCaseImpl(
     private val repository: ProgramRepository,
     private val clock: Clock,
@@ -54,8 +48,6 @@ class EnrolInProgramUseCaseImpl(
             }
         }
 
-        // Re-enrolling in a program already under way keeps its original start date,
-        // so a stumble on the tile does not reset the learner's progress.
         val existing = repository.enrolment(id.value)
         val enrolment = ProgramEnrolment(
             programId = id,

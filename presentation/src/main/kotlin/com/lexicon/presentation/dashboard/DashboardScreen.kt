@@ -1,13 +1,9 @@
 package com.lexicon.presentation.dashboard
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoStories
@@ -35,12 +30,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -74,7 +71,6 @@ private val MetricBarHeight = 3.dp
 private val StreakIconSize = 20.dp
 private val ButtonIconSize = 18.dp
 
-/** A progress track has to stay visible against the tile it is drawn on. */
 private const val TRACK_ALPHA = 0.25f
 
 @Composable
@@ -99,7 +95,7 @@ fun DashboardScreen(
             viewModel.onLaunchHandled()
         }
     }
-    // Coming back from a session is when every figure here has just moved.
+
     LaunchedEffect(Unit) { viewModel.onResumed() }
 
     DashboardContent(
@@ -135,7 +131,7 @@ private fun DashboardContent(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
                 )
-                // Saying where programs are is less use than going there.
+
                 Button(onClick = onGoToPlan) {
                     Text(stringResource(R.string.dashboard_go_to_plan))
                 }
@@ -154,10 +150,6 @@ private fun DashboardContent(
     }
 }
 
-/**
- * The program the learner is on, wearing the same coat as its tile on the Plan tab —
- * the one they tapped to get here, so it should be recognisably the same thing.
- */
 @Composable
 private fun ActiveProgramCard(
     uiState: DashboardUiState,
@@ -172,10 +164,15 @@ private fun ActiveProgramCard(
             horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            // The overall figure drawn around the level rather than written under it:
-            // it is the one number that is about the whole program, so it belongs on
-            // the thing that names the program.
-            ProgressRing(fraction = progress?.overall?.toFloat() ?: 0f, skin = skin) {
+            ProgressRing(
+                fraction = uiState.trainingsFraction,
+                skin = skin,
+                description = stringResource(
+                    R.string.dashboard_trainings_of,
+                    uiState.trainingsDone,
+                    uiState.trainingsTotal,
+                ),
+            ) {
                 ProgramMedallion(skin = skin)
             }
             Column(modifier = Modifier.weight(1f)) {
@@ -190,36 +187,25 @@ private fun ActiveProgramCard(
                     fontWeight = FontWeight.SemiBold,
                     color = skin.onTile,
                 )
-                if (progress != null) {
-                    Text(
-                        text = stringResource(R.string.dashboard_overall, (progress.overall * PERCENT).toInt()),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = skin.muted(),
-                    )
-                }
+
+                Text(
+                    text = pluralStringResource(
+                        R.plurals.dashboard_word_total,
+                        uiState.favourites,
+                        uiState.favourites,
+                    ),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = skin.muted(),
+                )
             }
             if (uiState.streakDays > 0) {
                 StreakBadge(days = uiState.streakDays, skin = skin)
             }
         }
 
-        // The breakdown, because one percentage says nothing about which part of the
-        // work is lagging. Each gets its own line so a lagging one is visible as a
-        // short bar rather than as arithmetic the reader has to do.
-        //
-        // Days studied is left out: the streak badge above is already a count of days
-        // on this card, and two of them side by side read as the same figure twice.
         progress?.metrics
-            ?.filterNot { it.type == ProgressMetricType.CONSISTENCY }
-            ?.forEach { MetricRow(it, skin) }
-
-        if (uiState.trainingsTotal > 0) {
-            TodaysQueue(
-                done = uiState.trainingsDone,
-                total = uiState.trainingsTotal,
-                skin = skin,
-            )
-        }
+            ?.firstOrNull { it.type == ProgressMetricType.ACCURACY }
+            ?.let { MetricRow(it, skin) }
 
         when {
             uiState.isDayComplete ->
@@ -267,17 +253,20 @@ private fun ActiveProgramCard(
     }
 }
 
-/** How far through the program, as a ring drawn around whatever sits inside it. */
 @Composable
 private fun ProgressRing(
     fraction: Float,
     skin: TileSkin,
+    description: String,
     content: @Composable () -> Unit,
 ) {
     val track = skin.onTile.copy(alpha = TRACK_ALPHA)
     val sweep = fraction.coerceIn(0f, 1f) * FULL_TURN_DEGREES
 
-    Box(contentAlignment = Alignment.Center) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.semantics { contentDescription = description },
+    ) {
         Canvas(modifier = Modifier.size(RingSize)) {
             val stroke = Stroke(width = RingStroke.toPx(), cap = StrokeCap.Round)
             val inset = stroke.width / 2
@@ -293,7 +282,6 @@ private fun ProgressRing(
             )
             drawArc(
                 color = skin.onTile,
-                // From the top, the way a dial is read.
                 startAngle = -QUARTER_TURN_DEGREES,
                 sweepAngle = sweep,
                 useCenter = false,
@@ -306,12 +294,6 @@ private fun ProgressRing(
     }
 }
 
-/**
- * The streak, as a number worth keeping rather than a line of text.
- *
- * A run of days is the one figure a learner loses by not turning up, so it earns its
- * own corner of the card.
- */
 @Composable
 private fun StreakBadge(
     days: Int,
@@ -338,54 +320,6 @@ private fun StreakBadge(
     }
 }
 
-/**
- * Today's queue as one pip per turn at a training.
- *
- * "0 / 16" is a fact; sixteen pips are a thing to fill in. The next one up is drawn
- * ringed rather than empty, so where the learner is in the day is visible without
- * counting.
- */
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun TodaysQueue(
-    done: Int,
-    total: Int,
-    skin: TileSkin,
-) {
-    Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-        ) {
-            Text(
-                text = stringResource(R.string.dashboard_trainings),
-                style = MaterialTheme.typography.bodySmall,
-                color = skin.muted(),
-                modifier = Modifier.weight(1f),
-            )
-            Text(
-                text = "$done / $total",
-                style = MaterialTheme.typography.bodySmall,
-                fontWeight = FontWeight.SemiBold,
-                color = skin.onTile,
-            )
-        }
-
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
-            repeat(total) { index ->
-                val pip = Modifier.size(PipSize).clip(CircleShape)
-                Box(
-                    modifier = when {
-                        index < done -> pip.background(skin.onTile)
-                        index == done -> pip.border(PipBorder, skin.onTile, CircleShape)
-                        else -> pip.background(skin.onTile.copy(alpha = TRACK_ALPHA))
-                    },
-                )
-            }
-        }
-    }
-}
-
 @Composable
 private fun MetricRow(
     metric: ProgressMetric,
@@ -403,11 +337,11 @@ private fun MetricRow(
                 modifier = Modifier.weight(1f),
             )
             Text(
-                // A share of answers reads as a percentage; a count reads as a count.
-                text = if (metric.type == ProgressMetricType.ACCURACY) {
-                    "${metric.current}%"
-                } else {
-                    "${metric.current} / ${metric.target}"
+                text = when {
+                    !metric.isMeasured -> stringResource(R.string.dashboard_metric_unmeasured)
+
+                    metric.type == ProgressMetricType.ACCURACY -> "${metric.current}%"
+                    else -> "${metric.current} / ${metric.target}"
                 },
                 style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.SemiBold,

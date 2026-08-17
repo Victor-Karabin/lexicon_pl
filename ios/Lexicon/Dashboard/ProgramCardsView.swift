@@ -1,11 +1,6 @@
 import SwiftUI
 import Shared
 
-/// The new words of the day, one card at a time, before any of them are drilled.
-///
-/// Meeting a word and being tested on it are different things, and a training that
-/// asks about a word never seen is a guess. The deck is marked as seen only on
-/// reaching the end, so backing out halfway shows the rest next time.
 struct ProgramCardsView: View {
     let programId: ProgramId?
 

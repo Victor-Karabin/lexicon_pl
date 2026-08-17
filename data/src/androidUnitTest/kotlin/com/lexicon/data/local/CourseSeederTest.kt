@@ -84,10 +84,6 @@ class CourseSeederTest {
             coVerify(exactly = 0) { courseDao.replaceCatalog(any(), any(), any(), any(), any(), any()) }
         }
 
-    /**
-     * The whole catalogue is replaced on every change, so this is the check that the
-     * learner's progress is not part of what gets replaced.
-     */
     @Test
     fun `replacing the catalogue never touches lesson progress`() =
         runTest {

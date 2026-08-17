@@ -150,8 +150,6 @@ private fun VocabularyContent(
     Scaffold(
         modifier = modifier,
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        // The add button would be a strange thing to offer while words are being
-        // picked out to remove.
         floatingActionButton = {
             if (!selection.isActive) AddFab(onAddWord = onAddWord, onAddPreset = onAddPreset)
         },

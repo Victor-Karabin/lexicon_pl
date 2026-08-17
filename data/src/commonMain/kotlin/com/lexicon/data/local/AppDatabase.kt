@@ -52,10 +52,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun programDao(): ProgramDao
 }
 
-/**
- * Room generates the actual per-platform implementation of this; the expect
- * declaration is what lets [AppDatabase] itself stay in commonMain.
- */
 @Suppress("KotlinNoActualForExpect", "EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
     override fun initialize(): AppDatabase

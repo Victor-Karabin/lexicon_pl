@@ -13,9 +13,6 @@ class AndroidLessonAudioPlayer(
     private var player: MediaPlayer? = null
     private var loadedFile: String? = null
 
-    // play()/pause()/stop() can all be called from different callers at once (a
-    // tap racing an onCleared(), or two tracks racing each other), and MediaPlayer
-    // is not thread-safe — guards every access to player/loadedFile.
     private val lock = Any()
 
     private val _playingFile = MutableStateFlow<String?>(null)

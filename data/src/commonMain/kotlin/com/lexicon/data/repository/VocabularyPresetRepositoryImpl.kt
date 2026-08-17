@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
-/** The title a preset's id is slugged from; ids are ASCII, so the English one. */
 private const val SLUG_LANGUAGE = "en"
 
 class VocabularyPresetRepositoryImpl(
@@ -64,8 +63,6 @@ class VocabularyPresetRepositoryImpl(
             descriptionJson = description.encodeLocalized(),
             icon = icon,
             color = color,
-            // Sorted last within My presets, so a new one lands at the end of the
-            // group rather than reshuffling the ones already there.
             popularity = presetDao.countUserPresets(),
             estimatedSeconds = 0,
             isUserCreated = true,
@@ -74,7 +71,6 @@ class VocabularyPresetRepositoryImpl(
         return preset.toBoundary(wordIds.distinct())
     }
 
-    /** Counts up from the plain slug until it reaches an id no preset already holds. */
     private suspend fun freeUserPresetId(title: String): String {
         var suffix = 0
         while (true) {

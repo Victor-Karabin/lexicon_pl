@@ -1,7 +1,6 @@
 import SwiftUI
 import Shared
 
-/// Turn the cards over and find the pairs: a picture and the word it is of.
 struct MemoryCardsView: View {
     let vocabularyIds: [Int64]
 

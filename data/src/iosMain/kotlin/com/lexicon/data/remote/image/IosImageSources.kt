@@ -6,14 +6,6 @@ import kotlinx.serialization.json.Json
 
 private val json = Json { ignoreUnknownKeys = true }
 
-/**
- * The image sources, over NSURLSession rather than Retrofit.
- *
- * The responses are the same shapes the Android APIs parse, so the two platforms
- * offer the learner the same pictures. Every one answers with an empty list rather
- * than throwing: a word with no picture is ordinary, and a training that cannot
- * reach the network should fall back to its text clue, not fail.
- */
 class OpenverseIosImageSource : RemoteImageSource {
     override suspend fun searchImageUrls(
         query: String,

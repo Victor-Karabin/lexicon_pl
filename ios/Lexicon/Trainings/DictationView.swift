@@ -1,7 +1,6 @@
 import SwiftUI
 import Shared
 
-/// Hear a word and type it. The Polish side is spoken; the English is the clue.
 struct DictationView: View {
     let vocabularyIds: [Int64]
     let fromAudio: Bool

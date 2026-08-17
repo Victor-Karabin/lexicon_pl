@@ -1,10 +1,5 @@
 import SwiftUI
 
-/// Previews come in pairs here, the way `@LightDarkPreview` pairs them on Android.
-///
-/// A tile is built from a `TileSkin` that reads the colour scheme, so a preview in
-/// one scheme only proves half of it — and the half that usually breaks is the one
-/// nobody looked at.
 struct LightDark<Content: View>: View {
     let title: String
     @ViewBuilder var content: Content
@@ -33,16 +28,12 @@ struct LightDark<Content: View>: View {
     }
 }
 
-// MARK: - the design system
-
 #Preview("Tiles") {
     LightDark(title: "Tiles") {
         TilePreviewBody()
     }
 }
 
-/// Both coats, the medallion in each of its three forms, and the chips — the whole
-/// vocabulary a screen is built from, on one page.
 private struct TilePreviewBody: View {
     @Environment(\.colorScheme) private var scheme
 
@@ -80,8 +71,6 @@ private struct TilePreviewBody: View {
     }
 }
 
-// MARK: - the training frame
-
 #Preview("Answer states") {
     LightDark(title: "Answer states") {
         VStack(spacing: Spacing.medium) {
@@ -118,8 +107,6 @@ private struct TilePreviewBody: View {
     )
     .preferredColorScheme(.dark)
 }
-
-// MARK: - the progress ring
 
 #Preview("Progress ring") {
     LightDark(title: "Progress ring") {

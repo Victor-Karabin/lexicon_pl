@@ -82,8 +82,6 @@ private fun SessionResultScreenContent(
         LazyColumn(
             modifier = Modifier.fillMaxSize().padding(padding).padding(horizontal = Dimens.spacingLarge),
         ) {
-            // The score first and large, because it is the one thing everyone
-            // looks at, and the tally beside it so the number can be accounted for.
             item {
                 val skin = tileSkin(highlighted = true)
                 GradientTile(skin = skin, modifier = Modifier.padding(top = Dimens.spacingSmall)) {

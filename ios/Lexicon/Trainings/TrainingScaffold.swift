@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// What every training step looks like once it has been answered.
 enum AnswerState: Equatable {
     case unanswered
     case correct
@@ -35,7 +34,6 @@ enum AnswerState: Equatable {
     }
 }
 
-/// The tally a session ends on.
 struct SessionTally {
     var correct = 0
     var incorrect = 0
@@ -46,7 +44,6 @@ struct SessionTally {
     var accuracy: Int { total == 0 ? 0 : Int((Double(correct) * 100 / Double(total)).rounded()) }
 }
 
-/// The frame every training runs inside: progress, the step, and what to do next.
 struct TrainingScaffold<Content: View, Actions: View>: View {
     let step: Int
     let total: Int
@@ -64,10 +61,6 @@ struct TrainingScaffold<Content: View, Actions: View>: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
 
-            // Scrolls: a step's clue, its options and the verdict under them are as
-            // tall as their content, and a short screen or a large text size can put
-            // the last option under the fold with no way to reach it. The actions stay
-            // pinned below, where they are always the same distance from a thumb.
             ScrollView {
                 VStack(spacing: Spacing.medium) {
                     content
@@ -90,7 +83,6 @@ struct TrainingScaffold<Content: View, Actions: View>: View {
     }
 }
 
-/// Where a session ends: the score, and the words it was over.
 struct SessionResultView: View {
     let tally: SessionTally
     let onDone: () -> Void

@@ -8,12 +8,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-/**
- * Re-seeding the preset catalogue clears preset_words wholesale, so the learner's own
- * membership edits only survive because they are replayed from preset_word_overrides
- * afterwards. That replay is what these cover — without it an app update would
- * silently undo every change the learner made.
- */
 class PresetWordOverrideTest {
     private val dao: PresetDao = mockk(relaxed = true)
 

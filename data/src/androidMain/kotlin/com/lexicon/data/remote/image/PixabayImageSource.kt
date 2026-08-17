@@ -1,6 +1,5 @@
 package com.lexicon.data.remote.image
 
-/** Pixabay rejects a per_page below 3, so a smaller ask is padded and trimmed back. */
 private const val PIXABAY_MIN_PER_PAGE = 3
 
 class PixabayImageSource(

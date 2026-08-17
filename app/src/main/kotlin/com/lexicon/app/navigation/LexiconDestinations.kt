@@ -28,11 +28,6 @@ internal object LexiconDestinations {
     const val WORD_CARD = TrainingIds.WORD_CARD
     const val CROSSWORD = TrainingIds.CROSSWORD
 
-    /**
-     * Every training route carries an optional word list. Omitted, the training runs
-     * over the whole study set, which is what the Trainings tab does; a course lesson
-     * fills it in to practise just its own words.
-     */
     fun trainingRoute(training: String) = "$training?$TRAINING_WORDS_ARG={$TRAINING_WORDS_ARG}"
 
     fun scopedTraining(

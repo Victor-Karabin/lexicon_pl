@@ -12,11 +12,6 @@ import com.lexicon.presentation.common.WordRowActions
 import com.lexicon.presentation.common.WordRowActionsWidth
 import com.lexicon.presentation.theme.Dimens
 
-/**
- * The word list as it looks everywhere a word can be acted on — the Vocabulary tab's
- * results and a preset's own contents. Both need the same row, the same swipe
- * actions and the same dividers, so they share this rather than each keeping a copy.
- */
 fun LazyListScope.wordRows(
     words: List<PresetWord>,
     onFavouriteToggled: (VocabularyId, Boolean) -> Unit,
@@ -29,8 +24,6 @@ fun LazyListScope.wordRows(
     itemsIndexed(words, key = { _, word -> word.id.value }) { index, word ->
         SwipeToRevealContainer(
             revealWidth = WordRowActionsWidth,
-            // Swiping a row aside to reach its actions makes no sense while rows are
-            // being ticked, and the two gestures would be reading the same drag.
             enabled = !selection.isActive,
             collapseSignal = selection.isActive,
             backgroundContent = {

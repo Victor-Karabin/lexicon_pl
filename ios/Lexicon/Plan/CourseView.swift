@@ -1,7 +1,6 @@
 import SwiftUI
 import Shared
 
-/// A course's lessons, locked until the one before is done.
 struct CourseView: View {
     let course: Course
 
@@ -51,7 +50,6 @@ struct CourseView: View {
     }
 }
 
-/// One lesson: its words, and a way to train over exactly those.
 struct LessonView: View {
     let lessonId: LessonId
     let title: String

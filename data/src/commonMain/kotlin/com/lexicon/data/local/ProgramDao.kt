@@ -20,8 +20,6 @@ interface ProgramDao {
     @Query("SELECT COUNT(*) FROM programs")
     suspend fun countPrograms(): Int
 
-    // ---- enrolment
-
     @Query("SELECT * FROM program_enrolment WHERE programId = :programId")
     suspend fun enrolment(programId: String): ProgramEnrolmentEntity?
 
@@ -33,8 +31,6 @@ interface ProgramDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertEnrolment(enrolment: ProgramEnrolmentEntity)
-
-    // ---- days
 
     @Query("SELECT * FROM program_day WHERE programId = :programId AND epochDay = :epochDay")
     suspend fun day(
@@ -54,8 +50,6 @@ interface ProgramDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertDay(day: ProgramDayEntity)
-
-    // ---- milestones and rewards
 
     @Query("SELECT * FROM program_milestone WHERE programId = :programId")
     suspend fun milestones(programId: String): List<ProgramMilestoneEntity>

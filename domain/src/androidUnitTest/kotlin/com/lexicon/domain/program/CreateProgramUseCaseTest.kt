@@ -23,11 +23,6 @@ import org.junit.Test
 
 private const val FAVOURITES = 84
 
-/**
- * A program the learner writes has to come out as ordinary configuration: the engine
- * runs it without knowing who wrote it, so what the form does not ask for still has
- * to be filled in correctly.
- */
 class CreateProgramUseCaseTest {
     private val programs: ProgramRepository = mockk()
     private val vocabulary: VocabularyRepository = mockk()
@@ -47,7 +42,6 @@ class CreateProgramUseCaseTest {
         description = "The ones I keep forgetting",
         newWordsPerDay = 15,
         reviewWordsPerDay = 30,
-        // The same training twice is two turns at it, which is how a day gets its length.
         trainings = listOf("word_match", "dictation", "word_match"),
     )
 
@@ -57,7 +51,7 @@ class CreateProgramUseCaseTest {
             val program = createProgram(draft).getOrThrow()
 
             assertEquals(program.id.value, saved.captured.id)
-            // Trimmed, so a stray space does not become part of the name.
+
             assertEquals("My starred words", saved.captured.title["en"])
         }
 
@@ -66,7 +60,6 @@ class CreateProgramUseCaseTest {
         runTest {
             val config = createProgram(draft).getOrThrow().config
 
-            // Nothing but favourites, so the program cannot quietly teach something else.
             assertEquals(ScopeSourceType.FAVOURITES, config.scope.include.single().type)
             assertEquals(FAVOURITES, config.goals.first { it.type == TargetType.VOCABULARY }.target)
         }
@@ -77,7 +70,7 @@ class CreateProgramUseCaseTest {
             val plan = createProgram(draft).getOrThrow().config.dailyPlan
 
             assertEquals(listOf("word_match", "dictation", "word_match"), plan.queue)
-            // Three turns, because the queue lists three — nothing is doubled behind it.
+
             assertEquals(3, plan.trainingsADay)
             assertEquals(15, plan.newWords)
             assertEquals(30, plan.reviewWords)
@@ -89,7 +82,7 @@ class CreateProgramUseCaseTest {
             val activities = createProgram(draft).getOrThrow().config.dailyPlan.activities
 
             assertEquals(setOf(ActivityType.LEARN, ActivityType.REVIEW), activities.map { it.type }.toSet())
-            // The distinct ones: an activity names what can satisfy it, not how often.
+
             activities.forEach { assertEquals(draft.trainings.distinct(), it.trainings) }
         }
 

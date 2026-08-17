@@ -14,7 +14,7 @@ class PolishTranscriptionTest {
         assertIpa("który", "ˈkturɨ")
         assertIpa("praca", "ˈprat͡sa")
         assertIpa("kobieta", "kɔˈbjɛta")
-        // One syllable takes no mark at all.
+
         assertIpa("kot", "kɔt")
         assertIpa("jak", "jak")
     }
@@ -46,11 +46,6 @@ class PolishTranscriptionTest {
         assertIpa("wódka", "ˈvutka")
     }
 
-    /**
-     * The exception to that, and the one place the shipped corpus has it backwards:
-     * it writes przez as bʐɛs and kwiat as gvjat, voicing the stop instead of
-     * devoicing what follows it.
-     */
     @Test
     fun `v and z devoice after a voiceless obstruent rather than voicing it`() {
         assertIpa("przez", "pʂɛs")
@@ -72,10 +67,6 @@ class PolishTranscriptionTest {
         assertEquals("", polishTranscription("!?"))
     }
 
-    /**
-     * A slice of the shipped corpus, so the rules are held against real data and not
-     * only against cases invented to suit them.
-     */
     @Test
     fun `matches the shipped corpus`() {
         corpusCases.forEach { (word, expected) -> assertIpa(word, expected) }

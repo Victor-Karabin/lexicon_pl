@@ -6,7 +6,6 @@ import com.lexicon.boundary.ProgramEnrolmentBoundary
 import com.lexicon.boundary.ProgramMilestoneBoundary
 import com.lexicon.boundary.ProgramRewardBoundary
 
-/** A program on its way to the table that keeps it. */
 fun ProgramBoundary.toUserEntity(): ProgramEntity =
     ProgramEntity(
         id = id,

@@ -5,12 +5,6 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.lexicon.common.ReviewState
 
-/**
- * When a word should next come back, and how confidently.
- *
- * One row per word the learner has actually answered — an untouched word has no row
- * rather than a row saying nothing, which is what makes "learned" a simple count.
- */
 @Entity(tableName = "word_review", indices = [Index("dueAtEpochDay")])
 data class WordReviewEntity(
     @PrimaryKey val wordId: Long,

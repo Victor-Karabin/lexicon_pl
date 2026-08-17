@@ -16,10 +16,6 @@ class CachingImageProviderImpl(
         return url
     }
 
-    /**
-     * Deliberately uncached: these are candidates to pick from, and the cache holds
-     * one image per query — the chosen one, which [pinImage] writes.
-     */
     override suspend fun searchImages(
         query: String,
         count: Int,

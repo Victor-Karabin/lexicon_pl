@@ -24,7 +24,6 @@ data class WordCardUiState(
     val isLoading: Boolean = true,
     val cards: ImmutableList<WordCardStep> = persistentListOf(),
     val index: Int = 0,
-    /** Set once the deck is through; the screen leaves on it. */
     val isFinished: Boolean = false,
 ) {
     val current: WordCardStep? get() = cards.getOrNull(index)
@@ -32,14 +31,6 @@ data class WordCardUiState(
     val isLast: Boolean get() = index >= cards.lastIndex
 }
 
-/**
- * The one training that asks nothing: a deck of words with everything known about
- * them on the face of the card.
- *
- * Each card is recorded as seen when it is reached — which counts the session and the
- * time, and deliberately does not touch the word's review schedule or the accuracy
- * figure, because being shown a word is not evidence of knowing it.
- */
 class WordCardViewModel(
     savedStateHandle: SavedStateHandle,
     private val startSession: StartWordCardSessionUseCase,
@@ -54,14 +45,12 @@ class WordCardViewModel(
 
     private var sessionId: String = ""
 
-    /** Recorded once apiece, however often the learner steps back and forth. */
     private val recorded = mutableSetOf<Int>()
 
     init {
         load()
     }
 
-    /** Reloaded after an edit, so a corrected word shows as corrected. */
     fun load() {
         viewModelScope.launch(dispatchers.io) {
             val session = startSession(StartWordCardSessionRequest(vocabularyIds = vocabularyIds))

@@ -9,7 +9,6 @@ interface MyMemoryApi {
     @GET("get")
     suspend fun translate(
         @Query("q") text: String,
-        /** Source and target as `en|pl`. */
         @Query("langpair") langPair: String,
     ): MyMemoryResponse
 }

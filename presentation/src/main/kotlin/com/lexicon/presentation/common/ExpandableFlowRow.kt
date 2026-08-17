@@ -18,13 +18,6 @@ import androidx.compose.ui.unit.Dp
 import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.Dimens
 
-/**
- * A wrapping row that shows [collapsedLines] rows to begin with, and the rest
- * behind a More button.
- *
- * The indicator is only drawn when there is something it would reveal, so a short
- * list looks like a plain row rather than one pretending to hide something.
- */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ExpandableFlowRow(
@@ -32,8 +25,6 @@ fun ExpandableFlowRow(
     modifier: Modifier = Modifier,
     horizontalSpacing: Dp = Dimens.spacingSmall,
     verticalSpacing: Dp = Dimens.spacingSmall,
-    // Deliberately unscoped: nothing here needs FlowRowScope, and taking it would
-    // push the experimental opt-in onto every caller.
     content: @Composable () -> Unit,
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }

@@ -1,7 +1,6 @@
 import SwiftUI
 import Shared
 
-/// Pair each Polish word with its English side.
 struct WordMatchView: View {
     let vocabularyIds: [Int64]
 

@@ -22,14 +22,6 @@ import kotlin.coroutines.resume
 private const val OK_RANGE_START = 200
 private const val OK_RANGE_END = 299
 
-/**
- * A GET, as a suspend function.
- *
- * The image and translation clients on Android are Retrofit over OkHttp, neither of
- * which exists here. Rather than take a Ktor dependency for four calls, this is
- * NSURLSession with the callback turned into a coroutine — the whole HTTP surface
- * this app needs on iOS is "fetch a URL and give me the text back".
- */
 suspend fun httpGet(
     url: String,
     headers: Map<String, String> = emptyMap(),
@@ -49,7 +41,6 @@ suspend fun httpGet(
     }
 }
 
-/** Percent-encoding for a value going into a query string. */
 fun String.urlEncoded(): String =
     (this as NSString)
         .stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet)

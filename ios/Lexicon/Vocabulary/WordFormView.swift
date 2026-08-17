@@ -1,10 +1,6 @@
 import SwiftUI
 import Shared
 
-/// Writing a word by hand, or correcting one that exists.
-///
-/// The Polish side fills itself in as the English is typed and the other way round —
-/// but only over what the app itself put there, never over what was typed.
 struct WordFormView: View {
     let wordId: Int64?
 
@@ -12,9 +8,7 @@ struct WordFormView: View {
     @State private var text = ""
     @State private var translation = ""
     @State private var images: [String] = []
-    /// Pictures the learner supplied rather than ones the search found. Kept apart
-    /// because they outlive a search: retyping the word fetches new candidates, and a
-    /// photograph somebody went and took is not a candidate.
+
     @State private var ownImages: [String] = []
     @State private var chosenImage: String?
     @State private var problem: String?
@@ -34,13 +28,11 @@ struct WordFormView: View {
                     .onChange(of: text) { _, _ in textWasFilledIn = false }
             }
             Section("Picture") {
-                // The row is never empty: adding a picture is always on offer, so the
-                // + leads it whether or not a search has run or found anything.
+
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: Spacing.small) {
                         AddImageTile { url in
-                            // Chosen as well as added: they went and found this one,
-                            // so asking them to tap it again would be asking twice.
+
                             ownImages = ([url] + ownImages).uniqued()
                             chosenImage = url
                         }
@@ -85,20 +77,17 @@ struct WordFormView: View {
         guard let word = try? await deps.getWord.invoke(id: VocabularyId(value: wordId)) else { return }
         text = word.text
         translation = word.translation
-        // The picture the word already has is the one the trainings show, so it is
-        // the one that arrives already chosen.
+
         chosenImage = try? await deps.getPinnedImage.invoke(translation: word.translation)
         if let pinned = chosenImage, isOwnImage(pinned) { ownImages = [pinned] }
         await lookUpImages(for: word.translation)
     }
 
-    /// Fills the Polish side in, and only over a value the app put there itself.
     private func fillPolish(from english: String) async {
         guard !english.isEmpty else { return }
         await lookUpImages(for: english)
         guard text.isEmpty || textWasFilledIn else { return }
-        // `try?` on a throwing call that already returns an optional gives a double
-        // optional; one flatten and it reads as what it is.
+
         let filled = try? await deps.translateWord.invoke(text: english, toPolish: true)
         if let filled, !filled.isEmpty {
             text = filled
@@ -108,8 +97,7 @@ struct WordFormView: View {
 
     private func lookUpImages(for query: String) async {
         images = (try? await deps.searchImageCandidates.invoke(query: query, skip: 0)) ?? []
-        // A picture the learner supplied was never about the search, so a new one
-        // neither replaces it nor unpicks it.
+
         if chosenImage == nil { chosenImage = images.first }
     }
 
@@ -138,9 +126,8 @@ struct WordFormView: View {
     }
 }
 
-
 private extension Array where Element: Hashable {
-    /// First occurrence wins, so the newest picture stays at the front of the row.
+
     func uniqued() -> [Element] {
         var seen = Set<Element>()
         return filter { seen.insert($0).inserted }

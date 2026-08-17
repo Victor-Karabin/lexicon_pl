@@ -27,7 +27,6 @@ sealed interface DictationPuzzleUiState {
         val canSkip: Boolean get() = isEditable
         val canUndo: Boolean get() = isEditable && placedTiles.isNotEmpty()
 
-        // Skip auto-advances, same as Correct; only Incorrect waits for a manual Next.
         val awaitingNext: Boolean get() = answerState is AnswerState.Incorrect
     }
 }

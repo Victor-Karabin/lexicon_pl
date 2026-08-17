@@ -1,10 +1,6 @@
 import SwiftUI
 import Shared
 
-/// Build the word from its letters.
-///
-/// One screen for two trainings: Puzzle gives a picture and a clue, Dictation Puzzle
-/// speaks the word instead. Only where the prompt comes from differs.
 struct PuzzleView: View {
     let vocabularyIds: [Int64]
     let fromAudio: Bool

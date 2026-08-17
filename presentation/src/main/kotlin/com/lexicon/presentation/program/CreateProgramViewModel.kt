@@ -24,10 +24,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-/** Route argument naming the program being edited. */
 const val PROGRAM_ID_ARG = "programId"
 
-/** The floor the form offers for new words a day, and what it starts at. */
 const val MIN_NEW_WORDS_A_DAY = 10
 
 private const val DEFAULT_REVIEW_WORDS_A_DAY = 20
@@ -37,16 +35,12 @@ data class CreateProgramUiState(
     val favourites: Int = 0,
     val newWordsPerDay: Int = MIN_NEW_WORDS_A_DAY,
     val reviewWordsPerDay: Int = DEFAULT_REVIEW_WORDS_A_DAY,
-    /** The chosen trainings, in the order the day runs them. */
     val queue: ImmutableList<String> = persistentListOf(),
     val problem: ProgramDraftProblem? = null,
     val isSaved: Boolean = false,
-    /** Rewriting one that exists rather than writing a new one. */
     val isEditing: Boolean = false,
-    /** Whether this is the program currently being worked through. */
     val isEnrolled: Boolean = false,
 ) {
-    /** A study set smaller than the floor still deserves a program over it. */
     val maxNewWords: Int get() = maxOf(favourites, MIN_NEW_WORDS_A_DAY)
 
     val hasFavourites: Boolean get() = favourites > 0
@@ -54,14 +48,6 @@ data class CreateProgramUiState(
     val canSave: Boolean get() = queue.isNotEmpty() && hasFavourites
 }
 
-/**
- * A program over the words the learner starred.
- *
- * The form asks only what is worth choosing — how much a day, and which trainings in
- * what order. Its name is fixed: there is one program and it is over the study set,
- * so naming it is a field to fill in rather than a decision. The goal, the scope and
- * the weights follow from the study set itself.
- */
 class CreateProgramViewModel(
     savedStateHandle: SavedStateHandle,
     private val createProgram: CreateProgramUseCase,
@@ -72,7 +58,6 @@ class CreateProgramViewModel(
     private val leave: LeaveProgramUseCase,
     observeActiveEnrolment: ObserveActiveEnrolmentUseCase,
 ) : ViewModel() {
-    /** Absent when the form is writing a new program rather than editing one. */
     private val editing: ProgramId? = savedStateHandle.get<String>(PROGRAM_ID_ARG)?.let(::ProgramId)
 
     private val _uiState = MutableStateFlow(CreateProgramUiState())
@@ -82,8 +67,7 @@ class CreateProgramViewModel(
         viewModelScope.launch {
             val favourites = countFavourites()
             val ceiling = maxOf(favourites, MIN_NEW_WORDS_A_DAY)
-            // What the program already says, so an edit starts from it rather than
-            // from the defaults — a form that forgets is a form that overwrites.
+
             val existing = editing?.let { getProgram(it) }
             val plan = existing?.config?.dailyPlan
 
@@ -99,8 +83,6 @@ class CreateProgramViewModel(
             }
         }
 
-        // Starting and stopping live here too: this is the only screen a program has,
-        // so it has to be the one that answers "am I on this?".
         viewModelScope.launch {
             observeActiveEnrolment().collect { active ->
                 val mine = active != null && active.programId == editing
@@ -120,32 +102,17 @@ class CreateProgramViewModel(
 
     fun onReviewWordsChanged(value: Int) = _uiState.update { it.copy(reviewWordsPerDay = value) }
 
-    /**
-     * Picking a training adds a turn at it.
-     *
-     * Adds rather than toggles, because the same training twice in the queue is two
-     * turns at it — which is how the length of a day is chosen now.
-     */
     fun onTrainingAdded(id: String) =
         _uiState.update { state ->
             state.copy(queue = (state.queue + id).toImmutableList(), problem = null)
         }
 
-    /** Drops one turn, the one at [index], rather than every turn at that training. */
     fun onTurnRemoved(index: Int) =
         _uiState.update { state ->
             if (index !in state.queue.indices) return@update state
             state.copy(queue = (state.queue.toMutableList().apply { removeAt(index) }).toImmutableList())
         }
 
-    /**
-     * Takes the turn at [from] out and puts it back in at [to].
-     *
-     * By position, not by name: the same training can sit in the queue more than once,
-     * and moving one of them must not move the others. Removed and re-inserted rather
-     * than swapped, because a drag passes over every position between the two and a
-     * swap would leave the ones it passed in the wrong order.
-     */
     fun onMove(
         from: Int,
         to: Int,
@@ -156,7 +123,6 @@ class CreateProgramViewModel(
         state.copy(queue = queue.toImmutableList())
     }
 
-    /** [name] and [description] are the app's own words for it, passed in by the screen that owns the copy. */
     fun onSave(
         name: String,
         description: String,
@@ -179,6 +145,5 @@ class CreateProgramViewModel(
         }
     }
 
-    /** Every training a program may use, whether or not it is in the queue yet. */
     val available: List<String> get() = programTrainings.map { it.id }
 }

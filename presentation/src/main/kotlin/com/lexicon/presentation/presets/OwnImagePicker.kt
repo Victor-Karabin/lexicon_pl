@@ -21,18 +21,10 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.UUID
 
-/** Where the learner's own pictures live, inside the app's own storage. */
 private const val OWN_IMAGE_DIR = "word_images"
 
-/** Matches the authority declared for the provider in the manifest. */
 private const val PROVIDER_SUFFIX = ".images"
 
-/**
- * The two ways a learner can supply a picture themselves.
- *
- * Both hand back a `file://` string, the same shape of thing as a searched picture's
- * URL, so nothing downstream has to know where a picture came from.
- */
 @Immutable
 class OwnImagePicker internal constructor(
     private val fromLibrary: () -> Unit,
@@ -43,22 +35,11 @@ class OwnImagePicker internal constructor(
     fun takePhoto() = fromCamera()
 }
 
-/**
- * Wires up the photo picker and the camera for the screen that calls it.
- *
- * A picked picture is copied into the app's files rather than kept as the URI it
- * arrived as: that URI is readable only while this screen is up, and the word is meant
- * to keep its picture. A camera shot is written into the same place to begin with, so
- * it needs no copy — only somewhere the camera app is allowed to write, which is what
- * the FileProvider is for.
- */
 @Composable
 fun rememberOwnImagePicker(onPicked: (String) -> Unit): OwnImagePicker {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    // Where the camera has been told to put the next shot. Held across the launch
-    // because the result says only whether it was taken, not where it went.
     var pendingPhoto by remember { mutableStateOf<File?>(null) }
 
     val library = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -73,8 +54,7 @@ fun rememberOwnImagePicker(onPicked: (String) -> Unit): OwnImagePicker {
         pendingPhoto = null
         when {
             file == null -> Unit
-            // Cancelled shots leave a zero-length file behind, which would show as a
-            // broken tile in the row for as long as the app is installed.
+
             taken -> onPicked(file.toUri().toString())
             else -> file.delete()
         }
@@ -100,7 +80,6 @@ private fun Context.ownImageDir(): File = File(filesDir, OWN_IMAGE_DIR).apply { 
 
 private fun Context.newOwnImageFile(): File = File(ownImageDir(), "${UUID.randomUUID()}.jpg")
 
-/** Null when the picture cannot be read — a revoked permission, or a file that moved. */
 private fun Context.copyIntoOwnImages(uri: Uri): File? {
     val file = newOwnImageFile()
     return runCatching {

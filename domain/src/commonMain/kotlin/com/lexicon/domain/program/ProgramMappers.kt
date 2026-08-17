@@ -17,17 +17,6 @@ private val programJson = Json {
     encodeDefaults = true
 }
 
-/**
- * Parses a program's configuration.
- *
- * This layer is the only one that knows what the configuration means: it arrives
- * from the data layer as an opaque string precisely so that storing a program and
- * understanding one stay separate concerns.
- *
- * A configuration that will not parse falls back to an empty one rather than
- * bringing the screen down. An empty program does nothing, which is visible and
- * recoverable; a crash on a malformed asset is neither.
- */
 internal fun String.toProgramConfig(): ProgramConfig =
     runCatching { programJson.decodeFromString<ProgramConfig>(this) }.getOrElse { ProgramConfig() }
 
@@ -60,8 +49,6 @@ fun ProgramEnrolment.toBoundary(): ProgramEnrolmentBoundary =
         completedAtEpochDay = completedAtEpochDay,
     )
 
-// An unrecognised name means the asset and this build disagree; the mildest reading
-// keeps the program usable rather than failing the whole catalogue over a label.
 private fun String.toDifficulty(): ProgramDifficulty =
     ProgramDifficulty.entries.firstOrNull { it.name == uppercase() } ?: ProgramDifficulty.BEGINNER
 

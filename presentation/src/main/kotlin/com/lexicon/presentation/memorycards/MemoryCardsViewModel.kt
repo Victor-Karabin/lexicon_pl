@@ -188,9 +188,7 @@ class MemoryCardsViewModel(
         val nextIndex = state.stepIndex + 1
         if (nextIndex >= steps.size) {
             updateLoaded { it.copy(isSessionComplete = true) }
-            // Memory Cards has no per-word translation to show on the Results screen's
-            // breakdown, so the holder is cleared rather than left showing a previous
-            // (unrelated) training's word list.
+
             lastSessionResultsHolder.wordResults = emptyList()
             _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount))
             return

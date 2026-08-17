@@ -17,8 +17,6 @@ class GetWordPresetMembershipsUseCaseImpl(
         val categories = repository.getCategories().associate { it.id to it.toCategory() }
         return repository.getPresets()
             .mapNotNull { preset -> categories[preset.categoryId]?.let(preset::toPreset) }
-            // Same order the Vocabulary tab lists presets in, so the checklist reads
-            // the way the learner already knows the catalogue.
             .sortedWith(compareBy({ it.category.order }, { it.popularity }))
             .map { PresetMembership(preset = it, isMember = it.id.value in memberOf) }
             .toImmutableList()

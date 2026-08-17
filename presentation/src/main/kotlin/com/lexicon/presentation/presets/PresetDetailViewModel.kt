@@ -80,8 +80,6 @@ class PresetDetailViewModel(
             ioContext = dispatchers.io,
             getMemberships = getWordPresetMemberships,
             setMembership = setWordPresetMembership,
-            // Unticking this preset takes the word out of the list behind the sheet,
-            // and changes the header's word count either way.
             onChanged = { refreshWords() },
         )
     val changePresetsState = changePresets.state
@@ -150,7 +148,6 @@ class PresetDetailViewModel(
         }
     }
 
-    /** Everything ticked, in one go, with one undo covering the lot. */
     fun onSelectedWordsDeleted(ids: Set<VocabularyId>) {
         if (ids.isEmpty()) return
         viewModelScope.launch(dispatchers.io) {
@@ -183,7 +180,6 @@ class PresetDetailViewModel(
 
     fun onDeleteMessageShown() = content.update { it?.copy(lastDeleted = null) }
 
-    /** Re-reads the preset and its words after something outside this screen changed them. */
     private suspend fun refreshWords() {
         val refreshed = getPreset(presetId)
         val words = getPresetVocabulary(presetId).sortedForDisplay()
@@ -192,7 +188,6 @@ class PresetDetailViewModel(
         }
     }
 
-    /** Reads the Polish out loud; the translation is not what a learner needs to hear. */
     fun onPronounceWord(word: PresetWord) {
         viewModelScope.launch(dispatchers.io) {
             runCatching { speechSynthesizer.speak(word.text) }

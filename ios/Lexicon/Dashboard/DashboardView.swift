@@ -1,7 +1,6 @@
 import SwiftUI
 import Shared
 
-/// What the learner should see first: the program they are on, and how it is going.
 struct DashboardView: View {
     @StateObject private var model = DashboardModel()
     @Environment(\.colorScheme) private var scheme
@@ -70,7 +69,7 @@ struct DashboardView: View {
                             .font(.caption.weight(.semibold))
                             .foregroundStyle(skin.onTile)
                     }
-                    // One pip per turn: a count is a fact, pips are a thing to fill in.
+
                     HStack(spacing: Spacing.tiny) {
                         ForEach(0..<model.totalTrainings, id: \.self) { i in
                             Circle()
@@ -116,7 +115,6 @@ struct DashboardView: View {
     }
 }
 
-/// How far through the program, drawn around whatever sits inside it.
 struct ProgressRing<Content: View>: View {
     let fraction: Double
     let skin: TileSkin

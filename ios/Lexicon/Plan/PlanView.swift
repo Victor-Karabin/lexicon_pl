@@ -1,7 +1,6 @@
 import SwiftUI
 import Shared
 
-/// Programs and courses: the things there are to work through.
 struct PlanView: View {
     @StateObject private var model = PlanModel()
     @Environment(\.colorScheme) private var scheme
@@ -21,8 +20,6 @@ struct PlanView: View {
                         .buttonStyle(.plain)
                     }
 
-                    // Only until they have one: an offer that never goes away reads as
-                    // an unfinished setup step rather than an option.
                     if model.programs.isEmpty {
                         NavigationLink {
                             ProgramFormView(programId: nil)
@@ -63,8 +60,7 @@ struct PlanView: View {
                 Spacer()
                 Image(systemName: active ? "play.fill" : "chevron.right").foregroundStyle(skin.onTile.muted)
             }
-            // Flowed rather than in a row: three chips fit across a wide phone and do
-            // not fit a narrow one at a large text size, and a row has no way to say so.
+
             FlowLayout(spacing: Spacing.small) {
                 if let words = program.config.goals.first(where: { $0.type == .vocabulary })?.target {
                     StatChip(systemName: "character.book.closed", text: "\(words) words", skin: skin)

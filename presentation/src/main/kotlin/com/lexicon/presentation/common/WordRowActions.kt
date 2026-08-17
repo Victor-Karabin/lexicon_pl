@@ -24,17 +24,10 @@ import androidx.compose.ui.unit.dp
 import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.LexiconTheme
 
-/** Change-presets sits alongside Delete, so a word row reveals twice the width. */
 val WordRowActionsWidth = DeleteActionWidth * 2
 
 private val PreviewRowHeight = 76.dp
 
-/**
- * The actions behind a word row: change which presets it belongs to, or delete it.
- *
- * Delete stays rightmost — it is the destructive one, and it was there on its own
- * before this, so its position is the one people already have in their fingers.
- */
 @Composable
 fun WordRowActions(
     onChangePresets: () -> Unit,
@@ -55,7 +48,6 @@ private fun ChangePresetsAction(onClick: () -> Unit) {
     Surface(
         onClick = onClick,
         color = MaterialTheme.colorScheme.secondaryContainer,
-        // Square edges: this one abuts the delete action rather than ending the row.
         shape = RoundedCornerShape(0.dp),
         modifier = Modifier.fillMaxSize(),
     ) {

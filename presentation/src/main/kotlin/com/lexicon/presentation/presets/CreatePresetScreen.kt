@@ -96,10 +96,7 @@ private fun CreatePresetContent(
         topBar = {
             Column {
                 TrainingTopBar(title = stringResource(R.string.create_preset_title), onClose = onClose)
-                // The preset as it will look in the list, built from the same block
-                // the list itself uses. Pinned under the bar rather than scrolling
-                // with the form: it is what the choices below are being made against,
-                // so it has to stay in view while they are made.
+
                 val preview = uiState.asPreview()
                 val skin = presetTileSkin(preview)
                 GradientTile(
@@ -116,8 +113,6 @@ private fun CreatePresetContent(
                 }
             }
         },
-        // Pinned rather than sitting under the choices: there are well over a
-        // hundred icons to scroll past, and Save should never be a journey away.
         bottomBar = {
             TextButton(
                 onClick = onSave,
@@ -241,10 +236,6 @@ private fun ColorChoices(
     }
 }
 
-/**
- * The draft as a preset, so the preview above can be the very same composable the
- * Vocabulary list draws. It has no words yet, which the count correctly shows as 0.
- */
 private fun CreatePresetUiState.asPreview(): VocabularyPreset =
     VocabularyPreset(
         id = PresetId(""),

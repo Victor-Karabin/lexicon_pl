@@ -1,9 +1,5 @@
 import SwiftUI
 
-/// Every training, as a tile apiece.
-///
-/// A name on its own says little — "Puzzle" and "Dictation Puzzle" are not obviously
-/// different things — so each tile carries what the training actually asks of you.
 struct TrainingsView: View {
     @Environment(\.colorScheme) private var scheme
 
@@ -49,7 +45,6 @@ struct TrainingEntry: Identifiable {
     let symbol: String
 }
 
-/// The same list the Android catalogue holds, in the same order.
 enum TrainingCatalog {
     static let all: [TrainingEntry] = [
         .init(id: "dictation", name: "Dictation", blurb: "Hear a word and type it", symbol: "headphones"),
@@ -68,7 +63,6 @@ enum TrainingCatalog {
     static func entry(id: String) -> TrainingEntry? { all.first { $0.id == id } }
 }
 
-/// Sends a training id to the screen that runs it.
 struct TrainingHost: View {
     let entry: TrainingEntry
     let vocabularyIds: [Int64]

@@ -35,11 +35,6 @@ import com.lexicon.presentation.theme.Dimens
 
 private val SheetMaxHeight = 420.dp
 
-/**
- * Which presets a word belongs to, as a grid of chips: a lit chip means the word is
- * in that preset. Tapping one applies immediately — a word can be in any number of
- * presets, so there is nothing to confirm and nothing that conflicts.
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChangePresetsSheet(
@@ -82,7 +77,6 @@ fun ChangePresetsSheet(
                     memberships = state.memberships,
                     languageTag = state.languageTag,
                     onToggle = onToggle,
-                    // The sheet scrolls; the form it is shared with does not.
                     modifier = Modifier
                         .heightIn(max = SheetMaxHeight)
                         .verticalScroll(rememberScrollState()),
@@ -92,16 +86,6 @@ fun ChangePresetsSheet(
     }
 }
 
-/**
- * Presets as a grid of chips, a lit one meaning the word is in it.
- *
- * Shared with the new-word form, where the same question is asked of a word that
- * does not exist yet — so this knows nothing about persisting a choice, only about
- * showing one.
- *
- * [collapsedLines] keeps seventy-odd chips from burying the rest of a form; the
- * sheet, which has nothing below them, passes null and shows the lot.
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PresetChips(
@@ -112,8 +96,6 @@ fun PresetChips(
     collapsedLines: Int? = null,
 ) {
     ExpandableFlowRow(
-        // Int.MAX_VALUE rather than a branch here: no indicator is drawn unless a
-        // row is actually hidden, so "all of them" needs no special case.
         collapsedLines = collapsedLines ?: Int.MAX_VALUE,
         modifier = modifier,
         verticalSpacing = ChipRowSpacing,
@@ -137,5 +119,4 @@ fun PresetChips(
     }
 }
 
-/** Chips carry their own padding, so the rows sit closer than the usual spacing. */
 private val ChipRowSpacing = 2.dp

@@ -64,13 +64,12 @@ fun WordCardsScreen(
 
     LaunchedEffect(uiState.isFinished) {
         if (!uiState.isFinished) return@LaunchedEffect
-        // The day carries on into its first training; only a day with nothing queued
-        // has anywhere else to go.
+
         uiState.launch
             ?.let { onStartTraining(it.training, it.wordIds) }
             ?: onFinished()
     }
-    // An edit lands back here, and the card should show what was just changed.
+
     LaunchedEffect(Unit) { viewModel.load() }
 
     WordCardsContent(
@@ -193,7 +192,6 @@ private fun Card(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                // English first: the side the learner already knows is the way in.
                 Text(
                     text = card.translation,
                     style = MaterialTheme.typography.titleMedium,

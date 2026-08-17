@@ -29,12 +29,6 @@ import com.lexicon.presentation.theme.component.MedallionIcon
 import com.lexicon.presentation.theme.component.muted
 import com.lexicon.presentation.theme.component.tileSkin
 
-/**
- * Every training, as a tile apiece.
- *
- * A name on its own says little — "Puzzle" and "Dictation Puzzle" are not obviously
- * different things — so each tile carries what the training actually asks of you.
- */
 @Composable
 fun TrainingsScreen(
     onTrainingSelected: (id: String) -> Unit,

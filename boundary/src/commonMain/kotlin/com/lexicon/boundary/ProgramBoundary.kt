@@ -1,12 +1,5 @@
 package com.lexicon.boundary
 
-/**
- * A program crossing the data boundary.
- *
- * [configJson] is deliberately opaque here. The data layer stores and returns a
- * program's configuration without knowing what any of it means; only the domain
- * layer, which owns the engine that reads it, parses it into a shape.
- */
 data class ProgramBoundary(
     val id: String,
     val level: String,

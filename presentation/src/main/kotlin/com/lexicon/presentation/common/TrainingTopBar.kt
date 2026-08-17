@@ -21,8 +21,6 @@ fun TrainingTopBar(
     onClose: () -> Unit,
 ) {
     TopAppBar(
-        // A preset's name can be longer than the bar; clip it rather than letting it
-        // push the close button around.
         title = {
             Text(
                 text = title,
@@ -47,8 +45,7 @@ private fun TrainingTopBarStatesPreview() {
             Column {
                 TrainingTopBar(title = "Dictation", onClose = {})
                 TrainingTopBar(title = "Pronunciation Check", onClose = {})
-                // Longer than the bar: should end in an ellipsis, not wrap or
-                // shove the close button aside.
+
                 TrainingTopBar(title = "A preset whose name is far longer than the bar", onClose = {})
             }
         }

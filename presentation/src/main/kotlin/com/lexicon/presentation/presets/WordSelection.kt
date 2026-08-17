@@ -9,14 +9,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.lexicon.interactors.presets.VocabularyId
 
-/**
- * Which words are ticked, and therefore whether the list is in selection mode at all.
- *
- * Held here rather than in a ViewModel because both word lists — the Vocabulary tab
- * and a preset's contents — need the same behaviour, and neither needs the selection
- * to outlive the screen. It does survive rotation, which is why it is saveable: a set
- * of ticks is tedious to rebuild by hand.
- */
 @Stable
 class WordSelection(
     initial: Set<VocabularyId> = emptySet(),
@@ -24,7 +16,6 @@ class WordSelection(
     var selected: Set<VocabularyId> by mutableStateOf(initial)
         private set
 
-    /** Selection mode is simply having something selected; there is no separate flag. */
     val isActive: Boolean get() = selected.isNotEmpty()
 
     val count: Int get() = selected.size

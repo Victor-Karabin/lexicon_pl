@@ -23,9 +23,7 @@ data class WordCardsUiState(
     val isLoading: Boolean = true,
     val cards: ImmutableList<WordCard> = persistentListOf(),
     val index: Int = 0,
-    /** Set once the deck is through; the screen leaves on it. */
     val isFinished: Boolean = false,
-    /** Where the deck leads: the first training of the day, over the day's words. */
     val launch: LaunchTraining? = null,
 ) {
     val current: WordCard? get() = cards.getOrNull(index)
@@ -33,13 +31,6 @@ data class WordCardsUiState(
     val isLast: Boolean get() = index >= cards.lastIndex
 }
 
-/**
- * The new words of the day, one card at a time, before any of them are drilled.
- *
- * Meeting a word and being tested on it are different things, and a training that
- * asks about a word never seen is a guess. The deck is marked as seen only on
- * reaching the end, so backing out halfway shows the rest next time.
- */
 class WordCardsViewModel(
     savedStateHandle: SavedStateHandle,
     private val getDay: GetProgramDayUseCase,
@@ -57,7 +48,6 @@ class WordCardsViewModel(
         load()
     }
 
-    /** Reloaded after an edit, so a corrected word shows as corrected. */
     fun load() {
         viewModelScope.launch {
             val day = getDay(programId)
@@ -66,12 +56,6 @@ class WordCardsViewModel(
         }
     }
 
-    /**
-     * The last card leads straight into the first training of the day.
-     *
-     * Meeting ten words and then being put back on the Dashboard to press Continue
-     * is a step that asks nothing of the learner, so the deck hands over directly.
-     */
     fun onNext() {
         val state = _uiState.value
         if (!state.isLast) {

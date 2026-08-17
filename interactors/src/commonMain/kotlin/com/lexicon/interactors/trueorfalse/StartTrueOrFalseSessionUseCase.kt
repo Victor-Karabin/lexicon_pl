@@ -3,7 +3,6 @@ package com.lexicon.interactors.trueorfalse
 data class StartTrueOrFalseSessionRequest(
     val poolSize: Int = DEFAULT_POOL_SIZE,
     val correctProbability: Double = DEFAULT_CORRECT_PROBABILITY,
-    // Empty means the whole study set; a lesson passes its own words here.
     val vocabularyIds: List<Long> = emptyList(),
 ) {
     companion object {

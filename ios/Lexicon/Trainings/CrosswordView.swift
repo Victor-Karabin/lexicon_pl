@@ -1,10 +1,6 @@
 import SwiftUI
 import Shared
 
-/// Fill the grid from the clues.
-///
-/// The grid comes already placed by the shared session — which letters sit where is
-/// a decision the two platforms should never make differently.
 struct CrosswordView: View {
     let vocabularyIds: [Int64]
 
@@ -68,7 +64,6 @@ struct CrosswordView: View {
         .frame(width: 30, height: 30)
     }
 
-    /// What the learner has typed so far, letter by letter, in the cells a word covers.
     private func letterAt(_ session: CrosswordSessionResponse, row: Int, col: Int) -> String? {
         for placement in session.words {
             let typed = Array(answers[placement.vocabularyItemId] ?? "")

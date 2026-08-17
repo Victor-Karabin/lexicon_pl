@@ -3,7 +3,6 @@ package com.lexicon.common
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
-/** Dispatchers.IO is not in coroutines' common source set, so each platform names its own. */
 internal expect val platformIoDispatcher: CoroutineDispatcher
 
 class DefaultDispatcherProvider : DispatcherProvider {

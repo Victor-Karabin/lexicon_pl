@@ -58,7 +58,6 @@ interface PresetDao {
     )
     suspend fun getPresetIdsForWord(wordId: Long): List<String>
 
-    /** Appends to the end of the preset, so a hand-added word lands last rather than mid-list. */
     @Query("SELECT COALESCE(MAX(position), -1) + 1 FROM preset_words WHERE presetId = :presetId")
     suspend fun nextPosition(presetId: String): Int
 
@@ -77,7 +76,6 @@ interface PresetDao {
     @Query("SELECT * FROM preset_word_overrides")
     suspend fun getOverrides(): List<PresetWordOverrideEntity>
 
-    /** Puts one word into (or out of) a preset, remembering the choice across re-seeds. */
     @Transaction
     suspend fun setWordInPreset(
         presetId: String,
@@ -116,9 +114,6 @@ interface PresetDao {
         presets: List<PresetEntity>,
         memberships: List<PresetWordEntity>,
     ) {
-        // Read the learner's own presets out before the wipe and write them back
-        // after: the clears below are what reset the shipped catalogue to the asset,
-        // and a hand-made preset is in neither the asset nor, afterwards, the table.
         val userPresets = getUserPresets()
         val userMemberships = userPresets.flatMap { getMembershipsOf(it.id) }
 
@@ -135,8 +130,6 @@ interface PresetDao {
             insertMemberships(userMemberships)
         }
 
-        // Overrides may name a hand-made preset, so this runs once both catalogues
-        // are back in place.
         reapplyOverrides((presets + userPresets).mapTo(mutableSetOf()) { it.id })
     }
 
@@ -149,7 +142,6 @@ interface PresetDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPreset(preset: PresetEntity)
 
-    /** Creates a preset of the learner's own, with the words they picked for it. */
     @Transaction
     suspend fun createUserPreset(
         preset: PresetEntity,
@@ -170,13 +162,6 @@ interface PresetDao {
     @Query("SELECT COUNT(*) FROM presets WHERE id = :id")
     suspend fun countPresetsWithId(id: String): Int
 
-    /**
-     * Replays the learner's own membership edits over the freshly-seeded catalogue,
-     * which the insert above has just reset to what the asset ships.
-     *
-     * An override for a preset the catalogue no longer has is dropped: the preset is
-     * gone, so the edit has nothing left to apply to.
-     */
     private suspend fun reapplyOverrides(livePresetIds: Set<String>) {
         for (override in getOverrides()) {
             if (override.presetId !in livePresetIds) continue

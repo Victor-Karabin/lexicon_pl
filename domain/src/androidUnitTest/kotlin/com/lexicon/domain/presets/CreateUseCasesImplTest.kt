@@ -58,13 +58,12 @@ class CreateUseCasesImplTest {
             )
 
             assertTrue(result.isSuccess)
-            // Trimmed on the way in, so a stray space does not become part of the word,
-            // and the pronunciation is worked out from the spelling rather than asked for.
+
             coVerify { vocabularyRepository.createWord("smok", "dragon", "smɔk") }
-            // Duplicates in the chip selection must not double-insert.
+
             coVerify(exactly = 1) { presetRepository.setWordInPreset("fantasy", -1, true) }
             coVerify(exactly = 1) { presetRepository.setWordInPreset("animals", -1, true) }
-            // Pinned against the English side, which is the key the trainings search by.
+
             coVerify { imageProvider.pinImage("dragon", "https://example.com/dragon.jpg") }
         }
 
@@ -107,7 +106,6 @@ class CreateUseCasesImplTest {
     @Test
     fun `an edit keeps the word's own spelling without calling it a clash`() =
         runTest {
-            // findWordByText returns this very word, which is not a duplicate of itself.
             coEvery { vocabularyRepository.findWordByText("smok") } returns stored
             coEvery { vocabularyRepository.updateWord(any(), any(), any(), any()) } returns stored
             coEvery { presetRepository.getPresetIdsForWord(any()) } returns emptyList()
@@ -136,7 +134,6 @@ class CreateUseCasesImplTest {
             coEvery { vocabularyRepository.updateWord(any(), any(), any(), any()) } returns stored
             coEvery { presetRepository.getPresetIdsForWord(-1) } returns listOf("animals", "fantasy")
 
-            // Keeps animals, leaves fantasy, joins myths.
             updateWord(
                 id = VocabularyId(-1),
                 text = "smok",
@@ -146,7 +143,7 @@ class CreateUseCasesImplTest {
 
             coVerify(exactly = 1) { presetRepository.setWordInPreset("myths", -1, true) }
             coVerify(exactly = 1) { presetRepository.setWordInPreset("fantasy", -1, false) }
-            // Untouched, so no override row for it.
+
             coVerify(exactly = 0) { presetRepository.setWordInPreset("animals", -1, any()) }
         }
 

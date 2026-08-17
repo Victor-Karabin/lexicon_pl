@@ -10,12 +10,6 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-/**
- * Words and presets the learner writes exist only in the database — no asset can put
- * them back. Both seeders reset their tables from the shipped asset, so without the
- * carve-outs these cover, the next app update that changed vocabulary_pl.json or
- * vocabulary_presets.json would quietly delete everything the learner had added.
- */
 class UserCreatedSurvivalTest {
     private val presetDao: PresetDao = mockk(relaxed = true)
 
@@ -150,8 +144,6 @@ class UserCreatedSurvivalTest {
             val loader: VocabularySeedAssetLoader = mockk()
             val syncStore: VocabularySyncStore = mockk(relaxed = true)
 
-            // Id 1 ships as woda/water; the learner has edited it, so it now counts
-            // as theirs and keeps the asset's id.
             val shipped = WordEntity(id = 1, text = "woda", translation = "water", transcription = "ˈvɔda")
             val edited = shipped.copy(translation = "drinking water", isUserCreated = true)
 
@@ -167,17 +159,15 @@ class UserCreatedSurvivalTest {
             val changed = slot<List<WordEntity>>()
             val removed = slot<List<Long>>()
             coVerify { wordDao.reconcile(capture(added), capture(removed), capture(changed)) }
-            // Re-inserting would collide on the primary key it still holds.
+
             assertTrue("the asset's copy was inserted over the edit", added.captured.isEmpty())
-            // Rewriting would undo the edit.
+
             assertTrue("the edit was overwritten from the asset", changed.captured.isEmpty())
             assertFalse("the edited word was deleted", 1L in removed.captured)
         }
 
     @Test
     fun `a hand-added word gets an id the asset can never reach`() {
-        // The asset numbers from 1 upward, so ids below zero stay clear of it however
-        // much the corpus grows.
         assertEquals(-1L, nextUserWordId(lowestExistingId = 1L))
         assertEquals(-1L, nextUserWordId(lowestExistingId = null))
         assertEquals(-3L, nextUserWordId(lowestExistingId = -2L))
@@ -187,7 +177,7 @@ class UserCreatedSurvivalTest {
     fun `preset ids are namespaced away from the shipped ones`() {
         assertEquals("my-kitchen", userPresetId("Kitchen"))
         assertEquals("my-kitchen", userPresetId("  Kitchen  "))
-        // Polish diacritics fold, and a repeat gets a suffix rather than colliding.
+
         assertEquals("my-jedzenie", userPresetId("Jedzenie"))
         assertEquals("my-kitchen-1", userPresetId("Kitchen", suffix = 1))
         assertEquals("my-preset", userPresetId("!!!"))

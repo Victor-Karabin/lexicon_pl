@@ -63,18 +63,10 @@ private val PlayIconSize = 20.dp
 private val LetterCellSize = 36.dp
 private val MatchIconSize = 32.dp
 
-/** Roughly one character, so a blank is about as wide as the word it wants. */
 private val GapCharacterWidth = 11.dp
 private val GapMinWidth = 56.dp
 private val GapMaxWidth = 200.dp
 
-/**
- * The drawings the book pairs with phrases, in the app's own hand.
- *
- * The book's own artwork is not shipped — it is a commercial coursebook, and none
- * of it is in this repository — so each picture is named in the asset and drawn
- * from the icon set the rest of the app is drawn from.
- */
 private val exerciseIcons = mapOf(
     "repeat" to Icons.Default.Repeat,
     "spell" to Icons.Default.Abc,
@@ -103,10 +95,6 @@ fun ExerciseAudioButton(
     }
 }
 
-/**
- * One of two near-identical words. Which was said is only knowable from the
- * recording, so nothing is revealed until the learner has committed to a choice.
- */
 @Composable
 fun MinimalPairRow(
     item: MinimalPairItem,
@@ -134,13 +122,6 @@ fun MinimalPairRow(
     }
 }
 
-/**
- * A line with words missing, typed where they belong.
- *
- * The blanks sit in the sentence rather than under it, the way the book prints
- * them: which word is missing is half the question, and a stack of fields below a
- * sentence does not say which gap is which.
- */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun GapFillRow(
@@ -165,8 +146,7 @@ fun GapFillRow(
         ) {
             var gap = 0
             item.prompt.split(GAP_MARKER).forEachIndexed { index, fragment ->
-                // Every fragment but the first follows a marker, so a blank goes in
-                // front of it.
+
                 if (index > 0) {
                     val at = gap++
                     InlineGap(
@@ -187,7 +167,6 @@ fun GapFillRow(
             }
         }
 
-        // The line as it should read, once there is a right answer to compare with.
         if (answerState !is AnswerState.Unanswered && correctness.any { !it }) {
             Text(
                 text = item.answers.foldIndexed(item.prompt) { index, line, answer ->
@@ -201,7 +180,6 @@ fun GapFillRow(
     }
 }
 
-/** Listen and write it down: the label is all there is to go on. */
 @Composable
 fun TranscribeRow(
     item: TranscribeItem,
@@ -241,13 +219,6 @@ fun TranscribeRow(
     }
 }
 
-/**
- * Two columns to pair up: tap one side, then the other.
- *
- * The right-hand column is ordered by its own labels rather than sitting opposite
- * its partner, which is what makes it a question — the book prints A to F down
- * one side and 1 to 6 down the other for the same reason.
- */
 @Composable
 fun MatchBoard(
     items: List<MatchItem>,
@@ -334,9 +305,7 @@ private fun MatchPrompt(
                 )
             } ?: Text(text = item.prompt, style = MaterialTheme.typography.bodyMedium)
         }
-        // Always drawn, blank or not: a row that grows when it is answered shifts
-        // the rows under it, and the next one to pair is no longer where it was
-        // when the learner reached for it.
+
         Text(
             text = chosen.ifBlank { " " },
             style = MaterialTheme.typography.labelMedium,
@@ -345,7 +314,6 @@ private fun MatchPrompt(
     }
 }
 
-/** A word with letters missing, one cell apiece, the way a crossword asks for them. */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun LetterFillRow(
@@ -376,9 +344,6 @@ fun LetterFillRow(
 
                     ' ' -> Box(modifier = Modifier.width(Dimens.spacingMedium).height(LetterCellSize))
 
-                    // As wide as the letter rather than as wide as a cell: a word
-                    // whose printed letters are spaced like empty boxes does not
-                    // read as a word.
                     else ->
                         Box(
                             modifier = Modifier.height(LetterCellSize),
@@ -414,8 +379,6 @@ private fun LetterCell(
     }
 
     BasicTextField(
-        // One letter to a cell: anything longer is the keyboard running ahead, and
-        // taking the last character keeps up with it rather than refusing.
         value = value,
         onValueChange = { onValueChanged(it.takeLast(1)) },
         enabled = enabled,
@@ -440,14 +403,6 @@ private fun LetterCell(
     )
 }
 
-/**
- * A blank inside a sentence, about as wide as the word that belongs in it.
- *
- * Sized from the answer's length rather than left to grow: a field that starts
- * tiny and stretches makes the line jump about as it is typed into, and the width
- * is a fair hint at how long the missing word is — which the book's printed dots
- * give away too.
- */
 @Composable
 private fun InlineGap(
     value: String,
@@ -498,7 +453,6 @@ private fun ItemLabel(label: String) {
     )
 }
 
-/** How a choice should look: only ever right or wrong once there is a marking. */
 private fun choiceState(
     option: String,
     selected: String?,

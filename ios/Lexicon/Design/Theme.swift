@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// The palette, matched to the Android theme so the two apps look like one product.
 enum Palette {
     static let primary = Color(red: 0.71, green: 0.76, blue: 1.0)
     static let onPrimary = Color(red: 0.16, green: 0.11, blue: 0.36)
@@ -11,7 +10,6 @@ enum Palette {
     static let warning = Color(red: 0.90, green: 0.32, blue: 0.0)
 }
 
-/// Spacing, named the way `Dimens` is on Android rather than by number.
 enum Spacing {
     static let tiny: CGFloat = 4
     static let small: CGFloat = 8
@@ -25,7 +23,6 @@ enum Radius {
     static let medium: CGFloat = 16
 }
 
-/// Secondary text on a tile, whichever coat the tile is wearing.
 extension Color {
     var muted: Color { opacity(0.75) }
 }

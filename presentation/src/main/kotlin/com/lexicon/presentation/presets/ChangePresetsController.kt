@@ -27,23 +27,11 @@ data class ChangePresetsUiState(
     val memberCount: Int get() = memberships.count { it.isMember }
 }
 
-/**
- * The change-presets sheet's state and behaviour, kept out of the ViewModels so the
- * Vocabulary tab and a preset's own word list drive it identically.
- *
- * A toggle is applied to local state straight away and persisted behind it: the chip
- * has to respond to the tap, and there is nothing to roll back to — the sheet shows
- * the truth again next time it opens.
- */
 class ChangePresetsController(
     private val scope: CoroutineScope,
     private val ioContext: CoroutineContext,
     private val getMemberships: GetWordPresetMembershipsUseCase,
     private val setMembership: SetWordPresetMembershipUseCase,
-    /**
-     * Called once a change is persisted, for screens whose own contents depend on
-     * membership — a preset's word list loses the word the moment it is unticked.
-     */
     private val onChanged: suspend () -> Unit = {},
 ) {
     private val _state = MutableStateFlow<ChangePresetsUiState?>(null)
@@ -57,7 +45,7 @@ class ChangePresetsController(
         scope.launch(ioContext) {
             val memberships = getMemberships(word.id)
             _state.update { current ->
-                // The sheet may have been dismissed while this was loading.
+
                 current?.takeIf { it.wordId == word.id }?.copy(memberships = memberships, isLoading = false)
             }
         }

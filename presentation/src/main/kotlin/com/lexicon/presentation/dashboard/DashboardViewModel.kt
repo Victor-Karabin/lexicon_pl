@@ -3,6 +3,7 @@ package com.lexicon.presentation.dashboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.interactors.presets.VocabularyId
+import com.lexicon.interactors.program.CountFavouritesUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramProgressUseCase
 import com.lexicon.interactors.program.GetProgramUseCase
@@ -20,7 +21,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-/** Where to send the learner when they tap the program: a training over these words. */
 data class LaunchTraining(
     val training: String,
     val wordIds: ImmutableList<VocabularyId>,
@@ -31,11 +31,10 @@ data class DashboardUiState(
     val program: Program? = null,
     val progress: ProgramProgress? = null,
     val streakDays: Int = 0,
+    val favourites: Int = 0,
     val languageTag: String = "en",
     val day: ProgramDay? = null,
-    /** Set when a session is ready; the screen navigates on it and clears it. */
     val launch: LaunchTraining? = null,
-    /** Set when today starts with new words to meet. */
     val openCards: Boolean = false,
 ) {
     val trainingsDone: Int get() = day?.completedTrainings ?: 0
@@ -43,21 +42,18 @@ data class DashboardUiState(
     val trainingsTotal: Int get() = day?.totalTrainings ?: 0
 
     val isDayComplete: Boolean get() = day?.isComplete == true
+
+    val trainingsFraction: Float
+        get() = if (trainingsTotal <= 0) 0f else trainingsDone.toFloat() / trainingsTotal
 }
 
-/**
- * What the learner should see first: the program they are on and how it is going.
- *
- * Progress is recomputed whenever the screen is shown rather than observed, because
- * every figure behind it — words mastered, retention, days studied — moves only when
- * a session ends, and the learner is on a training screen when that happens.
- */
 class DashboardViewModel(
     private val getProgram: GetProgramUseCase,
     private val getProgress: GetProgramProgressUseCase,
     private val startSession: StartProgramSessionUseCase,
     private val getDay: GetProgramDayUseCase,
     private val getStreak: GetStudyStreakUseCase,
+    private val countFavourites: CountFavouritesUseCase,
     observeActiveEnrolment: ObserveActiveEnrolmentUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(DashboardUiState())
@@ -76,27 +72,28 @@ class DashboardViewModel(
                     program = program,
                     progress = program?.let { getProgress(it) },
                     streakDays = getStreak(),
+                    favourites = countFavourites(),
                     day = program?.let { getDay(it.id) },
                 )
             }
         }
     }
 
-    /** Recomputes after a session, when the numbers behind it have moved. */
     fun onResumed() {
         val program = _uiState.value.program ?: return
         viewModelScope.launch {
             val day = getDay(program.id)
             _uiState.update {
-                it.copy(progress = getProgress(program), streakDays = getStreak(), day = day)
+                it.copy(
+                    progress = getProgress(program),
+                    streakDays = getStreak(),
+                    favourites = countFavourites(),
+                    day = day,
+                )
             }
         }
     }
 
-    /**
-     * The next thing in the day: the new-word cards if they have not been through,
-     * otherwise the next training in the queue that has no session against it yet.
-     */
     fun onContinue() {
         val state = _uiState.value
         val program = state.program ?: return
@@ -109,8 +106,6 @@ class DashboardViewModel(
         val next = day.nextTraining ?: return
 
         viewModelScope.launch {
-            // The words come from the same session builder as before; only which
-            // training runs them is the queue's business.
             val session = startSession(program.id)
             _uiState.update {
                 it.copy(launch = LaunchTraining(next.training, session?.wordIds ?: persistentListOf()))

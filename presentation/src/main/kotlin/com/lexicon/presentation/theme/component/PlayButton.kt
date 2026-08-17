@@ -35,7 +35,7 @@ fun PlayButton(
 ) {
     Row(
         modifier = modifier
-            .clip(RoundedCornerShape(20.dp)) // fully rounded pill for this chip's height; not a named shape-scale token
+            .clip(RoundedCornerShape(20.dp))
             .background(MaterialTheme.colorScheme.secondaryContainer)
             .clickable(onClick = debounced(onClick = onClick))
             .padding(

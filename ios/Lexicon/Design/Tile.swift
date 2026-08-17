@@ -1,18 +1,11 @@
 import SwiftUI
 
-/// The colours one tile wears.
-///
-/// A tile is the app's unit of "something to open": a program, a training, a preset,
-/// a course. They differ in what they hold and not in how they are read, so the
-/// palette is one decision rather than four — the same reasoning as `TileSkin` on
-/// Android, and the reason the two apps look alike.
 struct TileSkin {
     let sweep: [Color]
     let onTile: Color
     let medallion: Color
     let onMedallion: Color
 
-    /// Loud for whatever is under way, quiet for the rest.
     static func standard(highlighted: Bool = false, scheme: ColorScheme) -> TileSkin {
         let dark = scheme == .dark
         if highlighted {
@@ -35,9 +28,6 @@ struct TileSkin {
         )
     }
 
-    /// A coat built around a colour the content owns — a preset's own accent, say.
-    /// Washed out rather than used at full strength, because it has to sit behind
-    /// text that was not chosen with it in mind.
     static func accent(_ accent: Color, onAccent: Color, scheme: ColorScheme) -> TileSkin {
         let dark = scheme == .dark
         return TileSkin(
@@ -49,12 +39,6 @@ struct TileSkin {
     }
 }
 
-/// The card everything sits in: rounded, swept with colour, tappable when there is
-/// somewhere to go.
-///
-/// `padding` is the one thing worth varying. A tile that is a card — a program, a
-/// preset — wants room around it, but a tile used as a row in a list of them wants as
-/// little as it can have, or six of them will not fit on a screen.
 struct Tile<Content: View>: View {
     let skin: TileSkin
     var padding: CGFloat = Spacing.medium
@@ -73,7 +57,6 @@ struct Tile<Content: View>: View {
     }
 }
 
-/// The round badge a tile leads with: a level, a count, or the thing's own icon.
 struct Medallion<Content: View>: View {
     let skin: TileSkin
     var size: CGFloat = 52
@@ -106,8 +89,6 @@ struct MedallionIcon: View {
     }
 }
 
-/// One fact about a tile, small enough to sit beside two others. Chips rather than a
-/// sentence, because the numbers are what gets compared between one tile and the next.
 struct StatChip: View {
     let systemName: String
     let text: String
@@ -116,9 +97,7 @@ struct StatChip: View {
     var body: some View {
         HStack(spacing: Spacing.tiny) {
             Image(systemName: systemName).font(.caption2)
-            // One line, always. A chip is one short fact; given less width than it
-            // wants it would wrap, and a chip narrower than its longest word wraps
-            // per letter — a column of characters where a phrase should be.
+
             Text(text).font(.caption).lineLimit(1).fixedSize(horizontal: true, vertical: false)
         }
         .foregroundStyle(skin.onTile)

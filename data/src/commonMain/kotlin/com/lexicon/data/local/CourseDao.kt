@@ -40,10 +40,6 @@ interface CourseDao {
     @Query("SELECT * FROM lesson_progress WHERE lessonId = :lessonId")
     suspend fun getProgress(lessonId: String): LessonProgressEntity?
 
-    /**
-     * Words a lesson introduces, skipping any the learner has deleted, the way
-     * [PresetDao.getWordIds] does for presets.
-     */
     @Query(
         """
         SELECT lv.wordId FROM lesson_vocabulary lv
@@ -70,10 +66,6 @@ interface CourseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertProgress(progress: LessonProgressEntity)
 
-    /**
-     * Replaces the whole book-derived catalogue. Progress is a separate table and
-     * is deliberately not touched: it is the learner's, not the asset's.
-     */
     @Transaction
     suspend fun replaceCatalog(
         courses: List<CourseEntity>,

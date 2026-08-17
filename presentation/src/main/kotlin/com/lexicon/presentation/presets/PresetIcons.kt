@@ -149,14 +149,6 @@ import androidx.compose.material.icons.filled.Work
 import androidx.compose.material.icons.filled.Yard
 import androidx.compose.ui.graphics.vector.ImageVector
 
-/**
- * Every icon name the app understands, from the shipped catalogue and from the
- * new-preset form alike.
- *
- * Each name has its own drawing. Nine used to share one with a neighbour —
- * calendar_month was a clock, emergency a hospital, flutter_dash a paw print —
- * because the icon they wanted was not reachable at the time. They all are now.
- */
 private val PRESET_ICONS: Map<String, ImageVector> = mapOf(
     "ac_unit" to Icons.Default.AcUnit,
     "accessibility" to Icons.Default.Accessibility,
@@ -308,108 +300,54 @@ private val PRESET_ICONS: Map<String, ImageVector> = mapOf(
 
 fun presetIconFor(name: String?): ImageVector = PRESET_ICONS[name] ?: Icons.Default.Category
 
-/**
- * The icons offered when making a preset, in subject order so the grid can be
- * skimmed without headings over it.
- */
 val PRESET_ICON_CHOICES: List<String> = listOf(
-    // General
     "category", "interests", "star", "favorite", "favorite_border", "bookmarks", "flag", "pin", "edit",
-    // Talking
     "waving_hand", "chat", "record_voice_over", "language", "translate", "campaign", "podcasts",
-    // People
     "groups", "family_restroom", "person_add", "face", "mood", "psychology", "diversity3", "child_care", "elderly",
     "accessibility",
-    // Home
     "home", "bed", "chair", "kitchen", "cleaning_services", "light", "key", "lock",
-    // Food
     "restaurant", "soup_kitchen", "set_meal", "local_pizza", "bakery_dining", "cake", "icecream", "local_cafe",
     "local_bar", "local_drink", "egg", "agriculture",
-    // Shopping
     "shopping_cart", "storefront", "checkroom", "payments", "credit_card", "savings", "attach_money", "receipt",
-    // Time
     "schedule", "calendar_month", "watch", "calculate",
-    // Culture
     "palette", "brush", "movie", "theaters", "music_note", "headphones", "library_music", "piano", "sports_esports",
     "casino", "celebration", "card_giftcard",
-    // Sport
     "fitness_center", "sports_soccer", "sports_basketball", "sports_tennis", "pool", "hiking", "directions_run",
     "downhill_skiing", "self_improvement", "spa",
-    // Nature
     "pets", "flutter_dash", "yard", "local_florist", "park", "forest", "nature", "terrain", "wb_sunny", "ac_unit",
     "cloud", "thunderstorm", "water_drop", "umbrella", "beach_access", "local_fire_department", "nightlight",
     "emoji_nature",
-    // Travel
     "flight", "sailing", "directions_bus", "directions_car", "directions_bike", "train", "subway", "local_taxi",
     "two_wheeler", "anchor", "rocket",
-    // Places
     "hotel", "tour", "explore", "map", "place", "public", "location_city", "luggage",
-    // Study
     "school", "menu_book", "auto_stories", "science", "newspaper", "code", "computer", "smartphone", "phone", "email",
     "photo_camera",
-    // Work
     "business_center", "work", "badge", "account_balance", "gavel", "how_to_vote", "local_police", "trending_up",
-    // Health
     "local_hospital", "emergency", "local_pharmacy", "medication", "health_and_safety",
-    // Making
     "build", "construction", "engineering", "handyman", "bug_report",
 )
 
-/**
- * What a preset starts out as, named rather than taken from the head of either
- * list: those are ordered for browsing, and reordering them should not quietly
- * change what a new preset looks like.
- */
 const val DEFAULT_PRESET_ICON = "category"
 const val DEFAULT_PRESET_COLOR = "#2E7D32"
 
-/**
- * The colours offered when making a preset: the Material palette from 600 to 900,
- * ordered by hue, with all ten the shipped catalogue uses among them.
- *
- * The whole range is here, warm end included, because the icon and tick drawn on a
- * swatch take whichever of black or white can be read on it (see onAccentColor)
- * rather than always being white. Every one of these clears 4.5:1 against the ink
- * chosen for it — the palette that was always white on the colour could only manage
- * 3.08:1, and could not offer a yellow at all.
- */
 val PRESET_COLOR_CHOICES: List<String> = listOf(
-    // Red
     "#E53935", "#D32F2F", "#C62828", "#B71C1C",
-    // Pink
     "#D81B60", "#C2185B", "#AD1457", "#880E4F",
-    // Purple
     "#8E24AA", "#7B1FA2", "#6A1B9A", "#4A148C",
-    // Deep purple
     "#5E35B1", "#512DA8", "#4527A0", "#311B92",
-    // Indigo
     "#3949AB", "#303F9F", "#283593", "#1A237E",
-    // Blue
     "#1E88E5", "#1976D2", "#1565C0", "#0D47A1",
-    // Light blue
     "#039BE5", "#0288D1", "#0277BD", "#01579B",
-    // Cyan
     "#00ACC1", "#0097A7", "#00838F", "#006064",
-    // Teal
     "#00897B", "#00796B", "#00695C", "#004D40",
-    // Green
     "#43A047", "#388E3C", "#2E7D32", "#1B5E20",
-    // Light green
     "#7CB342", "#689F38", "#558B2F", "#33691E",
-    // Lime
     "#C0CA33", "#AFB42B", "#9E9D24", "#827717",
-    // Yellow
     "#FDD835", "#FBC02D", "#F9A825", "#F57F17",
-    // Amber
     "#FFB300", "#FFA000", "#FF8F00", "#FF6F00",
-    // Orange
     "#FB8C00", "#F57C00", "#EF6C00", "#E65100",
-    // Deep orange
     "#F4511E", "#E64A19", "#D84315", "#BF360C",
-    // Brown
     "#6D4C41", "#5D4037", "#4E342E", "#3E2723",
-    // Grey
     "#757575", "#616161", "#424242", "#212121",
-    // Blue grey
     "#546E7A", "#455A64", "#37474F", "#263238",
 )

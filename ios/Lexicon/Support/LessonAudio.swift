@@ -1,10 +1,6 @@
 import AVFoundation
 import Foundation
 
-/// The lesson recordings: downloaded once, then played from disk.
-///
-/// The same files and the same endpoint the Android library uses — a lesson carries
-/// a file name and a remote id, and the id is what the download is keyed by.
 @MainActor
 final class LessonAudio: ObservableObject {
     static let shared = LessonAudio()
@@ -55,8 +51,7 @@ final class LessonAudio: ObservableObject {
         do {
             let (data, response) = try await URLSession.shared.data(from: source)
             guard (response as? HTTPURLResponse)?.statusCode == 200 else { return nil }
-            // Written beside the target and moved, so an interrupted fetch cannot
-            // leave a half-file that later looks like a cached track.
+
             let partial = target.appendingPathExtension("part")
             try data.write(to: partial)
             try? FileManager.default.removeItem(at: target)

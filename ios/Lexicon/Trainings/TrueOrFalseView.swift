@@ -1,7 +1,6 @@
 import SwiftUI
 import Shared
 
-/// Is the translation on screen the right one?
 struct TrueOrFalseView: View {
     let vocabularyIds: [Int64]
 

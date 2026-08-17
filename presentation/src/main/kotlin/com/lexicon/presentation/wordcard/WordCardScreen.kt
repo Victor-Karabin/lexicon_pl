@@ -50,12 +50,6 @@ import org.koin.androidx.compose.koinViewModel
 
 private val CardImageHeight = 220.dp
 
-/**
- * Word Card: a deck to read, with nothing to answer.
- *
- * It ends where it ends — there is no score to report, so it closes rather than
- * handing off to the result screen every other training finishes on.
- */
 @Composable
 fun WordCardScreen(
     onClose: () -> Unit,
@@ -68,7 +62,7 @@ fun WordCardScreen(
     LaunchedEffect(uiState.isFinished) {
         if (uiState.isFinished) onClose()
     }
-    // An edit lands back here, and the card should show what was just changed.
+
     LaunchedEffect(Unit) { viewModel.load() }
 
     WordCardContent(
@@ -183,7 +177,6 @@ private fun Card(
 
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Column(modifier = Modifier.weight(1f)) {
-                // English first: the side the learner already knows is the way in.
                 Text(
                     text = card.translation,
                     style = MaterialTheme.typography.titleMedium,

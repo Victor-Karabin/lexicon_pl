@@ -82,8 +82,7 @@ fun CreateProgramScreen(
     viewModel: CreateProgramViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    // The program's name is the app's, not the learner's: there is one of them and it
-    // is over the study set, so the copy lives here with the rest of the wording.
+
     val name = stringResource(R.string.program_default_name)
     val description = stringResource(R.string.create_program_scope)
 
@@ -131,15 +130,11 @@ private fun CreateProgramContent(
             )
         },
         bottomBar = {
-            // Nothing to save when there is nothing to build a program over, and a
-            // permanently greyed button is just furniture.
             if (uiState.hasFavourites) {
                 Column(
                     modifier = Modifier.padding(Dimens.spacingMedium),
                     verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
                 ) {
-                    // A program that exists is a program that can be started, and
-                    // this is the only screen it has.
                     if (uiState.isEditing) {
                         OutlinedButton(onClick = onEnrolToggled, modifier = Modifier.fillMaxWidth()) {
                             Text(
@@ -149,8 +144,7 @@ private fun CreateProgramContent(
                             )
                         }
                     }
-                    // A greyed Save with no reason beside it reads as a broken
-                    // button. The queue is the one thing that can hold it back.
+
                     if (uiState.queue.isEmpty()) {
                         Text(
                             text = stringResource(R.string.create_program_needs_training),
@@ -193,8 +187,6 @@ private fun CreateProgramContent(
         ) {
             val skin = tileSkin()
 
-            // What the program will teach, said before anything is asked, because a
-            // program over an empty study set cannot be built at all.
             StudySetCard(uiState = uiState, skin = skin)
 
             AmountSlider(
@@ -256,13 +248,6 @@ private fun StudySetCard(
     }
 }
 
-/**
- * Nothing starred, so there is no program to build.
- *
- * The form is not shown at all rather than shown and refused: every field on it
- * would be a choice about words that do not exist yet, and the only useful thing to
- * do from here is go and star some.
- */
 @Composable
 private fun NoFavourites(
     onGoToVocabulary: () -> Unit,
@@ -308,19 +293,11 @@ private fun AmountSlider(
             value = value.coerceIn(range).toFloat(),
             onValueChange = { onChange(it.toInt()) },
             valueRange = range.first.toFloat()..range.last.toFloat(),
-            // A slider with no steps is a slider that cannot land on a round number.
             steps = (range.last - range.first - 1).coerceAtLeast(0),
         )
     }
 }
 
-/**
- * Every training a program may use, as something to add a turn at.
- *
- * Adds rather than toggles: picking the same one twice is how a day gets two turns at
- * it, so the chips do not carry a chosen state — the queue below is the answer to
- * what was chosen and how often.
- */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun TrainingPicker(onAdd: (String) -> Unit) {
@@ -337,17 +314,6 @@ private fun TrainingPicker(onAdd: (String) -> Unit) {
     }
 }
 
-/**
- * The day's turns, in order, rearranged by dragging one to where it should go.
- *
- * The list does not reorder while a finger is down. The dragged row follows it and the
- * rows it has passed slide out of its way, but the queue itself is only rewritten when
- * the finger lifts — reordering underneath a live gesture means the row's index changes
- * mid-drag, which restarts the gesture and drops the drag.
- *
- * Held together by one measured row height, which the rows are: after the arrows went,
- * a row is a medallion, a name and a cross, and it is one line on any phone.
- */
 @Composable
 private fun QueueList(
     queue: ImmutableList<String>,
@@ -362,7 +328,6 @@ private fun QueueList(
     val gap = with(LocalDensity.current) { Dimens.spacingSmall.toPx() }
     val step = rowHeight + gap
 
-    // Where the dragged row would land if the finger lifted now.
     val landing = draggedFrom?.let { from -> landingFor(from, dragOffset, step, queue.lastIndex) }
 
     val from = draggedFrom
@@ -370,8 +335,7 @@ private fun QueueList(
     Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
         queue.forEachIndexed { index, training ->
             val isDragged = from == index
-            // Everything between the row's home and where it is headed shuffles up or
-            // down by one, which is what shows the learner where it will land.
+
             val shift = when {
                 from == null || landing == null || isDragged -> 0f
                 landing > from && index in (from + 1)..landing -> -step
@@ -402,11 +366,6 @@ private fun QueueList(
                                 dragOffset += drag.y
                             },
                             onDragEnd = {
-                                // Worked out here rather than read from `landing`
-                                // above: the gesture block outlives the composition
-                                // that started it, so anything computed up there is
-                                // whatever it was before the drag began. The two
-                                // states are read live.
                                 val to = landingFor(index, dragOffset, rowHeight + gap, queue.lastIndex)
                                 if (to != index) onMove(index, to)
                                 draggedFrom = null
@@ -423,7 +382,6 @@ private fun QueueList(
     }
 }
 
-/** How many rows up or down the finger has carried a row, clamped to the queue. */
 private fun landingFor(
     from: Int,
     offset: Float,
@@ -431,13 +389,6 @@ private fun landingFor(
     lastIndex: Int,
 ): Int = if (step <= 0f) from else (from + (offset / step).roundToInt()).coerceIn(0, lastIndex)
 
-/**
- * One turn at a training: which turn it is, what it is, and the cross that drops it.
- *
- * Moving it is a drag rather than a pair of arrows, so the row carries a handle to say
- * so and nothing else. The two arrows it replaced are kept as accessibility actions,
- * because a long press and a drag is not an instruction a screen reader can follow.
- */
 @Composable
 private fun QueueRow(
     position: Int,
@@ -454,8 +405,6 @@ private fun QueueRow(
 
     GradientTile(
         skin = skin,
-        // Tighter than a card: the queue is six of these one under another, and the
-        // point of the list is seeing the whole day's order at once.
         padding = Dimens.spacingSmall,
         modifier = modifier.semantics {
             customActions = listOf(

@@ -115,7 +115,7 @@ internal fun NotEnoughWordsContent(
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(top = Dimens.spacingSmall),
             )
-            // The hint above says where the words come from; this is the way there.
+
             Button(onClick = onGoToVocabulary, modifier = Modifier.padding(top = Dimens.spacingXl)) {
                 Text(stringResource(R.string.training_go_to_vocabulary))
             }

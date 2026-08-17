@@ -3,15 +3,13 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
-    // The engine parses a program's configuration, which arrives from the data layer
-    // as an opaque string precisely so that only this layer has to know its shape.
+
     alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
     androidTarget {
-        // Java is pinned to 17 below; Kotlin otherwise follows the JDK running
-        // Gradle, which is 21 in Android Studio and fails the target check.
+
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
@@ -22,14 +20,13 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            // api: domainModule binds the use-case interfaces, so consumers see them.
+
             api(projects.interactors)
             api(projects.boundary)
             api(projects.common)
             implementation(libs.kotlinx.coroutines.core)
             api(libs.kotlinx.collections.immutable)
 
-            // The domain layer owns the wiring of its own use cases.
             api(project.dependencies.platform(libs.koin.bom))
             api(libs.koin.core)
         }

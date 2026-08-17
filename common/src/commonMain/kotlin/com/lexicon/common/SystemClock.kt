@@ -1,9 +1,7 @@
 package com.lexicon.common
 
-/** Wall-clock milliseconds, however the platform reports them. */
 internal expect fun nowEpochMillis(): Long
 
-/** Today in the device's own time zone, as days since the epoch. */
 internal expect fun todayEpochDay(): Long
 
 class SystemClock : Clock {

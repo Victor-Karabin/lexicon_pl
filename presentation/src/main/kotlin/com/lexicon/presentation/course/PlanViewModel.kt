@@ -26,17 +26,9 @@ sealed interface PlanUiState {
     ) : PlanUiState
 }
 
-/** True only when there is nothing at all to show, not merely no courses. */
 val PlanUiState.Loaded.isEmpty: Boolean
     get() = programs.isEmpty() && courses.all { it.lessons.isEmpty() }
 
-/**
- * The Plan tab: the programs on offer and the courses to work through.
- *
- * Two kinds of thing sit here — a program is a configured path toward a goal, a
- * course is a book's worth of lessons — so the tab combines them rather than either
- * owning the other.
- */
 class PlanViewModel(
     observeCourses: ObserveCoursesUseCase,
     observePrograms: ObserveProgramsUseCase,

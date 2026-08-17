@@ -3,7 +3,6 @@ package com.lexicon.domain.program
 import com.lexicon.boundary.ProgramRepository
 import com.lexicon.boundary.ReviewScheduleRepository
 import com.lexicon.boundary.StudyRecordRepository
-import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.Clock
@@ -25,19 +24,8 @@ import com.lexicon.interactors.program.TargetType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
-private const val MILLIS_PER_DAY = 86_400_000L
-
-/** Recent enough to reflect how the learner is doing now, long enough to be steady. */
-private const val ACCURACY_WINDOW_DAYS = 30
 private const val PERCENT = 100
 
-/**
- * Turns a program's declared sources into the words it may draw on.
- *
- * Every source maps onto data that already exists, which is what lets a program be
- * written against presets, favourites, a CEFR band or a lesson without any of them
- * knowing about programs.
- */
 class ResolveProgramScopeUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val presets: VocabularyPresetRepository,
@@ -45,14 +33,11 @@ class ResolveProgramScopeUseCaseImpl(
     override suspend fun invoke(program: Program): ImmutableList<VocabularyId> {
         val scope = program.config.scope
 
-        // A set, because two sources may well overlap — top-1000 and Food share
-        // plenty — and a word offered twice would be taught twice.
         val included = linkedSetOf<Long>()
         scope.include.forEach { included += wordIdsOf(it.type, it.value) }
         scope.exclude.forEach { included -= wordIdsOf(it.type, it.value).toSet() }
 
         val ordered = when (scope.ordering) {
-            // The corpus is numbered by frequency, so its own order is that order.
             ScopeOrdering.FREQUENCY, ScopeOrdering.AS_LISTED -> included.toList()
             ScopeOrdering.DIFFICULTY -> included.sorted()
             ScopeOrdering.ALPHABETICAL -> included.toList()
@@ -75,20 +60,11 @@ class ResolveProgramScopeUseCaseImpl(
             ScopeSourceType.FAVOURITES -> vocabulary.favouriteWordIds()
             ScopeSourceType.CEFR_LEVEL -> vocabulary.wordIdsForLevel(value)
             ScopeSourceType.ALL -> vocabulary.allWordIds()
-            // Lessons carry their own word lists, which the course layer owns. Nothing
-            // ships a lesson-scoped program yet, so this stays empty rather than
-            // pulling the course repository in for a caller that does not exist.
+
             ScopeSourceType.LESSON -> emptyList()
         }
 }
 
-/**
- * What to work on next.
- *
- * Reviews first while any are due, then new words from the scope — the order the
- * strategy asks for, with the review backlog winning by default because a backlog
- * left to grow is what turns a hundred half-known words into a wall.
- */
 class StartProgramSessionUseCaseImpl(
     private val getProgram: GetProgramUseCase,
     private val resolveScope: ResolveProgramScopeUseCase,
@@ -111,15 +87,12 @@ class StartProgramSessionUseCaseImpl(
             return reviewActivity.session(program, due.take(plan.reviewWords.orAll()))
         }
 
-        // Nothing due: meet the next words the learner has not seen.
         val learnActivity = plan.activities.firstOrNull { it.type == ActivityType.LEARN }
             ?: plan.activities.firstOrNull()
             ?: return null
         val met = reviews.scheduledWordIds()
         val fresh = scope.filterNot { it in met }.take(plan.newWords.orAll())
 
-        // Everything in scope has been seen and nothing is due yet, so there is
-        // genuinely nothing to do today — better said plainly than by inventing work.
         val words = fresh.ifEmpty { return null }
         return learnActivity.session(program, words)
     }
@@ -141,17 +114,9 @@ class StartProgramSessionUseCaseImpl(
     }
 }
 
-/**
- * How far through a program the learner is.
- *
- * Each configured weight becomes one metric, reported separately so a screen can
- * show what is moving and what is not rather than one number that explains nothing.
- * A weight of zero is left out entirely.
- */
 class GetProgramProgressUseCaseImpl(
     private val programs: ProgramRepository,
     private val reviews: ReviewScheduleRepository,
-    private val history: TrainingHistoryRepository,
     private val study: StudyRecordRepository,
     private val clock: Clock,
 ) : GetProgramProgressUseCase {
@@ -182,21 +147,21 @@ class GetProgramProgressUseCaseImpl(
         }
 
         if (weights.accuracy > 0) {
-            val now = clock.nowEpochMillis()
-            val accuracy = history.accuracyBetween(now - ACCURACY_WINDOW_DAYS * MILLIS_PER_DAY, now)
+            val today = study.day(clock.todayEpochDay())
+            val answers = today?.answers ?: 0
             metrics += ProgressMetric(
                 type = ProgressMetricType.ACCURACY,
-                current = (accuracy.fraction * PERCENT).toInt(),
+                current = if (answers == 0) 0 else (today!!.correctAnswers * PERCENT) / answers,
                 target = PERCENT,
                 weight = weights.accuracy,
+                isMeasured = answers > 0,
             )
         }
 
         if (weights.consistency > 0) {
             val enrolment = programs.enrolment(program.id.value)
             val today = clock.todayEpochDay()
-            // Days on the program so far, counting today, against days actually
-            // studied in that window.
+
             val elapsed = enrolment?.let { (today - it.startedAtEpochDay + 1).toInt() } ?: 0
             val studied = enrolment?.let {
                 study.daysBetween(it.startedAtEpochDay, today).count { day -> day.answers > 0 }
