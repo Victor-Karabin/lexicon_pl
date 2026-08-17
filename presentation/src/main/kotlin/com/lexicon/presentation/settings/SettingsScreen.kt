@@ -1,5 +1,6 @@
 package com.lexicon.presentation.settings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material3.MaterialTheme
@@ -27,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.lexicon.android.SpeechVoice
 import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.interactors.settings.ThemeMode
 import com.lexicon.presentation.R
@@ -50,11 +53,14 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = koinViewModel(),
 ) {
     val settings by viewModel.uiState.collectAsState()
+    val voices by viewModel.voices.collectAsState()
 
     SettingsScreenContent(
         settings = settings,
+        voices = voices,
         onThemeModeSelected = viewModel::onThemeModeSelected,
         onStepCountChanged = viewModel::onStepCountChanged,
+        onVoiceSelected = viewModel::onVoiceSelected,
         modifier = modifier,
     )
 }
@@ -62,8 +68,10 @@ fun SettingsScreen(
 @Composable
 private fun SettingsScreenContent(
     settings: AppSettings,
+    voices: List<SpeechVoice>,
     onThemeModeSelected: (ThemeMode) -> Unit,
     onStepCountChanged: (Int) -> Unit,
+    onVoiceSelected: (SpeechVoice) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -144,6 +152,42 @@ private fun SettingsScreenContent(
                 color = skin.muted(),
             )
         }
+
+        if (voices.isNotEmpty()) {
+            GradientTile(skin = skin) {
+                SettingHeading(
+                    icon = Icons.AutoMirrored.Filled.VolumeUp,
+                    text = stringResource(R.string.settings_voice),
+                    skin = skin,
+                )
+
+                voices.forEach { voice ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { onVoiceSelected(voice) },
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        RadioButton(
+                            selected = settings.voiceId == voice.id,
+                            onClick = { onVoiceSelected(voice) },
+                        )
+                        Text(
+                            text = voice.displayName,
+                            modifier = Modifier.padding(start = Dimens.spacingMedium),
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = skin.onTile,
+                        )
+                    }
+                }
+
+                Text(
+                    text = stringResource(R.string.settings_voice_note),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = skin.muted(),
+                )
+            }
+        }
     }
 }
 
@@ -180,7 +224,9 @@ private fun SettingsScreenPreview() {
     LexiconTheme {
         SettingsScreenContent(
             settings = AppSettings(themeMode = ThemeMode.SYSTEM, stepCount = 10),
+            voices = emptyList(),
             onThemeModeSelected = {},
+            onVoiceSelected = {},
             onStepCountChanged = {},
         )
     }
@@ -192,7 +238,9 @@ private fun SettingsScreenDarkSelectedPreview() {
     LexiconTheme {
         SettingsScreenContent(
             settings = AppSettings(themeMode = ThemeMode.DARK, stepCount = AppSettings.MAX_STEP_COUNT),
+            voices = emptyList(),
             onThemeModeSelected = {},
+            onVoiceSelected = {},
             onStepCountChanged = {},
         )
     }
@@ -204,7 +252,9 @@ private fun SettingsScreenMinimumStepsPreview() {
     LexiconTheme {
         SettingsScreenContent(
             settings = AppSettings(themeMode = ThemeMode.LIGHT, stepCount = AppSettings.MIN_STEP_COUNT),
+            voices = emptyList(),
             onThemeModeSelected = {},
+            onVoiceSelected = {},
             onStepCountChanged = {},
         )
     }

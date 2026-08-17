@@ -3,10 +3,6 @@ package com.lexicon.data.remote.sentence
 import com.lexicon.boundary.SentenceGenerator
 import com.lexicon.boundary.SentenceRequestBoundary
 import com.lexicon.boundary.SentenceResultBoundary
-import kotlinx.coroutines.CancellationException
-import java.io.IOException
-
-private const val MODEL = "gpt-5.4-mini"
 
 private const val PROMPT = """# Role
 
@@ -97,28 +93,14 @@ class OpenAiSentenceGenerator(
             .replace("{{context}}", request.context)
             .replace("{{required_words}}", request.requiredWords.joinToString(", "))
 
-        return try {
-            val result = api.generate(
-                ResponsesRequest(
-                    model = MODEL,
-                    input = listOf(
-                        ResponsesMessage(
-                            role = "developer",
-                            content = listOf(ResponsesContent(text = filled)),
-                        ),
-                    ),
-                ),
-            )
-            result.sentence
-                ?.trim()
-                ?.let(SentenceResultBoundary::Generated)
-                ?: SentenceResultBoundary.Refused("empty response")
-        } catch (e: CancellationException) {
-            throw e
-        } catch (e: IOException) {
-            SentenceResultBoundary.Offline
-        } catch (e: Exception) {
-            SentenceResultBoundary.Refused(e.message ?: e::class.simpleName.orEmpty())
+        return when (val answer = api.ask(filled)) {
+            is OpenAiAnswer.Text ->
+                answer.text.trim().takeIf { it.isNotEmpty() }
+                    ?.let(SentenceResultBoundary::Generated)
+                    ?: SentenceResultBoundary.Refused("empty response")
+
+            OpenAiAnswer.Offline -> SentenceResultBoundary.Offline
+            is OpenAiAnswer.Failed -> SentenceResultBoundary.Refused(answer.reason)
         }
     }
 }

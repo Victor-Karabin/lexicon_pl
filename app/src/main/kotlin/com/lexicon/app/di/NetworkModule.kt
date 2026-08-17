@@ -2,6 +2,7 @@ package com.lexicon.app.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.lexicon.BuildConfig
+import com.lexicon.boundary.FillwordGenerator
 import com.lexicon.boundary.SentenceGenerator
 import com.lexicon.boundary.Translator
 import com.lexicon.data.di.translatorChainQualifier
@@ -14,6 +15,7 @@ import com.lexicon.data.remote.image.PixabayImageSource
 import com.lexicon.data.remote.image.UnsplashApi
 import com.lexicon.data.remote.image.UnsplashImageSource
 import com.lexicon.data.remote.sentence.OpenAiApi
+import com.lexicon.data.remote.sentence.OpenAiFillwordGenerator
 import com.lexicon.data.remote.sentence.OpenAiSentenceGenerator
 import com.lexicon.data.remote.translate.DeepLApi
 import com.lexicon.data.remote.translate.DeepLTranslator
@@ -116,6 +118,7 @@ val networkModule = module {
     }
 
     single<SentenceGenerator> { OpenAiSentenceGenerator(get()) }
+    single<FillwordGenerator> { OpenAiFillwordGenerator(get()) }
 
     single { retrofit(MYMEMORY_BASE_URL, get(), get()).create(MyMemoryApi::class.java) }
 

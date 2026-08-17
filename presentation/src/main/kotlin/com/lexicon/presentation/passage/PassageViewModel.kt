@@ -21,7 +21,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 enum class PassageProblem { NONE, NO_FAVOURITES, OFFLINE, REFUSED }
 
@@ -131,7 +130,7 @@ class PassageViewModel(
 
     fun onGapCleared(index: Int) = onAnswerChanged(index, "")
 
-    fun onCheck(onComplete: (Int, Int, Int, Int) -> Unit) {
+    fun onCheck() {
         val state = _uiState.value
         state.passage ?: return
         viewModelScope.launch(dispatchers.io) {
@@ -142,12 +141,8 @@ class PassageViewModel(
                     answers = state.answers,
                 ),
             )
-            val correct = result.correct.count { it }
             _uiState.update {
                 it.copy(isChecked = true, correctness = result.correct.toImmutableList())
-            }
-            withContext(dispatchers.main) {
-                onComplete(correct, result.correct.size - correct, 0, 0)
             }
         }
     }

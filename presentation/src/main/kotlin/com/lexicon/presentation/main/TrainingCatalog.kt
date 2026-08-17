@@ -31,6 +31,7 @@ object TrainingIds {
     const val WORD_CARD = "word_card"
     const val PASSAGE_WRITE = "passage_write"
     const val PASSAGE_BANK = "passage_bank"
+    const val FILLWORD = "fillword"
 }
 
 data class TrainingCatalogEntry(
@@ -128,6 +129,13 @@ val trainingCatalog =
             blurb = R.string.training_passage_bank_blurb,
         ),
         TrainingCatalogEntry(
+            id = TrainingIds.FILLWORD,
+            displayName = "Word Search",
+            isEnabled = true,
+            icon = Icons.Default.GridOn,
+            blurb = R.string.training_fillword_blurb,
+        ),
+        TrainingCatalogEntry(
             id = TrainingIds.MIX,
             displayName = "Mix",
             isEnabled = true,
@@ -143,6 +151,7 @@ val programTrainings =
             TrainingIds.CROSSWORD,
             TrainingIds.PASSAGE_WRITE,
             TrainingIds.PASSAGE_BANK,
+            TrainingIds.FILLWORD,
         )
     }
 

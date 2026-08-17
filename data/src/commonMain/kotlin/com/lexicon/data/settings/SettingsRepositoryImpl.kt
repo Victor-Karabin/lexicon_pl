@@ -17,6 +17,7 @@ private const val DEFAULT_STEP_COUNT = 10
 private object Keys {
     val ThemeMode = stringPreferencesKey("theme_mode")
     val StepCount = intPreferencesKey("step_count")
+    val VoiceId = stringPreferencesKey("voice_id")
 }
 
 class SettingsRepositoryImpl(
@@ -34,11 +35,18 @@ class SettingsRepositoryImpl(
         dataStore.edit { it[Keys.StepCount] = stepCount }
     }
 
+    override suspend fun setVoiceId(voiceId: String?) {
+        dataStore.edit { preferences ->
+            if (voiceId == null) preferences.remove(Keys.VoiceId) else preferences[Keys.VoiceId] = voiceId
+        }
+    }
+
     private fun Preferences.toSettings(): AppSettingsBoundary =
         AppSettingsBoundary(
             themeMode = this[Keys.ThemeMode]
                 ?.let { stored -> ThemeModeBoundary.entries.firstOrNull { it.name == stored } }
                 ?: ThemeModeBoundary.SYSTEM,
             stepCount = this[Keys.StepCount] ?: DEFAULT_STEP_COUNT,
+            voiceId = this[Keys.VoiceId],
         )
 }

@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -37,10 +36,8 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.lexicon.interactors.crossword.CrosswordDirection
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
@@ -51,6 +48,8 @@ import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconTheme
+import com.lexicon.presentation.theme.component.GridCell
+import com.lexicon.presentation.theme.component.gridLetterStyle
 import org.koin.androidx.compose.koinViewModel
 
 private val MinCellSize = 14.dp
@@ -225,28 +224,13 @@ private fun CrosswordCellBox(
     }
     val textColor = MaterialTheme.colorScheme.onSurface
 
-    val corner = RoundedCornerShape(size * CELL_CORNER_FRACTION)
-
-    Box(
-        modifier = Modifier
-            .size(size)
-            .padding(1.dp)
-            .background(background, corner)
-            .border(1.dp, MaterialTheme.colorScheme.outline, corner),
-        contentAlignment = Alignment.Center,
-    ) {
+    GridCell(size = size, background = background, border = MaterialTheme.colorScheme.outline) {
         BasicTextField(
             value = state.letter,
             onValueChange = { onLetterEntered(cell, it) },
             enabled = enabled && !state.locked,
             singleLine = true,
-            textStyle = MaterialTheme.typography.titleMedium.copy(
-                color = textColor,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                fontSize = (size.value * LETTER_SIZE_RATIO).sp,
-                lineHeight = (size.value * LETTER_SIZE_RATIO).sp,
-            ),
+            textStyle = gridLetterStyle(size = size, color = textColor),
             keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Characters),
             cursorBrush = SolidColor(textColor),
             modifier = Modifier

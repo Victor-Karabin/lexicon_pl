@@ -25,6 +25,7 @@ import com.lexicon.presentation.course.LessonScreen
 import com.lexicon.presentation.crossword.CrosswordScreen
 import com.lexicon.presentation.dictation.DictationScreen
 import com.lexicon.presentation.dictationpuzzle.DictationPuzzleScreen
+import com.lexicon.presentation.fillword.FillwordScreen
 import com.lexicon.presentation.imagetest.ImageTestScreen
 import com.lexicon.presentation.main.MainScreen
 import com.lexicon.presentation.main.MainTab
@@ -443,6 +444,16 @@ fun LexiconNavHost(
                     onClose = closeToMain,
                 )
             }
+        }
+
+        trainingDestination(
+            training = LexiconDestinations.FILLWORD,
+            minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
+            onClose = closeToMain,
+            onGoToVocabulary = goToVocabulary,
+            onComplete = onStepSessionComplete(LexiconDestinations.FILLWORD),
+        ) { onComplete ->
+            FillwordScreen(onSessionComplete = onComplete, onClose = closeToMain)
         }
 
         composable(

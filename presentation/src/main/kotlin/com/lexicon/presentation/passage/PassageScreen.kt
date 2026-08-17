@@ -5,14 +5,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -28,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.passage.PassageSegment
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.course.ExerciseAudioButton
 import com.lexicon.presentation.theme.Dimens
@@ -55,7 +54,11 @@ fun PassageScreen(
         onAnswerChanged = viewModel::onAnswerChanged,
         onBankWordSelected = viewModel::onBankWordSelected,
         onGapCleared = viewModel::onGapCleared,
-        onCheck = { viewModel.onCheck(onSessionComplete) },
+        onCheck = viewModel::onCheck,
+        onNext = {
+            val correct = uiState.correctCount
+            onSessionComplete(correct, uiState.expected.size - correct, 0, 0)
+        },
         modifier = modifier,
     )
 }
@@ -71,6 +74,7 @@ private fun PassageContent(
     onBankWordSelected: (String) -> Unit,
     onGapCleared: (Int) -> Unit,
     onCheck: () -> Unit,
+    onNext: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -142,24 +146,12 @@ private fun PassageContent(
                         )
                     }
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
-                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall, Alignment.End),
-                    ) {
-                        if (uiState.isChecked) {
-                            Text(
-                                text = stringResource(
-                                    R.string.exercise_score,
-                                    uiState.correctCount,
-                                    uiState.expected.size,
-                                ),
-                                style = MaterialTheme.typography.bodyMedium,
-                                modifier = Modifier.align(Alignment.CenterVertically),
-                            )
-                        } else {
-                            Button(onClick = onCheck) { Text(stringResource(R.string.exercise_check)) }
-                        }
-                    }
+                    TrainingActionRow(
+                        onCheck = onCheck,
+                        onNext = onNext,
+                        awaitingNext = uiState.isChecked,
+                        checkEnabled = uiState.answers.any { it.isNotBlank() },
+                    )
                 }
         }
     }

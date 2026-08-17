@@ -60,6 +60,8 @@
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_training">Training</string>
     <string name="settings_step_count">Steps per session</string>
+    <string name="settings_voice">Voice</string>
+    <string name="settings_voice_note">Tap a name to hear it. Android does not say who a voice sounds like, so the names are labels — pick the one you like listening to.</string>
     <string name="settings_step_count_note">Applies to new training sessions only.</string>
 
     <!-- Mix -->
@@ -166,6 +168,12 @@
     <string name="training_passage_bank_blurb">Read a text and pick the missing words</string>
     <string name="passage_write_title">Read and Write</string>
     <string name="passage_bank_title">Read and Choose</string>
+    <string name="fillword_title">Word Search</string>
+    <string name="fillword_found">Found %1$d of %2$d</string>
+    <string name="fillword_none">Star some words first — the grid is built from your study set.</string>
+    <string name="fillword_offline">No connection. The grid is built fresh each time, so this training needs the internet.</string>
+    <string name="fillword_refused">The grid could not be built just now. Try again in a moment.</string>
+    <string name="training_fillword_blurb">Find your words hidden in a grid of letters</string>
     <string name="passage_none">Star some words first — the text is built from your study set.</string>
     <string name="passage_offline">No connection. The text is written fresh each time, so this training needs the internet.</string>
     <string name="passage_refused">The text could not be written just now. Try again in a moment.</string>
