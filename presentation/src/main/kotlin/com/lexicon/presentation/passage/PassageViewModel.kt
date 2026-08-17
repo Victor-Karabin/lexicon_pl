@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.lexicon.android.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.passage.Passage
+import com.lexicon.interactors.passage.PassageSegment
 import com.lexicon.interactors.passage.PassageSessionResult
 import com.lexicon.interactors.passage.StartPassageSessionRequest
 import com.lexicon.interactors.passage.StartPassageSessionUseCase
@@ -14,13 +15,19 @@ import com.lexicon.interactors.passage.SubmitPassageAnswersUseCase
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 enum class PassageProblem { NONE, NO_FAVOURITES, OFFLINE, REFUSED }
+
+private const val GAP_PAUSE_MS = 2_500L
+
+private const val SENTENCE_PAUSE_MS = 700L
 
 data class PassageUiState(
     val isLoading: Boolean = true,
@@ -83,10 +90,22 @@ class PassageViewModel(
     }
 
     fun onSpeak() {
-        val text = _uiState.value.passage?.plainText ?: return
+        val passage = _uiState.value.passage ?: return
+        if (_uiState.value.isSpeaking) return
+
         viewModelScope.launch {
             _uiState.update { it.copy(isSpeaking = true) }
-            runCatching { speechSynthesizer.speak(text) }
+            for (sentence in passage.sentences) {
+                for (segment in sentence.segments) {
+                    val spoken = when (segment) {
+                        is PassageSegment.Text -> segment.text
+                        is PassageSegment.Gap -> segment.answer
+                    }
+                    if (spoken.isNotBlank()) runCatching { speechSynthesizer.speak(spoken) }
+                    if (segment is PassageSegment.Gap) delay(GAP_PAUSE_MS)
+                }
+                delay(SENTENCE_PAUSE_MS)
+            }
             _uiState.update { it.copy(isSpeaking = false) }
         }
     }
@@ -127,7 +146,9 @@ class PassageViewModel(
             _uiState.update {
                 it.copy(isChecked = true, correctness = result.correct.toImmutableList())
             }
-            onComplete(correct, result.correct.size - correct, 0, 0)
+            withContext(dispatchers.main) {
+                onComplete(correct, result.correct.size - correct, 0, 0)
+            }
         }
     }
 }

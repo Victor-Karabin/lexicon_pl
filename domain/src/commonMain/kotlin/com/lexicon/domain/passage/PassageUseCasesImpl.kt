@@ -13,6 +13,7 @@ import com.lexicon.domain.dictation.AnswerNormalizer
 import com.lexicon.interactors.passage.CEFR_ORDER
 import com.lexicon.interactors.passage.Passage
 import com.lexicon.interactors.passage.PassageSegment
+import com.lexicon.interactors.passage.PassageSentence
 import com.lexicon.interactors.passage.PassageSessionResult
 import com.lexicon.interactors.passage.StartPassageSessionRequest
 import com.lexicon.interactors.passage.StartPassageSessionUseCase
@@ -65,17 +66,15 @@ class StartPassageSessionUseCaseImpl(
         generated.firstOrNull { it.second is SentenceResultBoundary.Refused }
             ?.let { return PassageSessionResult.Refused((it.second as SentenceResultBoundary.Refused).reason) }
 
-        val segments = mutableListOf<PassageSegment>()
         val answers = mutableListOf<String>()
-        generated.forEachIndexed { index, (word, result) ->
+        val sentences = generated.map { (word, result) ->
             val sentence = (result as SentenceResultBoundary.Generated).sentence
-            if (index > 0) segments += PassageSegment.Text(" ")
-            segments += sentence.gapping(word.text, answers)
+            PassageSentence(sentence.gapping(word.text, answers).toImmutableList())
         }
 
         return PassageSessionResult.Ready(
             sessionId = Uuid.random().toString(),
-            passage = Passage(level = level, segments = segments.toImmutableList()),
+            passage = Passage(level = level, sentences = sentences.toImmutableList()),
             bank = if (!request.withWordBank) {
                 emptyList<String>().toImmutableList()
             } else {

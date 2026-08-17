@@ -1,5 +1,7 @@
 package com.lexicon.data.remote.sentence
 
+import kotlinx.serialization.EncodeDefault
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import retrofit2.http.Body
@@ -12,14 +14,15 @@ interface OpenAiApi {
     ): ResponsesResult
 }
 
+@OptIn(ExperimentalSerializationApi::class)
 @Serializable
 data class ResponsesRequest(
     val model: String,
     val input: List<ResponsesMessage>,
-    val text: ResponsesText = ResponsesText(),
-    val reasoning: ResponsesReasoning = ResponsesReasoning(),
-    val tools: List<String> = emptyList(),
-    val store: Boolean = true,
+    @EncodeDefault val text: ResponsesText = ResponsesText(),
+    @EncodeDefault val reasoning: ResponsesReasoning = ResponsesReasoning(),
+    @EncodeDefault val tools: List<String> = emptyList(),
+    @EncodeDefault val store: Boolean = true,
 )
 
 @Serializable
@@ -28,25 +31,31 @@ data class ResponsesMessage(
     val content: List<ResponsesContent>,
 )
 
+@OptIn(ExperimentalSerializationApi::class)
 @Serializable
 data class ResponsesContent(
-    val type: String = "input_text",
+    @EncodeDefault val type: String = "input_text",
     val text: String,
 )
 
+@OptIn(ExperimentalSerializationApi::class)
 @Serializable
 data class ResponsesText(
-    val format: ResponsesFormat = ResponsesFormat(),
-    val verbosity: String = "medium",
+    @EncodeDefault val format: ResponsesFormat = ResponsesFormat(),
+    @EncodeDefault val verbosity: String = "medium",
 )
 
+@OptIn(ExperimentalSerializationApi::class)
 @Serializable
-data class ResponsesFormat(val type: String = "text")
+data class ResponsesFormat(
+    @EncodeDefault val type: String = "text",
+)
 
+@OptIn(ExperimentalSerializationApi::class)
 @Serializable
 data class ResponsesReasoning(
-    val mode: String = "standard",
-    val summary: String = "auto",
+    @EncodeDefault val mode: String = "standard",
+    @EncodeDefault val summary: String = "auto",
 )
 
 @Serializable

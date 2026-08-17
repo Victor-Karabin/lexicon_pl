@@ -1,6 +1,5 @@
 package com.lexicon.presentation.passage
 
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +8,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.passage.PassageSegment
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.TrainingTopBar
@@ -33,6 +34,8 @@ import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.component.AnswerChip
 import com.lexicon.presentation.theme.component.AnswerChipState
 import org.koin.androidx.compose.koinViewModel
+
+private val BankMaxHeight = 180.dp
 
 @Composable
 fun PassageScreen(
@@ -171,33 +174,42 @@ private fun PassageBody(
     onGapCleared: (Int) -> Unit,
 ) {
     val passage = uiState.passage ?: return
-    FlowRow(
-        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
-        verticalArrangement = Arrangement.Center,
-    ) {
-        var gap = 0
-        passage.segments.forEach { segment ->
-            when (segment) {
-                is PassageSegment.Text ->
-                    segment.text.split(" ").filter { it.isNotBlank() }.forEach { word ->
-                        Text(
-                            text = word,
-                            style = MaterialTheme.typography.bodyLarge,
-                            modifier = Modifier.padding(vertical = Dimens.spacingSmall),
-                        )
-                    }
+    var gap = 0
 
-                is PassageSegment.Gap -> {
-                    val at = gap++
-                    PassageGap(
-                        value = uiState.answers.getOrElse(at) { "" },
-                        expected = segment.answer,
-                        isCorrect = uiState.correctness.getOrNull(at),
-                        isChecked = uiState.isChecked,
-                        readOnly = withWordBank,
-                        onValueChanged = { onAnswerChanged(at, it) },
-                        onCleared = { onGapCleared(at) },
-                    )
+    Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium)) {
+        passage.sentences.forEach { sentence ->
+            val first = gap
+            gap += sentence.segments.count { it is PassageSegment.Gap }
+
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
+                verticalArrangement = Arrangement.Center,
+            ) {
+                var at = first
+                sentence.segments.forEach { segment ->
+                    when (segment) {
+                        is PassageSegment.Text ->
+                            segment.text.split(" ").filter { it.isNotBlank() }.forEach { word ->
+                                Text(
+                                    text = word,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    modifier = Modifier.padding(vertical = Dimens.spacingSmall),
+                                )
+                            }
+
+                        is PassageSegment.Gap -> {
+                            val index = at++
+                            PassageGap(
+                                value = uiState.answers.getOrElse(index) { "" },
+                                expected = segment.answer,
+                                isCorrect = uiState.correctness.getOrNull(index),
+                                isChecked = uiState.isChecked,
+                                readOnly = withWordBank,
+                                onValueChanged = { onAnswerChanged(index, it) },
+                                onCleared = { onGapCleared(index) },
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -211,12 +223,14 @@ private fun WordBank(
     onBankWordSelected: (String) -> Unit,
 ) {
     val used = uiState.usedBankWords
-    Row(
+    FlowRow(
         modifier = Modifier
             .fillMaxWidth()
-            .horizontalScroll(rememberScrollState())
+            .heightIn(max = BankMaxHeight)
+            .verticalScroll(rememberScrollState())
             .padding(Dimens.spacingMedium),
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
     ) {
         uiState.bank.forEach { word ->
             AnswerChip(

@@ -4,18 +4,16 @@ import kotlinx.collections.immutable.ImmutableList
 
 data class Passage(
     val level: String,
-    val segments: ImmutableList<PassageSegment>,
+    val sentences: ImmutableList<PassageSentence>,
 ) {
-    val plainText: String
-        get() = segments.joinToString("") {
-            when (it) {
-                is PassageSegment.Text -> it.text
-                is PassageSegment.Gap -> it.answer
-            }
-        }
+    val spoken: List<PassageSegment> get() = sentences.flatMap { it.segments }
 
-    val gaps: List<PassageSegment.Gap> get() = segments.filterIsInstance<PassageSegment.Gap>()
+    val gaps: List<PassageSegment.Gap> get() = spoken.filterIsInstance<PassageSegment.Gap>()
 }
+
+data class PassageSentence(
+    val segments: ImmutableList<PassageSegment>,
+)
 
 sealed interface PassageSegment {
     data class Text(val text: String) : PassageSegment
