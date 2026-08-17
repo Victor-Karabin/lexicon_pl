@@ -12,8 +12,6 @@ import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 
 private const val TRAINING_TYPE_PRONUNCIATION_CHECK = "PRONUNCIATION_CHECK"
 
-private const val RECOGNITION_CONFIDENCE_THRESHOLD = 0.7f
-
 class SubmitPronunciationResultUseCaseImpl(
     private val trainingHistoryRepository: TrainingHistoryRepository,
     private val answerNormalizer: AnswerNormalizer,
@@ -39,20 +37,12 @@ class SubmitPronunciationResultUseCaseImpl(
         return SubmitPronunciationResultResponse(outcome = outcome, expectedText = request.expectedText)
     }
 
-    private fun resolveOutcome(request: SubmitPronunciationResultRequest): PronunciationStepOutcome {
-        val confidence = request.confidence
-        return when {
+    private fun resolveOutcome(request: SubmitPronunciationResultRequest): PronunciationStepOutcome =
+        when {
             request.skipped -> PronunciationStepOutcome.SKIPPED
-            confidence != null ->
-                if (confidence >= RECOGNITION_CONFIDENCE_THRESHOLD) {
-                    PronunciationStepOutcome.CORRECT
-                } else {
-                    PronunciationStepOutcome.INCORRECT
-                }
             answerNormalizer.matches(request.expectedText, request.recognizedText) -> PronunciationStepOutcome.CORRECT
             else -> PronunciationStepOutcome.INCORRECT
         }
-    }
 
     private fun PronunciationStepOutcome.toBoundary(): TrainingResultOutcomeBoundary =
         when (this) {

@@ -42,14 +42,21 @@ class SubmitPronunciationResultUseCaseImplTest {
         }
 
     @Test
-    fun `confidence below the threshold is Incorrect even if text matches`() =
+    fun `the right word said with low confidence is Correct`() =
         runTest {
-            val response = useCase(request(recognizedText = "kot", confidence = 0.5f))
+            val response = useCase(request(recognizedText = "kot", confidence = 0.1f))
+            assertEquals(PronunciationStepOutcome.CORRECT, response.outcome)
+        }
+
+    @Test
+    fun `the wrong word said with high confidence is Incorrect`() =
+        runTest {
+            val response = useCase(request(recognizedText = "pies", confidence = 0.99f))
             assertEquals(PronunciationStepOutcome.INCORRECT, response.outcome)
         }
 
     @Test
-    fun `no confidence falls back to text matching`() =
+    fun `no confidence at all still compares the words`() =
         runTest {
             val response = useCase(request(recognizedText = "Kot", confidence = null))
             assertEquals(PronunciationStepOutcome.CORRECT, response.outcome)
