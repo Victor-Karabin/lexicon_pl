@@ -1,0 +1,45 @@
+# Clothes, footwear, jewellery and the parts a garment is made of.
+# Multi-word entries are compound nouns, not spoken phrases, so they belong here
+# rather than in phrases.tsv — the same call as "klatka piersiowa".
+figi	knickers, briefs	n	B1	clothing
+majtki	underpants, knickers	n	A2	clothing
+boksery	boxer shorts	n	B1	clothing
+kąpielówki	swimming trunks	n	B1	clothing
+podkoszulek	vest, undershirt	n	B1	clothing
+pończochy	stockings	n	B1	clothing
+golf	polo neck, turtleneck	n	B1	clothing
+kardigan	cardigan	n	B1	clothing
+żakiet	women's jacket	n	B1	clothing
+szlafrok	dressing gown	n	B1	clothing
+futro	fur coat	n	B1	clothing
+kożuch	sheepskin coat	n	B2	clothing
+skórzana kurtka	leather jacket	n	A2	clothing
+puchowa kurtka	down jacket	n	B1	clothing
+spodnie dresowe	tracksuit trousers	n	A2	clothing
+czarne dżinsy rurki	black skinny jeans	n	B1	clothing
+bluzka na ramiączkach	strappy top	n	B2	clothing
+wełniany szalik	woollen scarf	n	A2	clothing
+komin	snood, neck warmer	n	B2	clothing
+bejsbolówka	baseball cap	n	B1	clothing
+ciuchy	clothes, togs	n	B1	clothing
+japonki	flip-flops	n	B1	clothing
+klapki	flip-flops, slippers	n	A2	clothing
+ciepłe kapcie	warm slippers	n	A2	clothing
+sandały	sandals	n	A2	clothing
+kozaki	high boots	n	B2	clothing
+trampki	plimsolls, trainers	n	B1	clothing
+tenisówki	tennis shoes	n	B1	clothing
+sportowe buty	sports shoes	n	A2	clothing
+czółenka	court shoes, pumps	n	B2	clothing
+buty na obcasach	high-heeled shoes	n	A2	clothing
+obrączka	wedding ring	n	B1	clothing
+wisiorek	pendant	n	B1	clothing
+łańcuszek	chain	n	B1	clothing
+kolczyki	earrings	n	A2	clothing
+kieszeń	pocket	n	A2	clothing
+kołnierzyk	collar	n	B1	clothing
+rękawy	sleeves	n	A2	clothing
+nogawki	trouser legs	n	B2	clothing
+suwak	zip	n	B1	clothing
+podeszwa	sole	n	B2	clothing
+parasol	umbrella	n	A2	clothing
