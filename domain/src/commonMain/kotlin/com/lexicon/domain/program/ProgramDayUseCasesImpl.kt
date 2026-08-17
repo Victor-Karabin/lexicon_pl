@@ -4,10 +4,10 @@ import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.ProgramDayBoundary
 import com.lexicon.boundary.ProgramRepository
 import com.lexicon.boundary.ReviewScheduleRepository
-import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.Clock
 import com.lexicon.interactors.presets.VocabularyId
+import com.lexicon.interactors.program.AdvanceProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramUseCase
 import com.lexicon.interactors.program.GetWordCardsUseCase
@@ -31,34 +31,49 @@ private val dayJson = Json { ignoreUnknownKeys = true }
 private data class StoredDay(
     val newWords: List<Long> = emptyList(),
     val cardsSeen: Boolean = false,
+    val done: Int = 0,
+    val queueFingerprint: String = "",
 )
+
+private fun List<String>.fingerprint(): String = joinToString("|")
 
 class GetProgramDayUseCaseImpl(
     private val getProgram: GetProgramUseCase,
     private val resolveScope: ResolveProgramScopeUseCase,
     private val programs: ProgramRepository,
     private val reviews: ReviewScheduleRepository,
-    private val history: TrainingHistoryRepository,
     private val clock: Clock,
 ) : GetProgramDayUseCase {
     override suspend fun invoke(id: ProgramId): ProgramDay? {
         val program = getProgram(id) ?: return null
         val today = clock.todayEpochDay()
 
-        val stored = programs.day(id.value, today)?.let {
+        val queue = program.config.dailyPlan.queue
+        val fingerprint = queue.fingerprint()
+
+        val loaded = programs.day(id.value, today)?.let {
             runCatching { dayJson.decodeFromString(StoredDay.serializer(), it.activitiesJson) }.getOrNull()
-        } ?: generate(program).also { save(id, today, it) }
+        }
+        val stored = when {
+            loaded == null -> generate(program, fingerprint).also { save(id, today, it, queue.size) }
+            loaded.queueFingerprint != fingerprint ->
+                loaded.copy(done = 0, queueFingerprint = fingerprint).also { save(id, today, it, queue.size) }
+            else -> loaded
+        }
 
         return ProgramDay(
             programId = id,
             epochDay = today,
             newWords = stored.newWords.map(::VocabularyId).toImmutableList(),
             cardsSeen = stored.cardsSeen,
-            queue = program.config.dailyPlan.queue.toQueue(today),
+            queue = queue.toQueue(stored.done),
         )
     }
 
-    private suspend fun generate(program: Program): StoredDay {
+    private suspend fun generate(
+        program: Program,
+        fingerprint: String,
+    ): StoredDay {
         val plan = program.config.dailyPlan
         val scope = resolveScope(program).map { it.value }
         val met = reviews.scheduledWordIds()
@@ -66,13 +81,18 @@ class GetProgramDayUseCaseImpl(
             .filterNot { it in met }
             .take(plan.newWords.coerceAtLeast(0))
 
-        return StoredDay(newWords = newWords, cardsSeen = newWords.isEmpty())
+        return StoredDay(
+            newWords = newWords,
+            cardsSeen = newWords.isEmpty(),
+            queueFingerprint = fingerprint,
+        )
     }
 
     private suspend fun save(
         id: ProgramId,
         today: Long,
         day: StoredDay,
+        turns: Int,
     ) {
         programs.saveDay(
             ProgramDayBoundary(
@@ -80,26 +100,43 @@ class GetProgramDayUseCaseImpl(
                 epochDay = today,
                 activitiesJson = dayJson.encodeToString(StoredDay.serializer(), day),
                 appliedRulesJson = "[]",
-                isComplete = false,
+                isComplete = turns > 0 && day.done >= turns,
             ),
         )
     }
 
-    private suspend fun List<String>.toQueue(today: Long): ImmutableList<QueuedTraining> {
-        val from = today * MILLIS_PER_DAY
-        val to = from + MILLIS_PER_DAY - 1
-        val sessionsToday = distinct().associateWith { history.countSessionsOfTrainingBetween(it, from, to) }
-
+    private fun List<String>.toQueue(done: Int): ImmutableList<QueuedTraining> {
         val taken = mutableMapOf<String, Int>()
-        return map { training ->
+        return mapIndexed { index, training ->
             val round = taken.getOrElse(training) { 0 }
             taken[training] = round + 1
-            QueuedTraining(
-                training = training,
-                round = round,
-                isDone = round < (sessionsToday[training] ?: 0),
-            )
+            QueuedTraining(training = training, round = round, isDone = index < done)
         }.toImmutableList()
+    }
+}
+
+class AdvanceProgramDayUseCaseImpl(
+    private val getDay: GetProgramDayUseCase,
+    private val programs: ProgramRepository,
+    private val clock: Clock,
+) : AdvanceProgramDayUseCase {
+    override suspend fun invoke(id: ProgramId): ProgramDay? {
+        val day = getDay(id) ?: return null
+        val today = clock.todayEpochDay()
+        val existing = programs.day(id.value, today) ?: return day
+        val stored = runCatching {
+            dayJson.decodeFromString(StoredDay.serializer(), existing.activitiesJson)
+        }.getOrNull() ?: return day
+
+        val turns = day.queue.size
+        val done = (stored.done + 1).coerceAtMost(turns)
+        programs.saveDay(
+            existing.copy(
+                activitiesJson = dayJson.encodeToString(StoredDay.serializer(), stored.copy(done = done)),
+                isComplete = turns > 0 && done >= turns,
+            ),
+        )
+        return getDay(id)
     }
 }
 

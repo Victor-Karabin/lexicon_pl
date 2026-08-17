@@ -1,0 +1,43 @@
+# The body inside and out, what goes wrong with it, and what is done about it.
+# Glossed in English like the rest of the corpus; the presets body, health and
+# medicine select on the topics below and were empty until this file existed.
+czaszka	skull	n	B1	body
+kark	nape, back of the neck	n	B1	body
+biodro	hip	n	A2	body
+podudzie	lower leg, shank	n	B2	body
+goleń	shin	n	B2	body
+pięta	heel	n	A2	body
+pośladek	buttock	n	B1	body
+lędźwie	loins, lower back	n	C1	body
+łopatka	shoulder blade	n	B1	body
+skroń	temple	n	B2	body
+podbródek	chin	n	A2	body
+klatka piersiowa	chest, rib cage	n	B1	body
+talia	waist	n	A2	body
+pas	waist, belt	n	A2	body
+nadgarstek	wrist	n	B1	body
+pachwina	groin	n	B2	body
+udo	thigh	n	A2	body
+łydka	calf	n	A2	body
+przedramię	forearm	n	B1	body
+dłoń	palm, hand	n	A1	body
+pępek	navel	n	A2	body
+sutek	nipple	n	B2	body
+gardło	throat	n	A2	body
+żebra	ribs	n	A2	body
+nerki	kidneys	n	A2	body
+mięśnie	muscles	n	A2	body
+migrena	migraine	n	B1	health
+biegunka	diarrhoea	n	A2	health
+wymioty	vomiting	n	B1	health
+nudności	nausea	n	B1	health
+zatrucie	poisoning	n	B1	health
+słabość	weakness	n	B1	health
+kac	hangover	n	B1	health
+nowotwór	tumour, cancer	n	B2	health
+kichanie	sneezing	n	B1	health
+dreszcze	chills, shivers	n	B1	health
+złamanie	fracture	n	B1	health
+odcisk	corn, callus	n	B1	health
+wapno	calcium, lime	n	B1	medicine
+opatrunek	dressing, bandage	n	B1	medicine

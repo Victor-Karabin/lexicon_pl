@@ -1,6 +1,9 @@
 package com.lexicon.app.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -35,13 +38,17 @@ import com.lexicon.presentation.presets.PRESET_ID_ARG
 import com.lexicon.presentation.presets.PresetDetailScreen
 import com.lexicon.presentation.presets.WORD_ID_ARG
 import com.lexicon.presentation.program.CreateProgramScreen
+import com.lexicon.presentation.program.DayCompleteScreen
 import com.lexicon.presentation.program.PROGRAM_ID_ARG
+import com.lexicon.presentation.program.ProgramRunStep
+import com.lexicon.presentation.program.ProgramRunViewModel
 import com.lexicon.presentation.program.WordCardsScreen
 import com.lexicon.presentation.pronunciation.PronunciationScreen
 import com.lexicon.presentation.puzzle.PuzzleScreen
 import com.lexicon.presentation.trueorfalse.TrueOrFalseScreen
 import com.lexicon.presentation.wordcard.WordCardScreen
 import com.lexicon.presentation.wordmatch.WordMatchScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LexiconNavHost(
@@ -81,8 +88,10 @@ fun LexiconNavHost(
                 onPresetSelected = { id -> navController.navigate(LexiconDestinations.presetDetail(id)) },
                 onCourseSelected = { id -> navController.navigate(LexiconDestinations.course(id)) },
                 onProgramSelected = { id -> navController.navigate(LexiconDestinations.editProgram(id)) },
-                onStartTraining = { training, wordIds ->
-                    navController.navigate(LexiconDestinations.scopedTraining(training, wordIds))
+                onStartTraining = { training, wordIds, programId ->
+                    navController.navigate(
+                        LexiconDestinations.scopedTraining(training, wordIds, programId),
+                    )
                 },
                 onOpenCards = { id -> navController.navigate(LexiconDestinations.programCards(id)) },
                 onEditWord = { id -> navController.navigate(LexiconDestinations.editWord(id)) },
@@ -207,10 +216,19 @@ fun LexiconNavHost(
             ExerciseScreen(onClose = { navController.popBackStack() })
         }
 
-        fun onStepSessionComplete(training: String): (Int, Int, Int, Int) -> Unit =
-            { correct, incorrect, skipped, tipsUsed ->
-                navController.navigate(LexiconDestinations.sessionResult(correct, incorrect, skipped, tipsUsed)) {
-                    popUpTo(LexiconDestinations.trainingRoute(training)) { inclusive = true }
+        fun onStepSessionComplete(training: String): (String) -> (Int, Int, Int, Int) -> Unit =
+            { programRun ->
+                { correct, incorrect, skipped, tipsUsed ->
+                    val route = LexiconDestinations.sessionResult(
+                        correct = correct,
+                        incorrect = incorrect,
+                        skipped = skipped,
+                        tipsUsed = tipsUsed,
+                        programId = programRun.takeIf { it.isNotEmpty() },
+                    )
+                    navController.navigate(route) {
+                        popUpTo(LexiconDestinations.trainingRoute(training)) { inclusive = true }
+                    }
                 }
             }
 
@@ -344,14 +362,63 @@ fun LexiconNavHost(
                     navArgument("incorrect") { type = NavType.IntType },
                     navArgument("skipped") { type = NavType.IntType },
                     navArgument("tipsUsed") { type = NavType.IntType },
+                    navArgument(LexiconDestinations.PROGRAM_RUN_ARG) {
+                        type = NavType.StringType
+                        defaultValue = ""
+                    },
                 ),
         ) { backStackEntry ->
             val args = backStackEntry.arguments
+            val programRun = args?.getString(LexiconDestinations.PROGRAM_RUN_ARG).orEmpty()
+            val run: ProgramRunViewModel = koinViewModel()
+            val step by run.step.collectAsState()
+
+            LaunchedEffect(step) {
+                when (val current = step) {
+                    is ProgramRunStep.Next -> {
+                        val route = LexiconDestinations.scopedTraining(
+                            training = current.training,
+                            wordIds = current.wordIds.map { it.value },
+                            programId = programRun,
+                        )
+                        navController.navigate(route) {
+                            popUpTo(LexiconDestinations.MAIN) { inclusive = false }
+                        }
+                        run.onStepHandled()
+                    }
+
+                    ProgramRunStep.DayComplete -> {
+                        navController.navigate(LexiconDestinations.dayComplete(programRun)) {
+                            popUpTo(LexiconDestinations.MAIN) { inclusive = false }
+                        }
+                        run.onStepHandled()
+                    }
+
+                    else -> Unit
+                }
+            }
+
             SessionResultScreen(
                 correct = args?.getInt("correct").orDefault(),
                 incorrect = args?.getInt("incorrect").orDefault(),
                 skipped = args?.getInt("skipped").orDefault(),
                 tipsUsed = args?.getInt("tipsUsed").orDefault(),
+                isProgramRun = programRun.isNotEmpty(),
+                onDone = {
+                    if (programRun.isEmpty()) {
+                        navController.popBackStack(LexiconDestinations.MAIN, inclusive = false)
+                    } else {
+                        run.onTrainingFinished(programRun)
+                    }
+                },
+            )
+        }
+
+        composable(
+            route = LexiconDestinations.DAY_COMPLETE,
+            arguments = listOf(navArgument(PROGRAM_ID_ARG) { type = NavType.StringType }),
+        ) {
+            DayCompleteScreen(
                 onDone = { navController.popBackStack(LexiconDestinations.MAIN, inclusive = false) },
             )
         }
@@ -363,7 +430,7 @@ private fun NavGraphBuilder.trainingDestination(
     minimumWords: Int,
     onClose: () -> Unit,
     onGoToVocabulary: () -> Unit,
-    onComplete: (Int, Int, Int, Int) -> Unit,
+    onComplete: (programRun: String) -> (Int, Int, Int, Int) -> Unit,
     screen: @Composable (onComplete: (Int, Int, Int, Int) -> Unit) -> Unit,
 ) {
     composable(
@@ -373,9 +440,14 @@ private fun NavGraphBuilder.trainingDestination(
                 type = NavType.StringType
                 defaultValue = ""
             },
+            navArgument(LexiconDestinations.PROGRAM_RUN_ARG) {
+                type = NavType.StringType
+                defaultValue = ""
+            },
         ),
     ) { backStackEntry ->
         val scopedWords = backStackEntry.arguments?.getString(TRAINING_WORDS_ARG).orEmpty()
+        val programRun = backStackEntry.arguments?.getString(LexiconDestinations.PROGRAM_RUN_ARG).orEmpty()
         TrainingGate(
             minimumWords = if (scopedWords.isEmpty()) minimumWords else 0,
             trainingName = trainingDisplayName(training),
@@ -383,7 +455,7 @@ private fun NavGraphBuilder.trainingDestination(
             onGoToVocabulary = onGoToVocabulary,
             excludePhrases = training == LexiconDestinations.CROSSWORD,
         ) {
-            screen(onComplete)
+            screen(onComplete(programRun))
         }
     }
 }

@@ -28,12 +28,14 @@ internal object LexiconDestinations {
     const val WORD_CARD = TrainingIds.WORD_CARD
     const val CROSSWORD = TrainingIds.CROSSWORD
 
-    fun trainingRoute(training: String) = "$training?$TRAINING_WORDS_ARG={$TRAINING_WORDS_ARG}"
+    fun trainingRoute(training: String) = "$training?$TRAINING_WORDS_ARG={$TRAINING_WORDS_ARG}&$PROGRAM_RUN_ARG={$PROGRAM_RUN_ARG}"
 
     fun scopedTraining(
         training: String,
         wordIds: List<Long>,
-    ) = "$training?$TRAINING_WORDS_ARG=${wordIds.asTrainingWordsArgument()}"
+        programId: String? = null,
+    ) = "$training?$TRAINING_WORDS_ARG=${wordIds.asTrainingWordsArgument()}" +
+        "&$PROGRAM_RUN_ARG=${programId.orEmpty()}"
 
     const val PRESET_DETAIL = "preset/{presetId}"
 
@@ -69,12 +71,20 @@ internal object LexiconDestinations {
         exerciseId: String,
     ) = "lesson/$lessonId/exercise/$exerciseId"
 
-    const val SESSION_RESULT = "session_result/{correct}/{incorrect}/{skipped}/{tipsUsed}"
+    const val PROGRAM_RUN_ARG = "programRun"
+
+    const val SESSION_RESULT =
+        "session_result/{correct}/{incorrect}/{skipped}/{tipsUsed}?$PROGRAM_RUN_ARG={$PROGRAM_RUN_ARG}"
 
     fun sessionResult(
         correct: Int,
         incorrect: Int,
         skipped: Int,
         tipsUsed: Int,
-    ) = "session_result/$correct/$incorrect/$skipped/$tipsUsed"
+        programId: String? = null,
+    ) = "session_result/$correct/$incorrect/$skipped/$tipsUsed?$PROGRAM_RUN_ARG=${programId.orEmpty()}"
+
+    const val DAY_COMPLETE = "program/{programId}/day_complete"
+
+    fun dayComplete(programId: String) = "program/$programId/day_complete"
 }

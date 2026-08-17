@@ -75,7 +75,7 @@ private const val TRACK_ALPHA = 0.25f
 
 @Composable
 fun DashboardScreen(
-    onStartTraining: (training: String, wordIds: List<VocabularyId>) -> Unit,
+    onStartTraining: (training: String, wordIds: List<VocabularyId>, programId: String) -> Unit,
     onOpenCards: (programId: String) -> Unit,
     onGoToPlan: () -> Unit,
     modifier: Modifier = Modifier,
@@ -85,7 +85,7 @@ fun DashboardScreen(
 
     LaunchedEffect(uiState.launch) {
         uiState.launch?.let {
-            onStartTraining(it.training, it.wordIds)
+            onStartTraining(it.training, it.wordIds, uiState.program?.id?.value.orEmpty())
             viewModel.onLaunchHandled()
         }
     }

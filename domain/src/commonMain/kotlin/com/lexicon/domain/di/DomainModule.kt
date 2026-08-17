@@ -39,6 +39,7 @@ import com.lexicon.domain.presets.SetWordPresetMembershipUseCaseImpl
 import com.lexicon.domain.presets.ToggleWordFavouriteUseCaseImpl
 import com.lexicon.domain.presets.TranslateWordUseCaseImpl
 import com.lexicon.domain.presets.UpdateWordUseCaseImpl
+import com.lexicon.domain.program.AdvanceProgramDayUseCaseImpl
 import com.lexicon.domain.program.CountFavouritesUseCaseImpl
 import com.lexicon.domain.program.CreateProgramUseCaseImpl
 import com.lexicon.domain.program.EnrolInProgramUseCaseImpl
@@ -108,6 +109,7 @@ import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
+import com.lexicon.interactors.program.AdvanceProgramDayUseCase
 import com.lexicon.interactors.program.CountFavouritesUseCase
 import com.lexicon.interactors.program.CreateProgramUseCase
 import com.lexicon.interactors.program.EnrolInProgramUseCase
@@ -191,6 +193,7 @@ val domainModule = module {
     factoryOf(::RecordWordCardSeenUseCaseImpl) { bind<RecordWordCardSeenUseCase>() }
     factoryOf(::CountFavouritesUseCaseImpl) { bind<CountFavouritesUseCase>() }
     factoryOf(::GetProgramDayUseCaseImpl) { bind<GetProgramDayUseCase>() }
+    factoryOf(::AdvanceProgramDayUseCaseImpl) { bind<AdvanceProgramDayUseCase>() }
     factoryOf(::MarkCardsSeenUseCaseImpl) { bind<MarkCardsSeenUseCase>() }
     factoryOf(::GetWordCardsUseCaseImpl) { bind<GetWordCardsUseCase>() }
     factoryOf(::CreateWordUseCaseImpl) { bind<CreateWordUseCase>() }

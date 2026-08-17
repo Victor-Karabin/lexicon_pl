@@ -44,7 +44,7 @@ fun MainScreen(
     onPresetSelected: (id: String) -> Unit,
     onCourseSelected: (id: String) -> Unit,
     onProgramSelected: (id: String) -> Unit,
-    onStartTraining: (training: String, wordIds: List<Long>) -> Unit,
+    onStartTraining: (training: String, wordIds: List<Long>, programId: String) -> Unit,
     onOpenCards: (programId: String) -> Unit,
     onEditWord: (id: Long) -> Unit,
     onAddWord: () -> Unit,
@@ -75,7 +75,9 @@ fun MainScreen(
             MainTab.TRAININGS -> TrainingsScreen(onTrainingSelected = onTrainingSelected, modifier = content)
             MainTab.DASHBOARD ->
                 DashboardScreen(
-                    onStartTraining = { training, words -> onStartTraining(training, words.map { it.value }) },
+                    onStartTraining = { training, words, programId ->
+                        onStartTraining(training, words.map { it.value }, programId)
+                    },
                     onOpenCards = onOpenCards,
                     onGoToPlan = { selectedTab = MainTab.PLAN },
                     modifier = content,
