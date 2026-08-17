@@ -1,7 +1,9 @@
 package com.lexicon.presentation.main
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Notes
 import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.Ballot
 import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material.icons.filled.Extension
 import androidx.compose.material.icons.filled.GridOn
@@ -27,6 +29,8 @@ object TrainingIds {
     const val MIX = "mix"
     const val CROSSWORD = "crossword"
     const val WORD_CARD = "word_card"
+    const val PASSAGE_WRITE = "passage_write"
+    const val PASSAGE_BANK = "passage_bank"
 }
 
 data class TrainingCatalogEntry(
@@ -110,6 +114,20 @@ val trainingCatalog =
             blurb = R.string.training_word_card_blurb,
         ),
         TrainingCatalogEntry(
+            id = TrainingIds.PASSAGE_WRITE,
+            displayName = "Read and Write",
+            isEnabled = true,
+            icon = Icons.AutoMirrored.Filled.Notes,
+            blurb = R.string.training_passage_write_blurb,
+        ),
+        TrainingCatalogEntry(
+            id = TrainingIds.PASSAGE_BANK,
+            displayName = "Read and Choose",
+            isEnabled = true,
+            icon = Icons.Default.Ballot,
+            blurb = R.string.training_passage_bank_blurb,
+        ),
+        TrainingCatalogEntry(
             id = TrainingIds.MIX,
             displayName = "Mix",
             isEnabled = true,
@@ -119,6 +137,13 @@ val trainingCatalog =
     )
 
 val programTrainings =
-    trainingCatalog.filter { it.isEnabled && it.id !in setOf(TrainingIds.MEMORY_CARDS, TrainingIds.CROSSWORD) }
+    trainingCatalog.filter {
+        it.isEnabled && it.id !in setOf(
+            TrainingIds.MEMORY_CARDS,
+            TrainingIds.CROSSWORD,
+            TrainingIds.PASSAGE_WRITE,
+            TrainingIds.PASSAGE_BANK,
+        )
+    }
 
 fun trainingDisplayName(id: String): String = trainingCatalog.firstOrNull { it.id == id }?.displayName ?: id

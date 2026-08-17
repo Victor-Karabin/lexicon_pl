@@ -162,6 +162,11 @@
     <string name="training_memory_cards_blurb">Turn the cards over and find the pairs</string>
     <string name="training_crossword_blurb">Fill the grid from the clues</string>
     <string name="training_word_card_blurb">Read the word, its picture and how it sounds</string>
+    <string name="training_passage_write_blurb">Read a text and type the missing words</string>
+    <string name="training_passage_bank_blurb">Read a text and pick the missing words</string>
+    <string name="passage_write_title">Read and Write</string>
+    <string name="passage_bank_title">Read and Choose</string>
+    <string name="passage_none">No texts on this device yet.</string>
     <string name="training_mix_blurb">A little of every training</string>
     <string name="training_coming_soon">Coming soon</string>
     <string name="result_done">Done</string>

@@ -1,0 +1,18 @@
+{
+  "passages": [
+    {
+      "id": "czytaj-1-rodziny",
+      "title": "Rodziny",
+      "cefr": "A2",
+      "text": "Państwo Maj goszczą u siebie przyjeżdżających na kursy polskiego studentów. Są ciekawi świata i otwarci na nowe kontakty. Chcą też, aby ich dzieci dorastały w atmosferze tolerancji i szacunku dla innych kultur. Żałują, że tak rzadko odwiedzają bliskich - ich rodzina jest rozsypana po całej Polsce.",
+      "keyWords": ["goszczą", "ciekawi", "otwarci", "dorastały", "tolerancji", "szacunku", "żałują", "rzadko", "odwiedzają", "bliskich", "rozsypana"]
+    },
+    {
+      "id": "czytaj-1-nowakowie",
+      "title": "Nowakowie",
+      "cefr": "A2",
+      "text": "Życie rodziny Nowaków koncentruje się wokół seniorów. Babcia Zofia od zawsze rządzi mężem i trzema synami. A może tylko tak myśli? Dziadek Felicjan ma świetną receptę na to, jak żyć sto lat. Nowakowie mają artystyczne aspiracje, nawet ich kot ma imię z opery Mozarta.",
+      "keyWords": ["koncentruje", "seniorów", "rządzi", "mężem", "synami", "receptę", "artystyczne", "aspiracje", "opery"]
+    }
+  ]
+}

@@ -32,6 +32,8 @@ import com.lexicon.presentation.main.SplashScreen
 import com.lexicon.presentation.main.trainingDisplayName
 import com.lexicon.presentation.memorycards.MemoryCardsScreen
 import com.lexicon.presentation.mix.MixScreen
+import com.lexicon.presentation.passage.PASSAGE_BANK_ARG
+import com.lexicon.presentation.passage.PassageScreen
 import com.lexicon.presentation.presets.CreatePresetScreen
 import com.lexicon.presentation.presets.CreateWordScreen
 import com.lexicon.presentation.presets.PRESET_ID_ARG
@@ -412,6 +414,35 @@ fun LexiconNavHost(
                     }
                 },
             )
+        }
+
+        listOf(
+            LexiconDestinations.PASSAGE_WRITE to false,
+            LexiconDestinations.PASSAGE_BANK to true,
+        ).forEach { (training, withWordBank) ->
+            composable(
+                route = LexiconDestinations.trainingRoute(training),
+                arguments = listOf(
+                    navArgument(TRAINING_WORDS_ARG) {
+                        type = NavType.StringType
+                        defaultValue = ""
+                    },
+                    navArgument(LexiconDestinations.PROGRAM_RUN_ARG) {
+                        type = NavType.StringType
+                        defaultValue = ""
+                    },
+                    navArgument(PASSAGE_BANK_ARG) {
+                        type = NavType.StringType
+                        defaultValue = withWordBank.toString()
+                    },
+                ),
+            ) {
+                PassageScreen(
+                    withWordBank = withWordBank,
+                    onSessionComplete = onStepSessionComplete(training)(""),
+                    onClose = closeToMain,
+                )
+            }
         }
 
         composable(

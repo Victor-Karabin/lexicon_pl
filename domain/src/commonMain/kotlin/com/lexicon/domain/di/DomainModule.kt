@@ -17,6 +17,8 @@ import com.lexicon.domain.imagetest.SubmitImageTestAnswerUseCaseImpl
 import com.lexicon.domain.memorycards.StartMemoryCardsSessionUseCaseImpl
 import com.lexicon.domain.memorycards.SubmitMemoryCardsStepResultUseCaseImpl
 import com.lexicon.domain.mix.StartMixSessionUseCaseImpl
+import com.lexicon.domain.passage.StartPassageSessionUseCaseImpl
+import com.lexicon.domain.passage.SubmitPassageAnswersUseCaseImpl
 import com.lexicon.domain.presets.CreatePresetUseCaseImpl
 import com.lexicon.domain.presets.CreateWordUseCaseImpl
 import com.lexicon.domain.presets.DeletePresetUseCaseImpl
@@ -87,6 +89,8 @@ import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
 import com.lexicon.interactors.memorycards.StartMemoryCardsSessionUseCase
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
 import com.lexicon.interactors.mix.StartMixSessionUseCase
+import com.lexicon.interactors.passage.StartPassageSessionUseCase
+import com.lexicon.interactors.passage.SubmitPassageAnswersUseCase
 import com.lexicon.interactors.presets.CreatePresetUseCase
 import com.lexicon.interactors.presets.CreateWordUseCase
 import com.lexicon.interactors.presets.DeletePresetUseCase
@@ -194,6 +198,8 @@ val domainModule = module {
     factoryOf(::CountFavouritesUseCaseImpl) { bind<CountFavouritesUseCase>() }
     factoryOf(::GetProgramDayUseCaseImpl) { bind<GetProgramDayUseCase>() }
     factoryOf(::AdvanceProgramDayUseCaseImpl) { bind<AdvanceProgramDayUseCase>() }
+    factoryOf(::StartPassageSessionUseCaseImpl) { bind<StartPassageSessionUseCase>() }
+    factoryOf(::SubmitPassageAnswersUseCaseImpl) { bind<SubmitPassageAnswersUseCase>() }
     factoryOf(::MarkCardsSeenUseCaseImpl) { bind<MarkCardsSeenUseCase>() }
     factoryOf(::GetWordCardsUseCaseImpl) { bind<GetWordCardsUseCase>() }
     factoryOf(::CreateWordUseCaseImpl) { bind<CreateWordUseCase>() }

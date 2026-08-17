@@ -2,6 +2,7 @@ package com.lexicon.data.di
 
 import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.ImageProvider
+import com.lexicon.boundary.PassageRepository
 import com.lexicon.boundary.ProgramRepository
 import com.lexicon.boundary.ReviewScheduleRepository
 import com.lexicon.boundary.SettingsRepository
@@ -33,6 +34,7 @@ import com.lexicon.data.repository.CorpusTranslatorImpl
 import com.lexicon.data.repository.CourseRepositoryImpl
 import com.lexicon.data.repository.FallbackImageProviderImpl
 import com.lexicon.data.repository.FallbackTranslatorImpl
+import com.lexicon.data.repository.PassageRepositoryImpl
 import com.lexicon.data.repository.ProgramRepositoryImpl
 import com.lexicon.data.repository.ReviewScheduleRepositoryImpl
 import com.lexicon.data.repository.StudyRecordRepositoryImpl
@@ -78,6 +80,7 @@ val dataModule = module {
     single<SettingsRepository> { SettingsRepositoryImpl(get(settingsDataStoreQualifier)) }
     factoryOf(::VocabularyPresetRepositoryImpl) { bind<VocabularyPresetRepository>() }
     singleOf(::CourseRepositoryImpl) { bind<CourseRepository>() }
+    singleOf(::PassageRepositoryImpl) { bind<PassageRepository>() }
 
     singleOf(::FallbackImageProviderImpl)
 
