@@ -283,19 +283,6 @@ def build(report_missing: bool) -> int:
             print(f"{word}\t\t\t\t# {course_id} lesson {number}")
         return 0
 
-    validate(courses)
-
-    COURSE_ASSET.parent.mkdir(parents=True, exist_ok=True)
-    COURSE_ASSET.write_text(
-        json.dumps({"courses": courses}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-
-    total_lessons = sum(len(c["lessons"]) for c in courses)
-    total_words = sum(len(l["vocabularyIds"]) for c in courses for l in c["lessons"])
-    total_audio = sum(len(l["audio"]) for c in courses for l in c["lessons"])
-    fetchable = sum(
-        1 for c in courses for l in c["lessons"] for t in l["audio"] if t["remoteId"]
-    )
     # An extracted exercise whose tag names no recording cannot be run, so it is
     # dropped here rather than shipped as a dead entry. A hand-authored one stays:
     # matching and completing are worth doing with the audio missing, and somebody
@@ -309,6 +296,19 @@ def build(report_missing: bool) -> int:
             for exercise in lesson["exercises"]:
                 del exercise["handAuthored"]
 
+    validate(courses)
+
+    COURSE_ASSET.parent.mkdir(parents=True, exist_ok=True)
+    COURSE_ASSET.write_text(
+        json.dumps({"courses": courses}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+
+    total_lessons = sum(len(c["lessons"]) for c in courses)
+    total_words = sum(len(l["vocabularyIds"]) for c in courses for l in c["lessons"])
+    total_audio = sum(len(l["audio"]) for c in courses for l in c["lessons"])
+    fetchable = sum(
+        1 for c in courses for l in c["lessons"] for t in l["audio"] if t["remoteId"]
+    )
     total_exercises = sum(len(l["exercises"]) for c in courses for l in c["lessons"])
     print(
         f"{len(courses)} courses, {total_lessons} lessons, {total_words} word links, "

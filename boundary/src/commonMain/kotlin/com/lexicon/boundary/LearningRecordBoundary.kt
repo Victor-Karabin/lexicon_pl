@@ -8,16 +8,6 @@ data class AccuracyBoundary(
     val fraction: Double get() = if (answers == 0) 0.0 else correct.toDouble() / answers
 }
 
-/** One word's place in the review schedule. */
-data class WordScheduleBoundary(
-    val wordId: Long,
-    val repetitions: Int,
-    val easeFactor: Double,
-    val intervalDays: Long,
-    val dueAtEpochDay: Long,
-    val lapses: Int,
-)
-
 /** What one day of studying amounted to. */
 data class StudyDayBoundary(
     val epochDay: Long,
@@ -40,8 +30,6 @@ interface ReviewScheduleRepository {
         todayEpochDay: Long,
         limit: Int,
     ): List<Long>
-
-    suspend fun schedule(wordId: Long): WordScheduleBoundary?
 
     /**
      * Every word that has a schedule, in one query.

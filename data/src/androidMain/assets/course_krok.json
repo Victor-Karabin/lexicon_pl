@@ -165,8 +165,7 @@
                     "mi"
                   ]
                 }
-              ],
-              "handAuthored": true
+              ]
             },
             {
               "id": "krok-a1-01-101B2",
@@ -243,8 +242,7 @@
                 {
                   "text": "komputer"
                 }
-              ],
-              "handAuthored": true
+              ]
             },
             {
               "id": "krok-a1-01-101B3",
@@ -300,8 +298,7 @@
                     "gdzie"
                   ]
                 }
-              ],
-              "handAuthored": true
+              ]
             },
             {
               "id": "krok-a1-01-101B4",
@@ -485,8 +482,7 @@
                   ],
                   "answer": "siny"
                 }
-              ],
-              "handAuthored": true
+              ]
             },
             {
               "id": "krok-a1-01-101E3",
@@ -522,8 +518,7 @@
                     "proszę napisać"
                   ]
                 }
-              ],
-              "handAuthored": true
+              ]
             },
             {
               "id": "krok-a1-01-101E4",
@@ -573,8 +568,7 @@
                     "Dom."
                   ]
                 }
-              ],
-              "handAuthored": true
+              ]
             },
             {
               "id": "krok-a1-01-101F2",
@@ -638,8 +632,7 @@
                     "ć"
                   ]
                 }
-              ],
-              "handAuthored": true
+              ]
             }
           ]
         },
@@ -1040,23 +1033,7 @@
               "remoteId": "1K2hqyAhIyRzJ2NGYEONbej1LTE1zhZut"
             }
           ],
-          "exercises": [
-            {
-              "id": "krok-a1-06-106A2",
-              "type": "gap_fill",
-              "instruction": "Proszę posłuchać i uzupełnić.",
-              "audioFile": null,
-              "items": [
-                {
-                  "prompt": "Nie bardzo, tylko ryż. Moja mama gotuje bardzo dobrze. Ja nie ___",
-                  "answers": [
-                    "lubię."
-                  ]
-                }
-              ],
-              "handAuthored": false
-            }
-          ]
+          "exercises": []
         },
         {
           "id": "krok-a1-07",
@@ -1142,8 +1119,7 @@
                     "sklep"
                   ]
                 }
-              ],
-              "handAuthored": false
+              ]
             }
           ]
         },
@@ -1239,8 +1215,7 @@
                     "margaryną,"
                   ]
                 }
-              ],
-              "handAuthored": false
+              ]
             }
           ]
         },
@@ -1359,8 +1334,7 @@
                     "Mami, co kupujemy?"
                   ]
                 }
-              ],
-              "handAuthored": false
+              ]
             },
             {
               "id": "krok-a1-09-109B4",
@@ -1374,8 +1348,7 @@
                     "Poproszę czosnek, cztery pomidory, dwie żółte papryki i dwie czerwone."
                   ]
                 }
-              ],
-              "handAuthored": false
+              ]
             },
             {
               "id": "krok-a1-09-109B4",
@@ -1389,8 +1362,7 @@
                     "„Mami: Poproszę marchewkę."
                   ]
                 }
-              ],
-              "handAuthored": false
+              ]
             }
           ]
         },
@@ -1693,8 +1665,7 @@
                     "byłeś"
                   ]
                 }
-              ],
-              "handAuthored": false
+              ]
             }
           ]
         },
@@ -1903,23 +1874,7 @@
               "remoteId": "15qrMPPWh7lJOeKq_l5iYQGDnm6NcT5X1"
             }
           ],
-          "exercises": [
-            {
-              "id": "krok-a1-15-115B2",
-              "type": "gap_fill",
-              "instruction": "Proszę posłuchać i uzupełnić.",
-              "audioFile": null,
-              "items": [
-                {
-                  "prompt": "___",
-                  "answers": [
-                    "Cześć Sylwia! Jedziesz z nami na piknik? Taka piękna pogoda, wreszcie mamy złotą polską jesień."
-                  ]
-                }
-              ],
-              "handAuthored": false
-            }
-          ]
+          "exercises": []
         },
         {
           "id": "krok-a1-16",
@@ -2061,8 +2016,7 @@
                     "ty"
                   ]
                 }
-              ],
-              "handAuthored": false
+              ]
             }
           ]
         },
@@ -2420,8 +2374,7 @@
                     "?"
                   ]
                 }
-              ],
-              "handAuthored": false
+              ]
             }
           ]
         },
@@ -2781,8 +2734,7 @@
                     "cja. Proszę jeszcze wypełnić ten formularz."
                   ]
                 }
-              ],
-              "handAuthored": false
+              ]
             }
           ]
         }

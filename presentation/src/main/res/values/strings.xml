@@ -113,11 +113,9 @@
     <string name="create_preset_icon">Icon</string>
     <string name="create_preset_color">Colour</string>
     <string name="create_preset_name_missing">Give the preset a name.</string>
-    <string name="create_preset_saved">Added “%1$s”</string>
 
     <string name="create_word_title">New word</string>
     <string name="edit_word_title">Edit word</string>
-    <string name="edit_word_missing">This word is no longer in your vocabulary.</string>
     <string name="create_word_base">English</string>
     <string name="create_word_translation">Polish</string>
     <string name="create_word_image">Picture</string>
@@ -132,7 +130,6 @@
     <string name="create_word_text_missing">Type the Polish word.</string>
     <string name="create_word_translation_missing">Type the English word.</string>
     <string name="create_word_exists">“%1$s” is already in your vocabulary.</string>
-    <string name="create_word_saved">Added “%1$s”</string>
     <string name="create_translating">Translating…</string>
 
     <string name="dashboard_no_program">No program yet. Pick one on the Plan tab and it will show up here.</string>
@@ -147,7 +144,6 @@
     <string name="cards_edit">Edit this word</string>
     <string name="cards_none">No new words today.</string>
     <string name="dashboard_continuing">Continuing</string>
-    <string name="dashboard_streak">%1$d days running</string>
     <string name="dashboard_continue">Continue</string>
     <string name="dashboard_metric_vocabulary">Words mastered</string>
     <string name="dashboard_metric_milestones">Milestones</string>
@@ -188,32 +184,13 @@
     <string name="create_program_move_later">Move later</string>
     <string name="create_program_reorder">Drag to reorder</string>
     <string name="create_program_remove_turn">Remove this turn</string>
-    <string name="create_program_saved">Added “%1$s”</string>
     <string name="plan_courses">Courses</string>
     <string name="plan_program_active">In progress</string>
     <string name="plan_program_words">%1$d words</string>
     <string name="plan_program_new_a_day">%1$d new a day</string>
     <string name="plan_program_trainings">%1$d trainings</string>
-    <string name="program_not_found">This program is no longer available.</string>
-    <string name="program_goal">Goal</string>
-    <string name="program_each_day">Each day</string>
-    <string name="program_milestones">Milestones</string>
-    <string name="program_daily_summary">%1$d new words, %2$d reviews</string>
     <string name="program_start">Start this program</string>
     <string name="program_leave">In progress · tap to stop</string>
-    <string name="program_goal_words">Master %1$d words</string>
-    <string name="program_goal_accuracy">Answer %1$d%% correctly</string>
-    <string name="program_goal_streak">Study %1$d days running</string>
-    <string name="program_goal_minutes">Study %1$d minutes</string>
-    <string name="program_goal_exercises">Answer %1$d exercises</string>
-    <string name="program_goal_lessons">Finish %1$d lessons</string>
-    <string name="program_activity_learn">Learn %1$d new words</string>
-    <string name="program_activity_review">Review %1$d words</string>
-    <string name="program_activity_listen">Listen to %1$d words</string>
-    <string name="program_activity_pronounce">Say %1$d words out loud</string>
-    <string name="program_activity_write">Write %1$d words</string>
-    <string name="program_activity_mixed">Mixed practice, %1$d words</string>
-    <string name="program_activity_challenge">Daily challenge</string>
     <string name="course_title">Course</string>
     <string name="course_empty">The course could not be loaded.</string>
     <string name="course_progress">%1$d of %2$d lessons done</string>

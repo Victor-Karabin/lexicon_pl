@@ -51,19 +51,6 @@ data class PlannedActivity(
     val isComplete: Boolean get() = completed >= target
 }
 
-/** A generated day, as stored. */
-data class DailyPlan(
-    val programId: ProgramId,
-    val epochDay: Long,
-    val activities: ImmutableList<PlannedActivity> = persistentListOf(),
-    /** Adaptation rules that shaped this day, by id, so the change can be explained. */
-    val appliedRules: ImmutableList<String> = persistentListOf(),
-) {
-    val requiredActivities: List<PlannedActivity> get() = activities.filter { it.required }
-
-    val isComplete: Boolean get() = requiredActivities.isNotEmpty() && requiredActivities.all { it.isComplete }
-}
-
 /** One metric's contribution, kept apart so the UI can show the breakdown. */
 data class ProgressMetric(
     val type: ProgressMetricType,
@@ -93,27 +80,3 @@ data class ProgramProgress(
             return metrics.sumOf { it.fraction * it.weight } / totalWeight
         }
 }
-
-data class MilestoneState(
-    val id: String,
-    val title: LocalizedText,
-    val achievedAtEpochDay: Long?,
-    val conditions: ImmutableList<ConditionState> = persistentListOf(),
-) {
-    val isAchieved: Boolean get() = achievedAtEpochDay != null
-}
-
-data class ConditionState(
-    val type: TargetType,
-    val current: Int,
-    val target: Int,
-) {
-    val isMet: Boolean get() = current >= target
-}
-
-data class GrantedReward(
-    val id: String,
-    val type: RewardType,
-    val title: LocalizedText,
-    val grantedAtEpochDay: Long,
-)
