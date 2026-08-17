@@ -166,7 +166,9 @@
     <string name="training_passage_bank_blurb">Read a text and pick the missing words</string>
     <string name="passage_write_title">Read and Write</string>
     <string name="passage_bank_title">Read and Choose</string>
-    <string name="passage_none">No texts on this device yet.</string>
+    <string name="passage_none">Star some words first — the text is built from your study set.</string>
+    <string name="passage_offline">No connection. The text is written fresh each time, so this training needs the internet.</string>
+    <string name="passage_refused">The text could not be written just now. Try again in a moment.</string>
     <string name="training_mix_blurb">A little of every training</string>
     <string name="training_coming_soon">Coming soon</string>
     <string name="result_done">Done</string>

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.lexicon.android.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.passage.Passage
+import com.lexicon.interactors.passage.PassageSessionResult
 import com.lexicon.interactors.passage.StartPassageSessionRequest
 import com.lexicon.interactors.passage.StartPassageSessionUseCase
 import com.lexicon.interactors.passage.SubmitPassageAnswersRequest
@@ -19,8 +20,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+enum class PassageProblem { NONE, NO_FAVOURITES, OFFLINE, REFUSED }
+
 data class PassageUiState(
     val isLoading: Boolean = true,
+    val problem: PassageProblem = PassageProblem.NONE,
     val passage: Passage? = null,
     val bank: ImmutableList<String> = persistentListOf(),
     val answers: ImmutableList<String> = persistentListOf(),
@@ -53,19 +57,27 @@ class PassageViewModel(
 
     init {
         viewModelScope.launch(dispatchers.io) {
-            val session = startSession(StartPassageSessionRequest(withWordBank = withWordBank))
-            if (session == null) {
-                _uiState.update { it.copy(isLoading = false) }
-                return@launch
-            }
-            sessionId = session.sessionId
-            _uiState.update {
-                it.copy(
-                    isLoading = false,
-                    passage = session.passage,
-                    bank = session.bank,
-                    answers = List(session.passage.gaps.size) { "" }.toImmutableList(),
-                )
+            when (val session = startSession(StartPassageSessionRequest(withWordBank = withWordBank))) {
+                is PassageSessionResult.Ready -> {
+                    sessionId = session.sessionId
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            passage = session.passage,
+                            bank = session.bank,
+                            answers = List(session.passage.gaps.size) { "" }.toImmutableList(),
+                        )
+                    }
+                }
+
+                PassageSessionResult.NoFavourites ->
+                    _uiState.update { it.copy(isLoading = false, problem = PassageProblem.NO_FAVOURITES) }
+
+                PassageSessionResult.Offline ->
+                    _uiState.update { it.copy(isLoading = false, problem = PassageProblem.OFFLINE) }
+
+                is PassageSessionResult.Refused ->
+                    _uiState.update { it.copy(isLoading = false, problem = PassageProblem.REFUSED) }
             }
         }
     }
@@ -102,12 +114,11 @@ class PassageViewModel(
 
     fun onCheck(onComplete: (Int, Int, Int, Int) -> Unit) {
         val state = _uiState.value
-        val passage = state.passage ?: return
+        state.passage ?: return
         viewModelScope.launch(dispatchers.io) {
             val result = submitAnswers(
                 SubmitPassageAnswersRequest(
                     sessionId = sessionId,
-                    passageId = passage.id,
                     expected = state.expected,
                     answers = state.answers,
                 ),

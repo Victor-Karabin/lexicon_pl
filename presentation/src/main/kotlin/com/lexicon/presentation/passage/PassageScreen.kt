@@ -94,7 +94,13 @@ private fun PassageContent(
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
-                        text = stringResource(R.string.passage_none),
+                        text = stringResource(
+                            when (uiState.problem) {
+                                PassageProblem.OFFLINE -> R.string.passage_offline
+                                PassageProblem.REFUSED -> R.string.passage_refused
+                                else -> R.string.passage_none
+                            },
+                        ),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -111,7 +117,7 @@ private fun PassageContent(
                         verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
                     ) {
                         Text(
-                            text = passage.title,
+                            text = passage.level,
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.SemiBold,
                         )

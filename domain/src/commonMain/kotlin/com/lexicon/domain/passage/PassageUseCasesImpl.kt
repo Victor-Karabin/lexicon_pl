@@ -1,103 +1,136 @@
 package com.lexicon.domain.passage
 
-import com.lexicon.boundary.PassageBoundary
-import com.lexicon.boundary.PassageRepository
+import com.lexicon.boundary.SentenceGenerator
+import com.lexicon.boundary.SentenceRequestBoundary
+import com.lexicon.boundary.SentenceResultBoundary
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.TrainingResultBoundary
 import com.lexicon.boundary.TrainingResultOutcomeBoundary
+import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.Clock
+import com.lexicon.domain.dictation.AnswerNormalizer
+import com.lexicon.interactors.passage.CEFR_ORDER
 import com.lexicon.interactors.passage.Passage
 import com.lexicon.interactors.passage.PassageSegment
-import com.lexicon.interactors.passage.PassageSessionResponse
+import com.lexicon.interactors.passage.PassageSessionResult
 import com.lexicon.interactors.passage.StartPassageSessionRequest
 import com.lexicon.interactors.passage.StartPassageSessionUseCase
 import com.lexicon.interactors.passage.SubmitPassageAnswersRequest
 import com.lexicon.interactors.passage.SubmitPassageAnswersResponse
 import com.lexicon.interactors.passage.SubmitPassageAnswersUseCase
+import com.lexicon.interactors.passage.sentenceCountFor
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlin.random.Random
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
-private val WORD = Regex("\\p{L}+(?:[-'’]\\p{L}+)*")
-
 private const val TRAINING_ID = "passage"
 
 class StartPassageSessionUseCaseImpl(
-    private val passages: PassageRepository,
     private val vocabulary: VocabularyRepository,
+    private val generator: SentenceGenerator,
 ) : StartPassageSessionUseCase {
     @OptIn(ExperimentalUuidApi::class)
-    override suspend fun invoke(request: StartPassageSessionRequest): PassageSessionResponse? {
-        val all = passages.passages()
-        val chosen = request.passageId?.let { id -> all.firstOrNull { it.id == id } }
-            ?: all.randomOrNull()
-            ?: return null
+    override suspend fun invoke(request: StartPassageSessionRequest): PassageSessionResult {
+        val favourites = vocabulary.getItemsByIds(vocabulary.favouriteWordIds())
+        if (favourites.isEmpty()) return PassageSessionResult.NoFavourites
 
-        val favourites = vocabulary
-            .getItemsByIds(vocabulary.favouriteWordIds())
-            .map { it.text.lowercase() }
-            .toSet()
-        val key = chosen.keyWords.map { it.lowercase() }.toSet()
-        val passage = chosen.toPassage(gapWhen = { it in key || it in favourites })
+        val level = favourites.maxLevel()
+        val wanted = sentenceCountFor(level).random()
+        val targets = favourites.shuffled().take(wanted)
 
-        val answers = passage.gaps.map { it.answer }
-        return PassageSessionResponse(
+        val generated = coroutineScope {
+            targets
+                .map { word ->
+                    async {
+                        word to generator.generate(
+                            SentenceRequestBoundary(
+                                word = word.text,
+                                translation = word.translation,
+                                level = level,
+                                context = "",
+                                requiredWords = emptyList(),
+                            ),
+                        )
+                    }
+                }.awaitAll()
+        }
+
+        generated.firstOrNull { it.second is SentenceResultBoundary.Offline }
+            ?.let { return PassageSessionResult.Offline }
+        generated.firstOrNull { it.second is SentenceResultBoundary.Refused }
+            ?.let { return PassageSessionResult.Refused((it.second as SentenceResultBoundary.Refused).reason) }
+
+        val segments = mutableListOf<PassageSegment>()
+        val answers = mutableListOf<String>()
+        generated.forEachIndexed { index, (word, result) ->
+            val sentence = (result as SentenceResultBoundary.Generated).sentence
+            if (index > 0) segments += PassageSegment.Text(" ")
+            segments += sentence.gapping(word.text, answers)
+        }
+
+        return PassageSessionResult.Ready(
             sessionId = Uuid.random().toString(),
-            passage = passage,
+            passage = Passage(level = level, segments = segments.toImmutableList()),
             bank = if (!request.withWordBank) {
                 emptyList<String>().toImmutableList()
             } else {
-                answers.distinct().shuffled(Random(chosen.id.hashCode())).toImmutableList()
+                answers.distinct().shuffled(Random(answers.hashCode())).toImmutableList()
             },
         )
     }
 }
 
-internal fun PassageBoundary.toPassage(gapWhen: (String) -> Boolean): Passage {
-    val segments = mutableListOf<PassageSegment>()
-    var at = 0
-    WORD.findAll(text).forEach { match ->
-        if (!gapWhen(match.value.lowercase())) return@forEach
-        if (match.range.first > at) segments += PassageSegment.Text(text.substring(at, match.range.first))
-        segments += PassageSegment.Gap(match.value)
-        at = match.range.last + 1
-    }
-    if (at < text.length) segments += PassageSegment.Text(text.substring(at))
+internal fun List<VocabularyItemBoundary>.maxLevel(): String =
+    mapNotNull { it.cefr?.uppercase()?.takeIf { level -> level in CEFR_ORDER } }
+        .maxByOrNull { CEFR_ORDER.indexOf(it) }
+        ?: CEFR_ORDER.first()
 
-    return Passage(
-        id = id,
-        title = title,
-        cefr = cefr,
-        segments = segments.toImmutableList(),
-    )
+private fun String.gapping(
+    target: String,
+    answers: MutableList<String>,
+): List<PassageSegment> {
+    val found = Regex("\\p{L}+").findAll(this).firstOrNull { it.value.startsWithStem(target) }
+        ?: return listOf(PassageSegment.Text(this))
+
+    answers += found.value
+    return buildList {
+        if (found.range.first > 0) add(PassageSegment.Text(substring(0, found.range.first)))
+        add(PassageSegment.Gap(found.value))
+        if (found.range.last + 1 < length) add(PassageSegment.Text(substring(found.range.last + 1)))
+    }
+}
+
+private fun String.startsWithStem(target: String): Boolean {
+    val stem = target.lowercase().dropLast(if (target.length > 4) 2 else 0)
+    return lowercase().startsWith(stem)
 }
 
 class SubmitPassageAnswersUseCaseImpl(
-    private val passages: PassageRepository,
     private val vocabulary: VocabularyRepository,
     private val history: TrainingHistoryRepository,
+    private val answerNormalizer: AnswerNormalizer,
     private val clock: Clock,
 ) : SubmitPassageAnswersUseCase {
     override suspend fun invoke(request: SubmitPassageAnswersRequest): SubmitPassageAnswersResponse {
-        val passage = passages.passages().firstOrNull { it.id == request.passageId }
-            ?: return SubmitPassageAnswersResponse(correct = request.answers.map { false })
-
-        val expected = request.expected.ifEmpty { passage.keyWords }
         val correct = request.answers.mapIndexed { index, given ->
-            given.trim().equals(expected.getOrElse(index) { "" }.trim(), ignoreCase = true)
+            answerNormalizer.matches(request.expected.getOrElse(index) { "" }, given)
         }
 
         correct.forEachIndexed { index, right ->
-            val word = vocabulary.findWordByText(expected.getOrElse(index) { "" }) ?: return@forEachIndexed
+            val expected = request.expected.getOrElse(index) { "" }
+            val word = vocabulary.findWordByText(expected) ?: return@forEachIndexed
             history.recordResult(
                 TrainingResultBoundary(
                     sessionId = request.sessionId,
                     trainingType = TRAINING_ID,
                     stepIndex = index,
                     vocabularyItemId = word.id,
-                    expectedAnswer = expected.getOrElse(index) { "" },
+                    expectedAnswer = expected,
                     submittedAnswer = request.answers.getOrElse(index) { "" },
                     outcome = if (right) {
                         TrainingResultOutcomeBoundary.CORRECT
