@@ -111,15 +111,31 @@ def resolve_word(word: str, index: dict[str, int], forms: dict[str, list[str]]) 
     return [word_id] if word_id is not None else None
 
 
+HAND_AUTHORED = Path(__file__).resolve().parent / "exercises"
+
+
 def load_exercises() -> dict[int, list[dict]]:
-    """Exercises from extract_exercises.py, grouped by lesson number."""
-    path = CACHE_DIR / "exercises.json"
-    if not path.exists():
-        print("no exercises.json; lessons will ship without exercises")
-        return {}
+    """Exercises by lesson number, hand-authored ones winning over extracted ones.
+
+    The extractor recognises three shapes and reads them from the answer key, which
+    prints its exercises filled in by hand; anything it cannot read cleanly it drops.
+    A lesson written out by hand under exercises/ replaces its extracted exercises
+    entirely rather than adding to them, so a lesson is either transcribed or it is
+    whatever the extractor managed — never half of each, in an order nobody chose.
+    """
     grouped: dict[int, list[dict]] = {}
-    for exercise in json.loads(path.read_text(encoding="utf-8")):
-        grouped.setdefault(exercise["lesson"], []).append(exercise)
+    path = CACHE_DIR / "exercises.json"
+    if path.exists():
+        for exercise in json.loads(path.read_text(encoding="utf-8")):
+            grouped.setdefault(exercise["lesson"], []).append(exercise)
+    else:
+        print("no exercises.json; only hand-authored lessons will have exercises")
+
+    for source in sorted(HAND_AUTHORED.glob("*.json")):
+        authored = json.loads(source.read_text(encoding="utf-8"))
+        for exercise in authored["exercises"]:
+            exercise["handAuthored"] = True
+        grouped[authored["lesson"]] = authored["exercises"]
     return grouped
 
 
@@ -195,6 +211,7 @@ def build_lesson(
                     (t["file"] for t in coursebook_tracks if audio_tag_of(t) == e["tag"]), None
                 ),
                 "items": e["items"],
+                "handAuthored": e.get("handAuthored", False),
             }
             for e in exercises.get(lesson["number"], [])
         ],
@@ -279,14 +296,18 @@ def build(report_missing: bool) -> int:
     fetchable = sum(
         1 for c in courses for l in c["lessons"] for t in l["audio"] if t["remoteId"]
     )
-    # A listening exercise whose tag names no recording cannot be run, so it is
-    # dropped here rather than shipped as a dead entry.
+    # An extracted exercise whose tag names no recording cannot be run, so it is
+    # dropped here rather than shipped as a dead entry. A hand-authored one stays:
+    # matching and completing are worth doing with the audio missing, and somebody
+    # chose to write it out.
     dropped = 0
     for course in courses:
         for lesson in course["lessons"]:
-            playable = [e for e in lesson["exercises"] if e["audioFile"]]
+            playable = [e for e in lesson["exercises"] if e["audioFile"] or e["handAuthored"]]
             dropped += len(lesson["exercises"]) - len(playable)
             lesson["exercises"] = playable
+            for exercise in lesson["exercises"]:
+                del exercise["handAuthored"]
 
     total_exercises = sum(len(l["exercises"]) for c in courses for l in c["lessons"])
     print(

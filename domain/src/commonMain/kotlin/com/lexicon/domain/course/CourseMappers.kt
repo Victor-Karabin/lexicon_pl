@@ -8,12 +8,16 @@ import com.lexicon.boundary.LessonSummaryBoundary
 import com.lexicon.interactors.course.Course
 import com.lexicon.interactors.course.CourseId
 import com.lexicon.interactors.course.GapFillItem
+import com.lexicon.interactors.course.LETTER_GAP
 import com.lexicon.interactors.course.Lesson
 import com.lexicon.interactors.course.LessonAudio
 import com.lexicon.interactors.course.LessonExercise
 import com.lexicon.interactors.course.LessonId
 import com.lexicon.interactors.course.LessonSummary
+import com.lexicon.interactors.course.LetterFillItem
+import com.lexicon.interactors.course.MatchItem
 import com.lexicon.interactors.course.MinimalPairItem
+import com.lexicon.interactors.course.TranscribeItem
 import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.VocabularyId
 import kotlinx.collections.immutable.toImmutableList
@@ -63,6 +67,9 @@ fun LessonAudioBoundary.toAudio(): LessonAudio =
 private const val TYPE_REPEAT = "repeat"
 private const val TYPE_MINIMAL_PAIR = "minimal_pair"
 private const val TYPE_GAP_FILL = "gap_fill"
+private const val TYPE_TRANSCRIBE = "transcribe"
+private const val TYPE_MATCH = "match"
+private const val TYPE_LETTER_FILL = "letter_fill"
 
 /**
  * An exercise whose stored type is not one this build knows how to run is
@@ -101,9 +108,65 @@ fun LessonExerciseBoundary.toExercise(): LessonExercise? =
                 instruction = instruction,
                 audioFile = audioFile,
                 items = items
-                    .filter { it.prompt != null && it.answers.isNotEmpty() }
-                    .map { GapFillItem(prompt = it.prompt.orEmpty(), answers = it.answers.toImmutableList()) }
+                    // A line with nothing missing is kept: a dialogue opens with the
+                    // other person's turn, and the answers only make sense read after
+                    // what was said to them.
+                    .filter { it.prompt != null }
+                    .map {
+                        GapFillItem(
+                            prompt = it.prompt.orEmpty(),
+                            answers = it.answers.toImmutableList(),
+                            // A dialogue names who is speaking; a list of sentences
+                            // does not, and leaves the label empty.
+                            speaker = it.label?.takeIf(String::isNotBlank),
+                        )
+                    }.toImmutableList(),
+            )
+
+        TYPE_TRANSCRIBE ->
+            LessonExercise.Transcribe(
+                id = id,
+                instruction = instruction,
+                audioFile = audioFile,
+                items = items
+                    .filter { it.answers.isNotEmpty() }
+                    .map { TranscribeItem(label = it.label.orEmpty(), answer = it.answers.first()) }
                     .toImmutableList(),
+            )
+
+        TYPE_MATCH ->
+            LessonExercise.Match(
+                id = id,
+                instruction = instruction,
+                audioFile = audioFile,
+                items = items
+                    .filter { it.prompt != null && it.answers.isNotEmpty() }
+                    .map {
+                        MatchItem(
+                            label = it.label.orEmpty(),
+                            prompt = it.prompt.orEmpty(),
+                            answer = it.answers.first(),
+                        )
+                    }.toImmutableList(),
+            )
+
+        TYPE_LETTER_FILL ->
+            LessonExercise.LetterFill(
+                id = id,
+                instruction = instruction,
+                audioFile = audioFile,
+                items = items
+                    .filter { it.prompt != null && it.answers.isNotEmpty() }
+                    // A pattern whose gaps outnumber the letters given for them
+                    // would draw cells nothing can fill, so it is left out.
+                    .filter { it.prompt.orEmpty().count { gap -> gap == LETTER_GAP } == it.answers.size }
+                    .map {
+                        LetterFillItem(
+                            label = it.label.orEmpty(),
+                            pattern = it.prompt.orEmpty(),
+                            letters = it.answers.toImmutableList(),
+                        )
+                    }.toImmutableList(),
             )
 
         else -> null

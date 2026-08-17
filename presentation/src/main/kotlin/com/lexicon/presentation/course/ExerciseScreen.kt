@@ -47,6 +47,8 @@ fun ExerciseScreen(
         onPlayAudio = viewModel::onPlayAudio,
         onOptionSelected = viewModel::onOptionSelected,
         onGapChanged = viewModel::onGapChanged,
+        onMatchPromptSelected = viewModel::onMatchPromptSelected,
+        onMatchChoiceSelected = viewModel::onMatchChoiceSelected,
         onCheck = viewModel::onCheck,
         onRetry = viewModel::onRetry,
         modifier = modifier,
@@ -61,6 +63,8 @@ private fun ExerciseContent(
     onPlayAudio: () -> Unit,
     onOptionSelected: (Int, String) -> Unit,
     onGapChanged: (Int, Int, String) -> Unit,
+    onMatchPromptSelected: (Int) -> Unit,
+    onMatchChoiceSelected: (String) -> Unit,
     onCheck: () -> Unit,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier,
@@ -113,7 +117,7 @@ private fun ExerciseContent(
                         }
                     }
 
-                    questions(uiState, onOptionSelected, onGapChanged)
+                    questions(uiState, onOptionSelected, onGapChanged, onMatchPromptSelected, onMatchChoiceSelected)
 
                     if (uiState.exercise !is LessonExercise.Repeat) {
                         item { Footer(uiState, onCheck, onRetry) }
@@ -127,6 +131,8 @@ private fun androidx.compose.foundation.lazy.LazyListScope.questions(
     uiState: ExerciseUiState.Loaded,
     onOptionSelected: (Int, String) -> Unit,
     onGapChanged: (Int, Int, String) -> Unit,
+    onMatchPromptSelected: (Int) -> Unit,
+    onMatchChoiceSelected: (String) -> Unit,
 ) {
     when (val exercise = uiState.exercise) {
         is LessonExercise.Repeat -> {
@@ -162,6 +168,45 @@ private fun androidx.compose.foundation.lazy.LazyListScope.questions(
                 GapFillRow(
                     item = item,
                     values = uiState.responses.getOrNull(index).orEmpty(),
+                    correctness = uiState.correctness.getOrNull(index).orEmpty(),
+                    answerState = uiState.answerState,
+                    onValueChanged = { gap, value -> onGapChanged(index, gap, value) },
+                )
+            }
+
+        is LessonExercise.Transcribe ->
+            itemsIndexed(exercise.items) { index, item ->
+                TranscribeRow(
+                    item = item,
+                    value = uiState.responses.getOrNull(index)?.firstOrNull().orEmpty(),
+                    isCorrect = uiState.correctness.getOrNull(index)?.firstOrNull(),
+                    answerState = uiState.answerState,
+                    onValueChanged = { onGapChanged(index, 0, it) },
+                )
+            }
+
+        // One item rather than a row apiece: the two columns are laid out against
+        // each other, and a lazy list would scroll them independently.
+        is LessonExercise.Match ->
+            item {
+                MatchBoard(
+                    items = exercise.items,
+                    choices = uiState.choices,
+                    values = uiState.responses.map { it.firstOrNull().orEmpty() },
+                    correctness = uiState.correctness.map { it.firstOrNull() ?: false },
+                    answerState = uiState.answerState,
+                    selectedPrompt = uiState.selectedPrompt,
+                    onPromptSelected = onMatchPromptSelected,
+                    onChoiceSelected = onMatchChoiceSelected,
+                )
+            }
+
+        is LessonExercise.LetterFill ->
+            itemsIndexed(exercise.items) { index, item ->
+                LetterFillRow(
+                    item = item,
+                    values = uiState.responses.getOrNull(index).orEmpty(),
+                    correctness = uiState.correctness.getOrNull(index).orEmpty(),
                     answerState = uiState.answerState,
                     onValueChanged = { gap, value -> onGapChanged(index, gap, value) },
                 )
