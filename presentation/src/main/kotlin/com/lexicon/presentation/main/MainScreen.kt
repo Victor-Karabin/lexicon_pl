@@ -27,11 +27,6 @@ import com.lexicon.presentation.dashboard.DashboardScreen
 import com.lexicon.presentation.presets.VocabularyScreen
 import com.lexicon.presentation.settings.SettingsScreen
 
-/**
- * Labels are kept short on purpose. Five tabs split a portrait phone into slots of
- * about seventy dp, and "Dashboard" and "Vocabulary" do not fit one — they wrap onto
- * a second line and break mid-word.
- */
 enum class MainTab(val label: String, val icon: ImageVector) {
     DASHBOARD("Home", Icons.Default.Dashboard),
     TRAININGS("Trainings", Icons.Default.School),
@@ -56,8 +51,6 @@ fun MainScreen(
     onAddPreset: () -> Unit,
     onCreateProgram: () -> Unit,
     modifier: Modifier = Modifier,
-    // Which tab to land on. A training that could not start sends the learner here
-    // to build up their study set, and landing back on Trainings would be a loop.
     initialTab: MainTab = MainTab.DASHBOARD,
 ) {
     var selectedTab by rememberSaveable(stateSaver = MainTabSaver) { mutableStateOf(initialTab) }
@@ -71,10 +64,6 @@ fun MainScreen(
                         selected = tab == selectedTab,
                         onClick = { selectedTab = tab },
                         icon = { Icon(imageVector = tab.icon, contentDescription = null) },
-                        // One line, whatever the text size. A tab is a fifth of the
-                        // bar and cannot grow; left to wrap, "Trainings" becomes
-                        // "Trainin / gs" at a large font scale. A clipped word still
-                        // names the tab, and the icon above it is unchanged.
                         label = { Text(tab.label, maxLines = 1, overflow = TextOverflow.Ellipsis) },
                     )
                 }

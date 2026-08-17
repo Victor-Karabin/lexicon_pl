@@ -78,7 +78,6 @@ fun LessonAsset.toExerciseItemEntities(): List<LessonExerciseItemEntity> =
                 exerciseId = exercise.id,
                 position = index,
                 label = item.label,
-                // A repeat item carries only text; it reads as the prompt.
                 prompt = item.prompt ?: item.text,
                 optionsJson = item.options.encodeList(),
                 answersJson = (item.answers + listOfNotNull(item.answer)).encodeList(),

@@ -49,22 +49,10 @@ import org.koin.dsl.module
 internal val settingsDataStoreQualifier = named(SETTINGS_STORE_NAME)
 internal val vocabularySyncDataStoreQualifier = named(VOCABULARY_SYNC_STORE_NAME)
 
-/**
- * The ordered translators [FallbackTranslatorImpl] works through. Qualified because
- * that class is itself bound as a [Translator]: without it the list and the thing
- * built from the list are both reachable as the same type.
- */
 val translatorChainQualifier = named("translator-chain")
 
-/**
- * Everything in the data layer that is the same on every platform. What is not —
- * how the database and preferences files are located, and which image APIs exist —
- * comes from the platform's own module (dataAndroidModule / dataIosModule), which
- * has to be loaded alongside this one.
- */
 val dataModule = module {
-    // Both have multiplatform implementations in :common, so they are bound here
-    // rather than per-platform.
+
     singleOf(::DefaultDispatcherProvider) { bind<DispatcherProvider>() }
     singleOf(::SystemClock) { bind<Clock>() }
 
@@ -91,11 +79,8 @@ val dataModule = module {
     factoryOf(::VocabularyPresetRepositoryImpl) { bind<VocabularyPresetRepository>() }
     singleOf(::CourseRepositoryImpl) { bind<CourseRepository>() }
 
-    // The source list itself is platform-supplied; the fallback logic is not.
     singleOf(::FallbackImageProviderImpl)
 
-    // Same split for translation: the corpus lookup works anywhere, while which
-    // remote service is configured is the platform's business.
     singleOf(::CorpusTranslatorImpl)
     single<Translator> { FallbackTranslatorImpl(get(translatorChainQualifier)) }
 

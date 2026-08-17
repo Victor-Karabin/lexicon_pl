@@ -1,26 +1,11 @@
 package com.lexicon.common
 
-/**
- * The IPA transcription of a Polish word, worked out from its spelling.
- *
- * Polish orthography is near enough phonemic that this can be done by rule rather
- * than looked up: given the spelling, the pronunciation follows. That matters here
- * because a word being added by hand is, almost by definition, one no dictionary
- * the app could consult already has.
- *
- * Checked against all 2,477 transcriptions in the shipped corpus: the phonemes
- * agree everywhere. It disagrees on the voicing of 206 of them, all one mistake in
- * the corpus — see [assimilate].
- *
- * Returns an empty string for input with no letters in it.
- */
 fun polishTranscription(text: String): String =
     text
         .split(' ', '\t', '\n')
         .filter { it.any(Char::isLetter) }
         .joinToString(" ") { stress(assimilate(phonemes(it))) }
 
-/** Spellings of more than one letter, longest first so `dzi` wins over `dz`. */
 private val DIGRAPHS: List<Pair<String, String>> = listOf(
     "dzi" to "d͡ʑ", "dź" to "d͡ʑ", "dż" to "d͡ʐ",
     "dz" to "d͡z", "cz" to "t͡ʂ", "ci" to "t͡ɕ", "ć" to "t͡ɕ",
@@ -46,7 +31,6 @@ private val DEVOICED: Map<String, String> = mapOf(
 )
 private val VOICED: Map<String, String> = DEVOICED.entries.associate { (k, v) -> v to k }
 
-/** The vowels an `i` can glide into, spelled rather than transcribed. */
 private const val GLIDE_TARGETS = "aąeęoóu"
 
 private fun String.isObstruent(): Boolean = this !in VOWELS && this !in SONORANTS
@@ -61,14 +45,12 @@ private fun phonemes(word: String): List<String> {
             digraph != null -> {
                 out += digraph.second
                 i += digraph.first.length
-                // ci/si/zi/ni/dzi soften the consonant and swallow the i, but only
-                // when a vowel follows: "ciasto" is t͡ɕastɔ while "ci" alone is t͡ɕi.
+
                 val swallowsI = digraph.first.endsWith("i") &&
                     w.getOrNull(i)?.let { it in GLIDE_TARGETS } == true
                 if (digraph.first.endsWith("i") && !swallowsI) out += "i"
             }
 
-            // A consonant, then i, then a vowel: the i is the glide in mjɛt͡ɕ, kjɛdɨ.
             w[i] == 'i' && out.isNotEmpty() && out.last() !in VOWELS &&
                 w.getOrNull(i + 1)?.let { it in GLIDE_TARGETS } == true -> {
                 out += "j"
@@ -84,18 +66,6 @@ private fun phonemes(word: String): List<String> {
     return out
 }
 
-/**
- * Voicing across a consonant cluster, and at the end of a word.
- *
- * Polish assimilates rightwards-to-leftwards — the cluster takes the voicing of its
- * last obstruent — with one exception: `v` and `ʐ` devoice after a voiceless
- * obstruent instead of voicing it. That is why *przez* is `pʂɛs` and *twój* `tfuj`.
- *
- * The shipped corpus has this exception backwards in 206 of its 2,477 entries,
- * writing *przez* as `bʐɛs` and *kwiat* as `gvjat`. The rule here is the correct
- * one, so a hand-added word will not match those neighbours until the corpus is
- * regenerated.
- */
 private fun assimilate(phonemes: List<String>): List<String> {
     val ph = phonemes.toMutableList()
     val progressive = mutableSetOf<Int>()
@@ -122,10 +92,6 @@ private fun assimilate(phonemes: List<String>): List<String> {
     return ph
 }
 
-/**
- * Stress, which in Polish falls on the second-to-last syllable and is written at
- * the front of it — `ˈkturɨ`, not `ktˈurɨ`. A word of one syllable carries no mark.
- */
 private fun stress(phonemes: List<String>): String {
     val vowels = phonemes.indices.filter { phonemes[it] in VOWELS }
     if (vowels.size < 2) return phonemes.joinToString("")

@@ -71,11 +71,6 @@ private const val TYPE_TRANSCRIBE = "transcribe"
 private const val TYPE_MATCH = "match"
 private const val TYPE_LETTER_FILL = "letter_fill"
 
-/**
- * An exercise whose stored type is not one this build knows how to run is
- * dropped rather than rendered blank — the asset can gain types before the app
- * grows a screen for them.
- */
 fun LessonExerciseBoundary.toExercise(): LessonExercise? =
     when (type) {
         TYPE_REPEAT ->
@@ -108,16 +103,11 @@ fun LessonExerciseBoundary.toExercise(): LessonExercise? =
                 instruction = instruction,
                 audioFile = audioFile,
                 items = items
-                    // A line with nothing missing is kept: a dialogue opens with the
-                    // other person's turn, and the answers only make sense read after
-                    // what was said to them.
                     .filter { it.prompt != null }
                     .map {
                         GapFillItem(
                             prompt = it.prompt.orEmpty(),
                             answers = it.answers.toImmutableList(),
-                            // A dialogue names who is speaking; a list of sentences
-                            // does not, and leaves the label empty.
                             speaker = it.label?.takeIf(String::isNotBlank),
                         )
                     }.toImmutableList(),
@@ -157,8 +147,6 @@ fun LessonExerciseBoundary.toExercise(): LessonExercise? =
                 audioFile = audioFile,
                 items = items
                     .filter { it.prompt != null && it.answers.isNotEmpty() }
-                    // A pattern whose gaps outnumber the letters given for them
-                    // would draw cells nothing can fill, so it is left out.
                     .filter { it.prompt.orEmpty().count { gap -> gap == LETTER_GAP } == it.answers.size }
                     .map {
                         LetterFillItem(

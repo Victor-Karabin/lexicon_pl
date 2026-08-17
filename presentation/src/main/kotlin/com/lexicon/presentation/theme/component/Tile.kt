@@ -34,23 +34,12 @@ import com.lexicon.presentation.theme.LexiconShapes
 val MedallionSize = 52.dp
 private val StatIconSize = 14.dp
 
-/** Secondary text on a tile, whichever coat the tile is wearing. */
 const val TILE_MUTED_ALPHA = 0.75f
 
-/** Just enough tint for a chip to read against the tile behind it. */
 private const val CHIP_ALPHA = 0.1f
 
-/** How much of an accent colour a tile takes, before it stops being a background. */
 private const val ACCENT_WASH_ALPHA = 0.22f
 
-/**
- * The colours one tile wears.
- *
- * A tile is the app's unit of "something to open": a program, a training, a preset, a
- * course. They differ in what they hold and not in how they are read, so the palette
- * is one decision rather than four, and a screen picks a coat instead of assembling
- * colours by hand.
- */
 @Immutable
 data class TileSkin(
     val sweep: List<Color>,
@@ -59,12 +48,6 @@ data class TileSkin(
     val onMedallion: Color,
 )
 
-/**
- * The standard two coats: loud for whatever is under way, quiet for the rest.
- *
- * Highlighting is what makes a list scannable — one tile answers "where was I?" before
- * any of the text is read.
- */
 @Composable
 fun tileSkin(highlighted: Boolean = false): TileSkin {
     val scheme = MaterialTheme.colorScheme
@@ -85,12 +68,6 @@ fun tileSkin(highlighted: Boolean = false): TileSkin {
     }
 }
 
-/**
- * A coat built around a colour the content owns — a preset's own accent, say.
- *
- * Washed out rather than used at full strength, because the accent has to sit behind
- * text that is not chosen with it in mind.
- */
 @Composable
 fun accentTileSkin(
     accent: Color,
@@ -106,17 +83,8 @@ fun accentTileSkin(
         onMedallion = onAccent,
     )
 
-/** Secondary text and icons on a tile: present, but not competing with the title. */
 fun TileSkin.muted(): Color = onTile.copy(alpha = TILE_MUTED_ALPHA)
 
-/**
- * The card everything sits in: rounded, swept with colour, and tappable when there is
- * somewhere to go.
- *
- * [padding] is the one thing worth varying. A tile that is a card — a program, a
- * preset — wants room around it, but a tile used as a row in a list of them wants as
- * little as it can have, or six of them will not fit on a screen.
- */
 @Composable
 fun GradientTile(
     skin: TileSkin,
@@ -154,7 +122,6 @@ fun GradientTile(
     }
 }
 
-/** The round badge a tile leads with: a level, a count, or the thing's own icon. */
 @Composable
 fun Medallion(
     skin: TileSkin,
@@ -190,12 +157,6 @@ fun MedallionIcon(
     Icon(imageVector = icon, contentDescription = null, tint = skin.onMedallion)
 }
 
-/**
- * One fact about a tile, small enough to sit beside two others.
- *
- * Chips rather than a sentence, because the numbers are what gets compared between
- * one tile and the next.
- */
 @Composable
 fun StatChip(
     icon: ImageVector,
@@ -223,10 +184,6 @@ fun StatChip(
                 text = text,
                 style = MaterialTheme.typography.labelSmall,
                 color = skin.onTile,
-                // A chip is one short fact and stays on one line. Given less width than
-                // it wants it would otherwise wrap, and a chip narrower than its longest
-                // word wraps *per letter* — a column of single characters where a phrase
-                // should be. Truncating says the same thing and keeps the tile readable.
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -234,14 +191,6 @@ fun StatChip(
     }
 }
 
-/**
- * The strip of chips along the bottom of a tile.
- *
- * Flowed rather than in a row: three chips fit across a wide phone and do not fit a
- * narrow one at a large text size, and the row has no way to say so — it shares out
- * what is left and each chip shrinks until its text is a column of letters. Flowing
- * moves the chip that will not fit onto a line of its own instead.
- */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun TileChips(

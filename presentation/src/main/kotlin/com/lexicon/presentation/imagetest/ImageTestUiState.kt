@@ -20,7 +20,6 @@ sealed interface ImageTestUiState {
         val canCheck: Boolean get() = isEditable && selectedOption != null
         val canSkip: Boolean get() = isEditable
 
-        // Skip auto-advances, same as Correct; only Incorrect waits for a manual Next.
         val awaitingNext: Boolean get() = answerState is AnswerState.Incorrect
     }
 }

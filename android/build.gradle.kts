@@ -26,7 +26,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
-    // Lesson recordings are fetched over plain HTTP; the shared client is provided by the app module.
     implementation(libs.okhttp.core)
 
     testImplementation(libs.bundles.unit.test)

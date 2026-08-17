@@ -6,8 +6,6 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
-// Firebase is only wired up once each developer supplies their own google-services.json
-// (git-ignored, never committed) — see README/Lexicon.rtf for the setup note.
 val hasGoogleServicesConfig = file("google-services.json").exists()
 if (hasGoogleServicesConfig) {
     apply(plugin = "com.google.gms.google-services")

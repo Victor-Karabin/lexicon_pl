@@ -10,8 +10,7 @@ plugins {
 
 kotlin {
     androidTarget {
-        // Java is pinned to 17 below; Kotlin otherwise follows the JDK running
-        // Gradle, which is 21 in Android Studio and fails the target check.
+
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
@@ -20,16 +19,13 @@ kotlin {
     iosSimulatorArm64()
     iosX64()
 
-    // expect/actual classes are still flagged Beta; the three here (database builder,
-    // datastore path, asset reader) are exactly the intended use.
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 
     sourceSets {
         commonMain.dependencies {
-            // api: dataModule binds Clock/DispatcherProvider and the repository
-            // interfaces, so consumers of this module see those types.
+
             api(projects.boundary)
             api(projects.common)
 
@@ -40,17 +36,12 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
 
-            // The data layer owns its own Koin wiring: only it knows which pieces are
-            // platform-specific (see di/DataModule).
             api(project.dependencies.platform(libs.koin.bom))
             api(libs.koin.core)
         }
         androidMain.dependencies {
             implementation(libs.koin.android)
 
-            // The image-provider APIs are Retrofit-based and stay Android-only; iOS has
-            // no RemoteImageSource yet (see FallbackImageProviderImpl, which takes
-            // whatever the platform's DI module supplies).
             implementation(libs.retrofit.core)
             implementation(libs.retrofit.kotlinx.serialization)
             implementation(libs.okhttp.core)
@@ -62,7 +53,6 @@ kotlin {
     }
 }
 
-// One declaration wires the Room compiler across every target.
 dependencies {
     add("kspAndroid", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)

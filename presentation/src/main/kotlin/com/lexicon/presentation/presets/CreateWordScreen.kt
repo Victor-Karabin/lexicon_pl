@@ -119,8 +119,6 @@ private fun CreateWordContent(
                 onClose = onClose,
             )
         },
-        // Pinned: the preset chips run to many rows, and Save should not be a scroll
-        // away from the fields that enable it.
         bottomBar = {
             TextButton(
                 onClick = onSave,
@@ -141,8 +139,6 @@ private fun CreateWordContent(
                 .padding(Dimens.spacingMedium),
             verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
         ) {
-            // English first: it is the side the learner starts from, and the side
-            // pictures are searched by.
             OutlinedTextField(
                 value = uiState.translation,
                 onValueChange = onTranslationChanged,
@@ -222,8 +218,6 @@ private fun ImageSection(
         leadingTiles = 1 + uiState.ownImages.size,
     )
 
-    // The row is never empty: adding a picture is always on offer, so the + leads it
-    // whether or not a search has run or found anything.
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -254,8 +248,6 @@ private fun ImageSection(
         }
     }
 
-    // Said under the row rather than in place of it, now that the row always has the
-    // + in it.
     if (uiState.imageCandidates.isEmpty() && !uiState.isLoadingImages) {
         Text(
             text = stringResource(
@@ -271,18 +263,6 @@ private fun ImageSection(
     }
 }
 
-/**
- * Brings a fresh batch of pictures into view.
- *
- * More appends past the right edge, where the whole point of asking for more is not
- * visible. The row scrolls so the first of the new ones sits at the left, which shows
- * the batch rather than only its last picture.
- *
- * Appending is told from replacing by whether the pictures already shown are still the
- * start of the list: More keeps them and adds after, a new search throws them away. A
- * replaced list scrolls back to the beginning, since being left in the middle of a run
- * of pictures that are now different is worse than not scrolling at all.
- */
 @Composable
 private fun RevealNewCandidates(
     candidates: ImmutableList<String>,
@@ -302,12 +282,6 @@ private fun RevealNewCandidates(
     }
 }
 
-/**
- * The tile that adds a picture of the learner's own, first in the row and always there.
- *
- * Two sources behind one tile: which of the library or the camera a picture comes from
- * is a detail of getting one, not a choice worth two tiles in a row of pictures.
- */
 @Composable
 private fun AddImageTile(onPicked: (String) -> Unit) {
     var isChoosing by remember { mutableStateOf(false) }

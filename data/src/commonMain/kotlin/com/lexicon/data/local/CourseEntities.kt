@@ -43,14 +43,9 @@ data class LessonAudioEntity(
     val task: Int,
     val part: String?,
     val position: Int,
-    /** Google Drive file id, when the track can be fetched rather than side-loaded. */
     val remoteId: String?,
 )
 
-/**
- * What the learner has done. Unlike everything above it is not derived from the
- * asset, so [CourseSeeder] leaves it alone when the catalogue is replaced.
- */
 @Entity(tableName = "lesson_progress")
 data class LessonProgressEntity(
     @PrimaryKey val lessonId: String,
@@ -68,11 +63,6 @@ data class LessonExerciseEntity(
     val position: Int,
 )
 
-/**
- * One question of an exercise. The columns a row uses depend on its exercise's
- * type; [itemsJson] would have been the alternative, but keeping the answer in a
- * column is what lets the build fail on an exercise with no answers.
- */
 @Entity(
     tableName = "lesson_exercise_items",
     primaryKeys = ["exerciseId", "position"],

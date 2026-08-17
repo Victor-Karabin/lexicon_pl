@@ -36,12 +36,6 @@ import com.lexicon.presentation.theme.LexiconTheme
 private const val CLOSED_ROTATION = 0f
 private const val OPEN_ROTATION = 45f
 
-/**
- * The two things a learner can add, behind one button.
- *
- * Open state is kept here rather than in a ViewModel: nothing outside this button
- * reacts to it, and it should not survive leaving the tab.
- */
 @Composable
 fun AddFab(
     onAddWord: () -> Unit,
@@ -49,8 +43,7 @@ fun AddFab(
     modifier: Modifier = Modifier,
 ) {
     var isOpen by remember { mutableStateOf(false) }
-    // The plus becomes a close cross as the options appear, so the same button
-    // visibly undoes itself.
+
     val rotation by animateFloatAsState(
         targetValue = if (isOpen) OPEN_ROTATION else CLOSED_ROTATION,
         label = "addFabRotation",

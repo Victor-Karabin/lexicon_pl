@@ -27,16 +27,6 @@ private const val MILLIS_PER_DAY = 86_400_000L
 
 private val dayJson = Json { ignoreUnknownKeys = true }
 
-/**
- * What is fixed about a day once it has been generated.
- *
- * Only what would otherwise move: which words the learner is meeting, and whether
- * they have been through the deck. The queue is not stored — it is a pure function
- * of the program's configuration, so a stored copy could only ever be a stale one,
- * left over from the version of the plan that happened to be installed that
- * morning. Whether each turn is done is worked out from the training history, so it
- * cannot disagree with what was actually answered.
- */
 @Serializable
 private data class StoredDay(
     val newWords: List<Long> = emptyList(),
@@ -68,7 +58,6 @@ class GetProgramDayUseCaseImpl(
         )
     }
 
-    /** The words the learner has not met yet, as many as the plan asks for. */
     private suspend fun generate(program: Program): StoredDay {
         val plan = program.config.dailyPlan
         val scope = resolveScope(program).map { it.value }
@@ -96,10 +85,6 @@ class GetProgramDayUseCaseImpl(
         )
     }
 
-    /**
-     * Marks each turn done from the sessions actually recorded today: the nth turn at
-     * a training counts once an nth session of it exists.
-     */
     private suspend fun List<String>.toQueue(today: Long): ImmutableList<QueuedTraining> {
         val from = today * MILLIS_PER_DAY
         val to = from + MILLIS_PER_DAY - 1
@@ -130,13 +115,6 @@ class MarkCardsSeenUseCaseImpl(
     }
 }
 
-/**
- * The cards for a set of words.
- *
- * The picture is whatever the word already has: [ImageProvider.searchImage] answers
- * from the cache first, so a word whose picture was pinned when it was added shows
- * that one, and the trainings will show the same.
- */
 class GetWordCardsUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val imageProvider: ImageProvider,
@@ -144,7 +122,7 @@ class GetWordCardsUseCaseImpl(
     override suspend fun invoke(ids: List<VocabularyId>): ImmutableList<WordCard> {
         if (ids.isEmpty()) return emptyList<WordCard>().toImmutableList()
         val words = vocabulary.getItemsByIds(ids.map { it.value }).associateBy { it.id }
-        // Kept in the order asked for; getItemsByIds makes no promise about it.
+
         return ids
             .mapNotNull { words[it.value] }
             .map { word ->

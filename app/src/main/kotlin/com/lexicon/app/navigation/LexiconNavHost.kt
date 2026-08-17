@@ -80,10 +80,7 @@ fun LexiconNavHost(
                 onTrainingSelected = { route -> navController.navigate(route) },
                 onPresetSelected = { id -> navController.navigate(LexiconDestinations.presetDetail(id)) },
                 onCourseSelected = { id -> navController.navigate(LexiconDestinations.course(id)) },
-                // A program is its settings: tapping it opens the form that wrote it.
                 onProgramSelected = { id -> navController.navigate(LexiconDestinations.editProgram(id)) },
-                // A program hands back a training and the words for it; the route
-                // that carries a word list to a training already exists for lessons.
                 onStartTraining = { training, wordIds ->
                     navController.navigate(LexiconDestinations.scopedTraining(training, wordIds))
                 },
@@ -98,8 +95,6 @@ fun LexiconNavHost(
         composable(LexiconDestinations.CREATE_WORD) {
             CreateWordScreen(
                 onClose = { navController.popBackStack() },
-                // Straight back to the list, which re-reads on resume and so already
-                // shows the new word.
                 onCreated = { navController.popBackStack() },
             )
         }
@@ -117,15 +112,11 @@ fun LexiconNavHost(
         composable(LexiconDestinations.CREATE_PROGRAM) {
             CreateProgramScreen(
                 onClose = { navController.popBackStack() },
-                // Nothing starred yet: the study set is built in the Vocabulary tab,
-                // and saying so is less use than going there.
                 onGoToVocabulary = {
                     navController.navigate(LexiconDestinations.main(MainTab.VOCABULARY)) {
                         popUpTo(LexiconDestinations.MAIN) { inclusive = true }
                     }
                 },
-                // Back to the Plan tab, which re-reads on resume and so already shows
-                // the new program among the others.
                 onCreated = { navController.popBackStack() },
             )
         }
@@ -168,9 +159,6 @@ fun LexiconNavHost(
         ) {
             WordCardsScreen(
                 onClose = { navController.popBackStack() },
-                // Straight from the last card into the day's first training. The deck
-                // comes off the stack with it, so leaving the training lands on the
-                // Dashboard rather than back on cards already met.
                 onStartTraining = { training, wordIds ->
                     val route = LexiconDestinations.scopedTraining(training, wordIds.map { id -> id.value })
                     navController.navigate(route) {
@@ -228,8 +216,6 @@ fun LexiconNavHost(
 
         val closeToMain: () -> Unit = { navController.popBackStack(LexiconDestinations.MAIN, inclusive = false) }
 
-        // Replaces the tab host rather than stacking another: the learner is being
-        // sent to build up their study set, not deeper into the app.
         val goToVocabulary: () -> Unit = {
             navController.navigate(LexiconDestinations.main(MainTab.VOCABULARY)) {
                 popUpTo(LexiconDestinations.MAIN) { inclusive = true }
@@ -317,8 +303,7 @@ fun LexiconNavHost(
         ) { onComplete ->
             CrosswordScreen(onSessionComplete = onComplete, onClose = closeToMain)
         }
-        // Word Card has no result to report, so it does not go through the
-        // completion plumbing every other training ends on: it just closes.
+
         composable(
             route = LexiconDestinations.trainingRoute(LexiconDestinations.WORD_CARD),
             arguments = listOf(
@@ -373,10 +358,6 @@ fun LexiconNavHost(
     }
 }
 
-/**
- * A training destination: the shared not-enough-words gate, plus the optional word
- * list a course lesson uses to narrow the session.
- */
 private fun NavGraphBuilder.trainingDestination(
     training: String,
     minimumWords: Int,
@@ -396,13 +377,10 @@ private fun NavGraphBuilder.trainingDestination(
     ) { backStackEntry ->
         val scopedWords = backStackEntry.arguments?.getString(TRAINING_WORDS_ARG).orEmpty()
         TrainingGate(
-            // A lesson brings its own words, so the study-set size is not what gates it.
             minimumWords = if (scopedWords.isEmpty()) minimumWords else 0,
             trainingName = trainingDisplayName(training),
             onClose = onClose,
             onGoToVocabulary = onGoToVocabulary,
-            // Crossword can only place single words, so phrases in the study set
-            // don't count toward whether there are enough words to start it.
             excludePhrases = training == LexiconDestinations.CROSSWORD,
         ) {
             screen(onComplete)

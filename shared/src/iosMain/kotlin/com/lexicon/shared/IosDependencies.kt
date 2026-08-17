@@ -83,24 +83,12 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-/**
- * Everything the iOS app resolves from Koin, as named properties.
- *
- * Swift cannot use `KoinComponent.get<T>()` — the reified type parameter does not
- * survive into Objective-C — so the alternative to this is casting from `Any` at
- * every call site. Naming them once here is the difference between the Swift side
- * being type-checked and not.
- */
 @Suppress("TooManyFunctions")
 object IosDependencies : KoinComponent {
-    // ---- catalogue and settings
-
     val syncCatalog: SyncCatalogUseCase by inject()
     val observeSettings: ObserveSettingsUseCase by inject()
     val updateThemeMode: UpdateThemeModeUseCase by inject()
     val updateStepCount: UpdateStepCountUseCase by inject()
-
-    // ---- vocabulary
 
     val getPresets: GetVocabularyPresetsUseCase by inject()
     val observePresets: ObserveVocabularyPresetsUseCase by inject()
@@ -114,8 +102,6 @@ object IosDependencies : KoinComponent {
     val getWordPresetMemberships: GetWordPresetMembershipsUseCase by inject()
     val setWordPresetMembership: SetWordPresetMembershipUseCase by inject()
 
-    // ---- writing words and presets
-
     val createWord: CreateWordUseCase by inject()
     val updateWord: UpdateWordUseCase by inject()
     val getWord: GetWordUseCase by inject()
@@ -128,15 +114,11 @@ object IosDependencies : KoinComponent {
     val searchImageCandidates: SearchImageCandidatesUseCase by inject()
     val getPinnedImage: GetPinnedImageUseCase by inject()
 
-    // ---- course
-
     val observeCourses: ObserveCoursesUseCase by inject()
     val getLesson: GetLessonUseCase by inject()
     val getLessonVocabulary: GetLessonVocabularyUseCase by inject()
     val setLessonCompleted: SetLessonCompletedUseCase by inject()
     val checkExerciseAnswer: CheckExerciseAnswerUseCase by inject()
-
-    // ---- programs
 
     val observePrograms: ObserveProgramsUseCase by inject()
     val getProgram: GetProgramUseCase by inject()
@@ -152,8 +134,6 @@ object IosDependencies : KoinComponent {
     val getProgramDay: GetProgramDayUseCase by inject()
     val markCardsSeen: MarkCardsSeenUseCase by inject()
     val getWordCards: GetWordCardsUseCase by inject()
-
-    // ---- trainings
 
     val checkTrainingReadiness: CheckTrainingReadinessUseCase by inject()
 
@@ -179,19 +159,6 @@ object IosDependencies : KoinComponent {
     val startWordCard: StartWordCardSessionUseCase by inject()
     val recordWordCardSeen: RecordWordCardSeenUseCase by inject()
 
-    // ---- flows
-    //
-    // A Kotlin Flow reaches Swift as an opaque type with no way to collect it, so
-    // each one the app watches is wrapped in a callback here. The returned handle is
-    // what a SwiftUI view cancels when it goes away.
-
-    /**
-     * The catalogue import, step by step.
-     *
-     * [SyncCatalogUseCase] is a flow rather than a suspend function — it reports each
-     * step as it lands — so calling `invoke()` and not collecting it does nothing at
-     * all, silently. This is the only way to run it from Swift.
-     */
     fun watchCatalogSync(onEach: (CatalogSyncStatus) -> Unit): Cancellable = syncCatalog().watch(onEach)
 
     fun watchSettings(onEach: (AppSettings) -> Unit): Cancellable = observeSettings().watch(onEach)
@@ -213,7 +180,6 @@ object IosDependencies : KoinComponent {
     }
 }
 
-/** A running collection, for a view to stop when it disappears. */
 class Cancellable(private val job: Job) {
     fun cancel() {
         job.cancel()

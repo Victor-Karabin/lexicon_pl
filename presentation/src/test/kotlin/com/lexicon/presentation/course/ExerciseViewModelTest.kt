@@ -47,8 +47,6 @@ class ExerciseViewModelTest {
 
     private val getLesson: GetLessonUseCase = mockk()
 
-    // Trim + case-insensitive, same comparison CheckExerciseAnswerUseCaseImpl delegates
-    // to AnswerNormalizer for; kept as a fake here since presentation doesn't depend on domain.
     private val checkAnswer =
         object : CheckExerciseAnswerUseCase {
             override fun invoke(
@@ -107,8 +105,6 @@ class ExerciseViewModelTest {
             isCompleted = false,
         )
 
-    // uiState is stateIn(WhileSubscribed), so .value only tracks the upstream flow while
-    // something is collecting it; keep a collector alive for the length of the test.
     private fun TestScope.viewModel(exerciseId: String): ExerciseViewModel {
         val viewModel =
             ExerciseViewModel(

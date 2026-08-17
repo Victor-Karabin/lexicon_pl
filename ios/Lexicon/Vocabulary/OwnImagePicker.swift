@@ -2,21 +2,10 @@ import PhotosUI
 import SwiftUI
 import UIKit
 
-/// Where the learner's own pictures live, inside the app's own storage.
 private let ownImageDirectory = "word_images"
 
-/// A picture out of the app's own files, rather than one off the web.
 func isOwnImage(_ url: String) -> Bool { url.hasPrefix("file:") }
 
-/// The tile that adds a picture of the learner's own, first in the row and always there.
-///
-/// Two sources behind one tile: whether a picture comes from the library or the camera
-/// is a detail of getting one, not a choice worth two tiles in a row of pictures.
-///
-/// Both hand back a `file://` string, the same shape of thing as a searched picture's
-/// URL, so nothing downstream has to know where a picture came from. A picked photo is
-/// copied into the app's files rather than kept as the item it arrived as: that item is
-/// the library's, and the word is meant to keep its picture.
 struct AddImageTile: View {
     let onPicked: (String) -> Void
 
@@ -24,8 +13,6 @@ struct AddImageTile: View {
     @State private var isTakingPhoto = false
     @State private var isChoosing = false
 
-    /// A simulator has no camera, and offering one that cannot open is worse than not
-    /// offering it.
     private var hasCamera: Bool { UIImagePickerController.isSourceTypeAvailable(.camera) }
 
     var body: some View {
@@ -71,7 +58,6 @@ struct AddImageTile: View {
     }
 }
 
-/// Null when the picture cannot be written — a full disk, and little else.
 private func writeOwnImage(_ data: Data) -> String? {
     let directory = URL.documentsDirectory.appendingPathComponent(ownImageDirectory, isDirectory: true)
     try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
@@ -79,7 +65,6 @@ private func writeOwnImage(_ data: Data) -> String? {
     return (try? data.write(to: file)) == nil ? nil : file.absoluteString
 }
 
-/// The system camera, which SwiftUI has no view of its own for.
 private struct CameraPicker: UIViewControllerRepresentable {
     let onTaken: (UIImage?) -> Void
 

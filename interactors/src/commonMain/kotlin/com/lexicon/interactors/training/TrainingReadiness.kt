@@ -10,7 +10,6 @@ sealed interface TrainingReadiness {
 }
 
 interface CheckTrainingReadinessUseCase {
-    /** [excludePhrases] narrows the check to single words — what Crossword can place. */
     suspend operator fun invoke(
         minimumWords: Int,
         excludePhrases: Boolean = false,

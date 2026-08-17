@@ -28,18 +28,12 @@ import com.lexicon.interactors.program.UpdateProgramUseCase
 import com.lexicon.interactors.program.VocabularyScope
 import kotlinx.serialization.json.Json
 
-/**
- * A program of the learner's own is still a program: it is stored as configuration
- * and run by the same engine, so nothing downstream needs to know who wrote it.
- */
 private val configJson = Json { encodeDefaults = true }
 
-/** Only what the form asked about is chosen; the rest follows from the study set. */
 private const val VOCABULARY_WEIGHT = 60
 private const val ACCURACY_WEIGHT = 40
 private const val ACCURACY_TARGET = 90
 
-/** Own programs sort above the shipped ones: the learner wrote them, they matter more. */
 private const val USER_PROGRAM_ORDER = 0
 
 class CreateProgramUseCaseImpl(
@@ -49,14 +43,9 @@ class CreateProgramUseCaseImpl(
 ) : CreateProgramUseCase {
     private val writer = ProgramWriter(programs, vocabulary)
 
-    // A fresh id, unique without a lookup and sorted by when it was made.
     override suspend fun invoke(draft: ProgramDraft): Result<Program> = writer.write(ProgramId("user-${clock.nowEpochMillis()}"), draft)
 }
 
-/**
- * Rewrites one in place. Same id, so the enrolment and the days recorded against it
- * are still about this program afterwards.
- */
 class UpdateProgramUseCaseImpl(
     programs: ProgramRepository,
     vocabulary: VocabularyRepository,
@@ -69,7 +58,6 @@ class UpdateProgramUseCaseImpl(
     ): Result<Program> = writer.write(id, draft)
 }
 
-/** Turning a draft into a program, which is the same work whether it is new or not. */
 private class ProgramWriter(
     private val programs: ProgramRepository,
     private val vocabulary: VocabularyRepository,
@@ -114,15 +102,6 @@ private class ProgramWriter(
         return Result.success(program)
     }
 
-    /**
-     * The rest of the program, worked out rather than asked for.
-     *
-     * The goal is the study set itself: a program over favourites is finished when
-     * the learner knows the words they starred, so the target is however many that
-     * is. The draft's list becomes the day's queue as written — a training twice in
-     * it is a training worked through twice — and the activities name the distinct
-     * ones so reviews and new words both have somewhere to run.
-     */
     private fun ProgramDraft.toConfig(favourites: Int): ProgramConfig =
         ProgramConfig(
             goals = listOf(

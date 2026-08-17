@@ -27,13 +27,6 @@ import com.lexicon.presentation.theme.LexiconTheme
 
 private val BarElevation = 3.dp
 
-/**
- * What to do with the words that have been ticked.
- *
- * Sits over the list rather than replacing the top bar: the count is the useful
- * thing to show, and leaving the screen's own title in place makes it obvious this
- * is a mode the list is in rather than somewhere else you have gone.
- */
 @Composable
 fun WordSelectionBar(
     count: Int,

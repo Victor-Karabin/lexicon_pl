@@ -2,7 +2,6 @@ import SwiftUI
 import Speech
 import Shared
 
-/// Say the word out loud and be heard.
 struct PronunciationView: View {
     let vocabularyIds: [Int64]
 
@@ -110,7 +109,6 @@ struct PronunciationView: View {
     }
 }
 
-/// Polish speech, turned into text so the shared use case can judge it.
 @MainActor
 final class SpeechRecognizer: ObservableObject {
     @Published var heard = ""

@@ -50,7 +50,6 @@ final class DashboardModel: ObservableObject {
         day = try? await deps.getProgramDay.invoke(id: program.id)
     }
 
-    /// The next turn in the day, with the words the session picked for it.
     func nextTraining() async -> String? {
         guard let program, let next = day?.nextTraining else { return nil }
         let session = try? await deps.startProgramSession.invoke(id: program.id)
@@ -78,8 +77,7 @@ final class DashboardModel: ObservableObject {
 }
 
 extension IosDependencies {
-    /// The active enrolment as a one-shot read, for a screen that is refreshing
-    /// rather than watching.
+
     func observeActiveEnrolmentFirst() async throws -> ProgramEnrolment? {
         try await withCheckedThrowingContinuation { continuation in
             var handle: Cancellable?

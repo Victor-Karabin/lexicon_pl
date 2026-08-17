@@ -1,7 +1,6 @@
 import SwiftUI
 import Shared
 
-/// Pick the word the picture is of.
 struct ImageTestView: View {
     let vocabularyIds: [Int64]
 

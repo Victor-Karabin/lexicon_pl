@@ -25,7 +25,6 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 
-/** How many pictures the learner is offered at a time. */
 private const val IMAGE_CANDIDATES = 3
 
 class CreateWordUseCaseImpl(
@@ -51,8 +50,6 @@ class CreateWordUseCaseImpl(
         val word = vocabularyRepository.createWord(
             text = polish,
             translation = english,
-            // Derived rather than asked for, so a hand-added word reads the same way
-            // in the list and the trainings as every shipped one.
             transcription = polishTranscription(polish),
         )
 
@@ -60,8 +57,6 @@ class CreateWordUseCaseImpl(
             presetRepository.setWordInPreset(presetId = presetId.value, wordId = word.id, isMember = true)
         }
 
-        // Keyed on the English translation because that is what the picture
-        // trainings search by; pinning anywhere else would not reach them.
         if (!imageUrl.isNullOrBlank()) imageProvider.pinImage(query = english, imageUrl = imageUrl)
 
         return Result.success(word.toPresetWord())
@@ -85,8 +80,7 @@ class UpdateWordUseCaseImpl(
 
         if (polish.isEmpty()) return Result.failure(WordDraftException(WordDraftProblem.MISSING_TEXT))
         if (english.isEmpty()) return Result.failure(WordDraftException(WordDraftProblem.MISSING_TRANSLATION))
-        // A word is allowed to keep its own spelling; it is only a clash if some
-        // other word already has it.
+
         val clash = vocabularyRepository.findWordByText(polish)
         if (clash != null && clash.id != id.value) {
             return Result.failure(WordDraftException(WordDraftProblem.ALREADY_EXISTS))
@@ -99,8 +93,6 @@ class UpdateWordUseCaseImpl(
             transcription = polishTranscription(polish),
         )
 
-        // Only the difference is written: setWordInPreset records an override per
-        // call, and rewriting all seventy-odd would bury the handful that changed.
         val wanted = presetIds.mapTo(mutableSetOf()) { it.value }
         val current = presetRepository.getPresetIdsForWord(id.value).toSet()
         for (presetId in wanted - current) {
@@ -135,9 +127,6 @@ class CreatePresetUseCaseImpl(
         val name = title.trim()
         if (name.isEmpty()) return Result.failure(PresetDraftException(PresetDraftProblem.MISSING_TITLE))
 
-        // Stored under the default language rather than the phone's: the learner
-        // typed one name, and claiming it is the Polish one when the interface is in
-        // English would put the wrong string in front of them on a language change.
         val preset = presetRepository.createPreset(
             title = mapOf(LocalizedText.DEFAULT_LANGUAGE to name),
             description = description.trim()

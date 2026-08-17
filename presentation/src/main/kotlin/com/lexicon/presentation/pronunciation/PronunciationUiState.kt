@@ -39,7 +39,6 @@ sealed interface PronunciationUiState {
         val canUseTip: Boolean get() = isEditable && !isSubmitting && tipLevel < MAX_TIP_LEVEL
         val canSkip: Boolean get() = isEditable && !isSubmitting
 
-        // Skip auto-advances, same as Correct; only Incorrect waits for a manual Next.
         val awaitingNext: Boolean get() = answerState is AnswerState.Incorrect && !isSubmitting
     }
 }

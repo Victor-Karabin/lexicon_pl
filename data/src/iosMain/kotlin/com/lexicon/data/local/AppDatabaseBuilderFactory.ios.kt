@@ -12,7 +12,6 @@ import platform.Foundation.NSUserDomainMask
 actual class AppDatabaseBuilderFactory {
     actual fun create(): RoomDatabase.Builder<AppDatabase> = Room.databaseBuilder<AppDatabase>(name = databasePath())
 
-    /** Documents, not Caches: the seeded catalogue is not something iOS should reclaim. */
     private fun databasePath(): String {
         val documents =
             NSFileManager.defaultManager.URLForDirectory(

@@ -1,10 +1,6 @@
 import SwiftUI
 import Shared
 
-/// The Vocabulary tab's state.
-///
-/// The real work is in the shared use cases; this holds what the screen is showing
-/// and when to ask again.
 @MainActor
 final class VocabularyModel: ObservableObject {
     @Published var query: String = ""
@@ -55,8 +51,6 @@ final class VocabularyModel: ObservableObject {
 
     func name(of level: CefrLevel) -> String { level.name }
 
-    // ---- selecting several words at once
-
     @Published private(set) var selected: Set<Int64> = []
     @Published private(set) var isSelecting = false
 
@@ -73,8 +67,7 @@ final class VocabularyModel: ObservableObject {
         } else {
             selected.insert(word.id.value)
         }
-        // Unselecting the last one leaves selection mode, so the list does not sit
-        // in a mode with nothing selected.
+
         if selected.isEmpty { isSelecting = false }
     }
 
@@ -98,7 +91,7 @@ final class VocabularyModel: ObservableObject {
 }
 
 extension VocabularyPreset {
-    /// The catalogue ships `#RRGGBB`; a malformed one falls back rather than crashing.
+
     var accentColor: Color {
         guard let hex = color?.replacingOccurrences(of: "#", with: ""),
               let value = UInt32(hex, radix: 16) else { return Palette.accentDeep }
@@ -109,8 +102,6 @@ extension VocabularyPreset {
         )
     }
 
-    /// Black or white, whichever can be read on the accent — the same reasoning as
-    /// `onAccentColor` on Android, and what lets the warm end of the palette exist.
     var onAccentColor: Color {
         guard let hex = color?.replacingOccurrences(of: "#", with: ""),
               let value = UInt32(hex, radix: 16) else { return .white }
@@ -123,8 +114,6 @@ extension VocabularyPreset {
 
     var symbolName: String { VocabularyPreset.symbolName(forIcon: icon) }
 
-    /// The catalogue's icon names are Material's; these are the SF Symbols nearest to
-    /// them, so a preset looks like itself on both platforms.
     static func symbolName(forIcon icon: String?) -> String {
         switch icon {
         case "restaurant", "local_pizza", "bakery_dining", "set_meal", "egg": return "fork.knife"

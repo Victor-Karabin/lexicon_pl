@@ -2,9 +2,6 @@ package com.lexicon.data.remote.image
 
 import kotlinx.serialization.Serializable
 
-// The Android responses live beside the Retrofit interfaces that declare them, in a
-// source set iOS cannot see. Same shapes, so the same JSON parses on both.
-
 @Serializable
 data class OpenverseSearchResponse(val results: List<OpenverseImage> = emptyList())
 

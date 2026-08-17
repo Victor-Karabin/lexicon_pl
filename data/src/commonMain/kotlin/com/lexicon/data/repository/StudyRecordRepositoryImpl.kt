@@ -15,13 +15,6 @@ class StudyRecordRepositoryImpl(
         toEpochDay: Long,
     ): List<StudyDayBoundary> = studyDayDao.between(fromEpochDay, toEpochDay).map { it.toBoundary() }
 
-    /**
-     * Counts back from the most recent day studied, stopping at the first gap.
-     *
-     * A streak survives today being empty — the day is not over — but not yesterday
-     * being empty, which is a day genuinely missed. Starting from the newest day on
-     * record rather than from today is what expresses that without a special case.
-     */
     override suspend fun currentStreak(todayEpochDay: Long): Int {
         val days = studyDayDao.studiedDaysDescending()
         val mostRecent = days.firstOrNull() ?: return 0

@@ -20,14 +20,6 @@ import kotlin.uuid.Uuid
 
 private const val WORD_CARD_TRAINING = "word_card"
 
-/**
- * The deck for a session: as many words as a session is set to, from whatever list it
- * was given.
- *
- * The picture comes from [ImageProvider.searchImage], which answers from the cache
- * first — so a word shows the picture it was pinned with, and the picture trainings
- * later show the same one.
- */
 class StartWordCardSessionUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val imageProvider: ImageProvider,
@@ -51,14 +43,6 @@ class StartWordCardSessionUseCaseImpl(
     }
 }
 
-/**
- * Records the card as seen rather than as answered.
- *
- * [TrainingResultOutcomeBoundary.SEEN] is what keeps this honest: the session and the
- * time it took are recorded, so a day of only word cards still counts as a day
- * studied and a program's turn at it completes — but the word's review schedule does
- * not move and accuracy does not shift, because nothing was asked.
- */
 class RecordWordCardSeenUseCaseImpl(
     private val history: TrainingHistoryRepository,
     private val clock: Clock,

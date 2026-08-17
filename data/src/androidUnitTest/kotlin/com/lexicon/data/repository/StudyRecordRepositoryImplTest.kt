@@ -39,7 +39,6 @@ class StudyRecordRepositoryImplTest {
     @Test
     fun `only the run nearest today counts`() =
         runTest {
-            // Studied for three days, took a week off, studied two more.
             studied(TODAY, TODAY - 1, TODAY - 10, TODAY - 11, TODAY - 12)
             assertEquals(2, repository.currentStreak(TODAY))
         }

@@ -35,10 +35,10 @@ private fun speechRecognizerErrorName(error: Int): String =
         SpeechRecognizer.ERROR_NO_MATCH -> "ERROR_NO_MATCH"
         SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "ERROR_RECOGNIZER_BUSY"
         SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "ERROR_INSUFFICIENT_PERMISSIONS"
-        10 -> "ERROR_TOO_MANY_REQUESTS" // SpeechRecognizer.ERROR_TOO_MANY_REQUESTS, API 33+
-        11 -> "ERROR_SERVER_DISCONNECTED" // SpeechRecognizer.ERROR_SERVER_DISCONNECTED, API 33+
-        12 -> "ERROR_LANGUAGE_NOT_SUPPORTED" // SpeechRecognizer.ERROR_LANGUAGE_NOT_SUPPORTED, API 33+
-        13 -> "ERROR_LANGUAGE_UNAVAILABLE" // SpeechRecognizer.ERROR_LANGUAGE_UNAVAILABLE, API 33+
+        10 -> "ERROR_TOO_MANY_REQUESTS"
+        11 -> "ERROR_SERVER_DISCONNECTED"
+        12 -> "ERROR_LANGUAGE_NOT_SUPPORTED"
+        13 -> "ERROR_LANGUAGE_UNAVAILABLE"
         else -> "UNKNOWN"
     }
 
@@ -136,7 +136,7 @@ class AndroidSpeechRecognizerService(
         buffer.put("WAVE".toByteArray())
         buffer.put("fmt ".toByteArray())
         buffer.putInt(16)
-        buffer.putShort(1) // PCM
+        buffer.putShort(1)
         buffer.putShort(channels.toShort())
         buffer.putInt(AUDIO_SAMPLE_RATE_HZ)
         buffer.putInt(byteRate)

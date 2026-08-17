@@ -27,39 +27,24 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-/**
- * How long typing has to stop before the other field is filled in and pictures are
- * looked up. Both go over the network, so this is the difference between one request
- * and one per keystroke.
- */
 private const val TYPING_SETTLE_MS = 600L
 
-/** Route argument naming the word to edit; absent when writing a new one. */
 const val WORD_ID_ARG = "wordId"
 
-/** A picture out of the app's own files, rather than one off the web. */
 internal fun String.isOwnImage(): Boolean = startsWith("file:")
 
 data class CreateWordUiState(
     val isEditing: Boolean = false,
-    /** The word being edited is gone — deleted from another screen. */
     val isMissing: Boolean = false,
     val text: String = "",
     val translation: String = "",
     val memberships: ImmutableList<PresetMembership> = persistentListOf(),
     val imageCandidates: ImmutableList<String> = persistentListOf(),
-    /**
-     * Pictures the learner supplied rather than ones the search found.
-     *
-     * Kept apart because they outlive a search: retyping the word fetches new
-     * candidates, and a photograph somebody went and took is not a candidate.
-     */
     val ownImages: ImmutableList<String> = persistentListOf(),
     val selectedImage: String? = null,
     val languageTag: String = "en",
     val isTranslating: Boolean = false,
     val isLoadingImages: Boolean = false,
-    /** True once a search has run and found nothing, as opposed to not having run. */
     val hasSearchedImages: Boolean = false,
     val isSaving: Boolean = false,
     val problem: WordDraftProblem? = null,
@@ -79,7 +64,6 @@ class CreateWordViewModel(
     private val getWordPresetMemberships: GetWordPresetMembershipsUseCase,
     private val getPinnedImage: GetPinnedImageUseCase,
 ) : ViewModel() {
-    /** Absent when writing a new word, present when editing one that exists. */
     private val editing: VocabularyId? =
         savedStateHandle.get<String>(WORD_ID_ARG)?.toLongOrNull()?.let(::VocabularyId)
 
@@ -89,11 +73,8 @@ class CreateWordViewModel(
     private var translateJob: Job? = null
     private var imageJob: Job? = null
 
-    /** How many candidates have already been offered, so More asks past them. */
     private var shownImages = 0
 
-    // Which sides this filled in rather than the learner. Only these may be replaced
-    // when the word they were translated from changes.
     private var textWasFilledIn = false
     private var translationWasFilledIn = false
 
@@ -108,13 +89,6 @@ class CreateWordViewModel(
         _uiState.update { it.copy(memberships = presets.toImmutableList()) }
     }
 
-    /**
-     * Fills the form in from the stored word.
-     *
-     * Written straight into the state rather than through onTextChanged, which would
-     * read as typing: it would schedule a translation of what is already translated,
-     * and clear the picture that is already chosen.
-     */
     private suspend fun load(id: VocabularyId) {
         val word = getWord(id)
         if (word == null) {
@@ -146,12 +120,6 @@ class CreateWordViewModel(
 
     fun onImageSelected(url: String) = _uiState.update { it.copy(selectedImage = if (it.selectedImage == url) null else url) }
 
-    /**
-     * A picture from the learner's library or camera.
-     *
-     * Chosen as well as added: they went and found this one, so asking them to tap it
-     * again would be asking twice.
-     */
     fun onOwnImageAdded(url: String) =
         _uiState.update { state ->
             state.copy(
@@ -171,7 +139,6 @@ class CreateWordViewModel(
         )
     }
 
-    /** Asks for the next batch rather than repeating the one already on screen. */
     fun onMoreImages() {
         val query = _uiState.value.translation
         if (query.isBlank()) return
@@ -182,8 +149,6 @@ class CreateWordViewModel(
             shownImages += more.size
             _uiState.update { state ->
                 state.copy(
-                    // Appended, not replaced: a picture the learner liked should not
-                    // disappear because they looked at what else there was.
                     imageCandidates = (state.imageCandidates + more).distinct().toImmutableList(),
                     isLoadingImages = false,
                     hasSearchedImages = true,
@@ -200,8 +165,6 @@ class CreateWordViewModel(
         val presetIds = state.memberships.filter { it.isMember }.map { it.preset.id }
         viewModelScope.launch {
             val result = if (editing != null) {
-                // The full set the word should end up in, not just the additions:
-                // unlighting a chip has to take it out.
                 updateWord(
                     id = editing,
                     text = state.text,
@@ -231,15 +194,6 @@ class CreateWordViewModel(
         }
     }
 
-    /**
-     * Fills the opposite field in once typing settles.
-     *
-     * What was written by hand is never overwritten, but what this filled in before
-     * is: it was the translation of a word that has since been edited, so leaving it
-     * would show a Polish word belonging to English that is no longer there. It is
-     * cleared as soon as the other side changes rather than at the end of the round
-     * trip, so a stale pairing is never on screen while the new one is fetched.
-     */
     private fun scheduleTranslation(
         from: String,
         toPolish: Boolean,
@@ -258,8 +212,7 @@ class CreateWordViewModel(
             delay(TYPING_SETTLE_MS)
             _uiState.update { it.copy(isTranslating = true) }
             val translated = translateWord(from, toPolish = toPolish)
-            // Decided before the update rather than inside it: update retries its
-            // block under contention, and these flags must be set exactly once.
+
             val fills = translated != null && target(_uiState.value).isBlank()
 
             if (fills) {
@@ -272,19 +225,11 @@ class CreateWordViewModel(
                     else -> state.copy(translation = translated.orEmpty(), isTranslating = false)
                 }
             }
-            // The English side may have just been filled in, which is what pictures
-            // are searched by.
+
             if (!toPolish) scheduleImageSearch(_uiState.value.translation)
         }
     }
 
-    /**
-     * Straight away, with no settle delay: nothing is being typed.
-     *
-     * [pinned] is the picture the word already has. It is put at the front and marked
-     * as chosen, and it may well not be among the fresh search results — the search
-     * is live and the choice was made whenever the word was last saved.
-     */
     private suspend fun loadImagesFor(
         query: String,
         pinned: String? = null,
@@ -332,8 +277,6 @@ class CreateWordViewModel(
             _uiState.update {
                 it.copy(
                     imageCandidates = candidates,
-                    // The old pick belonged to a different word — unless the learner
-                    // supplied it, in which case it was never about the search.
                     selectedImage = it.selectedImage.takeIf { url -> url in it.ownImages },
                     isLoadingImages = false,
                     hasSearchedImages = true,

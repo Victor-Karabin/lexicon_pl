@@ -18,12 +18,6 @@ import kotlinx.coroutines.flow.map
 
 private const val ACTIVE = "ACTIVE"
 
-/**
- * Programs are written by the learner, not shipped.
- *
- * Nothing seeds this table: there is no catalogue asset behind it, so what is here
- * is what was built on the Plan tab and nothing else.
- */
 class ProgramRepositoryImpl(
     private val programDao: ProgramDao,
 ) : ProgramRepository {

@@ -82,9 +82,6 @@ private fun CourseDetailContent(
 
             is CourseDetailUiState.Loaded ->
                 Column(modifier = Modifier.fillMaxSize().padding(padding)) {
-                    // The same header the tab used to show above the lessons, now
-                    // that the lessons are only reachable through the tile. Without
-                    // the name, which the bar carries.
                     CourseHeader(
                         course = uiState.course,
                         languageTag = uiState.languageTag,

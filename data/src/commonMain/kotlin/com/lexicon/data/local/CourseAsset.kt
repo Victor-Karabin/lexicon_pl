@@ -45,11 +45,6 @@ data class LessonExerciseAsset(
     val items: List<ExerciseItemAsset> = emptyList(),
 )
 
-/**
- * One question. Which fields carry meaning depends on the exercise type: a
- * minimal pair uses [options] and [answer], a gap-fill uses [prompt] and
- * [answers].
- */
 @Serializable
 data class ExerciseItemAsset(
     val label: String? = null,

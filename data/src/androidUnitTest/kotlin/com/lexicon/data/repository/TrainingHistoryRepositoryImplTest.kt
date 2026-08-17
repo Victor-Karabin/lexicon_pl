@@ -18,11 +18,6 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-/**
- * Recording an answer is the one call every training already makes, so it is also
- * where the review schedule and the day's tally are kept up. These cover that the
- * three stay consistent with each other.
- */
 class TrainingHistoryRepositoryImplTest {
     private val trainingResultDao: TrainingResultDao = mockk(relaxed = true)
     private val wordReviewDao: WordReviewDao = mockk(relaxed = true)
@@ -154,7 +149,7 @@ class TrainingHistoryRepositoryImplTest {
     fun `a long pause is not counted as studying`() =
         runTest {
             coEvery { wordReviewDao.find(any()) } returns null
-            // An hour away from the phone between two answers.
+
             coEvery { trainingResultDao.lastAnsweredAtEpochMillis() } returns NOW - 3_600_000
 
             repository.recordResult(answer())

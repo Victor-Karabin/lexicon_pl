@@ -15,22 +15,9 @@ data class WordEntity(
     val searchKey: String = "",
     val cefr: String = "",
     val isDeleted: Boolean = false,
-    /**
-     * Written by the learner rather than shipped in the seed asset. The seed diff
-     * would otherwise read such a word as one the asset had dropped and delete it,
-     * so [VocabularySeeder] leaves these alone.
-     */
     val isUserCreated: Boolean = false,
 )
 
-/**
- * Ids for hand-added words, counting down from -1.
- *
- * The asset numbers its words from 1 upwards and the corpus only grows, so no
- * negative id can ever collide with one a future release ships. That matters
- * because preset membership, lesson links and training history all key off this
- * id: a collision would silently re-point them at a different word.
- */
 fun nextUserWordId(lowestExistingId: Long?): Long = minOf(lowestExistingId ?: 0L, 0L) - 1
 
 fun searchKeyFor(

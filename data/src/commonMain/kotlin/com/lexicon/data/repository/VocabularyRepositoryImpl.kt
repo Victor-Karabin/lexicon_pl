@@ -57,8 +57,6 @@ class VocabularyRepositoryImpl(
         translation: String,
         transcription: String,
     ): VocabularyItemBoundary {
-        // Seeding first so the id below is chosen against the full table rather than
-        // an empty one, which would hand out an id the seed is about to claim.
         vocabularySeeder.ensureSeeded()
         val word = WordEntity(
             id = nextUserWordId(wordDao.lowestId()),

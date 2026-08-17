@@ -105,10 +105,6 @@ val networkModule = module {
 
     single { retrofit(MYMEMORY_BASE_URL, get(), get()).create(MyMemoryApi::class.java) }
 
-    // Corpus first: free, instant and offline, and right about the words it knows.
-    // Then DeepL if a key was configured, since it reads Polish best. MyMemory last
-    // and always, so the field still fills itself in on a checkout with no keys —
-    // which is every checkout until somebody signs up for one.
     factory<List<Translator>>(translatorChainQualifier) {
         buildList {
             add(get<CorpusTranslatorImpl>())
@@ -125,10 +121,4 @@ val networkModule = module {
     factoryOf(::MyMemoryTranslator)
 }
 
-/**
- * Whether a DeepL key was configured. Without one the translator is left out of the
- * chain entirely rather than added and left to fail: every auto-fill would otherwise
- * spend a round trip earning a 403, and a build with no key is the normal state for
- * anyone who has not signed up for one.
- */
 val hasDeepLKey: Boolean get() = BuildConfig.DEEPL_API_KEY.isNotBlank()

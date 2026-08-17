@@ -1,10 +1,6 @@
 import SwiftUI
 import Shared
 
-/// A little of every training, in one session.
-///
-/// The shared session decides which step is which; this dispatches on the type and
-/// hands each one to the same UI the standalone training uses.
 struct MixView: View {
     let vocabularyIds: [Int64]
 
@@ -110,9 +106,6 @@ struct MixView: View {
         steps = response.steps
     }
 
-    /// Every kind of step in a Mix ends up in the same place: the training's own
-    /// submit use case, so the learning record cannot tell it apart from the
-    /// standalone training.
     private func submit(_ step: MixStep, skipped: Bool) async {
         switch step {
         case let dictation as MixStepDictation:

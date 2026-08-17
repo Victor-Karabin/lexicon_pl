@@ -13,9 +13,6 @@ interface WordReviewDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(review: WordReviewEntity)
 
-    /**
-     * Words waiting, most overdue first, skipping any the learner has deleted.
-     */
     @Query(
         """
         SELECT r.wordId FROM word_review r

@@ -54,13 +54,6 @@ fun VocabularySearchField(
     )
 }
 
-/**
- * The transcription and CEFR band under a word, or null when it has neither.
- *
- * Every shipped word has both. A word the learner added has no band and may have no
- * transcription, and empty brackets read as something having gone wrong rather than
- * as something simply not being there.
- */
 private fun PresetWord.detailLine(): String? {
     val phonetic = transcription.takeIf { it.isNotBlank() }?.let { "[$it]" }
     val band = cefr?.name
@@ -83,10 +76,6 @@ fun VocabularyWordRow(
     onLongClick: (() -> Unit)? = null,
 ) {
     Row(
-        // The whole row opens the word for editing, save for the two buttons at its
-        // end, which keep their own taps. While words are being picked out to delete,
-        // that same tap ticks the box instead — opening an editor mid-selection is
-        // never what was meant.
         modifier = modifier
             .fillMaxWidth()
             .combinedClickable(onClick = onClick, onLongClick = onLongClick)
@@ -101,8 +90,6 @@ fun VocabularyWordRow(
         if (isSelecting) {
             Checkbox(
                 checked = isSelected,
-                // The row already handles the tap; a checkbox with its own would let
-                // the two fight over a press that lands on the box itself.
                 onCheckedChange = null,
                 modifier = Modifier.padding(end = Dimens.spacingSmall),
             )

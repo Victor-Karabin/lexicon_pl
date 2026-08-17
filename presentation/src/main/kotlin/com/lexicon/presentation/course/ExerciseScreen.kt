@@ -185,8 +185,6 @@ private fun androidx.compose.foundation.lazy.LazyListScope.questions(
                 )
             }
 
-        // One item rather than a row apiece: the two columns are laid out against
-        // each other, and a lazy list would scroll them independently.
         is LessonExercise.Match ->
             item {
                 MatchBoard(

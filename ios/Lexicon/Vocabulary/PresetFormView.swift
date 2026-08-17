@@ -1,7 +1,6 @@
 import SwiftUI
 import Shared
 
-/// A preset of the learner's own: a name, a colour and an icon to tell it apart.
 struct PresetFormView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var scheme
@@ -12,8 +11,6 @@ struct PresetFormView: View {
     @State private var colour = "#EF6C00"
     @State private var problem: String?
 
-    /// The catalogue's own icon and colour names, so a preset made here looks like
-    /// the shipped ones and reads the same on Android.
     private let icons = [
         "restaurant", "local_pizza", "trending_up", "record_voice_over", "home",
         "directions_car", "school", "work", "favorite", "pets", "sports_soccer",

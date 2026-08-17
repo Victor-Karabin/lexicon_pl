@@ -1,8 +1,6 @@
 import SwiftUI
 import Shared
 
-/// The one training that asks nothing: a deck of words with everything known about
-/// them on the face of the card.
 struct WordCardView: View {
     let vocabularyIds: [Int64]
 
@@ -80,7 +78,6 @@ struct WordCardView: View {
         steps = response.steps
     }
 
-    /// Recorded once apiece, however often the learner steps back and forth.
     private func record() async {
         guard let step = steps[safe: index], seen.insert(index).inserted else { return }
         try? await deps.recordWordCardSeen.invoke(

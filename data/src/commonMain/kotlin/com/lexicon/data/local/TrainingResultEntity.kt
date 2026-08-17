@@ -15,12 +15,5 @@ data class TrainingResultEntity(
     val outcome: String,
     val tipUsed: Boolean,
     val completedAtEpochMillis: Long,
-    /**
-     * Whether the word already had a schedule when this was answered.
-     *
-     * Recorded rather than worked out later: retention is about words coming back,
-     * and by the time anyone asks, the schedule has moved on and no longer says what
-     * it said at the moment of the answer.
-     */
     val wasReview: Boolean = false,
 )

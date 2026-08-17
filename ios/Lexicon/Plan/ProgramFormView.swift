@@ -1,11 +1,6 @@
 import SwiftUI
 import Shared
 
-/// A program over the words the learner starred.
-///
-/// The form asks only what is worth choosing — how much a day, and which trainings
-/// in what order. Its name is fixed, and the goal, scope and weights follow from the
-/// study set itself.
 struct ProgramFormView: View {
     let programId: ProgramId?
 
@@ -19,8 +14,6 @@ struct ProgramFormView: View {
     @State private var isEnrolled = false
     @State private var loaded = false
 
-    /// Which row is under the finger, how far it has been carried, and how tall a row
-    /// is — everything the reorder needs and nothing that outlives the gesture.
     @State private var draggedFrom: Int?
     @State private var dragOffset: CGFloat = 0
     @State private var rowHeight: CGFloat = 0
@@ -61,8 +54,7 @@ struct ProgramFormView: View {
                 slider("Reviews a day", value: $reviewWords, range: 0...max(favourites, minimumNewWords))
 
                 Text("Trainings").font(.subheadline.weight(.semibold))
-                // Adding rather than toggling: the same training twice in the queue is
-                // two turns at it, which is how the length of a day is chosen.
+
                 FlowLayout(spacing: Spacing.small) {
                     ForEach(TrainingCatalog.all.filter { $0.id != "memory_cards" && $0.id != "crossword" }) { entry in
                         Button { queue.append(entry.id) } label: {
@@ -129,8 +121,7 @@ struct ProgramFormView: View {
     }
 
     private func queueRow(_ i: Int, skin: TileSkin) -> some View {
-        // Tighter than a card: the queue is six of these one under another, and the
-        // point of the list is seeing the whole day's order at once.
+
         Tile(skin: skin, padding: Spacing.small) {
             HStack(spacing: Spacing.medium) {
                 Image(systemName: "line.3.horizontal")
@@ -142,22 +133,18 @@ struct ProgramFormView: View {
             }
             .foregroundStyle(skin.onTile)
         }
-        // The arrows this replaced are kept as accessibility actions: press and drag is
-        // not an instruction VoiceOver can carry out.
+
         .accessibilityAction(named: "Move earlier") { move(i, by: -1) }
         .accessibilityAction(named: "Move later") { move(i, by: 1) }
     }
 
-    /// The spacing the queue rows sit at, and so the distance one drag step covers.
     private var step: CGFloat { rowHeight + Spacing.medium }
 
-    /// Where the dragged row would land if the finger lifted now.
     private func landing(_ from: Int) -> Int {
         guard step > 0, !queue.isEmpty else { return from }
         return min(max(from + Int((dragOffset / step).rounded()), 0), queue.count - 1)
     }
 
-    /// The dragged row follows the finger; the rows it has passed step out of its way.
     private func rowShift(_ i: Int) -> CGFloat {
         guard let from = draggedFrom else { return 0 }
         if i == from { return dragOffset }
@@ -167,9 +154,6 @@ struct ProgramFormView: View {
         return 0
     }
 
-    /// Press, then drag. The queue itself is only rewritten on release: reordering
-    /// under a live gesture changes the row's index, which ends the gesture with the
-    /// finger still down.
     private func reorder(_ i: Int) -> some Gesture {
         LongPressGesture(minimumDuration: 0.3)
             .sequenced(before: DragGesture())
@@ -188,12 +172,6 @@ struct ProgramFormView: View {
             }
     }
 
-    /// A slider, unless there is nothing to slide.
-    ///
-    /// A study set smaller than the floor leaves a range with one value in it, and
-    /// SwiftUI's Slider treats that as fatal rather than as a disabled control. The
-    /// number on its own is what that case actually means: this is the amount, and
-    /// there is no choice to make about it.
     @ViewBuilder
     private func slider(_ title: String, value: Binding<Int>, range: ClosedRange<Int>) -> some View {
         VStack(alignment: .leading) {
@@ -216,12 +194,6 @@ struct ProgramFormView: View {
         }
     }
 
-    /// Takes the turn at `from` out and puts it back in at `from + by`.
-    ///
-    /// By position, not by name: the same training can sit in the queue more than once,
-    /// and moving one of them must not move the others. Removed and re-inserted rather
-    /// than swapped, because a drag passes over every position between the two and a
-    /// swap would leave the ones it passed in the wrong order.
     private func move(_ from: Int, by: Int) {
         let to = from + by
         guard queue.indices.contains(from), queue.indices.contains(to) else { return }
@@ -258,7 +230,6 @@ struct ProgramFormView: View {
     }
 }
 
-/// Chips that wrap, which SwiftUI has no stock container for.
 struct FlowLayout: Layout {
     var spacing: CGFloat = 8
 
@@ -294,8 +265,6 @@ struct FlowLayout: Layout {
     }
 }
 
-
-/// The height of a queue row, which every row shares and one drag step spans.
 private struct RowHeightKey: PreferenceKey {
     static var defaultValue: CGFloat = 0
 

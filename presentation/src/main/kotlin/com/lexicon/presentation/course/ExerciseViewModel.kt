@@ -30,27 +30,14 @@ sealed interface ExerciseUiState {
 
     data class Loaded(
         val exercise: LessonExercise,
-        /** One entry per question: the chosen option, or the text typed per blank. */
         val responses: ImmutableList<ImmutableList<String>> = persistentListOf(),
-        /**
-         * Whether each of those answers was right, laid out the same way and empty
-         * until there has been a marking. Per answer rather than per question so a
-         * line with three blanks can show which one of them was wrong.
-         */
         val correctness: ImmutableList<ImmutableList<Boolean>> = persistentListOf(),
         val answerState: AnswerState = AnswerState.Unanswered,
         val correctCount: Int = 0,
         val isPlaying: Boolean = false,
         val isAudioMissing: Boolean = false,
-        /** The left-hand item waiting for something to pair with, on a matching exercise. */
         val selectedPrompt: Int? = null,
     ) : ExerciseUiState {
-        /**
-         * The right-hand column of a matching exercise: every answer there is, in an
-         * order that is not the prompts' order — otherwise the pairing is given away
-         * by the layout. Shuffled from the exercise's own id, so it is the same
-         * column every time this exercise is opened.
-         */
         val choices: ImmutableList<String>
             get() = (exercise as? LessonExercise.Match)
                 ?.items
@@ -76,7 +63,6 @@ class ExerciseViewModel(
 
     private data class Content(
         val exercise: LessonExercise?,
-        /** The lesson track this exercise plays, which carries the Drive id. */
         val remoteId: String? = null,
         val responses: List<List<String>> = emptyList(),
         val correctness: List<List<Boolean>> = emptyList(),
@@ -151,12 +137,6 @@ class ExerciseViewModel(
         value: String,
     ) = updateResponse(index, gap, value)
 
-    /**
-     * Pairs the chosen left-hand item with a right-hand one.
-     *
-     * A right-hand answer belongs to one prompt at a time, so giving it to another
-     * takes it away from the first rather than leaving it in two places.
-     */
     fun onMatchChoiceSelected(choice: String) {
         val current = content.value ?: return
         val prompt = current.selectedPrompt ?: return
@@ -174,7 +154,6 @@ class ExerciseViewModel(
         content.update { it?.copy(selectedPrompt = if (it.selectedPrompt == index) null else index) }
     }
 
-    /** Marks every question at once: the exercise is a page of the book, not a step. */
     fun onCheck() {
         val current = content.value ?: return
         val exercise = current.exercise ?: return
@@ -231,7 +210,6 @@ class ExerciseViewModel(
     }
 }
 
-/** The answers each question expects, one list per question. */
 internal fun expectedAnswers(exercise: LessonExercise): List<List<String>> =
     when (exercise) {
         is LessonExercise.Repeat -> emptyList()

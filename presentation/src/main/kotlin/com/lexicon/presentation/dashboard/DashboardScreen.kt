@@ -71,7 +71,6 @@ private val MetricBarHeight = 3.dp
 private val StreakIconSize = 20.dp
 private val ButtonIconSize = 18.dp
 
-/** A progress track has to stay visible against the tile it is drawn on. */
 private const val TRACK_ALPHA = 0.25f
 
 @Composable
@@ -96,7 +95,7 @@ fun DashboardScreen(
             viewModel.onLaunchHandled()
         }
     }
-    // Coming back from a session is when every figure here has just moved.
+
     LaunchedEffect(Unit) { viewModel.onResumed() }
 
     DashboardContent(
@@ -132,7 +131,7 @@ private fun DashboardContent(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
                 )
-                // Saying where programs are is less use than going there.
+
                 Button(onClick = onGoToPlan) {
                     Text(stringResource(R.string.dashboard_go_to_plan))
                 }
@@ -151,10 +150,6 @@ private fun DashboardContent(
     }
 }
 
-/**
- * The program the learner is on, wearing the same coat as its tile on the Plan tab —
- * the one they tapped to get here, so it should be recognisably the same thing.
- */
 @Composable
 private fun ActiveProgramCard(
     uiState: DashboardUiState,
@@ -169,9 +164,6 @@ private fun ActiveProgramCard(
             horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            // Today's queue, drawn around the heart rather than written out as a
-            // fraction with a row of pips under it: it is the one figure that is
-            // about right now, and the program's own badge is what it belongs on.
             ProgressRing(
                 fraction = uiState.trainingsFraction,
                 skin = skin,
@@ -195,9 +187,7 @@ private fun ActiveProgramCard(
                     fontWeight = FontWeight.SemiBold,
                     color = skin.onTile,
                 )
-                // The study set's size, which is what the program is over. A count
-                // rather than a bar: none of it is behind the learner yet in any
-                // sense the app can measure honestly.
+
                 Text(
                     text = pluralStringResource(
                         R.plurals.dashboard_word_total,
@@ -213,9 +203,6 @@ private fun ActiveProgramCard(
             }
         }
 
-        // Only today's accuracy. Words mastered is a count now, said above; days
-        // studied is the streak badge; and the queue is the ring. What is left is the
-        // one figure that reports on the answers just given.
         progress?.metrics
             ?.firstOrNull { it.type == ProgressMetricType.ACCURACY }
             ?.let { MetricRow(it, skin) }
@@ -266,7 +253,6 @@ private fun ActiveProgramCard(
     }
 }
 
-/** How far through the program, as a ring drawn around whatever sits inside it. */
 @Composable
 private fun ProgressRing(
     fraction: Float,
@@ -279,8 +265,6 @@ private fun ProgressRing(
 
     Box(
         contentAlignment = Alignment.Center,
-        // The ring is the only place the day's count is shown, so it has to say so
-        // out loud for anyone who cannot see it drawn.
         modifier = Modifier.semantics { contentDescription = description },
     ) {
         Canvas(modifier = Modifier.size(RingSize)) {
@@ -298,7 +282,6 @@ private fun ProgressRing(
             )
             drawArc(
                 color = skin.onTile,
-                // From the top, the way a dial is read.
                 startAngle = -QUARTER_TURN_DEGREES,
                 sweepAngle = sweep,
                 useCenter = false,
@@ -311,12 +294,6 @@ private fun ProgressRing(
     }
 }
 
-/**
- * The streak, as a number worth keeping rather than a line of text.
- *
- * A run of days is the one figure a learner loses by not turning up, so it earns its
- * own corner of the card.
- */
 @Composable
 private fun StreakBadge(
     days: Int,
@@ -361,9 +338,8 @@ private fun MetricRow(
             )
             Text(
                 text = when {
-                    // Nothing answered yet today is not nought per cent.
                     !metric.isMeasured -> stringResource(R.string.dashboard_metric_unmeasured)
-                    // A share of answers reads as a percentage; a count as a count.
+
                     metric.type == ProgressMetricType.ACCURACY -> "${metric.current}%"
                     else -> "${metric.current} / ${metric.target}"
                 },

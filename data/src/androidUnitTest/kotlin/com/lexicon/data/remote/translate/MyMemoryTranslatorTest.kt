@@ -8,11 +8,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
 
-/**
- * MyMemory is a translation memory, not an engine: when it has no good match it
- * answers with whatever segment came closest, which is not always a translation and
- * is sometimes not even a word. These cover what gets past that.
- */
 class MyMemoryTranslatorTest {
     private val api: MyMemoryApi = mockk()
     private val translator = MyMemoryTranslator(api)
@@ -35,7 +30,7 @@ class MyMemoryTranslatorTest {
         runTest {
             answers("dragon")
             assertNull(translate())
-            // Casing differs but it is still the same word.
+
             answers("Dragon")
             assertNull(translate())
         }
@@ -43,7 +38,6 @@ class MyMemoryTranslatorTest {
     @Test
     fun `a stray sentence out of the memory is refused`() =
         runTest {
-            // A real answer this API gave for "smok".
             answers("Iain Walker wrote:")
             assertNull(translate("smok"))
         }

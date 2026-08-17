@@ -23,7 +23,6 @@ interface StudyDayDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(day: StudyDayEntity)
 
-    /** Folds one answer into today's row, creating it on the first answer of the day. */
     @Transaction
     suspend fun record(
         epochDay: Long,

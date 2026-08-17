@@ -56,7 +56,6 @@ import org.koin.androidx.compose.koinViewModel
 private val MinCellSize = 14.dp
 private val MaxCellSize = 40.dp
 
-/** How much of a cell its rounded corner takes, so a small cell stays a square. */
 private const val CELL_CORNER_FRACTION = 0.2f
 
 private const val LETTER_SIZE_RATIO = 0.5f
@@ -226,9 +225,6 @@ private fun CrosswordCellBox(
     }
     val textColor = MaterialTheme.colorScheme.onSurface
 
-    // Rounded in proportion to the cell rather than by a fixed radius: a dense grid
-    // squeezes cells down to about fourteen dp, and the theme's small corner is wider
-    // than half of that, so every square came out drawn as a circle.
     val corner = RoundedCornerShape(size * CELL_CORNER_FRACTION)
 
     Box(

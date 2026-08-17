@@ -90,7 +90,6 @@ class LessonViewModel(
         }
     }
 
-    /** Reads the Polish out loud; the translation is not what a learner needs to hear. */
     fun onPronounceWord(word: PresetWord) {
         viewModelScope.launch(dispatchers.io) {
             runCatching { speechSynthesizer.speak(word.text) }

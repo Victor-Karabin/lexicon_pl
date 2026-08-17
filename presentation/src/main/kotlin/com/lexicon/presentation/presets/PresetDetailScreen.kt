@@ -190,8 +190,6 @@ private fun PresetHeader(
     uiState: PresetDetailUiState.Loaded,
     onFavouriteToggled: (PresetFavouriteState) -> Unit,
 ) {
-    // Without the name, which the bar carries already, but in the preset's own
-    // colour so the screen is recognisably the tile that was tapped.
     val skin = presetTileSkin(uiState.preset)
     GradientTile(skin = skin) {
         PresetSummary(

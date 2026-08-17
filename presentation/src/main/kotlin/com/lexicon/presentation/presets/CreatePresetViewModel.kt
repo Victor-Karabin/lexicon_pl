@@ -18,7 +18,6 @@ data class CreatePresetUiState(
     val color: String = DEFAULT_PRESET_COLOR,
     val isSaving: Boolean = false,
     val problem: PresetDraftProblem? = null,
-    /** Set once the preset is stored; the screen closes on it. */
     val savedName: String? = null,
 ) {
     val canSave: Boolean get() = name.isNotBlank() && !isSaving
@@ -30,7 +29,6 @@ class CreatePresetViewModel(
     private val _uiState = MutableStateFlow(CreatePresetUiState())
     val uiState: StateFlow<CreatePresetUiState> = _uiState.asStateFlow()
 
-    // Clearing the problem on edit: the complaint was about what was typed before.
     fun onNameChanged(name: String) = _uiState.update { it.copy(name = name, problem = null) }
 
     fun onDescriptionChanged(description: String) = _uiState.update { it.copy(description = description) }

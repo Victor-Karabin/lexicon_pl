@@ -12,14 +12,6 @@ private val json = Json { ignoreUnknownKeys = true }
 private const val EN = "en"
 private const val PL = "pl"
 
-/**
- * MyMemory, which needs no API key — so the field fills itself in on a plain
- * checkout with nothing to sign up for.
- *
- * [looksLikeATranslation] is shared with Android rather than copied: a memory that
- * answers with a stray segment has to be rejected the same way on both, or the same
- * word would fill in on one platform and not the other.
- */
 class IosMyMemoryTranslator : Translator {
     override suspend fun translate(
         text: String,

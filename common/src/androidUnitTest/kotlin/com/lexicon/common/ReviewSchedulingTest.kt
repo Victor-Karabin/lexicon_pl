@@ -26,9 +26,6 @@ class ReviewSchedulingTest {
         assertEquals(6L, state.intervalDays)
         assertEquals(7L, state.dueAtEpochDay)
 
-        // Third and later intervals are the previous one grown by the ease factor,
-        // which three perfect answers have raised from 2.5 to 2.8: 6 × 2.8 = 16.8,
-        // rounded to 17.
         state = state.answer(RecallQuality.PERFECT, today = 7)
         assertEquals(2.8, state.easeFactor, 0.0001)
         assertEquals(17L, state.intervalDays)
@@ -62,7 +59,7 @@ class ReviewSchedulingTest {
         assertEquals(0, state.repetitions)
         assertEquals(settings.firstIntervalDays, state.intervalDays)
         assertEquals(1, state.lapses)
-        // Still learned: the word is familiar, only its spacing was wrong.
+
         assertTrue(state.isLearned)
     }
 

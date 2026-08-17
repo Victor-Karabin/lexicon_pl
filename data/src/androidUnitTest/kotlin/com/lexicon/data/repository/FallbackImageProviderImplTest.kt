@@ -79,7 +79,6 @@ class FallbackImageProviderImplTest {
 
             val result = provider.searchImages("kot", count = 3)
 
-            // Four pictures from two libraries beat three from one.
             assertEquals(listOf("a", "b", "c"), result)
         }
 

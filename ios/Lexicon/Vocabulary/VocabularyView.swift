@@ -1,8 +1,6 @@
 import SwiftUI
 import Shared
 
-/// The study set and the shipped presets: search, filter by level, star what is
-/// worth learning.
 struct VocabularyView: View {
     @StateObject private var model = VocabularyModel()
     @Environment(\.colorScheme) private var scheme
@@ -42,7 +40,7 @@ struct VocabularyView: View {
                                 }
                             }
                             .buttonStyle(.plain)
-                            // Long-press to start selecting, exactly as on Android.
+
                             .onLongPressGesture { model.startSelecting(word) }
                             .simultaneousGesture(TapGesture().onEnded {
                                 if model.isSelecting { model.toggleSelected(word) }
@@ -184,8 +182,7 @@ struct WordRow: View {
                 onFavourite: {}
             )
             Divider()
-            // No transcription: the brackets have to disappear with it rather than
-            // leaving an empty pair, which is what they did on Android once.
+
             WordRow(
                 word: PresetWord(
                     id: VocabularyId(value: 2),

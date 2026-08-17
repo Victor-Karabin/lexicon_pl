@@ -81,7 +81,6 @@ private val StatusIconSize = 24.dp
 private const val LOCKED_ALPHA = 0.45f
 private const val DESCRIPTION_LINES = 2
 
-/** A progress track has to stay visible against the tile it is drawn on. */
 private const val TRACK_ALPHA = 0.25f
 
 @Composable
@@ -129,8 +128,7 @@ private fun PlanContent(
             }
 
         uiState is PlanUiState.Loaded ->
-            // A tile apiece, for both kinds of thing: the tab shows what there is
-            // to work through, not all of it at once.
+
             LazyColumn(
                 modifier = modifier.fillMaxSize(),
                 contentPadding = PaddingValues(Dimens.spacingMedium),
@@ -145,9 +143,7 @@ private fun PlanContent(
                         onClick = { onProgramSelected(program.id) },
                     )
                 }
-                // Only until they have one. Building a second is a thing to want
-                // eventually, but an offer that never goes away reads as an
-                // unfinished setup step rather than an option.
+
                 if (uiState.programs.isEmpty()) {
                     item(key = "create-program") { CreateProgramTile(onClick = onCreateProgram) }
                 }
@@ -177,15 +173,6 @@ private fun SectionHeading(text: String) {
     )
 }
 
-/**
- * A program as a card: the level it takes the learner to, what it is aiming at, and
- * what a day of it costs.
- *
- * Deliberately not the same shape as the course tile below it. A course is a book to
- * work through at whatever pace; a program is a commitment to a daily figure, and the
- * tile says what that figure is before the learner taps. The one under way is filled
- * rather than merely labelled, so the tab can be read at a glance.
- */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ProgramTile(
@@ -234,8 +221,6 @@ private fun ProgramTile(
             }
         }
 
-        // What a day of it actually costs, which is the thing worth knowing before
-        // starting rather than after.
         TileChips {
             program.config.goals
                 .firstOrNull { it.type == TargetType.VOCABULARY }
@@ -265,13 +250,6 @@ private fun ProgramTile(
     }
 }
 
-/**
- * The offer to write a program, as a tile among the ones on offer.
- *
- * It sits where a program would sit because that is what tapping it produces, and it
- * is outlined rather than filled so it reads as an empty slot rather than as another
- * course already waiting.
- */
 @Composable
 private fun CreateProgramTile(onClick: () -> Unit) {
     val skin = tileSkin()
@@ -304,12 +282,6 @@ private fun CreateProgramTile(onClick: () -> Unit) {
     }
 }
 
-/**
- * A course as a card, wearing the same coat as the program above it.
- *
- * The medallion carries the lessons done rather than the level, because that is the
- * number a learner returning to a course is looking for.
- */
 @Composable
 private fun CourseTile(
     course: Course,
@@ -355,12 +327,6 @@ private fun CourseTile(
     }
 }
 
-/**
- * A course's progress, above its lessons.
- *
- * [showTitle] is off on the course's own screen, where the top bar names it already
- * and repeating it reads as a mistake.
- */
 @Composable
 internal fun CourseHeader(
     course: Course,
@@ -509,7 +475,6 @@ private fun previewProgram(
         ),
     )
 
-/** Both tile states side by side: the one under way, and one waiting to be taken up. */
 @LightDarkPreview
 @Composable
 private fun PlanProgramsPreview() {

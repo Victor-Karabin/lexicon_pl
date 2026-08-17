@@ -7,8 +7,7 @@ plugins {
 
 kotlin {
     androidTarget {
-        // Java is pinned to 17 below; Kotlin otherwise follows the JDK running
-        // Gradle, which is 21 in Android Studio and fails the target check.
+
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
@@ -19,7 +18,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            // Settings are observed as a Flow, so the repository contract needs coroutines.
+
             implementation(libs.kotlinx.coroutines.core)
         }
         androidUnitTest.dependencies {

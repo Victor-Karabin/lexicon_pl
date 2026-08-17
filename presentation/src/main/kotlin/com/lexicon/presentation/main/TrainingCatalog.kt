@@ -29,12 +29,6 @@ object TrainingIds {
     const val WORD_CARD = "word_card"
 }
 
-/**
- * A training as the list shows it.
- *
- * [icon] and [blurb] are here rather than on the screen because they are facts about
- * the training, and the screen should not have to know ten of them by name.
- */
 data class TrainingCatalogEntry(
     val id: String,
     val displayName: String,
@@ -124,14 +118,6 @@ val trainingCatalog =
         ),
     )
 
-/**
- * Trainings a program may draw on.
- *
- * Memory Cards picks its pairs at random from whatever list it is given, and
- * Crossword needs eight grid-placeable words and cannot take phrases — either one
- * quietly practises a different set than the program chose, which would make the
- * program's count of what was learned untrue.
- */
 val programTrainings =
     trainingCatalog.filter { it.isEnabled && it.id !in setOf(TrainingIds.MEMORY_CARDS, TrainingIds.CROSSWORD) }
 

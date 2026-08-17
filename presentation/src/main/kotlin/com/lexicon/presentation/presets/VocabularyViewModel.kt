@@ -132,7 +132,6 @@ class VocabularyViewModel(
         }
     }
 
-    /** Reads the Polish out loud; the translation is not what a learner needs to hear. */
     fun onPronounceWord(word: PresetWord) {
         viewModelScope.launch(dispatchers.io) {
             runCatching { speechSynthesizer.speak(word.text) }
@@ -170,7 +169,6 @@ class VocabularyViewModel(
         }
     }
 
-    /** Everything ticked, in one go, with one undo covering the lot. */
     fun onSelectedWordsDeleted(ids: Set<VocabularyId>) {
         if (ids.isEmpty()) return
         viewModelScope.launch(dispatchers.io) {

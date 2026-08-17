@@ -5,14 +5,6 @@ import kotlinx.serialization.Serializable
 
 data class ProgramId(val value: String)
 
-/**
- * Everything a program is, as configuration.
- *
- * The engine reads this and nothing else — no program is special-cased anywhere, so
- * a new one is a new JSON file. Every list defaults to empty and every number to
- * something usable, because a program that only sets a goal and a daily plan should
- * still run.
- */
 @Serializable
 data class ProgramConfig(
     val goals: List<ProgramGoal> = emptyList(),
@@ -27,23 +19,16 @@ data class ProgramConfig(
     val completion: CompletionRules = CompletionRules(),
 )
 
-// ---------------------------------------------------------------- goals
-
 enum class TargetType {
-    /** Words mastered, by the review schedule's reckoning. */
     VOCABULARY,
     LESSONS,
 
-    /** Minutes studied. */
     TIME,
 
-    /** Steps answered. */
     EXERCISES,
 
-    /** Consecutive days studied. */
     STREAK,
 
-    /** Correct answers as a percentage, 0-100. */
     ACCURACY,
 }
 
@@ -52,19 +37,15 @@ data class ProgramGoal(
     val id: String,
     val type: TargetType,
     val target: Int,
-    /** Days from enrolment; absent means no deadline. */
     val deadlineDays: Int? = null,
     val required: Boolean = true,
 )
-
-// ---------------------------------------------------------------- scope
 
 enum class ScopeSourceType { PRESET, FAVOURITES, CEFR_LEVEL, LESSON, ALL }
 
 @Serializable
 data class ScopeSource(
     val type: ScopeSourceType,
-    /** Preset id, CEFR band or lesson id, depending on [type]. */
     val value: String = "",
 )
 
@@ -78,18 +59,10 @@ data class VocabularyScope(
     val ordering: ScopeOrdering = ScopeOrdering.FREQUENCY,
 )
 
-// ---------------------------------------------------------------- strategy
-
 enum class LearningStrategy { NEW_FIRST, REVIEWS_FIRST, MIXED, TOPIC_BY_TOPIC, ADAPTIVE }
-
-// ---------------------------------------------------------------- daily plan
 
 enum class ActivityType { LEARN, REVIEW, PRONOUNCE, LISTEN, WRITE, MIXED, CHALLENGE }
 
-/**
- * What to do, not how. [trainings] names the trainings that can satisfy it; the
- * engine picks among them, which is what keeps a program independent of any one.
- */
 @Serializable
 data class ActivityConfig(
     val id: String,
@@ -101,11 +74,6 @@ data class ActivityConfig(
     val trainings: List<String> = emptyList(),
 )
 
-/**
- * A day's work. [weekend] overrides the weekday shape where a program wants one —
- * the spec's "review only, longer practice" — and falls back to the weekday plan
- * when absent.
- */
 @Serializable
 data class DailyPlanConfig(
     val newWords: Int = 0,
@@ -114,17 +82,9 @@ data class DailyPlanConfig(
     val maxWords: Int? = null,
     val activities: List<ActivityConfig> = emptyList(),
     val weekend: WeekendPlanConfig? = null,
-    /**
-     * The day's turns at the trainings, in the order they come.
-     *
-     * Written out rather than derived: a training appears as many times as the day
-     * should work through it, so how long a day is and what is in it are the one
-     * decision they look like.
-     */
     val queue: List<String> = emptyList(),
 )
 
-/** How many turns at a training the day asks for, which is what the learner counts down. */
 val DailyPlanConfig.trainingsADay: Int get() = queue.size
 
 @Serializable
@@ -135,8 +95,6 @@ data class WeekendPlanConfig(
     val activities: List<ActivityConfig> = emptyList(),
 )
 
-// ---------------------------------------------------------------- milestones
-
 @Serializable
 data class MilestoneConfig(
     val id: String,
@@ -144,21 +102,12 @@ data class MilestoneConfig(
     val conditions: List<ProgramCondition> = emptyList(),
 )
 
-/** One measurable requirement, shared by milestones and completion rules. */
 @Serializable
 data class ProgramCondition(
     val type: TargetType,
     val target: Int,
 )
 
-// ---------------------------------------------------------------- progress
-
-/**
- * How much each metric counts toward the single figure.
- *
- * Weights are validated at build time to sum to 100, so nothing here has to
- * normalise or apologise for a program whose numbers do not add up.
- */
 @Serializable
 data class ProgressWeights(
     val vocabulary: Int = 100,
@@ -167,8 +116,6 @@ data class ProgressWeights(
     val studyTime: Int = 0,
     val accuracy: Int = 0,
 )
-
-// ---------------------------------------------------------------- review
 
 @Serializable
 data class ReviewStrategyConfig(
@@ -179,11 +126,8 @@ data class ReviewStrategyConfig(
     val maxIntervalDays: Int = 365,
     val minimumEase: Double = 1.3,
     val masteredIntervalDays: Int = 21,
-    /** Words that lapsed come back before those merely due. */
     val failedFirst: Boolean = true,
 )
-
-// ---------------------------------------------------------------- adaptation
 
 enum class AdaptationTrigger {
     HIGH_ACCURACY,
@@ -208,14 +152,10 @@ enum class AdaptationAction {
 data class AdaptationRule(
     val id: String,
     val trigger: AdaptationTrigger,
-    /** What the trigger compares against: a percentage, a day count, a backlog size. */
     val threshold: Int,
     val action: AdaptationAction,
-    /** How much the action moves things, in whatever unit the action implies. */
     val amount: Int = 1,
 )
-
-// ---------------------------------------------------------------- rewards
 
 enum class RewardTrigger { MILESTONE, DAILY_GOAL, WEEKLY_GOAL, PROGRAM_COMPLETED, STREAK, ACCURACY, STUDY_TIME }
 
@@ -231,8 +171,6 @@ data class RewardConfig(
     val value: Int = 0,
     @SerialName("icon") val iconName: String? = null,
 )
-
-// ---------------------------------------------------------------- completion
 
 @Serializable
 data class CompletionRules(
