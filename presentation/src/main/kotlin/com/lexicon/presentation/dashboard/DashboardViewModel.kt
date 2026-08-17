@@ -3,6 +3,7 @@ package com.lexicon.presentation.dashboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.interactors.presets.VocabularyId
+import com.lexicon.interactors.program.CountFavouritesUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramProgressUseCase
 import com.lexicon.interactors.program.GetProgramUseCase
@@ -31,6 +32,8 @@ data class DashboardUiState(
     val program: Program? = null,
     val progress: ProgramProgress? = null,
     val streakDays: Int = 0,
+    /** How many words the study set holds, which is what the program is over. */
+    val favourites: Int = 0,
     val languageTag: String = "en",
     val day: ProgramDay? = null,
     /** Set when a session is ready; the screen navigates on it and clears it. */
@@ -43,6 +46,10 @@ data class DashboardUiState(
     val trainingsTotal: Int get() = day?.totalTrainings ?: 0
 
     val isDayComplete: Boolean get() = day?.isComplete == true
+
+    /** How much of today's queue is behind the learner, for the ring around the heart. */
+    val trainingsFraction: Float
+        get() = if (trainingsTotal <= 0) 0f else trainingsDone.toFloat() / trainingsTotal
 }
 
 /**
@@ -58,6 +65,7 @@ class DashboardViewModel(
     private val startSession: StartProgramSessionUseCase,
     private val getDay: GetProgramDayUseCase,
     private val getStreak: GetStudyStreakUseCase,
+    private val countFavourites: CountFavouritesUseCase,
     observeActiveEnrolment: ObserveActiveEnrolmentUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(DashboardUiState())
@@ -76,6 +84,7 @@ class DashboardViewModel(
                     program = program,
                     progress = program?.let { getProgress(it) },
                     streakDays = getStreak(),
+                    favourites = countFavourites(),
                     day = program?.let { getDay(it.id) },
                 )
             }
@@ -88,7 +97,12 @@ class DashboardViewModel(
         viewModelScope.launch {
             val day = getDay(program.id)
             _uiState.update {
-                it.copy(progress = getProgress(program), streakDays = getStreak(), day = day)
+                it.copy(
+                    progress = getProgress(program),
+                    streakDays = getStreak(),
+                    favourites = countFavourites(),
+                    day = day,
+                )
             }
         }
     }

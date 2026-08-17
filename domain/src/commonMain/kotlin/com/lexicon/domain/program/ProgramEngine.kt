@@ -3,7 +3,6 @@ package com.lexicon.domain.program
 import com.lexicon.boundary.ProgramRepository
 import com.lexicon.boundary.ReviewScheduleRepository
 import com.lexicon.boundary.StudyRecordRepository
-import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.Clock
@@ -25,10 +24,7 @@ import com.lexicon.interactors.program.TargetType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
-private const val MILLIS_PER_DAY = 86_400_000L
-
 /** Recent enough to reflect how the learner is doing now, long enough to be steady. */
-private const val ACCURACY_WINDOW_DAYS = 30
 private const val PERCENT = 100
 
 /**
@@ -151,7 +147,6 @@ class StartProgramSessionUseCaseImpl(
 class GetProgramProgressUseCaseImpl(
     private val programs: ProgramRepository,
     private val reviews: ReviewScheduleRepository,
-    private val history: TrainingHistoryRepository,
     private val study: StudyRecordRepository,
     private val clock: Clock,
 ) : GetProgramProgressUseCase {
@@ -182,13 +177,19 @@ class GetProgramProgressUseCaseImpl(
         }
 
         if (weights.accuracy > 0) {
-            val now = clock.nowEpochMillis()
-            val accuracy = history.accuracyBetween(now - ACCURACY_WINDOW_DAYS * MILLIS_PER_DAY, now)
+            // Today's answers, not a rolling month's. A figure averaged over weeks
+            // barely moves, so it says nothing about the session just finished; the
+            // day's own record is what the learner can still do something about.
+            val today = study.day(clock.todayEpochDay())
+            val answers = today?.answers ?: 0
             metrics += ProgressMetric(
                 type = ProgressMetricType.ACCURACY,
-                current = (accuracy.fraction * PERCENT).toInt(),
+                current = if (answers == 0) 0 else (today!!.correctAnswers * PERCENT) / answers,
                 target = PERCENT,
                 weight = weights.accuracy,
+                // Nothing answered today is not nought per cent — it is no figure at
+                // all, and a screen has to be able to tell the two apart.
+                isMeasured = answers > 0,
             )
         }
 

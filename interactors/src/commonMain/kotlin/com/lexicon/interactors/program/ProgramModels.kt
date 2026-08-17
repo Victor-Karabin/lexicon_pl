@@ -70,6 +70,11 @@ data class ProgressMetric(
     val current: Int,
     val target: Int,
     val weight: Int,
+    /**
+     * False when there is nothing to measure yet — no answers today, say. Distinct
+     * from a measured nought, which is a real and much worse figure.
+     */
+    val isMeasured: Boolean = true,
 ) {
     val fraction: Double get() = if (target <= 0) 1.0 else (current.toDouble() / target).coerceIn(0.0, 1.0)
 }

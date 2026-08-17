@@ -137,7 +137,6 @@
 
     <string name="dashboard_no_program">No program yet. Pick one on the Plan tab and it will show up here.</string>
     <string name="dashboard_go_to_plan">Go to Plan</string>
-    <string name="dashboard_trainings">Trainings today</string>
     <string name="dashboard_streak_unit">day streak</string>
     <string name="dashboard_day_done">Today is done. Come back tomorrow.</string>
     <string name="dashboard_meet_words">Meet %1$d new words</string>
@@ -148,13 +147,14 @@
     <string name="cards_edit">Edit this word</string>
     <string name="cards_none">No new words today.</string>
     <string name="dashboard_continuing">Continuing</string>
-    <string name="dashboard_overall">%1$d%% through</string>
     <string name="dashboard_streak">%1$d days running</string>
     <string name="dashboard_continue">Continue</string>
     <string name="dashboard_metric_vocabulary">Words mastered</string>
     <string name="dashboard_metric_milestones">Milestones</string>
     <string name="dashboard_metric_consistency">Days studied</string>
     <string name="dashboard_metric_study_time">Study time</string>
+    <string name="dashboard_trainings_of">%1$d of %2$d trainings today</string>
+    <string name="dashboard_metric_unmeasured">—</string>
     <string name="dashboard_metric_accuracy">Correct answers</string>
     <string name="training_dictation_blurb">Hear a word and type it</string>
     <string name="training_dictation_puzzle_blurb">Hear a word and build it from letters</string>
@@ -251,5 +251,9 @@
     <plurals name="presets_word_count_label">
         <item quantity="one">word</item>
         <item quantity="other">words</item>
+    </plurals>
+    <plurals name="dashboard_word_total">
+        <item quantity="one">%1$d word in your study set</item>
+        <item quantity="other">%1$d words in your study set</item>
     </plurals>
 </resources>
