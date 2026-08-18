@@ -1,5 +1,6 @@
 package com.lexicon.android.speech
 
+import android.util.Log
 import com.lexicon.android.audio.AudioPlayer
 import com.lexicon.android.cloud.CloudSpeechApi
 import com.lexicon.common.DispatcherProvider
@@ -32,7 +33,9 @@ class CloudSpeechSynthesizer(
 
         val cloud = lock.withLock {
             cached ?: withContext(dispatchers.io) {
-                runCatching { nameVoices(api.voices(LANGUAGE_CODE)) }.getOrDefault(emptyList())
+                runCatching { nameVoices(api.voices(LANGUAGE_CODE)) }
+                    .onFailure { failure -> Log.e(TAG, "Could not list Cloud voices", failure) }
+                    .getOrDefault(emptyList())
             }.also { if (it.isNotEmpty()) cached = it }
         }
 
@@ -47,9 +50,13 @@ class CloudSpeechSynthesizer(
         val path = withContext(dispatchers.io) { audioFor(text) }
 
         if (path == null) {
+            Log.w(TAG, "No Cloud audio; speaking with the device voice instead")
             fallback.speak(text, locale)
         } else {
-            runCatching { player.play(path) }.onFailure { fallback.speak(text, locale) }
+            runCatching { player.play(path) }.onFailure { failure ->
+                Log.w(TAG, "Playing Cloud audio failed; speaking with the device voice instead", failure)
+                fallback.speak(text, locale)
+            }
         }
     }
 
@@ -60,8 +67,12 @@ class CloudSpeechSynthesizer(
 
         store.filePath(voice, text)?.let { return it }
 
-        val audio = runCatching { api.synthesize(text, voice, LANGUAGE_CODE) }.getOrNull() ?: return null
+        val audio = runCatching { api.synthesize(text, voice, LANGUAGE_CODE) }
+            .onFailure { failure -> Log.e(TAG, "Synthesis threw for $voice", failure) }
+            .getOrNull() ?: return null
+
         return store.store(voice, text, audio)
+            ?: null.also { Log.w(TAG, "Could not keep the audio for $voice") }
     }
 
     /**
@@ -77,6 +88,7 @@ class CloudSpeechSynthesizer(
     }
 
     private companion object {
+        private const val TAG = "CloudSpeechSynthesizer"
         private const val LANGUAGE_CODE = "pl-PL"
     }
 }

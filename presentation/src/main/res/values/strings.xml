@@ -63,7 +63,7 @@
     <string name="settings_step_count">Steps per session</string>
     <string name="settings_voice">Voice</string>
     <string name="settings_voice_note">Tap a name to hear it.</string>
-    <string name="settings_step_count_note">Applies to new training sessions only.</string>
+    <string name="settings_step_count_note">Sets how many words each training asks about, and how many sentences the reading trainings write. Takes effect next session.</string>
 
     <!-- Verb conjugation course -->
     <string name="conjugation_title">Verb Conjugation</string>
