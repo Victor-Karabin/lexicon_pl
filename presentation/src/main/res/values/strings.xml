@@ -61,7 +61,8 @@
     <string name="settings_training">Training</string>
     <string name="settings_step_count">Steps per session</string>
     <string name="settings_voice">Voice</string>
-    <string name="settings_voice_note">Tap a name to hear it. Android does not say who a voice sounds like, so the names are labels — pick the one you like listening to.</string>
+    <string name="settings_voice_name">Voice %1$d</string>
+    <string name="settings_voice_note">Tap one to hear it. Android will not say whose voice it is — not even whether it is a man or a woman — so pick by ear.</string>
     <string name="settings_step_count_note">Applies to new training sessions only.</string>
 
     <!-- Mix -->

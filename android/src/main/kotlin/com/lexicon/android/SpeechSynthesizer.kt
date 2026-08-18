@@ -4,7 +4,6 @@ import java.util.Locale
 
 data class SpeechVoice(
     val id: String,
-    val displayName: String,
 )
 
 interface SpeechSynthesizer {
@@ -13,6 +12,6 @@ interface SpeechSynthesizer {
         locale: Locale = Locale.forLanguageTag("pl-PL"),
     )
 
-    /** The Polish voices this device has, named so one can be chosen from a list. */
+    /** The distinct Polish voices this device has, in a stable order. */
     suspend fun voices(): List<SpeechVoice>
 }

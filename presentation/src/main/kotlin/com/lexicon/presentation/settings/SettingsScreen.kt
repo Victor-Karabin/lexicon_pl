@@ -13,8 +13,11 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.Palette
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Slider
@@ -22,6 +25,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -154,39 +160,85 @@ private fun SettingsScreenContent(
         }
 
         if (voices.isNotEmpty()) {
-            GradientTile(skin = skin) {
-                SettingHeading(
-                    icon = Icons.AutoMirrored.Filled.VolumeUp,
-                    text = stringResource(R.string.settings_voice),
-                    skin = skin,
-                )
+            VoiceSetting(
+                voices = voices,
+                selectedId = settings.voiceId,
+                skin = skin,
+                onVoiceSelected = onVoiceSelected,
+            )
+        }
+    }
+}
 
-                voices.forEach { voice ->
+/**
+ * The voice picker, folded away until it is wanted.
+ *
+ * A device can list a good few voices and they all have to be heard to be told apart,
+ * so left open the section pushes everything else off the screen. Closed it shows the
+ * one in use; open it lists the rest.
+ */
+@Composable
+private fun VoiceSetting(
+    voices: List<SpeechVoice>,
+    selectedId: String?,
+    skin: TileSkin,
+    onVoiceSelected: (SpeechVoice) -> Unit,
+) {
+    var isOpen by rememberSaveable { mutableStateOf(false) }
+    val selected = voices.indexOfFirst { it.id == selectedId }.takeIf { it >= 0 } ?: 0
+
+    GradientTile(skin = skin) {
+        Row(
+            modifier = Modifier.fillMaxWidth().clickable { isOpen = !isOpen },
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            SettingHeading(
+                icon = Icons.AutoMirrored.Filled.VolumeUp,
+                text = stringResource(R.string.settings_voice),
+                skin = skin,
+                modifier = Modifier.weight(1f),
+            )
+            Text(
+                text = stringResource(R.string.settings_voice_name, selected + 1),
+                style = MaterialTheme.typography.bodyMedium,
+                color = skin.muted(),
+            )
+            Icon(
+                imageVector = if (isOpen) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                contentDescription = null,
+                tint = skin.muted(),
+            )
+        }
+
+        if (isOpen) {
+            Column(modifier = Modifier.selectableGroup()) {
+                voices.forEachIndexed { index, voice ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { onVoiceSelected(voice) },
+                            .selectable(
+                                selected = voice.id == selectedId,
+                                role = Role.RadioButton,
+                                onClick = { onVoiceSelected(voice) },
+                            ),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        RadioButton(
-                            selected = settings.voiceId == voice.id,
-                            onClick = { onVoiceSelected(voice) },
-                        )
+                        RadioButton(selected = voice.id == selectedId, onClick = null)
                         Text(
-                            text = voice.displayName,
+                            text = stringResource(R.string.settings_voice_name, index + 1),
                             modifier = Modifier.padding(start = Dimens.spacingMedium),
                             style = MaterialTheme.typography.bodyLarge,
                             color = skin.onTile,
                         )
                     }
                 }
-
-                Text(
-                    text = stringResource(R.string.settings_voice_note),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = skin.muted(),
-                )
             }
+
+            Text(
+                text = stringResource(R.string.settings_voice_note),
+                style = MaterialTheme.typography.bodySmall,
+                color = skin.muted(),
+            )
         }
     }
 }
@@ -196,8 +248,10 @@ private fun SettingHeading(
     icon: ImageVector,
     text: String,
     skin: TileSkin,
+    modifier: Modifier = Modifier,
 ) {
     Row(
+        modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
         verticalAlignment = Alignment.CenterVertically,
     ) {

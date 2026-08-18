@@ -25,6 +25,7 @@ required_words: {{required_words}}
 * Prefer vocabulary and grammar appropriate for the specified CEFR level.
 * Use the `target_word` exactly as provided when grammatically possible.
 * If the target word requires inflection to produce natural Polish, use the appropriate grammatical form.
+* The sentence must contain the `target_word` or an inflected form of it. Never replace it with a synonym or a paraphrase.
 * Make the meaning of the target word understandable from the sentence context.
 * Prefer everyday Polish rather than literary, archaic, regional, or unnatural constructions.
 * Avoid unnecessary complexity.
@@ -55,7 +56,7 @@ Before returning the result, internally verify:
 
 1. The Polish is grammatically correct.
 2. The sentence sounds natural to a native Polish speaker.
-3. The target word is used correctly.
+3. The target word, or a form of it, is present in the sentence and used correctly.
 4. The meaning of the target word is clear from context.
 5. The vocabulary and grammar are appropriate for the requested level.
 6. The sentence does not contain unnecessary complexity.

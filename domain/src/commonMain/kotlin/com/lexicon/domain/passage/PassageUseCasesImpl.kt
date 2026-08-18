@@ -31,6 +31,15 @@ import kotlin.uuid.Uuid
 
 private const val TRAINING_ID = "passage"
 
+/** Sentences generated over the target count, to absorb the ones that miss their word. */
+private const val SPARE_SENTENCES = 2
+
+/**
+ * Below this, a stem is too short to tell words apart — `i` would match everything it
+ * begins, so such targets have to appear whole.
+ */
+private const val MIN_STEM = 4
+
 class StartPassageSessionUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val generator: SentenceGenerator,
@@ -42,7 +51,7 @@ class StartPassageSessionUseCaseImpl(
 
         val level = favourites.maxLevel()
         val wanted = sentenceCountFor(level).random()
-        val targets = favourites.shuffled().take(wanted)
+        val targets = favourites.shuffled().take(wanted + SPARE_SENTENCES)
 
         val generated = coroutineScope {
             targets
@@ -66,15 +75,19 @@ class StartPassageSessionUseCaseImpl(
         generated.firstOrNull { it.second is SentenceResultBoundary.Refused }
             ?.let { return PassageSessionResult.Refused((it.second as SentenceResultBoundary.Refused).reason) }
 
-        val answers = mutableListOf<String>()
-        val sentences = generated.map { (word, result) ->
-            val sentence = (result as SentenceResultBoundary.Generated).sentence
-            PassageSentence(sentence.gapping(word.text, answers).toImmutableList())
-        }
+        val sentences = generated.mapNotNull { (word, result) ->
+            (result as SentenceResultBoundary.Generated).sentence
+                .gapping(word.text)
+                ?.let { PassageSentence(it.toImmutableList()) }
+        }.take(wanted)
+        if (sentences.isEmpty()) return PassageSessionResult.Refused("no sentence used the word it was given")
+
+        val passage = Passage(level = level, sentences = sentences.toImmutableList())
+        val answers = passage.gaps.map { it.answer }
 
         return PassageSessionResult.Ready(
             sessionId = Uuid.random().toString(),
-            passage = Passage(level = level, sentences = sentences.toImmutableList()),
+            passage = passage,
             bank = if (!request.withWordBank) {
                 emptyList<String>().toImmutableList()
             } else {
@@ -89,14 +102,19 @@ internal fun List<VocabularyItemBoundary>.maxLevel(): String =
         .maxByOrNull { CEFR_ORDER.indexOf(it) }
         ?: CEFR_ORDER.first()
 
-private fun String.gapping(
-    target: String,
-    answers: MutableList<String>,
-): List<PassageSegment> {
-    val found = Regex("\\p{L}+").findAll(this).firstOrNull { it.value.startsWithStem(target) }
-        ?: return listOf(PassageSegment.Text(this))
+/**
+ * Splits a sentence around the word it was written for, or null if that word never
+ * turned up in it.
+ *
+ * The model is told to use the word and mostly does, but now and then it reaches for a
+ * synonym — asked for `polegać` it writes `mogę na niego liczyć`. A sentence with
+ * nothing to fill in is not an exercise, so it is dropped rather than shown; spares are
+ * generated to cover the loss.
+ */
+private fun String.gapping(target: String): List<PassageSegment>? {
+    val stem = target.stem()
+    val found = Regex("\\p{L}+").findAll(this).firstOrNull { it.value.grewFrom(stem) } ?: return null
 
-    answers += found.value
     return buildList {
         if (found.range.first > 0) add(PassageSegment.Text(substring(0, found.range.first)))
         add(PassageSegment.Gap(found.value))
@@ -104,9 +122,21 @@ private fun String.gapping(
     }
 }
 
-private fun String.startsWithStem(target: String): Boolean {
-    val stem = target.lowercase().dropLast(if (target.length > 4) 2 else 0)
-    return lowercase().startsWith(stem)
+/**
+ * The part of a word that survives Polish inflection, near enough.
+ *
+ * A phrase is reduced to its longest word, which is the one carrying the meaning:
+ * `mieć na myśli` is looked for by `myśli`, not by `mieć`.
+ */
+private fun String.stem(): String {
+    val head = split(' ', '-', '\'').maxByOrNull { it.length }.orEmpty().lowercase()
+    return head.take(maxOf(MIN_STEM, head.length * 2 / 3))
+}
+
+/** Whether an inflected form in the sentence came from the target, without matching everything. */
+private fun String.grewFrom(stem: String): Boolean {
+    val word = lowercase()
+    return if (stem.length < MIN_STEM) word == stem else word.startsWith(stem)
 }
 
 class SubmitPassageAnswersUseCaseImpl(

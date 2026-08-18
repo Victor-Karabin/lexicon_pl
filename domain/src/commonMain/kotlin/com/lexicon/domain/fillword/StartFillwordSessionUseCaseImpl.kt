@@ -10,30 +10,49 @@ import com.lexicon.interactors.fillword.FillwordPuzzle
 import com.lexicon.interactors.fillword.FillwordSessionResult
 import com.lexicon.interactors.fillword.FillwordWord
 import com.lexicon.interactors.fillword.StartFillwordSessionUseCase
-import kotlinx.collections.immutable.toImmutableList
+import kotlin.random.Random
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 private const val GRID_SIZE = 10
 
-private const val MAX_WORDS = 8
+private const val MAX_WORDS = 12
 
-private const val DIFFICULTY = "MEDIUM"
+private const val MIN_WORD_LENGTH = 3
+
+/**
+ * How many letters of the grid the hidden words may claim before we stop adding more.
+ *
+ * Words overlap, so this is a floor on how full the grid gets rather than a ceiling —
+ * it keeps the placer from being handed more than it can fit.
+ */
+private const val MAX_LETTERS = GRID_SIZE * GRID_SIZE / 2
+
+private const val DIFFICULTY = "HARD"
+
+/**
+ * How many times to lay the whole grid out before settling for the best attempt.
+ *
+ * Placement is greedy, so an unlucky early word can block a later one; laying it out
+ * again from a fresh shuffle almost always finds room. It is arithmetic on a hundred
+ * cells, so trying several times costs nothing worth measuring.
+ */
+private const val PACKING_ATTEMPTS = 12
 
 class StartFillwordSessionUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val generator: FillwordGenerator,
 ) : StartFillwordSessionUseCase {
-    @OptIn(ExperimentalUuidApi::class)
     override suspend fun invoke(): FillwordSessionResult {
         val favourites = vocabulary.getItemsByIds(vocabulary.favouriteWordIds())
         if (favourites.isEmpty()) return FillwordSessionResult.NoFavourites
 
         val words = favourites
-            .map { it.text }
-            .filter { it.none(Char::isWhitespace) && it.length in 3..GRID_SIZE }
+            .map { it.text.uppercase() }
+            .filter { it.none(Char::isWhitespace) && it.length in MIN_WORD_LENGTH..GRID_SIZE }
+            .distinct()
             .shuffled()
-            .take(MAX_WORDS)
+            .fillGrid()
         if (words.isEmpty()) return FillwordSessionResult.NoFavourites
 
         return when (
@@ -43,45 +62,59 @@ class StartFillwordSessionUseCaseImpl(
         ) {
             FillwordResultBoundary.Offline -> FillwordSessionResult.Offline
             is FillwordResultBoundary.Refused -> FillwordSessionResult.Refused(result.reason)
-            is FillwordResultBoundary.Generated -> result.toSession()
+            is FillwordResultBoundary.Generated -> result.toSession(words)
         }
+    }
+
+    /** As many words as the grid will hold, taken in the order they were shuffled into. */
+    private fun List<String>.fillGrid(): List<String> {
+        var letters = 0
+        return takeWhile { word ->
+            letters += word.length
+            letters <= MAX_LETTERS
+        }.take(MAX_WORDS)
     }
 
     @OptIn(ExperimentalUuidApi::class)
-    private fun FillwordResultBoundary.Generated.toSession(): FillwordSessionResult {
-        val grid = this.grid.map { row -> row.map { it.uppercase() }.toImmutableList() }.toImmutableList()
-
-        val placed = placements.mapNotNull { placement ->
-            val direction = runCatching { FillwordDirection.valueOf(placement.direction) }.getOrNull()
-                ?: return@mapNotNull null
-            val word = FillwordWord(
-                word = placement.word.uppercase(),
-                start = FillwordCell(placement.startRow, placement.startColumn),
-                direction = direction,
-            )
-            word.takeIf { it.readsCorrectlyIn(grid) }
+    private fun FillwordResultBoundary.Generated.toSession(words: List<String>): FillwordSessionResult {
+        var best = pack(words)
+        repeat(PACKING_ATTEMPTS - 1) {
+            if (best.words.size < words.size) {
+                val attempt = pack(words)
+                if (attempt.words.size > best.words.size) best = attempt
+            }
         }
 
-        return if (placed.isEmpty()) {
-            FillwordSessionResult.Refused("no word could be found in the grid")
+        return if (best.words.isEmpty()) {
+            FillwordSessionResult.Refused("no word would fit the grid")
         } else {
-            FillwordSessionResult.Ready(
-                sessionId = Uuid.random().toString(),
-                puzzle = FillwordPuzzle(grid = grid, words = placed.toImmutableList()),
-            )
+            FillwordSessionResult.Ready(sessionId = Uuid.random().toString(), puzzle = best)
         }
+    }
+
+    /**
+     * One complete layout: the model's own placements where they still work, then every
+     * remaining word, longest first because long words are the ones that run out of room.
+     */
+    private fun FillwordResultBoundary.Generated.pack(words: List<String>): FillwordPuzzle {
+        val builder = FillwordGrid(size = GRID_SIZE, seed = grid, random = Random.Default)
+
+        placements.forEach { placement ->
+            val direction = runCatching { FillwordDirection.valueOf(placement.direction) }.getOrNull()
+                ?: return@forEach
+            val word = placement.word.uppercase()
+            if (word in words) {
+                builder.accept(
+                    FillwordWord(
+                        word = word,
+                        start = FillwordCell(placement.startRow, placement.startColumn),
+                        direction = direction,
+                    ),
+                )
+            }
+        }
+
+        words.sortedByDescending { it.length }.forEach(builder::add)
+        return builder.toPuzzle()
     }
 }
-
-/**
- * Whether the letters along the reported path actually spell the word.
- *
- * The generator is asked to check its own placements and often cannot: a word
- * search is fiddly arithmetic, and a plausible-looking answer with one coordinate
- * out sends the learner hunting for something that is not there. Anything that
- * does not read back is dropped rather than shown.
- */
-internal fun FillwordWord.readsCorrectlyIn(grid: List<List<String>>): Boolean =
-    cells.withIndex().all { (index, cell) ->
-        grid.getOrNull(cell.row)?.getOrNull(cell.column) == word[index].toString()
-    }

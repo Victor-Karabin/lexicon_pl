@@ -23,13 +23,17 @@ data class FillwordUiState(
     val problem: FillwordProblem = FillwordProblem.NONE,
     val puzzle: FillwordPuzzle? = null,
     val found: ImmutableSet<String> = persistentSetOf(),
+    /**
+     * The cells of the runs already claimed.
+     *
+     * Held rather than derived: the same letters can spell a word in more than one
+     * place, and the run the learner actually traced is the one to light up.
+     */
+    val foundCells: ImmutableSet<FillwordCell> = persistentSetOf(),
     /** The first corner of a pair, waiting for the second. */
     val anchor: FillwordCell? = null,
 ) {
     val total: Int get() = puzzle?.words?.size ?: 0
-
-    val foundCells: Set<FillwordCell>
-        get() = puzzle?.words.orEmpty().filter { it.word in found }.flatMap { it.cells }.toSet()
 
     val isComplete: Boolean get() = total > 0 && found.size == total
 }
@@ -60,25 +64,35 @@ class FillwordViewModel(
     }
 
     /**
-     * A word is claimed by tapping its two ends.
-     *
-     * Tapping rather than dragging: a ten by ten grid on a phone gives cells about
-     * thirty dp, and a drag across them is easy to start by accident while scrolling.
+     * A word can also be claimed by tapping its two ends, for anyone who finds dragging
+     * across small cells fiddly. The first tap parks an anchor, the second completes it.
      */
     fun onCellTapped(cell: FillwordCell) =
         _uiState.update { state ->
-            val puzzle = state.puzzle ?: return@update state
             val anchor = state.anchor
             when {
                 anchor == null -> state.copy(anchor = cell)
                 anchor == cell -> state.copy(anchor = null)
-                else -> {
-                    val word = puzzle.wordBetween(anchor, cell)
-                    state.copy(
-                        anchor = null,
-                        found = if (word == null) state.found else (state.found + word.word).toImmutableSet(),
-                    )
-                }
+                else -> state.claim(anchor, cell)
             }
         }
+
+    /** A run traced with a finger, from wherever it started to wherever it was lifted. */
+    fun onCellsTraced(
+        from: FillwordCell,
+        to: FillwordCell,
+    ) = _uiState.update { it.claim(from, to) }
+
+    private fun FillwordUiState.claim(
+        from: FillwordCell,
+        to: FillwordCell,
+    ): FillwordUiState {
+        val puzzle = puzzle ?: return this
+        val word = puzzle.wordAlong(from, to) ?: return copy(anchor = null)
+        return copy(
+            anchor = null,
+            found = (found + word.word).toImmutableSet(),
+            foundCells = (foundCells + puzzle.runBetween(from, to)).toImmutableSet(),
+        )
+    }
 }

@@ -1,6 +1,7 @@
 package com.lexicon.presentation.fillword
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -20,12 +21,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.fillword.FillwordCell
+import com.lexicon.interactors.fillword.FillwordPuzzle
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
@@ -52,6 +60,7 @@ fun FillwordScreen(
         uiState = uiState,
         onClose = onClose,
         onCellTapped = viewModel::onCellTapped,
+        onCellsTraced = viewModel::onCellsTraced,
         onDone = { onSessionComplete(uiState.found.size, uiState.total - uiState.found.size, 0, 0) },
         modifier = modifier,
     )
@@ -62,6 +71,7 @@ private fun FillwordContent(
     uiState: FillwordUiState,
     onClose: () -> Unit,
     onCellTapped: (FillwordCell) -> Unit,
+    onCellsTraced: (FillwordCell, FillwordCell) -> Unit,
     onDone: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -104,7 +114,11 @@ private fun FillwordContent(
                             .padding(Dimens.spacingMedium),
                         verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
                     ) {
-                        Grid(uiState = uiState, onCellTapped = onCellTapped)
+                        Grid(
+                            uiState = uiState,
+                            onCellTapped = onCellTapped,
+                            onCellsTraced = onCellsTraced,
+                        )
                         WordsToFind(uiState = uiState)
                     }
 
@@ -123,48 +137,97 @@ private fun FillwordContent(
 private fun Grid(
     uiState: FillwordUiState,
     onCellTapped: (FillwordCell) -> Unit,
+    onCellsTraced: (FillwordCell, FillwordCell) -> Unit,
 ) {
     val puzzle = uiState.puzzle ?: return
-    val found = uiState.foundCells
 
     BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
         val cellSize = (maxWidth / puzzle.size.coerceAtLeast(1)).coerceIn(MinCellSize, MaxCellSize)
+        val cellPx = with(LocalDensity.current) { cellSize.toPx() }
 
-        Column {
-            for (row in 0 until puzzle.size) {
-                Row {
-                    for (column in 0 until puzzle.size) {
-                        val cell = FillwordCell(row, column)
-                        val isFound = cell in found
-                        val isAnchor = uiState.anchor == cell
+        var from by remember(puzzle) { mutableStateOf<FillwordCell?>(null) }
+        var to by remember(puzzle) { mutableStateOf<FillwordCell?>(null) }
 
-                        GridCell(
-                            size = cellSize,
-                            background = when {
-                                isFound -> LexiconSuccessContainer
-                                isAnchor -> MaterialTheme.colorScheme.primaryContainer
-                                else -> MaterialTheme.colorScheme.surface
-                            },
-                            border = when {
-                                isFound -> LexiconSuccess
-                                isAnchor -> MaterialTheme.colorScheme.primary
-                                else -> MaterialTheme.colorScheme.outline
-                            },
-                            modifier = Modifier.clickable { onCellTapped(cell) },
-                        ) {
-                            Text(
-                                text = puzzle.letterAt(cell),
-                                style = gridLetterStyle(
-                                    size = cellSize,
-                                    color = if (isFound) LexiconSuccess else MaterialTheme.colorScheme.onSurface,
-                                ),
-                            )
+        val cellAt: (Offset) -> FillwordCell? = { offset ->
+            val row = (offset.y / cellPx).toInt()
+            val column = (offset.x / cellPx).toInt()
+            FillwordCell(row, column)
+                .takeIf { offset.x >= 0f && offset.y >= 0f && row < puzzle.size && column < puzzle.size }
+        }
+
+        val tracing = puzzle.tracedCells(from, to)
+
+        Box(
+            modifier = Modifier
+                .pointerInput(puzzle, cellPx) {
+                    detectDragGestures(
+                        onDragStart = { offset ->
+                            from = cellAt(offset)
+                            to = from
+                        },
+                        onDrag = { change, _ -> cellAt(change.position)?.let { to = it } },
+                        onDragEnd = {
+                            val start = from
+                            val finish = to
+                            if (start != null && finish != null && start != finish) {
+                                onCellsTraced(start, finish)
+                            }
+                            from = null
+                            to = null
+                        },
+                        onDragCancel = {
+                            from = null
+                            to = null
+                        },
+                    )
+                }.pointerInput(puzzle, cellPx) {
+                    detectTapGestures { offset -> cellAt(offset)?.let(onCellTapped) }
+                },
+        ) {
+            Column {
+                for (row in 0 until puzzle.size) {
+                    Row {
+                        for (column in 0 until puzzle.size) {
+                            val cell = FillwordCell(row, column)
+                            val isFound = cell in uiState.foundCells
+                            val isLive = cell in tracing || uiState.anchor == cell
+
+                            GridCell(
+                                size = cellSize,
+                                background = when {
+                                    isFound -> LexiconSuccessContainer
+                                    isLive -> MaterialTheme.colorScheme.primaryContainer
+                                    else -> MaterialTheme.colorScheme.surface
+                                },
+                                border = when {
+                                    isFound -> LexiconSuccess
+                                    isLive -> MaterialTheme.colorScheme.primary
+                                    else -> MaterialTheme.colorScheme.outline
+                                },
+                            ) {
+                                Text(
+                                    text = puzzle.letterAt(cell),
+                                    style = gridLetterStyle(
+                                        size = cellSize,
+                                        color = if (isFound) LexiconSuccess else MaterialTheme.colorScheme.onSurface,
+                                    ),
+                                )
+                            }
                         }
                     }
                 }
             }
         }
     }
+}
+
+/** The run under the finger right now, so the learner can see what they are about to claim. */
+private fun FillwordPuzzle.tracedCells(
+    from: FillwordCell?,
+    to: FillwordCell?,
+): Set<FillwordCell> {
+    if (from == null) return emptySet()
+    return runBetween(from, to ?: from).toSet()
 }
 
 @OptIn(ExperimentalLayoutApi::class)
