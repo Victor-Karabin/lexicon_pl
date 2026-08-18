@@ -7,6 +7,7 @@ enum class ThemeModeBoundary { SYSTEM, LIGHT, DARK }
 data class AppSettingsBoundary(
     val themeMode: ThemeModeBoundary,
     val stepCount: Int,
+    val voiceId: String? = null,
 )
 
 interface SettingsRepository {
@@ -17,4 +18,6 @@ interface SettingsRepository {
     suspend fun setThemeMode(themeMode: ThemeModeBoundary)
 
     suspend fun setStepCount(stepCount: Int)
+
+    suspend fun setVoiceId(voiceId: String?)
 }

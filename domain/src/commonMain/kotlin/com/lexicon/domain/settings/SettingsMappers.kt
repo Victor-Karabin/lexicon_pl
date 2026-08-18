@@ -5,7 +5,8 @@ import com.lexicon.boundary.ThemeModeBoundary
 import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.interactors.settings.ThemeMode
 
-fun AppSettingsBoundary.toAppSettings(): AppSettings = AppSettings(themeMode = themeMode.toThemeMode(), stepCount = stepCount)
+fun AppSettingsBoundary.toAppSettings(): AppSettings =
+    AppSettings(themeMode = themeMode.toThemeMode(), stepCount = stepCount, voiceId = voiceId)
 
 fun ThemeModeBoundary.toThemeMode(): ThemeMode =
     when (this) {

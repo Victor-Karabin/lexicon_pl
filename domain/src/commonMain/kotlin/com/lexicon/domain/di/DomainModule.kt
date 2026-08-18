@@ -12,6 +12,7 @@ import com.lexicon.domain.dictation.StartDictationSessionUseCaseImpl
 import com.lexicon.domain.dictation.SubmitDictationAnswerUseCaseImpl
 import com.lexicon.domain.dictationpuzzle.StartDictationPuzzleSessionUseCaseImpl
 import com.lexicon.domain.dictationpuzzle.SubmitDictationPuzzleAnswerUseCaseImpl
+import com.lexicon.domain.fillword.StartFillwordSessionUseCaseImpl
 import com.lexicon.domain.imagetest.StartImageTestSessionUseCaseImpl
 import com.lexicon.domain.imagetest.SubmitImageTestAnswerUseCaseImpl
 import com.lexicon.domain.memorycards.StartMemoryCardsSessionUseCaseImpl
@@ -65,6 +66,7 @@ import com.lexicon.domain.settings.ObserveSettingsUseCaseImpl
 import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.domain.settings.UpdateStepCountUseCaseImpl
 import com.lexicon.domain.settings.UpdateThemeModeUseCaseImpl
+import com.lexicon.domain.settings.UpdateVoiceUseCaseImpl
 import com.lexicon.domain.sync.SyncCatalogUseCaseImpl
 import com.lexicon.domain.training.CheckTrainingReadinessUseCaseImpl
 import com.lexicon.domain.trueorfalse.StartTrueOrFalseSessionUseCaseImpl
@@ -84,6 +86,7 @@ import com.lexicon.interactors.dictation.StartDictationSessionUseCase
 import com.lexicon.interactors.dictation.SubmitDictationAnswerUseCase
 import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionUseCase
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerUseCase
+import com.lexicon.interactors.fillword.StartFillwordSessionUseCase
 import com.lexicon.interactors.imagetest.StartImageTestSessionUseCase
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
 import com.lexicon.interactors.memorycards.StartMemoryCardsSessionUseCase
@@ -136,6 +139,7 @@ import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerUseCase
 import com.lexicon.interactors.settings.ObserveSettingsUseCase
 import com.lexicon.interactors.settings.UpdateStepCountUseCase
 import com.lexicon.interactors.settings.UpdateThemeModeUseCase
+import com.lexicon.interactors.settings.UpdateVoiceUseCase
 import com.lexicon.interactors.sync.SyncCatalogUseCase
 import com.lexicon.interactors.training.CheckTrainingReadinessUseCase
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
@@ -173,6 +177,7 @@ val domainModule = module {
     factoryOf(::ObserveSettingsUseCaseImpl) { bind<ObserveSettingsUseCase>() }
     factoryOf(::UpdateThemeModeUseCaseImpl) { bind<UpdateThemeModeUseCase>() }
     factoryOf(::UpdateStepCountUseCaseImpl) { bind<UpdateStepCountUseCase>() }
+    factoryOf(::UpdateVoiceUseCaseImpl) { bind<UpdateVoiceUseCase>() }
     factoryOf(::StartMixSessionUseCaseImpl) { bind<StartMixSessionUseCase>() }
     factoryOf(::GetVocabularyPresetsUseCaseImpl) { bind<GetVocabularyPresetsUseCase>() }
     factoryOf(::GetPresetCategoriesUseCaseImpl) { bind<GetPresetCategoriesUseCase>() }
@@ -199,6 +204,7 @@ val domainModule = module {
     factoryOf(::GetProgramDayUseCaseImpl) { bind<GetProgramDayUseCase>() }
     factoryOf(::AdvanceProgramDayUseCaseImpl) { bind<AdvanceProgramDayUseCase>() }
     factoryOf(::StartPassageSessionUseCaseImpl) { bind<StartPassageSessionUseCase>() }
+    factoryOf(::StartFillwordSessionUseCaseImpl) { bind<StartFillwordSessionUseCase>() }
     factoryOf(::SubmitPassageAnswersUseCaseImpl) { bind<SubmitPassageAnswersUseCase>() }
     factoryOf(::MarkCardsSeenUseCaseImpl) { bind<MarkCardsSeenUseCase>() }
     factoryOf(::GetWordCardsUseCaseImpl) { bind<GetWordCardsUseCase>() }

@@ -2,7 +2,6 @@ package com.lexicon.interactors.passage
 
 data class SubmitPassageAnswersRequest(
     val sessionId: String,
-    val passageId: String,
     val expected: List<String>,
     val answers: List<String>,
 )
