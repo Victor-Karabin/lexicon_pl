@@ -1,10 +1,14 @@
 package com.lexicon.domain.pronunciation
 
+import com.lexicon.boundary.AppSettingsBoundary
 import com.lexicon.boundary.SentenceGenerator
 import com.lexicon.boundary.SentenceRequestBoundary
 import com.lexicon.boundary.SentenceResultBoundary
+import com.lexicon.boundary.SettingsRepository
+import com.lexicon.boundary.ThemeModeBoundary
 import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.interactors.pronunciation.PronunciationSentencesResult
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -16,9 +20,14 @@ import org.junit.Test
 class StartPronunciationSentencesUseCaseImplTest {
     private val vocabulary: VocabularyRepository = mockk()
     private val generator: SentenceGenerator = mockk()
-    private val useCase = StartPronunciationSentencesUseCaseImpl(vocabulary, generator)
+    private val settings: SettingsRepository = mockk()
+    private val useCase = StartPronunciationSentencesUseCaseImpl(vocabulary, generator, StepCountResolver(settings))
+
+    private var stepCount = 5
 
     private fun givenFavourites(vararg words: String) {
+        coEvery { settings.getSettings() } returns
+            AppSettingsBoundary(themeMode = ThemeModeBoundary.SYSTEM, stepCount = stepCount)
         val items = words.mapIndexed { index, word ->
             VocabularyItemBoundary(index + 1L, word, "meaning of $word", "x", cefr = "A1")
         }
@@ -68,6 +77,30 @@ class StartPronunciationSentencesUseCaseImplTest {
             val session = (useCase() as PronunciationSentencesResult.Ready).session
 
             assertEquals(session.steps.indices.toList(), session.steps.map { it.stepIndex })
+        }
+
+    @Test
+    fun `the number of sentences follows the step count setting`() =
+        runTest {
+            stepCount = 4
+            givenFavourites("okno", "dom", "kot", "lampa", "stol", "zegar", "dywan")
+            generating("To jest")
+
+            val session = (useCase() as PronunciationSentencesResult.Ready).session
+
+            assertEquals(4, session.steps.size)
+        }
+
+    @Test
+    fun `there is never more to read than there are favourites`() =
+        runTest {
+            stepCount = 20
+            givenFavourites("okno", "dom")
+            generating("To jest")
+
+            val session = (useCase() as PronunciationSentencesResult.Ready).session
+
+            assertEquals(2, session.steps.size)
         }
 
     @Test

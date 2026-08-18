@@ -3,7 +3,6 @@ package com.lexicon.domain.fillword
 import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.fillword.FillwordCell
-import com.lexicon.interactors.fillword.FillwordDirection
 import com.lexicon.interactors.fillword.FillwordPuzzle
 import com.lexicon.interactors.fillword.FillwordSessionResult
 import io.mockk.coEvery
@@ -102,9 +101,11 @@ class StartFillwordSessionUseCaseImplTest {
                     "no diagonal in $directions",
                     directions.any { it.rowStep != 0 && it.columnStep != 0 },
                 )
+                // Any run heading up or leftwards counts: UP_LEFT is as backwards as LEFT,
+                // and with eight directions shared out those two exact ones can go unused.
                 assertTrue(
                     "nothing backwards in $directions",
-                    directions.any { it == FillwordDirection.LEFT || it == FillwordDirection.UP },
+                    directions.any { it.rowStep < 0 || it.columnStep < 0 },
                 )
             }
         }

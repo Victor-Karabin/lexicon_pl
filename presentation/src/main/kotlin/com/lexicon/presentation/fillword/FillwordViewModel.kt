@@ -6,6 +6,7 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.fillword.FillwordCell
 import com.lexicon.interactors.fillword.FillwordPuzzle
 import com.lexicon.interactors.fillword.FillwordSessionResult
+import com.lexicon.interactors.fillword.FillwordWord
 import com.lexicon.interactors.fillword.StartFillwordSessionUseCase
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
@@ -32,10 +33,21 @@ data class FillwordUiState(
     val foundCells: ImmutableSet<FillwordCell> = persistentSetOf(),
     /** The first corner of a pair, waiting for the second. */
     val anchor: FillwordCell? = null,
+    /** Whether the words still missing have been given away. */
+    val isRevealed: Boolean = false,
 ) {
     val total: Int get() = puzzle?.words?.size ?: 0
 
     val isComplete: Boolean get() = total > 0 && found.size == total
+
+    val missing: List<FillwordWord> get() = puzzle?.words.orEmpty().filterNot { it.word in found }
+
+    /** The cells of the words never found, shown only once they have been given away. */
+    val missingCells: Set<FillwordCell>
+        get() = if (!isRevealed) emptySet() else missing.flatMap { it.cells }.toSet() - foundCells
+
+    /** Nothing left to check once every word is found, or once the rest have been shown. */
+    val isFinished: Boolean get() = isComplete || isRevealed
 }
 
 class FillwordViewModel(
@@ -56,6 +68,9 @@ class FillwordViewModel(
             }
         }
     }
+
+    /** Gives away whatever is still hidden, so the learner can see what they missed. */
+    fun onCheck() = _uiState.update { it.copy(isRevealed = true, anchor = null) }
 
     /**
      * Hands the result screen the same word-by-word breakdown every other training gives
@@ -80,6 +95,7 @@ class FillwordViewModel(
      */
     fun onCellTapped(cell: FillwordCell) =
         _uiState.update { state ->
+            if (state.isRevealed) return@update state
             val anchor = state.anchor
             when {
                 anchor == null -> state.copy(anchor = cell)
@@ -98,6 +114,8 @@ class FillwordViewModel(
         from: FillwordCell,
         to: FillwordCell,
     ): FillwordUiState {
+        // Once the answers are on the screen, tracing one is reading rather than finding.
+        if (isRevealed) return this
         val puzzle = puzzle ?: return this
         val word = puzzle.wordAlong(from, to) ?: return copy(anchor = null)
         return copy(

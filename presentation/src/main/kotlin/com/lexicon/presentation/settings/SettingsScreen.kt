@@ -1,5 +1,6 @@
 package com.lexicon.presentation.settings
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,11 +16,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
-import androidx.compose.material.icons.filled.Female
 import androidx.compose.material.icons.filled.FitnessCenter
-import androidx.compose.material.icons.filled.Male
 import androidx.compose.material.icons.filled.Palette
-import androidx.compose.material.icons.filled.Transgender
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -33,18 +31,20 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.lexicon.android.speech.SpeechVoice
-import com.lexicon.android.speech.VoiceGender
 import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.interactors.settings.ThemeMode
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.theme.Dimens
+import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.GradientTile
 import com.lexicon.presentation.theme.component.Medallion
@@ -56,6 +56,9 @@ import org.koin.androidx.compose.koinViewModel
 import kotlin.math.roundToInt
 
 private val HeadingIconSize = 36.dp
+
+/** Barely-there wash marking the voice in use, so the row reads as chosen, not as a button. */
+private const val SELECTED_TINT = 0.08f
 
 @Composable
 fun SettingsScreen(
@@ -215,31 +218,32 @@ private fun VoiceSetting(
         }
 
         if (isOpen) {
-            Column(modifier = Modifier.selectableGroup()) {
-                voices.forEachIndexed { index, voice ->
+            Column(
+                modifier = Modifier.selectableGroup(),
+                verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
+            ) {
+                voices.forEach { voice ->
+                    val isSelected = voice.id == selectedId
+
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .selectable(
-                                selected = voice.id == selectedId,
+                            // Clipped before it is made selectable, so the press ripple
+                            // stops at the rounded edge rather than squaring it off.
+                            .clip(LexiconShapes.medium)
+                            .background(
+                                if (isSelected) skin.onTile.copy(alpha = SELECTED_TINT) else Color.Transparent,
+                            ).selectable(
+                                selected = isSelected,
                                 role = Role.RadioButton,
                                 onClick = { onVoiceSelected(voice) },
+                            ).padding(
+                                horizontal = Dimens.spacingSmall,
+                                vertical = Dimens.spacingTiny,
                             ),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        RadioButton(selected = voice.id == selectedId, onClick = null)
-                        // Cloud voices declare their gender, so the icon is fact rather
-                        // than a guess; device voices fall back to the neutral mark.
-                        Icon(
-                            imageVector = when (voice.gender) {
-                                VoiceGender.FEMALE -> Icons.Default.Female
-                                VoiceGender.MALE -> Icons.Default.Male
-                                VoiceGender.NEUTRAL -> Icons.Default.Transgender
-                            },
-                            contentDescription = null,
-                            tint = skin.muted(),
-                            modifier = Modifier.padding(start = Dimens.spacingSmall),
-                        )
+                        RadioButton(selected = isSelected, onClick = null)
                         Text(
                             text = voice.displayName,
                             modifier = Modifier.padding(start = Dimens.spacingMedium),

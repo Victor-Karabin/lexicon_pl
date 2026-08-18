@@ -10,6 +10,7 @@ import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.Clock
 import com.lexicon.domain.dictation.AnswerNormalizer
+import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.interactors.passage.CEFR_ORDER
 import com.lexicon.interactors.passage.Passage
 import com.lexicon.interactors.passage.PassageGapResult
@@ -21,7 +22,6 @@ import com.lexicon.interactors.passage.StartPassageSessionUseCase
 import com.lexicon.interactors.passage.SubmitPassageAnswersRequest
 import com.lexicon.interactors.passage.SubmitPassageAnswersResponse
 import com.lexicon.interactors.passage.SubmitPassageAnswersUseCase
-import com.lexicon.interactors.passage.sentenceCountFor
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -44,6 +44,7 @@ private const val MIN_STEM = 4
 class StartPassageSessionUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val generator: SentenceGenerator,
+    private val stepCountResolver: StepCountResolver,
 ) : StartPassageSessionUseCase {
     @OptIn(ExperimentalUuidApi::class)
     override suspend fun invoke(request: StartPassageSessionRequest): PassageSessionResult {
@@ -51,7 +52,11 @@ class StartPassageSessionUseCaseImpl(
         if (favourites.isEmpty()) return PassageSessionResult.NoFavourites
 
         val level = favourites.maxLevel()
-        val wanted = sentenceCountFor(level).random()
+
+        // One gap per step, so the setting that governs how long every other training runs
+        // governs this one too. The level still decides how hard the sentences are; it no
+        // longer decides how many there are.
+        val wanted = stepCountResolver.resolve(request.stepCount).coerceAtMost(favourites.size)
         val targets = favourites.shuffled().take(wanted + SPARE_SENTENCES)
 
         val generated = coroutineScope {

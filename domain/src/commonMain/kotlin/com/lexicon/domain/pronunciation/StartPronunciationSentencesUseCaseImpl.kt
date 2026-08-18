@@ -5,7 +5,7 @@ import com.lexicon.boundary.SentenceRequestBoundary
 import com.lexicon.boundary.SentenceResultBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.domain.passage.maxLevel
-import com.lexicon.interactors.passage.sentenceCountFor
+import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.interactors.pronunciation.PronunciationSentencesResult
 import com.lexicon.interactors.pronunciation.PronunciationSessionResponse
 import com.lexicon.interactors.pronunciation.PronunciationStepResponse
@@ -19,6 +19,7 @@ import kotlin.uuid.Uuid
 class StartPronunciationSentencesUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val generator: SentenceGenerator,
+    private val stepCountResolver: StepCountResolver,
 ) : StartPronunciationSentencesUseCase {
     @OptIn(ExperimentalUuidApi::class)
     override suspend fun invoke(): PronunciationSentencesResult {
@@ -26,7 +27,8 @@ class StartPronunciationSentencesUseCaseImpl(
         if (favourites.isEmpty()) return PronunciationSentencesResult.NoFavourites
 
         val level = favourites.maxLevel()
-        val targets = favourites.shuffled().take(sentenceCountFor(level).random())
+        val wanted = stepCountResolver.resolve(null).coerceAtMost(favourites.size)
+        val targets = favourites.shuffled().take(wanted)
 
         val generated = coroutineScope {
             targets

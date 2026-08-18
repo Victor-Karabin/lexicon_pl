@@ -38,23 +38,23 @@ private data class VoiceJson(
 )
 
 @Serializable
-private data class SynthesizeRequest(
+internal data class SynthesizeRequest(
     val input: InputJson,
     val voice: VoiceSelectionJson,
     val audioConfig: AudioConfigJson,
 )
 
 @Serializable
-private data class InputJson(val text: String)
+internal data class InputJson(val text: String)
 
 @Serializable
-private data class VoiceSelectionJson(
+internal data class VoiceSelectionJson(
     val languageCode: String,
     val name: String,
 )
 
 @Serializable
-private data class AudioConfigJson(
+internal data class AudioConfigJson(
     @SerialName("audioEncoding") val encoding: String = AUDIO_ENCODING,
 )
 
@@ -113,7 +113,7 @@ class CloudSpeechApi(
     private val apiKey: String,
     private val client: OkHttpClient = OkHttpClient(),
 ) {
-    private val json = Json { ignoreUnknownKeys = true }
+    private val json = CLOUD_JSON
 
     val isConfigured: Boolean get() = apiKey.isNotBlank()
 
@@ -145,14 +145,7 @@ class CloudSpeechApi(
         voice: String,
         languageCode: String,
     ): ByteArray? {
-        val payload = json.encodeToString(
-            SynthesizeRequest.serializer(),
-            SynthesizeRequest(
-                input = InputJson(text),
-                voice = VoiceSelectionJson(languageCode = languageCode, name = voice),
-                audioConfig = AudioConfigJson(),
-            ),
-        )
+        val payload = synthesizePayload(text = text, voice = voice, languageCode = languageCode)
 
         val request = Request.Builder()
             .url("$BASE_URL/text:synthesize?key=$apiKey")
@@ -220,6 +213,34 @@ class CloudSpeechApi(
         private const val RECOGNITION_MODEL = "latest_short"
     }
 }
+
+/**
+ * `encodeDefaults` matters here, and its absence is silent.
+ *
+ * kotlinx.serialization leaves defaulted fields out of the output unless told otherwise,
+ * so `audioConfig` went over the wire as `{}` and the encoding — the only field it
+ * carries — never arrived. Synthesis then failed for every voice alike, the synthesiser
+ * fell back to the device, and every voice in the list came out sounding the same.
+ */
+private val CLOUD_JSON = Json {
+    ignoreUnknownKeys = true
+    encodeDefaults = true
+}
+
+/** The body of a synthesis request, built where a test can read it. */
+internal fun synthesizePayload(
+    text: String,
+    voice: String,
+    languageCode: String,
+): String =
+    CLOUD_JSON.encodeToString(
+        SynthesizeRequest.serializer(),
+        SynthesizeRequest(
+            input = InputJson(text),
+            voice = VoiceSelectionJson(languageCode = languageCode, name = voice),
+            audioConfig = AudioConfigJson(),
+        ),
+    )
 
 private fun String.toGender(): VoiceGender =
     when (uppercase()) {
