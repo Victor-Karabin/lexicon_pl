@@ -51,6 +51,7 @@ fun PronunciationScreen(
     onSessionComplete: (correct: Int, incorrect: Int, skipped: Int, tipsUsed: Int) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
+    readsSentences: Boolean = false,
     viewModel: PronunciationViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -78,6 +79,7 @@ fun PronunciationScreen(
 
     PronunciationScreenContent(
         uiState = uiState,
+        readsSentences = readsSentences,
         onClose = onClose,
         onRecordRequested = {
             if (hasRecordAudioPermission) {
@@ -99,6 +101,7 @@ fun PronunciationScreen(
 @Composable
 private fun PronunciationScreenContent(
     uiState: PronunciationUiState,
+    readsSentences: Boolean,
     onClose: () -> Unit,
     onRecordRequested: () -> Unit,
     onPlayRecording: () -> Unit,
@@ -110,7 +113,14 @@ private fun PronunciationScreenContent(
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = { TrainingTopBar(title = stringResource(R.string.pronunciation_title), onClose = onClose) },
+        topBar = {
+            TrainingTopBar(
+                title = stringResource(
+                    if (readsSentences) R.string.pronunciation_sentences_title else R.string.pronunciation_title,
+                ),
+                onClose = onClose,
+            )
+        },
     ) { padding ->
         when (uiState) {
             is PronunciationUiState.Loading ->
@@ -121,6 +131,25 @@ private fun PronunciationScreenContent(
                 ) {
                     CircularProgressIndicator()
                 }
+            is PronunciationUiState.Unavailable ->
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingXl),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    Text(
+                        text = stringResource(
+                            when (uiState.reason) {
+                                UnavailableReason.OFFLINE -> R.string.pronunciation_sentences_offline
+                                UnavailableReason.REFUSED -> R.string.pronunciation_sentences_refused
+                                UnavailableReason.NO_FAVOURITES -> R.string.pronunciation_sentences_none
+                            },
+                        ),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+
             is PronunciationUiState.Loaded ->
                 Column(modifier = Modifier.fillMaxSize().padding(padding)) {
                     Column(
@@ -245,6 +274,7 @@ private fun PronunciationScreenContent(
 private fun PronunciationScreenUnansweredPreview() {
     LexiconTheme {
         PronunciationScreenContent(
+            readsSentences = false,
             uiState =
                 PronunciationUiState.Loaded(
                     stepIndex = 2,
@@ -268,6 +298,7 @@ private fun PronunciationScreenUnansweredPreview() {
 private fun PronunciationScreenRecordedPreview() {
     LexiconTheme {
         PronunciationScreenContent(
+            readsSentences = false,
             uiState =
                 PronunciationUiState.Loaded(
                     stepIndex = 2,
@@ -293,6 +324,7 @@ private fun PronunciationScreenRecordedPreview() {
 private fun PronunciationScreenTipRevealedPreview() {
     LexiconTheme {
         PronunciationScreenContent(
+            readsSentences = false,
             uiState =
                 PronunciationUiState.Loaded(
                     stepIndex = 2,
@@ -319,6 +351,7 @@ private fun PronunciationScreenTipRevealedPreview() {
 private fun PronunciationScreenIncorrectPreview() {
     LexiconTheme {
         PronunciationScreenContent(
+            readsSentences = false,
             uiState =
                 PronunciationUiState.Loaded(
                     stepIndex = 2,

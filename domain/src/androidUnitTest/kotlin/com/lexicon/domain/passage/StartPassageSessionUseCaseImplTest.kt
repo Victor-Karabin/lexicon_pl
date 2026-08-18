@@ -119,6 +119,20 @@ class StartPassageSessionUseCaseImplTest {
         }
 
     @Test
+    fun `each gap remembers the favourite it was inflected from`() =
+        runTest {
+            givenFavourites("książka")
+            answering(mapOf("książka" to "Czytam ciekawą książkę wieczorem."))
+
+            val session = run() as PassageSessionResult.Ready
+
+            // The gap holds książkę, which the vocabulary cannot be looked up by; the
+            // base form is what reaches the history and the result screen.
+            assertEquals(listOf("książkę"), session.passage.gaps.map { it.answer })
+            assertEquals(listOf("książka"), session.passage.gaps.map { it.word })
+        }
+
+    @Test
     fun `the word bank offers exactly the answers`() =
         runTest {
             givenFavourites("nowy", "okno", "gdy")

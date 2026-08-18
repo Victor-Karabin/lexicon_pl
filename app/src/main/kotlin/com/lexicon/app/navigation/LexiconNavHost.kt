@@ -46,6 +46,7 @@ import com.lexicon.presentation.program.PROGRAM_ID_ARG
 import com.lexicon.presentation.program.ProgramRunStep
 import com.lexicon.presentation.program.ProgramRunViewModel
 import com.lexicon.presentation.program.WordCardsScreen
+import com.lexicon.presentation.pronunciation.PRONUNCIATION_SENTENCES_ARG
 import com.lexicon.presentation.pronunciation.PronunciationScreen
 import com.lexicon.presentation.puzzle.PuzzleScreen
 import com.lexicon.presentation.trueorfalse.TrueOrFalseScreen
@@ -444,6 +445,30 @@ fun LexiconNavHost(
                     onClose = closeToMain,
                 )
             }
+        }
+
+        composable(
+            route = LexiconDestinations.trainingRoute(LexiconDestinations.PRONUNCIATION_SENTENCES),
+            arguments = listOf(
+                navArgument(TRAINING_WORDS_ARG) {
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+                navArgument(LexiconDestinations.PROGRAM_RUN_ARG) {
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+                navArgument(PRONUNCIATION_SENTENCES_ARG) {
+                    type = NavType.StringType
+                    defaultValue = true.toString()
+                },
+            ),
+        ) {
+            PronunciationScreen(
+                readsSentences = true,
+                onSessionComplete = onStepSessionComplete(LexiconDestinations.PRONUNCIATION_SENTENCES)(""),
+                onClose = closeToMain,
+            )
         }
 
         trainingDestination(

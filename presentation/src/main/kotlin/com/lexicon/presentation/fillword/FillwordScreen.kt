@@ -61,7 +61,10 @@ fun FillwordScreen(
         onClose = onClose,
         onCellTapped = viewModel::onCellTapped,
         onCellsTraced = viewModel::onCellsTraced,
-        onDone = { onSessionComplete(uiState.found.size, uiState.total - uiState.found.size, 0, 0) },
+        onDone = {
+            viewModel.onFinished()
+            onSessionComplete(uiState.found.size, uiState.total - uiState.found.size, 0, 0)
+        },
         modifier = modifier,
     )
 }
@@ -92,13 +95,7 @@ private fun FillwordContent(
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
-                        text = stringResource(
-                            when (uiState.problem) {
-                                FillwordProblem.OFFLINE -> R.string.fillword_offline
-                                FillwordProblem.REFUSED -> R.string.fillword_refused
-                                else -> R.string.fillword_none
-                            },
-                        ),
+                        text = stringResource(R.string.fillword_none),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -122,11 +119,15 @@ private fun FillwordContent(
                         WordsToFind(uiState = uiState)
                     }
 
+                    // Nothing here is checked — a word is either found or it is not — so
+                    // the one button reads Done however much of the grid is left.
                     TrainingActionRow(
                         onCheck = onDone,
                         onNext = onDone,
                         awaitingNext = uiState.isComplete,
                         checkEnabled = true,
+                        checkLabel = R.string.action_done,
+                        nextLabel = R.string.action_done,
                     )
                 }
         }
@@ -242,13 +243,17 @@ private fun WordsToFind(uiState: FillwordUiState) {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         ) {
             puzzle.words.forEach { word ->
                 val isFound = word.word in uiState.found
+
+                // Asked in English and answered in Polish: the clue is the meaning, and
+                // the word itself is what the learner is recalling, so it only appears
+                // once they have found it.
                 Text(
-                    text = word.word,
+                    text = if (isFound) word.word else puzzle.translationOf(word),
                     style = MaterialTheme.typography.bodyLarge,
                     color = if (isFound) LexiconSuccess else MaterialTheme.colorScheme.onSurface,
                     textDecoration = if (isFound) TextDecoration.LineThrough else null,

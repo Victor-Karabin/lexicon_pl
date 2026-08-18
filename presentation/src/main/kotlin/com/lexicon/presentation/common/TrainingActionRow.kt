@@ -27,6 +27,9 @@ fun TrainingActionRow(
     onUndo: (() -> Unit)? = null,
     onTip: (() -> Unit)? = null,
     onSkip: (() -> Unit)? = null,
+    /** Overrides the button's wording where "Check" and "Next" do not describe the step. */
+    checkLabel: Int = R.string.action_check,
+    nextLabel: Int = R.string.action_next,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -55,7 +58,7 @@ fun TrainingActionRow(
                 },
             enabled = awaitingNext || checkEnabled,
         ) {
-            Text(stringResource(if (awaitingNext) R.string.action_next else R.string.action_check))
+            Text(stringResource(if (awaitingNext) nextLabel else checkLabel))
         }
     }
 }

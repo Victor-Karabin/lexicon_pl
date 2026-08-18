@@ -3,8 +3,8 @@ package com.lexicon.presentation.course
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.LessonAudioLibrary
-import com.lexicon.android.LessonAudioPlayer
+import com.lexicon.android.lesson.LessonAudioLibrary
+import com.lexicon.android.lesson.LessonAudioPlayer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
 import com.lexicon.interactors.course.GetLessonUseCase

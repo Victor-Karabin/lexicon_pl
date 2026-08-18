@@ -7,6 +7,9 @@ import com.lexicon.interactors.fillword.FillwordCell
 import com.lexicon.interactors.fillword.FillwordPuzzle
 import com.lexicon.interactors.fillword.FillwordSessionResult
 import com.lexicon.interactors.fillword.StartFillwordSessionUseCase
+import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.LastSessionResultsHolder
+import com.lexicon.presentation.common.WordResultEntry
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toImmutableSet
@@ -16,11 +19,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-enum class FillwordProblem { NONE, NO_FAVOURITES, OFFLINE, REFUSED }
-
 data class FillwordUiState(
     val isLoading: Boolean = true,
-    val problem: FillwordProblem = FillwordProblem.NONE,
     val puzzle: FillwordPuzzle? = null,
     val found: ImmutableSet<String> = persistentSetOf(),
     /**
@@ -40,6 +40,7 @@ data class FillwordUiState(
 
 class FillwordViewModel(
     private val startSession: StartFillwordSessionUseCase,
+    private val lastSessionResultsHolder: LastSessionResultsHolder,
     private val dispatchers: DispatcherProvider,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(FillwordUiState())
@@ -51,15 +52,25 @@ class FillwordViewModel(
                 is FillwordSessionResult.Ready ->
                     _uiState.update { it.copy(isLoading = false, puzzle = session.puzzle) }
 
-                FillwordSessionResult.NoFavourites ->
-                    _uiState.update { it.copy(isLoading = false, problem = FillwordProblem.NO_FAVOURITES) }
-
-                FillwordSessionResult.Offline ->
-                    _uiState.update { it.copy(isLoading = false, problem = FillwordProblem.OFFLINE) }
-
-                is FillwordSessionResult.Refused ->
-                    _uiState.update { it.copy(isLoading = false, problem = FillwordProblem.REFUSED) }
+                FillwordSessionResult.NoFavourites -> _uiState.update { it.copy(isLoading = false) }
             }
+        }
+    }
+
+    /**
+     * Hands the result screen the same word-by-word breakdown every other training gives
+     * it: what was hidden, what it meant, and whether it was found.
+     */
+    fun onFinished() {
+        val puzzle = _uiState.value.puzzle ?: return
+        val found = _uiState.value.found
+
+        lastSessionResultsHolder.wordResults = puzzle.words.map { word ->
+            WordResultEntry(
+                word = word.word,
+                translation = puzzle.translationOf(word),
+                outcome = if (word.word in found) AnswerState.Correct else AnswerState.Incorrect(word.word),
+            )
         }
     }
 

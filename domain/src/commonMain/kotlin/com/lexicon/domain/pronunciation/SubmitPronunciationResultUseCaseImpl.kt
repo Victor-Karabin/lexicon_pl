@@ -40,7 +40,7 @@ class SubmitPronunciationResultUseCaseImpl(
     private fun resolveOutcome(request: SubmitPronunciationResultRequest): PronunciationStepOutcome =
         when {
             request.skipped -> PronunciationStepOutcome.SKIPPED
-            answerNormalizer.matches(request.expectedText, request.recognizedText) -> PronunciationStepOutcome.CORRECT
+            answerNormalizer.matchesSpoken(request.expectedText, request.recognizedText) -> PronunciationStepOutcome.CORRECT
             else -> PronunciationStepOutcome.INCORRECT
         }
 

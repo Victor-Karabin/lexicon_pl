@@ -1,4 +1,4 @@
-package com.lexicon.android
+package com.lexicon.android.lesson
 
 import android.content.Context
 import com.lexicon.common.DispatcherProvider

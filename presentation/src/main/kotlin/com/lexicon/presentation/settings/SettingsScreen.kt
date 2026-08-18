@@ -15,8 +15,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.Female
 import androidx.compose.material.icons.filled.FitnessCenter
+import androidx.compose.material.icons.filled.Male
 import androidx.compose.material.icons.filled.Palette
+import androidx.compose.material.icons.filled.Transgender
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -35,7 +38,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.lexicon.android.SpeechVoice
+import com.lexicon.android.speech.SpeechVoice
+import com.lexicon.android.speech.VoiceGender
 import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.interactors.settings.ThemeMode
 import com.lexicon.presentation.R
@@ -199,7 +203,7 @@ private fun VoiceSetting(
                 modifier = Modifier.weight(1f),
             )
             Text(
-                text = stringResource(R.string.settings_voice_name, selected + 1),
+                text = voices.getOrNull(selected)?.displayName.orEmpty(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = skin.muted(),
             )
@@ -224,8 +228,20 @@ private fun VoiceSetting(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         RadioButton(selected = voice.id == selectedId, onClick = null)
+                        // Cloud voices declare their gender, so the icon is fact rather
+                        // than a guess; device voices fall back to the neutral mark.
+                        Icon(
+                            imageVector = when (voice.gender) {
+                                VoiceGender.FEMALE -> Icons.Default.Female
+                                VoiceGender.MALE -> Icons.Default.Male
+                                VoiceGender.NEUTRAL -> Icons.Default.Transgender
+                            },
+                            contentDescription = null,
+                            tint = skin.muted(),
+                            modifier = Modifier.padding(start = Dimens.spacingSmall),
+                        )
                         Text(
-                            text = stringResource(R.string.settings_voice_name, index + 1),
+                            text = voice.displayName,
                             modifier = Modifier.padding(start = Dimens.spacingMedium),
                             style = MaterialTheme.typography.bodyLarge,
                             color = skin.onTile,

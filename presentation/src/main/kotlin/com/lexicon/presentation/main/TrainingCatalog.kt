@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Headphones
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Keyboard
 import androidx.compose.material.icons.filled.Link
+import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.QuestionMark
 import androidx.compose.material.icons.filled.RecordVoiceOver
 import androidx.compose.material.icons.filled.Style
@@ -23,6 +24,7 @@ object TrainingIds {
     const val TRUE_OR_FALSE = "true_or_false"
     const val WORD_MATCH = "word_match"
     const val PRONUNCIATION_CHECK = "pronunciation_check"
+    const val PRONUNCIATION_SENTENCES = "pronunciation_sentences"
     const val PUZZLE = "puzzle"
     const val IMAGE_TEST = "image_test"
     const val MEMORY_CARDS = "memory_cards"
@@ -94,6 +96,13 @@ val trainingCatalog =
             blurb = R.string.training_pronunciation_blurb,
         ),
         TrainingCatalogEntry(
+            id = TrainingIds.PRONUNCIATION_SENTENCES,
+            displayName = "Read Aloud",
+            isEnabled = true,
+            icon = Icons.Default.Mic,
+            blurb = R.string.training_pronunciation_sentences_blurb,
+        ),
+        TrainingCatalogEntry(
             id = TrainingIds.MEMORY_CARDS,
             displayName = "Memory Cards",
             isEnabled = true,
@@ -152,6 +161,7 @@ val programTrainings =
             TrainingIds.PASSAGE_WRITE,
             TrainingIds.PASSAGE_BANK,
             TrainingIds.FILLWORD,
+            TrainingIds.PRONUNCIATION_SENTENCES,
         )
     }
 

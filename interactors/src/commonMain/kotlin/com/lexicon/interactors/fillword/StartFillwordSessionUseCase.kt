@@ -7,10 +7,6 @@ sealed interface FillwordSessionResult {
     ) : FillwordSessionResult
 
     data object NoFavourites : FillwordSessionResult
-
-    data object Offline : FillwordSessionResult
-
-    data class Refused(val reason: String) : FillwordSessionResult
 }
 
 interface StartFillwordSessionUseCase {

@@ -58,6 +58,7 @@ import com.lexicon.domain.program.ObserveProgramsUseCaseImpl
 import com.lexicon.domain.program.ResolveProgramScopeUseCaseImpl
 import com.lexicon.domain.program.StartProgramSessionUseCaseImpl
 import com.lexicon.domain.program.UpdateProgramUseCaseImpl
+import com.lexicon.domain.pronunciation.StartPronunciationSentencesUseCaseImpl
 import com.lexicon.domain.pronunciation.StartPronunciationSessionUseCaseImpl
 import com.lexicon.domain.pronunciation.SubmitPronunciationResultUseCaseImpl
 import com.lexicon.domain.puzzle.StartPuzzleSessionUseCaseImpl
@@ -132,6 +133,7 @@ import com.lexicon.interactors.program.ObserveProgramsUseCase
 import com.lexicon.interactors.program.ResolveProgramScopeUseCase
 import com.lexicon.interactors.program.StartProgramSessionUseCase
 import com.lexicon.interactors.program.UpdateProgramUseCase
+import com.lexicon.interactors.pronunciation.StartPronunciationSentencesUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
@@ -205,6 +207,7 @@ val domainModule = module {
     factoryOf(::AdvanceProgramDayUseCaseImpl) { bind<AdvanceProgramDayUseCase>() }
     factoryOf(::StartPassageSessionUseCaseImpl) { bind<StartPassageSessionUseCase>() }
     factoryOf(::StartFillwordSessionUseCaseImpl) { bind<StartFillwordSessionUseCase>() }
+    factoryOf(::StartPronunciationSentencesUseCaseImpl) { bind<StartPronunciationSentencesUseCase>() }
     factoryOf(::SubmitPassageAnswersUseCaseImpl) { bind<SubmitPassageAnswersUseCase>() }
     factoryOf(::MarkCardsSeenUseCaseImpl) { bind<MarkCardsSeenUseCase>() }
     factoryOf(::GetWordCardsUseCaseImpl) { bind<GetWordCardsUseCase>() }

@@ -3,7 +3,7 @@ package com.lexicon.presentation.passage
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.SpeechSynthesizer
+import com.lexicon.android.speech.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.passage.Passage
 import com.lexicon.interactors.passage.PassageSegment
@@ -12,6 +12,9 @@ import com.lexicon.interactors.passage.StartPassageSessionRequest
 import com.lexicon.interactors.passage.StartPassageSessionUseCase
 import com.lexicon.interactors.passage.SubmitPassageAnswersRequest
 import com.lexicon.interactors.passage.SubmitPassageAnswersUseCase
+import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.LastSessionResultsHolder
+import com.lexicon.presentation.common.WordResultEntry
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -40,6 +43,9 @@ data class PassageUiState(
 ) {
     val expected: List<String> get() = passage?.gaps?.map { it.answer }.orEmpty()
 
+    /** The favourite behind each gap, in gap order. */
+    val words: List<String> get() = passage?.gaps?.map { it.word }.orEmpty()
+
     val correctCount: Int get() = correctness.count { it }
 
     val usedBankWords: Set<String> get() = answers.filter { it.isNotBlank() }.toSet()
@@ -51,6 +57,7 @@ class PassageViewModel(
     savedStateHandle: SavedStateHandle,
     private val startSession: StartPassageSessionUseCase,
     private val submitAnswers: SubmitPassageAnswersUseCase,
+    private val lastSessionResultsHolder: LastSessionResultsHolder,
     private val speechSynthesizer: SpeechSynthesizer,
     private val dispatchers: DispatcherProvider,
 ) : ViewModel() {
@@ -139,8 +146,20 @@ class PassageViewModel(
                     sessionId = sessionId,
                     expected = state.expected,
                     answers = state.answers,
+                    words = state.words,
                 ),
             )
+
+            // The same word-by-word breakdown every other training hands the result
+            // screen, so a single-screen training reads no differently at the end.
+            lastSessionResultsHolder.wordResults = result.results.map { gap ->
+                WordResultEntry(
+                    word = gap.expected,
+                    translation = gap.translation,
+                    outcome = if (gap.isCorrect) AnswerState.Correct else AnswerState.Incorrect(gap.expected),
+                )
+            }
+
             _uiState.update {
                 it.copy(isChecked = true, correctness = result.correct.toImmutableList())
             }

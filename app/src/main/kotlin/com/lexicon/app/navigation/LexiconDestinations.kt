@@ -21,6 +21,7 @@ internal object LexiconDestinations {
     const val TRUE_OR_FALSE = TrainingIds.TRUE_OR_FALSE
     const val WORD_MATCH = TrainingIds.WORD_MATCH
     const val PRONUNCIATION_CHECK = TrainingIds.PRONUNCIATION_CHECK
+    const val PRONUNCIATION_SENTENCES = TrainingIds.PRONUNCIATION_SENTENCES
     const val PUZZLE = TrainingIds.PUZZLE
     const val IMAGE_TEST = TrainingIds.IMAGE_TEST
     const val MEMORY_CARDS = TrainingIds.MEMORY_CARDS

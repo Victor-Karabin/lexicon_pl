@@ -3,7 +3,7 @@ package com.lexicon.presentation.program
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.SpeechSynthesizer
+import com.lexicon.android.speech.SpeechSynthesizer
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetWordCardsUseCase
 import com.lexicon.interactors.program.MarkCardsSeenUseCase
