@@ -1,6 +1,8 @@
 package com.lexicon.interactors.fillword
 
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.persistentMapOf
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.sign
@@ -41,8 +43,12 @@ data class FillwordWord(
 data class FillwordPuzzle(
     val grid: ImmutableList<ImmutableList<String>>,
     val words: ImmutableList<FillwordWord>,
+    /** What each hidden word means, so the list under the grid can ask in English. */
+    val translations: ImmutableMap<String, String> = persistentMapOf(),
 ) {
     val size: Int get() = grid.size
+
+    fun translationOf(word: FillwordWord): String = translations[word.word].orEmpty()
 
     fun letterAt(cell: FillwordCell): String = grid.getOrNull(cell.row)?.getOrNull(cell.column).orEmpty()
 

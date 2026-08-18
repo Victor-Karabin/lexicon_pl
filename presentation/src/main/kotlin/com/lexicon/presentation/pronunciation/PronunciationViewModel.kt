@@ -3,13 +3,15 @@ package com.lexicon.presentation.pronunciation
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.AudioPlayer
-import com.lexicon.android.SpeechRecognitionFailed
-import com.lexicon.android.SpeechRecognizerService
-import com.lexicon.android.SpeechSynthesizer
+import com.lexicon.android.audio.AudioPlayer
+import com.lexicon.android.recognition.SpeechRecognitionFailed
+import com.lexicon.android.recognition.SpeechRecognizerService
+import com.lexicon.android.speech.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
+import com.lexicon.interactors.pronunciation.PronunciationSentencesResult
 import com.lexicon.interactors.pronunciation.PronunciationStepOutcome
 import com.lexicon.interactors.pronunciation.PronunciationStepResponse
+import com.lexicon.interactors.pronunciation.StartPronunciationSentencesUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionRequest
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultRequest
@@ -33,9 +35,12 @@ import java.io.File
 private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 400L
 private const val SKIPPED_ANSWER_ADVANCE_DELAY_MS = 700L
 
+const val PRONUNCIATION_SENTENCES_ARG = "sentences"
+
 class PronunciationViewModel(
     savedStateHandle: SavedStateHandle,
     private val startSessionUseCase: StartPronunciationSessionUseCase,
+    private val startSentencesUseCase: StartPronunciationSentencesUseCase,
     private val submitResultUseCase: SubmitPronunciationResultUseCase,
     private val speechSynthesizer: SpeechSynthesizer,
     private val speechRecognizerService: SpeechRecognizerService,
@@ -44,6 +49,9 @@ class PronunciationViewModel(
     private val lastSessionResultsHolder: LastSessionResultsHolder,
 ) : ViewModel() {
     private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
+
+    /** Whether this run reads generated sentences rather than single words. */
+    private val readsSentences: Boolean = savedStateHandle.get<String>(PRONUNCIATION_SENTENCES_ARG).toBoolean()
 
     private val _uiState = MutableStateFlow<PronunciationUiState>(PronunciationUiState.Loading)
     val uiState: StateFlow<PronunciationUiState> = _uiState.asStateFlow()
@@ -65,7 +73,23 @@ class PronunciationViewModel(
 
     private fun startSession() {
         viewModelScope.launch(dispatchers.io) {
-            val response = startSessionUseCase(StartPronunciationSessionRequest(vocabularyIds = vocabularyIds))
+            val response = when {
+                readsSentences -> when (val result = startSentencesUseCase()) {
+                    is PronunciationSentencesResult.Ready -> result.session
+
+                    PronunciationSentencesResult.NoFavourites ->
+                        return@launch showUnavailable(UnavailableReason.NO_FAVOURITES)
+
+                    PronunciationSentencesResult.Offline ->
+                        return@launch showUnavailable(UnavailableReason.OFFLINE)
+
+                    is PronunciationSentencesResult.Refused ->
+                        return@launch showUnavailable(UnavailableReason.REFUSED)
+                }
+
+                else -> startSessionUseCase(StartPronunciationSessionRequest(vocabularyIds = vocabularyIds))
+            }
+
             sessionId = response.sessionId
             steps = response.steps
             _uiState.update {
@@ -73,15 +97,26 @@ class PronunciationViewModel(
                     stepIndex = 0,
                     totalSteps = steps.size,
                     word = steps.getOrNull(0)?.clueText.orEmpty(),
+                    tipsAvailable = !readsSentences,
                 )
             }
-            speakReferenceAudio()
         }
     }
 
+    private fun showUnavailable(reason: UnavailableReason) {
+        _uiState.update { PronunciationUiState.Unavailable(reason) }
+    }
+
+    /**
+     * Speaks the answer, once it is no longer an answer.
+     *
+     * This used to play at the start of every step, which handed over the very thing the
+     * learner was being asked to produce. It belongs after the attempt, where hearing it
+     * is a correction rather than a giveaway.
+     */
     private suspend fun speakReferenceAudio() {
         val step = currentStepOrNull() ?: return
-        speechSynthesizer.speak(step.expectedText)
+        runCatching { speechSynthesizer.speak(step.expectedText) }
     }
 
     fun onTipRequested() {
@@ -188,6 +223,7 @@ class PronunciationViewModel(
                 correctCount++
                 step?.let { wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Correct, tipUsed) }
                 updateLoaded { it.copy(answerState = AnswerState.Correct) }
+                speakReferenceAudio()
                 delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                 advanceToNextStep()
             }
@@ -197,6 +233,7 @@ class PronunciationViewModel(
                     wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Incorrect(expectedText), tipUsed)
                 }
                 updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText), isSubmitting = false) }
+                speakReferenceAudio()
             }
             PronunciationStepOutcome.SKIPPED -> {
                 skippedCount++
@@ -204,6 +241,7 @@ class PronunciationViewModel(
                     wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Skipped(expectedText), tipUsed)
                 }
                 updateLoaded { it.copy(answerState = AnswerState.Skipped(expectedText), isSubmitting = false) }
+                speakReferenceAudio()
                 delay(SKIPPED_ANSWER_ADVANCE_DELAY_MS)
                 advanceToNextStep()
             }
@@ -230,9 +268,13 @@ class PronunciationViewModel(
             return
         }
         _uiState.update {
-            PronunciationUiState.Loaded(stepIndex = nextIndex, totalSteps = steps.size, word = steps[nextIndex].clueText)
+            PronunciationUiState.Loaded(
+                stepIndex = nextIndex,
+                totalSteps = steps.size,
+                word = steps[nextIndex].clueText,
+                tipsAvailable = !readsSentences,
+            )
         }
-        speakReferenceAudio()
     }
 
     private fun currentStepOrNull(): PronunciationStepResponse? {

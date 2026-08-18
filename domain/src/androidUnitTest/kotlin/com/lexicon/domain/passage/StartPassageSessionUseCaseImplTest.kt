@@ -1,10 +1,14 @@
 package com.lexicon.domain.passage
 
+import com.lexicon.boundary.AppSettingsBoundary
 import com.lexicon.boundary.SentenceGenerator
 import com.lexicon.boundary.SentenceRequestBoundary
 import com.lexicon.boundary.SentenceResultBoundary
+import com.lexicon.boundary.SettingsRepository
+import com.lexicon.boundary.ThemeModeBoundary
 import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.interactors.passage.PassageSegment
 import com.lexicon.interactors.passage.PassageSessionResult
 import com.lexicon.interactors.passage.StartPassageSessionRequest
@@ -18,9 +22,14 @@ import org.junit.Test
 class StartPassageSessionUseCaseImplTest {
     private val vocabulary: VocabularyRepository = mockk()
     private val generator: SentenceGenerator = mockk()
-    private val useCase = StartPassageSessionUseCaseImpl(vocabulary, generator)
+    private val settings: SettingsRepository = mockk()
+    private val useCase = StartPassageSessionUseCaseImpl(vocabulary, generator, StepCountResolver(settings))
+
+    private var stepCount = 6
 
     private fun givenFavourites(vararg words: String) {
+        coEvery { settings.getSettings() } returns
+            AppSettingsBoundary(themeMode = ThemeModeBoundary.SYSTEM, stepCount = stepCount)
         val items = words.mapIndexed { index, word ->
             VocabularyItemBoundary(index + 1L, word, "x", "x", cefr = "A1")
         }
@@ -116,6 +125,80 @@ class StartPassageSessionUseCaseImplTest {
             val session = run() as PassageSessionResult.Ready
 
             assertEquals(listOf("myśli"), session.passage.gaps.map { it.answer })
+        }
+
+    @Test
+    fun `each gap remembers the favourite it was inflected from`() =
+        runTest {
+            givenFavourites("książka")
+            answering(mapOf("książka" to "Czytam ciekawą książkę wieczorem."))
+
+            val session = run() as PassageSessionResult.Ready
+
+            // The gap holds książkę, which the vocabulary cannot be looked up by; the
+            // base form is what reaches the history and the result screen.
+            assertEquals(listOf("książkę"), session.passage.gaps.map { it.answer })
+            assertEquals(listOf("książka"), session.passage.gaps.map { it.word })
+        }
+
+    @Test
+    fun `the number of gaps follows the step count setting`() =
+        runTest {
+            stepCount = 3
+            givenFavourites("nowy", "okno", "gdy", "lampa", "stol", "kot", "dom", "zegar")
+            answering(
+                mapOf(
+                    "nowy" to "Mam nowy telefon.",
+                    "okno" to "Otworz okno.",
+                    "gdy" to "Gdy wroce, zadzwonie.",
+                    "lampa" to "Kupilem lampa wczoraj.",
+                    "stol" to "To jest stol.",
+                    "kot" to "Widze kot na dachu.",
+                    "dom" to "To moj dom.",
+                    "zegar" to "Ten zegar spieszy.",
+                ),
+            )
+
+            val session = run() as PassageSessionResult.Ready
+
+            assertEquals(3, session.passage.sentences.size)
+            assertEquals(3, session.passage.gaps.size)
+        }
+
+    @Test
+    fun `a longer setting means a longer passage`() =
+        runTest {
+            stepCount = 7
+            givenFavourites("nowy", "okno", "gdy", "lampa", "stol", "kot", "dom", "zegar")
+            answering(
+                mapOf(
+                    "nowy" to "Mam nowy telefon.",
+                    "okno" to "Otworz okno.",
+                    "gdy" to "Gdy wroce, zadzwonie.",
+                    "lampa" to "Kupilem lampa wczoraj.",
+                    "stol" to "To jest stol.",
+                    "kot" to "Widze kot na dachu.",
+                    "dom" to "To moj dom.",
+                    "zegar" to "Ten zegar spieszy.",
+                ),
+            )
+
+            val session = run() as PassageSessionResult.Ready
+
+            assertEquals(7, session.passage.sentences.size)
+        }
+
+    /** Asking for more steps than there are starred words cannot invent them. */
+    @Test
+    fun `the passage is capped by how many favourites there are`() =
+        runTest {
+            stepCount = 20
+            givenFavourites("nowy", "okno")
+            answering(mapOf("nowy" to "Mam nowy telefon.", "okno" to "Otworz okno."))
+
+            val session = run() as PassageSessionResult.Ready
+
+            assertEquals(2, session.passage.sentences.size)
         }
 
     @Test

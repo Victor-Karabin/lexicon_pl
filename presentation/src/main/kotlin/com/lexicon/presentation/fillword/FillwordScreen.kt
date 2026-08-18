@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,7 +28,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.fillword.FillwordCell
 import com.lexicon.interactors.fillword.FillwordPuzzle
@@ -38,6 +39,8 @@ import com.lexicon.presentation.R
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
+import com.lexicon.presentation.theme.LexiconError
+import com.lexicon.presentation.theme.LexiconErrorContainer
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconSuccessContainer
 import com.lexicon.presentation.theme.component.GridCell
@@ -61,7 +64,11 @@ fun FillwordScreen(
         onClose = onClose,
         onCellTapped = viewModel::onCellTapped,
         onCellsTraced = viewModel::onCellsTraced,
-        onDone = { onSessionComplete(uiState.found.size, uiState.total - uiState.found.size, 0, 0) },
+        onCheck = viewModel::onCheck,
+        onDone = {
+            viewModel.onFinished()
+            onSessionComplete(uiState.found.size, uiState.total - uiState.found.size, 0, 0)
+        },
         modifier = modifier,
     )
 }
@@ -72,6 +79,7 @@ private fun FillwordContent(
     onClose: () -> Unit,
     onCellTapped: (FillwordCell) -> Unit,
     onCellsTraced: (FillwordCell, FillwordCell) -> Unit,
+    onCheck: () -> Unit,
     onDone: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -92,13 +100,7 @@ private fun FillwordContent(
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
-                        text = stringResource(
-                            when (uiState.problem) {
-                                FillwordProblem.OFFLINE -> R.string.fillword_offline
-                                FillwordProblem.REFUSED -> R.string.fillword_refused
-                                else -> R.string.fillword_none
-                            },
-                        ),
+                        text = stringResource(R.string.fillword_none),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -122,11 +124,14 @@ private fun FillwordContent(
                         WordsToFind(uiState = uiState)
                     }
 
+                    // Check gives away whatever is still hidden rather than marking
+                    // anything; once there is nothing left to give away, only Done remains.
                     TrainingActionRow(
-                        onCheck = onDone,
+                        onCheck = onCheck,
                         onNext = onDone,
-                        awaitingNext = uiState.isComplete,
+                        awaitingNext = uiState.isFinished,
                         checkEnabled = true,
+                        nextLabel = R.string.action_done,
                     )
                 }
         }
@@ -190,17 +195,20 @@ private fun Grid(
                         for (column in 0 until puzzle.size) {
                             val cell = FillwordCell(row, column)
                             val isFound = cell in uiState.foundCells
+                            val isMissed = cell in uiState.missingCells
                             val isLive = cell in tracing || uiState.anchor == cell
 
                             GridCell(
                                 size = cellSize,
                                 background = when {
                                     isFound -> LexiconSuccessContainer
+                                    isMissed -> LexiconErrorContainer
                                     isLive -> MaterialTheme.colorScheme.primaryContainer
                                     else -> MaterialTheme.colorScheme.surface
                                 },
                                 border = when {
                                     isFound -> LexiconSuccess
+                                    isMissed -> LexiconError
                                     isLive -> MaterialTheme.colorScheme.primary
                                     else -> MaterialTheme.colorScheme.outline
                                 },
@@ -209,7 +217,11 @@ private fun Grid(
                                     text = puzzle.letterAt(cell),
                                     style = gridLetterStyle(
                                         size = cellSize,
-                                        color = if (isFound) LexiconSuccess else MaterialTheme.colorScheme.onSurface,
+                                        color = when {
+                                            isFound -> LexiconSuccess
+                                            isMissed -> LexiconError
+                                            else -> MaterialTheme.colorScheme.onSurface
+                                        },
                                     ),
                                 )
                             }
@@ -230,10 +242,39 @@ private fun FillwordPuzzle.tracedCells(
     return runBetween(from, to ?: from).toSet()
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun WordsToFind(uiState: FillwordUiState) {
     val puzzle = uiState.puzzle ?: return
+    val pending = MaterialTheme.colorScheme.onSurface
+    val separator = MaterialTheme.colorScheme.onSurfaceVariant
+
+    // One run of text rather than a row of separate labels: the clues then wrap the way a
+    // sentence does, and a comma can never end up stranded at the start of a line.
+    val clues = buildAnnotatedString {
+        puzzle.words.forEachIndexed { index, word ->
+            val isFound = word.word in uiState.found
+            val isMissed = !isFound && uiState.isRevealed
+
+            // Asked in English and answered in Polish: the clue is the meaning, and the
+            // word itself appears once it is found — or once it is given away.
+            withStyle(
+                SpanStyle(
+                    color = when {
+                        isFound -> LexiconSuccess
+                        isMissed -> LexiconError
+                        else -> pending
+                    },
+                    textDecoration = if (isFound) TextDecoration.LineThrough else null,
+                ),
+            ) {
+                append(if (isFound || isMissed) word.word else puzzle.translationOf(word))
+            }
+
+            if (index < puzzle.words.lastIndex) {
+                withStyle(SpanStyle(color = separator)) { append(", ") }
+            }
+        }
+    }
 
     Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
         Text(
@@ -241,19 +282,6 @@ private fun WordsToFind(uiState: FillwordUiState) {
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-            verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-        ) {
-            puzzle.words.forEach { word ->
-                val isFound = word.word in uiState.found
-                Text(
-                    text = word.word,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = if (isFound) LexiconSuccess else MaterialTheme.colorScheme.onSurface,
-                    textDecoration = if (isFound) TextDecoration.LineThrough else null,
-                )
-            }
-        }
+        Text(text = clues, style = MaterialTheme.typography.bodyLarge)
     }
 }

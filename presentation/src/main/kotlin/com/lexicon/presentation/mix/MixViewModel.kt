@@ -3,9 +3,9 @@ package com.lexicon.presentation.mix
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.SpeechRecognitionFailed
-import com.lexicon.android.SpeechRecognizerService
-import com.lexicon.android.SpeechSynthesizer
+import com.lexicon.android.recognition.SpeechRecognitionFailed
+import com.lexicon.android.recognition.SpeechRecognizerService
+import com.lexicon.android.speech.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.dictation.DictationStepOutcome
 import com.lexicon.interactors.dictation.SubmitDictationAnswerRequest

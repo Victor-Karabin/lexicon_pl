@@ -1,4 +1,4 @@
-package com.lexicon.android
+package com.lexicon.android.lesson
 
 interface LessonAudioLibrary {
     fun localPathOrNull(file: String): String?

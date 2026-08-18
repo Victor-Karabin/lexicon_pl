@@ -1,4 +1,4 @@
-package com.lexicon.android
+package com.lexicon.android.recognition
 
 import java.util.Locale
 

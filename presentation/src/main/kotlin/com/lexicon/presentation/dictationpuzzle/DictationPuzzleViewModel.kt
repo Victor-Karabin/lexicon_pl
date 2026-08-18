@@ -3,7 +3,7 @@ package com.lexicon.presentation.dictationpuzzle
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.SpeechSynthesizer
+import com.lexicon.android.speech.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.dictationpuzzle.DictationPuzzleStepOutcome
 import com.lexicon.interactors.dictationpuzzle.DictationPuzzleStepResponse

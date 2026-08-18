@@ -1,4 +1,4 @@
-package com.lexicon.android
+package com.lexicon.android.audio
 
 interface AudioPlayer {
     suspend fun play(filePath: String)

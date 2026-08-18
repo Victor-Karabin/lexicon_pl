@@ -1,4 +1,4 @@
-package com.lexicon.android
+package com.lexicon.android.audio
 
 import android.media.MediaPlayer
 import com.lexicon.common.DispatcherProvider

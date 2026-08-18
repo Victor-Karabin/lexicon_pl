@@ -1,5 +1,6 @@
 package com.lexicon.presentation.settings
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,17 +31,20 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.lexicon.android.SpeechVoice
+import com.lexicon.android.speech.SpeechVoice
 import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.interactors.settings.ThemeMode
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.theme.Dimens
+import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.GradientTile
 import com.lexicon.presentation.theme.component.Medallion
@@ -52,6 +56,9 @@ import org.koin.androidx.compose.koinViewModel
 import kotlin.math.roundToInt
 
 private val HeadingIconSize = 36.dp
+
+/** Barely-there wash marking the voice in use, so the row reads as chosen, not as a button. */
+private const val SELECTED_TINT = 0.08f
 
 @Composable
 fun SettingsScreen(
@@ -199,7 +206,7 @@ private fun VoiceSetting(
                 modifier = Modifier.weight(1f),
             )
             Text(
-                text = stringResource(R.string.settings_voice_name, selected + 1),
+                text = voices.getOrNull(selected)?.displayName.orEmpty(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = skin.muted(),
             )
@@ -211,21 +218,34 @@ private fun VoiceSetting(
         }
 
         if (isOpen) {
-            Column(modifier = Modifier.selectableGroup()) {
-                voices.forEachIndexed { index, voice ->
+            Column(
+                modifier = Modifier.selectableGroup(),
+                verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
+            ) {
+                voices.forEach { voice ->
+                    val isSelected = voice.id == selectedId
+
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .selectable(
-                                selected = voice.id == selectedId,
+                            // Clipped before it is made selectable, so the press ripple
+                            // stops at the rounded edge rather than squaring it off.
+                            .clip(LexiconShapes.medium)
+                            .background(
+                                if (isSelected) skin.onTile.copy(alpha = SELECTED_TINT) else Color.Transparent,
+                            ).selectable(
+                                selected = isSelected,
                                 role = Role.RadioButton,
                                 onClick = { onVoiceSelected(voice) },
+                            ).padding(
+                                horizontal = Dimens.spacingSmall,
+                                vertical = Dimens.spacingTiny,
                             ),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        RadioButton(selected = voice.id == selectedId, onClick = null)
+                        RadioButton(selected = isSelected, onClick = null)
                         Text(
-                            text = stringResource(R.string.settings_voice_name, index + 1),
+                            text = voice.displayName,
                             modifier = Modifier.padding(start = Dimens.spacingMedium),
                             style = MaterialTheme.typography.bodyLarge,
                             color = skin.onTile,

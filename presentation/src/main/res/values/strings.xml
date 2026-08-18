@@ -5,6 +5,7 @@
     <string name="action_undo">Undo</string>
     <string name="action_check">Check</string>
     <string name="action_next">Next</string>
+    <string name="action_done">Done</string>
     <string name="status_correct">✓ Correct</string>
     <string name="status_incorrect">✗ Incorrect</string>
     <string name="status_skipped">Skipped</string>
@@ -61,8 +62,7 @@
     <string name="settings_training">Training</string>
     <string name="settings_step_count">Steps per session</string>
     <string name="settings_voice">Voice</string>
-    <string name="settings_voice_name">Voice %1$d</string>
-    <string name="settings_voice_note">Tap one to hear it. Android will not say whose voice it is — not even whether it is a man or a woman — so pick by ear.</string>
+    <string name="settings_voice_note">Tap a name to hear it.</string>
     <string name="settings_step_count_note">Applies to new training sessions only.</string>
 
     <!-- Mix -->
@@ -169,11 +169,14 @@
     <string name="training_passage_bank_blurb">Read a text and pick the missing words</string>
     <string name="passage_write_title">Read and Write</string>
     <string name="passage_bank_title">Read and Choose</string>
+    <string name="pronunciation_sentences_title">Read Aloud</string>
+    <string name="pronunciation_sentences_none">Star some words first — the sentences are written around them.</string>
+    <string name="pronunciation_sentences_offline">No connection. The sentences are written fresh each time, so this training needs the internet.</string>
+    <string name="pronunciation_sentences_refused">The sentences could not be written just now. Try again in a moment.</string>
+    <string name="training_pronunciation_sentences_blurb">Read a sentence aloud and hear how close you got</string>
     <string name="fillword_title">Word Search</string>
     <string name="fillword_found">Found %1$d of %2$d</string>
     <string name="fillword_none">Star some words first — the grid is built from your study set.</string>
-    <string name="fillword_offline">No connection. The grid is built fresh each time, so this training needs the internet.</string>
-    <string name="fillword_refused">The grid could not be built just now. Try again in a moment.</string>
     <string name="training_fillword_blurb">Find your words hidden in a grid of letters</string>
     <string name="passage_none">Star some words first — the text is built from your study set.</string>
     <string name="passage_offline">No connection. The text is written fresh each time, so this training needs the internet.</string>

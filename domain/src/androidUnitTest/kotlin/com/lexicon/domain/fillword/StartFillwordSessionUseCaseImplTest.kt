@@ -1,9 +1,5 @@
 package com.lexicon.domain.fillword
 
-import com.lexicon.boundary.FillwordGenerator
-import com.lexicon.boundary.FillwordPlacementBoundary
-import com.lexicon.boundary.FillwordRequestBoundary
-import com.lexicon.boundary.FillwordResultBoundary
 import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.fillword.FillwordCell
@@ -18,158 +14,160 @@ import org.junit.Test
 
 private const val GRID_SIZE = 10
 
-/** Layouts to demand of a randomised placer before believing it. */
+/** Layouts to demand of a randomised placer before believing anything about it. */
 private const val LAYOUTS = 200
 
 class StartFillwordSessionUseCaseImplTest {
     private val vocabulary: VocabularyRepository = mockk()
-    private val generator: FillwordGenerator = mockk()
-    private val useCase = StartFillwordSessionUseCaseImpl(vocabulary, generator)
+    private val useCase = StartFillwordSessionUseCaseImpl(vocabulary)
 
     private val favourites = listOf(
-        "kot", "dom", "okno", "stół", "krzesło", "książka", "lampa", "szafa",
-        "kwiat", "zegar", "obraz", "dywan", "łóżko", "ściana",
-    ).mapIndexed { index, word -> VocabularyItemBoundary(index + 1L, word, "x", "x") }
+        "kot" to "cat", "dom" to "house", "okno" to "window", "stół" to "table",
+        "krzesło" to "chair", "książka" to "book", "lampa" to "lamp", "szafa" to "wardrobe",
+        "kwiat" to "flower", "zegar" to "clock", "obraz" to "picture", "dywan" to "rug",
+        "łóżko" to "bed", "ściana" to "wall",
+    ).mapIndexed { index, (word, meaning) -> VocabularyItemBoundary(index + 1L, word, meaning, "x") }
 
     private fun givenFavourites() {
         coEvery { vocabulary.favouriteWordIds() } returns favourites.map { it.id }
         coEvery { vocabulary.getItemsByIds(any()) } returns favourites
     }
 
-    /** The letters along a word's own path have to spell it, or it cannot be found. */
+    private suspend fun puzzle(): FillwordPuzzle = (useCase() as FillwordSessionResult.Ready).puzzle
+
     private fun FillwordPuzzle.everyWordReadable(): Boolean =
         words.all { word ->
             word.cells.withIndex().all { (index, cell) -> letterAt(cell) == word.word[index].toString() }
         }
 
-    /**
-     * Placement is randomised, so one passing layout proves little — this asks for many.
-     */
+    private fun FillwordPuzzle.crossings(): Int {
+        val counts = mutableMapOf<FillwordCell, Int>()
+        words.forEach { word -> word.cells.forEach { counts[it] = (counts[it] ?: 0) + 1 } }
+        return counts.values.count { it > 1 }
+    }
+
     @Test
-    fun `every word the model failed to place is placed anyway`() =
+    fun `every word is readable along its own path`() =
         runTest {
             givenFavourites()
-            var asked: FillwordRequestBoundary? = null
-            coEvery { generator.generate(any()) } answers {
-                asked = firstArg()
-                FillwordResultBoundary.Generated(
-                    grid = List(GRID_SIZE) { List(GRID_SIZE) { "X" } },
-                    placements = emptyList(),
-                )
-            }
 
             repeat(LAYOUTS) {
-                val session = useCase() as FillwordSessionResult.Ready
-
-                assertEquals(asked!!.words.toSet(), session.puzzle.words.map { it.word }.toSet())
-                assertTrue(session.puzzle.everyWordReadable())
+                assertTrue(puzzle().everyWordReadable())
             }
         }
 
     @Test
-    fun `a placement pointing at the wrong cells is corrected rather than dropped`() =
+    fun `the grid is square and every cell carries a single letter`() =
         runTest {
             givenFavourites()
-            coEvery { generator.generate(any()) } answers {
-                val request = firstArg<FillwordRequestBoundary>()
-                FillwordResultBoundary.Generated(
-                    grid = List(GRID_SIZE) { List(GRID_SIZE) { "X" } },
-                    placements = request.words.map {
-                        FillwordPlacementBoundary(word = it, startRow = 0, startColumn = 0, direction = "RIGHT")
-                    },
+
+            val puzzle = puzzle()
+
+            assertEquals(GRID_SIZE, puzzle.size)
+            assertTrue(puzzle.grid.all { row -> row.size == GRID_SIZE && row.all { it.length == 1 } })
+        }
+
+    @Test
+    fun `the grid is packed rather than showing a handful of words`() =
+        runTest {
+            givenFavourites()
+
+            repeat(LAYOUTS) {
+                val words = puzzle().words.size
+                assertTrue("expected a full grid, got $words words", words >= 8)
+            }
+        }
+
+    /** The complaint that started this: words laid one per line, left to right. */
+    @Test
+    fun `words are not all laid out in the same direction`() =
+        runTest {
+            givenFavourites()
+
+            repeat(LAYOUTS) {
+                val directions = puzzle().words.map { it.direction }.toSet()
+                assertTrue("only used $directions", directions.size >= 4)
+            }
+        }
+
+    @Test
+    fun `diagonals and backwards runs are used, not just across and down`() =
+        runTest {
+            givenFavourites()
+
+            repeat(LAYOUTS) {
+                val directions = puzzle().words.map { it.direction }
+                assertTrue(
+                    "no diagonal in $directions",
+                    directions.any { it.rowStep != 0 && it.columnStep != 0 },
+                )
+                // Any run heading up or leftwards counts: UP_LEFT is as backwards as LEFT,
+                // and with eight directions shared out those two exact ones can go unused.
+                assertTrue(
+                    "nothing backwards in $directions",
+                    directions.any { it.rowStep < 0 || it.columnStep < 0 },
                 )
             }
-
-            val session = useCase() as FillwordSessionResult.Ready
-
-            assertTrue(session.puzzle.everyWordReadable())
         }
 
     @Test
-    fun `a nonsense direction does not lose the word`() =
+    fun `words cross each other instead of each keeping to itself`() =
         runTest {
             givenFavourites()
-            coEvery { generator.generate(any()) } answers {
-                val request = firstArg<FillwordRequestBoundary>()
-                FillwordResultBoundary.Generated(
-                    grid = List(GRID_SIZE) { List(GRID_SIZE) { "X" } },
-                    placements = request.words.map {
-                        FillwordPlacementBoundary(word = it, startRow = 0, startColumn = 0, direction = "SIDEWAYS")
-                    },
-                )
+
+            repeat(LAYOUTS) {
+                val puzzle = puzzle()
+                assertTrue("no shared cells in ${puzzle.words.map { it.word }}", puzzle.crossings() > 0)
             }
-
-            val session = useCase() as FillwordSessionResult.Ready
-
-            assertTrue(session.puzzle.everyWordReadable())
-            assertTrue(session.puzzle.words.size > 1)
         }
 
     @Test
-    fun `a grid of the wrong shape is replaced rather than shown short`() =
+    fun `no word is hidden entirely inside another`() =
         runTest {
             givenFavourites()
-            coEvery { generator.generate(any()) } returns FillwordResultBoundary.Generated(
-                grid = listOf(listOf("A", "B"), listOf("C")),
-                placements = emptyList(),
-            )
 
-            val session = useCase() as FillwordSessionResult.Ready
-
-            assertEquals(GRID_SIZE, session.puzzle.size)
-            assertTrue(session.puzzle.grid.all { it.size == GRID_SIZE })
-            assertTrue(session.puzzle.grid.all { row -> row.all { it.length == 1 } })
-            assertTrue(session.puzzle.everyWordReadable())
-        }
-
-    @Test
-    fun `the hardest setting is the only one asked for`() =
-        runTest {
-            givenFavourites()
-            var asked: FillwordRequestBoundary? = null
-            coEvery { generator.generate(any()) } answers {
-                asked = firstArg()
-                FillwordResultBoundary.Generated(
-                    grid = List(GRID_SIZE) { List(GRID_SIZE) { "X" } },
-                    placements = emptyList(),
-                )
+            repeat(LAYOUTS) {
+                val puzzle = puzzle()
+                puzzle.words.forEach { word ->
+                    val others = puzzle.words.filterNot { it == word }
+                    val swallowed = others.any { other -> word.cells.all { it in other.cells } }
+                    assertTrue("${word.word} sits inside another word", !swallowed)
+                }
             }
-
-            useCase()
-
-            assertEquals("HARD", asked!!.difficulty)
         }
 
     @Test
-    fun `the grid is filled with more than a handful of words`() =
+    fun `each hidden word keeps its meaning for the clue list`() =
         runTest {
             givenFavourites()
-            coEvery { generator.generate(any()) } returns FillwordResultBoundary.Generated(
-                grid = List(GRID_SIZE) { List(GRID_SIZE) { "X" } },
-                placements = emptyList(),
-            )
 
-            val session = useCase() as FillwordSessionResult.Ready
+            val puzzle = puzzle()
 
-            assertTrue(
-                "expected the grid to be packed, got ${session.puzzle.words.size} words",
-                session.puzzle.words.size >= 8,
-            )
+            puzzle.words.forEach { word ->
+                assertTrue("no meaning for ${word.word}", puzzle.translationOf(word).isNotBlank())
+            }
+        }
+
+    @Test
+    fun `a word can be claimed from either end`() =
+        runTest {
+            givenFavourites()
+
+            val puzzle = puzzle()
+            val word = puzzle.words.first()
+            val cells = word.cells
+
+            assertEquals(word, puzzle.wordAlong(cells.first(), cells.last()))
+            assertEquals(word, puzzle.wordAlong(cells.last(), cells.first()))
         }
 
     @Test
     fun `a drag that strays off the diagonal still claims the word`() =
         runTest {
             givenFavourites()
-            coEvery { generator.generate(any()) } returns FillwordResultBoundary.Generated(
-                grid = List(GRID_SIZE) { List(GRID_SIZE) { "X" } },
-                placements = emptyList(),
-            )
 
-            val puzzle = (useCase() as FillwordSessionResult.Ready).puzzle
-            val diagonal = puzzle.words.firstOrNull { it.direction.rowStep != 0 && it.direction.columnStep != 0 }
-                ?: return@runTest
-
+            val puzzle = puzzle()
+            val diagonal = puzzle.words.first { it.direction.rowStep != 0 && it.direction.columnStep != 0 }
             val cells = diagonal.cells
             val short = cells.last().let { FillwordCell(it.row - diagonal.direction.rowStep, it.column) }
 
@@ -180,33 +178,19 @@ class StartFillwordSessionUseCaseImplTest {
     fun `a run is clipped at the edge rather than running off the grid`() =
         runTest {
             givenFavourites()
-            coEvery { generator.generate(any()) } returns FillwordResultBoundary.Generated(
-                grid = List(GRID_SIZE) { List(GRID_SIZE) { "X" } },
-                placements = emptyList(),
-            )
 
-            val puzzle = (useCase() as FillwordSessionResult.Ready).puzzle
-
-            val run = puzzle.runBetween(FillwordCell(0, 0), FillwordCell(GRID_SIZE + 5, GRID_SIZE + 5))
+            val run = puzzle().runBetween(FillwordCell(0, 0), FillwordCell(GRID_SIZE + 5, GRID_SIZE + 5))
 
             assertEquals(GRID_SIZE, run.size)
             assertTrue(run.all { it.row in 0 until GRID_SIZE && it.column in 0 until GRID_SIZE })
         }
 
     @Test
-    fun `a word can be claimed from either end`() =
+    fun `no favourites means no puzzle`() =
         runTest {
-            givenFavourites()
-            coEvery { generator.generate(any()) } returns FillwordResultBoundary.Generated(
-                grid = List(GRID_SIZE) { List(GRID_SIZE) { "X" } },
-                placements = emptyList(),
-            )
+            coEvery { vocabulary.favouriteWordIds() } returns emptyList()
+            coEvery { vocabulary.getItemsByIds(any()) } returns emptyList()
 
-            val puzzle = (useCase() as FillwordSessionResult.Ready).puzzle
-            val word = puzzle.words.first()
-            val cells = word.cells
-
-            assertEquals(word, puzzle.wordAlong(cells.first(), cells.last()))
-            assertEquals(word, puzzle.wordAlong(cells.last(), cells.first()))
+            assertEquals(FillwordSessionResult.NoFavourites, useCase())
         }
 }

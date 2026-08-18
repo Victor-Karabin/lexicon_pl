@@ -4,6 +4,7 @@ import kotlinx.collections.immutable.ImmutableList
 
 data class StartPassageSessionRequest(
     val withWordBank: Boolean = false,
+    val stepCount: Int? = null,
 )
 
 sealed interface PassageSessionResult {

@@ -2,7 +2,7 @@ package com.lexicon.presentation.dictation
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.lexicon.android.SpeechSynthesizer
+import com.lexicon.android.speech.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.dictation.DictationSessionResponse
 import com.lexicon.interactors.dictation.DictationStepOutcome

@@ -1,4 +1,4 @@
-package com.lexicon.android
+package com.lexicon.android.speech
 
 import android.content.Context
 import android.speech.tts.TextToSpeech
@@ -46,11 +46,20 @@ class AndroidSpeechSynthesizer(
             .orEmpty()
             .filter { it.locale.language == POLISH.language }
             .filterNot { TextToSpeech.Engine.KEY_FEATURE_NOT_INSTALLED in it.features }
+            .filterNot { it.isAlias() }
             .groupBy { it.speaker() }
             .toSortedMap()
             .values
             .mapNotNull { copies -> copies.minWithOrNull(BEST_COPY) }
-            .map { SpeechVoice(id = it.name) }
+            .dropPoorOnes()
+            .mapIndexed { index, voice ->
+                SpeechVoice(
+                    id = voice.name,
+                    displayName = VOICE_NAMES[index % VOICE_NAMES.size],
+                    // The platform will not say, and the id does not encode it.
+                    gender = VoiceGender.NEUTRAL,
+                )
+            }
     }
 
     override suspend fun speak(
@@ -88,6 +97,15 @@ class AndroidSpeechSynthesizer(
     }
 }
 
+/**
+ * Drops the voices the engine itself rates below ordinary quality.
+ *
+ * Devices carry a few thin, buzzy voices nobody would choose to learn from. They are only
+ * dropped while something better remains — a short list beats an empty one, and this list
+ * is the fallback for when Cloud cannot be reached at all.
+ */
+private fun List<Voice>.dropPoorOnes(): List<Voice> = filter { it.quality >= Voice.QUALITY_NORMAL }.ifEmpty { this }
+
 /** Prefer a voice that works offline, then the better-sounding one. */
 private val BEST_COPY = compareBy<Voice>({ if (it.isNetworkConnectionRequired) 1 else 0 }, { -it.quality })
 
@@ -96,9 +114,39 @@ private val POLISH = Locale.forLanguageTag("pl-PL")
 /**
  * The part of a voice name that identifies who is speaking.
  *
- * Names run `pl-pl-x-oda-local`; everything after the speaker code says how the voice is
- * delivered rather than what it sounds like.
+ * Names usually run `pl-pl-x-oda-local`, where `oda` is the speaker and the rest says how
+ * the voice is delivered and at what quality. Engines are inconsistent about the rest of
+ * it — case differs, and the same speaker turns up with several suffixes — so the speaker
+ * code alone is the key where there is one.
  */
-private fun Voice.speaker(): String = name.removeSuffix("-local").removeSuffix("-network")
+private fun Voice.speaker(): String {
+    val lower = name.lowercase()
+    return SPEAKER_CODE.find(lower)?.groupValues?.get(1)
+        ?: lower.removeSuffix("-local").removeSuffix("-network")
+}
+
+private val SPEAKER_CODE = Regex("-x-([a-z0-9]+?)(?:-|#|$)")
+
+/**
+ * Whether a voice is the locale's stand-in rather than a voice of its own.
+ *
+ * Engines list `pl-pl-language` alongside the real voices as a pointer to whichever one
+ * is the default. It carries its own name, so it survives grouping by speaker, and it
+ * sounds exactly like the voice it points at — one way the same voice appears twice.
+ */
+private fun Voice.isAlias(): Boolean = name.lowercase().endsWith("-language")
+
+/**
+ * Polish names for the device's voices.
+ *
+ * Assigned by position in the deduplicated list, so a voice keeps its name between
+ * launches. Android's Voice carries no gender and its ids do not encode one, so which
+ * name lands on which voice is arbitrary — the names are labels to pick by after
+ * listening, not a claim about who is speaking.
+ */
+private val VOICE_NAMES = listOf(
+    "Zofia", "Marek", "Hanna", "Piotr", "Alicja", "Tomasz",
+    "Maja", "Jakub", "Nina", "Rafał", "Ewa", "Kamil",
+)
 
 class SpeechSynthesisFailed(message: String) : Exception(message)

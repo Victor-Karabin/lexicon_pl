@@ -1,9 +1,13 @@
-package com.lexicon.android
+package com.lexicon.android.speech
 
 import java.util.Locale
 
+enum class VoiceGender { FEMALE, MALE, NEUTRAL }
+
 data class SpeechVoice(
     val id: String,
+    val displayName: String,
+    val gender: VoiceGender,
 )
 
 interface SpeechSynthesizer {
@@ -12,6 +16,6 @@ interface SpeechSynthesizer {
         locale: Locale = Locale.forLanguageTag("pl-PL"),
     )
 
-    /** The distinct Polish voices this device has, in a stable order. */
+    /** The Polish voices available to the learner, in a stable order. */
     suspend fun voices(): List<SpeechVoice>
 }

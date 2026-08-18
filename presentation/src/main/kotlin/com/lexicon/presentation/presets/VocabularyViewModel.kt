@@ -2,7 +2,7 @@ package com.lexicon.presentation.presets
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.SpeechSynthesizer
+import com.lexicon.android.speech.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.DeletePresetUseCase
