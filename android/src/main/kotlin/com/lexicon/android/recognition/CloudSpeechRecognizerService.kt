@@ -1,5 +1,6 @@
 package com.lexicon.android.recognition
 
+import android.util.Log
 import com.lexicon.android.audio.AudioRecorder
 import com.lexicon.android.audio.RECORDING_SAMPLE_RATE_HZ
 import com.lexicon.android.cloud.CloudSpeechApi
@@ -26,21 +27,32 @@ class CloudSpeechRecognizerService(
     override suspend fun recognize(locale: Locale): SpeechRecognitionResult {
         if (!api.isConfigured) return device.recognize(locale)
 
-        val path = recorder.record() ?: throw SpeechRecognitionFailed("Nothing was recorded")
+        val path = recorder.record() ?: run {
+            Log.w(TAG, "The microphone produced nothing to recognise")
+            throw SpeechRecognitionFailed("Nothing was recorded")
+        }
 
         val transcript = withContext(dispatchers.io) {
             runCatching { api.recognize(File(path).readBytes(), locale.toLanguageTag(), RECORDING_SAMPLE_RATE_HZ) }
+                .onFailure { failure -> Log.e(TAG, "Cloud recognition threw", failure) }
                 .getOrNull()
         }
 
         // Speaking again is the only way back from a failed call, since the recording has
         // already been made and the platform recogniser cannot be handed a file.
-        transcript ?: throw SpeechRecognitionFailed("Speech could not be recognised just now")
+        if (transcript == null) {
+            Log.w(TAG, "Cloud returned no transcript; asking for the phrase again")
+            throw SpeechRecognitionFailed("Speech could not be recognised just now")
+        }
 
         return SpeechRecognitionResult(
             recognizedText = transcript.text,
             confidence = transcript.confidence,
             audioFilePath = path,
         )
+    }
+
+    private companion object {
+        private const val TAG = "CloudSpeechRecognizer"
     }
 }

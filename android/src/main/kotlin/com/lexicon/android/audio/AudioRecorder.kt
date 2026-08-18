@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
+import android.util.Log
 import com.lexicon.common.DispatcherProvider
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
@@ -42,6 +43,8 @@ interface AudioRecorder {
     suspend fun record(): String?
 }
 
+private const val TAG = "AudioRecorder"
+
 class AndroidAudioRecorder(
     private val cacheDirectory: File,
     private val dispatchers: DispatcherProvider,
@@ -54,7 +57,10 @@ class AndroidAudioRecorder(
                 AudioFormat.CHANNEL_IN_MONO,
                 AudioFormat.ENCODING_PCM_16BIT,
             )
-            if (minimum <= 0) return@withContext null
+            if (minimum <= 0) {
+                Log.e(TAG, "The microphone reported no usable buffer size")
+                return@withContext null
+            }
 
             val recorder = runCatching {
                 AudioRecord(
@@ -64,16 +70,22 @@ class AndroidAudioRecorder(
                     AudioFormat.ENCODING_PCM_16BIT,
                     minimum * 2,
                 )
-            }.getOrNull() ?: return@withContext null
+            }.onFailure { failure -> Log.e(TAG, "Could not open the microphone", failure) }
+                .getOrNull() ?: return@withContext null
 
             if (recorder.state != AudioRecord.STATE_INITIALIZED) {
+                Log.e(TAG, "The microphone would not initialise")
                 recorder.release()
                 return@withContext null
             }
 
-            val pcm = runCatching { recorder.capture(minimum) }.getOrNull()
+            val pcm = runCatching { recorder.capture(minimum) }
+                .onFailure { failure -> Log.e(TAG, "Recording failed", failure) }
+                .getOrNull()
             runCatching { recorder.stop() }
             recorder.release()
+
+            if (pcm != null && pcm.isEmpty()) Log.w(TAG, "Nobody spoke before the recorder gave up")
 
             pcm?.takeIf { it.isNotEmpty() }?.let { writeWav(it) }
         }
@@ -123,7 +135,8 @@ class AndroidAudioRecorder(
                 out.write(pcm)
             }
             file.absolutePath
-        }.getOrNull()
+        }.onFailure { failure -> Log.e(TAG, "Could not write the recording", failure) }
+            .getOrNull()
     }
 
     private fun OutputStream.writeWavHeader(dataSize: Int) {

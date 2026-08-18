@@ -1,6 +1,7 @@
 package com.lexicon.android.cloud
 
 import android.util.Base64
+import android.util.Log
 import com.lexicon.android.speech.VoiceGender
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -124,8 +125,12 @@ class CloudSpeechApi(
             .build()
 
         val body = client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) return emptyList()
-            response.body?.string().orEmpty()
+            val payload = response.body?.string().orEmpty()
+            if (!response.isSuccessful) {
+                Log.e(TAG, "Listing voices failed: ${response.code} ${payload.take(ERROR_LOG_LIMIT)}")
+                return emptyList()
+            }
+            payload
         }
 
         return json
@@ -153,12 +158,20 @@ class CloudSpeechApi(
             .build()
 
         val body = client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) return null
-            response.body?.string().orEmpty()
+            val payload = response.body?.string().orEmpty()
+            if (!response.isSuccessful) {
+                Log.e(TAG, "Synthesis failed for $voice: ${response.code} ${payload.take(ERROR_LOG_LIMIT)}")
+                return null
+            }
+            payload
         }
 
         val encoded = json.decodeFromString(SynthesizeResponse.serializer(), body).audioContent
-        return if (encoded.isBlank()) null else Base64.decode(encoded, Base64.DEFAULT)
+        if (encoded.isBlank()) {
+            Log.e(TAG, "Synthesis returned no audio for $voice")
+            return null
+        }
+        return Base64.decode(encoded, Base64.DEFAULT)
     }
 
     /**
@@ -193,8 +206,12 @@ class CloudSpeechApi(
             .build()
 
         val body = client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) return null
-            response.body?.string().orEmpty()
+            val payload = response.body?.string().orEmpty()
+            if (!response.isSuccessful) {
+                Log.e(TAG, "Recognition failed: ${response.code} ${payload.take(ERROR_LOG_LIMIT)}")
+                return null
+            }
+            payload
         }
 
         val best = json
@@ -207,6 +224,11 @@ class CloudSpeechApi(
     }
 
     private companion object {
+        private const val TAG = "CloudSpeechApi"
+
+        /** Enough of a refusal to name it, without pasting a whole response into the log. */
+        private const val ERROR_LOG_LIMIT = 300
+
         private const val WAV_HEADER_SIZE = 44
 
         /** Tuned for short commands and single phrases, which is what a learner reads out. */
