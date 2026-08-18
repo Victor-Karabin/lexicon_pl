@@ -16,6 +16,8 @@ import com.lexicon.presentation.common.SessionResultScreen
 import com.lexicon.presentation.common.TRAINING_WORDS_ARG
 import com.lexicon.presentation.common.TrainingGate
 import com.lexicon.presentation.common.TrainingRequirements
+import com.lexicon.presentation.conjugation.ConjugationScreen
+import com.lexicon.presentation.conjugation.VerbSelectionScreen
 import com.lexicon.presentation.course.COURSE_ID_ARG
 import com.lexicon.presentation.course.CourseDetailScreen
 import com.lexicon.presentation.course.EXERCISE_ID_ARG
@@ -102,6 +104,8 @@ fun LexiconNavHost(
                 onAddWord = { navController.navigate(LexiconDestinations.CREATE_WORD) },
                 onAddPreset = { navController.navigate(LexiconDestinations.CREATE_PRESET) },
                 onCreateProgram = { navController.navigate(LexiconDestinations.CREATE_PROGRAM) },
+                onConjugationSelected = { navController.navigate(LexiconDestinations.CONJUGATION_VERBS) },
+                onTrainConjugation = { navController.navigate(LexiconDestinations.CONJUGATION) },
             )
         }
 
@@ -479,6 +483,17 @@ fun LexiconNavHost(
             onComplete = onStepSessionComplete(LexiconDestinations.FILLWORD),
         ) { onComplete ->
             FillwordScreen(onSessionComplete = onComplete, onClose = closeToMain)
+        }
+
+        composable(route = LexiconDestinations.CONJUGATION_VERBS) {
+            VerbSelectionScreen(
+                onContinue = { navController.popBackStack() },
+                onClose = closeToMain,
+            )
+        }
+
+        composable(route = LexiconDestinations.CONJUGATION) {
+            ConjugationScreen(onClose = closeToMain)
         }
 
         composable(

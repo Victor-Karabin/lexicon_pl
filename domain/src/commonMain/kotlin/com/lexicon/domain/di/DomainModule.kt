@@ -1,5 +1,16 @@
 package com.lexicon.domain.di
 
+import com.lexicon.domain.conjugation.ChooseVerbImageUseCaseImpl
+import com.lexicon.domain.conjugation.FavouriteVerbUseCaseImpl
+import com.lexicon.domain.conjugation.LoadConjugationProgressUseCaseImpl
+import com.lexicon.domain.conjugation.LoadConjugationVerbsUseCaseImpl
+import com.lexicon.domain.conjugation.LoadFavouriteVerbsUseCaseImpl
+import com.lexicon.domain.conjugation.LoadSelectedVerbsUseCaseImpl
+import com.lexicon.domain.conjugation.LoadVerbImageChoicesUseCaseImpl
+import com.lexicon.domain.conjugation.NextConjugationQuestionUseCaseImpl
+import com.lexicon.domain.conjugation.ResetConjugationCourseUseCaseImpl
+import com.lexicon.domain.conjugation.SelectConjugationVerbsUseCaseImpl
+import com.lexicon.domain.conjugation.SubmitConjugationAnswerUseCaseImpl
 import com.lexicon.domain.course.CheckExerciseAnswerUseCaseImpl
 import com.lexicon.domain.course.GetLessonUseCaseImpl
 import com.lexicon.domain.course.GetLessonVocabularyUseCaseImpl
@@ -76,6 +87,17 @@ import com.lexicon.domain.wordcard.RecordWordCardSeenUseCaseImpl
 import com.lexicon.domain.wordcard.StartWordCardSessionUseCaseImpl
 import com.lexicon.domain.wordmatch.StartWordMatchSessionUseCaseImpl
 import com.lexicon.domain.wordmatch.SubmitWordMatchStepResultUseCaseImpl
+import com.lexicon.interactors.conjugation.ChooseVerbImageUseCase
+import com.lexicon.interactors.conjugation.FavouriteVerbUseCase
+import com.lexicon.interactors.conjugation.LoadConjugationProgressUseCase
+import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
+import com.lexicon.interactors.conjugation.LoadFavouriteVerbsUseCase
+import com.lexicon.interactors.conjugation.LoadSelectedVerbsUseCase
+import com.lexicon.interactors.conjugation.LoadVerbImageChoicesUseCase
+import com.lexicon.interactors.conjugation.NextConjugationQuestionUseCase
+import com.lexicon.interactors.conjugation.ResetConjugationCourseUseCase
+import com.lexicon.interactors.conjugation.SelectConjugationVerbsUseCase
+import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
 import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
@@ -208,6 +230,18 @@ val domainModule = module {
     factoryOf(::StartPassageSessionUseCaseImpl) { bind<StartPassageSessionUseCase>() }
     factoryOf(::StartFillwordSessionUseCaseImpl) { bind<StartFillwordSessionUseCase>() }
     factoryOf(::StartPronunciationSentencesUseCaseImpl) { bind<StartPronunciationSentencesUseCase>() }
+
+    factoryOf(::LoadConjugationVerbsUseCaseImpl) { bind<LoadConjugationVerbsUseCase>() }
+    factoryOf(::LoadSelectedVerbsUseCaseImpl) { bind<LoadSelectedVerbsUseCase>() }
+    factoryOf(::SelectConjugationVerbsUseCaseImpl) { bind<SelectConjugationVerbsUseCase>() }
+    factoryOf(::NextConjugationQuestionUseCaseImpl) { bind<NextConjugationQuestionUseCase>() }
+    factoryOf(::SubmitConjugationAnswerUseCaseImpl) { bind<SubmitConjugationAnswerUseCase>() }
+    factoryOf(::LoadConjugationProgressUseCaseImpl) { bind<LoadConjugationProgressUseCase>() }
+    factoryOf(::ResetConjugationCourseUseCaseImpl) { bind<ResetConjugationCourseUseCase>() }
+    factoryOf(::LoadVerbImageChoicesUseCaseImpl) { bind<LoadVerbImageChoicesUseCase>() }
+    factoryOf(::ChooseVerbImageUseCaseImpl) { bind<ChooseVerbImageUseCase>() }
+    factoryOf(::FavouriteVerbUseCaseImpl) { bind<FavouriteVerbUseCase>() }
+    factoryOf(::LoadFavouriteVerbsUseCaseImpl) { bind<LoadFavouriteVerbsUseCase>() }
     factoryOf(::SubmitPassageAnswersUseCaseImpl) { bind<SubmitPassageAnswersUseCase>() }
     factoryOf(::MarkCardsSeenUseCaseImpl) { bind<MarkCardsSeenUseCase>() }
     factoryOf(::GetWordCardsUseCaseImpl) { bind<GetWordCardsUseCase>() }

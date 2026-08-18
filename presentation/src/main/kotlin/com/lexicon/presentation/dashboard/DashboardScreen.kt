@@ -1,9 +1,11 @@
 package com.lexicon.presentation.dashboard
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +19,7 @@ import androidx.compose.material.icons.filled.AutoStories
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -48,11 +51,18 @@ import com.lexicon.interactors.program.ProgramProgress
 import com.lexicon.interactors.program.ProgressMetric
 import com.lexicon.interactors.program.ProgressMetricType
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.DeleteAction
+import com.lexicon.presentation.common.DeleteActionWidth
 import com.lexicon.presentation.common.LightDarkPreview
+import com.lexicon.presentation.common.SwipeToRevealContainer
 import com.lexicon.presentation.program.ProgramMedallion
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.GradientTile
+import com.lexicon.presentation.theme.component.Medallion
+import com.lexicon.presentation.theme.component.MedallionIcon
+import com.lexicon.presentation.theme.component.StatChip
+import com.lexicon.presentation.theme.component.TileChips
 import com.lexicon.presentation.theme.component.TileSkin
 import com.lexicon.presentation.theme.component.muted
 import com.lexicon.presentation.theme.component.tileSkin
@@ -78,6 +88,7 @@ fun DashboardScreen(
     onStartTraining: (training: String, wordIds: List<VocabularyId>, programId: String) -> Unit,
     onOpenCards: (programId: String) -> Unit,
     onGoToPlan: () -> Unit,
+    onOpenConjugation: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DashboardViewModel = koinViewModel(),
 ) {
@@ -98,10 +109,14 @@ fun DashboardScreen(
 
     LaunchedEffect(Unit) { viewModel.onResumed() }
 
+    LaunchedEffect(Unit) { viewModel.refreshConjugation() }
+
     DashboardContent(
         uiState = uiState,
         onContinue = viewModel::onContinue,
         onGoToPlan = onGoToPlan,
+        onOpenConjugation = onOpenConjugation,
+        onRemoveConjugation = viewModel::onConjugationRemoved,
         modifier = modifier,
     )
 }
@@ -111,30 +126,14 @@ private fun DashboardContent(
     uiState: DashboardUiState,
     onContinue: () -> Unit,
     onGoToPlan: () -> Unit,
+    onOpenConjugation: () -> Unit,
+    onRemoveConjugation: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when {
         uiState.isLoading ->
             Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
-            }
-
-        uiState.program == null ->
-            Column(
-                modifier = modifier.fillMaxSize().padding(Dimens.spacingXl),
-                verticalArrangement = Arrangement.spacedBy(Dimens.spacingLarge, Alignment.CenterVertically),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Text(
-                    text = stringResource(R.string.dashboard_no_program),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                )
-
-                Button(onClick = onGoToPlan) {
-                    Text(stringResource(R.string.dashboard_go_to_plan))
-                }
             }
 
         else ->
@@ -145,8 +144,98 @@ private fun DashboardContent(
                     .padding(Dimens.spacingMedium),
                 verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             ) {
-                ActiveProgramCard(uiState = uiState, onContinue = onContinue)
+                if (uiState.hasConjugationCourse) {
+                    ConjugationCourseCard(
+                        uiState = uiState,
+                        onOpen = onOpenConjugation,
+                        onRemove = onRemoveConjugation,
+                    )
+                }
+
+                if (uiState.program == null && !uiState.hasConjugationCourse) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth().padding(Dimens.spacingXl),
+                        verticalArrangement = Arrangement.spacedBy(Dimens.spacingLarge),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text(
+                            text = stringResource(R.string.dashboard_no_program),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center,
+                        )
+                        Button(onClick = onGoToPlan) {
+                            Text(stringResource(R.string.dashboard_go_to_plan))
+                        }
+                    }
+                } else {
+                    ActiveProgramCard(uiState = uiState, onContinue = onContinue)
+                }
             }
+    }
+}
+
+@Composable
+@OptIn(ExperimentalLayoutApi::class)
+private fun ConjugationCourseCard(
+    uiState: DashboardUiState,
+    onOpen: () -> Unit,
+    onRemove: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val progress = uiState.conjugation ?: return
+    val skin = tileSkin(highlighted = true)
+
+    SwipeToRevealContainer(
+        revealWidth = DeleteActionWidth,
+        modifier = modifier.fillMaxWidth(),
+        backgroundContent = { DeleteAction(onClick = onRemove) },
+    ) {
+        GradientTile(skin = skin, modifier = Modifier.fillMaxWidth().clickable(onClick = onOpen)) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                ProgressRing(
+                    fraction = progress.fraction,
+                    skin = skin,
+                    description = stringResource(R.string.conjugation_progress, progress.mastered, progress.total),
+                ) {
+                    Medallion(skin = skin) { MedallionIcon(Icons.Default.Translate, skin) }
+                }
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = stringResource(R.string.dashboard_continuing),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = skin.muted(),
+                    )
+                    Text(
+                        text = stringResource(R.string.conjugation_title),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold,
+                        color = skin.onTile,
+                    )
+                    Text(
+                        text = stringResource(R.string.conjugation_progress, progress.mastered, progress.total),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = skin.muted(),
+                    )
+                }
+            }
+
+            TileChips {
+                StatChip(
+                    icon = Icons.Default.Translate,
+                    text = stringResource(R.string.conjugation_verbs_chip, progress.verbs),
+                    skin = skin,
+                )
+                StatChip(
+                    icon = Icons.Default.CheckCircle,
+                    text = stringResource(R.string.conjugation_attempted_chip, progress.attempted, progress.total),
+                    skin = skin,
+                )
+            }
+        }
     }
 }
 
@@ -280,15 +369,17 @@ private fun ProgressRing(
                 size = arcSize,
                 style = stroke,
             )
-            drawArc(
-                color = skin.onTile,
-                startAngle = -QUARTER_TURN_DEGREES,
-                sweepAngle = sweep,
-                useCenter = false,
-                topLeft = Offset(inset, inset),
-                size = arcSize,
-                style = stroke,
-            )
+            if (sweep > 0f) {
+                drawArc(
+                    color = skin.onTile,
+                    startAngle = -QUARTER_TURN_DEGREES,
+                    sweepAngle = sweep,
+                    useCenter = false,
+                    topLeft = Offset(inset, inset),
+                    size = arcSize,
+                    style = stroke,
+                )
+            }
         }
         content()
     }
@@ -372,7 +463,13 @@ private fun ProgressMetricType.label(): Int =
 @Composable
 private fun DashboardNoProgramPreview() {
     LexiconTheme {
-        DashboardContent(uiState = DashboardUiState(isLoading = false), onContinue = {}, onGoToPlan = {})
+        DashboardContent(
+            uiState = DashboardUiState(isLoading = false),
+            onContinue = {},
+            onGoToPlan = {},
+            onOpenConjugation = {},
+            onRemoveConjugation = {},
+        )
     }
 }
 
@@ -407,6 +504,8 @@ private fun DashboardActivePreview() {
             ),
             onContinue = {},
             onGoToPlan = {},
+            onOpenConjugation = {},
+            onRemoveConjugation = {},
         )
     }
 }

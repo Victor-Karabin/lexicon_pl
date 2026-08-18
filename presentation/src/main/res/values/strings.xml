@@ -65,6 +65,25 @@
     <string name="settings_voice_note">Tap a name to hear it.</string>
     <string name="settings_step_count_note">Applies to new training sessions only.</string>
 
+    <!-- Verb conjugation course -->
+    <string name="conjugation_title">Verb Conjugation</string>
+    <string name="training_conjugation_blurb">Pick verbs and learn how they change by person</string>
+    <string name="conjugation_select_title">Choose verbs</string>
+    <string name="conjugation_search_hint">Search Polish or English</string>
+    <string name="conjugation_selected_count">%1$d selected</string>
+    <string name="conjugation_start">Start the course</string>
+    <string name="conjugation_partial">only %1$d of 6 persons in the source</string>
+    <string name="conjugation_none">Choose some verbs first — the course is built from the ones you pick.</string>
+    <string name="conjugation_complete">Every form mastered. Pick more verbs to carry on.</string>
+    <string name="conjugation_progress">%1$d of %2$d forms mastered</string>
+    <string name="conjugation_ending_hint">Choose the ending</string>
+    <string name="conjugation_form_hint">Choose the form</string>
+    <string name="conjugation_blank">____</string>
+    <string name="conjugation_change_image">Change the picture</string>
+    <string name="conjugation_remove">Remove the conjugation course</string>
+    <string name="conjugation_verbs_chip">%1$d verbs</string>
+    <string name="conjugation_attempted_chip">%1$d of %2$d tried</string>
+
     <!-- Mix -->
     <string name="mix_title">Mix</string>
     <string name="word_card_title">Word Card</string>

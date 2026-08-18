@@ -8,7 +8,6 @@ import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetWordCardsUseCase
 import com.lexicon.interactors.program.MarkCardsSeenUseCase
 import com.lexicon.interactors.program.ProgramId
-import com.lexicon.interactors.program.StartProgramSessionUseCase
 import com.lexicon.interactors.program.WordCard
 import com.lexicon.presentation.dashboard.LaunchTraining
 import kotlinx.collections.immutable.ImmutableList
@@ -36,7 +35,7 @@ class WordCardsViewModel(
     private val getDay: GetProgramDayUseCase,
     private val getCards: GetWordCardsUseCase,
     private val markSeen: MarkCardsSeenUseCase,
-    private val startSession: StartProgramSessionUseCase,
+    private val queue: ProgramQueue,
     private val speechSynthesizer: SpeechSynthesizer,
 ) : ViewModel() {
     private val programId = ProgramId(savedStateHandle.get<String>(PROGRAM_ID_ARG).orEmpty())
@@ -64,14 +63,11 @@ class WordCardsViewModel(
         }
         viewModelScope.launch {
             markSeen(programId)
-            val next = getDay(programId)?.nextTraining
-            val session = next?.let { startSession(programId) }
+            val next = queue.next(programId)
             _uiState.update {
                 it.copy(
                     isFinished = true,
-                    launch = next?.let { queued ->
-                        LaunchTraining(queued.training, session?.wordIds ?: persistentListOf())
-                    },
+                    launch = next?.let { LaunchTraining(it.training, it.wordIds) },
                 )
             }
         }

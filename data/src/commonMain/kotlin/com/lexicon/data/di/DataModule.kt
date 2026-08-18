@@ -1,5 +1,6 @@
 package com.lexicon.data.di
 
+import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.ProgramRepository
@@ -16,6 +17,7 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.common.SystemClock
 import com.lexicon.data.local.AppDatabase
 import com.lexicon.data.local.AppDatabaseBuilderFactory
+import com.lexicon.data.local.ConjugationAssetLoader
 import com.lexicon.data.local.CourseAssetLoader
 import com.lexicon.data.local.CourseSeeder
 import com.lexicon.data.local.DataStorePathResolver
@@ -29,6 +31,7 @@ import com.lexicon.data.local.VocabularySyncStore
 import com.lexicon.data.local.buildAppDatabase
 import com.lexicon.data.local.createDataStore
 import com.lexicon.data.repository.CachingImageProviderImpl
+import com.lexicon.data.repository.ConjugationRepositoryImpl
 import com.lexicon.data.repository.CorpusTranslatorImpl
 import com.lexicon.data.repository.CourseRepositoryImpl
 import com.lexicon.data.repository.FallbackImageProviderImpl
@@ -65,6 +68,7 @@ val dataModule = module {
     factory { get<AppDatabase>().wordReviewDao() }
     factory { get<AppDatabase>().studyDayDao() }
     factory { get<AppDatabase>().programDao() }
+    factory { get<AppDatabase>().conjugationDao() }
 
     single(settingsDataStoreQualifier) { get<DataStorePathResolver>().createDataStore(SETTINGS_STORE_NAME) }
     single(vocabularySyncDataStoreQualifier) { get<DataStorePathResolver>().createDataStore(VOCABULARY_SYNC_STORE_NAME) }
@@ -86,6 +90,8 @@ val dataModule = module {
 
     factoryOf(::VocabularySeedAssetLoader)
     factoryOf(::VocabularyPresetAssetLoader)
+    factoryOf(::ConjugationAssetLoader)
+    singleOf(::ConjugationRepositoryImpl) { bind<ConjugationRepository>() }
     factoryOf(::CourseAssetLoader)
 
     single { VocabularySyncStore(get(vocabularySyncDataStoreQualifier)) }

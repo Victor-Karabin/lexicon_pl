@@ -31,6 +31,8 @@ internal object LexiconDestinations {
     const val PASSAGE_WRITE = TrainingIds.PASSAGE_WRITE
     const val PASSAGE_BANK = TrainingIds.PASSAGE_BANK
     const val FILLWORD = TrainingIds.FILLWORD
+    const val CONJUGATION = TrainingIds.CONJUGATION
+    const val CONJUGATION_VERBS = "conjugation/verbs"
 
     fun trainingRoute(training: String) = "$training?$TRAINING_WORDS_ARG={$TRAINING_WORDS_ARG}&$PROGRAM_RUN_ARG={$PROGRAM_RUN_ARG}"
 

@@ -175,7 +175,7 @@ private fun PassageBody(
 
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
             ) {
                 var at = first
                 sentence.segments.forEach { segment ->
@@ -185,7 +185,7 @@ private fun PassageBody(
                                 Text(
                                     text = word,
                                     style = MaterialTheme.typography.bodyLarge,
-                                    modifier = Modifier.padding(vertical = Dimens.spacingSmall),
+                                    modifier = Modifier.align(Alignment.CenterVertically),
                                 )
                             }
 

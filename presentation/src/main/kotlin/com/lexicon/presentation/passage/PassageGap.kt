@@ -51,7 +51,7 @@ fun PassageGap(
                 .clickable(enabled = !isChecked && value.isNotBlank(), onClick = onCleared),
         ) {
             Box(
-                modifier = Modifier.fillMaxWidth().padding(vertical = Dimens.spacingSmall),
+                modifier = Modifier.fillMaxWidth().padding(vertical = Dimens.spacingTiny),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(text = value, style = MaterialTheme.typography.bodyLarge)
@@ -75,7 +75,7 @@ fun PassageGap(
         decorationBox = { field ->
             Column(modifier = Modifier.width(width)) {
                 Box(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = Dimens.spacingSmall),
+                    modifier = Modifier.fillMaxWidth().padding(vertical = Dimens.spacingTiny),
                     contentAlignment = Alignment.Center,
                     content = { field() },
                 )

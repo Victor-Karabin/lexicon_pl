@@ -50,6 +50,8 @@ fun MainScreen(
     onAddWord: () -> Unit,
     onAddPreset: () -> Unit,
     onCreateProgram: () -> Unit,
+    onConjugationSelected: () -> Unit,
+    onTrainConjugation: () -> Unit,
     modifier: Modifier = Modifier,
     initialTab: MainTab = MainTab.DASHBOARD,
 ) {
@@ -80,6 +82,7 @@ fun MainScreen(
                     },
                     onOpenCards = onOpenCards,
                     onGoToPlan = { selectedTab = MainTab.PLAN },
+                    onOpenConjugation = onTrainConjugation,
                     modifier = content,
                 )
             MainTab.VOCABULARY ->
@@ -95,6 +98,7 @@ fun MainScreen(
                     onCourseSelected = { onCourseSelected(it.value) },
                     onProgramSelected = { onProgramSelected(it.value) },
                     onCreateProgram = onCreateProgram,
+                    onConjugationSelected = onConjugationSelected,
                     modifier = content,
                 )
             MainTab.SETTINGS -> SettingsScreen(modifier = content)

@@ -34,6 +34,7 @@ object TrainingIds {
     const val PASSAGE_WRITE = "passage_write"
     const val PASSAGE_BANK = "passage_bank"
     const val FILLWORD = "fillword"
+    const val CONJUGATION = "conjugation"
 }
 
 data class TrainingCatalogEntry(
@@ -153,16 +154,6 @@ val trainingCatalog =
         ),
     )
 
-val programTrainings =
-    trainingCatalog.filter {
-        it.isEnabled && it.id !in setOf(
-            TrainingIds.MEMORY_CARDS,
-            TrainingIds.CROSSWORD,
-            TrainingIds.PASSAGE_WRITE,
-            TrainingIds.PASSAGE_BANK,
-            TrainingIds.FILLWORD,
-            TrainingIds.PRONUNCIATION_SENTENCES,
-        )
-    }
+val programTrainings = trainingCatalog.filter { it.isEnabled && it.id != TrainingIds.MEMORY_CARDS }
 
 fun trainingDisplayName(id: String): String = trainingCatalog.firstOrNull { it.id == id }?.displayName ?: id

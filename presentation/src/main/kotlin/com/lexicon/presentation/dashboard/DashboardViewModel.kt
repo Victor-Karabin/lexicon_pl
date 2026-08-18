@@ -2,6 +2,10 @@ package com.lexicon.presentation.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lexicon.interactors.conjugation.ConjugationCourseProgress
+import com.lexicon.interactors.conjugation.LoadConjugationProgressUseCase
+import com.lexicon.interactors.conjugation.ResetConjugationCourseUseCase
+import com.lexicon.interactors.conjugation.SelectConjugationVerbsUseCase
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.program.CountFavouritesUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
@@ -12,9 +16,8 @@ import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
 import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramDay
 import com.lexicon.interactors.program.ProgramProgress
-import com.lexicon.interactors.program.StartProgramSessionUseCase
+import com.lexicon.presentation.program.ProgramQueue
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,7 +39,10 @@ data class DashboardUiState(
     val day: ProgramDay? = null,
     val launch: LaunchTraining? = null,
     val openCards: Boolean = false,
+    val conjugation: ConjugationCourseProgress? = null,
 ) {
+    val hasConjugationCourse: Boolean get() = (conjugation?.total ?: 0) > 0
+
     val trainingsDone: Int get() = day?.completedTrainings ?: 0
 
     val trainingsTotal: Int get() = day?.totalTrainings ?: 0
@@ -50,7 +56,10 @@ data class DashboardUiState(
 class DashboardViewModel(
     private val getProgram: GetProgramUseCase,
     private val getProgress: GetProgramProgressUseCase,
-    private val startSession: StartProgramSessionUseCase,
+    private val queue: ProgramQueue,
+    private val loadConjugationProgress: LoadConjugationProgressUseCase,
+    private val resetConjugation: ResetConjugationCourseUseCase,
+    private val selectConjugationVerbs: SelectConjugationVerbsUseCase,
     private val getDay: GetProgramDayUseCase,
     private val getStreak: GetStudyStreakUseCase,
     private val countFavourites: CountFavouritesUseCase,
@@ -103,15 +112,25 @@ class DashboardViewModel(
             _uiState.update { it.copy(openCards = true) }
             return
         }
-        val next = day.nextTraining ?: return
-
         viewModelScope.launch {
-            val session = startSession(program.id)
-            _uiState.update {
-                it.copy(launch = LaunchTraining(next.training, session?.wordIds ?: persistentListOf()))
-            }
+            val next = queue.next(program.id) ?: return@launch
+            _uiState.update { it.copy(launch = LaunchTraining(next.training, next.wordIds)) }
         }
     }
 
     fun onLaunchHandled() = _uiState.update { it.copy(launch = null, openCards = false) }
+
+    fun refreshConjugation() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(conjugation = loadConjugationProgress()) }
+        }
+    }
+
+    fun onConjugationRemoved() {
+        viewModelScope.launch {
+            selectConjugationVerbs(emptyList())
+            resetConjugation()
+            _uiState.update { it.copy(conjugation = loadConjugationProgress()) }
+        }
+    }
 }

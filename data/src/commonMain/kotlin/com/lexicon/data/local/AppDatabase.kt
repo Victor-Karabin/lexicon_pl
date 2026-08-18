@@ -29,8 +29,11 @@ import androidx.room.RoomDatabaseConstructor
         ProgramDayEntity::class,
         ProgramMilestoneEntity::class,
         ProgramRewardEntity::class,
+        ConjugationSelectionEntity::class,
+        ConjugationProgressEntity::class,
+        ConjugationImageEntity::class,
     ],
-    version = 19,
+    version = 21,
     exportSchema = false,
 )
 @ConstructedBy(AppDatabaseConstructor::class)
@@ -50,6 +53,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun studyDayDao(): StudyDayDao
 
     abstract fun programDao(): ProgramDao
+
+    abstract fun conjugationDao(): ConjugationDao
 }
 
 @Suppress("KotlinNoActualForExpect", "EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")

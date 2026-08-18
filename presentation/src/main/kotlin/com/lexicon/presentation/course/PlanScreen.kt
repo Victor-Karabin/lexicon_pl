@@ -88,6 +88,7 @@ fun PlanScreen(
     onCourseSelected: (CourseId) -> Unit,
     onProgramSelected: (ProgramId) -> Unit,
     onCreateProgram: () -> Unit,
+    onConjugationSelected: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PlanViewModel = koinViewModel(),
 ) {
@@ -97,6 +98,7 @@ fun PlanScreen(
         onCourseSelected = onCourseSelected,
         onProgramSelected = onProgramSelected,
         onCreateProgram = onCreateProgram,
+        onConjugationSelected = onConjugationSelected,
         modifier = modifier,
     )
 }
@@ -107,24 +109,13 @@ private fun PlanContent(
     onCourseSelected: (CourseId) -> Unit,
     onProgramSelected: (ProgramId) -> Unit,
     onCreateProgram: () -> Unit,
+    onConjugationSelected: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when {
         uiState is PlanUiState.Loading ->
             Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
-            }
-
-        uiState is PlanUiState.Loaded && uiState.isEmpty ->
-            Box(
-                modifier = modifier.fillMaxSize().padding(Dimens.spacingXl),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = stringResource(R.string.course_empty),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
             }
 
         uiState is PlanUiState.Loaded ->
@@ -148,17 +139,51 @@ private fun PlanContent(
                     item(key = "create-program") { CreateProgramTile(onClick = onCreateProgram) }
                 }
 
-                if (uiState.courses.any { it.lessons.isNotEmpty() }) {
-                    item(key = "courses-heading") { SectionHeading(stringResource(R.string.plan_courses)) }
-                    items(uiState.courses, key = { it.id.value }) { course ->
-                        CourseTile(
-                            course = course,
-                            languageTag = uiState.languageTag,
-                            onClick = { onCourseSelected(course.id) },
-                        )
-                    }
+                item(key = "courses-heading") { SectionHeading(stringResource(R.string.plan_courses)) }
+
+                items(uiState.courses.filter { it.lessons.isNotEmpty() }, key = { it.id.value }) { course ->
+                    CourseTile(
+                        course = course,
+                        languageTag = uiState.languageTag,
+                        onClick = { onCourseSelected(course.id) },
+                    )
                 }
+
+                item(key = "conjugation-course") { ConjugationCourseTile(onClick = onConjugationSelected) }
             }
+    }
+}
+
+@Composable
+private fun ConjugationCourseTile(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val skin = tileSkin()
+
+    GradientTile(skin = skin, modifier = modifier.fillMaxWidth().clickable(onClick = onClick)) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium)) {
+            Medallion(skin = skin) { MedallionIcon(Icons.Default.Translate, skin) }
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = stringResource(R.string.conjugation_title),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = skin.onTile,
+                )
+                Text(
+                    text = stringResource(R.string.training_conjugation_blurb),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = skin.muted(),
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = null,
+                tint = skin.muted(),
+            )
+        }
     }
 }
 
@@ -441,6 +466,7 @@ private fun PlanPreview() {
             onCourseSelected = {},
             onProgramSelected = {},
             onCreateProgram = {},
+            onConjugationSelected = {},
         )
     }
 }
@@ -494,6 +520,7 @@ private fun PlanProgramsPreview() {
             onCourseSelected = {},
             onProgramSelected = {},
             onCreateProgram = {},
+            onConjugationSelected = {},
         )
     }
 }
@@ -507,6 +534,7 @@ private fun PlanEmptyPreview() {
             onCourseSelected = {},
             onProgramSelected = {},
             onCreateProgram = {},
+            onConjugationSelected = {},
         )
     }
 }

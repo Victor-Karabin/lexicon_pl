@@ -3,6 +3,8 @@ package com.lexicon.app.di
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionResultViewModel
 import com.lexicon.presentation.common.TrainingGateViewModel
+import com.lexicon.presentation.conjugation.ConjugationViewModel
+import com.lexicon.presentation.conjugation.VerbSelectionViewModel
 import com.lexicon.presentation.course.CourseDetailViewModel
 import com.lexicon.presentation.course.ExerciseViewModel
 import com.lexicon.presentation.course.LessonViewModel
@@ -22,6 +24,7 @@ import com.lexicon.presentation.presets.CreateWordViewModel
 import com.lexicon.presentation.presets.PresetDetailViewModel
 import com.lexicon.presentation.presets.VocabularyViewModel
 import com.lexicon.presentation.program.CreateProgramViewModel
+import com.lexicon.presentation.program.ProgramQueue
 import com.lexicon.presentation.program.ProgramRunViewModel
 import com.lexicon.presentation.program.WordCardsViewModel
 import com.lexicon.presentation.pronunciation.PronunciationViewModel
@@ -30,12 +33,14 @@ import com.lexicon.presentation.settings.SettingsViewModel
 import com.lexicon.presentation.trueorfalse.TrueOrFalseViewModel
 import com.lexicon.presentation.wordcard.WordCardViewModel
 import com.lexicon.presentation.wordmatch.WordMatchViewModel
+import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val viewModelModule = module {
     singleOf(::LastSessionResultsHolder)
+    factoryOf(::ProgramQueue)
 
     viewModelOf(::SessionResultViewModel)
     viewModelOf(::TrainingGateViewModel)
@@ -46,6 +51,8 @@ val viewModelModule = module {
     viewModelOf(::ProgramRunViewModel)
     viewModelOf(::PassageViewModel)
     viewModelOf(::FillwordViewModel)
+    viewModelOf(::VerbSelectionViewModel)
+    viewModelOf(::ConjugationViewModel)
     viewModelOf(::WordCardViewModel)
     viewModelOf(::CourseDetailViewModel)
     viewModelOf(::ExerciseViewModel)

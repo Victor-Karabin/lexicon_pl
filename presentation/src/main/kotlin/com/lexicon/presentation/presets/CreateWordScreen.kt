@@ -283,7 +283,7 @@ private fun RevealNewCandidates(
 }
 
 @Composable
-private fun AddImageTile(onPicked: (String) -> Unit) {
+internal fun AddImageTile(onPicked: (String) -> Unit) {
     var isChoosing by remember { mutableStateOf(false) }
     val picker = rememberOwnImagePicker(onPicked = onPicked)
 
@@ -326,7 +326,7 @@ private fun AddImageTile(onPicked: (String) -> Unit) {
 }
 
 @Composable
-private fun ImageCandidate(
+internal fun ImageCandidate(
     url: String,
     isSelected: Boolean,
     onClick: () -> Unit,
