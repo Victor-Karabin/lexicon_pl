@@ -1,5 +1,6 @@
 package com.lexicon.interactors.presets
 
+import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.Word
 
 interface CreateWordUseCase {

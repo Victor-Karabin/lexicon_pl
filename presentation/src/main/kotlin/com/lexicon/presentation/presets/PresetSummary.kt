@@ -18,8 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.presets.PresetStudySetState
-import com.lexicon.interactors.presets.VocabularyPreset
-import com.lexicon.interactors.presets.wordCount
+import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.resolve
 import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.Dimens

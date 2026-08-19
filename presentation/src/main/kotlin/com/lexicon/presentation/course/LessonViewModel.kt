@@ -8,10 +8,10 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
 import com.lexicon.interactors.course.Lesson
-import com.lexicon.interactors.course.LessonId
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
 import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
 import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
+import com.lexicon.model.course.LessonId
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.ImmutableList

@@ -27,7 +27,7 @@ Everything the learner practises comes from one of three sources: the shipped
 | Training | A single practice session and what it records | `model.training`, `interactors.<training>` |
 | Scheduling | Review intervals, mastery, study days, streaks | `model.scheduling` |
 | Program | The daily plan and its queue of trainings | `model.program`, `interactors.program` |
-| Course | Fixed teaching material — lessons and exercises | `interactors.course` |
+| Course | Fixed teaching material — lessons and exercises | `model.course`, `interactors.course` |
 | Conjugation | Verbs, their forms, and courses over them | `interactors.conjugation` |
 | Catalogue | Seeding shipped data into the database | `interactors.sync` |
 
@@ -41,7 +41,7 @@ must not be merged.
 | --- | --- | --- | --- | --- | --- |
 | Word | A Polish word or phrase with its English translation, IPA and optional picture | Vocabulary | vocabulary item | *entry*, *item*, *term* | `Word`, `VocabularyId`, `CefrLevel` |
 | Study set | The words the learner has chosen to practise | Vocabulary | — | — | `isInStudySet`, `studySetWordIds()` |
-| Preset | A named, shipped or hand-made grouping of words by topic | Vocabulary | word list | *category* (that is the grouping above presets) | `VocabularyPreset`, `PresetId` |
+| Preset | A named, shipped or hand-made grouping of words by topic | Vocabulary | word list | *category* (that is the grouping above presets) | `VocabularyPreset`, `PresetId` in `model.vocabulary` |
 | Preset category | A grouping of presets | Vocabulary | — | *topic* | `PresetCategory` |
 | Membership | Whether a word belongs to a preset, including a hand-made override | Vocabulary | — | *link*, *relation* | `PresetMembership` |
 | Training | A kind of exercise — dictation, crossword, word search | Training | exercise type | *game*, *test* | `TrainingType`; `trainingCatalog` for its presentation |
@@ -65,7 +65,7 @@ must not be merged.
 | Queue | The ordered trainings a program day asks for | Program | — | *playlist*, *schedule* | `QueuedTraining`, `ProgramQueue` |
 | Activity | A unit of work in a program's plan, mapped to a training | Program | — | *task* | `PlannedActivity`, `ActivityType` |
 | Word card | A word shown for learning rather than testing, before the day's trainings | Program | — | *flashcard* | `WordCard`, `GetWordCardsUseCase` |
-| Course | Fixed teaching material — a sequence of lessons | Course | — | *program*, *class* | `Course`, `CourseId` |
+| Course | Fixed teaching material — a sequence of lessons | Course | — | *program*, *class* | `Course`, `CourseId` in `model.course` |
 | Lesson | One unit of a course, with its words, audio and exercises | Course | — | *chapter*, *unit* | `Lesson`, `LessonId` |
 | Exercise | A question inside a lesson, of a fixed authored shape | Course | — | *training*, *step* | `LessonExercise`, `GapFillItem` |
 | Verb | A Polish infinitive with the forms the source records for it | Conjugation | — | *word* (a verb is not in the vocabulary catalogue) | `VerbConjugation` |
@@ -249,6 +249,7 @@ unified.
 | 2026-08-19 | *Favourite* renamed to *study set* throughout the code | The interface had always said study set; the code name was the last holdout |
 | 2026-08-19 | **`SEEN` added to `StepOutcome`; `TrainingResultOutcomeBoundary` removed** | The two enums became identical. The earlier reason for keeping the boundary copy — that only it carried `SEEN` — was the defect, not the justification: the model could not express a state the domain has |
 | 2026-08-19 | **Review scheduling moved out of `data` into `model.scheduling`** | A Room repository owned SM-2, the review policy and the study-time rule. The application now invokes the scheduler through `RecordAnswerUseCase` |
+| 2026-08-19 | **`Course` and `VocabularyPreset` moved to the model**, with their behaviour folded onto the types | `completedCount`, `currentLesson` and `wordCount` were extension functions beside the data classes. A course's `level` is a `CefrLevel` rather than a string |
 | 2026-08-19 | **`Session` became a real aggregate** | The language had claimed a Session aggregate whose invariant was "every step records exactly one result". Nothing enforced it: `sessionId` was a `String`, and the submit request carried the expected answer in from the caller, so a client could rename the right answer. Nine trainings now draw it from the session |
 | 2026-08-19 | **`ProgramQueue` moved out of the Compose module** and became `NextProgramTrainingUseCase` | The glossary already listed it as the *queue resolver* domain service, but it was a class in the UI module applying a policy that also lived there. `QueuedTraining` now carries a `TrainingType` rather than a string |
 | 2026-08-19 | **Speech and audio ports moved from `android` to `boundary`** | The ports were declared inside the Android module, so every ViewModel that wanted to play a word depended on infrastructure. `presentation` no longer depends on `android` at all. The `java.util.Locale` parameter went with them: no caller ever passed anything but Polish |

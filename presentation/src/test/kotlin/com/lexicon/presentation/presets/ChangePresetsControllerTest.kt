@@ -1,13 +1,13 @@
 package com.lexicon.presentation.presets
 
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
-import com.lexicon.interactors.presets.PresetCategory
-import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetMembership
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
-import com.lexicon.interactors.presets.VocabularyPreset
 import com.lexicon.model.vocabulary.LocalizedText
+import com.lexicon.model.vocabulary.PresetCategory
+import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
 import io.mockk.coVerify

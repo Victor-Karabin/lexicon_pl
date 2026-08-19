@@ -5,14 +5,14 @@ import com.lexicon.boundary.LessonAudioLibrary
 import com.lexicon.boundary.LessonAudioPlayer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
-import com.lexicon.interactors.course.CourseId
 import com.lexicon.interactors.course.GapFillItem
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.Lesson
 import com.lexicon.interactors.course.LessonAudio
 import com.lexicon.interactors.course.LessonExercise
-import com.lexicon.interactors.course.LessonId
 import com.lexicon.interactors.course.MinimalPairItem
+import com.lexicon.model.course.CourseId
+import com.lexicon.model.course.LessonId
 import com.lexicon.presentation.common.AnswerState
 import io.mockk.coEvery
 import io.mockk.coVerify

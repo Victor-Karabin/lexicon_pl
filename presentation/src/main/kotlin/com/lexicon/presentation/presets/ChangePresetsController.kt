@@ -1,9 +1,9 @@
 package com.lexicon.presentation.presets
 
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
-import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetMembership
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
+import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.ImmutableList

@@ -1,6 +1,7 @@
 package com.lexicon.interactors.presets
 
 import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.VocabularyPreset
 
 interface CreatePresetUseCase {
     suspend operator fun invoke(

@@ -9,7 +9,7 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.LessonExercise
-import com.lexicon.interactors.course.LessonId
+import com.lexicon.model.course.LessonId
 import com.lexicon.presentation.common.AnswerState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

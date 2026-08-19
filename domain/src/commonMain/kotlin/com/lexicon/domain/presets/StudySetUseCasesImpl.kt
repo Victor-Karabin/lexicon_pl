@@ -3,9 +3,9 @@ package com.lexicon.domain.presets
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
-import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.SetPresetInStudySetUseCase
 import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
+import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

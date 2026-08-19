@@ -34,11 +34,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import com.lexicon.interactors.course.CourseId
 import com.lexicon.interactors.course.Lesson
 import com.lexicon.interactors.course.LessonExercise
-import com.lexicon.interactors.course.LessonId
 import com.lexicon.interactors.course.questionCount
+import com.lexicon.model.course.CourseId
+import com.lexicon.model.course.LessonId
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
 import com.lexicon.presentation.R

@@ -26,8 +26,8 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetMembership
+import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.resolve
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.ExpandableFlowRow

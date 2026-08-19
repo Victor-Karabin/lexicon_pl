@@ -2,13 +2,13 @@ package com.lexicon.domain.course
 
 import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.VocabularyRepository
-import com.lexicon.interactors.course.Course
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
 import com.lexicon.interactors.course.Lesson
-import com.lexicon.interactors.course.LessonId
 import com.lexicon.interactors.course.ObserveCoursesUseCase
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
+import com.lexicon.model.course.Course
+import com.lexicon.model.course.LessonId
 import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

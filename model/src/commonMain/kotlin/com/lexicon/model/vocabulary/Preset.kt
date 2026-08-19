@@ -1,7 +1,5 @@
-package com.lexicon.interactors.presets
+package com.lexicon.model.vocabulary
 
-import com.lexicon.model.vocabulary.LocalizedText
-import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.ImmutableList
 import kotlin.time.Duration
 
@@ -23,6 +21,6 @@ data class VocabularyPreset(
     val popularity: Int,
     val estimatedDuration: Duration,
     val vocabularyIds: ImmutableList<VocabularyId>,
-)
-
-val VocabularyPreset.wordCount: Int get() = vocabularyIds.size
+) {
+    val wordCount: Int get() = vocabularyIds.size
+}

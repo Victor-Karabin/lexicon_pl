@@ -5,19 +5,20 @@ import com.lexicon.boundary.LessonAudioBoundary
 import com.lexicon.boundary.LessonBoundary
 import com.lexicon.boundary.LessonExerciseBoundary
 import com.lexicon.boundary.LessonSummaryBoundary
-import com.lexicon.interactors.course.Course
-import com.lexicon.interactors.course.CourseId
 import com.lexicon.interactors.course.GapFillItem
 import com.lexicon.interactors.course.LETTER_GAP
 import com.lexicon.interactors.course.Lesson
 import com.lexicon.interactors.course.LessonAudio
 import com.lexicon.interactors.course.LessonExercise
-import com.lexicon.interactors.course.LessonId
-import com.lexicon.interactors.course.LessonSummary
 import com.lexicon.interactors.course.LetterFillItem
 import com.lexicon.interactors.course.MatchItem
 import com.lexicon.interactors.course.MinimalPairItem
 import com.lexicon.interactors.course.TranscribeItem
+import com.lexicon.model.course.Course
+import com.lexicon.model.course.CourseId
+import com.lexicon.model.course.LessonId
+import com.lexicon.model.course.LessonSummary
+import com.lexicon.model.vocabulary.CefrLevel
 import com.lexicon.model.vocabulary.LocalizedText
 import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.toImmutableList
@@ -26,7 +27,7 @@ fun CourseBoundary.toCourse(): Course =
     Course(
         id = CourseId(id),
         order = order,
-        level = level,
+        level = CefrLevel.ofName(level),
         title = LocalizedText(title),
         lessons = lessons
             .mapIndexed { index, lesson -> lesson.toSummary(LessonUnlockRule.isUnlocked(lessons, index)) }

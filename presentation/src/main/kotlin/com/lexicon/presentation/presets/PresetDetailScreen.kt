@@ -25,12 +25,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import com.lexicon.interactors.presets.PresetCategory
-import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetStudySetState
-import com.lexicon.interactors.presets.VocabularyPreset
 import com.lexicon.model.vocabulary.LocalizedText
+import com.lexicon.model.vocabulary.PresetCategory
+import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.Word
 import com.lexicon.model.vocabulary.resolve
 import com.lexicon.presentation.R

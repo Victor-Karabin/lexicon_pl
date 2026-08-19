@@ -3,7 +3,7 @@ package com.lexicon.domain.presets
 import com.lexicon.boundary.VocabularyPresetBoundary
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
-import com.lexicon.interactors.presets.PresetId
+import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
 import io.mockk.coEvery
 import io.mockk.coVerify

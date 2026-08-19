@@ -2,11 +2,11 @@ package com.lexicon.domain.presets
 
 import com.lexicon.boundary.PresetCategoryBoundary
 import com.lexicon.boundary.VocabularyPresetBoundary
-import com.lexicon.interactors.presets.PresetCategory
-import com.lexicon.interactors.presets.PresetId
-import com.lexicon.interactors.presets.VocabularyPreset
 import com.lexicon.model.vocabulary.LocalizedText
+import com.lexicon.model.vocabulary.PresetCategory
+import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.VocabularyPreset
 import kotlinx.collections.immutable.toImmutableList
 import kotlin.time.Duration.Companion.seconds
 
