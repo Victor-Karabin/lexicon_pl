@@ -10,6 +10,7 @@ data class ProgramBoundary(
     val estimatedDays: Int,
     val visibility: String,
     val configJson: String,
+    val isUserCreated: Boolean = true,
 )
 
 data class ProgramEnrolmentBoundary(

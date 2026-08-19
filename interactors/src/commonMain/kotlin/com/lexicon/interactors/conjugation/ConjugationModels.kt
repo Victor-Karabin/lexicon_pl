@@ -95,3 +95,15 @@ data class ConjugationCourseProgress(
 
     val isComplete: Boolean get() = total > 0 && mastered == total
 }
+
+data class ConjugationCourse(
+    val id: String,
+    val infinitives: ImmutableList<String>,
+    val progress: ConjugationCourseProgress,
+) {
+    val title: String get() = infinitives.take(TITLE_VERBS).joinToString(", ")
+
+    private companion object {
+        private const val TITLE_VERBS = 3
+    }
+}

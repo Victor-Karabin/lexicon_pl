@@ -22,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -34,6 +35,9 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import com.lexicon.interactors.conjugation.VerbConjugation
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.DeleteAction
+import com.lexicon.presentation.common.DeleteActionWidth
+import com.lexicon.presentation.common.SwipeToRevealContainer
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
@@ -44,6 +48,7 @@ object VerbSelectionTestTags {
     const val LIST = "verb_selection_list"
     const val COUNT = "verb_selection_count"
     const val CONTINUE = "verb_selection_continue"
+    const val RESTORE = "verb_selection_restore"
 
     fun verb(infinitive: String) = "verb_selection_item_$infinitive"
 
@@ -73,7 +78,9 @@ fun VerbSelectionScreen(
         onQueryChanged = viewModel::onQueryChanged,
         onVerbToggled = viewModel::onVerbToggled,
         onFavouriteToggled = viewModel::onFavouriteToggled,
-        onSave = viewModel::onSave,
+        onCreateCourse = viewModel::onCreateCourse,
+        onVerbDeleted = viewModel::onVerbDeleted,
+        onRestoreAll = viewModel::onRestoreAll,
         onClose = onClose,
         modifier = modifier,
     )
@@ -85,13 +92,28 @@ private fun VerbSelectionContent(
     onQueryChanged: (String) -> Unit,
     onVerbToggled: (String) -> Unit,
     onFavouriteToggled: (VerbConjugation) -> Unit,
-    onSave: () -> Unit,
+    onCreateCourse: () -> Unit,
+    onVerbDeleted: (String) -> Unit,
+    onRestoreAll: () -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = { TrainingTopBar(title = stringResource(R.string.conjugation_select_title), onClose = onClose) },
+        topBar = {
+            TrainingTopBar(
+                title = stringResource(R.string.conjugation_select_title),
+                onClose = onClose,
+                actions = {
+                    TextButton(
+                        onClick = onRestoreAll,
+                        modifier = Modifier.testTag(VerbSelectionTestTags.RESTORE),
+                    ) {
+                        Text(stringResource(R.string.conjugation_restore_all))
+                    }
+                },
+            )
+        },
     ) { padding ->
         Column(modifier = Modifier.fillMaxSize().padding(padding)) {
             OutlinedTextField(
@@ -121,25 +143,30 @@ private fun VerbSelectionContent(
 
             LazyColumn(modifier = Modifier.weight(1f).testTag(VerbSelectionTestTags.LIST)) {
                 items(uiState.verbs, key = { it.infinitive }) { verb ->
-                    VerbRow(
-                        verb = verb,
-                        isSelected = verb.infinitive in uiState.selected,
-                        isFavourite = verb.infinitive in uiState.favourites,
-                        onToggled = { onVerbToggled(verb.infinitive) },
-                        onFavouriteToggled = { onFavouriteToggled(verb) },
-                    )
+                    SwipeToRevealContainer(
+                        revealWidth = DeleteActionWidth,
+                        backgroundContent = { DeleteAction(onClick = { onVerbDeleted(verb.infinitive) }) },
+                    ) {
+                        VerbRow(
+                            verb = verb,
+                            isSelected = verb.infinitive in uiState.selected,
+                            isFavourite = verb.infinitive in uiState.favourites,
+                            onToggled = { onVerbToggled(verb.infinitive) },
+                            onFavouriteToggled = { onFavouriteToggled(verb) },
+                        )
+                    }
                 }
             }
 
             Button(
-                onClick = onSave,
+                onClick = onCreateCourse,
                 enabled = uiState.canContinue,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(Dimens.spacingMedium)
                     .testTag(VerbSelectionTestTags.CONTINUE),
             ) {
-                Text(stringResource(R.string.conjugation_start))
+                Text(stringResource(R.string.conjugation_create))
             }
         }
     }

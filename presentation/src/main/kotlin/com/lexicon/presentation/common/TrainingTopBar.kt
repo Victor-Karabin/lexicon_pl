@@ -1,6 +1,7 @@
 package com.lexicon.presentation.common
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,8 +20,10 @@ import com.lexicon.presentation.theme.LexiconTheme
 fun TrainingTopBar(
     title: String,
     onClose: () -> Unit,
+    actions: @Composable RowScope.() -> Unit = {},
 ) {
     TopAppBar(
+        actions = actions,
         title = {
             Text(
                 text = title,

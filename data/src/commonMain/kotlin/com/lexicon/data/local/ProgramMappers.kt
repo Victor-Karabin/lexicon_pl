@@ -31,6 +31,7 @@ fun ProgramEntity.toBoundary(): ProgramBoundary =
         estimatedDays = estimatedDays,
         visibility = visibility,
         configJson = configJson,
+        isUserCreated = isUserCreated,
     )
 
 fun ProgramEnrolmentEntity.toBoundary(): ProgramEnrolmentBoundary =

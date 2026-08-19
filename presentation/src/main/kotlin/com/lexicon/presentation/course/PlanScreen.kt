@@ -187,6 +187,14 @@ private fun ConjugationCourseTile(
     }
 }
 
+/**
+ * A program you made has no name you chose — it takes the default, and storing that made
+ * the copy on disk outlive the wording. The label is read from resources instead.
+ */
+@Composable
+private fun Program.displayTitle(languageTag: String): String =
+    if (isUserCreated) stringResource(R.string.program_default_name) else title.resolve(languageTag)
+
 @Composable
 private fun SectionHeading(text: String) {
     Text(
@@ -217,7 +225,7 @@ private fun ProgramTile(
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = program.title.resolve(languageTag),
+                    text = program.displayTitle(languageTag),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
                     color = skin.onTile,

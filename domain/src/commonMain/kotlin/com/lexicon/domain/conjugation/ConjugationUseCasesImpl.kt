@@ -4,20 +4,23 @@ import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.conjugation.ChooseVerbImageUseCase
+import com.lexicon.interactors.conjugation.ConjugationCourse
 import com.lexicon.interactors.conjugation.ConjugationCourseProgress
 import com.lexicon.interactors.conjugation.ConjugationQuestion
 import com.lexicon.interactors.conjugation.ConjugationVariant
 import com.lexicon.interactors.conjugation.ConjugationVariantProgress
+import com.lexicon.interactors.conjugation.CreateConjugationCourseUseCase
+import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
+import com.lexicon.interactors.conjugation.DeleteConjugationVerbUseCase
 import com.lexicon.interactors.conjugation.EnsureVerbWordUseCase
 import com.lexicon.interactors.conjugation.FavouriteVerbUseCase
+import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationProgressUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadFavouriteVerbsUseCase
-import com.lexicon.interactors.conjugation.LoadSelectedVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadVerbImageChoicesUseCase
 import com.lexicon.interactors.conjugation.NextConjugationQuestionUseCase
-import com.lexicon.interactors.conjugation.ResetConjugationCourseUseCase
-import com.lexicon.interactors.conjugation.SelectConjugationVerbsUseCase
+import com.lexicon.interactors.conjugation.RestoreConjugationVerbsUseCase
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerRequest
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerResponse
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
@@ -44,36 +47,57 @@ class LoadConjugationVerbsUseCaseImpl(
         infinitive.contains(needle, ignoreCase = true) || translation?.contains(needle, ignoreCase = true) == true
 }
 
-class LoadSelectedVerbsUseCaseImpl(
+class DeleteConjugationVerbUseCaseImpl(
     private val conjugations: ConjugationRepository,
-) : LoadSelectedVerbsUseCase {
-    override suspend fun invoke() = conjugations.selectedInfinitives().toImmutableList()
+) : DeleteConjugationVerbUseCase {
+    override suspend fun invoke(infinitive: String) = conjugations.deleteVerb(infinitive)
 }
 
-class SelectConjugationVerbsUseCaseImpl(
+class RestoreConjugationVerbsUseCaseImpl(
     private val conjugations: ConjugationRepository,
-) : SelectConjugationVerbsUseCase {
-    override suspend fun invoke(infinitives: List<String>) {
+) : RestoreConjugationVerbsUseCase {
+    override suspend fun invoke() = conjugations.restoreVerbs()
+}
+
+class CreateConjugationCourseUseCaseImpl(
+    private val conjugations: ConjugationRepository,
+) : CreateConjugationCourseUseCase {
+    override suspend fun invoke(infinitives: List<String>): String {
         val teachable = conjugations
             .verbs()
             .filter { it.toVerb().isTeachable }
             .map { it.infinitive }
             .toSet()
 
-        conjugations.selectInfinitives(infinitives.filter { it in teachable })
+        return conjugations.createCourse(infinitives.filter { it in teachable })
     }
+}
+
+class LoadConjugationCoursesUseCaseImpl(
+    private val conjugations: ConjugationRepository,
+) : LoadConjugationCoursesUseCase {
+    override suspend fun invoke(): ImmutableList<ConjugationCourse> =
+        conjugations
+            .courses()
+            .map {
+                ConjugationCourse(
+                    id = it.id,
+                    infinitives = it.infinitives.toImmutableList(),
+                    progress = conjugations.courseProgress(it.id),
+                )
+            }.toImmutableList()
+}
+
+class DeleteConjugationCourseUseCaseImpl(
+    private val conjugations: ConjugationRepository,
+) : DeleteConjugationCourseUseCase {
+    override suspend fun invoke(courseId: String) = conjugations.deleteCourse(courseId)
 }
 
 class LoadConjugationProgressUseCaseImpl(
     private val conjugations: ConjugationRepository,
 ) : LoadConjugationProgressUseCase {
-    override suspend fun invoke(): ConjugationCourseProgress = conjugations.courseProgress()
-}
-
-class ResetConjugationCourseUseCaseImpl(
-    private val conjugations: ConjugationRepository,
-) : ResetConjugationCourseUseCase {
-    override suspend fun invoke() = conjugations.resetProgress()
+    override suspend fun invoke(courseId: String): ConjugationCourseProgress = conjugations.courseProgress(courseId)
 }
 
 class NextConjugationQuestionUseCaseImpl(
@@ -81,11 +105,11 @@ class NextConjugationQuestionUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val imageProvider: ImageProvider,
 ) : NextConjugationQuestionUseCase {
-    override suspend fun invoke(): ConjugationQuestion? {
-        val selected = conjugations.selectedVerbs()
+    override suspend fun invoke(courseId: String): ConjugationQuestion? {
+        val selected = conjugations.courseVerbs(courseId)
         if (selected.isEmpty()) return null
 
-        val progress = conjugations.courseProgress().variants.associateBy { it.variant }
+        val progress = conjugations.courseProgress(courseId).variants.associateBy { it.variant }
         val verb = selected.leastPractised(progress) ?: return null
 
         return verb.question(selected)?.withLearningAids()
@@ -220,6 +244,7 @@ class SubmitConjugationAnswerUseCaseImpl(
             val isCorrect = given != null && step.correctOptions.any { it.equalsAnswer(given) }
 
             conjugations.recordAttempt(
+                courseId = request.courseId,
                 infinitive = step.variant.infinitive,
                 person = step.variant.person.sourceKey,
                 isCorrect = isCorrect,
