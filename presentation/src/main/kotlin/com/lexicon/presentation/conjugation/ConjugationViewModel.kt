@@ -1,5 +1,6 @@
 package com.lexicon.presentation.conjugation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.android.speech.SpeechSynthesizer
@@ -50,7 +51,10 @@ data class ConjugationUiState(
     val usedOptions: Set<String> get() = answers.values.toSet()
 }
 
+const val CONJUGATION_COURSE_ARG = "courseId"
+
 class ConjugationViewModel(
+    savedStateHandle: SavedStateHandle,
     private val nextQuestion: NextConjugationQuestionUseCase,
     private val submitAnswer: SubmitConjugationAnswerUseCase,
     private val loadImageChoices: LoadVerbImageChoicesUseCase,
@@ -59,6 +63,8 @@ class ConjugationViewModel(
     private val lastSessionResultsHolder: LastSessionResultsHolder,
     private val dispatchers: DispatcherProvider,
 ) : ViewModel() {
+    private val courseId: String = savedStateHandle.get<String>(CONJUGATION_COURSE_ARG).orEmpty()
+
     private val _uiState = MutableStateFlow(ConjugationUiState())
     val uiState: StateFlow<ConjugationUiState> = _uiState.asStateFlow()
 
@@ -71,7 +77,7 @@ class ConjugationViewModel(
 
     init {
         viewModelScope.launch(dispatchers.io) {
-            val first = nextQuestion()
+            val first = nextQuestion(courseId)
             _uiState.update {
                 it.copy(
                     isLoading = false,
@@ -104,7 +110,7 @@ class ConjugationViewModel(
         if (!state.canCheck) return
 
         viewModelScope.launch(dispatchers.io) {
-            val response = submitAnswer(SubmitConjugationAnswerRequest(question, state.answers))
+            val response = submitAnswer(SubmitConjugationAnswerRequest(courseId, question, state.answers))
             val allRight = response.allCorrect
 
             question.steps.forEach { step ->
@@ -137,7 +143,7 @@ class ConjugationViewModel(
                 return@launch
             }
 
-            val question = nextQuestion()
+            val question = nextQuestion(courseId)
             if (question == null) {
                 lastSessionResultsHolder.wordResults = results.toList()
                 _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correct, incorrect, 0, 0))

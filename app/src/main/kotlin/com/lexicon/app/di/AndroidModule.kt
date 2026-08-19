@@ -20,12 +20,15 @@ import com.lexicon.android.speech.CloudSpeechSynthesizer
 import com.lexicon.android.speech.SpeechStore
 import com.lexicon.android.speech.SpeechSynthesizer
 import com.lexicon.android.speech.VoicePreference
+import com.lexicon.boundary.AppVersionProvider
 import com.lexicon.boundary.SettingsRepository
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val androidModule = module {
+    single<AppVersionProvider> { AppVersionProvider { BuildConfig.VERSION_CODE } }
+
     single<VoicePreference> { VoicePreference { get<SettingsRepository>().getSettings().voiceId } }
 
     single<SpeechStore> { AndroidSpeechStore(context = get()) }

@@ -27,10 +27,11 @@ data class CatalogSyncStatus(
     val vocabulary: SyncStepStatus = SyncStepStatus.Pending,
     val presets: SyncStepStatus = SyncStepStatus.Pending,
     val course: SyncStepStatus = SyncStepStatus.Pending,
+    val verbs: SyncStepStatus = SyncStepStatus.Pending,
 )
 
 val CatalogSyncStatus.steps: List<SyncStepStatus>
-    get() = listOf(vocabulary, presets, course)
+    get() = listOf(vocabulary, presets, course, verbs)
 
 val SyncStepStatus.Complete.wasAlreadyCurrent: Boolean
     get() = added == 0 && updated == 0 && removed == 0

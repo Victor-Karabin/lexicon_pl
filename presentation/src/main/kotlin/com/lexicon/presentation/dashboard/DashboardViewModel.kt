@@ -2,10 +2,9 @@ package com.lexicon.presentation.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.interactors.conjugation.ConjugationCourseProgress
-import com.lexicon.interactors.conjugation.LoadConjugationProgressUseCase
-import com.lexicon.interactors.conjugation.ResetConjugationCourseUseCase
-import com.lexicon.interactors.conjugation.SelectConjugationVerbsUseCase
+import com.lexicon.interactors.conjugation.ConjugationCourse
+import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
+import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.program.CountFavouritesUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
@@ -18,6 +17,7 @@ import com.lexicon.interactors.program.ProgramDay
 import com.lexicon.interactors.program.ProgramProgress
 import com.lexicon.presentation.program.ProgramQueue
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -39,9 +39,9 @@ data class DashboardUiState(
     val day: ProgramDay? = null,
     val launch: LaunchTraining? = null,
     val openCards: Boolean = false,
-    val conjugation: ConjugationCourseProgress? = null,
+    val conjugationCourses: ImmutableList<ConjugationCourse> = persistentListOf(),
 ) {
-    val hasConjugationCourse: Boolean get() = (conjugation?.total ?: 0) > 0
+    val hasConjugationCourse: Boolean get() = conjugationCourses.isNotEmpty()
 
     val trainingsDone: Int get() = day?.completedTrainings ?: 0
 
@@ -57,9 +57,8 @@ class DashboardViewModel(
     private val getProgram: GetProgramUseCase,
     private val getProgress: GetProgramProgressUseCase,
     private val queue: ProgramQueue,
-    private val loadConjugationProgress: LoadConjugationProgressUseCase,
-    private val resetConjugation: ResetConjugationCourseUseCase,
-    private val selectConjugationVerbs: SelectConjugationVerbsUseCase,
+    private val loadConjugationCourses: LoadConjugationCoursesUseCase,
+    private val deleteConjugationCourse: DeleteConjugationCourseUseCase,
     private val getDay: GetProgramDayUseCase,
     private val getStreak: GetStudyStreakUseCase,
     private val countFavourites: CountFavouritesUseCase,
@@ -71,17 +70,16 @@ class DashboardViewModel(
     init {
         viewModelScope.launch {
             observeActiveEnrolment().collect { enrolment ->
-                if (enrolment == null) {
-                    _uiState.value = DashboardUiState(isLoading = false)
-                    return@collect
-                }
-                val program = getProgram(enrolment.programId)
+                val courses = loadConjugationCourses()
+                val program = enrolment?.let { getProgram(it.programId) }
+
                 _uiState.value = DashboardUiState(
                     isLoading = false,
+                    conjugationCourses = courses,
                     program = program,
                     progress = program?.let { getProgress(it) },
-                    streakDays = getStreak(),
-                    favourites = countFavourites(),
+                    streakDays = if (program == null) 0 else getStreak(),
+                    favourites = if (program == null) 0 else countFavourites(),
                     day = program?.let { getDay(it.id) },
                 )
             }
@@ -122,15 +120,14 @@ class DashboardViewModel(
 
     fun refreshConjugation() {
         viewModelScope.launch {
-            _uiState.update { it.copy(conjugation = loadConjugationProgress()) }
+            _uiState.update { it.copy(conjugationCourses = loadConjugationCourses()) }
         }
     }
 
-    fun onConjugationRemoved() {
+    fun onConjugationCourseRemoved(courseId: String) {
         viewModelScope.launch {
-            selectConjugationVerbs(emptyList())
-            resetConjugation()
-            _uiState.update { it.copy(conjugation = loadConjugationProgress()) }
+            deleteConjugationCourse(courseId)
+            _uiState.update { it.copy(conjugationCourses = loadConjugationCourses()) }
         }
     }
 }

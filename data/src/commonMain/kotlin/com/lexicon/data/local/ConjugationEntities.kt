@@ -8,17 +8,36 @@ import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
 
-@Entity(tableName = "conjugation_selection")
-data class ConjugationSelectionEntity(
+@Entity(tableName = "conjugation_verb")
+data class ConjugationVerbEntity(
     @PrimaryKey val infinitive: String,
+    val translation: String,
+    val formsJson: String,
+)
+
+@Entity(tableName = "conjugation_course")
+data class ConjugationCourseEntity(
+    @PrimaryKey val id: String,
+    val createdAtEpochMillis: Long,
+)
+
+@Entity(
+    tableName = "conjugation_course_verb",
+    primaryKeys = ["courseId", "infinitive"],
+    indices = [Index("courseId")],
+)
+data class ConjugationCourseVerbEntity(
+    val courseId: String,
+    val infinitive: String,
 )
 
 @Entity(
     tableName = "conjugation_progress",
-    primaryKeys = ["infinitive", "person"],
-    indices = [Index("infinitive")],
+    primaryKeys = ["courseId", "infinitive", "person"],
+    indices = [Index("courseId")],
 )
 data class ConjugationProgressEntity(
+    val courseId: String,
     val infinitive: String,
     val person: String,
     val attempted: Int,
@@ -29,20 +48,45 @@ data class ConjugationProgressEntity(
 
 @Dao
 interface ConjugationDao {
-    @Query("SELECT infinitive FROM conjugation_selection ORDER BY infinitive")
-    suspend fun selection(): List<String>
+    @Query("SELECT COUNT(*) FROM conjugation_verb")
+    suspend fun countVerbs(): Int
 
-    @Query("DELETE FROM conjugation_selection")
-    suspend fun clearSelection()
+    @Query("SELECT * FROM conjugation_verb ORDER BY infinitive")
+    suspend fun verbs(): List<ConjugationVerbEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addToSelection(rows: List<ConjugationSelectionEntity>)
+    suspend fun saveVerbs(rows: List<ConjugationVerbEntity>)
 
-    @Query("SELECT * FROM conjugation_progress")
-    suspend fun progress(): List<ConjugationProgressEntity>
+    @Query("DELETE FROM conjugation_verb WHERE infinitive = :infinitive")
+    suspend fun deleteVerb(infinitive: String)
 
-    @Query("SELECT * FROM conjugation_progress WHERE infinitive = :infinitive AND person = :person")
+    @Query("SELECT * FROM conjugation_course ORDER BY createdAtEpochMillis")
+    suspend fun courses(): List<ConjugationCourseEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveCourse(row: ConjugationCourseEntity)
+
+    @Query("DELETE FROM conjugation_course WHERE id = :courseId")
+    suspend fun deleteCourse(courseId: String)
+
+    @Query("SELECT infinitive FROM conjugation_course_verb WHERE courseId = :courseId ORDER BY infinitive")
+    suspend fun courseVerbs(courseId: String): List<String>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addCourseVerbs(rows: List<ConjugationCourseVerbEntity>)
+
+    @Query("DELETE FROM conjugation_course_verb WHERE courseId = :courseId")
+    suspend fun clearCourseVerbs(courseId: String)
+
+    @Query("SELECT * FROM conjugation_progress WHERE courseId = :courseId")
+    suspend fun progress(courseId: String): List<ConjugationProgressEntity>
+
+    @Query(
+        "SELECT * FROM conjugation_progress " +
+            "WHERE courseId = :courseId AND infinitive = :infinitive AND person = :person",
+    )
     suspend fun progressFor(
+        courseId: String,
         infinitive: String,
         person: String,
     ): ConjugationProgressEntity?
@@ -50,6 +94,6 @@ interface ConjugationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(row: ConjugationProgressEntity)
 
-    @Query("DELETE FROM conjugation_progress")
-    suspend fun clearProgress()
+    @Query("DELETE FROM conjugation_progress WHERE courseId = :courseId")
+    suspend fun clearProgress(courseId: String)
 }

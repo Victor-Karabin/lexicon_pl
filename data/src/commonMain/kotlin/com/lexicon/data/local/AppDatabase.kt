@@ -29,10 +29,12 @@ import androidx.room.RoomDatabaseConstructor
         ProgramDayEntity::class,
         ProgramMilestoneEntity::class,
         ProgramRewardEntity::class,
-        ConjugationSelectionEntity::class,
+        ConjugationVerbEntity::class,
+        ConjugationCourseEntity::class,
+        ConjugationCourseVerbEntity::class,
         ConjugationProgressEntity::class,
     ],
-    version = 21,
+    version = 22,
     exportSchema = false,
 )
 @ConstructedBy(AppDatabaseConstructor::class)

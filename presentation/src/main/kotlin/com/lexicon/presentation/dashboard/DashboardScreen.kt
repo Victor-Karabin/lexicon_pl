@@ -44,6 +44,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.lexicon.interactors.conjugation.ConjugationCourse
 import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.resolve
@@ -88,7 +89,7 @@ fun DashboardScreen(
     onStartTraining: (training: String, wordIds: List<VocabularyId>, programId: String) -> Unit,
     onOpenCards: (programId: String) -> Unit,
     onGoToPlan: () -> Unit,
-    onOpenConjugation: () -> Unit,
+    onOpenConjugation: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DashboardViewModel = koinViewModel(),
 ) {
@@ -107,16 +108,17 @@ fun DashboardScreen(
         }
     }
 
-    LaunchedEffect(Unit) { viewModel.onResumed() }
-
-    LaunchedEffect(Unit) { viewModel.refreshConjugation() }
+    LaunchedEffect(Unit) {
+        viewModel.onResumed()
+        viewModel.refreshConjugation()
+    }
 
     DashboardContent(
         uiState = uiState,
         onContinue = viewModel::onContinue,
         onGoToPlan = onGoToPlan,
         onOpenConjugation = onOpenConjugation,
-        onRemoveConjugation = viewModel::onConjugationRemoved,
+        onRemoveConjugation = viewModel::onConjugationCourseRemoved,
         modifier = modifier,
     )
 }
@@ -126,8 +128,8 @@ private fun DashboardContent(
     uiState: DashboardUiState,
     onContinue: () -> Unit,
     onGoToPlan: () -> Unit,
-    onOpenConjugation: () -> Unit,
-    onRemoveConjugation: () -> Unit,
+    onOpenConjugation: (String) -> Unit,
+    onRemoveConjugation: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when {
@@ -144,11 +146,11 @@ private fun DashboardContent(
                     .padding(Dimens.spacingMedium),
                 verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             ) {
-                if (uiState.hasConjugationCourse) {
+                uiState.conjugationCourses.forEach { course ->
                     ConjugationCourseCard(
-                        uiState = uiState,
-                        onOpen = onOpenConjugation,
-                        onRemove = onRemoveConjugation,
+                        course = course,
+                        onOpen = { onOpenConjugation(course.id) },
+                        onRemove = { onRemoveConjugation(course.id) },
                     )
                 }
 
@@ -178,12 +180,12 @@ private fun DashboardContent(
 @Composable
 @OptIn(ExperimentalLayoutApi::class)
 private fun ConjugationCourseCard(
-    uiState: DashboardUiState,
+    course: ConjugationCourse,
     onOpen: () -> Unit,
     onRemove: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val progress = uiState.conjugation ?: return
+    val progress = course.progress
     val skin = tileSkin(highlighted = true)
 
     SwipeToRevealContainer(
@@ -271,7 +273,11 @@ private fun ActiveProgramCard(
                     color = skin.muted(),
                 )
                 Text(
-                    text = program.title.resolve(uiState.languageTag),
+                    text = if (program.isUserCreated) {
+                        stringResource(R.string.program_default_name)
+                    } else {
+                        program.title.resolve(uiState.languageTag)
+                    },
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.SemiBold,
                     color = skin.onTile,

@@ -16,6 +16,7 @@ import com.lexicon.presentation.common.SessionResultScreen
 import com.lexicon.presentation.common.TRAINING_WORDS_ARG
 import com.lexicon.presentation.common.TrainingGate
 import com.lexicon.presentation.common.TrainingRequirements
+import com.lexicon.presentation.conjugation.CONJUGATION_COURSE_ARG
 import com.lexicon.presentation.conjugation.ConjugationScreen
 import com.lexicon.presentation.conjugation.VerbSelectionScreen
 import com.lexicon.presentation.course.COURSE_ID_ARG
@@ -105,7 +106,7 @@ fun LexiconNavHost(
                 onAddPreset = { navController.navigate(LexiconDestinations.CREATE_PRESET) },
                 onCreateProgram = { navController.navigate(LexiconDestinations.CREATE_PROGRAM) },
                 onConjugationSelected = { navController.navigate(LexiconDestinations.CONJUGATION_VERBS) },
-                onTrainConjugation = { navController.navigate(LexiconDestinations.CONJUGATION) },
+                onTrainConjugation = { navController.navigate(LexiconDestinations.conjugationCourse(it)) },
             )
         }
 
@@ -492,7 +493,10 @@ fun LexiconNavHost(
             )
         }
 
-        composable(route = LexiconDestinations.CONJUGATION) {
+        composable(
+            route = LexiconDestinations.CONJUGATION,
+            arguments = listOf(navArgument(CONJUGATION_COURSE_ARG) { type = NavType.StringType }),
+        ) {
             ConjugationScreen(
                 onSessionComplete = onStepSessionComplete(LexiconDestinations.CONJUGATION)(""),
                 onClose = closeToMain,

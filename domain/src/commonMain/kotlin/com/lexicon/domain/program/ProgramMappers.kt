@@ -31,6 +31,7 @@ fun ProgramBoundary.toProgram(): Program =
         estimatedDays = estimatedDays,
         visibility = visibility.toVisibility(),
         config = configJson.toProgramConfig(),
+        isUserCreated = isUserCreated,
     )
 
 fun ProgramEnrolmentBoundary.toEnrolment(): ProgramEnrolment =

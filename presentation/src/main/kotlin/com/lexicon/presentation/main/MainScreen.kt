@@ -51,7 +51,7 @@ fun MainScreen(
     onAddPreset: () -> Unit,
     onCreateProgram: () -> Unit,
     onConjugationSelected: () -> Unit,
-    onTrainConjugation: () -> Unit,
+    onTrainConjugation: (String) -> Unit,
     modifier: Modifier = Modifier,
     initialTab: MainTab = MainTab.DASHBOARD,
 ) {

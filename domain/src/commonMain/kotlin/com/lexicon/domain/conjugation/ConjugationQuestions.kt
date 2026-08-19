@@ -24,15 +24,15 @@ internal fun VerbConjugationBoundary.toVerb(): VerbConjugation =
             }.toMap(),
     )
 
-internal suspend fun ConjugationRepository.selectedVerbs(): List<VerbConjugation> {
-    val chosen = selectedInfinitives().toSet()
+internal suspend fun ConjugationRepository.courseVerbs(courseId: String): List<VerbConjugation> {
+    val chosen = courses().firstOrNull { it.id == courseId }?.infinitives.orEmpty().toSet()
     return verbs().filter { it.infinitive in chosen }.map { it.toVerb() }.filter { it.isTeachable }
 }
 
-internal suspend fun ConjugationRepository.courseProgress(): ConjugationCourseProgress {
-    val stored = progress().associateBy { it.infinitive to it.person }
+internal suspend fun ConjugationRepository.courseProgress(courseId: String): ConjugationCourseProgress {
+    val stored = progress(courseId).associateBy { it.infinitive to it.person }
 
-    val variants = selectedVerbs().flatMap { verb ->
+    val variants = courseVerbs(courseId).flatMap { verb ->
         verb.persons.map { person ->
             val row = stored[verb.infinitive to person.sourceKey]
             ConjugationVariantProgress(

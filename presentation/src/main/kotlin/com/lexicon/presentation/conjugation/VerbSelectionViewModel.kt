@@ -3,11 +3,13 @@ package com.lexicon.presentation.conjugation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
+import com.lexicon.interactors.conjugation.CreateConjugationCourseUseCase
+import com.lexicon.interactors.conjugation.DeleteConjugationVerbUseCase
 import com.lexicon.interactors.conjugation.FavouriteVerbUseCase
+import com.lexicon.interactors.conjugation.HasDeletedVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadFavouriteVerbsUseCase
-import com.lexicon.interactors.conjugation.LoadSelectedVerbsUseCase
-import com.lexicon.interactors.conjugation.SelectConjugationVerbsUseCase
+import com.lexicon.interactors.conjugation.RestoreConjugationVerbsUseCase
 import com.lexicon.interactors.conjugation.VerbConjugation
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet
@@ -26,6 +28,7 @@ data class VerbSelectionUiState(
     val verbs: ImmutableList<VerbConjugation> = persistentListOf(),
     val selected: ImmutableSet<String> = persistentSetOf(),
     val isSaved: Boolean = false,
+    val canRestore: Boolean = false,
     val favourites: ImmutableSet<String> = persistentSetOf(),
 ) {
     val count: Int get() = selected.size
@@ -35,8 +38,10 @@ data class VerbSelectionUiState(
 
 class VerbSelectionViewModel(
     private val loadVerbs: LoadConjugationVerbsUseCase,
-    private val loadSelected: LoadSelectedVerbsUseCase,
-    private val selectVerbs: SelectConjugationVerbsUseCase,
+    private val createCourse: CreateConjugationCourseUseCase,
+    private val deleteVerb: DeleteConjugationVerbUseCase,
+    private val restoreVerbs: RestoreConjugationVerbsUseCase,
+    private val hasDeletedVerbs: HasDeletedVerbsUseCase,
     private val favouriteVerb: FavouriteVerbUseCase,
     private val loadFavourites: LoadFavouriteVerbsUseCase,
     private val dispatchers: DispatcherProvider,
@@ -46,14 +51,14 @@ class VerbSelectionViewModel(
 
     init {
         viewModelScope.launch(dispatchers.io) {
-            val already = loadSelected()
+            // Nothing starts ticked: this screen builds a new course each time it opens.
             val verbs = loadVerbs()
             _uiState.update {
                 it.copy(
                     isLoading = false,
                     verbs = verbs,
-                    selected = already.toImmutableSet(),
                     favourites = loadFavourites(verbs.map { verb -> verb.infinitive }).toImmutableSet(),
+                    canRestore = hasDeletedVerbs(),
                 )
             }
         }
@@ -85,11 +90,39 @@ class VerbSelectionViewModel(
         }
     }
 
-    fun onSave() {
+    fun onCreateCourse() {
         val chosen = _uiState.value.selected.toList()
         viewModelScope.launch(dispatchers.io) {
-            selectVerbs(chosen)
+            createCourse(chosen)
             _uiState.update { it.copy(isSaved = true) }
+        }
+    }
+
+    fun onVerbDeleted(infinitive: String) {
+        viewModelScope.launch(dispatchers.io) {
+            deleteVerb(infinitive)
+            refresh()
+        }
+    }
+
+    fun onRestoreAll() {
+        _uiState.update { it.copy(isLoading = true) }
+        viewModelScope.launch(dispatchers.io) {
+            restoreVerbs()
+            refresh()
+        }
+    }
+
+    private suspend fun refresh() {
+        val verbs = loadVerbs(_uiState.value.query)
+        val canRestore = hasDeletedVerbs()
+        _uiState.update {
+            it.copy(
+                isLoading = false,
+                canRestore = canRestore,
+                verbs = verbs,
+                selected = it.selected.filter { chosen -> verbs.any { v -> v.infinitive == chosen } }.toImmutableSet(),
+            )
         }
     }
 
