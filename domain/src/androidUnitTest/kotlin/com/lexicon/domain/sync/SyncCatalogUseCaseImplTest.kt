@@ -1,5 +1,6 @@
 package com.lexicon.domain.sync
 
+import com.lexicon.boundary.CatalogSyncGate
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.SyncOutcomeBoundary
@@ -26,8 +27,17 @@ class SyncCatalogUseCaseImplTest {
     private val presetRepository: VocabularyPresetRepository = mockk(relaxed = true)
     private val courseRepository: CourseRepository = mockk(relaxed = true)
     private val conjugationRepository: ConjugationRepository = mockk(relaxed = true)
+    private val gate: CatalogSyncGate = mockk(relaxed = true) {
+        coEvery { isCurrent() } returns false
+    }
     private val useCase =
-        SyncCatalogUseCaseImpl(vocabularyRepository, presetRepository, courseRepository, conjugationRepository)
+        SyncCatalogUseCaseImpl(
+            vocabularyRepository,
+            presetRepository,
+            courseRepository,
+            conjugationRepository,
+            gate,
+        )
 
     private fun outcome(
         total: Int,
@@ -48,6 +58,45 @@ class SyncCatalogUseCaseImplTest {
             assertEquals(SyncStepStatus.Complete(72, 72, 0, 0), final.presets)
             assertTrue(final.isFinished)
             assertFalse(final.isBlocked)
+        }
+
+    /** A launch with nothing new to load must not read a single asset. */
+    @Test
+    fun `an unchanged app version skips every step`() =
+        runTest {
+            coEvery { gate.isCurrent() } returns true
+            coEvery { vocabularyRepository.countWords() } returns 2563
+
+            val final = run().last()
+
+            assertTrue(final.isFinished)
+            assertEquals(SyncStepStatus.Complete(2563, 0, 0, 0), final.vocabulary)
+            coVerify(exactly = 0) { vocabularyRepository.syncFromSource() }
+            coVerify(exactly = 0) { conjugationRepository.syncFromSource() }
+        }
+
+    @Test
+    fun `a completed sync records the version so the next launch can skip it`() =
+        runTest {
+            coEvery { vocabularyRepository.syncFromSource() } returns outcome(10)
+            coEvery { presetRepository.syncFromSource() } returns outcome(3)
+            coEvery { courseRepository.syncFromSource() } returns outcome(26)
+            coEvery { conjugationRepository.syncFromSource() } returns outcome(4545)
+
+            run()
+
+            coVerify { gate.markCurrent() }
+        }
+
+    @Test
+    fun `a blocked sync is not recorded, so it runs again next launch`() =
+        runTest {
+            coEvery { vocabularyRepository.syncFromSource() } throws IllegalStateException("no asset")
+            coEvery { vocabularyRepository.countWords() } returns 0
+
+            run()
+
+            coVerify(exactly = 0) { gate.markCurrent() }
         }
 
     @Test

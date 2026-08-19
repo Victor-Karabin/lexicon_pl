@@ -3,6 +3,7 @@ package com.lexicon.data.local
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -11,6 +12,7 @@ private val SyncedFingerprint = stringPreferencesKey("synced_asset_fingerprint")
 private val SyncedPresetFingerprint = stringPreferencesKey("synced_preset_fingerprint")
 private val SyncedCourseFingerprint = stringPreferencesKey("synced_course_fingerprint")
 private val SyncedVerbFingerprint = stringPreferencesKey("synced_verb_fingerprint")
+private val SyncedAppVersion = intPreferencesKey("synced_app_version")
 
 class VocabularySyncStore(
     private val dataStore: DataStore<Preferences>,
@@ -37,5 +39,11 @@ class VocabularySyncStore(
 
     suspend fun setSyncedVerbFingerprint(fingerprint: String) {
         dataStore.edit { it[SyncedVerbFingerprint] = fingerprint }
+    }
+
+    suspend fun syncedAppVersion(): Int? = dataStore.data.map { it[SyncedAppVersion] }.first()
+
+    suspend fun setSyncedAppVersion(version: Int) {
+        dataStore.edit { it[SyncedAppVersion] = version }
     }
 }

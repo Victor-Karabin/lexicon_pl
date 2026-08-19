@@ -1,5 +1,6 @@
 package com.lexicon.data.di
 
+import com.lexicon.boundary.CatalogSyncGate
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.ImageProvider
@@ -31,6 +32,7 @@ import com.lexicon.data.local.VocabularySyncStore
 import com.lexicon.data.local.buildAppDatabase
 import com.lexicon.data.local.createDataStore
 import com.lexicon.data.repository.CachingImageProviderImpl
+import com.lexicon.data.repository.CatalogSyncGateImpl
 import com.lexicon.data.repository.ConjugationRepositoryImpl
 import com.lexicon.data.repository.CorpusTranslatorImpl
 import com.lexicon.data.repository.CourseRepositoryImpl
@@ -92,6 +94,7 @@ val dataModule = module {
     factoryOf(::VocabularyPresetAssetLoader)
     factoryOf(::ConjugationAssetLoader)
     singleOf(::ConjugationRepositoryImpl) { bind<ConjugationRepository>() }
+    singleOf(::CatalogSyncGateImpl) { bind<CatalogSyncGate>() }
     factoryOf(::CourseAssetLoader)
 
     single { VocabularySyncStore(get(vocabularySyncDataStoreQualifier)) }
