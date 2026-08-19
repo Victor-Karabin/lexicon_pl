@@ -33,12 +33,12 @@ class CreateProgramUseCaseTest {
 
     @Before
     fun setUp() {
-        coEvery { vocabulary.favouriteWordIds() } returns List(FAVOURITES) { it.toLong() }
+        coEvery { vocabulary.studySetWordIds() } returns List(FAVOURITES) { it.toLong() }
         coJustRun { programs.saveProgram(capture(saved)) }
     }
 
     private val draft = ProgramDraft(
-        title = "  My starred words  ",
+        title = "  My studySet  ",
         description = "The ones I keep forgetting",
         newWordsPerDay = 15,
         reviewWordsPerDay = 30,
@@ -52,7 +52,7 @@ class CreateProgramUseCaseTest {
 
             assertEquals(program.id.value, saved.captured.id)
 
-            assertEquals("My starred words", saved.captured.title["en"])
+            assertEquals("My studySet", saved.captured.title["en"])
         }
 
     @Test
@@ -112,7 +112,7 @@ class CreateProgramUseCaseTest {
     @Test
     fun `a draft over an empty study set is refused, because it would teach nothing`() =
         runTest {
-            coEvery { vocabulary.favouriteWordIds() } returns emptyList()
+            coEvery { vocabulary.studySetWordIds() } returns emptyList()
 
             assertEquals(ProgramDraftProblem.NO_FAVOURITES, problemOf(draft))
             assertFalse(saved.isCaptured)

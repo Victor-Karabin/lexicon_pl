@@ -2,13 +2,13 @@ package com.lexicon.domain.dictationpuzzle
 
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.boundary.TrainingResultOutcomeBoundary
 import com.lexicon.common.Clock
 import com.lexicon.domain.dictation.AnswerNormalizer
-import com.lexicon.interactors.dictationpuzzle.DictationPuzzleStepOutcome
+import com.lexicon.domain.training.toBoundary
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerRequest
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerResponse
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerUseCase
+import com.lexicon.interactors.training.StepOutcome
 
 private const val TRAINING_TYPE_DICTATION_PUZZLE = "DICTATION_PUZZLE"
 
@@ -37,17 +37,10 @@ class SubmitDictationPuzzleAnswerUseCaseImpl(
         return SubmitDictationPuzzleAnswerResponse(outcome = outcome, expectedText = request.expectedText)
     }
 
-    private fun resolveOutcome(request: SubmitDictationPuzzleAnswerRequest): DictationPuzzleStepOutcome =
+    private fun resolveOutcome(request: SubmitDictationPuzzleAnswerRequest): StepOutcome =
         when {
-            request.skipped -> DictationPuzzleStepOutcome.SKIPPED
-            answerNormalizer.matches(request.expectedText, request.submittedText) -> DictationPuzzleStepOutcome.CORRECT
-            else -> DictationPuzzleStepOutcome.INCORRECT
-        }
-
-    private fun DictationPuzzleStepOutcome.toBoundary(): TrainingResultOutcomeBoundary =
-        when (this) {
-            DictationPuzzleStepOutcome.CORRECT -> TrainingResultOutcomeBoundary.CORRECT
-            DictationPuzzleStepOutcome.INCORRECT -> TrainingResultOutcomeBoundary.INCORRECT
-            DictationPuzzleStepOutcome.SKIPPED -> TrainingResultOutcomeBoundary.SKIPPED
+            request.skipped -> StepOutcome.SKIPPED
+            answerNormalizer.matches(request.expectedText, request.submittedText) -> StepOutcome.CORRECT
+            else -> StepOutcome.INCORRECT
         }
 }

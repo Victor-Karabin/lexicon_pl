@@ -1,5 +1,7 @@
 package com.lexicon.interactors.wordmatch
 
+import com.lexicon.interactors.training.StepOutcome
+
 data class SubmitWordMatchStepResultRequest(
     val sessionId: String,
     val stepIndex: Int,
@@ -8,7 +10,7 @@ data class SubmitWordMatchStepResultRequest(
 )
 
 data class SubmitWordMatchStepResultResponse(
-    val outcome: WordMatchStepOutcome,
+    val outcome: StepOutcome,
 )
 
 interface SubmitWordMatchStepResultUseCase {

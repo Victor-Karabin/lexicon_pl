@@ -1,7 +1,5 @@
 package com.lexicon.interactors.imagetest
 
-enum class ImageTestStepOutcome { CORRECT, INCORRECT, SKIPPED }
-
 data class ImageTestStepResponse(
     val stepIndex: Int,
     val vocabularyItemId: Long,

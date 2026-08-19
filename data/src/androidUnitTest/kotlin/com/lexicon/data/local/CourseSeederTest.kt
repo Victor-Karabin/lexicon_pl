@@ -12,7 +12,7 @@ import org.junit.Test
 class CourseSeederTest {
     private val courseDao: CourseDao = mockk(relaxed = true)
     private val loader: CourseAssetLoader = mockk()
-    private val syncStore: VocabularySyncStore = mockk(relaxed = true)
+    private val syncStore: CatalogSeedStore = mockk(relaxed = true)
 
     private fun seeder() = CourseSeeder(courseDao, loader, syncStore)
 

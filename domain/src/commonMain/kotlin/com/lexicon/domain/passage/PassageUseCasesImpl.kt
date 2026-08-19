@@ -48,16 +48,16 @@ class StartPassageSessionUseCaseImpl(
 ) : StartPassageSessionUseCase {
     @OptIn(ExperimentalUuidApi::class)
     override suspend fun invoke(request: StartPassageSessionRequest): PassageSessionResult {
-        val favourites = vocabulary.getItemsByIds(vocabulary.favouriteWordIds())
-        if (favourites.isEmpty()) return PassageSessionResult.NoFavourites
+        val studySet = vocabulary.getItemsByIds(vocabulary.studySetWordIds())
+        if (studySet.isEmpty()) return PassageSessionResult.EmptyStudySet
 
-        val level = favourites.maxLevel()
+        val level = studySet.maxLevel()
 
         // One gap per step, so the setting that governs how long every other training runs
         // governs this one too. The level still decides how hard the sentences are; it no
         // longer decides how many there are.
-        val wanted = stepCountResolver.resolve(request.stepCount).coerceAtMost(favourites.size)
-        val targets = favourites.shuffled().take(wanted + SPARE_SENTENCES)
+        val wanted = stepCountResolver.resolve(request.stepCount).coerceAtMost(studySet.size)
+        val targets = studySet.shuffled().take(wanted + SPARE_SENTENCES)
 
         val generated = coroutineScope {
             targets

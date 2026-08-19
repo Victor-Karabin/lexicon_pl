@@ -17,7 +17,7 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.lexicon.interactors.presets.PresetFavouriteState
+import com.lexicon.interactors.presets.PresetStudySetState
 import com.lexicon.interactors.presets.VocabularyPreset
 import com.lexicon.interactors.presets.resolve
 import com.lexicon.interactors.presets.wordCount
@@ -43,9 +43,9 @@ fun presetTileSkin(preset: VocabularyPreset): TileSkin {
 fun PresetSummary(
     preset: VocabularyPreset,
     languageTag: String,
-    favouriteState: PresetFavouriteState,
+    studySetState: PresetStudySetState,
     skin: TileSkin,
-    onFavouriteToggled: () -> Unit,
+    onStudySetToggled: () -> Unit,
     modifier: Modifier = Modifier,
     showTitle: Boolean = true,
 ) {
@@ -79,7 +79,7 @@ fun PresetSummary(
                 )
             }
 
-            PresetFavouriteButton(state = favouriteState, onClick = onFavouriteToggled)
+            PresetInStudySetButton(state = studySetState, onClick = onStudySetToggled)
         }
 
         StatChip(

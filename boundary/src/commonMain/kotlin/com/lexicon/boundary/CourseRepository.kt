@@ -3,7 +3,7 @@ package com.lexicon.boundary
 import kotlinx.coroutines.flow.Flow
 
 interface CourseRepository {
-    suspend fun syncFromSource(): SyncOutcomeBoundary
+    suspend fun seedFromAsset(): SeedOutcomeBoundary
 
     fun observeCourses(): Flow<List<CourseBoundary>>
 

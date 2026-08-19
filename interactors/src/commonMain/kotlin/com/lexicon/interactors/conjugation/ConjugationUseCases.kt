@@ -30,13 +30,13 @@ interface DeleteConjugationCourseUseCase {
     suspend operator fun invoke(courseId: String)
 }
 
-interface NextConjugationQuestionUseCase {
-    suspend operator fun invoke(courseId: String): ConjugationQuestion?
+interface NextConjugationTableUseCase {
+    suspend operator fun invoke(courseId: String): ConjugationTable?
 }
 
 data class SubmitConjugationAnswerRequest(
     val courseId: String,
-    val question: ConjugationQuestion,
+    val table: ConjugationTable,
     val answers: Map<GrammaticalPerson, String?>,
 )
 
@@ -72,15 +72,15 @@ interface ChooseVerbImageUseCase {
     )
 }
 
-interface FavouriteVerbUseCase {
+interface ToggleVerbInStudySetUseCase {
     suspend operator fun invoke(
         infinitive: String,
         translation: String?,
-        isFavourite: Boolean,
+        isInStudySet: Boolean,
     )
 }
 
-interface LoadFavouriteVerbsUseCase {
+interface LoadStudySetVerbsUseCase {
     suspend operator fun invoke(infinitives: List<String>): Set<String>
 }
 

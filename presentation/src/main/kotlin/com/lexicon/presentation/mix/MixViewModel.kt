@@ -7,27 +7,22 @@ import com.lexicon.android.recognition.SpeechRecognitionFailed
 import com.lexicon.android.recognition.SpeechRecognizerService
 import com.lexicon.android.speech.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
-import com.lexicon.interactors.dictation.DictationStepOutcome
 import com.lexicon.interactors.dictation.SubmitDictationAnswerRequest
 import com.lexicon.interactors.dictation.SubmitDictationAnswerUseCase
-import com.lexicon.interactors.dictationpuzzle.DictationPuzzleStepOutcome
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerRequest
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerUseCase
-import com.lexicon.interactors.imagetest.ImageTestStepOutcome
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerRequest
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
 import com.lexicon.interactors.mix.MixStep
 import com.lexicon.interactors.mix.StartMixSessionRequest
 import com.lexicon.interactors.mix.StartMixSessionUseCase
-import com.lexicon.interactors.pronunciation.PronunciationStepOutcome
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultRequest
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
-import com.lexicon.interactors.puzzle.PuzzleStepOutcome
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerRequest
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerUseCase
+import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerRequest
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
-import com.lexicon.interactors.trueorfalse.TrueOrFalseStepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.LetterTile
@@ -191,7 +186,7 @@ class MixViewModel(
                 ),
             )
             finishStep(
-                isCorrect = response.outcome == TrueOrFalseStepOutcome.CORRECT,
+                isCorrect = response.outcome == StepOutcome.CORRECT,
                 skipped = false,
                 revealed = null,
                 word = step.step.word,
@@ -232,7 +227,7 @@ class MixViewModel(
                         ),
                     )
                     finishStep(
-                        response.outcome == DictationStepOutcome.CORRECT,
+                        response.outcome == StepOutcome.CORRECT,
                         skipped,
                         response.expectedText,
                         step.step.expectedText,
@@ -253,7 +248,7 @@ class MixViewModel(
                         ),
                     )
                     finishStep(
-                        response.outcome == DictationPuzzleStepOutcome.CORRECT,
+                        response.outcome == StepOutcome.CORRECT,
                         skipped,
                         response.expectedText,
                         step.step.expectedText,
@@ -274,7 +269,7 @@ class MixViewModel(
                         ),
                     )
                     finishStep(
-                        response.outcome == PuzzleStepOutcome.CORRECT,
+                        response.outcome == StepOutcome.CORRECT,
                         skipped,
                         response.expectedText,
                         step.step.expectedText,
@@ -295,7 +290,7 @@ class MixViewModel(
                     )
                     updateLoaded { it.copy(correctOption = response.correctOption) }
                     finishStep(
-                        response.outcome == ImageTestStepOutcome.CORRECT,
+                        response.outcome == StepOutcome.CORRECT,
                         skipped,
                         response.correctOption,
                         step.step.correctOption,
@@ -317,7 +312,7 @@ class MixViewModel(
                         ),
                     )
                     finishStep(
-                        response.outcome == PronunciationStepOutcome.CORRECT,
+                        response.outcome == StepOutcome.CORRECT,
                         skipped,
                         response.expectedText,
                         step.step.expectedText,

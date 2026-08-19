@@ -2,13 +2,13 @@ package com.lexicon.domain.pronunciation
 
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.boundary.TrainingResultOutcomeBoundary
 import com.lexicon.common.Clock
 import com.lexicon.domain.dictation.AnswerNormalizer
-import com.lexicon.interactors.pronunciation.PronunciationStepOutcome
+import com.lexicon.domain.training.toBoundary
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultRequest
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultResponse
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
+import com.lexicon.interactors.training.StepOutcome
 
 private const val TRAINING_TYPE_PRONUNCIATION_CHECK = "PRONUNCIATION_CHECK"
 
@@ -37,17 +37,10 @@ class SubmitPronunciationResultUseCaseImpl(
         return SubmitPronunciationResultResponse(outcome = outcome, expectedText = request.expectedText)
     }
 
-    private fun resolveOutcome(request: SubmitPronunciationResultRequest): PronunciationStepOutcome =
+    private fun resolveOutcome(request: SubmitPronunciationResultRequest): StepOutcome =
         when {
-            request.skipped -> PronunciationStepOutcome.SKIPPED
-            answerNormalizer.matchesSpoken(request.expectedText, request.recognizedText) -> PronunciationStepOutcome.CORRECT
-            else -> PronunciationStepOutcome.INCORRECT
-        }
-
-    private fun PronunciationStepOutcome.toBoundary(): TrainingResultOutcomeBoundary =
-        when (this) {
-            PronunciationStepOutcome.CORRECT -> TrainingResultOutcomeBoundary.CORRECT
-            PronunciationStepOutcome.INCORRECT -> TrainingResultOutcomeBoundary.INCORRECT
-            PronunciationStepOutcome.SKIPPED -> TrainingResultOutcomeBoundary.SKIPPED
+            request.skipped -> StepOutcome.SKIPPED
+            answerNormalizer.matchesSpoken(request.expectedText, request.recognizedText) -> StepOutcome.CORRECT
+            else -> StepOutcome.INCORRECT
         }
 }

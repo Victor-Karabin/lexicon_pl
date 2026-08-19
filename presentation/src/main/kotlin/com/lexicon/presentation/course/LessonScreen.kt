@@ -68,7 +68,7 @@ fun LessonScreen(
         onClose = onClose,
         onTrainLesson = onTrainLesson,
         onCompletedToggled = viewModel::onCompletedToggled,
-        onWordFavouriteToggled = viewModel::onWordFavouriteToggled,
+        onWordStudySetToggled = viewModel::onWordStudySetToggled,
         onPronounceWord = viewModel::onPronounceWord,
         onEditWord = onEditWord,
         onExerciseSelected = onExerciseSelected,
@@ -83,7 +83,7 @@ private fun LessonContent(
     onClose: () -> Unit,
     onTrainLesson: (List<Long>) -> Unit,
     onCompletedToggled: (Boolean) -> Unit,
-    onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
+    onWordStudySetToggled: (VocabularyId, Boolean) -> Unit,
     onPronounceWord: (PresetWord) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
     onExerciseSelected: (LessonExercise) -> Unit,
@@ -125,7 +125,7 @@ private fun LessonContent(
                 ) {
                     lessonHeader(uiState.lesson, onTrainLesson, onCompletedToggled)
                     exercisesBlock(uiState.lesson.exercises, onExerciseSelected)
-                    wordsBlock(uiState, onWordFavouriteToggled, onPronounceWord, onEditWord)
+                    wordsBlock(uiState, onWordStudySetToggled, onPronounceWord, onEditWord)
                 }
         }
     }
@@ -220,7 +220,7 @@ private fun LazyListScope.exercisesBlock(
 
 private fun LazyListScope.wordsBlock(
     uiState: LessonUiState.Loaded,
-    onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
+    onWordStudySetToggled: (VocabularyId, Boolean) -> Unit,
     onPronounceWord: (PresetWord) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
 ) {
@@ -239,7 +239,7 @@ private fun LazyListScope.wordsBlock(
     itemsIndexed(uiState.words, key = { _, word -> word.id.value }) { index, word ->
         VocabularyWordRow(
             word = word,
-            onFavouriteToggled = { onWordFavouriteToggled(word.id, !word.isFavourite) },
+            onStudySetToggled = { onWordStudySetToggled(word.id, !word.isInStudySet) },
             onPronounce = { onPronounceWord(word) },
             onClick = { onEditWord(word.id) },
         )
@@ -283,7 +283,7 @@ private fun LessonPreview() {
             uiState = LessonUiState.Loaded(
                 lesson = previewLesson,
                 words = persistentListOf(
-                    PresetWord(VocabularyId(1), "proszę", "please", "ˈprɔʂɛ", isFavourite = true),
+                    PresetWord(VocabularyId(1), "proszę", "please", "ˈprɔʂɛ", isInStudySet = true),
                     PresetWord(VocabularyId(2), "dziękuję", "thank you", "d͡ʑɛŋˈkujɛ"),
                     PresetWord(VocabularyId(3), "przepraszam", "sorry", "pʂɛˈpraʂam"),
                 ),
@@ -292,7 +292,7 @@ private fun LessonPreview() {
             onClose = {},
             onTrainLesson = {},
             onCompletedToggled = {},
-            onWordFavouriteToggled = { _, _ -> },
+            onWordStudySetToggled = { _, _ -> },
             onPronounceWord = {},
             onEditWord = {},
             onExerciseSelected = {},
@@ -309,7 +309,7 @@ private fun LessonNotFoundPreview() {
             onClose = {},
             onTrainLesson = {},
             onCompletedToggled = {},
-            onWordFavouriteToggled = { _, _ -> },
+            onWordStudySetToggled = { _, _ -> },
             onPronounceWord = {},
             onEditWord = {},
             onExerciseSelected = {},

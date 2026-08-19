@@ -4,8 +4,8 @@ import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.VerbConjugationBoundary
 import com.lexicon.interactors.conjugation.ConjugationAnswerMode
 import com.lexicon.interactors.conjugation.ConjugationCourseProgress
-import com.lexicon.interactors.conjugation.ConjugationQuestion
 import com.lexicon.interactors.conjugation.ConjugationStep
+import com.lexicon.interactors.conjugation.ConjugationTable
 import com.lexicon.interactors.conjugation.ConjugationVariant
 import com.lexicon.interactors.conjugation.ConjugationVariantProgress
 import com.lexicon.interactors.conjugation.GrammaticalPerson
@@ -56,11 +56,11 @@ internal suspend fun ConjugationRepository.courseProgress(courseId: String): Con
  * are asked for instead. Nothing here invents a form: every option is a string that
  * appears in the source data for some verb and person.
  */
-internal fun VerbConjugation.question(pool: List<VerbConjugation>): ConjugationQuestion? {
+internal fun VerbConjugation.question(pool: List<VerbConjugation>): ConjugationTable? {
     val steps = persons.mapNotNull { step(it, pool) }
     if (steps.isEmpty()) return null
 
-    return ConjugationQuestion(
+    return ConjugationTable(
         infinitive = infinitive,
         translation = translation,
         steps = steps.toImmutableList(),

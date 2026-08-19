@@ -3,9 +3,9 @@ package com.lexicon.domain.crossword
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.common.Clock
 import com.lexicon.domain.dictation.AnswerNormalizer
-import com.lexicon.interactors.crossword.CrosswordWordOutcome
 import com.lexicon.interactors.crossword.CrosswordWordSubmission
 import com.lexicon.interactors.crossword.SubmitCrosswordRequest
+import com.lexicon.interactors.training.StepOutcome
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -36,7 +36,7 @@ class SubmitCrosswordUseCaseImplTest {
                 ),
             )
             assertTrue(response.isFullyCorrect)
-            assertTrue(response.wordResults.all { it.outcome == CrosswordWordOutcome.CORRECT })
+            assertTrue(response.wordResults.all { it.outcome == StepOutcome.CORRECT })
         }
 
     @Test
@@ -49,7 +49,7 @@ class SubmitCrosswordUseCaseImplTest {
                 ),
             )
             assertFalse(response.isFullyCorrect)
-            assertEquals(CrosswordWordOutcome.INCORRECT, response.wordResults[1].outcome)
+            assertEquals(StepOutcome.INCORRECT, response.wordResults[1].outcome)
         }
 
     @Test
@@ -62,7 +62,7 @@ class SubmitCrosswordUseCaseImplTest {
                 ),
             )
             assertFalse(response.isFullyCorrect)
-            assertTrue(response.wordResults.all { it.outcome == CrosswordWordOutcome.CORRECT })
+            assertTrue(response.wordResults.all { it.outcome == StepOutcome.CORRECT })
         }
 
     @Test
@@ -78,6 +78,6 @@ class SubmitCrosswordUseCaseImplTest {
             val response = useCase(
                 SubmitCrosswordRequest(sessionId = "session-1", words = listOf(submission(1, "kot", " KOT "))),
             )
-            assertEquals(CrosswordWordOutcome.CORRECT, response.wordResults.single().outcome)
+            assertEquals(StepOutcome.CORRECT, response.wordResults.single().outcome)
         }
 }

@@ -40,8 +40,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.lexicon.interactors.sync.CatalogSyncStatus
-import com.lexicon.interactors.sync.SyncStepStatus
+import com.lexicon.interactors.sync.CatalogSeedStatus
+import com.lexicon.interactors.sync.SeedStepStatus
 import com.lexicon.interactors.sync.isBlocked
 import com.lexicon.interactors.sync.isFinished
 import com.lexicon.interactors.sync.steps
@@ -81,7 +81,7 @@ fun SplashScreen(
 
 @Composable
 private fun SplashContent(
-    status: CatalogSyncStatus,
+    status: CatalogSeedStatus,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -142,7 +142,7 @@ private fun Brand() {
 
 @Composable
 private fun StatusCard(
-    status: CatalogSyncStatus,
+    status: CatalogSeedStatus,
     modifier: Modifier = Modifier,
 ) {
     Surface(
@@ -175,10 +175,10 @@ private fun StatusCard(
 @Composable
 private fun SyncStepRow(
     label: String,
-    status: SyncStepStatus,
+    status: SeedStepStatus,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth().alpha(if (status is SyncStepStatus.Pending) PENDING_ALPHA else 1f),
+        modifier = Modifier.fillMaxWidth().alpha(if (status is SeedStepStatus.Pending) PENDING_ALPHA else 1f),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
     ) {
@@ -214,7 +214,7 @@ private fun SyncStepRow(
                 Text(
                     text = detail,
                     style = MaterialTheme.typography.bodySmall,
-                    color = if (status is SyncStepStatus.Failed) {
+                    color = if (status is SeedStepStatus.Failed) {
                         LexiconError
                     } else {
                         MaterialTheme.colorScheme.onSurfaceVariant
@@ -227,21 +227,21 @@ private fun SyncStepRow(
 
 private enum class StepIcon { PENDING, RUNNING, DONE, FAILED }
 
-private fun SyncStepStatus.icon(): StepIcon =
+private fun SeedStepStatus.icon(): StepIcon =
     when (this) {
-        is SyncStepStatus.Pending -> StepIcon.PENDING
-        is SyncStepStatus.InProgress -> StepIcon.RUNNING
-        is SyncStepStatus.Complete -> StepIcon.DONE
-        is SyncStepStatus.Failed -> StepIcon.FAILED
+        is SeedStepStatus.Pending -> StepIcon.PENDING
+        is SeedStepStatus.InProgress -> StepIcon.RUNNING
+        is SeedStepStatus.Complete -> StepIcon.DONE
+        is SeedStepStatus.Failed -> StepIcon.FAILED
     }
 
 @Composable
-private fun statusDetail(status: SyncStepStatus): String? =
+private fun statusDetail(status: SeedStepStatus): String? =
     when (status) {
-        is SyncStepStatus.Pending -> stringResource(R.string.sync_waiting)
-        is SyncStepStatus.InProgress -> stringResource(R.string.sync_in_progress)
-        is SyncStepStatus.Failed -> status.reason
-        is SyncStepStatus.Complete ->
+        is SeedStepStatus.Pending -> stringResource(R.string.sync_waiting)
+        is SeedStepStatus.InProgress -> stringResource(R.string.sync_in_progress)
+        is SeedStepStatus.Failed -> status.reason
+        is SeedStepStatus.Complete ->
             if (status.wasAlreadyCurrent) {
                 stringResource(R.string.sync_up_to_date, status.total.grouped())
             } else {
@@ -257,8 +257,8 @@ private fun statusDetail(status: SyncStepStatus): String? =
 
 private fun Int.grouped(): String = NumberFormat.getIntegerInstance().format(this)
 
-private fun CatalogSyncStatus.completedFraction(): Float {
-    val settled = steps.count { it is SyncStepStatus.Complete || it is SyncStepStatus.Failed }
+private fun CatalogSeedStatus.completedFraction(): Float {
+    val settled = steps.count { it is SeedStepStatus.Complete || it is SeedStepStatus.Failed }
     return settled.toFloat() / steps.size
 }
 
@@ -267,9 +267,9 @@ private fun CatalogSyncStatus.completedFraction(): Float {
 private fun SplashImportingPreview() {
     LexiconTheme {
         SplashContent(
-            status = CatalogSyncStatus(
-                vocabulary = SyncStepStatus.Complete(total = 2477, added = 2477, updated = 0, removed = 0),
-                presets = SyncStepStatus.InProgress,
+            status = CatalogSeedStatus(
+                vocabulary = SeedStepStatus.Complete(total = 2477, added = 2477, updated = 0, removed = 0),
+                presets = SeedStepStatus.InProgress,
             ),
             onRetry = {},
         )
@@ -281,10 +281,10 @@ private fun SplashImportingPreview() {
 private fun SplashUpToDatePreview() {
     LexiconTheme {
         SplashContent(
-            status = CatalogSyncStatus(
-                vocabulary = SyncStepStatus.Complete(total = 2477, added = 0, updated = 0, removed = 0),
-                presets = SyncStepStatus.Complete(total = 73, added = 0, updated = 0, removed = 0),
-                course = SyncStepStatus.Complete(total = 26, added = 0, updated = 0, removed = 0),
+            status = CatalogSeedStatus(
+                vocabulary = SeedStepStatus.Complete(total = 2477, added = 0, updated = 0, removed = 0),
+                presets = SeedStepStatus.Complete(total = 73, added = 0, updated = 0, removed = 0),
+                course = SeedStepStatus.Complete(total = 26, added = 0, updated = 0, removed = 0),
             ),
             onRetry = {},
         )
@@ -295,7 +295,7 @@ private fun SplashUpToDatePreview() {
 @Composable
 private fun SplashStartingPreview() {
     LexiconTheme {
-        SplashContent(status = CatalogSyncStatus(vocabulary = SyncStepStatus.InProgress), onRetry = {})
+        SplashContent(status = CatalogSeedStatus(vocabulary = SeedStepStatus.InProgress), onRetry = {})
     }
 }
 
@@ -304,10 +304,10 @@ private fun SplashStartingPreview() {
 private fun SplashFailedPreview() {
     LexiconTheme {
         SplashContent(
-            status = CatalogSyncStatus(
-                vocabulary = SyncStepStatus.Failed("vocabulary_pl.json not found", canContinue = false),
-                presets = SyncStepStatus.Failed("Skipped because the vocabulary could not be loaded", false),
-                course = SyncStepStatus.Failed("Skipped because the vocabulary could not be loaded", false),
+            status = CatalogSeedStatus(
+                vocabulary = SeedStepStatus.Failed("vocabulary_pl.json not found", canContinue = false),
+                presets = SeedStepStatus.Failed("Skipped because the vocabulary could not be loaded", false),
+                course = SeedStepStatus.Failed("Skipped because the vocabulary could not be loaded", false),
             ),
             onRetry = {},
         )

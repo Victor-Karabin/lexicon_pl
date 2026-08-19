@@ -4,8 +4,8 @@ import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.TrainingResultBoundary
 import com.lexicon.boundary.TrainingResultOutcomeBoundary
 import com.lexicon.common.Clock
+import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultRequest
-import com.lexicon.interactors.wordmatch.WordMatchStepOutcome
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
@@ -23,7 +23,7 @@ class SubmitWordMatchStepResultUseCaseImplTest {
         runTest {
             val response =
                 useCase(SubmitWordMatchStepResultRequest("s", 0, listOf(1L, 2L), incorrectAttempts = 0))
-            assertEquals(WordMatchStepOutcome.CORRECT, response.outcome)
+            assertEquals(StepOutcome.CORRECT, response.outcome)
         }
 
     @Test
@@ -31,7 +31,7 @@ class SubmitWordMatchStepResultUseCaseImplTest {
         runTest {
             val response =
                 useCase(SubmitWordMatchStepResultRequest("s", 0, listOf(1L, 2L), incorrectAttempts = 3))
-            assertEquals(WordMatchStepOutcome.INCORRECT, response.outcome)
+            assertEquals(StepOutcome.INCORRECT, response.outcome)
         }
 
     @Test

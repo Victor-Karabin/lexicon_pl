@@ -43,7 +43,7 @@ data class PassageUiState(
 ) {
     val expected: List<String> get() = passage?.gaps?.map { it.answer }.orEmpty()
 
-    /** The favourite behind each gap, in gap order. */
+    /** The starred word behind each gap, in gap order. */
     val words: List<String> get() = passage?.gaps?.map { it.word }.orEmpty()
 
     val correctCount: Int get() = correctness.count { it }
@@ -83,7 +83,7 @@ class PassageViewModel(
                     }
                 }
 
-                PassageSessionResult.NoFavourites ->
+                PassageSessionResult.EmptyStudySet ->
                     _uiState.update { it.copy(isLoading = false, problem = PassageProblem.NO_FAVOURITES) }
 
                 PassageSessionResult.Offline ->

@@ -1,6 +1,6 @@
 package com.lexicon.data.local
 
-import com.lexicon.boundary.SyncOutcomeBoundary
+import com.lexicon.boundary.SeedOutcomeBoundary
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlin.concurrent.Volatile
@@ -8,7 +8,7 @@ import kotlin.concurrent.Volatile
 class VocabularyPresetSeeder(
     private val presetDao: PresetDao,
     private val loader: VocabularyPresetAssetLoader,
-    private val syncStore: VocabularySyncStore,
+    private val syncStore: CatalogSeedStore,
 ) {
     private val mutex = Mutex()
 
@@ -33,13 +33,13 @@ class VocabularyPresetSeeder(
         presetDao.deletePreset(presetId)
     }
 
-    suspend fun sync(): SyncOutcomeBoundary =
+    suspend fun sync(): SeedOutcomeBoundary =
         mutex.withLock {
             val fingerprint = loader.fingerprint()
             val stored = presetDao.countPresets()
             if (fingerprint == syncStore.syncedPresetFingerprint() && stored > 0) {
                 syncedThisProcess = true
-                return@withLock SyncOutcomeBoundary(total = stored, added = 0, updated = 0, removed = 0)
+                return@withLock SeedOutcomeBoundary(total = stored, added = 0, updated = 0, removed = 0)
             }
 
             val catalog = loader.load()
@@ -53,7 +53,7 @@ class VocabularyPresetSeeder(
             syncStore.setSyncedPresetFingerprint(fingerprint)
             syncedThisProcess = true
 
-            SyncOutcomeBoundary(
+            SeedOutcomeBoundary(
                 total = presets.size,
                 added = presets.size - stored.coerceAtMost(presets.size),
                 updated = stored.coerceAtMost(presets.size),

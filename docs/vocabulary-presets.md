@@ -140,7 +140,7 @@ The two stores are kept current differently, and the difference is the point:
 | | Vocabulary | Presets |
 | --- | --- | --- |
 | Strategy | reconcile row by row | replace wholesale |
-| Why | rows carry the user's favourites, which are not the asset's to overwrite | nothing user-owned lives on them — a preset's heart is stored on its words |
+| Why | rows carry the user's study set, which is not the asset's to overwrite | nothing user-owned lives on them — a preset's heart is stored on its words |
 
 Both skip their work when a fingerprint of the asset matches the last synced value, so an
 unchanged asset costs a file read and no JSON parse. Row counts are still checked, because a
@@ -177,24 +177,24 @@ The one assumption to preserve: a preset references vocabulary **by id**. A sour
 brings its own words must first insert them into the vocabulary store and reference the
 resulting ids, rather than embedding words in the preset.
 
-## Favourites — the study set
+## The study set
 
 A word can be marked with a heart, on its own row in the detail screen, from search results,
-or in bulk from a preset's heart. **Trainings draw from the favourited words and nothing
-else.** A user who has favourited nothing therefore has nothing to train on, which is what
+or in bulk from a preset's heart. **Trainings draw from the study set and nothing
+else.** A user with an empty study set therefore has nothing to train on, which is what
 `TrainingGate` exists to explain rather than leave as an empty session.
 
 A preset's heart is tri-state — `NONE`, `SOME`, `ALL` — because a preset can be partly
-favourited and a boolean would have to lie about that. Partly-favourited counts as off, so
+in the study set and a boolean would have to lie about that. Partly-in counts as off, so
 one tap completes the preset rather than clearing it. The bulk toggle writes every word in a
 single call; word by word, a thousand-word preset would emit a thousand updates.
 
 Two consequences worth knowing:
 
-- Favouriting **very few** words no longer degrades trainings silently. Every training is
+- A study set of **very few** words no longer degrades trainings silently. Every training is
   fronted by `TrainingGate`, which checks the study-set size against that training's minimum
   (`TrainingRequirements`) and shows a "not enough words" screen naming both numbers instead
-  of starting a session it cannot build. Before this, an Image Test with three favourites ran
+  of starting a session it cannot build. Before this, an Image Test with three starred words ran
   with three options, and a training with none spun forever — `openStep(0)` returns early on
   an empty session, so the screen never left Loading.
 - `getRandomForStudy` is plain SQL, and the project has no Robolectric or instrumentation
@@ -236,7 +236,7 @@ never match, and the failure is silent.
 `VocabularySeeder` keeps the table in line with the asset rather than only filling an empty
 one. On launch it fingerprints the asset; if that differs from the last synced value it inserts
 new words, deletes words the asset has dropped, and refreshes the rest — **preserving the
-favourite flag**, which is the user's and not the asset's to state. Unchanged assets cost a file
+study-set flag**, which is the user's and not the asset's to state. Unchanged assets cost a file
 read and no parse.
 
 This is not an optimisation, it is the difference between shipping a corpus update and not:
@@ -250,7 +250,7 @@ device.
 preset's own order (so "100 most common words" arrives in frequency order) and silently
 skips ids the store no longer holds, so a preset built against an older corpus stays usable.
 
-Trainings, Mix, Custom Builder, Search, Favourites and any future spaced-repetition
+Trainings, Mix, Custom Builder, Search, the study set and any future spaced-repetition
 scheduler consume presets through that one call. **Not yet wired:** no training currently
 takes a preset as a session filter — that means threading a preset id through each
 training's session-start request, and is separate work.

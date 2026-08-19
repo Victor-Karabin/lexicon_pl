@@ -4,12 +4,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
-import com.lexicon.interactors.memorycards.MemoryCardsStepOutcome
 import com.lexicon.interactors.memorycards.MemoryCardsStepResponse
 import com.lexicon.interactors.memorycards.StartMemoryCardsSessionRequest
 import com.lexicon.interactors.memorycards.StartMemoryCardsSessionUseCase
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultRequest
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
+import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -143,9 +143,9 @@ class MemoryCardsViewModel(
                 ),
             )
         when (response.outcome) {
-            MemoryCardsStepOutcome.CORRECT -> correctCount++
-            MemoryCardsStepOutcome.INCORRECT -> incorrectCount++
-            MemoryCardsStepOutcome.SKIPPED -> Unit
+            StepOutcome.CORRECT -> correctCount++
+            StepOutcome.INCORRECT -> incorrectCount++
+            StepOutcome.SKIPPED -> Unit
         }
         delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
         advanceToNextStep()

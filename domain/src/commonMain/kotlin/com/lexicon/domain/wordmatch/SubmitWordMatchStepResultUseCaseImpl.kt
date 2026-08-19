@@ -2,12 +2,12 @@ package com.lexicon.domain.wordmatch
 
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.boundary.TrainingResultOutcomeBoundary
 import com.lexicon.common.Clock
+import com.lexicon.domain.training.toBoundary
+import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultRequest
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultResponse
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultUseCase
-import com.lexicon.interactors.wordmatch.WordMatchStepOutcome
 
 private const val TRAINING_TYPE_WORD_MATCH = "WORD_MATCH"
 
@@ -38,12 +38,6 @@ class SubmitWordMatchStepResultUseCaseImpl(
         return SubmitWordMatchStepResultResponse(outcome = outcome)
     }
 
-    private fun resolveOutcome(request: SubmitWordMatchStepResultRequest): WordMatchStepOutcome =
-        if (request.incorrectAttempts == 0) WordMatchStepOutcome.CORRECT else WordMatchStepOutcome.INCORRECT
-
-    private fun WordMatchStepOutcome.toBoundary(): TrainingResultOutcomeBoundary =
-        when (this) {
-            WordMatchStepOutcome.CORRECT -> TrainingResultOutcomeBoundary.CORRECT
-            WordMatchStepOutcome.INCORRECT -> TrainingResultOutcomeBoundary.INCORRECT
-        }
+    private fun resolveOutcome(request: SubmitWordMatchStepResultRequest): StepOutcome =
+        if (request.incorrectAttempts == 0) StepOutcome.CORRECT else StepOutcome.INCORRECT
 }

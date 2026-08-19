@@ -27,13 +27,13 @@ class StartPassageSessionUseCaseImplTest {
 
     private var stepCount = 6
 
-    private fun givenFavourites(vararg words: String) {
+    private fun givenStudySet(vararg words: String) {
         coEvery { settings.getSettings() } returns
             AppSettingsBoundary(themeMode = ThemeModeBoundary.SYSTEM, stepCount = stepCount)
         val items = words.mapIndexed { index, word ->
             VocabularyItemBoundary(index + 1L, word, "x", "x", cefr = "A1")
         }
-        coEvery { vocabulary.favouriteWordIds() } returns items.map { it.id }
+        coEvery { vocabulary.studySetWordIds() } returns items.map { it.id }
         coEvery { vocabulary.getItemsByIds(any()) } returns items
     }
 
@@ -49,7 +49,7 @@ class StartPassageSessionUseCaseImplTest {
     @Test
     fun `every sentence shown has something to fill in`() =
         runTest {
-            givenFavourites("polegać", "nowy", "gdy", "jeśli", "pewnie", "okno")
+            givenStudySet("polegać", "nowy", "gdy", "jeśli", "pewnie", "okno")
             answering(
                 mapOf(
                     "polegać" to "Znam Piotra od lat i zawsze mogę na niego liczyć.",
@@ -75,7 +75,7 @@ class StartPassageSessionUseCaseImplTest {
     @Test
     fun `a sentence that reached for a synonym is dropped`() =
         runTest {
-            givenFavourites("polegać", "nowy", "gdy", "jeśli", "pewnie", "okno")
+            givenStudySet("polegać", "nowy", "gdy", "jeśli", "pewnie", "okno")
             answering(
                 mapOf(
                     "polegać" to "Znam Piotra od lat i zawsze mogę na niego liczyć.",
@@ -99,7 +99,7 @@ class StartPassageSessionUseCaseImplTest {
     @Test
     fun `an inflected form of the word is what gets gapped`() =
         runTest {
-            givenFavourites("książka")
+            givenStudySet("książka")
             answering(mapOf("książka" to "Czytam ciekawą książkę wieczorem."))
 
             val session = run() as PassageSessionResult.Ready
@@ -110,7 +110,7 @@ class StartPassageSessionUseCaseImplTest {
     @Test
     fun `a short word has to appear whole rather than matching anything it starts`() =
         runTest {
-            givenFavourites("i")
+            givenStudySet("i")
             answering(mapOf("i" to "Ile masz lat?"))
 
             assertTrue(run() is PassageSessionResult.Refused)
@@ -119,7 +119,7 @@ class StartPassageSessionUseCaseImplTest {
     @Test
     fun `a phrase is looked for by the word carrying its meaning`() =
         runTest {
-            givenFavourites("mieć na myśli")
+            givenStudySet("mieć na myśli")
             answering(mapOf("mieć na myśli" to "Nie wiem, co masz na myśli."))
 
             val session = run() as PassageSessionResult.Ready
@@ -128,9 +128,9 @@ class StartPassageSessionUseCaseImplTest {
         }
 
     @Test
-    fun `each gap remembers the favourite it was inflected from`() =
+    fun `each gap remembers the starred word it was inflected from`() =
         runTest {
-            givenFavourites("książka")
+            givenStudySet("książka")
             answering(mapOf("książka" to "Czytam ciekawą książkę wieczorem."))
 
             val session = run() as PassageSessionResult.Ready
@@ -145,7 +145,7 @@ class StartPassageSessionUseCaseImplTest {
     fun `the number of gaps follows the step count setting`() =
         runTest {
             stepCount = 3
-            givenFavourites("nowy", "okno", "gdy", "lampa", "stol", "kot", "dom", "zegar")
+            givenStudySet("nowy", "okno", "gdy", "lampa", "stol", "kot", "dom", "zegar")
             answering(
                 mapOf(
                     "nowy" to "Mam nowy telefon.",
@@ -169,7 +169,7 @@ class StartPassageSessionUseCaseImplTest {
     fun `a longer setting means a longer passage`() =
         runTest {
             stepCount = 7
-            givenFavourites("nowy", "okno", "gdy", "lampa", "stol", "kot", "dom", "zegar")
+            givenStudySet("nowy", "okno", "gdy", "lampa", "stol", "kot", "dom", "zegar")
             answering(
                 mapOf(
                     "nowy" to "Mam nowy telefon.",
@@ -188,12 +188,12 @@ class StartPassageSessionUseCaseImplTest {
             assertEquals(7, session.passage.sentences.size)
         }
 
-    /** Asking for more steps than there are starred words cannot invent them. */
+    /** Asking for more steps than there are studySets cannot invent them. */
     @Test
-    fun `the passage is capped by how many favourites there are`() =
+    fun `the passage is capped by how many studySet there are`() =
         runTest {
             stepCount = 20
-            givenFavourites("nowy", "okno")
+            givenStudySet("nowy", "okno")
             answering(mapOf("nowy" to "Mam nowy telefon.", "okno" to "Otworz okno."))
 
             val session = run() as PassageSessionResult.Ready
@@ -204,7 +204,7 @@ class StartPassageSessionUseCaseImplTest {
     @Test
     fun `the word bank offers exactly the answers`() =
         runTest {
-            givenFavourites("nowy", "okno", "gdy")
+            givenStudySet("nowy", "okno", "gdy")
             answering(
                 mapOf(
                     "nowy" to "Mam nowy telefon.",

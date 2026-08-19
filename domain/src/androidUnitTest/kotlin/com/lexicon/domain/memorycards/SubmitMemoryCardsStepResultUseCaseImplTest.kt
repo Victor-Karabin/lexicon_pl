@@ -4,8 +4,8 @@ import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.TrainingResultBoundary
 import com.lexicon.boundary.TrainingResultOutcomeBoundary
 import com.lexicon.common.Clock
-import com.lexicon.interactors.memorycards.MemoryCardsStepOutcome
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultRequest
+import com.lexicon.interactors.training.StepOutcome
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
@@ -25,7 +25,7 @@ class SubmitMemoryCardsStepResultUseCaseImplTest {
                 useCase(
                     SubmitMemoryCardsStepResultRequest("s", 0, listOf(1L, 2L), incorrectAttempts = 0, skipped = false),
                 )
-            assertEquals(MemoryCardsStepOutcome.CORRECT, response.outcome)
+            assertEquals(StepOutcome.CORRECT, response.outcome)
         }
 
     @Test
@@ -35,7 +35,7 @@ class SubmitMemoryCardsStepResultUseCaseImplTest {
                 useCase(
                     SubmitMemoryCardsStepResultRequest("s", 0, listOf(1L, 2L), incorrectAttempts = 2, skipped = false),
                 )
-            assertEquals(MemoryCardsStepOutcome.INCORRECT, response.outcome)
+            assertEquals(StepOutcome.INCORRECT, response.outcome)
         }
 
     @Test
@@ -45,7 +45,7 @@ class SubmitMemoryCardsStepResultUseCaseImplTest {
                 useCase(
                     SubmitMemoryCardsStepResultRequest("s", 0, listOf(1L, 2L), incorrectAttempts = 0, skipped = true),
                 )
-            assertEquals(MemoryCardsStepOutcome.SKIPPED, response.outcome)
+            assertEquals(StepOutcome.SKIPPED, response.outcome)
         }
 
     @Test

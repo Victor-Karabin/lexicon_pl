@@ -91,7 +91,7 @@ private val BAJAC = VerbConjugationBoundary(
 
 private val EMPTY = VerbConjugationBoundary("beknąć", emptyMap())
 
-class ConjugationQuestionsTest {
+class ConjugationTablesTest {
     private val pool = listOf(BYC, CHODZIC, BRAC, BAC_SIE, BAWIC_SIE, BOLEC, BAJAC).map { it.toVerb() }
 
     private fun verb(source: VerbConjugationBoundary) = source.toVerb()

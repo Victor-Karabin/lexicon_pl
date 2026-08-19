@@ -57,7 +57,7 @@ data class ConjugationStep(
     val spokenForm: String = "",
 )
 
-data class ConjugationQuestion(
+data class ConjugationTable(
     val infinitive: String,
     val translation: String? = null,
     val steps: ImmutableList<ConjugationStep>,

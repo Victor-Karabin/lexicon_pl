@@ -4,11 +4,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
+import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionRequest
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerRequest
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
-import com.lexicon.interactors.trueorfalse.TrueOrFalseStepOutcome
 import com.lexicon.interactors.trueorfalse.TrueOrFalseStepResponse
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
@@ -45,6 +45,7 @@ class TrueOrFalseViewModel(
     private var steps: List<TrueOrFalseStepResponse> = emptyList()
     private var correctCount = 0
     private var incorrectCount = 0
+    private var skippedCount = 0
     private var timerJob: Job? = null
     private val wordResults = mutableListOf<WordResultEntry>()
 
@@ -107,17 +108,22 @@ class TrueOrFalseViewModel(
     }
 
     private suspend fun applyOutcome(
-        outcome: TrueOrFalseStepOutcome,
+        outcome: StepOutcome,
         step: TrueOrFalseStepResponse,
     ) {
         when (outcome) {
-            TrueOrFalseStepOutcome.CORRECT -> {
+            StepOutcome.CORRECT -> {
                 correctCount++
                 wordResults += WordResultEntry(step.word, step.displayedTranslation, AnswerState.Correct)
             }
-            TrueOrFalseStepOutcome.INCORRECT -> {
+            StepOutcome.INCORRECT -> {
                 incorrectCount++
                 wordResults += WordResultEntry(step.word, step.displayedTranslation, AnswerState.Incorrect())
+            }
+
+            StepOutcome.SKIPPED -> {
+                skippedCount++
+                wordResults += WordResultEntry(step.word, step.displayedTranslation, AnswerState.Skipped())
             }
         }
         advanceToNextStep()
@@ -139,7 +145,7 @@ class TrueOrFalseViewModel(
         if (state.isSessionComplete) return
         updateLoaded { it.copy(isSessionComplete = true) }
         lastSessionResultsHolder.wordResults = wordResults.toList()
-        _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skipped = 0))
+        _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skipped = skippedCount))
         timerJob?.cancel()
     }
 

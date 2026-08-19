@@ -2,8 +2,8 @@ package com.lexicon.domain.trueorfalse
 
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.common.Clock
+import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerRequest
-import com.lexicon.interactors.trueorfalse.TrueOrFalseStepOutcome
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -30,20 +30,20 @@ class SubmitTrueOrFalseAnswerUseCaseImplTest {
     fun `answering True when the pairing is correct is Correct`() =
         runTest {
             val response = useCase(request(isCorrect = true, userAnsweredTrue = true))
-            assertEquals(TrueOrFalseStepOutcome.CORRECT, response.outcome)
+            assertEquals(StepOutcome.CORRECT, response.outcome)
         }
 
     @Test
     fun `answering False when the pairing is a distractor is Correct`() =
         runTest {
             val response = useCase(request(isCorrect = false, userAnsweredTrue = false))
-            assertEquals(TrueOrFalseStepOutcome.CORRECT, response.outcome)
+            assertEquals(StepOutcome.CORRECT, response.outcome)
         }
 
     @Test
     fun `answering True when the pairing is a distractor is Incorrect`() =
         runTest {
             val response = useCase(request(isCorrect = false, userAnsweredTrue = true))
-            assertEquals(TrueOrFalseStepOutcome.INCORRECT, response.outcome)
+            assertEquals(StepOutcome.INCORRECT, response.outcome)
         }
 }

@@ -28,7 +28,7 @@ sealed interface VocabularyUiState {
         val words: ImmutableList<PresetWord> = persistentListOf(),
         val isSearching: Boolean = false,
         val languageTag: String = "en",
-        val favouriteWordIds: Set<VocabularyId> = emptySet(),
+        val studySetWordIds: Set<VocabularyId> = emptySet(),
         val lastDeleted: DeletedItem? = null,
     ) : VocabularyUiState
 }

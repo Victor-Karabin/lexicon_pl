@@ -1,7 +1,5 @@
 package com.lexicon.interactors.dictation
 
-enum class DictationStepOutcome { CORRECT, INCORRECT, SKIPPED }
-
 data class DictationStepResponse(
     val stepIndex: Int,
     val vocabularyItemId: Long,

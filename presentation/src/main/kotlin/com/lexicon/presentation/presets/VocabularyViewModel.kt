@@ -8,17 +8,17 @@ import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.DeletePresetUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
-import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
+import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
 import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
-import com.lexicon.interactors.presets.PresetFavouriteState
 import com.lexicon.interactors.presets.PresetId
+import com.lexicon.interactors.presets.PresetStudySetState
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.RestorePresetUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
-import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
+import com.lexicon.interactors.presets.SetPresetInStudySetUseCase
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
-import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
+import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
 import com.lexicon.interactors.presets.resolve
@@ -38,13 +38,13 @@ private const val QUERY_DEBOUNCE_MS = 200L
 class VocabularyViewModel(
     private val observePresets: ObserveVocabularyPresetsUseCase,
     private val searchVocabulary: SearchVocabularyUseCase,
-    private val setPresetFavourite: SetPresetFavouriteUseCase,
-    private val toggleWordFavourite: ToggleWordFavouriteUseCase,
+    private val setPresetInStudySet: SetPresetInStudySetUseCase,
+    private val toggleWordInStudySet: ToggleWordInStudySetUseCase,
     private val deleteWord: DeleteWordUseCase,
     private val restoreWord: RestoreWordUseCase,
     private val deletePreset: DeletePresetUseCase,
     private val restorePreset: RestorePresetUseCase,
-    private val observeFavouriteWordIds: ObserveFavouriteWordIdsUseCase,
+    private val observeStudySetIds: ObserveStudySetIdsUseCase,
     getWordPresetMemberships: GetWordPresetMembershipsUseCase,
     setWordPresetMembership: SetWordPresetMembershipUseCase,
     private val dispatchers: DispatcherProvider,
@@ -84,8 +84,8 @@ class VocabularyViewModel(
             }
         }
         viewModelScope.launch(dispatchers.io) {
-            observeFavouriteWordIds().collect { favourites ->
-                updateLoaded { it.copy(favouriteWordIds = favourites) }
+            observeStudySetIds().collect { studySet ->
+                updateLoaded { it.copy(studySetWordIds = studySet) }
             }
         }
         observeQuery()
@@ -123,12 +123,12 @@ class VocabularyViewModel(
         updateLoaded { it.copy(selectedCefrLevels = emptySet()).clearedWordsIfIdle() }
     }
 
-    fun onPresetFavouriteToggled(
+    fun onPresetStudySetToggled(
         id: PresetId,
-        current: PresetFavouriteState,
+        current: PresetStudySetState,
     ) {
         viewModelScope.launch(dispatchers.io) {
-            setPresetFavourite(id, current != PresetFavouriteState.ALL)
+            setPresetInStudySet(id, current != PresetStudySetState.ALL)
         }
     }
 
@@ -138,11 +138,11 @@ class VocabularyViewModel(
         }
     }
 
-    fun onWordFavouriteToggled(
+    fun onWordStudySetToggled(
         id: VocabularyId,
-        isFavourite: Boolean,
+        isInStudySet: Boolean,
     ) {
-        viewModelScope.launch(dispatchers.io) { toggleWordFavourite(id, isFavourite) }
+        viewModelScope.launch(dispatchers.io) { toggleWordInStudySet(id, isInStudySet) }
     }
 
     fun onWordDeleted(word: PresetWord) {

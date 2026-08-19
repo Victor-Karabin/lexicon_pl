@@ -1,6 +1,6 @@
 package com.lexicon.data.local
 
-import com.lexicon.boundary.SyncOutcomeBoundary
+import com.lexicon.boundary.SeedOutcomeBoundary
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlin.concurrent.Volatile
@@ -8,7 +8,7 @@ import kotlin.concurrent.Volatile
 class VocabularySeeder(
     private val wordDao: WordDao,
     private val vocabularySeedAssetLoader: VocabularySeedAssetLoader,
-    private val vocabularySyncStore: VocabularySyncStore,
+    private val vocabularySyncStore: CatalogSeedStore,
 ) {
     private val mutex = Mutex()
 
@@ -20,12 +20,12 @@ class VocabularySeeder(
         sync()
     }
 
-    suspend fun sync(): SyncOutcomeBoundary =
+    suspend fun sync(): SeedOutcomeBoundary =
         mutex.withLock {
             val fingerprint = vocabularySeedAssetLoader.fingerprint()
             if (fingerprint == vocabularySyncStore.syncedFingerprint() && wordDao.countIncludingDeleted() > 0) {
                 syncedThisProcess = true
-                return@withLock SyncOutcomeBoundary(total = wordDao.count(), added = 0, updated = 0, removed = 0)
+                return@withLock SeedOutcomeBoundary(total = wordDao.count(), added = 0, updated = 0, removed = 0)
             }
 
             val outcome = reconcile()
@@ -34,7 +34,7 @@ class VocabularySeeder(
             outcome
         }
 
-    private suspend fun reconcile(): SyncOutcomeBoundary {
+    private suspend fun reconcile(): SeedOutcomeBoundary {
         val asset = vocabularySeedAssetLoader.load()
         val all = wordDao.getAll()
 
@@ -42,7 +42,7 @@ class VocabularySeeder(
 
         if (all.isEmpty()) {
             wordDao.insertAll(asset)
-            return SyncOutcomeBoundary(total = asset.size, added = asset.size, updated = 0, removed = 0)
+            return SeedOutcomeBoundary(total = asset.size, added = asset.size, updated = 0, removed = 0)
         }
 
         val assetIds = asset.mapTo(mutableSetOf()) { it.id }
@@ -53,12 +53,12 @@ class VocabularySeeder(
         val changed = asset.mapNotNull { incoming ->
             val current = existing[incoming.id] ?: return@mapNotNull null
             incoming
-                .copy(isFavourite = current.isFavourite, isDeleted = current.isDeleted)
+                .copy(isInStudySet = current.isInStudySet, isDeleted = current.isDeleted)
                 .takeIf { it != current }
         }
         wordDao.reconcile(added = added, removedIds = removed.toList(), changed = changed)
 
-        return SyncOutcomeBoundary(
+        return SeedOutcomeBoundary(
             total = asset.size,
             added = added.size,
             updated = changed.size,

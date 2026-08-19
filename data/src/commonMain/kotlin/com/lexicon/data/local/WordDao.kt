@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WordDao {
-    @Query("SELECT * FROM words WHERE isFavourite = 1 AND isDeleted = 0 ORDER BY RANDOM() LIMIT :count")
+    @Query("SELECT * FROM words WHERE isInStudySet = 1 AND isDeleted = 0 ORDER BY RANDOM() LIMIT :count")
     suspend fun getRandomForStudy(count: Int): List<WordEntity>
 
     @Query("SELECT * FROM words WHERE id IN (:ids) AND isDeleted = 0 ORDER BY RANDOM() LIMIT :count")
@@ -21,19 +21,19 @@ interface WordDao {
     @Query("SELECT * FROM words WHERE id IN (:ids) AND isDeleted = 0")
     suspend fun getByIds(ids: List<Long>): List<WordEntity>
 
-    @Query("UPDATE words SET isFavourite = :isFavourite WHERE id IN (:ids)")
-    suspend fun setFavourite(
+    @Query("UPDATE words SET isInStudySet = :isInStudySet WHERE id IN (:ids)")
+    suspend fun setInStudySet(
         ids: List<Long>,
-        isFavourite: Boolean,
+        isInStudySet: Boolean,
     )
 
-    @Query("SELECT id FROM words WHERE isFavourite = 1 AND isDeleted = 0")
-    fun observeFavouriteIds(): Flow<List<Long>>
+    @Query("SELECT id FROM words WHERE isInStudySet = 1 AND isDeleted = 0")
+    fun observeStudySetIds(): Flow<List<Long>>
 
     @Query(
         """
         SELECT COUNT(*) FROM words
-        WHERE isFavourite = 1 AND isDeleted = 0
+        WHERE isInStudySet = 1 AND isDeleted = 0
           AND (:excludePhrases = 0 OR text NOT LIKE '% %')
         """,
     )
@@ -98,8 +98,8 @@ interface WordDao {
     @Query("SELECT id FROM words WHERE isDeleted = 0 AND cefr = :level ORDER BY id")
     suspend fun wordIdsForLevel(level: String): List<Long>
 
-    @Query("SELECT id FROM words WHERE isDeleted = 0 AND isFavourite = 1 ORDER BY id")
-    suspend fun favouriteWordIds(): List<Long>
+    @Query("SELECT id FROM words WHERE isDeleted = 0 AND isInStudySet = 1 ORDER BY id")
+    suspend fun studySetWordIds(): List<Long>
 
     @Query(
         """

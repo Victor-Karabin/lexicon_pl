@@ -2,8 +2,8 @@ package com.lexicon.domain.imagetest
 
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.common.Clock
-import com.lexicon.interactors.imagetest.ImageTestStepOutcome
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerRequest
+import com.lexicon.interactors.training.StepOutcome
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -31,20 +31,20 @@ class SubmitImageTestAnswerUseCaseImplTest {
     fun `selecting the correct option is Correct`() =
         runTest {
             val response = useCase(request(selectedOption = "cat"))
-            assertEquals(ImageTestStepOutcome.CORRECT, response.outcome)
+            assertEquals(StepOutcome.CORRECT, response.outcome)
         }
 
     @Test
     fun `selecting a distractor is Incorrect`() =
         runTest {
             val response = useCase(request(selectedOption = "dog"))
-            assertEquals(ImageTestStepOutcome.INCORRECT, response.outcome)
+            assertEquals(StepOutcome.INCORRECT, response.outcome)
         }
 
     @Test
     fun `skip is Skipped regardless of selection`() =
         runTest {
             val response = useCase(request(selectedOption = null, skipped = true))
-            assertEquals(ImageTestStepOutcome.SKIPPED, response.outcome)
+            assertEquals(StepOutcome.SKIPPED, response.outcome)
         }
 }

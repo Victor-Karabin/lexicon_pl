@@ -3,7 +3,7 @@ package com.lexicon.presentation.program
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.interactors.program.CountFavouritesUseCase
+import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.CreateProgramUseCase
 import com.lexicon.interactors.program.EnrolInProgramUseCase
 import com.lexicon.interactors.program.GetProgramUseCase
@@ -32,7 +32,7 @@ private const val DEFAULT_REVIEW_WORDS_A_DAY = 20
 
 data class CreateProgramUiState(
     val isLoading: Boolean = true,
-    val favourites: Int = 0,
+    val studySet: Int = 0,
     val newWordsPerDay: Int = MIN_NEW_WORDS_A_DAY,
     val reviewWordsPerDay: Int = DEFAULT_REVIEW_WORDS_A_DAY,
     val queue: ImmutableList<String> = persistentListOf(),
@@ -41,11 +41,11 @@ data class CreateProgramUiState(
     val isEditing: Boolean = false,
     val isEnrolled: Boolean = false,
 ) {
-    val maxNewWords: Int get() = maxOf(favourites, MIN_NEW_WORDS_A_DAY)
+    val maxNewWords: Int get() = maxOf(studySet, MIN_NEW_WORDS_A_DAY)
 
-    val hasFavourites: Boolean get() = favourites > 0
+    val hasStudySet: Boolean get() = studySet > 0
 
-    val canSave: Boolean get() = queue.isNotEmpty() && hasFavourites
+    val canSave: Boolean get() = queue.isNotEmpty() && hasStudySet
 }
 
 class CreateProgramViewModel(
@@ -53,7 +53,7 @@ class CreateProgramViewModel(
     private val createProgram: CreateProgramUseCase,
     private val updateProgram: UpdateProgramUseCase,
     private val getProgram: GetProgramUseCase,
-    private val countFavourites: CountFavouritesUseCase,
+    private val countStudySet: CountStudySetUseCase,
     private val enrol: EnrolInProgramUseCase,
     private val leave: LeaveProgramUseCase,
     observeActiveEnrolment: ObserveActiveEnrolmentUseCase,
@@ -65,8 +65,8 @@ class CreateProgramViewModel(
 
     init {
         viewModelScope.launch {
-            val favourites = countFavourites()
-            val ceiling = maxOf(favourites, MIN_NEW_WORDS_A_DAY)
+            val studySet = countStudySet()
+            val ceiling = maxOf(studySet, MIN_NEW_WORDS_A_DAY)
 
             val existing = editing?.let { getProgram(it) }
             val plan = existing?.config?.dailyPlan
@@ -75,7 +75,7 @@ class CreateProgramViewModel(
                 state.copy(
                     isLoading = false,
                     isEditing = existing != null,
-                    favourites = favourites,
+                    studySet = studySet,
                     newWordsPerDay = (plan?.newWords ?: state.newWordsPerDay).coerceIn(MIN_NEW_WORDS_A_DAY, ceiling),
                     reviewWordsPerDay = (plan?.reviewWords ?: state.reviewWordsPerDay).coerceIn(0, ceiling),
                     queue = plan?.queue?.toImmutableList() ?: state.queue,

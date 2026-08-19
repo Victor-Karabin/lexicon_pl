@@ -1,6 +1,6 @@
 package com.lexicon.interactors.crossword
 
-enum class CrosswordWordOutcome { CORRECT, INCORRECT }
+import com.lexicon.interactors.training.StepOutcome
 
 data class CrosswordWordSubmission(
     val vocabularyItemId: Long,
@@ -17,7 +17,7 @@ data class SubmitCrosswordRequest(
 data class CrosswordWordResult(
     val vocabularyItemId: Long,
     val expectedText: String,
-    val outcome: CrosswordWordOutcome,
+    val outcome: StepOutcome,
     val tipUsed: Boolean,
 )
 

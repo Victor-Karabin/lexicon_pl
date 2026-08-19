@@ -4,8 +4,8 @@ import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.TrainingResultBoundary
 import com.lexicon.common.Clock
 import com.lexicon.domain.dictation.AnswerNormalizer
-import com.lexicon.interactors.pronunciation.PronunciationStepOutcome
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultRequest
+import com.lexicon.interactors.training.StepOutcome
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
@@ -38,35 +38,35 @@ class SubmitPronunciationResultUseCaseImplTest {
     fun `confidence at or above the 70pct threshold is Correct`() =
         runTest {
             val response = useCase(request(confidence = 0.7f))
-            assertEquals(PronunciationStepOutcome.CORRECT, response.outcome)
+            assertEquals(StepOutcome.CORRECT, response.outcome)
         }
 
     @Test
     fun `the right word said with low confidence is Correct`() =
         runTest {
             val response = useCase(request(recognizedText = "kot", confidence = 0.1f))
-            assertEquals(PronunciationStepOutcome.CORRECT, response.outcome)
+            assertEquals(StepOutcome.CORRECT, response.outcome)
         }
 
     @Test
     fun `the wrong word said with high confidence is Incorrect`() =
         runTest {
             val response = useCase(request(recognizedText = "pies", confidence = 0.99f))
-            assertEquals(PronunciationStepOutcome.INCORRECT, response.outcome)
+            assertEquals(StepOutcome.INCORRECT, response.outcome)
         }
 
     @Test
     fun `no confidence at all still compares the words`() =
         runTest {
             val response = useCase(request(recognizedText = "Kot", confidence = null))
-            assertEquals(PronunciationStepOutcome.CORRECT, response.outcome)
+            assertEquals(StepOutcome.CORRECT, response.outcome)
         }
 
     @Test
     fun `high confidence with tip used is still Correct — tip usage doesn't affect the outcome`() =
         runTest {
             val response = useCase(request(confidence = 0.99f, tipUsed = true))
-            assertEquals(PronunciationStepOutcome.CORRECT, response.outcome)
+            assertEquals(StepOutcome.CORRECT, response.outcome)
         }
 
     @Test
@@ -80,6 +80,6 @@ class SubmitPronunciationResultUseCaseImplTest {
     fun `skip is Skipped regardless of confidence`() =
         runTest {
             val response = useCase(request(confidence = 0.99f, skipped = true))
-            assertEquals(PronunciationStepOutcome.SKIPPED, response.outcome)
+            assertEquals(StepOutcome.SKIPPED, response.outcome)
         }
 }

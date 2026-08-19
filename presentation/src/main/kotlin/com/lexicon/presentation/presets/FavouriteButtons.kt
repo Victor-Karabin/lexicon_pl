@@ -10,48 +10,48 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.lexicon.interactors.presets.PresetFavouriteState
+import com.lexicon.interactors.presets.PresetStudySetState
 import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.LexiconError
 
 @Composable
-fun FavouriteButton(
-    isFavourite: Boolean,
+fun StudySetButton(
+    isInStudySet: Boolean,
     contentDescription: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     IconButton(onClick = onClick, modifier = modifier) {
         Icon(
-            imageVector = if (isFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+            imageVector = if (isInStudySet) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
             contentDescription = contentDescription,
-            tint = if (isFavourite) LexiconError else MaterialTheme.colorScheme.onSurfaceVariant,
+            tint = if (isInStudySet) LexiconError else MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }
 
 @Composable
-fun PresetFavouriteButton(
-    state: PresetFavouriteState,
+fun PresetInStudySetButton(
+    state: PresetStudySetState,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val icon = when (state) {
-        PresetFavouriteState.ALL -> Icons.Default.Favorite
-        PresetFavouriteState.SOME -> Icons.Default.HeartBroken
-        PresetFavouriteState.NONE -> Icons.Default.FavoriteBorder
+        PresetStudySetState.ALL -> Icons.Default.Favorite
+        PresetStudySetState.SOME -> Icons.Default.HeartBroken
+        PresetStudySetState.NONE -> Icons.Default.FavoriteBorder
     }
     val description = stringResource(
         when (state) {
-            PresetFavouriteState.ALL -> R.string.favourite_preset_remove
-            else -> R.string.favourite_preset_add
+            PresetStudySetState.ALL -> R.string.study_set_preset_remove
+            else -> R.string.study_set_preset_add
         },
     )
     IconButton(onClick = onClick, modifier = modifier) {
         Icon(
             imageVector = icon,
             contentDescription = description,
-            tint = if (state == PresetFavouriteState.NONE) {
+            tint = if (state == PresetStudySetState.NONE) {
                 MaterialTheme.colorScheme.onSurfaceVariant
             } else {
                 LexiconError

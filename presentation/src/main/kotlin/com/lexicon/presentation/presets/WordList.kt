@@ -14,7 +14,7 @@ import com.lexicon.presentation.theme.Dimens
 
 fun LazyListScope.wordRows(
     words: List<PresetWord>,
-    onFavouriteToggled: (VocabularyId, Boolean) -> Unit,
+    onStudySetToggled: (VocabularyId, Boolean) -> Unit,
     onPronounce: (PresetWord) -> Unit,
     onChangePresets: (PresetWord) -> Unit,
     onDelete: (PresetWord) -> Unit,
@@ -35,7 +35,7 @@ fun LazyListScope.wordRows(
         ) {
             VocabularyWordRow(
                 word = word,
-                onFavouriteToggled = { onFavouriteToggled(word.id, !word.isFavourite) },
+                onStudySetToggled = { onStudySetToggled(word.id, !word.isInStudySet) },
                 onPronounce = { onPronounce(word) },
                 onClick = { if (selection.isActive) selection.toggle(word.id) else onEdit(word) },
                 isSelecting = selection.isActive,

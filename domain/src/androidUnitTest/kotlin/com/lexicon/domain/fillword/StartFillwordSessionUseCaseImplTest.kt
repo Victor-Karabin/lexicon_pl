@@ -21,16 +21,16 @@ class StartFillwordSessionUseCaseImplTest {
     private val vocabulary: VocabularyRepository = mockk()
     private val useCase = StartFillwordSessionUseCaseImpl(vocabulary)
 
-    private val favourites = listOf(
+    private val studySet = listOf(
         "kot" to "cat", "dom" to "house", "okno" to "window", "stół" to "table",
         "krzesło" to "chair", "książka" to "book", "lampa" to "lamp", "szafa" to "wardrobe",
         "kwiat" to "flower", "zegar" to "clock", "obraz" to "picture", "dywan" to "rug",
         "łóżko" to "bed", "ściana" to "wall",
     ).mapIndexed { index, (word, meaning) -> VocabularyItemBoundary(index + 1L, word, meaning, "x") }
 
-    private fun givenFavourites() {
-        coEvery { vocabulary.favouriteWordIds() } returns favourites.map { it.id }
-        coEvery { vocabulary.getItemsByIds(any()) } returns favourites
+    private fun givenStudySet() {
+        coEvery { vocabulary.studySetWordIds() } returns studySet.map { it.id }
+        coEvery { vocabulary.getItemsByIds(any()) } returns studySet
     }
 
     private suspend fun puzzle(): FillwordPuzzle = (useCase() as FillwordSessionResult.Ready).puzzle
@@ -49,7 +49,7 @@ class StartFillwordSessionUseCaseImplTest {
     @Test
     fun `every word is readable along its own path`() =
         runTest {
-            givenFavourites()
+            givenStudySet()
 
             repeat(LAYOUTS) {
                 assertTrue(puzzle().everyWordReadable())
@@ -59,7 +59,7 @@ class StartFillwordSessionUseCaseImplTest {
     @Test
     fun `the grid is square and every cell carries a single letter`() =
         runTest {
-            givenFavourites()
+            givenStudySet()
 
             val puzzle = puzzle()
 
@@ -70,7 +70,7 @@ class StartFillwordSessionUseCaseImplTest {
     @Test
     fun `the grid is packed rather than showing a handful of words`() =
         runTest {
-            givenFavourites()
+            givenStudySet()
 
             repeat(LAYOUTS) {
                 val words = puzzle().words.size
@@ -82,7 +82,7 @@ class StartFillwordSessionUseCaseImplTest {
     @Test
     fun `words are not all laid out in the same direction`() =
         runTest {
-            givenFavourites()
+            givenStudySet()
 
             repeat(LAYOUTS) {
                 val directions = puzzle().words.map { it.direction }.toSet()
@@ -93,7 +93,7 @@ class StartFillwordSessionUseCaseImplTest {
     @Test
     fun `diagonals and backwards runs are used, not just across and down`() =
         runTest {
-            givenFavourites()
+            givenStudySet()
 
             repeat(LAYOUTS) {
                 val directions = puzzle().words.map { it.direction }
@@ -113,7 +113,7 @@ class StartFillwordSessionUseCaseImplTest {
     @Test
     fun `words cross each other instead of each keeping to itself`() =
         runTest {
-            givenFavourites()
+            givenStudySet()
 
             repeat(LAYOUTS) {
                 val puzzle = puzzle()
@@ -124,7 +124,7 @@ class StartFillwordSessionUseCaseImplTest {
     @Test
     fun `no word is hidden entirely inside another`() =
         runTest {
-            givenFavourites()
+            givenStudySet()
 
             repeat(LAYOUTS) {
                 val puzzle = puzzle()
@@ -139,7 +139,7 @@ class StartFillwordSessionUseCaseImplTest {
     @Test
     fun `each hidden word keeps its meaning for the clue list`() =
         runTest {
-            givenFavourites()
+            givenStudySet()
 
             val puzzle = puzzle()
 
@@ -151,7 +151,7 @@ class StartFillwordSessionUseCaseImplTest {
     @Test
     fun `a word can be claimed from either end`() =
         runTest {
-            givenFavourites()
+            givenStudySet()
 
             val puzzle = puzzle()
             val word = puzzle.words.first()
@@ -164,7 +164,7 @@ class StartFillwordSessionUseCaseImplTest {
     @Test
     fun `a drag that strays off the diagonal still claims the word`() =
         runTest {
-            givenFavourites()
+            givenStudySet()
 
             val puzzle = puzzle()
             val diagonal = puzzle.words.first { it.direction.rowStep != 0 && it.direction.columnStep != 0 }
@@ -177,7 +177,7 @@ class StartFillwordSessionUseCaseImplTest {
     @Test
     fun `a run is clipped at the edge rather than running off the grid`() =
         runTest {
-            givenFavourites()
+            givenStudySet()
 
             val run = puzzle().runBetween(FillwordCell(0, 0), FillwordCell(GRID_SIZE + 5, GRID_SIZE + 5))
 
@@ -186,11 +186,11 @@ class StartFillwordSessionUseCaseImplTest {
         }
 
     @Test
-    fun `no favourites means no puzzle`() =
+    fun `no studySet means no puzzle`() =
         runTest {
-            coEvery { vocabulary.favouriteWordIds() } returns emptyList()
+            coEvery { vocabulary.studySetWordIds() } returns emptyList()
             coEvery { vocabulary.getItemsByIds(any()) } returns emptyList()
 
-            assertEquals(FillwordSessionResult.NoFavourites, useCase())
+            assertEquals(FillwordSessionResult.EmptyStudySet, useCase())
         }
 }

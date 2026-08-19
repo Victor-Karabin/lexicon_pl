@@ -9,13 +9,13 @@ import com.lexicon.android.recognition.SpeechRecognizerService
 import com.lexicon.android.speech.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.pronunciation.PronunciationSentencesResult
-import com.lexicon.interactors.pronunciation.PronunciationStepOutcome
 import com.lexicon.interactors.pronunciation.PronunciationStepResponse
 import com.lexicon.interactors.pronunciation.StartPronunciationSentencesUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionRequest
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultRequest
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
+import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -77,7 +77,7 @@ class PronunciationViewModel(
                 readsSentences -> when (val result = startSentencesUseCase()) {
                     is PronunciationSentencesResult.Ready -> result.session
 
-                    PronunciationSentencesResult.NoFavourites ->
+                    PronunciationSentencesResult.EmptyStudySet ->
                         return@launch showUnavailable(UnavailableReason.NO_FAVOURITES)
 
                     PronunciationSentencesResult.Offline ->
@@ -213,13 +213,13 @@ class PronunciationViewModel(
     }
 
     private suspend fun applyOutcome(
-        outcome: PronunciationStepOutcome,
+        outcome: StepOutcome,
         expectedText: String,
         tipUsed: Boolean,
     ) {
         val step = currentStepOrNull()
         when (outcome) {
-            PronunciationStepOutcome.CORRECT -> {
+            StepOutcome.CORRECT -> {
                 correctCount++
                 step?.let { wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Correct, tipUsed) }
                 updateLoaded { it.copy(answerState = AnswerState.Correct) }
@@ -227,7 +227,7 @@ class PronunciationViewModel(
                 delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                 advanceToNextStep()
             }
-            PronunciationStepOutcome.INCORRECT -> {
+            StepOutcome.INCORRECT -> {
                 incorrectCount++
                 step?.let {
                     wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Incorrect(expectedText), tipUsed)
@@ -235,7 +235,7 @@ class PronunciationViewModel(
                 updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText), isSubmitting = false) }
                 speakReferenceAudio()
             }
-            PronunciationStepOutcome.SKIPPED -> {
+            StepOutcome.SKIPPED -> {
                 skippedCount++
                 step?.let {
                     wordResults += WordResultEntry(it.expectedText, it.clueText, AnswerState.Skipped(expectedText), tipUsed)

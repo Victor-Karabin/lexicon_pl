@@ -1,7 +1,7 @@
 package com.lexicon.data.repository
 
 import com.lexicon.boundary.PresetCategoryBoundary
-import com.lexicon.boundary.SyncOutcomeBoundary
+import com.lexicon.boundary.SeedOutcomeBoundary
 import com.lexicon.boundary.VocabularyPresetBoundary
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.data.local.PresetDao
@@ -21,7 +21,7 @@ class VocabularyPresetRepositoryImpl(
     private val presetDao: PresetDao,
     private val seeder: VocabularyPresetSeeder,
 ) : VocabularyPresetRepository {
-    override suspend fun syncFromSource(): SyncOutcomeBoundary = seeder.sync()
+    override suspend fun seedFromAsset(): SeedOutcomeBoundary = seeder.sync()
 
     override suspend fun getPresets(): List<VocabularyPresetBoundary> {
         seeder.ensureSeeded()

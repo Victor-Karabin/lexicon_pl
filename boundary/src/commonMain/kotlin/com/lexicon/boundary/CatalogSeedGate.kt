@@ -1,6 +1,6 @@
 package com.lexicon.boundary
 
-interface CatalogSyncGate {
+interface CatalogSeedGate {
     suspend fun isCurrent(): Boolean
 
     suspend fun markCurrent()

@@ -6,25 +6,25 @@ import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.conjugation.ChooseVerbImageUseCase
 import com.lexicon.interactors.conjugation.ConjugationCourse
 import com.lexicon.interactors.conjugation.ConjugationCourseProgress
-import com.lexicon.interactors.conjugation.ConjugationQuestion
+import com.lexicon.interactors.conjugation.ConjugationTable
 import com.lexicon.interactors.conjugation.ConjugationVariant
 import com.lexicon.interactors.conjugation.ConjugationVariantProgress
 import com.lexicon.interactors.conjugation.CreateConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.DeleteConjugationVerbUseCase
 import com.lexicon.interactors.conjugation.EnsureVerbWordUseCase
-import com.lexicon.interactors.conjugation.FavouriteVerbUseCase
 import com.lexicon.interactors.conjugation.HasDeletedVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationProgressUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
-import com.lexicon.interactors.conjugation.LoadFavouriteVerbsUseCase
+import com.lexicon.interactors.conjugation.LoadStudySetVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadVerbImageChoicesUseCase
-import com.lexicon.interactors.conjugation.NextConjugationQuestionUseCase
+import com.lexicon.interactors.conjugation.NextConjugationTableUseCase
 import com.lexicon.interactors.conjugation.RestoreConjugationVerbsUseCase
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerRequest
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerResponse
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
+import com.lexicon.interactors.conjugation.ToggleVerbInStudySetUseCase
 import com.lexicon.interactors.conjugation.VerbConjugation
 import com.lexicon.interactors.presets.CreateWordUseCase
 import kotlinx.collections.immutable.ImmutableList
@@ -107,12 +107,12 @@ class LoadConjugationProgressUseCaseImpl(
     override suspend fun invoke(courseId: String): ConjugationCourseProgress = conjugations.courseProgress(courseId)
 }
 
-class NextConjugationQuestionUseCaseImpl(
+class NextConjugationTableUseCaseImpl(
     private val conjugations: ConjugationRepository,
     private val vocabulary: VocabularyRepository,
     private val imageProvider: ImageProvider,
-) : NextConjugationQuestionUseCase {
-    override suspend fun invoke(courseId: String): ConjugationQuestion? {
+) : NextConjugationTableUseCase {
+    override suspend fun invoke(courseId: String): ConjugationTable? {
         val selected = conjugations.courseVerbs(courseId)
         if (selected.isEmpty()) return null
 
@@ -136,7 +136,7 @@ class NextConjugationQuestionUseCaseImpl(
         return filterNot(::mastered).minByOrNull(::attempts)
     }
 
-    private suspend fun ConjugationQuestion.withLearningAids(): ConjugationQuestion {
+    private suspend fun ConjugationTable.withLearningAids(): ConjugationTable {
         val word = runCatching { vocabulary.findWordByText(infinitive) }.getOrNull()
         val subject = translation?.takeIf { it.isNotBlank() } ?: word?.translation ?: infinitive
         val image = runCatching { imageProvider.searchImage(subject) }.getOrNull()
@@ -218,35 +218,35 @@ class ChooseVerbImageUseCaseImpl(
     }
 }
 
-class FavouriteVerbUseCaseImpl(
+class ToggleVerbInStudySetUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val ensureWord: EnsureVerbWordUseCase,
-) : FavouriteVerbUseCase {
+) : ToggleVerbInStudySetUseCase {
     override suspend fun invoke(
         infinitive: String,
         translation: String?,
-        isFavourite: Boolean,
+        isInStudySet: Boolean,
     ) {
         val existing = vocabulary.findWordByText(infinitive)
-        if (existing == null && !isFavourite) return
+        if (existing == null && !isInStudySet) return
 
         val id = existing?.id ?: ensureWord(infinitive, translation) ?: return
-        vocabulary.setFavourite(listOf(id), isFavourite)
+        vocabulary.setInStudySet(listOf(id), isInStudySet)
     }
 }
 
-class LoadFavouriteVerbsUseCaseImpl(
+class LoadStudySetVerbsUseCaseImpl(
     private val vocabulary: VocabularyRepository,
-) : LoadFavouriteVerbsUseCase {
+) : LoadStudySetVerbsUseCase {
     override suspend fun invoke(infinitives: List<String>): Set<String> =
-        infinitives.filter { vocabulary.findWordByText(it)?.isFavourite == true }.toSet()
+        infinitives.filter { vocabulary.findWordByText(it)?.isInStudySet == true }.toSet()
 }
 
 class SubmitConjugationAnswerUseCaseImpl(
     private val conjugations: ConjugationRepository,
 ) : SubmitConjugationAnswerUseCase {
     override suspend fun invoke(request: SubmitConjugationAnswerRequest): SubmitConjugationAnswerResponse {
-        val correctness = request.question.steps.associate { step ->
+        val correctness = request.table.steps.associate { step ->
             val given = request.answers[step.variant.person]?.trim()
             val isCorrect = given != null && step.correctOptions.any { it.equalsAnswer(given) }
 

@@ -7,7 +7,7 @@ import com.lexicon.common.Clock
 import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.program.ActivityConfig
 import com.lexicon.interactors.program.ActivityType
-import com.lexicon.interactors.program.CountFavouritesUseCase
+import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.CreateProgramUseCase
 import com.lexicon.interactors.program.DailyPlanConfig
 import com.lexicon.interactors.program.Program
@@ -70,10 +70,10 @@ private class ProgramWriter(
         if (title.isEmpty()) return failure(ProgramDraftProblem.MISSING_TITLE)
         if (draft.trainings.isEmpty()) return failure(ProgramDraftProblem.NO_TRAININGS)
 
-        val favourites = vocabulary.favouriteWordIds().size
-        if (favourites == 0) return failure(ProgramDraftProblem.NO_FAVOURITES)
+        val studySet = vocabulary.studySetWordIds().size
+        if (studySet == 0) return failure(ProgramDraftProblem.NO_FAVOURITES)
 
-        val config = draft.toConfig(favourites)
+        val config = draft.toConfig(studySet)
         val program = Program(
             id = id,
             level = "",
@@ -102,10 +102,10 @@ private class ProgramWriter(
         return Result.success(program)
     }
 
-    private fun ProgramDraft.toConfig(favourites: Int): ProgramConfig =
+    private fun ProgramDraft.toConfig(studySet: Int): ProgramConfig =
         ProgramConfig(
             goals = listOf(
-                ProgramGoal(id = "words", type = TargetType.VOCABULARY, target = favourites),
+                ProgramGoal(id = "words", type = TargetType.VOCABULARY, target = studySet),
                 ProgramGoal(id = "accuracy", type = TargetType.ACCURACY, target = ACCURACY_TARGET, required = false),
             ),
             scope = VocabularyScope(
@@ -113,8 +113,8 @@ private class ProgramWriter(
                 ordering = ScopeOrdering.FREQUENCY,
             ),
             dailyPlan = DailyPlanConfig(
-                newWords = newWordsPerDay.coerceIn(0, favourites),
-                reviewWords = reviewWordsPerDay.coerceIn(0, favourites),
+                newWords = newWordsPerDay.coerceIn(0, studySet),
+                reviewWords = reviewWordsPerDay.coerceIn(0, studySet),
                 queue = trainings,
                 activities = listOf(
                     ActivityConfig(
@@ -143,8 +143,8 @@ private class ProgramWriter(
     private fun failure(problem: ProgramDraftProblem): Result<Program> = Result.failure(ProgramDraftException(problem))
 }
 
-class CountFavouritesUseCaseImpl(
+class CountStudySetUseCaseImpl(
     private val vocabulary: VocabularyRepository,
-) : CountFavouritesUseCase {
-    override suspend fun invoke(): Int = vocabulary.favouriteWordIds().size
+) : CountStudySetUseCase {
+    override suspend fun invoke(): Int = vocabulary.studySetWordIds().size
 }

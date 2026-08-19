@@ -7,7 +7,7 @@ struct ProgramFormView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var scheme
 
-    @State private var favourites = 0
+    @State private var studySet = 0
     @State private var newWords = 10
     @State private var reviewWords = 10
     @State private var queue: [String] = []
@@ -24,7 +24,7 @@ struct ProgramFormView: View {
         Group {
             if !loaded {
                 ProgressView()
-            } else if favourites == 0 {
+            } else if studySet == 0 {
                 VStack(spacing: Spacing.large) {
                     Text("Nothing starred yet. Add words to your study set in the Words tab first.")
                         .multilineTextAlignment(.center)
@@ -47,11 +47,11 @@ struct ProgramFormView: View {
 
                 Tile(skin: skin) {
                     Text("Over the words in your study set").foregroundStyle(skin.onTile)
-                    StatChip(systemName: "character.book.closed", text: "\(favourites) words", skin: skin)
+                    StatChip(systemName: "character.book.closed", text: "\(studySet) words", skin: skin)
                 }
 
-                slider("New words a day", value: $newWords, range: minimumNewWords...max(favourites, minimumNewWords))
-                slider("Reviews a day", value: $reviewWords, range: 0...max(favourites, minimumNewWords))
+                slider("New words a day", value: $newWords, range: minimumNewWords...max(studySet, minimumNewWords))
+                slider("Reviews a day", value: $reviewWords, range: 0...max(studySet, minimumNewWords))
 
                 Text("Trainings").font(.subheadline.weight(.semibold))
 
@@ -201,11 +201,11 @@ struct ProgramFormView: View {
     }
 
     private func load() async {
-        favourites = Int((try? await deps.countFavourites.invoke()) as? Int32 ?? 0)
+        studySet = Int((try? await deps.countStudySet.invoke()) as? Int32 ?? 0)
         if let programId, let program = try? await deps.getProgram.invoke(id: programId) {
             let plan = program.config.dailyPlan
-            newWords = min(max(Int(plan.newWords), minimumNewWords), max(favourites, minimumNewWords))
-            reviewWords = min(Int(plan.reviewWords), max(favourites, minimumNewWords))
+            newWords = min(max(Int(plan.newWords), minimumNewWords), max(studySet, minimumNewWords))
+            reviewWords = min(Int(plan.reviewWords), max(studySet, minimumNewWords))
             queue = plan.queue
             let active = try? await deps.observeActiveEnrolmentFirst()
             isEnrolled = active?.programId.value == programId.value

@@ -113,7 +113,7 @@ class UserCreatedSurvivalTest {
         runTest {
             val wordDao: WordDao = mockk(relaxed = true)
             val loader: VocabularySeedAssetLoader = mockk()
-            val syncStore: VocabularySyncStore = mockk(relaxed = true)
+            val syncStore: CatalogSeedStore = mockk(relaxed = true)
 
             val shipped = WordEntity(id = 1, text = "woda", translation = "water", transcription = "ˈvɔda")
             val mine = WordEntity(
@@ -142,7 +142,7 @@ class UserCreatedSurvivalTest {
         runTest {
             val wordDao: WordDao = mockk(relaxed = true)
             val loader: VocabularySeedAssetLoader = mockk()
-            val syncStore: VocabularySyncStore = mockk(relaxed = true)
+            val syncStore: CatalogSeedStore = mockk(relaxed = true)
 
             val shipped = WordEntity(id = 1, text = "woda", translation = "water", transcription = "ˈvɔda")
             val edited = shipped.copy(translation = "drinking water", isUserCreated = true)

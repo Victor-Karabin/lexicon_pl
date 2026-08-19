@@ -5,11 +5,11 @@ import app.cash.turbine.test
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.memorycards.MemoryCardsPairResponse
 import com.lexicon.interactors.memorycards.MemoryCardsSessionResponse
-import com.lexicon.interactors.memorycards.MemoryCardsStepOutcome
 import com.lexicon.interactors.memorycards.MemoryCardsStepResponse
 import com.lexicon.interactors.memorycards.StartMemoryCardsSessionUseCase
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultResponse
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
+import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -85,7 +85,7 @@ class MemoryCardsViewModelTest {
         runTest {
             lastSessionResultsHolder.wordResults = listOf(WordResultEntry("kot", "cat", AnswerState.Correct))
             coEvery { startUseCase(any()) } returns session()
-            coEvery { submitUseCase(any()) } returns SubmitMemoryCardsStepResultResponse(MemoryCardsStepOutcome.SKIPPED)
+            coEvery { submitUseCase(any()) } returns SubmitMemoryCardsStepResultResponse(StepOutcome.SKIPPED)
 
             val viewModel = viewModel()
             testDispatcher.scheduler.advanceUntilIdle()
@@ -100,7 +100,7 @@ class MemoryCardsViewModelTest {
     fun `skip records Skipped and auto-advances without a manual Next`() =
         runTest {
             coEvery { startUseCase(any()) } returns session()
-            coEvery { submitUseCase(any()) } returns SubmitMemoryCardsStepResultResponse(MemoryCardsStepOutcome.SKIPPED)
+            coEvery { submitUseCase(any()) } returns SubmitMemoryCardsStepResultResponse(StepOutcome.SKIPPED)
 
             val viewModel = viewModel()
             testDispatcher.scheduler.advanceUntilIdle()

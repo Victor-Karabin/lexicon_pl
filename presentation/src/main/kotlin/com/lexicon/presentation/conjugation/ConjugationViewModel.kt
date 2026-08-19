@@ -6,10 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.lexicon.android.speech.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.conjugation.ChooseVerbImageUseCase
-import com.lexicon.interactors.conjugation.ConjugationQuestion
+import com.lexicon.interactors.conjugation.ConjugationTable
 import com.lexicon.interactors.conjugation.GrammaticalPerson
 import com.lexicon.interactors.conjugation.LoadVerbImageChoicesUseCase
-import com.lexicon.interactors.conjugation.NextConjugationQuestionUseCase
+import com.lexicon.interactors.conjugation.NextConjugationTableUseCase
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerRequest
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
 import com.lexicon.interactors.settings.AppSettings
@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 
 data class ConjugationUiState(
     val isLoading: Boolean = true,
-    val question: ConjugationQuestion? = null,
+    val table: ConjugationTable? = null,
     val stepIndex: Int = 0,
     val totalSteps: Int = 0,
     val answers: ImmutableMap<GrammaticalPerson, String> = persistentMapOf(),
@@ -46,7 +46,7 @@ data class ConjugationUiState(
     val isAnswered: Boolean get() = answerState !is AnswerState.Unanswered
 
     val canCheck: Boolean
-        get() = !isAnswered && question?.steps?.all { answers.containsKey(it.variant.person) } == true
+        get() = !isAnswered && table?.steps?.all { answers.containsKey(it.variant.person) } == true
 
     val usedOptions: Set<String> get() = answers.values.toSet()
 }
@@ -55,7 +55,7 @@ const val CONJUGATION_COURSE_ARG = "courseId"
 
 class ConjugationViewModel(
     savedStateHandle: SavedStateHandle,
-    private val nextQuestion: NextConjugationQuestionUseCase,
+    private val nextQuestion: NextConjugationTableUseCase,
     private val submitAnswer: SubmitConjugationAnswerUseCase,
     private val loadImageChoices: LoadVerbImageChoicesUseCase,
     private val chooseImage: ChooseVerbImageUseCase,
@@ -81,7 +81,7 @@ class ConjugationViewModel(
             _uiState.update {
                 it.copy(
                     isLoading = false,
-                    question = first,
+                    table = first,
                     hasNoVerbs = first == null,
                     totalSteps = AppSettings.DEFAULT_STEP_COUNT,
                 )
@@ -93,7 +93,7 @@ class ConjugationViewModel(
     fun onOptionPicked(option: String) =
         _uiState.update { state ->
             if (state.isAnswered) return@update state
-            val next = state.question?.steps?.firstOrNull { !state.answers.containsKey(it.variant.person) }
+            val next = state.table?.steps?.firstOrNull { !state.answers.containsKey(it.variant.person) }
                 ?: return@update state
 
             state.copy(answers = (state.answers + (next.variant.person to option)).toImmutableMap())
@@ -106,19 +106,19 @@ class ConjugationViewModel(
 
     fun onCheck() {
         val state = _uiState.value
-        val question = state.question ?: return
+        val table = state.table ?: return
         if (!state.canCheck) return
 
         viewModelScope.launch(dispatchers.io) {
-            val response = submitAnswer(SubmitConjugationAnswerRequest(courseId, question, state.answers))
+            val response = submitAnswer(SubmitConjugationAnswerRequest(courseId, table, state.answers))
             val allRight = response.allCorrect
 
-            question.steps.forEach { step ->
+            table.steps.forEach { step ->
                 val right = response.correctness[step.variant.person] == true
                 if (right) correct++ else incorrect++
                 results += WordResultEntry(
                     word = step.spokenForm,
-                    translation = "${question.infinitive} · ${step.variant.person.label}",
+                    translation = "${table.infinitive} · ${step.variant.person.label}",
                     outcome = if (right) AnswerState.Correct else AnswerState.Incorrect(step.correctOptions.first()),
                 )
             }
@@ -143,8 +143,8 @@ class ConjugationViewModel(
                 return@launch
             }
 
-            val question = nextQuestion(courseId)
-            if (question == null) {
+            val table = nextQuestion(courseId)
+            if (table == null) {
                 lastSessionResultsHolder.wordResults = results.toList()
                 _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correct, incorrect, 0, 0))
                 return@launch
@@ -152,7 +152,7 @@ class ConjugationViewModel(
 
             _uiState.update {
                 it.copy(
-                    question = question,
+                    table = table,
                     stepIndex = nextIndex,
                     answers = persistentMapOf(),
                     correctness = persistentMapOf(),
@@ -168,20 +168,20 @@ class ConjugationViewModel(
     }
 
     fun onEditVerb() {
-        val question = _uiState.value.question ?: return
+        val table = _uiState.value.table ?: return
         _uiState.update { it.copy(isPickingImage = true) }
         viewModelScope.launch(dispatchers.io) {
-            val choices = loadImageChoices(question.infinitive, question.translation)
+            val choices = loadImageChoices(table.infinitive, table.translation)
             _uiState.update { it.copy(imageChoices = choices) }
         }
     }
 
     fun onImageChosen(url: String) {
-        val question = _uiState.value.question ?: return
+        val table = _uiState.value.table ?: return
         _uiState.update {
-            it.copy(isPickingImage = false, imageChoices = persistentListOf(), question = it.question?.copy(imageUrl = url))
+            it.copy(isPickingImage = false, imageChoices = persistentListOf(), table = it.table?.copy(imageUrl = url))
         }
-        viewModelScope.launch(dispatchers.io) { chooseImage(question.infinitive, question.translation, url) }
+        viewModelScope.launch(dispatchers.io) { chooseImage(table.infinitive, table.translation, url) }
     }
 
     fun onImagePickerDismissed() = _uiState.update { it.copy(isPickingImage = false, imageChoices = persistentListOf()) }

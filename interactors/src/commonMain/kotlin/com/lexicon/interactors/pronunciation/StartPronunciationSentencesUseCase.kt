@@ -3,7 +3,7 @@ package com.lexicon.interactors.pronunciation
 sealed interface PronunciationSentencesResult {
     data class Ready(val session: PronunciationSessionResponse) : PronunciationSentencesResult
 
-    data object NoFavourites : PronunciationSentencesResult
+    data object EmptyStudySet : PronunciationSentencesResult
 
     data object Offline : PronunciationSentencesResult
 

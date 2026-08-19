@@ -129,7 +129,7 @@ private fun ConjugationContent(
     if (uiState.isPickingImage) {
         VerbImagePicker(
             choices = uiState.imageChoices,
-            selected = uiState.question?.imageUrl,
+            selected = uiState.table?.imageUrl,
             onChosen = onImageChosen,
             onDismiss = onImagePickerDismissed,
         )
@@ -139,7 +139,7 @@ private fun ConjugationContent(
         modifier = modifier,
         topBar = { TrainingTopBar(title = stringResource(R.string.conjugation_title), onClose = onClose) },
     ) { padding ->
-        val question = uiState.question
+        val table = uiState.table
 
         when {
             uiState.isLoading ->
@@ -147,7 +147,7 @@ private fun ConjugationContent(
                     CircularProgressIndicator()
                 }
 
-            question == null ->
+            table == null ->
                 Box(
                     modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingXl),
                     contentAlignment = Alignment.Center,
@@ -179,8 +179,8 @@ private fun ConjugationContent(
 
                         Box(modifier = Modifier.fillMaxWidth()) {
                             ClueImage(
-                                imageUrl = question.imageUrl,
-                                fallbackText = question.infinitive,
+                                imageUrl = table.imageUrl,
+                                fallbackText = table.infinitive,
                                 modifier = Modifier.testTag(ConjugationTestTags.IMAGE),
                             )
                             IconButton(
@@ -199,12 +199,12 @@ private fun ConjugationContent(
 
                         Column {
                             Text(
-                                text = question.infinitive,
+                                text = table.infinitive,
                                 style = MaterialTheme.typography.headlineSmall,
                                 fontWeight = FontWeight.SemiBold,
                                 modifier = Modifier.testTag(ConjugationTestTags.INFINITIVE),
                             )
-                            question.translation?.let { translation ->
+                            table.translation?.let { translation ->
                                 Text(
                                     text = translation,
                                     style = MaterialTheme.typography.bodyLarge,
@@ -212,7 +212,7 @@ private fun ConjugationContent(
                                     modifier = Modifier.testTag(ConjugationTestTags.TRANSLATION),
                                 )
                             }
-                            question.transcription?.let { ipa ->
+                            table.transcription?.let { ipa ->
                                 Text(
                                     text = stringResource(R.string.pronunciation_ipa_format, ipa),
                                     style = MaterialTheme.typography.bodyMedium,
@@ -223,7 +223,7 @@ private fun ConjugationContent(
                         }
 
                         Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
-                            question.steps.forEach { step ->
+                            table.steps.forEach { step ->
                                 PersonRow(
                                     step = step,
                                     uiState = uiState,
@@ -318,7 +318,7 @@ private fun OptionBank(
     onOptionPicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val question = uiState.question ?: return
+    val table = uiState.table ?: return
     val used = uiState.usedOptions
 
     FlowRow(
@@ -326,7 +326,7 @@ private fun OptionBank(
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
     ) {
-        question.bank.forEach { option ->
+        table.bank.forEach { option ->
             AnswerChip(
                 label = option,
                 state = if (option in used) AnswerChipState.SELECTED else AnswerChipState.UNSELECTED,

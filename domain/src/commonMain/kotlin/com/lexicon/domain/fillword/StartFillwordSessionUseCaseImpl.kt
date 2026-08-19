@@ -36,16 +36,16 @@ class StartFillwordSessionUseCaseImpl(
 ) : StartFillwordSessionUseCase {
     @OptIn(ExperimentalUuidApi::class)
     override suspend fun invoke(): FillwordSessionResult {
-        val favourites = vocabulary.getItemsByIds(vocabulary.favouriteWordIds())
-        if (favourites.isEmpty()) return FillwordSessionResult.NoFavourites
+        val studySet = vocabulary.getItemsByIds(vocabulary.studySetWordIds())
+        if (studySet.isEmpty()) return FillwordSessionResult.EmptyStudySet
 
-        val chosen = favourites
+        val chosen = studySet
             .map { it.text.uppercase() to it.translation }
             .filter { (text, _) -> text.none(Char::isWhitespace) && text.length in MIN_WORD_LENGTH..GRID_SIZE }
             .distinctBy { (text, _) -> text }
             .shuffled()
             .fillGrid()
-        if (chosen.isEmpty()) return FillwordSessionResult.NoFavourites
+        if (chosen.isEmpty()) return FillwordSessionResult.EmptyStudySet
 
         val words = chosen.map { (text, _) -> text }
         val translations = chosen.toMap()

@@ -1,5 +1,7 @@
 package com.lexicon.interactors.pronunciation
 
+import com.lexicon.interactors.training.StepOutcome
+
 data class SubmitPronunciationResultRequest(
     val sessionId: String,
     val stepIndex: Int,
@@ -12,7 +14,7 @@ data class SubmitPronunciationResultRequest(
 )
 
 data class SubmitPronunciationResultResponse(
-    val outcome: PronunciationStepOutcome,
+    val outcome: StepOutcome,
     val expectedText: String,
 )
 

@@ -4,12 +4,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
-import com.lexicon.interactors.crossword.CrosswordWordOutcome
 import com.lexicon.interactors.crossword.CrosswordWordSubmission
 import com.lexicon.interactors.crossword.StartCrosswordSessionRequest
 import com.lexicon.interactors.crossword.StartCrosswordSessionUseCase
 import com.lexicon.interactors.crossword.SubmitCrosswordRequest
 import com.lexicon.interactors.crossword.SubmitCrosswordUseCase
+import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -180,7 +180,7 @@ class CrosswordViewModel(
                 WordResultEntry(
                     word = result.expectedText,
                     translation = word.clueText,
-                    outcome = if (result.outcome == CrosswordWordOutcome.CORRECT) {
+                    outcome = if (result.outcome == StepOutcome.CORRECT) {
                         AnswerState.Correct
                     } else {
                         AnswerState.Incorrect(result.expectedText)
@@ -189,7 +189,7 @@ class CrosswordViewModel(
                 )
             }
 
-            val correct = response.wordResults.count { it.outcome == CrosswordWordOutcome.CORRECT }
+            val correct = response.wordResults.count { it.outcome == StepOutcome.CORRECT }
             updateLoaded {
                 it.copy(
                     answerState = if (correct == response.wordResults.size) AnswerState.Correct else AnswerState.Incorrect(),

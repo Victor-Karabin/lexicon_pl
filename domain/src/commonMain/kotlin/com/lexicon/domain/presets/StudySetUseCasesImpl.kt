@@ -2,39 +2,39 @@ package com.lexicon.domain.presets
 
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
-import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
+import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
 import com.lexicon.interactors.presets.PresetId
-import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
-import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
+import com.lexicon.interactors.presets.SetPresetInStudySetUseCase
+import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
 import com.lexicon.interactors.presets.VocabularyId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class ToggleWordFavouriteUseCaseImpl(
+class ToggleWordInStudySetUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,
-) : ToggleWordFavouriteUseCase {
+) : ToggleWordInStudySetUseCase {
     override suspend fun invoke(
         id: VocabularyId,
-        isFavourite: Boolean,
-    ) = vocabularyRepository.setFavourite(listOf(id.value), isFavourite)
+        isInStudySet: Boolean,
+    ) = vocabularyRepository.setInStudySet(listOf(id.value), isInStudySet)
 }
 
-class SetPresetFavouriteUseCaseImpl(
+class SetPresetInStudySetUseCaseImpl(
     private val presetRepository: VocabularyPresetRepository,
     private val vocabularyRepository: VocabularyRepository,
-) : SetPresetFavouriteUseCase {
+) : SetPresetInStudySetUseCase {
     override suspend fun invoke(
         id: PresetId,
-        isFavourite: Boolean,
+        isInStudySet: Boolean,
     ) {
         val preset = presetRepository.getPreset(id.value) ?: return
-        vocabularyRepository.setFavourite(preset.vocabularyIds, isFavourite)
+        vocabularyRepository.setInStudySet(preset.vocabularyIds, isInStudySet)
     }
 }
 
-class ObserveFavouriteWordIdsUseCaseImpl(
+class ObserveStudySetIdsUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,
-) : ObserveFavouriteWordIdsUseCase {
+) : ObserveStudySetIdsUseCase {
     override fun invoke(): Flow<Set<VocabularyId>> =
-        vocabularyRepository.observeFavouriteIds().map { ids -> ids.mapTo(mutableSetOf(), ::VocabularyId) }
+        vocabularyRepository.observeStudySetIds().map { ids -> ids.mapTo(mutableSetOf(), ::VocabularyId) }
 }

@@ -1,5 +1,5 @@
 package com.lexicon.interactors.program
 
-interface CountFavouritesUseCase {
+interface CountStudySetUseCase {
     suspend operator fun invoke(): Int
 }

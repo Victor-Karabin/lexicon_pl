@@ -130,7 +130,7 @@ private fun CreateProgramContent(
             )
         },
         bottomBar = {
-            if (uiState.hasFavourites) {
+            if (uiState.hasStudySet) {
                 Column(
                     modifier = Modifier.padding(Dimens.spacingMedium),
                     verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
@@ -172,8 +172,8 @@ private fun CreateProgramContent(
             return@Scaffold
         }
 
-        if (!uiState.hasFavourites) {
-            NoFavourites(onGoToVocabulary = onGoToVocabulary, modifier = Modifier.padding(padding))
+        if (!uiState.hasStudySet) {
+            EmptyStudySet(onGoToVocabulary = onGoToVocabulary, modifier = Modifier.padding(padding))
             return@Scaffold
         }
 
@@ -242,14 +242,14 @@ private fun StudySetCard(
         )
         StatChip(
             icon = Icons.Default.Translate,
-            text = stringResource(R.string.plan_program_words, uiState.favourites),
+            text = stringResource(R.string.plan_program_words, uiState.studySet),
             skin = skin,
         )
     }
 }
 
 @Composable
-private fun NoFavourites(
+private fun EmptyStudySet(
     onGoToVocabulary: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -259,7 +259,7 @@ private fun NoFavourites(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = stringResource(R.string.create_program_no_favourites),
+            text = stringResource(R.string.create_program_empty_study_set),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
@@ -453,10 +453,10 @@ private fun SectionLabel(text: String) {
 
 @LightDarkPreview
 @Composable
-private fun CreateProgramNoFavouritesPreview() {
+private fun CreateProgramEmptyStudySetPreview() {
     LexiconTheme {
         CreateProgramContent(
-            uiState = CreateProgramUiState(isLoading = false, favourites = 0),
+            uiState = CreateProgramUiState(isLoading = false, studySet = 0),
             onClose = {},
             onGoToVocabulary = {},
             onNewWordsChanged = {},
@@ -477,7 +477,7 @@ private fun CreateProgramPreview() {
         CreateProgramContent(
             uiState = CreateProgramUiState(
                 isLoading = false,
-                favourites = 84,
+                studySet = 84,
                 queue = persistentListOf("word_match", "dictation", "word_match", "true_or_false"),
             ),
             onClose = {},

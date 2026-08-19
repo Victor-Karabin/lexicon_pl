@@ -1,5 +1,7 @@
 package com.lexicon.interactors.imagetest
 
+import com.lexicon.interactors.training.StepOutcome
+
 data class SubmitImageTestAnswerRequest(
     val sessionId: String,
     val stepIndex: Int,
@@ -10,7 +12,7 @@ data class SubmitImageTestAnswerRequest(
 )
 
 data class SubmitImageTestAnswerResponse(
-    val outcome: ImageTestStepOutcome,
+    val outcome: StepOutcome,
     val correctOption: String,
 )
 

@@ -14,7 +14,7 @@ private val SyncedCourseFingerprint = stringPreferencesKey("synced_course_finger
 private val SyncedVerbFingerprint = stringPreferencesKey("synced_verb_fingerprint")
 private val SyncedAppVersion = intPreferencesKey("synced_app_version")
 
-class VocabularySyncStore(
+class CatalogSeedStore(
     private val dataStore: DataStore<Preferences>,
 ) {
     suspend fun syncedFingerprint(): String? = dataStore.data.map { it[SyncedFingerprint] }.first()

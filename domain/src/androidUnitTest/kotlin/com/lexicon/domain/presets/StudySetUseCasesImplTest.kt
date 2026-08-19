@@ -15,7 +15,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class FavouriteUseCasesImplTest {
+class StudySetUseCasesImplTest {
     private val foodPreset = VocabularyPresetBoundary(
         id = "food",
         categoryId = "everyday-life",
@@ -37,49 +37,49 @@ class FavouriteUseCasesImplTest {
     @Test
     fun `toggling one word writes only that word`() =
         runTest {
-            ToggleWordFavouriteUseCaseImpl(vocabularyRepository)(VocabularyId(7L), isFavourite = true)
+            ToggleWordInStudySetUseCaseImpl(vocabularyRepository)(VocabularyId(7L), isInStudySet = true)
 
-            coVerify { vocabularyRepository.setFavourite(listOf(7L), true) }
+            coVerify { vocabularyRepository.setInStudySet(listOf(7L), true) }
         }
 
     @Test
-    fun `un-favouriting a word writes the flag off rather than deleting anything`() =
+    fun `taking a word out of the study set writes the flag off rather than deleting anything`() =
         runTest {
-            ToggleWordFavouriteUseCaseImpl(vocabularyRepository)(VocabularyId(7L), isFavourite = false)
+            ToggleWordInStudySetUseCaseImpl(vocabularyRepository)(VocabularyId(7L), isInStudySet = false)
 
-            coVerify { vocabularyRepository.setFavourite(listOf(7L), false) }
+            coVerify { vocabularyRepository.setInStudySet(listOf(7L), false) }
         }
 
     @Test
-    fun `favouriting a preset writes all of its words in a single call`() =
+    fun `adding a preset writes all of its words in a single call`() =
         runTest {
-            SetPresetFavouriteUseCaseImpl(presetRepository, vocabularyRepository)(PresetId("food"), true)
+            SetPresetInStudySetUseCaseImpl(presetRepository, vocabularyRepository)(PresetId("food"), true)
 
-            coVerify(exactly = 1) { vocabularyRepository.setFavourite(listOf(1L, 2L, 3L), true) }
+            coVerify(exactly = 1) { vocabularyRepository.setInStudySet(listOf(1L, 2L, 3L), true) }
         }
 
     @Test
-    fun `un-favouriting a preset clears all of its words`() =
+    fun `removing a preset clears all of its words`() =
         runTest {
-            SetPresetFavouriteUseCaseImpl(presetRepository, vocabularyRepository)(PresetId("food"), false)
+            SetPresetInStudySetUseCaseImpl(presetRepository, vocabularyRepository)(PresetId("food"), false)
 
-            coVerify { vocabularyRepository.setFavourite(listOf(1L, 2L, 3L), false) }
+            coVerify { vocabularyRepository.setInStudySet(listOf(1L, 2L, 3L), false) }
         }
 
     @Test
     fun `an unknown preset changes nothing instead of failing`() =
         runTest {
-            SetPresetFavouriteUseCaseImpl(presetRepository, vocabularyRepository)(PresetId("missing"), true)
+            SetPresetInStudySetUseCaseImpl(presetRepository, vocabularyRepository)(PresetId("missing"), true)
 
-            coVerify(exactly = 0) { vocabularyRepository.setFavourite(any(), any()) }
+            coVerify(exactly = 0) { vocabularyRepository.setInStudySet(any(), any()) }
         }
 
     @Test
-    fun `observed favourites arrive as typed ids`() =
+    fun `observed studySet arrive as typed ids`() =
         runTest {
-            every { vocabularyRepository.observeFavouriteIds() } returns flowOf(setOf(1L, 5L))
+            every { vocabularyRepository.observeStudySetIds() } returns flowOf(setOf(1L, 5L))
 
-            val ids = ObserveFavouriteWordIdsUseCaseImpl(vocabularyRepository)().first()
+            val ids = ObserveStudySetIdsUseCaseImpl(vocabularyRepository)().first()
 
             assertEquals(setOf(VocabularyId(1L), VocabularyId(5L)), ids)
         }

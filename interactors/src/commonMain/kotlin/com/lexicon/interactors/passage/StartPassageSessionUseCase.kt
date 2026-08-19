@@ -14,7 +14,7 @@ sealed interface PassageSessionResult {
         val bank: ImmutableList<String>,
     ) : PassageSessionResult
 
-    data object NoFavourites : PassageSessionResult
+    data object EmptyStudySet : PassageSessionResult
 
     data object Offline : PassageSessionResult
 

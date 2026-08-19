@@ -1,6 +1,6 @@
 package com.lexicon.data.di
 
-import com.lexicon.boundary.CatalogSyncGate
+import com.lexicon.boundary.CatalogSeedGate
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.ImageProvider
@@ -18,6 +18,7 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.common.SystemClock
 import com.lexicon.data.local.AppDatabase
 import com.lexicon.data.local.AppDatabaseBuilderFactory
+import com.lexicon.data.local.CatalogSeedStore
 import com.lexicon.data.local.ConjugationAssetLoader
 import com.lexicon.data.local.CourseAssetLoader
 import com.lexicon.data.local.CourseSeeder
@@ -28,11 +29,10 @@ import com.lexicon.data.local.VocabularyPresetAssetLoader
 import com.lexicon.data.local.VocabularyPresetSeeder
 import com.lexicon.data.local.VocabularySeedAssetLoader
 import com.lexicon.data.local.VocabularySeeder
-import com.lexicon.data.local.VocabularySyncStore
 import com.lexicon.data.local.buildAppDatabase
 import com.lexicon.data.local.createDataStore
 import com.lexicon.data.repository.CachingImageProviderImpl
-import com.lexicon.data.repository.CatalogSyncGateImpl
+import com.lexicon.data.repository.CatalogSeedGateImpl
 import com.lexicon.data.repository.ConjugationRepositoryImpl
 import com.lexicon.data.repository.CorpusTranslatorImpl
 import com.lexicon.data.repository.CourseRepositoryImpl
@@ -94,10 +94,10 @@ val dataModule = module {
     factoryOf(::VocabularyPresetAssetLoader)
     factoryOf(::ConjugationAssetLoader)
     singleOf(::ConjugationRepositoryImpl) { bind<ConjugationRepository>() }
-    singleOf(::CatalogSyncGateImpl) { bind<CatalogSyncGate>() }
+    singleOf(::CatalogSeedGateImpl) { bind<CatalogSeedGate>() }
     factoryOf(::CourseAssetLoader)
 
-    single { VocabularySyncStore(get(vocabularySyncDataStoreQualifier)) }
+    single { CatalogSeedStore(get(vocabularySyncDataStoreQualifier)) }
     singleOf(::VocabularySeeder)
     singleOf(::VocabularyPresetSeeder)
     singleOf(::CourseSeeder)
