@@ -21,13 +21,6 @@ interface ConjugationRepository {
         isCorrect: Boolean,
     )
 
-    suspend fun chosenImage(infinitive: String): String?
-
-    suspend fun chooseImage(
-        infinitive: String,
-        imageUrl: String,
-    )
-
     suspend fun resetProgress()
 }
 

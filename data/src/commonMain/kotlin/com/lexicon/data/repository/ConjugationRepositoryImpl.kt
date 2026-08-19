@@ -5,7 +5,6 @@ import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.VerbConjugationBoundary
 import com.lexicon.data.local.ConjugationAssetLoader
 import com.lexicon.data.local.ConjugationDao
-import com.lexicon.data.local.ConjugationImageEntity
 import com.lexicon.data.local.ConjugationProgressEntity
 import com.lexicon.data.local.ConjugationSelectionEntity
 import kotlinx.coroutines.sync.Mutex
@@ -59,13 +58,6 @@ class ConjugationRepositoryImpl(
             ),
         )
     }
-
-    override suspend fun chosenImage(infinitive: String): String? = dao.image(infinitive)
-
-    override suspend fun chooseImage(
-        infinitive: String,
-        imageUrl: String,
-    ) = dao.saveImage(ConjugationImageEntity(infinitive = infinitive, imageUrl = imageUrl))
 
     override suspend fun resetProgress() = dao.clearProgress()
 }

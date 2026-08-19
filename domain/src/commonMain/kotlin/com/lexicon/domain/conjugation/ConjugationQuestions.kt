@@ -5,6 +5,7 @@ import com.lexicon.boundary.VerbConjugationBoundary
 import com.lexicon.interactors.conjugation.ConjugationAnswerMode
 import com.lexicon.interactors.conjugation.ConjugationCourseProgress
 import com.lexicon.interactors.conjugation.ConjugationQuestion
+import com.lexicon.interactors.conjugation.ConjugationStep
 import com.lexicon.interactors.conjugation.ConjugationVariant
 import com.lexicon.interactors.conjugation.ConjugationVariantProgress
 import com.lexicon.interactors.conjugation.GrammaticalPerson
@@ -48,17 +49,29 @@ internal suspend fun ConjugationRepository.courseProgress(): ConjugationCoursePr
 }
 
 /**
- * Builds the question for one verb and person.
+ * Builds one question covering every person the verb has a form for.
  *
  * Endings are asked for only where the verb's own forms decompose into a shared stem and
- * differing endings; where they do not — `być` being the standing example — the whole form
- * is asked for instead. Nothing here invents a form: every option is a string that appears
- * in the source data for some verb and person.
+ * differing endings; where they do not — `być` being the standing example — whole forms
+ * are asked for instead. Nothing here invents a form: every option is a string that
+ * appears in the source data for some verb and person.
  */
-internal fun VerbConjugation.question(
+internal fun VerbConjugation.question(pool: List<VerbConjugation>): ConjugationQuestion? {
+    val steps = persons.mapNotNull { step(it, pool) }
+    if (steps.isEmpty()) return null
+
+    return ConjugationQuestion(
+        infinitive = infinitive,
+        translation = translation,
+        steps = steps.toImmutableList(),
+        bank = steps.flatMap { it.options }.distinct().shuffled().toImmutableList(),
+    )
+}
+
+internal fun VerbConjugation.step(
     person: GrammaticalPerson,
     pool: List<VerbConjugation>,
-): ConjugationQuestion? {
+): ConjugationStep? {
     val correct = formsFor(person)
     if (correct.isEmpty()) return null
 
@@ -66,7 +79,7 @@ internal fun VerbConjugation.question(
     val endings = split?.let { correct.mapNotNull(::endingFor) }.orEmpty()
 
     return if (split != null && endings.isNotEmpty()) {
-        ConjugationQuestion(
+        ConjugationStep(
             variant = ConjugationVariant(infinitive, person),
             mode = ConjugationAnswerMode.ENDING,
             options = optionsAround(endings, endingDistractors(person, pool)).toImmutableList(),
@@ -75,7 +88,7 @@ internal fun VerbConjugation.question(
             spokenForm = correct.first(),
         )
     } else {
-        ConjugationQuestion(
+        ConjugationStep(
             variant = ConjugationVariant(infinitive, person),
             mode = ConjugationAnswerMode.FULL_FORM,
             options = optionsAround(correct, formDistractors(person, pool)).toImmutableList(),

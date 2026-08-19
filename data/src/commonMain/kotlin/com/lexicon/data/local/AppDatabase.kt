@@ -31,7 +31,6 @@ import androidx.room.RoomDatabaseConstructor
         ProgramRewardEntity::class,
         ConjugationSelectionEntity::class,
         ConjugationProgressEntity::class,
-        ConjugationImageEntity::class,
     ],
     version = 21,
     exportSchema = false,

@@ -493,7 +493,10 @@ fun LexiconNavHost(
         }
 
         composable(route = LexiconDestinations.CONJUGATION) {
-            ConjugationScreen(onClose = closeToMain)
+            ConjugationScreen(
+                onSessionComplete = onStepSessionComplete(LexiconDestinations.CONJUGATION)(""),
+                onClose = closeToMain,
+            )
         }
 
         composable(

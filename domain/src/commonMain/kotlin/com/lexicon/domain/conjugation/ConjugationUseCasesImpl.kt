@@ -8,6 +8,7 @@ import com.lexicon.interactors.conjugation.ConjugationCourseProgress
 import com.lexicon.interactors.conjugation.ConjugationQuestion
 import com.lexicon.interactors.conjugation.ConjugationVariant
 import com.lexicon.interactors.conjugation.ConjugationVariantProgress
+import com.lexicon.interactors.conjugation.EnsureVerbWordUseCase
 import com.lexicon.interactors.conjugation.FavouriteVerbUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationProgressUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
@@ -85,24 +86,29 @@ class NextConjugationQuestionUseCaseImpl(
         if (selected.isEmpty()) return null
 
         val progress = conjugations.courseProgress().variants.associateBy { it.variant }
-        val variant = selected.leastPractised(progress) ?: return null
-        val verb = selected.first { it.infinitive == variant.infinitive }
+        val verb = selected.leastPractised(progress) ?: return null
 
-        return verb.question(variant.person, selected)?.withLearningAids()
+        return verb.question(selected)?.withLearningAids()
     }
 
-    /** The variant the learner has done least well at, so weak spots come round again. */
-    private fun List<VerbConjugation>.leastPractised(progress: Map<ConjugationVariant, ConjugationVariantProgress>): ConjugationVariant? =
-        flatMap { verb -> verb.persons.map { ConjugationVariant(verb.infinitive, it) } }
-            .filterNot { progress[it]?.isMastered == true }
-            .minByOrNull { progress[it]?.attempted ?: 0 }
-            ?: flatMap { verb -> verb.persons.map { ConjugationVariant(verb.infinitive, it) } }.randomOrNull()
+    /**
+     * The verb whose forms are least secure, so weak ones come round again.
+     *
+     * A verb counts as done when every one of its persons is mastered; among the rest the
+     * one with the fewest attempts across its persons is asked next.
+     */
+    private fun List<VerbConjugation>.leastPractised(progress: Map<ConjugationVariant, ConjugationVariantProgress>): VerbConjugation? {
+        fun attempts(verb: VerbConjugation) = verb.persons.sumOf { progress[ConjugationVariant(verb.infinitive, it)]?.attempted ?: 0 }
+
+        fun mastered(verb: VerbConjugation) = verb.persons.all { progress[ConjugationVariant(verb.infinitive, it)]?.isMastered == true }
+
+        return filterNot(::mastered).minByOrNull(::attempts)
+    }
 
     private suspend fun ConjugationQuestion.withLearningAids(): ConjugationQuestion {
-        val word = runCatching { vocabulary.findWordByText(variant.infinitive) }.getOrNull()
-        val subject = word?.translation?.takeIf { it.isNotBlank() } ?: variant.infinitive
-        val image = conjugations.chosenImage(variant.infinitive)
-            ?: runCatching { imageProvider.searchImage(subject) }.getOrNull()
+        val word = runCatching { vocabulary.findWordByText(infinitive) }.getOrNull()
+        val subject = translation?.takeIf { it.isNotBlank() } ?: word?.translation ?: infinitive
+        val image = runCatching { imageProvider.searchImage(subject) }.getOrNull()
 
         return copy(
             imageUrl = image,
@@ -111,18 +117,42 @@ class NextConjugationQuestionUseCaseImpl(
     }
 }
 
+class EnsureVerbWordUseCaseImpl(
+    private val vocabulary: VocabularyRepository,
+    private val createWord: CreateWordUseCase,
+    private val imageProvider: ImageProvider,
+) : EnsureVerbWordUseCase {
+    override suspend fun invoke(
+        infinitive: String,
+        translation: String?,
+    ): Long? {
+        vocabulary.findWordByText(infinitive)?.let { return it.id }
+
+        val english = translation?.trim().orEmpty()
+        if (english.isEmpty()) return null
+
+        val image = runCatching { imageProvider.searchImage(english) }.getOrNull()
+        createWord(text = infinitive, translation = english, imageUrl = image, presetIds = emptyList())
+
+        return vocabulary.findWordByText(infinitive)?.id
+    }
+}
+
 class LoadVerbImageChoicesUseCaseImpl(
-    private val conjugations: ConjugationRepository,
     private val vocabulary: VocabularyRepository,
     private val imageProvider: ImageProvider,
 ) : LoadVerbImageChoicesUseCase {
-    override suspend fun invoke(infinitive: String): ImmutableList<String> {
-        val word = runCatching { vocabulary.findWordByText(infinitive) }.getOrNull()
-        val subject = word?.translation?.takeIf { it.isNotBlank() } ?: infinitive
-        val found = runCatching { imageProvider.searchImages(subject, CHOICE_COUNT) }.getOrDefault(emptyList())
-        val chosen = conjugations.chosenImage(infinitive)
+    override suspend fun invoke(
+        infinitive: String,
+        translation: String?,
+    ): ImmutableList<String> {
+        val subject = translation?.takeIf { it.isNotBlank() }
+            ?: runCatching { vocabulary.findWordByText(infinitive) }.getOrNull()?.translation
+            ?: infinitive
 
-        return (listOfNotNull(chosen) + found).distinct().toImmutableList()
+        return runCatching { imageProvider.searchImages(subject, CHOICE_COUNT) }
+            .getOrDefault(emptyList())
+            .toImmutableList()
     }
 
     private companion object {
@@ -130,39 +160,47 @@ class LoadVerbImageChoicesUseCaseImpl(
     }
 }
 
+/**
+ * Keeps the chosen picture where a word keeps its own.
+ *
+ * Pinning against the translation is what `CreateWordUseCase` does, so the verb's picture
+ * is the word's picture: it shows in the vocabulary and the card as well as here, and
+ * needs no table of its own.
+ */
 class ChooseVerbImageUseCaseImpl(
-    private val conjugations: ConjugationRepository,
+    private val ensureWord: EnsureVerbWordUseCase,
+    private val vocabulary: VocabularyRepository,
+    private val imageProvider: ImageProvider,
 ) : ChooseVerbImageUseCase {
     override suspend fun invoke(
         infinitive: String,
+        translation: String?,
         imageUrl: String,
-    ) = conjugations.chooseImage(infinitive, imageUrl)
+    ) {
+        ensureWord(infinitive, translation)
+
+        val subject = translation?.takeIf { it.isNotBlank() }
+            ?: vocabulary.findWordByText(infinitive)?.translation
+            ?: return
+
+        imageProvider.pinImage(query = subject, imageUrl = imageUrl)
+    }
 }
 
 class FavouriteVerbUseCaseImpl(
     private val vocabulary: VocabularyRepository,
-    private val createWord: CreateWordUseCase,
-    private val imageProvider: ImageProvider,
+    private val ensureWord: EnsureVerbWordUseCase,
 ) : FavouriteVerbUseCase {
     override suspend fun invoke(
         infinitive: String,
         translation: String?,
         isFavourite: Boolean,
     ) {
-        vocabulary.findWordByText(infinitive)?.let { existing ->
-            vocabulary.setFavourite(listOf(existing.id), isFavourite)
-            return
-        }
+        val existing = vocabulary.findWordByText(infinitive)
+        if (existing == null && !isFavourite) return
 
-        if (!isFavourite) return
-
-        val english = translation?.trim().orEmpty()
-        if (english.isEmpty()) return
-
-        val image = runCatching { imageProvider.searchImage(english) }.getOrNull()
-        createWord(text = infinitive, translation = english, imageUrl = image, presetIds = emptyList())
-
-        vocabulary.findWordByText(infinitive)?.let { vocabulary.setFavourite(listOf(it.id), true) }
+        val id = existing?.id ?: ensureWord(infinitive, translation) ?: return
+        vocabulary.setFavourite(listOf(id), isFavourite)
     }
 }
 
@@ -170,28 +208,27 @@ class LoadFavouriteVerbsUseCaseImpl(
     private val vocabulary: VocabularyRepository,
 ) : LoadFavouriteVerbsUseCase {
     override suspend fun invoke(infinitives: List<String>): Set<String> =
-        infinitives
-            .filter { vocabulary.findWordByText(it)?.isFavourite == true }
-            .toSet()
+        infinitives.filter { vocabulary.findWordByText(it)?.isFavourite == true }.toSet()
 }
 
 class SubmitConjugationAnswerUseCaseImpl(
     private val conjugations: ConjugationRepository,
 ) : SubmitConjugationAnswerUseCase {
     override suspend fun invoke(request: SubmitConjugationAnswerRequest): SubmitConjugationAnswerResponse {
-        val given = request.answer?.trim()
-        val isCorrect = given != null && request.question.correctOptions.any { it.equalsAnswer(given) }
+        val correctness = request.question.steps.associate { step ->
+            val given = request.answers[step.variant.person]?.trim()
+            val isCorrect = given != null && step.correctOptions.any { it.equalsAnswer(given) }
 
-        conjugations.recordAttempt(
-            infinitive = request.question.variant.infinitive,
-            person = request.question.variant.person.sourceKey,
-            isCorrect = isCorrect,
-        )
+            conjugations.recordAttempt(
+                infinitive = step.variant.infinitive,
+                person = step.variant.person.sourceKey,
+                isCorrect = isCorrect,
+            )
 
-        return SubmitConjugationAnswerResponse(
-            isCorrect = isCorrect,
-            correctOptions = request.question.correctOptions,
-        )
+            step.variant.person to isCorrect
+        }
+
+        return SubmitConjugationAnswerResponse(correctness = correctness)
     }
 }
 

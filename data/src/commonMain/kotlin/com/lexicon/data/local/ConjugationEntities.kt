@@ -27,20 +27,8 @@ data class ConjugationProgressEntity(
     val streak: Int,
 )
 
-@Entity(tableName = "conjugation_image")
-data class ConjugationImageEntity(
-    @PrimaryKey val infinitive: String,
-    val imageUrl: String,
-)
-
 @Dao
 interface ConjugationDao {
-    @Query("SELECT imageUrl FROM conjugation_image WHERE infinitive = :infinitive")
-    suspend fun image(infinitive: String): String?
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveImage(row: ConjugationImageEntity)
-
     @Query("SELECT infinitive FROM conjugation_selection ORDER BY infinitive")
     suspend fun selection(): List<String>
 

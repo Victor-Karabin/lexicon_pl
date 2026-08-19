@@ -11,16 +11,22 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -29,10 +35,13 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.conjugation.ConjugationAnswerMode
+import com.lexicon.interactors.conjugation.ConjugationStep
+import com.lexicon.interactors.conjugation.GrammaticalPerson
 import com.lexicon.presentation.R
-import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.ClueImage
+import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.presets.AddImageTile
@@ -42,42 +51,56 @@ import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.component.AnswerChip
 import com.lexicon.presentation.theme.component.AnswerChipState
-import com.lexicon.presentation.theme.component.PlayButton
+import com.lexicon.presentation.theme.component.ProgressDots
 import kotlinx.collections.immutable.ImmutableList
 import org.koin.androidx.compose.koinViewModel
 
+private val PersonColumnWidth = 96.dp
+
 object ConjugationTestTags {
     const val INFINITIVE = "conjugation_infinitive"
-    const val PERSON = "conjugation_person"
-    const val PROMPT = "conjugation_prompt"
+    const val TRANSLATION = "conjugation_translation"
     const val IMAGE = "conjugation_image"
     const val TRANSCRIPTION = "conjugation_transcription"
-    const val PLAY = "conjugation_play"
-    const val PROGRESS = "conjugation_progress"
-    const val STATUS = "conjugation_status"
-    const val EMPTY = "conjugation_empty"
-    const val COMPLETE = "conjugation_complete"
-    const val EDIT_IMAGE = "conjugation_edit_image"
+    const val EDIT = "conjugation_edit"
     const val IMAGE_PICKER = "conjugation_image_picker"
+    const val BANK = "conjugation_bank"
+    const val PROGRESS = "conjugation_progress"
+    const val EMPTY = "conjugation_empty"
+
+    fun person(label: String) = "conjugation_person_$label"
 
     fun option(value: String) = "conjugation_option_$value"
+
+    fun play(label: String) = "conjugation_play_$label"
 }
 
 @Composable
 fun ConjugationScreen(
+    onSessionComplete: (Int, Int, Int, Int) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ConjugationViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.navigationEvents.collect { event ->
+            when (event) {
+                is SessionNavigationEvent.SessionComplete ->
+                    onSessionComplete(event.correct, event.incorrect, event.skipped, event.tipsUsed)
+            }
+        }
+    }
+
     ConjugationContent(
         uiState = uiState,
-        onOptionSelected = viewModel::onOptionSelected,
+        onOptionPicked = viewModel::onOptionPicked,
+        onRowCleared = viewModel::onRowCleared,
         onCheck = viewModel::onCheck,
         onNext = viewModel::onNext,
         onSpeak = viewModel::onSpeak,
-        onEditImage = viewModel::onEditImage,
+        onEdit = viewModel::onEditVerb,
         onImageChosen = viewModel::onImageChosen,
         onImagePickerDismissed = viewModel::onImagePickerDismissed,
         onClose = onClose,
@@ -88,11 +111,12 @@ fun ConjugationScreen(
 @Composable
 private fun ConjugationContent(
     uiState: ConjugationUiState,
-    onOptionSelected: (String) -> Unit,
+    onOptionPicked: (String) -> Unit,
+    onRowCleared: (GrammaticalPerson) -> Unit,
     onCheck: () -> Unit,
     onNext: () -> Unit,
-    onSpeak: () -> Unit,
-    onEditImage: () -> Unit,
+    onSpeak: (String) -> Unit,
+    onEdit: () -> Unit,
     onImageChosen: (String) -> Unit,
     onImagePickerDismissed: () -> Unit,
     onClose: () -> Unit,
@@ -119,15 +143,19 @@ private fun ConjugationContent(
                     CircularProgressIndicator()
                 }
 
-            uiState.hasNoVerbs ->
-                Message(text = stringResource(R.string.conjugation_none), tag = ConjugationTestTags.EMPTY, padding = padding)
-
             question == null ->
-                Message(
-                    text = stringResource(R.string.conjugation_complete),
-                    tag = ConjugationTestTags.COMPLETE,
-                    padding = padding,
-                )
+                Box(
+                    modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingXl),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        text = stringResource(R.string.conjugation_none),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.testTag(ConjugationTestTags.EMPTY),
+                    )
+                }
 
             else ->
                 Column(modifier = Modifier.fillMaxSize().padding(padding)) {
@@ -139,10 +167,62 @@ private fun ConjugationContent(
                             .padding(Dimens.spacingMedium),
                         verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
                     ) {
-                        Progress(uiState)
-                        Prompt(uiState, onSpeak, onEditImage)
-                        Options(uiState, onOptionSelected)
-                        Status(uiState)
+                        ProgressDots(
+                            step = uiState.stepIndex,
+                            total = uiState.totalSteps,
+                            modifier = Modifier.fillMaxWidth().testTag(ConjugationTestTags.PROGRESS),
+                        )
+
+                        ClueImage(
+                            imageUrl = question.imageUrl,
+                            fallbackText = question.infinitive,
+                            modifier = Modifier.testTag(ConjugationTestTags.IMAGE),
+                        )
+
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = question.infinitive,
+                                    style = MaterialTheme.typography.headlineSmall,
+                                    fontWeight = FontWeight.SemiBold,
+                                    modifier = Modifier.testTag(ConjugationTestTags.INFINITIVE),
+                                )
+                                question.translation?.let { translation ->
+                                    Text(
+                                        text = translation,
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        modifier = Modifier.testTag(ConjugationTestTags.TRANSLATION),
+                                    )
+                                }
+                                question.transcription?.let { ipa ->
+                                    Text(
+                                        text = stringResource(R.string.pronunciation_ipa_format, ipa),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        modifier = Modifier.testTag(ConjugationTestTags.TRANSCRIPTION),
+                                    )
+                                }
+                            }
+                            IconButton(onClick = onEdit, modifier = Modifier.testTag(ConjugationTestTags.EDIT)) {
+                                Icon(
+                                    imageVector = Icons.Default.Edit,
+                                    contentDescription = stringResource(R.string.cards_edit),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
+                        }
+
+                        question.steps.forEach { step ->
+                            PersonRow(
+                                step = step,
+                                uiState = uiState,
+                                onCleared = { onRowCleared(step.variant.person) },
+                                onSpeak = onSpeak,
+                            )
+                        }
+
+                        OptionBank(uiState = uiState, onOptionPicked = onOptionPicked)
                     }
 
                     TrainingActionRow(
@@ -157,176 +237,90 @@ private fun ConjugationContent(
 }
 
 @Composable
-private fun Message(
-    text: String,
-    tag: String,
-    padding: androidx.compose.foundation.layout.PaddingValues,
+private fun PersonRow(
+    step: ConjugationStep,
+    uiState: ConjugationUiState,
+    onCleared: () -> Unit,
+    onSpeak: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Box(
-        modifier = modifier.fillMaxSize().padding(padding).padding(Dimens.spacingXl),
-        contentAlignment = Alignment.Center,
+    val person = step.variant.person
+    val chosen = uiState.answers[person]
+    val isRight = uiState.correctness[person]
+
+    val filled = when {
+        chosen == null -> stringResource(R.string.conjugation_blank)
+        step.mode == ConjugationAnswerMode.ENDING -> chosen
+        else -> chosen
+    }
+
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(enabled = !uiState.isAnswered && chosen != null, onClick = onCleared)
+            .padding(vertical = Dimens.spacingTiny)
+            .testTag(ConjugationTestTags.person(person.label)),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
     ) {
         Text(
-            text = text,
-            style = MaterialTheme.typography.bodyMedium,
+            text = person.label,
+            style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.testTag(tag),
-        )
-    }
-}
-
-@Composable
-private fun Progress(
-    uiState: ConjugationUiState,
-    modifier: Modifier = Modifier,
-) {
-    Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
-        Text(
-            text = stringResource(
-                R.string.conjugation_progress,
-                uiState.progress.mastered,
-                uiState.progress.total,
-            ),
-            style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.testTag(ConjugationTestTags.PROGRESS),
-        )
-        LinearProgressIndicator(progress = { uiState.progress.fraction }, modifier = Modifier.fillMaxWidth())
-    }
-}
-
-@Composable
-private fun Prompt(
-    uiState: ConjugationUiState,
-    onSpeak: () -> Unit,
-    onEditImage: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val question = uiState.question ?: return
-
-    Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
-        ClueImage(
-            imageUrl = question.imageUrl,
-            fallbackText = question.variant.infinitive,
-            modifier = Modifier.clickable(onClick = onEditImage).testTag(ConjugationTestTags.IMAGE),
-        )
-        TextButton(onClick = onEditImage, modifier = Modifier.testTag(ConjugationTestTags.EDIT_IMAGE)) {
-            Text(stringResource(R.string.conjugation_change_image))
-        }
-
-        Text(
-            text = question.variant.infinitive,
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.testTag(ConjugationTestTags.INFINITIVE),
+            modifier = Modifier.width(PersonColumnWidth),
         )
 
         Text(
-            text = question.variant.person.label,
+            text = if (step.mode == ConjugationAnswerMode.ENDING) step.stem + filled else filled,
             style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.testTag(ConjugationTestTags.PERSON),
+            fontWeight = FontWeight.Medium,
+            color = when (isRight) {
+                true -> LexiconSuccess
+                false -> LexiconError
+                null -> MaterialTheme.colorScheme.onSurface
+            },
+            modifier = Modifier.weight(1f),
         )
-
-        if (question.mode == ConjugationAnswerMode.ENDING) {
-            Text(
-                text = question.stem + stringResource(R.string.conjugation_blank),
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.testTag(ConjugationTestTags.PROMPT),
-            )
-        }
-
-        Text(
-            text = stringResource(
-                if (question.mode == ConjugationAnswerMode.ENDING) {
-                    R.string.conjugation_ending_hint
-                } else {
-                    R.string.conjugation_form_hint
-                },
-            ),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-
-        question.transcription?.let { ipa ->
-            Text(
-                text = stringResource(R.string.pronunciation_ipa_format, ipa),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.testTag(ConjugationTestTags.TRANSCRIPTION),
-            )
-        }
 
         if (uiState.isAnswered) {
-            PlayButton(
-                onClick = onSpeak,
-                label = question.spokenForm,
-                modifier = Modifier.testTag(ConjugationTestTags.PLAY),
-            )
+            IconButton(
+                onClick = { onSpeak(step.spokenForm) },
+                modifier = Modifier.testTag(ConjugationTestTags.play(person.label)),
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.VolumeUp,
+                    contentDescription = stringResource(R.string.word_pronounce, step.spokenForm),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
     }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun Options(
+private fun OptionBank(
     uiState: ConjugationUiState,
-    onOptionSelected: (String) -> Unit,
+    onOptionPicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val question = uiState.question ?: return
+    val used = uiState.usedOptions
 
     FlowRow(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().testTag(ConjugationTestTags.BANK),
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
     ) {
-        question.options.forEach { option ->
+        question.bank.forEach { option ->
             AnswerChip(
                 label = option,
-                state = optionState(uiState, option),
-                onClick = { onOptionSelected(option) }.takeIf { !uiState.isAnswered },
+                state = if (option in used) AnswerChipState.SELECTED else AnswerChipState.UNSELECTED,
+                onClick = { onOptionPicked(option) }.takeIf { !uiState.isAnswered && option !in used },
                 modifier = Modifier.testTag(ConjugationTestTags.option(option)),
             )
         }
     }
-}
-
-private fun optionState(
-    uiState: ConjugationUiState,
-    option: String,
-): AnswerChipState {
-    val question = uiState.question ?: return AnswerChipState.UNSELECTED
-    val isCorrect = question.correctOptions.any { it.equals(option, ignoreCase = true) }
-
-    return when {
-        !uiState.isAnswered -> if (option == uiState.selected) AnswerChipState.SELECTED else AnswerChipState.UNSELECTED
-        isCorrect -> AnswerChipState.CORRECT
-        option == uiState.selected -> AnswerChipState.INCORRECT
-        else -> AnswerChipState.UNSELECTED
-    }
-}
-
-@Composable
-private fun Status(
-    uiState: ConjugationUiState,
-    modifier: Modifier = Modifier,
-) {
-    val label = when (uiState.answerState) {
-        is AnswerState.Correct -> stringResource(R.string.status_correct)
-        is AnswerState.Incorrect -> stringResource(R.string.status_incorrect)
-        else -> return
-    }
-
-    Text(
-        text = label,
-        style = MaterialTheme.typography.titleMedium,
-        fontWeight = FontWeight.Bold,
-        color = if (uiState.answerState is AnswerState.Correct) LexiconSuccess else LexiconError,
-        modifier = modifier.testTag(ConjugationTestTags.STATUS),
-    )
 }
 
 @Composable
@@ -340,10 +334,8 @@ private fun VerbImagePicker(
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = modifier.testTag(ConjugationTestTags.IMAGE_PICKER),
-        title = { Text(stringResource(R.string.conjugation_change_image)) },
-        confirmButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_done)) }
-        },
+        title = { Text(stringResource(R.string.create_word_image)) },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_done)) } },
         text = {
             Row(
                 modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),

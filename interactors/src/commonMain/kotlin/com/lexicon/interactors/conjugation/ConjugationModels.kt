@@ -48,14 +48,20 @@ data class ConjugationVariant(
 
 enum class ConjugationAnswerMode { FULL_FORM, ENDING }
 
-data class ConjugationQuestion(
+data class ConjugationStep(
     val variant: ConjugationVariant,
     val mode: ConjugationAnswerMode,
     val options: ImmutableList<String>,
     val correctOptions: ImmutableList<String>,
-    /** The unchanging part shown before the blank, in ending mode. */
     val stem: String = "",
     val spokenForm: String = "",
+)
+
+data class ConjugationQuestion(
+    val infinitive: String,
+    val translation: String? = null,
+    val steps: ImmutableList<ConjugationStep>,
+    val bank: ImmutableList<String> = persistentListOf(),
     val imageUrl: String? = null,
     val transcription: String? = null,
 )

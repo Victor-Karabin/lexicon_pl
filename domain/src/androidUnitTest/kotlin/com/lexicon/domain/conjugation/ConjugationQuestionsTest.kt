@@ -113,7 +113,7 @@ class ConjugationQuestionsTest {
 
     @Test
     fun `an irregular verb falls back to whole forms rather than invented endings`() {
-        val question = verb(BYC).question(GrammaticalPerson.JA, pool)
+        val question = verb(BYC).step(GrammaticalPerson.JA, pool)
 
         assertNotNull(question)
         assertEquals(ConjugationAnswerMode.FULL_FORM, question!!.mode)
@@ -122,7 +122,7 @@ class ConjugationQuestionsTest {
 
     @Test
     fun `a regular verb is asked by its ending`() {
-        val question = verb(CHODZIC).question(GrammaticalPerson.JA, pool)!!
+        val question = verb(CHODZIC).step(GrammaticalPerson.JA, pool)!!
 
         assertEquals(ConjugationAnswerMode.ENDING, question.mode)
         assertEquals("chodz", question.stem)
@@ -132,7 +132,7 @@ class ConjugationQuestionsTest {
 
     @Test
     fun `the stem comes from the data, not from the infinitive`() {
-        val question = verb(BRAC).question(GrammaticalPerson.TY, pool)!!
+        val question = verb(BRAC).step(GrammaticalPerson.TY, pool)!!
 
         assertEquals(ConjugationAnswerMode.ENDING, question.mode)
         assertEquals("bi", question.stem)
@@ -142,7 +142,7 @@ class ConjugationQuestionsTest {
 
     @Test
     fun `a reflexive verb keeps sie in the answer`() {
-        val question = verb(BAC_SIE).question(GrammaticalPerson.JA, pool)!!
+        val question = verb(BAC_SIE).step(GrammaticalPerson.JA, pool)!!
 
         assertEquals("bo", question.stem)
         assertEquals(listOf("ję się"), question.correctOptions)
@@ -152,7 +152,7 @@ class ConjugationQuestionsTest {
     /** A stem stopping mid-gap would leave " się" as the ending, which teaches nothing. */
     @Test
     fun `a reflexive verb whose ending would be only sie is asked whole`() {
-        val question = verb(BAWIC_SIE).question(GrammaticalPerson.ON_ONA_ONO, pool)!!
+        val question = verb(BAWIC_SIE).step(GrammaticalPerson.ON_ONA_ONO, pool)!!
 
         assertEquals(ConjugationAnswerMode.FULL_FORM, question.mode)
         assertEquals(listOf("bawi się"), question.correctOptions)
@@ -160,7 +160,7 @@ class ConjugationQuestionsTest {
 
     @Test
     fun `both source variants are accepted where the data gives two`() {
-        val question = verb(BAJAC).question(GrammaticalPerson.JA, pool)!!
+        val question = verb(BAJAC).step(GrammaticalPerson.JA, pool)!!
 
         assertEquals(2, question.correctOptions.size)
         assertTrue(question.correctOptions.all { it.isNotBlank() })
@@ -170,7 +170,7 @@ class ConjugationQuestionsTest {
     fun `the correct answer is always among the options`() {
         pool.forEach { verb ->
             verb.persons.forEach { person ->
-                val question = verb.question(person, pool)!!
+                val question = verb.step(person, pool)!!
                 assertTrue(
                     "${verb.infinitive} ${person.label}",
                     question.correctOptions.any { it in question.options },
@@ -183,7 +183,7 @@ class ConjugationQuestionsTest {
     fun `options never repeat`() {
         pool.forEach { verb ->
             verb.persons.forEach { person ->
-                val options = verb.question(person, pool)!!.options
+                val options = verb.step(person, pool)!!.options
                 assertEquals(verb.infinitive, options.size, options.distinct().size)
             }
         }
@@ -193,7 +193,7 @@ class ConjugationQuestionsTest {
     fun `no option is ever blank`() {
         pool.forEach { verb ->
             verb.persons.forEach { person ->
-                assertTrue(verb.question(person, pool)!!.options.none { it.isBlank() })
+                assertTrue(verb.step(person, pool)!!.options.none { it.isBlank() })
             }
         }
     }
@@ -202,7 +202,7 @@ class ConjugationQuestionsTest {
     fun `a distractor is never also a correct answer`() {
         pool.forEach { verb ->
             verb.persons.forEach { person ->
-                val question = verb.question(person, pool)!!
+                val question = verb.step(person, pool)!!
                 val wrong = question.options.filterNot { it in question.correctOptions }
                 assertTrue(wrong.none { candidate -> question.correctOptions.any { it.equals(candidate, true) } })
             }
@@ -211,21 +211,21 @@ class ConjugationQuestionsTest {
 
     @Test
     fun `a verb short of forms borrows distractors from the others`() {
-        val question = verb(BOLEC).question(GrammaticalPerson.ON_ONA_ONO, pool)!!
+        val question = verb(BOLEC).step(GrammaticalPerson.ON_ONA_ONO, pool)!!
 
         assertTrue("only ${question.options.size} options", question.options.size > 2)
     }
 
     @Test
     fun `a person the verb does not have yields no question`() {
-        assertNull(verb(BOLEC).question(GrammaticalPerson.JA, pool))
+        assertNull(verb(BOLEC).step(GrammaticalPerson.JA, pool))
     }
 
     @Test
     fun `an ending always rebuilds its form when joined to the stem`() {
         pool.forEach { verb ->
             verb.persons.forEach { person ->
-                val question = verb.question(person, pool)!!
+                val question = verb.step(person, pool)!!
                 if (question.mode == ConjugationAnswerMode.ENDING) {
                     assertTrue(
                         "${verb.infinitive} ${person.label}",

@@ -20,25 +20,37 @@ interface NextConjugationQuestionUseCase {
 
 data class SubmitConjugationAnswerRequest(
     val question: ConjugationQuestion,
-    val answer: String?,
+    val answers: Map<GrammaticalPerson, String?>,
 )
 
 data class SubmitConjugationAnswerResponse(
-    val isCorrect: Boolean,
-    val correctOptions: ImmutableList<String>,
-)
+    val correctness: Map<GrammaticalPerson, Boolean>,
+) {
+    val allCorrect: Boolean get() = correctness.values.all { it }
+}
 
 interface SubmitConjugationAnswerUseCase {
     suspend operator fun invoke(request: SubmitConjugationAnswerRequest): SubmitConjugationAnswerResponse
 }
 
+interface EnsureVerbWordUseCase {
+    suspend operator fun invoke(
+        infinitive: String,
+        translation: String?,
+    ): Long?
+}
+
 interface LoadVerbImageChoicesUseCase {
-    suspend operator fun invoke(infinitive: String): ImmutableList<String>
+    suspend operator fun invoke(
+        infinitive: String,
+        translation: String?,
+    ): ImmutableList<String>
 }
 
 interface ChooseVerbImageUseCase {
     suspend operator fun invoke(
         infinitive: String,
+        translation: String?,
         imageUrl: String,
     )
 }

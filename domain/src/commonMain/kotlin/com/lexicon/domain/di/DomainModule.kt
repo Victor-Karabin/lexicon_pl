@@ -1,6 +1,7 @@
 package com.lexicon.domain.di
 
 import com.lexicon.domain.conjugation.ChooseVerbImageUseCaseImpl
+import com.lexicon.domain.conjugation.EnsureVerbWordUseCaseImpl
 import com.lexicon.domain.conjugation.FavouriteVerbUseCaseImpl
 import com.lexicon.domain.conjugation.LoadConjugationProgressUseCaseImpl
 import com.lexicon.domain.conjugation.LoadConjugationVerbsUseCaseImpl
@@ -88,6 +89,7 @@ import com.lexicon.domain.wordcard.StartWordCardSessionUseCaseImpl
 import com.lexicon.domain.wordmatch.StartWordMatchSessionUseCaseImpl
 import com.lexicon.domain.wordmatch.SubmitWordMatchStepResultUseCaseImpl
 import com.lexicon.interactors.conjugation.ChooseVerbImageUseCase
+import com.lexicon.interactors.conjugation.EnsureVerbWordUseCase
 import com.lexicon.interactors.conjugation.FavouriteVerbUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationProgressUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
@@ -238,6 +240,7 @@ val domainModule = module {
     factoryOf(::SubmitConjugationAnswerUseCaseImpl) { bind<SubmitConjugationAnswerUseCase>() }
     factoryOf(::LoadConjugationProgressUseCaseImpl) { bind<LoadConjugationProgressUseCase>() }
     factoryOf(::ResetConjugationCourseUseCaseImpl) { bind<ResetConjugationCourseUseCase>() }
+    factoryOf(::EnsureVerbWordUseCaseImpl) { bind<EnsureVerbWordUseCase>() }
     factoryOf(::LoadVerbImageChoicesUseCaseImpl) { bind<LoadVerbImageChoicesUseCase>() }
     factoryOf(::ChooseVerbImageUseCaseImpl) { bind<ChooseVerbImageUseCase>() }
     factoryOf(::FavouriteVerbUseCaseImpl) { bind<FavouriteVerbUseCase>() }
