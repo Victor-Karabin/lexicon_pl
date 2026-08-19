@@ -9,7 +9,7 @@ import com.lexicon.interactors.imagetest.StartImageTestSessionRequest
 import com.lexicon.interactors.imagetest.StartImageTestSessionUseCase
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerRequest
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -140,6 +140,8 @@ class ImageTestViewModel(
                 delay(SKIPPED_ANSWER_ADVANCE_DELAY_MS)
                 advanceToNextStep()
             }
+
+            StepOutcome.SEEN -> Unit
         }
     }
 

@@ -21,6 +21,7 @@ rootProject.name = "lexicon"
 include(":app")
 include(":common")
 include(":android")
+include(":model")
 include(":boundary")
 include(":interactors")
 include(":domain")

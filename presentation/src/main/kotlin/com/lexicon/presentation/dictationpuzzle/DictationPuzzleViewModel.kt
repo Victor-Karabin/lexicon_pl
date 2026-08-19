@@ -10,7 +10,7 @@ import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionReques
 import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionUseCase
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerRequest
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerUseCase
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.LetterTile
@@ -179,6 +179,8 @@ class DictationPuzzleViewModel(
                 delay(SKIPPED_ANSWER_ADVANCE_DELAY_MS)
                 advanceToNextStep()
             }
+
+            StepOutcome.SEEN -> Unit
         }
     }
 

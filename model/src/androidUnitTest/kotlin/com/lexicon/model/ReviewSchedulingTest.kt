@@ -1,4 +1,4 @@
-package com.lexicon.common
+package com.lexicon.model.scheduling
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse

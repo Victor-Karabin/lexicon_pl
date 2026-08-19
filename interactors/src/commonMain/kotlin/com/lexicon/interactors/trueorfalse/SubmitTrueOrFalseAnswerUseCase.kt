@@ -1,6 +1,6 @@
 package com.lexicon.interactors.trueorfalse
 
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 
 data class SubmitTrueOrFalseAnswerRequest(
     val sessionId: String,

@@ -4,12 +4,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
-import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionRequest
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerRequest
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
 import com.lexicon.interactors.trueorfalse.TrueOrFalseStepResponse
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -125,6 +125,8 @@ class TrueOrFalseViewModel(
                 skippedCount++
                 wordResults += WordResultEntry(step.word, step.displayedTranslation, AnswerState.Skipped())
             }
+
+            StepOutcome.SEEN -> Unit
         }
         advanceToNextStep()
     }

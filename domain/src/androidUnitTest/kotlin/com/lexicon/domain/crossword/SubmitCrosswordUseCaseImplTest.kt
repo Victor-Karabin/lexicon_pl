@@ -1,12 +1,10 @@
 package com.lexicon.domain.crossword
 
-import com.lexicon.boundary.TrainingHistoryRepository
-import com.lexicon.common.Clock
 import com.lexicon.domain.dictation.AnswerNormalizer
 import com.lexicon.interactors.crossword.CrosswordWordSubmission
 import com.lexicon.interactors.crossword.SubmitCrosswordRequest
-import com.lexicon.interactors.training.StepOutcome
-import io.mockk.every
+import com.lexicon.interactors.training.RecordAnswerUseCase
+import com.lexicon.model.training.StepOutcome
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -15,9 +13,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SubmitCrosswordUseCaseImplTest {
-    private val trainingHistoryRepository: TrainingHistoryRepository = mockk(relaxed = true)
-    private val clock: Clock = mockk { every { nowEpochMillis() } returns 1_000L }
-    private val useCase = SubmitCrosswordUseCaseImpl(trainingHistoryRepository, AnswerNormalizer(), clock)
+    private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
+    private val useCase = SubmitCrosswordUseCaseImpl(recordAnswer, AnswerNormalizer())
 
     private fun submission(
         id: Long,

@@ -1,12 +1,6 @@
 package com.lexicon.boundary
 
-enum class TrainingResultOutcomeBoundary {
-    CORRECT,
-    INCORRECT,
-    SKIPPED,
-
-    SEEN,
-}
+import com.lexicon.model.training.StepOutcome
 
 data class TrainingResultBoundary(
     val sessionId: String,
@@ -15,7 +9,8 @@ data class TrainingResultBoundary(
     val vocabularyItemId: Long,
     val expectedAnswer: String,
     val submittedAnswer: String,
-    val outcome: TrainingResultOutcomeBoundary,
+    val outcome: StepOutcome,
     val tipUsed: Boolean,
     val completedAtEpochMillis: Long,
+    val wasReview: Boolean = false,
 )

@@ -15,7 +15,7 @@ import com.lexicon.interactors.pronunciation.StartPronunciationSessionRequest
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultRequest
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -245,6 +245,8 @@ class PronunciationViewModel(
                 delay(SKIPPED_ANSWER_ADVANCE_DELAY_MS)
                 advanceToNextStep()
             }
+
+            StepOutcome.SEEN -> Unit
         }
     }
 

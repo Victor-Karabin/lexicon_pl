@@ -1,22 +1,19 @@
 package com.lexicon.domain.dictationpuzzle
 
-import com.lexicon.boundary.TrainingHistoryRepository
-import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.common.Clock
 import com.lexicon.domain.dictation.AnswerNormalizer
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerRequest
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.interactors.training.RecordAnswerUseCase
+import com.lexicon.interactors.training.RecordedAnswer
+import com.lexicon.model.training.StepOutcome
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class SubmitDictationPuzzleAnswerUseCaseImplTest {
-    private val trainingHistoryRepository: TrainingHistoryRepository = mockk(relaxed = true)
-    private val clock: Clock = mockk { every { nowEpochMillis() } returns 1_000L }
-    private val useCase = SubmitDictationPuzzleAnswerUseCaseImpl(trainingHistoryRepository, AnswerNormalizer(), clock)
+    private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
+    private val useCase = SubmitDictationPuzzleAnswerUseCaseImpl(recordAnswer, AnswerNormalizer())
 
     private fun request(
         submittedText: String = "kot",
@@ -52,8 +49,8 @@ class SubmitDictationPuzzleAnswerUseCaseImplTest {
             useCase(request(submittedText = "kot", tipUsed = true))
 
             coVerify {
-                trainingHistoryRepository.recordResult(
-                    match<TrainingResultBoundary> { it.tipUsed },
+                recordAnswer(
+                    match<RecordedAnswer> { it.tipUsed },
                 )
             }
         }

@@ -1,22 +1,18 @@
 package com.lexicon.domain.wordmatch
 
-import com.lexicon.boundary.TrainingHistoryRepository
-import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.boundary.TrainingResultOutcomeBoundary
-import com.lexicon.common.Clock
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.interactors.training.RecordAnswerUseCase
+import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultRequest
+import com.lexicon.model.training.StepOutcome
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class SubmitWordMatchStepResultUseCaseImplTest {
-    private val trainingHistoryRepository: TrainingHistoryRepository = mockk(relaxed = true)
-    private val clock: Clock = mockk { every { nowEpochMillis() } returns 1_000L }
-    private val useCase = SubmitWordMatchStepResultUseCaseImpl(trainingHistoryRepository, clock)
+    private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
+    private val useCase = SubmitWordMatchStepResultUseCaseImpl(recordAnswer)
 
     @Test
     fun `zero incorrect attempts is Correct`() =
@@ -40,8 +36,8 @@ class SubmitWordMatchStepResultUseCaseImplTest {
             useCase(SubmitWordMatchStepResultRequest("s", 0, listOf(1L, 2L, 3L), incorrectAttempts = 0))
 
             coVerify(exactly = 3) {
-                trainingHistoryRepository.recordResult(
-                    match<TrainingResultBoundary> { it.outcome == TrainingResultOutcomeBoundary.CORRECT },
+                recordAnswer(
+                    match<RecordedAnswer> { it.outcome == StepOutcome.CORRECT },
                 )
             }
         }

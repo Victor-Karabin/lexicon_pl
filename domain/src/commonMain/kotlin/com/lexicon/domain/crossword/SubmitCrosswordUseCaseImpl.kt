@@ -1,43 +1,37 @@
 package com.lexicon.domain.crossword
 
-import com.lexicon.boundary.TrainingHistoryRepository
-import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.common.Clock
 import com.lexicon.domain.dictation.AnswerNormalizer
-import com.lexicon.domain.training.toBoundary
 import com.lexicon.interactors.crossword.CrosswordWordResult
 import com.lexicon.interactors.crossword.SubmitCrosswordRequest
 import com.lexicon.interactors.crossword.SubmitCrosswordResponse
 import com.lexicon.interactors.crossword.SubmitCrosswordUseCase
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.interactors.training.RecordAnswerUseCase
+import com.lexicon.interactors.training.RecordedAnswer
+import com.lexicon.model.training.StepOutcome
 
 private const val TRAINING_TYPE_CROSSWORD = "CROSSWORD"
 
 class SubmitCrosswordUseCaseImpl(
-    private val trainingHistoryRepository: TrainingHistoryRepository,
+    private val recordAnswer: RecordAnswerUseCase,
     private val answerNormalizer: AnswerNormalizer,
-    private val clock: Clock,
 ) : SubmitCrosswordUseCase {
     override suspend fun invoke(request: SubmitCrosswordRequest): SubmitCrosswordResponse {
-        val completedAt = clock.nowEpochMillis()
-
         val wordResults = request.words.mapIndexed { index, submission ->
             val outcome = if (answerNormalizer.matches(submission.expectedText, submission.submittedText)) {
                 StepOutcome.CORRECT
             } else {
                 StepOutcome.INCORRECT
             }
-            trainingHistoryRepository.recordResult(
-                TrainingResultBoundary(
+            recordAnswer(
+                RecordedAnswer(
                     sessionId = request.sessionId,
                     trainingType = TRAINING_TYPE_CROSSWORD,
                     stepIndex = index,
                     vocabularyItemId = submission.vocabularyItemId,
                     expectedAnswer = submission.expectedText,
                     submittedAnswer = submission.submittedText,
-                    outcome = outcome.toBoundary(),
+                    outcome = outcome,
                     tipUsed = submission.tipUsed,
-                    completedAtEpochMillis = completedAt,
                 ),
             )
             CrosswordWordResult(submission.vocabularyItemId, submission.expectedText, outcome, submission.tipUsed)

@@ -21,6 +21,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
 
+            api(projects.model)
             implementation(libs.kotlinx.coroutines.core)
             api(libs.kotlinx.collections.immutable)
             api(libs.kotlinx.serialization.json)

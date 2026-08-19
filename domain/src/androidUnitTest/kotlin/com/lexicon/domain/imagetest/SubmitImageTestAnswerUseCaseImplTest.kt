@@ -1,19 +1,16 @@
 package com.lexicon.domain.imagetest
 
-import com.lexicon.boundary.TrainingHistoryRepository
-import com.lexicon.common.Clock
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerRequest
-import com.lexicon.interactors.training.StepOutcome
-import io.mockk.every
+import com.lexicon.interactors.training.RecordAnswerUseCase
+import com.lexicon.model.training.StepOutcome
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class SubmitImageTestAnswerUseCaseImplTest {
-    private val trainingHistoryRepository: TrainingHistoryRepository = mockk(relaxed = true)
-    private val clock: Clock = mockk { every { nowEpochMillis() } returns 1_000L }
-    private val useCase = SubmitImageTestAnswerUseCaseImpl(trainingHistoryRepository, clock)
+    private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
+    private val useCase = SubmitImageTestAnswerUseCaseImpl(recordAnswer)
 
     private fun request(
         selectedOption: String?,

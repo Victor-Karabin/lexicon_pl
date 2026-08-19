@@ -1,6 +1,6 @@
 package com.lexicon.interactors.imagetest
 
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 
 data class SubmitImageTestAnswerRequest(
     val sessionId: String,

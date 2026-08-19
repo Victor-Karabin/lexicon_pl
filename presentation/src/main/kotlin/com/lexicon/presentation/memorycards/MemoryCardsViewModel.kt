@@ -9,7 +9,7 @@ import com.lexicon.interactors.memorycards.StartMemoryCardsSessionRequest
 import com.lexicon.interactors.memorycards.StartMemoryCardsSessionUseCase
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultRequest
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -146,6 +146,8 @@ class MemoryCardsViewModel(
             StepOutcome.CORRECT -> correctCount++
             StepOutcome.INCORRECT -> incorrectCount++
             StepOutcome.SKIPPED -> Unit
+
+            StepOutcome.SEEN -> Unit
         }
         delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
         advanceToNextStep()

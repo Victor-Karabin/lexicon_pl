@@ -8,6 +8,15 @@ import com.lexicon.data.local.StudyDayEntity
 class StudyRecordRepositoryImpl(
     private val studyDayDao: StudyDayDao,
 ) : StudyRecordRepository {
+    override suspend fun record(
+        epochDay: Long,
+        addedSeconds: Long,
+        wasNew: Boolean,
+        wasCorrect: Boolean,
+    ) {
+        studyDayDao.record(epochDay, addedSeconds, wasNew, wasCorrect)
+    }
+
     override suspend fun day(epochDay: Long): StudyDayBoundary? = studyDayDao.find(epochDay)?.toBoundary()
 
     override suspend fun daysBetween(

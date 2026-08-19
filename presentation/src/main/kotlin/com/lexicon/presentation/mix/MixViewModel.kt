@@ -20,9 +20,9 @@ import com.lexicon.interactors.pronunciation.SubmitPronunciationResultRequest
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerRequest
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerUseCase
-import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerRequest
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.LetterTile

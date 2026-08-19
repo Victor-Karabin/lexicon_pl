@@ -1,6 +1,6 @@
 package com.lexicon.interactors.wordmatch
 
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 
 data class SubmitWordMatchStepResultRequest(
     val sessionId: String,

@@ -1,6 +1,6 @@
 package com.lexicon.interactors.pronunciation
 
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 
 data class SubmitPronunciationResultRequest(
     val sessionId: String,

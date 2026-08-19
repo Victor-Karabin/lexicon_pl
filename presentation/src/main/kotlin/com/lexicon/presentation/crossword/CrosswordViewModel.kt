@@ -9,7 +9,7 @@ import com.lexicon.interactors.crossword.StartCrosswordSessionRequest
 import com.lexicon.interactors.crossword.StartCrosswordSessionUseCase
 import com.lexicon.interactors.crossword.SubmitCrosswordRequest
 import com.lexicon.interactors.crossword.SubmitCrosswordUseCase
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent

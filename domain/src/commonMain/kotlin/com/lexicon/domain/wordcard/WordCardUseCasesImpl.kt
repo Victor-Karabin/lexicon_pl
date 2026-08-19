@@ -3,18 +3,17 @@
 package com.lexicon.domain.wordcard
 
 import com.lexicon.boundary.ImageProvider
-import com.lexicon.boundary.TrainingHistoryRepository
-import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.boundary.TrainingResultOutcomeBoundary
 import com.lexicon.boundary.VocabularyRepository
-import com.lexicon.common.Clock
 import com.lexicon.domain.settings.StepCountResolver
+import com.lexicon.interactors.training.RecordAnswerUseCase
+import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.interactors.wordcard.RecordWordCardSeenRequest
 import com.lexicon.interactors.wordcard.RecordWordCardSeenUseCase
 import com.lexicon.interactors.wordcard.StartWordCardSessionRequest
 import com.lexicon.interactors.wordcard.StartWordCardSessionUseCase
 import com.lexicon.interactors.wordcard.WordCardSessionResponse
 import com.lexicon.interactors.wordcard.WordCardStep
+import com.lexicon.model.training.StepOutcome
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -44,21 +43,19 @@ class StartWordCardSessionUseCaseImpl(
 }
 
 class RecordWordCardSeenUseCaseImpl(
-    private val history: TrainingHistoryRepository,
-    private val clock: Clock,
+    private val recordAnswer: RecordAnswerUseCase,
 ) : RecordWordCardSeenUseCase {
     override suspend fun invoke(request: RecordWordCardSeenRequest) {
-        history.recordResult(
-            TrainingResultBoundary(
+        recordAnswer(
+            RecordedAnswer(
                 sessionId = request.sessionId,
                 trainingType = WORD_CARD_TRAINING,
                 stepIndex = request.stepIndex,
                 vocabularyItemId = request.vocabularyItemId,
                 expectedAnswer = request.text,
                 submittedAnswer = "",
-                outcome = TrainingResultOutcomeBoundary.SEEN,
+                outcome = StepOutcome.SEEN,
                 tipUsed = false,
-                completedAtEpochMillis = clock.nowEpochMillis(),
             ),
         )
     }

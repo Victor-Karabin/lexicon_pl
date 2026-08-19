@@ -10,7 +10,7 @@ import com.lexicon.interactors.dictation.StartDictationSessionRequest
 import com.lexicon.interactors.dictation.StartDictationSessionUseCase
 import com.lexicon.interactors.dictation.SubmitDictationAnswerResponse
 import com.lexicon.interactors.dictation.SubmitDictationAnswerUseCase
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent

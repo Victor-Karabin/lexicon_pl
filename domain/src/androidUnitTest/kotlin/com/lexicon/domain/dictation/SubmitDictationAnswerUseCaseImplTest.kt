@@ -1,26 +1,21 @@
 package com.lexicon.domain.dictation
 
-import com.lexicon.boundary.TrainingHistoryRepository
-import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.boundary.TrainingResultOutcomeBoundary
-import com.lexicon.common.Clock
 import com.lexicon.interactors.dictation.SubmitDictationAnswerRequest
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.interactors.training.RecordAnswerUseCase
+import com.lexicon.interactors.training.RecordedAnswer
+import com.lexicon.model.training.StepOutcome
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class SubmitDictationAnswerUseCaseImplTest {
-    private val trainingHistoryRepository: TrainingHistoryRepository = mockk(relaxed = true)
-    private val clock: Clock = mockk { every { nowEpochMillis() } returns 1_000L }
+    private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
     private val useCase =
         SubmitDictationAnswerUseCaseImpl(
-            trainingHistoryRepository = trainingHistoryRepository,
+            recordAnswer = recordAnswer,
             answerNormalizer = AnswerNormalizer(),
-            clock = clock,
         )
 
     private fun request(
@@ -64,8 +59,8 @@ class SubmitDictationAnswerUseCaseImplTest {
             useCase(request(submittedText = "kot", tipUsed = true))
 
             coVerify {
-                trainingHistoryRepository.recordResult(
-                    match<TrainingResultBoundary> { it.tipUsed },
+                recordAnswer(
+                    match<RecordedAnswer> { it.tipUsed },
                 )
             }
         }
@@ -83,8 +78,8 @@ class SubmitDictationAnswerUseCaseImplTest {
             useCase(request(submittedText = "kot"))
 
             coVerify {
-                trainingHistoryRepository.recordResult(
-                    match<TrainingResultBoundary> { it.outcome == TrainingResultOutcomeBoundary.CORRECT },
+                recordAnswer(
+                    match<RecordedAnswer> { it.outcome == StepOutcome.CORRECT },
                 )
             }
         }

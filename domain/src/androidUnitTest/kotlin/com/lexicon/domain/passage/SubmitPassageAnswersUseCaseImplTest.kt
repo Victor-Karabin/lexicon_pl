@@ -1,13 +1,12 @@
 package com.lexicon.domain.passage
 
-import com.lexicon.boundary.TrainingHistoryRepository
-import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.boundary.TrainingResultOutcomeBoundary
 import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
-import com.lexicon.common.Clock
 import com.lexicon.domain.dictation.AnswerNormalizer
 import com.lexicon.interactors.passage.SubmitPassageAnswersRequest
+import com.lexicon.interactors.training.RecordAnswerUseCase
+import com.lexicon.interactors.training.RecordedAnswer
+import com.lexicon.model.training.StepOutcome
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -18,9 +17,8 @@ import org.junit.Test
 
 class SubmitPassageAnswersUseCaseImplTest {
     private val vocabulary: VocabularyRepository = mockk()
-    private val history: TrainingHistoryRepository = mockk(relaxed = true)
-    private val clock: Clock = mockk { coEvery { nowEpochMillis() } returns 0L }
-    private val useCase = SubmitPassageAnswersUseCaseImpl(vocabulary, history, AnswerNormalizer(), clock)
+    private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
+    private val useCase = SubmitPassageAnswersUseCaseImpl(vocabulary, recordAnswer, AnswerNormalizer())
 
     private val book = VocabularyItemBoundary(7, "książka", "a book", "ˈkʂɔ̃ʂka")
 
@@ -41,9 +39,9 @@ class SubmitPassageAnswersUseCaseImplTest {
             assertEquals(listOf(true), response.correct)
             assertEquals("a book", response.results.single().translation)
             coVerify {
-                history.recordResult(
-                    match<TrainingResultBoundary> {
-                        it.vocabularyItemId == 7L && it.outcome == TrainingResultOutcomeBoundary.CORRECT
+                recordAnswer(
+                    match<RecordedAnswer> {
+                        it.vocabularyItemId == 7L && it.outcome == StepOutcome.CORRECT
                     },
                 )
             }
@@ -67,8 +65,8 @@ class SubmitPassageAnswersUseCaseImplTest {
             assertEquals("książkę", response.results.single().expected)
             assertEquals("gazetę", response.results.single().submitted)
             coVerify {
-                history.recordResult(
-                    match<TrainingResultBoundary> { it.outcome == TrainingResultOutcomeBoundary.INCORRECT },
+                recordAnswer(
+                    match<RecordedAnswer> { it.outcome == StepOutcome.INCORRECT },
                 )
             }
         }

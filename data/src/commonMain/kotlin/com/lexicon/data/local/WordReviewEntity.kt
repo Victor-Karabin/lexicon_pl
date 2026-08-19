@@ -3,7 +3,7 @@ package com.lexicon.data.local
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.lexicon.common.ReviewState
+import com.lexicon.model.scheduling.ReviewState
 
 @Entity(tableName = "word_review", indices = [Index("dueAtEpochDay")])
 data class WordReviewEntity(

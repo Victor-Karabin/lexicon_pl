@@ -1,22 +1,19 @@
 package com.lexicon.domain.pronunciation
 
-import com.lexicon.boundary.TrainingHistoryRepository
-import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.common.Clock
 import com.lexicon.domain.dictation.AnswerNormalizer
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultRequest
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.interactors.training.RecordAnswerUseCase
+import com.lexicon.interactors.training.RecordedAnswer
+import com.lexicon.model.training.StepOutcome
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class SubmitPronunciationResultUseCaseImplTest {
-    private val trainingHistoryRepository: TrainingHistoryRepository = mockk(relaxed = true)
-    private val clock: Clock = mockk { every { nowEpochMillis() } returns 1_000L }
-    private val useCase = SubmitPronunciationResultUseCaseImpl(trainingHistoryRepository, AnswerNormalizer(), clock)
+    private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
+    private val useCase = SubmitPronunciationResultUseCaseImpl(recordAnswer, AnswerNormalizer())
 
     private fun request(
         recognizedText: String = "kot",
@@ -73,7 +70,7 @@ class SubmitPronunciationResultUseCaseImplTest {
     fun `tip usage is recorded to history regardless of outcome`() =
         runTest {
             useCase(request(confidence = 0.99f, tipUsed = true))
-            coVerify { trainingHistoryRepository.recordResult(match<TrainingResultBoundary> { it.tipUsed }) }
+            coVerify { recordAnswer(match<RecordedAnswer> { it.tipUsed }) }
         }
 
     @Test

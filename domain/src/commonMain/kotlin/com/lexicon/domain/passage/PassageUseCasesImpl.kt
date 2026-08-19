@@ -3,12 +3,8 @@ package com.lexicon.domain.passage
 import com.lexicon.boundary.SentenceGenerator
 import com.lexicon.boundary.SentenceRequestBoundary
 import com.lexicon.boundary.SentenceResultBoundary
-import com.lexicon.boundary.TrainingHistoryRepository
-import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.boundary.TrainingResultOutcomeBoundary
 import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
-import com.lexicon.common.Clock
 import com.lexicon.domain.dictation.AnswerNormalizer
 import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.interactors.passage.CEFR_ORDER
@@ -22,6 +18,9 @@ import com.lexicon.interactors.passage.StartPassageSessionUseCase
 import com.lexicon.interactors.passage.SubmitPassageAnswersRequest
 import com.lexicon.interactors.passage.SubmitPassageAnswersResponse
 import com.lexicon.interactors.passage.SubmitPassageAnswersUseCase
+import com.lexicon.interactors.training.RecordAnswerUseCase
+import com.lexicon.interactors.training.RecordedAnswer
+import com.lexicon.model.training.StepOutcome
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -147,9 +146,8 @@ private fun String.grewFrom(stem: String): Boolean {
 
 class SubmitPassageAnswersUseCaseImpl(
     private val vocabulary: VocabularyRepository,
-    private val history: TrainingHistoryRepository,
+    private val recordAnswer: RecordAnswerUseCase,
     private val answerNormalizer: AnswerNormalizer,
-    private val clock: Clock,
 ) : SubmitPassageAnswersUseCase {
     override suspend fun invoke(request: SubmitPassageAnswersRequest): SubmitPassageAnswersResponse {
         val results = request.expected.mapIndexed { index, expected ->
@@ -158,8 +156,8 @@ class SubmitPassageAnswersUseCaseImpl(
             val word = vocabulary.findWordByText(request.words.getOrElse(index) { expected })
 
             if (word != null) {
-                history.recordResult(
-                    TrainingResultBoundary(
+                recordAnswer(
+                    RecordedAnswer(
                         sessionId = request.sessionId,
                         trainingType = TRAINING_ID,
                         stepIndex = index,
@@ -167,12 +165,11 @@ class SubmitPassageAnswersUseCaseImpl(
                         expectedAnswer = expected,
                         submittedAnswer = submitted,
                         outcome = if (right) {
-                            TrainingResultOutcomeBoundary.CORRECT
+                            StepOutcome.CORRECT
                         } else {
-                            TrainingResultOutcomeBoundary.INCORRECT
+                            StepOutcome.INCORRECT
                         },
                         tipUsed = false,
-                        completedAtEpochMillis = clock.nowEpochMillis(),
                     ),
                 )
             }

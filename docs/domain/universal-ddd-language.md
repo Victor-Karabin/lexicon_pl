@@ -24,8 +24,8 @@ Everything the learner practises comes from one of three sources: the shipped
 | Context | Owns | Package |
 | --- | --- | --- |
 | Vocabulary | Words, presets, the study set, images and translations | `interactors.presets` |
-| Training | A single practice session and what it records | `interactors.<training>` |
-| Scheduling | Review intervals, mastery, study days, streaks | `boundary.LearningRecordBoundary` |
+| Training | A single practice session and what it records | `model.training`, `interactors.<training>` |
+| Scheduling | Review intervals, mastery, study days, streaks | `model.scheduling` |
 | Program | The daily plan and its queue of trainings | `interactors.program` |
 | Course | Fixed teaching material — lessons and exercises | `interactors.course` |
 | Conjugation | Verbs, their forms, and courses over them | `interactors.conjugation` |
@@ -47,8 +47,11 @@ must not be merged.
 | Training | A kind of exercise — dictation, crossword, word search | Training | exercise type | *game*, *test* | `TrainingIds`, `trainingCatalog` |
 | Session | One run of one training, start to result screen | Training | — | *training* (that is the kind), *round* | `sessionId`, `Start*SessionUseCase` |
 | Step | One question inside a session | Training | question | *item*, *card* | `stepIndex`, `*StepResponse` |
-| Outcome | How one step was answered: correct, incorrect, skipped | Training | result | *score*, *status* | `StepOutcome`; `TrainingResultOutcomeBoundary` at the data edge |
+| Outcome | How one step was answered, or that it was only shown | Training | result | *score*, *status* | `StepOutcome` |
 | Training result | One recorded answer, kept for scheduling and statistics | Training / Scheduling | — | *history entry* | `TrainingResultBoundary` |
+| Recall quality | How well a word was remembered, as the scheduler grades it | Scheduling | — | *score* | `RecallQuality` |
+| Review settings | The policy the scheduler applies: intervals, ease, mastery threshold | Scheduling | — | *config* | `ReviewSettings` |
+| Study time policy | How much of the gap between two answers counts as studying | Scheduling | — | — | `StudyTimePolicy` |
 | Review | A later encounter with a word the learner has already met | Scheduling | — | *repetition* | `ReviewScheduleRepository`, `WordReviewEntity` |
 | Due | A word whose review interval has elapsed | Scheduling | — | *pending*, *expired* | `dueAtEpochDay` |
 | Mastery | The point at which a word or variant counts as known | Scheduling / Conjugation | — | *learned*, *complete* | `isMastered`, `MASTERY_STREAK` |
@@ -117,7 +120,7 @@ Operations that belong to no single entity.
 
 | Service | Responsibility | Code |
 | --- | --- | --- |
-| Review scheduler | Turns an outcome into the next due date | `LearningRecordBoundary` |
+| Review scheduler | Turns an outcome into the next due date | `ReviewState.next()` in `model.scheduling` |
 | Scope resolver | Turns a program's declared sources into word ids | `ResolveProgramScopeUseCase` |
 | Queue resolver | Finds the next training a day can actually run | `ProgramQueue` |
 | Conjugation splitter | Derives stem and endings from a verb's own forms | `VerbConjugation.split()` |
@@ -146,7 +149,8 @@ Introducing an event type is a domain change and requires updating this document
 | --- | --- | --- |
 | Star a word | Add it to the study set, creating it if it does not exist | `ToggleWordInStudySetUseCase`, `ToggleVerbInStudySetUseCase` |
 | Start a session | Draw words and build the steps for one training | `Start*SessionUseCase` |
-| Submit an answer | Mark one step, record it, and schedule the word | `Submit*UseCase` |
+| Submit an answer | Mark one step against the session's expected answer | `Submit*UseCase` |
+| Record an answer | Store the result, advance the review schedule, credit the study day | `RecordAnswerUseCase` |
 | Advance the day | Mark the current training done and find the next runnable one | `AdvanceProgramDayUseCase`, `ProgramQueue` |
 | Enrol / leave | Begin or abandon a program | `EnrolInProgramUseCase`, `LeaveProgramUseCase` |
 | Create a conjugation course | Fix a set of verbs as a course | `CreateConjugationCourseUseCase` |
@@ -217,6 +221,7 @@ unified.
 | Sync | Misleading — nothing is fetched from a network | Seeding, for catalogue loading |
 | Selection (conjugation) | Removed | A conjugation course |
 | Reset the course | Removed | Delete the course |
+| `TrainingResultOutcomeBoundary` | Removed — it duplicated `StepOutcome` exactly | `StepOutcome`, which now carries `SEEN` |
 
 ## Terminology Change History
 
@@ -231,6 +236,8 @@ unified.
 | 2026-08-19 | Nine per-training outcome enums → one **`StepOutcome`** | One concept had nine declarations. `TrainingResultOutcomeBoundary` stays: boundary types are the data-edge contract, and it carries `SEEN`, which no training produces |
 | 2026-08-18 | *Program title* stopped being stored data | It was never editable, so a stored copy could only go stale |
 | 2026-08-19 | *Favourite* renamed to *study set* throughout the code | The interface had always said study set; the code name was the last holdout |
+| 2026-08-19 | **`SEEN` added to `StepOutcome`; `TrainingResultOutcomeBoundary` removed** | The two enums became identical. The earlier reason for keeping the boundary copy — that only it carried `SEEN` — was the defect, not the justification: the model could not express a state the domain has |
+| 2026-08-19 | **Review scheduling moved out of `data` into `model.scheduling`** | A Room repository owned SM-2, the review policy and the study-time rule. The application now invokes the scheduler through `RecordAnswerUseCase` |
 
 ## Enforcement
 

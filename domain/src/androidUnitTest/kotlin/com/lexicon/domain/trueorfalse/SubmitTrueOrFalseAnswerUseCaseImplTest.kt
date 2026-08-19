@@ -1,19 +1,16 @@
 package com.lexicon.domain.trueorfalse
 
-import com.lexicon.boundary.TrainingHistoryRepository
-import com.lexicon.common.Clock
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerRequest
-import io.mockk.every
+import com.lexicon.model.training.StepOutcome
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class SubmitTrueOrFalseAnswerUseCaseImplTest {
-    private val trainingHistoryRepository: TrainingHistoryRepository = mockk(relaxed = true)
-    private val clock: Clock = mockk { every { nowEpochMillis() } returns 1_000L }
-    private val useCase = SubmitTrueOrFalseAnswerUseCaseImpl(trainingHistoryRepository, clock)
+    private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
+    private val useCase = SubmitTrueOrFalseAnswerUseCaseImpl(recordAnswer)
 
     private fun request(
         isCorrect: Boolean,

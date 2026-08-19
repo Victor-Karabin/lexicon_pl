@@ -1,36 +1,31 @@
 package com.lexicon.domain.wordmatch
 
-import com.lexicon.boundary.TrainingHistoryRepository
-import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.common.Clock
-import com.lexicon.domain.training.toBoundary
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.interactors.training.RecordAnswerUseCase
+import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultRequest
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultResponse
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultUseCase
+import com.lexicon.model.training.StepOutcome
 
 private const val TRAINING_TYPE_WORD_MATCH = "WORD_MATCH"
 
 class SubmitWordMatchStepResultUseCaseImpl(
-    private val trainingHistoryRepository: TrainingHistoryRepository,
-    private val clock: Clock,
+    private val recordAnswer: RecordAnswerUseCase,
 ) : SubmitWordMatchStepResultUseCase {
     override suspend fun invoke(request: SubmitWordMatchStepResultRequest): SubmitWordMatchStepResultResponse {
         val outcome = resolveOutcome(request)
-        val completedAt = clock.nowEpochMillis()
 
         request.vocabularyItemIds.forEach { vocabularyItemId ->
-            trainingHistoryRepository.recordResult(
-                TrainingResultBoundary(
+            recordAnswer(
+                RecordedAnswer(
                     sessionId = request.sessionId,
                     trainingType = TRAINING_TYPE_WORD_MATCH,
                     stepIndex = request.stepIndex,
                     vocabularyItemId = vocabularyItemId,
                     expectedAnswer = "matched",
                     submittedAnswer = request.incorrectAttempts.toString(),
-                    outcome = outcome.toBoundary(),
+                    outcome = outcome,
                     tipUsed = false,
-                    completedAtEpochMillis = completedAt,
                 ),
             )
         }

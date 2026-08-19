@@ -1,36 +1,32 @@
 package com.lexicon.domain.pronunciation
 
-import com.lexicon.boundary.TrainingHistoryRepository
-import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.common.Clock
 import com.lexicon.domain.dictation.AnswerNormalizer
-import com.lexicon.domain.training.toBoundary
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultRequest
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultResponse
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.interactors.training.RecordAnswerUseCase
+import com.lexicon.interactors.training.RecordedAnswer
+import com.lexicon.model.training.StepOutcome
 
 private const val TRAINING_TYPE_PRONUNCIATION_CHECK = "PRONUNCIATION_CHECK"
 
 class SubmitPronunciationResultUseCaseImpl(
-    private val trainingHistoryRepository: TrainingHistoryRepository,
+    private val recordAnswer: RecordAnswerUseCase,
     private val answerNormalizer: AnswerNormalizer,
-    private val clock: Clock,
 ) : SubmitPronunciationResultUseCase {
     override suspend fun invoke(request: SubmitPronunciationResultRequest): SubmitPronunciationResultResponse {
         val outcome = resolveOutcome(request)
 
-        trainingHistoryRepository.recordResult(
-            TrainingResultBoundary(
+        recordAnswer(
+            RecordedAnswer(
                 sessionId = request.sessionId,
                 trainingType = TRAINING_TYPE_PRONUNCIATION_CHECK,
                 stepIndex = request.stepIndex,
                 vocabularyItemId = request.vocabularyItemId,
                 expectedAnswer = request.expectedText,
                 submittedAnswer = request.recognizedText,
-                outcome = outcome.toBoundary(),
+                outcome = outcome,
                 tipUsed = request.tipUsed,
-                completedAtEpochMillis = clock.nowEpochMillis(),
             ),
         )
 

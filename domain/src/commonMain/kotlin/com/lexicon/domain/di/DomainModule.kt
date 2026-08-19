@@ -85,6 +85,7 @@ import com.lexicon.domain.settings.UpdateThemeModeUseCaseImpl
 import com.lexicon.domain.settings.UpdateVoiceUseCaseImpl
 import com.lexicon.domain.sync.SeedCatalogsUseCaseImpl
 import com.lexicon.domain.training.CheckTrainingReadinessUseCaseImpl
+import com.lexicon.domain.training.RecordAnswerUseCaseImpl
 import com.lexicon.domain.trueorfalse.StartTrueOrFalseSessionUseCaseImpl
 import com.lexicon.domain.trueorfalse.SubmitTrueOrFalseAnswerUseCaseImpl
 import com.lexicon.domain.wordcard.RecordWordCardSeenUseCaseImpl
@@ -174,18 +175,25 @@ import com.lexicon.interactors.settings.UpdateThemeModeUseCase
 import com.lexicon.interactors.settings.UpdateVoiceUseCase
 import com.lexicon.interactors.sync.SeedCatalogsUseCase
 import com.lexicon.interactors.training.CheckTrainingReadinessUseCase
+import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
 import com.lexicon.interactors.wordcard.RecordWordCardSeenUseCase
 import com.lexicon.interactors.wordcard.StartWordCardSessionUseCase
 import com.lexicon.interactors.wordmatch.StartWordMatchSessionUseCase
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultUseCase
+import com.lexicon.model.scheduling.ReviewSettings
+import com.lexicon.model.scheduling.StudyTimePolicy
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val domainModule = module {
+    single { ReviewSettings() }
+    single { StudyTimePolicy() }
+
     factoryOf(::AnswerNormalizer)
+    factoryOf(::RecordAnswerUseCaseImpl) { bind<RecordAnswerUseCase>() }
     factoryOf(::StepCountResolver)
 
     factoryOf(::StartDictationSessionUseCaseImpl) { bind<StartDictationSessionUseCase>() }

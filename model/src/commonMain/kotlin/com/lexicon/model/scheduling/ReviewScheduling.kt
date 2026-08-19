@@ -1,4 +1,4 @@
-package com.lexicon.common
+package com.lexicon.model.scheduling
 
 import kotlin.math.max
 import kotlin.math.min
