@@ -108,9 +108,10 @@ fun DashboardScreen(
         }
     }
 
-    LaunchedEffect(Unit) { viewModel.onResumed() }
-
-    LaunchedEffect(Unit) { viewModel.refreshConjugation() }
+    LaunchedEffect(Unit) {
+        viewModel.onResumed()
+        viewModel.refreshConjugation()
+    }
 
     DashboardContent(
         uiState = uiState,

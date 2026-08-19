@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -56,6 +58,8 @@ import kotlinx.collections.immutable.ImmutableList
 import org.koin.androidx.compose.koinViewModel
 
 private val PersonColumnWidth = 96.dp
+private val PersonRowHeight = 44.dp
+private val SpeakerSlotSize = 40.dp
 
 object ConjugationTestTags {
     const val INFINITIVE = "conjugation_infinitive"
@@ -266,6 +270,7 @@ private fun PersonRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .heightIn(min = PersonRowHeight)
             .clickable(enabled = !uiState.isAnswered && chosen != null, onClick = onCleared)
             .testTag(ConjugationTestTags.person(person.label)),
         verticalAlignment = Alignment.CenterVertically,
@@ -290,16 +295,18 @@ private fun PersonRow(
             modifier = Modifier.weight(1f),
         )
 
-        if (uiState.isAnswered) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.VolumeUp,
-                contentDescription = stringResource(R.string.word_pronounce, step.spokenForm),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier
-                    .clickable { onSpeak(step.spokenForm) }
-                    .padding(Dimens.spacingSmall)
-                    .testTag(ConjugationTestTags.play(person.label)),
-            )
+        Box(modifier = Modifier.size(SpeakerSlotSize), contentAlignment = Alignment.Center) {
+            if (uiState.isAnswered) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.VolumeUp,
+                    contentDescription = stringResource(R.string.word_pronounce, step.spokenForm),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier
+                        .clickable { onSpeak(step.spokenForm) }
+                        .padding(Dimens.spacingSmall)
+                        .testTag(ConjugationTestTags.play(person.label)),
+                )
+            }
         }
     }
 }

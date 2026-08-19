@@ -157,11 +157,12 @@ private fun StatusCard(
         shape = LexiconShapes.medium,
         color = MaterialTheme.colorScheme.surfaceContainerHigh,
     ) {
-        Column(modifier = Modifier.padding(Dimens.spacingMedium)) {
+        Column(
+            modifier = Modifier.padding(Dimens.spacingMedium),
+            verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+        ) {
             SyncStepRow(stringResource(R.string.sync_step_vocabulary), status.vocabulary)
-            Spacer(modifier = Modifier.height(Dimens.spacingMedium))
             SyncStepRow(stringResource(R.string.sync_step_presets), status.presets)
-            Spacer(modifier = Modifier.height(Dimens.spacingMedium))
             SyncStepRow(stringResource(R.string.sync_step_course), status.course)
             SyncStepRow(stringResource(R.string.sync_step_verbs), status.verbs)
 

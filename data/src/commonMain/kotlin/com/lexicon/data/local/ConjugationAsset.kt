@@ -26,7 +26,11 @@ data class ConjugationEntryAsset(
 class ConjugationAssetLoader(
     private val assets: AssetReader,
 ) {
-    fun load(): List<VerbConjugationBoundary> = parseConjugations(assets.readText(CONJUGATION_ASSET_PATH))
+    fun load(): List<VerbConjugationBoundary> = parseConjugations(readAsset())
+
+    fun fingerprint(): String = readAsset().let { "${'$'}{it.length}:${'$'}{it.hashCode()}" }
+
+    private fun readAsset(): String = assets.readText(CONJUGATION_ASSET_PATH)
 }
 
 private val conjugationJson = Json { ignoreUnknownKeys = true }

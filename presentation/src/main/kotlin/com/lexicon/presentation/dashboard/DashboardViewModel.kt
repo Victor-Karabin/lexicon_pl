@@ -70,17 +70,16 @@ class DashboardViewModel(
     init {
         viewModelScope.launch {
             observeActiveEnrolment().collect { enrolment ->
-                if (enrolment == null) {
-                    _uiState.value = DashboardUiState(isLoading = false)
-                    return@collect
-                }
-                val program = getProgram(enrolment.programId)
+                val courses = loadConjugationCourses()
+                val program = enrolment?.let { getProgram(it.programId) }
+
                 _uiState.value = DashboardUiState(
                     isLoading = false,
+                    conjugationCourses = courses,
                     program = program,
                     progress = program?.let { getProgress(it) },
-                    streakDays = getStreak(),
-                    favourites = countFavourites(),
+                    streakDays = if (program == null) 0 else getStreak(),
+                    favourites = if (program == null) 0 else countFavourites(),
                     day = program?.let { getDay(it.id) },
                 )
             }

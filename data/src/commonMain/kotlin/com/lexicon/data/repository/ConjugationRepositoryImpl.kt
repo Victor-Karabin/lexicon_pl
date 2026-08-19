@@ -12,6 +12,7 @@ import com.lexicon.data.local.ConjugationCourseVerbEntity
 import com.lexicon.data.local.ConjugationDao
 import com.lexicon.data.local.ConjugationProgressEntity
 import com.lexicon.data.local.ConjugationVerbEntity
+import com.lexicon.data.local.VocabularySyncStore
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.builtins.ListSerializer
@@ -26,6 +27,7 @@ private val formsSerializer = MapSerializer(String.serializer(), ListSerializer(
 class ConjugationRepositoryImpl(
     private val loader: ConjugationAssetLoader,
     private val dao: ConjugationDao,
+    private val syncStore: VocabularySyncStore,
     private val clock: Clock,
 ) : ConjugationRepository {
     private val json = Json { ignoreUnknownKeys = true }
@@ -34,16 +36,17 @@ class ConjugationRepositoryImpl(
 
     override suspend fun syncFromSource(): SyncOutcomeBoundary =
         lock.withLock {
+            val fingerprint = loader.fingerprint()
+
+            if (fingerprint == syncStore.syncedVerbFingerprint() && dao.countVerbs() > 0) {
+                return@withLock SyncOutcomeBoundary(total = dao.countVerbs(), added = 0, updated = 0, removed = 0)
+            }
+
             val before = dao.countVerbs()
             seed()
-            val after = dao.countVerbs()
+            syncStore.setSyncedVerbFingerprint(fingerprint)
 
-            SyncOutcomeBoundary(
-                total = after,
-                added = (after - before).coerceAtLeast(0),
-                updated = if (before == 0) 0 else minOf(before, after),
-                removed = 0,
-            )
+            SyncOutcomeBoundary(total = dao.countVerbs(), added = (dao.countVerbs() - before).coerceAtLeast(0), updated = 0, removed = 0)
         }
 
     override suspend fun countVerbs(): Int = dao.countVerbs()
