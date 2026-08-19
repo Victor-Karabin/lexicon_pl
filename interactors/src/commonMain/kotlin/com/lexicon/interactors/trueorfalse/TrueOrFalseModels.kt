@@ -1,7 +1,5 @@
 package com.lexicon.interactors.trueorfalse
 
-enum class TrueOrFalseStepOutcome { CORRECT, INCORRECT }
-
 data class TrueOrFalseStepResponse(
     val stepIndex: Int,
     val vocabularyItemId: Long,

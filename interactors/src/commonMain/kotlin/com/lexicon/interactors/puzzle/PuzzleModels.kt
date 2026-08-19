@@ -1,7 +1,5 @@
 package com.lexicon.interactors.puzzle
 
-enum class PuzzleStepOutcome { CORRECT, INCORRECT, SKIPPED }
-
 data class PuzzleStepResponse(
     val stepIndex: Int,
     val vocabularyItemId: Long,

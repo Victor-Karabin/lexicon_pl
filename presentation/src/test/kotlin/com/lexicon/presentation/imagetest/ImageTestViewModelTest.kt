@@ -4,11 +4,11 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.imagetest.ImageTestSessionResponse
-import com.lexicon.interactors.imagetest.ImageTestStepOutcome
 import com.lexicon.interactors.imagetest.ImageTestStepResponse
 import com.lexicon.interactors.imagetest.StartImageTestSessionUseCase
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerResponse
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
+import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -78,7 +78,7 @@ class ImageTestViewModelTest {
     fun `session completion stashes a per-word result for the Results screen`() =
         runTest {
             coEvery { startUseCase(any()) } returns session("kot" to "cat")
-            coEvery { submitUseCase(any()) } returns SubmitImageTestAnswerResponse(ImageTestStepOutcome.CORRECT, "kot")
+            coEvery { submitUseCase(any()) } returns SubmitImageTestAnswerResponse(StepOutcome.CORRECT, "kot")
 
             val viewModel = viewModel()
             testDispatcher.scheduler.advanceUntilIdle()
@@ -97,7 +97,7 @@ class ImageTestViewModelTest {
     fun `skip records Skipped and auto-advances without a manual Next`() =
         runTest {
             coEvery { startUseCase(any()) } returns session("kot" to "cat")
-            coEvery { submitUseCase(any()) } returns SubmitImageTestAnswerResponse(ImageTestStepOutcome.SKIPPED, "kot")
+            coEvery { submitUseCase(any()) } returns SubmitImageTestAnswerResponse(StepOutcome.SKIPPED, "kot")
 
             val viewModel = viewModel()
             testDispatcher.scheduler.advanceUntilIdle()
@@ -117,7 +117,7 @@ class ImageTestViewModelTest {
     fun `an incorrect answer waits for a manual Next, unlike Skip`() =
         runTest {
             coEvery { startUseCase(any()) } returns session("kot" to "cat", "pies" to "dog")
-            coEvery { submitUseCase(any()) } returns SubmitImageTestAnswerResponse(ImageTestStepOutcome.INCORRECT, "kot")
+            coEvery { submitUseCase(any()) } returns SubmitImageTestAnswerResponse(StepOutcome.INCORRECT, "kot")
 
             val viewModel = viewModel()
             testDispatcher.scheduler.advanceUntilIdle()

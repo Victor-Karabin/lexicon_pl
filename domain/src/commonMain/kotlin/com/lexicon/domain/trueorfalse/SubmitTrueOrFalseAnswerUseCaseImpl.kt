@@ -2,12 +2,12 @@ package com.lexicon.domain.trueorfalse
 
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.boundary.TrainingResultOutcomeBoundary
 import com.lexicon.common.Clock
+import com.lexicon.domain.training.toBoundary
+import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerRequest
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerResponse
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
-import com.lexicon.interactors.trueorfalse.TrueOrFalseStepOutcome
 
 private const val TRAINING_TYPE_TRUE_OR_FALSE = "TRUE_OR_FALSE"
 
@@ -38,16 +38,10 @@ class SubmitTrueOrFalseAnswerUseCaseImpl(
         )
     }
 
-    private fun resolveOutcome(request: SubmitTrueOrFalseAnswerRequest): TrueOrFalseStepOutcome =
+    private fun resolveOutcome(request: SubmitTrueOrFalseAnswerRequest): StepOutcome =
         if (request.userAnsweredTrue == request.isDisplayedTranslationCorrect) {
-            TrueOrFalseStepOutcome.CORRECT
+            StepOutcome.CORRECT
         } else {
-            TrueOrFalseStepOutcome.INCORRECT
-        }
-
-    private fun TrueOrFalseStepOutcome.toBoundary(): TrainingResultOutcomeBoundary =
-        when (this) {
-            TrueOrFalseStepOutcome.CORRECT -> TrainingResultOutcomeBoundary.CORRECT
-            TrueOrFalseStepOutcome.INCORRECT -> TrainingResultOutcomeBoundary.INCORRECT
+            StepOutcome.INCORRECT
         }
 }

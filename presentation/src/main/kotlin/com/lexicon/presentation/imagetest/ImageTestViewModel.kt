@@ -4,12 +4,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
-import com.lexicon.interactors.imagetest.ImageTestStepOutcome
 import com.lexicon.interactors.imagetest.ImageTestStepResponse
 import com.lexicon.interactors.imagetest.StartImageTestSessionRequest
 import com.lexicon.interactors.imagetest.StartImageTestSessionUseCase
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerRequest
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
+import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -117,23 +117,23 @@ class ImageTestViewModel(
 
     private suspend fun applyOutcome(
         step: ImageTestStepResponse,
-        outcome: ImageTestStepOutcome,
+        outcome: StepOutcome,
         correctOption: String,
     ) {
         when (outcome) {
-            ImageTestStepOutcome.CORRECT -> {
+            StepOutcome.CORRECT -> {
                 correctCount++
                 wordResults += WordResultEntry(correctOption, step.clueText, AnswerState.Correct)
                 updateLoaded { it.copy(answerState = AnswerState.Correct, correctOption = correctOption) }
                 delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                 advanceToNextStep()
             }
-            ImageTestStepOutcome.INCORRECT -> {
+            StepOutcome.INCORRECT -> {
                 incorrectCount++
                 wordResults += WordResultEntry(correctOption, step.clueText, AnswerState.Incorrect(correctOption))
                 updateLoaded { it.copy(answerState = AnswerState.Incorrect(), correctOption = correctOption) }
             }
-            ImageTestStepOutcome.SKIPPED -> {
+            StepOutcome.SKIPPED -> {
                 skippedCount++
                 wordResults += WordResultEntry(correctOption, step.clueText, AnswerState.Skipped(correctOption))
                 updateLoaded { it.copy(answerState = AnswerState.Skipped(), correctOption = correctOption) }

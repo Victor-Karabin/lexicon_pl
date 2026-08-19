@@ -1,5 +1,7 @@
 package com.lexicon.interactors.puzzle
 
+import com.lexicon.interactors.training.StepOutcome
+
 data class SubmitPuzzleAnswerRequest(
     val sessionId: String,
     val stepIndex: Int,
@@ -11,7 +13,7 @@ data class SubmitPuzzleAnswerRequest(
 )
 
 data class SubmitPuzzleAnswerResponse(
-    val outcome: PuzzleStepOutcome,
+    val outcome: StepOutcome,
     val expectedText: String,
 )
 

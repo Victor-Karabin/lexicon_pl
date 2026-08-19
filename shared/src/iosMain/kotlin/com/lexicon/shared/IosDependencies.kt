@@ -65,8 +65,8 @@ import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.interactors.settings.ObserveSettingsUseCase
 import com.lexicon.interactors.settings.UpdateStepCountUseCase
 import com.lexicon.interactors.settings.UpdateThemeModeUseCase
-import com.lexicon.interactors.sync.CatalogSyncStatus
-import com.lexicon.interactors.sync.SyncCatalogUseCase
+import com.lexicon.interactors.sync.CatalogSeedStatus
+import com.lexicon.interactors.sync.SeedCatalogsUseCase
 import com.lexicon.interactors.training.CheckTrainingReadinessUseCase
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
@@ -85,7 +85,7 @@ import org.koin.core.component.inject
 
 @Suppress("TooManyFunctions")
 object IosDependencies : KoinComponent {
-    val syncCatalog: SyncCatalogUseCase by inject()
+    val seedCatalogs: SeedCatalogsUseCase by inject()
     val observeSettings: ObserveSettingsUseCase by inject()
     val updateThemeMode: UpdateThemeModeUseCase by inject()
     val updateStepCount: UpdateStepCountUseCase by inject()
@@ -159,7 +159,7 @@ object IosDependencies : KoinComponent {
     val startWordCard: StartWordCardSessionUseCase by inject()
     val recordWordCardSeen: RecordWordCardSeenUseCase by inject()
 
-    fun watchCatalogSync(onEach: (CatalogSyncStatus) -> Unit): Cancellable = syncCatalog().watch(onEach)
+    fun watchCatalogSync(onEach: (CatalogSeedStatus) -> Unit): Cancellable = seedCatalogs().watch(onEach)
 
     fun watchSettings(onEach: (AppSettings) -> Unit): Cancellable = observeSettings().watch(onEach)
 

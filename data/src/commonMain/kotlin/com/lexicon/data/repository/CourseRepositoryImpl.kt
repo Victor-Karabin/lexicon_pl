@@ -5,7 +5,7 @@ import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.LessonBoundary
 import com.lexicon.boundary.LessonExerciseBoundary
 import com.lexicon.boundary.LessonSummaryBoundary
-import com.lexicon.boundary.SyncOutcomeBoundary
+import com.lexicon.boundary.SeedOutcomeBoundary
 import com.lexicon.common.Clock
 import com.lexicon.data.local.CourseDao
 import com.lexicon.data.local.CourseSeeder
@@ -21,7 +21,7 @@ class CourseRepositoryImpl(
     private val seeder: CourseSeeder,
     private val clock: Clock,
 ) : CourseRepository {
-    override suspend fun syncFromSource(): SyncOutcomeBoundary = seeder.sync()
+    override suspend fun seedFromAsset(): SeedOutcomeBoundary = seeder.sync()
 
     override fun observeCourses(): Flow<List<CourseBoundary>> =
         combine(

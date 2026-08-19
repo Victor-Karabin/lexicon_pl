@@ -2,12 +2,12 @@ package com.lexicon.domain.imagetest
 
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.boundary.TrainingResultOutcomeBoundary
 import com.lexicon.common.Clock
-import com.lexicon.interactors.imagetest.ImageTestStepOutcome
+import com.lexicon.domain.training.toBoundary
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerRequest
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerResponse
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
+import com.lexicon.interactors.training.StepOutcome
 
 private const val TRAINING_TYPE_IMAGE_TEST = "IMAGE_TEST"
 
@@ -35,17 +35,10 @@ class SubmitImageTestAnswerUseCaseImpl(
         return SubmitImageTestAnswerResponse(outcome = outcome, correctOption = request.correctOption)
     }
 
-    private fun resolveOutcome(request: SubmitImageTestAnswerRequest): ImageTestStepOutcome =
+    private fun resolveOutcome(request: SubmitImageTestAnswerRequest): StepOutcome =
         when {
-            request.skipped -> ImageTestStepOutcome.SKIPPED
-            request.selectedOption == request.correctOption -> ImageTestStepOutcome.CORRECT
-            else -> ImageTestStepOutcome.INCORRECT
-        }
-
-    private fun ImageTestStepOutcome.toBoundary(): TrainingResultOutcomeBoundary =
-        when (this) {
-            ImageTestStepOutcome.CORRECT -> TrainingResultOutcomeBoundary.CORRECT
-            ImageTestStepOutcome.INCORRECT -> TrainingResultOutcomeBoundary.INCORRECT
-            ImageTestStepOutcome.SKIPPED -> TrainingResultOutcomeBoundary.SKIPPED
+            request.skipped -> StepOutcome.SKIPPED
+            request.selectedOption == request.correctOption -> StepOutcome.CORRECT
+            else -> StepOutcome.INCORRECT
         }
 }

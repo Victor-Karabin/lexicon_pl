@@ -4,8 +4,8 @@ import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.TrainingResultBoundary
 import com.lexicon.boundary.TrainingResultOutcomeBoundary
 import com.lexicon.common.Clock
-import com.lexicon.interactors.dictation.DictationStepOutcome
 import com.lexicon.interactors.dictation.SubmitDictationAnswerRequest
+import com.lexicon.interactors.training.StepOutcome
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
@@ -41,21 +41,21 @@ class SubmitDictationAnswerUseCaseImplTest {
     fun `matching answer without tip is Correct`() =
         runTest {
             val response = useCase(request(submittedText = "Kot"))
-            assertEquals(DictationStepOutcome.CORRECT, response.outcome)
+            assertEquals(StepOutcome.CORRECT, response.outcome)
         }
 
     @Test
     fun `non-matching answer is Incorrect`() =
         runTest {
             val response = useCase(request(submittedText = "pies"))
-            assertEquals(DictationStepOutcome.INCORRECT, response.outcome)
+            assertEquals(StepOutcome.INCORRECT, response.outcome)
         }
 
     @Test
     fun `matching answer with tip used is still Correct — tip usage doesn't affect the outcome`() =
         runTest {
             val response = useCase(request(submittedText = "kot", tipUsed = true))
-            assertEquals(DictationStepOutcome.CORRECT, response.outcome)
+            assertEquals(StepOutcome.CORRECT, response.outcome)
         }
 
     @Test
@@ -74,7 +74,7 @@ class SubmitDictationAnswerUseCaseImplTest {
     fun `skipped step is Skipped even if text happens to be submitted`() =
         runTest {
             val response = useCase(request(submittedText = "kot", skipped = true))
-            assertEquals(DictationStepOutcome.SKIPPED, response.outcome)
+            assertEquals(StepOutcome.SKIPPED, response.outcome)
         }
 
     @Test

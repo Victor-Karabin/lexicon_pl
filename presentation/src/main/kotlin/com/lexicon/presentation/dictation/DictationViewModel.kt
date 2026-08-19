@@ -5,12 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.android.speech.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
-import com.lexicon.interactors.dictation.DictationStepOutcome
 import com.lexicon.interactors.dictation.DictationStepResponse
 import com.lexicon.interactors.dictation.StartDictationSessionRequest
 import com.lexicon.interactors.dictation.StartDictationSessionUseCase
 import com.lexicon.interactors.dictation.SubmitDictationAnswerRequest
 import com.lexicon.interactors.dictation.SubmitDictationAnswerUseCase
+import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -127,13 +127,13 @@ class DictationViewModel(
     }
 
     private suspend fun applyOutcome(
-        outcome: DictationStepOutcome,
+        outcome: StepOutcome,
         expectedText: String,
         tipUsed: Boolean,
     ) {
         val step = currentStepOrNull()
         when (outcome) {
-            DictationStepOutcome.CORRECT -> {
+            StepOutcome.CORRECT -> {
                 correctCount++
                 step?.let {
                     wordResults += WordResultEntry(it.expectedText, it.translationText, AnswerState.Correct, tipUsed)
@@ -142,7 +142,7 @@ class DictationViewModel(
                 delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                 advanceToNextStep()
             }
-            DictationStepOutcome.INCORRECT -> {
+            StepOutcome.INCORRECT -> {
                 incorrectCount++
                 step?.let {
                     wordResults +=
@@ -152,7 +152,7 @@ class DictationViewModel(
                     it.copy(answerState = AnswerState.Incorrect(expectedText), isSubmitting = false)
                 }
             }
-            DictationStepOutcome.SKIPPED -> {
+            StepOutcome.SKIPPED -> {
                 skippedCount++
                 step?.let {
                     wordResults +=

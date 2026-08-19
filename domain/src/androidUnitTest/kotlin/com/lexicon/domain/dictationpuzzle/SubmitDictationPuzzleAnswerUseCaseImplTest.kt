@@ -4,8 +4,8 @@ import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.TrainingResultBoundary
 import com.lexicon.common.Clock
 import com.lexicon.domain.dictation.AnswerNormalizer
-import com.lexicon.interactors.dictationpuzzle.DictationPuzzleStepOutcome
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerRequest
+import com.lexicon.interactors.training.StepOutcome
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
@@ -36,14 +36,14 @@ class SubmitDictationPuzzleAnswerUseCaseImplTest {
     fun `matching tiles without tip is Correct`() =
         runTest {
             val response = useCase(request(submittedText = "kot"))
-            assertEquals(DictationPuzzleStepOutcome.CORRECT, response.outcome)
+            assertEquals(StepOutcome.CORRECT, response.outcome)
         }
 
     @Test
     fun `matching tiles with tip used is still Correct — tip usage doesn't affect the outcome`() =
         runTest {
             val response = useCase(request(submittedText = "kot", tipUsed = true))
-            assertEquals(DictationPuzzleStepOutcome.CORRECT, response.outcome)
+            assertEquals(StepOutcome.CORRECT, response.outcome)
         }
 
     @Test
@@ -62,6 +62,6 @@ class SubmitDictationPuzzleAnswerUseCaseImplTest {
     fun `skip is Skipped regardless of tip`() =
         runTest {
             val response = useCase(request(skipped = true, tipUsed = true))
-            assertEquals(DictationPuzzleStepOutcome.SKIPPED, response.outcome)
+            assertEquals(StepOutcome.SKIPPED, response.outcome)
         }
 }

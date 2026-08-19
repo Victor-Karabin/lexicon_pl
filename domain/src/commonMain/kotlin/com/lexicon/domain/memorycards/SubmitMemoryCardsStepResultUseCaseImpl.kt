@@ -2,12 +2,12 @@ package com.lexicon.domain.memorycards
 
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.boundary.TrainingResultOutcomeBoundary
 import com.lexicon.common.Clock
-import com.lexicon.interactors.memorycards.MemoryCardsStepOutcome
+import com.lexicon.domain.training.toBoundary
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultRequest
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultResponse
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
+import com.lexicon.interactors.training.StepOutcome
 
 private const val TRAINING_TYPE_MEMORY_CARDS = "MEMORY_CARDS"
 
@@ -38,17 +38,10 @@ class SubmitMemoryCardsStepResultUseCaseImpl(
         return SubmitMemoryCardsStepResultResponse(outcome = outcome)
     }
 
-    private fun resolveOutcome(request: SubmitMemoryCardsStepResultRequest): MemoryCardsStepOutcome =
+    private fun resolveOutcome(request: SubmitMemoryCardsStepResultRequest): StepOutcome =
         when {
-            request.skipped -> MemoryCardsStepOutcome.SKIPPED
-            request.incorrectAttempts == 0 -> MemoryCardsStepOutcome.CORRECT
-            else -> MemoryCardsStepOutcome.INCORRECT
-        }
-
-    private fun MemoryCardsStepOutcome.toBoundary(): TrainingResultOutcomeBoundary =
-        when (this) {
-            MemoryCardsStepOutcome.CORRECT -> TrainingResultOutcomeBoundary.CORRECT
-            MemoryCardsStepOutcome.INCORRECT -> TrainingResultOutcomeBoundary.INCORRECT
-            MemoryCardsStepOutcome.SKIPPED -> TrainingResultOutcomeBoundary.SKIPPED
+            request.skipped -> StepOutcome.SKIPPED
+            request.incorrectAttempts == 0 -> StepOutcome.CORRECT
+            else -> StepOutcome.INCORRECT
         }
 }

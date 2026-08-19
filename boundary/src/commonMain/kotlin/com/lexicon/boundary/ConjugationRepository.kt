@@ -21,7 +21,7 @@ data class ConjugationProgressBoundary(
 )
 
 interface ConjugationRepository {
-    suspend fun syncFromSource(): SyncOutcomeBoundary
+    suspend fun seedFromAsset(): SeedOutcomeBoundary
 
     suspend fun countVerbs(): Int
 

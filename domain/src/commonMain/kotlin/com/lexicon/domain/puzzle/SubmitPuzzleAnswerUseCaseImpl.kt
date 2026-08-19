@@ -2,13 +2,13 @@ package com.lexicon.domain.puzzle
 
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.boundary.TrainingResultOutcomeBoundary
 import com.lexicon.common.Clock
 import com.lexicon.domain.dictation.AnswerNormalizer
-import com.lexicon.interactors.puzzle.PuzzleStepOutcome
+import com.lexicon.domain.training.toBoundary
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerRequest
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerResponse
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerUseCase
+import com.lexicon.interactors.training.StepOutcome
 
 private const val TRAINING_TYPE_PUZZLE = "PUZZLE"
 
@@ -37,17 +37,10 @@ class SubmitPuzzleAnswerUseCaseImpl(
         return SubmitPuzzleAnswerResponse(outcome = outcome, expectedText = request.expectedText)
     }
 
-    private fun resolveOutcome(request: SubmitPuzzleAnswerRequest): PuzzleStepOutcome =
+    private fun resolveOutcome(request: SubmitPuzzleAnswerRequest): StepOutcome =
         when {
-            request.skipped -> PuzzleStepOutcome.SKIPPED
-            answerNormalizer.matches(request.expectedText, request.submittedText) -> PuzzleStepOutcome.CORRECT
-            else -> PuzzleStepOutcome.INCORRECT
-        }
-
-    private fun PuzzleStepOutcome.toBoundary(): TrainingResultOutcomeBoundary =
-        when (this) {
-            PuzzleStepOutcome.CORRECT -> TrainingResultOutcomeBoundary.CORRECT
-            PuzzleStepOutcome.INCORRECT -> TrainingResultOutcomeBoundary.INCORRECT
-            PuzzleStepOutcome.SKIPPED -> TrainingResultOutcomeBoundary.SKIPPED
+            request.skipped -> StepOutcome.SKIPPED
+            answerNormalizer.matches(request.expectedText, request.submittedText) -> StepOutcome.CORRECT
+            else -> StepOutcome.INCORRECT
         }
 }

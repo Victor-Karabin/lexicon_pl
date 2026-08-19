@@ -1,5 +1,7 @@
 package com.lexicon.interactors.memorycards
 
+import com.lexicon.interactors.training.StepOutcome
+
 data class SubmitMemoryCardsStepResultRequest(
     val sessionId: String,
     val stepIndex: Int,
@@ -9,7 +11,7 @@ data class SubmitMemoryCardsStepResultRequest(
 )
 
 data class SubmitMemoryCardsStepResultResponse(
-    val outcome: MemoryCardsStepOutcome,
+    val outcome: StepOutcome,
 )
 
 interface SubmitMemoryCardsStepResultUseCase {

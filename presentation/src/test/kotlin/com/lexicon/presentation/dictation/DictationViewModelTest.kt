@@ -5,12 +5,12 @@ import app.cash.turbine.test
 import com.lexicon.android.speech.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.dictation.DictationSessionResponse
-import com.lexicon.interactors.dictation.DictationStepOutcome
 import com.lexicon.interactors.dictation.DictationStepResponse
 import com.lexicon.interactors.dictation.StartDictationSessionRequest
 import com.lexicon.interactors.dictation.StartDictationSessionUseCase
 import com.lexicon.interactors.dictation.SubmitDictationAnswerResponse
 import com.lexicon.interactors.dictation.SubmitDictationAnswerUseCase
+import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -123,7 +123,7 @@ class DictationViewModelTest {
     fun `correct answer marks Correct, auto-advances, then reports session complete`() =
         runTest {
             coEvery { startUseCase(any()) } returns session("kot")
-            coEvery { submitUseCase(any()) } returns SubmitDictationAnswerResponse(DictationStepOutcome.CORRECT, "kot")
+            coEvery { submitUseCase(any()) } returns SubmitDictationAnswerResponse(StepOutcome.CORRECT, "kot")
 
             val viewModel = viewModel()
             testDispatcher.scheduler.advanceUntilIdle()
@@ -145,7 +145,7 @@ class DictationViewModelTest {
     fun `incorrect answer reveals the expected text and waits for Next`() =
         runTest {
             coEvery { startUseCase(any()) } returns session("kot", "pies")
-            coEvery { submitUseCase(any()) } returns SubmitDictationAnswerResponse(DictationStepOutcome.INCORRECT, "kot")
+            coEvery { submitUseCase(any()) } returns SubmitDictationAnswerResponse(StepOutcome.INCORRECT, "kot")
 
             val viewModel = viewModel()
             testDispatcher.scheduler.advanceUntilIdle()
@@ -165,7 +165,7 @@ class DictationViewModelTest {
     fun `skip records Skipped, reveals the expected text, then auto-advances`() =
         runTest {
             coEvery { startUseCase(any()) } returns session("kot")
-            coEvery { submitUseCase(any()) } returns SubmitDictationAnswerResponse(DictationStepOutcome.SKIPPED, "kot")
+            coEvery { submitUseCase(any()) } returns SubmitDictationAnswerResponse(StepOutcome.SKIPPED, "kot")
 
             val viewModel = viewModel()
             testDispatcher.scheduler.advanceUntilIdle()
@@ -204,7 +204,7 @@ class DictationViewModelTest {
     fun `rapid double-tap on Check only submits once`() =
         runTest {
             coEvery { startUseCase(any()) } returns session("kot")
-            coEvery { submitUseCase(any()) } returns SubmitDictationAnswerResponse(DictationStepOutcome.INCORRECT, "kot")
+            coEvery { submitUseCase(any()) } returns SubmitDictationAnswerResponse(StepOutcome.INCORRECT, "kot")
 
             val viewModel = viewModel()
             testDispatcher.scheduler.advanceUntilIdle()
@@ -221,7 +221,7 @@ class DictationViewModelTest {
     fun `rapid double-tap on Next only advances once`() =
         runTest {
             coEvery { startUseCase(any()) } returns session("kot", "pies")
-            coEvery { submitUseCase(any()) } returns SubmitDictationAnswerResponse(DictationStepOutcome.INCORRECT, "kot")
+            coEvery { submitUseCase(any()) } returns SubmitDictationAnswerResponse(StepOutcome.INCORRECT, "kot")
 
             val viewModel = viewModel()
             testDispatcher.scheduler.advanceUntilIdle()
@@ -240,7 +240,7 @@ class DictationViewModelTest {
     fun `session completion stashes a per-word result for the Results screen`() =
         runTest {
             coEvery { startUseCase(any()) } returns session("kot")
-            coEvery { submitUseCase(any()) } returns SubmitDictationAnswerResponse(DictationStepOutcome.CORRECT, "kot")
+            coEvery { submitUseCase(any()) } returns SubmitDictationAnswerResponse(StepOutcome.CORRECT, "kot")
 
             val viewModel = viewModel()
             testDispatcher.scheduler.advanceUntilIdle()

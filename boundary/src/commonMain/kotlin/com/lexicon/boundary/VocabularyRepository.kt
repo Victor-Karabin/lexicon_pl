@@ -3,7 +3,7 @@ package com.lexicon.boundary
 import kotlinx.coroutines.flow.Flow
 
 interface VocabularyRepository {
-    suspend fun syncFromSource(): SyncOutcomeBoundary
+    suspend fun seedFromAsset(): SeedOutcomeBoundary
 
     suspend fun getRandomItems(
         count: Int,

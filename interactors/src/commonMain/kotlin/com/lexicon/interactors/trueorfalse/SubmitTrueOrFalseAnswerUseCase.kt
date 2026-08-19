@@ -1,5 +1,7 @@
 package com.lexicon.interactors.trueorfalse
 
+import com.lexicon.interactors.training.StepOutcome
+
 data class SubmitTrueOrFalseAnswerRequest(
     val sessionId: String,
     val stepIndex: Int,
@@ -9,7 +11,7 @@ data class SubmitTrueOrFalseAnswerRequest(
 )
 
 data class SubmitTrueOrFalseAnswerResponse(
-    val outcome: TrueOrFalseStepOutcome,
+    val outcome: StepOutcome,
     val isDisplayedTranslationCorrect: Boolean,
 )
 

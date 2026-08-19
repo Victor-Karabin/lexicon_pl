@@ -1,7 +1,5 @@
 package com.lexicon.interactors.memorycards
 
-enum class MemoryCardsStepOutcome { CORRECT, INCORRECT, SKIPPED }
-
 data class MemoryCardsPairResponse(
     val vocabularyItemId: Long,
     val imageUrl: String?,

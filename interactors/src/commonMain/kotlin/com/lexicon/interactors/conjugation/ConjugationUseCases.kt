@@ -30,13 +30,13 @@ interface DeleteConjugationCourseUseCase {
     suspend operator fun invoke(courseId: String)
 }
 
-interface NextConjugationQuestionUseCase {
-    suspend operator fun invoke(courseId: String): ConjugationQuestion?
+interface NextConjugationTableUseCase {
+    suspend operator fun invoke(courseId: String): ConjugationTable?
 }
 
 data class SubmitConjugationAnswerRequest(
     val courseId: String,
-    val question: ConjugationQuestion,
+    val table: ConjugationTable,
     val answers: Map<GrammaticalPerson, String?>,
 )
 

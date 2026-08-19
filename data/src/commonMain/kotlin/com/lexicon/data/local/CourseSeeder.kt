@@ -1,6 +1,6 @@
 package com.lexicon.data.local
 
-import com.lexicon.boundary.SyncOutcomeBoundary
+import com.lexicon.boundary.SeedOutcomeBoundary
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlin.concurrent.Volatile
@@ -8,7 +8,7 @@ import kotlin.concurrent.Volatile
 class CourseSeeder(
     private val courseDao: CourseDao,
     private val loader: CourseAssetLoader,
-    private val syncStore: VocabularySyncStore,
+    private val syncStore: CatalogSeedStore,
 ) {
     private val mutex = Mutex()
 
@@ -20,13 +20,13 @@ class CourseSeeder(
         sync()
     }
 
-    suspend fun sync(): SyncOutcomeBoundary =
+    suspend fun sync(): SeedOutcomeBoundary =
         mutex.withLock {
             val fingerprint = loader.fingerprint()
             val stored = courseDao.countLessons()
             if (fingerprint == syncStore.syncedCourseFingerprint() && stored > 0) {
                 syncedThisProcess = true
-                return@withLock SyncOutcomeBoundary(total = stored, added = 0, updated = 0, removed = 0)
+                return@withLock SeedOutcomeBoundary(total = stored, added = 0, updated = 0, removed = 0)
             }
 
             val catalog = loader.load()
@@ -42,7 +42,7 @@ class CourseSeeder(
             syncStore.setSyncedCourseFingerprint(fingerprint)
             syncedThisProcess = true
 
-            SyncOutcomeBoundary(
+            SeedOutcomeBoundary(
                 total = lessons.size,
                 added = lessons.size - stored.coerceAtMost(lessons.size),
                 updated = stored.coerceAtMost(lessons.size),

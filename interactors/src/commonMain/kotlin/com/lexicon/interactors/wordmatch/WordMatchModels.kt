@@ -1,7 +1,5 @@
 package com.lexicon.interactors.wordmatch
 
-enum class WordMatchStepOutcome { CORRECT, INCORRECT }
-
 data class WordMatchPairResponse(
     val vocabularyItemId: Long,
     val word: String,

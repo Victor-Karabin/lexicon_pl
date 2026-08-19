@@ -2,14 +2,14 @@ package com.lexicon.domain.crossword
 
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.TrainingResultBoundary
-import com.lexicon.boundary.TrainingResultOutcomeBoundary
 import com.lexicon.common.Clock
 import com.lexicon.domain.dictation.AnswerNormalizer
-import com.lexicon.interactors.crossword.CrosswordWordOutcome
+import com.lexicon.domain.training.toBoundary
 import com.lexicon.interactors.crossword.CrosswordWordResult
 import com.lexicon.interactors.crossword.SubmitCrosswordRequest
 import com.lexicon.interactors.crossword.SubmitCrosswordResponse
 import com.lexicon.interactors.crossword.SubmitCrosswordUseCase
+import com.lexicon.interactors.training.StepOutcome
 
 private const val TRAINING_TYPE_CROSSWORD = "CROSSWORD"
 
@@ -23,9 +23,9 @@ class SubmitCrosswordUseCaseImpl(
 
         val wordResults = request.words.mapIndexed { index, submission ->
             val outcome = if (answerNormalizer.matches(submission.expectedText, submission.submittedText)) {
-                CrosswordWordOutcome.CORRECT
+                StepOutcome.CORRECT
             } else {
-                CrosswordWordOutcome.INCORRECT
+                StepOutcome.INCORRECT
             }
             trainingHistoryRepository.recordResult(
                 TrainingResultBoundary(
@@ -44,15 +44,9 @@ class SubmitCrosswordUseCaseImpl(
         }
 
         val isFullyCorrect = wordResults.isNotEmpty() &&
-            wordResults.all { it.outcome == CrosswordWordOutcome.CORRECT } &&
+            wordResults.all { it.outcome == StepOutcome.CORRECT } &&
             wordResults.none { it.tipUsed }
 
         return SubmitCrosswordResponse(wordResults = wordResults, isFullyCorrect = isFullyCorrect)
     }
-
-    private fun CrosswordWordOutcome.toBoundary(): TrainingResultOutcomeBoundary =
-        when (this) {
-            CrosswordWordOutcome.CORRECT -> TrainingResultOutcomeBoundary.CORRECT
-            CrosswordWordOutcome.INCORRECT -> TrainingResultOutcomeBoundary.INCORRECT
-        }
 }

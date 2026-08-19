@@ -1,6 +1,6 @@
 package com.lexicon.data.repository
 
-import com.lexicon.boundary.SyncOutcomeBoundary
+import com.lexicon.boundary.SeedOutcomeBoundary
 import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.data.local.VocabularySeeder
@@ -50,7 +50,7 @@ class VocabularyRepositoryImpl(
             ).map { it.toBoundary() }
     }
 
-    override suspend fun syncFromSource(): SyncOutcomeBoundary = vocabularySeeder.sync()
+    override suspend fun seedFromAsset(): SeedOutcomeBoundary = vocabularySeeder.sync()
 
     override suspend fun createWord(
         text: String,

@@ -1,5 +1,7 @@
 package com.lexicon.interactors.dictation
 
+import com.lexicon.interactors.training.StepOutcome
+
 data class SubmitDictationAnswerRequest(
     val sessionId: String,
     val stepIndex: Int,
@@ -11,7 +13,7 @@ data class SubmitDictationAnswerRequest(
 )
 
 data class SubmitDictationAnswerResponse(
-    val outcome: DictationStepOutcome,
+    val outcome: StepOutcome,
     val expectedText: String,
 )
 

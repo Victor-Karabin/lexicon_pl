@@ -12,7 +12,7 @@ import com.lexicon.domain.conjugation.LoadConjugationProgressUseCaseImpl
 import com.lexicon.domain.conjugation.LoadConjugationVerbsUseCaseImpl
 import com.lexicon.domain.conjugation.LoadFavouriteVerbsUseCaseImpl
 import com.lexicon.domain.conjugation.LoadVerbImageChoicesUseCaseImpl
-import com.lexicon.domain.conjugation.NextConjugationQuestionUseCaseImpl
+import com.lexicon.domain.conjugation.NextConjugationTableUseCaseImpl
 import com.lexicon.domain.conjugation.RestoreConjugationVerbsUseCaseImpl
 import com.lexicon.domain.conjugation.SubmitConjugationAnswerUseCaseImpl
 import com.lexicon.domain.course.CheckExerciseAnswerUseCaseImpl
@@ -83,7 +83,7 @@ import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.domain.settings.UpdateStepCountUseCaseImpl
 import com.lexicon.domain.settings.UpdateThemeModeUseCaseImpl
 import com.lexicon.domain.settings.UpdateVoiceUseCaseImpl
-import com.lexicon.domain.sync.SyncCatalogUseCaseImpl
+import com.lexicon.domain.sync.SeedCatalogsUseCaseImpl
 import com.lexicon.domain.training.CheckTrainingReadinessUseCaseImpl
 import com.lexicon.domain.trueorfalse.StartTrueOrFalseSessionUseCaseImpl
 import com.lexicon.domain.trueorfalse.SubmitTrueOrFalseAnswerUseCaseImpl
@@ -103,7 +103,7 @@ import com.lexicon.interactors.conjugation.LoadConjugationProgressUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadFavouriteVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadVerbImageChoicesUseCase
-import com.lexicon.interactors.conjugation.NextConjugationQuestionUseCase
+import com.lexicon.interactors.conjugation.NextConjugationTableUseCase
 import com.lexicon.interactors.conjugation.RestoreConjugationVerbsUseCase
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
 import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
@@ -172,7 +172,7 @@ import com.lexicon.interactors.settings.ObserveSettingsUseCase
 import com.lexicon.interactors.settings.UpdateStepCountUseCase
 import com.lexicon.interactors.settings.UpdateThemeModeUseCase
 import com.lexicon.interactors.settings.UpdateVoiceUseCase
-import com.lexicon.interactors.sync.SyncCatalogUseCase
+import com.lexicon.interactors.sync.SeedCatalogsUseCase
 import com.lexicon.interactors.training.CheckTrainingReadinessUseCase
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
@@ -243,7 +243,7 @@ val domainModule = module {
     factoryOf(::DeleteConjugationVerbUseCaseImpl) { bind<DeleteConjugationVerbUseCase>() }
     factoryOf(::RestoreConjugationVerbsUseCaseImpl) { bind<RestoreConjugationVerbsUseCase>() }
     factoryOf(::HasDeletedVerbsUseCaseImpl) { bind<HasDeletedVerbsUseCase>() }
-    factoryOf(::NextConjugationQuestionUseCaseImpl) { bind<NextConjugationQuestionUseCase>() }
+    factoryOf(::NextConjugationTableUseCaseImpl) { bind<NextConjugationTableUseCase>() }
     factoryOf(::SubmitConjugationAnswerUseCaseImpl) { bind<SubmitConjugationAnswerUseCase>() }
     factoryOf(::LoadConjugationProgressUseCaseImpl) { bind<LoadConjugationProgressUseCase>() }
     factoryOf(::CreateConjugationCourseUseCaseImpl) { bind<CreateConjugationCourseUseCase>() }
@@ -267,7 +267,7 @@ val domainModule = module {
     factoryOf(::ObserveFavouriteWordIdsUseCaseImpl) { bind<ObserveFavouriteWordIdsUseCase>() }
     factoryOf(::CheckTrainingReadinessUseCaseImpl) { bind<CheckTrainingReadinessUseCase>() }
     factoryOf(::SearchVocabularyUseCaseImpl) { bind<SearchVocabularyUseCase>() }
-    factoryOf(::SyncCatalogUseCaseImpl) { bind<SyncCatalogUseCase>() }
+    factoryOf(::SeedCatalogsUseCaseImpl) { bind<SeedCatalogsUseCase>() }
     factoryOf(::DeleteWordUseCaseImpl) { bind<DeleteWordUseCase>() }
     factoryOf(::RestoreWordUseCaseImpl) { bind<RestoreWordUseCase>() }
     factoryOf(::DeletePresetUseCaseImpl) { bind<DeletePresetUseCase>() }

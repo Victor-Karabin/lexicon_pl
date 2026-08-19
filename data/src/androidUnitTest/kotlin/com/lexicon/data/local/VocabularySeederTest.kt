@@ -12,7 +12,7 @@ import org.junit.Test
 class VocabularySeederTest {
     private val wordDao: WordDao = mockk(relaxed = true)
     private val vocabularySeedAssetLoader: VocabularySeedAssetLoader = mockk()
-    private val vocabularySyncStore: VocabularySyncStore = mockk(relaxed = true)
+    private val vocabularySyncStore: CatalogSeedStore = mockk(relaxed = true)
 
     private fun seeder() = VocabularySeeder(wordDao, vocabularySeedAssetLoader, vocabularySyncStore)
 

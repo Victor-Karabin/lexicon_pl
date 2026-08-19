@@ -5,12 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.android.speech.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
-import com.lexicon.interactors.dictationpuzzle.DictationPuzzleStepOutcome
 import com.lexicon.interactors.dictationpuzzle.DictationPuzzleStepResponse
 import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionRequest
 import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionUseCase
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerRequest
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerUseCase
+import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.LetterTile
@@ -146,13 +146,13 @@ class DictationPuzzleViewModel(
     }
 
     private suspend fun applyOutcome(
-        outcome: DictationPuzzleStepOutcome,
+        outcome: StepOutcome,
         expectedText: String,
         tipUsed: Boolean,
     ) {
         val step = currentStepOrNull()
         when (outcome) {
-            DictationPuzzleStepOutcome.CORRECT -> {
+            StepOutcome.CORRECT -> {
                 correctCount++
                 step?.let {
                     wordResults += WordResultEntry(it.expectedText, it.translationText, AnswerState.Correct, tipUsed)
@@ -161,7 +161,7 @@ class DictationPuzzleViewModel(
                 delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                 advanceToNextStep()
             }
-            DictationPuzzleStepOutcome.INCORRECT -> {
+            StepOutcome.INCORRECT -> {
                 incorrectCount++
                 step?.let {
                     wordResults +=
@@ -169,7 +169,7 @@ class DictationPuzzleViewModel(
                 }
                 updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText)) }
             }
-            DictationPuzzleStepOutcome.SKIPPED -> {
+            StepOutcome.SKIPPED -> {
                 skippedCount++
                 step?.let {
                     wordResults +=

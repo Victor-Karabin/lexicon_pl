@@ -3,7 +3,7 @@ package com.lexicon.boundary
 import kotlinx.coroutines.flow.Flow
 
 interface VocabularyPresetRepository {
-    suspend fun syncFromSource(): SyncOutcomeBoundary
+    suspend fun seedFromAsset(): SeedOutcomeBoundary
 
     suspend fun getPresets(): List<VocabularyPresetBoundary>
 
