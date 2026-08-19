@@ -33,11 +33,6 @@ class ConjugationRepositoryImpl(
     private val json = Json { ignoreUnknownKeys = true }
     private val lock = Mutex()
 
-    /**
-     * Only how many verbs the file holds is worth keeping. Seeding and restoring read it
-     * whole, but that is rare, and holding 4,545 parsed verbs for the life of the app so
-     * that one screen can ask for a count costs megabytes for a single number.
-     */
     private var assetVerbCount: Int? = null
 
     override suspend fun seedFromAsset(): SeedOutcomeBoundary =
@@ -61,7 +56,6 @@ class ConjugationRepositoryImpl(
 
     override suspend fun deleteVerb(infinitive: String) = dao.deleteVerb(infinitive)
 
-    /** Fewer verbs than the file holds means some were deleted; nothing else records it. */
     override suspend fun hasDeletedVerbs(): Boolean = dao.countVerbs() < assetVerbCount()
 
     override suspend fun restoreVerbs() = lock.withLock { seed() }

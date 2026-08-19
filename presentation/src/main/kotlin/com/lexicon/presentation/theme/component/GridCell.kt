@@ -23,14 +23,6 @@ private const val CORNER_FRACTION = 0.2f
 
 private const val LETTER_SIZE_RATIO = 0.5f
 
-/**
- * One square of a letter grid, shared by the crossword and the word search.
- *
- * They differ in what sits inside — a field to type into, or a letter to tap —
- * and in nothing else, so the square itself is written once. The corner is a
- * fraction of the cell rather than a fixed radius: a dense grid shrinks a cell to
- * about fourteen dp, and a fixed corner wider than half of that draws a circle.
- */
 @Composable
 fun GridCell(
     size: Dp,
@@ -51,7 +43,6 @@ fun GridCell(
     )
 }
 
-/** Letters sized to whatever the grid could afford, so a tight grid stays legible. */
 @Composable
 fun gridLetterStyle(
     size: Dp,

@@ -48,14 +48,6 @@ internal suspend fun ConjugationRepository.courseProgress(courseId: String): Con
     return ConjugationCourseProgress(variants.toImmutableList())
 }
 
-/**
- * Builds one question covering every person the verb has a form for.
- *
- * Endings are asked for only where the verb's own forms decompose into a shared stem and
- * differing endings; where they do not — `być` being the standing example — whole forms
- * are asked for instead. Nothing here invents a form: every option is a string that
- * appears in the source data for some verb and person.
- */
 internal fun VerbConjugation.question(pool: List<VerbConjugation>): ConjugationTable? {
     val steps = persons.mapNotNull { step(it, pool) }
     if (steps.isEmpty()) return null
@@ -98,7 +90,6 @@ internal fun VerbConjugation.step(
     }
 }
 
-/** Other persons of this verb first, then other verbs, never anything already correct. */
 private fun VerbConjugation.formDistractors(
     person: GrammaticalPerson,
     pool: List<VerbConjugation>,
@@ -119,13 +110,6 @@ private fun VerbConjugation.endingDistractors(
     return own.shuffled() + others.shuffled()
 }
 
-/**
- * The correct answers plus enough distinct wrong ones to fill the list.
- *
- * Blank values never reach here, duplicates are dropped, and nothing that is also a
- * correct answer can appear as a distractor — so an option list can never contain the
- * same string twice or offer two answers that are both right without both being marked so.
- */
 private fun optionsAround(
     correct: List<String>,
     distractors: List<String>,

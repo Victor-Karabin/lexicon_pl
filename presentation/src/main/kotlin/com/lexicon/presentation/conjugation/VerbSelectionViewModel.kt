@@ -51,7 +51,6 @@ class VerbSelectionViewModel(
 
     init {
         viewModelScope.launch(dispatchers.io) {
-            // Nothing starts ticked: this screen builds a new course each time it opens.
             val verbs = loadVerbs()
             _uiState.update {
                 it.copy(

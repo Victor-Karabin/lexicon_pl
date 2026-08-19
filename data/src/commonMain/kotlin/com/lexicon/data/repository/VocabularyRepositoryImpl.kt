@@ -27,8 +27,7 @@ class VocabularyRepositoryImpl(
         val words = when {
             restrictToIds.isEmpty() -> wordDao.getRandomForStudy(count)
             restrictToIds.size <= MAX_SQL_VARIABLES -> wordDao.getRandomFromIds(restrictToIds, count)
-            // Too many ids for one statement. Shuffling first keeps the sample random, so
-            // the batches can then be read in plain id order and cut to size.
+
             else -> restrictToIds.shuffled().inBatches { wordDao.getByIds(it) }.shuffled().take(count)
         }
         return words.map { it.toWord() }

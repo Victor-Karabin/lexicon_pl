@@ -3,13 +3,6 @@ package com.lexicon.android.cloud
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-/**
- * Guards a failure that says nothing when it happens.
- *
- * kotlinx.serialization drops defaulted fields unless `encodeDefaults` is set, and the
- * request still serialises, still sends, and still comes back — as a rejection. The first
- * symptom is every voice sounding identical, which points nowhere near the serializer.
- */
 class CloudSpeechApiPayloadTest {
     private val payload = synthesizePayload(
         text = "Dzień dobry",

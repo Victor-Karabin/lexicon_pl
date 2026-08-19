@@ -58,7 +58,6 @@ import kotlin.math.roundToInt
 
 private val HeadingIconSize = 36.dp
 
-/** Barely-there wash marking the voice in use, so the row reads as chosen, not as a button. */
 private const val SELECTED_TINT = 0.08f
 
 @Composable
@@ -178,13 +177,6 @@ private fun SettingsScreenContent(
     }
 }
 
-/**
- * The voice picker, folded away until it is wanted.
- *
- * A device can list a good few voices and they all have to be heard to be told apart,
- * so left open the section pushes everything else off the screen. Closed it shows the
- * one in use; open it lists the rest.
- */
 @Composable
 private fun VoiceSetting(
     voices: List<SpeechVoice>,
@@ -229,8 +221,6 @@ private fun VoiceSetting(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            // Clipped before it is made selectable, so the press ripple
-                            // stops at the rounded edge rather than squaring it off.
                             .clip(LexiconShapes.medium)
                             .background(
                                 if (isSelected) skin.onTile.copy(alpha = SELECTED_TINT) else Color.Transparent,

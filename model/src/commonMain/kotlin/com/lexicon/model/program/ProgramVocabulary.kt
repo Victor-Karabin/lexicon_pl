@@ -2,11 +2,6 @@ package com.lexicon.model.program
 
 import com.lexicon.model.vocabulary.Word
 
-/**
- * The states a program's configuration is written in. They live here rather than with
- * the stored configuration because the rules switch on them: what a goal measures, where
- * a program's words come from, what a day's activity asks for.
- */
 enum class TargetType {
     VOCABULARY,
     LESSONS,
@@ -51,14 +46,6 @@ enum class ScopeOrdering {
     RANDOM,
     ;
 
-    /**
-     * Puts a program's resolved words in the order it asks for.
-     *
-     * Frequency is the catalogue's own id order: the shipped vocabulary is numbered by
-     * how common a word is, which is why the Top 100 preset is ids 1..100. Difficulty is
-     * the CEFR level, falling back to frequency inside a level and putting unlevelled
-     * words last, since nothing is known about how hard they are.
-     */
     fun applyTo(words: List<Word>): List<Word> =
         when (this) {
             AS_LISTED -> words

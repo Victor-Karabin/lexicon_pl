@@ -13,12 +13,6 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
-/**
- * Opens a session over the words a training drew, so the expected answers live with
- * the session rather than travelling back in from whoever submits. A draw of nothing
- * is not a session: the aggregate rejects it, and the training gate keeps it from
- * happening.
- */
 suspend fun SessionStore.open(
     training: TrainingType,
     answers: List<Pair<VocabularyId, String>>,
@@ -43,10 +37,6 @@ suspend fun SessionStore.stepAt(
     stepIndex: Int,
 ): Step.Question? = find(SessionId(sessionId))?.question(stepIndex)
 
-/**
- * Opens a session whose steps are boards of words matched together rather than single
- * questions with one right answer.
- */
 suspend fun SessionStore.openBoards(
     training: TrainingType,
     boards: List<List<VocabularyId>>,

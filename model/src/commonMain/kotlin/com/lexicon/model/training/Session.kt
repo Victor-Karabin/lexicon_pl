@@ -7,12 +7,6 @@ import kotlinx.collections.immutable.toImmutableList
 
 data class SessionId(val value: String)
 
-/**
- * Most trainings ask about one word and have one right answer. Memory Cards and Word
- * Match instead put several words on the board and ask for them to be paired, so there
- * is no single expected answer to hold. Both are steps; only one of them can promise an
- * expected answer, and the type says which.
- */
 sealed interface Step {
     val index: Int
     val outcome: StepOutcome?

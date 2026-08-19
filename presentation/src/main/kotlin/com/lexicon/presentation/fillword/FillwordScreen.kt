@@ -124,8 +124,6 @@ private fun FillwordContent(
                         WordsToFind(uiState = uiState)
                     }
 
-                    // Check gives away whatever is still hidden rather than marking
-                    // anything; once there is nothing left to give away, only Done remains.
                     TrainingActionRow(
                         onCheck = onCheck,
                         onNext = onDone,
@@ -233,7 +231,6 @@ private fun Grid(
     }
 }
 
-/** The run under the finger right now, so the learner can see what they are about to claim. */
 private fun FillwordPuzzle.tracedCells(
     from: FillwordCell?,
     to: FillwordCell?,
@@ -248,15 +245,11 @@ private fun WordsToFind(uiState: FillwordUiState) {
     val pending = MaterialTheme.colorScheme.onSurface
     val separator = MaterialTheme.colorScheme.onSurfaceVariant
 
-    // One run of text rather than a row of separate labels: the clues then wrap the way a
-    // sentence does, and a comma can never end up stranded at the start of a line.
     val clues = buildAnnotatedString {
         puzzle.words.forEachIndexed { index, word ->
             val isFound = word.word in uiState.found
             val isMissed = !isFound && uiState.isRevealed
 
-            // Asked in English and answered in Polish: the clue is the meaning, and the
-            // word itself appears once it is found — or once it is given away.
             withStyle(
                 SpanStyle(
                     color = when {

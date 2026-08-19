@@ -3,13 +3,6 @@ package com.lexicon.interactors.conjugation
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-/**
- * The persons the source data distinguishes.
- *
- * `on`, `ona` and `ono` share one form in the source, as do `oni` and `one`, so they are
- * one variant here rather than several. Splitting them would mean inventing forms the
- * data does not contain.
- */
 enum class GrammaticalPerson(
     val sourceKey: String,
     val label: String,

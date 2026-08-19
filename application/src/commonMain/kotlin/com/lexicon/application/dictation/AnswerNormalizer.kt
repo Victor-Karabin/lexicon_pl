@@ -10,13 +10,6 @@ class AnswerNormalizer {
         submitted: String,
     ): Boolean = normalize(expected) == normalize(submitted)
 
-    /**
-     * Whether something said out loud matches what was written down.
-     *
-     * Recognition returns bare words: no commas, no full stop, capitals wherever the
-     * engine felt like them. Holding a spoken answer to the page's punctuation would
-     * fail every sentence read perfectly, so only the words themselves are compared.
-     */
     fun matchesSpoken(
         expected: String,
         submitted: String,

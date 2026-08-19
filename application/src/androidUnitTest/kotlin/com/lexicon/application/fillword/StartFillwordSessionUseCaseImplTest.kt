@@ -15,7 +15,6 @@ import org.junit.Test
 
 private const val GRID_SIZE = 10
 
-/** Layouts to demand of a randomised placer before believing anything about it. */
 private const val LAYOUTS = 200
 
 class StartFillwordSessionUseCaseImplTest {
@@ -79,7 +78,6 @@ class StartFillwordSessionUseCaseImplTest {
             }
         }
 
-    /** The complaint that started this: words laid one per line, left to right. */
     @Test
     fun `words are not all laid out in the same direction`() =
         runTest {
@@ -102,8 +100,7 @@ class StartFillwordSessionUseCaseImplTest {
                     "no diagonal in $directions",
                     directions.any { it.rowStep != 0 && it.columnStep != 0 },
                 )
-                // Any run heading up or leftwards counts: UP_LEFT is as backwards as LEFT,
-                // and with eight directions shared out those two exact ones can go unused.
+
                 assertTrue(
                     "nothing backwards in $directions",
                     directions.any { it.rowStep < 0 || it.columnStep < 0 },

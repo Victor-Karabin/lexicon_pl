@@ -43,7 +43,6 @@ data class FillwordWord(
 data class FillwordPuzzle(
     val grid: ImmutableList<ImmutableList<String>>,
     val words: ImmutableList<FillwordWord>,
-    /** What each hidden word means, so the list under the grid can ask in English. */
     val translations: ImmutableMap<String, String> = persistentMapOf(),
 ) {
     val size: Int get() = grid.size
@@ -52,14 +51,6 @@ data class FillwordPuzzle(
 
     fun letterAt(cell: FillwordCell): String = grid.getOrNull(cell.row)?.getOrNull(cell.column).orEmpty()
 
-    /**
-     * The straight run of cells a drag from one cell to another means.
-     *
-     * The run is snapped to whichever of the eight directions the drag was closest to,
-     * because a finger crossing a diagonal rarely lands on the exact cell the diagonal
-     * wants, and a word that will not be claimed unless traced to the pixel is a word
-     * the learner cannot find. Runs are clipped at the edge of the grid.
-     */
     fun runBetween(
         from: FillwordCell,
         to: FillwordCell,
@@ -86,13 +77,6 @@ data class FillwordPuzzle(
             }
     }
 
-    /**
-     * The word spelled by the cells between two corners, read either way round.
-     *
-     * Matched on the letters rather than on where the word was placed: the learner sees
-     * only letters, so a run that spells a listed word is a find no matter which end
-     * they started from or whether the same letters also sit somewhere else.
-     */
     fun wordAlong(
         from: FillwordCell,
         to: FillwordCell,
@@ -105,5 +89,4 @@ data class FillwordPuzzle(
     }
 }
 
-/** How far off a diagonal a drag may stray before it counts as a straight line instead. */
 private const val DIAGONAL_TOLERANCE = 2

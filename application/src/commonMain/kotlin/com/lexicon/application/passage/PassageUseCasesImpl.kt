@@ -32,13 +32,8 @@ import kotlinx.coroutines.coroutineScope
 import kotlin.random.Random
 import kotlin.uuid.ExperimentalUuidApi
 
-/** Sentences generated over the target count, to absorb the ones that miss their word. */
 private const val SPARE_SENTENCES = 2
 
-/**
- * Below this, a stem is too short to tell words apart — `i` would match everything it
- * begins, so such targets have to appear whole.
- */
 private const val MIN_STEM = 4
 
 class StartPassageSessionUseCaseImpl(
@@ -54,9 +49,6 @@ class StartPassageSessionUseCaseImpl(
 
         val level = studySet.maxLevel()
 
-        // One gap per step, so the setting that governs how long every other training runs
-        // governs this one too. The level still decides how hard the sentences are; it no
-        // longer decides how many there are.
         val wanted = stepCountResolver.resolve(request.stepCount).coerceAtMost(studySet.size)
         val targets = studySet.shuffled().take(wanted + SPARE_SENTENCES)
 
@@ -112,15 +104,6 @@ class StartPassageSessionUseCaseImpl(
 
 internal fun List<Word>.maxLevel(): String = mapNotNull { it.cefr }.maxByOrNull { it.ordinal }?.name ?: CefrLevel.A1.name
 
-/**
- * Splits a sentence around the word it was written for, or null if that word never
- * turned up in it.
- *
- * The model is told to use the word and mostly does, but now and then it reaches for a
- * synonym — asked for `polegać` it writes `mogę na niego liczyć`. A sentence with
- * nothing to fill in is not an exercise, so it is dropped rather than shown; spares are
- * generated to cover the loss.
- */
 private fun String.gapping(target: String): List<PassageSegment>? {
     val stem = target.stem()
     val found = Regex("\\p{L}+").findAll(this).firstOrNull { it.value.grewFrom(stem) } ?: return null
@@ -132,18 +115,11 @@ private fun String.gapping(target: String): List<PassageSegment>? {
     }
 }
 
-/**
- * The part of a word that survives Polish inflection, near enough.
- *
- * A phrase is reduced to its longest word, which is the one carrying the meaning:
- * `mieć na myśli` is looked for by `myśli`, not by `mieć`.
- */
 private fun String.stem(): String {
     val head = split(' ', '-', '\'').maxByOrNull { it.length }.orEmpty().lowercase()
     return head.take(maxOf(MIN_STEM, head.length * 2 / 3))
 }
 
-/** Whether an inflected form in the sentence came from the target, without matching everything. */
 private fun String.grewFrom(stem: String): Boolean {
     val word = lowercase()
     return if (stem.length < MIN_STEM) word == stem else word.startsWith(stem)

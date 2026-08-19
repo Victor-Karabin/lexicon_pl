@@ -20,25 +20,14 @@ private const val BITS_PER_SAMPLE = 16
 private const val CHANNELS = 1
 private const val WAV_HEADER_SIZE = 44
 
-/** Loudness, on the same 0..1 scale as a full-scale sample, above which someone is talking. */
 private const val SPEECH_LEVEL = 0.02
 
-/** Silence this long after speech means the phrase is over. */
 private const val TRAILING_SILENCE_MS = 1_200
 
-/** How long to wait for someone to start before giving up. */
 private const val PATIENCE_MS = 6_000
 
-/** A hard stop, so a noisy room cannot record forever. */
 private const val MAX_LENGTH_MS = 20_000
 
-/**
- * Records a phrase from the microphone and hands back the file.
- *
- * The platform recogniser will not share its audio — `onBufferReceived` is optional and
- * Google's implementation never calls it — so anything that needs the recording itself,
- * whether to send for recognition or to play back, has to capture it here.
- */
 interface AudioRecorder {
     suspend fun record(): String?
 }
@@ -90,7 +79,6 @@ class AndroidAudioRecorder(
             pcm?.takeIf { it.isNotEmpty() }?.let { writeWav(it) }
         }
 
-    /** Reads until the speaker stops, they never start, or the hard limit is reached. */
     private fun AudioRecord.capture(bufferSize: Int): ByteArray {
         val out = ByteArrayOutputStream()
         val buffer = ByteArray(bufferSize)
@@ -159,7 +147,6 @@ class AndroidAudioRecorder(
     }
 }
 
-/** Root-mean-square loudness of a chunk of 16-bit samples, as a fraction of full scale. */
 private fun ByteArray.level(length: Int): Double {
     var sum = 0.0
     var count = 0

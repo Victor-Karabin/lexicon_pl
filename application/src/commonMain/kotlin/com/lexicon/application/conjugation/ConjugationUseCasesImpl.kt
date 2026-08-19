@@ -122,12 +122,6 @@ class NextConjugationTableUseCaseImpl(
         return verb.question(selected)?.withLearningAids()
     }
 
-    /**
-     * The verb whose forms are least secure, so weak ones come round again.
-     *
-     * A verb counts as done when every one of its persons is mastered; among the rest the
-     * one with the fewest attempts across its persons is asked next.
-     */
     private fun List<VerbConjugation>.leastPractised(progress: Map<ConjugationVariant, ConjugationVariantProgress>): VerbConjugation? {
         fun attempts(verb: VerbConjugation) = verb.persons.sumOf { progress[ConjugationVariant(verb.infinitive, it)]?.attempted ?: 0 }
 
@@ -191,13 +185,6 @@ class LoadVerbImageChoicesUseCaseImpl(
     }
 }
 
-/**
- * Keeps the chosen picture where a word keeps its own.
- *
- * Pinning against the translation is what `CreateWordUseCase` does, so the verb's picture
- * is the word's picture: it shows in the vocabulary and the card as well as here, and
- * needs no table of its own.
- */
 class ChooseVerbImageUseCaseImpl(
     private val ensureWord: EnsureVerbWordUseCase,
     private val vocabulary: VocabularyRepository,

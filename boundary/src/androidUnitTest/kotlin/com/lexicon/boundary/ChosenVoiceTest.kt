@@ -14,16 +14,11 @@ class ChosenVoiceTest {
         assertEquals(voice("agnieszka"), voices.chosen("agnieszka"))
     }
 
-    /** First launch: nothing has been chosen, and the settings screen still has to name one. */
     @Test
     fun `the first voice stands in when nothing has been chosen`() {
         assertEquals(voice("agata"), voices.chosen(null))
     }
 
-    /**
-     * A stored id from the device synthesiser will not name a Cloud voice, and a voice can
-     * disappear when the engine changes. Neither may leave the learner with silence.
-     */
     @Test
     fun `a choice that is no longer offered falls back to the first`() {
         assertEquals(voice("agata"), voices.chosen("a-voice-that-went-away"))

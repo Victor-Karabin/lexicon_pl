@@ -59,7 +59,6 @@ class NextProgramTrainingUseCaseImplTest {
         )
     }
 
-    /** The ask: a crossword in the queue must not stall a day with too few words for it. */
     @Test
     fun `a crossword is skipped when the study set is too small for it`() =
         runTest {

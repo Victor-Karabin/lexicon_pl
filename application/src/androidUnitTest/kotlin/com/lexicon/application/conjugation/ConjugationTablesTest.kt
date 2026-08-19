@@ -9,7 +9,6 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-/** Exactly the values in conjugations.json, so the tests fail if the data is misread. */
 private val BYC = VerbConjugationBoundary(
     "być",
     mapOf(
@@ -70,13 +69,11 @@ private val BAWIC_SIE = VerbConjugationBoundary(
     ),
 )
 
-/** boleć is the partial case: only the third persons exist, the rest are N/A in source. */
 private val BOLEC = VerbConjugationBoundary(
     "boleć",
     mapOf("on/ona/ono" to listOf("boli"), "oni/one" to listOf("bolą")),
 )
 
-/** bajać carries two accepted forms per person, separated by ';' in source. */
 private val BAJAC = VerbConjugationBoundary(
     "bajać",
     mapOf(
@@ -149,7 +146,6 @@ class ConjugationTablesTest {
         assertEquals("boję się", question.spokenForm)
     }
 
-    /** A stem stopping mid-gap would leave " się" as the ending, which teaches nothing. */
     @Test
     fun `a reflexive verb whose ending would be only sie is asked whole`() {
         val question = verb(BAWIC_SIE).step(GrammaticalPerson.ON_ONA_ONO, pool)!!
