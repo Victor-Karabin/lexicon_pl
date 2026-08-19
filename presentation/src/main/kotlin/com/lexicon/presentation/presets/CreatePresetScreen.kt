@@ -30,12 +30,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetCategory
 import com.lexicon.interactors.presets.PresetDraftProblem
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetStudySetState
 import com.lexicon.interactors.presets.VocabularyPreset
+import com.lexicon.model.vocabulary.LocalizedText
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.ExpandableFlowRow
 import com.lexicon.presentation.common.LightDarkPreview

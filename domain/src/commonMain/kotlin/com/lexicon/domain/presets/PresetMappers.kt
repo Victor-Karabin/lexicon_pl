@@ -1,15 +1,12 @@
 package com.lexicon.domain.presets
 
 import com.lexicon.boundary.PresetCategoryBoundary
-import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyPresetBoundary
-import com.lexicon.interactors.presets.CefrLevel
-import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetCategory
 import com.lexicon.interactors.presets.PresetId
-import com.lexicon.interactors.presets.PresetWord
-import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
+import com.lexicon.model.vocabulary.LocalizedText
+import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.toImmutableList
 import kotlin.time.Duration.Companion.seconds
 
@@ -26,14 +23,4 @@ fun VocabularyPresetBoundary.toPreset(category: PresetCategory): VocabularyPrese
         popularity = popularity,
         estimatedDuration = estimatedSeconds.seconds,
         vocabularyIds = vocabularyIds.map(::VocabularyId).toImmutableList(),
-    )
-
-fun VocabularyItemBoundary.toPresetWord(): PresetWord =
-    PresetWord(
-        id = VocabularyId(id),
-        text = text,
-        translation = translation,
-        transcription = transcription,
-        isInStudySet = isInStudySet,
-        cefr = cefr?.let { value -> CefrLevel.entries.firstOrNull { it.name == value } },
     )

@@ -1,6 +1,5 @@
 package com.lexicon.presentation.program
 
-import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.program.ActivityType
 import com.lexicon.interactors.program.AdvanceProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
@@ -9,6 +8,7 @@ import com.lexicon.interactors.program.ProgramId
 import com.lexicon.interactors.program.ProgramSession
 import com.lexicon.interactors.program.QueuedTraining
 import com.lexicon.interactors.program.StartProgramSessionUseCase
+import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.presentation.main.TrainingIds
 import io.mockk.coEvery
 import io.mockk.mockk

@@ -2,7 +2,6 @@ package com.lexicon.domain.course
 
 import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.VocabularyRepository
-import com.lexicon.domain.presets.toPresetWord
 import com.lexicon.interactors.course.Course
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
@@ -10,7 +9,7 @@ import com.lexicon.interactors.course.Lesson
 import com.lexicon.interactors.course.LessonId
 import com.lexicon.interactors.course.ObserveCoursesUseCase
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
-import com.lexicon.interactors.presets.PresetWord
+import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -36,11 +35,11 @@ class GetLessonVocabularyUseCaseImpl(
     private val courseRepository: CourseRepository,
     private val vocabularyRepository: VocabularyRepository,
 ) : GetLessonVocabularyUseCase {
-    override suspend fun invoke(id: LessonId): ImmutableList<PresetWord> {
+    override suspend fun invoke(id: LessonId): ImmutableList<Word> {
         val wordIds = courseRepository.getLessonWordIds(id.value)
         if (wordIds.isEmpty()) return persistentListOf()
-        val byId = vocabularyRepository.getItemsByIds(wordIds).associateBy { it.id }
-        return wordIds.mapNotNull { byId[it]?.toPresetWord() }.toImmutableList()
+        val byId = vocabularyRepository.getItemsByIds(wordIds).associateBy { it.id.value }
+        return wordIds.mapNotNull { byId[it] }.toImmutableList()
     }
 }
 

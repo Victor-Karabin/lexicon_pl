@@ -13,9 +13,9 @@ import com.lexicon.interactors.presets.PresetMembership
 import com.lexicon.interactors.presets.SearchImageCandidatesUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
-import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.WordDraftException
 import com.lexicon.interactors.presets.WordDraftProblem
+import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList

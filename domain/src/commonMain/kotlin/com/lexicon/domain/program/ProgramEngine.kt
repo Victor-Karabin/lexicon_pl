@@ -6,7 +6,6 @@ import com.lexicon.boundary.StudyRecordRepository
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.Clock
-import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.program.ActivityType
 import com.lexicon.interactors.program.GetProgramProgressUseCase
 import com.lexicon.interactors.program.GetProgramUseCase
@@ -21,6 +20,7 @@ import com.lexicon.interactors.program.ScopeOrdering
 import com.lexicon.interactors.program.ScopeSourceType
 import com.lexicon.interactors.program.StartProgramSessionUseCase
 import com.lexicon.interactors.program.TargetType
+import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
@@ -57,7 +57,7 @@ class ResolveProgramScopeUseCaseImpl(
     ): List<Long> =
         when (type) {
             ScopeSourceType.PRESET -> presets.getPreset(value)?.vocabularyIds.orEmpty()
-            ScopeSourceType.FAVOURITES -> vocabulary.studySetWordIds()
+            ScopeSourceType.STUDY_SET -> vocabulary.studySetWordIds()
             ScopeSourceType.CEFR_LEVEL -> vocabulary.wordIdsForLevel(value)
             ScopeSourceType.ALL -> vocabulary.allWordIds()
 

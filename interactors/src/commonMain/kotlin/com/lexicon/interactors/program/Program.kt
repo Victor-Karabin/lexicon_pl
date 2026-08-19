@@ -1,6 +1,6 @@
 package com.lexicon.interactors.program
 
-import com.lexicon.interactors.presets.LocalizedText
+import com.lexicon.model.vocabulary.LocalizedText
 
 data class Program(
     val id: ProgramId,

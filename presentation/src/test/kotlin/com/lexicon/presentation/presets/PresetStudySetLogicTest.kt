@@ -1,12 +1,12 @@
 package com.lexicon.presentation.presets
 
-import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetCategory
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetStudySetState
-import com.lexicon.interactors.presets.PresetWord
-import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
+import com.lexicon.model.vocabulary.LocalizedText
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.toImmutableList
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -60,7 +60,7 @@ class PresetStudySetLogicTest {
         assertEquals(PresetStudySetState.ALL, studySetStateOf(preset(1, 2), studySet(1, 2, 3, 4)))
     }
 
-    private fun word(text: String) = PresetWord(VocabularyId(text.hashCode().toLong()), text, "", "")
+    private fun word(text: String) = Word(VocabularyId(text.hashCode().toLong()), text, "", "")
 
     @Test
     fun `words sort alphabetically`() {

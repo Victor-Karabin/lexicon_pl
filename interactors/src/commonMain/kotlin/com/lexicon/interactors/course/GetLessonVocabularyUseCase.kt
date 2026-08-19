@@ -1,8 +1,8 @@
 package com.lexicon.interactors.course
 
-import com.lexicon.interactors.presets.PresetWord
+import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.ImmutableList
 
 interface GetLessonVocabularyUseCase {
-    suspend operator fun invoke(id: LessonId): ImmutableList<PresetWord>
+    suspend operator fun invoke(id: LessonId): ImmutableList<Word>
 }

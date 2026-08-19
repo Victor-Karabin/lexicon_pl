@@ -2,8 +2,10 @@ package com.lexicon.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.common.foldForSearch
+import com.lexicon.model.vocabulary.CefrLevel
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 
 @Entity(tableName = "words")
 data class WordEntity(
@@ -25,12 +27,12 @@ fun searchKeyFor(
     translation: String,
 ): String = "${text.foldForSearch()} ${translation.foldForSearch()}"
 
-fun WordEntity.toBoundary(): VocabularyItemBoundary =
-    VocabularyItemBoundary(
-        id = id,
+fun WordEntity.toWord(): Word =
+    Word(
+        id = VocabularyId(id),
         text = text,
         translation = translation,
         transcription = transcription,
         isInStudySet = isInStudySet,
-        cefr = cefr.ifEmpty { null },
+        cefr = CefrLevel.ofName(cefr.ifEmpty { null }),
     )

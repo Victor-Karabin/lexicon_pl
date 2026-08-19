@@ -5,7 +5,7 @@ enum class ProgramDraftProblem {
 
     NO_TRAININGS,
 
-    NO_FAVOURITES,
+    EMPTY_STUDY_SET,
 }
 
 class ProgramDraftException(val problem: ProgramDraftProblem) : Exception(problem.name)

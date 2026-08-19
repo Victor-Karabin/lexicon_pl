@@ -142,7 +142,7 @@ private fun PronunciationScreenContent(
                             when (uiState.reason) {
                                 UnavailableReason.OFFLINE -> R.string.pronunciation_sentences_offline
                                 UnavailableReason.REFUSED -> R.string.pronunciation_sentences_refused
-                                UnavailableReason.NO_FAVOURITES -> R.string.pronunciation_sentences_none
+                                UnavailableReason.EMPTY_STUDY_SET -> R.string.pronunciation_sentences_none
                             },
                         ),
                         style = MaterialTheme.typography.bodyMedium,

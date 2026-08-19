@@ -9,8 +9,8 @@ import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.PresetCategory
 import com.lexicon.interactors.presets.PresetId
-import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyPreset
+import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -63,9 +63,9 @@ class GetPresetVocabularyUseCaseImpl(
     private val presetRepository: VocabularyPresetRepository,
     private val vocabularyRepository: VocabularyRepository,
 ) : GetPresetVocabularyUseCase {
-    override suspend fun invoke(id: PresetId): ImmutableList<PresetWord> {
+    override suspend fun invoke(id: PresetId): ImmutableList<Word> {
         val preset = presetRepository.getPreset(id.value) ?: return persistentListOf()
-        val byId = vocabularyRepository.getItemsByIds(preset.vocabularyIds).associateBy { it.id }
-        return preset.vocabularyIds.mapNotNull { byId[it]?.toPresetWord() }.toImmutableList()
+        val byId = vocabularyRepository.getItemsByIds(preset.vocabularyIds).associateBy { it.id.value }
+        return preset.vocabularyIds.mapNotNull { byId[it] }.toImmutableList()
     }
 }

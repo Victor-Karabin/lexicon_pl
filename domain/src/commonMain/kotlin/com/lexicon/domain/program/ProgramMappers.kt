@@ -2,7 +2,6 @@ package com.lexicon.domain.program
 
 import com.lexicon.boundary.ProgramBoundary
 import com.lexicon.boundary.ProgramEnrolmentBoundary
-import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.program.EnrolmentStatus
 import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramConfig
@@ -10,6 +9,7 @@ import com.lexicon.interactors.program.ProgramDifficulty
 import com.lexicon.interactors.program.ProgramEnrolment
 import com.lexicon.interactors.program.ProgramId
 import com.lexicon.interactors.program.ProgramVisibility
+import com.lexicon.model.vocabulary.LocalizedText
 import kotlinx.serialization.json.Json
 
 private val programJson = Json {

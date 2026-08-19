@@ -3,11 +3,9 @@ package com.lexicon.domain.passage
 import com.lexicon.boundary.SentenceGenerator
 import com.lexicon.boundary.SentenceRequestBoundary
 import com.lexicon.boundary.SentenceResultBoundary
-import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.domain.dictation.AnswerNormalizer
 import com.lexicon.domain.settings.StepCountResolver
-import com.lexicon.interactors.passage.CEFR_ORDER
 import com.lexicon.interactors.passage.Passage
 import com.lexicon.interactors.passage.PassageGapResult
 import com.lexicon.interactors.passage.PassageSegment
@@ -22,6 +20,8 @@ import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.model.training.StepOutcome
 import com.lexicon.model.training.TrainingType
+import com.lexicon.model.vocabulary.CefrLevel
+import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -101,10 +101,7 @@ class StartPassageSessionUseCaseImpl(
     }
 }
 
-internal fun List<VocabularyItemBoundary>.maxLevel(): String =
-    mapNotNull { it.cefr?.uppercase()?.takeIf { level -> level in CEFR_ORDER } }
-        .maxByOrNull { CEFR_ORDER.indexOf(it) }
-        ?: CEFR_ORDER.first()
+internal fun List<Word>.maxLevel(): String = mapNotNull { it.cefr }.maxByOrNull { it.ordinal }?.name ?: CefrLevel.A1.name
 
 /**
  * Splits a sentence around the word it was written for, or null if that word never
@@ -160,7 +157,7 @@ class SubmitPassageAnswersUseCaseImpl(
                         sessionId = request.sessionId,
                         trainingType = TrainingType.PASSAGE,
                         stepIndex = index,
-                        vocabularyItemId = word.id,
+                        vocabularyItemId = word.id.value,
                         expectedAnswer = expected,
                         submittedAnswer = submitted,
                         outcome = if (right) {

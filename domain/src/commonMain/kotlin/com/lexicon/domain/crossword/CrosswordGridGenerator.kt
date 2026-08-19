@@ -1,7 +1,7 @@
 package com.lexicon.domain.crossword
 
-import com.lexicon.domain.dictation.Word
 import com.lexicon.interactors.crossword.CrosswordDirection
+import com.lexicon.model.vocabulary.Word
 import kotlin.random.Random
 
 internal data class PlacedWord(

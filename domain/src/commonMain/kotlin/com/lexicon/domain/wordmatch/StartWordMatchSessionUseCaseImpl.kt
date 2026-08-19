@@ -3,15 +3,13 @@
 package com.lexicon.domain.wordmatch
 
 import com.lexicon.boundary.VocabularyRepository
-import com.lexicon.domain.dictation.Word
-import com.lexicon.domain.dictation.isPhrase
-import com.lexicon.domain.dictation.toWord
 import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.interactors.wordmatch.StartWordMatchSessionRequest
 import com.lexicon.interactors.wordmatch.StartWordMatchSessionUseCase
 import com.lexicon.interactors.wordmatch.WordMatchPairResponse
 import com.lexicon.interactors.wordmatch.WordMatchSessionResponse
 import com.lexicon.interactors.wordmatch.WordMatchStepResponse
+import com.lexicon.model.vocabulary.Word
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -23,10 +21,10 @@ class StartWordMatchSessionUseCaseImpl(
 ) : StartWordMatchSessionUseCase {
     override suspend fun invoke(request: StartWordMatchSessionRequest): WordMatchSessionResponse {
         val pairCount = stepCountResolver.resolve(request.stepCount)
-        val pool = vocabularyRepository.getRandomItems(pairCount * POOL_MULTIPLIER, request.vocabularyIds).map { it.toWord() }
+        val pool = vocabularyRepository.getRandomItems(pairCount * POOL_MULTIPLIER, request.vocabularyIds).map { it }
 
         val pairs = sameContentTypePairs(pool, pairCount).map { word ->
-            WordMatchPairResponse(vocabularyItemId = word.id, word = word.text, translation = word.translation)
+            WordMatchPairResponse(vocabularyItemId = word.id.value, word = word.text, translation = word.translation)
         }
         val step = WordMatchStepResponse(stepIndex = 0, pairs = pairs)
         return WordMatchSessionResponse(sessionId = Uuid.random().toString(), steps = listOf(step))

@@ -1,7 +1,8 @@
 package com.lexicon.domain.crossword
 
-import com.lexicon.domain.dictation.Word
 import com.lexicon.interactors.crossword.CrosswordDirection
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -9,7 +10,7 @@ import org.junit.Test
 private fun word(
     id: Long,
     text: String,
-) = Word(id = id, text = text, translation = text, transcription = text)
+) = Word(id = VocabularyId(id), text = text, translation = text, transcription = text)
 
 class CrosswordGridGeneratorTest {
     @Test
@@ -138,7 +139,7 @@ class CrosswordGridGeneratorTest {
     @Test
     fun `a word that shares no letter with the puzzle is dropped rather than left floating`() {
         val layout = CrosswordGridGenerator.generate(listOf(word(1, "kot"), word(2, "pies")))
-        assertEquals(listOf(1L), layout.placements.map { it.word.id })
+        assertEquals(listOf(VocabularyId(1)), layout.placements.map { it.word.id })
     }
 
     @Test

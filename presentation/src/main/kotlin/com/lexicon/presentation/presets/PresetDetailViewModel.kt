@@ -12,13 +12,13 @@ import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetStudySetState
-import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SetPresetInStudySetUseCase
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
-import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -39,7 +39,7 @@ sealed interface PresetDetailUiState {
 
     data class Loaded(
         val preset: VocabularyPreset,
-        val words: ImmutableList<PresetWord> = persistentListOf(),
+        val words: ImmutableList<Word> = persistentListOf(),
         val studySetState: PresetStudySetState = PresetStudySetState.NONE,
         val languageTag: String = "en",
         val isLoadingWords: Boolean = true,
@@ -67,7 +67,7 @@ class PresetDetailViewModel(
 
     private data class Content(
         val preset: VocabularyPreset?,
-        val words: List<PresetWord>,
+        val words: List<Word>,
         val wordsLoaded: Boolean = false,
         val lastDeleted: DeletedItem? = null,
     )
@@ -84,7 +84,7 @@ class PresetDetailViewModel(
         )
     val changePresetsState = changePresets.state
 
-    fun onChangePresetsRequested(word: PresetWord) {
+    fun onChangePresetsRequested(word: Word) {
         val languageTag = (uiState.value as? PresetDetailUiState.Loaded)?.languageTag ?: return
         changePresets.open(word, languageTag)
     }
@@ -134,7 +134,7 @@ class PresetDetailViewModel(
         }
     }
 
-    fun onWordDeleted(word: PresetWord) {
+    fun onWordDeleted(word: Word) {
         viewModelScope.launch(dispatchers.io) {
             deleteWord(word.id)
             val refreshed = getPreset(presetId)
@@ -188,7 +188,7 @@ class PresetDetailViewModel(
         }
     }
 
-    fun onPronounceWord(word: PresetWord) {
+    fun onPronounceWord(word: Word) {
         viewModelScope.launch(dispatchers.io) {
             runCatching { speechSynthesizer.speak(word.text) }
         }
@@ -224,4 +224,4 @@ internal fun studySetStateOf(
 
 private val polishCollator: Collator = Collator.getInstance(Locale.forLanguageTag("pl"))
 
-internal fun List<PresetWord>.sortedForDisplay(): List<PresetWord> = sortedWith(compareBy(polishCollator) { it.text })
+internal fun List<Word>.sortedForDisplay(): List<Word> = sortedWith(compareBy(polishCollator) { it.text })

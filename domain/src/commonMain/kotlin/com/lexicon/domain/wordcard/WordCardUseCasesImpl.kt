@@ -30,7 +30,7 @@ class StartWordCardSessionUseCaseImpl(
         val steps = words.mapIndexed { index, word ->
             WordCardStep(
                 stepIndex = index,
-                vocabularyItemId = word.id,
+                vocabularyItemId = word.id.value,
                 text = word.text,
                 translation = word.translation,
                 transcription = word.transcription,

@@ -3,13 +3,11 @@
 package com.lexicon.domain.trueorfalse
 
 import com.lexicon.boundary.VocabularyRepository
-import com.lexicon.domain.dictation.Word
-import com.lexicon.domain.dictation.isPhrase
-import com.lexicon.domain.dictation.toWord
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionRequest
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.TrueOrFalseSessionResponse
 import com.lexicon.interactors.trueorfalse.TrueOrFalseStepResponse
+import com.lexicon.model.vocabulary.Word
 import kotlin.random.Random
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
@@ -23,7 +21,7 @@ class StartTrueOrFalseSessionUseCaseImpl(
         val pool =
             vocabularyRepository
                 .getRandomItems(request.poolSize * DISTRACTOR_POOL_MULTIPLIER, request.vocabularyIds)
-                .map { it.toWord() }
+                .map { it }
         val subjects = pool.take(request.poolSize)
 
         val steps =
@@ -36,7 +34,7 @@ class StartTrueOrFalseSessionUseCaseImpl(
                 }
                 TrueOrFalseStepResponse(
                     stepIndex = index,
-                    vocabularyItemId = subject.id,
+                    vocabularyItemId = subject.id.value,
                     word = subject.text,
                     displayedTranslation = displayedTranslation,
                     isDisplayedTranslationCorrect = displayedTranslation == subject.translation,

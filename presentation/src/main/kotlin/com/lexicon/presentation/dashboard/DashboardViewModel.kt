@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.lexicon.interactors.conjugation.ConjugationCourse
 import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
-import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramProgressUseCase
@@ -15,6 +14,7 @@ import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
 import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramDay
 import com.lexicon.interactors.program.ProgramProgress
+import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.presentation.program.ProgramQueue
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

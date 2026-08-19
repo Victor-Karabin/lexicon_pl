@@ -1,14 +1,14 @@
 package com.lexicon.presentation.presets
 
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
-import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetCategory
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetMembership
-import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
-import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
+import com.lexicon.model.vocabulary.LocalizedText
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -27,7 +27,7 @@ import kotlin.time.Duration.Companion.seconds
 class ChangePresetsControllerTest {
     private val dispatcher = StandardTestDispatcher()
 
-    private val kot = PresetWord(VocabularyId(1L), "kot", "cat", "kɔt")
+    private val kot = Word(VocabularyId(1L), "kot", "cat", "kɔt")
 
     private val getMemberships: GetWordPresetMembershipsUseCase = mockk()
     private val setMembership: SetWordPresetMembershipUseCase = mockk(relaxed = true)

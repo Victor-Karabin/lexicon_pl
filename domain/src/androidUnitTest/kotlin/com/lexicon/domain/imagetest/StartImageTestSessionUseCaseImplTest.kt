@@ -4,10 +4,11 @@ import com.lexicon.boundary.AppSettingsBoundary
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.SettingsRepository
 import com.lexicon.boundary.ThemeModeBoundary
-import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.interactors.imagetest.StartImageTestSessionRequest
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -27,12 +28,12 @@ class StartImageTestSessionUseCaseImplTest {
 
     private val items =
         listOf(
-            VocabularyItemBoundary(1, "kot", "cat", "kɔt"),
-            VocabularyItemBoundary(2, "pies", "dog", "pjɛs"),
-            VocabularyItemBoundary(3, "dom", "house", "dɔm"),
-            VocabularyItemBoundary(4, "woda", "water", "ˈvɔda"),
-            VocabularyItemBoundary(5, "chleb", "bread", "xlɛp"),
-            VocabularyItemBoundary(6, "książka", "book", "ˈkʂɔ̃ʐka"),
+            Word(VocabularyId(1), "kot", "cat", "kɔt"),
+            Word(VocabularyId(2), "pies", "dog", "pjɛs"),
+            Word(VocabularyId(3), "dom", "house", "dɔm"),
+            Word(VocabularyId(4), "woda", "water", "ˈvɔda"),
+            Word(VocabularyId(5), "chleb", "bread", "xlɛp"),
+            Word(VocabularyId(6), "książka", "book", "ˈkʂɔ̃ʐka"),
         )
 
     @Test
@@ -68,8 +69,8 @@ class StartImageTestSessionUseCaseImplTest {
         runTest {
             val mixedItems =
                 items + listOf(
-                    VocabularyItemBoundary(7, "dzień dobry", "good morning", "d͡ʑɛɲ ˈdɔbrɨ"),
-                    VocabularyItemBoundary(8, "dobry wieczór", "good evening", "ˈdɔbrɨ ˈvjɛt͡ʂur"),
+                    Word(VocabularyId(7), "dzień dobry", "good morning", "d͡ʑɛɲ ˈdɔbrɨ"),
+                    Word(VocabularyId(8), "dobry wieczór", "good evening", "ˈdɔbrɨ ˈvjɛt͡ʂur"),
                 )
             coEvery { vocabularyRepository.getRandomItems(any()) } returns mixedItems
             coEvery { imageProvider.searchImage(any()) } returns null
@@ -86,8 +87,8 @@ class StartImageTestSessionUseCaseImplTest {
     fun `every step is filled to the requested option count even though phrases are scarce`() =
         runTest {
             val scarcePhrases = listOf(
-                VocabularyItemBoundary(90, "dzien dobry", "good morning", "d"),
-                VocabularyItemBoundary(91, "gdzie jest dworzec", "where is the station", "g"),
+                Word(VocabularyId(90), "dzien dobry", "good morning", "d"),
+                Word(VocabularyId(91), "gdzie jest dworzec", "where is the station", "g"),
             ) + items
             coEvery { vocabularyRepository.getRandomItems(any()) } returns scarcePhrases
             coEvery { imageProvider.searchImage(any()) } returns null

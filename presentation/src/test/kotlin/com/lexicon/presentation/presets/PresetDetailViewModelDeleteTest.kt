@@ -7,18 +7,18 @@ import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
-import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
 import com.lexicon.interactors.presets.PresetCategory
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetStudySetState
-import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SetPresetInStudySetUseCase
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
-import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
+import com.lexicon.model.vocabulary.LocalizedText
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -46,13 +46,13 @@ import kotlin.time.Duration.Companion.minutes
 class PresetDetailViewModelDeleteTest {
     private val dispatcher = StandardTestDispatcher()
 
-    private val kot = PresetWord(VocabularyId(1L), "kot", "cat", "kɔt")
-    private val pies = PresetWord(VocabularyId(2L), "pies", "dog", "pjɛs")
+    private val kot = Word(VocabularyId(1L), "kot", "cat", "kɔt")
+    private val pies = Word(VocabularyId(2L), "pies", "dog", "pjɛs")
 
     private var storedWords = listOf(kot, pies)
     private val studySet = MutableStateFlow<Set<VocabularyId>>(emptySet())
 
-    private fun presetOf(words: List<PresetWord>) =
+    private fun presetOf(words: List<Word>) =
         VocabularyPreset(
             id = PresetId("food"),
             title = LocalizedText(mapOf("en" to "Food")),
@@ -137,7 +137,7 @@ class PresetDetailViewModelDeleteTest {
             val viewModel = viewModel()
             advanceUntilIdle()
 
-            viewModel.onPronounceWord(PresetWord(VocabularyId(1), "chleb", "bread", "xlɛp"))
+            viewModel.onPronounceWord(Word(VocabularyId(1), "chleb", "bread", "xlɛp"))
             advanceUntilIdle()
 
             coVerify { speechSynthesizer.speak("chleb") }

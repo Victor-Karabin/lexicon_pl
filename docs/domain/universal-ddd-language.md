@@ -23,7 +23,7 @@ Everything the learner practises comes from one of three sources: the shipped
 
 | Context | Owns | Package |
 | --- | --- | --- |
-| Vocabulary | Words, presets, the study set, images and translations | `interactors.presets` |
+| Vocabulary | Words, presets, the study set, images and translations | `model.vocabulary`, `interactors.presets` |
 | Training | A single practice session and what it records | `model.training`, `interactors.<training>` |
 | Scheduling | Review intervals, mastery, study days, streaks | `model.scheduling` |
 | Program | The daily plan and its queue of trainings | `interactors.program` |
@@ -39,7 +39,7 @@ must not be merged.
 
 | Term | Definition | Context | Synonyms | Avoid | Code Representation |
 | --- | --- | --- | --- | --- | --- |
-| Word | A Polish word or phrase with its English translation, IPA and optional picture | Vocabulary | vocabulary item | *entry*, *item*, *term* | `VocabularyItemBoundary`, `PresetWord`, `VocabularyId` |
+| Word | A Polish word or phrase with its English translation, IPA and optional picture | Vocabulary | vocabulary item | *entry*, *item*, *term* | `Word`, `VocabularyId`, `CefrLevel` |
 | Study set | The words the learner has chosen to practise | Vocabulary | — | — | `isInStudySet`, `studySetWordIds()` |
 | Preset | A named, shipped or hand-made grouping of words by topic | Vocabulary | word list | *category* (that is the grouping above presets) | `VocabularyPreset`, `PresetId` |
 | Preset category | A grouping of presets | Vocabulary | — | *topic* | `PresetCategory` |
@@ -55,7 +55,8 @@ must not be merged.
 | Minimum words | The smallest study set a training can build a session from | Training | — | *requirement* | `TrainingType.minimumWords` |
 | Review | A later encounter with a word the learner has already met | Scheduling | — | *repetition* | `ReviewScheduleRepository`, `WordReviewEntity` |
 | Due | A word whose review interval has elapsed | Scheduling | — | *pending*, *expired* | `dueAtEpochDay` |
-| Mastery | The point at which a word or variant counts as known | Scheduling / Conjugation | — | *learned*, *complete* | `isMastered`, `MASTERY_STREAK` |
+| Word mastery | A word whose review interval has passed the settings' threshold | Scheduling | — | *learned*, *complete* | `ReviewState.isMastered(settings)` |
+| Variant mastery | A conjugation variant answered correctly enough times in a row | Conjugation | — | *learned*, *complete* | `VariantProgress.isMastered`, `MASTERY_STREAK` |
 | Study day | A calendar day on which the learner practised, with its totals | Scheduling | — | *session day* | `StudyDayBoundary` |
 | Streak | Consecutive study days | Scheduling | — | — | `GetStudyStreakUseCase` |
 | Program | A configuration that plans a learner's daily work | Program | — | *course*, *plan* | `Program`, `ProgramId`, `ProgramConfig` |
@@ -203,6 +204,7 @@ unified.
 | Word | In one context | In another |
 | --- | --- | --- |
 | **Course** | Course — a sequence of authored lessons (Krok po kroku) | Conjugation course — a chosen set of verbs |
+| **Mastery** | Scheduling: a word whose review interval passed the threshold (21 days by default) | Conjugation: a variant answered correctly twice in a row |
 | **Progress** | Program: weighted metrics combined into a figure | Conjugation: variants mastered out of total |
 | | | Course: lessons completed |
 | **Step** | Training: one question in a session | Conjugation: one person's row inside a question |
@@ -225,6 +227,9 @@ unified.
 | `TrainingResultOutcomeBoundary` | Removed — it duplicated `StepOutcome` exactly | `StepOutcome`, which now carries `SEEN` |
 | `TrainingRequirements` | Removed — a domain policy that lived in the UI module | `TrainingType.minimumWords` |
 | `TRAINING_TYPE_*` constants | Removed, eleven of them | `TrainingType` |
+| `VocabularyItemBoundary` | Removed — an anemic twin of the word, carrying `Long` and `String?` where the model had value objects | `Word` |
+| `PresetWord` | Renamed — it was never preset-specific | `Word` |
+| `ScopeSourceType.FAVOURITES`, `ProgramDraftProblem.NO_FAVOURITES` | Renamed — the deprecated term survived an earlier case-sensitive sweep | `STUDY_SET`, `EMPTY_STUDY_SET` |
 
 ## Terminology Change History
 
@@ -241,6 +246,8 @@ unified.
 | 2026-08-19 | *Favourite* renamed to *study set* throughout the code | The interface had always said study set; the code name was the last holdout |
 | 2026-08-19 | **`SEEN` added to `StepOutcome`; `TrainingResultOutcomeBoundary` removed** | The two enums became identical. The earlier reason for keeping the boundary copy — that only it carried `SEEN` — was the defect, not the justification: the model could not express a state the domain has |
 | 2026-08-19 | **Review scheduling moved out of `data` into `model.scheduling`** | A Room repository owned SM-2, the review policy and the study-time rule. The application now invokes the scheduler through `RecordAnswerUseCase` |
+| 2026-08-19 | **`Word` promoted to the model**, absorbing `PresetWord` and `VocabularyItemBoundary` | One concept had two representations: a modelled one in the application layer and an anemic twin at the data edge, with a mapper between them. `VocabularyId` and `CefrLevel` now reach the repository |
+| 2026-08-19 | *Mastery* split into **word mastery** and **variant mastery** | One glossary term covered two unrelated rules — an interval threshold in Scheduling, a correct-answer streak in Conjugation. They were never the same measure |
 | 2026-08-19 | **`TrainingType` introduced**; `TrainingIds`, eleven `TRAINING_TYPE_*` constants and `TrainingRequirements` folded into it | One concept had three string encodings — lowercase route ids, uppercase stored types, and a minimum-words table in the UI module |
 
 ## Enforcement

@@ -1,11 +1,12 @@
 package com.lexicon.domain.presets
 
 import com.lexicon.boundary.PresetCategoryBoundary
-import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyPresetBoundary
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.presets.PresetId
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -51,9 +52,9 @@ class VocabularyPresetUseCasesImplTest {
 
     private val vocabularyRepository: VocabularyRepository = mockk {
         coEvery { getItemsByIds(any()) } returns listOf(
-            VocabularyItemBoundary(1L, "kot", "cat", "kɔt"),
-            VocabularyItemBoundary(2L, "pies", "dog", "pjɛs"),
-            VocabularyItemBoundary(3L, "dom", "house", "dɔm"),
+            Word(VocabularyId(1), "kot", "cat", "kɔt"),
+            Word(VocabularyId(2), "pies", "dog", "pjɛs"),
+            Word(VocabularyId(3), "dom", "house", "dɔm"),
         )
     }
 

@@ -1,15 +1,15 @@
 package com.lexicon.domain.presets
 
-import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
-import com.lexicon.interactors.presets.CefrLevel
+import com.lexicon.model.vocabulary.CefrLevel
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.slot
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -17,14 +17,14 @@ class SearchVocabularyUseCaseImplTest {
     private val vocabularyRepository: VocabularyRepository = mockk()
     private val useCase = SearchVocabularyUseCaseImpl(vocabularyRepository)
 
-    private fun repositoryReturns(vararg items: VocabularyItemBoundary) {
+    private fun repositoryReturns(vararg items: Word) {
         coEvery { vocabularyRepository.search(any(), any(), any()) } returns items.toList()
     }
 
     @Test
     fun `results are mapped into words, level included`() =
         runTest {
-            repositoryReturns(VocabularyItemBoundary(1L, "woda", "water", "ˈvɔda", isInStudySet = true, cefr = "A1"))
+            repositoryReturns(Word(VocabularyId(1), "woda", "water", "ˈvɔda", isInStudySet = true, cefr = CefrLevel.A1))
 
             val word = useCase("woda").single()
 
@@ -32,14 +32,6 @@ class SearchVocabularyUseCaseImplTest {
             assertEquals("water", word.translation)
             assertEquals(CefrLevel.A1, word.cefr)
             assertTrue("the study-set flag has to survive the mapping", word.isInStudySet)
-        }
-
-    @Test
-    fun `a level the app does not know degrades to null rather than failing`() =
-        runTest {
-            repositoryReturns(VocabularyItemBoundary(1L, "woda", "water", "ˈvɔda", cefr = "D3"))
-
-            assertNull(useCase("woda").single().cefr)
         }
 
     @Test

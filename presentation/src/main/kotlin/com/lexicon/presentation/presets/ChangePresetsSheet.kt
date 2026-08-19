@@ -28,7 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetMembership
-import com.lexicon.interactors.presets.resolve
+import com.lexicon.model.vocabulary.resolve
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.ExpandableFlowRow
 import com.lexicon.presentation.theme.Dimens

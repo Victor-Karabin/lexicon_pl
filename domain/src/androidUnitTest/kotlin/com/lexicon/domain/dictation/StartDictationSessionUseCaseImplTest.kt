@@ -3,10 +3,11 @@ package com.lexicon.domain.dictation
 import com.lexicon.boundary.AppSettingsBoundary
 import com.lexicon.boundary.SettingsRepository
 import com.lexicon.boundary.ThemeModeBoundary
-import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.interactors.dictation.StartDictationSessionRequest
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -26,8 +27,8 @@ class StartDictationSessionUseCaseImplTest {
         runTest {
             val items =
                 listOf(
-                    VocabularyItemBoundary(1, "kot", "cat", "kɔt"),
-                    VocabularyItemBoundary(2, "pies", "dog", "pjɛs"),
+                    Word(VocabularyId(1), "kot", "cat", "kɔt"),
+                    Word(VocabularyId(2), "pies", "dog", "pjɛs"),
                 )
             coEvery { vocabularyRepository.getRandomItems(2) } returns items
 

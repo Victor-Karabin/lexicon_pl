@@ -1,12 +1,13 @@
 package com.lexicon.domain.passage
 
-import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.domain.dictation.AnswerNormalizer
 import com.lexicon.interactors.passage.SubmitPassageAnswersRequest
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.model.training.StepOutcome
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -20,7 +21,7 @@ class SubmitPassageAnswersUseCaseImplTest {
     private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
     private val useCase = SubmitPassageAnswersUseCaseImpl(vocabulary, recordAnswer, AnswerNormalizer())
 
-    private val book = VocabularyItemBoundary(7, "książka", "a book", "ˈkʂɔ̃ʂka")
+    private val book = Word(VocabularyId(7), "książka", "a book", "ˈkʂɔ̃ʂka")
 
     @Test
     fun `an inflected gap is recorded against the starred word it came from`() =

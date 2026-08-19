@@ -43,8 +43,6 @@ import com.lexicon.interactors.course.CourseId
 import com.lexicon.interactors.course.LessonId
 import com.lexicon.interactors.course.LessonSummary
 import com.lexicon.interactors.course.completedCount
-import com.lexicon.interactors.presets.LocalizedText
-import com.lexicon.interactors.presets.resolve
 import com.lexicon.interactors.program.ActivityConfig
 import com.lexicon.interactors.program.ActivityType
 import com.lexicon.interactors.program.DailyPlanConfig
@@ -58,6 +56,8 @@ import com.lexicon.interactors.program.ProgramId
 import com.lexicon.interactors.program.ProgramVisibility
 import com.lexicon.interactors.program.TargetType
 import com.lexicon.interactors.program.trainingsADay
+import com.lexicon.model.vocabulary.LocalizedText
+import com.lexicon.model.vocabulary.resolve
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.program.ProgramMedallion

@@ -6,7 +6,6 @@ import com.lexicon.boundary.ProgramRepository
 import com.lexicon.boundary.ReviewScheduleRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.Clock
-import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.program.AdvanceProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramUseCase
@@ -18,6 +17,7 @@ import com.lexicon.interactors.program.ProgramId
 import com.lexicon.interactors.program.QueuedTraining
 import com.lexicon.interactors.program.ResolveProgramScopeUseCase
 import com.lexicon.interactors.program.WordCard
+import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.serialization.Serializable
@@ -158,13 +158,13 @@ class GetWordCardsUseCaseImpl(
 ) : GetWordCardsUseCase {
     override suspend fun invoke(ids: List<VocabularyId>): ImmutableList<WordCard> {
         if (ids.isEmpty()) return emptyList<WordCard>().toImmutableList()
-        val words = vocabulary.getItemsByIds(ids.map { it.value }).associateBy { it.id }
+        val words = vocabulary.getItemsByIds(ids.map { it.value }).associateBy { it.id.value }
 
         return ids
             .mapNotNull { words[it.value] }
             .map { word ->
                 WordCard(
-                    id = VocabularyId(word.id),
+                    id = word.id,
                     text = word.text,
                     translation = word.translation,
                     transcription = word.transcription,

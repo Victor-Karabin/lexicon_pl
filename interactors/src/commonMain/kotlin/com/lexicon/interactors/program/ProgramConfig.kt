@@ -41,7 +41,7 @@ data class ProgramGoal(
     val required: Boolean = true,
 )
 
-enum class ScopeSourceType { PRESET, FAVOURITES, CEFR_LEVEL, LESSON, ALL }
+enum class ScopeSourceType { PRESET, STUDY_SET, CEFR_LEVEL, LESSON, ALL }
 
 @Serializable
 data class ScopeSource(

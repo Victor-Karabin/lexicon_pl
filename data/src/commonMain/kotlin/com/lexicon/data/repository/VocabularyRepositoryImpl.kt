@@ -1,14 +1,14 @@
 package com.lexicon.data.repository
 
 import com.lexicon.boundary.SeedOutcomeBoundary
-import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.data.local.VocabularySeeder
 import com.lexicon.data.local.WordDao
 import com.lexicon.data.local.WordEntity
 import com.lexicon.data.local.nextUserWordId
 import com.lexicon.data.local.searchKeyFor
-import com.lexicon.data.local.toBoundary
+import com.lexicon.data.local.toWord
+import com.lexicon.model.vocabulary.Word
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -19,27 +19,27 @@ class VocabularyRepositoryImpl(
     override suspend fun getRandomItems(
         count: Int,
         restrictToIds: List<Long>,
-    ): List<VocabularyItemBoundary> {
+    ): List<Word> {
         vocabularySeeder.ensureSeeded()
         val words = if (restrictToIds.isEmpty()) {
             wordDao.getRandomForStudy(count)
         } else {
             wordDao.getRandomFromIds(restrictToIds, count)
         }
-        return words.map { it.toBoundary() }
+        return words.map { it.toWord() }
     }
 
-    override suspend fun getItemsByIds(ids: List<Long>): List<VocabularyItemBoundary> {
+    override suspend fun getItemsByIds(ids: List<Long>): List<Word> {
         if (ids.isEmpty()) return emptyList()
         vocabularySeeder.ensureSeeded()
-        return wordDao.getByIds(ids).map { it.toBoundary() }
+        return wordDao.getByIds(ids).map { it.toWord() }
     }
 
     override suspend fun search(
         foldedQuery: String,
         levels: Set<String>,
         limit: Int,
-    ): List<VocabularyItemBoundary> {
+    ): List<Word> {
         vocabularySeeder.ensureSeeded()
         return wordDao
             .search(
@@ -47,7 +47,7 @@ class VocabularyRepositoryImpl(
                 levels = levels.toList(),
                 ignoreLevels = if (levels.isEmpty()) 1 else 0,
                 limit = limit,
-            ).map { it.toBoundary() }
+            ).map { it.toWord() }
     }
 
     override suspend fun seedFromAsset(): SeedOutcomeBoundary = vocabularySeeder.sync()
@@ -56,7 +56,7 @@ class VocabularyRepositoryImpl(
         text: String,
         translation: String,
         transcription: String,
-    ): VocabularyItemBoundary {
+    ): Word {
         vocabularySeeder.ensureSeeded()
         val word = WordEntity(
             id = nextUserWordId(wordDao.lowestId()),
@@ -67,7 +67,7 @@ class VocabularyRepositoryImpl(
             isUserCreated = true,
         )
         wordDao.insert(word)
-        return word.toBoundary()
+        return word.toWord()
     }
 
     override suspend fun updateWord(
@@ -75,7 +75,7 @@ class VocabularyRepositoryImpl(
         text: String,
         translation: String,
         transcription: String,
-    ): VocabularyItemBoundary {
+    ): Word {
         vocabularySeeder.ensureSeeded()
         wordDao.updateWord(
             id = id,
@@ -84,12 +84,12 @@ class VocabularyRepositoryImpl(
             transcription = transcription,
             searchKey = searchKeyFor(text, translation),
         )
-        return checkNotNull(wordDao.findById(id)) { "word $id vanished while being edited" }.toBoundary()
+        return checkNotNull(wordDao.findById(id)) { "word $id vanished while being edited" }.toWord()
     }
 
-    override suspend fun findWordByText(text: String): VocabularyItemBoundary? {
+    override suspend fun findWordByText(text: String): Word? {
         vocabularySeeder.ensureSeeded()
-        return wordDao.findByText(text)?.toBoundary()
+        return wordDao.findByText(text)?.toWord()
     }
 
     override suspend fun allWordIds(): List<Long> {
@@ -107,9 +107,9 @@ class VocabularyRepositoryImpl(
         return wordDao.studySetWordIds()
     }
 
-    override suspend fun getWord(id: Long): VocabularyItemBoundary? {
+    override suspend fun getWord(id: Long): Word? {
         vocabularySeeder.ensureSeeded()
-        return wordDao.findById(id)?.toBoundary()
+        return wordDao.findById(id)?.toWord()
     }
 
     override suspend fun countWords(): Int = wordDao.count()

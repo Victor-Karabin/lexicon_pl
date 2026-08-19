@@ -44,12 +44,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.conjugation.ConjugationCourse
-import com.lexicon.interactors.presets.LocalizedText
-import com.lexicon.interactors.presets.VocabularyId
-import com.lexicon.interactors.presets.resolve
 import com.lexicon.interactors.program.ProgramProgress
 import com.lexicon.interactors.program.ProgressMetric
 import com.lexicon.interactors.program.ProgressMetricType
+import com.lexicon.model.vocabulary.LocalizedText
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.resolve
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.DeleteAction
 import com.lexicon.presentation.common.DeleteActionWidth

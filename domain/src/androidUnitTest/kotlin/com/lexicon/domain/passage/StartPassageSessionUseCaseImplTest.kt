@@ -6,12 +6,14 @@ import com.lexicon.boundary.SentenceRequestBoundary
 import com.lexicon.boundary.SentenceResultBoundary
 import com.lexicon.boundary.SettingsRepository
 import com.lexicon.boundary.ThemeModeBoundary
-import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.interactors.passage.PassageSegment
 import com.lexicon.interactors.passage.PassageSessionResult
 import com.lexicon.interactors.passage.StartPassageSessionRequest
+import com.lexicon.model.vocabulary.CefrLevel
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -31,9 +33,9 @@ class StartPassageSessionUseCaseImplTest {
         coEvery { settings.getSettings() } returns
             AppSettingsBoundary(themeMode = ThemeModeBoundary.SYSTEM, stepCount = stepCount)
         val items = words.mapIndexed { index, word ->
-            VocabularyItemBoundary(index + 1L, word, "x", "x", cefr = "A1")
+            Word(VocabularyId(index + 1L), word, "x", "x", cefr = CefrLevel.A1)
         }
-        coEvery { vocabulary.studySetWordIds() } returns items.map { it.id }
+        coEvery { vocabulary.studySetWordIds() } returns items.map { it.id.value }
         coEvery { vocabulary.getItemsByIds(any()) } returns items
     }
 

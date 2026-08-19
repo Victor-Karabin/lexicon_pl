@@ -1,8 +1,9 @@
 package com.lexicon.domain.crossword
 
-import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.crossword.StartCrosswordSessionRequest
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -15,11 +16,11 @@ class StartCrosswordSessionUseCaseImplTest {
     private val useCase = StartCrosswordSessionUseCaseImpl(vocabularyRepository)
 
     private val items = listOf(
-        VocabularyItemBoundary(1, "kot", "cat", "kɔt"),
-        VocabularyItemBoundary(2, "tor", "track", "tɔr"),
-        VocabularyItemBoundary(3, "dom", "house", "dɔm"),
-        VocabularyItemBoundary(4, "dzień dobry", "good morning", "d͡ʑɛɲ ˈdɔbrɨ"),
-        VocabularyItemBoundary(5, "gdzie jest dworzec?", "where is the station?", "ɡd͡ʑɛ jɛst ˈdvɔʐɛt͡s"),
+        Word(VocabularyId(1), "kot", "cat", "kɔt"),
+        Word(VocabularyId(2), "tor", "track", "tɔr"),
+        Word(VocabularyId(3), "dom", "house", "dɔm"),
+        Word(VocabularyId(4), "dzień dobry", "good morning", "d͡ʑɛɲ ˈdɔbrɨ"),
+        Word(VocabularyId(5), "gdzie jest dworzec?", "where is the station?", "ɡd͡ʑɛ jɛst ˈdvɔʐɛt͡s"),
     )
 
     @Test

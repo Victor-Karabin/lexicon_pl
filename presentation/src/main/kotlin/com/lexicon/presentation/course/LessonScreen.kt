@@ -39,8 +39,8 @@ import com.lexicon.interactors.course.Lesson
 import com.lexicon.interactors.course.LessonExercise
 import com.lexicon.interactors.course.LessonId
 import com.lexicon.interactors.course.questionCount
-import com.lexicon.interactors.presets.PresetWord
-import com.lexicon.interactors.presets.VocabularyId
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
@@ -84,7 +84,7 @@ private fun LessonContent(
     onTrainLesson: (List<Long>) -> Unit,
     onCompletedToggled: (Boolean) -> Unit,
     onWordStudySetToggled: (VocabularyId, Boolean) -> Unit,
-    onPronounceWord: (PresetWord) -> Unit,
+    onPronounceWord: (Word) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
     onExerciseSelected: (LessonExercise) -> Unit,
     modifier: Modifier = Modifier,
@@ -221,7 +221,7 @@ private fun LazyListScope.exercisesBlock(
 private fun LazyListScope.wordsBlock(
     uiState: LessonUiState.Loaded,
     onWordStudySetToggled: (VocabularyId, Boolean) -> Unit,
-    onPronounceWord: (PresetWord) -> Unit,
+    onPronounceWord: (Word) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
 ) {
     item { SectionHeading(stringResource(R.string.lesson_words)) }
@@ -283,9 +283,9 @@ private fun LessonPreview() {
             uiState = LessonUiState.Loaded(
                 lesson = previewLesson,
                 words = persistentListOf(
-                    PresetWord(VocabularyId(1), "proszę", "please", "ˈprɔʂɛ", isInStudySet = true),
-                    PresetWord(VocabularyId(2), "dziękuję", "thank you", "d͡ʑɛŋˈkujɛ"),
-                    PresetWord(VocabularyId(3), "przepraszam", "sorry", "pʂɛˈpraʂam"),
+                    Word(VocabularyId(1), "proszę", "please", "ˈprɔʂɛ", isInStudySet = true),
+                    Word(VocabularyId(2), "dziękuję", "thank you", "d͡ʑɛŋˈkujɛ"),
+                    Word(VocabularyId(3), "przepraszam", "sorry", "pʂɛˈpraʂam"),
                 ),
                 isLoadingWords = false,
             ),

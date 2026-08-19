@@ -4,14 +4,12 @@ package com.lexicon.domain.imagetest
 
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.VocabularyRepository
-import com.lexicon.domain.dictation.Word
-import com.lexicon.domain.dictation.isPhrase
-import com.lexicon.domain.dictation.toWord
 import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.interactors.imagetest.ImageTestSessionResponse
 import com.lexicon.interactors.imagetest.ImageTestStepResponse
 import com.lexicon.interactors.imagetest.StartImageTestSessionRequest
 import com.lexicon.interactors.imagetest.StartImageTestSessionUseCase
+import com.lexicon.model.vocabulary.Word
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlin.uuid.ExperimentalUuidApi
@@ -29,7 +27,7 @@ class StartImageTestSessionUseCaseImpl(
     override suspend fun invoke(request: StartImageTestSessionRequest): ImageTestSessionResponse {
         val stepCount = stepCountResolver.resolve(request.stepCount)
         val poolSize = maxOf(maxOf(stepCount, request.optionCount) * POOL_MULTIPLIER, MIN_POOL_SIZE)
-        val pool = vocabularyRepository.getRandomItems(poolSize, request.vocabularyIds).map { it.toWord() }
+        val pool = vocabularyRepository.getRandomItems(poolSize, request.vocabularyIds).map { it }
         val subjects = subjectsWithEnoughDistractors(pool, request.optionCount).take(stepCount)
 
         val steps =
@@ -68,7 +66,7 @@ class StartImageTestSessionUseCaseImpl(
 
         return ImageTestStepResponse(
             stepIndex = index,
-            vocabularyItemId = subject.id,
+            vocabularyItemId = subject.id.value,
             imageUrl = imageProvider.searchImage(subject.translation),
             clueText = subject.translation,
             options = options,

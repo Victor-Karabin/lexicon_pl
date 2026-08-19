@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.android.speech.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
-import com.lexicon.interactors.presets.CefrLevel
 import com.lexicon.interactors.presets.DeletePresetUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
@@ -12,16 +11,17 @@ import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
 import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetStudySetState
-import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.RestorePresetUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
 import com.lexicon.interactors.presets.SetPresetInStudySetUseCase
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
-import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
-import com.lexicon.interactors.presets.resolve
+import com.lexicon.model.vocabulary.CefrLevel
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.resolve
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.FlowPreview
@@ -59,7 +59,7 @@ class VocabularyViewModel(
         ChangePresetsController(viewModelScope, dispatchers.io, getWordPresetMemberships, setWordPresetMembership)
     val changePresetsState = changePresets.state
 
-    fun onChangePresetsRequested(word: PresetWord) {
+    fun onChangePresetsRequested(word: Word) {
         val languageTag = (_uiState.value as? VocabularyUiState.Loaded)?.languageTag ?: return
         changePresets.open(word, languageTag)
     }
@@ -132,7 +132,7 @@ class VocabularyViewModel(
         }
     }
 
-    fun onPronounceWord(word: PresetWord) {
+    fun onPronounceWord(word: Word) {
         viewModelScope.launch(dispatchers.io) {
             runCatching { speechSynthesizer.speak(word.text) }
         }
@@ -145,7 +145,7 @@ class VocabularyViewModel(
         viewModelScope.launch(dispatchers.io) { toggleWordInStudySet(id, isInStudySet) }
     }
 
-    fun onWordDeleted(word: PresetWord) {
+    fun onWordDeleted(word: Word) {
         viewModelScope.launch(dispatchers.io) {
             deleteWord(word.id)
             updateLoaded {

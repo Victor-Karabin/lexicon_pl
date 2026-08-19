@@ -9,18 +9,18 @@ import com.lexicon.common.polishTranscription
 import com.lexicon.interactors.presets.CreatePresetUseCase
 import com.lexicon.interactors.presets.CreateWordUseCase
 import com.lexicon.interactors.presets.GetWordUseCase
-import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetDraftException
 import com.lexicon.interactors.presets.PresetDraftProblem
 import com.lexicon.interactors.presets.PresetId
-import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.SearchImageCandidatesUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
-import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
 import com.lexicon.interactors.presets.WordDraftException
 import com.lexicon.interactors.presets.WordDraftProblem
+import com.lexicon.model.vocabulary.LocalizedText
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -37,7 +37,7 @@ class CreateWordUseCaseImpl(
         translation: String,
         imageUrl: String?,
         presetIds: List<PresetId>,
-    ): Result<PresetWord> {
+    ): Result<Word> {
         val polish = text.trim()
         val english = translation.trim()
 
@@ -54,12 +54,12 @@ class CreateWordUseCaseImpl(
         )
 
         for (presetId in presetIds.distinct()) {
-            presetRepository.setWordInPreset(presetId = presetId.value, wordId = word.id, isMember = true)
+            presetRepository.setWordInPreset(presetId = presetId.value, wordId = word.id.value, isMember = true)
         }
 
         if (!imageUrl.isNullOrBlank()) imageProvider.pinImage(query = english, imageUrl = imageUrl)
 
-        return Result.success(word.toPresetWord())
+        return Result.success(word)
     }
 }
 
@@ -74,7 +74,7 @@ class UpdateWordUseCaseImpl(
         translation: String,
         imageUrl: String?,
         presetIds: List<PresetId>,
-    ): Result<PresetWord> {
+    ): Result<Word> {
         val polish = text.trim()
         val english = translation.trim()
 
@@ -82,7 +82,7 @@ class UpdateWordUseCaseImpl(
         if (english.isEmpty()) return Result.failure(WordDraftException(WordDraftProblem.MISSING_TRANSLATION))
 
         val clash = vocabularyRepository.findWordByText(polish)
-        if (clash != null && clash.id != id.value) {
+        if (clash != null && clash.id.value != id.value) {
             return Result.failure(WordDraftException(WordDraftProblem.ALREADY_EXISTS))
         }
 
@@ -104,14 +104,14 @@ class UpdateWordUseCaseImpl(
 
         if (!imageUrl.isNullOrBlank()) imageProvider.pinImage(query = english, imageUrl = imageUrl)
 
-        return Result.success(word.toPresetWord())
+        return Result.success(word)
     }
 }
 
 class GetWordUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,
 ) : GetWordUseCase {
-    override suspend fun invoke(id: VocabularyId): PresetWord? = vocabularyRepository.getWord(id.value)?.toPresetWord()
+    override suspend fun invoke(id: VocabularyId): Word? = vocabularyRepository.getWord(id.value)
 }
 
 class CreatePresetUseCaseImpl(

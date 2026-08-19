@@ -4,7 +4,6 @@ import com.lexicon.boundary.ProgramBoundary
 import com.lexicon.boundary.ProgramRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.Clock
-import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.program.ActivityConfig
 import com.lexicon.interactors.program.ActivityType
 import com.lexicon.interactors.program.CountStudySetUseCase
@@ -26,6 +25,7 @@ import com.lexicon.interactors.program.ScopeSourceType
 import com.lexicon.interactors.program.TargetType
 import com.lexicon.interactors.program.UpdateProgramUseCase
 import com.lexicon.interactors.program.VocabularyScope
+import com.lexicon.model.vocabulary.LocalizedText
 import kotlinx.serialization.json.Json
 
 private val configJson = Json { encodeDefaults = true }
@@ -71,7 +71,7 @@ private class ProgramWriter(
         if (draft.trainings.isEmpty()) return failure(ProgramDraftProblem.NO_TRAININGS)
 
         val studySet = vocabulary.studySetWordIds().size
-        if (studySet == 0) return failure(ProgramDraftProblem.NO_FAVOURITES)
+        if (studySet == 0) return failure(ProgramDraftProblem.EMPTY_STUDY_SET)
 
         val config = draft.toConfig(studySet)
         val program = Program(
@@ -109,7 +109,7 @@ private class ProgramWriter(
                 ProgramGoal(id = "accuracy", type = TargetType.ACCURACY, target = ACCURACY_TARGET, required = false),
             ),
             scope = VocabularyScope(
-                include = listOf(ScopeSource(type = ScopeSourceType.FAVOURITES)),
+                include = listOf(ScopeSource(type = ScopeSourceType.STUDY_SET)),
                 ordering = ScopeOrdering.FREQUENCY,
             ),
             dailyPlan = DailyPlanConfig(

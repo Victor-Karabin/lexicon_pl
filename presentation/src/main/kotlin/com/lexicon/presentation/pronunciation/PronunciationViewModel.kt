@@ -78,7 +78,7 @@ class PronunciationViewModel(
                     is PronunciationSentencesResult.Ready -> result.session
 
                     PronunciationSentencesResult.EmptyStudySet ->
-                        return@launch showUnavailable(UnavailableReason.NO_FAVOURITES)
+                        return@launch showUnavailable(UnavailableReason.EMPTY_STUDY_SET)
 
                     PronunciationSentencesResult.Offline ->
                         return@launch showUnavailable(UnavailableReason.OFFLINE)

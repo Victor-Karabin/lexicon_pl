@@ -157,7 +157,7 @@ class EnsureVerbWordUseCaseImpl(
         infinitive: String,
         translation: String?,
     ): Long? {
-        vocabulary.findWordByText(infinitive)?.let { return it.id }
+        vocabulary.findWordByText(infinitive)?.let { return it.id.value }
 
         val english = translation?.trim().orEmpty()
         if (english.isEmpty()) return null
@@ -165,7 +165,7 @@ class EnsureVerbWordUseCaseImpl(
         val image = runCatching { imageProvider.searchImage(english) }.getOrNull()
         createWord(text = infinitive, translation = english, imageUrl = image, presetIds = emptyList())
 
-        return vocabulary.findWordByText(infinitive)?.id
+        return vocabulary.findWordByText(infinitive)?.id?.value
     }
 }
 
@@ -230,7 +230,7 @@ class ToggleVerbInStudySetUseCaseImpl(
         val existing = vocabulary.findWordByText(infinitive)
         if (existing == null && !isInStudySet) return
 
-        val id = existing?.id ?: ensureWord(infinitive, translation) ?: return
+        val id = existing?.id?.value ?: ensureWord(infinitive, translation) ?: return
         vocabulary.setInStudySet(listOf(id), isInStudySet)
     }
 }

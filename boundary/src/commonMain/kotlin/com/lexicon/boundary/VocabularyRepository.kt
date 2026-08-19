@@ -1,5 +1,6 @@
 package com.lexicon.boundary
 
+import com.lexicon.model.vocabulary.Word
 import kotlinx.coroutines.flow.Flow
 
 interface VocabularyRepository {
@@ -8,15 +9,15 @@ interface VocabularyRepository {
     suspend fun getRandomItems(
         count: Int,
         restrictToIds: List<Long> = emptyList(),
-    ): List<VocabularyItemBoundary>
+    ): List<Word>
 
-    suspend fun getItemsByIds(ids: List<Long>): List<VocabularyItemBoundary>
+    suspend fun getItemsByIds(ids: List<Long>): List<Word>
 
     suspend fun search(
         foldedQuery: String,
         levels: Set<String>,
         limit: Int,
-    ): List<VocabularyItemBoundary>
+    ): List<Word>
 
     suspend fun countStudyWords(excludePhrases: Boolean = false): Int
 
@@ -26,18 +27,18 @@ interface VocabularyRepository {
         text: String,
         translation: String,
         transcription: String,
-    ): VocabularyItemBoundary
+    ): Word
 
     suspend fun updateWord(
         id: Long,
         text: String,
         translation: String,
         transcription: String,
-    ): VocabularyItemBoundary
+    ): Word
 
-    suspend fun findWordByText(text: String): VocabularyItemBoundary?
+    suspend fun findWordByText(text: String): Word?
 
-    suspend fun getWord(id: Long): VocabularyItemBoundary?
+    suspend fun getWord(id: Long): Word?
 
     suspend fun deleteWord(id: Long)
 

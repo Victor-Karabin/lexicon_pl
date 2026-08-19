@@ -37,14 +37,14 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.lexicon.interactors.presets.CefrLevel
-import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetCategory
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetStudySetState
-import com.lexicon.interactors.presets.PresetWord
-import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
+import com.lexicon.model.vocabulary.CefrLevel
+import com.lexicon.model.vocabulary.LocalizedText
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.DeleteAction
 import com.lexicon.presentation.common.DeleteActionWidth
@@ -136,9 +136,9 @@ private fun VocabularyContent(
     onPresetSelected: (PresetId) -> Unit,
     onPresetStudySetToggled: (PresetId, PresetStudySetState) -> Unit,
     onWordStudySetToggled: (VocabularyId, Boolean) -> Unit,
-    onPronounceWord: (PresetWord) -> Unit,
-    onWordDeleted: (PresetWord) -> Unit,
-    onChangePresets: (PresetWord) -> Unit,
+    onPronounceWord: (Word) -> Unit,
+    onWordDeleted: (Word) -> Unit,
+    onChangePresets: (Word) -> Unit,
     onPresetDeleted: (VocabularyPreset) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
     onAddWord: () -> Unit,
@@ -191,9 +191,9 @@ private fun VocabularyBody(
     onPresetSelected: (PresetId) -> Unit,
     onPresetStudySetToggled: (PresetId, PresetStudySetState) -> Unit,
     onWordStudySetToggled: (VocabularyId, Boolean) -> Unit,
-    onPronounceWord: (PresetWord) -> Unit,
-    onWordDeleted: (PresetWord) -> Unit,
-    onChangePresets: (PresetWord) -> Unit,
+    onPronounceWord: (Word) -> Unit,
+    onWordDeleted: (Word) -> Unit,
+    onChangePresets: (Word) -> Unit,
     onPresetDeleted: (VocabularyPreset) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
     selection: WordSelection,
@@ -232,9 +232,9 @@ private fun VocabularyBody(
 private fun WordResults(
     uiState: VocabularyUiState.Loaded,
     onWordStudySetToggled: (VocabularyId, Boolean) -> Unit,
-    onPronounceWord: (PresetWord) -> Unit,
-    onWordDeleted: (PresetWord) -> Unit,
-    onChangePresets: (PresetWord) -> Unit,
+    onPronounceWord: (Word) -> Unit,
+    onWordDeleted: (Word) -> Unit,
+    onChangePresets: (Word) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
     selection: WordSelection,
 ) {
@@ -444,9 +444,9 @@ private fun VocabularyWordSearchPreview() {
                 query = "wod",
                 presets = previewPresets,
                 words = persistentListOf(
-                    PresetWord(VocabularyId(1), "woda", "water", "ˈvɔda", isInStudySet = true, cefr = CefrLevel.A1),
-                    PresetWord(VocabularyId(2), "wodospad", "waterfall", "vɔˈdɔspat", cefr = CefrLevel.B1),
-                    PresetWord(VocabularyId(3), "woda mineralna", "mineral water", "ˈvɔda miɲɛˈralna", cefr = CefrLevel.A1),
+                    Word(VocabularyId(1), "woda", "water", "ˈvɔda", isInStudySet = true, cefr = CefrLevel.A1),
+                    Word(VocabularyId(2), "wodospad", "waterfall", "vɔˈdɔspat", cefr = CefrLevel.B1),
+                    Word(VocabularyId(3), "woda mineralna", "mineral water", "ˈvɔda miɲɛˈralna", cefr = CefrLevel.A1),
                 ),
             ),
             onQueryChanged = {},

@@ -1,8 +1,9 @@
 package com.lexicon.domain.trueorfalse
 
-import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionRequest
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -16,10 +17,10 @@ class StartTrueOrFalseSessionUseCaseImplTest {
 
     private val items =
         listOf(
-            VocabularyItemBoundary(1, "kot", "cat", "kɔt"),
-            VocabularyItemBoundary(2, "pies", "dog", "pjɛs"),
-            VocabularyItemBoundary(3, "dom", "house", "dɔm"),
-            VocabularyItemBoundary(4, "woda", "water", "ˈvɔda"),
+            Word(VocabularyId(1), "kot", "cat", "kɔt"),
+            Word(VocabularyId(2), "pies", "dog", "pjɛs"),
+            Word(VocabularyId(3), "dom", "house", "dɔm"),
+            Word(VocabularyId(4), "woda", "water", "ˈvɔda"),
         )
 
     @Test
@@ -29,7 +30,7 @@ class StartTrueOrFalseSessionUseCaseImplTest {
             val response = useCase(StartTrueOrFalseSessionRequest(poolSize = 2, correctProbability = 1.0))
             response.steps.forEach { step ->
                 assertTrue(step.isDisplayedTranslationCorrect)
-                assertEquals(items.first { it.id == step.vocabularyItemId }.translation, step.displayedTranslation)
+                assertEquals(items.first { it.id.value == step.vocabularyItemId }.translation, step.displayedTranslation)
             }
         }
 
@@ -39,7 +40,7 @@ class StartTrueOrFalseSessionUseCaseImplTest {
             coEvery { vocabularyRepository.getRandomItems(any()) } returns items
             val response = useCase(StartTrueOrFalseSessionRequest(poolSize = 2, correctProbability = 0.0))
             response.steps.forEach { step ->
-                val subject = items.first { it.id == step.vocabularyItemId }
+                val subject = items.first { it.id.value == step.vocabularyItemId }
                 assertEquals(false, step.isDisplayedTranslationCorrect)
                 assertTrue(step.displayedTranslation != subject.translation)
             }
@@ -51,7 +52,7 @@ class StartTrueOrFalseSessionUseCaseImplTest {
             coEvery { vocabularyRepository.getRandomItems(any()) } returns items
             val response = useCase(StartTrueOrFalseSessionRequest(poolSize = 4, correctProbability = 0.5))
             response.steps.forEach { step ->
-                val subject = items.first { it.id == step.vocabularyItemId }
+                val subject = items.first { it.id.value == step.vocabularyItemId }
                 assertEquals(step.displayedTranslation == subject.translation, step.isDisplayedTranslationCorrect)
             }
         }
@@ -61,13 +62,13 @@ class StartTrueOrFalseSessionUseCaseImplTest {
         runTest {
             val mixedItems =
                 items + listOf(
-                    VocabularyItemBoundary(5, "dzień dobry", "good morning", "d͡ʑɛɲ ˈdɔbrɨ"),
-                    VocabularyItemBoundary(6, "dobry wieczór", "good evening", "ˈdɔbrɨ ˈvjɛt͡ʂur"),
+                    Word(VocabularyId(5), "dzień dobry", "good morning", "d͡ʑɛɲ ˈdɔbrɨ"),
+                    Word(VocabularyId(6), "dobry wieczór", "good evening", "ˈdɔbrɨ ˈvjɛt͡ʂur"),
                 )
             coEvery { vocabularyRepository.getRandomItems(any()) } returns mixedItems
             val response = useCase(StartTrueOrFalseSessionRequest(poolSize = mixedItems.size, correctProbability = 0.0))
             response.steps.forEach { step ->
-                val subject = mixedItems.first { it.id == step.vocabularyItemId }
+                val subject = mixedItems.first { it.id.value == step.vocabularyItemId }
                 assertEquals(subject.translation.contains(' '), step.displayedTranslation.contains(' '))
             }
         }

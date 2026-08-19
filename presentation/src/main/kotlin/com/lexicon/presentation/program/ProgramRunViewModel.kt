@@ -2,8 +2,8 @@ package com.lexicon.presentation.program
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.program.ProgramId
+import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

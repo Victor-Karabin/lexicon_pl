@@ -1,6 +1,6 @@
 package com.lexicon.interactors.course
 
-import com.lexicon.interactors.presets.LocalizedText
+import com.lexicon.model.vocabulary.LocalizedText
 import kotlinx.collections.immutable.ImmutableList
 
 data class Course(

@@ -3,10 +3,11 @@ package com.lexicon.domain.wordmatch
 import com.lexicon.boundary.AppSettingsBoundary
 import com.lexicon.boundary.SettingsRepository
 import com.lexicon.boundary.ThemeModeBoundary
-import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.domain.settings.StepCountResolver
 import com.lexicon.interactors.wordmatch.StartWordMatchSessionRequest
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -21,8 +22,8 @@ class StartWordMatchSessionUseCaseImplTest {
     }
     private val useCase = StartWordMatchSessionUseCaseImpl(vocabularyRepository, StepCountResolver(settingsRepository))
 
-    private val singleWords = (1L..10L).map { VocabularyItemBoundary(it, "słowo$it", "word$it", "ˈswɔvɔ") }
-    private val phrases = (11L..20L).map { VocabularyItemBoundary(it, "dzień dobry $it", "good morning $it", "d͡ʑɛɲ") }
+    private val singleWords = (1L..10L).map { Word(VocabularyId(it), "słowo$it", "word$it", "ˈswɔvɔ") }
+    private val phrases = (11L..20L).map { Word(VocabularyId(it), "dzień dobry $it", "good morning $it", "d͡ʑɛɲ") }
 
     private fun pairsAreOneContentType(words: List<String>) = words.all { it.contains(' ') } || words.none { it.contains(' ') }
 
@@ -74,7 +75,7 @@ class StartWordMatchSessionUseCaseImplTest {
             val pairs = useCase(StartWordMatchSessionRequest(stepCount = 3)).steps.single().pairs
 
             pairs.forEach { pair ->
-                val source = singleWords.first { it.id == pair.vocabularyItemId }
+                val source = singleWords.first { it.id.value == pair.vocabularyItemId }
                 assertEquals(source.text, pair.word)
                 assertEquals(source.translation, pair.translation)
             }

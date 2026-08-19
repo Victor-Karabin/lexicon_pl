@@ -7,7 +7,7 @@ import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.RestorePresetUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
-import com.lexicon.interactors.presets.VocabularyId
+import com.lexicon.model.vocabulary.VocabularyId
 
 class DeleteWordUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,

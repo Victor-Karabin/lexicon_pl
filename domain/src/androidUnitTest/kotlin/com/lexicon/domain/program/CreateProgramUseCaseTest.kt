@@ -21,7 +21,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.Test
 
-private const val FAVOURITES = 84
+private const val STUDY_SET = 84
 
 class CreateProgramUseCaseTest {
     private val programs: ProgramRepository = mockk()
@@ -33,7 +33,7 @@ class CreateProgramUseCaseTest {
 
     @Before
     fun setUp() {
-        coEvery { vocabulary.studySetWordIds() } returns List(FAVOURITES) { it.toLong() }
+        coEvery { vocabulary.studySetWordIds() } returns List(STUDY_SET) { it.toLong() }
         coJustRun { programs.saveProgram(capture(saved)) }
     }
 
@@ -60,8 +60,8 @@ class CreateProgramUseCaseTest {
         runTest {
             val config = createProgram(draft).getOrThrow().config
 
-            assertEquals(ScopeSourceType.FAVOURITES, config.scope.include.single().type)
-            assertEquals(FAVOURITES, config.goals.first { it.type == TargetType.VOCABULARY }.target)
+            assertEquals(ScopeSourceType.STUDY_SET, config.scope.include.single().type)
+            assertEquals(STUDY_SET, config.goals.first { it.type == TargetType.VOCABULARY }.target)
         }
 
     @Test
@@ -90,11 +90,11 @@ class CreateProgramUseCaseTest {
     fun `a day cannot ask for more words than the study set holds`() =
         runTest {
             val plan = createProgram(
-                draft.copy(newWordsPerDay = FAVOURITES * 2, reviewWordsPerDay = FAVOURITES * 2),
+                draft.copy(newWordsPerDay = STUDY_SET * 2, reviewWordsPerDay = STUDY_SET * 2),
             ).getOrThrow().config.dailyPlan
 
-            assertEquals(FAVOURITES, plan.newWords)
-            assertEquals(FAVOURITES, plan.reviewWords)
+            assertEquals(STUDY_SET, plan.newWords)
+            assertEquals(STUDY_SET, plan.reviewWords)
         }
 
     @Test
@@ -114,7 +114,7 @@ class CreateProgramUseCaseTest {
         runTest {
             coEvery { vocabulary.studySetWordIds() } returns emptyList()
 
-            assertEquals(ProgramDraftProblem.NO_FAVOURITES, problemOf(draft))
+            assertEquals(ProgramDraftProblem.EMPTY_STUDY_SET, problemOf(draft))
             assertFalse(saved.isCaptured)
         }
 

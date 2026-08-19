@@ -4,16 +4,16 @@ import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.PresetCategoryBoundary
 import com.lexicon.boundary.TranslationDirection
 import com.lexicon.boundary.Translator
-import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyPresetBoundary
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.presets.PresetDraftException
 import com.lexicon.interactors.presets.PresetDraftProblem
 import com.lexicon.interactors.presets.PresetId
-import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.WordDraftException
 import com.lexicon.interactors.presets.WordDraftProblem
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -31,8 +31,8 @@ class CreateUseCasesImplTest {
     private val createWord = CreateWordUseCaseImpl(vocabularyRepository, presetRepository, imageProvider)
     private val updateWord = UpdateWordUseCaseImpl(vocabularyRepository, presetRepository, imageProvider)
 
-    private val stored = VocabularyItemBoundary(
-        id = -1,
+    private val stored = Word(
+        id = VocabularyId(-1),
         text = "smok",
         translation = "dragon",
         transcription = "",
@@ -119,7 +119,7 @@ class CreateUseCasesImplTest {
     @Test
     fun `an edit onto another word's spelling is refused`() =
         runTest {
-            coEvery { vocabularyRepository.findWordByText("woda") } returns stored.copy(id = 42)
+            coEvery { vocabularyRepository.findWordByText("woda") } returns stored.copy(id = VocabularyId(42))
 
             val result = updateWord(id = VocabularyId(-1), text = "woda", translation = "water")
 

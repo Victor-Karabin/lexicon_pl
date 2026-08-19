@@ -1,11 +1,11 @@
 package com.lexicon.presentation.program
 
-import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.program.AdvanceProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.ProgramId
 import com.lexicon.interactors.program.StartProgramSessionUseCase
 import com.lexicon.model.training.TrainingType
+import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 

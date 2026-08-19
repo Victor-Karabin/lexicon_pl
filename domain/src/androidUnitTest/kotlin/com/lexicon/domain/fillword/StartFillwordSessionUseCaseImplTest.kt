@@ -1,10 +1,11 @@
 package com.lexicon.domain.fillword
 
-import com.lexicon.boundary.VocabularyItemBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.fillword.FillwordCell
 import com.lexicon.interactors.fillword.FillwordPuzzle
 import com.lexicon.interactors.fillword.FillwordSessionResult
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -26,10 +27,10 @@ class StartFillwordSessionUseCaseImplTest {
         "krzesło" to "chair", "książka" to "book", "lampa" to "lamp", "szafa" to "wardrobe",
         "kwiat" to "flower", "zegar" to "clock", "obraz" to "picture", "dywan" to "rug",
         "łóżko" to "bed", "ściana" to "wall",
-    ).mapIndexed { index, (word, meaning) -> VocabularyItemBoundary(index + 1L, word, meaning, "x") }
+    ).mapIndexed { index, (word, meaning) -> Word(VocabularyId(index + 1L), word, meaning, "x") }
 
     private fun givenStudySet() {
-        coEvery { vocabulary.studySetWordIds() } returns studySet.map { it.id }
+        coEvery { vocabulary.studySetWordIds() } returns studySet.map { it.id.value }
         coEvery { vocabulary.getItemsByIds(any()) } returns studySet
     }
 

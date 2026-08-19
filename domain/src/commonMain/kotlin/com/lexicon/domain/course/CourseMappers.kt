@@ -18,8 +18,8 @@ import com.lexicon.interactors.course.LetterFillItem
 import com.lexicon.interactors.course.MatchItem
 import com.lexicon.interactors.course.MinimalPairItem
 import com.lexicon.interactors.course.TranscribeItem
-import com.lexicon.interactors.presets.LocalizedText
-import com.lexicon.interactors.presets.VocabularyId
+import com.lexicon.model.vocabulary.LocalizedText
+import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.toImmutableList
 
 fun CourseBoundary.toCourse(): Course =

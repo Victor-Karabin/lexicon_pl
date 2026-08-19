@@ -1,34 +1,11 @@
 package com.lexicon.interactors.presets
 
+import com.lexicon.model.vocabulary.LocalizedText
+import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.ImmutableList
 import kotlin.time.Duration
 
 data class PresetId(val value: String)
-
-data class VocabularyId(val value: Long)
-
-data class LocalizedText(val values: Map<String, String>) {
-    companion object {
-        const val DEFAULT_LANGUAGE = "en"
-    }
-}
-
-fun LocalizedText.resolve(languageTag: String): String =
-    values[languageTag]
-        ?: values[LocalizedText.DEFAULT_LANGUAGE]
-        ?: values.values.firstOrNull()
-        ?: ""
-
-enum class CefrLevel { A1, A2, B1, B2, C1, C2 }
-
-data class PresetWord(
-    val id: VocabularyId,
-    val text: String,
-    val translation: String,
-    val transcription: String,
-    val isInStudySet: Boolean = false,
-    val cefr: CefrLevel? = null,
-)
 
 data class PresetCategory(
     val id: String,
