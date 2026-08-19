@@ -1,6 +1,8 @@
 package com.lexicon.android.audio
 
 import android.media.MediaPlayer
+import com.lexicon.boundary.AudioPlaybackFailed
+import com.lexicon.boundary.AudioPlayer
 import com.lexicon.common.DispatcherProvider
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext

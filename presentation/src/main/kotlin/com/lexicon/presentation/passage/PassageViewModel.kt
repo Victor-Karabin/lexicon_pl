@@ -3,7 +3,7 @@ package com.lexicon.presentation.passage
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.speech.SpeechSynthesizer
+import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.passage.Passage
 import com.lexicon.interactors.passage.PassageSegment

@@ -1,8 +1,8 @@
 package com.lexicon.presentation.course
 
 import androidx.lifecycle.SavedStateHandle
-import com.lexicon.android.lesson.LessonAudioLibrary
-import com.lexicon.android.lesson.LessonAudioPlayer
+import com.lexicon.boundary.LessonAudioLibrary
+import com.lexicon.boundary.LessonAudioPlayer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
 import com.lexicon.interactors.course.CourseId

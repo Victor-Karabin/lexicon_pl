@@ -1,6 +1,4 @@
-package com.lexicon.android.speech
-
-import java.util.Locale
+package com.lexicon.boundary
 
 enum class VoiceGender { FEMALE, MALE, NEUTRAL }
 
@@ -11,10 +9,7 @@ data class SpeechVoice(
 )
 
 interface SpeechSynthesizer {
-    suspend fun speak(
-        text: String,
-        locale: Locale = Locale.forLanguageTag("pl-PL"),
-    )
+    suspend fun speak(text: String)
 
     /** The Polish voices available to the learner, in a stable order. */
     suspend fun voices(): List<SpeechVoice>

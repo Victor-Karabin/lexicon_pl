@@ -1,6 +1,4 @@
-package com.lexicon.android.recognition
-
-import java.util.Locale
+package com.lexicon.boundary
 
 data class SpeechRecognitionResult(
     val recognizedText: String,
@@ -9,7 +7,7 @@ data class SpeechRecognitionResult(
 )
 
 interface SpeechRecognizerService {
-    suspend fun recognize(locale: Locale = Locale.forLanguageTag("pl-PL")): SpeechRecognitionResult
+    suspend fun recognize(): SpeechRecognitionResult
 }
 
 class SpeechRecognitionFailed(message: String) : Exception(message)

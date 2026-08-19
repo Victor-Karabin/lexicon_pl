@@ -7,6 +7,10 @@ import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.util.Log
+import com.lexicon.android.speech.POLISH_LANGUAGE_TAG
+import com.lexicon.boundary.SpeechRecognitionFailed
+import com.lexicon.boundary.SpeechRecognitionResult
+import com.lexicon.boundary.SpeechRecognizerService
 import com.lexicon.common.DispatcherProvider
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
@@ -15,7 +19,6 @@ import java.io.File
 import java.io.OutputStream
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
-import java.util.Locale
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
@@ -46,7 +49,7 @@ class AndroidSpeechRecognizerService(
     private val context: Context,
     private val dispatchers: DispatcherProvider,
 ) : SpeechRecognizerService {
-    override suspend fun recognize(locale: Locale): SpeechRecognitionResult {
+    override suspend fun recognize(): SpeechRecognitionResult {
         if (!SpeechRecognizer.isRecognitionAvailable(context)) {
             Log.w(TAG, "isRecognitionAvailable() is false — no speech recognizer service on this device/emulator image")
             throw SpeechRecognitionFailed("Speech recognition is not available on this device")
@@ -57,7 +60,7 @@ class AndroidSpeechRecognizerService(
                 val intent =
                     Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
                         putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-                        putExtra(RecognizerIntent.EXTRA_LANGUAGE, locale.toLanguageTag())
+                        putExtra(RecognizerIntent.EXTRA_LANGUAGE, POLISH_LANGUAGE_TAG)
                     }
                 val recordedAudio = ByteArrayOutputStream()
 
@@ -79,7 +82,7 @@ class AndroidSpeechRecognizerService(
 
                         override fun onError(error: Int) {
                             val errorName = speechRecognizerErrorName(error)
-                            Log.w(TAG, "SpeechRecognizer error: $error ($errorName) for locale ${locale.toLanguageTag()}")
+                            Log.w(TAG, "SpeechRecognizer error: $error ($errorName) for $POLISH_LANGUAGE_TAG")
                             recognizer.destroy()
                             if (continuation.isActive) {
                                 continuation.resumeWithException(SpeechRecognitionFailed("Recognition error $error ($errorName)"))

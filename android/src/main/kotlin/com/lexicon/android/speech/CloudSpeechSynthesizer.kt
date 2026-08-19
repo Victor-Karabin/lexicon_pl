@@ -1,13 +1,14 @@
 package com.lexicon.android.speech
 
 import android.util.Log
-import com.lexicon.android.audio.AudioPlayer
 import com.lexicon.android.cloud.CloudSpeechApi
+import com.lexicon.boundary.AudioPlayer
+import com.lexicon.boundary.SpeechSynthesizer
+import com.lexicon.boundary.SpeechVoice
 import com.lexicon.common.DispatcherProvider
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import java.util.Locale
 
 /**
  * Speaks with Google Cloud voices, and with the device's own when it cannot.
@@ -42,20 +43,17 @@ class CloudSpeechSynthesizer(
         return cloud.ifEmpty { fallback.voices() }
     }
 
-    override suspend fun speak(
-        text: String,
-        locale: Locale,
-    ) {
+    override suspend fun speak(text: String) {
         if (text.isBlank()) return
         val path = withContext(dispatchers.io) { audioFor(text) }
 
         if (path == null) {
             Log.w(TAG, "No Cloud audio; speaking with the device voice instead")
-            fallback.speak(text, locale)
+            fallback.speak(text)
         } else {
             runCatching { player.play(path) }.onFailure { failure ->
                 Log.w(TAG, "Playing Cloud audio failed; speaking with the device voice instead", failure)
-                fallback.speak(text, locale)
+                fallback.speak(text)
             }
         }
     }

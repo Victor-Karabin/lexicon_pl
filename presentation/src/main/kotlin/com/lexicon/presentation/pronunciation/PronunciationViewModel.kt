@@ -3,10 +3,10 @@ package com.lexicon.presentation.pronunciation
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.audio.AudioPlayer
-import com.lexicon.android.recognition.SpeechRecognitionFailed
-import com.lexicon.android.recognition.SpeechRecognizerService
-import com.lexicon.android.speech.SpeechSynthesizer
+import com.lexicon.boundary.AudioPlayer
+import com.lexicon.boundary.SpeechRecognitionFailed
+import com.lexicon.boundary.SpeechRecognizerService
+import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.pronunciation.PronunciationSentencesResult
 import com.lexicon.interactors.pronunciation.PronunciationStepResponse

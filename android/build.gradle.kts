@@ -22,6 +22,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.boundary)
     implementation(projects.common)
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlinx.coroutines.core)

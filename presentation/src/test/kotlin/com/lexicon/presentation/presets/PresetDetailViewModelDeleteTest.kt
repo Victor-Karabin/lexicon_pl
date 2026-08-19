@@ -1,7 +1,7 @@
 package com.lexicon.presentation.presets
 
 import androidx.lifecycle.SavedStateHandle
-import com.lexicon.android.speech.SpeechSynthesizer
+import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase

@@ -4,8 +4,10 @@ import android.content.Context
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.speech.tts.Voice
+import com.lexicon.boundary.SpeechSynthesizer
+import com.lexicon.boundary.SpeechVoice
+import com.lexicon.boundary.VoiceGender
 import kotlinx.coroutines.suspendCancellableCoroutine
-import java.util.Locale
 import java.util.UUID
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -62,12 +64,9 @@ class AndroidSpeechSynthesizer(
             }
     }
 
-    override suspend fun speak(
-        text: String,
-        locale: Locale,
-    ) {
+    override suspend fun speak(text: String) {
         val tts = engine()
-        tts.language = locale
+        tts.language = POLISH
         settings.preferredVoiceId()?.let { preferred ->
             tts.voices.orEmpty().firstOrNull { it.name == preferred }?.let { tts.voice = it }
         }
@@ -108,8 +107,6 @@ private fun List<Voice>.dropPoorOnes(): List<Voice> = filter { it.quality >= Voi
 
 /** Prefer a voice that works offline, then the better-sounding one. */
 private val BEST_COPY = compareBy<Voice>({ if (it.isNetworkConnectionRequired) 1 else 0 }, { -it.quality })
-
-private val POLISH = Locale.forLanguageTag("pl-PL")
 
 /**
  * The part of a voice name that identifies who is speaking.

@@ -128,6 +128,8 @@ Operations that belong to no single entity.
 | Conjugation splitter | Derives stem and endings from a verb's own forms | `VerbConjugation.split()` |
 | Answer normaliser | Decides whether a written or spoken answer matches | `AnswerNormalizer` |
 | Sentence generator | Writes example sentences for a target word | `SentenceGenerator` |
+| Speech synthesiser | Says a Polish word or sentence out loud | `SpeechSynthesizer` |
+| Speech recogniser | Turns what the learner said into text | `SpeechRecognizerService` |
 
 ## Domain Events
 
@@ -246,6 +248,7 @@ unified.
 | 2026-08-19 | *Favourite* renamed to *study set* throughout the code | The interface had always said study set; the code name was the last holdout |
 | 2026-08-19 | **`SEEN` added to `StepOutcome`; `TrainingResultOutcomeBoundary` removed** | The two enums became identical. The earlier reason for keeping the boundary copy — that only it carried `SEEN` — was the defect, not the justification: the model could not express a state the domain has |
 | 2026-08-19 | **Review scheduling moved out of `data` into `model.scheduling`** | A Room repository owned SM-2, the review policy and the study-time rule. The application now invokes the scheduler through `RecordAnswerUseCase` |
+| 2026-08-19 | **Speech and audio ports moved from `android` to `boundary`** | The ports were declared inside the Android module, so every ViewModel that wanted to play a word depended on infrastructure. `presentation` no longer depends on `android` at all. The `java.util.Locale` parameter went with them: no caller ever passed anything but Polish |
 | 2026-08-19 | **`Word` promoted to the model**, absorbing `PresetWord` and `VocabularyItemBoundary` | One concept had two representations: a modelled one in the application layer and an anemic twin at the data edge, with a mapper between them. `VocabularyId` and `CefrLevel` now reach the repository |
 | 2026-08-19 | *Mastery* split into **word mastery** and **variant mastery** | One glossary term covered two unrelated rules — an interval threshold in Scheduling, a correct-answer streak in Conjugation. They were never the same measure |
 | 2026-08-19 | **`TrainingType` introduced**; `TrainingIds`, eleven `TRAINING_TYPE_*` constants and `TrainingRequirements` folded into it | One concept had three string encodings — lowercase route ids, uppercase stored types, and a minimum-words table in the UI module |

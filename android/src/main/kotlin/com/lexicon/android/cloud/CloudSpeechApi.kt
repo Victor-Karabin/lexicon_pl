@@ -2,7 +2,7 @@ package com.lexicon.android.cloud
 
 import android.util.Base64
 import android.util.Log
-import com.lexicon.android.speech.VoiceGender
+import com.lexicon.boundary.VoiceGender
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
