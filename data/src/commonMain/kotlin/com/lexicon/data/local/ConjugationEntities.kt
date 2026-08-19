@@ -72,6 +72,9 @@ interface ConjugationDao {
     @Query("SELECT infinitive FROM conjugation_course_verb WHERE courseId = :courseId ORDER BY infinitive")
     suspend fun courseVerbs(courseId: String): List<String>
 
+    @Query("SELECT * FROM conjugation_course_verb ORDER BY courseId, infinitive")
+    suspend fun allCourseVerbs(): List<ConjugationCourseVerbEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addCourseVerbs(rows: List<ConjugationCourseVerbEntity>)
 
