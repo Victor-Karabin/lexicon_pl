@@ -10,7 +10,6 @@ sealed interface PronunciationSentencesResult {
     data class Refused(val reason: String) : PronunciationSentencesResult
 }
 
-/** Sentences to read aloud, written for the words you are learning. */
 interface StartPronunciationSentencesUseCase {
     suspend operator fun invoke(): PronunciationSentencesResult
 }

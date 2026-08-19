@@ -76,7 +76,6 @@ class ConjugationAssetLoaderTest {
         assertTrue(verbs.none { it.infinitive.isBlank() })
     }
 
-    /** The real 4,545-entry file, so a change to it cannot quietly break the course. */
     @Test
     fun `a translation is carried through when the source has one`() {
         assertEquals("to walk", of("chodzić").translation)

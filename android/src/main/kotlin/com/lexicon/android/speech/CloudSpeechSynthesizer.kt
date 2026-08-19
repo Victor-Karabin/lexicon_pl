@@ -11,14 +11,6 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
-/**
- * Speaks with Google Cloud voices, and with the device's own when it cannot.
- *
- * Cloud is the one that carries gender and sounds like a person, so it leads. It also
- * needs a key, a network and a working service, none of which are guaranteed — so every
- * path that fails falls through to the device synthesiser rather than leaving the learner
- * with silence. Anything heard once is on disk and plays again without either.
- */
 class CloudSpeechSynthesizer(
     private val api: CloudSpeechApi,
     private val store: SpeechStore,
@@ -59,7 +51,6 @@ class CloudSpeechSynthesizer(
         }
     }
 
-    /** The file to play, fetching and keeping it first if this phrase is new. */
     private suspend fun audioFor(text: String): String? {
         if (!api.isConfigured) return null
         val voice = chosenVoice() ?: return null
@@ -74,12 +65,6 @@ class CloudSpeechSynthesizer(
             ?: null.also { Log.w(TAG, "Could not keep the audio for $voice") }
     }
 
-    /**
-     * The learner's voice, or the first one going.
-     *
-     * A stored id from the device synthesiser will not name a Cloud voice, so it is only
-     * honoured when Cloud actually offers it.
-     */
     private suspend fun chosenVoice(): String? = voices().chosen(settings.preferredVoiceId())?.id
 
     private companion object {

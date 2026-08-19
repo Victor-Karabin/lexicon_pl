@@ -12,15 +12,6 @@ import com.lexicon.common.DispatcherProvider
 import kotlinx.coroutines.withContext
 import java.io.File
 
-/**
- * Judges pronunciation with Google Cloud, and with the device's recogniser when it cannot.
- *
- * The platform recogniser and Cloud cannot share a turn at the microphone, so the choice
- * is made before recording rather than after: with a key, this records the phrase itself
- * and sends it; without one, the platform handles the whole thing as before. Recording it
- * here also means there is finally an audio file to play back, which the platform
- * recogniser only pretended to provide.
- */
 class CloudSpeechRecognizerService(
     private val recorder: AudioRecorder,
     private val api: CloudSpeechApi,
@@ -41,8 +32,6 @@ class CloudSpeechRecognizerService(
                 .getOrNull()
         }
 
-        // Speaking again is the only way back from a failed call, since the recording has
-        // already been made and the platform recogniser cannot be handed a file.
         if (transcript == null) {
             Log.w(TAG, "Cloud returned no transcript; asking for the phrase again")
             throw SpeechRecognitionFailed("Speech could not be recognised just now")

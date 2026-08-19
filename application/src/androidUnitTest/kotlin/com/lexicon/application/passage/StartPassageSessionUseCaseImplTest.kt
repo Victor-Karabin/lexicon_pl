@@ -138,8 +138,6 @@ class StartPassageSessionUseCaseImplTest {
 
             val session = run() as PassageSessionResult.Ready
 
-            // The gap holds książkę, which the vocabulary cannot be looked up by; the
-            // base form is what reaches the history and the result screen.
             assertEquals(listOf("książkę"), session.passage.gaps.map { it.answer })
             assertEquals(listOf("książka"), session.passage.gaps.map { it.word })
         }
@@ -191,7 +189,6 @@ class StartPassageSessionUseCaseImplTest {
             assertEquals(7, session.passage.sentences.size)
         }
 
-    /** Asking for more steps than there are studySets cannot invent them. */
     @Test
     fun `the passage is capped by how many studySet there are`() =
         runTest {

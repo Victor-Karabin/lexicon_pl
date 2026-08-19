@@ -4,16 +4,6 @@ import com.lexicon.android.cloud.CloudVoice
 import com.lexicon.boundary.SpeechVoice
 import com.lexicon.boundary.VoiceGender
 
-/**
- * Polish given names for Cloud voices, carried over from the earlier Lexicon app.
- *
- * Cloud voices declare their gender, so unlike the device's own voices these names can be
- * right rather than merely stable: the voices of one gender are matched against the names
- * of that gender. A woman's voice cannot come out called Piotr.
- *
- * Kept alphabetical, and longer than the voice list Google currently offers for Polish
- * (16 women, 18 men), so every voice gets a name rather than falling back to its id.
- */
 internal val FEMALE_NAMES = listOf(
     "Agata", "Agnieszka", "Aleksandra", "Alicja", "Amelia", "Barbara",
     "Dorota", "Ewa", "Gabriela", "Hanna", "Iwona", "Joanna",
@@ -41,14 +31,6 @@ private val NAMES_BY_GENDER = mapOf(
     VoiceGender.NEUTRAL to NEUTRAL_NAMES,
 )
 
-/**
- * Names a set of voices, gender by gender.
- *
- * Both sides are sorted before being paired — the voices by the engine's own name, the
- * names alphabetically — so the same device always produces the same pairing and a voice
- * keeps its name between launches. Voices beyond the supply of names fall back to the
- * engine's name rather than borrowing one already in use.
- */
 fun nameVoices(voices: List<CloudVoice>): List<SpeechVoice> =
     voices
         .groupBy { it.gender }

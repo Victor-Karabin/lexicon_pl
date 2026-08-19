@@ -46,7 +46,6 @@ class InMemorySessionStoreTest {
             assertNull(store.find(SessionId("a")))
         }
 
-    /** Abandoned sessions are never removed by anyone, so the store has to bound itself. */
     @Test
     fun `the oldest session is dropped once the store is full`() =
         runTest {

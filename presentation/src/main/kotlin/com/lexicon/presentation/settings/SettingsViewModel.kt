@@ -45,11 +45,6 @@ class SettingsViewModel(
         }
     }
 
-    /**
-     * Chooses a voice and says something in it, because the platform tells us nothing
-     * about how a voice sounds — not even whether it is a man or a woman — so the only
-     * way to pick one is to hear it.
-     */
     fun onVoiceSelected(voice: SpeechVoice) {
         viewModelScope.launch(dispatchers.io) {
             updateVoice(voice.id)

@@ -50,7 +50,6 @@ class PronunciationViewModel(
 ) : ViewModel() {
     private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
 
-    /** Whether this run reads generated sentences rather than single words. */
     private val readsSentences: Boolean = savedStateHandle.get<String>(PRONUNCIATION_SENTENCES_ARG).toBoolean()
 
     private val _uiState = MutableStateFlow<PronunciationUiState>(PronunciationUiState.Loading)
@@ -107,13 +106,6 @@ class PronunciationViewModel(
         _uiState.update { PronunciationUiState.Unavailable(reason) }
     }
 
-    /**
-     * Speaks the answer, once it is no longer an answer.
-     *
-     * This used to play at the start of every step, which handed over the very thing the
-     * learner was being asked to produce. It belongs after the attempt, where hearing it
-     * is a correction rather than a giveaway.
-     */
     private suspend fun speakReferenceAudio() {
         val step = currentStepOrNull() ?: return
         runCatching { speechSynthesizer.speak(step.expectedText) }

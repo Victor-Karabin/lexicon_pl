@@ -43,7 +43,6 @@ data class PassageUiState(
 ) {
     val expected: List<String> get() = passage?.gaps?.map { it.answer }.orEmpty()
 
-    /** The starred word behind each gap, in gap order. */
     val words: List<String> get() = passage?.gaps?.map { it.word }.orEmpty()
 
     val correctCount: Int get() = correctness.count { it }
@@ -150,8 +149,6 @@ class PassageViewModel(
                 ),
             )
 
-            // The same word-by-word breakdown every other training hands the result
-            // screen, so a single-screen training reads no differently at the end.
             lastSessionResultsHolder.wordResults = result.results.map { gap ->
                 WordResultEntry(
                     word = gap.expected,

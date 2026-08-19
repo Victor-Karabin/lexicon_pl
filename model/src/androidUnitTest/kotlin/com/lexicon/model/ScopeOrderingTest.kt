@@ -27,7 +27,6 @@ class ScopeOrderingTest {
         assertEquals(ids(words), ids(ScopeOrdering.AS_LISTED.applyTo(words)))
     }
 
-    /** The shipped catalogue is numbered by how common a word is: Top 100 is ids 1..100. */
     @Test
     fun `frequency is the catalogue's own numbering`() {
         assertEquals(listOf(10L, 20L, 30L, 40L), ids(ScopeOrdering.FREQUENCY.applyTo(words)))

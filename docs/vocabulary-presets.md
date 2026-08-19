@@ -14,7 +14,7 @@ Presets follow the project's existing layering. Each layer knows only the one be
 | --- | --- | --- |
 | Presentation | `com.lexicon.presentation.presets` | `VocabularyScreen`, `PresetDetailScreen`, their ViewModels and UI state |
 | Interactor | `com.lexicon.interactors.presets` | `VocabularyPreset`, `PresetCategory`, `CefrLevel`, use-case contracts |
-| Domain | `com.lexicon.domain.presets` | Use-case implementations, mappers, `VocabularyPresetValidator` |
+| Application | `com.lexicon.application.presets` | Use-case implementations, mappers, `VocabularyPresetValidator` |
 | Boundary | `com.lexicon.boundary` | `VocabularyPresetRepository`, `VocabularyPresetBoundary` |
 | Data | `com.lexicon.data.local` / `.repository` | Asset DTOs, `VocabularyPresetAssetLoader`, repository implementation |
 
@@ -193,7 +193,7 @@ Two consequences worth knowing:
 
 - A study set of **very few** words no longer degrades trainings silently. Every training is
   fronted by `TrainingGate`, which checks the study-set size against that training's minimum
-  (`TrainingRequirements`) and shows a "not enough words" screen naming both numbers instead
+  (`TrainingType.minimumWords`) and shows a "not enough words" screen naming both numbers instead
   of starting a session it cannot build. Before this, an Image Test with three starred words ran
   with three options, and a training with none spun forever — `openStep(0)` returns early on
   an empty session, so the screen never left Loading.

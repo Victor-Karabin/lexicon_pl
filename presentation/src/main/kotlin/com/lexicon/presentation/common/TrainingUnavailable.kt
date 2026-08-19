@@ -24,11 +24,6 @@ import com.lexicon.presentation.theme.LexiconTheme
 
 private val UnavailableIconSize = 64.dp
 
-/**
- * Shown when a training drew no questions it could ask. The gate catches a study set
- * that is too small; this catches what is left — a draw the training could not turn
- * into steps, which used to leave the screen loading with nothing on the way.
- */
 @Composable
 fun TrainingUnavailableContent(
     onClose: () -> Unit,

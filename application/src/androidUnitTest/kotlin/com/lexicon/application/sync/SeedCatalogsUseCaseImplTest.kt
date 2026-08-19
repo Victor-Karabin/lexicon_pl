@@ -60,7 +60,6 @@ class SeedCatalogsUseCaseImplTest {
             assertFalse(final.isBlocked)
         }
 
-    /** A launch with nothing new to load must not read a single asset. */
     @Test
     fun `an unchanged app version skips every step`() =
         runTest {

@@ -35,8 +35,6 @@ val androidModule = module {
 
     single { CloudSpeechApi(apiKey = BuildConfig.GOOGLE_TTS_API_KEY) }
 
-    // Cloud leads because its voices carry a gender and sound like people; the device
-    // synthesiser stays behind it for no key, no network, or a bad day at Google.
     single<SpeechSynthesizer> {
         CloudSpeechSynthesizer(
             api = get(),
@@ -49,8 +47,6 @@ val androidModule = module {
     }
     single<AudioRecorder> { AndroidAudioRecorder(cacheDirectory = get<Context>().cacheDir, dispatchers = get()) }
 
-    // Cloud hears whole Polish sentences far better than the device does, which is what
-    // the reading trainings ask of it; the device recogniser stands in without a key.
     single<SpeechRecognizerService> {
         CloudSpeechRecognizerService(
             recorder = get(),

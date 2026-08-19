@@ -89,7 +89,6 @@ class ConjugationViewModel(
         }
     }
 
-    /** A tapped option drops into the first row still empty, as the word bank does. */
     fun onOptionPicked(option: String) =
         _uiState.update { state ->
             if (state.isAnswered) return@update state

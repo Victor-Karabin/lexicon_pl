@@ -24,11 +24,6 @@ data class VocabularyPreset(
     val wordCount: Int = vocabularyIds.size,
     val studySetCount: Int = 0,
 ) {
-    /**
-     * A preset is tri-state because it can be partly in the study set, and a boolean
-     * would have to lie about that. Counted rather than derived from the id list, so the
-     * answer does not depend on every id having been loaded.
-     */
     val studySetState: PresetStudySetState get() = PresetStudySetState.of(wordCount, studySetCount)
 }
 

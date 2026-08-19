@@ -19,7 +19,6 @@ private const val AUDIO_ENCODING = "MP3"
 
 private val JSON_MEDIA_TYPE = "application/json".toMediaType()
 
-/** A Cloud voice as the service describes it, gender included — which is the whole point. */
 data class CloudVoice(
     val name: String,
     val languageCode: String,
@@ -97,19 +96,11 @@ private data class AlternativeJson(
     val confidence: Float? = null,
 )
 
-/** What the recogniser made of a recording. */
 data class CloudTranscript(
     val text: String,
     val confidence: Float?,
 )
 
-/**
- * Google Cloud Text-to-Speech over its REST interface.
- *
- * REST rather than the Cloud client library: the library is Android-only and heavy, and
- * this project has an iOS target to keep alive. A plain request costs one dependency
- * already on hand.
- */
 class CloudSpeechApi(
     private val apiKey: String,
     private val client: OkHttpClient = OkHttpClient(),
@@ -174,12 +165,6 @@ class CloudSpeechApi(
         return Base64.decode(encoded, Base64.DEFAULT)
     }
 
-    /**
-     * What Cloud hears in a recording.
-     *
-     * The header is dropped and the format stated outright rather than left to be sniffed,
-     * because the recorder already knows exactly what it wrote.
-     */
     fun recognize(
         wav: ByteArray,
         languageCode: String,
@@ -226,30 +211,19 @@ class CloudSpeechApi(
     private companion object {
         private const val TAG = "CloudSpeechApi"
 
-        /** Enough of a refusal to name it, without pasting a whole response into the log. */
         private const val ERROR_LOG_LIMIT = 300
 
         private const val WAV_HEADER_SIZE = 44
 
-        /** Tuned for short commands and single phrases, which is what a learner reads out. */
         private const val RECOGNITION_MODEL = "latest_short"
     }
 }
 
-/**
- * `encodeDefaults` matters here, and its absence is silent.
- *
- * kotlinx.serialization leaves defaulted fields out of the output unless told otherwise,
- * so `audioConfig` went over the wire as `{}` and the encoding — the only field it
- * carries — never arrived. Synthesis then failed for every voice alike, the synthesiser
- * fell back to the device, and every voice in the list came out sounding the same.
- */
 private val CLOUD_JSON = Json {
     ignoreUnknownKeys = true
     encodeDefaults = true
 }
 
-/** The body of a synthesis request, built where a test can read it. */
 internal fun synthesizePayload(
     text: String,
     voice: String,

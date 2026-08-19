@@ -14,7 +14,6 @@ const val MAX_TIP_LEVEL = 2
 sealed interface PronunciationUiState {
     data object Loading : PronunciationUiState
 
-    /** Sentences are written on demand, so this one can fail before it starts. */
     data class Unavailable(val reason: UnavailableReason) : PronunciationUiState
 
     data class Loaded(
@@ -32,10 +31,6 @@ sealed interface PronunciationUiState {
         val isSessionComplete: Boolean = false,
         val isSubmitting: Boolean = false,
         val recognitionError: RecognitionErrorType? = null,
-        /**
-         * Whether a tip is on offer. Reading a sentence aloud has nothing to hint at —
-         * the words are already on the screen — so tips only apply to the word training.
-         */
         val tipsAvailable: Boolean = true,
     ) : PronunciationUiState {
         val revealedAnswer: String? get() = answerState.revealedAnswer

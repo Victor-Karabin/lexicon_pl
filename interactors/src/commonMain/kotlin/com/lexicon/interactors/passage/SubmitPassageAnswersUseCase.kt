@@ -4,11 +4,9 @@ data class SubmitPassageAnswersRequest(
     val sessionId: String,
     val expected: List<String>,
     val answers: List<String>,
-    /** The starred word behind each gap, since the gap itself holds an inflected form. */
     val words: List<String>,
 )
 
-/** One gap, marked, with enough about the word to list it on the result screen. */
 data class PassageGapResult(
     val expected: String,
     val submitted: String,

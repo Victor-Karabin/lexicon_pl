@@ -57,8 +57,6 @@ class StartPronunciationSentencesUseCaseImpl(
             PronunciationStepResponse(
                 stepIndex = index,
                 vocabularyItemId = word.id.value,
-                // The sentence is both what is shown and what has to be said, so there is
-                // nothing to reveal: the exercise is reading it aloud, not recalling it.
                 expectedText = sentence,
                 clueText = sentence,
                 transcription = "",

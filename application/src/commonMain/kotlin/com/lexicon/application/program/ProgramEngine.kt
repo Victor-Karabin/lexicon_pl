@@ -38,8 +38,6 @@ class ResolveProgramScopeUseCaseImpl(
         scope.include.forEach { included += wordIdsOf(it.type, it.value) }
         scope.exclude.forEach { included -= wordIdsOf(it.type, it.value).toSet() }
 
-        // `IN (:ids)` answers in whatever order SQLite likes, so the sources' own order —
-        // which is exactly what AS_LISTED means — has to be put back before ordering.
         val byId = vocabulary.getItemsByIds(included.toList()).associateBy { it.id.value }
         val ordered = scope.ordering.applyTo(included.mapNotNull { byId[it] })
 

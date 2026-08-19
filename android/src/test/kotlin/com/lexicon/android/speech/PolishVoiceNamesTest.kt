@@ -22,7 +22,6 @@ class PolishVoiceNamesTest {
         voice("pl-PL-Standard-B", VoiceGender.MALE),
     )
 
-    /** The complaint that started all this: a woman's voice called Piotr. */
     @Test
     fun `a woman's voice never gets a man's name`() {
         nameVoices(polish)
@@ -37,10 +36,6 @@ class PolishVoiceNamesTest {
             .forEach { assertTrue("${it.displayName} is not a man's name", it.displayName in MALE_NAMES) }
     }
 
-    /**
-     * An anchor the shared lists cannot fake: these are the exact names that landed on the
-     * wrong voices when the device synthesiser was naming them by position.
-     */
     @Test
     fun `the names from the bug report sit on the side they belong to`() {
         assertTrue("Zofia" in FEMALE_NAMES)
@@ -53,7 +48,6 @@ class PolishVoiceNamesTest {
 
     @Test
     fun `there are more names than Google offers Polish voices`() {
-        // 16 female and 18 male as of writing; short lists would leak raw voice ids.
         assertTrue(FEMALE_NAMES.size >= 16)
         assertTrue(MALE_NAMES.size >= 18)
     }
