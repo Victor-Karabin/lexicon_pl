@@ -58,6 +58,10 @@ class TrueOrFalseViewModel(
             val response = startSessionUseCase(StartTrueOrFalseSessionRequest(vocabularyIds = vocabularyIds))
             sessionId = response.sessionId
             steps = response.steps
+            if (steps.isEmpty()) {
+                _uiState.update { TrueOrFalseUiState.Unavailable }
+                return@launch
+            }
             openStep(0)
             startTimer()
         }

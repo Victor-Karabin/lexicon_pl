@@ -58,6 +58,10 @@ class MemoryCardsViewModel(
             val response = startSessionUseCase(StartMemoryCardsSessionRequest(vocabularyIds = vocabularyIds))
             sessionId = response.sessionId
             steps = response.steps
+            if (steps.isEmpty()) {
+                _uiState.update { MemoryCardsUiState.Unavailable }
+                return@launch
+            }
             openStep(0)
         }
     }

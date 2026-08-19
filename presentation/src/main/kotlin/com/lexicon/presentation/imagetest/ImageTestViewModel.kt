@@ -59,6 +59,10 @@ class ImageTestViewModel(
             val response = startSessionUseCase(StartImageTestSessionRequest(vocabularyIds = vocabularyIds))
             sessionId = response.sessionId
             steps = response.steps
+            if (steps.isEmpty()) {
+                _uiState.update { ImageTestUiState.Unavailable }
+                return@launch
+            }
             openStep(0)
         }
     }

@@ -5,6 +5,8 @@ data class WordMatchColumnItem(val vocabularyItemId: Long, val text: String)
 sealed interface WordMatchUiState {
     data object Loading : WordMatchUiState
 
+    data object Unavailable : WordMatchUiState
+
     data class Loaded(
         val stepIndex: Int = 0,
         val totalSteps: Int = 0,

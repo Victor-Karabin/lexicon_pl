@@ -64,6 +64,10 @@ class DictationPuzzleViewModel(
             val response = startSessionUseCase(StartDictationPuzzleSessionRequest(vocabularyIds = vocabularyIds))
             sessionId = response.sessionId
             steps = response.steps
+            if (steps.isEmpty()) {
+                _uiState.update { DictationPuzzleUiState.Unavailable }
+                return@launch
+            }
             openStep(0)
             speakCurrentStep()
         }

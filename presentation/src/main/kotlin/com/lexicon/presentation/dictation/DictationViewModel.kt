@@ -62,6 +62,10 @@ class DictationViewModel(
             val response = startDictationSession(StartDictationSessionRequest(vocabularyIds = vocabularyIds))
             sessionId = response.sessionId
             steps = response.steps
+            if (steps.isEmpty()) {
+                _uiState.update { DictationUiState.Unavailable }
+                return@launch
+            }
             _uiState.update {
                 DictationUiState.Loaded(stepIndex = 0, totalSteps = steps.size)
             }

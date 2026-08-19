@@ -27,6 +27,7 @@ import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.TrainingUnavailableContent
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.LexiconProgressBar
@@ -78,6 +79,9 @@ private fun ImageTestScreenContent(
         topBar = { TrainingTopBar(title = stringResource(R.string.image_test_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
+            ImageTestUiState.Unavailable ->
+                TrainingUnavailableContent(onClose = onClose, modifier = Modifier.padding(padding))
+
             is ImageTestUiState.Loading ->
                 Column(
                     modifier = Modifier.fillMaxSize().padding(padding),

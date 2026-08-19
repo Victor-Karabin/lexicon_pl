@@ -83,6 +83,10 @@ class MixViewModel(
             val response = startMixSession(StartMixSessionRequest(vocabularyIds = vocabularyIds))
             sessionId = response.sessionId
             steps = response.steps
+            if (steps.isEmpty()) {
+                _uiState.update { MixUiState.Unavailable }
+                return@launch
+            }
             openStep(0)
         }
     }

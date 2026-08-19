@@ -58,6 +58,10 @@ class WordMatchViewModel(
             val response = startSessionUseCase(StartWordMatchSessionRequest(vocabularyIds = vocabularyIds))
             sessionId = response.sessionId
             steps = response.steps
+            if (steps.isEmpty()) {
+                _uiState.update { WordMatchUiState.Unavailable }
+                return@launch
+            }
             openStep(0)
         }
     }

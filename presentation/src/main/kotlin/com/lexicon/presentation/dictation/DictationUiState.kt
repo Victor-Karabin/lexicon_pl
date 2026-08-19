@@ -6,6 +6,8 @@ import com.lexicon.presentation.common.revealedAnswer
 sealed interface DictationUiState {
     data object Loading : DictationUiState
 
+    data object Unavailable : DictationUiState
+
     data class Loaded(
         val stepIndex: Int = 0,
         val totalSteps: Int = 0,

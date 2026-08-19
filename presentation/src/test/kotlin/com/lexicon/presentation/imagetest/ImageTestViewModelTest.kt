@@ -130,4 +130,16 @@ class ImageTestViewModelTest {
             assertTrue(state.awaitingNext)
             assertEquals(0, state.stepIndex)
         }
+
+    @Test
+    fun `a session that produced no steps says so instead of loading forever`() =
+        runTest {
+            coEvery { startUseCase(any()) } returns session()
+
+            viewModel().uiState.test {
+                assertEquals(ImageTestUiState.Loading, awaitItem())
+                assertEquals(ImageTestUiState.Unavailable, awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
+        }
 }

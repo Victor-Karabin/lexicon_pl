@@ -61,6 +61,10 @@ class CrosswordViewModel(
                     expectedText = placement.expectedText,
                 )
             }
+            if (words.isEmpty()) {
+                _uiState.update { CrosswordUiState.Unavailable }
+                return@launch
+            }
             val firstWord = words.firstOrNull()
             _uiState.update {
                 CrosswordUiState.Loaded(

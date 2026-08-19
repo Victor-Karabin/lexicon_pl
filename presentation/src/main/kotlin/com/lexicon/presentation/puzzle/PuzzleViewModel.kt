@@ -62,6 +62,10 @@ class PuzzleViewModel(
             val response = startSessionUseCase(StartPuzzleSessionRequest(vocabularyIds = vocabularyIds))
             sessionId = response.sessionId
             steps = response.steps
+            if (steps.isEmpty()) {
+                _uiState.update { PuzzleUiState.Unavailable }
+                return@launch
+            }
             openStep(0)
         }
     }

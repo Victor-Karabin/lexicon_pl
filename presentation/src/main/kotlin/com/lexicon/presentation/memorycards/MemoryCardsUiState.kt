@@ -13,6 +13,8 @@ data class MemoryCard(
 sealed interface MemoryCardsUiState {
     data object Loading : MemoryCardsUiState
 
+    data object Unavailable : MemoryCardsUiState
+
     data class Loaded(
         val stepIndex: Int = 0,
         val totalSteps: Int = 0,

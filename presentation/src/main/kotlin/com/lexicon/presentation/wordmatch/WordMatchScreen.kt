@@ -28,6 +28,7 @@ import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.TrainingUnavailableContent
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
@@ -76,6 +77,9 @@ private fun WordMatchScreenContent(
         topBar = { TrainingTopBar(title = stringResource(R.string.word_match_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
+            WordMatchUiState.Unavailable ->
+                TrainingUnavailableContent(onClose = onClose, modifier = Modifier.padding(padding))
+
             is WordMatchUiState.Loading ->
                 Column(
                     modifier = Modifier.fillMaxSize().padding(padding),

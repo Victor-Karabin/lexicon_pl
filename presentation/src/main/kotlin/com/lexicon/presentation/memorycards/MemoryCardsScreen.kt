@@ -33,6 +33,7 @@ import coil.compose.SubcomposeAsyncImage
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.TrainingUnavailableContent
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
@@ -84,6 +85,9 @@ private fun MemoryCardsScreenContent(
         topBar = { TrainingTopBar(title = "Memory Cards", onClose = onClose) },
     ) { padding ->
         when (uiState) {
+            MemoryCardsUiState.Unavailable ->
+                TrainingUnavailableContent(onClose = onClose, modifier = Modifier.padding(padding))
+
             is MemoryCardsUiState.Loading ->
                 Column(
                     modifier = Modifier.fillMaxSize().padding(padding),

@@ -45,6 +45,7 @@ import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.TrainingUnavailableContent
 import com.lexicon.presentation.common.TrueOrFalseAnswerRow
 import com.lexicon.presentation.common.debounced
 import com.lexicon.presentation.common.shuffleIntoTiles
@@ -134,6 +135,9 @@ private fun MixScreenContent(
         topBar = { TrainingTopBar(title = stringResource(R.string.mix_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
+            MixUiState.Unavailable ->
+                TrainingUnavailableContent(onClose = onClose, modifier = Modifier.padding(padding))
+
             is MixUiState.Loading ->
                 Column(
                     modifier = Modifier.fillMaxSize().padding(padding),

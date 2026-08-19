@@ -31,6 +31,8 @@ fun CrosswordWordUi.occupiedCells(): List<CrosswordCell> = (0 until length).map 
 sealed interface CrosswordUiState {
     data object Loading : CrosswordUiState
 
+    data object Unavailable : CrosswordUiState
+
     data class Loaded(
         val words: List<CrosswordWordUi> = emptyList(),
         val cells: Map<CrosswordCell, CrosswordCellState> = emptyMap(),

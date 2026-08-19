@@ -28,6 +28,7 @@ import com.lexicon.presentation.common.AnswerTone
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.TrainingUnavailableContent
 import com.lexicon.presentation.common.TrueOrFalseAnswerRow
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
@@ -77,6 +78,9 @@ private fun TrueOrFalseScreenContent(
         topBar = { TrainingTopBar(title = stringResource(R.string.true_or_false_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
+            TrueOrFalseUiState.Unavailable ->
+                TrainingUnavailableContent(onClose = onClose, modifier = Modifier.padding(padding))
+
             is TrueOrFalseUiState.Loading ->
                 Column(
                     modifier = Modifier.fillMaxSize().padding(padding),
