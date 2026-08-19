@@ -9,7 +9,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -30,6 +29,7 @@ import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
+import com.lexicon.presentation.theme.component.LexiconProgressBar
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -95,7 +95,7 @@ private fun ImageTestScreenContent(
                             .verticalScroll(rememberScrollState())
                             .padding(Dimens.spacingMedium),
                     ) {
-                        LinearProgressIndicator(
+                        LexiconProgressBar(
                             progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
                             modifier = Modifier.fillMaxWidth(),
                         )

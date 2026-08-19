@@ -17,7 +17,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -44,6 +43,7 @@ import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.GradientTile
+import com.lexicon.presentation.theme.component.LexiconProgressBar
 import com.lexicon.presentation.theme.component.muted
 import com.lexicon.presentation.theme.component.tileSkin
 import kotlinx.collections.immutable.persistentListOf
@@ -145,7 +145,7 @@ private fun WordCardsContent(
                         .padding(Dimens.spacingMedium),
                     verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
                 ) {
-                    LinearProgressIndicator(
+                    LexiconProgressBar(
                         progress = { (uiState.index + 1f) / uiState.cards.size },
                         modifier = Modifier.fillMaxWidth(),
                     )

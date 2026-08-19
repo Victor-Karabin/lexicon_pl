@@ -24,7 +24,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -60,6 +59,7 @@ import com.lexicon.presentation.program.ProgramMedallion
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.GradientTile
+import com.lexicon.presentation.theme.component.LexiconProgressBar
 import com.lexicon.presentation.theme.component.Medallion
 import com.lexicon.presentation.theme.component.MedallionIcon
 import com.lexicon.presentation.theme.component.StatChip
@@ -445,12 +445,11 @@ private fun MetricRow(
                 color = skin.onTile,
             )
         }
-        LinearProgressIndicator(
+        LexiconProgressBar(
             progress = { if (metric.target > 0) metric.current.toFloat() / metric.target else 0f },
             color = skin.onTile,
             trackColor = skin.onTile.copy(alpha = TRACK_ALPHA),
             gapSize = 0.dp,
-            drawStopIndicator = {},
             modifier = Modifier.fillMaxWidth().height(MetricBarHeight),
         )
     }

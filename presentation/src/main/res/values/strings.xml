@@ -117,7 +117,6 @@
     <string name="sync_retry">Try again</string>
     <!-- The launcher label lives in the app module; this is the wordmark on the splash. -->
     <string name="splash_title">Lexicon</string>
-    <string name="splash_tagline">Polish vocabulary, one session at a time</string>
     <string name="vocabulary_delete">Delete</string>
     <string name="word_change_presets">Presets</string>
     <string name="word_change_presets_title">Presets for “%1$s”</string>

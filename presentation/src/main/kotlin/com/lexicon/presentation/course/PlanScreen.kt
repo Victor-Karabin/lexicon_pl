@@ -25,7 +25,6 @@ import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -66,6 +65,7 @@ import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.GradientTile
+import com.lexicon.presentation.theme.component.LexiconProgressBar
 import com.lexicon.presentation.theme.component.Medallion
 import com.lexicon.presentation.theme.component.MedallionIcon
 import com.lexicon.presentation.theme.component.MedallionText
@@ -351,7 +351,7 @@ private fun CourseTile(
             )
         }
 
-        LinearProgressIndicator(
+        LexiconProgressBar(
             progress = { course.completedFraction() },
             color = skin.onTile,
             trackColor = skin.onTile.copy(alpha = TRACK_ALPHA),
@@ -390,7 +390,7 @@ internal fun CourseHeader(
                 )
             }
         }
-        LinearProgressIndicator(
+        LexiconProgressBar(
             progress = { course.completedFraction() },
             color = skin.onTile,
             trackColor = skin.onTile.copy(alpha = TRACK_ALPHA),

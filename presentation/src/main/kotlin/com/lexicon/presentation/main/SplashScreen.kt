@@ -25,7 +25,6 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -55,6 +54,7 @@ import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
+import com.lexicon.presentation.theme.component.LexiconProgressBar
 import org.koin.androidx.compose.koinViewModel
 import java.text.NumberFormat
 
@@ -138,13 +138,6 @@ private fun Brand() {
         fontWeight = FontWeight.SemiBold,
         modifier = Modifier.padding(top = Dimens.spacingLarge),
     )
-    Text(
-        text = stringResource(R.string.splash_tagline),
-        style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        textAlign = TextAlign.Center,
-        modifier = Modifier.padding(top = Dimens.spacingSmall),
-    )
 }
 
 @Composable
@@ -170,7 +163,7 @@ private fun StatusCard(
                 targetValue = status.completedFraction(),
                 label = "sync progress",
             )
-            LinearProgressIndicator(
+            LexiconProgressBar(
                 progress = { progress },
                 modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium),
                 color = if (status.isBlocked) LexiconError else MaterialTheme.colorScheme.primary,
