@@ -14,6 +14,7 @@ import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.DeleteConjugationVerbUseCase
 import com.lexicon.interactors.conjugation.EnsureVerbWordUseCase
 import com.lexicon.interactors.conjugation.FavouriteVerbUseCase
+import com.lexicon.interactors.conjugation.HasDeletedVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationProgressUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
@@ -51,6 +52,12 @@ class DeleteConjugationVerbUseCaseImpl(
     private val conjugations: ConjugationRepository,
 ) : DeleteConjugationVerbUseCase {
     override suspend fun invoke(infinitive: String) = conjugations.deleteVerb(infinitive)
+}
+
+class HasDeletedVerbsUseCaseImpl(
+    private val conjugations: ConjugationRepository,
+) : HasDeletedVerbsUseCase {
+    override suspend fun invoke(): Boolean = conjugations.hasDeletedVerbs()
 }
 
 class RestoreConjugationVerbsUseCaseImpl(

@@ -10,6 +10,10 @@ interface DeleteConjugationVerbUseCase {
     suspend operator fun invoke(infinitive: String)
 }
 
+interface HasDeletedVerbsUseCase {
+    suspend operator fun invoke(): Boolean
+}
+
 interface RestoreConjugationVerbsUseCase {
     suspend operator fun invoke()
 }

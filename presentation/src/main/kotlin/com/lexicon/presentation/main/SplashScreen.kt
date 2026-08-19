@@ -163,6 +163,7 @@ private fun StatusCard(
             SyncStepRow(stringResource(R.string.sync_step_presets), status.presets)
             Spacer(modifier = Modifier.height(Dimens.spacingMedium))
             SyncStepRow(stringResource(R.string.sync_step_course), status.course)
+            SyncStepRow(stringResource(R.string.sync_step_verbs), status.verbs)
 
             val progress by animateFloatAsState(
                 targetValue = status.completedFraction(),

@@ -1,5 +1,6 @@
 package com.lexicon.domain.sync
 
+import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.SyncOutcomeBoundary
 import com.lexicon.boundary.VocabularyPresetRepository
@@ -16,6 +17,7 @@ class SyncCatalogUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,
     private val presetRepository: VocabularyPresetRepository,
     private val courseRepository: CourseRepository,
+    private val conjugationRepository: ConjugationRepository,
 ) : SyncCatalogUseCase {
     override fun invoke(): Flow<CatalogSyncStatus> =
         flow {
@@ -34,6 +36,7 @@ class SyncCatalogUseCaseImpl(
                     status.copy(
                         presets = SyncStepStatus.Failed(SKIPPED, canContinue = false),
                         course = SyncStepStatus.Failed(SKIPPED, canContinue = false),
+                        verbs = SyncStepStatus.Failed(SKIPPED, canContinue = false),
                     ),
                 )
                 return@flow
@@ -53,11 +56,22 @@ class SyncCatalogUseCaseImpl(
             status = status.copy(course = SyncStepStatus.InProgress)
             emit(status)
 
+            status = status.copy(
+                course = step(
+                    sync = courseRepository::syncFromSource,
+                    storeHasData = { courseRepository.countLessons() > 0 },
+                ),
+            )
+            emit(status)
+
+            status = status.copy(verbs = SyncStepStatus.InProgress)
+            emit(status)
+
             emit(
                 status.copy(
-                    course = step(
-                        sync = courseRepository::syncFromSource,
-                        storeHasData = { courseRepository.countLessons() > 0 },
+                    verbs = step(
+                        sync = conjugationRepository::syncFromSource,
+                        storeHasData = { conjugationRepository.countVerbs() > 0 },
                     ),
                 ),
             )

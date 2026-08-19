@@ -21,9 +21,15 @@ data class ConjugationProgressBoundary(
 )
 
 interface ConjugationRepository {
+    suspend fun syncFromSource(): SyncOutcomeBoundary
+
+    suspend fun countVerbs(): Int
+
     suspend fun verbs(): List<VerbConjugationBoundary>
 
     suspend fun deleteVerb(infinitive: String)
+
+    suspend fun hasDeletedVerbs(): Boolean
 
     suspend fun restoreVerbs()
 

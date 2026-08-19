@@ -173,38 +173,18 @@ private fun ConjugationContent(
                             modifier = Modifier.fillMaxWidth().testTag(ConjugationTestTags.PROGRESS),
                         )
 
-                        ClueImage(
-                            imageUrl = question.imageUrl,
-                            fallbackText = question.infinitive,
-                            modifier = Modifier.testTag(ConjugationTestTags.IMAGE),
-                        )
-
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text(
-                                    text = question.infinitive,
-                                    style = MaterialTheme.typography.headlineSmall,
-                                    fontWeight = FontWeight.SemiBold,
-                                    modifier = Modifier.testTag(ConjugationTestTags.INFINITIVE),
-                                )
-                                question.translation?.let { translation ->
-                                    Text(
-                                        text = translation,
-                                        style = MaterialTheme.typography.bodyLarge,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        modifier = Modifier.testTag(ConjugationTestTags.TRANSLATION),
-                                    )
-                                }
-                                question.transcription?.let { ipa ->
-                                    Text(
-                                        text = stringResource(R.string.pronunciation_ipa_format, ipa),
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        modifier = Modifier.testTag(ConjugationTestTags.TRANSCRIPTION),
-                                    )
-                                }
-                            }
-                            IconButton(onClick = onEdit, modifier = Modifier.testTag(ConjugationTestTags.EDIT)) {
+                        Box(modifier = Modifier.fillMaxWidth()) {
+                            ClueImage(
+                                imageUrl = question.imageUrl,
+                                fallbackText = question.infinitive,
+                                modifier = Modifier.testTag(ConjugationTestTags.IMAGE),
+                            )
+                            IconButton(
+                                onClick = onEdit,
+                                modifier = Modifier
+                                    .align(Alignment.TopEnd)
+                                    .testTag(ConjugationTestTags.EDIT),
+                            ) {
                                 Icon(
                                     imageVector = Icons.Default.Edit,
                                     contentDescription = stringResource(R.string.cards_edit),
@@ -213,16 +193,45 @@ private fun ConjugationContent(
                             }
                         }
 
-                        question.steps.forEach { step ->
-                            PersonRow(
-                                step = step,
-                                uiState = uiState,
-                                onCleared = { onRowCleared(step.variant.person) },
-                                onSpeak = onSpeak,
+                        Column {
+                            Text(
+                                text = question.infinitive,
+                                style = MaterialTheme.typography.headlineSmall,
+                                fontWeight = FontWeight.SemiBold,
+                                modifier = Modifier.testTag(ConjugationTestTags.INFINITIVE),
                             )
+                            question.translation?.let { translation ->
+                                Text(
+                                    text = translation,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.testTag(ConjugationTestTags.TRANSLATION),
+                                )
+                            }
+                            question.transcription?.let { ipa ->
+                                Text(
+                                    text = stringResource(R.string.pronunciation_ipa_format, ipa),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.testTag(ConjugationTestTags.TRANSCRIPTION),
+                                )
+                            }
                         }
 
-                        OptionBank(uiState = uiState, onOptionPicked = onOptionPicked)
+                        Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
+                            question.steps.forEach { step ->
+                                PersonRow(
+                                    step = step,
+                                    uiState = uiState,
+                                    onCleared = { onRowCleared(step.variant.person) },
+                                    onSpeak = onSpeak,
+                                )
+                            }
+                        }
+
+                        if (!uiState.isAnswered) {
+                            OptionBank(uiState = uiState, onOptionPicked = onOptionPicked)
+                        }
                     }
 
                     TrainingActionRow(
@@ -258,7 +267,6 @@ private fun PersonRow(
         modifier = modifier
             .fillMaxWidth()
             .clickable(enabled = !uiState.isAnswered && chosen != null, onClick = onCleared)
-            .padding(vertical = Dimens.spacingTiny)
             .testTag(ConjugationTestTags.person(person.label)),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
@@ -283,16 +291,15 @@ private fun PersonRow(
         )
 
         if (uiState.isAnswered) {
-            IconButton(
-                onClick = { onSpeak(step.spokenForm) },
-                modifier = Modifier.testTag(ConjugationTestTags.play(person.label)),
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.VolumeUp,
-                    contentDescription = stringResource(R.string.word_pronounce, step.spokenForm),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.VolumeUp,
+                contentDescription = stringResource(R.string.word_pronounce, step.spokenForm),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier
+                    .clickable { onSpeak(step.spokenForm) }
+                    .padding(Dimens.spacingSmall)
+                    .testTag(ConjugationTestTags.play(person.label)),
+            )
         }
     }
 }

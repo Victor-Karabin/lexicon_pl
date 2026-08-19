@@ -105,11 +105,13 @@ private fun VerbSelectionContent(
                 title = stringResource(R.string.conjugation_select_title),
                 onClose = onClose,
                 actions = {
-                    TextButton(
-                        onClick = onRestoreAll,
-                        modifier = Modifier.testTag(VerbSelectionTestTags.RESTORE),
-                    ) {
-                        Text(stringResource(R.string.conjugation_restore_all))
+                    if (uiState.canRestore) {
+                        TextButton(
+                            onClick = onRestoreAll,
+                            modifier = Modifier.testTag(VerbSelectionTestTags.RESTORE),
+                        ) {
+                            Text(stringResource(R.string.conjugation_restore_all))
+                        }
                     }
                 },
             )

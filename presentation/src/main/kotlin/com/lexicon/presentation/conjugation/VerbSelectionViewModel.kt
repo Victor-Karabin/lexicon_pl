@@ -6,6 +6,7 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.conjugation.CreateConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.DeleteConjugationVerbUseCase
 import com.lexicon.interactors.conjugation.FavouriteVerbUseCase
+import com.lexicon.interactors.conjugation.HasDeletedVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadFavouriteVerbsUseCase
 import com.lexicon.interactors.conjugation.RestoreConjugationVerbsUseCase
@@ -27,6 +28,7 @@ data class VerbSelectionUiState(
     val verbs: ImmutableList<VerbConjugation> = persistentListOf(),
     val selected: ImmutableSet<String> = persistentSetOf(),
     val isSaved: Boolean = false,
+    val canRestore: Boolean = false,
     val favourites: ImmutableSet<String> = persistentSetOf(),
 ) {
     val count: Int get() = selected.size
@@ -39,6 +41,7 @@ class VerbSelectionViewModel(
     private val createCourse: CreateConjugationCourseUseCase,
     private val deleteVerb: DeleteConjugationVerbUseCase,
     private val restoreVerbs: RestoreConjugationVerbsUseCase,
+    private val hasDeletedVerbs: HasDeletedVerbsUseCase,
     private val favouriteVerb: FavouriteVerbUseCase,
     private val loadFavourites: LoadFavouriteVerbsUseCase,
     private val dispatchers: DispatcherProvider,
@@ -55,6 +58,7 @@ class VerbSelectionViewModel(
                     isLoading = false,
                     verbs = verbs,
                     favourites = loadFavourites(verbs.map { verb -> verb.infinitive }).toImmutableSet(),
+                    canRestore = hasDeletedVerbs(),
                 )
             }
         }
@@ -111,9 +115,11 @@ class VerbSelectionViewModel(
 
     private suspend fun refresh() {
         val verbs = loadVerbs(_uiState.value.query)
+        val canRestore = hasDeletedVerbs()
         _uiState.update {
             it.copy(
                 isLoading = false,
+                canRestore = canRestore,
                 verbs = verbs,
                 selected = it.selected.filter { chosen -> verbs.any { v -> v.infinitive == chosen } }.toImmutableSet(),
             )

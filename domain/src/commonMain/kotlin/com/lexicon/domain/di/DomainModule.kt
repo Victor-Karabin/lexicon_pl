@@ -6,6 +6,7 @@ import com.lexicon.domain.conjugation.DeleteConjugationCourseUseCaseImpl
 import com.lexicon.domain.conjugation.DeleteConjugationVerbUseCaseImpl
 import com.lexicon.domain.conjugation.EnsureVerbWordUseCaseImpl
 import com.lexicon.domain.conjugation.FavouriteVerbUseCaseImpl
+import com.lexicon.domain.conjugation.HasDeletedVerbsUseCaseImpl
 import com.lexicon.domain.conjugation.LoadConjugationCoursesUseCaseImpl
 import com.lexicon.domain.conjugation.LoadConjugationProgressUseCaseImpl
 import com.lexicon.domain.conjugation.LoadConjugationVerbsUseCaseImpl
@@ -96,6 +97,7 @@ import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.DeleteConjugationVerbUseCase
 import com.lexicon.interactors.conjugation.EnsureVerbWordUseCase
 import com.lexicon.interactors.conjugation.FavouriteVerbUseCase
+import com.lexicon.interactors.conjugation.HasDeletedVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationProgressUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
@@ -240,6 +242,7 @@ val domainModule = module {
     factoryOf(::LoadConjugationVerbsUseCaseImpl) { bind<LoadConjugationVerbsUseCase>() }
     factoryOf(::DeleteConjugationVerbUseCaseImpl) { bind<DeleteConjugationVerbUseCase>() }
     factoryOf(::RestoreConjugationVerbsUseCaseImpl) { bind<RestoreConjugationVerbsUseCase>() }
+    factoryOf(::HasDeletedVerbsUseCaseImpl) { bind<HasDeletedVerbsUseCase>() }
     factoryOf(::NextConjugationQuestionUseCaseImpl) { bind<NextConjugationQuestionUseCase>() }
     factoryOf(::SubmitConjugationAnswerUseCaseImpl) { bind<SubmitConjugationAnswerUseCase>() }
     factoryOf(::LoadConjugationProgressUseCaseImpl) { bind<LoadConjugationProgressUseCase>() }

@@ -3,6 +3,7 @@ package com.lexicon.data.repository
 import com.lexicon.boundary.ConjugationCourseBoundary
 import com.lexicon.boundary.ConjugationProgressBoundary
 import com.lexicon.boundary.ConjugationRepository
+import com.lexicon.boundary.SyncOutcomeBoundary
 import com.lexicon.boundary.VerbConjugationBoundary
 import com.lexicon.common.Clock
 import com.lexicon.data.local.ConjugationAssetLoader
@@ -29,13 +30,30 @@ class ConjugationRepositoryImpl(
 ) : ConjugationRepository {
     private val json = Json { ignoreUnknownKeys = true }
     private val lock = Mutex()
+    private var cachedAsset: List<VerbConjugationBoundary>? = null
 
-    override suspend fun verbs(): List<VerbConjugationBoundary> {
-        lock.withLock { if (dao.countVerbs() == 0) seed() }
-        return dao.verbs().map { it.toBoundary() }
-    }
+    override suspend fun syncFromSource(): SyncOutcomeBoundary =
+        lock.withLock {
+            val before = dao.countVerbs()
+            seed()
+            val after = dao.countVerbs()
+
+            SyncOutcomeBoundary(
+                total = after,
+                added = (after - before).coerceAtLeast(0),
+                updated = if (before == 0) 0 else minOf(before, after),
+                removed = 0,
+            )
+        }
+
+    override suspend fun countVerbs(): Int = dao.countVerbs()
+
+    override suspend fun verbs(): List<VerbConjugationBoundary> = dao.verbs().map { it.toBoundary() }
 
     override suspend fun deleteVerb(infinitive: String) = dao.deleteVerb(infinitive)
+
+    /** Fewer verbs than the file holds means some were deleted; nothing else records it. */
+    override suspend fun hasDeletedVerbs(): Boolean = dao.countVerbs() < assetVerbs().size
 
     override suspend fun restoreVerbs() = lock.withLock { seed() }
 
@@ -88,9 +106,11 @@ class ConjugationRepositoryImpl(
         )
     }
 
+    private suspend fun assetVerbs(): List<VerbConjugationBoundary> = cachedAsset ?: loader.load().also { cachedAsset = it }
+
     private suspend fun seed() {
         dao.saveVerbs(
-            loader.load().map { verb ->
+            assetVerbs().map { verb ->
                 ConjugationVerbEntity(
                     infinitive = verb.infinitive,
                     translation = verb.translation.orEmpty(),

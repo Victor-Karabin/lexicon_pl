@@ -1,5 +1,6 @@
 package com.lexicon.domain.sync
 
+import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.SyncOutcomeBoundary
 import com.lexicon.boundary.VocabularyPresetRepository
@@ -24,7 +25,9 @@ class SyncCatalogUseCaseImplTest {
     private val vocabularyRepository: VocabularyRepository = mockk(relaxed = true)
     private val presetRepository: VocabularyPresetRepository = mockk(relaxed = true)
     private val courseRepository: CourseRepository = mockk(relaxed = true)
-    private val useCase = SyncCatalogUseCaseImpl(vocabularyRepository, presetRepository, courseRepository)
+    private val conjugationRepository: ConjugationRepository = mockk(relaxed = true)
+    private val useCase =
+        SyncCatalogUseCaseImpl(vocabularyRepository, presetRepository, courseRepository, conjugationRepository)
 
     private fun outcome(
         total: Int,
@@ -45,6 +48,33 @@ class SyncCatalogUseCaseImplTest {
             assertEquals(SyncStepStatus.Complete(72, 72, 0, 0), final.presets)
             assertTrue(final.isFinished)
             assertFalse(final.isBlocked)
+        }
+
+    @Test
+    fun `the verbs are seeded as their own step`() =
+        runTest {
+            coEvery { vocabularyRepository.syncFromSource() } returns outcome(10)
+            coEvery { presetRepository.syncFromSource() } returns outcome(3)
+            coEvery { courseRepository.syncFromSource() } returns outcome(26)
+            coEvery { conjugationRepository.syncFromSource() } returns outcome(4545, added = 4545)
+
+            val emissions = run()
+
+            assertTrue(emissions.any { it.verbs is SyncStepStatus.InProgress })
+            assertEquals(SyncStepStatus.Complete(4545, 4545, 0, 0), emissions.last().verbs)
+            assertTrue(emissions.last().isFinished)
+        }
+
+    @Test
+    fun `a failed vocabulary skips the verbs too`() =
+        runTest {
+            coEvery { vocabularyRepository.syncFromSource() } throws IllegalStateException("no asset")
+            coEvery { vocabularyRepository.countWords() } returns 0
+
+            val final = run().last()
+
+            assertTrue(final.verbs is SyncStepStatus.Failed)
+            assertTrue(final.isBlocked)
         }
 
     @Test

@@ -108,6 +108,7 @@
     <string name="sync_step_vocabulary">Vocabulary</string>
     <string name="sync_step_presets">Presets</string>
     <string name="sync_step_course">Course</string>
+    <string name="sync_step_verbs">Verbs</string>
     <string name="sync_waiting">Waiting</string>
     <string name="sync_in_progress">Importing…</string>
     <string name="sync_up_to_date">%1$s ready</string>
