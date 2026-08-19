@@ -3,7 +3,7 @@ package com.lexicon.presentation.conjugation
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.speech.SpeechSynthesizer
+import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.conjugation.ChooseVerbImageUseCase
 import com.lexicon.interactors.conjugation.ConjugationTable

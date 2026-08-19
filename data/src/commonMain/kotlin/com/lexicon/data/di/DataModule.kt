@@ -6,6 +6,7 @@ import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.ProgramRepository
 import com.lexicon.boundary.ReviewScheduleRepository
+import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.SettingsRepository
 import com.lexicon.boundary.StudyRecordRepository
 import com.lexicon.boundary.TrainingHistoryRepository
@@ -38,6 +39,7 @@ import com.lexicon.data.repository.CorpusTranslatorImpl
 import com.lexicon.data.repository.CourseRepositoryImpl
 import com.lexicon.data.repository.FallbackImageProviderImpl
 import com.lexicon.data.repository.FallbackTranslatorImpl
+import com.lexicon.data.repository.InMemorySessionStore
 import com.lexicon.data.repository.ProgramRepositoryImpl
 import com.lexicon.data.repository.ReviewScheduleRepositoryImpl
 import com.lexicon.data.repository.StudyRecordRepositoryImpl
@@ -57,6 +59,7 @@ internal val vocabularySyncDataStoreQualifier = named(VOCABULARY_SYNC_STORE_NAME
 val translatorChainQualifier = named("translator-chain")
 
 val dataModule = module {
+    single<SessionStore> { InMemorySessionStore() }
 
     singleOf(::DefaultDispatcherProvider) { bind<DispatcherProvider>() }
     singleOf(::SystemClock) { bind<Clock>() }

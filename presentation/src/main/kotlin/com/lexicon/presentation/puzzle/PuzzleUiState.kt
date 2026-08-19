@@ -7,6 +7,8 @@ import com.lexicon.presentation.common.revealedAnswer
 sealed interface PuzzleUiState {
     data object Loading : PuzzleUiState
 
+    data object Unavailable : PuzzleUiState
+
     data class Loaded(
         val stepIndex: Int = 0,
         val totalSteps: Int = 0,

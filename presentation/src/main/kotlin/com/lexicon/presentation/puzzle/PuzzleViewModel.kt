@@ -9,7 +9,7 @@ import com.lexicon.interactors.puzzle.StartPuzzleSessionRequest
 import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerRequest
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerUseCase
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.LetterTile
@@ -62,6 +62,10 @@ class PuzzleViewModel(
             val response = startSessionUseCase(StartPuzzleSessionRequest(vocabularyIds = vocabularyIds))
             sessionId = response.sessionId
             steps = response.steps
+            if (steps.isEmpty()) {
+                _uiState.update { PuzzleUiState.Unavailable }
+                return@launch
+            }
             openStep(0)
         }
     }
@@ -169,6 +173,8 @@ class PuzzleViewModel(
                 delay(SKIPPED_ANSWER_ADVANCE_DELAY_MS)
                 advanceToNextStep()
             }
+
+            StepOutcome.SEEN -> Unit
         }
     }
 

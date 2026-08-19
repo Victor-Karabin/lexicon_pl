@@ -1,6 +1,8 @@
 package com.lexicon.interactors.course
 
-import com.lexicon.interactors.presets.VocabularyId
+import com.lexicon.model.course.CourseId
+import com.lexicon.model.course.LessonId
+import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.ImmutableList
 
 data class Lesson(

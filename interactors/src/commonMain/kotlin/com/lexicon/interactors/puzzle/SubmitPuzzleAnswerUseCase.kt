@@ -1,6 +1,6 @@
 package com.lexicon.interactors.puzzle
 
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 
 data class SubmitPuzzleAnswerRequest(
     val sessionId: String,

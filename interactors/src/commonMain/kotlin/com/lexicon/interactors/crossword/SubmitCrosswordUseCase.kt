@@ -1,6 +1,6 @@
 package com.lexicon.interactors.crossword
 
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 
 data class CrosswordWordSubmission(
     val vocabularyItemId: Long,

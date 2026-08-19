@@ -23,11 +23,11 @@ Everything the learner practises comes from one of three sources: the shipped
 
 | Context | Owns | Package |
 | --- | --- | --- |
-| Vocabulary | Words, presets, the study set, images and translations | `interactors.presets` |
-| Training | A single practice session and what it records | `interactors.<training>` |
-| Scheduling | Review intervals, mastery, study days, streaks | `boundary.LearningRecordBoundary` |
-| Program | The daily plan and its queue of trainings | `interactors.program` |
-| Course | Fixed teaching material — lessons and exercises | `interactors.course` |
+| Vocabulary | Words, presets, the study set, images and translations | `model.vocabulary` |
+| Training | A single practice session and what it records | `model.training`, `interactors.<training>` |
+| Scheduling | Review intervals, mastery, study days, streaks | `model.scheduling` |
+| Program | The daily plan and its queue of trainings | `model.program`, `interactors.program` |
+| Course | Fixed teaching material — lessons and exercises | `model.course`, `interactors.course` |
 | Conjugation | Verbs, their forms, and courses over them | `interactors.conjugation` |
 | Catalogue | Seeding shipped data into the database | `interactors.sync` |
 
@@ -39,19 +39,24 @@ must not be merged.
 
 | Term | Definition | Context | Synonyms | Avoid | Code Representation |
 | --- | --- | --- | --- | --- | --- |
-| Word | A Polish word or phrase with its English translation, IPA and optional picture | Vocabulary | vocabulary item | *entry*, *item*, *term* | `VocabularyItemBoundary`, `PresetWord`, `VocabularyId` |
+| Word | A Polish word or phrase with its English translation, IPA and optional picture | Vocabulary | vocabulary item | *entry*, *item*, *term* | `Word`, `VocabularyId`, `CefrLevel` |
 | Study set | The words the learner has chosen to practise | Vocabulary | — | — | `isInStudySet`, `studySetWordIds()` |
-| Preset | A named, shipped or hand-made grouping of words by topic | Vocabulary | word list | *category* (that is the grouping above presets) | `VocabularyPreset`, `PresetId` |
+| Preset | A named, shipped or hand-made grouping of words by topic | Vocabulary | word list | *category* (that is the grouping above presets) | `VocabularyPreset`, `PresetId` in `model.vocabulary` |
 | Preset category | A grouping of presets | Vocabulary | — | *topic* | `PresetCategory` |
-| Membership | Whether a word belongs to a preset, including a hand-made override | Vocabulary | — | *link*, *relation* | `PresetMembership` |
-| Training | A kind of exercise — dictation, crossword, word search | Training | exercise type | *game*, *test* | `TrainingIds`, `trainingCatalog` |
-| Session | One run of one training, start to result screen | Training | — | *training* (that is the kind), *round* | `sessionId`, `Start*SessionUseCase` |
-| Step | One question inside a session | Training | question | *item*, *card* | `stepIndex`, `*StepResponse` |
-| Outcome | How one step was answered: correct, incorrect, skipped | Training | result | *score*, *status* | `StepOutcome`; `TrainingResultOutcomeBoundary` at the data edge |
+| Membership | Whether a word belongs to a preset, including a hand-made override | Vocabulary | — | *link*, *relation* | `PresetMembership`, `PresetStudySetState` |
+| Training | A kind of exercise — dictation, crossword, word search | Training | exercise type | *game*, *test* | `TrainingType`; `trainingCatalog` for its presentation |
+| Session | One run of one training, start to result screen | Training | — | *training* (that is the kind), *round* | `Session`, `SessionId` |
+| Step | One question inside a session | Training | question | *item*, *card* | `Step`; `*StepResponse` at the UI edge |
+| Outcome | How one step was answered, or that it was only shown | Training | result | *score*, *status* | `StepOutcome` |
 | Training result | One recorded answer, kept for scheduling and statistics | Training / Scheduling | — | *history entry* | `TrainingResultBoundary` |
+| Recall quality | How well a word was remembered, as the scheduler grades it | Scheduling | — | *score* | `RecallQuality` |
+| Review settings | The policy the scheduler applies: intervals, ease, mastery threshold | Scheduling | — | *config* | `ReviewSettings` |
+| Study time policy | How much of the gap between two answers counts as studying | Scheduling | — | — | `StudyTimePolicy` |
+| Minimum words | The smallest study set a training can build a session from | Training | — | *requirement* | `TrainingType.minimumWords` |
 | Review | A later encounter with a word the learner has already met | Scheduling | — | *repetition* | `ReviewScheduleRepository`, `WordReviewEntity` |
 | Due | A word whose review interval has elapsed | Scheduling | — | *pending*, *expired* | `dueAtEpochDay` |
-| Mastery | The point at which a word or variant counts as known | Scheduling / Conjugation | — | *learned*, *complete* | `isMastered`, `MASTERY_STREAK` |
+| Word mastery | A word whose review interval has passed the settings' threshold | Scheduling | — | *learned*, *complete* | `ReviewState.isMastered(settings)` |
+| Variant mastery | A conjugation variant answered correctly enough times in a row | Conjugation | — | *learned*, *complete* | `VariantProgress.isMastered`, `MASTERY_STREAK` |
 | Study day | A calendar day on which the learner practised, with its totals | Scheduling | — | *session day* | `StudyDayBoundary` |
 | Streak | Consecutive study days | Scheduling | — | — | `GetStudyStreakUseCase` |
 | Program | A configuration that plans a learner's daily work | Program | — | *course*, *plan* | `Program`, `ProgramId`, `ProgramConfig` |
@@ -59,8 +64,9 @@ must not be merged.
 | Program day | One day's plan for a program, and how much of it is done | Program | — | *daily plan* | `ProgramDay` |
 | Queue | The ordered trainings a program day asks for | Program | — | *playlist*, *schedule* | `QueuedTraining`, `ProgramQueue` |
 | Activity | A unit of work in a program's plan, mapped to a training | Program | — | *task* | `PlannedActivity`, `ActivityType` |
+| Program configuration | The stored, read-mostly description of a program: its goals, scope, plan and rules | Program | — | *settings* | `ProgramConfig` — a stored format, not a domain object |
 | Word card | A word shown for learning rather than testing, before the day's trainings | Program | — | *flashcard* | `WordCard`, `GetWordCardsUseCase` |
-| Course | Fixed teaching material — a sequence of lessons | Course | — | *program*, *class* | `Course`, `CourseId` |
+| Course | Fixed teaching material — a sequence of lessons | Course | — | *program*, *class* | `Course`, `CourseId` in `model.course` |
 | Lesson | One unit of a course, with its words, audio and exercises | Course | — | *chapter*, *unit* | `Lesson`, `LessonId` |
 | Exercise | A question inside a lesson, of a fixed authored shape | Course | — | *training*, *step* | `LessonExercise`, `GapFillItem` |
 | Verb | A Polish infinitive with the forms the source records for it | Conjugation | — | *word* (a verb is not in the vocabulary catalogue) | `VerbConjugation` |
@@ -117,12 +123,14 @@ Operations that belong to no single entity.
 
 | Service | Responsibility | Code |
 | --- | --- | --- |
-| Review scheduler | Turns an outcome into the next due date | `LearningRecordBoundary` |
-| Scope resolver | Turns a program's declared sources into word ids | `ResolveProgramScopeUseCase` |
-| Queue resolver | Finds the next training a day can actually run | `ProgramQueue` |
+| Review scheduler | Turns an outcome into the next due date | `ReviewState.next()` in `model.scheduling` |
+| Scope resolver | Turns a program's declared sources into word ids | `ResolveProgramScopeUseCase`, `ScopeOrdering.applyTo` |
+| Queue resolver | Finds the next training a day can actually run | `NextProgramTrainingUseCase` |
 | Conjugation splitter | Derives stem and endings from a verb's own forms | `VerbConjugation.split()` |
 | Answer normaliser | Decides whether a written or spoken answer matches | `AnswerNormalizer` |
 | Sentence generator | Writes example sentences for a target word | `SentenceGenerator` |
+| Speech synthesiser | Says a Polish word or sentence out loud | `SpeechSynthesizer` |
+| Speech recogniser | Turns what the learner said into text | `SpeechRecognizerService` |
 
 ## Domain Events
 
@@ -146,8 +154,9 @@ Introducing an event type is a domain change and requires updating this document
 | --- | --- | --- |
 | Star a word | Add it to the study set, creating it if it does not exist | `ToggleWordInStudySetUseCase`, `ToggleVerbInStudySetUseCase` |
 | Start a session | Draw words and build the steps for one training | `Start*SessionUseCase` |
-| Submit an answer | Mark one step, record it, and schedule the word | `Submit*UseCase` |
-| Advance the day | Mark the current training done and find the next runnable one | `AdvanceProgramDayUseCase`, `ProgramQueue` |
+| Submit an answer | Mark one step against the session's expected answer | `Submit*UseCase` |
+| Record an answer | Store the result, advance the review schedule, credit the study day | `RecordAnswerUseCase` |
+| Advance the day | Mark the current training done and find the next runnable one | `AdvanceProgramDayUseCase`, `NextProgramTrainingUseCase` |
 | Enrol / leave | Begin or abandon a program | `EnrolInProgramUseCase`, `LeaveProgramUseCase` |
 | Create a conjugation course | Fix a set of verbs as a course | `CreateConjugationCourseUseCase` |
 | Restore the verbs | Re-seed the verb catalogue from its asset | `RestoreConjugationVerbsUseCase` |
@@ -198,6 +207,7 @@ unified.
 | Word | In one context | In another |
 | --- | --- | --- |
 | **Course** | Course — a sequence of authored lessons (Krok po kroku) | Conjugation course — a chosen set of verbs |
+| **Mastery** | Scheduling: a word whose review interval passed the threshold (21 days by default) | Conjugation: a variant answered correctly twice in a row |
 | **Progress** | Program: weighted metrics combined into a figure | Conjugation: variants mastered out of total |
 | | | Course: lessons completed |
 | **Step** | Training: one question in a session | Conjugation: one person's row inside a question |
@@ -217,6 +227,13 @@ unified.
 | Sync | Misleading — nothing is fetched from a network | Seeding, for catalogue loading |
 | Selection (conjugation) | Removed | A conjugation course |
 | Reset the course | Removed | Delete the course |
+| `TrainingResultOutcomeBoundary` | Removed — it duplicated `StepOutcome` exactly | `StepOutcome`, which now carries `SEEN` |
+| `TrainingRequirements` | Removed — a domain policy that lived in the UI module | `TrainingType.minimumWords` |
+| `TRAINING_TYPE_*` constants | Removed, eleven of them | `TrainingType` |
+| `VocabularyItemBoundary` | Removed — an anemic twin of the word, carrying `Long` and `String?` where the model had value objects | `Word` |
+| `PresetWord` | Renamed — it was never preset-specific | `Word` |
+| `ScopeSourceType.FAVOURITES`, `ProgramDraftProblem.NO_FAVOURITES` | Renamed — the deprecated term survived an earlier case-sensitive sweep | `STUDY_SET`, `EMPTY_STUDY_SET` |
+| `ProgramQueue` | Renamed and moved out of the presentation module | `NextProgramTrainingUseCase` |
 
 ## Terminology Change History
 
@@ -231,6 +248,22 @@ unified.
 | 2026-08-19 | Nine per-training outcome enums → one **`StepOutcome`** | One concept had nine declarations. `TrainingResultOutcomeBoundary` stays: boundary types are the data-edge contract, and it carries `SEEN`, which no training produces |
 | 2026-08-18 | *Program title* stopped being stored data | It was never editable, so a stored copy could only go stale |
 | 2026-08-19 | *Favourite* renamed to *study set* throughout the code | The interface had always said study set; the code name was the last holdout |
+| 2026-08-19 | **`SEEN` added to `StepOutcome`; `TrainingResultOutcomeBoundary` removed** | The two enums became identical. The earlier reason for keeping the boundary copy — that only it carried `SEEN` — was the defect, not the justification: the model could not express a state the domain has |
+| 2026-08-19 | **Review scheduling moved out of `data` into `model.scheduling`** | A Room repository owned SM-2, the review policy and the study-time rule. The application now invokes the scheduler through `RecordAnswerUseCase` |
+| 2026-08-19 | **Scope orderings implemented**: frequency is the catalogue's own numbering, difficulty is CEFR | The shipped vocabulary is numbered by how common a word is — Top 100 is ids 1..100 — so frequency needed no new data, and what `DIFFICULTY` did was frequency under the wrong name |
+| 2026-08-19 | `ScopeSourceType.LESSON` implemented | The lesson word ids were already on `CourseRepository`; the branch had simply never been filled in |
+| 2026-08-19 | **`PresetStudySetState` moved to the model** and is counted rather than derived from the id list | Whether a preset is fully, partly or not at all in the study set is a rule about membership, and counting it in SQL keeps the answer independent of every id having loaded |
+| 2026-08-19 | **Session completed across all sixteen trainings**; `Step` split into `Question` and `Board` | Memory Cards and Word Match ask for a board of words to be paired, not a question with one right answer. Two shapes, stated as two, rather than making `expectedAnswer` nullable for the other fourteen |
+| 2026-08-19 | *Passage* recorded as `PASSAGE_WRITE` / `PASSAGE_BANK`; `TrainingType.PASSAGE` removed | The session now carries which variant ran, so the stand-in that covered both produces nothing |
+| 2026-08-19 | Program **enums moved to `model.program`**; `ProgramConfig` stays a stored format | The rules switch on these states, so they are domain vocabulary. The `@Serializable` structures around them are the persistence format and are named as such rather than duplicated into the model |
+| 2026-08-19 | Module **`domain` renamed to `application`** | It held use-case implementations, not a domain model. `model` is the domain; `interactors` declares the use cases; `application` implements them |
+| 2026-08-19 | **`Course` and `VocabularyPreset` moved to the model**, with their behaviour folded onto the types | `completedCount`, `currentLesson` and `wordCount` were extension functions beside the data classes. A course's `level` is a `CefrLevel` rather than a string |
+| 2026-08-19 | **`Session` became a real aggregate** | The language had claimed a Session aggregate whose invariant was "every step records exactly one result". Nothing enforced it: `sessionId` was a `String`, and the submit request carried the expected answer in from the caller, so a client could rename the right answer. Nine trainings now draw it from the session |
+| 2026-08-19 | **`ProgramQueue` moved out of the Compose module** and became `NextProgramTrainingUseCase` | The glossary already listed it as the *queue resolver* domain service, but it was a class in the UI module applying a policy that also lived there. `QueuedTraining` now carries a `TrainingType` rather than a string |
+| 2026-08-19 | **Speech and audio ports moved from `android` to `boundary`** | The ports were declared inside the Android module, so every ViewModel that wanted to play a word depended on infrastructure. `presentation` no longer depends on `android` at all. The `java.util.Locale` parameter went with them: no caller ever passed anything but Polish |
+| 2026-08-19 | **`Word` promoted to the model**, absorbing `PresetWord` and `VocabularyItemBoundary` | One concept had two representations: a modelled one in the application layer and an anemic twin at the data edge, with a mapper between them. `VocabularyId` and `CefrLevel` now reach the repository |
+| 2026-08-19 | *Mastery* split into **word mastery** and **variant mastery** | One glossary term covered two unrelated rules — an interval threshold in Scheduling, a correct-answer streak in Conjugation. They were never the same measure |
+| 2026-08-19 | **`TrainingType` introduced**; `TrainingIds`, eleven `TRAINING_TYPE_*` constants and `TrainingRequirements` folded into it | One concept had three string encodings — lowercase route ids, uppercase stored types, and a minimum-words table in the UI module |
 
 ## Enforcement
 

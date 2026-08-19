@@ -5,6 +5,8 @@ import com.lexicon.presentation.common.AnswerState
 sealed interface ImageTestUiState {
     data object Loading : ImageTestUiState
 
+    data object Unavailable : ImageTestUiState
+
     data class Loaded(
         val stepIndex: Int = 0,
         val totalSteps: Int = 0,

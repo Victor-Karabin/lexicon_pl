@@ -1,6 +1,7 @@
 package com.lexicon.android.lesson
 
 import android.media.MediaPlayer
+import com.lexicon.boundary.LessonAudioPlayer
 import com.lexicon.common.DispatcherProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

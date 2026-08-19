@@ -43,6 +43,7 @@ import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.TrainingUnavailableContent
 import com.lexicon.presentation.common.debounced
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
@@ -107,6 +108,9 @@ private fun CrosswordScreenContent(
         topBar = { TrainingTopBar(title = stringResource(R.string.crossword_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
+            CrosswordUiState.Unavailable ->
+                TrainingUnavailableContent(onClose = onClose, modifier = Modifier.padding(padding))
+
             is CrosswordUiState.Loading ->
                 Column(
                     modifier = Modifier.fillMaxSize().padding(padding),

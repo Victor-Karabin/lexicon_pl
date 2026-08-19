@@ -4,20 +4,20 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.DeletePresetUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
-import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
 import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
-import com.lexicon.interactors.presets.PresetCategory
-import com.lexicon.interactors.presets.PresetId
-import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.RestorePresetUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
 import com.lexicon.interactors.presets.SetPresetInStudySetUseCase
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
-import com.lexicon.interactors.presets.VocabularyId
-import com.lexicon.interactors.presets.VocabularyPreset
+import com.lexicon.model.vocabulary.LocalizedText
+import com.lexicon.model.vocabulary.PresetCategory
+import com.lexicon.model.vocabulary.PresetId
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.VocabularyPreset
+import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -46,8 +46,8 @@ import kotlin.time.Duration.Companion.minutes
 class VocabularyViewModelDeleteTest {
     private val dispatcher = StandardTestDispatcher()
 
-    private val kot = PresetWord(VocabularyId(1L), "kot", "cat", "kɔt")
-    private val pies = PresetWord(VocabularyId(2L), "pies", "dog", "pjɛs")
+    private val kot = Word(VocabularyId(1L), "kot", "cat", "kɔt")
+    private val pies = Word(VocabularyId(2L), "pies", "dog", "pjɛs")
 
     private val searchVocabulary: SearchVocabularyUseCase = mockk {
         coEvery { this@mockk(any(), any(), any()) } returns persistentListOf(kot, pies)

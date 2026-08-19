@@ -25,9 +25,9 @@ android {
 }
 
 dependencies {
+    implementation(projects.boundary)
     implementation(projects.interactors)
     implementation(projects.common)
-    implementation(projects.android)
 
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)

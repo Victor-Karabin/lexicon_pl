@@ -10,6 +10,8 @@ import com.lexicon.presentation.pronunciation.RecordingState
 sealed interface MixUiState {
     data object Loading : MixUiState
 
+    data object Unavailable : MixUiState
+
     data class Loaded(
         val stepIndex: Int = 0,
         val totalSteps: Int = 0,

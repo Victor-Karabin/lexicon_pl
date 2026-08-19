@@ -1,9 +1,14 @@
 package com.lexicon.interactors.program
 
+import com.lexicon.model.program.ActivityType
+import com.lexicon.model.program.AdaptationAction
+import com.lexicon.model.program.AdaptationTrigger
+import com.lexicon.model.program.LearningStrategy
+import com.lexicon.model.program.ScopeOrdering
+import com.lexicon.model.program.ScopeSourceType
+import com.lexicon.model.program.TargetType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-
-data class ProgramId(val value: String)
 
 @Serializable
 data class ProgramConfig(
@@ -19,19 +24,6 @@ data class ProgramConfig(
     val completion: CompletionRules = CompletionRules(),
 )
 
-enum class TargetType {
-    VOCABULARY,
-    LESSONS,
-
-    TIME,
-
-    EXERCISES,
-
-    STREAK,
-
-    ACCURACY,
-}
-
 @Serializable
 data class ProgramGoal(
     val id: String,
@@ -41,15 +33,11 @@ data class ProgramGoal(
     val required: Boolean = true,
 )
 
-enum class ScopeSourceType { PRESET, FAVOURITES, CEFR_LEVEL, LESSON, ALL }
-
 @Serializable
 data class ScopeSource(
     val type: ScopeSourceType,
     val value: String = "",
 )
-
-enum class ScopeOrdering { AS_LISTED, FREQUENCY, DIFFICULTY, ALPHABETICAL, RANDOM }
 
 @Serializable
 data class VocabularyScope(
@@ -58,10 +46,6 @@ data class VocabularyScope(
     val maxWords: Int? = null,
     val ordering: ScopeOrdering = ScopeOrdering.FREQUENCY,
 )
-
-enum class LearningStrategy { NEW_FIRST, REVIEWS_FIRST, MIXED, TOPIC_BY_TOPIC, ADAPTIVE }
-
-enum class ActivityType { LEARN, REVIEW, PRONOUNCE, LISTEN, WRITE, MIXED, CHALLENGE }
 
 @Serializable
 data class ActivityConfig(
@@ -128,25 +112,6 @@ data class ReviewStrategyConfig(
     val masteredIntervalDays: Int = 21,
     val failedFirst: Boolean = true,
 )
-
-enum class AdaptationTrigger {
-    HIGH_ACCURACY,
-    LOW_ACCURACY,
-    MISSED_DAY,
-    MISSED_WEEK,
-    FAST_PROGRESS,
-    SLOW_PROGRESS,
-    REVIEW_BACKLOG,
-}
-
-enum class AdaptationAction {
-    INCREASE_NEW_WORDS,
-    DECREASE_NEW_WORDS,
-    INCREASE_REVIEWS,
-    PAUSE_NEW_WORDS,
-    EXTEND_DURATION,
-    REPEAT_MILESTONE,
-}
 
 @Serializable
 data class AdaptationRule(

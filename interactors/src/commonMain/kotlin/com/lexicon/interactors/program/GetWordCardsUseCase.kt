@@ -1,6 +1,6 @@
 package com.lexicon.interactors.program
 
-import com.lexicon.interactors.presets.VocabularyId
+import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.ImmutableList
 
 interface GetWordCardsUseCase {

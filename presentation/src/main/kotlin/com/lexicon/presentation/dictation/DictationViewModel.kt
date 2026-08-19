@@ -3,14 +3,14 @@ package com.lexicon.presentation.dictation
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.speech.SpeechSynthesizer
+import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.dictation.DictationStepResponse
 import com.lexicon.interactors.dictation.StartDictationSessionRequest
 import com.lexicon.interactors.dictation.StartDictationSessionUseCase
 import com.lexicon.interactors.dictation.SubmitDictationAnswerRequest
 import com.lexicon.interactors.dictation.SubmitDictationAnswerUseCase
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -62,6 +62,10 @@ class DictationViewModel(
             val response = startDictationSession(StartDictationSessionRequest(vocabularyIds = vocabularyIds))
             sessionId = response.sessionId
             steps = response.steps
+            if (steps.isEmpty()) {
+                _uiState.update { DictationUiState.Unavailable }
+                return@launch
+            }
             _uiState.update {
                 DictationUiState.Loaded(stepIndex = 0, totalSteps = steps.size)
             }
@@ -164,6 +168,8 @@ class DictationViewModel(
                 delay(SKIPPED_ANSWER_ADVANCE_DELAY_MS)
                 advanceToNextStep()
             }
+
+            StepOutcome.SEEN -> Unit
         }
     }
 

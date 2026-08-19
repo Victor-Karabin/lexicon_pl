@@ -3,13 +3,13 @@ package com.lexicon.presentation.course
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.lesson.LessonAudioLibrary
-import com.lexicon.android.lesson.LessonAudioPlayer
+import com.lexicon.boundary.LessonAudioLibrary
+import com.lexicon.boundary.LessonAudioPlayer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.LessonExercise
-import com.lexicon.interactors.course.LessonId
+import com.lexicon.model.course.LessonId
 import com.lexicon.presentation.common.AnswerState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

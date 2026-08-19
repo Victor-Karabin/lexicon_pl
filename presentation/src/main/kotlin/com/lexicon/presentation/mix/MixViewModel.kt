@@ -3,9 +3,9 @@ package com.lexicon.presentation.mix
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.recognition.SpeechRecognitionFailed
-import com.lexicon.android.recognition.SpeechRecognizerService
-import com.lexicon.android.speech.SpeechSynthesizer
+import com.lexicon.boundary.SpeechRecognitionFailed
+import com.lexicon.boundary.SpeechRecognizerService
+import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.dictation.SubmitDictationAnswerRequest
 import com.lexicon.interactors.dictation.SubmitDictationAnswerUseCase
@@ -20,9 +20,9 @@ import com.lexicon.interactors.pronunciation.SubmitPronunciationResultRequest
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerRequest
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerUseCase
-import com.lexicon.interactors.training.StepOutcome
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerRequest
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.LetterTile
@@ -83,6 +83,10 @@ class MixViewModel(
             val response = startMixSession(StartMixSessionRequest(vocabularyIds = vocabularyIds))
             sessionId = response.sessionId
             steps = response.steps
+            if (steps.isEmpty()) {
+                _uiState.update { MixUiState.Unavailable }
+                return@launch
+            }
             openStep(0)
         }
     }

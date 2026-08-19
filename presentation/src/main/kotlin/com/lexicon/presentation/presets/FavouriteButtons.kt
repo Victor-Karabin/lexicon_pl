@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.lexicon.interactors.presets.PresetStudySetState
+import com.lexicon.model.vocabulary.PresetStudySetState
 import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.LexiconError
 

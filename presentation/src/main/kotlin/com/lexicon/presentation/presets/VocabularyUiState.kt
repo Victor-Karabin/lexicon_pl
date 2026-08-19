@@ -1,10 +1,10 @@
 package com.lexicon.presentation.presets
 
-import com.lexicon.interactors.presets.CefrLevel
-import com.lexicon.interactors.presets.PresetId
-import com.lexicon.interactors.presets.PresetWord
-import com.lexicon.interactors.presets.VocabularyId
-import com.lexicon.interactors.presets.VocabularyPreset
+import com.lexicon.model.vocabulary.CefrLevel
+import com.lexicon.model.vocabulary.PresetId
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.VocabularyPreset
+import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -25,7 +25,7 @@ sealed interface VocabularyUiState {
         val query: String = "",
         val presets: ImmutableList<VocabularyPreset> = persistentListOf(),
         val selectedCefrLevels: Set<CefrLevel> = emptySet(),
-        val words: ImmutableList<PresetWord> = persistentListOf(),
+        val words: ImmutableList<Word> = persistentListOf(),
         val isSearching: Boolean = false,
         val languageTag: String = "en",
         val studySetWordIds: Set<VocabularyId> = emptySet(),

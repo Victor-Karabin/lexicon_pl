@@ -1,11 +1,11 @@
 package com.lexicon.presentation.presets
 
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
-import com.lexicon.interactors.presets.PresetId
 import com.lexicon.interactors.presets.PresetMembership
-import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
-import com.lexicon.interactors.presets.VocabularyId
+import com.lexicon.model.vocabulary.PresetId
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -38,7 +38,7 @@ class ChangePresetsController(
     val state: StateFlow<ChangePresetsUiState?> = _state.asStateFlow()
 
     fun open(
-        word: PresetWord,
+        word: Word,
         languageTag: String,
     ) {
         _state.value = ChangePresetsUiState(wordId = word.id, word = word.text, languageTag = languageTag)

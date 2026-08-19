@@ -33,6 +33,7 @@ import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.TrainingUnavailableContent
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconShapes
@@ -105,6 +106,9 @@ private fun DictationScreenContent(
         topBar = { TrainingTopBar(title = stringResource(R.string.dictation_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
+            DictationUiState.Unavailable ->
+                TrainingUnavailableContent(onClose = onClose, modifier = Modifier.padding(padding))
+
             is DictationUiState.Loading ->
                 Column(
                     modifier = Modifier.fillMaxSize().padding(padding),

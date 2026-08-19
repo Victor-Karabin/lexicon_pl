@@ -1,6 +1,8 @@
 package com.lexicon.android.speech
 
 import com.lexicon.android.cloud.CloudVoice
+import com.lexicon.boundary.SpeechVoice
+import com.lexicon.boundary.VoiceGender
 
 /**
  * Polish given names for Cloud voices, carried over from the earlier Lexicon app.

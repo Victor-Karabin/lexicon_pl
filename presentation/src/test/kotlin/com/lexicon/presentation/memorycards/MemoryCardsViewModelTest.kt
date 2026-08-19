@@ -9,7 +9,7 @@ import com.lexicon.interactors.memorycards.MemoryCardsStepResponse
 import com.lexicon.interactors.memorycards.StartMemoryCardsSessionUseCase
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultResponse
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent

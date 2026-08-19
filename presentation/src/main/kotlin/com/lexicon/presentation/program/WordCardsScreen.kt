@@ -34,8 +34,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
-import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.program.WordCard
+import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
@@ -66,7 +66,7 @@ fun WordCardsScreen(
         if (!uiState.isFinished) return@LaunchedEffect
 
         uiState.launch
-            ?.let { onStartTraining(it.training, it.wordIds) }
+            ?.let { onStartTraining(it.training.id, it.wordIds) }
             ?: onFinished()
     }
 

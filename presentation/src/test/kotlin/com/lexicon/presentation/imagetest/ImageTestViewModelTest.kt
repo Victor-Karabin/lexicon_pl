@@ -8,7 +8,7 @@ import com.lexicon.interactors.imagetest.ImageTestStepResponse
 import com.lexicon.interactors.imagetest.StartImageTestSessionUseCase
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerResponse
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -129,5 +129,17 @@ class ImageTestViewModelTest {
             val state = viewModel.uiState.value as ImageTestUiState.Loaded
             assertTrue(state.awaitingNext)
             assertEquals(0, state.stepIndex)
+        }
+
+    @Test
+    fun `a session that produced no steps says so instead of loading forever`() =
+        runTest {
+            coEvery { startUseCase(any()) } returns session()
+
+            viewModel().uiState.test {
+                assertEquals(ImageTestUiState.Loading, awaitItem())
+                assertEquals(ImageTestUiState.Unavailable, awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
         }
 }

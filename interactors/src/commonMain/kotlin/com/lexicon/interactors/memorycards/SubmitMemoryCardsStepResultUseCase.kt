@@ -1,6 +1,6 @@
 package com.lexicon.interactors.memorycards
 
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 
 data class SubmitMemoryCardsStepResultRequest(
     val sessionId: String,

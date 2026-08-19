@@ -19,6 +19,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
 
+            api(projects.model)
             implementation(libs.kotlinx.coroutines.core)
         }
         androidUnitTest.dependencies {

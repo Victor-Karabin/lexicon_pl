@@ -1,8 +1,8 @@
 package com.lexicon.shared
 
+import com.lexicon.application.di.domainModule
 import com.lexicon.data.di.dataIosModule
 import com.lexicon.data.di.dataModule
-import com.lexicon.domain.di.domainModule
 import org.koin.core.context.startKoin
 
 fun initKoinIos(

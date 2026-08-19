@@ -276,4 +276,7 @@
         <item quantity="one">%1$d word in your study set</item>
         <item quantity="other">%1$d words in your study set</item>
     </plurals>
+    <string name="training_unavailable_title">Nothing to practise here</string>
+    <string name="training_unavailable_body">This training could not build a round from your study set. Try another training, or add a few more words.</string>
+    <string name="training_unavailable_action">Go back</string>
 </resources>

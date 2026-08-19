@@ -1,6 +1,7 @@
 package com.lexicon.android.speech
 
 import com.lexicon.android.cloud.CloudVoice
+import com.lexicon.boundary.VoiceGender
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test

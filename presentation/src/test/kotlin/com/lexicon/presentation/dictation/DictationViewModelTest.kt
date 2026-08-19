@@ -2,7 +2,7 @@ package com.lexicon.presentation.dictation
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.lexicon.android.speech.SpeechSynthesizer
+import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.dictation.DictationSessionResponse
 import com.lexicon.interactors.dictation.DictationStepResponse
@@ -10,7 +10,7 @@ import com.lexicon.interactors.dictation.StartDictationSessionRequest
 import com.lexicon.interactors.dictation.StartDictationSessionUseCase
 import com.lexicon.interactors.dictation.SubmitDictationAnswerResponse
 import com.lexicon.interactors.dictation.SubmitDictationAnswerUseCase
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent

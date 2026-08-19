@@ -9,7 +9,7 @@ import com.lexicon.interactors.imagetest.StartImageTestSessionRequest
 import com.lexicon.interactors.imagetest.StartImageTestSessionUseCase
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerRequest
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -59,6 +59,10 @@ class ImageTestViewModel(
             val response = startSessionUseCase(StartImageTestSessionRequest(vocabularyIds = vocabularyIds))
             sessionId = response.sessionId
             steps = response.steps
+            if (steps.isEmpty()) {
+                _uiState.update { ImageTestUiState.Unavailable }
+                return@launch
+            }
             openStep(0)
         }
     }
@@ -140,6 +144,8 @@ class ImageTestViewModel(
                 delay(SKIPPED_ANSWER_ADVANCE_DELAY_MS)
                 advanceToNextStep()
             }
+
+            StepOutcome.SEEN -> Unit
         }
     }
 

@@ -5,20 +5,20 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.ui.Modifier
-import com.lexicon.interactors.presets.PresetWord
-import com.lexicon.interactors.presets.VocabularyId
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import com.lexicon.presentation.common.SwipeToRevealContainer
 import com.lexicon.presentation.common.WordRowActions
 import com.lexicon.presentation.common.WordRowActionsWidth
 import com.lexicon.presentation.theme.Dimens
 
 fun LazyListScope.wordRows(
-    words: List<PresetWord>,
+    words: List<Word>,
     onStudySetToggled: (VocabularyId, Boolean) -> Unit,
-    onPronounce: (PresetWord) -> Unit,
-    onChangePresets: (PresetWord) -> Unit,
-    onDelete: (PresetWord) -> Unit,
-    onEdit: (PresetWord) -> Unit,
+    onPronounce: (Word) -> Unit,
+    onChangePresets: (Word) -> Unit,
+    onDelete: (Word) -> Unit,
+    onEdit: (Word) -> Unit,
     selection: WordSelection,
 ) {
     itemsIndexed(words, key = { _, word -> word.id.value }) { index, word ->

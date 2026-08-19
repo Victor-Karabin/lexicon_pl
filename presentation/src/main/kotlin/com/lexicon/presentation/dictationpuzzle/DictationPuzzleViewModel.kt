@@ -3,14 +3,14 @@ package com.lexicon.presentation.dictationpuzzle
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.speech.SpeechSynthesizer
+import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.dictationpuzzle.DictationPuzzleStepResponse
 import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionRequest
 import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionUseCase
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerRequest
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerUseCase
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.LetterTile
@@ -64,6 +64,10 @@ class DictationPuzzleViewModel(
             val response = startSessionUseCase(StartDictationPuzzleSessionRequest(vocabularyIds = vocabularyIds))
             sessionId = response.sessionId
             steps = response.steps
+            if (steps.isEmpty()) {
+                _uiState.update { DictationPuzzleUiState.Unavailable }
+                return@launch
+            }
             openStep(0)
             speakCurrentStep()
         }
@@ -179,6 +183,8 @@ class DictationPuzzleViewModel(
                 delay(SKIPPED_ANSWER_ADVANCE_DELAY_MS)
                 advanceToNextStep()
             }
+
+            StepOutcome.SEEN -> Unit
         }
     }
 

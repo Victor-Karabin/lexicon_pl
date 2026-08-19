@@ -1,5 +1,7 @@
 package com.lexicon.boundary
 
+import com.lexicon.model.scheduling.ReviewState
+
 data class AccuracyBoundary(
     val answers: Int,
     val correct: Int,
@@ -17,6 +19,14 @@ data class StudyDayBoundary(
 )
 
 interface ReviewScheduleRepository {
+    suspend fun find(wordId: Long): ReviewState?
+
+    suspend fun save(
+        wordId: Long,
+        state: ReviewState,
+        reviewedAtEpochMillis: Long,
+    )
+
     suspend fun dueWordIds(
         todayEpochDay: Long,
         limit: Int,
@@ -30,6 +40,13 @@ interface ReviewScheduleRepository {
 }
 
 interface StudyRecordRepository {
+    suspend fun record(
+        epochDay: Long,
+        addedSeconds: Long,
+        wasNew: Boolean,
+        wasCorrect: Boolean,
+    )
+
     suspend fun day(epochDay: Long): StudyDayBoundary?
 
     suspend fun daysBetween(

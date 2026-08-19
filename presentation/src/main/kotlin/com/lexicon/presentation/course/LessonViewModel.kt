@@ -3,17 +3,17 @@ package com.lexicon.presentation.course
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.speech.SpeechSynthesizer
+import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
 import com.lexicon.interactors.course.Lesson
-import com.lexicon.interactors.course.LessonId
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
 import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
-import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
-import com.lexicon.interactors.presets.VocabularyId
+import com.lexicon.model.course.LessonId
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -32,7 +32,7 @@ sealed interface LessonUiState {
 
     data class Loaded(
         val lesson: Lesson,
-        val words: ImmutableList<PresetWord> = persistentListOf(),
+        val words: ImmutableList<Word> = persistentListOf(),
         val isLoadingWords: Boolean = true,
     ) : LessonUiState
 }
@@ -53,7 +53,7 @@ class LessonViewModel(
 
     private data class Content(
         val lesson: Lesson?,
-        val words: List<PresetWord> = emptyList(),
+        val words: List<Word> = emptyList(),
         val wordsLoaded: Boolean = false,
     )
 
@@ -90,7 +90,7 @@ class LessonViewModel(
         }
     }
 
-    fun onPronounceWord(word: PresetWord) {
+    fun onPronounceWord(word: Word) {
         viewModelScope.launch(dispatchers.io) {
             runCatching { speechSynthesizer.speak(word.text) }
         }

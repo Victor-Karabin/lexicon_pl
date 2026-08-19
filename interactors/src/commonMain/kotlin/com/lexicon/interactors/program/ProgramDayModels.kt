@@ -1,11 +1,13 @@
 package com.lexicon.interactors.program
 
-import com.lexicon.interactors.presets.VocabularyId
+import com.lexicon.model.program.ProgramId
+import com.lexicon.model.training.TrainingType
+import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 data class QueuedTraining(
-    val training: String,
+    val training: TrainingType,
     val round: Int,
     val isDone: Boolean,
 )

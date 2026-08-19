@@ -16,25 +16,26 @@ import androidx.compose.material.icons.filled.QuestionMark
 import androidx.compose.material.icons.filled.RecordVoiceOver
 import androidx.compose.material.icons.filled.Style
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.lexicon.model.training.TrainingType
 import com.lexicon.presentation.R
 
 object TrainingIds {
-    const val DICTATION = "dictation"
-    const val DICTATION_PUZZLE = "dictation_puzzle"
-    const val TRUE_OR_FALSE = "true_or_false"
-    const val WORD_MATCH = "word_match"
-    const val PRONUNCIATION_CHECK = "pronunciation_check"
-    const val PRONUNCIATION_SENTENCES = "pronunciation_sentences"
-    const val PUZZLE = "puzzle"
-    const val IMAGE_TEST = "image_test"
-    const val MEMORY_CARDS = "memory_cards"
-    const val MIX = "mix"
-    const val CROSSWORD = "crossword"
-    const val WORD_CARD = "word_card"
-    const val PASSAGE_WRITE = "passage_write"
-    const val PASSAGE_BANK = "passage_bank"
-    const val FILLWORD = "fillword"
-    const val CONJUGATION = "conjugation"
+    val DICTATION = TrainingType.DICTATION.id
+    val DICTATION_PUZZLE = TrainingType.DICTATION_PUZZLE.id
+    val TRUE_OR_FALSE = TrainingType.TRUE_OR_FALSE.id
+    val WORD_MATCH = TrainingType.WORD_MATCH.id
+    val PRONUNCIATION_CHECK = TrainingType.PRONUNCIATION_CHECK.id
+    val PRONUNCIATION_SENTENCES = TrainingType.PRONUNCIATION_SENTENCES.id
+    val PUZZLE = TrainingType.PUZZLE.id
+    val IMAGE_TEST = TrainingType.IMAGE_TEST.id
+    val MEMORY_CARDS = TrainingType.MEMORY_CARDS.id
+    val MIX = TrainingType.MIX.id
+    val CROSSWORD = TrainingType.CROSSWORD.id
+    val WORD_CARD = TrainingType.WORD_CARD.id
+    val PASSAGE_WRITE = TrainingType.PASSAGE_WRITE.id
+    val PASSAGE_BANK = TrainingType.PASSAGE_BANK.id
+    val FILLWORD = TrainingType.FILLWORD.id
+    val CONJUGATION = TrainingType.CONJUGATION.id
 }
 
 data class TrainingCatalogEntry(

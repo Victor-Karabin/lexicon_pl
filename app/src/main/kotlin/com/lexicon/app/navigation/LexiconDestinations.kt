@@ -16,21 +16,21 @@ internal object LexiconDestinations {
 
     fun main(tab: MainTab? = null) = "main?$MAIN_TAB_ARG=${tab?.name.orEmpty()}"
 
-    const val DICTATION = TrainingIds.DICTATION
-    const val DICTATION_PUZZLE = TrainingIds.DICTATION_PUZZLE
-    const val TRUE_OR_FALSE = TrainingIds.TRUE_OR_FALSE
-    const val WORD_MATCH = TrainingIds.WORD_MATCH
-    const val PRONUNCIATION_CHECK = TrainingIds.PRONUNCIATION_CHECK
-    const val PRONUNCIATION_SENTENCES = TrainingIds.PRONUNCIATION_SENTENCES
-    const val PUZZLE = TrainingIds.PUZZLE
-    const val IMAGE_TEST = TrainingIds.IMAGE_TEST
-    const val MEMORY_CARDS = TrainingIds.MEMORY_CARDS
-    const val MIX = TrainingIds.MIX
-    const val WORD_CARD = TrainingIds.WORD_CARD
-    const val CROSSWORD = TrainingIds.CROSSWORD
-    const val PASSAGE_WRITE = TrainingIds.PASSAGE_WRITE
-    const val PASSAGE_BANK = TrainingIds.PASSAGE_BANK
-    const val FILLWORD = TrainingIds.FILLWORD
+    val DICTATION = TrainingIds.DICTATION
+    val DICTATION_PUZZLE = TrainingIds.DICTATION_PUZZLE
+    val TRUE_OR_FALSE = TrainingIds.TRUE_OR_FALSE
+    val WORD_MATCH = TrainingIds.WORD_MATCH
+    val PRONUNCIATION_CHECK = TrainingIds.PRONUNCIATION_CHECK
+    val PRONUNCIATION_SENTENCES = TrainingIds.PRONUNCIATION_SENTENCES
+    val PUZZLE = TrainingIds.PUZZLE
+    val IMAGE_TEST = TrainingIds.IMAGE_TEST
+    val MEMORY_CARDS = TrainingIds.MEMORY_CARDS
+    val MIX = TrainingIds.MIX
+    val WORD_CARD = TrainingIds.WORD_CARD
+    val CROSSWORD = TrainingIds.CROSSWORD
+    val PASSAGE_WRITE = TrainingIds.PASSAGE_WRITE
+    val PASSAGE_BANK = TrainingIds.PASSAGE_BANK
+    val FILLWORD = TrainingIds.FILLWORD
     const val CONJUGATION = "conjugation/{courseId}"
     const val CONJUGATION_VERBS = "conjugation/verbs"
 

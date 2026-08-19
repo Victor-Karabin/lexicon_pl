@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import com.lexicon.interactors.presets.PresetWord
+import com.lexicon.model.vocabulary.Word
 import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconShapes
@@ -54,7 +54,7 @@ fun VocabularySearchField(
     )
 }
 
-private fun PresetWord.detailLine(): String? {
+private fun Word.detailLine(): String? {
     val phonetic = transcription.takeIf { it.isNotBlank() }?.let { "[$it]" }
     val band = cefr?.name
     return when {
@@ -66,7 +66,7 @@ private fun PresetWord.detailLine(): String? {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun VocabularyWordRow(
-    word: PresetWord,
+    word: Word,
     onStudySetToggled: () -> Unit,
     onPronounce: () -> Unit,
     onClick: () -> Unit,

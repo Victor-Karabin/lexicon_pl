@@ -26,8 +26,9 @@ class VocabularyPresetRepositoryImpl(
     override suspend fun getPresets(): List<VocabularyPresetBoundary> {
         seeder.ensureSeeded()
         val membership = presetDao.getAllMemberships().groupBy { it.presetId }
+        val counts = presetDao.getWordCounts().associateBy { it.presetId }
         return presetDao.getPresets().map { preset ->
-            preset.toBoundary(membership[preset.id].orEmpty().map { it.wordId })
+            preset.toBoundary(membership[preset.id].orEmpty().map { it.wordId }, counts[preset.id])
         }
     }
 
@@ -37,8 +38,9 @@ class VocabularyPresetRepositoryImpl(
             .onStart { seeder.ensureSeeded() }
             .map { memberships ->
                 val byPreset = memberships.groupBy { it.presetId }
+                val counts = presetDao.getWordCounts().associateBy { it.presetId }
                 presetDao.getPresets().map { preset ->
-                    preset.toBoundary(byPreset[preset.id].orEmpty().map { it.wordId })
+                    preset.toBoundary(byPreset[preset.id].orEmpty().map { it.wordId }, counts[preset.id])
                 }
             }
 

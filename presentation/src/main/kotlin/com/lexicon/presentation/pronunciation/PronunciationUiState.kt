@@ -7,7 +7,7 @@ enum class RecordingState { IDLE, RECORDING, PROCESSING, RECORDED }
 
 enum class RecognitionErrorType { UNAVAILABLE, FAILED }
 
-enum class UnavailableReason { NO_FAVOURITES, OFFLINE, REFUSED }
+enum class UnavailableReason { EMPTY_STUDY_SET, OFFLINE, REFUSED }
 
 const val MAX_TIP_LEVEL = 2
 

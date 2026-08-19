@@ -25,14 +25,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import com.lexicon.interactors.presets.LocalizedText
-import com.lexicon.interactors.presets.PresetCategory
-import com.lexicon.interactors.presets.PresetId
-import com.lexicon.interactors.presets.PresetStudySetState
-import com.lexicon.interactors.presets.PresetWord
-import com.lexicon.interactors.presets.VocabularyId
-import com.lexicon.interactors.presets.VocabularyPreset
-import com.lexicon.interactors.presets.resolve
+import com.lexicon.model.vocabulary.LocalizedText
+import com.lexicon.model.vocabulary.PresetCategory
+import com.lexicon.model.vocabulary.PresetId
+import com.lexicon.model.vocabulary.PresetStudySetState
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.VocabularyPreset
+import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.resolve
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
@@ -109,10 +109,10 @@ private fun PresetDetailContent(
     snackbarHostState: SnackbarHostState,
     onClose: () -> Unit,
     onWordStudySetToggled: (VocabularyId, Boolean) -> Unit,
-    onPronounceWord: (PresetWord) -> Unit,
+    onPronounceWord: (Word) -> Unit,
     onPresetStudySetToggled: (PresetStudySetState) -> Unit,
-    onWordDeleted: (PresetWord) -> Unit,
-    onChangePresets: (PresetWord) -> Unit,
+    onWordDeleted: (Word) -> Unit,
+    onChangePresets: (Word) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
     selection: WordSelection,
     onDeleteSelected: () -> Unit,
@@ -223,10 +223,10 @@ private fun PresetDetailPreview() {
             uiState = PresetDetailUiState.Loaded(
                 preset = previewPreset,
                 words = persistentListOf(
-                    PresetWord(VocabularyId(1), "chleb", "bread", "xlɛp", isInStudySet = true),
-                    PresetWord(VocabularyId(2), "jabłko", "apple", "ˈjabwkɔ"),
-                    PresetWord(VocabularyId(3), "mleko", "milk", "ˈmlɛkɔ", isInStudySet = true),
-                    PresetWord(VocabularyId(4), "ziemniak", "potato", "ˈʑɛmɲak"),
+                    Word(VocabularyId(1), "chleb", "bread", "xlɛp", isInStudySet = true),
+                    Word(VocabularyId(2), "jabłko", "apple", "ˈjabwkɔ"),
+                    Word(VocabularyId(3), "mleko", "milk", "ˈmlɛkɔ", isInStudySet = true),
+                    Word(VocabularyId(4), "ziemniak", "potato", "ˈʑɛmɲak"),
                 ),
                 studySetState = PresetStudySetState.SOME,
                 isLoadingWords = false,

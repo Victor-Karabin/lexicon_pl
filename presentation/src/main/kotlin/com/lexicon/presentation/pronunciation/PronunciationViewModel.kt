@@ -3,10 +3,10 @@ package com.lexicon.presentation.pronunciation
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.audio.AudioPlayer
-import com.lexicon.android.recognition.SpeechRecognitionFailed
-import com.lexicon.android.recognition.SpeechRecognizerService
-import com.lexicon.android.speech.SpeechSynthesizer
+import com.lexicon.boundary.AudioPlayer
+import com.lexicon.boundary.SpeechRecognitionFailed
+import com.lexicon.boundary.SpeechRecognizerService
+import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.pronunciation.PronunciationSentencesResult
 import com.lexicon.interactors.pronunciation.PronunciationStepResponse
@@ -15,7 +15,7 @@ import com.lexicon.interactors.pronunciation.StartPronunciationSessionRequest
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultRequest
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -78,7 +78,7 @@ class PronunciationViewModel(
                     is PronunciationSentencesResult.Ready -> result.session
 
                     PronunciationSentencesResult.EmptyStudySet ->
-                        return@launch showUnavailable(UnavailableReason.NO_FAVOURITES)
+                        return@launch showUnavailable(UnavailableReason.EMPTY_STUDY_SET)
 
                     PronunciationSentencesResult.Offline ->
                         return@launch showUnavailable(UnavailableReason.OFFLINE)
@@ -245,6 +245,8 @@ class PronunciationViewModel(
                 delay(SKIPPED_ANSWER_ADVANCE_DELAY_MS)
                 advanceToNextStep()
             }
+
+            StepOutcome.SEEN -> Unit
         }
     }
 

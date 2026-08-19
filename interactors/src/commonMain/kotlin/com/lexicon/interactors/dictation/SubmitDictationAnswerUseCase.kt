@@ -1,6 +1,6 @@
 package com.lexicon.interactors.dictation
 
-import com.lexicon.interactors.training.StepOutcome
+import com.lexicon.model.training.StepOutcome
 
 data class SubmitDictationAnswerRequest(
     val sessionId: String,

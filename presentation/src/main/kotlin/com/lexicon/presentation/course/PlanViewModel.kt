@@ -2,12 +2,12 @@ package com.lexicon.presentation.course
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.interactors.course.Course
 import com.lexicon.interactors.course.ObserveCoursesUseCase
 import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
 import com.lexicon.interactors.program.ObserveProgramsUseCase
 import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramEnrolment
+import com.lexicon.model.course.Course
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.SharingStarted

@@ -1,7 +1,6 @@
 package com.lexicon.shared
 
 import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
-import com.lexicon.interactors.course.Course
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
 import com.lexicon.interactors.course.ObserveCoursesUseCase
@@ -39,8 +38,6 @@ import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
-import com.lexicon.interactors.presets.VocabularyId
-import com.lexicon.interactors.presets.VocabularyPreset
 import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.CreateProgramUseCase
 import com.lexicon.interactors.program.EnrolInProgramUseCase
@@ -74,6 +71,9 @@ import com.lexicon.interactors.wordcard.RecordWordCardSeenUseCase
 import com.lexicon.interactors.wordcard.StartWordCardSessionUseCase
 import com.lexicon.interactors.wordmatch.StartWordMatchSessionUseCase
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultUseCase
+import com.lexicon.model.course.Course
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.VocabularyPreset
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

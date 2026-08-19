@@ -1,5 +1,6 @@
 package com.lexicon.interactors.presets
 
+import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.ImmutableList
 
 interface GetWordPresetMembershipsUseCase {

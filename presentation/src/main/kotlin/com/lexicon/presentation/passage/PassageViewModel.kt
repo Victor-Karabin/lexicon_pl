@@ -3,7 +3,7 @@ package com.lexicon.presentation.passage
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.speech.SpeechSynthesizer
+import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.passage.Passage
 import com.lexicon.interactors.passage.PassageSegment
@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-enum class PassageProblem { NONE, NO_FAVOURITES, OFFLINE, REFUSED }
+enum class PassageProblem { NONE, EMPTY_STUDY_SET, OFFLINE, REFUSED }
 
 private const val GAP_PAUSE_MS = 2_500L
 
@@ -84,7 +84,7 @@ class PassageViewModel(
                 }
 
                 PassageSessionResult.EmptyStudySet ->
-                    _uiState.update { it.copy(isLoading = false, problem = PassageProblem.NO_FAVOURITES) }
+                    _uiState.update { it.copy(isLoading = false, problem = PassageProblem.EMPTY_STUDY_SET) }
 
                 PassageSessionResult.Offline ->
                     _uiState.update { it.copy(isLoading = false, problem = PassageProblem.OFFLINE) }

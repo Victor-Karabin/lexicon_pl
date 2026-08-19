@@ -2,8 +2,8 @@ package com.lexicon.presentation.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexicon.android.speech.SpeechSynthesizer
-import com.lexicon.android.speech.SpeechVoice
+import com.lexicon.boundary.SpeechSynthesizer
+import com.lexicon.boundary.SpeechVoice
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.interactors.settings.ObserveSettingsUseCase

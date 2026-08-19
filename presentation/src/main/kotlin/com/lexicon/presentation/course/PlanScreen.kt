@@ -38,15 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.lexicon.interactors.course.Course
-import com.lexicon.interactors.course.CourseId
-import com.lexicon.interactors.course.LessonId
-import com.lexicon.interactors.course.LessonSummary
-import com.lexicon.interactors.course.completedCount
-import com.lexicon.interactors.presets.LocalizedText
-import com.lexicon.interactors.presets.resolve
 import com.lexicon.interactors.program.ActivityConfig
-import com.lexicon.interactors.program.ActivityType
 import com.lexicon.interactors.program.DailyPlanConfig
 import com.lexicon.interactors.program.EnrolmentStatus
 import com.lexicon.interactors.program.Program
@@ -54,10 +46,18 @@ import com.lexicon.interactors.program.ProgramConfig
 import com.lexicon.interactors.program.ProgramDifficulty
 import com.lexicon.interactors.program.ProgramEnrolment
 import com.lexicon.interactors.program.ProgramGoal
-import com.lexicon.interactors.program.ProgramId
 import com.lexicon.interactors.program.ProgramVisibility
-import com.lexicon.interactors.program.TargetType
 import com.lexicon.interactors.program.trainingsADay
+import com.lexicon.model.course.Course
+import com.lexicon.model.course.CourseId
+import com.lexicon.model.course.LessonId
+import com.lexicon.model.course.LessonSummary
+import com.lexicon.model.program.ActivityType
+import com.lexicon.model.program.ProgramId
+import com.lexicon.model.program.TargetType
+import com.lexicon.model.vocabulary.CefrLevel
+import com.lexicon.model.vocabulary.LocalizedText
+import com.lexicon.model.vocabulary.resolve
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.program.ProgramMedallion
@@ -328,7 +328,7 @@ private fun CourseTile(
             horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Medallion(skin = skin) { MedallionText(course.level, skin) }
+            Medallion(skin = skin) { MedallionText(course.level?.name.orEmpty(), skin) }
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
@@ -373,7 +373,7 @@ internal fun CourseHeader(
             horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Medallion(skin = skin) { MedallionText(course.level, skin) }
+            Medallion(skin = skin) { MedallionText(course.level?.name.orEmpty(), skin) }
             Column(modifier = Modifier.weight(1f)) {
                 if (showTitle) {
                     Text(
@@ -455,7 +455,7 @@ internal fun previewCourse(): Course =
     Course(
         id = CourseId("krok-a1"),
         order = 1,
-        level = "A1",
+        level = CefrLevel.A1,
         title = LocalizedText(mapOf("en" to "Polski krok po kroku 1")),
         lessons = listOf(
             LessonSummary(LessonId("1"), 1, "PIERWSZY DZIEŃ W SZKOLE", 8, isCompleted = true, isUnlocked = true),
