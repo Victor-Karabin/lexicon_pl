@@ -5,6 +5,7 @@ import com.lexicon.boundary.SettingsRepository
 import com.lexicon.boundary.ThemeModeBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.domain.settings.StepCountResolver
+import com.lexicon.domain.training.FakeSessionStore
 import com.lexicon.interactors.dictation.StartDictationSessionRequest
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
@@ -20,7 +21,7 @@ class StartDictationSessionUseCaseImplTest {
         coEvery { getSettings() } returns AppSettingsBoundary(ThemeModeBoundary.SYSTEM, stepCount = 10)
     }
     private val stepCountResolver = StepCountResolver(settingsRepository)
-    private val useCase = StartDictationSessionUseCaseImpl(vocabularyRepository, stepCountResolver)
+    private val useCase = StartDictationSessionUseCaseImpl(vocabularyRepository, stepCountResolver, FakeSessionStore())
 
     @Test
     fun `builds one step per returned vocabulary item, preserving order`() =

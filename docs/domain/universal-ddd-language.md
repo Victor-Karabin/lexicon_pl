@@ -45,8 +45,8 @@ must not be merged.
 | Preset category | A grouping of presets | Vocabulary | — | *topic* | `PresetCategory` |
 | Membership | Whether a word belongs to a preset, including a hand-made override | Vocabulary | — | *link*, *relation* | `PresetMembership` |
 | Training | A kind of exercise — dictation, crossword, word search | Training | exercise type | *game*, *test* | `TrainingType`; `trainingCatalog` for its presentation |
-| Session | One run of one training, start to result screen | Training | — | *training* (that is the kind), *round* | `sessionId`, `Start*SessionUseCase` |
-| Step | One question inside a session | Training | question | *item*, *card* | `stepIndex`, `*StepResponse` |
+| Session | One run of one training, start to result screen | Training | — | *training* (that is the kind), *round* | `Session`, `SessionId` |
+| Step | One question inside a session | Training | question | *item*, *card* | `Step`; `*StepResponse` at the UI edge |
 | Outcome | How one step was answered, or that it was only shown | Training | result | *score*, *status* | `StepOutcome` |
 | Training result | One recorded answer, kept for scheduling and statistics | Training / Scheduling | — | *history entry* | `TrainingResultBoundary` |
 | Recall quality | How well a word was remembered, as the scheduler grades it | Scheduling | — | *score* | `RecallQuality` |
@@ -249,6 +249,7 @@ unified.
 | 2026-08-19 | *Favourite* renamed to *study set* throughout the code | The interface had always said study set; the code name was the last holdout |
 | 2026-08-19 | **`SEEN` added to `StepOutcome`; `TrainingResultOutcomeBoundary` removed** | The two enums became identical. The earlier reason for keeping the boundary copy — that only it carried `SEEN` — was the defect, not the justification: the model could not express a state the domain has |
 | 2026-08-19 | **Review scheduling moved out of `data` into `model.scheduling`** | A Room repository owned SM-2, the review policy and the study-time rule. The application now invokes the scheduler through `RecordAnswerUseCase` |
+| 2026-08-19 | **`Session` became a real aggregate** | The language had claimed a Session aggregate whose invariant was "every step records exactly one result". Nothing enforced it: `sessionId` was a `String`, and the submit request carried the expected answer in from the caller, so a client could rename the right answer. Nine trainings now draw it from the session |
 | 2026-08-19 | **`ProgramQueue` moved out of the Compose module** and became `NextProgramTrainingUseCase` | The glossary already listed it as the *queue resolver* domain service, but it was a class in the UI module applying a policy that also lived there. `QueuedTraining` now carries a `TrainingType` rather than a string |
 | 2026-08-19 | **Speech and audio ports moved from `android` to `boundary`** | The ports were declared inside the Android module, so every ViewModel that wanted to play a word depended on infrastructure. `presentation` no longer depends on `android` at all. The `java.util.Locale` parameter went with them: no caller ever passed anything but Polish |
 | 2026-08-19 | **`Word` promoted to the model**, absorbing `PresetWord` and `VocabularyItemBoundary` | One concept had two representations: a modelled one in the application layer and an anemic twin at the data edge, with a mapper between them. `VocabularyId` and `CefrLevel` now reach the repository |

@@ -1,6 +1,7 @@
 package com.lexicon.domain.puzzle
 
 import com.lexicon.domain.dictation.AnswerNormalizer
+import com.lexicon.domain.training.FakeSessionStore
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerRequest
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
@@ -13,7 +14,7 @@ import org.junit.Test
 
 class SubmitPuzzleAnswerUseCaseImplTest {
     private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
-    private val useCase = SubmitPuzzleAnswerUseCaseImpl(recordAnswer, AnswerNormalizer())
+    private val useCase = SubmitPuzzleAnswerUseCaseImpl(recordAnswer, AnswerNormalizer(), FakeSessionStore())
 
     private fun request(
         submittedText: String = "kot",

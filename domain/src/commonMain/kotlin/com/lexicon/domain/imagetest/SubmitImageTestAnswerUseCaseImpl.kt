@@ -1,5 +1,8 @@
 package com.lexicon.domain.imagetest
 
+import com.lexicon.boundary.SessionStore
+import com.lexicon.domain.training.recordOutcome
+import com.lexicon.domain.training.stepAt
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerRequest
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerResponse
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
@@ -10,30 +13,37 @@ import com.lexicon.model.training.TrainingType
 
 class SubmitImageTestAnswerUseCaseImpl(
     private val recordAnswer: RecordAnswerUseCase,
+    private val sessions: SessionStore,
 ) : SubmitImageTestAnswerUseCase {
     override suspend fun invoke(request: SubmitImageTestAnswerRequest): SubmitImageTestAnswerResponse {
-        val outcome = resolveOutcome(request)
+        val step = sessions.stepAt(request.sessionId, request.stepIndex)
+        val correctOption = step?.expectedAnswer ?: request.correctOption
+        val outcome = resolveOutcome(request, correctOption)
+        sessions.recordOutcome(request.sessionId, request.stepIndex, outcome)
 
         recordAnswer(
             RecordedAnswer(
                 sessionId = request.sessionId,
                 trainingType = TrainingType.IMAGE_TEST,
                 stepIndex = request.stepIndex,
-                vocabularyItemId = request.vocabularyItemId,
-                expectedAnswer = request.correctOption,
+                vocabularyItemId = step?.wordId?.value ?: request.vocabularyItemId,
+                expectedAnswer = correctOption,
                 submittedAnswer = request.selectedOption.orEmpty(),
                 outcome = outcome,
                 tipUsed = false,
             ),
         )
 
-        return SubmitImageTestAnswerResponse(outcome = outcome, correctOption = request.correctOption)
+        return SubmitImageTestAnswerResponse(outcome = outcome, correctOption = correctOption)
     }
 
-    private fun resolveOutcome(request: SubmitImageTestAnswerRequest): StepOutcome =
+    private fun resolveOutcome(
+        request: SubmitImageTestAnswerRequest,
+        correctOption: String,
+    ): StepOutcome =
         when {
             request.skipped -> StepOutcome.SKIPPED
-            request.selectedOption == request.correctOption -> StepOutcome.CORRECT
+            request.selectedOption == correctOption -> StepOutcome.CORRECT
             else -> StepOutcome.INCORRECT
         }
 }

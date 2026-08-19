@@ -1,5 +1,6 @@
 package com.lexicon.domain.trueorfalse
 
+import com.lexicon.domain.training.FakeSessionStore
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerRequest
 import com.lexicon.model.training.StepOutcome
@@ -10,7 +11,7 @@ import org.junit.Test
 
 class SubmitTrueOrFalseAnswerUseCaseImplTest {
     private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
-    private val useCase = SubmitTrueOrFalseAnswerUseCaseImpl(recordAnswer)
+    private val useCase = SubmitTrueOrFalseAnswerUseCaseImpl(recordAnswer, FakeSessionStore())
 
     private fun request(
         isCorrect: Boolean,

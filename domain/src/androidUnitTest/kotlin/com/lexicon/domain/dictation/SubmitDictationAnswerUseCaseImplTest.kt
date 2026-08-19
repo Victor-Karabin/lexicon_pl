@@ -1,5 +1,6 @@
 package com.lexicon.domain.dictation
 
+import com.lexicon.domain.training.FakeSessionStore
 import com.lexicon.interactors.dictation.SubmitDictationAnswerRequest
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
@@ -16,6 +17,7 @@ class SubmitDictationAnswerUseCaseImplTest {
         SubmitDictationAnswerUseCaseImpl(
             recordAnswer = recordAnswer,
             answerNormalizer = AnswerNormalizer(),
+            sessions = FakeSessionStore(),
         )
 
     private fun request(

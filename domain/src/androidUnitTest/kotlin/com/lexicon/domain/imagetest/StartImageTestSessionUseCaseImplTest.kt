@@ -6,6 +6,7 @@ import com.lexicon.boundary.SettingsRepository
 import com.lexicon.boundary.ThemeModeBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.domain.settings.StepCountResolver
+import com.lexicon.domain.training.FakeSessionStore
 import com.lexicon.interactors.imagetest.StartImageTestSessionRequest
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
@@ -24,7 +25,7 @@ class StartImageTestSessionUseCaseImplTest {
         coEvery { getSettings() } returns AppSettingsBoundary(ThemeModeBoundary.SYSTEM, stepCount = 10)
     }
     private val stepCountResolver = StepCountResolver(settingsRepository)
-    private val useCase = StartImageTestSessionUseCaseImpl(vocabularyRepository, imageProvider, stepCountResolver)
+    private val useCase = StartImageTestSessionUseCaseImpl(vocabularyRepository, imageProvider, stepCountResolver, FakeSessionStore())
 
     private val items =
         listOf(

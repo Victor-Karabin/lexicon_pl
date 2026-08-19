@@ -3,17 +3,19 @@
 package com.lexicon.domain.imagetest
 
 import com.lexicon.boundary.ImageProvider
+import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.domain.settings.StepCountResolver
+import com.lexicon.domain.training.open
 import com.lexicon.interactors.imagetest.ImageTestSessionResponse
 import com.lexicon.interactors.imagetest.ImageTestStepResponse
 import com.lexicon.interactors.imagetest.StartImageTestSessionRequest
 import com.lexicon.interactors.imagetest.StartImageTestSessionUseCase
+import com.lexicon.model.training.TrainingType
 import com.lexicon.model.vocabulary.Word
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 private const val POOL_MULTIPLIER = 2
 
@@ -23,6 +25,7 @@ class StartImageTestSessionUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,
     private val imageProvider: ImageProvider,
     private val stepCountResolver: StepCountResolver,
+    private val sessions: SessionStore,
 ) : StartImageTestSessionUseCase {
     override suspend fun invoke(request: StartImageTestSessionRequest): ImageTestSessionResponse {
         val stepCount = stepCountResolver.resolve(request.stepCount)
@@ -36,7 +39,8 @@ class StartImageTestSessionUseCaseImpl(
                     async { buildStep(index, subject, pool, request.optionCount) }
                 }.map { it.await() }
             }
-        return ImageTestSessionResponse(sessionId = Uuid.random().toString(), steps = steps)
+        val sessionId = sessions.open(TrainingType.IMAGE_TEST, subjects.map { it.id to it.text })
+        return ImageTestSessionResponse(sessionId = sessionId.value, steps = steps)
     }
 
     private fun subjectsWithEnoughDistractors(

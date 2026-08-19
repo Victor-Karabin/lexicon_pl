@@ -1,6 +1,7 @@
 package com.lexicon.domain.pronunciation
 
 import com.lexicon.domain.dictation.AnswerNormalizer
+import com.lexicon.domain.training.FakeSessionStore
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultRequest
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
@@ -13,7 +14,7 @@ import org.junit.Test
 
 class SubmitPronunciationResultUseCaseImplTest {
     private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
-    private val useCase = SubmitPronunciationResultUseCaseImpl(recordAnswer, AnswerNormalizer())
+    private val useCase = SubmitPronunciationResultUseCaseImpl(recordAnswer, AnswerNormalizer(), FakeSessionStore())
 
     private fun request(
         recognizedText: String = "kot",

@@ -2,20 +2,23 @@
 
 package com.lexicon.domain.trueorfalse
 
+import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.domain.training.open
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionRequest
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.TrueOrFalseSessionResponse
 import com.lexicon.interactors.trueorfalse.TrueOrFalseStepResponse
+import com.lexicon.model.training.TrainingType
 import com.lexicon.model.vocabulary.Word
 import kotlin.random.Random
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 private const val DISTRACTOR_POOL_MULTIPLIER = 2
 
 class StartTrueOrFalseSessionUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,
+    private val sessions: SessionStore,
 ) : StartTrueOrFalseSessionUseCase {
     override suspend fun invoke(request: StartTrueOrFalseSessionRequest): TrueOrFalseSessionResponse {
         val pool =
@@ -40,7 +43,8 @@ class StartTrueOrFalseSessionUseCaseImpl(
                     isDisplayedTranslationCorrect = displayedTranslation == subject.translation,
                 )
             }
-        return TrueOrFalseSessionResponse(sessionId = Uuid.random().toString(), steps = steps)
+        val sessionId = sessions.open(TrainingType.TRUE_OR_FALSE, subjects.map { it.id to it.translation })
+        return TrueOrFalseSessionResponse(sessionId = sessionId.value, steps = steps)
     }
 
     private fun pickDistractorTranslation(

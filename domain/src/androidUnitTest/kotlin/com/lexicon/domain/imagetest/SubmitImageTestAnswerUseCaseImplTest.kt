@@ -1,5 +1,6 @@
 package com.lexicon.domain.imagetest
 
+import com.lexicon.domain.training.FakeSessionStore
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerRequest
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.model.training.StepOutcome
@@ -10,7 +11,7 @@ import org.junit.Test
 
 class SubmitImageTestAnswerUseCaseImplTest {
     private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
-    private val useCase = SubmitImageTestAnswerUseCaseImpl(recordAnswer)
+    private val useCase = SubmitImageTestAnswerUseCaseImpl(recordAnswer, FakeSessionStore())
 
     private fun request(
         selectedOption: String?,

@@ -1,6 +1,7 @@
 package com.lexicon.domain.trueorfalse
 
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.domain.training.FakeSessionStore
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionRequest
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
@@ -13,7 +14,7 @@ import org.junit.Test
 
 class StartTrueOrFalseSessionUseCaseImplTest {
     private val vocabularyRepository: VocabularyRepository = mockk()
-    private val useCase = StartTrueOrFalseSessionUseCaseImpl(vocabularyRepository)
+    private val useCase = StartTrueOrFalseSessionUseCaseImpl(vocabularyRepository, FakeSessionStore())
 
     private val items =
         listOf(
