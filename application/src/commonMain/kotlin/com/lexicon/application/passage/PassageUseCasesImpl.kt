@@ -2,9 +2,11 @@ package com.lexicon.application.passage
 
 import com.lexicon.application.dictation.AnswerNormalizer
 import com.lexicon.application.settings.StepCountResolver
+import com.lexicon.application.training.open
 import com.lexicon.boundary.SentenceGenerator
 import com.lexicon.boundary.SentenceRequestBoundary
 import com.lexicon.boundary.SentenceResultBoundary
+import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.passage.Passage
 import com.lexicon.interactors.passage.PassageGapResult
@@ -18,6 +20,7 @@ import com.lexicon.interactors.passage.SubmitPassageAnswersResponse
 import com.lexicon.interactors.passage.SubmitPassageAnswersUseCase
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
+import com.lexicon.model.training.SessionId
 import com.lexicon.model.training.StepOutcome
 import com.lexicon.model.training.TrainingType
 import com.lexicon.model.vocabulary.CefrLevel
@@ -28,7 +31,6 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlin.random.Random
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 /** Sentences generated over the target count, to absorb the ones that miss their word. */
 private const val SPARE_SENTENCES = 2
@@ -43,6 +45,7 @@ class StartPassageSessionUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val generator: SentenceGenerator,
     private val stepCountResolver: StepCountResolver,
+    private val sessions: SessionStore,
 ) : StartPassageSessionUseCase {
     @OptIn(ExperimentalUuidApi::class)
     override suspend fun invoke(request: StartPassageSessionRequest): PassageSessionResult {
@@ -89,8 +92,14 @@ class StartPassageSessionUseCaseImpl(
         val passage = Passage(level = level, sentences = sentences.toImmutableList())
         val answers = passage.gaps.map { it.answer }
 
+        val byText = targets.associateBy { it.text }
+        val sessionId = sessions.open(
+            training = if (request.withWordBank) TrainingType.PASSAGE_BANK else TrainingType.PASSAGE_WRITE,
+            answers = passage.gaps.mapNotNull { gap -> byText[gap.word]?.let { it.id to gap.answer } },
+        )
+
         return PassageSessionResult.Ready(
-            sessionId = Uuid.random().toString(),
+            sessionId = sessionId.value,
             passage = passage,
             bank = if (!request.withWordBank) {
                 emptyList<String>().toImmutableList()
@@ -144,8 +153,12 @@ class SubmitPassageAnswersUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val recordAnswer: RecordAnswerUseCase,
     private val answerNormalizer: AnswerNormalizer,
+    private val sessions: SessionStore,
 ) : SubmitPassageAnswersUseCase {
     override suspend fun invoke(request: SubmitPassageAnswersRequest): SubmitPassageAnswersResponse {
+        val session = sessions.find(SessionId(request.sessionId))
+        val training = session?.training ?: TrainingType.PASSAGE_WRITE
+
         val results = request.expected.mapIndexed { index, expected ->
             val submitted = request.answers.getOrElse(index) { "" }
             val right = answerNormalizer.matches(expected, submitted)
@@ -155,7 +168,7 @@ class SubmitPassageAnswersUseCaseImpl(
                 recordAnswer(
                     RecordedAnswer(
                         sessionId = request.sessionId,
-                        trainingType = TrainingType.PASSAGE,
+                        trainingType = training,
                         stepIndex = index,
                         vocabularyItemId = word.id.value,
                         expectedAnswer = expected,

@@ -58,8 +58,8 @@ class DictationSessionUseCaseTest {
             val session = sessions.find(SessionId(id))!!
 
             assertEquals(2, session.steps.size)
-            assertEquals("kot", session.step(0).expectedAnswer)
-            assertEquals(VocabularyId(2), session.step(1).wordId)
+            assertEquals("kot", session.question(0)?.expectedAnswer)
+            assertEquals(VocabularyId(2), session.question(1)?.wordId)
         }
 
     @Test

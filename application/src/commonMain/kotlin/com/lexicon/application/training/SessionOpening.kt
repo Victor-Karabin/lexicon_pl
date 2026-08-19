@@ -30,7 +30,7 @@ suspend fun SessionStore.open(
                 id = id,
                 training = training,
                 steps = answers.mapIndexed { index, (wordId, expected) ->
-                    Step(index = index, wordId = wordId, expectedAnswer = expected)
+                    Step.Question(index = index, wordId = wordId, expectedAnswer = expected)
                 }.toImmutableList(),
             ),
         )
@@ -41,7 +41,31 @@ suspend fun SessionStore.open(
 suspend fun SessionStore.stepAt(
     sessionId: String,
     stepIndex: Int,
-): Step? = find(SessionId(sessionId))?.steps?.getOrNull(stepIndex)
+): Step.Question? = find(SessionId(sessionId))?.question(stepIndex)
+
+/**
+ * Opens a session whose steps are boards of words matched together rather than single
+ * questions with one right answer.
+ */
+suspend fun SessionStore.openBoards(
+    training: TrainingType,
+    boards: List<List<VocabularyId>>,
+): SessionId {
+    val id = SessionId(Uuid.random().toString())
+    val usable = boards.filter { it.isNotEmpty() }
+    if (usable.isNotEmpty()) {
+        save(
+            Session(
+                id = id,
+                training = training,
+                steps = usable.mapIndexed { index, words ->
+                    Step.Board(index = index, wordIds = words.toImmutableList())
+                }.toImmutableList(),
+            ),
+        )
+    }
+    return id
+}
 
 suspend fun SessionStore.recordOutcome(
     sessionId: String,

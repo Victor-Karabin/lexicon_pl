@@ -18,7 +18,6 @@ enum class TrainingType(
     MIX("mix", 6),
     CROSSWORD("crossword", 8),
     WORD_CARD("word_card", ONE_WORD_PER_STEP),
-    PASSAGE("passage", ONE_WORD_PER_STEP),
     PASSAGE_WRITE("passage_write", ONE_WORD_PER_STEP),
     PASSAGE_BANK("passage_bank", ONE_WORD_PER_STEP),
     FILLWORD("fillword", ONE_WORD_PER_STEP),

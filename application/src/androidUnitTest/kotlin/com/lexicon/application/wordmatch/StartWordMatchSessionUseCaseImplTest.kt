@@ -1,6 +1,7 @@
 package com.lexicon.application.wordmatch
 
 import com.lexicon.application.settings.StepCountResolver
+import com.lexicon.application.training.FakeSessionStore
 import com.lexicon.boundary.AppSettingsBoundary
 import com.lexicon.boundary.SettingsRepository
 import com.lexicon.boundary.ThemeModeBoundary
@@ -20,7 +21,7 @@ class StartWordMatchSessionUseCaseImplTest {
     private val settingsRepository: SettingsRepository = mockk {
         coEvery { getSettings() } returns AppSettingsBoundary(ThemeModeBoundary.SYSTEM, stepCount = 10)
     }
-    private val useCase = StartWordMatchSessionUseCaseImpl(vocabularyRepository, StepCountResolver(settingsRepository))
+    private val useCase = StartWordMatchSessionUseCaseImpl(vocabularyRepository, StepCountResolver(settingsRepository), FakeSessionStore())
 
     private val singleWords = (1L..10L).map { Word(VocabularyId(it), "słowo$it", "word$it", "ˈswɔvɔ") }
     private val phrases = (11L..20L).map { Word(VocabularyId(it), "dzień dobry $it", "good morning $it", "d͡ʑɛɲ") }

@@ -14,7 +14,7 @@ class SessionTest {
             id = SessionId("s1"),
             training = TrainingType.DICTATION,
             steps = (0 until steps).map {
-                Step(index = it, wordId = VocabularyId(it + 1L), expectedAnswer = "word$it")
+                Step.Question(index = it, wordId = VocabularyId(it + 1L), expectedAnswer = "word$it")
             }.toImmutableList(),
         )
 
@@ -32,7 +32,7 @@ class SessionTest {
             Session(
                 SessionId("s1"),
                 TrainingType.DICTATION,
-                listOf(Step(1, VocabularyId(1), "a"), Step(0, VocabularyId(2), "b")).toImmutableList(),
+                listOf(Step.Question(1, VocabularyId(1), "a"), Step.Question(0, VocabularyId(2), "b")).toImmutableList(),
             )
         }.exceptionOrNull()
         assertTrue(failure is IllegalArgumentException)
@@ -93,6 +93,49 @@ class SessionTest {
 
     @Test
     fun `the expected answer belongs to the session, not the caller`() {
-        assertEquals("word1", session().step(1).expectedAnswer)
+        assertEquals("word1", session().question(1)?.expectedAnswer)
+    }
+
+    @Test
+    fun `a board step holds every word on it`() {
+        val board = Session(
+            id = SessionId("s2"),
+            training = TrainingType.MEMORY_CARDS,
+            steps = listOf(
+                Step.Board(0, listOf(VocabularyId(1), VocabularyId(2), VocabularyId(3)).toImmutableList()),
+                Step.Board(1, listOf(VocabularyId(4), VocabularyId(5)).toImmutableList()),
+            ).toImmutableList(),
+        )
+
+        assertEquals(3, board.step(0).wordIds.size)
+        assertFalse(board.isComplete)
+        assertTrue(board.answer(0, StepOutcome.CORRECT).answer(1, StepOutcome.INCORRECT).isComplete)
+    }
+
+    @Test
+    fun `a board is not a question, so it promises no expected answer`() {
+        val board = Session(
+            id = SessionId("s2"),
+            training = TrainingType.WORD_MATCH,
+            steps = listOf(Step.Board(0, listOf(VocabularyId(1)).toImmutableList())).toImmutableList(),
+        )
+
+        assertNull(board.question(0))
+    }
+
+    @Test
+    fun `a board step cannot be answered twice either`() {
+        val board = Session(
+            id = SessionId("s2"),
+            training = TrainingType.WORD_MATCH,
+            steps = listOf(Step.Board(0, listOf(VocabularyId(1)).toImmutableList())).toImmutableList(),
+        ).answer(0, StepOutcome.CORRECT)
+
+        assertTrue(runCatching { board.answer(0, StepOutcome.CORRECT) }.exceptionOrNull() is StepAlreadyAnswered)
+    }
+
+    @Test
+    fun `a question step carries exactly its own word`() {
+        assertEquals(listOf(VocabularyId(2)), session().step(1).wordIds)
     }
 }

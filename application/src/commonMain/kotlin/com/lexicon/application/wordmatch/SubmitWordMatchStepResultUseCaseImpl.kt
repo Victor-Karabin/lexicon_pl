@@ -1,5 +1,7 @@
 package com.lexicon.application.wordmatch
 
+import com.lexicon.application.training.recordOutcome
+import com.lexicon.boundary.SessionStore
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultRequest
@@ -10,9 +12,11 @@ import com.lexicon.model.training.TrainingType
 
 class SubmitWordMatchStepResultUseCaseImpl(
     private val recordAnswer: RecordAnswerUseCase,
+    private val sessions: SessionStore,
 ) : SubmitWordMatchStepResultUseCase {
     override suspend fun invoke(request: SubmitWordMatchStepResultRequest): SubmitWordMatchStepResultResponse {
         val outcome = resolveOutcome(request)
+        sessions.recordOutcome(request.sessionId, request.stepIndex, outcome)
 
         request.vocabularyItemIds.forEach { vocabularyItemId ->
             recordAnswer(

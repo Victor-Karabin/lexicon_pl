@@ -1,21 +1,14 @@
-@file:OptIn(ExperimentalUuidApi::class)
-
 package com.lexicon.application.dictation
 
 import com.lexicon.application.settings.StepCountResolver
+import com.lexicon.application.training.open
 import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.dictation.DictationSessionResponse
 import com.lexicon.interactors.dictation.DictationStepResponse
 import com.lexicon.interactors.dictation.StartDictationSessionRequest
 import com.lexicon.interactors.dictation.StartDictationSessionUseCase
-import com.lexicon.model.training.Session
-import com.lexicon.model.training.SessionId
-import com.lexicon.model.training.Step
 import com.lexicon.model.training.TrainingType
-import kotlinx.collections.immutable.toImmutableList
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 class StartDictationSessionUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,
@@ -26,19 +19,7 @@ class StartDictationSessionUseCaseImpl(
         val stepCount = stepCountResolver.resolve(request.stepCount)
         val words = vocabularyRepository.getRandomItems(stepCount, request.vocabularyIds)
 
-        val sessionId = SessionId(Uuid.random().toString())
-
-        if (words.isNotEmpty()) {
-            sessions.save(
-                Session(
-                    id = sessionId,
-                    training = TrainingType.DICTATION,
-                    steps = words.mapIndexed { index, word ->
-                        Step(index = index, wordId = word.id, expectedAnswer = word.text)
-                    }.toImmutableList(),
-                ),
-            )
-        }
+        val sessionId = sessions.open(TrainingType.DICTATION, words.map { it.id to it.text })
 
         return DictationSessionResponse(
             sessionId = sessionId.value,

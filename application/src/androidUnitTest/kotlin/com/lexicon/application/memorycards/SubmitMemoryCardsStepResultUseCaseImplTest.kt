@@ -1,5 +1,6 @@
 package com.lexicon.application.memorycards
 
+import com.lexicon.application.training.FakeSessionStore
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultRequest
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
@@ -12,7 +13,7 @@ import org.junit.Test
 
 class SubmitMemoryCardsStepResultUseCaseImplTest {
     private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
-    private val useCase = SubmitMemoryCardsStepResultUseCaseImpl(recordAnswer)
+    private val useCase = SubmitMemoryCardsStepResultUseCaseImpl(recordAnswer, FakeSessionStore())
 
     @Test
     fun `zero incorrect attempts is Correct`() =

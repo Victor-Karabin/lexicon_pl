@@ -1,5 +1,7 @@
 package com.lexicon.application.memorycards
 
+import com.lexicon.application.training.recordOutcome
+import com.lexicon.boundary.SessionStore
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultRequest
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultResponse
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
@@ -10,9 +12,11 @@ import com.lexicon.model.training.TrainingType
 
 class SubmitMemoryCardsStepResultUseCaseImpl(
     private val recordAnswer: RecordAnswerUseCase,
+    private val sessions: SessionStore,
 ) : SubmitMemoryCardsStepResultUseCase {
     override suspend fun invoke(request: SubmitMemoryCardsStepResultRequest): SubmitMemoryCardsStepResultResponse {
         val outcome = resolveOutcome(request)
+        sessions.recordOutcome(request.sessionId, request.stepIndex, outcome)
 
         request.vocabularyItemIds.forEach { vocabularyItemId ->
             recordAnswer(

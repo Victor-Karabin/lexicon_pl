@@ -1,5 +1,6 @@
 package com.lexicon.application.wordmatch
 
+import com.lexicon.application.training.FakeSessionStore
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultRequest
@@ -12,7 +13,7 @@ import org.junit.Test
 
 class SubmitWordMatchStepResultUseCaseImplTest {
     private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
-    private val useCase = SubmitWordMatchStepResultUseCaseImpl(recordAnswer)
+    private val useCase = SubmitWordMatchStepResultUseCaseImpl(recordAnswer, FakeSessionStore())
 
     @Test
     fun `zero incorrect attempts is Correct`() =

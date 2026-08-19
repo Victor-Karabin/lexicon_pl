@@ -1,6 +1,7 @@
 package com.lexicon.application.passage
 
 import com.lexicon.application.dictation.AnswerNormalizer
+import com.lexicon.application.training.FakeSessionStore
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.passage.SubmitPassageAnswersRequest
 import com.lexicon.interactors.training.RecordAnswerUseCase
@@ -19,7 +20,7 @@ import org.junit.Test
 class SubmitPassageAnswersUseCaseImplTest {
     private val vocabulary: VocabularyRepository = mockk()
     private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
-    private val useCase = SubmitPassageAnswersUseCaseImpl(vocabulary, recordAnswer, AnswerNormalizer())
+    private val useCase = SubmitPassageAnswersUseCaseImpl(vocabulary, recordAnswer, AnswerNormalizer(), FakeSessionStore())
 
     private val book = Word(VocabularyId(7), "książka", "a book", "ˈkʂɔ̃ʂka")
 
