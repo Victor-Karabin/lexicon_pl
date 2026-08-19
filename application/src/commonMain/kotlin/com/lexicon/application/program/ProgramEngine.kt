@@ -1,5 +1,6 @@
 package com.lexicon.application.program
 
+import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.ProgramRepository
 import com.lexicon.boundary.ReviewScheduleRepository
 import com.lexicon.boundary.StudyRecordRepository
@@ -28,6 +29,7 @@ private const val PERCENT = 100
 class ResolveProgramScopeUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val presets: VocabularyPresetRepository,
+    private val courses: CourseRepository,
 ) : ResolveProgramScopeUseCase {
     override suspend fun invoke(program: Program): ImmutableList<VocabularyId> {
         val scope = program.config.scope
@@ -36,12 +38,15 @@ class ResolveProgramScopeUseCaseImpl(
         scope.include.forEach { included += wordIdsOf(it.type, it.value) }
         scope.exclude.forEach { included -= wordIdsOf(it.type, it.value).toSet() }
 
-        val ordered = scope.ordering.applyTo(included.toList())
+        // `IN (:ids)` answers in whatever order SQLite likes, so the sources' own order —
+        // which is exactly what AS_LISTED means — has to be put back before ordering.
+        val byId = vocabulary.getItemsByIds(included.toList()).associateBy { it.id.value }
+        val ordered = scope.ordering.applyTo(included.mapNotNull { byId[it] })
 
         val cap = scope.maxWords
         return ordered
             .let { if (cap != null) it.take(cap) else it }
-            .map(::VocabularyId)
+            .map { it.id }
             .toImmutableList()
     }
 
@@ -55,7 +60,7 @@ class ResolveProgramScopeUseCaseImpl(
             ScopeSourceType.CEFR_LEVEL -> vocabulary.wordIdsForLevel(value)
             ScopeSourceType.ALL -> vocabulary.allWordIds()
 
-            ScopeSourceType.LESSON -> emptyList()
+            ScopeSourceType.LESSON -> courses.getLessonWordIds(value)
         }
 }
 

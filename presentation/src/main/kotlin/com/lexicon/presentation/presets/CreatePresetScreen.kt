@@ -31,10 +31,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.presets.PresetDraftProblem
-import com.lexicon.interactors.presets.PresetStudySetState
 import com.lexicon.model.vocabulary.LocalizedText
 import com.lexicon.model.vocabulary.PresetCategory
 import com.lexicon.model.vocabulary.PresetId
+import com.lexicon.model.vocabulary.PresetStudySetState
 import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.ExpandableFlowRow

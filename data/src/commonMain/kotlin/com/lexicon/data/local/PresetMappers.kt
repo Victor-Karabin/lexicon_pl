@@ -23,7 +23,10 @@ internal fun String.decodeLocalized(): Map<String, String> =
 fun PresetCategoryEntity.toBoundary(): PresetCategoryBoundary =
     PresetCategoryBoundary(id = id, order = sortOrder, title = titleJson.decodeLocalized())
 
-fun PresetEntity.toBoundary(vocabularyIds: List<Long>): VocabularyPresetBoundary =
+fun PresetEntity.toBoundary(
+    vocabularyIds: List<Long>,
+    counts: PresetWordCount? = null,
+): VocabularyPresetBoundary =
     VocabularyPresetBoundary(
         id = id,
         categoryId = categoryId,
@@ -34,6 +37,8 @@ fun PresetEntity.toBoundary(vocabularyIds: List<Long>): VocabularyPresetBoundary
         popularity = popularity,
         estimatedSeconds = estimatedSeconds,
         vocabularyIds = vocabularyIds,
+        wordCount = counts?.wordCount ?: vocabularyIds.size,
+        studySetCount = counts?.studySetCount ?: 0,
     )
 
 fun PresetCategoryAsset.toEntity(): PresetCategoryEntity =

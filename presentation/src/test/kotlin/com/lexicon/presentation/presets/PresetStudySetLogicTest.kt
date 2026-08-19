@@ -1,9 +1,9 @@
 package com.lexicon.presentation.presets
 
-import com.lexicon.interactors.presets.PresetStudySetState
 import com.lexicon.model.vocabulary.LocalizedText
 import com.lexicon.model.vocabulary.PresetCategory
 import com.lexicon.model.vocabulary.PresetId
+import com.lexicon.model.vocabulary.PresetStudySetState
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.Word

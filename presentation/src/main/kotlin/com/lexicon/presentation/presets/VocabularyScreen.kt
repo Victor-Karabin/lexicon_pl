@@ -37,11 +37,11 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.lexicon.interactors.presets.PresetStudySetState
 import com.lexicon.model.vocabulary.CefrLevel
 import com.lexicon.model.vocabulary.LocalizedText
 import com.lexicon.model.vocabulary.PresetCategory
 import com.lexicon.model.vocabulary.PresetId
+import com.lexicon.model.vocabulary.PresetStudySetState
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.Word
@@ -270,7 +270,7 @@ private fun PresetResults(
                 verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
             ) {
                 items(uiState.presets, key = { it.id.value }) { preset ->
-                    val studySetState = studySetStateOf(preset, uiState.studySetWordIds)
+                    val studySetState = preset.studySetState
                     SwipeToRevealContainer(
                         revealWidth = DeleteActionWidth,
                         backgroundContent = { DeleteAction(onClick = { onPresetDeleted(preset) }) },

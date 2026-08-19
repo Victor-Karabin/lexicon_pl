@@ -1,5 +1,7 @@
 package com.lexicon.model.program
 
+import com.lexicon.model.vocabulary.Word
+
 /**
  * The states a program's configuration is written in. They live here rather than with
  * the stored configuration because the rules switch on them: what a goal measures, where
@@ -50,18 +52,19 @@ enum class ScopeOrdering {
     ;
 
     /**
-     * Puts a program's resolved word ids in the order it asks for.
+     * Puts a program's resolved words in the order it asks for.
      *
-     * FREQUENCY and ALPHABETICAL currently order nothing, and DIFFICULTY orders by id.
-     * That is what the code has always done; whether those three were meant to sort and
-     * never did, or are placeholders, cannot be read from the project, so the behaviour
-     * is kept as found rather than guessed at. Gathering it here at least makes it one
-     * visible decision instead of a `when` buried in a use case.
+     * Frequency is the catalogue's own id order: the shipped vocabulary is numbered by
+     * how common a word is, which is why the Top 100 preset is ids 1..100. Difficulty is
+     * the CEFR level, falling back to frequency inside a level and putting unlevelled
+     * words last, since nothing is known about how hard they are.
      */
-    fun applyTo(wordIds: List<Long>): List<Long> =
+    fun applyTo(words: List<Word>): List<Word> =
         when (this) {
-            AS_LISTED, FREQUENCY, ALPHABETICAL -> wordIds
-            DIFFICULTY -> wordIds.sorted()
-            RANDOM -> wordIds.shuffled()
+            AS_LISTED -> words
+            FREQUENCY -> words.sortedBy { it.id.value }
+            DIFFICULTY -> words.sortedWith(compareBy({ it.cefr?.ordinal ?: Int.MAX_VALUE }, { it.id.value }))
+            ALPHABETICAL -> words.sortedBy { it.text.lowercase() }
+            RANDOM -> words.shuffled()
         }
 }

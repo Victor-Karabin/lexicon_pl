@@ -47,6 +47,8 @@ fun VocabularyPresetCatalogAsset.toBoundary(): VocabularyPresetCatalogBoundary =
                 popularity = it.popularity,
                 estimatedSeconds = it.estimatedSeconds,
                 vocabularyIds = it.vocabularyIds,
+                wordCount = it.vocabularyIds.size,
+                studySetCount = 0,
             )
         },
     )

@@ -10,6 +10,8 @@ data class VocabularyPresetBoundary(
     val popularity: Int,
     val estimatedSeconds: Long,
     val vocabularyIds: List<Long>,
+    val wordCount: Int = vocabularyIds.size,
+    val studySetCount: Int = 0,
 )
 
 data class PresetCategoryBoundary(

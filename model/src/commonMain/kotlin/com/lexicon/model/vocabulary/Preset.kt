@@ -21,6 +21,32 @@ data class VocabularyPreset(
     val popularity: Int,
     val estimatedDuration: Duration,
     val vocabularyIds: ImmutableList<VocabularyId>,
+    val wordCount: Int = vocabularyIds.size,
+    val studySetCount: Int = 0,
 ) {
-    val wordCount: Int get() = vocabularyIds.size
+    /**
+     * A preset is tri-state because it can be partly in the study set, and a boolean
+     * would have to lie about that. Counted rather than derived from the id list, so the
+     * answer does not depend on every id having been loaded.
+     */
+    val studySetState: PresetStudySetState get() = PresetStudySetState.of(wordCount, studySetCount)
+}
+
+enum class PresetStudySetState {
+    NONE,
+    SOME,
+    ALL,
+    ;
+
+    companion object {
+        fun of(
+            wordCount: Int,
+            studySetCount: Int,
+        ): PresetStudySetState =
+            when {
+                studySetCount <= 0 -> NONE
+                studySetCount >= wordCount -> ALL
+                else -> SOME
+            }
+    }
 }

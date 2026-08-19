@@ -23,4 +23,6 @@ fun VocabularyPresetBoundary.toPreset(category: PresetCategory): VocabularyPrese
         popularity = popularity,
         estimatedDuration = estimatedSeconds.seconds,
         vocabularyIds = vocabularyIds.map(::VocabularyId).toImmutableList(),
+        wordCount = wordCount,
+        studySetCount = studySetCount,
     )

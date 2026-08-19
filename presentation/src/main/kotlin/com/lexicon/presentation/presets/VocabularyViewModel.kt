@@ -9,7 +9,6 @@ import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
 import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
-import com.lexicon.interactors.presets.PresetStudySetState
 import com.lexicon.interactors.presets.RestorePresetUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
@@ -18,6 +17,7 @@ import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
 import com.lexicon.model.vocabulary.CefrLevel
 import com.lexicon.model.vocabulary.PresetId
+import com.lexicon.model.vocabulary.PresetStudySetState
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.Word

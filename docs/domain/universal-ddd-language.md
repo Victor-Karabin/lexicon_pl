@@ -43,7 +43,7 @@ must not be merged.
 | Study set | The words the learner has chosen to practise | Vocabulary | — | — | `isInStudySet`, `studySetWordIds()` |
 | Preset | A named, shipped or hand-made grouping of words by topic | Vocabulary | word list | *category* (that is the grouping above presets) | `VocabularyPreset`, `PresetId` in `model.vocabulary` |
 | Preset category | A grouping of presets | Vocabulary | — | *topic* | `PresetCategory` |
-| Membership | Whether a word belongs to a preset, including a hand-made override | Vocabulary | — | *link*, *relation* | `PresetMembership` |
+| Membership | Whether a word belongs to a preset, including a hand-made override | Vocabulary | — | *link*, *relation* | `PresetMembership`, `PresetStudySetState` |
 | Training | A kind of exercise — dictation, crossword, word search | Training | exercise type | *game*, *test* | `TrainingType`; `trainingCatalog` for its presentation |
 | Session | One run of one training, start to result screen | Training | — | *training* (that is the kind), *round* | `Session`, `SessionId` |
 | Step | One question inside a session | Training | question | *item*, *card* | `Step`; `*StepResponse` at the UI edge |
@@ -250,6 +250,9 @@ unified.
 | 2026-08-19 | *Favourite* renamed to *study set* throughout the code | The interface had always said study set; the code name was the last holdout |
 | 2026-08-19 | **`SEEN` added to `StepOutcome`; `TrainingResultOutcomeBoundary` removed** | The two enums became identical. The earlier reason for keeping the boundary copy — that only it carried `SEEN` — was the defect, not the justification: the model could not express a state the domain has |
 | 2026-08-19 | **Review scheduling moved out of `data` into `model.scheduling`** | A Room repository owned SM-2, the review policy and the study-time rule. The application now invokes the scheduler through `RecordAnswerUseCase` |
+| 2026-08-19 | **Scope orderings implemented**: frequency is the catalogue's own numbering, difficulty is CEFR | The shipped vocabulary is numbered by how common a word is — Top 100 is ids 1..100 — so frequency needed no new data, and what `DIFFICULTY` did was frequency under the wrong name |
+| 2026-08-19 | `ScopeSourceType.LESSON` implemented | The lesson word ids were already on `CourseRepository`; the branch had simply never been filled in |
+| 2026-08-19 | **`PresetStudySetState` moved to the model** and is counted rather than derived from the id list | Whether a preset is fully, partly or not at all in the study set is a rule about membership, and counting it in SQL keeps the answer independent of every id having loaded |
 | 2026-08-19 | **Session completed across all sixteen trainings**; `Step` split into `Question` and `Board` | Memory Cards and Word Match ask for a board of words to be paired, not a question with one right answer. Two shapes, stated as two, rather than making `expectedAnswer` nullable for the other fourteen |
 | 2026-08-19 | *Passage* recorded as `PASSAGE_WRITE` / `PASSAGE_BANK`; `TrainingType.PASSAGE` removed | The session now carries which variant ran, so the stand-in that covered both produces nothing |
 | 2026-08-19 | Program **enums moved to `model.program`**; `ProgramConfig` stays a stored format | The rules switch on these states, so they are domain vocabulary. The `@Serializable` structures around them are the persistence format and are named as such rather than duplicated into the model |

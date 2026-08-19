@@ -51,6 +51,19 @@ interface PresetDao {
 
     @Query(
         """
+        SELECT pw.presetId AS presetId,
+               COUNT(*) AS wordCount,
+               SUM(CASE WHEN w.isInStudySet THEN 1 ELSE 0 END) AS studySetCount
+        FROM preset_words pw
+        INNER JOIN words w ON w.id = pw.wordId
+        WHERE w.isDeleted = 0
+        GROUP BY pw.presetId
+        """,
+    )
+    suspend fun getWordCounts(): List<PresetWordCount>
+
+    @Query(
+        """
         SELECT pw.presetId FROM preset_words pw
         INNER JOIN presets p ON p.id = pw.presetId
         WHERE pw.wordId = :wordId
