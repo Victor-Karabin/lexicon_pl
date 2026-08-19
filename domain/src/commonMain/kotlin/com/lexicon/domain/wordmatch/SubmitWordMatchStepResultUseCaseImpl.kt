@@ -6,8 +6,7 @@ import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultRequest
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultResponse
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultUseCase
 import com.lexicon.model.training.StepOutcome
-
-private const val TRAINING_TYPE_WORD_MATCH = "WORD_MATCH"
+import com.lexicon.model.training.TrainingType
 
 class SubmitWordMatchStepResultUseCaseImpl(
     private val recordAnswer: RecordAnswerUseCase,
@@ -19,7 +18,7 @@ class SubmitWordMatchStepResultUseCaseImpl(
             recordAnswer(
                 RecordedAnswer(
                     sessionId = request.sessionId,
-                    trainingType = TRAINING_TYPE_WORD_MATCH,
+                    trainingType = TrainingType.WORD_MATCH,
                     stepIndex = request.stepIndex,
                     vocabularyItemId = vocabularyItemId,
                     expectedAnswer = "matched",

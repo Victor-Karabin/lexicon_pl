@@ -44,7 +44,7 @@ must not be merged.
 | Preset | A named, shipped or hand-made grouping of words by topic | Vocabulary | word list | *category* (that is the grouping above presets) | `VocabularyPreset`, `PresetId` |
 | Preset category | A grouping of presets | Vocabulary | — | *topic* | `PresetCategory` |
 | Membership | Whether a word belongs to a preset, including a hand-made override | Vocabulary | — | *link*, *relation* | `PresetMembership` |
-| Training | A kind of exercise — dictation, crossword, word search | Training | exercise type | *game*, *test* | `TrainingIds`, `trainingCatalog` |
+| Training | A kind of exercise — dictation, crossword, word search | Training | exercise type | *game*, *test* | `TrainingType`; `trainingCatalog` for its presentation |
 | Session | One run of one training, start to result screen | Training | — | *training* (that is the kind), *round* | `sessionId`, `Start*SessionUseCase` |
 | Step | One question inside a session | Training | question | *item*, *card* | `stepIndex`, `*StepResponse` |
 | Outcome | How one step was answered, or that it was only shown | Training | result | *score*, *status* | `StepOutcome` |
@@ -52,6 +52,7 @@ must not be merged.
 | Recall quality | How well a word was remembered, as the scheduler grades it | Scheduling | — | *score* | `RecallQuality` |
 | Review settings | The policy the scheduler applies: intervals, ease, mastery threshold | Scheduling | — | *config* | `ReviewSettings` |
 | Study time policy | How much of the gap between two answers counts as studying | Scheduling | — | — | `StudyTimePolicy` |
+| Minimum words | The smallest study set a training can build a session from | Training | — | *requirement* | `TrainingType.minimumWords` |
 | Review | A later encounter with a word the learner has already met | Scheduling | — | *repetition* | `ReviewScheduleRepository`, `WordReviewEntity` |
 | Due | A word whose review interval has elapsed | Scheduling | — | *pending*, *expired* | `dueAtEpochDay` |
 | Mastery | The point at which a word or variant counts as known | Scheduling / Conjugation | — | *learned*, *complete* | `isMastered`, `MASTERY_STREAK` |
@@ -222,6 +223,8 @@ unified.
 | Selection (conjugation) | Removed | A conjugation course |
 | Reset the course | Removed | Delete the course |
 | `TrainingResultOutcomeBoundary` | Removed — it duplicated `StepOutcome` exactly | `StepOutcome`, which now carries `SEEN` |
+| `TrainingRequirements` | Removed — a domain policy that lived in the UI module | `TrainingType.minimumWords` |
+| `TRAINING_TYPE_*` constants | Removed, eleven of them | `TrainingType` |
 
 ## Terminology Change History
 
@@ -238,6 +241,7 @@ unified.
 | 2026-08-19 | *Favourite* renamed to *study set* throughout the code | The interface had always said study set; the code name was the last holdout |
 | 2026-08-19 | **`SEEN` added to `StepOutcome`; `TrainingResultOutcomeBoundary` removed** | The two enums became identical. The earlier reason for keeping the boundary copy — that only it carried `SEEN` — was the defect, not the justification: the model could not express a state the domain has |
 | 2026-08-19 | **Review scheduling moved out of `data` into `model.scheduling`** | A Room repository owned SM-2, the review policy and the study-time rule. The application now invokes the scheduler through `RecordAnswerUseCase` |
+| 2026-08-19 | **`TrainingType` introduced**; `TrainingIds`, eleven `TRAINING_TYPE_*` constants and `TrainingRequirements` folded into it | One concept had three string encodings — lowercase route ids, uppercase stored types, and a minimum-words table in the UI module |
 
 ## Enforcement
 

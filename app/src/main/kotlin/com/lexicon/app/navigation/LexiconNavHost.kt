@@ -12,10 +12,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.lexicon.model.training.TrainingType
 import com.lexicon.presentation.common.SessionResultScreen
 import com.lexicon.presentation.common.TRAINING_WORDS_ARG
 import com.lexicon.presentation.common.TrainingGate
-import com.lexicon.presentation.common.TrainingRequirements
 import com.lexicon.presentation.conjugation.CONJUGATION_COURSE_ARG
 import com.lexicon.presentation.conjugation.ConjugationScreen
 import com.lexicon.presentation.conjugation.VerbSelectionScreen
@@ -251,7 +251,7 @@ fun LexiconNavHost(
 
         trainingDestination(
             training = LexiconDestinations.DICTATION,
-            minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
+            minimumWords = TrainingType.DICTATION.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.DICTATION),
@@ -260,7 +260,7 @@ fun LexiconNavHost(
         }
         trainingDestination(
             training = LexiconDestinations.DICTATION_PUZZLE,
-            minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
+            minimumWords = TrainingType.DICTATION.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.DICTATION_PUZZLE),
@@ -269,7 +269,7 @@ fun LexiconNavHost(
         }
         trainingDestination(
             training = LexiconDestinations.TRUE_OR_FALSE,
-            minimumWords = TrainingRequirements.TRUE_OR_FALSE,
+            minimumWords = TrainingType.TRUE_OR_FALSE.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.TRUE_OR_FALSE),
@@ -278,7 +278,7 @@ fun LexiconNavHost(
         }
         trainingDestination(
             training = LexiconDestinations.WORD_MATCH,
-            minimumWords = TrainingRequirements.WORD_MATCH,
+            minimumWords = TrainingType.WORD_MATCH.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.WORD_MATCH),
@@ -287,7 +287,7 @@ fun LexiconNavHost(
         }
         trainingDestination(
             training = LexiconDestinations.PRONUNCIATION_CHECK,
-            minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
+            minimumWords = TrainingType.DICTATION.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.PRONUNCIATION_CHECK),
@@ -296,7 +296,7 @@ fun LexiconNavHost(
         }
         trainingDestination(
             training = LexiconDestinations.PUZZLE,
-            minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
+            minimumWords = TrainingType.DICTATION.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.PUZZLE),
@@ -305,7 +305,7 @@ fun LexiconNavHost(
         }
         trainingDestination(
             training = LexiconDestinations.IMAGE_TEST,
-            minimumWords = TrainingRequirements.IMAGE_TEST,
+            minimumWords = TrainingType.IMAGE_TEST.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.IMAGE_TEST),
@@ -314,7 +314,7 @@ fun LexiconNavHost(
         }
         trainingDestination(
             training = LexiconDestinations.MEMORY_CARDS,
-            minimumWords = TrainingRequirements.MEMORY_CARDS,
+            minimumWords = TrainingType.MEMORY_CARDS.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.MEMORY_CARDS),
@@ -323,7 +323,7 @@ fun LexiconNavHost(
         }
         trainingDestination(
             training = LexiconDestinations.CROSSWORD,
-            minimumWords = TrainingRequirements.CROSSWORD,
+            minimumWords = TrainingType.CROSSWORD.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.CROSSWORD),
@@ -342,7 +342,7 @@ fun LexiconNavHost(
         ) { entry ->
             val scopedWords = entry.arguments?.getString(TRAINING_WORDS_ARG).orEmpty()
             TrainingGate(
-                minimumWords = if (scopedWords.isEmpty()) TrainingRequirements.SINGLE_WORD_STEP else 0,
+                minimumWords = if (scopedWords.isEmpty()) TrainingType.DICTATION.minimumWords else 0,
                 trainingName = trainingDisplayName(LexiconDestinations.WORD_CARD),
                 onClose = closeToMain,
                 onGoToVocabulary = goToVocabulary,
@@ -355,7 +355,7 @@ fun LexiconNavHost(
         }
         trainingDestination(
             training = LexiconDestinations.MIX,
-            minimumWords = TrainingRequirements.MIX,
+            minimumWords = TrainingType.MIX.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.MIX),
@@ -478,7 +478,7 @@ fun LexiconNavHost(
 
         trainingDestination(
             training = LexiconDestinations.FILLWORD,
-            minimumWords = TrainingRequirements.SINGLE_WORD_STEP,
+            minimumWords = TrainingType.DICTATION.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
             onComplete = onStepSessionComplete(LexiconDestinations.FILLWORD),

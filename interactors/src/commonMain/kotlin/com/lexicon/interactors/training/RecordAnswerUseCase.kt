@@ -1,10 +1,11 @@
 package com.lexicon.interactors.training
 
 import com.lexicon.model.training.StepOutcome
+import com.lexicon.model.training.TrainingType
 
 data class RecordedAnswer(
     val sessionId: String,
-    val trainingType: String,
+    val trainingType: TrainingType,
     val stepIndex: Int,
     val vocabularyItemId: Long,
     val expectedAnswer: String,

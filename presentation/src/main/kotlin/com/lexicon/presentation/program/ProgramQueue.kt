@@ -5,7 +5,7 @@ import com.lexicon.interactors.program.AdvanceProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.ProgramId
 import com.lexicon.interactors.program.StartProgramSessionUseCase
-import com.lexicon.presentation.common.TrainingRequirements.minimumWordsFor
+import com.lexicon.model.training.TrainingType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -41,3 +41,5 @@ class ProgramQueue(
         return queued?.let { ProgramLaunch(training = it.training, wordIds = words) }
     }
 }
+
+private fun minimumWordsFor(training: String): Int = TrainingType.ofId(training)?.minimumWords ?: TrainingType.DICTATION.minimumWords

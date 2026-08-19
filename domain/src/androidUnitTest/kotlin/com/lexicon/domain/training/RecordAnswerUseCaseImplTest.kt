@@ -8,6 +8,7 @@ import com.lexicon.common.Clock
 import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.model.scheduling.ReviewState
 import com.lexicon.model.training.StepOutcome
+import com.lexicon.model.training.TrainingType
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -36,7 +37,7 @@ class RecordAnswerUseCaseImplTest {
         tipUsed: Boolean = false,
     ) = RecordedAnswer(
         sessionId = "s1",
-        trainingType = "dictation",
+        trainingType = TrainingType.DICTATION,
         stepIndex = 0,
         vocabularyItemId = wordId,
         expectedAnswer = "woda",

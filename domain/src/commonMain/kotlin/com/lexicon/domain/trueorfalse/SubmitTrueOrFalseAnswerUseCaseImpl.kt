@@ -6,8 +6,7 @@ import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerRequest
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerResponse
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
 import com.lexicon.model.training.StepOutcome
-
-private const val TRAINING_TYPE_TRUE_OR_FALSE = "TRUE_OR_FALSE"
+import com.lexicon.model.training.TrainingType
 
 class SubmitTrueOrFalseAnswerUseCaseImpl(
     private val recordAnswer: RecordAnswerUseCase,
@@ -18,7 +17,7 @@ class SubmitTrueOrFalseAnswerUseCaseImpl(
         recordAnswer(
             RecordedAnswer(
                 sessionId = request.sessionId,
-                trainingType = TRAINING_TYPE_TRUE_OR_FALSE,
+                trainingType = TrainingType.TRUE_OR_FALSE,
                 stepIndex = request.stepIndex,
                 vocabularyItemId = request.vocabularyItemId,
                 expectedAnswer = request.isDisplayedTranslationCorrect.toString(),

@@ -7,8 +7,7 @@ import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerUseCas
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.model.training.StepOutcome
-
-private const val TRAINING_TYPE_DICTATION_PUZZLE = "DICTATION_PUZZLE"
+import com.lexicon.model.training.TrainingType
 
 class SubmitDictationPuzzleAnswerUseCaseImpl(
     private val recordAnswer: RecordAnswerUseCase,
@@ -20,7 +19,7 @@ class SubmitDictationPuzzleAnswerUseCaseImpl(
         recordAnswer(
             RecordedAnswer(
                 sessionId = request.sessionId,
-                trainingType = TRAINING_TYPE_DICTATION_PUZZLE,
+                trainingType = TrainingType.DICTATION_PUZZLE,
                 stepIndex = request.stepIndex,
                 vocabularyItemId = request.vocabularyItemId,
                 expectedAnswer = request.expectedText,

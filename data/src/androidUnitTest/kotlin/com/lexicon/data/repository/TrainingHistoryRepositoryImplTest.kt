@@ -4,6 +4,7 @@ import com.lexicon.boundary.TrainingResultBoundary
 import com.lexicon.data.local.TrainingResultDao
 import com.lexicon.data.local.TrainingResultEntity
 import com.lexicon.model.training.StepOutcome
+import com.lexicon.model.training.TrainingType
 import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.slot
@@ -23,7 +24,7 @@ class TrainingHistoryRepositoryImplTest {
             repository.recordResult(
                 TrainingResultBoundary(
                     sessionId = "s1",
-                    trainingType = "dictation",
+                    trainingType = TrainingType.DICTATION,
                     stepIndex = 3,
                     vocabularyItemId = 7,
                     expectedAnswer = "woda",
@@ -38,6 +39,7 @@ class TrainingHistoryRepositoryImplTest {
             val stored = slot<TrainingResultEntity>()
             coVerify { trainingResultDao.insert(capture(stored)) }
             assertEquals("s1", stored.captured.sessionId)
+            assertEquals("dictation", stored.captured.trainingType)
             assertEquals(3, stored.captured.stepIndex)
             assertEquals(7, stored.captured.vocabularyItemId)
             assertEquals("INCORRECT", stored.captured.outcome)

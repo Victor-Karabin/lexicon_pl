@@ -14,7 +14,7 @@ class TrainingHistoryRepositoryImpl(
         trainingResultDao.insert(
             TrainingResultEntity(
                 sessionId = result.sessionId,
-                trainingType = result.trainingType,
+                trainingType = result.trainingType.id,
                 stepIndex = result.stepIndex,
                 vocabularyItemId = result.vocabularyItemId,
                 expectedAnswer = result.expectedAnswer,
@@ -43,30 +43,8 @@ class TrainingHistoryRepositoryImpl(
         toEpochMillis: Long,
     ): Int = trainingResultDao.countSessionsBetween(fromEpochMillis, toEpochMillis)
 
-    override suspend fun countSessionsOfTrainingBetween(
-        trainingType: String,
-        fromEpochMillis: Long,
-        toEpochMillis: Long,
-    ): Int = trainingResultDao.countSessionsOfTrainingBetween(trainingType, fromEpochMillis, toEpochMillis)
-
-    override suspend fun resultsForWord(wordId: Long): List<TrainingResultBoundary> =
-        trainingResultDao.forWord(wordId).map { it.toBoundary() }
-
     private companion object {
         val CORRECT = StepOutcome.CORRECT.name
         val SEEN = StepOutcome.SEEN.name
     }
 }
-
-private fun TrainingResultEntity.toBoundary(): TrainingResultBoundary =
-    TrainingResultBoundary(
-        sessionId = sessionId,
-        trainingType = trainingType,
-        stepIndex = stepIndex,
-        vocabularyItemId = vocabularyItemId,
-        expectedAnswer = expectedAnswer,
-        submittedAnswer = submittedAnswer,
-        outcome = StepOutcome.valueOf(outcome),
-        tipUsed = tipUsed,
-        completedAtEpochMillis = completedAtEpochMillis,
-    )

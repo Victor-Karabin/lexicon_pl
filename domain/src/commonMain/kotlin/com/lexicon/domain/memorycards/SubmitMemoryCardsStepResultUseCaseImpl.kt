@@ -6,8 +6,7 @@ import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.model.training.StepOutcome
-
-private const val TRAINING_TYPE_MEMORY_CARDS = "MEMORY_CARDS"
+import com.lexicon.model.training.TrainingType
 
 class SubmitMemoryCardsStepResultUseCaseImpl(
     private val recordAnswer: RecordAnswerUseCase,
@@ -19,7 +18,7 @@ class SubmitMemoryCardsStepResultUseCaseImpl(
             recordAnswer(
                 RecordedAnswer(
                     sessionId = request.sessionId,
-                    trainingType = TRAINING_TYPE_MEMORY_CARDS,
+                    trainingType = TrainingType.MEMORY_CARDS,
                     stepIndex = request.stepIndex,
                     vocabularyItemId = vocabularyItemId,
                     expectedAnswer = "matched",

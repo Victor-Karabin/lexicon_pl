@@ -14,10 +14,9 @@ import com.lexicon.interactors.wordcard.StartWordCardSessionUseCase
 import com.lexicon.interactors.wordcard.WordCardSessionResponse
 import com.lexicon.interactors.wordcard.WordCardStep
 import com.lexicon.model.training.StepOutcome
+import com.lexicon.model.training.TrainingType
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
-
-private const val WORD_CARD_TRAINING = "word_card"
 
 class StartWordCardSessionUseCaseImpl(
     private val vocabulary: VocabularyRepository,
@@ -49,7 +48,7 @@ class RecordWordCardSeenUseCaseImpl(
         recordAnswer(
             RecordedAnswer(
                 sessionId = request.sessionId,
-                trainingType = WORD_CARD_TRAINING,
+                trainingType = TrainingType.WORD_CARD,
                 stepIndex = request.stepIndex,
                 vocabularyItemId = request.vocabularyItemId,
                 expectedAnswer = request.text,

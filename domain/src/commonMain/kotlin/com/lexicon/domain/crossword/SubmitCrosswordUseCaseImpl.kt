@@ -8,8 +8,7 @@ import com.lexicon.interactors.crossword.SubmitCrosswordUseCase
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.model.training.StepOutcome
-
-private const val TRAINING_TYPE_CROSSWORD = "CROSSWORD"
+import com.lexicon.model.training.TrainingType
 
 class SubmitCrosswordUseCaseImpl(
     private val recordAnswer: RecordAnswerUseCase,
@@ -25,7 +24,7 @@ class SubmitCrosswordUseCaseImpl(
             recordAnswer(
                 RecordedAnswer(
                     sessionId = request.sessionId,
-                    trainingType = TRAINING_TYPE_CROSSWORD,
+                    trainingType = TrainingType.CROSSWORD,
                     stepIndex = index,
                     vocabularyItemId = submission.vocabularyItemId,
                     expectedAnswer = submission.expectedText,

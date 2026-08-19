@@ -6,8 +6,7 @@ import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.model.training.StepOutcome
-
-private const val TRAINING_TYPE_IMAGE_TEST = "IMAGE_TEST"
+import com.lexicon.model.training.TrainingType
 
 class SubmitImageTestAnswerUseCaseImpl(
     private val recordAnswer: RecordAnswerUseCase,
@@ -18,7 +17,7 @@ class SubmitImageTestAnswerUseCaseImpl(
         recordAnswer(
             RecordedAnswer(
                 sessionId = request.sessionId,
-                trainingType = TRAINING_TYPE_IMAGE_TEST,
+                trainingType = TrainingType.IMAGE_TEST,
                 stepIndex = request.stepIndex,
                 vocabularyItemId = request.vocabularyItemId,
                 expectedAnswer = request.correctOption,

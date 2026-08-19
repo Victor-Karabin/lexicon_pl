@@ -14,12 +14,4 @@ interface TrainingHistoryRepository {
         fromEpochMillis: Long,
         toEpochMillis: Long,
     ): Int
-
-    suspend fun countSessionsOfTrainingBetween(
-        trainingType: String,
-        fromEpochMillis: Long,
-        toEpochMillis: Long,
-    ): Int
-
-    suspend fun resultsForWord(wordId: Long): List<TrainingResultBoundary>
 }

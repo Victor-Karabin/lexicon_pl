@@ -21,6 +21,7 @@ import com.lexicon.interactors.passage.SubmitPassageAnswersUseCase
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.model.training.StepOutcome
+import com.lexicon.model.training.TrainingType
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -28,8 +29,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlin.random.Random
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
-
-private const val TRAINING_ID = "passage"
 
 /** Sentences generated over the target count, to absorb the ones that miss their word. */
 private const val SPARE_SENTENCES = 2
@@ -159,7 +158,7 @@ class SubmitPassageAnswersUseCaseImpl(
                 recordAnswer(
                     RecordedAnswer(
                         sessionId = request.sessionId,
-                        trainingType = TRAINING_ID,
+                        trainingType = TrainingType.PASSAGE,
                         stepIndex = index,
                         vocabularyItemId = word.id,
                         expectedAnswer = expected,

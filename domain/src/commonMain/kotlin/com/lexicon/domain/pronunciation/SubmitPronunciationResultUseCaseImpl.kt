@@ -7,8 +7,7 @@ import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.model.training.StepOutcome
-
-private const val TRAINING_TYPE_PRONUNCIATION_CHECK = "PRONUNCIATION_CHECK"
+import com.lexicon.model.training.TrainingType
 
 class SubmitPronunciationResultUseCaseImpl(
     private val recordAnswer: RecordAnswerUseCase,
@@ -20,7 +19,7 @@ class SubmitPronunciationResultUseCaseImpl(
         recordAnswer(
             RecordedAnswer(
                 sessionId = request.sessionId,
-                trainingType = TRAINING_TYPE_PRONUNCIATION_CHECK,
+                trainingType = TrainingType.PRONUNCIATION_CHECK,
                 stepIndex = request.stepIndex,
                 vocabularyItemId = request.vocabularyItemId,
                 expectedAnswer = request.expectedText,
