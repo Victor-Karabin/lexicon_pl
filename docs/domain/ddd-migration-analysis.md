@@ -510,49 +510,78 @@ added, per the standing constraint).
 
 ## Migration status
 
+All planned steps are complete.
+
 | Step | State | Commit |
 | --- | --- | --- |
-| 0 — `model` module | **Done** | `815de11` |
-| 1 — Scheduling into the model; application invokes it | **Done** | `815de11` |
-| 2 — `TrainingType` | **Done** | `300fa6a` |
-| 3 — `Word` entity, `VocabularyId`, `CefrLevel` | **Done** | `53f82c9` |
-| 6 — Mastery split into word / variant | **Done** (glossary; the code was already separate) | `53f82c9` |
-| 4 — `Session` aggregate | Not started | — |
-| 5 — `Program` aggregate, `ProgramQueue` out of the UI | Not started | — |
-| 7 — Speech and audio ports out of `android` | Not started | — |
-| 8 — `Preset` and `Course` aggregates | Not started | — |
-| 9 — Optional module rename | Not started | — |
+| 0 — `model` module | Done | `815de11` |
+| 1 — Scheduling into the model; application invokes it | Done | `815de11` |
+| 2 — `TrainingType` | Done | `300fa6a` |
+| 3 — `Word` entity, `VocabularyId`, `CefrLevel` | Done | `53f82c9` |
+| 6 — Mastery split into word / variant | Done | `53f82c9` |
+| 7 — Speech and audio ports out of `android` | Done | `161ce73` |
+| 5 — Queue resolver out of the UI; program value objects | Done | `45799e5` |
+| 4 — `Session` aggregate | Done | `4330055` |
+| 8 — `Course` and `VocabularyPreset` to the model | Done | `e035cfb` |
+| 9 — `domain` module renamed to `application` | Done | — |
 
-Every completed step ends on a green `./gradlew build` — all modules, all unit
-tests, ktlint, Android lint, and the iOS framework link. **None of it has been
-run on a device.**
+Every step ends on a green `./gradlew build` — all modules, all unit tests,
+ktlint, Android lint, and the iOS framework link. **None of it has been run on a
+device.**
 
-### Corrections to this analysis, found while implementing
+### Final module shape
 
-- **§3 understated the Vocabulary model.** It said the word "today is
-  `VocabularyItemBoundary`, a six-field DTO". True, but incomplete: a properly
-  modelled `PresetWord` — with `VocabularyId` and `CefrLevel` — already existed in
-  `interactors.presets`. The defect was not an absent model but **two
-  representations of one concept**, with the anemic one on the repository. Step 3
-  collapsed them rather than building from nothing.
-- **A third and fourth training-id spelling existed.** §13 V6 counted three
-  encodings; `"passage"` and `"word_card"` were declared separately again inside
-  their use cases.
+```
+model          pure Kotlin: entities, value objects, aggregates, policies
+   ^      ^         ^
+boundary  interactors        (ports)   (use-case contracts)
+   ^   ^        ^
+data android  application    (adapters)          (use-case implementations)
+                  ^
+             presentation
+```
+
+`presentation` no longer depends on `android` at all. `model` depends on nothing
+but the Kotlin stdlib and immutable collections.
+
+### Where the analysis was wrong, and what implementing changed
+
+- **§3 understated the Vocabulary model.** A properly modelled `PresetWord` — with
+  `VocabularyId` and `CefrLevel` — already existed beside the anemic
+  `VocabularyItemBoundary`. The defect was two representations of one concept, not
+  an absent model.
+- **A third and fourth training-id spelling existed** beyond the three counted in
+  §13 V6: `"passage"` and `"word_card"`, declared inside their own use cases.
 - **`SEEN` was the reason the two outcome enums could not merge**, not a reason to
-  keep both. Adding it to `StepOutcome` let `TrainingResultOutcomeBoundary` go.
-- **Two boundary methods were dead**: `countSessionsOfTrainingBetween` and
-  `resultsForWord` had no callers anywhere. They were removed in step 2 rather
-  than kept alive by a mapping that would misreport old rows.
+  keep both.
+- **Two boundary methods were dead** — `countSessionsOfTrainingBetween` and
+  `resultsForWord` — and were removed rather than kept alive by a mapping that
+  would misreport old rows.
 - **No `ReviewPolicy` type was introduced.** `ReviewSettings` already was the
-  policy object; adding a second would have been an abstraction for its own sake.
+  policy object.
+- **`Preset` was not made an owning aggregate.** Its invariant is enforced in the
+  seeder and covered by tests that fail when the carve-out is reverted; owning its
+  words would mean reading a thousand rows to answer questions that do not need
+  them.
+- **`Word Match` and `Memory Cards` are not on the `Session` aggregate.** Their
+  step is a board of several words; `Step` models one word per step, and widening
+  it for two trainings would weaken it for the other fourteen.
+- **The `Session` invariant found a latent bug.** "A session must have at least one
+  step" rejected the session a zero-word draw builds today — which is why such a
+  training used to sit on Loading forever. The start use cases no longer open one.
 
-### Still true, still unresolved
+### Still unresolved
 
-The open questions in §18 are unchanged: the inert `ScopeOrdering` values, the
-empty `ScopeSourceType.LESSON`, and whether the two mastery rules are meant to
-converge. Step 2 added one more:
-
-- **Passage Write and Passage Bank record as a single training type**, because
-  the submit request does not carry the variant while the start request does.
-  Preserved as-is. The `Session` aggregate in step 4 holds the mode and can close
-  this without guessing.
+- **`ScopeOrdering.FREQUENCY` and `ALPHABETICAL` do nothing** — both fall through to
+  the unsorted list, and `DIFFICULTY` sorts by word id. Left as found: whether they
+  are unimplemented or intentionally inert cannot be read from the code.
+- **`ScopeSourceType.LESSON` returns an empty list.** Same question.
+- **Passage Write and Passage Bank record as one training type**, because the submit
+  request does not carry the variant. The session now holds it, so this can be
+  closed without guessing — but it is a behaviour change, not a refactoring.
+- **Whether the two mastery rules should converge** is a business decision.
+- **`ProgramConfig` is still `@Serializable`** and lives in `interactors`. It is the
+  stored configuration format rather than a domain concept; giving the model its own
+  copy would mean mapping eleven sub-structures for no rule that needs it.
+- **Nothing has been verified on a device.** Step 1 rewrote the write path of every
+  training; a defect there corrupts review schedules silently.

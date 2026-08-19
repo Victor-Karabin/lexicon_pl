@@ -23,7 +23,7 @@ Everything the learner practises comes from one of three sources: the shipped
 
 | Context | Owns | Package |
 | --- | --- | --- |
-| Vocabulary | Words, presets, the study set, images and translations | `model.vocabulary`, `interactors.presets` |
+| Vocabulary | Words, presets, the study set, images and translations | `model.vocabulary` |
 | Training | A single practice session and what it records | `model.training`, `interactors.<training>` |
 | Scheduling | Review intervals, mastery, study days, streaks | `model.scheduling` |
 | Program | The daily plan and its queue of trainings | `model.program`, `interactors.program` |
@@ -249,6 +249,7 @@ unified.
 | 2026-08-19 | *Favourite* renamed to *study set* throughout the code | The interface had always said study set; the code name was the last holdout |
 | 2026-08-19 | **`SEEN` added to `StepOutcome`; `TrainingResultOutcomeBoundary` removed** | The two enums became identical. The earlier reason for keeping the boundary copy — that only it carried `SEEN` — was the defect, not the justification: the model could not express a state the domain has |
 | 2026-08-19 | **Review scheduling moved out of `data` into `model.scheduling`** | A Room repository owned SM-2, the review policy and the study-time rule. The application now invokes the scheduler through `RecordAnswerUseCase` |
+| 2026-08-19 | Module **`domain` renamed to `application`** | It held use-case implementations, not a domain model. `model` is the domain; `interactors` declares the use cases; `application` implements them |
 | 2026-08-19 | **`Course` and `VocabularyPreset` moved to the model**, with their behaviour folded onto the types | `completedCount`, `currentLesson` and `wordCount` were extension functions beside the data classes. A course's `level` is a `CefrLevel` rather than a string |
 | 2026-08-19 | **`Session` became a real aggregate** | The language had claimed a Session aggregate whose invariant was "every step records exactly one result". Nothing enforced it: `sessionId` was a `String`, and the submit request carried the expected answer in from the caller, so a client could rename the right answer. Nine trainings now draw it from the session |
 | 2026-08-19 | **`ProgramQueue` moved out of the Compose module** and became `NextProgramTrainingUseCase` | The glossary already listed it as the *queue resolver* domain service, but it was a class in the UI module applying a policy that also lived there. `QueuedTraining` now carries a `TrainingType` rather than a string |

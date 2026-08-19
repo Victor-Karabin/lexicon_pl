@@ -2,9 +2,9 @@ package com.lexicon.app.di
 
 import android.content.Context
 import androidx.lifecycle.SavedStateHandle
+import com.lexicon.application.di.domainModule
 import com.lexicon.data.di.dataAndroidModule
 import com.lexicon.data.di.dataModule
-import com.lexicon.domain.di.domainModule
 import org.junit.Test
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.dsl.module

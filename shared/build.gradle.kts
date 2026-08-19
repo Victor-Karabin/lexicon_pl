@@ -16,7 +16,7 @@ kotlin {
             export(projects.boundary)
             export(projects.common)
             export(projects.interactors)
-            export(projects.domain)
+            export(projects.application)
             export(projects.data)
         }
     }
@@ -26,7 +26,7 @@ kotlin {
             api(projects.boundary)
             api(projects.common)
             api(projects.interactors)
-            api(projects.domain)
+            api(projects.application)
             api(projects.data)
         }
     }

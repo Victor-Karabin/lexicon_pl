@@ -65,7 +65,7 @@ dependencies {
     implementation(projects.android)
     implementation(projects.boundary)
     implementation(projects.interactors)
-    implementation(projects.domain)
+    implementation(projects.application)
     implementation(projects.data)
     implementation(projects.presentation)
 
