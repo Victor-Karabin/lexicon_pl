@@ -31,6 +31,15 @@ Cloud Text-to-Speech, with the device's own engine as a fallback, and pronunciat
 judged by Google Cloud Speech-to-Text. Pictures come from Pexels, Pixabay, Unsplash and
 Openverse.
 
+## Screenshots
+
+| | | |
+| :---: | :---: | :---: |
+| <img src="docs/screenshots/home.png" width="240"> | <img src="docs/screenshots/trainings.png" width="240"> | <img src="docs/screenshots/training.png" width="240"> |
+| **Home** — the day's work, from the program you are running | **Trainings** — fifteen ways to practise the same study set | **Image Test** — pick the word the picture is of |
+| <img src="docs/screenshots/words.png" width="240"> | <img src="docs/screenshots/plan.png" width="240"> | <img src="docs/screenshots/settings.png" width="240"> |
+| **Words** — presets to star by topic and frequency | **Plan** — programs you build, and courses to follow | **Settings** — theme, session length, and the voice you hear |
+
 ## Tech stack
 
 | | |
