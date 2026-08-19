@@ -54,7 +54,7 @@ object VerbSelectionTestTags {
 
     fun checkbox(infinitive: String) = "verb_selection_checkbox_$infinitive"
 
-    fun favourite(infinitive: String) = "verb_selection_favourite_$infinitive"
+    fun studySet(infinitive: String) = "verb_selection_study_set_$infinitive"
 }
 
 @Composable
@@ -77,7 +77,7 @@ fun VerbSelectionScreen(
         uiState = uiState,
         onQueryChanged = viewModel::onQueryChanged,
         onVerbToggled = viewModel::onVerbToggled,
-        onFavouriteToggled = viewModel::onFavouriteToggled,
+        onStudySetToggled = viewModel::onStudySetToggled,
         onCreateCourse = viewModel::onCreateCourse,
         onVerbDeleted = viewModel::onVerbDeleted,
         onRestoreAll = viewModel::onRestoreAll,
@@ -91,7 +91,7 @@ private fun VerbSelectionContent(
     uiState: VerbSelectionUiState,
     onQueryChanged: (String) -> Unit,
     onVerbToggled: (String) -> Unit,
-    onFavouriteToggled: (VerbConjugation) -> Unit,
+    onStudySetToggled: (VerbConjugation) -> Unit,
     onCreateCourse: () -> Unit,
     onVerbDeleted: (String) -> Unit,
     onRestoreAll: () -> Unit,
@@ -152,9 +152,9 @@ private fun VerbSelectionContent(
                         VerbRow(
                             verb = verb,
                             isSelected = verb.infinitive in uiState.selected,
-                            isFavourite = verb.infinitive in uiState.favourites,
+                            isInStudySet = verb.infinitive in uiState.studySet,
                             onToggled = { onVerbToggled(verb.infinitive) },
-                            onFavouriteToggled = { onFavouriteToggled(verb) },
+                            onStudySetToggled = { onStudySetToggled(verb) },
                         )
                     }
                 }
@@ -178,9 +178,9 @@ private fun VerbSelectionContent(
 private fun VerbRow(
     verb: VerbConjugation,
     isSelected: Boolean,
-    isFavourite: Boolean,
+    isInStudySet: Boolean,
     onToggled: () -> Unit,
-    onFavouriteToggled: () -> Unit,
+    onStudySetToggled: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -220,15 +220,15 @@ private fun VerbRow(
         }
 
         IconButton(
-            onClick = onFavouriteToggled,
-            modifier = Modifier.testTag(VerbSelectionTestTags.favourite(verb.infinitive)),
+            onClick = onStudySetToggled,
+            modifier = Modifier.testTag(VerbSelectionTestTags.studySet(verb.infinitive)),
         ) {
             Icon(
-                imageVector = if (isFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                imageVector = if (isInStudySet) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                 contentDescription = stringResource(
-                    if (isFavourite) R.string.favourite_remove else R.string.favourite_add,
+                    if (isInStudySet) R.string.study_set_remove else R.string.study_set_add,
                 ),
-                tint = if (isFavourite) LexiconError else MaterialTheme.colorScheme.onSurfaceVariant,
+                tint = if (isInStudySet) LexiconError else MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
     }

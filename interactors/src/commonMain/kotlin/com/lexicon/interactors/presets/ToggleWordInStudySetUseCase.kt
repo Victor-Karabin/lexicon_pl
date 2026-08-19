@@ -1,8 +1,8 @@
 package com.lexicon.interactors.presets
 
-interface ToggleWordFavouriteUseCase {
+interface ToggleWordInStudySetUseCase {
     suspend operator fun invoke(
         id: VocabularyId,
-        isFavourite: Boolean,
+        isInStudySet: Boolean,
     )
 }

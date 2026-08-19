@@ -1,8 +1,8 @@
 package com.lexicon.interactors.presets
 
-interface SetPresetFavouriteUseCase {
+interface SetPresetInStudySetUseCase {
     suspend operator fun invoke(
         id: PresetId,
-        isFavourite: Boolean,
+        isInStudySet: Boolean,
     )
 }

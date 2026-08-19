@@ -21,13 +21,13 @@ class VocabularySeederTest {
         text: String,
         translation: String = "x",
         cefr: String = "A1",
-        isFavourite: Boolean = false,
+        isInStudySet: Boolean = false,
     ) = WordEntity(
         id = id,
         text = text,
         translation = translation,
         transcription = "",
-        isFavourite = isFavourite,
+        isInStudySet = isInStudySet,
         searchKey = searchKeyFor(text, translation),
         cefr = cefr,
     )
@@ -99,10 +99,10 @@ class VocabularySeederTest {
         }
 
     @Test
-    fun `a favourite survives its word being refreshed`() =
+    fun `a starred word survives its word being refreshed`() =
         runTest {
             assetIs(word(1, "kot", translation = "cat"))
-            tableIs(word(1, "kot", translation = "kitten", isFavourite = true))
+            tableIs(word(1, "kot", translation = "kitten", isInStudySet = true))
             coEvery { vocabularySyncStore.syncedFingerprint() } returns "stale"
             val changed = slot<List<WordEntity>>()
             coEvery { wordDao.reconcile(any(), any(), capture(changed)) } returns Unit
@@ -111,14 +111,14 @@ class VocabularySeederTest {
 
             val row = changed.captured.single()
             assertEquals("the corrected translation must be taken", "cat", row.translation)
-            assertTrue("the heart must not be", row.isFavourite)
+            assertTrue("the heart must not be", row.isInStudySet)
         }
 
     @Test
     fun `rows that already match the asset are not rewritten`() =
         runTest {
             assetIs(word(1, "kot"), word(2, "pies"))
-            tableIs(word(1, "kot"), word(2, "pies", isFavourite = true))
+            tableIs(word(1, "kot"), word(2, "pies", isInStudySet = true))
             coEvery { vocabularySyncStore.syncedFingerprint() } returns "stale"
             val changed = slot<List<WordEntity>>()
             coEvery { wordDao.reconcile(any(), any(), capture(changed)) } returns Unit

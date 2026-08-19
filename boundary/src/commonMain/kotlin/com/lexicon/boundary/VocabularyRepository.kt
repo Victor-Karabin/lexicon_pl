@@ -43,16 +43,16 @@ interface VocabularyRepository {
 
     suspend fun restoreWord(id: Long)
 
-    suspend fun setFavourite(
+    suspend fun setInStudySet(
         ids: List<Long>,
-        isFavourite: Boolean,
+        isInStudySet: Boolean,
     )
 
-    fun observeFavouriteIds(): Flow<Set<Long>>
+    fun observeStudySetIds(): Flow<Set<Long>>
 
     suspend fun allWordIds(): List<Long>
 
     suspend fun wordIdsForLevel(level: String): List<Long>
 
-    suspend fun favouriteWordIds(): List<Long>
+    suspend fun studySetWordIds(): List<Long>
 }

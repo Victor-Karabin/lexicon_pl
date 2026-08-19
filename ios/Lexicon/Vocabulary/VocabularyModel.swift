@@ -7,15 +7,15 @@ final class VocabularyModel: ObservableObject {
     @Published private(set) var levels: Set<CefrLevel> = []
     @Published private(set) var presets: [VocabularyPreset] = []
     @Published private(set) var words: [PresetWord] = []
-    @Published private(set) var favourites: Set<Int64> = []
+    @Published private(set) var studySet: Set<Int64> = []
 
     private var watcher: Cancellable?
 
     let allLevels: [CefrLevel] = [.a1, .a2, .b1, .b2, .c1, .c2]
 
     init() {
-        watcher = deps.watchFavouriteWordIds { [weak self] ids in
-            self?.favourites = Set(ids.compactMap { ($0 as? VocabularyId)?.value })
+        watcher = deps.watchStudySetWordIds { [weak self] ids in
+            self?.studySet = Set(ids.compactMap { ($0 as? VocabularyId)?.value })
         }
     }
 
@@ -43,10 +43,10 @@ final class VocabularyModel: ObservableObject {
         await search()
     }
 
-    func isFavourite(_ word: PresetWord) -> Bool { favourites.contains(word.id.value) }
+    func isInStudySet(_ word: PresetWord) -> Bool { studySet.contains(word.id.value) }
 
-    func toggleFavourite(_ word: PresetWord) async {
-        try? await deps.toggleWordFavourite.invoke(id: word.id, isFavourite: !isFavourite(word))
+    func toggleInStudySet(_ word: PresetWord) async {
+        try? await deps.toggleWordInStudySet.invoke(id: word.id, isInStudySet: !isInStudySet(word))
     }
 
     func name(of level: CefrLevel) -> String { level.name }

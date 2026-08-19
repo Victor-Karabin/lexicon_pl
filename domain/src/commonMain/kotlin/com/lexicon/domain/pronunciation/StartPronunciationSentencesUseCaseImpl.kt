@@ -23,12 +23,12 @@ class StartPronunciationSentencesUseCaseImpl(
 ) : StartPronunciationSentencesUseCase {
     @OptIn(ExperimentalUuidApi::class)
     override suspend fun invoke(): PronunciationSentencesResult {
-        val favourites = vocabulary.getItemsByIds(vocabulary.favouriteWordIds())
-        if (favourites.isEmpty()) return PronunciationSentencesResult.NoFavourites
+        val studySet = vocabulary.getItemsByIds(vocabulary.studySetWordIds())
+        if (studySet.isEmpty()) return PronunciationSentencesResult.EmptyStudySet
 
-        val level = favourites.maxLevel()
-        val wanted = stepCountResolver.resolve(null).coerceAtMost(favourites.size)
-        val targets = favourites.shuffled().take(wanted)
+        val level = studySet.maxLevel()
+        val wanted = stepCountResolver.resolve(null).coerceAtMost(studySet.size)
+        val targets = studySet.shuffled().take(wanted)
 
         val generated = coroutineScope {
             targets

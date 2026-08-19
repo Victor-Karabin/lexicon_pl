@@ -72,15 +72,15 @@ interface ChooseVerbImageUseCase {
     )
 }
 
-interface FavouriteVerbUseCase {
+interface ToggleVerbInStudySetUseCase {
     suspend operator fun invoke(
         infinitive: String,
         translation: String?,
-        isFavourite: Boolean,
+        isInStudySet: Boolean,
     )
 }
 
-interface LoadFavouriteVerbsUseCase {
+interface LoadStudySetVerbsUseCase {
     suspend operator fun invoke(infinitives: List<String>): Set<String>
 }
 

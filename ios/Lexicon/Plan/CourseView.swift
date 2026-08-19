@@ -104,9 +104,9 @@ struct LessonView: View {
 
                 Text("New words").font(.subheadline.weight(.semibold))
                 ForEach(words, id: \.id.value) { word in
-                    WordRow(word: word, isFavourite: word.isFavourite) {
+                    WordRow(word: word, isInStudySet: word.isInStudySet) {
                         Task {
-                            try? await deps.toggleWordFavourite.invoke(id: word.id, isFavourite: !word.isFavourite)
+                            try? await deps.toggleWordInStudySet.invoke(id: word.id, isInStudySet: !word.isInStudySet)
                             await load()
                         }
                     }

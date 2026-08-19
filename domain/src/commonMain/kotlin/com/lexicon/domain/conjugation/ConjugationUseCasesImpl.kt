@@ -13,18 +13,18 @@ import com.lexicon.interactors.conjugation.CreateConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.DeleteConjugationVerbUseCase
 import com.lexicon.interactors.conjugation.EnsureVerbWordUseCase
-import com.lexicon.interactors.conjugation.FavouriteVerbUseCase
 import com.lexicon.interactors.conjugation.HasDeletedVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationProgressUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
-import com.lexicon.interactors.conjugation.LoadFavouriteVerbsUseCase
+import com.lexicon.interactors.conjugation.LoadStudySetVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadVerbImageChoicesUseCase
 import com.lexicon.interactors.conjugation.NextConjugationTableUseCase
 import com.lexicon.interactors.conjugation.RestoreConjugationVerbsUseCase
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerRequest
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerResponse
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
+import com.lexicon.interactors.conjugation.ToggleVerbInStudySetUseCase
 import com.lexicon.interactors.conjugation.VerbConjugation
 import com.lexicon.interactors.presets.CreateWordUseCase
 import kotlinx.collections.immutable.ImmutableList
@@ -218,28 +218,28 @@ class ChooseVerbImageUseCaseImpl(
     }
 }
 
-class FavouriteVerbUseCaseImpl(
+class ToggleVerbInStudySetUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val ensureWord: EnsureVerbWordUseCase,
-) : FavouriteVerbUseCase {
+) : ToggleVerbInStudySetUseCase {
     override suspend fun invoke(
         infinitive: String,
         translation: String?,
-        isFavourite: Boolean,
+        isInStudySet: Boolean,
     ) {
         val existing = vocabulary.findWordByText(infinitive)
-        if (existing == null && !isFavourite) return
+        if (existing == null && !isInStudySet) return
 
         val id = existing?.id ?: ensureWord(infinitive, translation) ?: return
-        vocabulary.setFavourite(listOf(id), isFavourite)
+        vocabulary.setInStudySet(listOf(id), isInStudySet)
     }
 }
 
-class LoadFavouriteVerbsUseCaseImpl(
+class LoadStudySetVerbsUseCaseImpl(
     private val vocabulary: VocabularyRepository,
-) : LoadFavouriteVerbsUseCase {
+) : LoadStudySetVerbsUseCase {
     override suspend fun invoke(infinitives: List<String>): Set<String> =
-        infinitives.filter { vocabulary.findWordByText(it)?.isFavourite == true }.toSet()
+        infinitives.filter { vocabulary.findWordByText(it)?.isInStudySet == true }.toSet()
 }
 
 class SubmitConjugationAnswerUseCaseImpl(

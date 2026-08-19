@@ -77,7 +77,7 @@ class PronunciationViewModel(
                 readsSentences -> when (val result = startSentencesUseCase()) {
                     is PronunciationSentencesResult.Ready -> result.session
 
-                    PronunciationSentencesResult.NoFavourites ->
+                    PronunciationSentencesResult.EmptyStudySet ->
                         return@launch showUnavailable(UnavailableReason.NO_FAVOURITES)
 
                     PronunciationSentencesResult.Offline ->

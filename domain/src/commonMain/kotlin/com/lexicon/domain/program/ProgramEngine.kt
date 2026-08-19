@@ -57,7 +57,7 @@ class ResolveProgramScopeUseCaseImpl(
     ): List<Long> =
         when (type) {
             ScopeSourceType.PRESET -> presets.getPreset(value)?.vocabularyIds.orEmpty()
-            ScopeSourceType.FAVOURITES -> vocabulary.favouriteWordIds()
+            ScopeSourceType.FAVOURITES -> vocabulary.studySetWordIds()
             ScopeSourceType.CEFR_LEVEL -> vocabulary.wordIdsForLevel(value)
             ScopeSourceType.ALL -> vocabulary.allWordIds()
 

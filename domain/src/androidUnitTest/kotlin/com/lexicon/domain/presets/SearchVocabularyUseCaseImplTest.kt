@@ -24,14 +24,14 @@ class SearchVocabularyUseCaseImplTest {
     @Test
     fun `results are mapped into words, level included`() =
         runTest {
-            repositoryReturns(VocabularyItemBoundary(1L, "woda", "water", "ˈvɔda", isFavourite = true, cefr = "A1"))
+            repositoryReturns(VocabularyItemBoundary(1L, "woda", "water", "ˈvɔda", isInStudySet = true, cefr = "A1"))
 
             val word = useCase("woda").single()
 
             assertEquals("woda", word.text)
             assertEquals("water", word.translation)
             assertEquals(CefrLevel.A1, word.cefr)
-            assertTrue("the favourite flag has to survive the mapping", word.isFavourite)
+            assertTrue("the study-set flag has to survive the mapping", word.isInStudySet)
         }
 
     @Test

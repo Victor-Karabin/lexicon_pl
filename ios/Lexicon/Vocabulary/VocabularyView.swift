@@ -34,8 +34,8 @@ struct VocabularyView: View {
                                         Image(systemName: model.isSelected(word) ? "checkmark.circle.fill" : "circle")
                                             .foregroundStyle(model.isSelected(word) ? Palette.accentDeep : .secondary)
                                     }
-                                    WordRow(word: word, isFavourite: model.isFavourite(word)) {
-                                        Task { await model.toggleFavourite(word) }
+                                    WordRow(word: word, isInStudySet: model.isInStudySet(word)) {
+                                        Task { await model.toggleInStudySet(word) }
                                     }
                                 }
                             }
@@ -139,8 +139,8 @@ private struct PresetTile: View {
 
 struct WordRow: View {
     let word: PresetWord
-    let isFavourite: Bool
-    let onFavourite: () -> Void
+    let isInStudySet: Bool
+    let onStudySet: () -> Void
 
     var body: some View {
         HStack {
@@ -156,8 +156,8 @@ struct WordRow: View {
                 Image(systemName: "speaker.wave.2")
             }
             .buttonStyle(.plain)
-            Button(action: onFavourite) {
-                Image(systemName: isFavourite ? "heart.fill" : "heart")
+            Button(action: onStudySet) {
+                Image(systemName: isInStudySet ? "heart.fill" : "heart")
             }
             .buttonStyle(.plain)
             .padding(.leading, Spacing.small)
@@ -175,11 +175,11 @@ struct WordRow: View {
                     text: "woda",
                     translation: "water",
                     transcription: "ˈvɔda",
-                    isFavourite: true,
+                    isInStudySet: true,
                     cefr: CefrLevel.a1
                 ),
-                isFavourite: true,
-                onFavourite: {}
+                isInStudySet: true,
+                onStudySet: {}
             )
             Divider()
 
@@ -189,11 +189,11 @@ struct WordRow: View {
                     text: "dzień dobry",
                     translation: "good morning",
                     transcription: "",
-                    isFavourite: false,
+                    isInStudySet: false,
                     cefr: CefrLevel.a1
                 ),
-                isFavourite: false,
-                onFavourite: {}
+                isInStudySet: false,
+                onStudySet: {}
             )
         }
     }

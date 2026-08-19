@@ -64,7 +64,7 @@ class FillwordViewModel(
                 is FillwordSessionResult.Ready ->
                     _uiState.update { it.copy(isLoading = false, puzzle = session.puzzle) }
 
-                FillwordSessionResult.NoFavourites -> _uiState.update { it.copy(isLoading = false) }
+                FillwordSessionResult.EmptyStudySet -> _uiState.update { it.copy(isLoading = false) }
             }
         }
     }

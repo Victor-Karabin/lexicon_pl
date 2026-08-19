@@ -10,9 +10,9 @@ import com.lexicon.interactors.course.GetLessonVocabularyUseCase
 import com.lexicon.interactors.course.Lesson
 import com.lexicon.interactors.course.LessonId
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
-import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
+import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
 import com.lexicon.interactors.presets.PresetWord
-import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
+import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
 import com.lexicon.interactors.presets.VocabularyId
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -44,8 +44,8 @@ class LessonViewModel(
     private val getLesson: GetLessonUseCase,
     private val getLessonVocabulary: GetLessonVocabularyUseCase,
     private val setLessonCompleted: SetLessonCompletedUseCase,
-    private val toggleWordFavourite: ToggleWordFavouriteUseCase,
-    observeFavouriteWordIds: ObserveFavouriteWordIdsUseCase,
+    private val toggleWordInStudySet: ToggleWordInStudySetUseCase,
+    observeStudySetIds: ObserveStudySetIdsUseCase,
     private val dispatchers: DispatcherProvider,
     private val speechSynthesizer: SpeechSynthesizer,
 ) : ViewModel() {
@@ -60,7 +60,7 @@ class LessonViewModel(
     private val content = MutableStateFlow<Content?>(null)
 
     val uiState: StateFlow<LessonUiState> =
-        combine(content, observeFavouriteWordIds()) { loaded, favourites ->
+        combine(content, observeStudySetIds()) { loaded, studySet ->
             when {
                 loaded == null -> LessonUiState.Loading
                 loaded.lesson == null -> LessonUiState.NotFound
@@ -68,7 +68,7 @@ class LessonViewModel(
                     LessonUiState.Loaded(
                         lesson = loaded.lesson,
                         words = loaded.words
-                            .map { it.copy(isFavourite = it.id in favourites) }
+                            .map { it.copy(isInStudySet = it.id in studySet) }
                             .toImmutableList(),
                         isLoadingWords = !loaded.wordsLoaded,
                     )
@@ -96,11 +96,11 @@ class LessonViewModel(
         }
     }
 
-    fun onWordFavouriteToggled(
+    fun onWordStudySetToggled(
         id: VocabularyId,
-        isFavourite: Boolean,
+        isInStudySet: Boolean,
     ) {
-        viewModelScope.launch(dispatchers.io) { toggleWordFavourite(id, isFavourite) }
+        viewModelScope.launch(dispatchers.io) { toggleWordInStudySet(id, isInStudySet) }
     }
 
     private suspend fun load() {

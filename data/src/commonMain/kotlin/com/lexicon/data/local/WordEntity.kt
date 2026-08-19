@@ -11,7 +11,7 @@ data class WordEntity(
     val text: String,
     val translation: String,
     val transcription: String,
-    val isFavourite: Boolean = false,
+    val isInStudySet: Boolean = false,
     val searchKey: String = "",
     val cefr: String = "",
     val isDeleted: Boolean = false,
@@ -31,6 +31,6 @@ fun WordEntity.toBoundary(): VocabularyItemBoundary =
         text = text,
         translation = translation,
         transcription = transcription,
-        isFavourite = isFavourite,
+        isInStudySet = isInStudySet,
         cefr = cefr.ifEmpty { null },
     )

@@ -67,7 +67,7 @@ private fun PresetWord.detailLine(): String? {
 @Composable
 fun VocabularyWordRow(
     word: PresetWord,
-    onFavouriteToggled: () -> Unit,
+    onStudySetToggled: () -> Unit,
     onPronounce: () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -120,12 +120,12 @@ fun VocabularyWordRow(
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        FavouriteButton(
-            isFavourite = word.isFavourite,
+        StudySetButton(
+            isInStudySet = word.isInStudySet,
             contentDescription = stringResource(
-                if (word.isFavourite) R.string.favourite_remove else R.string.favourite_add,
+                if (word.isInStudySet) R.string.study_set_remove else R.string.study_set_add,
             ),
-            onClick = onFavouriteToggled,
+            onClick = onStudySetToggled,
         )
     }
 }

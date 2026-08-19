@@ -33,8 +33,8 @@ import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetCategory
 import com.lexicon.interactors.presets.PresetDraftProblem
-import com.lexicon.interactors.presets.PresetFavouriteState
 import com.lexicon.interactors.presets.PresetId
+import com.lexicon.interactors.presets.PresetStudySetState
 import com.lexicon.interactors.presets.VocabularyPreset
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.ExpandableFlowRow
@@ -106,9 +106,9 @@ private fun CreatePresetContent(
                     PresetSummary(
                         preset = preview,
                         languageTag = LocalizedText.DEFAULT_LANGUAGE,
-                        favouriteState = PresetFavouriteState.NONE,
+                        studySetState = PresetStudySetState.NONE,
                         skin = skin,
-                        onFavouriteToggled = {},
+                        onStudySetToggled = {},
                     )
                 }
             }

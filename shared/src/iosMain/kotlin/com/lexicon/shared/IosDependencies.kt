@@ -28,20 +28,20 @@ import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.GetWordUseCase
-import com.lexicon.interactors.presets.ObserveFavouriteWordIdsUseCase
+import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
 import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.RestorePresetUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SearchImageCandidatesUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
-import com.lexicon.interactors.presets.SetPresetFavouriteUseCase
+import com.lexicon.interactors.presets.SetPresetInStudySetUseCase
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
-import com.lexicon.interactors.presets.ToggleWordFavouriteUseCase
+import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
-import com.lexicon.interactors.program.CountFavouritesUseCase
+import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.CreateProgramUseCase
 import com.lexicon.interactors.program.EnrolInProgramUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
@@ -96,9 +96,9 @@ object IosDependencies : KoinComponent {
     val getPresetCategories: GetPresetCategoriesUseCase by inject()
     val getPresetVocabulary: GetPresetVocabularyUseCase by inject()
     val searchVocabulary: SearchVocabularyUseCase by inject()
-    val toggleWordFavourite: ToggleWordFavouriteUseCase by inject()
-    val setPresetFavourite: SetPresetFavouriteUseCase by inject()
-    val observeFavouriteWordIds: ObserveFavouriteWordIdsUseCase by inject()
+    val toggleWordInStudySet: ToggleWordInStudySetUseCase by inject()
+    val setPresetInStudySet: SetPresetInStudySetUseCase by inject()
+    val observeStudySetIds: ObserveStudySetIdsUseCase by inject()
     val getWordPresetMemberships: GetWordPresetMembershipsUseCase by inject()
     val setWordPresetMembership: SetWordPresetMembershipUseCase by inject()
 
@@ -124,7 +124,7 @@ object IosDependencies : KoinComponent {
     val getProgram: GetProgramUseCase by inject()
     val createProgram: CreateProgramUseCase by inject()
     val updateProgram: UpdateProgramUseCase by inject()
-    val countFavourites: CountFavouritesUseCase by inject()
+    val countStudySet: CountStudySetUseCase by inject()
     val observeActiveEnrolment: ObserveActiveEnrolmentUseCase by inject()
     val enrolInProgram: EnrolInProgramUseCase by inject()
     val leaveProgram: LeaveProgramUseCase by inject()
@@ -165,7 +165,7 @@ object IosDependencies : KoinComponent {
 
     fun watchPresets(onEach: (List<VocabularyPreset>) -> Unit): Cancellable = observePresets().watch(onEach)
 
-    fun watchFavouriteWordIds(onEach: (Set<VocabularyId>) -> Unit): Cancellable = observeFavouriteWordIds().watch(onEach)
+    fun watchStudySetWordIds(onEach: (Set<VocabularyId>) -> Unit): Cancellable = observeStudySetIds().watch(onEach)
 
     fun watchCourses(onEach: (List<Course>) -> Unit): Cancellable = observeCourses().watch(onEach)
 

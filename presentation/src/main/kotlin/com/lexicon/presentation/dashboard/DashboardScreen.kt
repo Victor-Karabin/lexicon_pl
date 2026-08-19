@@ -286,8 +286,8 @@ private fun ActiveProgramCard(
                 Text(
                     text = pluralStringResource(
                         R.plurals.dashboard_word_total,
-                        uiState.favourites,
-                        uiState.favourites,
+                        uiState.studySet,
+                        uiState.studySet,
                     ),
                     style = MaterialTheme.typography.bodyMedium,
                     color = skin.muted(),

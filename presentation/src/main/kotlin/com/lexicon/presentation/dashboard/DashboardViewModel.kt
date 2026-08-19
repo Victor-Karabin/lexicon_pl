@@ -6,7 +6,7 @@ import com.lexicon.interactors.conjugation.ConjugationCourse
 import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
 import com.lexicon.interactors.presets.VocabularyId
-import com.lexicon.interactors.program.CountFavouritesUseCase
+import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramProgressUseCase
 import com.lexicon.interactors.program.GetProgramUseCase
@@ -34,7 +34,7 @@ data class DashboardUiState(
     val program: Program? = null,
     val progress: ProgramProgress? = null,
     val streakDays: Int = 0,
-    val favourites: Int = 0,
+    val studySet: Int = 0,
     val languageTag: String = "en",
     val day: ProgramDay? = null,
     val launch: LaunchTraining? = null,
@@ -61,7 +61,7 @@ class DashboardViewModel(
     private val deleteConjugationCourse: DeleteConjugationCourseUseCase,
     private val getDay: GetProgramDayUseCase,
     private val getStreak: GetStudyStreakUseCase,
-    private val countFavourites: CountFavouritesUseCase,
+    private val countStudySet: CountStudySetUseCase,
     observeActiveEnrolment: ObserveActiveEnrolmentUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(DashboardUiState())
@@ -79,7 +79,7 @@ class DashboardViewModel(
                     program = program,
                     progress = program?.let { getProgress(it) },
                     streakDays = if (program == null) 0 else getStreak(),
-                    favourites = if (program == null) 0 else countFavourites(),
+                    studySet = if (program == null) 0 else countStudySet(),
                     day = program?.let { getDay(it.id) },
                 )
             }
@@ -94,7 +94,7 @@ class DashboardViewModel(
                 it.copy(
                     progress = getProgress(program),
                     streakDays = getStreak(),
-                    favourites = countFavourites(),
+                    studySet = countStudySet(),
                     day = day,
                 )
             }

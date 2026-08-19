@@ -25,13 +25,13 @@ class StartPronunciationSentencesUseCaseImplTest {
 
     private var stepCount = 5
 
-    private fun givenFavourites(vararg words: String) {
+    private fun givenStudySet(vararg words: String) {
         coEvery { settings.getSettings() } returns
             AppSettingsBoundary(themeMode = ThemeModeBoundary.SYSTEM, stepCount = stepCount)
         val items = words.mapIndexed { index, word ->
             VocabularyItemBoundary(index + 1L, word, "meaning of $word", "x", cefr = "A1")
         }
-        coEvery { vocabulary.favouriteWordIds() } returns items.map { it.id }
+        coEvery { vocabulary.studySetWordIds() } returns items.map { it.id }
         coEvery { vocabulary.getItemsByIds(any()) } returns items
     }
 
@@ -44,7 +44,7 @@ class StartPronunciationSentencesUseCaseImplTest {
     @Test
     fun `the sentence is both what is shown and what has to be said`() =
         runTest {
-            givenFavourites("okno", "dom", "kot", "lampa", "stół")
+            givenStudySet("okno", "dom", "kot", "lampa", "stół")
             generating("To jest")
 
             val session = (useCase() as PronunciationSentencesResult.Ready).session
@@ -59,7 +59,7 @@ class StartPronunciationSentencesUseCaseImplTest {
     @Test
     fun `each sentence is recorded against the word it was written for`() =
         runTest {
-            givenFavourites("okno", "dom", "kot", "lampa", "stół")
+            givenStudySet("okno", "dom", "kot", "lampa", "stół")
             generating("To jest")
 
             val session = (useCase() as PronunciationSentencesResult.Ready).session
@@ -71,7 +71,7 @@ class StartPronunciationSentencesUseCaseImplTest {
     @Test
     fun `steps are numbered from zero in order`() =
         runTest {
-            givenFavourites("okno", "dom", "kot", "lampa", "stół")
+            givenStudySet("okno", "dom", "kot", "lampa", "stół")
             generating("To jest")
 
             val session = (useCase() as PronunciationSentencesResult.Ready).session
@@ -83,7 +83,7 @@ class StartPronunciationSentencesUseCaseImplTest {
     fun `the number of sentences follows the step count setting`() =
         runTest {
             stepCount = 4
-            givenFavourites("okno", "dom", "kot", "lampa", "stol", "zegar", "dywan")
+            givenStudySet("okno", "dom", "kot", "lampa", "stol", "zegar", "dywan")
             generating("To jest")
 
             val session = (useCase() as PronunciationSentencesResult.Ready).session
@@ -92,10 +92,10 @@ class StartPronunciationSentencesUseCaseImplTest {
         }
 
     @Test
-    fun `there is never more to read than there are favourites`() =
+    fun `there is never more to read than there are studySet`() =
         runTest {
             stepCount = 20
-            givenFavourites("okno", "dom")
+            givenStudySet("okno", "dom")
             generating("To jest")
 
             val session = (useCase() as PronunciationSentencesResult.Ready).session
@@ -104,18 +104,18 @@ class StartPronunciationSentencesUseCaseImplTest {
         }
 
     @Test
-    fun `no favourites means nothing to read`() =
+    fun `no studySet means nothing to read`() =
         runTest {
-            coEvery { vocabulary.favouriteWordIds() } returns emptyList()
+            coEvery { vocabulary.studySetWordIds() } returns emptyList()
             coEvery { vocabulary.getItemsByIds(any()) } returns emptyList()
 
-            assertEquals(PronunciationSentencesResult.NoFavourites, useCase())
+            assertEquals(PronunciationSentencesResult.EmptyStudySet, useCase())
         }
 
     @Test
     fun `being offline is reported rather than showing an empty training`() =
         runTest {
-            givenFavourites("okno", "dom")
+            givenStudySet("okno", "dom")
             coEvery { generator.generate(any()) } returns SentenceResultBoundary.Offline
 
             assertEquals(PronunciationSentencesResult.Offline, useCase())
@@ -124,7 +124,7 @@ class StartPronunciationSentencesUseCaseImplTest {
     @Test
     fun `a refusal carries its reason`() =
         runTest {
-            givenFavourites("okno", "dom")
+            givenStudySet("okno", "dom")
             coEvery { generator.generate(any()) } returns SentenceResultBoundary.Refused("busy")
 
             assertEquals(PronunciationSentencesResult.Refused("busy"), useCase())

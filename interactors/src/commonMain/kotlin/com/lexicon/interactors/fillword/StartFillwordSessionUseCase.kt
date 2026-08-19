@@ -6,7 +6,7 @@ sealed interface FillwordSessionResult {
         val puzzle: FillwordPuzzle,
     ) : FillwordSessionResult
 
-    data object NoFavourites : FillwordSessionResult
+    data object EmptyStudySet : FillwordSessionResult
 }
 
 interface StartFillwordSessionUseCase {

@@ -34,6 +34,6 @@ fun VocabularyItemBoundary.toPresetWord(): PresetWord =
         text = text,
         translation = translation,
         transcription = transcription,
-        isFavourite = isFavourite,
+        isInStudySet = isInStudySet,
         cefr = cefr?.let { value -> CefrLevel.entries.firstOrNull { it.name == value } },
     )

@@ -27,8 +27,8 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import com.lexicon.interactors.presets.LocalizedText
 import com.lexicon.interactors.presets.PresetCategory
-import com.lexicon.interactors.presets.PresetFavouriteState
 import com.lexicon.interactors.presets.PresetId
+import com.lexicon.interactors.presets.PresetStudySetState
 import com.lexicon.interactors.presets.PresetWord
 import com.lexicon.interactors.presets.VocabularyId
 import com.lexicon.interactors.presets.VocabularyPreset
@@ -79,9 +79,9 @@ fun PresetDetailScreen(
         uiState = uiState,
         snackbarHostState = snackbarHostState,
         onClose = onClose,
-        onWordFavouriteToggled = viewModel::onWordFavouriteToggled,
+        onWordStudySetToggled = viewModel::onWordStudySetToggled,
         onPronounceWord = viewModel::onPronounceWord,
-        onPresetFavouriteToggled = viewModel::onPresetFavouriteToggled,
+        onPresetStudySetToggled = viewModel::onPresetStudySetToggled,
         onWordDeleted = viewModel::onWordDeleted,
         onChangePresets = viewModel::onChangePresetsRequested,
         onEditWord = onEditWord,
@@ -108,9 +108,9 @@ private fun PresetDetailContent(
     uiState: PresetDetailUiState,
     snackbarHostState: SnackbarHostState,
     onClose: () -> Unit,
-    onWordFavouriteToggled: (VocabularyId, Boolean) -> Unit,
+    onWordStudySetToggled: (VocabularyId, Boolean) -> Unit,
     onPronounceWord: (PresetWord) -> Unit,
-    onPresetFavouriteToggled: (PresetFavouriteState) -> Unit,
+    onPresetStudySetToggled: (PresetStudySetState) -> Unit,
     onWordDeleted: (PresetWord) -> Unit,
     onChangePresets: (PresetWord) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
@@ -157,7 +157,7 @@ private fun PresetDetailContent(
                             onCancel = selection::clear,
                         )
                     }
-                    PresetHeader(uiState, onPresetFavouriteToggled)
+                    PresetHeader(uiState, onPresetStudySetToggled)
                     HorizontalDivider()
 
                     if (uiState.isLoadingWords) {
@@ -171,7 +171,7 @@ private fun PresetDetailContent(
                         LazyColumn(contentPadding = PaddingValues(vertical = Dimens.spacingSmall)) {
                             wordRows(
                                 words = uiState.words,
-                                onFavouriteToggled = onWordFavouriteToggled,
+                                onStudySetToggled = onWordStudySetToggled,
                                 onPronounce = onPronounceWord,
                                 onChangePresets = onChangePresets,
                                 onDelete = onWordDeleted,
@@ -188,16 +188,16 @@ private fun PresetDetailContent(
 @Composable
 private fun PresetHeader(
     uiState: PresetDetailUiState.Loaded,
-    onFavouriteToggled: (PresetFavouriteState) -> Unit,
+    onStudySetToggled: (PresetStudySetState) -> Unit,
 ) {
     val skin = presetTileSkin(uiState.preset)
     GradientTile(skin = skin) {
         PresetSummary(
             preset = uiState.preset,
             languageTag = uiState.languageTag,
-            favouriteState = uiState.favouriteState,
+            studySetState = uiState.studySetState,
             skin = skin,
-            onFavouriteToggled = { onFavouriteToggled(uiState.favouriteState) },
+            onStudySetToggled = { onStudySetToggled(uiState.studySetState) },
             showTitle = false,
         )
     }
@@ -223,18 +223,18 @@ private fun PresetDetailPreview() {
             uiState = PresetDetailUiState.Loaded(
                 preset = previewPreset,
                 words = persistentListOf(
-                    PresetWord(VocabularyId(1), "chleb", "bread", "xlɛp", isFavourite = true),
+                    PresetWord(VocabularyId(1), "chleb", "bread", "xlɛp", isInStudySet = true),
                     PresetWord(VocabularyId(2), "jabłko", "apple", "ˈjabwkɔ"),
-                    PresetWord(VocabularyId(3), "mleko", "milk", "ˈmlɛkɔ", isFavourite = true),
+                    PresetWord(VocabularyId(3), "mleko", "milk", "ˈmlɛkɔ", isInStudySet = true),
                     PresetWord(VocabularyId(4), "ziemniak", "potato", "ˈʑɛmɲak"),
                 ),
-                favouriteState = PresetFavouriteState.SOME,
+                studySetState = PresetStudySetState.SOME,
                 isLoadingWords = false,
             ),
             onClose = {},
-            onWordFavouriteToggled = { _, _ -> },
+            onWordStudySetToggled = { _, _ -> },
             onPronounceWord = {},
-            onPresetFavouriteToggled = {},
+            onPresetStudySetToggled = {},
             onWordDeleted = {},
             onChangePresets = {},
             onEditWord = {},
@@ -252,9 +252,9 @@ private fun PresetDetailLoadingWordsPreview() {
         PresetDetailContent(
             uiState = PresetDetailUiState.Loaded(preset = previewPreset),
             onClose = {},
-            onWordFavouriteToggled = { _, _ -> },
+            onWordStudySetToggled = { _, _ -> },
             onPronounceWord = {},
-            onPresetFavouriteToggled = {},
+            onPresetStudySetToggled = {},
             onWordDeleted = {},
             onChangePresets = {},
             onEditWord = {},
@@ -272,9 +272,9 @@ private fun PresetDetailNotFoundPreview() {
         PresetDetailContent(
             uiState = PresetDetailUiState.NotFound,
             onClose = {},
-            onWordFavouriteToggled = { _, _ -> },
+            onWordStudySetToggled = { _, _ -> },
             onPronounceWord = {},
-            onPresetFavouriteToggled = {},
+            onPresetStudySetToggled = {},
             onWordDeleted = {},
             onChangePresets = {},
             onEditWord = {},

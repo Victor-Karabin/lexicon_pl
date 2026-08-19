@@ -36,7 +36,7 @@ class CreateUseCasesImplTest {
         text = "smok",
         translation = "dragon",
         transcription = "",
-        isFavourite = false,
+        isInStudySet = false,
         cefr = null,
     )
 

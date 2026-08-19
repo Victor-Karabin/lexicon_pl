@@ -25,7 +25,7 @@ class SubmitPassageAnswersUseCaseImplTest {
     private val book = VocabularyItemBoundary(7, "książka", "a book", "ˈkʂɔ̃ʂka")
 
     @Test
-    fun `an inflected gap is recorded against the favourite it came from`() =
+    fun `an inflected gap is recorded against the starred word it came from`() =
         runTest {
             coEvery { vocabulary.findWordByText("książka") } returns book
 

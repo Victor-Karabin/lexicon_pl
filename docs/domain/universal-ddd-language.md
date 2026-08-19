@@ -40,7 +40,7 @@ must not be merged.
 | Term | Definition | Context | Synonyms | Avoid | Code Representation |
 | --- | --- | --- | --- | --- | --- |
 | Word | A Polish word or phrase with its English translation, IPA and optional picture | Vocabulary | vocabulary item | *entry*, *item*, *term* | `VocabularyItemBoundary`, `PresetWord`, `VocabularyId` |
-| Study set | The words the learner has chosen to practise | Vocabulary | — | *favourites* (code only) | `isFavourite`, `favouriteWordIds()` |
+| Study set | The words the learner has chosen to practise | Vocabulary | — | — | `isInStudySet`, `studySetWordIds()` |
 | Preset | A named, shipped or hand-made grouping of words by topic | Vocabulary | word list | *category* (that is the grouping above presets) | `VocabularyPreset`, `PresetId` |
 | Preset category | A grouping of presets | Vocabulary | — | *topic* | `PresetCategory` |
 | Membership | Whether a word belongs to a preset, including a hand-made override | Vocabulary | — | *link*, *relation* | `PresetMembership` |
@@ -144,7 +144,7 @@ Introducing an event type is a domain change and requires updating this document
 
 | Operation | Meaning | Entry point |
 | --- | --- | --- |
-| Star a word | Add it to the study set, creating it if it does not exist | `SetFavouriteUseCase`, `FavouriteVerbUseCase` |
+| Star a word | Add it to the study set, creating it if it does not exist | `ToggleWordInStudySetUseCase`, `ToggleVerbInStudySetUseCase` |
 | Start a session | Draw words and build the steps for one training | `Start*SessionUseCase` |
 | Submit an answer | Mark one step, record it, and schedule the word | `Submit*UseCase` |
 | Advance the day | Mark the current training done and find the next runnable one | `AdvanceProgramDayUseCase`, `ProgramQueue` |
@@ -213,7 +213,7 @@ unified.
 | Sync / `syncFromSource` | Renamed | Seeding / `seedFromAsset` |
 | `ConjugationQuestion` | Renamed | `ConjugationTable` |
 | Per-training outcome enums | Removed, nine of them | `StepOutcome` |
-| Favourite | Code-only; the interface says *study set* | Study set in all copy; `isFavourite` remains in code |
+| Favourite | Two names for one concept: the interface said *study set*, the code said *favourite* | Study set everywhere; the term is gone from the codebase |
 | Sync | Misleading — nothing is fetched from a network | Seeding, for catalogue loading |
 | Selection (conjugation) | Removed | A conjugation course |
 | Reset the course | Removed | Delete the course |
@@ -230,6 +230,7 @@ unified.
 | 2026-08-19 | *ConjugationQuestion* → **ConjugationTable** | It was never one question — it is a verb's table, presenting one step per person |
 | 2026-08-19 | Nine per-training outcome enums → one **`StepOutcome`** | One concept had nine declarations. `TrainingResultOutcomeBoundary` stays: boundary types are the data-edge contract, and it carries `SEEN`, which no training produces |
 | 2026-08-18 | *Program title* stopped being stored data | It was never editable, so a stored copy could only go stale |
+| 2026-08-19 | *Favourite* renamed to *study set* throughout the code | The interface had always said study set; the code name was the last holdout |
 
 ## Enforcement
 

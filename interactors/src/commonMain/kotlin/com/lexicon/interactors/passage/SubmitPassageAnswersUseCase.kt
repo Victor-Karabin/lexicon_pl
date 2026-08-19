@@ -4,7 +4,7 @@ data class SubmitPassageAnswersRequest(
     val sessionId: String,
     val expected: List<String>,
     val answers: List<String>,
-    /** The favourite behind each gap, since the gap itself holds an inflected form. */
+    /** The starred word behind each gap, since the gap itself holds an inflected form. */
     val words: List<String>,
 )
 

@@ -102,9 +102,9 @@ class VocabularyRepositoryImpl(
         return wordDao.wordIdsForLevel(level)
     }
 
-    override suspend fun favouriteWordIds(): List<Long> {
+    override suspend fun studySetWordIds(): List<Long> {
         vocabularySeeder.ensureSeeded()
-        return wordDao.favouriteWordIds()
+        return wordDao.studySetWordIds()
     }
 
     override suspend fun getWord(id: Long): VocabularyItemBoundary? {
@@ -129,14 +129,14 @@ class VocabularyRepositoryImpl(
         wordDao.setDeleted(id, isDeleted = false)
     }
 
-    override suspend fun setFavourite(
+    override suspend fun setInStudySet(
         ids: List<Long>,
-        isFavourite: Boolean,
+        isInStudySet: Boolean,
     ) {
         if (ids.isEmpty()) return
         vocabularySeeder.ensureSeeded()
-        wordDao.setFavourite(ids, isFavourite)
+        wordDao.setInStudySet(ids, isInStudySet)
     }
 
-    override fun observeFavouriteIds(): Flow<Set<Long>> = wordDao.observeFavouriteIds().map { it.toSet() }
+    override fun observeStudySetIds(): Flow<Set<Long>> = wordDao.observeStudySetIds().map { it.toSet() }
 }

@@ -138,7 +138,7 @@ stays open so it can be revisited.
 Every `Start*SessionRequest` takes an optional `vocabularyIds`; empty means the
 whole study set, which is what the Trainings tab passes. A lesson fills it in, and
 it travels as a `?words=` argument on the training route. Unlike the study set,
-a lesson-scoped session ignores the favourite flag: picking the lesson is already
+a lesson-scoped session ignores the study-set flag: picking the lesson is already
 the choice of what to practise.
 
 ### Audio
