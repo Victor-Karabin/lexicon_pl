@@ -32,7 +32,13 @@ class ConjugationRepositoryImpl(
 ) : ConjugationRepository {
     private val json = Json { ignoreUnknownKeys = true }
     private val lock = Mutex()
-    private var cachedAsset: List<VerbConjugationBoundary>? = null
+
+    /**
+     * Only how many verbs the file holds is worth keeping. Seeding and restoring read it
+     * whole, but that is rare, and holding 4,545 parsed verbs for the life of the app so
+     * that one screen can ask for a count costs megabytes for a single number.
+     */
+    private var assetVerbCount: Int? = null
 
     override suspend fun seedFromAsset(): SeedOutcomeBoundary =
         lock.withLock {
@@ -56,12 +62,14 @@ class ConjugationRepositoryImpl(
     override suspend fun deleteVerb(infinitive: String) = dao.deleteVerb(infinitive)
 
     /** Fewer verbs than the file holds means some were deleted; nothing else records it. */
-    override suspend fun hasDeletedVerbs(): Boolean = dao.countVerbs() < assetVerbs().size
+    override suspend fun hasDeletedVerbs(): Boolean = dao.countVerbs() < assetVerbCount()
 
     override suspend fun restoreVerbs() = lock.withLock { seed() }
 
-    override suspend fun courses(): List<ConjugationCourseBoundary> =
-        dao.courses().map { ConjugationCourseBoundary(id = it.id, infinitives = dao.courseVerbs(it.id)) }
+    override suspend fun courses(): List<ConjugationCourseBoundary> {
+        val verbsByCourse = dao.allCourseVerbs().groupBy({ it.courseId }, { it.infinitive })
+        return dao.courses().map { ConjugationCourseBoundary(id = it.id, infinitives = verbsByCourse[it.id].orEmpty()) }
+    }
 
     @OptIn(ExperimentalUuidApi::class)
     override suspend fun createCourse(infinitives: List<String>): String {
@@ -109,7 +117,9 @@ class ConjugationRepositoryImpl(
         )
     }
 
-    private suspend fun assetVerbs(): List<VerbConjugationBoundary> = cachedAsset ?: loader.load().also { cachedAsset = it }
+    private suspend fun assetVerbs(): List<VerbConjugationBoundary> = loader.load().also { assetVerbCount = it.size }
+
+    private suspend fun assetVerbCount(): Int = assetVerbCount ?: loader.load().size.also { assetVerbCount = it }
 
     private suspend fun seed() {
         dao.saveVerbs(

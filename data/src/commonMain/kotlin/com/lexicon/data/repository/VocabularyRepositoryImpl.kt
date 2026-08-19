@@ -2,9 +2,12 @@ package com.lexicon.data.repository
 
 import com.lexicon.boundary.SeedOutcomeBoundary
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.data.local.MAX_SQL_VARIABLES
 import com.lexicon.data.local.VocabularySeeder
 import com.lexicon.data.local.WordDao
 import com.lexicon.data.local.WordEntity
+import com.lexicon.data.local.forEachBatch
+import com.lexicon.data.local.inBatches
 import com.lexicon.data.local.nextUserWordId
 import com.lexicon.data.local.searchKeyFor
 import com.lexicon.data.local.toWord
@@ -21,10 +24,12 @@ class VocabularyRepositoryImpl(
         restrictToIds: List<Long>,
     ): List<Word> {
         vocabularySeeder.ensureSeeded()
-        val words = if (restrictToIds.isEmpty()) {
-            wordDao.getRandomForStudy(count)
-        } else {
-            wordDao.getRandomFromIds(restrictToIds, count)
+        val words = when {
+            restrictToIds.isEmpty() -> wordDao.getRandomForStudy(count)
+            restrictToIds.size <= MAX_SQL_VARIABLES -> wordDao.getRandomFromIds(restrictToIds, count)
+            // Too many ids for one statement. Shuffling first keeps the sample random, so
+            // the batches can then be read in plain id order and cut to size.
+            else -> restrictToIds.shuffled().inBatches { wordDao.getByIds(it) }.shuffled().take(count)
         }
         return words.map { it.toWord() }
     }
@@ -32,7 +37,7 @@ class VocabularyRepositoryImpl(
     override suspend fun getItemsByIds(ids: List<Long>): List<Word> {
         if (ids.isEmpty()) return emptyList()
         vocabularySeeder.ensureSeeded()
-        return wordDao.getByIds(ids).map { it.toWord() }
+        return ids.inBatches { wordDao.getByIds(it) }.map { it.toWord() }
     }
 
     override suspend fun search(
@@ -135,7 +140,7 @@ class VocabularyRepositoryImpl(
     ) {
         if (ids.isEmpty()) return
         vocabularySeeder.ensureSeeded()
-        wordDao.setInStudySet(ids, isInStudySet)
+        ids.forEachBatch { wordDao.setInStudySet(it, isInStudySet) }
     }
 
     override fun observeStudySetIds(): Flow<Set<Long>> = wordDao.observeStudySetIds().map { it.toSet() }
