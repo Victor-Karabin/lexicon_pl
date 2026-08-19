@@ -505,3 +505,54 @@ added, per the standing constraint).
 - **Whether `Preset` needs to be a real aggregate.** The re-seed invariant is
   currently enforced in the seeder and tested. Modelling it is defensible but its
   value is unproven — hence step 8, last.
+
+---
+
+## Migration status
+
+| Step | State | Commit |
+| --- | --- | --- |
+| 0 — `model` module | **Done** | `815de11` |
+| 1 — Scheduling into the model; application invokes it | **Done** | `815de11` |
+| 2 — `TrainingType` | **Done** | `300fa6a` |
+| 3 — `Word` entity, `VocabularyId`, `CefrLevel` | **Done** | `53f82c9` |
+| 6 — Mastery split into word / variant | **Done** (glossary; the code was already separate) | `53f82c9` |
+| 4 — `Session` aggregate | Not started | — |
+| 5 — `Program` aggregate, `ProgramQueue` out of the UI | Not started | — |
+| 7 — Speech and audio ports out of `android` | Not started | — |
+| 8 — `Preset` and `Course` aggregates | Not started | — |
+| 9 — Optional module rename | Not started | — |
+
+Every completed step ends on a green `./gradlew build` — all modules, all unit
+tests, ktlint, Android lint, and the iOS framework link. **None of it has been
+run on a device.**
+
+### Corrections to this analysis, found while implementing
+
+- **§3 understated the Vocabulary model.** It said the word "today is
+  `VocabularyItemBoundary`, a six-field DTO". True, but incomplete: a properly
+  modelled `PresetWord` — with `VocabularyId` and `CefrLevel` — already existed in
+  `interactors.presets`. The defect was not an absent model but **two
+  representations of one concept**, with the anemic one on the repository. Step 3
+  collapsed them rather than building from nothing.
+- **A third and fourth training-id spelling existed.** §13 V6 counted three
+  encodings; `"passage"` and `"word_card"` were declared separately again inside
+  their use cases.
+- **`SEEN` was the reason the two outcome enums could not merge**, not a reason to
+  keep both. Adding it to `StepOutcome` let `TrainingResultOutcomeBoundary` go.
+- **Two boundary methods were dead**: `countSessionsOfTrainingBetween` and
+  `resultsForWord` had no callers anywhere. They were removed in step 2 rather
+  than kept alive by a mapping that would misreport old rows.
+- **No `ReviewPolicy` type was introduced.** `ReviewSettings` already was the
+  policy object; adding a second would have been an abstraction for its own sake.
+
+### Still true, still unresolved
+
+The open questions in §18 are unchanged: the inert `ScopeOrdering` values, the
+empty `ScopeSourceType.LESSON`, and whether the two mastery rules are meant to
+converge. Step 2 added one more:
+
+- **Passage Write and Passage Bank record as a single training type**, because
+  the submit request does not carry the variant while the start request does.
+  Preserved as-is. The `Session` aggregate in step 4 holds the mode and can close
+  this without guessing.
