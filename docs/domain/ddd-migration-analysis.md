@@ -526,8 +526,23 @@ All planned steps are complete.
 | 9 — `domain` module renamed to `application` | Done | — |
 
 Every step ends on a green `./gradlew build` — all modules, all unit tests,
-ktlint, Android lint, and the iOS framework link. **None of it has been run on a
-device.**
+ktlint, Android lint, and the iOS framework link.
+
+**Verified on an emulator** (no physical device was touched). A fresh install
+seeds 2,563 words and 73 presets, the app launches with no crash and no DI
+failure, and a True or False session over a starred Top 100 wrote the write path
+end to end:
+
+| What | Observed | Expected |
+| --- | --- | --- |
+| Correct answer | `repetitions=1`, ease 2.6, due today+1 | SM-2 rewards a perfect recall |
+| Wrong answer | `repetitions=0`, ease 1.96, `lapses=1`, due today+1 | back to the start of the ladder |
+| `wasReview` | 0 on every row | all first exposures |
+| `trainingType` | `true_or_false` | the `TrainingType.id` encoding |
+| `study_day` | 10 answers, 7 correct, 10 new, 18s studied | tallies and the gap clamp |
+
+That is the step-1 rewrite — scheduling moved out of the Room repository — doing
+in production what its tests say it does.
 
 ### Final module shape
 
