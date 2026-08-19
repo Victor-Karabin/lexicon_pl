@@ -5,7 +5,6 @@ import com.lexicon.boundary.ProgramRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.Clock
 import com.lexicon.interactors.program.ActivityConfig
-import com.lexicon.interactors.program.ActivityType
 import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.CreateProgramUseCase
 import com.lexicon.interactors.program.DailyPlanConfig
@@ -18,13 +17,14 @@ import com.lexicon.interactors.program.ProgramDraftProblem
 import com.lexicon.interactors.program.ProgramGoal
 import com.lexicon.interactors.program.ProgramVisibility
 import com.lexicon.interactors.program.ProgressWeights
-import com.lexicon.interactors.program.ScopeOrdering
 import com.lexicon.interactors.program.ScopeSource
-import com.lexicon.interactors.program.ScopeSourceType
-import com.lexicon.interactors.program.TargetType
 import com.lexicon.interactors.program.UpdateProgramUseCase
 import com.lexicon.interactors.program.VocabularyScope
+import com.lexicon.model.program.ActivityType
 import com.lexicon.model.program.ProgramId
+import com.lexicon.model.program.ScopeOrdering
+import com.lexicon.model.program.ScopeSourceType
+import com.lexicon.model.program.TargetType
 import com.lexicon.model.vocabulary.LocalizedText
 import kotlinx.serialization.json.Json
 

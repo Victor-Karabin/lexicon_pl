@@ -1,12 +1,12 @@
 package com.lexicon.application.program
 
-import com.lexicon.interactors.program.ActivityType
 import com.lexicon.interactors.program.AdvanceProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.ProgramDay
 import com.lexicon.interactors.program.ProgramSession
 import com.lexicon.interactors.program.QueuedTraining
 import com.lexicon.interactors.program.StartProgramSessionUseCase
+import com.lexicon.model.program.ActivityType
 import com.lexicon.model.program.ProgramId
 import com.lexicon.model.training.TrainingType
 import com.lexicon.model.vocabulary.VocabularyId

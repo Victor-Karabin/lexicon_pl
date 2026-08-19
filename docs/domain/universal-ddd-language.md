@@ -64,6 +64,7 @@ must not be merged.
 | Program day | One day's plan for a program, and how much of it is done | Program | — | *daily plan* | `ProgramDay` |
 | Queue | The ordered trainings a program day asks for | Program | — | *playlist*, *schedule* | `QueuedTraining`, `ProgramQueue` |
 | Activity | A unit of work in a program's plan, mapped to a training | Program | — | *task* | `PlannedActivity`, `ActivityType` |
+| Program configuration | The stored, read-mostly description of a program: its goals, scope, plan and rules | Program | — | *settings* | `ProgramConfig` — a stored format, not a domain object |
 | Word card | A word shown for learning rather than testing, before the day's trainings | Program | — | *flashcard* | `WordCard`, `GetWordCardsUseCase` |
 | Course | Fixed teaching material — a sequence of lessons | Course | — | *program*, *class* | `Course`, `CourseId` in `model.course` |
 | Lesson | One unit of a course, with its words, audio and exercises | Course | — | *chapter*, *unit* | `Lesson`, `LessonId` |
@@ -123,7 +124,7 @@ Operations that belong to no single entity.
 | Service | Responsibility | Code |
 | --- | --- | --- |
 | Review scheduler | Turns an outcome into the next due date | `ReviewState.next()` in `model.scheduling` |
-| Scope resolver | Turns a program's declared sources into word ids | `ResolveProgramScopeUseCase` |
+| Scope resolver | Turns a program's declared sources into word ids | `ResolveProgramScopeUseCase`, `ScopeOrdering.applyTo` |
 | Queue resolver | Finds the next training a day can actually run | `NextProgramTrainingUseCase` |
 | Conjugation splitter | Derives stem and endings from a verb's own forms | `VerbConjugation.split()` |
 | Answer normaliser | Decides whether a written or spoken answer matches | `AnswerNormalizer` |
@@ -249,6 +250,9 @@ unified.
 | 2026-08-19 | *Favourite* renamed to *study set* throughout the code | The interface had always said study set; the code name was the last holdout |
 | 2026-08-19 | **`SEEN` added to `StepOutcome`; `TrainingResultOutcomeBoundary` removed** | The two enums became identical. The earlier reason for keeping the boundary copy — that only it carried `SEEN` — was the defect, not the justification: the model could not express a state the domain has |
 | 2026-08-19 | **Review scheduling moved out of `data` into `model.scheduling`** | A Room repository owned SM-2, the review policy and the study-time rule. The application now invokes the scheduler through `RecordAnswerUseCase` |
+| 2026-08-19 | **Session completed across all sixteen trainings**; `Step` split into `Question` and `Board` | Memory Cards and Word Match ask for a board of words to be paired, not a question with one right answer. Two shapes, stated as two, rather than making `expectedAnswer` nullable for the other fourteen |
+| 2026-08-19 | *Passage* recorded as `PASSAGE_WRITE` / `PASSAGE_BANK`; `TrainingType.PASSAGE` removed | The session now carries which variant ran, so the stand-in that covered both produces nothing |
+| 2026-08-19 | Program **enums moved to `model.program`**; `ProgramConfig` stays a stored format | The rules switch on these states, so they are domain vocabulary. The `@Serializable` structures around them are the persistence format and are named as such rather than duplicated into the model |
 | 2026-08-19 | Module **`domain` renamed to `application`** | It held use-case implementations, not a domain model. `model` is the domain; `interactors` declares the use cases; `application` implements them |
 | 2026-08-19 | **`Course` and `VocabularyPreset` moved to the model**, with their behaviour folded onto the types | `completedCount`, `currentLesson` and `wordCount` were extension functions beside the data classes. A course's `level` is a `CefrLevel` rather than a string |
 | 2026-08-19 | **`Session` became a real aggregate** | The language had claimed a Session aggregate whose invariant was "every step records exactly one result". Nothing enforced it: `sessionId` was a `String`, and the submit request carried the expected answer in from the caller, so a client could rename the right answer. Nine trainings now draw it from the session |

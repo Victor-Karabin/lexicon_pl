@@ -6,20 +6,19 @@ import com.lexicon.boundary.StudyRecordRepository
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.Clock
-import com.lexicon.interactors.program.ActivityType
 import com.lexicon.interactors.program.GetProgramProgressUseCase
 import com.lexicon.interactors.program.GetProgramUseCase
 import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramSession
 import com.lexicon.interactors.program.ResolveProgramScopeUseCase
-import com.lexicon.interactors.program.ScopeOrdering
-import com.lexicon.interactors.program.ScopeSourceType
 import com.lexicon.interactors.program.StartProgramSessionUseCase
-import com.lexicon.interactors.program.TargetType
+import com.lexicon.model.program.ActivityType
 import com.lexicon.model.program.ProgramId
 import com.lexicon.model.program.ProgramProgress
 import com.lexicon.model.program.ProgressMetric
 import com.lexicon.model.program.ProgressMetricType
+import com.lexicon.model.program.ScopeSourceType
+import com.lexicon.model.program.TargetType
 import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -37,12 +36,7 @@ class ResolveProgramScopeUseCaseImpl(
         scope.include.forEach { included += wordIdsOf(it.type, it.value) }
         scope.exclude.forEach { included -= wordIdsOf(it.type, it.value).toSet() }
 
-        val ordered = when (scope.ordering) {
-            ScopeOrdering.FREQUENCY, ScopeOrdering.AS_LISTED -> included.toList()
-            ScopeOrdering.DIFFICULTY -> included.sorted()
-            ScopeOrdering.ALPHABETICAL -> included.toList()
-            ScopeOrdering.RANDOM -> included.shuffled()
-        }
+        val ordered = scope.ordering.applyTo(included.toList())
 
         val cap = scope.maxWords
         return ordered

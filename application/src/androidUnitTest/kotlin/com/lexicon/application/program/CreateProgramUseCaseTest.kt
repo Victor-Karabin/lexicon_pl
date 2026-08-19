@@ -4,13 +4,13 @@ import com.lexicon.boundary.ProgramBoundary
 import com.lexicon.boundary.ProgramRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.Clock
-import com.lexicon.interactors.program.ActivityType
 import com.lexicon.interactors.program.ProgramDraft
 import com.lexicon.interactors.program.ProgramDraftException
 import com.lexicon.interactors.program.ProgramDraftProblem
-import com.lexicon.interactors.program.ScopeSourceType
-import com.lexicon.interactors.program.TargetType
 import com.lexicon.interactors.program.trainingsADay
+import com.lexicon.model.program.ActivityType
+import com.lexicon.model.program.ScopeSourceType
+import com.lexicon.model.program.TargetType
 import io.mockk.coEvery
 import io.mockk.coJustRun
 import io.mockk.mockk

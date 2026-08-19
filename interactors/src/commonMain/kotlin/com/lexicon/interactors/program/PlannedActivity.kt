@@ -1,5 +1,6 @@
 package com.lexicon.interactors.program
 
+import com.lexicon.model.program.ActivityType
 import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

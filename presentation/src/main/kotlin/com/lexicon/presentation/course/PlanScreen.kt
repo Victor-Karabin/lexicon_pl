@@ -39,7 +39,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.program.ActivityConfig
-import com.lexicon.interactors.program.ActivityType
 import com.lexicon.interactors.program.DailyPlanConfig
 import com.lexicon.interactors.program.EnrolmentStatus
 import com.lexicon.interactors.program.Program
@@ -48,13 +47,14 @@ import com.lexicon.interactors.program.ProgramDifficulty
 import com.lexicon.interactors.program.ProgramEnrolment
 import com.lexicon.interactors.program.ProgramGoal
 import com.lexicon.interactors.program.ProgramVisibility
-import com.lexicon.interactors.program.TargetType
 import com.lexicon.interactors.program.trainingsADay
 import com.lexicon.model.course.Course
 import com.lexicon.model.course.CourseId
 import com.lexicon.model.course.LessonId
 import com.lexicon.model.course.LessonSummary
+import com.lexicon.model.program.ActivityType
 import com.lexicon.model.program.ProgramId
+import com.lexicon.model.program.TargetType
 import com.lexicon.model.vocabulary.CefrLevel
 import com.lexicon.model.vocabulary.LocalizedText
 import com.lexicon.model.vocabulary.resolve
