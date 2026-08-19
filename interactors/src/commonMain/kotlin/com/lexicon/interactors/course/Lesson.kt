@@ -15,5 +15,3 @@ data class Lesson(
     val exercises: ImmutableList<LessonExercise>,
     val isCompleted: Boolean,
 )
-
-data class LessonId(val value: String)
