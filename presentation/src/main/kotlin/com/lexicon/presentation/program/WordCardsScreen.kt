@@ -66,7 +66,7 @@ fun WordCardsScreen(
         if (!uiState.isFinished) return@LaunchedEffect
 
         uiState.launch
-            ?.let { onStartTraining(it.training, it.wordIds) }
+            ?.let { onStartTraining(it.training.id, it.wordIds) }
             ?: onFinished()
     }
 

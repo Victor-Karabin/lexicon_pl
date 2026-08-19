@@ -52,10 +52,10 @@ import com.lexicon.interactors.program.ProgramConfig
 import com.lexicon.interactors.program.ProgramDifficulty
 import com.lexicon.interactors.program.ProgramEnrolment
 import com.lexicon.interactors.program.ProgramGoal
-import com.lexicon.interactors.program.ProgramId
 import com.lexicon.interactors.program.ProgramVisibility
 import com.lexicon.interactors.program.TargetType
 import com.lexicon.interactors.program.trainingsADay
+import com.lexicon.model.program.ProgramId
 import com.lexicon.model.vocabulary.LocalizedText
 import com.lexicon.model.vocabulary.resolve
 import com.lexicon.presentation.R

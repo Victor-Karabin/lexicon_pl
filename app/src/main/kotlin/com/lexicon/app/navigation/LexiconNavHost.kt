@@ -386,7 +386,7 @@ fun LexiconNavHost(
                 when (val current = step) {
                     is ProgramRunStep.Next -> {
                         val route = LexiconDestinations.scopedTraining(
-                            training = current.training,
+                            training = current.training.id,
                             wordIds = current.wordIds.map { it.value },
                             programId = programRun,
                         )

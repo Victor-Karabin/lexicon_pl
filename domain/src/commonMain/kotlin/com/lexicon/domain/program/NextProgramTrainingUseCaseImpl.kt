@@ -1,27 +1,22 @@
-package com.lexicon.presentation.program
+package com.lexicon.domain.program
 
 import com.lexicon.interactors.program.AdvanceProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
-import com.lexicon.interactors.program.ProgramId
+import com.lexicon.interactors.program.NextProgramTrainingUseCase
+import com.lexicon.interactors.program.ProgramLaunch
 import com.lexicon.interactors.program.StartProgramSessionUseCase
+import com.lexicon.model.program.ProgramId
 import com.lexicon.model.training.TrainingType
-import com.lexicon.model.vocabulary.VocabularyId
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-data class ProgramLaunch(
-    val training: String,
-    val wordIds: ImmutableList<VocabularyId>,
-)
-
-class ProgramQueue(
+class NextProgramTrainingUseCaseImpl(
     private val getDay: GetProgramDayUseCase,
     private val advanceDay: AdvanceProgramDayUseCase,
     private val startSession: StartProgramSessionUseCase,
-) {
-    suspend fun next(id: ProgramId): ProgramLaunch? = runnable(id, getDay(id) != null)
+) : NextProgramTrainingUseCase {
+    override suspend fun next(id: ProgramId): ProgramLaunch? = runnable(id, getDay(id) != null)
 
-    suspend fun advance(id: ProgramId): ProgramLaunch? = runnable(id, advanceDay(id) != null)
+    override suspend fun advance(id: ProgramId): ProgramLaunch? = runnable(id, advanceDay(id) != null)
 
     private suspend fun runnable(
         id: ProgramId,
@@ -32,14 +27,14 @@ class ProgramQueue(
         var queued = getDay(id)?.nextTraining
         var words = startSession(id)?.wordIds ?: persistentListOf()
 
-        while (queued != null && words.size < minimumWordsFor(queued.training)) {
+        while (queued != null && !queued.training.canRunWith(words.size)) {
             if (advanceDay(id) == null) return null
             queued = getDay(id)?.nextTraining
             words = startSession(id)?.wordIds ?: persistentListOf()
         }
 
-        return queued?.let { ProgramLaunch(training = it.training, wordIds = words) }
+        return queued?.let { launch -> launch.training.let { ProgramLaunch(training = it, wordIds = words) } }
     }
 }
 
-private fun minimumWordsFor(training: String): Int = TrainingType.ofId(training)?.minimumWords ?: TrainingType.DICTATION.minimumWords
+private fun TrainingType.canRunWith(wordCount: Int): Boolean = wordCount >= minimumWords

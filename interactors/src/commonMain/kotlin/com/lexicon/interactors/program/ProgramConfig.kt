@@ -3,8 +3,6 @@ package com.lexicon.interactors.program
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-data class ProgramId(val value: String)
-
 @Serializable
 data class ProgramConfig(
     val goals: List<ProgramGoal> = emptyList(),

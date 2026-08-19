@@ -68,6 +68,7 @@ import com.lexicon.domain.program.GetStudyStreakUseCaseImpl
 import com.lexicon.domain.program.GetWordCardsUseCaseImpl
 import com.lexicon.domain.program.LeaveProgramUseCaseImpl
 import com.lexicon.domain.program.MarkCardsSeenUseCaseImpl
+import com.lexicon.domain.program.NextProgramTrainingUseCaseImpl
 import com.lexicon.domain.program.ObserveActiveEnrolmentUseCaseImpl
 import com.lexicon.domain.program.ObserveProgramsUseCaseImpl
 import com.lexicon.domain.program.ResolveProgramScopeUseCaseImpl
@@ -159,6 +160,7 @@ import com.lexicon.interactors.program.GetStudyStreakUseCase
 import com.lexicon.interactors.program.GetWordCardsUseCase
 import com.lexicon.interactors.program.LeaveProgramUseCase
 import com.lexicon.interactors.program.MarkCardsSeenUseCase
+import com.lexicon.interactors.program.NextProgramTrainingUseCase
 import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
 import com.lexicon.interactors.program.ObserveProgramsUseCase
 import com.lexicon.interactors.program.ResolveProgramScopeUseCase
@@ -192,6 +194,7 @@ val domainModule = module {
     single { ReviewSettings() }
     single { StudyTimePolicy() }
 
+    factoryOf(::NextProgramTrainingUseCaseImpl) { bind<NextProgramTrainingUseCase>() }
     factoryOf(::AnswerNormalizer)
     factoryOf(::RecordAnswerUseCaseImpl) { bind<RecordAnswerUseCase>() }
     factoryOf(::StepCountResolver)

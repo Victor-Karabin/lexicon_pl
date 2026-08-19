@@ -10,7 +10,7 @@ import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
 import com.lexicon.interactors.program.ObserveProgramsUseCase
 import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramEnrolment
-import com.lexicon.interactors.program.ProgramId
+import com.lexicon.model.program.ProgramId
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow

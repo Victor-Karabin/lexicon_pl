@@ -16,7 +16,6 @@ import com.lexicon.interactors.program.ProgramDraft
 import com.lexicon.interactors.program.ProgramDraftException
 import com.lexicon.interactors.program.ProgramDraftProblem
 import com.lexicon.interactors.program.ProgramGoal
-import com.lexicon.interactors.program.ProgramId
 import com.lexicon.interactors.program.ProgramVisibility
 import com.lexicon.interactors.program.ProgressWeights
 import com.lexicon.interactors.program.ScopeOrdering
@@ -25,6 +24,7 @@ import com.lexicon.interactors.program.ScopeSourceType
 import com.lexicon.interactors.program.TargetType
 import com.lexicon.interactors.program.UpdateProgramUseCase
 import com.lexicon.interactors.program.VocabularyScope
+import com.lexicon.model.program.ProgramId
 import com.lexicon.model.vocabulary.LocalizedText
 import kotlinx.serialization.json.Json
 

@@ -7,8 +7,8 @@ import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramConfig
 import com.lexicon.interactors.program.ProgramDifficulty
 import com.lexicon.interactors.program.ProgramEnrolment
-import com.lexicon.interactors.program.ProgramId
 import com.lexicon.interactors.program.ProgramVisibility
+import com.lexicon.model.program.ProgramId
 import com.lexicon.model.vocabulary.LocalizedText
 import kotlinx.serialization.json.Json
 

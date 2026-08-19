@@ -44,9 +44,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.conjugation.ConjugationCourse
-import com.lexicon.interactors.program.ProgramProgress
-import com.lexicon.interactors.program.ProgressMetric
-import com.lexicon.interactors.program.ProgressMetricType
+import com.lexicon.model.program.ProgramId
+import com.lexicon.model.program.ProgramProgress
+import com.lexicon.model.program.ProgressMetric
+import com.lexicon.model.program.ProgressMetricType
 import com.lexicon.model.vocabulary.LocalizedText
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.resolve
@@ -97,7 +98,7 @@ fun DashboardScreen(
 
     LaunchedEffect(uiState.launch) {
         uiState.launch?.let {
-            onStartTraining(it.training, it.wordIds, uiState.program?.id?.value.orEmpty())
+            onStartTraining(it.training.id, it.wordIds, uiState.program?.id?.value.orEmpty())
             viewModel.onLaunchHandled()
         }
     }
@@ -486,7 +487,7 @@ private fun DashboardActivePreview() {
             uiState = DashboardUiState(
                 isLoading = false,
                 program = com.lexicon.interactors.program.Program(
-                    id = com.lexicon.interactors.program.ProgramId("a1-essentials"),
+                    id = ProgramId("a1-essentials"),
                     level = "A1",
                     order = 1,
                     title = LocalizedText(mapOf("en" to "Polish A1")),
@@ -497,7 +498,7 @@ private fun DashboardActivePreview() {
                     config = com.lexicon.interactors.program.ProgramConfig(),
                 ),
                 progress = ProgramProgress(
-                    programId = com.lexicon.interactors.program.ProgramId("a1-essentials"),
+                    programId = ProgramId("a1-essentials"),
                     metrics = persistentListOf(
                         ProgressMetric(ProgressMetricType.VOCABULARY, current = 128, target = 1000, weight = 40),
                         ProgressMetric(ProgressMetricType.MILESTONES, current = 1, target = 5, weight = 20),

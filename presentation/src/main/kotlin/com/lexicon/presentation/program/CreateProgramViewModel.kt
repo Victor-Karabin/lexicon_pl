@@ -12,8 +12,8 @@ import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
 import com.lexicon.interactors.program.ProgramDraft
 import com.lexicon.interactors.program.ProgramDraftException
 import com.lexicon.interactors.program.ProgramDraftProblem
-import com.lexicon.interactors.program.ProgramId
 import com.lexicon.interactors.program.UpdateProgramUseCase
+import com.lexicon.model.program.ProgramId
 import com.lexicon.presentation.main.programTrainings
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

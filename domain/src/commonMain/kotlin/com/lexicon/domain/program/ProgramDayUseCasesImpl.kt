@@ -13,10 +13,11 @@ import com.lexicon.interactors.program.GetWordCardsUseCase
 import com.lexicon.interactors.program.MarkCardsSeenUseCase
 import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramDay
-import com.lexicon.interactors.program.ProgramId
 import com.lexicon.interactors.program.QueuedTraining
 import com.lexicon.interactors.program.ResolveProgramScopeUseCase
 import com.lexicon.interactors.program.WordCard
+import com.lexicon.model.program.ProgramId
+import com.lexicon.model.training.TrainingType
 import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -106,8 +107,9 @@ class GetProgramDayUseCaseImpl(
     }
 
     private fun List<String>.toQueue(done: Int): ImmutableList<QueuedTraining> {
-        val taken = mutableMapOf<String, Int>()
-        return mapIndexed { index, training ->
+        val taken = mutableMapOf<TrainingType, Int>()
+        return mapIndexedNotNull { index, id ->
+            val training = TrainingType.ofId(id) ?: return@mapIndexedNotNull null
             val round = taken.getOrElse(training) { 0 }
             taken[training] = round + 1
             QueuedTraining(training = training, round = round, isDone = index < done)

@@ -10,12 +10,13 @@ import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramProgressUseCase
 import com.lexicon.interactors.program.GetProgramUseCase
 import com.lexicon.interactors.program.GetStudyStreakUseCase
+import com.lexicon.interactors.program.NextProgramTrainingUseCase
 import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
 import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramDay
-import com.lexicon.interactors.program.ProgramProgress
+import com.lexicon.model.program.ProgramProgress
+import com.lexicon.model.training.TrainingType
 import com.lexicon.model.vocabulary.VocabularyId
-import com.lexicon.presentation.program.ProgramQueue
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +26,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class LaunchTraining(
-    val training: String,
+    val training: TrainingType,
     val wordIds: ImmutableList<VocabularyId>,
 )
 
@@ -56,7 +57,7 @@ data class DashboardUiState(
 class DashboardViewModel(
     private val getProgram: GetProgramUseCase,
     private val getProgress: GetProgramProgressUseCase,
-    private val queue: ProgramQueue,
+    private val queue: NextProgramTrainingUseCase,
     private val loadConjugationCourses: LoadConjugationCoursesUseCase,
     private val deleteConjugationCourse: DeleteConjugationCourseUseCase,
     private val getDay: GetProgramDayUseCase,

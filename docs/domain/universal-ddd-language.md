@@ -26,7 +26,7 @@ Everything the learner practises comes from one of three sources: the shipped
 | Vocabulary | Words, presets, the study set, images and translations | `model.vocabulary`, `interactors.presets` |
 | Training | A single practice session and what it records | `model.training`, `interactors.<training>` |
 | Scheduling | Review intervals, mastery, study days, streaks | `model.scheduling` |
-| Program | The daily plan and its queue of trainings | `interactors.program` |
+| Program | The daily plan and its queue of trainings | `model.program`, `interactors.program` |
 | Course | Fixed teaching material — lessons and exercises | `interactors.course` |
 | Conjugation | Verbs, their forms, and courses over them | `interactors.conjugation` |
 | Catalogue | Seeding shipped data into the database | `interactors.sync` |
@@ -124,7 +124,7 @@ Operations that belong to no single entity.
 | --- | --- | --- |
 | Review scheduler | Turns an outcome into the next due date | `ReviewState.next()` in `model.scheduling` |
 | Scope resolver | Turns a program's declared sources into word ids | `ResolveProgramScopeUseCase` |
-| Queue resolver | Finds the next training a day can actually run | `ProgramQueue` |
+| Queue resolver | Finds the next training a day can actually run | `NextProgramTrainingUseCase` |
 | Conjugation splitter | Derives stem and endings from a verb's own forms | `VerbConjugation.split()` |
 | Answer normaliser | Decides whether a written or spoken answer matches | `AnswerNormalizer` |
 | Sentence generator | Writes example sentences for a target word | `SentenceGenerator` |
@@ -155,7 +155,7 @@ Introducing an event type is a domain change and requires updating this document
 | Start a session | Draw words and build the steps for one training | `Start*SessionUseCase` |
 | Submit an answer | Mark one step against the session's expected answer | `Submit*UseCase` |
 | Record an answer | Store the result, advance the review schedule, credit the study day | `RecordAnswerUseCase` |
-| Advance the day | Mark the current training done and find the next runnable one | `AdvanceProgramDayUseCase`, `ProgramQueue` |
+| Advance the day | Mark the current training done and find the next runnable one | `AdvanceProgramDayUseCase`, `NextProgramTrainingUseCase` |
 | Enrol / leave | Begin or abandon a program | `EnrolInProgramUseCase`, `LeaveProgramUseCase` |
 | Create a conjugation course | Fix a set of verbs as a course | `CreateConjugationCourseUseCase` |
 | Restore the verbs | Re-seed the verb catalogue from its asset | `RestoreConjugationVerbsUseCase` |
@@ -232,6 +232,7 @@ unified.
 | `VocabularyItemBoundary` | Removed — an anemic twin of the word, carrying `Long` and `String?` where the model had value objects | `Word` |
 | `PresetWord` | Renamed — it was never preset-specific | `Word` |
 | `ScopeSourceType.FAVOURITES`, `ProgramDraftProblem.NO_FAVOURITES` | Renamed — the deprecated term survived an earlier case-sensitive sweep | `STUDY_SET`, `EMPTY_STUDY_SET` |
+| `ProgramQueue` | Renamed and moved out of the presentation module | `NextProgramTrainingUseCase` |
 
 ## Terminology Change History
 
@@ -248,6 +249,7 @@ unified.
 | 2026-08-19 | *Favourite* renamed to *study set* throughout the code | The interface had always said study set; the code name was the last holdout |
 | 2026-08-19 | **`SEEN` added to `StepOutcome`; `TrainingResultOutcomeBoundary` removed** | The two enums became identical. The earlier reason for keeping the boundary copy — that only it carried `SEEN` — was the defect, not the justification: the model could not express a state the domain has |
 | 2026-08-19 | **Review scheduling moved out of `data` into `model.scheduling`** | A Room repository owned SM-2, the review policy and the study-time rule. The application now invokes the scheduler through `RecordAnswerUseCase` |
+| 2026-08-19 | **`ProgramQueue` moved out of the Compose module** and became `NextProgramTrainingUseCase` | The glossary already listed it as the *queue resolver* domain service, but it was a class in the UI module applying a policy that also lived there. `QueuedTraining` now carries a `TrainingType` rather than a string |
 | 2026-08-19 | **Speech and audio ports moved from `android` to `boundary`** | The ports were declared inside the Android module, so every ViewModel that wanted to play a word depended on infrastructure. `presentation` no longer depends on `android` at all. The `java.util.Locale` parameter went with them: no caller ever passed anything but Polish |
 | 2026-08-19 | **`Word` promoted to the model**, absorbing `PresetWord` and `VocabularyItemBoundary` | One concept had two representations: a modelled one in the application layer and an anemic twin at the data edge, with a mapper between them. `VocabularyId` and `CefrLevel` now reach the repository |
 | 2026-08-19 | *Mastery* split into **word mastery** and **variant mastery** | One glossary term covered two unrelated rules — an interval threshold in Scheduling, a correct-answer streak in Conjugation. They were never the same measure |

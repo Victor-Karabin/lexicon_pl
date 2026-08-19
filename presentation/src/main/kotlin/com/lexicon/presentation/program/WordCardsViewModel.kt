@@ -7,8 +7,9 @@ import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetWordCardsUseCase
 import com.lexicon.interactors.program.MarkCardsSeenUseCase
-import com.lexicon.interactors.program.ProgramId
+import com.lexicon.interactors.program.NextProgramTrainingUseCase
 import com.lexicon.interactors.program.WordCard
+import com.lexicon.model.program.ProgramId
 import com.lexicon.presentation.dashboard.LaunchTraining
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -35,7 +36,7 @@ class WordCardsViewModel(
     private val getDay: GetProgramDayUseCase,
     private val getCards: GetWordCardsUseCase,
     private val markSeen: MarkCardsSeenUseCase,
-    private val queue: ProgramQueue,
+    private val queue: NextProgramTrainingUseCase,
     private val speechSynthesizer: SpeechSynthesizer,
 ) : ViewModel() {
     private val programId = ProgramId(savedStateHandle.get<String>(PROGRAM_ID_ARG).orEmpty())
