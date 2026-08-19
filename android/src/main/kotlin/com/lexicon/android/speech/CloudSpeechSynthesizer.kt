@@ -5,6 +5,7 @@ import com.lexicon.android.cloud.CloudSpeechApi
 import com.lexicon.boundary.AudioPlayer
 import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.boundary.SpeechVoice
+import com.lexicon.boundary.chosen
 import com.lexicon.common.DispatcherProvider
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -79,11 +80,7 @@ class CloudSpeechSynthesizer(
      * A stored id from the device synthesiser will not name a Cloud voice, so it is only
      * honoured when Cloud actually offers it.
      */
-    private suspend fun chosenVoice(): String? {
-        val available = voices().map { it.id }
-        if (available.isEmpty()) return null
-        return settings.preferredVoiceId()?.takeIf { it in available } ?: available.first()
-    }
+    private suspend fun chosenVoice(): String? = voices().chosen(settings.preferredVoiceId())?.id
 
     private companion object {
         private const val TAG = "CloudSpeechSynthesizer"

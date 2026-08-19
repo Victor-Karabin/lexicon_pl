@@ -39,6 +39,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.lexicon.boundary.SpeechVoice
+import com.lexicon.boundary.chosen
 import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.interactors.settings.ThemeMode
 import com.lexicon.presentation.R
@@ -192,7 +193,7 @@ private fun VoiceSetting(
     onVoiceSelected: (SpeechVoice) -> Unit,
 ) {
     var isOpen by rememberSaveable { mutableStateOf(false) }
-    val selected = voices.indexOfFirst { it.id == selectedId }.takeIf { it >= 0 } ?: 0
+    val chosen = voices.chosen(selectedId)
 
     GradientTile(skin = skin) {
         Row(
@@ -206,7 +207,7 @@ private fun VoiceSetting(
                 modifier = Modifier.weight(1f),
             )
             Text(
-                text = voices.getOrNull(selected)?.displayName.orEmpty(),
+                text = chosen?.displayName.orEmpty(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = skin.muted(),
             )
@@ -223,7 +224,7 @@ private fun VoiceSetting(
                 verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
             ) {
                 voices.forEach { voice ->
-                    val isSelected = voice.id == selectedId
+                    val isSelected = voice.id == chosen?.id
 
                     Row(
                         modifier = Modifier

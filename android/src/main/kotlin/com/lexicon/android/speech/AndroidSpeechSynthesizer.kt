@@ -7,6 +7,7 @@ import android.speech.tts.Voice
 import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.boundary.SpeechVoice
 import com.lexicon.boundary.VoiceGender
+import com.lexicon.boundary.chosen
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.util.UUID
 import kotlin.coroutines.resume
@@ -67,8 +68,10 @@ class AndroidSpeechSynthesizer(
     override suspend fun speak(text: String) {
         val tts = engine()
         tts.language = POLISH
-        settings.preferredVoiceId()?.let { preferred ->
-            tts.voices.orEmpty().firstOrNull { it.name == preferred }?.let { tts.voice = it }
+        // Without this the engine keeps whatever voice it defaults to, which the settings
+        // screen has no way to name — so it would show one voice while another spoke.
+        voices().chosen(settings.preferredVoiceId())?.let { chosen ->
+            tts.voices.orEmpty().firstOrNull { it.name == chosen.id }?.let { tts.voice = it }
         }
         val utteranceId = UUID.randomUUID().toString()
         suspendCancellableCoroutine<Unit> { continuation ->
