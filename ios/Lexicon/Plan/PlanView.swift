@@ -40,10 +40,33 @@ struct PlanView: View {
                         }
                         .buttonStyle(.plain)
                     }
+
+                    NavigationLink {
+                        ConjugationCoursesView()
+                    } label: {
+                        conjugationTile
+                    }
+                    .buttonStyle(.plain)
                 }
                 .padding(Spacing.medium)
             }
             .navigationTitle("Plan")
+        }
+    }
+
+    private var conjugationTile: some View {
+        let skin = TileSkin.standard(highlighted: false, scheme: scheme)
+        return Tile(skin: skin) {
+            HStack(spacing: Spacing.medium) {
+                Medallion(skin: skin) { MedallionIcon(systemName: "textformat.abc", skin: skin) }
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Verb Conjugation").font(.headline).foregroundStyle(skin.onTile)
+                    Text("Pick verbs and learn how they change by person")
+                        .font(.subheadline).foregroundStyle(skin.onTile.muted)
+                }
+                Spacer()
+                Image(systemName: "chevron.right").foregroundStyle(skin.onTile.muted)
+            }
         }
     }
 
@@ -100,7 +123,7 @@ struct PlanView: View {
         let done = course.lessons.filter { $0.isCompleted }.count
         return Tile(skin: skin) {
             HStack(spacing: Spacing.medium) {
-                Medallion(skin: skin) { MedallionText(text: course.level, skin: skin) }
+                Medallion(skin: skin) { MedallionText(text: course.level?.name ?? "", skin: skin) }
                 VStack(alignment: .leading, spacing: 2) {
                     Text(course.title.text()).font(.headline).foregroundStyle(skin.onTile)
                     Text("\(done) of \(course.lessons.count) lessons done")

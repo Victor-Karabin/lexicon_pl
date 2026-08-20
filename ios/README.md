@@ -1,6 +1,6 @@
 # Lexicon for iOS
 
-The SwiftUI app. It shares everything below the UI with Android — use cases,
+The SwiftUI app, for iPhone and iPad. It shares everything below the UI with Android — use cases,
 repositories, the Room database, the review schedule — through the `Shared`
 XCFramework the `:shared` Gradle module produces.
 
@@ -50,6 +50,11 @@ them up by name. One source of truth, read by both platforms.
 group, so a new `.swift` file under `Lexicon/` needs no project edit.
 
 ## What is not here yet
+
+- **Landscape is enabled on iPad but unverified.** The layouts are vertical scrolls of
+  full-width tiles and should reflow, but nobody has looked.
+- **The program run.** The dashboard offers the day's next training; running a whole
+  program day as a chain, as Android does, is not wired here.
 
 - **DeepL.** Translation goes corpus first, then MyMemory, which needs no key.
   Android also tries DeepL; adding it here is another `RemoteImageSource`-shaped

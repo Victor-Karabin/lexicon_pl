@@ -55,7 +55,7 @@ Openverse.
 | Testing | JUnit 4, MockK, Turbine |
 | Static analysis | ktlint, detekt, Android Lint |
 | Build | Gradle 8.12 with version catalogs, AGP 8.7 |
-| Targets | Android 8.0 and up (minSdk 26, target 35); an iOS app links the shared framework |
+| Targets | Android 8.0 and up (minSdk 26, target 35); iPhone and iPad on iOS 17, linking the same shared framework — all fifteen trainings on both |
 
 ## Layout
 

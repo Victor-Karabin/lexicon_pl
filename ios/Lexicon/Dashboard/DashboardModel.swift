@@ -54,7 +54,7 @@ final class DashboardModel: ObservableObject {
         guard let program, let next = day?.nextTraining else { return nil }
         let session = try? await deps.startProgramSession.invoke(id: program.id)
         sessionWordIds = (session?.wordIds ?? []).map { $0.value }
-        return next.training
+        return next.training.id
     }
 
     func label(for type: ProgressMetricType) -> String {

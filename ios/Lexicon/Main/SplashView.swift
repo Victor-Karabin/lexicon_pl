@@ -4,7 +4,7 @@ import Shared
 struct SplashView: View {
     let onFinished: () -> Void
 
-    @State private var status: CatalogSyncStatus?
+    @State private var status: CatalogSeedStatus?
     @State private var watcher: Cancellable?
 
     var body: some View {
@@ -22,6 +22,7 @@ struct SplashView: View {
                 step("Vocabulary", status?.vocabulary)
                 step("Presets", status?.presets)
                 step("Course", status?.course)
+                step("Verbs", status?.verbs)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(Spacing.medium)
@@ -41,26 +42,26 @@ struct SplashView: View {
     }
 
     @ViewBuilder
-    private func step(_ name: String, _ state: SyncStepStatus?) -> some View {
+    private func step(_ name: String, _ state: SeedStepStatus?) -> some View {
         HStack(spacing: Spacing.small) {
             switch state {
-            case is SyncStepStatusComplete:
+            case is SeedStepStatusComplete:
                 Image(systemName: "checkmark").foregroundStyle(Palette.success)
-            case let failed as SyncStepStatusFailed:
+            case let failed as SeedStepStatusFailed:
                 Image(systemName: "xmark").foregroundStyle(Palette.failure)
                     .accessibilityLabel(failed.reason)
-            case is SyncStepStatusInProgress:
+            case is SeedStepStatusInProgress:
                 ProgressView().controlSize(.small)
             default:
                 Image(systemName: "circle").foregroundStyle(.secondary)
             }
             VStack(alignment: .leading, spacing: 0) {
                 Text(name).font(.callout)
-                if let complete = state as? SyncStepStatusComplete {
+                if let complete = state as? SeedStepStatusComplete {
                     Text("\(complete.total) ready").font(.caption).foregroundStyle(.secondary)
                 }
 
-                if let failed = state as? SyncStepStatusFailed {
+                if let failed = state as? SeedStepStatusFailed {
                     Text(failed.reason).font(.caption).foregroundStyle(Palette.failure)
                 }
             }
@@ -69,14 +70,14 @@ struct SplashView: View {
 
     private var isBlocked: Bool {
         guard let status else { return false }
-        return [status.vocabulary, status.presets, status.course]
-            .contains { ($0 as? SyncStepStatusFailed)?.canContinue == false }
+        return [status.vocabulary, status.presets, status.course, status.verbs]
+            .contains { ($0 as? SeedStepStatusFailed)?.canContinue == false }
     }
 
     private var isFinished: Bool {
         guard let status else { return false }
-        return [status.vocabulary, status.presets, status.course].allSatisfy {
-            $0 is SyncStepStatusComplete || $0 is SyncStepStatusFailed
+        return [status.vocabulary, status.presets, status.course, status.verbs].allSatisfy {
+            $0 is SeedStepStatusComplete || $0 is SeedStepStatusFailed
         }
     }
 

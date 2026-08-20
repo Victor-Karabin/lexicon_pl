@@ -1,5 +1,13 @@
 package com.lexicon.shared
 
+import com.lexicon.interactors.conjugation.CreateConjugationCourseUseCase
+import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
+import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
+import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
+import com.lexicon.interactors.conjugation.LoadStudySetVerbsUseCase
+import com.lexicon.interactors.conjugation.NextConjugationTableUseCase
+import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
+import com.lexicon.interactors.conjugation.ToggleVerbInStudySetUseCase
 import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
@@ -11,11 +19,14 @@ import com.lexicon.interactors.dictation.StartDictationSessionUseCase
 import com.lexicon.interactors.dictation.SubmitDictationAnswerUseCase
 import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionUseCase
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerUseCase
+import com.lexicon.interactors.fillword.StartFillwordSessionUseCase
 import com.lexicon.interactors.imagetest.StartImageTestSessionUseCase
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
 import com.lexicon.interactors.memorycards.StartMemoryCardsSessionUseCase
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
 import com.lexicon.interactors.mix.StartMixSessionUseCase
+import com.lexicon.interactors.passage.StartPassageSessionUseCase
+import com.lexicon.interactors.passage.SubmitPassageAnswersUseCase
 import com.lexicon.interactors.presets.CreatePresetUseCase
 import com.lexicon.interactors.presets.CreateWordUseCase
 import com.lexicon.interactors.presets.DeletePresetUseCase
@@ -54,6 +65,7 @@ import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramEnrolment
 import com.lexicon.interactors.program.StartProgramSessionUseCase
 import com.lexicon.interactors.program.UpdateProgramUseCase
+import com.lexicon.interactors.pronunciation.StartPronunciationSentencesUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
@@ -156,6 +168,19 @@ object IosDependencies : KoinComponent {
     val startCrossword: StartCrosswordSessionUseCase by inject()
     val submitCrossword: SubmitCrosswordUseCase by inject()
     val startMix: StartMixSessionUseCase by inject()
+    val loadConjugationVerbs: LoadConjugationVerbsUseCase by inject()
+    val createConjugationCourse: CreateConjugationCourseUseCase by inject()
+    val loadConjugationCourses: LoadConjugationCoursesUseCase by inject()
+    val deleteConjugationCourse: DeleteConjugationCourseUseCase by inject()
+    val nextConjugationTable: NextConjugationTableUseCase by inject()
+    val submitConjugationAnswer: SubmitConjugationAnswerUseCase by inject()
+    val toggleVerbInStudySet: ToggleVerbInStudySetUseCase by inject()
+    val loadStudySetVerbs: LoadStudySetVerbsUseCase by inject()
+
+    val startFillword: StartFillwordSessionUseCase by inject()
+    val startPassage: StartPassageSessionUseCase by inject()
+    val submitPassage: SubmitPassageAnswersUseCase by inject()
+    val startPronunciationSentences: StartPronunciationSentencesUseCase by inject()
     val startWordCard: StartWordCardSessionUseCase by inject()
     val recordWordCardSeen: RecordWordCardSeenUseCase by inject()
 

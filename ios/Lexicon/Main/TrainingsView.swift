@@ -54,9 +54,13 @@ enum TrainingCatalog {
         .init(id: "word_match", name: "Word Match", blurb: "Pair each word with its translation", symbol: "link"),
         .init(id: "true_or_false", name: "True or False", blurb: "Say whether the translation is right", symbol: "questionmark"),
         .init(id: "pronunciation_check", name: "Pronunciation Check", blurb: "Say the word out loud and be heard", symbol: "waveform"),
+        .init(id: "pronunciation_sentences", name: "Read Aloud", blurb: "Read a sentence aloud and hear how close you got", symbol: "mic"),
         .init(id: "memory_cards", name: "Memory Cards", blurb: "Turn the cards over and find the pairs", symbol: "square.stack"),
         .init(id: "crossword", name: "Crossword", blurb: "Fill the grid from the clues", symbol: "grid"),
         .init(id: "word_card", name: "Word Card", blurb: "Read the word, its picture and how it sounds", symbol: "creditcard"),
+        .init(id: "passage_write", name: "Read and Write", blurb: "Fill the gaps in a short passage", symbol: "text.alignleft"),
+        .init(id: "passage_bank", name: "Read and Choose", blurb: "Fill the gaps from a bank of words", symbol: "list.bullet.rectangle"),
+        .init(id: "fillword", name: "Word Search", blurb: "Find the hidden words in the grid", symbol: "square.grid.3x3"),
         .init(id: "mix", name: "Mix", blurb: "A little of every training", symbol: "sparkles"),
     ]
 
@@ -80,6 +84,10 @@ struct TrainingHost: View {
             case "memory_cards": MemoryCardsView(vocabularyIds: vocabularyIds)
             case "crossword": CrosswordView(vocabularyIds: vocabularyIds)
             case "word_card": WordCardView(vocabularyIds: vocabularyIds)
+            case "pronunciation_sentences": ReadAloudView()
+            case "passage_write": PassageView(withWordBank: false)
+            case "passage_bank": PassageView(withWordBank: true)
+            case "fillword": WordSearchView()
             case "mix": MixView(vocabularyIds: vocabularyIds)
             default: Text("Unknown training")
             }
