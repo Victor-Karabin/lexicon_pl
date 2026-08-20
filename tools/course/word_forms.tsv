@@ -1,0 +1,21 @@
+# Krok po kroku prints some new words with their conjugation, their aspect partner or
+# in the gender the dialogue happens to use. This maps the printed form back to the
+# corpus headword, so the lesson still links to a real vocabulary entry.
+#
+# Columns: printed form (as extract_krok.py reads it) <TAB> corpus headword(s), comma separated
+# An empty second column drops the entry: it is a grammar note, not a word to learn.
+spać (śpię, śpisz)	spać
+zamawiać/zamówić	zamawiać
+zabór/zabory	zabór
+ciuch/-y	ciuch
+wyglądać ładnie/brzydko	wyglądać
+pozwolić (sobie) na	pozwolić na
+zaczynać się ≠ kończyć się	zaczynać się,kończyć się
+zależeć od + dopełniacz	zależeć od
+obchodzić urodziny / imieniny	obchodzić urodziny
+co słychać? wszystko w porządku	co słychać,wszystko w porządku
+jeśli chodzi o …	jeśli chodzi o
+upadł komunizm	komunizm
+marudna	marudny
+stuprocentowe	stuprocentowy
+międzywojenne	międzywojenny

@@ -1,0 +1,190 @@
+# Education, work, technology and leisure vocabulary. Columns as in core.tsv.
+dyrektor	headmaster, director	n	A2	school,office
+klasa	class, classroom	n	A1	school,classroom
+świadectwo	school report	n	B1	school
+przedmiot	subject, object	n	A2	school,studying
+matematyka	mathematics	n	A1	school
+historia	history, story	n	A1	school
+geografia	geography	n	A1	school
+biologia	biology	n	A1	school
+chemia	chemistry	n	A1	school
+fizyka	physics	n	A1	school
+ferie	school holidays	n	A2	school,dates
+dzwonek	bell, ringtone	n	A2	school,smartphone
+stołówka	canteen	n	A2	school,food
+boisko	sports pitch	n	A2	school,sports
+wydział	faculty	n	B1	university
+semestr	semester	n	A2	university
+sesja	exam session	n	B1	university
+stypendium	scholarship	n	B1	university
+akademik	student hall	n	B1	university
+rektor	rector	n	B2	university
+dziekan	dean	n	B2	university
+praca magisterska	master's thesis	n	B2	university
+licencjat	bachelor's degree	n	B1	university
+doktorat	doctorate	n	B2	university
+ławka	desk, bench	n	A2	classroom
+projektor	projector	n	B1	classroom,office
+gąbka	sponge	n	B1	classroom,household
+podręcznik	textbook	n	A2	classroom,books
+słownik	dictionary	n	A1	classroom,books
+obecność	attendance	n	B1	classroom
+skupienie	focus	n	B2	studying
+motywacja	motivation	n	B1	studying
+powtórka	revision	n	B1	studying
+fiszka	flashcard	n	B1	studying
+streszczenie	summary	n	B1	studying,books
+pamięć	memory	n	A2	studying,computer
+postęp	progress	n	B1	studying
+nawyk	habit	n	B1	studying
+kolega z pracy	colleague	n	A2	office,work
+nadgodziny	overtime	n	B1	office,work
+urlop	leave, holiday	n	A2	office,work
+zwolnienie	sick note, dismissal	n	B1	office,work
+pensja	salary	n	A2	office,finance
+awans	promotion	n	B1	office,work
+rozmowa kwalifikacyjna	job interview	n	B1	office,work
+stanowisko	position, post	n	B1	office,work
+dział	department	n	A2	office,business
+sekretarka	secretary	n	A2	office,professions
+konferencja	conference	n	A2	office,meetings
+agenda	agenda	n	B2	meetings
+uczestnik	participant	n	B1	meetings
+prowadzący	chair, host	n	B2	meetings
+wniosek	conclusion, motion	n	B1	meetings,law
+ustalenia	arrangements	n	B2	meetings
+telekonferencja	conference call	n	B2	meetings,office
+zaproszenie	invitation	n	A2	meetings,relationships
+podsumowanie	summary	n	B1	meetings,studying
+inwestycja	investment	n	B1	business,finance
+budżet	budget	n	B1	business,finance
+koszt	cost	n	A2	business,finance
+dochód	income	n	B1	business,finance
+akcje	shares	n	B2	business,finance
+marka	brand	n	A2	business
+strategia	strategy	n	B1	business
+dostawca	supplier	n	B1	business
+magazyn	warehouse, magazine	n	A2	business,books
+waluta	currency	n	A2	finance
+kurs	exchange rate, course	n	A2	finance,studying
+przelew	transfer	n	B1	finance
+bankomat	cash machine	n	A1	finance
+odsetki	interest	n	B2	finance
+pożyczka	loan	n	B1	finance
+rata	instalment	n	B1	finance
+emerytura	pension	n	B1	finance
+ubezpieczenie	insurance	n	B1	finance
+inflacja	inflation	n	B2	finance
+laptop	laptop	n	A1	computer
+monitor	monitor	n	A1	computer
+dysk	disk, drive	n	A2	computer
+procesor	processor	n	B1	computer
+system	system	n	A2	computer
+folder	folder	n	A2	computer
+kliknąć	to click	v	A2	computer,internet
+zainstalować	to install	v	A2	computer
+aktualizacja	update	n	A2	computer,smartphone
+link	link	n	A1	internet
+e-mail	email	n	A1	internet
+logowanie	log-in	n	A2	internet
+wirus	virus	n	A2	internet,health
+bezpieczeństwo	security, safety	n	B1	internet,emergency
+media społecznościowe	social media	n	B1	internet
+komentarz	comment	n	A2	internet
+sms	text message	n	A1	smartphone
+rozmowa	conversation, call	n	A1	smartphone,daily-conversation
+kontakt	contact	n	A1	smartphone
+tryb cichy	silent mode	n	B1	smartphone
+ekran dotykowy	touchscreen	n	B1	smartphone
+zasięg	signal, range	n	B1	smartphone
+abonament	subscription	n	B1	smartphone,finance
+ikona	icon	n	A2	smartphone,computer
+blokada	lock	n	B1	smartphone
+algorytm	algorithm	n	B1	programming
+obiekt	object	n	B1	programming
+metoda	method	n	B1	programming
+biblioteka programistyczna	software library	n	B2	programming
+kompilator	compiler	n	B2	programming
+wersja	version	n	A2	programming,computer
+repozytorium	repository	n	B2	programming
+składnia	syntax	n	B2	programming
+typ	type	n	A2	programming
+plansza	board	n	A2	games
+pionek	game piece	n	B1	games
+rzut	throw	n	A2	games,sports
+konsola	console	n	A2	games
+zwycięstwo	victory	n	A2	games,sports
+porażka	defeat	n	A2	games,sports
+gol	goal	n	A1	sports
+rzut karny	penalty kick	n	B1	sports
+remis	draw	n	A2	sports,games
+zwycięzca	winner	n	A2	sports,games
+przeciwnik	opponent	n	B1	sports,games
+kort	court	n	B1	sports
+basen	swimming pool	n	A1	sports,fitness
+rakieta	racket, rocket	n	A2	sports
+przysiad	squat	n	B1	fitness
+pompka	push-up	n	B1	fitness
+sztanga	barbell	n	B2	fitness
+hantle	dumbbells	n	B2	fitness
+bieżnia	treadmill	n	B2	fitness
+rozciąganie	stretching	n	B1	fitness
+kondycja	fitness	n	B1	fitness,health
+wytrzymałość	endurance	n	B2	fitness,sports
+kalorie	calories	n	A2	fitness,food
+aktorka	actress	n	A1	movies,professions
+seans	screening	n	B1	movies
+napisy	subtitles	n	A2	movies
+lektor	voice-over	n	B2	movies
+gatunek	genre, species	n	B1	movies,animals
+komedia	comedy	n	A1	movies
+dramat	drama	n	A2	movies
+horror	horror	n	A2	movies
+animacja	animation	n	A2	movies
+premiera	premiere	n	B1	movies
+melodia	melody	n	A2	music
+rytm	rhythm	n	A2	music
+nuta	note	n	A2	music
+tekst piosenki	lyrics	n	B1	music
+album	album	n	A1	music
+chór	choir	n	B1	music
+dyrygent	conductor	n	B2	music,professions
+festiwal	festival	n	A2	music,hobbies
+taniec	dance	n	A1	music,hobbies
+wydawnictwo	publisher	n	B2	books
+tłumaczenie	translation	n	A2	books,studying
+egzemplarz	copy	n	B2	books
+bohater	hero, protagonist	n	A2	books,movies
+fabuła	plot	n	B1	books,movies
+zakładka	bookmark, tab	n	A2	books,internet
+literatura	literature	n	A2	books
+poezja	poetry	n	B1	books
+recenzja	review	n	B1	books,movies
+kolekcja	collection	n	A2	hobbies
+majsterkowanie	do-it-yourself	n	B2	hobbies
+joga	yoga	n	A2	hobbies,fitness
+medytacja	meditation	n	B1	hobbies,health
+planszówki	board games	n	B1	hobbies,games
+origami	origami	n	B2	hobbies
+przyroda	nature	n	A2	nature,plants
+krajobraz	landscape	n	B1	nature
+środowisko	environment	n	B1	nature
+powietrze	air	n	A2	nature,weather
+ogień	fire	n	A1	nature,emergency
+ziemia	earth, ground	n	A1	nature
+kamień	stone	n	A1	nature,mountains
+błoto	mud	n	B1	nature,weather
+strumień	stream	n	B1	nature,forest
+wodospad	waterfall	n	B1	nature,mountains
+łąka	meadow	n	B1	nature,plants
+pustynia	desert	n	B1	nature
+wulkan	volcano	n	B1	nature,mountains
+kwitnąć	to bloom	v	B1	plants,flowers
+sadzić	to plant	v	B1	plants,hobbies
+podlewać	to water	v	B1	plants,hobbies
+zioło	herb	n	B1	plants,cooking
+pokrzywa	nettle	n	B2	plants
+mniszek	dandelion	n	B2	plants,flowers
+kaktus	cactus	n	B1	plants
+bluszcz	ivy	n	B2	plants
+pąk	bud	n	B2	plants,flowers

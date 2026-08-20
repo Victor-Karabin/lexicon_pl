@@ -13,21 +13,19 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.theme.Dimens
+import com.lexicon.presentation.theme.LexiconTheme
 
 enum class ProgressDotsVariant { BAR, DOTS }
 
-/**
- * Session progress, shown under the title bar on every multi-step training (not Crossword).
- * [ProgressDotsVariant.BAR] matches the current app (LinearProgressIndicator-style bar + counter);
- * [ProgressDotsVariant.DOTS] is DESIGN.md §8.3's bubble-mode treatment, not yet used anywhere.
- */
 @Composable
 fun ProgressDots(
     step: Int,
@@ -85,5 +83,26 @@ fun ProgressDots(
                     modifier = Modifier.padding(top = Dimens.spacingTiny),
                 )
             }
+    }
+}
+
+@LightDarkPreview
+@Composable
+private fun ProgressDotsStatesPreview() {
+    LexiconTheme {
+        Surface {
+            Column(
+                modifier = Modifier.padding(Dimens.spacingMedium),
+                verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+            ) {
+                listOf(0, 4, 9).forEach { step ->
+                    ProgressDots(step = step, total = 10, modifier = Modifier.fillMaxWidth())
+                }
+                listOf(0, 4, 9).forEach { step ->
+                    ProgressDots(step = step, total = 10, variant = ProgressDotsVariant.DOTS)
+                }
+                ProgressDots(step = 0, total = 1, modifier = Modifier.fillMaxWidth())
+            }
+        }
     }
 }

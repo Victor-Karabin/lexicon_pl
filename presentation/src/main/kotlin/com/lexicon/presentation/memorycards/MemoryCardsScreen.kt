@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -30,15 +29,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.SubcomposeAsyncImage
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.TrainingUnavailableContent
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
+import com.lexicon.presentation.theme.component.LexiconProgressBar
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,7 +47,7 @@ fun MemoryCardsScreen(
     onSessionComplete: (correct: Int, incorrect: Int, skipped: Int, tipsUsed: Int) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: MemoryCardsViewModel = hiltViewModel(),
+    viewModel: MemoryCardsViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -84,6 +85,9 @@ private fun MemoryCardsScreenContent(
         topBar = { TrainingTopBar(title = "Memory Cards", onClose = onClose) },
     ) { padding ->
         when (uiState) {
+            MemoryCardsUiState.Unavailable ->
+                TrainingUnavailableContent(onClose = onClose, modifier = Modifier.padding(padding))
+
             is MemoryCardsUiState.Loading ->
                 Column(
                     modifier = Modifier.fillMaxSize().padding(padding),
@@ -94,7 +98,7 @@ private fun MemoryCardsScreenContent(
                 }
             is MemoryCardsUiState.Loaded ->
                 Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
-                    LinearProgressIndicator(
+                    LexiconProgressBar(
                         progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
                         modifier = Modifier.fillMaxWidth(),
                     )
@@ -190,7 +194,7 @@ private val previewCards = listOf(
     MemoryCard(cardId = 7, vocabularyItemId = 4, isImageCard = false, imageUrl = null, text = "dog"),
 )
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun MemoryCardsScreenPreview() {
     LexiconTheme {
@@ -202,6 +206,28 @@ private fun MemoryCardsScreenPreview() {
                     cards = previewCards,
                     flippedCardIds = listOf(2),
                     matchedItemIds = setOf(1),
+                ),
+            onClose = {},
+            onCardSelected = {},
+            onSkip = {},
+            onNext = {},
+        )
+    }
+}
+
+@LightDarkPreview
+@Composable
+private fun MemoryCardsScreenInProgressPreview() {
+    LexiconTheme {
+        MemoryCardsScreenContent(
+            uiState =
+                MemoryCardsUiState.Loaded(
+                    stepIndex = 2,
+                    totalSteps = 10,
+                    cards = previewCards,
+                    matchedItemIds = setOf(1),
+                    incorrectFlashCardIds = setOf(2, 3),
+                    incorrectAttempts = 1,
                 ),
             onClose = {},
             onCardSelected = {},

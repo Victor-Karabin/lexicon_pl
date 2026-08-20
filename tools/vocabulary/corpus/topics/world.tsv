@@ -1,0 +1,184 @@
+# Health, travel, work, technology, leisure, nature and civic vocabulary. Columns as in core.tsv.
+ramię	shoulder, arm	n	A2	body
+łokieć	elbow	n	B1	body
+kolano	knee	n	A2	body
+stopa	foot	n	A2	body
+szyja	neck	n	A2	body
+brew	eyebrow	n	B1	body,appearance
+warga	lip	n	B1	body
+czoło	forehead	n	B1	body
+policzek	cheek	n	B1	body
+paznokieć	nail	n	B1	body
+żołądek	stomach	n	A2	body,health
+płuca	lungs	n	B1	body,medicine
+mózg	brain	n	B1	body,medicine
+wątroba	liver	n	B2	body,medicine
+gorączka	fever	n	A2	health
+kaszel	cough	n	A2	health
+katar	runny nose	n	A2	health
+grypa	flu	n	A2	health
+przeziębienie	cold (illness)	n	A2	health
+alergia	allergy	n	A2	health
+rana	wound	n	B1	health,medicine
+badanie	examination	n	A2	health,hospital
+wizyta	appointment, visit	n	A1	health
+recepta	prescription	n	A2	health,pharmacy
+szczepienie	vaccination	n	B1	health,medicine
+operacja	surgery, operation	n	B1	health,hospital
+dieta	diet	n	A2	health,food
+oddychać	to breathe	v	B1	health,body
+leczyć	to treat	v	B1	health,medicine
+boleć	to hurt	v	A1	health
+wyzdrowieć	to recover	v	B1	health
+tabletka	tablet	n	A2	medicine,pharmacy
+syrop	syrup	n	A2	medicine,pharmacy
+maść	ointment	n	B1	medicine,pharmacy
+zastrzyk	injection	n	B1	medicine,hospital
+witamina	vitamin	n	A2	medicine,pharmacy
+antybiotyk	antibiotic	n	B1	medicine,pharmacy
+dawka	dose	n	B1	medicine,pharmacy
+plaster	plaster	n	A2	medicine,pharmacy
+bandaż	bandage	n	B1	medicine
+termometr	thermometer	n	A2	medicine
+apteczka	first-aid kit	n	B1	medicine,emergency
+kropla	drop	n	A2	medicine,pharmacy
+farmaceuta	pharmacist	n	B1	pharmacy,professions
+lek	drug, medicine	n	A2	pharmacy,medicine
+bez recepty	over the counter	expr	B1	pharmacy
+opakowanie	packaging	n	A2	pharmacy,shopping
+ulotka	leaflet	n	B1	pharmacy
+dawkowanie	dosage	n	B2	pharmacy,medicine
+zamiennik	substitute	n	B2	pharmacy
+kolejka	queue, turn	n	A1	pharmacy,shopping
+oddział	ward, department	n	B1	hospital
+izba przyjęć	accident and emergency	n	B2	hospital,emergency
+chirurg	surgeon	n	B1	hospital,professions
+pacjent	patient	n	A2	hospital,health
+kroplówka	drip	n	B2	hospital
+karetka	ambulance	n	A2	hospital,emergency
+zabieg	procedure	n	B1	hospital,medicine
+rejestracja	registration desk	n	A2	hospital
+wyniki	results	n	A2	hospital,studying
+pożar	fire	n	A2	emergency
+alarm	alarm	n	A2	emergency
+ewakuacja	evacuation	n	B2	emergency
+ratownik	lifeguard, rescuer	n	B1	emergency
+gaśnica	fire extinguisher	n	B2	emergency
+numer alarmowy	emergency number	n	A2	emergency
+ofiara	victim	n	B1	emergency,police
+ostrzeżenie	warning	n	B1	emergency
+zagrożenie	threat	n	B2	emergency
+komisariat	police station	n	B1	police
+mandat	fine	n	B1	police,law
+przestępca	criminal	n	B1	police,law
+złodziej	thief	n	A2	police,law
+aresztować	to arrest	v	B1	police,law
+śledztwo	investigation	n	B2	police,law
+zeznanie	testimony	n	B2	police,law
+patrol	patrol	n	B1	police
+zgłosić	to report	v	B1	police,emergency
+sędzia	judge, referee	n	A2	law,sports
+prokurator	prosecutor	n	B2	law
+wyrok	verdict	n	B1	law
+rozprawa	hearing	n	B2	law
+skarga	complaint	n	B2	law
+konstytucja	constitution	n	B1	law,politics
+ustawa	act, statute	n	B2	law,politics
+obrona	defence	n	B1	law,sports
+oskarżony	defendant	n	B2	law
+sejm	lower house of parliament	n	B1	politics
+senat	senate	n	B1	politics
+głosowanie	vote	n	B1	politics
+kampania	campaign	n	B1	politics
+poseł	member of parliament	n	B1	politics
+premier	prime minister	n	A2	politics
+opozycja	opposition	n	B2	politics
+koalicja	coalition	n	B2	politics
+samorząd	local government	n	B2	politics
+demokracja	democracy	n	B1	politics
+Polska	Poland	n	A1	countries
+Niemcy	Germany	n	A1	countries
+Francja	France	n	A1	countries
+Anglia	England	n	A1	countries
+Hiszpania	Spain	n	A1	countries
+Włochy	Italy	n	A1	countries
+Ukraina	Ukraine	n	A1	countries
+Czechy	Czechia	n	A1	countries
+Rosja	Russia	n	A1	countries
+Stany Zjednoczone	United States	n	A2	countries
+Wielka Brytania	Great Britain	n	A2	countries
+Szwecja	Sweden	n	A2	countries
+Norwegia	Norway	n	A2	countries
+Litwa	Lithuania	n	A2	countries
+Słowacja	Slovakia	n	A2	countries
+Węgry	Hungary	n	A2	countries
+Chiny	China	n	A1	countries
+Japonia	Japan	n	A1	countries
+Warszawa	Warsaw	n	A1	cities
+Kraków	Krakow	n	A1	cities
+Gdańsk	Gdansk	n	A1	cities
+Wrocław	Wroclaw	n	A2	cities
+Poznań	Poznan	n	A2	cities
+stolica	capital	n	A2	cities,countries
+centrum	centre	n	A1	cities,directions
+dzielnica	district	n	A2	cities
+ratusz	town hall	n	B1	cities,tourism
+most	bridge	n	A1	cities,directions
+park	park	n	A1	cities,nature
+plac	square	n	A1	cities,directions
+przedmieścia	suburbs	n	B2	cities
+zabytek	monument, landmark	n	B1	cities,tourism
+pomnik	statue	n	B1	cities,tourism
+kościół	church	n	A1	cities,tourism
+zamek	castle, lock	n	A1	cities,tourism
+przewodnik	guide, guidebook	n	A2	tourism
+muzeum	museum	n	A1	tourism
+wystawa	exhibition	n	A2	tourism
+pamiątka	souvenir	n	A2	tourism,shopping
+atrakcja	attraction	n	A2	tourism
+zwiedzanie	sightseeing	n	A2	tourism
+wstęp	admission	n	A2	tourism
+turysta	tourist	n	A1	tourism
+sezon	season	n	A2	tourism,dates
+nocleg	accommodation	n	B1	tourism,hotel
+zameldowanie	check-in	n	B1	hotel
+wymeldowanie	check-out	n	B1	hotel
+pokojówka	housekeeper	n	B2	hotel,professions
+winda	lift	n	A1	hotel,home
+pościel	bedding	n	B1	hotel,household
+sejf	safe	n	B1	hotel,finance
+portier	doorman	n	B2	hotel,professions
+odlot	departure	n	A2	airport
+przylot	arrival	n	A2	airport
+lot	flight	n	A1	airport,transport
+odprawa	check-in (airport)	n	B1	airport
+bramka	gate, goal	n	A2	airport,sports
+stewardessa	flight attendant	n	A2	airport,professions
+opóźnienie	delay	n	A2	airport,transport
+karta pokładowa	boarding pass	n	B1	airport
+celnik	customs officer	n	B2	airport,professions
+terminal	terminal	n	A2	airport
+metro	underground	n	A1	transport
+tramwaj	tram	n	A1	transport
+taksówka	taxi	n	A1	transport
+korek	traffic jam, cork	n	A2	transport
+parking	car park	n	A1	transport
+benzyna	petrol	n	A2	transport
+kierownica	steering wheel	n	B1	transport
+silnik	engine	n	A2	transport
+prędkość	speed	n	A2	transport
+rozkład jazdy	timetable	n	A2	transport
+peron	platform	n	A2	transport
+wsiadać	to get on	v	A2	transport
+wysiadać	to get off	v	A2	transport
+skręcać	to turn	v	A2	directions
+zakręt	bend	n	B1	directions
+skrzyżowanie	crossroads	n	A2	directions
+rondo	roundabout	n	A2	directions
+róg	corner, horn	n	A2	directions
+naprzeciwko	opposite	prep	A2	directions
+obok	next to	prep	A1	directions
+pomiędzy	between	prep	A2	directions
+nad	above, over	prep	A1	directions
+kierunek	direction	n	A2	directions
+odległość	distance	n	B1	directions

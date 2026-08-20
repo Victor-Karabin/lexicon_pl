@@ -1,13 +1,12 @@
 package com.lexicon.presentation.dictationpuzzle
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -19,27 +18,24 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.AnswerStatusLabel
+import com.lexicon.presentation.common.BuiltAnswerField
 import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.LetterTileGrid
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.TrainingUnavailableContent
 import com.lexicon.presentation.common.shuffleIntoTiles
 import com.lexicon.presentation.theme.Dimens
-import com.lexicon.presentation.theme.LexiconError
-import com.lexicon.presentation.theme.LexiconShapes
-import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.PlayButton
 import com.lexicon.presentation.theme.component.ProgressDots
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,7 +43,7 @@ fun DictationPuzzleScreen(
     onSessionComplete: (correct: Int, incorrect: Int, skipped: Int, tipsUsed: Int) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: DictationPuzzleViewModel = hiltViewModel(),
+    viewModel: DictationPuzzleViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -93,6 +89,9 @@ private fun DictationPuzzleScreenContent(
         topBar = { TrainingTopBar(title = stringResource(R.string.dictation_puzzle_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
+            DictationPuzzleUiState.Unavailable ->
+                TrainingUnavailableContent(onClose = onClose, modifier = Modifier.padding(padding))
+
             is DictationPuzzleUiState.Loading ->
                 Column(
                     modifier = Modifier.fillMaxSize().padding(padding),
@@ -102,18 +101,12 @@ private fun DictationPuzzleScreenContent(
                     CircularProgressIndicator()
                 }
             is DictationPuzzleUiState.Loaded -> {
-                // Mirrors DictationScreen's state -> color mapping so both screens read consistently.
-                val answerColor = when (uiState.answerState) {
-                    is AnswerState.Correct -> LexiconSuccess
-                    is AnswerState.Incorrect, is AnswerState.Skipped -> LexiconError
-                    is AnswerState.Unanswered -> MaterialTheme.colorScheme.outline
-                }
-
                 Column(modifier = Modifier.fillMaxSize().padding(padding)) {
                     Column(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth()
+                            .verticalScroll(rememberScrollState())
                             .padding(Dimens.spacingMedium),
                     ) {
                         ProgressDots(
@@ -128,21 +121,11 @@ private fun DictationPuzzleScreenContent(
                             modifier = Modifier.padding(top = Dimens.spacingLarge),
                         )
 
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = Dimens.spacingMedium)
-                                .clip(LexiconShapes.small)
-                                .background(MaterialTheme.colorScheme.surfaceVariant)
-                                .border(1.dp, answerColor, LexiconShapes.small)
-                                .padding(Dimens.spacingMedium),
-                        ) {
-                            Text(
-                                text = uiState.builtAnswer.ifEmpty { " " },
-                                style = MaterialTheme.typography.headlineSmall,
-                                color = answerColor,
-                            )
-                        }
+                        BuiltAnswerField(
+                            answer = uiState.builtAnswer,
+                            answerState = uiState.answerState,
+                            modifier = Modifier.padding(top = Dimens.spacingMedium),
+                        )
 
                         LetterTileGrid(
                             tiles = uiState.availableTiles,
@@ -160,21 +143,10 @@ private fun DictationPuzzleScreenContent(
                             }
                         }
 
-                        val statusLabel = when (uiState.answerState) {
-                            is AnswerState.Correct -> stringResource(R.string.status_correct)
-                            is AnswerState.Incorrect -> stringResource(R.string.status_incorrect)
-                            is AnswerState.Skipped -> stringResource(R.string.status_skipped)
-                            is AnswerState.Unanswered -> null
-                        }
-                        statusLabel?.let { label ->
-                            Text(
-                                text = label,
-                                color = answerColor,
-                                modifier = Modifier.padding(top = Dimens.spacingMedium),
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
-                            )
-                        }
+                        AnswerStatusLabel(
+                            answerState = uiState.answerState,
+                            modifier = Modifier.padding(top = Dimens.spacingMedium),
+                        )
 
                         uiState.revealedAnswer?.let { answer ->
                             Text(
@@ -202,7 +174,7 @@ private fun DictationPuzzleScreenContent(
 
 private val previewTiles = shuffleIntoTiles("praca")
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun DictationPuzzleScreenUnansweredPreview() {
     LexiconTheme {
@@ -226,7 +198,7 @@ private fun DictationPuzzleScreenUnansweredPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun DictationPuzzleScreenIncorrectPreview() {
     LexiconTheme {

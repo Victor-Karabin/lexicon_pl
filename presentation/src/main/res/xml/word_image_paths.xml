@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Only the one directory the app writes its own word pictures into. -->
+<paths>
+    <files-path name="word_images" path="word_images/" />
+</paths>

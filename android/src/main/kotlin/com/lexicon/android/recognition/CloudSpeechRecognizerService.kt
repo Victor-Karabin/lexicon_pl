@@ -1,0 +1,50 @@
+package com.lexicon.android.recognition
+
+import android.util.Log
+import com.lexicon.android.audio.AudioRecorder
+import com.lexicon.android.audio.RECORDING_SAMPLE_RATE_HZ
+import com.lexicon.android.cloud.CloudSpeechApi
+import com.lexicon.android.speech.POLISH_LANGUAGE_TAG
+import com.lexicon.boundary.SpeechRecognitionFailed
+import com.lexicon.boundary.SpeechRecognitionResult
+import com.lexicon.boundary.SpeechRecognizerService
+import com.lexicon.common.DispatcherProvider
+import kotlinx.coroutines.withContext
+import java.io.File
+
+class CloudSpeechRecognizerService(
+    private val recorder: AudioRecorder,
+    private val api: CloudSpeechApi,
+    private val device: SpeechRecognizerService,
+    private val dispatchers: DispatcherProvider,
+) : SpeechRecognizerService {
+    override suspend fun recognize(): SpeechRecognitionResult {
+        if (!api.isConfigured) return device.recognize()
+
+        val path = recorder.record() ?: run {
+            Log.w(TAG, "The microphone produced nothing to recognise")
+            throw SpeechRecognitionFailed("Nothing was recorded")
+        }
+
+        val transcript = withContext(dispatchers.io) {
+            runCatching { api.recognize(File(path).readBytes(), POLISH_LANGUAGE_TAG, RECORDING_SAMPLE_RATE_HZ) }
+                .onFailure { failure -> Log.e(TAG, "Cloud recognition threw", failure) }
+                .getOrNull()
+        }
+
+        if (transcript == null) {
+            Log.w(TAG, "Cloud returned no transcript; asking for the phrase again")
+            throw SpeechRecognitionFailed("Speech could not be recognised just now")
+        }
+
+        return SpeechRecognitionResult(
+            recognizedText = transcript.text,
+            confidence = transcript.confidence,
+            audioFilePath = path,
+        )
+    }
+
+    private companion object {
+        private const val TAG = "CloudSpeechRecognizer"
+    }
+}

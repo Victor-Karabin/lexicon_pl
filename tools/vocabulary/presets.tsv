@@ -1,0 +1,77 @@
+# Vocabulary presets. Columns:
+#   id, category, select_type, select_arg, popularity, icon, color, title_en, title_pl, desc_en, desc_pl
+# select_type: frequency (arg = how many of the most common words) | topic (arg = tag) | pos (arg = part of speech)
+# popularity: editorial ranking used by the "most popular" sort; lower comes first.
+top-100	frequency	frequency	100	1	trending_up	#2E7D32	Top 100	Top 100	The hundred words you will meet first in almost any Polish sentence.	Sto słów, które spotkasz w niemal każdym polskim zdaniu.
+top-250	frequency	frequency	250	2	trending_up	#2E7D32	Top 250	Top 250	Enough everyday vocabulary to follow the shape of a simple conversation.	Słownictwo wystarczające, by nadążyć za prostą rozmową.
+top-500	frequency	frequency	500	3	trending_up	#2E7D32	Top 500	Top 500	The core of spoken Polish, covering most of what you hear day to day.	Rdzeń mówionej polszczyzny, obecny w codziennych rozmowach.
+top-1000	frequency	frequency	1000	4	trending_up	#2E7D32	Top 1000	Top 1000	A working everyday vocabulary for reading and conversation.	Praktyczne słownictwo do czytania i rozmowy.
+phrases	everyday-life	pos	expr	5	record_voice_over	#EF6C00	Phrases	Zwroty	What you actually say: asking, ordering, apologising and finding your way.	To, co naprawdę mówisz: pytania, zamówienia, przeprosiny i pytanie o drogę.
+greetings	everyday-life	topic	greetings	10	waving_hand	#EF6C00	Greetings	Powitania	Hello, goodbye, thank you — the phrases every conversation starts with.	Cześć, do widzenia, dziękuję — od tego zaczyna się rozmowa.
+introductions	everyday-life	topic	introductions	11	person_add	#EF6C00	Introductions	Przedstawianie się	Saying who you are, where you are from and what you do.	Kim jesteś, skąd pochodzisz i czym się zajmujesz.
+daily-conversation	everyday-life	topic	daily-conversation	12	chat	#EF6C00	Daily conversation	Codzienna rozmowa	The connectors and fillers that hold spoken Polish together.	Zwroty i spójniki, które spajają mówioną polszczyznę.
+family	everyday-life	topic	family	13	family_restroom	#EF6C00	Family	Rodzina	Parents, siblings, grandparents and the wider family.	Rodzice, rodzeństwo, dziadkowie i dalsza rodzina.
+relationships	everyday-life	topic	relationships	14	favorite	#EF6C00	Relationships	Relacje	Friendship, love, weddings and the words in between.	Przyjaźń, miłość, ślub i wszystko pomiędzy.
+home	everyday-life	topic	home	15	home	#EF6C00	Home	Dom	Rooms, furniture and the parts of a flat or house.	Pokoje, meble i części mieszkania lub domu.
+household	everyday-life	topic	household	16	cleaning_services	#EF6C00	Household	Gospodarstwo domowe	Cleaning, laundry and the appliances that do them.	Sprzątanie, pranie i sprzęty, które w tym pomagają.
+food	everyday-life	topic	food	17	restaurant	#EF6C00	Food	Jedzenie	Meals, ingredients, fruit and vegetables.	Posiłki, składniki, owoce i warzywa.
+drinks	everyday-life	topic	drinks	18	local_cafe	#EF6C00	Drinks	Napoje	Coffee, tea, juice and what to order at a bar.	Kawa, herbata, sok i co zamówić w barze.
+cooking	everyday-life	topic	cooking	19	soup_kitchen	#EF6C00	Cooking	Gotowanie	Recipes, methods and what is in the kitchen drawer.	Przepisy, sposoby przyrządzania i sprzęt kuchenny.
+shopping	everyday-life	topic	shopping	20	shopping_cart	#EF6C00	Shopping	Zakupy	Prices, sizes, receipts and asking for a discount.	Ceny, rozmiary, paragony i pytanie o zniżkę.
+clothing	everyday-life	topic	clothing	21	checkroom	#EF6C00	Clothing	Ubrania	Everything you wear, from socks to a winter coat.	Wszystko, co nosisz — od skarpetek po zimowy płaszcz.
+weather	everyday-life	topic	weather	22	wb_sunny	#EF6C00	Weather	Pogoda	Sun, rain, frost and the small talk they produce.	Słońce, deszcz, mróz i rozmowy, które wywołują.
+time	everyday-life	topic	time	23	schedule	#EF6C00	Time	Czas	Hours, moments, being early and being late.	Godziny, chwile, punktualność i spóźnienia.
+dates	everyday-life	topic	dates	24	calendar_month	#EF6C00	Dates	Daty	Days of the week, months, seasons and birthdays.	Dni tygodnia, miesiące, pory roku i urodziny.
+numbers	everyday-life	topic	numbers	25	pin	#EF6C00	Numbers	Liczby	Counting, quantities, halves and percentages.	Liczenie, ilości, połowy i procenty.
+colors	everyday-life	topic	colors	26	palette	#EF6C00	Colours	Kolory	Basic colours plus the shades in between.	Podstawowe kolory i odcienie pomiędzy nimi.
+shapes	everyday-life	topic	shapes	27	category	#EF6C00	Shapes	Kształty	Circles, squares and the words for size and form.	Koła, kwadraty i słowa opisujące formę.
+body	people	topic	body	28	accessibility	#6A1B9A	Body	Ciało	Head to toe, inside and out.	Od stóp do głów, z zewnątrz i od środka.
+appearance	people	topic	appearance	29	face	#6A1B9A	Appearance	Wygląd	Describing how somebody looks.	Opisywanie tego, jak ktoś wygląda.
+personality	people	topic	personality	30	psychology	#6A1B9A	Personality	Charakter	Patient, stubborn, generous — describing character.	Cierpliwy, uparty, hojny — opisywanie charakteru.
+emotions	people	topic	emotions	31	mood	#6A1B9A	Emotions	Emocje	Joy, fear, relief and everything they bring.	Radość, strach, ulga i wszystko, co im towarzyszy.
+health	people	topic	health	32	favorite_border	#6A1B9A	Health	Zdrowie	Symptoms, appointments and getting better.	Objawy, wizyty i powrót do zdrowia.
+medicine	people	topic	medicine	33	medication	#6A1B9A	Medicine	Leki	Tablets, doses, bandages and first aid.	Tabletki, dawki, bandaże i pierwsza pomoc.
+pharmacy	people	topic	pharmacy	34	local_pharmacy	#6A1B9A	Pharmacy	Apteka	Asking for medicine, with or without a prescription.	Prośba o lek, na receptę i bez recepty.
+hospital	people	topic	hospital	35	local_hospital	#6A1B9A	Hospital	Szpital	Wards, procedures and who does what.	Oddziały, zabiegi i kto czym się zajmuje.
+animals	nature	topic	animals	36	pets	#00695C	Animals	Zwierzęta	Pets, farm animals and animals from further away.	Zwierzęta domowe, gospodarskie i egzotyczne.
+birds	nature	topic	birds	37	flutter_dash	#00695C	Birds	Ptaki	Sparrows, storks, owls and their nests and wings.	Wróble, bociany, sowy oraz ich gniazda i skrzydła.
+fish	nature	topic	fish	38	set_meal	#00695C	Fish	Ryby	Freshwater and sea fish, and how to catch them.	Ryby słodkowodne i morskie oraz jak je łowić.
+insects	nature	topic	insects	39	bug_report	#00695C	Insects	Owady	Bees, ants, butterflies and the ones that sting.	Pszczoły, mrówki, motyle i te, które żądlą.
+plants	nature	topic	plants	40	local_florist	#00695C	Plants	Rośliny	Leaves, roots, herbs and how things grow.	Liście, korzenie, zioła i jak rośliny rosną.
+trees	nature	topic	trees	41	park	#00695C	Trees	Drzewa	Oak, birch, pine and the parts of a tree.	Dąb, brzoza, sosna i części drzewa.
+flowers	nature	topic	flowers	42	yard	#00695C	Flowers	Kwiaty	Roses, tulips, petals and bouquets.	Róże, tulipany, płatki i bukiety.
+nature	nature	topic	nature	43	forest	#00695C	Nature	Natura	Landscape, air, earth, water and fire.	Krajobraz, powietrze, ziemia, woda i ogień.
+mountains	nature	topic	mountains	44	terrain	#00695C	Mountains	Góry	Peaks, valleys, trails and mountain huts.	Szczyty, doliny, szlaki i schroniska.
+forest	nature	topic	forest	45	nature	#00695C	Forest	Las	Trees, moss, mushrooms and forest animals.	Drzewa, mech, grzyby i leśne zwierzęta.
+sea	nature	topic	sea	46	sailing	#00695C	Sea	Morze	Waves, beaches, ships and sea creatures.	Fale, plaże, statki i morskie stworzenia.
+transport	travel	topic	transport	47	directions_bus	#0277BD	Transport	Transport	Cars, trains, trams and getting on and off them.	Samochody, pociągi, tramwaje i wsiadanie do nich.
+airport	travel	topic	airport	48	flight	#0277BD	Airport	Lotnisko	Check-in, gates, boarding passes and delays.	Odprawa, bramki, karty pokładowe i opóźnienia.
+hotel	travel	topic	hotel	49	hotel	#0277BD	Hotel	Hotel	Booking a room, checking in and asking for a towel.	Rezerwacja pokoju, meldunek i prośba o ręcznik.
+directions	travel	topic	directions	50	explore	#0277BD	Directions	Kierunki	Left, right, straight on and how far it is.	W lewo, w prawo, prosto i jak daleko.
+tourism	travel	topic	tourism	51	tour	#0277BD	Tourism	Turystyka	Museums, guides, tickets and souvenirs.	Muzea, przewodnicy, bilety i pamiątki.
+countries	travel	topic	countries	52	public	#0277BD	Countries	Kraje	Country names, nationalities and borders.	Nazwy krajów, narodowości i granice.
+cities	travel	topic	cities	53	location_city	#0277BD	Cities	Miasta	Polish cities and what you find in a town centre.	Polskie miasta i to, co znajdziesz w centrum.
+school	education	topic	school	54	school	#4527A0	School	Szkoła	Lessons, subjects, grades and the school day.	Lekcje, przedmioty, oceny i szkolny dzień.
+university	education	topic	university	55	account_balance	#4527A0	University	Uniwersytet	Faculties, semesters, theses and scholarships.	Wydziały, semestry, prace dyplomowe i stypendia.
+classroom	education	topic	classroom	56	edit	#4527A0	Classroom	Klasa	Desks, textbooks, chalk and what is in your bag.	Ławki, podręczniki, kreda i zawartość plecaka.
+studying	education	topic	studying	57	menu_book	#4527A0	Studying	Nauka	Revision, memory, progress and making mistakes.	Powtórki, pamięć, postępy i popełnianie błędów.
+office	work	topic	office	58	business_center	#37474F	Office	Biuro	Salary, leave, promotions and job interviews.	Pensja, urlop, awans i rozmowy kwalifikacyjne.
+business	work	topic	business	59	storefront	#37474F	Business	Biznes	Clients, contracts, brands and the market.	Klienci, umowy, marki i rynek.
+professions	work	topic	professions	60	badge	#37474F	Professions	Zawody	What people do for a living.	Czym ludzie zajmują się zawodowo.
+meetings	work	topic	meetings	61	groups	#37474F	Meetings	Spotkania	Agendas, participants, decisions and summaries.	Agendy, uczestnicy, decyzje i podsumowania.
+finance	work	topic	finance	62	savings	#37474F	Finance	Finanse	Accounts, transfers, loans and interest.	Konta, przelewy, pożyczki i odsetki.
+computer	technology	topic	computer	63	computer	#455A64	Computer	Komputer	Screens, files, keyboards and installing things.	Ekrany, pliki, klawiatury i instalowanie.
+internet	technology	topic	internet	64	language	#455A64	Internet	Internet	Websites, passwords, links and social media.	Strony, hasła, linki i media społecznościowe.
+smartphone	technology	topic	smartphone	65	smartphone	#455A64	Smartphone	Smartfon	Calls, messages, batteries and signal.	Rozmowy, wiadomości, bateria i zasięg.
+programming	technology	topic	programming	66	code	#455A64	Programming	Programowanie	Code, functions, loops and repositories.	Kod, funkcje, pętle i repozytoria.
+sports	leisure	topic	sports	67	sports_soccer	#AD1457	Sports	Sport	Matches, teams, goals and winning or losing.	Mecze, drużyny, gole oraz wygrane i porażki.
+fitness	leisure	topic	fitness	68	fitness_center	#AD1457	Fitness	Fitness	Training, stretching, endurance and calories.	Trening, rozciąganie, wytrzymałość i kalorie.
+music	leisure	topic	music	69	music_note	#AD1457	Music	Muzyka	Instruments, concerts, rhythm and lyrics.	Instrumenty, koncerty, rytm i teksty piosenek.
+movies	leisure	topic	movies	70	movie	#AD1457	Movies	Filmy	Genres, subtitles, actors and premieres.	Gatunki, napisy, aktorzy i premiery.
+books	leisure	topic	books	71	auto_stories	#AD1457	Books	Książki	Novels, chapters, authors and reviews.	Powieści, rozdziały, autorzy i recenzje.
+games	leisure	topic	games	72	sports_esports	#AD1457	Games	Gry	Boards, pieces, turns and who won.	Plansze, pionki, kolejki i kto wygrał.
+hobbies	leisure	topic	hobbies	73	interests	#AD1457	Hobbies	Hobby	Gardening, painting, collecting and yoga.	Ogrodnictwo, malowanie, kolekcjonowanie i joga.
+police	government	topic	police	74	local_police	#5D4037	Police	Policja	Stations, fines, thefts and reporting a crime.	Komisariaty, mandaty, kradzieże i zgłoszenia.
+law	government	topic	law	75	gavel	#5D4037	Law	Prawo	Courts, judges, verdicts and rights.	Sądy, sędziowie, wyroki i prawa.
+politics	government	topic	politics	76	how_to_vote	#5D4037	Politics	Polityka	Elections, parliament, parties and voting.	Wybory, parlament, partie i głosowanie.
+emergency	government	topic	emergency	77	emergency	#5D4037	Emergency	Sytuacje awaryjne	Fire, accidents, warnings and calling for help.	Pożar, wypadki, ostrzeżenia i wzywanie pomocy.

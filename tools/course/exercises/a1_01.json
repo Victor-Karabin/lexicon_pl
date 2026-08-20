@@ -1,0 +1,540 @@
+{
+  "_comment": [
+    "Lesson 1 of the A1 coursebook, transcribed by hand from the book's own pages.",
+    "",
+    "Hand-authored rather than extracted: the answer key prints its exercises filled",
+    "in by hand, and OCR of that handwriting is unusable — 101A3's first line comes",
+    "out as 'Studentka: /Z7..41.... dobry.'. The coursebook's text layer gives the",
+    "gapped lines cleanly and the key's transcript gives the answers, so the two were",
+    "read side by side and written out here.",
+    "",
+    "'___' marks a missing word, '_' a missing letter, and 'icon:name' a drawing.",
+    "Only the words the exercise itself asks for are reproduced."
+  ],
+  "lesson": 1,
+  "exercises": [
+    {
+      "tag": "101A3",
+      "type": "gap_fill",
+      "instruction": "Proszę posłuchać i uzupełnić dialogi.",
+      "items": [
+        {
+          "label": "Sekretarka",
+          "prompt": "Dzień dobry. Jestem Agnieszka Polańska.",
+          "answers": []
+        },
+        {
+          "label": "Studentka",
+          "prompt": "___ dobry. ___ się Mami Takada.",
+          "answers": [
+            "Dzień",
+            "Nazywam"
+          ]
+        },
+        {
+          "label": "Sekretarka",
+          "prompt": "___ mi miło.",
+          "answers": [
+            "Bardzo"
+          ]
+        },
+        {
+          "label": "Studentka",
+          "prompt": "Miło ___ .",
+          "answers": [
+            "mi"
+          ]
+        },
+        {
+          "label": "Student",
+          "prompt": "Cześć, ___ Tom, a ty?",
+          "answers": [
+            "jestem"
+          ]
+        },
+        {
+          "label": "Studentka",
+          "prompt": "___ , jestem Mami.",
+          "answers": [
+            "Cześć"
+          ]
+        },
+        {
+          "label": "Student",
+          "prompt": "___ mi.",
+          "answers": [
+            "Miło"
+          ]
+        },
+        {
+          "label": "Studentka",
+          "prompt": "Bardzo ___ miło.",
+          "answers": [
+            "mi"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "101B2",
+      "type": "repeat",
+      "instruction": "Proszę powtórzyć.",
+      "items": [
+        {
+          "text": "być"
+        },
+        {
+          "text": "dym"
+        },
+        {
+          "text": "dziecko"
+        },
+        {
+          "text": "jak"
+        },
+        {
+          "text": "żakiet"
+        },
+        {
+          "text": "książka"
+        },
+        {
+          "text": "rower"
+        },
+        {
+          "text": "Rzym"
+        },
+        {
+          "text": "rzadko"
+        },
+        {
+          "text": "szybko"
+        },
+        {
+          "text": "silny"
+        },
+        {
+          "text": "drzewo"
+        },
+        {
+          "text": "drżeć"
+        },
+        {
+          "text": "fotografia"
+        },
+        {
+          "text": "bank"
+        },
+        {
+          "text": "restauracja"
+        },
+        {
+          "text": "program"
+        },
+        {
+          "text": "interesujący"
+        },
+        {
+          "text": "kino"
+        },
+        {
+          "text": "teatr"
+        },
+        {
+          "text": "plan"
+        },
+        {
+          "text": "projekt"
+        },
+        {
+          "text": "komputer"
+        }
+      ]
+    },
+    {
+      "tag": "101B3",
+      "type": "transcribe",
+      "instruction": "Co mówi lektor?",
+      "items": [
+        {
+          "label": "a",
+          "answers": [
+            "cześć"
+          ]
+        },
+        {
+          "label": "b",
+          "answers": [
+            "szkoła"
+          ]
+        },
+        {
+          "label": "c",
+          "answers": [
+            "dziękuję"
+          ]
+        },
+        {
+          "label": "d",
+          "answers": [
+            "przepraszam"
+          ]
+        },
+        {
+          "label": "e",
+          "answers": [
+            "powtórzyć"
+          ]
+        },
+        {
+          "label": "f",
+          "answers": [
+            "sześć"
+          ]
+        },
+        {
+          "label": "g",
+          "answers": [
+            "dziewięć"
+          ]
+        },
+        {
+          "label": "h",
+          "answers": [
+            "gdzie"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "101B4",
+      "type": "minimal_pair",
+      "instruction": "Co mówi lektor?",
+      "items": [
+        {
+          "label": "a",
+          "options": [
+            "krzywy",
+            "grzyby"
+          ],
+          "answer": "krzywy"
+        },
+        {
+          "label": "b",
+          "options": [
+            "sześć",
+            "cześć"
+          ],
+          "answer": "cześć"
+        },
+        {
+          "label": "c",
+          "options": [
+            "dziewięć",
+            "dziesięć"
+          ],
+          "answer": "dziewięć"
+        },
+        {
+          "label": "d",
+          "options": [
+            "szybko",
+            "sitko"
+          ],
+          "answer": "szybko"
+        },
+        {
+          "label": "e",
+          "options": [
+            "grzeczny",
+            "grzeszny"
+          ],
+          "answer": "grzeszny"
+        },
+        {
+          "label": "f",
+          "options": [
+            "jeden",
+            "żaden"
+          ],
+          "answer": "żaden"
+        },
+        {
+          "label": "g",
+          "options": [
+            "prasować",
+            "pracować"
+          ],
+          "answer": "pracować"
+        },
+        {
+          "label": "h",
+          "options": [
+            "cudy",
+            "cudzy"
+          ],
+          "answer": "cudzy"
+        },
+        {
+          "label": "i",
+          "options": [
+            "ładny",
+            "łatwy"
+          ],
+          "answer": "ładny"
+        },
+        {
+          "label": "j",
+          "options": [
+            "drugi",
+            "długi"
+          ],
+          "answer": "długi"
+        },
+        {
+          "label": "k",
+          "options": [
+            "mały",
+            "małe"
+          ],
+          "answer": "mały"
+        },
+        {
+          "label": "l",
+          "options": [
+            "zimno",
+            "ciemno"
+          ],
+          "answer": "ciemno"
+        },
+        {
+          "label": "m",
+          "options": [
+            "ze",
+            "że"
+          ],
+          "answer": "że"
+        },
+        {
+          "label": "n",
+          "options": [
+            "młoda",
+            "moda"
+          ],
+          "answer": "młoda"
+        },
+        {
+          "label": "o",
+          "options": [
+            "chata",
+            "kata"
+          ],
+          "answer": "kata"
+        },
+        {
+          "label": "p",
+          "options": [
+            "wódka",
+            "łódka"
+          ],
+          "answer": "łódka"
+        },
+        {
+          "label": "r",
+          "options": [
+            "sen",
+            "syn"
+          ],
+          "answer": "sen"
+        },
+        {
+          "label": "s",
+          "options": [
+            "kaseta",
+            "gazeta"
+          ],
+          "answer": "kaseta"
+        },
+        {
+          "label": "t",
+          "options": [
+            "chart",
+            "żart"
+          ],
+          "answer": "chart"
+        },
+        {
+          "label": "u",
+          "options": [
+            "tom",
+            "dom"
+          ],
+          "answer": "dom"
+        },
+        {
+          "label": "w",
+          "options": [
+            "proszę",
+            "prosię"
+          ],
+          "answer": "proszę"
+        },
+        {
+          "label": "y",
+          "options": [
+            "Chiny",
+            "siny"
+          ],
+          "answer": "siny"
+        }
+      ]
+    },
+    {
+      "tag": "101E3",
+      "type": "match",
+      "instruction": "Proszę dopasować.",
+      "items": [
+        {
+          "label": "1",
+          "prompt": "icon:repeat",
+          "answers": [
+            "proszę powtórzyć"
+          ]
+        },
+        {
+          "label": "2",
+          "prompt": "icon:spell",
+          "answers": [
+            "proszę przeliterować"
+          ]
+        },
+        {
+          "label": "3",
+          "prompt": "icon:read",
+          "answers": [
+            "proszę przeczytać"
+          ]
+        },
+        {
+          "label": "4",
+          "prompt": "icon:write",
+          "answers": [
+            "proszę napisać"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "101E4",
+      "type": "match",
+      "instruction": "Co pasuje?",
+      "items": [
+        {
+          "label": "1",
+          "prompt": "Proszę przeliterować „dom”.",
+          "answers": [
+            "„d-o-m”"
+          ]
+        },
+        {
+          "label": "2",
+          "prompt": "Proszę powtórzyć „dziękuję”.",
+          "answers": [
+            "Dziękuję."
+          ]
+        },
+        {
+          "label": "3",
+          "prompt": "Proszę powtórzyć „szkoła”.",
+          "answers": [
+            "Szkoła."
+          ]
+        },
+        {
+          "label": "4",
+          "prompt": "Co to znaczy „dziękuję”?",
+          "answers": [
+            "Thank you."
+          ]
+        },
+        {
+          "label": "5",
+          "prompt": "Co to znaczy „dom”?",
+          "answers": [
+            "Nie wiem."
+          ]
+        },
+        {
+          "label": "6",
+          "prompt": "Proszę przeczytać „dom”.",
+          "answers": [
+            "Dom."
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "101F2",
+      "type": "letter_fill",
+      "instruction": "Proszę uzupełnić.",
+      "items": [
+        {
+          "label": "a",
+          "prompt": "j_d_n",
+          "answers": [
+            "e",
+            "e"
+          ]
+        },
+        {
+          "label": "b",
+          "prompt": "_wa",
+          "answers": [
+            "d"
+          ]
+        },
+        {
+          "label": "c",
+          "prompt": "t_z_",
+          "answers": [
+            "r",
+            "y"
+          ]
+        },
+        {
+          "label": "d",
+          "prompt": "__tery",
+          "answers": [
+            "c",
+            "z"
+          ]
+        },
+        {
+          "label": "e",
+          "prompt": "sze__",
+          "answers": [
+            "ś",
+            "ć"
+          ]
+        },
+        {
+          "label": "f",
+          "prompt": "si_d_m",
+          "answers": [
+            "e",
+            "e"
+          ]
+        },
+        {
+          "label": "g",
+          "prompt": "d__esię_",
+          "answers": [
+            "z",
+            "i",
+            "ć"
+          ]
+        }
+      ]
+    }
+  ]
+}

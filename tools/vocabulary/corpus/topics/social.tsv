@@ -1,0 +1,138 @@
+# Topical vocabulary beyond the core frequency list. Same columns as core.tsv, but position
+# carries no frequency meaning: these words rank below the core list by construction.
+cześć	hi	interj	A1	greetings
+dzień dobry	good morning	expr	A1	greetings
+dobry wieczór	good evening	expr	A1	greetings
+dobranoc	good night	expr	A1	greetings
+do widzenia	goodbye	expr	A1	greetings
+do zobaczenia	see you	expr	A1	greetings
+na razie	see you later	expr	A1	greetings
+proszę	please, here you are	part	A1	greetings,daily-conversation
+dziękuję	thank you	expr	A1	greetings
+przepraszam	sorry, excuse me	expr	A1	greetings
+nie ma za co	you are welcome	expr	A1	greetings
+miło mi	nice to meet you	expr	A1	greetings,introductions
+jak się masz	how are you	expr	A1	greetings,daily-conversation
+co słychać	what is new	expr	A2	greetings,daily-conversation
+powodzenia	good luck	expr	A2	greetings
+na zdrowie	cheers, bless you	expr	A1	greetings,drinks
+smacznego	enjoy your meal	expr	A1	greetings,food
+wszystkiego najlepszego	all the best	expr	A2	greetings,dates
+witaj	welcome	interj	A1	greetings
+nazywać się	to be called	v	A1	introductions
+imię	first name	n	A1	introductions
+nazwisko	surname	n	A1	introductions
+wiek	age, century	n	A1	introductions,dates
+pochodzić	to come from	v	A2	introductions,countries
+mieszkać	to live	v	A1	introductions,home
+narodowość	nationality	n	A2	introductions,countries
+przedstawiać	to introduce	v	A2	introductions
+skąd	where from	adv	A1	introductions,directions
+obcokrajowiec	foreigner	n	B1	introductions,countries
+kawaler	bachelor	n	B1	introductions,relationships
+żonaty	married (man)	adj	A2	introductions,relationships
+zamężna	married (woman)	adj	A2	introductions,relationships
+osoba	person	n	A1	people
+ludzie	people	n	A1	people
+chłopiec	boy	n	A1	people,family
+dziewczyna	girl, girlfriend	n	A1	people,relationships
+chłopak	boy, boyfriend	n	A1	people,relationships
+pan	sir, Mr	n	A1	people,introductions
+pani	madam, Mrs	n	A1	people,introductions
+dorosły	adult	n	A2	people
+nastolatek	teenager	n	A2	people
+niemowlę	baby	n	A2	people,family
+starszy	elderly, older	adj	A2	people,appearance
+tłum	crowd	n	B1	people,cities
+gość	guest	n	A1	people,hotel
+mieszkaniec	resident	n	B1	people,cities
+sąsiad	neighbour	n	A1	people,relationships
+żona	wife	n	A1	family
+mąż	husband	n	A1	family
+babcia	grandmother	n	A1	family
+dziadek	grandfather	n	A1	family
+wnuk	grandson	n	A2	family
+wnuczka	granddaughter	n	A2	family
+ciocia	aunt	n	A1	family
+wujek	uncle	n	A1	family
+kuzyn	cousin	n	A2	family
+siostrzenica	niece	n	B1	family
+bratanek	nephew	n	B1	family
+teść	father-in-law	n	B1	family
+teściowa	mother-in-law	n	B1	family
+rodzice	parents	n	A1	family
+rodzeństwo	siblings	n	A2	family
+bliźniak	twin	n	B1	family
+krewny	relative	n	B1	family
+chrzestny	godfather	n	B2	family
+miłość	love	n	A1	relationships,emotions
+przyjaźń	friendship	n	A2	relationships
+związek	relationship	n	A2	relationships
+para	couple, pair	n	A1	relationships,numbers
+narzeczony	fiancé	n	B1	relationships
+ślub	wedding	n	A2	relationships
+wesele	wedding party	n	A2	relationships
+rozwód	divorce	n	B1	relationships
+randka	date	n	A2	relationships
+zaufanie	trust	n	B1	relationships,personality
+kłótnia	quarrel	n	B1	relationships
+znajomy	acquaintance	n	A2	relationships
+kolega	friend (male)	n	A1	relationships
+koleżanka	friend (female)	n	A1	relationships
+tęsknić	to miss	v	B1	relationships,emotions
+całować	to kiss	v	A2	relationships
+przytulać	to hug	v	A2	relationships
+obietnica	promise	n	B1	relationships
+uprzejmy	polite	adj	A2	personality
+grzeczny	well-behaved	adj	A2	personality
+nieśmiały	shy	adj	B1	personality
+pewny siebie	self-confident	adj	B1	personality
+leniwy	lazy	adj	A2	personality
+pracowity	hard-working	adj	A2	personality
+mądry	wise	adj	A1	personality
+głupi	stupid	adj	A1	personality
+uczciwy	honest	adj	B1	personality
+cierpliwy	patient	adj	B1	personality
+hojny	generous	adj	B2	personality
+skąpy	stingy	adj	B2	personality
+odważny	brave	adj	A2	personality
+tchórzliwy	cowardly	adj	B2	personality
+spokojny	calm	adj	A2	personality,emotions
+nerwowy	nervous	adj	A2	personality,emotions
+towarzyski	sociable	adj	B1	personality
+samolubny	selfish	adj	B1	personality
+wierny	loyal	adj	B1	personality
+radość	joy	n	A2	emotions
+smutek	sadness	n	A2	emotions
+strach	fear	n	A2	emotions
+złość	anger	n	A2	emotions
+nadzieja	hope	n	A2	emotions
+zazdrość	jealousy	n	B1	emotions
+duma	pride	n	B1	emotions
+wstyd	shame	n	B1	emotions
+zaskoczenie	surprise	n	B1	emotions
+ulga	relief	n	B1	emotions
+spokój	peace, calm	n	A2	emotions
+stres	stress	n	A2	emotions,health
+nastrój	mood	n	B1	emotions
+uczucie	feeling	n	A2	emotions
+zdenerwowany	annoyed	adj	B1	emotions
+podekscytowany	excited	adj	B1	emotions
+rozczarowany	disappointed	adj	B1	emotions
+wdzięczny	grateful	adj	B1	emotions
+szczupły	slim	adj	A2	appearance
+łysy	bald	adj	B1	appearance
+broda	beard, chin	n	A2	appearance,body
+wąsy	moustache	n	B1	appearance
+okulary	glasses	n	A1	appearance,clothing
+blondynka	blonde woman	n	A2	appearance
+brunetka	brunette	n	B1	appearance
+kręcony	curly	adj	B1	appearance
+prosty	straight, simple	adj	A1	appearance,shapes
+wzrost	height, growth	n	A2	appearance
+waga	weight, scales	n	A2	appearance,health
+przystojny	handsome	adj	A2	appearance
+elegancki	elegant	adj	A2	appearance,clothing
+tatuaż	tattoo	n	B1	appearance
+piegi	freckles	n	B2	appearance
+blizna	scar	n	B2	appearance,health

@@ -1,0 +1,156 @@
+# Spoken phrases: what a learner actually says, rather than compounds that merely contain a space.
+jak się nazywasz	what is your name	expr	A1	introductions
+mam na imię	my name is	expr	A1	introductions
+skąd jesteś	where are you from	expr	A1	introductions,countries
+jestem z Polski	I am from Poland	expr	A1	introductions,countries
+ile masz lat	how old are you	expr	A1	introductions,numbers
+gdzie mieszkasz	where do you live	expr	A1	introductions,home
+czym się zajmujesz	what do you do	expr	A2	introductions,professions
+miło cię poznać	nice to meet you	expr	A1	introductions,greetings
+mówię po polsku	I speak Polish	expr	A1	daily-conversation
+nie mówię po polsku	I do not speak Polish	expr	A1	daily-conversation
+czy mówisz po angielsku	do you speak English	expr	A1	daily-conversation
+nie rozumiem	I do not understand	expr	A1	daily-conversation
+czy możesz powtórzyć	could you repeat that	expr	A1	daily-conversation
+mów wolniej	speak more slowly	expr	A1	daily-conversation
+co to znaczy	what does that mean	expr	A1	daily-conversation
+jak to powiedzieć po polsku	how do you say it in Polish	expr	A2	daily-conversation,studying
+jak się to pisze	how do you spell it	expr	A2	daily-conversation,studying
+nie jestem pewien	I am not sure	expr	A2	daily-conversation
+chyba tak	I think so	expr	A2	daily-conversation
+raczej nie	probably not	expr	A2	daily-conversation
+zgadzam się	I agree	expr	A2	daily-conversation,meetings
+nie zgadzam się	I disagree	expr	A2	daily-conversation,meetings
+masz rację	you are right	expr	A2	daily-conversation
+to prawda	that is true	expr	A1	daily-conversation
+to nieprawda	that is not true	expr	A2	daily-conversation
+nie szkodzi	never mind	expr	A2	daily-conversation,greetings
+nie ma problemu	no problem	expr	A1	daily-conversation
+nie ma sprawy	no worries	expr	A2	daily-conversation
+z przyjemnością	with pleasure	expr	A2	daily-conversation
+niestety nie	unfortunately not	expr	A2	daily-conversation
+może innym razem	maybe another time	expr	B1	relationships
+trudno powiedzieć	hard to say	expr	B1	daily-conversation
+nie mam pojęcia	I have no idea	expr	B1	daily-conversation
+kto wie	who knows	expr	B1	daily-conversation
+mam nadzieję	I hope so	expr	A2	emotions
+obawiam się	I am afraid	expr	B1	emotions
+przykro mi	I am sorry	expr	A2	emotions,greetings
+cieszę się	I am glad	expr	A2	emotions
+trzymam kciuki	fingers crossed	expr	B1	relationships
+trzymaj się	take care	expr	A2	greetings
+miłego dnia	have a nice day	expr	A1	greetings
+do usłyszenia	talk to you later	expr	A2	greetings,smartphone
+daj mi znać	let me know	expr	A2	relationships,smartphone
+zadzwoń do mnie	call me	expr	A1	smartphone
+napisz do mnie	text me	expr	A1	smartphone
+zaraz wracam	I will be right back	expr	A2	daily-conversation
+muszę już iść	I have to go now	expr	A2	daily-conversation
+do zobaczenia jutro	see you tomorrow	expr	A1	greetings,dates
+sto lat	happy birthday	expr	A2	dates,greetings
+wesołych świąt	happy holidays	expr	A2	dates,greetings
+szczęśliwego nowego roku	happy new year	expr	A2	dates,greetings
+szerokiej drogi	safe journey	expr	B1	travel,greetings
+co u ciebie	how are things	expr	A1	greetings,daily-conversation
+wszystko w porządku	everything is fine	expr	A1	daily-conversation
+nie najlepiej	not so good	expr	A2	daily-conversation,health
+jestem zmęczony	I am tired	expr	A1	health,emotions
+jestem głodny	I am hungry	expr	A1	food
+chce mi się pić	I am thirsty	expr	A2	drinks
+źle się czuję	I do not feel well	expr	A2	health
+boli mnie głowa	I have a headache	expr	A1	health,body
+boli mnie brzuch	I have a stomach ache	expr	A2	health,body
+potrzebuję lekarza	I need a doctor	expr	A2	health,emergency
+zadzwoń po pogotowie	call an ambulance	expr	B1	emergency,hospital
+czy mogę prosić o pomoc	could I ask for help	expr	A2	emergency
+czy możesz mi pomóc	can you help me	expr	A1	daily-conversation,emergency
+potrzebuję pomocy	I need help	expr	A1	emergency
+czy mogę pomóc	can I help	expr	A1	daily-conversation
+ile to kosztuje	how much does it cost	expr	A1	shopping,finance
+to za drogie	that is too expensive	expr	A2	shopping
+czy mogę zapłacić kartą	can I pay by card	expr	A2	shopping,finance
+czy mogę dostać paragon	could I have a receipt	expr	A2	shopping
+czy mogę przymierzyć	may I try it on	expr	A2	shopping,clothing
+czy jest w innym rozmiarze	do you have another size	expr	B1	shopping,clothing
+gdzie jest kasa	where is the till	expr	A1	shopping
+poproszę rachunek	the bill, please	expr	A1	food,finance
+czy jest wolny stolik	is there a free table	expr	A2	food
+poproszę wodę	water, please	expr	A1	drinks
+na wynos	to take away	expr	A2	food
+na miejscu	to eat in	expr	A2	food
+jestem wegetarianinem	I am a vegetarian	expr	A2	food,health
+jestem uczulony	I am allergic	expr	B1	health,food
+czy to jest ostre	is it spicy	expr	A2	food
+gdzie jest toaleta	where is the toilet	expr	A1	directions
+gdzie jest najbliższy sklep	where is the nearest shop	expr	A2	directions,shopping
+jak dojść do centrum	how do I get to the centre	expr	A2	directions,cities
+jak dojechać na dworzec	how do I get to the station	expr	A2	directions,transport
+czy to daleko	is it far	expr	A1	directions
+idź prosto	go straight on	expr	A1	directions
+skręć w lewo	turn left	expr	A1	directions
+skręć w prawo	turn right	expr	A1	directions
+po lewej stronie	on the left	expr	A1	directions
+po prawej stronie	on the right	expr	A1	directions
+zgubiłem się	I am lost	expr	A2	directions,emergency
+czy mogę prosić o mapę	could I have a map	expr	B1	directions,tourism
+ile to zajmie	how long will it take	expr	A2	time
+która jest godzina	what time is it	expr	A1	time
+o której godzinie	at what time	expr	A1	time
+za pięć minut	in five minutes	expr	A1	time,numbers
+za godzinę	in an hour	expr	A1	time
+w przyszłym tygodniu	next week	expr	A2	dates
+w zeszłym tygodniu	last week	expr	A2	dates
+w tym roku	this year	expr	A2	dates
+od czasu do czasu	from time to time	expr	B1	time
+przez cały dzień	all day long	expr	A2	time
+co drugi dzień	every other day	expr	B1	time
+jak najszybciej	as soon as possible	expr	B1	work,time
+nie mam czasu	I do not have time	expr	A1	time
+czy jest wolny pokój	do you have a room free	expr	A2	hotel
+chciałbym zarezerwować	I would like to book	expr	B1	hotel,travel
+na jedną noc	for one night	expr	A2	hotel
+o której jest śniadanie	what time is breakfast	expr	A2	hotel,food
+gdzie mogę zostawić bagaż	where can I leave my luggage	expr	B1	hotel,airport
+mój lot jest opóźniony	my flight is delayed	expr	B1	airport
+zgubiłem bagaż	my luggage is lost	expr	B1	airport,emergency
+ile kosztuje bilet	how much is a ticket	expr	A1	transport,travel
+bilet w jedną stronę	a one-way ticket	expr	A2	transport,travel
+bilet w dwie strony	a return ticket	expr	A2	transport,travel
+o której odjeżdża pociąg	what time does the train leave	expr	A2	transport
+z którego peronu	from which platform	expr	B1	transport
+czy to miejsce jest wolne	is this seat taken	expr	A2	transport
+mam pytanie	I have a question	expr	A1	meetings,school
+czy możemy się spotkać	can we meet	expr	A2	meetings
+zaraz to sprawdzę	I will check that now	expr	B1	work,meetings
+wrócę do ciebie	I will get back to you	expr	B1	work,meetings
+zgodnie z planem	according to plan	expr	B1	work,meetings
+w miarę możliwości	as far as possible	expr	B2	work
+podoba mi się	I like it	expr	A1	emotions
+nie podoba mi się	I do not like it	expr	A1	emotions
+według mnie	in my view	expr	B1	daily-conversation
+z jednej strony	on the one hand	expr	B1	meetings
+z drugiej strony	on the other hand	expr	B1	meetings
+przede wszystkim	above all	expr	B1	daily-conversation
+poza tym	besides that	expr	B1	daily-conversation
+to znaczy	that is to say	expr	A2	daily-conversation
+innymi słowy	in other words	expr	B1	books,meetings
+krótko mówiąc	in short	expr	B1	daily-conversation
+tak czy inaczej	one way or another	expr	B1	daily-conversation
+w każdym razie	in any case	expr	B1	daily-conversation
+bez wątpienia	without a doubt	expr	B2	meetings
+co więcej	what is more	expr	B1	meetings
+mimo to	even so	expr	B1	daily-conversation
+rzecz jasna	naturally	expr	B2	daily-conversation
+że tak powiem	so to speak	expr	C1	books
+o ile wiem	as far as I know	expr	B2	daily-conversation
+ściśle rzecz biorąc	strictly speaking	expr	C1	university
+w gruncie rzeczy	essentially	expr	C1	books
+na dobrą sprawę	when it comes down to it	expr	C1	daily-conversation
+biorąc pod uwagę	taking into account	expr	B2	meetings
+w związku z tym	consequently	expr	B2	office
+zwracam się z prośbą	I would like to request	expr	C1	office
+z góry dziękuję	thank you in advance	expr	B1	office,greetings
+z poważaniem	yours sincerely	expr	B1	office
+nie martw się	do not worry	expr	A2	daily-conversation
+tak mi wstyd	I am so ashamed	expr	B1	emotions
+czy mógłby mi pan pomóc	could you help me	expr	A2	daily-conversation

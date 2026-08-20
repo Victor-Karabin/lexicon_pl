@@ -1,18 +1,14 @@
 package com.lexicon.presentation.puzzle
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,29 +18,24 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.SubcomposeAsyncImage
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.AnswerStatusLabel
+import com.lexicon.presentation.common.BuiltAnswerField
+import com.lexicon.presentation.common.ClueImage
 import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.LetterTileGrid
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.TrainingUnavailableContent
 import com.lexicon.presentation.common.shuffleIntoTiles
 import com.lexicon.presentation.theme.Dimens
-import com.lexicon.presentation.theme.LexiconError
-import com.lexicon.presentation.theme.LexiconShapes
-import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
-
-private val ImageHeight = 180.dp
+import com.lexicon.presentation.theme.component.LexiconProgressBar
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,7 +43,7 @@ fun PuzzleScreen(
     onSessionComplete: (correct: Int, incorrect: Int, skipped: Int, tipsUsed: Int) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: PuzzleViewModel = hiltViewModel(),
+    viewModel: PuzzleViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -96,6 +87,9 @@ private fun PuzzleScreenContent(
         topBar = { TrainingTopBar(title = stringResource(R.string.puzzle_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
+            PuzzleUiState.Unavailable ->
+                TrainingUnavailableContent(onClose = onClose, modifier = Modifier.padding(padding))
+
             is PuzzleUiState.Loading ->
                 Column(
                     modifier = Modifier.fillMaxSize().padding(padding),
@@ -105,21 +99,15 @@ private fun PuzzleScreenContent(
                     CircularProgressIndicator()
                 }
             is PuzzleUiState.Loaded -> {
-                // Mirrors DictationScreen's state -> color mapping so both screens read consistently.
-                val answerColor = when (uiState.answerState) {
-                    is AnswerState.Correct -> LexiconSuccess
-                    is AnswerState.Incorrect, is AnswerState.Skipped -> LexiconError
-                    is AnswerState.Unanswered -> MaterialTheme.colorScheme.outline
-                }
-
                 Column(modifier = Modifier.fillMaxSize().padding(padding)) {
                     Column(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth()
+                            .verticalScroll(rememberScrollState())
                             .padding(Dimens.spacingMedium),
                     ) {
-                        LinearProgressIndicator(
+                        LexiconProgressBar(
                             progress = { (uiState.stepIndex + 1f) / uiState.totalSteps },
                             modifier = Modifier.fillMaxWidth(),
                         )
@@ -129,40 +117,17 @@ private fun PuzzleScreenContent(
                             style = MaterialTheme.typography.labelMedium,
                         )
 
-                        Box(modifier = Modifier.fillMaxWidth().height(ImageHeight).padding(top = Dimens.spacingMedium)) {
-                            if (uiState.imageUrl == null) {
-                                Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall)
-                            } else {
-                                SubcomposeAsyncImage(
-                                    model = uiState.imageUrl,
-                                    contentDescription = null,
-                                    contentScale = ContentScale.Fit,
-                                    modifier = Modifier.fillMaxSize(),
-                                    loading = {
-                                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                                            CircularProgressIndicator()
-                                        }
-                                    },
-                                    error = { Text(uiState.clueText, style = MaterialTheme.typography.headlineSmall) },
-                                )
-                            }
-                        }
+                        ClueImage(
+                            imageUrl = uiState.imageUrl,
+                            fallbackText = uiState.clueText,
+                            modifier = Modifier.padding(top = Dimens.spacingMedium),
+                        )
 
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = Dimens.spacingMedium)
-                                .clip(LexiconShapes.small)
-                                .background(MaterialTheme.colorScheme.surfaceVariant)
-                                .border(1.dp, answerColor, LexiconShapes.small)
-                                .padding(Dimens.spacingMedium),
-                        ) {
-                            Text(
-                                text = uiState.builtAnswer.ifEmpty { " " },
-                                style = MaterialTheme.typography.headlineSmall,
-                                color = answerColor,
-                            )
-                        }
+                        BuiltAnswerField(
+                            answer = uiState.builtAnswer,
+                            answerState = uiState.answerState,
+                            modifier = Modifier.padding(top = Dimens.spacingMedium),
+                        )
 
                         LetterTileGrid(
                             tiles = uiState.availableTiles,
@@ -170,21 +135,10 @@ private fun PuzzleScreenContent(
                             modifier = Modifier.padding(top = Dimens.spacingMedium),
                         )
 
-                        val statusLabel = when (uiState.answerState) {
-                            is AnswerState.Correct -> stringResource(R.string.status_correct)
-                            is AnswerState.Incorrect -> stringResource(R.string.status_incorrect)
-                            is AnswerState.Skipped -> stringResource(R.string.status_skipped)
-                            is AnswerState.Unanswered -> null
-                        }
-                        statusLabel?.let { label ->
-                            Text(
-                                text = label,
-                                color = answerColor,
-                                modifier = Modifier.padding(top = Dimens.spacingMedium),
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
-                            )
-                        }
+                        AnswerStatusLabel(
+                            answerState = uiState.answerState,
+                            modifier = Modifier.padding(top = Dimens.spacingMedium),
+                        )
 
                         if (uiState.isEditable) {
                             uiState.tipTranslation?.let { hint ->
@@ -222,7 +176,7 @@ private fun PuzzleScreenContent(
 
 private val previewTiles = shuffleIntoTiles("praca")
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun PuzzleScreenUnansweredPreview() {
     LexiconTheme {
@@ -246,7 +200,7 @@ private fun PuzzleScreenUnansweredPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun PuzzleScreenIncorrectPreview() {
     LexiconTheme {

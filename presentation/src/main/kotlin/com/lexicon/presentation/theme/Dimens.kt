@@ -8,7 +8,6 @@ object Dimens {
     val spacingMedium = 16.dp
     val spacingLarge = 24.dp
 
-    // Reserved for medium/expanded window classes (DESIGN.md §5) — not yet used by any live screen.
     val spacingXl = 32.dp
     val spacingXxl = 48.dp
 

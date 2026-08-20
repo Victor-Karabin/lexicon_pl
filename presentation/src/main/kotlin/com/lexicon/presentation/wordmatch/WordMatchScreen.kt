@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -22,15 +24,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.TrainingUnavailableContent
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,7 +41,7 @@ fun WordMatchScreen(
     onSessionComplete: (correct: Int, incorrect: Int, skipped: Int, tipsUsed: Int) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: WordMatchViewModel = hiltViewModel(),
+    viewModel: WordMatchViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -74,6 +77,9 @@ private fun WordMatchScreenContent(
         topBar = { TrainingTopBar(title = stringResource(R.string.word_match_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
+            WordMatchUiState.Unavailable ->
+                TrainingUnavailableContent(onClose = onClose, modifier = Modifier.padding(padding))
+
             is WordMatchUiState.Loading ->
                 Column(
                     modifier = Modifier.fillMaxSize().padding(padding),
@@ -83,7 +89,13 @@ private fun WordMatchScreenContent(
                     CircularProgressIndicator()
                 }
             is WordMatchUiState.Loaded ->
-                Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding)
+                        .verticalScroll(rememberScrollState())
+                        .padding(Dimens.spacingMedium),
+                ) {
                     val leftNumbers = uiState.leftColumn.mapIndexed { index, item -> item.vocabularyItemId to index + 1 }.toMap()
 
                     Row(modifier = Modifier.fillMaxWidth()) {
@@ -172,7 +184,7 @@ private val previewRightColumn = listOf(
     WordMatchColumnItem(vocabularyItemId = 1, text = "work"),
 )
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun WordMatchScreenPreview() {
     LexiconTheme {
@@ -185,6 +197,48 @@ private fun WordMatchScreenPreview() {
                     rightColumn = previewRightColumn,
                     matchedIds = setOf(1),
                     selectedLeftId = 2,
+                ),
+            onClose = {},
+            onLeftSelected = {},
+            onRightSelected = {},
+        )
+    }
+}
+
+@LightDarkPreview
+@Composable
+private fun WordMatchScreenIncorrectPreview() {
+    LexiconTheme {
+        WordMatchScreenContent(
+            uiState =
+                WordMatchUiState.Loaded(
+                    stepIndex = 1,
+                    totalSteps = 5,
+                    leftColumn = previewLeftColumn,
+                    rightColumn = previewRightColumn,
+                    incorrectLeftId = 2,
+                    incorrectRightId = 3,
+                    incorrectAttempts = 1,
+                ),
+            onClose = {},
+            onLeftSelected = {},
+            onRightSelected = {},
+        )
+    }
+}
+
+@LightDarkPreview
+@Composable
+private fun WordMatchScreenAllMatchedPreview() {
+    LexiconTheme {
+        WordMatchScreenContent(
+            uiState =
+                WordMatchUiState.Loaded(
+                    stepIndex = 1,
+                    totalSteps = 5,
+                    leftColumn = previewLeftColumn,
+                    rightColumn = previewRightColumn,
+                    matchedIds = setOf(1, 2, 3),
                 ),
             onClose = {},
             onLeftSelected = {},

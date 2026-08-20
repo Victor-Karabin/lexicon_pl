@@ -9,7 +9,6 @@ import androidx.compose.runtime.setValue
 
 private const val DEFAULT_DEBOUNCE_MS = 500L
 
-/** Wraps [onClick] so a rapid double-tap within [debounceTime] only fires once. */
 @Composable
 fun debounced(
     debounceTime: Long = DEFAULT_DEBOUNCE_MS,

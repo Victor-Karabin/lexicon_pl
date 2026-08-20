@@ -1,0 +1,117 @@
+# Vocabulary introduced by the Polski krok po kroku lessons and not already in the corpus.
+# Columns as in core.tsv.
+#
+# The file name keeps this list last in the topic glob. Ids are handed out in load
+# order, so a file sorting earlier would renumber every word after it and scramble
+# which word a stored favourite points at.
+#
+# Krok po kroku is monolingual: the books print these words with no translation, so
+# every English gloss here is authored. Headwords are normalised — the books print
+# "spać (śpię, śpisz)" and "zamawiać/zamówić", which map back to their entries here
+# through tools/course/word_forms.tsv.
+proszę powtórzyć	please repeat	expr	A1	daily-conversation,classroom
+wszystko dobrze	all good	expr	A1	daily-conversation
+dlaczego	why	adv	A1	daily-conversation
+uczyć się polskiego	to learn Polish	expr	A1	studying
+mój chłopak	my boyfriend	expr	A1	relationships
+moja dziewczyna	my girlfriend	expr	A1	relationships
+moje hobby	my hobby	expr	A1	hobbies
+bezokolicznik	infinitive	n	A2	studying
+mieć rację	to be right	expr	A1	daily-conversation
+oscypek	smoked sheep cheese	n	A2	food
+pół	half	num	A1	numbers
+gospodarz	host	n	A2	people
+gospodyni	hostess	n	A2	people
+nudzić się	to be bored	v	A1	emotions
+bogaty	rich	adj	A1	personality
+biedny	poor	adj	A1	personality
+polecać	to recommend	v	A2	daily-conversation
+kantor	currency exchange	n	A2	finance
+zaspany	sleepy	adj	A2	daily-conversation
+chętnie	willingly	adv	A1	daily-conversation
+mieć ochotę na	to feel like	expr	A2	daily-conversation
+suszony	dried	adj	A2	food
+świeży	fresh	adj	A1	food
+miękki	soft	adj	A1	shapes
+twardy	hard	adj	A1	shapes
+doniczka	flower pot	n	A2	home
+węgorz	eel	n	B1	fish
+uwielbiać	to adore	v	A2	emotions
+zamawiać	to order	v	A1	shopping
+zapiekanka	baked baguette	n	A2	food
+coś dobrze brzmi	that sounds good	expr	A2	daily-conversation
+rozwiedziona	divorced	adj	A2	family
+nie żyje	has passed away	expr	A2	family
+drzewo genealogiczne	family tree	n	A2	family
+rozmawiać	to talk	v	A1	daily-conversation
+stuprocentowy	hundred per cent	adj	B1	daily-conversation
+umówić się	to arrange to meet	v	A2	meetings
+odbierać telefon	to answer the phone	expr	A2	smartphone
+mieć zasięg	to have signal	expr	A2	smartphone
+marzenie	dream	n	A2	emotions
+odpisywać	to write back	v	A2	smartphone
+szczęście	happiness	n	A1	emotions
+jednocześnie	at the same time	adv	B1	time
+światło	light	n	A1	home
+światła	traffic lights	n	A2	directions
+krzyż	cross	n	A2	shapes
+krzyżówka	crossword	n	A2	games
+wygrać	to win	v	A1	games
+plasterek	slice	n	A2	food
+zapałki	matches	n	A2	household
+zgrzewka	shrink-wrapped pack	n	B1	shopping
+bochenek	loaf	n	A2	food
+wybierać się	to be setting off	v	A2	travel
+nie cierpieć	to detest	expr	A2	emotions
+zmyślać	to make things up	v	B1	daily-conversation
+zależeć od	to depend on	expr	A2	daily-conversation
+pora roku	season	n	A1	weather
+przysłowie	proverb	n	B1	books
+zaczynać się	to begin	v	A1	time
+kończyć się	to end	v	A1	time
+mieć nadzieję	to hope	expr	A2	emotions
+modny	fashionable	adj	A2	clothing
+marudny	grumpy	adj	B1	personality
+plotki	gossip	n	A2	daily-conversation
+plotkować	to gossip	v	B1	daily-conversation
+strasznie	terribly	adv	A2	emotions
+piętro	floor	n	A1	home
+mebel	piece of furniture	n	A1	home
+parter	ground floor	n	A2	home
+kamienica	tenement house	n	B1	home
+kominek	fireplace	n	A2	home
+spiżarnia	pantry	n	B1	home
+przeprowadzać się	to move house	v	A2	home
+zaspać	to oversleep	v	A2	daily-conversation
+zdarzać się	to happen	v	A2	daily-conversation
+jeśli chodzi o	as far as ... goes	expr	B1	daily-conversation
+graniczyć	to border	v	B1	countries
+połączenie	connection	n	A2	transport
+średniowiecze	the Middle Ages	n	B1	cities
+obchodzić urodziny	to celebrate a birthday	expr	A2	dates
+komunizm	communism	n	B1	politics
+kieliszek	small glass	n	A2	drinks
+zostawać	to stay	v	A2	daily-conversation
+zejść	to come down	v	A2	directions
+należeć	to belong	v	A2	daily-conversation
+zabór	partition	n	B2	politics
+pod względem	in terms of	expr	B1	daily-conversation
+międzywojenny	interwar	adj	B2	politics
+ciuch	rag	n	B1	clothing
+nosić	to wear	v	A1	clothing
+mieć na sobie	to be wearing	expr	A2	clothing
+olśniewający	dazzling	adj	B2	appearance
+kiepski	lousy	adj	A2	daily-conversation
+strzyżenie	haircut	n	A2	appearance
+pozwolić na	to allow	expr	A2	daily-conversation
+wygląd zewnętrzny	outward appearance	n	A2	appearance
+części ciała	parts of the body	n	A1	body
+zażywać	to take medicine	v	B1	medicine
+przypadek	case	n	A2	daily-conversation
+sprawa do załatwienia	errand	expr	B1	daily-conversation
+usługi	services	n	A2	work
+doładować kartę	to top up a card	expr	A2	smartphone
+korzystać	to make use of	v	A2	daily-conversation
+zepsuć się	to break down	v	A2	emergency
+naprawić	to repair	v	A1	household
+nieodpowiedzialny	irresponsible	adj	B1	personality

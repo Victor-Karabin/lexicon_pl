@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -21,14 +22,14 @@ android {
 }
 
 dependencies {
+    implementation(projects.boundary)
     implementation(projects.common)
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
-    // Provides the @ApplicationContext qualifier and javax.inject.Inject only.
-    // No Hilt @Module lives here — those are restricted to the app module per the architecture spec.
-    implementation(libs.hilt.android)
+    implementation(libs.okhttp.core)
+    implementation(libs.kotlinx.serialization.json)
 
     testImplementation(libs.bundles.unit.test)
 }

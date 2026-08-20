@@ -1,28 +1,98 @@
 package com.lexicon.app.navigation
 
+import com.lexicon.presentation.common.TRAINING_WORDS_ARG
+import com.lexicon.presentation.common.asTrainingWordsArgument
+import com.lexicon.presentation.course.COURSE_ID_ARG
+import com.lexicon.presentation.main.MainTab
 import com.lexicon.presentation.main.TrainingIds
+import com.lexicon.presentation.presets.WORD_ID_ARG
+import com.lexicon.presentation.program.PROGRAM_ID_ARG
 
 internal object LexiconDestinations {
     const val SPLASH = "splash"
-    const val MAIN = "main"
+    const val MAIN_TAB_ARG = "tab"
 
-    // Route strings match TrainingIds exactly, since TrainingsScreen navigates by passing that id up.
-    const val DICTATION = TrainingIds.DICTATION
-    const val DICTATION_PUZZLE = TrainingIds.DICTATION_PUZZLE
-    const val WORD_BUILDER = TrainingIds.WORD_BUILDER
-    const val TRUE_OR_FALSE = TrainingIds.TRUE_OR_FALSE
-    const val WORD_MATCH = TrainingIds.WORD_MATCH
-    const val PRONUNCIATION_CHECK = TrainingIds.PRONUNCIATION_CHECK
-    const val PUZZLE = TrainingIds.PUZZLE
-    const val IMAGE_TEST = TrainingIds.IMAGE_TEST
-    const val MEMORY_CARDS = TrainingIds.MEMORY_CARDS
+    const val MAIN = "main?$MAIN_TAB_ARG={$MAIN_TAB_ARG}"
 
-    const val SESSION_RESULT = "session_result/{correct}/{incorrect}/{skipped}/{tipsUsed}"
+    fun main(tab: MainTab? = null) = "main?$MAIN_TAB_ARG=${tab?.name.orEmpty()}"
+
+    val DICTATION = TrainingIds.DICTATION
+    val DICTATION_PUZZLE = TrainingIds.DICTATION_PUZZLE
+    val TRUE_OR_FALSE = TrainingIds.TRUE_OR_FALSE
+    val WORD_MATCH = TrainingIds.WORD_MATCH
+    val PRONUNCIATION_CHECK = TrainingIds.PRONUNCIATION_CHECK
+    val PRONUNCIATION_SENTENCES = TrainingIds.PRONUNCIATION_SENTENCES
+    val PUZZLE = TrainingIds.PUZZLE
+    val IMAGE_TEST = TrainingIds.IMAGE_TEST
+    val MEMORY_CARDS = TrainingIds.MEMORY_CARDS
+    val MIX = TrainingIds.MIX
+    val WORD_CARD = TrainingIds.WORD_CARD
+    val CROSSWORD = TrainingIds.CROSSWORD
+    val PASSAGE_WRITE = TrainingIds.PASSAGE_WRITE
+    val PASSAGE_BANK = TrainingIds.PASSAGE_BANK
+    val FILLWORD = TrainingIds.FILLWORD
+    const val CONJUGATION = "conjugation/{courseId}"
+    const val CONJUGATION_VERBS = "conjugation/verbs"
+
+    fun conjugationCourse(courseId: String) = "conjugation/$courseId"
+
+    fun trainingRoute(training: String) = "$training?$TRAINING_WORDS_ARG={$TRAINING_WORDS_ARG}&$PROGRAM_RUN_ARG={$PROGRAM_RUN_ARG}"
+
+    fun scopedTraining(
+        training: String,
+        wordIds: List<Long>,
+        programId: String? = null,
+    ) = "$training?$TRAINING_WORDS_ARG=${wordIds.asTrainingWordsArgument()}" +
+        "&$PROGRAM_RUN_ARG=${programId.orEmpty()}"
+
+    const val PRESET_DETAIL = "preset/{presetId}"
+
+    fun presetDetail(presetId: String) = "preset/$presetId"
+
+    const val CREATE_WORD = "create/word"
+    const val CREATE_PRESET = "create/preset"
+    const val CREATE_PROGRAM = "create/program"
+    const val EDIT_PROGRAM = "edit/program/{programId}"
+
+    fun editProgram(id: String): String = "edit/program/$id"
+
+    const val EDIT_WORD = "word/{$WORD_ID_ARG}/edit"
+
+    fun editWord(wordId: Long) = "word/$wordId/edit"
+
+    const val PROGRAM_CARDS = "program/{$PROGRAM_ID_ARG}/cards"
+
+    fun programCards(programId: String) = "program/$programId/cards"
+
+    const val COURSE = "course/{$COURSE_ID_ARG}"
+
+    fun course(courseId: String) = "course/$courseId"
+
+    const val LESSON = "lesson/{lessonId}"
+
+    fun lesson(lessonId: String) = "lesson/$lessonId"
+
+    const val EXERCISE = "lesson/{lessonId}/exercise/{exerciseId}"
+
+    fun exercise(
+        lessonId: String,
+        exerciseId: String,
+    ) = "lesson/$lessonId/exercise/$exerciseId"
+
+    const val PROGRAM_RUN_ARG = "programRun"
+
+    const val SESSION_RESULT =
+        "session_result/{correct}/{incorrect}/{skipped}/{tipsUsed}?$PROGRAM_RUN_ARG={$PROGRAM_RUN_ARG}"
 
     fun sessionResult(
         correct: Int,
         incorrect: Int,
         skipped: Int,
         tipsUsed: Int,
-    ) = "session_result/$correct/$incorrect/$skipped/$tipsUsed"
+        programId: String? = null,
+    ) = "session_result/$correct/$incorrect/$skipped/$tipsUsed?$PROGRAM_RUN_ARG=${programId.orEmpty()}"
+
+    const val DAY_COMPLETE = "program/{programId}/day_complete"
+
+    fun dayComplete(programId: String) = "program/$programId/day_complete"
 }

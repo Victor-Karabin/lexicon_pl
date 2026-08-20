@@ -3,15 +3,12 @@ package com.lexicon.presentation.trueorfalse
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -25,21 +22,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.AnswerTone
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
-import com.lexicon.presentation.common.debounced
+import com.lexicon.presentation.common.TrainingUnavailableContent
+import com.lexicon.presentation.common.TrueOrFalseAnswerRow
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
-import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
+import org.koin.androidx.compose.koinViewModel
 
 private const val LOW_TIME_WARNING_SECONDS = 10
 private val TimerSize = 100.dp
-private val AnswerButtonHeight = 120.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,7 +44,7 @@ fun TrueOrFalseScreen(
     onSessionComplete: (correct: Int, incorrect: Int, skipped: Int, tipsUsed: Int) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: TrueOrFalseViewModel = hiltViewModel(),
+    viewModel: TrueOrFalseViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -81,6 +78,9 @@ private fun TrueOrFalseScreenContent(
         topBar = { TrainingTopBar(title = stringResource(R.string.true_or_false_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
+            TrueOrFalseUiState.Unavailable ->
+                TrainingUnavailableContent(onClose = onClose, modifier = Modifier.padding(padding))
+
             is TrueOrFalseUiState.Loading ->
                 Column(
                     modifier = Modifier.fillMaxSize().padding(padding),
@@ -97,7 +97,7 @@ private fun TrueOrFalseScreenContent(
                 }
                 Column(modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingMedium)) {
                     Column(
-                        modifier = Modifier.weight(1f).fillMaxWidth(),
+                        modifier = Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Box(modifier = Modifier.size(TimerSize), contentAlignment = Alignment.Center) {
@@ -127,34 +127,19 @@ private fun TrueOrFalseScreenContent(
                         )
                     }
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth().height(AnswerButtonHeight),
-                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-                    ) {
-                        Button(
-                            onClick = debounced { onAnswer(true) },
-                            enabled = uiState.isEditable,
-                            colors = ButtonDefaults.buttonColors(containerColor = LexiconSuccess),
-                            modifier = Modifier.weight(1f).fillMaxHeight(),
-                        ) {
-                            Text(stringResource(R.string.action_true), style = MaterialTheme.typography.headlineMedium)
-                        }
-                        Button(
-                            onClick = debounced { onAnswer(false) },
-                            enabled = uiState.isEditable,
-                            colors = ButtonDefaults.buttonColors(containerColor = LexiconError),
-                            modifier = Modifier.weight(1f).fillMaxHeight(),
-                        ) {
-                            Text(stringResource(R.string.action_false), style = MaterialTheme.typography.headlineMedium)
-                        }
-                    }
+                    TrueOrFalseAnswerRow(
+                        trueTone = AnswerTone.POSITIVE,
+                        falseTone = AnswerTone.NEGATIVE,
+                        enabled = uiState.isEditable,
+                        onAnswer = onAnswer,
+                    )
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun TrueOrFalseScreenPreview() {
     LexiconTheme {
@@ -165,6 +150,24 @@ private fun TrueOrFalseScreenPreview() {
                     timeRemainingSeconds = 42,
                     word = "praca",
                     displayedTranslation = "work",
+                ),
+            onClose = {},
+            onAnswer = {},
+        )
+    }
+}
+
+@LightDarkPreview
+@Composable
+private fun TrueOrFalseScreenLowTimePreview() {
+    LexiconTheme {
+        TrueOrFalseScreenContent(
+            uiState =
+                TrueOrFalseUiState.Loaded(
+                    stepIndex = 24,
+                    timeRemainingSeconds = 5,
+                    word = "przyjaciel",
+                    displayedTranslation = "friend",
                 ),
             onClose = {},
             onAnswer = {},

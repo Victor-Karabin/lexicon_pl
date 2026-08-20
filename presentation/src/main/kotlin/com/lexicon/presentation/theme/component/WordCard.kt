@@ -1,27 +1,30 @@
 package com.lexicon.presentation.theme.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconErrorContainer
 import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconSuccessContainer
+import com.lexicon.presentation.theme.LexiconTheme
 
 enum class WordCardState { NEUTRAL, CORRECT, INCORRECT }
 
 enum class WordCardSize { COMPACT, EXPANDED }
 
-/** The target word / prompt — the one visually loud element on a training step. */
 @Composable
 fun WordCard(
     word: String,
@@ -61,6 +64,25 @@ fun WordCard(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = Dimens.spacingSmall),
             )
+        }
+    }
+}
+
+@LightDarkPreview
+@Composable
+private fun WordCardStatesPreview() {
+    LexiconTheme {
+        Surface {
+            Column(
+                modifier = Modifier.padding(Dimens.spacingMedium),
+                verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                WordCardState.entries.forEach { state ->
+                    WordCard(word = "praca", sublabel = state.name.lowercase(), state = state)
+                }
+                WordCard(word = "dzień dobry", size = WordCardSize.EXPANDED)
+            }
         }
     }
 }

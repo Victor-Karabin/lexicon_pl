@@ -2,12 +2,18 @@ package com.lexicon.presentation.common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -18,18 +24,22 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
+import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.LexiconWarning
+import com.lexicon.presentation.theme.component.GradientTile
+import com.lexicon.presentation.theme.component.StatChip
+import com.lexicon.presentation.theme.component.TileChips
+import com.lexicon.presentation.theme.component.muted
+import com.lexicon.presentation.theme.component.tileSkin
+import org.koin.androidx.compose.koinViewModel
 import kotlin.math.roundToInt
 
-/** Shared end-of-session summary, reused by every training's result screen. */
 @Composable
 fun SessionResultScreen(
     correct: Int,
@@ -38,7 +48,8 @@ fun SessionResultScreen(
     tipsUsed: Int,
     onDone: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: SessionResultViewModel = hiltViewModel(),
+    isProgramRun: Boolean = false,
+    viewModel: SessionResultViewModel = koinViewModel(),
 ) {
     SessionResultScreenContent(
         correct = correct,
@@ -47,11 +58,12 @@ fun SessionResultScreen(
         tipsUsed = tipsUsed,
         wordResults = viewModel.wordResults,
         onDone = onDone,
+        isProgramRun = isProgramRun,
         modifier = modifier,
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 private fun SessionResultScreenContent(
     correct: Int,
@@ -61,6 +73,7 @@ private fun SessionResultScreenContent(
     wordResults: List<WordResultEntry>,
     onDone: () -> Unit,
     modifier: Modifier = Modifier,
+    isProgramRun: Boolean = false,
 ) {
     val totalSteps = correct + incorrect + skipped
     val accuracyPercent = if (totalSteps > 0) (correct * 100f / totalSteps).roundToInt() else 0
@@ -73,15 +86,35 @@ private fun SessionResultScreenContent(
             modifier = Modifier.fillMaxSize().padding(padding).padding(horizontal = Dimens.spacingLarge),
         ) {
             item {
-                Column(
-                    modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingSmall),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
+                val skin = tileSkin(highlighted = true)
+                GradientTile(skin = skin, modifier = Modifier.padding(top = Dimens.spacingSmall)) {
                     Text(
-                        "$accuracyPercent% accuracy",
-                        style = MaterialTheme.typography.headlineMedium,
+                        text = "$accuracyPercent%",
+                        style = MaterialTheme.typography.displaySmall,
                         fontWeight = FontWeight.Bold,
+                        color = skin.onTile,
                     )
+                    Text(
+                        text = stringResource(R.string.result_accuracy),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = skin.muted(),
+                    )
+                    TileChips {
+                        StatChip(
+                            icon = Icons.Default.Check,
+                            text = "$correct",
+                            skin = skin,
+                        )
+                        if (incorrect > 0) {
+                            StatChip(icon = Icons.Default.Close, text = "$incorrect", skin = skin)
+                        }
+                        if (skipped > 0) {
+                            StatChip(icon = Icons.AutoMirrored.Filled.ArrowForward, text = "$skipped", skin = skin)
+                        }
+                        if (tipsUsed > 0) {
+                            StatChip(icon = Icons.Default.Lightbulb, text = "$tipsUsed", skin = skin)
+                        }
+                    }
                 }
             }
 
@@ -91,15 +124,6 @@ private fun SessionResultScreenContent(
                     WordResultRow(index + 1, entry, modifier = Modifier.padding(vertical = Dimens.spacingSmall))
                     HorizontalDivider()
                 }
-            } else {
-                item {
-                    Column(modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingLarge)) {
-                        CountRow(label = "Correct", value = correct, color = LexiconSuccess)
-                        CountRow(label = "Incorrect", value = incorrect, color = LexiconError)
-                        CountRow(label = "Skipped", value = skipped, color = LexiconWarning)
-                        CountRow(label = "Tips used", value = tipsUsed, color = MaterialTheme.colorScheme.outline)
-                    }
-                }
             }
 
             item {
@@ -107,7 +131,11 @@ private fun SessionResultScreenContent(
                     onClick = onDone,
                     modifier = Modifier.fillMaxWidth().padding(vertical = Dimens.spacingLarge),
                 ) {
-                    Text("Done")
+                    Text(
+                        stringResource(
+                            if (isProgramRun) R.string.result_next_training else R.string.result_done,
+                        ),
+                    )
                 }
             }
         }
@@ -120,7 +148,6 @@ private fun WordResultRow(
     entry: WordResultEntry,
     modifier: Modifier = Modifier,
 ) {
-    // Tip used takes over the status column entirely, rather than sitting alongside Correct/Incorrect.
     val color = when {
         entry.tipUsed -> MaterialTheme.colorScheme.outline
         entry.outcome is AnswerState.Correct -> LexiconSuccess
@@ -163,21 +190,6 @@ private fun WordResultRow(
     }
 }
 
-@Composable
-private fun CountRow(
-    label: String,
-    value: Int,
-    color: Color,
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth().padding(vertical = Dimens.spacingTiny),
-        horizontalArrangement = Arrangement.SpaceBetween,
-    ) {
-        Text(label, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
-        Text("$value", style = MaterialTheme.typography.bodyLarge, color = color, fontWeight = FontWeight.Bold)
-    }
-}
-
 private val previewWordResults = listOf(
     WordResultEntry(word = "praca", translation = "work", outcome = AnswerState.Correct),
     WordResultEntry(word = "dom", translation = "house", outcome = AnswerState.Incorrect()),
@@ -185,7 +197,7 @@ private val previewWordResults = listOf(
     WordResultEntry(word = "pies", translation = "dog", outcome = AnswerState.Correct, tipUsed = true),
 )
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun SessionResultScreenWordListPreview() {
     LexiconTheme {
@@ -200,7 +212,7 @@ private fun SessionResultScreenWordListPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun SessionResultScreenCountsOnlyPreview() {
     LexiconTheme {

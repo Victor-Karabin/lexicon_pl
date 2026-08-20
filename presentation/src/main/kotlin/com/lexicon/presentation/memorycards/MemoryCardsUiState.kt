@@ -13,6 +13,8 @@ data class MemoryCard(
 sealed interface MemoryCardsUiState {
     data object Loading : MemoryCardsUiState
 
+    data object Unavailable : MemoryCardsUiState
+
     data class Loaded(
         val stepIndex: Int = 0,
         val totalSteps: Int = 0,
@@ -26,7 +28,8 @@ sealed interface MemoryCardsUiState {
     ) : MemoryCardsUiState {
         val isInteractive: Boolean get() = answerState is AnswerState.Unanswered
         val canSkip: Boolean get() = isInteractive
-        val awaitingNext: Boolean get() = answerState is AnswerState.Skipped
+
+        val awaitingNext: Boolean get() = false
 
         fun isFaceUp(card: MemoryCard): Boolean =
             matchedItemIds.contains(card.vocabularyItemId) ||

@@ -1,0 +1,226 @@
+package com.lexicon.presentation.presets
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.lexicon.boundary.SpeechSynthesizer
+import com.lexicon.common.DispatcherProvider
+import com.lexicon.interactors.presets.DeletePresetUseCase
+import com.lexicon.interactors.presets.DeleteWordUseCase
+import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
+import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
+import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
+import com.lexicon.interactors.presets.RestorePresetUseCase
+import com.lexicon.interactors.presets.RestoreWordUseCase
+import com.lexicon.interactors.presets.SearchVocabularyUseCase
+import com.lexicon.interactors.presets.SetPresetInStudySetUseCase
+import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
+import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
+import com.lexicon.model.vocabulary.CefrLevel
+import com.lexicon.model.vocabulary.PresetId
+import com.lexicon.model.vocabulary.PresetStudySetState
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.VocabularyPreset
+import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.resolve
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+private const val QUERY_DEBOUNCE_MS = 200L
+
+class VocabularyViewModel(
+    private val observePresets: ObserveVocabularyPresetsUseCase,
+    private val searchVocabulary: SearchVocabularyUseCase,
+    private val setPresetInStudySet: SetPresetInStudySetUseCase,
+    private val toggleWordInStudySet: ToggleWordInStudySetUseCase,
+    private val deleteWord: DeleteWordUseCase,
+    private val restoreWord: RestoreWordUseCase,
+    private val deletePreset: DeletePresetUseCase,
+    private val restorePreset: RestorePresetUseCase,
+    private val observeStudySetIds: ObserveStudySetIdsUseCase,
+    getWordPresetMemberships: GetWordPresetMembershipsUseCase,
+    setWordPresetMembership: SetWordPresetMembershipUseCase,
+    private val dispatchers: DispatcherProvider,
+    private val speechSynthesizer: SpeechSynthesizer,
+) : ViewModel() {
+    private val _uiState = MutableStateFlow<VocabularyUiState>(VocabularyUiState.Loading)
+    val uiState: StateFlow<VocabularyUiState> = _uiState.asStateFlow()
+
+    private val criteria = MutableStateFlow(SearchCriteria())
+
+    private val changePresets =
+        ChangePresetsController(viewModelScope, dispatchers.io, getWordPresetMemberships, setWordPresetMembership)
+    val changePresetsState = changePresets.state
+
+    fun onChangePresetsRequested(word: Word) {
+        val languageTag = (_uiState.value as? VocabularyUiState.Loaded)?.languageTag ?: return
+        changePresets.open(word, languageTag)
+    }
+
+    fun onChangePresetsDismissed() = changePresets.dismiss()
+
+    fun onPresetMembershipToggled(
+        presetId: PresetId,
+        isMember: Boolean,
+    ) = changePresets.toggle(presetId, isMember)
+
+    init {
+        viewModelScope.launch(dispatchers.io) {
+            observePresets().collect { presets ->
+                _uiState.update { current ->
+                    if (current is VocabularyUiState.Loaded) {
+                        current.copy(presets = presets)
+                    } else {
+                        VocabularyUiState.Loaded(presets = presets)
+                    }
+                }
+            }
+        }
+        viewModelScope.launch(dispatchers.io) {
+            observeStudySetIds().collect { studySet ->
+                updateLoaded { it.copy(studySetWordIds = studySet) }
+            }
+        }
+        observeQuery()
+    }
+
+    @OptIn(FlowPreview::class)
+    private fun observeQuery() {
+        viewModelScope.launch(dispatchers.io) {
+            criteria.debounce(QUERY_DEBOUNCE_MS).collect { current ->
+                searchJob?.cancel()
+                searchJob = viewModelScope.launch(dispatchers.io) {
+                    val results = searchVocabulary(current.query, current.levels)
+                    updateLoaded { it.copy(words = results, isSearching = false) }
+                }
+            }
+        }
+    }
+
+    private var searchJob: Job? = null
+
+    fun onQueryChanged(value: String) {
+        criteria.update { it.copy(query = value) }
+        updateLoaded { it.copy(query = value).clearedWordsIfIdle() }
+    }
+
+    fun onCefrToggled(level: CefrLevel) {
+        val updated = (_uiState.value as? VocabularyUiState.Loaded)
+            ?.selectedCefrLevels?.toggle(level) ?: return
+        criteria.update { it.copy(levels = updated) }
+        updateLoaded { it.copy(selectedCefrLevels = updated).clearedWordsIfIdle() }
+    }
+
+    fun onFiltersCleared() {
+        criteria.update { it.copy(levels = emptySet()) }
+        updateLoaded { it.copy(selectedCefrLevels = emptySet()).clearedWordsIfIdle() }
+    }
+
+    fun onPresetStudySetToggled(
+        id: PresetId,
+        current: PresetStudySetState,
+    ) {
+        viewModelScope.launch(dispatchers.io) {
+            setPresetInStudySet(id, current != PresetStudySetState.ALL)
+        }
+    }
+
+    fun onPronounceWord(word: Word) {
+        viewModelScope.launch(dispatchers.io) {
+            runCatching { speechSynthesizer.speak(word.text) }
+        }
+    }
+
+    fun onWordStudySetToggled(
+        id: VocabularyId,
+        isInStudySet: Boolean,
+    ) {
+        viewModelScope.launch(dispatchers.io) { toggleWordInStudySet(id, isInStudySet) }
+    }
+
+    fun onWordDeleted(word: Word) {
+        viewModelScope.launch(dispatchers.io) {
+            deleteWord(word.id)
+            updateLoaded {
+                it.copy(
+                    words = it.words.filterNot { candidate -> candidate.id == word.id }.toImmutableList(),
+                    lastDeleted = DeletedItem.Word(word.id, word.text),
+                )
+            }
+        }
+    }
+
+    fun onPresetDeleted(preset: VocabularyPreset) {
+        viewModelScope.launch(dispatchers.io) {
+            deletePreset(preset.id)
+            updateLoaded {
+                it.copy(
+                    presets = it.presets.filterNot { candidate -> candidate.id == preset.id }.toImmutableList(),
+                    lastDeleted = DeletedItem.Preset(preset.id, preset.title.resolve(it.languageTag)),
+                )
+            }
+        }
+    }
+
+    fun onSelectedWordsDeleted(ids: Set<VocabularyId>) {
+        if (ids.isEmpty()) return
+        viewModelScope.launch(dispatchers.io) {
+            ids.forEach { deleteWord(it) }
+            updateLoaded {
+                it.copy(
+                    words = it.words.filterNot { candidate -> candidate.id in ids }.toImmutableList(),
+                    lastDeleted = DeletedItem.Words(ids.toList()),
+                )
+            }
+        }
+    }
+
+    fun onUndoDelete() {
+        val deleted = (_uiState.value as? VocabularyUiState.Loaded)?.lastDeleted ?: return
+        viewModelScope.launch(dispatchers.io) {
+            when (deleted) {
+                is DeletedItem.Word -> {
+                    restoreWord(deleted.id)
+                    refreshWords()
+                }
+
+                is DeletedItem.Words -> {
+                    deleted.ids.forEach { restoreWord(it) }
+                    refreshWords()
+                }
+
+                is DeletedItem.Preset -> restorePreset(deleted.id)
+            }
+            updateLoaded { it.copy(lastDeleted = null) }
+        }
+    }
+
+    fun onDeleteMessageShown() = updateLoaded { it.copy(lastDeleted = null) }
+
+    private suspend fun refreshWords() {
+        val current = criteria.value
+        val results = searchVocabulary(current.query, current.levels)
+        updateLoaded { it.copy(words = results) }
+    }
+
+    private fun updateLoaded(transform: (VocabularyUiState.Loaded) -> VocabularyUiState.Loaded) {
+        _uiState.update { if (it is VocabularyUiState.Loaded) transform(it) else it }
+    }
+}
+
+private data class SearchCriteria(
+    val query: String = "",
+    val levels: Set<CefrLevel> = emptySet(),
+)
+
+private fun <T> Set<T>.toggle(value: T): Set<T> = if (value in this) this - value else this + value
+
+private fun VocabularyUiState.Loaded.clearedWordsIfIdle(): VocabularyUiState.Loaded =
+    if (isSearchingWords) copy(isSearching = true) else copy(isSearching = false, words = persistentListOf())

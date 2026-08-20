@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,11 +29,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
@@ -42,6 +43,7 @@ import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.PlayButton
 import com.lexicon.presentation.theme.component.ProgressDots
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,7 +51,8 @@ fun PronunciationScreen(
     onSessionComplete: (correct: Int, incorrect: Int, skipped: Int, tipsUsed: Int) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: PronunciationViewModel = hiltViewModel(),
+    readsSentences: Boolean = false,
+    viewModel: PronunciationViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -76,6 +79,7 @@ fun PronunciationScreen(
 
     PronunciationScreenContent(
         uiState = uiState,
+        readsSentences = readsSentences,
         onClose = onClose,
         onRecordRequested = {
             if (hasRecordAudioPermission) {
@@ -97,6 +101,7 @@ fun PronunciationScreen(
 @Composable
 private fun PronunciationScreenContent(
     uiState: PronunciationUiState,
+    readsSentences: Boolean,
     onClose: () -> Unit,
     onRecordRequested: () -> Unit,
     onPlayRecording: () -> Unit,
@@ -108,7 +113,14 @@ private fun PronunciationScreenContent(
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = { TrainingTopBar(title = stringResource(R.string.pronunciation_title), onClose = onClose) },
+        topBar = {
+            TrainingTopBar(
+                title = stringResource(
+                    if (readsSentences) R.string.pronunciation_sentences_title else R.string.pronunciation_title,
+                ),
+                onClose = onClose,
+            )
+        },
     ) { padding ->
         when (uiState) {
             is PronunciationUiState.Loading ->
@@ -119,12 +131,32 @@ private fun PronunciationScreenContent(
                 ) {
                     CircularProgressIndicator()
                 }
+            is PronunciationUiState.Unavailable ->
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingXl),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    Text(
+                        text = stringResource(
+                            when (uiState.reason) {
+                                UnavailableReason.OFFLINE -> R.string.pronunciation_sentences_offline
+                                UnavailableReason.REFUSED -> R.string.pronunciation_sentences_refused
+                                UnavailableReason.EMPTY_STUDY_SET -> R.string.pronunciation_sentences_none
+                            },
+                        ),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+
             is PronunciationUiState.Loaded ->
                 Column(modifier = Modifier.fillMaxSize().padding(padding)) {
                     Column(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth()
+                            .verticalScroll(rememberScrollState())
                             .padding(Dimens.spacingMedium),
                     ) {
                         ProgressDots(
@@ -237,11 +269,12 @@ private fun PronunciationScreenContent(
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun PronunciationScreenUnansweredPreview() {
     LexiconTheme {
         PronunciationScreenContent(
+            readsSentences = false,
             uiState =
                 PronunciationUiState.Loaded(
                     stepIndex = 2,
@@ -260,11 +293,12 @@ private fun PronunciationScreenUnansweredPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun PronunciationScreenRecordedPreview() {
     LexiconTheme {
         PronunciationScreenContent(
+            readsSentences = false,
             uiState =
                 PronunciationUiState.Loaded(
                     stepIndex = 2,
@@ -285,11 +319,12 @@ private fun PronunciationScreenRecordedPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun PronunciationScreenTipRevealedPreview() {
     LexiconTheme {
         PronunciationScreenContent(
+            readsSentences = false,
             uiState =
                 PronunciationUiState.Loaded(
                     stepIndex = 2,
@@ -311,11 +346,12 @@ private fun PronunciationScreenTipRevealedPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun PronunciationScreenIncorrectPreview() {
     LexiconTheme {
         PronunciationScreenContent(
+            readsSentences = false,
             uiState =
                 PronunciationUiState.Loaded(
                     stepIndex = 2,

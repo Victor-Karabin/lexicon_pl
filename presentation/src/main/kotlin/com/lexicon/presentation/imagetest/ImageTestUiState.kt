@@ -5,6 +5,8 @@ import com.lexicon.presentation.common.AnswerState
 sealed interface ImageTestUiState {
     data object Loading : ImageTestUiState
 
+    data object Unavailable : ImageTestUiState
+
     data class Loaded(
         val stepIndex: Int = 0,
         val totalSteps: Int = 0,
@@ -19,6 +21,7 @@ sealed interface ImageTestUiState {
         val isEditable: Boolean get() = answerState is AnswerState.Unanswered
         val canCheck: Boolean get() = isEditable && selectedOption != null
         val canSkip: Boolean get() = isEditable
-        val awaitingNext: Boolean get() = answerState is AnswerState.Incorrect || answerState is AnswerState.Skipped
+
+        val awaitingNext: Boolean get() = answerState is AnswerState.Incorrect
     }
 }

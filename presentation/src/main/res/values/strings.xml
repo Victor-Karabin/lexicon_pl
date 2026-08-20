@@ -5,12 +5,15 @@
     <string name="action_undo">Undo</string>
     <string name="action_check">Check</string>
     <string name="action_next">Next</string>
+    <string name="action_done">Done</string>
     <string name="status_correct">✓ Correct</string>
     <string name="status_incorrect">✗ Incorrect</string>
     <string name="status_skipped">Skipped</string>
     <string name="expected_format">Expected: %1$s</string>
     <string name="hint_format">Hint: %1$s</string>
     <string name="action_listen_again">Listen again</string>
+    <string name="action_more">More</string>
+    <string name="action_less">Less</string>
 
     <!-- Dictation -->
     <string name="dictation_title">Dictation</string>
@@ -28,6 +31,12 @@
     <!-- Word Match -->
     <string name="word_match_title">Word Match</string>
 
+    <!-- Crossword -->
+    <string name="crossword_title">Crossword</string>
+    <string name="crossword_across_format">Across · %1$d</string>
+    <string name="crossword_down_format">Down · %1$d</string>
+    <string name="crossword_check_failed">Couldn\'t save your answers. Change a letter to try again.</string>
+
     <!-- True or False -->
     <string name="true_or_false_title">True or False</string>
     <string name="action_true">True</string>
@@ -44,4 +53,230 @@
     <string name="pronunciation_ipa_format">IPA: /%1$s/</string>
     <string name="pronunciation_recognition_unavailable">Speech recognition isn\'t available on this device. Try a real device or an emulator with Google Play services and on-device speech recognition set up.</string>
     <string name="pronunciation_recognition_failed">Couldn\'t hear that clearly. Try recording again.</string>
+
+    <!-- Settings -->
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_theme_system">System</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_training">Training</string>
+    <string name="settings_step_count">Steps per session</string>
+    <string name="settings_voice">Voice</string>
+    <string name="settings_voice_note">Tap a name to hear it.</string>
+    <string name="settings_step_count_note">Sets how many words each training asks about, and how many sentences the reading trainings write. Takes effect next session.</string>
+
+    <!-- Verb conjugation course -->
+    <string name="conjugation_title">Verb Conjugation</string>
+    <string name="training_conjugation_blurb">Pick verbs and learn how they change by person</string>
+    <string name="conjugation_select_title">Choose verbs</string>
+    <string name="conjugation_search_hint">Search verb</string>
+    <string name="conjugation_selected_count">%1$d selected</string>
+    <string name="conjugation_create">Create the course</string>
+    <string name="conjugation_restore_all">Restore all</string>
+    <string name="conjugation_partial">only %1$d of 6 persons in the source</string>
+    <string name="conjugation_none">Choose some verbs first — the course is built from the ones you pick.</string>
+    <string name="conjugation_complete">Every form mastered. Pick more verbs to carry on.</string>
+    <string name="conjugation_progress">%1$d of %2$d forms mastered</string>
+    <string name="conjugation_ending_hint">Choose the ending</string>
+    <string name="conjugation_form_hint">Choose the form</string>
+    <string name="conjugation_blank">____</string>
+    <string name="conjugation_remove">Remove the conjugation course</string>
+    <string name="conjugation_verbs_chip">%1$d verbs</string>
+    <string name="conjugation_attempted_chip">%1$d of %2$d tried</string>
+
+    <!-- Mix -->
+    <string name="mix_title">Mix</string>
+    <string name="word_card_title">Word Card</string>
+    <string name="word_card_done">Done</string>
+    <string name="presets_clear_search">Clear search</string>
+    <string name="presets_clear_filters">Clear filters</string>
+    <string name="presets_catalog_empty">No vocabulary presets are available.</string>
+    <string name="preset_detail_title">Preset</string>
+    <string name="preset_detail_not_found">This preset is no longer available.</string>
+    <string name="word_pronounce">Play “%1$s”</string>
+    <string name="study_set_add">Add to study set</string>
+    <string name="study_set_remove">Remove from study set</string>
+    <string name="study_set_preset_add">Add every word to study set</string>
+    <string name="study_set_preset_remove">Remove every word from study set</string>
+    <string name="training_not_enough_words_title">Not enough words</string>
+    <string name="training_not_enough_words_body">%1$s needs at least %2$d words, and your study set has %3$d.</string>
+    <string name="training_not_enough_words_hint">Add words to your study set with the heart button in the Words tab.</string>
+    <string name="training_go_to_vocabulary">Go to Words</string>
+    <string name="training_not_enough_words_action">Back to trainings</string>
+    <string name="vocabulary_search_hint">Search words</string>
+    <string name="vocabulary_search_no_matches">No words match “%1$s”.</string>
+    <string name="sync_step_vocabulary">Vocabulary</string>
+    <string name="sync_step_presets">Presets</string>
+    <string name="sync_step_course">Course</string>
+    <string name="sync_step_verbs">Verbs</string>
+    <string name="sync_waiting">Waiting</string>
+    <string name="sync_in_progress">Importing…</string>
+    <string name="sync_up_to_date">%1$s ready</string>
+    <string name="sync_changed">%1$s ready · %2$s added, %3$s updated, %4$s removed</string>
+    <string name="sync_blocked">The bundled vocabulary could not be loaded, so there is nothing to study yet.</string>
+    <string name="sync_retry">Try again</string>
+    <!-- The launcher label lives in the app module; this is the wordmark on the splash. -->
+    <string name="splash_title">Lexicon</string>
+    <string name="vocabulary_delete">Delete</string>
+    <string name="word_change_presets">Presets</string>
+    <string name="word_change_presets_title">Presets for “%1$s”</string>
+    <string name="vocabulary_deleted">Deleted “%1$s”</string>
+    <string name="vocabulary_undo">Undo</string>
+    <string name="selection_cancel">Stop selecting</string>
+    <!-- Adding a word or a preset by hand. -->
+    <string name="vocabulary_add">Add</string>
+    <string name="vocabulary_add_word">Add word</string>
+    <string name="vocabulary_add_preset">Add preset</string>
+    <string name="create_save">Save</string>
+
+    <string name="create_preset_title">New preset</string>
+    <string name="create_preset_name">Name</string>
+    <string name="create_preset_description">Description (optional)</string>
+    <string name="create_preset_icon">Icon</string>
+    <string name="create_preset_color">Colour</string>
+    <string name="create_preset_name_missing">Give the preset a name.</string>
+
+    <string name="create_word_title">New word</string>
+    <string name="edit_word_title">Edit word</string>
+    <string name="create_word_base">English</string>
+    <string name="create_word_translation">Polish</string>
+    <string name="create_word_image">Picture</string>
+    <string name="create_word_image_add">Add a picture of your own</string>
+    <string name="create_word_image_from_library">Choose a photo</string>
+    <string name="create_word_image_from_camera">Take a photo</string>
+    <string name="create_word_image_more">More</string>
+    <string name="create_word_image_none">Type a word to look for a picture.</string>
+    <string name="create_word_image_empty">No pictures were found for this word.</string>
+    <string name="create_word_image_selected">Selected picture</string>
+    <string name="create_word_presets">Presets (optional)</string>
+    <string name="create_word_text_missing">Type the Polish word.</string>
+    <string name="create_word_translation_missing">Type the English word.</string>
+    <string name="create_word_exists">“%1$s” is already in your vocabulary.</string>
+    <string name="create_translating">Translating…</string>
+
+    <string name="dashboard_no_program">No program yet. Pick one on the Plan tab and it will show up here.</string>
+    <string name="dashboard_go_to_plan">Go to Plan</string>
+    <string name="dashboard_streak_unit">day streak</string>
+    <string name="dashboard_day_done">Today is done. Come back tomorrow.</string>
+    <string name="dashboard_meet_words">Meet %1$d new words</string>
+    <string name="cards_title">New words</string>
+    <string name="cards_next">Next</string>
+    <string name="cards_back">Back</string>
+    <string name="cards_start_training">Start training</string>
+    <string name="cards_edit">Edit this word</string>
+    <string name="cards_none">No new words today.</string>
+    <string name="dashboard_continuing">Continuing</string>
+    <string name="dashboard_continue">Continue</string>
+    <string name="dashboard_metric_vocabulary">Words mastered</string>
+    <string name="dashboard_metric_milestones">Milestones</string>
+    <string name="dashboard_metric_consistency">Days studied</string>
+    <string name="dashboard_metric_study_time">Study time</string>
+    <string name="dashboard_trainings_of">%1$d of %2$d trainings today</string>
+    <string name="dashboard_metric_unmeasured">—</string>
+    <string name="dashboard_metric_accuracy">Correct answers</string>
+    <string name="training_dictation_blurb">Hear a word and type it</string>
+    <string name="training_dictation_puzzle_blurb">Hear a word and build it from letters</string>
+    <string name="training_puzzle_blurb">Put the letters in the right order</string>
+    <string name="training_image_test_blurb">Pick the word that matches the picture</string>
+    <string name="training_word_match_blurb">Pair each word with its translation</string>
+    <string name="training_true_or_false_blurb">Say whether the translation is right</string>
+    <string name="training_pronunciation_blurb">Say the word out loud and be heard</string>
+    <string name="training_memory_cards_blurb">Turn the cards over and find the pairs</string>
+    <string name="training_crossword_blurb">Fill the grid from the clues</string>
+    <string name="training_word_card_blurb">Read the word, its picture and how it sounds</string>
+    <string name="training_passage_write_blurb">Read a text and type the missing words</string>
+    <string name="training_passage_bank_blurb">Read a text and pick the missing words</string>
+    <string name="passage_write_title">Read and Write</string>
+    <string name="passage_bank_title">Read and Choose</string>
+    <string name="pronunciation_sentences_title">Read Aloud</string>
+    <string name="pronunciation_sentences_none">Star some words first — the sentences are written around them.</string>
+    <string name="pronunciation_sentences_offline">No connection. The sentences are written fresh each time, so this training needs the internet.</string>
+    <string name="pronunciation_sentences_refused">The sentences could not be written just now. Try again in a moment.</string>
+    <string name="training_pronunciation_sentences_blurb">Read a sentence aloud and hear how close you got</string>
+    <string name="fillword_title">Word Search</string>
+    <string name="fillword_found">Found %1$d of %2$d</string>
+    <string name="fillword_none">Star some words first — the grid is built from your study set.</string>
+    <string name="training_fillword_blurb">Find your words hidden in a grid of letters</string>
+    <string name="passage_none">Star some words first — the text is built from your study set.</string>
+    <string name="passage_offline">No connection. The text is written fresh each time, so this training needs the internet.</string>
+    <string name="passage_refused">The text could not be written just now. Try again in a moment.</string>
+    <string name="training_mix_blurb">A little of every training</string>
+    <string name="training_coming_soon">Coming soon</string>
+    <string name="result_done">Done</string>
+    <string name="result_next_training">Next training</string>
+    <string name="day_complete_title">Today is done</string>
+    <string name="day_complete_body">Every training in today\'s queue is finished. Come back tomorrow for the next lot.</string>
+    <string name="day_complete_done">Back to Home</string>
+    <string name="result_accuracy">answered correctly</string>
+    <string name="plan_programs">Programs</string>
+    <string name="plan_program_create">Build your own</string>
+    <string name="plan_program_create_hint">A daily plan over the words in your study set</string>
+    <string name="create_program_title">New program</string>
+    <string name="edit_program_title">Edit program</string>
+    <string name="program_default_name">Vocabulary program</string>
+    <string name="create_program_new_words">New words a day</string>
+    <string name="create_program_review_words">Reviews a day</string>
+    <string name="create_program_trainings">Trainings</string>
+    <string name="create_program_queue">Queue</string>
+    <string name="create_program_queue_empty">Nothing yet. Tap a training above to add a turn at it.</string>
+    <string name="create_program_needs_training">Add at least one training to save.</string>
+    <string name="create_program_queue_note">%1$d turns a day, in this order</string>
+    <string name="create_program_scope">Over the words in your study set</string>
+    <string name="create_program_empty_study_set">Nothing starred yet. Add words to your study set in the Words tab first.</string>
+    <string name="create_program_move_earlier">Move earlier</string>
+    <string name="create_program_move_later">Move later</string>
+    <string name="create_program_reorder">Drag to reorder</string>
+    <string name="create_program_remove_turn">Remove this turn</string>
+    <string name="plan_courses">Courses</string>
+    <string name="plan_program_active">In progress</string>
+    <string name="plan_program_words">%1$d words</string>
+    <string name="plan_program_new_a_day">%1$d new a day</string>
+    <string name="plan_program_trainings">%1$d trainings</string>
+    <string name="program_start">Start this program</string>
+    <string name="program_leave">In progress · tap to stop</string>
+    <string name="course_title">Course</string>
+    <string name="course_empty">The course could not be loaded.</string>
+    <string name="course_progress">%1$d of %2$d lessons done</string>
+    <string name="course_lesson_number">Lesson %1$d</string>
+    <string name="course_lesson_locked">Finish the lesson before this one to open it.</string>
+    <string name="lesson_words">New words</string>
+    <string name="lesson_train">Train this lesson</string>
+    <string name="lesson_mark_complete">Mark as done</string>
+    <string name="lesson_mark_incomplete">Mark as not done</string>
+    <string name="exercise_play">Play</string>
+    <string name="exercise_pause">Pause</string>
+    <string name="exercise_check">Check</string>
+    <string name="exercise_try_again">Try again</string>
+    <string name="exercise_score">%1$d of %2$d correct</string>
+    <string name="exercises_heading">Exercises</string>
+    <string name="exercise_repeat_hint">Listen, then say each word out loud.</string>
+    <string name="exercise_audio_unavailable">This recording could not be loaded.</string>
+    <string name="lesson_not_found">This lesson is no longer in the course.</string>
+    <plurals name="selection_count">
+        <item quantity="one">%1$d selected</item>
+        <item quantity="other">%1$d selected</item>
+    </plurals>
+    <plurals name="vocabulary_deleted_words">
+        <item quantity="one">Deleted %1$d word</item>
+        <item quantity="other">Deleted %1$d words</item>
+    </plurals>
+    <plurals name="word_change_presets_count">
+        <item quantity="one">In %1$d preset. A word can be in several.</item>
+        <item quantity="other">In %1$d presets. A word can be in several.</item>
+    </plurals>
+    <plurals name="exercise_question_count">
+        <item quantity="one">%1$d question</item>
+        <item quantity="other">%1$d questions</item>
+    </plurals>
+    <plurals name="presets_word_count_label">
+        <item quantity="one">word</item>
+        <item quantity="other">words</item>
+    </plurals>
+    <plurals name="dashboard_word_total">
+        <item quantity="one">%1$d word in your study set</item>
+        <item quantity="other">%1$d words in your study set</item>
+    </plurals>
+    <string name="training_unavailable_title">Nothing to practise here</string>
+    <string name="training_unavailable_body">This training could not build a round from your study set. Try another training, or add a few more words.</string>
+    <string name="training_unavailable_action">Go back</string>
 </resources>

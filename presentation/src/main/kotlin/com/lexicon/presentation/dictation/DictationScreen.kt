@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -25,13 +27,13 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.TrainingUnavailableContent
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconShapes
@@ -39,6 +41,7 @@ import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.PlayButton
 import com.lexicon.presentation.theme.component.ProgressDots
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,7 +49,7 @@ fun DictationScreen(
     onSessionComplete: (correct: Int, incorrect: Int, skipped: Int, tipsUsed: Int) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: DictationViewModel = hiltViewModel(),
+    viewModel: DictationViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val focusRequester = remember { FocusRequester() }
@@ -55,8 +58,6 @@ fun DictationScreen(
     val loadedState = uiState as? DictationUiState.Loaded
     LaunchedEffect(loadedState?.stepIndex, loadedState != null) {
         if (loadedState != null && loadedState.isEditable) {
-            // On the very first step, the field is composed for the first time in this same
-            // recomposition, so its focus target may not be attached yet — wait a frame.
             withFrameNanos { }
             runCatching { focusRequester.requestFocus() }
             keyboardController?.show()
@@ -105,6 +106,9 @@ private fun DictationScreenContent(
         topBar = { TrainingTopBar(title = stringResource(R.string.dictation_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
+            DictationUiState.Unavailable ->
+                TrainingUnavailableContent(onClose = onClose, modifier = Modifier.padding(padding))
+
             is DictationUiState.Loading ->
                 Column(
                     modifier = Modifier.fillMaxSize().padding(padding),
@@ -119,6 +123,7 @@ private fun DictationScreenContent(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth()
+                            .verticalScroll(rememberScrollState())
                             .padding(Dimens.spacingMedium),
                     ) {
                         ProgressDots(
@@ -133,9 +138,6 @@ private fun DictationScreenContent(
                             modifier = Modifier.padding(top = Dimens.spacingLarge),
                         )
 
-                        // The field stays `enabled` even after validation (readOnly blocks typing instead),
-                        // so it always resolves via focused/unfocused colors, never the separate disabled
-                        // bucket — that mismatch was what made the border look broken.
                         val fieldColors = when (uiState.answerState) {
                             is AnswerState.Correct ->
                                 OutlinedTextFieldDefaults.colors(
@@ -218,7 +220,7 @@ private fun DictationScreenContent(
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun DictationScreenUnansweredPreview() {
     LexiconTheme {
@@ -235,7 +237,7 @@ private fun DictationScreenUnansweredPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun DictationScreenCorrectPreview() {
     LexiconTheme {
@@ -258,7 +260,7 @@ private fun DictationScreenCorrectPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun DictationScreenIncorrectPreview() {
     LexiconTheme {

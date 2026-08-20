@@ -3,18 +3,22 @@ package com.lexicon.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.lexicon.app.navigation.LexiconNavHost
-import com.lexicon.presentation.theme.LexiconTheme
-import dagger.hilt.android.AndroidEntryPoint
+import com.lexicon.presentation.theme.LexiconAppTheme
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            LexiconTheme {
-                LexiconNavHost(navController = rememberNavController())
+            LexiconAppTheme {
+                LexiconNavHost(
+                    navController = rememberNavController(),
+                    modifier = Modifier.fillMaxSize().imePadding(),
+                )
             }
         }
     }

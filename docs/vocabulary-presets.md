@@ -1,0 +1,294 @@
+# Vocabulary presets
+
+A **preset** is a curated collection of vocabulary grouped by topic, frequency band or CEFR
+level — "Food", "100 most common words", "A2". Presets are data, not code: adding one means
+editing a text file and re-running a build script, never touching Kotlin.
+
+The browser lives in the **Vocabulary** tab.
+
+## Architecture
+
+Presets follow the project's existing layering. Each layer knows only the one below it.
+
+| Layer | Package | Holds |
+| --- | --- | --- |
+| Presentation | `com.lexicon.presentation.presets` | `VocabularyScreen`, `PresetDetailScreen`, their ViewModels and UI state |
+| Interactor | `com.lexicon.interactors.presets` | `VocabularyPreset`, `PresetCategory`, `CefrLevel`, use-case contracts |
+| Application | `com.lexicon.application.presets` | Use-case implementations, mappers, `VocabularyPresetValidator` |
+| Boundary | `com.lexicon.boundary` | `VocabularyPresetRepository`, `VocabularyPresetBoundary` |
+| Data | `com.lexicon.data.local` / `.repository` | Asset DTOs, `VocabularyPresetAssetLoader`, repository implementation |
+
+Domain and interactors stay pure Kotlin. `kotlin.time.Duration` and `ImmutableList` are the
+only non-stdlib types they use.
+
+Two deliberate consequences of the model:
+
+- **A preset holds vocabulary ids, not words.** Listing, searching and sorting 77 presets
+  never touches the word store. Words are resolved only when a preset is opened or trained
+  on. Without this, the 1000-word presets would duplicate most of the corpus in memory.
+- **Localized text is resolved at the edge**, by `LocalizedText.resolve(languageTag)`, not
+  at load time — so the display language can change without reloading the catalogue.
+
+`GetPresetCategoriesUseCase` currently has no caller: categories still order the preset list
+and label each card, but nothing lists them on their own since the category chips were removed.
+It is kept rather than deleted because it is correct and small, unlike the browse use case,
+which had become a filter that could never match.
+
+## Preset format
+
+The assets are the **build-time source**, not the runtime one. Both are imported into the
+database at startup, and everything afterwards reads rows — see *Startup sync* below.
+
+The app reads two generated assets from `data/src/main/assets/`:
+
+- `vocabulary_pl.json` — every word, with `id`, `text`, `translation`, `transcription`,
+  `partOfSpeech`, `cefr`, `topics`.
+- `vocabulary_presets.json` — `{ "categories": [...], "presets": [...] }`.
+
+A preset entry:
+
+```json
+{
+  "id": "food",
+  "category": "everyday-life",
+  "title":       { "en": "Food", "pl": "Jedzenie" },
+  "description": { "en": "Meals, ingredients, fruit and vegetables.", "pl": "..." },
+  "icon": "restaurant",
+  "color": "#EF6C00",
+  "cefr": null,
+  "popularity": 17,
+  "estimatedSeconds": 3480,
+  "wordCount": 58,
+  "vocabularyIds": [168, 169, 180]
+}
+```
+
+Every field except `id` and `category` is optional when parsing: a file written by an older
+or newer app version still loads. Unknown fields are ignored, so a future `premium` or
+`packUrl` will not break older clients.
+
+## Authoring: adding a new preset
+
+Sources live in `tools/vocabulary/`. Nothing here ships; it generates what ships.
+
+```
+tools/vocabulary/
+  corpus/core.tsv        frequency-ordered core list — line order IS the rank
+  corpus/topics/*.tsv    topical vocabulary beyond the core list
+  categories.tsv         preset categories
+  presets.tsv            preset metadata and selection rules
+  g2p.py                 Polish spelling → IPA
+  build_assets.py        validates, then writes both assets
+```
+
+To add a preset, append a row to `presets.tsv` and run:
+
+```bash
+python3 tools/vocabulary/build_assets.py
+```
+
+Columns are `id, category, select_type, select_arg, popularity, icon, color, title_en,
+title_pl, desc_en, desc_pl`. The selection rule decides membership, so no id list is ever
+written by hand:
+
+| `select_type` | `select_arg` | Selects |
+| --- | --- | --- |
+| `frequency` | a count, e.g. `250` | the N most frequent words in `core.tsv` |
+| `cefr` | `A1`…`C2` | every word tagged with that level |
+| `topic` | a tag, e.g. `food` | every word carrying that topic tag |
+| `pos` | a part of speech, e.g. `expr` | every word of that kind — how the Phrases preset is built |
+
+To add **vocabulary**, append to `corpus/core.tsv` (if it belongs in the frequency ranking)
+or a file under `corpus/topics/`, then rebuild. Columns are `polish, english, pos, cefr,
+topics`. Transcriptions are generated — never write IPA by hand.
+
+The one thing that can still need a code change is an **icon**: Compose cannot look an icon
+up by name, so `PresetIcons.kt` maps names to vectors. An unmapped name falls back to a
+generic icon rather than failing, so a new preset always renders; add a mapping only if you
+want a specific icon that nothing else uses.
+
+## Validation
+
+Two layers, deliberately duplicated because they protect against different things.
+
+`build_assets.py` validates **before writing**, and a failure stops the build. It rejects
+duplicate ids, unknown categories, empty presets, repeated words within a preset, unknown
+parts of speech or CEFR levels, duplicate word/translation pairs across the corpus, and
+presets too small to train on (fewer than six words, which Image Test needs for options).
+
+`VocabularyPresetValidator` (domain) checks the same rules **at runtime**, and exists for
+catalogues that did not come from the build tool — imported files, downloaded packs,
+user-created presets. It returns every issue rather than throwing on the first, so a bad
+import can be explained in full. Issues are typed (`PresetValidationIssue`), not strings.
+
+`VocabularyPresetAssetTest` re-checks the shipped asset from the test suite, because the
+build tool cannot stop the file being hand-edited afterwards.
+
+## Startup sync
+
+`SyncCatalogUseCase` runs on the splash screen and reports each step as it goes, because on a
+first launch it writes thousands of rows and a splash that says nothing for that long is
+indistinguishable from one that has hung. The screen shows, per step, whether it is waiting,
+importing, already current with a count, or failed with a reason.
+
+Vocabulary is synced first and presets only if it succeeded: a preset is a list of word ids, so
+importing one over an empty vocabulary produces a catalogue whose every entry resolves to
+nothing.
+
+The two stores are kept current differently, and the difference is the point:
+
+| | Vocabulary | Presets |
+| --- | --- | --- |
+| Strategy | reconcile row by row | replace wholesale |
+| Why | rows carry the user's study set, which is not the asset's to overwrite | nothing user-owned lives on them — a preset's heart is stored on its words |
+
+Both skip their work when a fingerprint of the asset matches the last synced value, so an
+unchanged asset costs a file read and no JSON parse. Row counts are still checked, because a
+schema change can empty a table without the asset moving at all.
+
+A failed sync blocks startup only when it leaves the app with nothing usable. Over a store that
+already holds rows it is a stale catalogue, not a broken app, and stranding the user on a splash
+screen over something they cannot fix would be the worse outcome.
+
+## Repository responsibilities
+
+`VocabularyPresetRepository` answers three questions — all presets, one preset by id, all
+categories — plus `syncFromSource`, and says nothing about where they come from.
+`VocabularyPresetRepositoryImpl` reads them from the database. Memberships are fetched in one
+query and grouped in memory rather than one query per preset, which would be 72 round trips to
+draw one screen.
+
+The repository does **not** validate, sort, filter or localize. Those belong to the domain
+layer, so that every source gets the same treatment.
+
+## Extension points
+
+The architecture was shaped so these need no structural change:
+
+| Future | How it fits |
+| --- | --- |
+| User-created presets | Another `VocabularyPresetRepository`, composed with the bundled one |
+| Downloadable packs | Same — a repository reading from cache storage instead of assets |
+| AI-generated / imported | Same, plus `VocabularyPresetValidator` on the untrusted input |
+| Community presets | Same, plus whatever metadata fields; unknown fields already parse |
+| Premium presets | An added field on the asset DTO; old clients ignore it |
+
+The one assumption to preserve: a preset references vocabulary **by id**. A source that
+brings its own words must first insert them into the vocabulary store and reference the
+resulting ids, rather than embedding words in the preset.
+
+## The study set
+
+A word can be marked with a heart, on its own row in the detail screen, from search results,
+or in bulk from a preset's heart. **Trainings draw from the study set and nothing
+else.** A user with an empty study set therefore has nothing to train on, which is what
+`TrainingGate` exists to explain rather than leave as an empty session.
+
+A preset's heart is tri-state — `NONE`, `SOME`, `ALL` — because a preset can be partly
+in the study set and a boolean would have to lie about that. Partly-in counts as off, so
+one tap completes the preset rather than clearing it. The bulk toggle writes every word in a
+single call; word by word, a thousand-word preset would emit a thousand updates.
+
+Two consequences worth knowing:
+
+- A study set of **very few** words no longer degrades trainings silently. Every training is
+  fronted by `TrainingGate`, which checks the study-set size against that training's minimum
+  (`TrainingType.minimumWords`) and shows a "not enough words" screen naming both numbers instead
+  of starting a session it cannot build. Before this, an Image Test with three starred words ran
+  with three options, and a training with none spun forever — `openStep(0)` returns early on
+  an empty session, so the screen never left Loading.
+- `getRandomForStudy` is plain SQL, and the project has no Robolectric or instrumentation
+  setup, so **the study-set query itself is not covered by a unit test**. Everything above it
+  — the use cases, the tri-state derivation, the sorting — is.
+
+## Word search
+
+The Vocabulary tab has one search box and one row of filter chips, and both select **words**.
+With the box empty and no level picked, the preset list is shown; typing — or picking a CEFR
+level — replaces that list with the matching words, and clearing both puts the presets back
+exactly as they were.
+
+Presets are not filtered, searched or sorted from the UI: the catalogue is 72 items whose
+names are on screen to scan. `BrowseVocabularyPresetsUseCase` was removed once every one of
+its narrowing parameters had become unreachable; `GetVocabularyPresetsUseCase` returns the
+list in category-then-popularity order, which is the order shown.
+
+**CEFR is a property of a word, not of a preset.** There are no A1/A2/B1 presets; instead
+every word carries its level, and the level chips list every word at the levels picked. Levels
+and the query narrow together.
+
+Matching is by either language — "apple", "jabłko" and "jablko" all find the same entry — and
+each result carries the same heart as the preset detail screen, so search is also how you add
+a single word to the study set.
+
+Presets are narrowed by the filter chips rather than by typing. A preset list is 77 items with
+names you can see; a vocabulary is 1,767 words you cannot, so the box is worth more pointed at
+the words.
+
+Matching is done in SQLite against a stored `searchKey` column holding both languages folded
+together (lower case, Polish diacritics stripped). The alternative — folding every row at
+query time — would mean scanning the whole table per keystroke.
+
+The folding lives in `common.foldForSearch`, used by the stored key, the query, and preset
+search. That shared location is the point: a key folded one way and a query folded another
+never match, and the failure is silent.
+
+`VocabularySeeder` keeps the table in line with the asset rather than only filling an empty
+one. On launch it fingerprints the asset; if that differs from the last synced value it inserts
+new words, deletes words the asset has dropped, and refreshes the rest — **preserving the
+study-set flag**, which is the user's and not the asset's to state. Unchanged assets cost a file
+read and no parse.
+
+This is not an optimisation, it is the difference between shipping a corpus update and not:
+before it, an install seeded once never received another word, so the 452 words added for the
+upper CEFR bands reached only fresh installs and the C2 filter stayed empty on every existing
+device.
+
+## Consuming presets
+
+`GetPresetVocabularyUseCase` is the integration point. It returns a preset's words in the
+preset's own order (so "100 most common words" arrives in frequency order) and silently
+skips ids the store no longer holds, so a preset built against an older corpus stays usable.
+
+Trainings, Mix, Custom Builder, Search, the study set and any future spaced-repetition
+scheduler consume presets through that one call. **Not yet wired:** no training currently
+takes a preset as a session filter — that means threading a preset id through each
+training's session-start request, and is separate work.
+
+## Dataset provenance and limits
+
+The corpus is roughly 2,370 entries: about 1,010 frequency-ranked core words plus topical,
+upper-level and phrase vocabulary. By CEFR band: A1 737, A2 605, B1 392, B2 286, C1 203, C2 148.
+
+The **Phrases** preset gathers all 184 of them by part of speech rather than by tag, so a phrase
+added to the corpus joins it without anyone remembering to label it. Five members are single
+words — *dziękuję*, *przepraszam*, *dobranoc*, *powodzenia*, *smacznego* — which are utterances
+rather than vocabulary, and belong there for the same reason the rest do.
+
+259 entries are multi-word, of which 179 are spoken phrases — what a learner actually says,
+rather than compounds that merely happen to contain a space. They live in
+`corpus/topics/phrases.tsv`. Phrases are excluded from Crossword, and never mixed with single
+words inside one Image Test or Word Match step, because a phrase is a different kind of answer.
+
+Entries are at least three letters. One- and two-letter words are function words — *w*, *na*,
+*że* — and they break every training built on spelling: there is no letter puzzle or crossword
+answer in a two-letter preposition. `MIN_WORD_LENGTH` in the build tool rejects them.
+
+Every band has to be non-empty, because each is offered as a filter chip and a chip that
+returns nothing is a control that silently does nothing — C2 shipped that way once. Both
+`build_assets.py` and `VocabularyPresetAssetTest` now refuse an empty band, and likewise a
+word below the minimum length.
+
+Three honest caveats:
+
+- **The frequency ranking is a curated approximation**, not a corpus-derived list. It is
+  ordered to be defensible for learners, but the exact rank of any given word is an
+  editorial judgement, not a measurement.
+- **The upper bands are editorial.** Assigning a word to B2 rather than C1 is a judgement,
+  not a measurement against a syllabus; the ordering between bands is meaningful, the exact
+  boundary is not.
+- **Transcriptions are rule-generated** by `g2p.py` from spelling. Polish orthography is
+  close to phonemic so this is accurate for the ordinary cases it covers — digraphs,
+  softening, final devoicing, voicing assimilation, penultimate stress — but it does not
+  handle loanwords whose pronunciation genuinely diverges from their spelling.
+  `test_g2p.py` pins the rules against known words.
