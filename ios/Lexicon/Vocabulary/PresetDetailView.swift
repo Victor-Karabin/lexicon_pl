@@ -4,7 +4,7 @@ import Shared
 struct PresetDetailView: View {
     let preset: VocabularyPreset
 
-    @State private var words: [PresetWord] = []
+    @State private var words: [Word] = []
     @State private var studySet: Set<Int64> = []
     @Environment(\.colorScheme) private var scheme
 

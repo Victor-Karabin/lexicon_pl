@@ -1,9 +1,11 @@
 package com.lexicon.data.di
 
+import com.lexicon.boundary.AppVersionProvider
 import com.lexicon.boundary.Translator
 import com.lexicon.data.local.AppDatabaseBuilderFactory
 import com.lexicon.data.local.AssetReader
 import com.lexicon.data.local.DataStorePathResolver
+import com.lexicon.data.local.iosAppVersionProvider
 import com.lexicon.data.remote.image.OpenverseIosImageSource
 import com.lexicon.data.remote.image.PexelsIosImageSource
 import com.lexicon.data.remote.image.PixabayIosImageSource
@@ -19,6 +21,7 @@ fun dataIosModule(
     single { AppDatabaseBuilderFactory() }
     single { DataStorePathResolver() }
     single { AssetReader() }
+    single<AppVersionProvider> { iosAppVersionProvider() }
 
     factory<List<RemoteImageSource>> {
         listOf(

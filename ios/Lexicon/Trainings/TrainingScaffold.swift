@@ -113,3 +113,30 @@ struct SessionResultView: View {
         .padding(Spacing.medium)
     }
 }
+
+/// Shown when a training drew nothing it could ask. The Android app gained the same
+/// screen when seven of its trainings were found sitting on a spinner instead.
+struct TrainingUnavailableView: View {
+    var title = "Nothing to practise here"
+    var message = "This training could not build a round from your study set. Try another training, or add a few more words."
+
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        VStack(spacing: Spacing.medium) {
+            Image(systemName: "magnifyingglass")
+                .font(.system(size: 44))
+                .foregroundStyle(.secondary)
+            Text(title).font(.title3.weight(.semibold)).multilineTextAlignment(.center)
+            Text(message)
+                .font(.callout)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+            Button("Go back") { dismiss() }
+                .buttonStyle(.borderedProminent)
+                .padding(.top, Spacing.small)
+        }
+        .padding(Spacing.xl)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}

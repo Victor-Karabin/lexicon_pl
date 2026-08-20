@@ -13,6 +13,7 @@ kotlin {
             isStatic = true
             xcf.add(this)
 
+            export(projects.model)
             export(projects.boundary)
             export(projects.common)
             export(projects.interactors)
@@ -23,6 +24,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            api(projects.model)
             api(projects.boundary)
             api(projects.common)
             api(projects.interactors)

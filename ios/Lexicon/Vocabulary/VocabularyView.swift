@@ -138,7 +138,7 @@ private struct PresetTile: View {
 }
 
 struct WordRow: View {
-    let word: PresetWord
+    let word: Word
     let isInStudySet: Bool
     let onStudySet: () -> Void
 
@@ -170,7 +170,7 @@ struct WordRow: View {
     LightDark(title: "Word rows") {
         VStack(spacing: 0) {
             WordRow(
-                word: PresetWord(
+                word: Word(
                     id: VocabularyId(value: 1),
                     text: "woda",
                     translation: "water",
@@ -184,7 +184,7 @@ struct WordRow: View {
             Divider()
 
             WordRow(
-                word: PresetWord(
+                word: Word(
                     id: VocabularyId(value: 2),
                     text: "dzień dobry",
                     translation: "good morning",

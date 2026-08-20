@@ -8,7 +8,7 @@ struct CrosswordView: View {
     @State private var session: CrosswordSessionResponse?
     @State private var answers: [Int64: String] = [:]
     @State private var focused: Int64?
-    @State private var results: [Int64: CrosswordWordOutcome] = [:]
+    @State private var results: [Int64: StepOutcome] = [:]
     @State private var tally = SessionTally()
     @State private var finished = false
 

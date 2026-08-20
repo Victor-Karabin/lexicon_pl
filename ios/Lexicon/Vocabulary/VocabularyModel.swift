@@ -6,7 +6,7 @@ final class VocabularyModel: ObservableObject {
     @Published var query: String = ""
     @Published private(set) var levels: Set<CefrLevel> = []
     @Published private(set) var presets: [VocabularyPreset] = []
-    @Published private(set) var words: [PresetWord] = []
+    @Published private(set) var words: [Word] = []
     @Published private(set) var studySet: Set<Int64> = []
 
     private var watcher: Cancellable?
@@ -43,9 +43,9 @@ final class VocabularyModel: ObservableObject {
         await search()
     }
 
-    func isInStudySet(_ word: PresetWord) -> Bool { studySet.contains(word.id.value) }
+    func isInStudySet(_ word: Word) -> Bool { studySet.contains(word.id.value) }
 
-    func toggleInStudySet(_ word: PresetWord) async {
+    func toggleInStudySet(_ word: Word) async {
         try? await deps.toggleWordInStudySet.invoke(id: word.id, isInStudySet: !isInStudySet(word))
     }
 
@@ -54,14 +54,14 @@ final class VocabularyModel: ObservableObject {
     @Published private(set) var selected: Set<Int64> = []
     @Published private(set) var isSelecting = false
 
-    func isSelected(_ word: PresetWord) -> Bool { selected.contains(word.id.value) }
+    func isSelected(_ word: Word) -> Bool { selected.contains(word.id.value) }
 
-    func startSelecting(_ word: PresetWord) {
+    func startSelecting(_ word: Word) {
         isSelecting = true
         selected = [word.id.value]
     }
 
-    func toggleSelected(_ word: PresetWord) {
+    func toggleSelected(_ word: Word) {
         if selected.contains(word.id.value) {
             selected.remove(word.id.value)
         } else {
@@ -76,7 +76,7 @@ final class VocabularyModel: ObservableObject {
         selected = []
     }
 
-    func delete(_ word: PresetWord) async {
+    func delete(_ word: Word) async {
         try? await deps.deleteWord.invoke(id: word.id)
         await search()
     }

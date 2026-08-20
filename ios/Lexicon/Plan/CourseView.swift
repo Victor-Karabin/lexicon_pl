@@ -13,7 +13,7 @@ struct CourseView: View {
                 let done = course.lessons.filter { $0.isCompleted }.count
                 Tile(skin: skin) {
                     HStack(spacing: Spacing.medium) {
-                        Medallion(skin: skin) { MedallionText(text: course.level, skin: skin) }
+                        Medallion(skin: skin) { MedallionText(text: course.level?.name ?? "", skin: skin) }
                         Text("\(done) of \(course.lessons.count) lessons done")
                             .foregroundStyle(skin.onTile.muted)
                         Spacer()
@@ -55,7 +55,7 @@ struct LessonView: View {
     let title: String
 
     @State private var lesson: Lesson?
-    @State private var words: [PresetWord] = []
+    @State private var words: [Word] = []
 
     var body: some View {
         ScrollView {
