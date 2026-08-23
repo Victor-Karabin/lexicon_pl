@@ -6,10 +6,17 @@ Run from anywhere:  python3 tools/translate/retranslate.py
 Reads
     local.properties                        google.translateApiKey, or google.ttsApiKey
     tools/vocabulary/corpus/**/*.tsv        the authored vocabulary, column 2 is the gloss
-    data/src/androidMain/assets/conjugations.json
 
-Writes the same corpus files and conjugations.json back, then rebuilds
-vocabulary_pl.json through tools/vocabulary/build_assets.py.
+Writes the same corpus files back, then rebuilds vocabulary_pl.json through
+tools/vocabulary/build_assets.py.
+
+conjugations.json is deliberately left alone. Every verb in it already carries an
+authored gloss, so a rewrite gains no coverage and only trades one wording for
+another — and the trade measured badly: 273 glosses switched from the dictionary's
+person-neutral "to defend oneself" to "to defend myself", 1261 landed on a gloss
+another verb already answered to, and single-word requests turned "to corroborate"
+into "to work". Word senses in a 4545-verb list, most of them rare, are not
+something one API call per infinitive can settle.
 
 Translations are cached in tools/translate/.cache.json, so a second run costs
 nothing and an interrupted run resumes. Pass --refresh to ignore the cache.
@@ -41,7 +48,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 CORPUS = ROOT / "tools" / "vocabulary" / "corpus"
-CONJUGATIONS = ROOT / "data" / "src" / "androidMain" / "assets" / "conjugations.json"
 CACHE = Path(__file__).parent / ".cache.json"
 BUILD_ASSETS = ROOT / "tools" / "vocabulary" / "build_assets.py"
 
@@ -195,19 +201,6 @@ def rewrite_corpus(
     return changed
 
 
-def rewrite_conjugations(translator: Translator) -> int:
-    verbs = json.loads(CONJUGATIONS.read_text())
-    changed = 0
-    for verb in verbs:
-        gloss = translator.gloss(verb["bezokolicznik"], verb.get("translation", ""), is_verb=True)
-        if gloss != verb.get("translation"):
-            verb["translation"] = gloss
-            changed += 1
-    if changed:
-        CONJUGATIONS.write_text(json.dumps(verbs, ensure_ascii=False, indent=2) + "\n")
-    return changed
-
-
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dry-run", action="store_true", help="report what would be sent, translate nothing")
@@ -222,11 +215,9 @@ def main() -> int:
         return 1
 
     files = corpus_files()
-    verbs = json.loads(CONJUGATIONS.read_text())
 
     wanted = [phrase for path in files for phrase in phrases_for(path)]
-    wanted += [VERB_FRAME + verb["bezokolicznik"] for verb in verbs]
-    print(f"{len(set(wanted))} distinct phrases across {len(files)} corpus files and {len(verbs)} verbs")
+    print(f"{len(set(wanted))} distinct phrases across {len(files)} corpus files")
 
     try:
         translator.warm(wanted)
@@ -254,9 +245,6 @@ def main() -> int:
         if changed:
             print(f"  {path.relative_to(ROOT)}: {changed} glosses")
 
-    changed = rewrite_conjugations(translator)
-    total += changed
-    print(f"  conjugations.json: {changed} glosses")
     print(f"{total} glosses rewritten")
 
     if not arguments.skip_build:
