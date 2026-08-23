@@ -13,6 +13,7 @@ data class ConjugationVerbEntity(
     @PrimaryKey val infinitive: String,
     val translation: String,
     val formsJson: String,
+    val example: String = "",
 )
 
 @Entity(tableName = "conjugation_course")

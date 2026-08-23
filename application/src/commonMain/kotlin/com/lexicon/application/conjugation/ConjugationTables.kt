@@ -18,6 +18,7 @@ internal fun VerbConjugationBoundary.toVerb(): VerbConjugation =
     VerbConjugation(
         infinitive = infinitive,
         translation = translation,
+        example = example,
         forms = forms
             .mapNotNull { (key, values) ->
                 GrammaticalPerson.bySourceKey(key)?.let { person -> person to values.toImmutableList() }
@@ -55,6 +56,7 @@ internal fun VerbConjugation.question(pool: List<VerbConjugation>): ConjugationT
     return ConjugationTable(
         infinitive = infinitive,
         translation = translation,
+        example = example,
         steps = steps.toImmutableList(),
         bank = steps.flatMap { it.options }.distinct().shuffled().toImmutableList(),
     )

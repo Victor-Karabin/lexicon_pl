@@ -35,7 +35,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import com.lexicon.interactors.wordcard.WordCardStep
+import com.lexicon.model.vocabulary.ExampleSentence
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.ExampleSentenceRow
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
@@ -72,6 +74,7 @@ fun WordCardScreen(
         onNext = viewModel::onNext,
         onPrevious = viewModel::onPrevious,
         onPronounce = viewModel::onPronounce,
+        onSpeakExample = viewModel::onSpeakExample,
         onEdit = { uiState.current?.let { onEditWord(it.vocabularyItemId) } },
         modifier = modifier,
     )
@@ -84,6 +87,7 @@ private fun WordCardContent(
     onNext: () -> Unit,
     onPrevious: () -> Unit,
     onPronounce: () -> Unit,
+    onSpeakExample: () -> Unit,
     onEdit: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -146,7 +150,12 @@ private fun WordCardContent(
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
-                    Card(card = uiState.current!!, onPronounce = onPronounce, onEdit = onEdit)
+                    Card(
+                        card = uiState.current!!,
+                        onPronounce = onPronounce,
+                        onSpeakExample = onSpeakExample,
+                        onEdit = onEdit,
+                    )
                 }
         }
     }
@@ -156,6 +165,7 @@ private fun WordCardContent(
 private fun Card(
     card: WordCardStep,
     onPronounce: () -> Unit,
+    onSpeakExample: () -> Unit,
     onEdit: () -> Unit,
 ) {
     val skin = tileSkin(highlighted = true)
@@ -212,6 +222,12 @@ private fun Card(
                 )
             }
         }
+
+        ExampleSentenceRow(
+            example = ExampleSentence.parse(card.example),
+            onPlay = onSpeakExample,
+            color = skin.muted(),
+        )
     }
 }
 
@@ -231,6 +247,7 @@ private fun WordCardPreview() {
             onNext = {},
             onPrevious = {},
             onPronounce = {},
+            onSpeakExample = {},
             onEdit = {},
         )
     }

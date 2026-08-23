@@ -50,6 +50,7 @@ import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.ExampleSentenceRow
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
@@ -65,6 +66,8 @@ import kotlin.time.Duration.Companion.minutes
 private const val PRESET_CHIP_LINES = 2
 
 private val CandidateSize = 104.dp
+private val ProgressSize = 18.dp
+private val ProgressStroke = 2.dp
 private val SelectedBorder = 3.dp
 private val ImageRowHeight = 112.dp
 
@@ -89,6 +92,9 @@ fun CreateWordScreen(
         onImageSelected = viewModel::onImageSelected,
         onOwnImageAdded = viewModel::onOwnImageAdded,
         onMoreImages = viewModel::onMoreImages,
+        onExampleChanged = viewModel::onExampleChanged,
+        onExampleRequested = viewModel::onExampleRequested,
+        onExamplePlayed = viewModel::onExamplePlayed,
         onPresetToggled = viewModel::onPresetToggled,
         onSave = viewModel::onSave,
         modifier = modifier,
@@ -104,6 +110,9 @@ private fun CreateWordContent(
     onImageSelected: (String) -> Unit,
     onOwnImageAdded: (String) -> Unit,
     onMoreImages: () -> Unit,
+    onExampleChanged: (String) -> Unit,
+    onExampleRequested: () -> Unit,
+    onExamplePlayed: () -> Unit,
     onPresetToggled: (PresetId, Boolean) -> Unit,
     onSave: () -> Unit,
     modifier: Modifier = Modifier,
@@ -177,6 +186,13 @@ private fun CreateWordContent(
 
             ImageSection(uiState, onImageSelected, onOwnImageAdded, onMoreImages)
 
+            ExampleSection(
+                uiState = uiState,
+                onExampleChanged = onExampleChanged,
+                onExampleRequested = onExampleRequested,
+                onExamplePlayed = onExamplePlayed,
+            )
+
             if (uiState.memberships.isNotEmpty()) {
                 SectionHeading(stringResource(R.string.create_word_presets))
                 PresetChips(
@@ -187,6 +203,55 @@ private fun CreateWordContent(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun ExampleSection(
+    uiState: CreateWordUiState,
+    onExampleChanged: (String) -> Unit,
+    onExampleRequested: () -> Unit,
+    onExamplePlayed: () -> Unit,
+) {
+    SectionHeading(stringResource(R.string.example_label))
+
+    if (!uiState.sentence.isBlank) {
+        ExampleSentenceRow(
+            example = uiState.sentence,
+            onPlay = onExamplePlayed,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+
+    OutlinedTextField(
+        value = uiState.example,
+        onValueChange = onExampleChanged,
+        label = { Text(stringResource(R.string.example_hint)) },
+        supportingText = { Text(stringResource(R.string.example_markers)) },
+        minLines = 2,
+        modifier = Modifier.fillMaxWidth(),
+        shape = LexiconShapes.small,
+    )
+
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        TextButton(onClick = onExampleRequested, enabled = uiState.canWriteExample) {
+            Text(
+                stringResource(
+                    if (uiState.example.isBlank()) R.string.example_generate else R.string.example_regenerate,
+                ),
+            )
+        }
+        if (uiState.isWritingExample) {
+            CircularProgressIndicator(modifier = Modifier.size(ProgressSize), strokeWidth = ProgressStroke)
+        }
+    }
+
+    if (uiState.exampleFailed) {
+        Text(
+            text = stringResource(R.string.example_offline),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.error,
+        )
     }
 }
 
@@ -424,6 +489,9 @@ private fun CreateWordPreview() {
             onImageSelected = {},
             onOwnImageAdded = {},
             onMoreImages = {},
+            onExampleChanged = {},
+            onExampleRequested = {},
+            onExamplePlayed = {},
             onPresetToggled = { _, _ -> },
             onSave = {},
         )
@@ -442,6 +510,9 @@ private fun CreateWordEmptyPreview() {
             onImageSelected = {},
             onOwnImageAdded = {},
             onMoreImages = {},
+            onExampleChanged = {},
+            onExampleRequested = {},
+            onExamplePlayed = {},
             onPresetToggled = { _, _ -> },
             onSave = {},
         )
@@ -465,6 +536,9 @@ private fun CreateWordDuplicatePreview() {
             onImageSelected = {},
             onOwnImageAdded = {},
             onMoreImages = {},
+            onExampleChanged = {},
+            onExampleRequested = {},
+            onExamplePlayed = {},
             onPresetToggled = { _, _ -> },
             onSave = {},
         )

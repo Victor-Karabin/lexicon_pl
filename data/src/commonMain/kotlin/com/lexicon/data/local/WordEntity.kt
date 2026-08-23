@@ -16,6 +16,7 @@ data class WordEntity(
     val isInStudySet: Boolean = false,
     val searchKey: String = "",
     val cefr: String = "",
+    val example: String = "",
     val isDeleted: Boolean = false,
     val isUserCreated: Boolean = false,
 )
@@ -35,4 +36,5 @@ fun WordEntity.toWord(): Word =
         transcription = transcription,
         isInStudySet = isInStudySet,
         cefr = CefrLevel.ofName(cefr.ifEmpty { null }),
+        example = example,
     )

@@ -38,8 +38,10 @@ import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.conjugation.ConjugationAnswerMode
 import com.lexicon.interactors.conjugation.ConjugationStep
 import com.lexicon.interactors.conjugation.GrammaticalPerson
+import com.lexicon.model.vocabulary.ExampleSentence
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.ClueImage
+import com.lexicon.presentation.common.ExampleSentenceRow
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
@@ -222,6 +224,13 @@ private fun ConjugationContent(
                                     modifier = Modifier.testTag(ConjugationTestTags.TRANSCRIPTION),
                                 )
                             }
+
+                            val example = ExampleSentence.parse(table.example)
+                            ExampleSentenceRow(
+                                example = example,
+                                onPlay = { onSpeak(example.text) },
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
                         }
 
                         Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {

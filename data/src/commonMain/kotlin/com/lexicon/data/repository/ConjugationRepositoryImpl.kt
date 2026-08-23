@@ -122,6 +122,7 @@ class ConjugationRepositoryImpl(
                     infinitive = verb.infinitive,
                     translation = verb.translation.orEmpty(),
                     formsJson = json.encodeToString(formsSerializer, verb.forms),
+                    example = verb.example,
                 )
             },
         )
@@ -132,5 +133,6 @@ class ConjugationRepositoryImpl(
             infinitive = infinitive,
             translation = translation.takeIf { it.isNotBlank() },
             forms = runCatching { json.decodeFromString(formsSerializer, formsJson) }.getOrDefault(emptyMap()),
+            example = example,
         )
 }

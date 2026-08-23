@@ -1,6 +1,7 @@
 package com.lexicon.data.di
 
 import com.lexicon.boundary.AppVersionProvider
+import com.lexicon.boundary.ExampleSentenceGenerator
 import com.lexicon.boundary.Translator
 import com.lexicon.data.local.AppDatabaseBuilderFactory
 import com.lexicon.data.local.AssetReader
@@ -10,6 +11,7 @@ import com.lexicon.data.remote.image.OpenverseIosImageSource
 import com.lexicon.data.remote.image.PexelsIosImageSource
 import com.lexicon.data.remote.image.PixabayIosImageSource
 import com.lexicon.data.remote.image.RemoteImageSource
+import com.lexicon.data.remote.sentence.IosExampleSentenceGenerator
 import com.lexicon.data.remote.translate.IosGoogleTranslator
 import com.lexicon.data.repository.CorpusTranslatorImpl
 import org.koin.dsl.module
@@ -23,6 +25,7 @@ fun dataIosModule(
     single { DataStorePathResolver() }
     single { AssetReader() }
     single<AppVersionProvider> { iosAppVersionProvider() }
+    single<ExampleSentenceGenerator> { IosExampleSentenceGenerator() }
 
     factory<List<RemoteImageSource>> {
         listOf(

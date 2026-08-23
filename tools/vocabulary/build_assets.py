@@ -7,6 +7,7 @@ Reads
     tools/vocabulary/corpus/core.tsv        frequency-ordered core list (line order = rank)
     tools/vocabulary/corpus/topics/*.tsv    topical vocabulary beyond the core list
     tools/vocabulary/categories.tsv         preset categories
+    tools/vocabulary/examples.tsv           generated example sentences, keyed by word
     tools/vocabulary/presets.tsv            preset metadata and selection rules
 
 Writes
@@ -55,10 +56,32 @@ def read_tsv(path: Path) -> list[list[str]]:
     return rows
 
 
+def load_examples() -> dict[tuple[str, str], str]:
+    """Example sentences are generated, not authored, so they live beside the corpus.
+
+    Keyed by word and gloss because homonyms are separate entries deserving separate
+    sentences. A missing file just means no word ships with an example yet.
+    """
+    path = TOOLS / "examples.tsv"
+    if not path.exists():
+        return {}
+
+    examples: dict[tuple[str, str], str] = {}
+    for number, cols in read_tsv(path):
+        if len(cols) < 3:
+            raise BuildError(f"{path.name}:{number}: expected word, translation and sentence")
+        text, translation, sentence = (c.strip() for c in cols[:3])
+        if sentence:
+            examples[(text.lower(), translation.lower())] = sentence
+    return examples
+
+
 def load_words() -> list[dict]:
     """Core first so ids follow frequency, then topical files in a stable order."""
     words: list[dict] = []
     seen: dict[tuple[str, str], int] = {}
+
+    examples = load_examples()
 
     sources = [(TOOLS / "corpus" / "core.tsv", True)]
     sources += [(p, False) for p in sorted((TOOLS / "corpus" / "topics").glob("*.tsv"))]
@@ -97,6 +120,7 @@ def load_words() -> list[dict]:
                     "partOfSpeech": pos,
                     "cefr": cefr,
                     "topics": topics,
+                    "example": examples.get(key, ""),
                     # Rank exists only for the core list; topical extras are not ranked.
                     "frequencyRank": len(words) + 1 if is_core else None,
                 }
@@ -212,7 +236,7 @@ def main() -> int:
 
     ASSETS.mkdir(parents=True, exist_ok=True)
     vocabulary_asset = [
-        {k: w[k] for k in ("id", "text", "translation", "transcription", "partOfSpeech", "cefr", "topics")}
+        {k: w[k] for k in ("id", "text", "translation", "transcription", "partOfSpeech", "cefr", "topics", "example")}
         for w in words
     ]
     (ASSETS / "vocabulary_pl.json").write_text(
@@ -224,7 +248,9 @@ def main() -> int:
     )
 
     ranked = sum(1 for w in words if w["frequencyRank"] is not None)
+    with_examples = sum(1 for w in words if w["example"])
     print(f"{len(words)} words ({ranked} ranked), {len(presets)} presets in {len(categories)} categories")
+    print(f"  with an example sentence: {with_examples}")
     levels = {level: sum(1 for w in words if w["cefr"] == level) for level in CEFR_LEVELS}
     print("  by level: " + ", ".join(f"{lvl} {n}" for lvl, n in levels.items()))
     smallest = min(presets, key=lambda p: p["wordCount"])

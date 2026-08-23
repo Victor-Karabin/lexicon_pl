@@ -174,6 +174,7 @@ class GetWordCardsUseCaseImpl(
                     translation = word.translation,
                     transcription = word.transcription,
                     imageUrl = runCatching { imageProvider.searchImage(word.translation) }.getOrNull(),
+                    example = word.example,
                 )
             }.toImmutableList()
     }

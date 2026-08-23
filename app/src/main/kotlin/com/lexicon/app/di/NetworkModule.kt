@@ -2,6 +2,7 @@ package com.lexicon.app.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.lexicon.BuildConfig
+import com.lexicon.boundary.ExampleSentenceGenerator
 import com.lexicon.boundary.SentenceGenerator
 import com.lexicon.boundary.Translator
 import com.lexicon.data.di.translatorChainQualifier
@@ -14,6 +15,7 @@ import com.lexicon.data.remote.image.PixabayImageSource
 import com.lexicon.data.remote.image.UnsplashApi
 import com.lexicon.data.remote.image.UnsplashImageSource
 import com.lexicon.data.remote.sentence.OpenAiApi
+import com.lexicon.data.remote.sentence.OpenAiExampleGenerator
 import com.lexicon.data.remote.sentence.OpenAiSentenceGenerator
 import com.lexicon.data.remote.translate.GoogleTranslateApi
 import com.lexicon.data.remote.translate.GoogleTranslator
@@ -105,6 +107,7 @@ val networkModule = module {
     }
 
     single<SentenceGenerator> { OpenAiSentenceGenerator(get()) }
+    single<ExampleSentenceGenerator> { OpenAiExampleGenerator(get()) }
 
     single {
         val client =

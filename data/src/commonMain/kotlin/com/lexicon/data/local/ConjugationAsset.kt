@@ -15,6 +15,7 @@ private val UNUSABLE = setOf("", "-", "n/a", "na")
 data class ConjugationEntryAsset(
     @SerialName("bezokolicznik") val infinitive: String = "",
     @SerialName("translation") val translation: String = "",
+    @SerialName("example") val example: String = "",
     @SerialName("ja") val first: String = "",
     @SerialName("ty") val second: String = "",
     @SerialName("on/ona/ono") val thirdSingular: String = "",
@@ -57,6 +58,7 @@ private fun ConjugationEntryAsset.toBoundary(): VerbConjugationBoundary? {
         infinitive = infinitive,
         translation = translation.trim().takeIf { it.isNotEmpty() },
         forms = forms,
+        example = example.trim(),
     )
 }
 

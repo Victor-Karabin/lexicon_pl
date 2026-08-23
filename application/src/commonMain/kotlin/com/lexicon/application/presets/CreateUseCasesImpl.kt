@@ -36,6 +36,7 @@ class CreateWordUseCaseImpl(
         text: String,
         translation: String,
         imageUrl: String?,
+        example: String,
         presetIds: List<PresetId>,
     ): Result<Word> {
         val polish = text.trim()
@@ -51,6 +52,7 @@ class CreateWordUseCaseImpl(
             text = polish,
             translation = english,
             transcription = polishTranscription(polish),
+            example = example.trim(),
         )
 
         for (presetId in presetIds.distinct()) {
@@ -73,6 +75,7 @@ class UpdateWordUseCaseImpl(
         text: String,
         translation: String,
         imageUrl: String?,
+        example: String,
         presetIds: List<PresetId>,
     ): Result<Word> {
         val polish = text.trim()
@@ -91,6 +94,7 @@ class UpdateWordUseCaseImpl(
             text = polish,
             translation = english,
             transcription = polishTranscription(polish),
+            example = example.trim(),
         )
 
         val wanted = presetIds.mapTo(mutableSetOf()) { it.value }
