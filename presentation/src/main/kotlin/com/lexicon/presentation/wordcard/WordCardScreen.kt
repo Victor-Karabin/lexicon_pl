@@ -224,7 +224,7 @@ private fun Card(
         }
 
         ExampleSentenceRow(
-            example = ExampleSentence.parse(card.example),
+            example = ExampleSentence.of(card.example, word = card.text),
             onPlay = onSpeakExample,
             color = skin.muted(),
         )

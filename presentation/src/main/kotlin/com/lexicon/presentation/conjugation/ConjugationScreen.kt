@@ -225,7 +225,7 @@ private fun ConjugationContent(
                                 )
                             }
 
-                            val example = ExampleSentence.parse(table.example)
+                            val example = ExampleSentence.of(table.example, word = table.infinitive)
                             ExampleSentenceRow(
                                 example = example,
                                 onPlay = { onSpeak(example.text) },

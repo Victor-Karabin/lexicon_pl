@@ -55,6 +55,7 @@ import com.lexicon.application.presets.SearchImageCandidatesUseCaseImpl
 import com.lexicon.application.presets.SearchVocabularyUseCaseImpl
 import com.lexicon.application.presets.SetPresetInStudySetUseCaseImpl
 import com.lexicon.application.presets.SetWordPresetMembershipUseCaseImpl
+import com.lexicon.application.presets.SetWordPresetUseCaseImpl
 import com.lexicon.application.presets.ToggleWordInStudySetUseCaseImpl
 import com.lexicon.application.presets.TranslateWordUseCaseImpl
 import com.lexicon.application.presets.UpdateWordUseCaseImpl
@@ -150,6 +151,7 @@ import com.lexicon.interactors.presets.SearchImageCandidatesUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
 import com.lexicon.interactors.presets.SetPresetInStudySetUseCase
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
+import com.lexicon.interactors.presets.SetWordPresetUseCase
 import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
@@ -279,6 +281,7 @@ val domainModule = module {
     factoryOf(::CreateWordUseCaseImpl) { bind<CreateWordUseCase>() }
     factoryOf(::UpdateWordUseCaseImpl) { bind<UpdateWordUseCase>() }
     factoryOf(::GenerateWordExampleUseCaseImpl) { bind<GenerateWordExampleUseCase>() }
+    factoryOf(::SetWordPresetUseCaseImpl) { bind<SetWordPresetUseCase>() }
     factoryOf(::GetWordUseCaseImpl) { bind<GetWordUseCase>() }
     factoryOf(::CreatePresetUseCaseImpl) { bind<CreatePresetUseCase>() }
     factoryOf(::TranslateWordUseCaseImpl) { bind<TranslateWordUseCase>() }

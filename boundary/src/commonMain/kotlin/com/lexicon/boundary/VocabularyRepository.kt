@@ -58,4 +58,6 @@ interface VocabularyRepository {
     suspend fun wordIdsForLevel(level: String): List<Long>
 
     suspend fun studySetWordIds(): List<Long>
+
+    suspend fun studySetTextsAmong(texts: List<String>): Set<String>
 }

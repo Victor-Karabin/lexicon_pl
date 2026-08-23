@@ -12,6 +12,7 @@ import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.GetWordUseCase
 import com.lexicon.interactors.presets.PresetMembership
 import com.lexicon.interactors.presets.SearchImageCandidatesUseCase
+import com.lexicon.interactors.presets.SetWordPresetUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
 import com.lexicon.interactors.presets.WordDraftException
@@ -48,6 +49,7 @@ data class CreateWordUiState(
     val example: String = "",
     val isWritingExample: Boolean = false,
     val exampleFailed: Boolean = false,
+    val presetFailed: Boolean = false,
     val languageTag: String = "en",
     val isTranslating: Boolean = false,
     val isLoadingImages: Boolean = false,
@@ -60,7 +62,7 @@ data class CreateWordUiState(
 
     val isImageLoading: Boolean get() = selectedImage == null && isLoadingImages
 
-    val sentence: ExampleSentence get() = ExampleSentence.parse(example)
+    val sentence: ExampleSentence get() = ExampleSentence.of(example, word = text)
 
     val canWriteExample: Boolean get() = text.isNotBlank() && !isWritingExample
 }
@@ -76,6 +78,7 @@ class CreateWordViewModel(
     private val getWordPresetMemberships: GetWordPresetMembershipsUseCase,
     private val getPinnedImage: GetPinnedImageUseCase,
     private val generateExample: GenerateWordExampleUseCase,
+    private val setWordPreset: SetWordPresetUseCase,
     private val speechSynthesizer: SpeechSynthesizer,
 ) : ViewModel() {
     private val editing: VocabularyId? =
@@ -88,6 +91,7 @@ class CreateWordViewModel(
 
     private var translateJob: Job? = null
     private var imageJob: Job? = null
+    private val presetJobs = mutableMapOf<PresetId, Job>()
 
     private var shownImages = 0
 
@@ -174,11 +178,36 @@ class CreateWordViewModel(
         viewModelScope.launch { runCatching { speechSynthesizer.speak(sentence.text) } }
     }
 
+    /**
+     * The chip answers at once and the write follows. A word being created has nothing
+     * to attach to yet, so its memberships wait for the save; an existing one is written
+     * straight away and put back the way it was if the write fails.
+     */
     fun onPresetToggled(
+        presetId: PresetId,
+        isMember: Boolean,
+    ) {
+        showMembership(presetId, isMember)
+
+        val id = editing ?: return
+        presetJobs[presetId]?.cancel()
+        presetJobs[presetId] = viewModelScope.launch {
+            setWordPreset(wordId = id, presetId = presetId, isMember = isMember)
+                .onFailure {
+                    showMembership(presetId, !isMember)
+                    _uiState.update { it.copy(presetFailed = true) }
+                }
+        }
+    }
+
+    fun onErrorShown() = _uiState.update { it.copy(presetFailed = false, exampleFailed = false) }
+
+    private fun showMembership(
         presetId: PresetId,
         isMember: Boolean,
     ) = _uiState.update { state ->
         state.copy(
+            presetFailed = false,
             memberships = state.memberships
                 .map { if (it.preset.id == presetId) it.copy(isMember = isMember) else it }
                 .toImmutableList(),

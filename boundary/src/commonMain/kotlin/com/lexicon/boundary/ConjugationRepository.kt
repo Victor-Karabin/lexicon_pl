@@ -28,6 +28,12 @@ interface ConjugationRepository {
 
     suspend fun verbs(): List<VerbConjugationBoundary>
 
+    suspend fun verbPage(
+        query: String,
+        limit: Int,
+        offset: Int,
+    ): List<VerbConjugationBoundary>
+
     suspend fun deleteVerb(infinitive: String)
 
     suspend fun hasDeletedVerbs(): Boolean

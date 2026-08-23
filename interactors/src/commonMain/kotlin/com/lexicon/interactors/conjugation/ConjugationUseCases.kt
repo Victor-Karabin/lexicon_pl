@@ -4,6 +4,11 @@ import kotlinx.collections.immutable.ImmutableList
 
 interface LoadConjugationVerbsUseCase {
     suspend operator fun invoke(query: String = ""): ImmutableList<VerbConjugation>
+
+    suspend fun page(
+        query: String = "",
+        skip: Int = 0,
+    ): ImmutableList<VerbConjugation>
 }
 
 interface DeleteConjugationVerbUseCase {

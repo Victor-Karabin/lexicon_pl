@@ -95,6 +95,12 @@ class VocabularyRepositoryImpl(
         return checkNotNull(wordDao.findById(id)) { "word $id vanished while being edited" }.toWord()
     }
 
+    override suspend fun studySetTextsAmong(texts: List<String>): Set<String> {
+        if (texts.isEmpty()) return emptySet()
+        vocabularySeeder.ensureSeeded()
+        return texts.inBatches { wordDao.studySetTextsAmong(it) }.toSet()
+    }
+
     override suspend fun findWordByText(text: String): Word? {
         vocabularySeeder.ensureSeeded()
         return wordDao.findByText(text)?.toWord()

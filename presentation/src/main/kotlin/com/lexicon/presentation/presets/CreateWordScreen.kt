@@ -17,13 +17,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material.icons.filled.PhotoLibrary
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -97,6 +101,7 @@ fun CreateWordScreen(
         onExamplePlayed = viewModel::onExamplePlayed,
         onPresetToggled = viewModel::onPresetToggled,
         onSave = viewModel::onSave,
+        onErrorShown = viewModel::onErrorShown,
         modifier = modifier,
     )
 }
@@ -115,10 +120,27 @@ private fun CreateWordContent(
     onExamplePlayed: () -> Unit,
     onPresetToggled: (PresetId, Boolean) -> Unit,
     onSave: () -> Unit,
+    onErrorShown: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val snackbar = remember { SnackbarHostState() }
+
+    val exampleFailed = stringResource(R.string.example_offline)
+    val presetFailed = stringResource(R.string.preset_change_failed)
+
+    LaunchedEffect(uiState.exampleFailed, uiState.presetFailed) {
+        val message = when {
+            uiState.exampleFailed -> exampleFailed
+            uiState.presetFailed -> presetFailed
+            else -> return@LaunchedEffect
+        }
+        snackbar.showSnackbar(message)
+        onErrorShown()
+    }
+
     Scaffold(
         modifier = modifier,
+        snackbarHost = { SnackbarHost(snackbar) },
         topBar = {
             TrainingTopBar(
                 title = stringResource(
@@ -224,35 +246,27 @@ private fun ExampleSection(
     }
 
     OutlinedTextField(
-        value = uiState.example,
+        value = uiState.sentence.text,
         onValueChange = onExampleChanged,
         label = { Text(stringResource(R.string.example_hint)) },
-        supportingText = { Text(stringResource(R.string.example_markers)) },
         minLines = 2,
         modifier = Modifier.fillMaxWidth(),
         shape = LexiconShapes.small,
+        trailingIcon = {
+            if (uiState.isWritingExample) {
+                CircularProgressIndicator(modifier = Modifier.size(ProgressSize), strokeWidth = ProgressStroke)
+            } else {
+                IconButton(onClick = onExampleRequested, enabled = uiState.canWriteExample) {
+                    Icon(
+                        imageVector = Icons.Default.Refresh,
+                        contentDescription = stringResource(
+                            if (uiState.example.isBlank()) R.string.example_generate else R.string.example_refresh,
+                        ),
+                    )
+                }
+            }
+        },
     )
-
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        TextButton(onClick = onExampleRequested, enabled = uiState.canWriteExample) {
-            Text(
-                stringResource(
-                    if (uiState.example.isBlank()) R.string.example_generate else R.string.example_regenerate,
-                ),
-            )
-        }
-        if (uiState.isWritingExample) {
-            CircularProgressIndicator(modifier = Modifier.size(ProgressSize), strokeWidth = ProgressStroke)
-        }
-    }
-
-    if (uiState.exampleFailed) {
-        Text(
-            text = stringResource(R.string.example_offline),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.error,
-        )
-    }
 }
 
 @Composable
@@ -494,6 +508,7 @@ private fun CreateWordPreview() {
             onExamplePlayed = {},
             onPresetToggled = { _, _ -> },
             onSave = {},
+            onErrorShown = {},
         )
     }
 }
@@ -515,6 +530,7 @@ private fun CreateWordEmptyPreview() {
             onExamplePlayed = {},
             onPresetToggled = { _, _ -> },
             onSave = {},
+            onErrorShown = {},
         )
     }
 }
@@ -541,6 +557,7 @@ private fun CreateWordDuplicatePreview() {
             onExamplePlayed = {},
             onPresetToggled = { _, _ -> },
             onSave = {},
+            onErrorShown = {},
         )
     }
 }

@@ -58,4 +58,53 @@ class ExampleSentenceTest {
 
         assertEquals(marked, ExampleSentence.mark(sentence.text, sentence.emphasis))
     }
+
+    @Test
+    fun `an unmarked sentence takes its emphasis from the word itself`() {
+        val sentence = ExampleSentence.of("Chcę kawę, ale bez cukru.", word = "ale")
+
+        assertEquals("Chcę kawę, ale bez cukru.", sentence.text)
+        assertEquals(listOf("ale"), sentence.emphasis.map { sentence.text.substring(it) })
+    }
+
+    @Test
+    fun `an inflected form is found by what it still shares with the word`() {
+        val sentence = ExampleSentence.of("Ta kobietę widziałem wczoraj.", word = "kobieta")
+
+        assertEquals(listOf("kobietę"), sentence.emphasis.map { sentence.text.substring(it) })
+    }
+
+    @Test
+    fun `a shortened stem still finds the word`() {
+        val sentence = ExampleSentence.of("Na stole leży zamku klucz.", word = "zamek")
+
+        assertEquals(listOf("zamku"), sentence.emphasis.map { sentence.text.substring(it) })
+    }
+
+    @Test
+    fun `a two word entry lights up both of its words`() {
+        val sentence = ExampleSentence.of("Muszę bać się psa.", word = "bać się")
+
+        assertEquals(listOf("bać się"), sentence.emphasis.map { sentence.text.substring(it) })
+    }
+
+    @Test
+    fun `markers already in the sentence win over matching`() {
+        val sentence = ExampleSentence.of("**Idę** do domu.", word = "iść")
+
+        assertEquals(listOf("Idę"), sentence.emphasis.map { sentence.text.substring(it) })
+    }
+
+    @Test
+    fun `a stem that alternates away is left unemphasised rather than guessed at`() {
+        val sentence = ExampleSentence.of("Idę do domu.", word = "iść")
+
+        assertEquals("Idę do domu.", sentence.text)
+        assertTrue(sentence.emphasis.isEmpty())
+    }
+
+    @Test
+    fun `a word too short to match safely emphasises nothing`() {
+        assertTrue(ExampleSentence.of("To nie jest moje.", word = "w").emphasis.isEmpty())
+    }
 }

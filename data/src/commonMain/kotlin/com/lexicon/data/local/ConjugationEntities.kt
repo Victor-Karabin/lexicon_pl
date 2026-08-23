@@ -55,6 +55,20 @@ interface ConjugationDao {
     @Query("SELECT * FROM conjugation_verb ORDER BY infinitive")
     suspend fun verbs(): List<ConjugationVerbEntity>
 
+    @Query(
+        """
+        SELECT * FROM conjugation_verb
+        WHERE :needle = '' OR infinitive LIKE '%' || :needle || '%' OR translation LIKE '%' || :needle || '%'
+        ORDER BY infinitive
+        LIMIT :limit OFFSET :offset
+        """,
+    )
+    suspend fun verbPage(
+        needle: String,
+        limit: Int,
+        offset: Int,
+    ): List<ConjugationVerbEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveVerbs(rows: List<ConjugationVerbEntity>)
 
