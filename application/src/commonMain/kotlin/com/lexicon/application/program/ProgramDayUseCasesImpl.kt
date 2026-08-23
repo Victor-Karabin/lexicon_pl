@@ -36,7 +36,11 @@ private data class StoredDay(
     val queueFingerprint: String = "",
 )
 
-private fun List<String>.fingerprint(): String = joinToString("|")
+private fun fingerprintOf(
+    queue: List<String>,
+    scope: List<Long>,
+    newWordsADay: Int,
+): String = "${queue.joinToString("|")}#$newWordsADay#${scope.size}:${scope.joinToString(",").hashCode()}"
 
 class GetProgramDayUseCaseImpl(
     private val getProgram: GetProgramUseCase,
@@ -50,16 +54,15 @@ class GetProgramDayUseCaseImpl(
         val today = clock.todayEpochDay()
 
         val queue = program.config.dailyPlan.queue
-        val fingerprint = queue.fingerprint()
+        val scope = resolveScope(program).map { it.value }
+        val fingerprint = fingerprintOf(queue, scope, program.config.dailyPlan.newWords)
 
         val loaded = programs.day(id.value, today)?.let {
             runCatching { dayJson.decodeFromString(StoredDay.serializer(), it.activitiesJson) }.getOrNull()
         }
-        val stored = when {
-            loaded == null -> generate(program, fingerprint).also { save(id, today, it, queue.size) }
-            loaded.queueFingerprint != fingerprint ->
-                loaded.copy(done = 0, queueFingerprint = fingerprint).also { save(id, today, it, queue.size) }
-            else -> loaded
+        val stored = when (loaded?.queueFingerprint) {
+            fingerprint -> loaded
+            else -> generate(program, scope, fingerprint).also { save(id, today, it, queue.size) }
         }
 
         return ProgramDay(
@@ -73,10 +76,10 @@ class GetProgramDayUseCaseImpl(
 
     private suspend fun generate(
         program: Program,
+        scope: List<Long>,
         fingerprint: String,
     ): StoredDay {
         val plan = program.config.dailyPlan
-        val scope = resolveScope(program).map { it.value }
         val met = reviews.scheduledWordIds()
         val newWords = scope
             .filterNot { it in met }

@@ -7,6 +7,7 @@ import com.lexicon.boundary.StudyRecordRepository
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.Clock
+import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramProgressUseCase
 import com.lexicon.interactors.program.GetProgramUseCase
 import com.lexicon.interactors.program.Program
@@ -64,6 +65,7 @@ class ResolveProgramScopeUseCaseImpl(
 
 class StartProgramSessionUseCaseImpl(
     private val getProgram: GetProgramUseCase,
+    private val getDay: GetProgramDayUseCase,
     private val resolveScope: ResolveProgramScopeUseCase,
     private val reviews: ReviewScheduleRepository,
     private val clock: Clock,
@@ -71,27 +73,22 @@ class StartProgramSessionUseCaseImpl(
     override suspend fun invoke(id: ProgramId): ProgramSession? {
         val program = getProgram(id) ?: return null
         val plan = program.config.dailyPlan
-        val scope = resolveScope(program).map { it.value }
-        if (scope.isEmpty()) return null
+        val inScope = resolveScope(program).map { it.value }.toSet()
+        if (inScope.isEmpty()) return null
 
-        val inScope = scope.toSet()
+        val today = getDay(id)?.newWords?.map { it.value }?.filter { it in inScope }.orEmpty()
         val due = reviews
             .dueWordIds(clock.todayEpochDay(), program.config.review.dailyLimit)
-            .filter { it in inScope }
+            .filter { it in inScope && it !in today }
+            .take(plan.reviewWords.orAll())
 
-        val reviewActivity = plan.activities.firstOrNull { it.type == ActivityType.REVIEW }
-        if (due.isNotEmpty() && reviewActivity != null) {
-            return reviewActivity.session(program, due.take(plan.reviewWords.orAll()))
-        }
-
-        val learnActivity = plan.activities.firstOrNull { it.type == ActivityType.LEARN }
+        val words = (today + due).ifEmpty { return null }
+        val wanted = if (today.isEmpty()) ActivityType.REVIEW else ActivityType.LEARN
+        val activity = plan.activities.firstOrNull { it.type == wanted }
             ?: plan.activities.firstOrNull()
             ?: return null
-        val met = reviews.scheduledWordIds()
-        val fresh = scope.filterNot { it in met }.take(plan.newWords.orAll())
 
-        val words = fresh.ifEmpty { return null }
-        return learnActivity.session(program, words)
+        return activity.session(program, words)
     }
 
     private fun Int.orAll(): Int = if (this <= 0) Int.MAX_VALUE else this

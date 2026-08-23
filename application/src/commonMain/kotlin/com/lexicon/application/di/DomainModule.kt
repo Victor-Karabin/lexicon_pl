@@ -60,6 +60,7 @@ import com.lexicon.application.presets.UpdateWordUseCaseImpl
 import com.lexicon.application.program.AdvanceProgramDayUseCaseImpl
 import com.lexicon.application.program.CountStudySetUseCaseImpl
 import com.lexicon.application.program.CreateProgramUseCaseImpl
+import com.lexicon.application.program.DeleteProgramUseCaseImpl
 import com.lexicon.application.program.EnrolInProgramUseCaseImpl
 import com.lexicon.application.program.GetProgramDayUseCaseImpl
 import com.lexicon.application.program.GetProgramProgressUseCaseImpl
@@ -71,6 +72,7 @@ import com.lexicon.application.program.MarkCardsSeenUseCaseImpl
 import com.lexicon.application.program.NextProgramTrainingUseCaseImpl
 import com.lexicon.application.program.ObserveActiveEnrolmentUseCaseImpl
 import com.lexicon.application.program.ObserveProgramsUseCaseImpl
+import com.lexicon.application.program.ResetProgramUseCaseImpl
 import com.lexicon.application.program.ResolveProgramScopeUseCaseImpl
 import com.lexicon.application.program.StartProgramSessionUseCaseImpl
 import com.lexicon.application.program.UpdateProgramUseCaseImpl
@@ -152,6 +154,7 @@ import com.lexicon.interactors.presets.UpdateWordUseCase
 import com.lexicon.interactors.program.AdvanceProgramDayUseCase
 import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.CreateProgramUseCase
+import com.lexicon.interactors.program.DeleteProgramUseCase
 import com.lexicon.interactors.program.EnrolInProgramUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramProgressUseCase
@@ -163,6 +166,7 @@ import com.lexicon.interactors.program.MarkCardsSeenUseCase
 import com.lexicon.interactors.program.NextProgramTrainingUseCase
 import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
 import com.lexicon.interactors.program.ObserveProgramsUseCase
+import com.lexicon.interactors.program.ResetProgramUseCase
 import com.lexicon.interactors.program.ResolveProgramScopeUseCase
 import com.lexicon.interactors.program.StartProgramSessionUseCase
 import com.lexicon.interactors.program.UpdateProgramUseCase
@@ -241,6 +245,8 @@ val domainModule = module {
     factoryOf(::GetStudyStreakUseCaseImpl) { bind<GetStudyStreakUseCase>() }
     factoryOf(::CreateProgramUseCaseImpl) { bind<CreateProgramUseCase>() }
     factoryOf(::UpdateProgramUseCaseImpl) { bind<UpdateProgramUseCase>() }
+    factoryOf(::DeleteProgramUseCaseImpl) { bind<DeleteProgramUseCase>() }
+    factoryOf(::ResetProgramUseCaseImpl) { bind<ResetProgramUseCase>() }
     factoryOf(::StartWordCardSessionUseCaseImpl) { bind<StartWordCardSessionUseCase>() }
     factoryOf(::RecordWordCardSeenUseCaseImpl) { bind<RecordWordCardSeenUseCase>() }
     factoryOf(::CountStudySetUseCaseImpl) { bind<CountStudySetUseCase>() }

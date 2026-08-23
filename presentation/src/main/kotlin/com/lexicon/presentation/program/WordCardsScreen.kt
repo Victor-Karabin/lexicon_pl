@@ -54,7 +54,7 @@ private val CardImageHeight = 220.dp
 @Composable
 fun WordCardsScreen(
     onClose: () -> Unit,
-    onStartTraining: (training: String, wordIds: List<VocabularyId>) -> Unit,
+    onStartTraining: (training: String, wordIds: List<VocabularyId>, programId: String) -> Unit,
     onFinished: () -> Unit,
     onEditWord: (VocabularyId) -> Unit,
     modifier: Modifier = Modifier,
@@ -66,7 +66,7 @@ fun WordCardsScreen(
         if (!uiState.isFinished) return@LaunchedEffect
 
         uiState.launch
-            ?.let { onStartTraining(it.training.id, it.wordIds) }
+            ?.let { onStartTraining(it.training.id, it.wordIds, uiState.programId) }
             ?: onFinished()
     }
 

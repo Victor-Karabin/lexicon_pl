@@ -206,7 +206,11 @@ private fun ImageSection(
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        ChosenImageTile(url = uiState.selectedImage, onClick = { isPicking = true })
+        ChosenImageTile(
+            url = uiState.selectedImage,
+            isLoading = uiState.isImageLoading,
+            onClick = { isPicking = true },
+        )
 
         TextButton(onClick = { isPicking = true }) {
             Text(
@@ -238,20 +242,25 @@ private fun ImageSection(
 @Composable
 private fun ChosenImageTile(
     url: String?,
+    isLoading: Boolean,
     onClick: () -> Unit,
 ) {
     Surface(
         shape = LexiconShapes.small,
         color = MaterialTheme.colorScheme.surfaceContainerHigh,
-        modifier = Modifier.size(CandidateSize).clickable(onClick = onClick),
+        modifier = Modifier.size(CandidateSize).clickable(enabled = !isLoading, onClick = onClick),
     ) {
         if (url == null) {
             Box(contentAlignment = Alignment.Center) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(R.string.create_word_image_add),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+                if (isLoading) {
+                    CircularProgressIndicator()
+                } else {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = stringResource(R.string.create_word_image_add),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             }
         } else {
             SubcomposeAsyncImage(

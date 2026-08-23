@@ -53,6 +53,7 @@ private val CardImageHeight = 220.dp
 @Composable
 fun WordCardScreen(
     onClose: () -> Unit,
+    onFinished: () -> Unit,
     onEditWord: (id: Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: WordCardViewModel = koinViewModel(),
@@ -60,7 +61,7 @@ fun WordCardScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(uiState.isFinished) {
-        if (uiState.isFinished) onClose()
+        if (uiState.isFinished) onFinished()
     }
 
     LaunchedEffect(Unit) { viewModel.load() }

@@ -17,6 +17,8 @@ import com.lexicon.data.remote.sentence.OpenAiApi
 import com.lexicon.data.remote.sentence.OpenAiSentenceGenerator
 import com.lexicon.data.remote.translate.DeepLApi
 import com.lexicon.data.remote.translate.DeepLTranslator
+import com.lexicon.data.remote.translate.GoogleTranslateApi
+import com.lexicon.data.remote.translate.GoogleTranslator
 import com.lexicon.data.remote.translate.MyMemoryApi
 import com.lexicon.data.remote.translate.MyMemoryTranslator
 import com.lexicon.data.repository.CorpusTranslatorImpl
@@ -36,6 +38,7 @@ private const val OPENVERSE_BASE_URL = "https://api.openverse.org/"
 private const val DEEPL_BASE_URL = "https://api-free.deepl.com/"
 private const val OPENAI_BASE_URL = "https://api.openai.com/"
 private const val MYMEMORY_BASE_URL = "https://api.mymemory.translated.net/"
+private const val GOOGLE_TRANSLATE_BASE_URL = "https://translation.googleapis.com/"
 
 private fun headerInterceptor(
     name: String,
@@ -119,11 +122,23 @@ val networkModule = module {
 
     single { retrofit(MYMEMORY_BASE_URL, get(), get()).create(MyMemoryApi::class.java) }
 
+    single {
+        val client =
+            get<OkHttpClient>().newBuilder()
+                .addInterceptor(queryParamInterceptor("key", BuildConfig.GOOGLE_TRANSLATE_API_KEY))
+                .build()
+        retrofit(GOOGLE_TRANSLATE_BASE_URL, client, get()).create(GoogleTranslateApi::class.java)
+    }
+
     factory<List<Translator>>(translatorChainQualifier) {
-        buildList {
-            add(get<CorpusTranslatorImpl>())
-            if (hasDeepLKey) add(get<DeepLTranslator>())
-            add(get<MyMemoryTranslator>())
+        if (hasGoogleTranslateKey) {
+            listOf(get<GoogleTranslator>())
+        } else {
+            buildList {
+                add(get<CorpusTranslatorImpl>())
+                if (hasDeepLKey) add(get<DeepLTranslator>())
+                add(get<MyMemoryTranslator>())
+            }
         }
     }
 
@@ -132,7 +147,10 @@ val networkModule = module {
     factoryOf(::UnsplashImageSource)
     factoryOf(::OpenverseImageSource)
     factoryOf(::DeepLTranslator)
+    factoryOf(::GoogleTranslator)
     factoryOf(::MyMemoryTranslator)
 }
 
 val hasDeepLKey: Boolean get() = BuildConfig.DEEPL_API_KEY.isNotBlank()
+
+val hasGoogleTranslateKey: Boolean get() = BuildConfig.GOOGLE_TRANSLATE_API_KEY.isNotBlank()

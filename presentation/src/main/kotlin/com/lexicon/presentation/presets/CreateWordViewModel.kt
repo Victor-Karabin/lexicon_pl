@@ -51,6 +51,8 @@ data class CreateWordUiState(
     val savedWord: String? = null,
 ) {
     val canSave: Boolean get() = text.isNotBlank() && translation.isNotBlank() && !isSaving
+
+    val isImageLoading: Boolean get() = selectedImage == null && isLoadingImages
 }
 
 class CreateWordViewModel(
@@ -67,7 +69,9 @@ class CreateWordViewModel(
     private val editing: VocabularyId? =
         savedStateHandle.get<String>(WORD_ID_ARG)?.toLongOrNull()?.let(::VocabularyId)
 
-    private val _uiState = MutableStateFlow(CreateWordUiState(isEditing = editing != null))
+    private val _uiState = MutableStateFlow(
+        CreateWordUiState(isEditing = editing != null, isLoadingImages = editing != null),
+    )
     val uiState: StateFlow<CreateWordUiState> = _uiState.asStateFlow()
 
     private var translateJob: Job? = null
@@ -92,7 +96,7 @@ class CreateWordViewModel(
     private suspend fun load(id: VocabularyId) {
         val word = getWord(id)
         if (word == null) {
-            _uiState.update { it.copy(isMissing = true) }
+            _uiState.update { it.copy(isMissing = true, isLoadingImages = false) }
             return
         }
         _uiState.update {
@@ -234,7 +238,10 @@ class CreateWordViewModel(
         query: String,
         pinned: String? = null,
     ) {
-        if (query.isBlank()) return
+        if (query.isBlank()) {
+            _uiState.update { it.copy(isLoadingImages = false) }
+            return
+        }
         _uiState.update { it.copy(isLoadingImages = true) }
         val candidates = searchImageCandidates(query)
         shownImages = candidates.size

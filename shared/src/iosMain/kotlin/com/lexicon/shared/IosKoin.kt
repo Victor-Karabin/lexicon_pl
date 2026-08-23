@@ -8,11 +8,16 @@ import org.koin.core.context.startKoin
 fun initKoinIos(
     pexelsApiKey: String = "",
     pixabayApiKey: String = "",
+    googleTranslateApiKey: String = "",
 ) {
     startKoin {
         modules(
             dataModule,
-            dataIosModule(pexelsApiKey = pexelsApiKey, pixabayApiKey = pixabayApiKey),
+            dataIosModule(
+                pexelsApiKey = pexelsApiKey,
+                pixabayApiKey = pixabayApiKey,
+                googleTranslateApiKey = googleTranslateApiKey,
+            ),
             domainModule,
         )
     }

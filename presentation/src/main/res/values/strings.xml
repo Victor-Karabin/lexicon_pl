@@ -236,6 +236,11 @@
     <string name="plan_program_trainings">%1$d trainings</string>
     <string name="program_start">Start this program</string>
     <string name="program_leave">In progress · tap to stop</string>
+    <string name="program_reset">Reset progress</string>
+    <string name="program_reset_message">Today\'s plan, every completed day and the review schedule for this program\'s words are cleared. The program itself is kept.</string>
+    <string name="program_delete">Delete program</string>
+    <string name="program_delete_message">The program and everything it recorded are removed. Your words stay in the study set.</string>
+    <string name="action_cancel">Cancel</string>
     <string name="course_title">Course</string>
     <string name="course_empty">The course could not be loaded.</string>
     <string name="course_progress">%1$d of %2$d lessons done</string>

@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class WordCardsUiState(
+    val programId: String = "",
     val isLoading: Boolean = true,
     val cards: ImmutableList<WordCard> = persistentListOf(),
     val index: Int = 0,
@@ -41,7 +42,7 @@ class WordCardsViewModel(
 ) : ViewModel() {
     private val programId = ProgramId(savedStateHandle.get<String>(PROGRAM_ID_ARG).orEmpty())
 
-    private val _uiState = MutableStateFlow(WordCardsUiState())
+    private val _uiState = MutableStateFlow(WordCardsUiState(programId = programId.value))
     val uiState: StateFlow<WordCardsUiState> = _uiState.asStateFlow()
 
     init {

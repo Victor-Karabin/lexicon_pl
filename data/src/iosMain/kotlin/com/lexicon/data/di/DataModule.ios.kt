@@ -10,6 +10,7 @@ import com.lexicon.data.remote.image.OpenverseIosImageSource
 import com.lexicon.data.remote.image.PexelsIosImageSource
 import com.lexicon.data.remote.image.PixabayIosImageSource
 import com.lexicon.data.remote.image.RemoteImageSource
+import com.lexicon.data.remote.translate.IosGoogleTranslator
 import com.lexicon.data.remote.translate.IosMyMemoryTranslator
 import com.lexicon.data.repository.CorpusTranslatorImpl
 import org.koin.dsl.module
@@ -17,6 +18,7 @@ import org.koin.dsl.module
 fun dataIosModule(
     pexelsApiKey: String = "",
     pixabayApiKey: String = "",
+    googleTranslateApiKey: String = "",
 ) = module {
     single { AppDatabaseBuilderFactory() }
     single { DataStorePathResolver() }
@@ -32,6 +34,10 @@ fun dataIosModule(
     }
 
     factory<List<Translator>>(translatorChainQualifier) {
-        listOf(get<CorpusTranslatorImpl>(), IosMyMemoryTranslator())
+        if (googleTranslateApiKey.isNotBlank()) {
+            listOf(IosGoogleTranslator(googleTranslateApiKey))
+        } else {
+            listOf(get<CorpusTranslatorImpl>(), IosMyMemoryTranslator())
+        }
     }
 }

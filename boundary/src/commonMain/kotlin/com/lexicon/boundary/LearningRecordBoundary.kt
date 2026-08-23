@@ -34,6 +34,8 @@ interface ReviewScheduleRepository {
 
     suspend fun scheduledWordIds(): Set<Long>
 
+    suspend fun forget(wordIds: List<Long>)
+
     suspend fun countLearned(): Int
 
     suspend fun countMastered(masteredIntervalDays: Long): Int

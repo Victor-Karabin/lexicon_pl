@@ -32,6 +32,10 @@ class ProgramRepositoryImpl(
         programDao.insertPrograms(listOf(program.toUserEntity()))
     }
 
+    override suspend fun deleteProgram(id: String) = programDao.deleteProgram(id)
+
+    override suspend fun clearProgress(id: String) = programDao.clearProgress(id)
+
     override suspend fun enrolment(programId: String): ProgramEnrolmentBoundary? = programDao.enrolment(programId)?.toBoundary()
 
     override suspend fun activeEnrolment(): ProgramEnrolmentBoundary? = programDao.enrolmentWithStatus(ACTIVE)?.toBoundary()

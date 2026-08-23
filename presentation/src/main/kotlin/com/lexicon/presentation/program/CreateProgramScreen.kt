@@ -17,8 +17,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DragHandle
 import androidx.compose.material.icons.filled.Translate
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -86,8 +88,8 @@ fun CreateProgramScreen(
     val name = stringResource(R.string.program_default_name)
     val description = stringResource(R.string.create_program_scope)
 
-    LaunchedEffect(uiState.isSaved) {
-        if (uiState.isSaved) onCreated()
+    LaunchedEffect(uiState.isSaved, uiState.isDeleted) {
+        if (uiState.isSaved || uiState.isDeleted) onCreated()
     }
 
     CreateProgramContent(
@@ -101,6 +103,9 @@ fun CreateProgramScreen(
         onMove = viewModel::onMove,
         onSave = { viewModel.onSave(name = name, description = description) },
         onEnrolToggled = viewModel::onEnrolToggled,
+        onActionRequested = viewModel::onActionRequested,
+        onActionConfirmed = viewModel::onActionConfirmed,
+        onActionDismissed = viewModel::onActionDismissed,
         modifier = modifier,
     )
 }
@@ -117,8 +122,15 @@ private fun CreateProgramContent(
     onMove: (from: Int, to: Int) -> Unit,
     onSave: () -> Unit,
     onEnrolToggled: () -> Unit,
+    onActionRequested: (ProgramAction) -> Unit,
+    onActionConfirmed: () -> Unit,
+    onActionDismissed: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    uiState.confirming?.let { action ->
+        ConfirmActionDialog(action = action, onConfirm = onActionConfirmed, onDismiss = onActionDismissed)
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -142,6 +154,23 @@ private fun CreateProgramContent(
                                     if (uiState.isEnrolled) R.string.program_leave else R.string.program_start,
                                 ),
                             )
+                        }
+                        Row(horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
+                            OutlinedButton(
+                                onClick = { onActionRequested(ProgramAction.RESET) },
+                                modifier = Modifier.weight(1f),
+                            ) {
+                                Text(stringResource(R.string.program_reset))
+                            }
+                            OutlinedButton(
+                                onClick = { onActionRequested(ProgramAction.DELETE) },
+                                modifier = Modifier.weight(1f),
+                                colors = ButtonDefaults.outlinedButtonColors(
+                                    contentColor = MaterialTheme.colorScheme.error,
+                                ),
+                            ) {
+                                Text(stringResource(R.string.program_delete))
+                            }
                         }
                     }
 
@@ -227,6 +256,34 @@ private fun CreateProgramContent(
             }
         }
     }
+}
+
+@Composable
+private fun ConfirmActionDialog(
+    action: ProgramAction,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val title = when (action) {
+        ProgramAction.RESET -> R.string.program_reset
+        ProgramAction.DELETE -> R.string.program_delete
+    }
+    val message = when (action) {
+        ProgramAction.RESET -> R.string.program_reset_message
+        ProgramAction.DELETE -> R.string.program_delete_message
+    }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(title)) },
+        text = { Text(stringResource(message)) },
+        confirmButton = {
+            TextButton(onClick = onConfirm) { Text(stringResource(title)) }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) }
+        },
+    )
 }
 
 @Composable
@@ -466,6 +523,9 @@ private fun CreateProgramEmptyStudySetPreview() {
             onMove = { _, _ -> },
             onSave = {},
             onEnrolToggled = {},
+            onActionRequested = {},
+            onActionConfirmed = {},
+            onActionDismissed = {},
         )
     }
 }
@@ -489,6 +549,9 @@ private fun CreateProgramPreview() {
             onMove = { _, _ -> },
             onSave = {},
             onEnrolToggled = {},
+            onActionRequested = {},
+            onActionConfirmed = {},
+            onActionDismissed = {},
         )
     }
 }

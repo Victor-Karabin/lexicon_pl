@@ -39,6 +39,11 @@ android {
         buildConfigField("String", "DEEPL_API_KEY", "\"${localProperty("deepl.apiKey")}\"")
         buildConfigField("String", "OPENAI_API_KEY", "\"${localProperty("openai.apiKey")}\"")
         buildConfigField("String", "GOOGLE_TTS_API_KEY", "\"${localProperty("google.ttsApiKey")}\"")
+        buildConfigField(
+            "String",
+            "GOOGLE_TRANSLATE_API_KEY",
+            "\"${localProperty("google.translateApiKey").ifBlank { localProperty("google.ttsApiKey") }}\"",
+        )
     }
 
     buildTypes {
