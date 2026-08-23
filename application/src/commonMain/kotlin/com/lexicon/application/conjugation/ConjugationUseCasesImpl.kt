@@ -170,12 +170,13 @@ class LoadVerbImageChoicesUseCaseImpl(
     override suspend fun invoke(
         infinitive: String,
         translation: String?,
+        skip: Int,
     ): ImmutableList<String> {
         val subject = translation?.takeIf { it.isNotBlank() }
             ?: runCatching { vocabulary.findWordByText(infinitive) }.getOrNull()?.translation
             ?: infinitive
 
-        return runCatching { imageProvider.searchImages(subject, CHOICE_COUNT) }
+        return runCatching { imageProvider.searchImages(subject, CHOICE_COUNT, skip) }
             .getOrDefault(emptyList())
             .toImmutableList()
     }

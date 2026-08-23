@@ -3,7 +3,9 @@ package com.lexicon.presentation.presets
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.interactors.presets.CreateWordUseCase
+import com.lexicon.interactors.presets.GenerateWordExampleUseCase
 import com.lexicon.interactors.presets.GetPinnedImageUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
@@ -14,6 +16,7 @@ import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
 import com.lexicon.interactors.presets.WordDraftException
 import com.lexicon.interactors.presets.WordDraftProblem
+import com.lexicon.model.vocabulary.ExampleSentence
 import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.ImmutableList
@@ -42,6 +45,9 @@ data class CreateWordUiState(
     val imageCandidates: ImmutableList<String> = persistentListOf(),
     val ownImages: ImmutableList<String> = persistentListOf(),
     val selectedImage: String? = null,
+    val example: String = "",
+    val isWritingExample: Boolean = false,
+    val exampleFailed: Boolean = false,
     val languageTag: String = "en",
     val isTranslating: Boolean = false,
     val isLoadingImages: Boolean = false,
@@ -51,6 +57,12 @@ data class CreateWordUiState(
     val savedWord: String? = null,
 ) {
     val canSave: Boolean get() = text.isNotBlank() && translation.isNotBlank() && !isSaving
+
+    val isImageLoading: Boolean get() = selectedImage == null && isLoadingImages
+
+    val sentence: ExampleSentence get() = ExampleSentence.parse(example)
+
+    val canWriteExample: Boolean get() = text.isNotBlank() && !isWritingExample
 }
 
 class CreateWordViewModel(
@@ -63,11 +75,15 @@ class CreateWordViewModel(
     private val getPresets: GetVocabularyPresetsUseCase,
     private val getWordPresetMemberships: GetWordPresetMembershipsUseCase,
     private val getPinnedImage: GetPinnedImageUseCase,
+    private val generateExample: GenerateWordExampleUseCase,
+    private val speechSynthesizer: SpeechSynthesizer,
 ) : ViewModel() {
     private val editing: VocabularyId? =
         savedStateHandle.get<String>(WORD_ID_ARG)?.toLongOrNull()?.let(::VocabularyId)
 
-    private val _uiState = MutableStateFlow(CreateWordUiState(isEditing = editing != null))
+    private val _uiState = MutableStateFlow(
+        CreateWordUiState(isEditing = editing != null, isLoadingImages = editing != null),
+    )
     val uiState: StateFlow<CreateWordUiState> = _uiState.asStateFlow()
 
     private var translateJob: Job? = null
@@ -92,13 +108,14 @@ class CreateWordViewModel(
     private suspend fun load(id: VocabularyId) {
         val word = getWord(id)
         if (word == null) {
-            _uiState.update { it.copy(isMissing = true) }
+            _uiState.update { it.copy(isMissing = true, isLoadingImages = false) }
             return
         }
         _uiState.update {
             it.copy(
                 text = word.text,
                 translation = word.translation,
+                example = word.example,
                 memberships = getWordPresetMemberships(id),
             )
         }
@@ -127,6 +144,35 @@ class CreateWordViewModel(
                 selectedImage = url,
             )
         }
+
+    fun onExampleChanged(example: String) = _uiState.update { it.copy(example = example, exampleFailed = false) }
+
+    fun onExampleRequested() {
+        val state = _uiState.value
+        if (!state.canWriteExample) return
+
+        _uiState.update { it.copy(isWritingExample = true, exampleFailed = false) }
+        viewModelScope.launch {
+            val written = generateExample(
+                text = state.text,
+                translation = state.translation,
+                level = "",
+            )
+            _uiState.update {
+                it.copy(
+                    example = written ?: it.example,
+                    isWritingExample = false,
+                    exampleFailed = written == null,
+                )
+            }
+        }
+    }
+
+    fun onExamplePlayed() {
+        val sentence = _uiState.value.sentence
+        if (sentence.isBlank) return
+        viewModelScope.launch { runCatching { speechSynthesizer.speak(sentence.text) } }
+    }
 
     fun onPresetToggled(
         presetId: PresetId,
@@ -170,6 +216,7 @@ class CreateWordViewModel(
                     text = state.text,
                     translation = state.translation,
                     imageUrl = state.selectedImage,
+                    example = state.example,
                     presetIds = presetIds,
                 )
             } else {
@@ -177,6 +224,7 @@ class CreateWordViewModel(
                     text = state.text,
                     translation = state.translation,
                     imageUrl = state.selectedImage,
+                    example = state.example,
                     presetIds = presetIds,
                 )
             }
@@ -234,7 +282,10 @@ class CreateWordViewModel(
         query: String,
         pinned: String? = null,
     ) {
-        if (query.isBlank()) return
+        if (query.isBlank()) {
+            _uiState.update { it.copy(isLoadingImages = false) }
+            return
+        }
         _uiState.update { it.copy(isLoadingImages = true) }
         val candidates = searchImageCandidates(query)
         shownImages = candidates.size

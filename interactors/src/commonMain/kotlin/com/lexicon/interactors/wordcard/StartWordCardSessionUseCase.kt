@@ -20,4 +20,5 @@ data class WordCardStep(
     val translation: String,
     val transcription: String,
     val imageUrl: String?,
+    val example: String = "",
 )

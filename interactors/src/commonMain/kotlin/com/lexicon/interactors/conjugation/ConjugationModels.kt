@@ -24,6 +24,7 @@ data class VerbConjugation(
     val infinitive: String,
     val forms: Map<GrammaticalPerson, ImmutableList<String>>,
     val translation: String? = null,
+    val example: String = "",
 ) {
     val persons: List<GrammaticalPerson> get() = GrammaticalPerson.entries.filter { forms[it]?.isNotEmpty() == true }
 
@@ -53,6 +54,7 @@ data class ConjugationStep(
 data class ConjugationTable(
     val infinitive: String,
     val translation: String? = null,
+    val example: String = "",
     val steps: ImmutableList<ConjugationStep>,
     val bank: ImmutableList<String> = persistentListOf(),
     val imageUrl: String? = null,

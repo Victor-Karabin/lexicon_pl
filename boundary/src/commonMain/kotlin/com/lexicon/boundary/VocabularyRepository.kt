@@ -27,6 +27,7 @@ interface VocabularyRepository {
         text: String,
         translation: String,
         transcription: String,
+        example: String = "",
     ): Word
 
     suspend fun updateWord(
@@ -34,6 +35,7 @@ interface VocabularyRepository {
         text: String,
         translation: String,
         transcription: String,
+        example: String = "",
     ): Word
 
     suspend fun findWordByText(text: String): Word?

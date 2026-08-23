@@ -2,6 +2,7 @@ package com.lexicon.app.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.lexicon.BuildConfig
+import com.lexicon.boundary.ExampleSentenceGenerator
 import com.lexicon.boundary.SentenceGenerator
 import com.lexicon.boundary.Translator
 import com.lexicon.data.di.translatorChainQualifier
@@ -14,11 +15,10 @@ import com.lexicon.data.remote.image.PixabayImageSource
 import com.lexicon.data.remote.image.UnsplashApi
 import com.lexicon.data.remote.image.UnsplashImageSource
 import com.lexicon.data.remote.sentence.OpenAiApi
+import com.lexicon.data.remote.sentence.OpenAiExampleGenerator
 import com.lexicon.data.remote.sentence.OpenAiSentenceGenerator
-import com.lexicon.data.remote.translate.DeepLApi
-import com.lexicon.data.remote.translate.DeepLTranslator
-import com.lexicon.data.remote.translate.MyMemoryApi
-import com.lexicon.data.remote.translate.MyMemoryTranslator
+import com.lexicon.data.remote.translate.GoogleTranslateApi
+import com.lexicon.data.remote.translate.GoogleTranslator
 import com.lexicon.data.repository.CorpusTranslatorImpl
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
@@ -33,9 +33,8 @@ private const val PEXELS_BASE_URL = "https://api.pexels.com/"
 private const val PIXABAY_BASE_URL = "https://pixabay.com/"
 private const val UNSPLASH_BASE_URL = "https://api.unsplash.com/"
 private const val OPENVERSE_BASE_URL = "https://api.openverse.org/"
-private const val DEEPL_BASE_URL = "https://api-free.deepl.com/"
 private const val OPENAI_BASE_URL = "https://api.openai.com/"
-private const val MYMEMORY_BASE_URL = "https://api.mymemory.translated.net/"
+private const val GOOGLE_TRANSLATE_BASE_URL = "https://translation.googleapis.com/"
 
 private fun headerInterceptor(
     name: String,
@@ -102,28 +101,26 @@ val networkModule = module {
     single {
         val client =
             get<OkHttpClient>().newBuilder()
-                .addInterceptor(headerInterceptor("Authorization", "DeepL-Auth-Key ${BuildConfig.DEEPL_API_KEY}"))
-                .build()
-        retrofit(DEEPL_BASE_URL, client, get()).create(DeepLApi::class.java)
-    }
-
-    single {
-        val client =
-            get<OkHttpClient>().newBuilder()
                 .addInterceptor(headerInterceptor("Authorization", "Bearer ${BuildConfig.OPENAI_API_KEY}"))
                 .build()
         retrofit(OPENAI_BASE_URL, client, get()).create(OpenAiApi::class.java)
     }
 
     single<SentenceGenerator> { OpenAiSentenceGenerator(get()) }
+    single<ExampleSentenceGenerator> { OpenAiExampleGenerator(get()) }
 
-    single { retrofit(MYMEMORY_BASE_URL, get(), get()).create(MyMemoryApi::class.java) }
+    single {
+        val client =
+            get<OkHttpClient>().newBuilder()
+                .addInterceptor(queryParamInterceptor("key", BuildConfig.GOOGLE_TRANSLATE_API_KEY))
+                .build()
+        retrofit(GOOGLE_TRANSLATE_BASE_URL, client, get()).create(GoogleTranslateApi::class.java)
+    }
 
     factory<List<Translator>>(translatorChainQualifier) {
         buildList {
             add(get<CorpusTranslatorImpl>())
-            if (hasDeepLKey) add(get<DeepLTranslator>())
-            add(get<MyMemoryTranslator>())
+            if (hasGoogleTranslateKey) add(get<GoogleTranslator>())
         }
     }
 
@@ -131,8 +128,7 @@ val networkModule = module {
     factoryOf(::PixabayImageSource)
     factoryOf(::UnsplashImageSource)
     factoryOf(::OpenverseImageSource)
-    factoryOf(::DeepLTranslator)
-    factoryOf(::MyMemoryTranslator)
+    factoryOf(::GoogleTranslator)
 }
 
-val hasDeepLKey: Boolean get() = BuildConfig.DEEPL_API_KEY.isNotBlank()
+val hasGoogleTranslateKey: Boolean get() = BuildConfig.GOOGLE_TRANSLATE_API_KEY.isNotBlank()

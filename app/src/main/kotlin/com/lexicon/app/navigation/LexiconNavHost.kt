@@ -177,8 +177,12 @@ fun LexiconNavHost(
         ) {
             WordCardsScreen(
                 onClose = { navController.popBackStack() },
-                onStartTraining = { training, wordIds ->
-                    val route = LexiconDestinations.scopedTraining(training, wordIds.map { id -> id.value })
+                onStartTraining = { training, wordIds, programId ->
+                    val route = LexiconDestinations.scopedTraining(
+                        training = training,
+                        wordIds = wordIds.map { id -> id.value },
+                        programId = programId,
+                    )
                     navController.navigate(route) {
                         popUpTo(LexiconDestinations.PROGRAM_CARDS) { inclusive = true }
                     }
@@ -338,9 +342,18 @@ fun LexiconNavHost(
                     type = NavType.StringType
                     defaultValue = ""
                 },
+                navArgument(LexiconDestinations.PROGRAM_RUN_ARG) {
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
             ),
         ) { entry ->
             val scopedWords = entry.arguments?.getString(TRAINING_WORDS_ARG).orEmpty()
+            val programRun = entry.arguments?.getString(LexiconDestinations.PROGRAM_RUN_ARG).orEmpty()
+            val run: ProgramRunViewModel = koinViewModel()
+
+            ProgramRunHandoff(run = run, programRun = programRun, navController = navController)
+
             TrainingGate(
                 minimumWords = if (scopedWords.isEmpty()) TrainingType.DICTATION.minimumWords else 0,
                 trainingName = trainingDisplayName(LexiconDestinations.WORD_CARD),
@@ -349,6 +362,9 @@ fun LexiconNavHost(
             ) {
                 WordCardScreen(
                     onClose = closeToMain,
+                    onFinished = {
+                        if (programRun.isEmpty()) closeToMain() else run.onTrainingFinished(programRun)
+                    },
                     onEditWord = { id -> navController.navigate(LexiconDestinations.editWord(id)) },
                 )
             }
@@ -380,32 +396,8 @@ fun LexiconNavHost(
             val args = backStackEntry.arguments
             val programRun = args?.getString(LexiconDestinations.PROGRAM_RUN_ARG).orEmpty()
             val run: ProgramRunViewModel = koinViewModel()
-            val step by run.step.collectAsState()
 
-            LaunchedEffect(step) {
-                when (val current = step) {
-                    is ProgramRunStep.Next -> {
-                        val route = LexiconDestinations.scopedTraining(
-                            training = current.training.id,
-                            wordIds = current.wordIds.map { it.value },
-                            programId = programRun,
-                        )
-                        navController.navigate(route) {
-                            popUpTo(LexiconDestinations.MAIN) { inclusive = false }
-                        }
-                        run.onStepHandled()
-                    }
-
-                    ProgramRunStep.DayComplete -> {
-                        navController.navigate(LexiconDestinations.dayComplete(programRun)) {
-                            popUpTo(LexiconDestinations.MAIN) { inclusive = false }
-                        }
-                        run.onStepHandled()
-                    }
-
-                    else -> Unit
-                }
-            }
+            ProgramRunHandoff(run = run, programRun = programRun, navController = navController)
 
             SessionResultScreen(
                 correct = args?.getInt("correct").orDefault(),
@@ -443,10 +435,12 @@ fun LexiconNavHost(
                         defaultValue = withWordBank.toString()
                     },
                 ),
-            ) {
+            ) { entry ->
                 PassageScreen(
                     withWordBank = withWordBank,
-                    onSessionComplete = onStepSessionComplete(training)(""),
+                    onSessionComplete = onStepSessionComplete(training)(
+                        entry.arguments?.getString(LexiconDestinations.PROGRAM_RUN_ARG).orEmpty(),
+                    ),
                     onClose = closeToMain,
                 )
             }
@@ -468,10 +462,12 @@ fun LexiconNavHost(
                     defaultValue = true.toString()
                 },
             ),
-        ) {
+        ) { entry ->
             PronunciationScreen(
                 readsSentences = true,
-                onSessionComplete = onStepSessionComplete(LexiconDestinations.PRONUNCIATION_SENTENCES)(""),
+                onSessionComplete = onStepSessionComplete(LexiconDestinations.PRONUNCIATION_SENTENCES)(
+                    entry.arguments?.getString(LexiconDestinations.PROGRAM_RUN_ARG).orEmpty(),
+                ),
                 onClose = closeToMain,
             )
         }
@@ -510,6 +506,40 @@ fun LexiconNavHost(
             DayCompleteScreen(
                 onDone = { navController.popBackStack(LexiconDestinations.MAIN, inclusive = false) },
             )
+        }
+    }
+}
+
+@Composable
+private fun ProgramRunHandoff(
+    run: ProgramRunViewModel,
+    programRun: String,
+    navController: NavHostController,
+) {
+    val step by run.step.collectAsState()
+
+    LaunchedEffect(step) {
+        when (val current = step) {
+            is ProgramRunStep.Next -> {
+                val route = LexiconDestinations.scopedTraining(
+                    training = current.training.id,
+                    wordIds = current.wordIds.map { it.value },
+                    programId = programRun,
+                )
+                navController.navigate(route) {
+                    popUpTo(LexiconDestinations.MAIN) { inclusive = false }
+                }
+                run.onStepHandled()
+            }
+
+            ProgramRunStep.DayComplete -> {
+                navController.navigate(LexiconDestinations.dayComplete(programRun)) {
+                    popUpTo(LexiconDestinations.MAIN) { inclusive = false }
+                }
+                run.onStepHandled()
+            }
+
+            else -> Unit
         }
     }
 }

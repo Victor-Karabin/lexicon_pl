@@ -35,6 +35,7 @@ class StartWordCardSessionUseCaseImpl(
                 translation = word.translation,
                 transcription = word.transcription,
                 imageUrl = runCatching { imageProvider.searchImage(word.translation) }.getOrNull(),
+                example = word.example,
             )
         }
         return WordCardSessionResponse(sessionId = Uuid.random().toString(), steps = steps)

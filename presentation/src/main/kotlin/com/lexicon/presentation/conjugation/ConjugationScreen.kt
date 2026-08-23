@@ -1,7 +1,6 @@
 package com.lexicon.presentation.conjugation
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,14 +18,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -41,20 +38,21 @@ import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.conjugation.ConjugationAnswerMode
 import com.lexicon.interactors.conjugation.ConjugationStep
 import com.lexicon.interactors.conjugation.GrammaticalPerson
+import com.lexicon.model.vocabulary.ExampleSentence
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.ClueImage
+import com.lexicon.presentation.common.ExampleSentenceRow
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
-import com.lexicon.presentation.presets.AddImageTile
-import com.lexicon.presentation.presets.ImageCandidate
+import com.lexicon.presentation.presets.ImagePickerDialog
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.component.AnswerChip
 import com.lexicon.presentation.theme.component.AnswerChipState
 import com.lexicon.presentation.theme.component.ProgressDots
-import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
 
 private val PersonColumnWidth = 96.dp
@@ -106,6 +104,7 @@ fun ConjugationScreen(
         onSpeak = viewModel::onSpeak,
         onEdit = viewModel::onEditVerb,
         onImageChosen = viewModel::onImageChosen,
+        onMoreVerbImages = viewModel::onMoreVerbImages,
         onImagePickerDismissed = viewModel::onImagePickerDismissed,
         onClose = onClose,
         modifier = modifier,
@@ -122,15 +121,20 @@ private fun ConjugationContent(
     onSpeak: (String) -> Unit,
     onEdit: () -> Unit,
     onImageChosen: (String) -> Unit,
+    onMoreVerbImages: () -> Unit,
     onImagePickerDismissed: () -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     if (uiState.isPickingImage) {
-        VerbImagePicker(
-            choices = uiState.imageChoices,
+        ImagePickerDialog(
+            candidates = uiState.imageChoices,
+            ownImages = persistentListOf(),
             selected = uiState.table?.imageUrl,
-            onChosen = onImageChosen,
+            isLoading = uiState.isLoadingImages,
+            onSelected = onImageChosen,
+            onOwnImageAdded = onImageChosen,
+            onLoadMore = onMoreVerbImages,
             onDismiss = onImagePickerDismissed,
         )
     }
@@ -220,6 +224,13 @@ private fun ConjugationContent(
                                     modifier = Modifier.testTag(ConjugationTestTags.TRANSCRIPTION),
                                 )
                             }
+
+                            val example = ExampleSentence.parse(table.example)
+                            ExampleSentenceRow(
+                                example = example,
+                                onPlay = { onSpeak(example.text) },
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
                         }
 
                         Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
@@ -335,31 +346,4 @@ private fun OptionBank(
             )
         }
     }
-}
-
-@Composable
-private fun VerbImagePicker(
-    choices: ImmutableList<String>,
-    selected: String?,
-    onChosen: (String) -> Unit,
-    onDismiss: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        modifier = modifier.testTag(ConjugationTestTags.IMAGE_PICKER),
-        title = { Text(stringResource(R.string.create_word_image)) },
-        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_done)) } },
-        text = {
-            Row(
-                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-            ) {
-                AddImageTile(onPicked = onChosen)
-                choices.forEach { url ->
-                    ImageCandidate(url = url, isSelected = url == selected, onClick = { onChosen(url) })
-                }
-            }
-        },
-    )
 }

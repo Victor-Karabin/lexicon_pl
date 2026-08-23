@@ -4,6 +4,7 @@ data class VerbConjugationBoundary(
     val infinitive: String,
     val forms: Map<String, List<String>>,
     val translation: String? = null,
+    val example: String = "",
 )
 
 data class ConjugationCourseBoundary(

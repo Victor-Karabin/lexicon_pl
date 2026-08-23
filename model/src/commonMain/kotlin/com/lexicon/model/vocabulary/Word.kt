@@ -23,10 +23,13 @@ data class Word(
     val transcription: String,
     val isInStudySet: Boolean = false,
     val cefr: CefrLevel? = null,
+    val example: String = "",
 ) {
     init {
         require(text.isNotBlank()) { "a word must have text" }
     }
+
+    val hasExample: Boolean get() = example.isNotBlank()
 
     val isPhrase: Boolean get() = text.contains(' ')
 
@@ -38,5 +41,6 @@ data class Word(
         text: String = this.text,
         translation: String = this.translation,
         transcription: String = this.transcription,
-    ): Word = copy(text = text, translation = translation, transcription = transcription)
+        example: String = this.example,
+    ): Word = copy(text = text, translation = translation, transcription = transcription, example = example)
 }

@@ -10,6 +10,7 @@ interface UpdateWordUseCase {
         text: String,
         translation: String,
         imageUrl: String? = null,
+        example: String = "",
         presetIds: List<PresetId> = emptyList(),
     ): Result<Word>
 }

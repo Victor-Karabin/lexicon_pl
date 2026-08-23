@@ -35,8 +35,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import com.lexicon.interactors.program.WordCard
+import com.lexicon.model.vocabulary.ExampleSentence
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.ExampleSentenceRow
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
@@ -54,7 +56,7 @@ private val CardImageHeight = 220.dp
 @Composable
 fun WordCardsScreen(
     onClose: () -> Unit,
-    onStartTraining: (training: String, wordIds: List<VocabularyId>) -> Unit,
+    onStartTraining: (training: String, wordIds: List<VocabularyId>, programId: String) -> Unit,
     onFinished: () -> Unit,
     onEditWord: (VocabularyId) -> Unit,
     modifier: Modifier = Modifier,
@@ -66,7 +68,7 @@ fun WordCardsScreen(
         if (!uiState.isFinished) return@LaunchedEffect
 
         uiState.launch
-            ?.let { onStartTraining(it.training.id, it.wordIds) }
+            ?.let { onStartTraining(it.training.id, it.wordIds, uiState.programId) }
             ?: onFinished()
     }
 
@@ -78,6 +80,7 @@ fun WordCardsScreen(
         onNext = viewModel::onNext,
         onPrevious = viewModel::onPrevious,
         onPronounce = viewModel::onPronounce,
+        onSpeakExample = viewModel::onSpeakExample,
         onEdit = { uiState.current?.let { card -> onEditWord(card.id) } },
         modifier = modifier,
     )
@@ -90,6 +93,7 @@ private fun WordCardsContent(
     onNext: () -> Unit,
     onPrevious: () -> Unit,
     onPronounce: () -> Unit,
+    onSpeakExample: () -> Unit,
     onEdit: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -154,7 +158,12 @@ private fun WordCardsContent(
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
-                    Card(card = uiState.current!!, onPronounce = onPronounce, onEdit = onEdit)
+                    Card(
+                        card = uiState.current!!,
+                        onPronounce = onPronounce,
+                        onSpeakExample = onSpeakExample,
+                        onEdit = onEdit,
+                    )
                 }
         }
     }
@@ -164,6 +173,7 @@ private fun WordCardsContent(
 private fun Card(
     card: WordCard,
     onPronounce: () -> Unit,
+    onSpeakExample: () -> Unit,
     onEdit: () -> Unit,
 ) {
     val skin = tileSkin(highlighted = true)
@@ -226,6 +236,12 @@ private fun Card(
                 )
             }
         }
+
+        ExampleSentenceRow(
+            example = ExampleSentence.parse(card.example),
+            onPlay = onSpeakExample,
+            color = skin.muted(),
+        )
     }
 }
 
@@ -245,6 +261,7 @@ private fun WordCardsPreview() {
             onNext = {},
             onPrevious = {},
             onPronounce = {},
+            onSpeakExample = {},
             onEdit = {},
         )
     }

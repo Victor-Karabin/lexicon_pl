@@ -21,6 +21,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,6 +43,7 @@ data class ConjugationUiState(
     val hasNoVerbs: Boolean = false,
     val isPickingImage: Boolean = false,
     val imageChoices: ImmutableList<String> = persistentListOf(),
+    val isLoadingImages: Boolean = false,
 ) {
     val isAnswered: Boolean get() = answerState !is AnswerState.Unanswered
 
@@ -168,10 +170,27 @@ class ConjugationViewModel(
 
     fun onEditVerb() {
         val table = _uiState.value.table ?: return
-        _uiState.update { it.copy(isPickingImage = true) }
+        _uiState.update { it.copy(isPickingImage = true, isLoadingImages = true) }
         viewModelScope.launch(dispatchers.io) {
             val choices = loadImageChoices(table.infinitive, table.translation)
-            _uiState.update { it.copy(imageChoices = choices) }
+            _uiState.update { it.copy(imageChoices = choices, isLoadingImages = false) }
+        }
+    }
+
+    fun onMoreVerbImages() {
+        val state = _uiState.value
+        val table = state.table ?: return
+        if (state.isLoadingImages) return
+
+        _uiState.update { it.copy(isLoadingImages = true) }
+        viewModelScope.launch(dispatchers.io) {
+            val more = loadImageChoices(table.infinitive, table.translation, skip = state.imageChoices.size)
+            _uiState.update {
+                it.copy(
+                    imageChoices = (it.imageChoices + more).distinct().toImmutableList(),
+                    isLoadingImages = false,
+                )
+            }
         }
     }
 

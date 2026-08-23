@@ -3,7 +3,6 @@ package com.lexicon.application.program
 import com.lexicon.boundary.ProgramBoundary
 import com.lexicon.boundary.ProgramRepository
 import com.lexicon.boundary.VocabularyRepository
-import com.lexicon.common.Clock
 import com.lexicon.interactors.program.ProgramDraft
 import com.lexicon.interactors.program.ProgramDraftException
 import com.lexicon.interactors.program.ProgramDraftProblem
@@ -120,10 +119,4 @@ class CreateProgramUseCaseTest {
 
     private suspend fun problemOf(draft: ProgramDraft): ProgramDraftProblem =
         (createProgram(draft).exceptionOrNull() as ProgramDraftException).problem
-}
-
-private class FixedClock(private val nowMillis: Long) : Clock {
-    override fun nowEpochMillis(): Long = nowMillis
-
-    override fun todayEpochDay(): Long = nowMillis / 86_400_000L
 }
