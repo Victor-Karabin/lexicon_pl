@@ -36,7 +36,6 @@ android {
         buildConfigField("String", "UNSPLASH_ACCESS_KEY", "\"${localProperty("unsplash.accessKey")}\"")
         buildConfigField("String", "OPENVERSE_CLIENT_ID", "\"${localProperty("openverse.clientId")}\"")
         buildConfigField("String", "OPENVERSE_CLIENT_SECRET", "\"${localProperty("openverse.clientSecret")}\"")
-        buildConfigField("String", "DEEPL_API_KEY", "\"${localProperty("deepl.apiKey")}\"")
         buildConfigField("String", "OPENAI_API_KEY", "\"${localProperty("openai.apiKey")}\"")
         buildConfigField("String", "GOOGLE_TTS_API_KEY", "\"${localProperty("google.ttsApiKey")}\"")
         buildConfigField(

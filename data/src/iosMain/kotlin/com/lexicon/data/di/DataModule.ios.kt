@@ -11,7 +11,6 @@ import com.lexicon.data.remote.image.PexelsIosImageSource
 import com.lexicon.data.remote.image.PixabayIosImageSource
 import com.lexicon.data.remote.image.RemoteImageSource
 import com.lexicon.data.remote.translate.IosGoogleTranslator
-import com.lexicon.data.remote.translate.IosMyMemoryTranslator
 import com.lexicon.data.repository.CorpusTranslatorImpl
 import org.koin.dsl.module
 
@@ -34,10 +33,9 @@ fun dataIosModule(
     }
 
     factory<List<Translator>>(translatorChainQualifier) {
-        if (googleTranslateApiKey.isNotBlank()) {
-            listOf(IosGoogleTranslator(googleTranslateApiKey))
-        } else {
-            listOf(get<CorpusTranslatorImpl>(), IosMyMemoryTranslator())
+        buildList {
+            add(get<CorpusTranslatorImpl>())
+            if (googleTranslateApiKey.isNotBlank()) add(IosGoogleTranslator(googleTranslateApiKey))
         }
     }
 }
