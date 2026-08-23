@@ -3,7 +3,6 @@ package com.lexicon.presentation.presets
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -198,68 +197,76 @@ private fun ImageSection(
     onOwnImageAdded: (String) -> Unit,
     onMoreImages: () -> Unit,
 ) {
+    var isPicking by remember { mutableStateOf(false) }
+
+    SectionHeading(stringResource(R.string.create_word_image))
+
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        SectionHeading(stringResource(R.string.create_word_image))
-        if (uiState.imageCandidates.isNotEmpty()) {
-            TextButton(onClick = onMoreImages, enabled = !uiState.isLoadingImages) {
-                Text(stringResource(R.string.create_word_image_more))
-            }
+        ChosenImageTile(url = uiState.selectedImage, onClick = { isPicking = true })
+
+        TextButton(onClick = { isPicking = true }) {
+            Text(
+                stringResource(
+                    if (uiState.selectedImage == null) {
+                        R.string.create_word_image_choose
+                    } else {
+                        R.string.create_word_image_change
+                    },
+                ),
+            )
         }
     }
 
-    val scroll = rememberScrollState()
-    RevealNewCandidates(
-        candidates = uiState.imageCandidates,
-        scroll = scroll,
-        leadingTiles = 1 + uiState.ownImages.size,
-    )
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .horizontalScroll(scroll),
-        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-    ) {
-        AddImageTile(onPicked = onOwnImageAdded)
-
-        uiState.ownImages.forEach { url ->
-            ImageCandidate(
-                url = url,
-                isSelected = url == uiState.selectedImage,
-                onClick = { onImageSelected(url) },
-            )
-        }
-        uiState.imageCandidates.forEach { url ->
-            ImageCandidate(
-                url = url,
-                isSelected = url == uiState.selectedImage,
-                onClick = { onImageSelected(url) },
-            )
-        }
-        if (uiState.isLoadingImages) {
-            Box(
-                modifier = Modifier.size(CandidateSize),
-                contentAlignment = Alignment.Center,
-            ) { CircularProgressIndicator() }
-        }
-    }
-
-    if (uiState.imageCandidates.isEmpty() && !uiState.isLoadingImages) {
-        Text(
-            text = stringResource(
-                if (uiState.hasSearchedImages) {
-                    R.string.create_word_image_empty
-                } else {
-                    R.string.create_word_image_none
-                },
-            ),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+    if (isPicking) {
+        ImagePickerDialog(
+            candidates = uiState.imageCandidates,
+            ownImages = uiState.ownImages,
+            selected = uiState.selectedImage,
+            isLoading = uiState.isLoadingImages,
+            onSelected = onImageSelected,
+            onOwnImageAdded = onOwnImageAdded,
+            onLoadMore = onMoreImages,
+            onDismiss = { isPicking = false },
         )
+    }
+}
+
+@Composable
+private fun ChosenImageTile(
+    url: String?,
+    onClick: () -> Unit,
+) {
+    Surface(
+        shape = LexiconShapes.small,
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        modifier = Modifier.size(CandidateSize).clickable(onClick = onClick),
+    ) {
+        if (url == null) {
+            Box(contentAlignment = Alignment.Center) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(R.string.create_word_image_add),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        } else {
+            SubcomposeAsyncImage(
+                model = url,
+                contentDescription = stringResource(R.string.create_word_image_selected),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize(),
+                loading = {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator()
+                    }
+                },
+                error = {},
+            )
+        }
     }
 }
 

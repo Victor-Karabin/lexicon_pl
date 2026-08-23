@@ -14,18 +14,29 @@ class FallbackImageProviderImpl(
         return null
     }
 
+    /**
+     * Takes from every source in turn rather than draining the first one that answers,
+     * so a page is a spread of what the web has for the word instead of ten variations
+     * from whichever provider happens to be listed first.
+     */
     override suspend fun searchImages(
         query: String,
         count: Int,
         skip: Int,
     ): List<String> {
         val wanted = skip + count
-        val pooled = LinkedHashSet<String>()
-        for (source in sources) {
-            source.searchImageUrls(query, wanted).forEach { url ->
-                if (url.isNotBlank()) pooled += url
-            }
+        val perSource = sources.map { source ->
+            runCatching { source.searchImageUrls(query, wanted) }
+                .getOrDefault(emptyList())
+                .filter { it.isNotBlank() }
+        }
 
+        val pooled = LinkedHashSet<String>()
+        val deepest = perSource.maxOfOrNull { it.size } ?: 0
+        for (rank in 0 until deepest) {
+            for (fromOneSource in perSource) {
+                fromOneSource.getOrNull(rank)?.let { pooled += it }
+            }
             if (pooled.size >= wanted) break
         }
         return pooled.drop(skip).take(count)

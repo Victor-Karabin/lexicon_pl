@@ -61,6 +61,7 @@ interface LoadVerbImageChoicesUseCase {
     suspend operator fun invoke(
         infinitive: String,
         translation: String?,
+        skip: Int = 0,
     ): ImmutableList<String>
 }
 
