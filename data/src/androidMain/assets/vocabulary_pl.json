@@ -13,7 +13,7 @@
  {
   "id": 2,
   "text": "nie",
-  "translation": "no, not",
+  "translation": "no",
   "transcription": "ɲɛ",
   "partOfSpeech": "part",
   "cefr": "A1",
@@ -24,7 +24,7 @@
  {
   "id": 3,
   "text": "się",
-  "translation": "oneself",
+  "translation": "myself",
   "transcription": "ɕɛ̃",
   "partOfSpeech": "prn",
   "cefr": "A1",
@@ -64,7 +64,7 @@
  {
   "id": 7,
   "text": "jak",
-  "translation": "how, as",
+  "translation": "how",
   "transcription": "jak",
   "partOfSpeech": "adv",
   "cefr": "A1",
@@ -75,7 +75,7 @@
  {
   "id": 8,
   "text": "tak",
-  "translation": "yes, so",
+  "translation": "yes",
   "transcription": "tak",
   "partOfSpeech": "part",
   "cefr": "A1",
@@ -86,7 +86,7 @@
  {
   "id": 9,
   "text": "który",
-  "translation": "which, who",
+  "translation": "which",
   "transcription": "ˈkturɨ",
   "partOfSpeech": "prn",
   "cefr": "A1",
@@ -95,7 +95,7 @@
  {
   "id": 10,
   "text": "przez",
-  "translation": "through, by",
+  "translation": "by",
   "transcription": "bʐɛs",
   "partOfSpeech": "prep",
   "cefr": "A1",
@@ -137,7 +137,7 @@
  {
   "id": 14,
   "text": "tylko",
-  "translation": "only",
+  "translation": "just",
   "transcription": "ˈtɨlkɔ",
   "partOfSpeech": "adv",
   "cefr": "A1",
@@ -224,7 +224,7 @@
  {
   "id": 22,
   "text": "też",
-  "translation": "also",
+  "translation": "too",
   "transcription": "tɛʂ",
   "partOfSpeech": "adv",
   "cefr": "A1",
@@ -246,7 +246,7 @@
  {
   "id": 24,
   "text": "wszystko",
-  "translation": "everything",
+  "translation": "all",
   "transcription": "ˈfʂɨstkɔ",
   "partOfSpeech": "prn",
   "cefr": "A1",
@@ -297,7 +297,7 @@
  {
   "id": 29,
   "text": "jeszcze",
-  "translation": "still, yet",
+  "translation": "still",
   "transcription": "ˈjɛʂt͡ʂɛ",
   "partOfSpeech": "adv",
   "cefr": "A1",
@@ -496,7 +496,7 @@
  {
   "id": 48,
   "text": "dom",
-  "translation": "house, home",
+  "translation": "house",
   "transcription": "dɔm",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -518,7 +518,7 @@
  {
   "id": 50,
   "text": "robić",
-  "translation": "to do, to make",
+  "translation": "to do",
   "transcription": "ˈrɔbit͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A1",
@@ -529,7 +529,7 @@
  {
   "id": 51,
   "text": "iść",
-  "translation": "to go (on foot)",
+  "translation": "to go",
   "transcription": "iɕt͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A1",
@@ -551,7 +551,7 @@
  {
   "id": 53,
   "text": "sposób",
-  "translation": "way, manner",
+  "translation": "way",
   "transcription": "ˈspɔsup",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -636,7 +636,7 @@
  {
   "id": 61,
   "text": "ręka",
-  "translation": "hand, arm",
+  "translation": "hand",
   "transcription": "ˈrɛ̃ka",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -669,7 +669,7 @@
  {
   "id": 64,
   "text": "dziecko",
-  "translation": "child",
+  "translation": "kid",
   "transcription": "ˈd͡ʑɛt͡skɔ",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -736,7 +736,7 @@
  {
   "id": 70,
   "text": "strona",
-  "translation": "side, page",
+  "translation": "side",
   "transcription": "ˈstrɔna",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -827,7 +827,7 @@
  {
   "id": 79,
   "text": "mało",
-  "translation": "few, little",
+  "translation": "little",
   "transcription": "ˈmawɔ",
   "partOfSpeech": "adv",
   "cefr": "A1",
@@ -847,7 +847,7 @@
  {
   "id": 81,
   "text": "można",
-  "translation": "one can",
+  "translation": "you can",
   "transcription": "ˈmɔʐna",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -931,7 +931,7 @@
  {
   "id": 89,
   "text": "więc",
-  "translation": "so, therefore",
+  "translation": "so",
   "transcription": "vjɛ̃t͡s",
   "partOfSpeech": "conj",
   "cefr": "A2",
@@ -940,7 +940,7 @@
  {
   "id": 90,
   "text": "dlatego",
-  "translation": "that is why",
+  "translation": "which is why",
   "transcription": "dlaˈtɛgɔ",
   "partOfSpeech": "conj",
   "cefr": "A2",
@@ -958,7 +958,7 @@
  {
   "id": 92,
   "text": "chociaż",
-  "translation": "although",
+  "translation": "though",
   "transcription": "ˈxɔt͡ɕaʂ",
   "partOfSpeech": "conj",
   "cefr": "B1",
@@ -1009,7 +1009,7 @@
  {
   "id": 97,
   "text": "pewnie",
-  "translation": "probably, surely",
+  "translation": "sure",
   "transcription": "ˈpɛvɲɛ",
   "partOfSpeech": "adv",
   "cefr": "A2",
@@ -1045,7 +1045,7 @@
  {
   "id": 101,
   "text": "trochę",
-  "translation": "a little",
+  "translation": "a bit",
   "transcription": "ˈtrɔxɛ̃",
   "partOfSpeech": "adv",
   "cefr": "A1",
@@ -1078,7 +1078,7 @@
  {
   "id": 104,
   "text": "najlepszy",
-  "translation": "the best",
+  "translation": "best",
   "transcription": "naˈjlɛpʂɨ",
   "partOfSpeech": "adj",
   "cefr": "A2",
@@ -1198,7 +1198,7 @@
  {
   "id": 116,
   "text": "sam",
-  "translation": "alone, myself",
+  "translation": "alone",
   "transcription": "sam",
   "partOfSpeech": "prn",
   "cefr": "A1",
@@ -1229,7 +1229,7 @@
  {
   "id": 119,
   "text": "szybko",
-  "translation": "quickly",
+  "translation": "quick",
   "transcription": "ˈʂɨpkɔ",
   "partOfSpeech": "adv",
   "cefr": "A1",
@@ -1238,7 +1238,7 @@
  {
   "id": 120,
   "text": "wolno",
-  "translation": "slowly",
+  "translation": "slow",
   "transcription": "ˈvɔlnɔ",
   "partOfSpeech": "adv",
   "cefr": "A1",
@@ -1256,7 +1256,7 @@
  {
   "id": 122,
   "text": "trudno",
-  "translation": "with difficulty",
+  "translation": "it's difficult",
   "transcription": "ˈtrudnɔ",
   "partOfSpeech": "adv",
   "cefr": "A2",
@@ -1386,7 +1386,7 @@
  {
   "id": 134,
   "text": "rano",
-  "translation": "morning",
+  "translation": "in the morning",
   "transcription": "ˈranɔ",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -1454,7 +1454,7 @@
  {
   "id": 140,
   "text": "chwila",
-  "translation": "moment",
+  "translation": "one sec",
   "transcription": "ˈxvila",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -1726,7 +1726,7 @@
  {
   "id": 164,
   "text": "obiad",
-  "translation": "lunch, dinner",
+  "translation": "lunch",
   "transcription": "ˈɔbjat",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -1748,7 +1748,7 @@
  {
   "id": 166,
   "text": "kolacja",
-  "translation": "supper",
+  "translation": "dinner",
   "transcription": "kɔˈlat͡sja",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -1803,7 +1803,7 @@
  {
   "id": 171,
   "text": "sklep",
-  "translation": "shop",
+  "translation": "store",
   "transcription": "sklɛp",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -1838,7 +1838,7 @@
  {
   "id": 174,
   "text": "drogi",
-  "translation": "expensive",
+  "translation": "dear",
   "transcription": "ˈdrɔgi",
   "partOfSpeech": "adj",
   "cefr": "A1",
@@ -2019,7 +2019,7 @@
  {
   "id": 190,
   "text": "uczyć się",
-  "translation": "to study",
+  "translation": "to learn",
   "transcription": "ˈut͡ʂɨt͡ɕ ɕɛ̃",
   "partOfSpeech": "v",
   "cefr": "A1",
@@ -2128,7 +2128,7 @@
  {
   "id": 200,
   "text": "język",
-  "translation": "language, tongue",
+  "translation": "tongue",
   "transcription": "ˈjɛ̃zɨk",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -2281,7 +2281,7 @@
  {
   "id": 215,
   "text": "chodzić",
-  "translation": "to walk, to go",
+  "translation": "to walk",
   "transcription": "ˈxɔd͡ʑit͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A1",
@@ -2354,7 +2354,7 @@
  {
   "id": 222,
   "text": "zaczynać",
-  "translation": "to begin",
+  "translation": "to start",
   "transcription": "zaˈt͡ʂɨnat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A1",
@@ -2499,7 +2499,7 @@
  {
   "id": 236,
   "text": "cieszyć się",
-  "translation": "to be glad",
+  "translation": "to enjoy",
   "transcription": "ˈt͡ɕɛʂɨt͡ɕ ɕɛ̃",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -2521,7 +2521,7 @@
  {
   "id": 238,
   "text": "dziękować",
-  "translation": "to thank",
+  "translation": "to thank you",
   "transcription": "d͡ʑɛ̃ˈkɔvat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A1",
@@ -2543,7 +2543,7 @@
  {
   "id": 240,
   "text": "przepraszać",
-  "translation": "to apologise",
+  "translation": "to apologize",
   "transcription": "bʐɛˈpraʂat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A1",
@@ -2554,7 +2554,7 @@
  {
   "id": 241,
   "text": "witać",
-  "translation": "to greet",
+  "translation": "to welcome",
   "transcription": "ˈvitat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A1",
@@ -2576,7 +2576,7 @@
  {
   "id": 243,
   "text": "dzwonić",
-  "translation": "to call, to ring",
+  "translation": "to call",
   "transcription": "ˈd͡zvɔɲit͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A1",
@@ -2587,7 +2587,7 @@
  {
   "id": 244,
   "text": "pisać wiadomość",
-  "translation": "to write a message",
+  "translation": "write a message",
   "transcription": "ˈpisat͡ɕ vjaˈdɔmɔɕt͡ɕ",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -2788,7 +2788,7 @@
  {
   "id": 265,
   "text": "cel",
-  "translation": "goal",
+  "translation": "objective",
   "transcription": "t͡sɛl",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -2826,7 +2826,7 @@
  {
   "id": 269,
   "text": "władza",
-  "translation": "power, authority",
+  "translation": "power",
   "transcription": "ˈvwad͡za",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -2860,7 +2860,7 @@
  {
   "id": 272,
   "text": "firma",
-  "translation": "company",
+  "translation": "business",
   "transcription": "ˈfirma",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -2928,7 +2928,7 @@
  {
   "id": 278,
   "text": "projekt",
-  "translation": "project",
+  "translation": "design",
   "transcription": "ˈprɔjɛkt",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -2951,7 +2951,7 @@
  {
   "id": 280,
   "text": "wiadomość",
-  "translation": "message, news",
+  "translation": "message",
   "transcription": "vjaˈdɔmɔɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -2973,7 +2973,7 @@
  {
   "id": 282,
   "text": "telewizja",
-  "translation": "television",
+  "translation": "tv",
   "transcription": "tɛlɛˈvizja",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -2995,7 +2995,7 @@
  {
   "id": 284,
   "text": "film",
-  "translation": "film",
+  "translation": "movie",
   "transcription": "film",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -3443,7 +3443,7 @@
  {
   "id": 324,
   "text": "szary",
-  "translation": "grey",
+  "translation": "gray",
   "transcription": "ˈʂarɨ",
   "partOfSpeech": "adj",
   "cefr": "A1",
@@ -3509,7 +3509,7 @@
  {
   "id": 330,
   "text": "wysoki",
-  "translation": "tall, high",
+  "translation": "tall",
   "transcription": "vɨˈsɔki",
   "partOfSpeech": "adj",
   "cefr": "A1",
@@ -3555,7 +3555,7 @@
  {
   "id": 334,
   "text": "gruby",
-  "translation": "thick, fat",
+  "translation": "fat",
   "transcription": "ˈgrubɨ",
   "partOfSpeech": "adj",
   "cefr": "A1",
@@ -3668,7 +3668,7 @@
  {
   "id": 345,
   "text": "miły",
-  "translation": "nice, kind",
+  "translation": "nice",
   "transcription": "ˈmiwɨ",
   "partOfSpeech": "adj",
   "cefr": "A1",
@@ -3679,7 +3679,7 @@
  {
   "id": 346,
   "text": "zły",
-  "translation": "bad, angry",
+  "translation": "bad",
   "transcription": "zwɨ",
   "partOfSpeech": "adj",
   "cefr": "A1",
@@ -3759,7 +3759,7 @@
  {
   "id": 353,
   "text": "chory",
-  "translation": "ill",
+  "translation": "sick",
   "transcription": "ˈxɔrɨ",
   "partOfSpeech": "adj",
   "cefr": "A1",
@@ -3790,7 +3790,7 @@
  {
   "id": 356,
   "text": "ciekawy",
-  "translation": "interesting, curious",
+  "translation": "interesting",
   "transcription": "t͡ɕɛˈkavɨ",
   "partOfSpeech": "adj",
   "cefr": "A1",
@@ -3837,7 +3837,7 @@
  {
   "id": 361,
   "text": "prawdziwy",
-  "translation": "true, real",
+  "translation": "true",
   "transcription": "praˈvd͡ʑivɨ",
   "partOfSpeech": "adj",
   "cefr": "A2",
@@ -3864,7 +3864,7 @@
  {
   "id": 364,
   "text": "wolny",
-  "translation": "free, slow",
+  "translation": "free",
   "transcription": "ˈvɔlnɨ",
   "partOfSpeech": "adj",
   "cefr": "A1",
@@ -3873,7 +3873,7 @@
  {
   "id": 365,
   "text": "zajęty",
-  "translation": "busy",
+  "translation": "occupied",
   "transcription": "zaˈjɛ̃tɨ",
   "partOfSpeech": "adj",
   "cefr": "A1",
@@ -3946,7 +3946,7 @@
  {
   "id": 372,
   "text": "głowa boli",
-  "translation": "headache",
+  "translation": "my head hurts",
   "transcription": "ˈgwɔva ˈbɔli",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -4016,7 +4016,7 @@
  {
   "id": 378,
   "text": "choroba",
-  "translation": "illness",
+  "translation": "disease",
   "transcription": "xɔˈrɔba",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -4061,7 +4061,7 @@
  {
   "id": 382,
   "text": "noga",
-  "translation": "leg, foot",
+  "translation": "leg",
   "transcription": "ˈnɔga",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -4207,7 +4207,7 @@
  {
   "id": 395,
   "text": "ubranie",
-  "translation": "clothing",
+  "translation": "clothes",
   "transcription": "uˈbraɲɛ",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -4229,7 +4229,7 @@
  {
   "id": 397,
   "text": "spodnie",
-  "translation": "trousers",
+  "translation": "pants",
   "transcription": "ˈspɔdɲɛ",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -4306,7 +4306,7 @@
  {
   "id": 404,
   "text": "czapka",
-  "translation": "cap, hat",
+  "translation": "hat",
   "transcription": "ˈt͡ʂapka",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -4522,7 +4522,7 @@
  {
   "id": 423,
   "text": "lodówka",
-  "translation": "fridge",
+  "translation": "refrigerator",
   "transcription": "lɔˈdufka",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -4534,7 +4534,7 @@
  {
   "id": 424,
   "text": "kuchenka",
-  "translation": "cooker",
+  "translation": "stove",
   "transcription": "kuˈxɛnka",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -4664,7 +4664,7 @@
  {
   "id": 435,
   "text": "telefon",
-  "translation": "telephone",
+  "translation": "phone",
   "transcription": "tɛˈlɛfɔn",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -4834,7 +4834,7 @@
  {
   "id": 450,
   "text": "paczka",
-  "translation": "parcel",
+  "translation": "package",
   "transcription": "ˈpat͡ʂka",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -4845,7 +4845,7 @@
  {
   "id": 451,
   "text": "poczta",
-  "translation": "post office",
+  "translation": "post",
   "transcription": "ˈpɔt͡ʂta",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -4946,7 +4946,7 @@
  {
   "id": 460,
   "text": "zarabiać",
-  "translation": "to earn",
+  "translation": "to earn money",
   "transcription": "zaˈrabjat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -5133,7 +5133,7 @@
  {
   "id": 476,
   "text": "zwiedzać",
-  "translation": "to sightsee",
+  "translation": "to explore",
   "transcription": "ˈzvjɛd͡zat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -5178,7 +5178,7 @@
  {
   "id": 480,
   "text": "prosto",
-  "translation": "straight ahead",
+  "translation": "straight",
   "transcription": "ˈprɔstɔ",
   "partOfSpeech": "adv",
   "cefr": "A1",
@@ -5189,7 +5189,7 @@
  {
   "id": 481,
   "text": "blisko",
-  "translation": "near",
+  "translation": "close",
   "transcription": "ˈbliskɔ",
   "partOfSpeech": "adv",
   "cefr": "A1",
@@ -5211,7 +5211,7 @@
  {
   "id": 483,
   "text": "północ",
-  "translation": "north, midnight",
+  "translation": "midnight",
   "transcription": "ˈpuwnɔt͡s",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -5223,7 +5223,7 @@
  {
   "id": 484,
   "text": "południe",
-  "translation": "south, noon",
+  "translation": "south",
   "transcription": "pɔˈwudɲɛ",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -5235,7 +5235,7 @@
  {
   "id": 485,
   "text": "wschód",
-  "translation": "east, sunrise",
+  "translation": "east",
   "transcription": "fsxut",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -5246,7 +5246,7 @@
  {
   "id": 486,
   "text": "zachód",
-  "translation": "west, sunset",
+  "translation": "west",
   "transcription": "ˈzaxut",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -5269,7 +5269,7 @@
  {
   "id": 488,
   "text": "policjant",
-  "translation": "police officer",
+  "translation": "policeman",
   "transcription": "pɔˈlit͡sjant",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -5292,7 +5292,7 @@
  {
   "id": 490,
   "text": "pogotowie",
-  "translation": "ambulance service",
+  "translation": "emergency service",
   "transcription": "pɔgɔˈtɔvjɛ",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -5348,7 +5348,7 @@
  {
   "id": 495,
   "text": "uwaga",
-  "translation": "attention, careful",
+  "translation": "attention",
   "transcription": "uˈvaga",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -5370,7 +5370,7 @@
  {
   "id": 497,
   "text": "adwokat",
-  "translation": "lawyer",
+  "translation": "advocate",
   "transcription": "aˈdvɔkat",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -5393,7 +5393,7 @@
  {
   "id": 499,
   "text": "kara",
-  "translation": "punishment, fine",
+  "translation": "penalty",
   "transcription": "ˈkara",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -5427,7 +5427,7 @@
  {
   "id": 502,
   "text": "przestępstwo",
-  "translation": "crime",
+  "translation": "offense",
   "transcription": "bʐɛˈstɛ̃bzdvɔ",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -5439,7 +5439,7 @@
  {
   "id": 503,
   "text": "wybory",
-  "translation": "election",
+  "translation": "elections",
   "transcription": "vɨˈbɔrɨ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -5574,7 +5574,7 @@
  {
   "id": 515,
   "text": "stopień",
-  "translation": "degree, step",
+  "translation": "degree",
   "transcription": "ˈstɔpjɛɲ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -5643,7 +5643,7 @@
  {
   "id": 521,
   "text": "piórnik",
-  "translation": "pencil case",
+  "translation": "pencil box",
   "transcription": "ˈpjurɲik",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -5665,7 +5665,7 @@
  {
   "id": 523,
   "text": "gumka",
-  "translation": "eraser",
+  "translation": "rubber",
   "transcription": "ˈgumka",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -5699,7 +5699,7 @@
  {
   "id": 526,
   "text": "ocena",
-  "translation": "grade",
+  "translation": "rate",
   "transcription": "ɔˈt͡sɛna",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -5735,7 +5735,7 @@
  {
   "id": 529,
   "text": "powtarzać",
-  "translation": "to repeat, to revise",
+  "translation": "to repeat",
   "transcription": "pɔˈftaʐat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -5769,7 +5769,7 @@
  {
   "id": 532,
   "text": "tłumaczyć",
-  "translation": "to translate, to explain",
+  "translation": "to translate",
   "transcription": "twuˈmat͡ʂɨt͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -5803,7 +5803,7 @@
  {
   "id": 535,
   "text": "poprawiać",
-  "translation": "to correct",
+  "translation": "to improve",
   "transcription": "pɔˈpravjat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -5825,7 +5825,7 @@
  {
   "id": 537,
   "text": "nauka",
-  "translation": "science, learning",
+  "translation": "science",
   "transcription": "naˈuka",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -5836,7 +5836,7 @@
  {
   "id": 538,
   "text": "zawód",
-  "translation": "profession",
+  "translation": "occupation",
   "transcription": "ˈzavut",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -5870,7 +5870,7 @@
  {
   "id": 541,
   "text": "sprzedawca",
-  "translation": "shop assistant",
+  "translation": "seller",
   "transcription": "zbʐɛˈdaft͡sa",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -6206,7 +6206,7 @@
  {
   "id": 570,
   "text": "protokół",
-  "translation": "minutes, protocol",
+  "translation": "protocol",
   "transcription": "prɔˈtɔkuw",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -6217,7 +6217,7 @@
  {
   "id": 571,
   "text": "termin",
-  "translation": "deadline, term",
+  "translation": "deadline",
   "transcription": "ˈtɛrmin",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -6469,7 +6469,7 @@
  {
   "id": 593,
   "text": "aplikacja",
-  "translation": "application",
+  "translation": "app",
   "transcription": "apliˈkat͡sja",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -6514,7 +6514,7 @@
  {
   "id": 597,
   "text": "głośnik",
-  "translation": "speaker",
+  "translation": "loudspeaker",
   "transcription": "ˈgwɔɕɲik",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -6538,7 +6538,7 @@
  {
   "id": 599,
   "text": "aparat",
-  "translation": "camera",
+  "translation": "apparatus",
   "transcription": "aˈparat",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -6707,7 +6707,7 @@
  {
   "id": 614,
   "text": "teatr",
-  "translation": "theatre",
+  "translation": "theater",
   "transcription": "ˈtɛatr",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -6719,7 +6719,7 @@
  {
   "id": 615,
   "text": "scena",
-  "translation": "stage, scene",
+  "translation": "scene",
   "transcription": "ˈst͡sɛna",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -6753,7 +6753,7 @@
  {
   "id": 618,
   "text": "widz",
-  "translation": "viewer",
+  "translation": "spectator",
   "transcription": "vit͡s",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -6786,7 +6786,7 @@
  {
   "id": 621,
   "text": "opowiadanie",
-  "translation": "short story",
+  "translation": "story",
   "transcription": "ɔpɔvjaˈdaɲɛ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -6797,7 +6797,7 @@
  {
   "id": 622,
   "text": "wiersz",
-  "translation": "poem",
+  "translation": "row",
   "transcription": "vjɛrʂ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -6853,7 +6853,7 @@
  {
   "id": 627,
   "text": "księgarnia",
-  "translation": "bookshop",
+  "translation": "bookstore",
   "transcription": "kɕɛ̃ˈgarɲa",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -6898,7 +6898,7 @@
  {
   "id": 631,
   "text": "kostka",
-  "translation": "dice, cube",
+  "translation": "ankle",
   "transcription": "ˈkɔstka",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -7150,7 +7150,7 @@
  {
   "id": 653,
   "text": "puchar",
-  "translation": "cup, trophy",
+  "translation": "cup",
   "transcription": "ˈpuxar",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -7481,7 +7481,7 @@
  {
   "id": 682,
   "text": "dzik",
-  "translation": "wild boar",
+  "translation": "boar",
   "transcription": "d͡ʑik",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -7493,7 +7493,7 @@
  {
   "id": 683,
   "text": "sarna",
-  "translation": "roe deer",
+  "translation": "roe",
   "transcription": "ˈsarna",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -7738,7 +7738,7 @@
  {
   "id": 705,
   "text": "sikorka",
-  "translation": "tit",
+  "translation": "titmouse",
   "transcription": "ɕiˈkɔrka",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -7957,7 +7957,7 @@
  {
   "id": 724,
   "text": "krewetka",
-  "translation": "shrimp",
+  "translation": "prawn",
   "transcription": "krɛˈvɛtka",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -7969,7 +7969,7 @@
  {
   "id": 725,
   "text": "łuska",
-  "translation": "scale (fish)",
+  "translation": "husk",
   "transcription": "ˈwuska",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -8103,7 +8103,7 @@
  {
   "id": 737,
   "text": "robak",
-  "translation": "worm, bug",
+  "translation": "worm",
   "transcription": "ˈrɔbak",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -8227,7 +8227,7 @@
  {
   "id": 748,
   "text": "łodyga",
-  "translation": "stem",
+  "translation": "stalk",
   "transcription": "wɔˈdɨga",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -8238,7 +8238,7 @@
  {
   "id": 749,
   "text": "nasiono",
-  "translation": "seed",
+  "translation": "kernel",
   "transcription": "naˈɕɔnɔ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -8273,7 +8273,7 @@
  {
   "id": 752,
   "text": "mech",
-  "translation": "moss",
+  "translation": "down",
   "transcription": "mɛx",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -8392,7 +8392,7 @@
  {
   "id": 762,
   "text": "lipa",
-  "translation": "linden",
+  "translation": "lime tree",
   "transcription": "ˈlipa",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -8536,7 +8536,7 @@
  {
   "id": 775,
   "text": "narcyz",
-  "translation": "daffodil",
+  "translation": "narcissus",
   "transcription": "ˈnart͡sɨs",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -8592,7 +8592,7 @@
  {
   "id": 780,
   "text": "szczyt",
-  "translation": "peak, summit",
+  "translation": "peak",
   "transcription": "ʂt͡ʂɨt",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -8615,7 +8615,7 @@
  {
   "id": 782,
   "text": "skała",
-  "translation": "rock",
+  "translation": "scale",
   "transcription": "ˈskawa",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -8663,7 +8663,7 @@
  {
   "id": 786,
   "text": "schronisko",
-  "translation": "mountain hut",
+  "translation": "shelter",
   "transcription": "sxrɔˈɲiskɔ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -8687,7 +8687,7 @@
  {
   "id": 788,
   "text": "przełęcz",
-  "translation": "mountain pass",
+  "translation": "pass",
   "transcription": "ˈbʐɛwɛ̃t͡ʂ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -8745,7 +8745,7 @@
  {
   "id": 793,
   "text": "muszla",
-  "translation": "shell",
+  "translation": "seashell",
   "transcription": "ˈmuʂla",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -8826,7 +8826,7 @@
  {
   "id": 800,
   "text": "przypływ",
-  "translation": "tide",
+  "translation": "inflow",
   "transcription": "ˈbʐɨpwɨf",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -8881,7 +8881,7 @@
  {
   "id": 805,
   "text": "upał",
-  "translation": "heatwave",
+  "translation": "heat",
   "transcription": "ˈupaw",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -9037,7 +9037,7 @@
  {
   "id": 819,
   "text": "powinien",
-  "translation": "should",
+  "translation": "to should",
   "transcription": "pɔˈviɲɛn",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -9137,7 +9137,7 @@
  {
   "id": 829,
   "text": "wracać",
-  "translation": "to come back",
+  "translation": "to go back",
   "transcription": "ˈvrat͡sat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A1",
@@ -9159,7 +9159,7 @@
  {
   "id": 831,
   "text": "wchodzić",
-  "translation": "to enter",
+  "translation": "to come in",
   "transcription": "ˈvxɔd͡ʑit͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A1",
@@ -9188,7 +9188,7 @@
  {
   "id": 834,
   "text": "kłaść",
-  "translation": "to put, to lay",
+  "translation": "to lay",
   "transcription": "kwaɕt͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -9197,7 +9197,7 @@
  {
   "id": 835,
   "text": "trzymać",
-  "translation": "to hold",
+  "translation": "to keep",
   "transcription": "ˈdʐɨmat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A1",
@@ -9253,7 +9253,7 @@
  {
   "id": 841,
   "text": "naprawiać",
-  "translation": "to repair",
+  "translation": "to fix it",
   "transcription": "naˈpravjat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -9300,7 +9300,7 @@
  {
   "id": 846,
   "text": "zdążyć",
-  "translation": "to make it in time",
+  "translation": "to be on time",
   "transcription": "ˈzdɔ̃ʐɨt͡ɕ",
   "partOfSpeech": "v",
   "cefr": "B1",
@@ -9466,7 +9466,7 @@
  {
   "id": 862,
   "text": "krzyczeć",
-  "translation": "to shout",
+  "translation": "to scream",
   "transcription": "ˈgʐɨt͡ʂɛt͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -9486,7 +9486,7 @@
  {
   "id": 864,
   "text": "milczeć",
-  "translation": "to keep silent",
+  "translation": "to remain silent",
   "transcription": "ˈmilt͡ʂɛt͡ɕ",
   "partOfSpeech": "v",
   "cefr": "B1",
@@ -9495,7 +9495,7 @@
  {
   "id": 865,
   "text": "powtarzać się",
-  "translation": "to repeat oneself",
+  "translation": "to repeat myself",
   "transcription": "pɔˈftaʐat͡ɕ ɕɛ̃",
   "partOfSpeech": "v",
   "cefr": "B2",
@@ -9504,7 +9504,7 @@
  {
   "id": 866,
   "text": "przestawać",
-  "translation": "to stop doing",
+  "translation": "to stop",
   "transcription": "bʐɛˈstavat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -9513,7 +9513,7 @@
  {
   "id": 867,
   "text": "zostawiać",
-  "translation": "to leave behind",
+  "translation": "to leave",
   "transcription": "zɔˈstavjat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -9540,7 +9540,7 @@
  {
   "id": 870,
   "text": "dzielić",
-  "translation": "to divide, to share",
+  "translation": "to share",
   "transcription": "ˈd͡ʑɛlit͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -9551,7 +9551,7 @@
  {
   "id": 871,
   "text": "łączyć",
-  "translation": "to join",
+  "translation": "to connect",
   "transcription": "ˈwɔ̃t͡ʂɨt͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -9622,7 +9622,7 @@
  {
   "id": 878,
   "text": "środek",
-  "translation": "middle, means",
+  "translation": "middle",
   "transcription": "ˈɕrɔdɛk",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -9655,7 +9655,7 @@
  {
   "id": 881,
   "text": "brzeg",
-  "translation": "edge, shore",
+  "translation": "edge",
   "transcription": "bʐɛk",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -9667,7 +9667,7 @@
  {
   "id": 882,
   "text": "siła",
-  "translation": "strength, force",
+  "translation": "force",
   "transcription": "ˈɕiwa",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -9678,7 +9678,7 @@
  {
   "id": 883,
   "text": "ruch",
-  "translation": "movement, traffic",
+  "translation": "movement",
   "transcription": "rux",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -9745,7 +9745,7 @@
  {
   "id": 889,
   "text": "kształt",
-  "translation": "shape",
+  "translation": "form",
   "transcription": "kʂtawt",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -9756,7 +9756,7 @@
  {
   "id": 890,
   "text": "kolor",
-  "translation": "colour",
+  "translation": "color",
   "transcription": "ˈkɔlɔr",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -9811,7 +9811,7 @@
  {
   "id": 895,
   "text": "obraz",
-  "translation": "picture, painting",
+  "translation": "picture",
   "transcription": "ˈɔbras",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -9833,7 +9833,7 @@
  {
   "id": 897,
   "text": "wzór",
-  "translation": "pattern, formula",
+  "translation": "pattern",
   "transcription": "vzur",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -9908,7 +9908,7 @@
  {
   "id": 904,
   "text": "teren",
-  "translation": "area, ground",
+  "translation": "area",
   "transcription": "ˈtɛrɛn",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -9928,7 +9928,7 @@
  {
   "id": 906,
   "text": "odcinek",
-  "translation": "stretch, episode",
+  "translation": "episode",
   "transcription": "ɔˈtt͡ɕinɛk",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -9979,7 +9979,7 @@
  {
   "id": 911,
   "text": "tajemnica",
-  "translation": "secret",
+  "translation": "mystery",
   "transcription": "tajɛˈmɲit͡sa",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -9999,7 +9999,7 @@
  {
   "id": 913,
   "text": "uwaga krytyczna",
-  "translation": "criticism",
+  "translation": "critical note",
   "transcription": "uˈvaga krɨˈtɨt͡ʂna",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -10019,7 +10019,7 @@
  {
   "id": 915,
   "text": "nagroda",
-  "translation": "reward, prize",
+  "translation": "prize",
   "transcription": "naˈgrɔda",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -10030,7 +10030,7 @@
  {
   "id": 916,
   "text": "prezent",
-  "translation": "present, gift",
+  "translation": "gift",
   "transcription": "ˈprɛzɛnt",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -10136,7 +10136,7 @@
  {
   "id": 926,
   "text": "uwaga skupiona",
-  "translation": "concentration",
+  "translation": "focused attention",
   "transcription": "uˈvaga skuˈpjɔna",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -10244,7 +10244,7 @@
  {
   "id": 936,
   "text": "zachowanie",
-  "translation": "behaviour",
+  "translation": "behavior",
   "transcription": "zaxɔˈvaɲɛ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -10288,7 +10288,7 @@
  {
   "id": 940,
   "text": "sztuka",
-  "translation": "art, play",
+  "translation": "piece",
   "transcription": "ˈʂtuka",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -10321,7 +10321,7 @@
  {
   "id": 943,
   "text": "wygoda",
-  "translation": "comfort",
+  "translation": "convenience",
   "transcription": "vɨˈgɔda",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -10376,7 +10376,7 @@
  {
   "id": 948,
   "text": "korzyść",
-  "translation": "benefit",
+  "translation": "advantage",
   "transcription": "ˈkɔʐɨɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -10387,7 +10387,7 @@
  {
   "id": 949,
   "text": "szkoda",
-  "translation": "damage, pity",
+  "translation": "pity",
   "transcription": "ˈʂkɔda",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -10471,7 +10471,7 @@
  {
   "id": 957,
   "text": "cicho",
-  "translation": "quietly",
+  "translation": "quiet",
   "transcription": "ˈt͡ɕixɔ",
   "partOfSpeech": "adv",
   "cefr": "A1",
@@ -10555,7 +10555,7 @@
  {
   "id": 965,
   "text": "dawno",
-  "translation": "long ago",
+  "translation": "long time ago",
   "transcription": "ˈdavnɔ",
   "partOfSpeech": "adv",
   "cefr": "A2",
@@ -10566,7 +10566,7 @@
  {
   "id": 966,
   "text": "ostatnio",
-  "translation": "recently",
+  "translation": "lately",
   "transcription": "ɔˈstatɲɔ",
   "partOfSpeech": "adv",
   "cefr": "A2",
@@ -10577,7 +10577,7 @@
  {
   "id": 967,
   "text": "kiedyś",
-  "translation": "someday, once",
+  "translation": "once",
   "transcription": "ˈkjɛdɨɕ",
   "partOfSpeech": "adv",
   "cefr": "A2",
@@ -10588,7 +10588,7 @@
  {
   "id": 968,
   "text": "zaraz",
-  "translation": "in a moment",
+  "translation": "in a second",
   "transcription": "ˈzaras",
   "partOfSpeech": "adv",
   "cefr": "A1",
@@ -10621,7 +10621,7 @@
  {
   "id": 971,
   "text": "najpierw",
-  "translation": "first of all",
+  "translation": "firstly",
   "transcription": "ˈnajpjɛrf",
   "partOfSpeech": "adv",
   "cefr": "A2",
@@ -10632,7 +10632,7 @@
  {
   "id": 972,
   "text": "wreszcie",
-  "translation": "finally",
+  "translation": "at last",
   "transcription": "ˈvrɛʂt͡ɕɛ",
   "partOfSpeech": "adv",
   "cefr": "B1",
@@ -10681,7 +10681,7 @@
  {
   "id": 977,
   "text": "na szczęście",
-  "translation": "fortunately",
+  "translation": "luckily",
   "transcription": "na ˈʂt͡ʂɛ̃ɕt͡ɕɛ",
   "partOfSpeech": "adv",
   "cefr": "A2",
@@ -10692,7 +10692,7 @@
  {
   "id": 978,
   "text": "właśnie",
-  "translation": "exactly, just",
+  "translation": "exactly",
   "transcription": "ˈvwaɕɲɛ",
   "partOfSpeech": "part",
   "cefr": "A2",
@@ -10703,7 +10703,7 @@
  {
   "id": 979,
   "text": "chyba",
-  "translation": "probably",
+  "translation": "i guess",
   "transcription": "ˈxɨba",
   "partOfSpeech": "part",
   "cefr": "A1",
@@ -10714,7 +10714,7 @@
  {
   "id": 980,
   "text": "przecież",
-  "translation": "after all",
+  "translation": "yet",
   "transcription": "ˈbʐɛt͡ɕɛʂ",
   "partOfSpeech": "part",
   "cefr": "B1",
@@ -10734,7 +10734,7 @@
  {
   "id": 982,
   "text": "aby",
-  "translation": "in order to",
+  "translation": "to",
   "transcription": "ˈabɨ",
   "partOfSpeech": "conj",
   "cefr": "B1",
@@ -10752,7 +10752,7 @@
  {
   "id": 984,
   "text": "dopóki",
-  "translation": "as long as",
+  "translation": "until",
   "transcription": "dɔˈpuki",
   "partOfSpeech": "conj",
   "cefr": "B2",
@@ -10812,7 +10812,7 @@
  {
   "id": 990,
   "text": "oprócz",
-  "translation": "besides",
+  "translation": "apart from",
   "transcription": "ˈɔprut͡ʂ",
   "partOfSpeech": "prep",
   "cefr": "B1",
@@ -10821,7 +10821,7 @@
  {
   "id": 991,
   "text": "zamiast",
-  "translation": "instead of",
+  "translation": "instead",
   "transcription": "ˈzamjast",
   "partOfSpeech": "prep",
   "cefr": "B1",
@@ -10830,7 +10830,7 @@
  {
   "id": 992,
   "text": "dzięki",
-  "translation": "thanks to",
+  "translation": "thanks",
   "transcription": "ˈd͡ʑɛ̃ki",
   "partOfSpeech": "prep",
   "cefr": "A2",
@@ -10883,7 +10883,7 @@
  {
   "id": 997,
   "text": "w górę",
-  "translation": "upwards",
+  "translation": "up",
   "transcription": "f ˈgurɛ̃",
   "partOfSpeech": "adv",
   "cefr": "A2",
@@ -10971,7 +10971,7 @@
  {
   "id": 1005,
   "text": "ktoś",
-  "translation": "somebody",
+  "translation": "someone",
   "transcription": "ktɔɕ",
   "partOfSpeech": "prn",
   "cefr": "A1",
@@ -11066,7 +11066,7 @@
  {
   "id": 1014,
   "text": "przeświadczenie",
-  "translation": "conviction, belief",
+  "translation": "conviction",
   "transcription": "bʐɛʑvjaˈtt͡ʂɛɲɛ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -11089,7 +11089,7 @@
  {
   "id": 1016,
   "text": "zażyłość",
-  "translation": "closeness",
+  "translation": "intimacy",
   "transcription": "zaˈʐɨwɔɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -11111,7 +11111,7 @@
  {
   "id": 1018,
   "text": "wnikliwy",
-  "translation": "insightful",
+  "translation": "astute",
   "transcription": "vɲiˈklivɨ",
   "partOfSpeech": "adj",
   "cefr": "C1",
@@ -11175,7 +11175,7 @@
  {
   "id": 1024,
   "text": "znikomy",
-  "translation": "negligible",
+  "translation": "insignificant",
   "transcription": "zɲiˈkɔmɨ",
   "partOfSpeech": "adj",
   "cefr": "C1",
@@ -11208,7 +11208,7 @@
  {
   "id": 1027,
   "text": "kompleksowy",
-  "translation": "comprehensive",
+  "translation": "complex",
   "transcription": "kɔmplɛˈksɔvɨ",
   "partOfSpeech": "adj",
   "cefr": "C1",
@@ -11264,7 +11264,7 @@
  {
   "id": 1032,
   "text": "zaniechać",
-  "translation": "to refrain from",
+  "translation": "to give up",
   "transcription": "zaˈɲɛxat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C1",
@@ -11275,7 +11275,7 @@
  {
   "id": 1033,
   "text": "podważyć",
-  "translation": "to undermine",
+  "translation": "to challenge",
   "transcription": "pɔˈdvaʐɨt͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C1",
@@ -11297,7 +11297,7 @@
  {
   "id": 1035,
   "text": "nadużycie",
-  "translation": "abuse, misuse",
+  "translation": "abuse",
   "transcription": "naduˈʐɨt͡ɕɛ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -11319,7 +11319,7 @@
  {
   "id": 1037,
   "text": "zobowiązanie",
-  "translation": "obligation",
+  "translation": "commitment",
   "transcription": "zɔbɔvjɔ̃ˈzaɲɛ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -11342,7 +11342,7 @@
  {
   "id": 1039,
   "text": "rozporządzenie",
-  "translation": "regulation",
+  "translation": "ordinance",
   "transcription": "rɔspɔʐɔ̃ˈd͡zɛɲɛ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -11354,7 +11354,7 @@
  {
   "id": 1040,
   "text": "orzeczenie",
-  "translation": "ruling",
+  "translation": "judgment",
   "transcription": "ɔʐɛˈt͡ʂɛɲɛ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -11377,7 +11377,7 @@
  {
   "id": 1042,
   "text": "zaniedbanie",
-  "translation": "negligence",
+  "translation": "neglect",
   "transcription": "zaɲɛˈdbaɲɛ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -11410,7 +11410,7 @@
  {
   "id": 1045,
   "text": "przejrzystość",
-  "translation": "transparency",
+  "translation": "clarity",
   "transcription": "bʐɛˈjʐɨstɔɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -11431,7 +11431,7 @@
  {
   "id": 1047,
   "text": "bezsprzecznie",
-  "translation": "indisputably",
+  "translation": "undoubtedly",
   "transcription": "bɛˈzzbʐɛt͡ʂɲɛ",
   "partOfSpeech": "adv",
   "cefr": "C1",
@@ -11467,7 +11467,7 @@
  {
   "id": 1051,
   "text": "osobliwy",
-  "translation": "peculiar",
+  "translation": "quaint",
   "transcription": "ɔsɔˈblivɨ",
   "partOfSpeech": "adj",
   "cefr": "C1",
@@ -11487,7 +11487,7 @@
  {
   "id": 1053,
   "text": "uwarunkowanie",
-  "translation": "determinant",
+  "translation": "conditioning",
   "transcription": "uvarunkɔˈvaɲɛ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -11652,7 +11652,7 @@
  {
   "id": 1068,
   "text": "kompetencja",
-  "translation": "competence, remit",
+  "translation": "competence",
   "transcription": "kɔmpɛˈtɛnt͡sja",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -11663,7 +11663,7 @@
  {
   "id": 1069,
   "text": "uprawnienie",
-  "translation": "authorisation",
+  "translation": "powers",
   "transcription": "upraˈvɲɛɲɛ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -11762,7 +11762,7 @@
  {
   "id": 1078,
   "text": "załącznik",
-  "translation": "annex",
+  "translation": "attachment",
   "transcription": "zaˈwɔ̃t͡ʂɲik",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -11828,7 +11828,7 @@
  {
   "id": 1084,
   "text": "egzekucja",
-  "translation": "enforcement",
+  "translation": "execution",
   "transcription": "ɛgzɛˈkut͡sja",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -11839,7 +11839,7 @@
  {
   "id": 1085,
   "text": "windykacja",
-  "translation": "debt collection",
+  "translation": "vindication",
   "transcription": "vindɨˈkat͡sja",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -11960,7 +11960,7 @@
  {
   "id": 1096,
   "text": "miernik",
-  "translation": "measure, metric",
+  "translation": "gauge",
   "transcription": "ˈmjɛrɲik",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -11982,7 +11982,7 @@
  {
   "id": 1098,
   "text": "tolerancja błędu",
-  "translation": "margin of error",
+  "translation": "error tolerance",
   "transcription": "tɔlɛˈrant͡sja ˈbwɛ̃du",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12004,7 +12004,7 @@
  {
   "id": 1100,
   "text": "uściślenie",
-  "translation": "refinement",
+  "translation": "clarification",
   "transcription": "uɕt͡ɕiˈɕlɛɲɛ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12015,7 +12015,7 @@
  {
   "id": 1101,
   "text": "sprostowanie",
-  "translation": "correction, retraction",
+  "translation": "rectification",
   "transcription": "sprɔstɔˈvaɲɛ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12059,7 +12059,7 @@
  {
   "id": 1105,
   "text": "cytat",
-  "translation": "quotation",
+  "translation": "quote",
   "transcription": "ˈt͡sɨtat",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12092,7 +12092,7 @@
  {
   "id": 1108,
   "text": "recenzja naukowa",
-  "translation": "peer review",
+  "translation": "scientific review",
   "transcription": "rɛˈt͡sɛnzja nauˈkɔva",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12103,7 +12103,7 @@
  {
   "id": 1109,
   "text": "rozprawa naukowa",
-  "translation": "dissertation",
+  "translation": "treatise",
   "transcription": "rɔˈsprava nauˈkɔva",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12114,7 +12114,7 @@
  {
   "id": 1110,
   "text": "konspekt",
-  "translation": "outline",
+  "translation": "synopsis",
   "transcription": "ˈkɔnspɛkt",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12213,7 +12213,7 @@
  {
   "id": 1119,
   "text": "insynuacja",
-  "translation": "insinuation",
+  "translation": "innuendo",
   "transcription": "insɨnuˈat͡sja",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12257,7 +12257,7 @@
  {
   "id": 1123,
   "text": "wiarygodne źródło",
-  "translation": "credible source",
+  "translation": "reliable source",
   "transcription": "vjarɨˈgɔdnɛ ˈʑrudwɔ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12357,7 +12357,7 @@
  {
   "id": 1132,
   "text": "przenikliwość",
-  "translation": "perceptiveness",
+  "translation": "penetration",
   "transcription": "bʐɛɲiˈklivɔɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12368,7 +12368,7 @@
  {
   "id": 1133,
   "text": "rozwaga",
-  "translation": "deliberation",
+  "translation": "consideration",
   "transcription": "rɔˈzvaga",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12390,7 +12390,7 @@
  {
   "id": 1135,
   "text": "przezorność",
-  "translation": "foresight",
+  "translation": "forethought",
   "transcription": "bʐɛˈzɔrnɔɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12423,7 +12423,7 @@
  {
   "id": 1138,
   "text": "konsekwencja w działaniu",
-  "translation": "consistency",
+  "translation": "consistency in action",
   "transcription": "kɔnsɛˈgvɛnt͡sja f d͡ʑaˈwaɲu",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12434,7 +12434,7 @@
  {
   "id": 1139,
   "text": "wytrwałość",
-  "translation": "perseverance",
+  "translation": "persistence",
   "transcription": "vɨˈtrvawɔɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12445,7 +12445,7 @@
  {
   "id": 1140,
   "text": "zawziętość",
-  "translation": "doggedness",
+  "translation": "bitterness",
   "transcription": "zaˈvʑɛ̃tɔɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12533,7 +12533,7 @@
  {
   "id": 1148,
   "text": "wyrozumiałość",
-  "translation": "forbearance",
+  "translation": "indulgence",
   "transcription": "vɨrɔzuˈmjawɔɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12688,7 +12688,7 @@
  {
   "id": 1162,
   "text": "przygnębienie",
-  "translation": "dejection",
+  "translation": "depression",
   "transcription": "bʐɨgnɛ̃ˈbjɛɲɛ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12723,7 +12723,7 @@
  {
   "id": 1165,
   "text": "lęk",
-  "translation": "anxiety",
+  "translation": "bow",
   "transcription": "lɛ̃k",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12746,7 +12746,7 @@
  {
   "id": 1167,
   "text": "zdumienie",
-  "translation": "astonishment",
+  "translation": "amazement",
   "transcription": "zduˈmjɛɲɛ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12757,7 +12757,7 @@
  {
   "id": 1168,
   "text": "osłupienie",
-  "translation": "stupefaction",
+  "translation": "stupor",
   "transcription": "ɔswuˈpjɛɲɛ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -12790,7 +12790,7 @@
  {
   "id": 1171,
   "text": "przytoczyć",
-  "translation": "to cite",
+  "translation": "to quote",
   "transcription": "bʐɨˈtɔt͡ʂɨt͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C1",
@@ -12801,7 +12801,7 @@
  {
   "id": 1172,
   "text": "powołać się",
-  "translation": "to invoke, to refer to",
+  "translation": "to refer",
   "transcription": "pɔˈvɔwat͡ɕ ɕɛ̃",
   "partOfSpeech": "v",
   "cefr": "C1",
@@ -12845,7 +12845,7 @@
  {
   "id": 1176,
   "text": "zredagować",
-  "translation": "to edit, to draft",
+  "translation": "to edit",
   "transcription": "zrɛdaˈgɔvat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C1",
@@ -12856,7 +12856,7 @@
  {
   "id": 1177,
   "text": "streścić",
-  "translation": "to summarise",
+  "translation": "to summarize",
   "transcription": "ˈstrɛɕt͡ɕit͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C1",
@@ -12878,7 +12878,7 @@
  {
   "id": 1179,
   "text": "zakwestionować",
-  "translation": "to question, to challenge",
+  "translation": "to question",
   "transcription": "zagvɛstjɔˈnɔvat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C1",
@@ -12889,7 +12889,7 @@
  {
   "id": 1180,
   "text": "obalić",
-  "translation": "to refute",
+  "translation": "to overthrow",
   "transcription": "ɔˈbalit͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C1",
@@ -12900,7 +12900,7 @@
  {
   "id": 1181,
   "text": "zbagatelizować",
-  "translation": "to trivialise",
+  "translation": "to downplay",
   "transcription": "zbagatɛliˈzɔvat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C1",
@@ -12955,7 +12955,7 @@
  {
   "id": 1186,
   "text": "uwzględnić",
-  "translation": "to take into account",
+  "translation": "to include",
   "transcription": "uˈvzglɛ̃dɲit͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C1",
@@ -12966,7 +12966,7 @@
  {
   "id": 1187,
   "text": "pominąć",
-  "translation": "to omit",
+  "translation": "to skip",
   "transcription": "pɔˈminɔ̃t͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C1",
@@ -12977,7 +12977,7 @@
  {
   "id": 1188,
   "text": "wyodrębnić",
-  "translation": "to isolate, to single out",
+  "translation": "to extract",
   "transcription": "vɨɔˈdrɛ̃bɲit͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C1",
@@ -12988,7 +12988,7 @@
  {
   "id": 1189,
   "text": "scharakteryzować",
-  "translation": "to characterise",
+  "translation": "to characterize",
   "transcription": "sxaraktɛrɨˈzɔvat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C1",
@@ -13032,7 +13032,7 @@
  {
   "id": 1193,
   "text": "świadczyć o",
-  "translation": "to attest to",
+  "translation": "to testify about",
   "transcription": "ˈʑvjatt͡ʂɨt͡ɕ ɔ",
   "partOfSpeech": "v",
   "cefr": "C1",
@@ -13065,7 +13065,7 @@
  {
   "id": 1196,
   "text": "wykluczać",
-  "translation": "to rule out",
+  "translation": "to exclude",
   "transcription": "vɨˈklut͡ʂat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C1",
@@ -13142,7 +13142,7 @@
  {
   "id": 1203,
   "text": "podudzie",
-  "translation": "lower leg, shank",
+  "translation": "shank",
   "transcription": "pɔˈdud͡ʑɛ",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -13186,7 +13186,7 @@
  {
   "id": 1207,
   "text": "lędźwie",
-  "translation": "loins, lower back",
+  "translation": "loins",
   "transcription": "ˈlɛ̃d͡ʑvjɛ",
   "partOfSpeech": "n",
   "cefr": "C1",
@@ -13197,7 +13197,7 @@
  {
   "id": 1208,
   "text": "łopatka",
-  "translation": "shoulder blade",
+  "translation": "shoulder",
   "transcription": "wɔˈpatka",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -13230,7 +13230,7 @@
  {
   "id": 1211,
   "text": "klatka piersiowa",
-  "translation": "chest, rib cage",
+  "translation": "chest",
   "transcription": "ˈklatka pjɛˈrɕɔva",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -13252,7 +13252,7 @@
  {
   "id": 1213,
   "text": "pas",
-  "translation": "waist, belt",
+  "translation": "crimson",
   "transcription": "pas",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -13329,7 +13329,7 @@
  {
   "id": 1220,
   "text": "pępek",
-  "translation": "navel",
+  "translation": "belly button",
   "transcription": "ˈpɛ̃pɛk",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -13406,7 +13406,7 @@
  {
   "id": 1227,
   "text": "biegunka",
-  "translation": "diarrhoea",
+  "translation": "diarrhea",
   "transcription": "bjɛˈgunka",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -13472,7 +13472,7 @@
  {
   "id": 1233,
   "text": "nowotwór",
-  "translation": "tumour, cancer",
+  "translation": "tumor",
   "transcription": "nɔˈvɔdvur",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -13494,7 +13494,7 @@
  {
   "id": 1235,
   "text": "dreszcze",
-  "translation": "chills, shivers",
+  "translation": "chills",
   "transcription": "ˈdrɛʂt͡ʂɛ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -13516,7 +13516,7 @@
  {
   "id": 1237,
   "text": "odcisk",
-  "translation": "corn, callus",
+  "translation": "imprint",
   "transcription": "ˈɔtt͡ɕisk",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -13527,7 +13527,7 @@
  {
   "id": 1238,
   "text": "wapno",
-  "translation": "calcium, lime",
+  "translation": "calcium carbonate",
   "transcription": "ˈvapnɔ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -13538,7 +13538,7 @@
  {
   "id": 1239,
   "text": "opatrunek",
-  "translation": "dressing, bandage",
+  "translation": "dressing",
   "transcription": "ɔpaˈtrunɛk",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -13549,7 +13549,7 @@
  {
   "id": 1240,
   "text": "figi",
-  "translation": "knickers, briefs",
+  "translation": "figs",
   "transcription": "ˈfigi",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -13560,7 +13560,7 @@
  {
   "id": 1241,
   "text": "majtki",
-  "translation": "underpants, knickers",
+  "translation": "panties",
   "transcription": "ˈmajtki",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -13571,7 +13571,7 @@
  {
   "id": 1242,
   "text": "boksery",
-  "translation": "boxer shorts",
+  "translation": "boxers",
   "transcription": "bɔˈksɛrɨ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -13593,7 +13593,7 @@
  {
   "id": 1244,
   "text": "podkoszulek",
-  "translation": "vest, undershirt",
+  "translation": "undershirt",
   "transcription": "pɔtkɔˈʂulɛk",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -13648,7 +13648,7 @@
  {
   "id": 1249,
   "text": "szlafrok",
-  "translation": "dressing gown",
+  "translation": "bathrobe",
   "transcription": "ˈʂlafrɔk",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -13659,7 +13659,7 @@
  {
   "id": 1250,
   "text": "futro",
-  "translation": "fur coat",
+  "translation": "fur",
   "transcription": "ˈfutrɔ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -13703,7 +13703,7 @@
  {
   "id": 1254,
   "text": "spodnie dresowe",
-  "translation": "tracksuit trousers",
+  "translation": "sweatpants",
   "transcription": "ˈspɔdɲɛ drɛˈsɔvɛ",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -13725,7 +13725,7 @@
  {
   "id": 1256,
   "text": "bluzka na ramiączkach",
-  "translation": "strappy top",
+  "translation": "a blouse with straps",
   "transcription": "ˈbluska na raˈmjɔ̃t͡ʂkax",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -13736,7 +13736,7 @@
  {
   "id": 1257,
   "text": "wełniany szalik",
-  "translation": "woollen scarf",
+  "translation": "woolen scarf",
   "transcription": "vɛˈwɲanɨ ˈʂalik",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -13747,7 +13747,7 @@
  {
   "id": 1258,
   "text": "komin",
-  "translation": "snood, neck warmer",
+  "translation": "chimney",
   "transcription": "ˈkɔmin",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -13824,7 +13824,7 @@
  {
   "id": 1265,
   "text": "kozaki",
-  "translation": "high boots",
+  "translation": "boots",
   "transcription": "kɔˈzaki",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -13835,7 +13835,7 @@
  {
   "id": 1266,
   "text": "trampki",
-  "translation": "plimsolls, trainers",
+  "translation": "sneakers",
   "transcription": "ˈtrampki",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -13868,7 +13868,7 @@
  {
   "id": 1269,
   "text": "czółenka",
-  "translation": "court shoes, pumps",
+  "translation": "pumps",
   "transcription": "t͡ʂuˈwɛnka",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -13967,7 +13967,7 @@
  {
   "id": 1278,
   "text": "nogawki",
-  "translation": "trouser legs",
+  "translation": "legs",
   "transcription": "nɔˈgafki",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -13978,7 +13978,7 @@
  {
   "id": 1279,
   "text": "suwak",
-  "translation": "zip",
+  "translation": "slider",
   "transcription": "ˈsuvak",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -14055,7 +14055,7 @@
  {
   "id": 1286,
   "text": "ciastko",
-  "translation": "biscuit",
+  "translation": "cookie",
   "transcription": "ˈt͡ɕastkɔ",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -14066,7 +14066,7 @@
  {
   "id": 1287,
   "text": "lody",
-  "translation": "ice cream",
+  "translation": "ice-cream",
   "transcription": "ˈlɔdɨ",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -14088,7 +14088,7 @@
  {
   "id": 1289,
   "text": "cukierek",
-  "translation": "sweet",
+  "translation": "candy",
   "transcription": "t͡suˈkjɛrɛk",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -14299,7 +14299,7 @@
  {
   "id": 1308,
   "text": "woda gazowana",
-  "translation": "sparkling water",
+  "translation": "carbonated water",
   "transcription": "ˈvɔda gazɔˈvana",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -14321,7 +14321,7 @@
  {
   "id": 1310,
   "text": "kompot",
-  "translation": "stewed fruit drink",
+  "translation": "compote",
   "transcription": "ˈkɔmpɔt",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -14365,7 +14365,7 @@
  {
   "id": 1314,
   "text": "koktajl",
-  "translation": "cocktail, smoothie",
+  "translation": "cocktail",
   "transcription": "ˈkɔktajl",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -14431,7 +14431,7 @@
  {
   "id": 1320,
   "text": "mieszać",
-  "translation": "to stir, to mix",
+  "translation": "to mix",
   "transcription": "ˈmjɛʂat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -14453,7 +14453,7 @@
  {
   "id": 1322,
   "text": "składnik",
-  "translation": "ingredient",
+  "translation": "component",
   "transcription": "ˈskwadɲik",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -14464,7 +14464,7 @@
  {
   "id": 1323,
   "text": "przyprawa",
-  "translation": "spice",
+  "translation": "seasoning",
   "transcription": "bʐɨˈprava",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -14522,7 +14522,7 @@
  {
   "id": 1328,
   "text": "ciasto",
-  "translation": "cake, dough",
+  "translation": "cake",
   "transcription": "ˈt͡ɕastɔ",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -14557,7 +14557,7 @@
  {
   "id": 1331,
   "text": "kasa",
-  "translation": "till, checkout",
+  "translation": "cash register",
   "transcription": "ˈkasa",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -14579,7 +14579,7 @@
  {
   "id": 1333,
   "text": "wózek",
-  "translation": "trolley",
+  "translation": "cart",
   "transcription": "ˈvuzɛk",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -14657,7 +14657,7 @@
  {
   "id": 1340,
   "text": "przymierzalnia",
-  "translation": "fitting room",
+  "translation": "dressing room",
   "transcription": "bʐɨmjɛˈʐalɲa",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -14669,7 +14669,7 @@
  {
   "id": 1341,
   "text": "centrum handlowe",
-  "translation": "shopping centre",
+  "translation": "shopping mall",
   "transcription": "ˈt͡sɛntrum xaˈndlɔvɛ",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -14759,7 +14759,7 @@
  {
   "id": 1349,
   "text": "torebka",
-  "translation": "handbag",
+  "translation": "bag",
   "transcription": "tɔˈrɛpka",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -14782,7 +14782,7 @@
  {
   "id": 1351,
   "text": "biżuteria",
-  "translation": "jewellery",
+  "translation": "jewelry",
   "transcription": "biʐuˈtɛrja",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -14815,7 +14815,7 @@
  {
   "id": 1354,
   "text": "piżama",
-  "translation": "pyjamas",
+  "translation": "pajamas",
   "transcription": "piˈʐama",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -14849,7 +14849,7 @@
  {
   "id": 1357,
   "text": "mieszkanie",
-  "translation": "flat",
+  "translation": "apartment",
   "transcription": "mjɛˈʂkaɲɛ",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -14871,7 +14871,7 @@
  {
   "id": 1359,
   "text": "piwnica",
-  "translation": "cellar",
+  "translation": "basement",
   "transcription": "piˈvɲit͡sa",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -14972,7 +14972,7 @@
  {
   "id": 1368,
   "text": "dywan",
-  "translation": "carpet",
+  "translation": "rug",
   "transcription": "ˈdɨvan",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -14984,7 +14984,7 @@
  {
   "id": 1369,
   "text": "zasłony",
-  "translation": "curtains",
+  "translation": "drapes",
   "transcription": "zaˈswɔnɨ",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -15054,7 +15054,7 @@
  {
   "id": 1375,
   "text": "zmywać",
-  "translation": "to wash up",
+  "translation": "to do the dishes",
   "transcription": "ˈzmɨvat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -15065,7 +15065,7 @@
  {
   "id": 1376,
   "text": "prać",
-  "translation": "to do laundry",
+  "translation": "to wash",
   "transcription": "prat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -15142,7 +15142,7 @@
  {
   "id": 1383,
   "text": "śmieci",
-  "translation": "rubbish",
+  "translation": "garbage",
   "transcription": "ˈɕmjɛt͡ɕi",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -15153,7 +15153,7 @@
  {
   "id": 1384,
   "text": "kosz",
-  "translation": "bin, basket",
+  "translation": "bin",
   "transcription": "kɔʂ",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -15517,7 +15517,7 @@
  {
   "id": 1417,
   "text": "święto",
-  "translation": "holiday, feast",
+  "translation": "holiday",
   "transcription": "ˈʑvjɛ̃tɔ",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -15753,7 +15753,7 @@
  {
   "id": 1438,
   "text": "procent",
-  "translation": "per cent",
+  "translation": "percent",
   "transcription": "ˈprɔt͡sɛnt",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -15776,7 +15776,7 @@
  {
   "id": 1440,
   "text": "granatowy",
-  "translation": "navy blue",
+  "translation": "navy",
   "transcription": "granaˈtɔvɨ",
   "partOfSpeech": "adj",
   "cefr": "A2",
@@ -15809,7 +15809,7 @@
  {
   "id": 1443,
   "text": "złoty",
-  "translation": "golden, zloty",
+  "translation": "golden",
   "transcription": "ˈzwɔtɨ",
   "partOfSpeech": "adj",
   "cefr": "A1",
@@ -15821,7 +15821,7 @@
  {
   "id": 1444,
   "text": "jasny",
-  "translation": "light, bright",
+  "translation": "bright",
   "transcription": "ˈjasnɨ",
   "partOfSpeech": "adj",
   "cefr": "A1",
@@ -15843,7 +15843,7 @@
  {
   "id": 1446,
   "text": "kolorowy",
-  "translation": "colourful",
+  "translation": "colorful",
   "transcription": "kɔlɔˈrɔvɨ",
   "partOfSpeech": "adj",
   "cefr": "A2",
@@ -15854,7 +15854,7 @@
  {
   "id": 1447,
   "text": "odcień",
-  "translation": "shade",
+  "translation": "hue",
   "transcription": "ˈɔtt͡ɕɛɲ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -15865,7 +15865,7 @@
  {
   "id": 1448,
   "text": "koło",
-  "translation": "circle, wheel",
+  "translation": "wheel",
   "transcription": "ˈkɔwɔ",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -15932,7 +15932,7 @@
  {
   "id": 1454,
   "text": "kąt",
-  "translation": "angle, corner",
+  "translation": "corner",
   "transcription": "kɔ̃t",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -15976,7 +15976,7 @@
  {
   "id": 1458,
   "text": "ostry",
-  "translation": "sharp, spicy",
+  "translation": "spicy",
   "transcription": "ˈɔstrɨ",
   "partOfSpeech": "adj",
   "cefr": "A2",
@@ -15999,7 +15999,7 @@
  {
   "id": 1460,
   "text": "zgadza się",
-  "translation": "that is right",
+  "translation": "that's right",
   "transcription": "ˈzgad͡za ɕɛ̃",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -16010,7 +16010,7 @@
  {
   "id": 1461,
   "text": "nie wiem",
-  "translation": "I do not know",
+  "translation": "i don't know",
   "transcription": "ɲɛ vjɛm",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -16087,7 +16087,7 @@
  {
   "id": 1468,
   "text": "pieczołowitość",
-  "translation": "meticulous care",
+  "translation": "care",
   "transcription": "pjɛt͡ʂɔwɔˈvitɔɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16098,7 +16098,7 @@
  {
   "id": 1469,
   "text": "skrupuły",
-  "translation": "scruples",
+  "translation": "scruple",
   "transcription": "skruˈpuwɨ",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16120,7 +16120,7 @@
  {
   "id": 1471,
   "text": "rzetelność badawcza",
-  "translation": "scholarly rigour",
+  "translation": "research reliability",
   "transcription": "ʐɛˈtɛlnɔɕt͡ɕ baˈdaft͡ʂa",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16142,7 +16142,7 @@
  {
   "id": 1473,
   "text": "rozterka",
-  "translation": "dilemma",
+  "translation": "indecision",
   "transcription": "rɔˈstɛrka",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16153,7 +16153,7 @@
  {
   "id": 1474,
   "text": "dylemat",
-  "translation": "dilemma",
+  "translation": "fix",
   "transcription": "dɨˈlɛmat",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16197,7 +16197,7 @@
  {
   "id": 1478,
   "text": "zatarg",
-  "translation": "altercation",
+  "translation": "conflict",
   "transcription": "ˈzatark",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16208,7 +16208,7 @@
  {
   "id": 1479,
   "text": "polemika",
-  "translation": "polemic",
+  "translation": "polemics",
   "transcription": "pɔlɛˈmika",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16219,7 +16219,7 @@
  {
   "id": 1480,
   "text": "dysputa",
-  "translation": "disputation",
+  "translation": "debate",
   "transcription": "dɨˈsputa",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16252,7 +16252,7 @@
  {
   "id": 1483,
   "text": "przewód myślowy",
-  "translation": "train of thought",
+  "translation": "thought conduit",
   "transcription": "ˈbʐɛvut mɨˈɕlɔvɨ",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16274,7 +16274,7 @@
  {
   "id": 1485,
   "text": "puenta",
-  "translation": "punchline, point",
+  "translation": "punch line",
   "transcription": "puˈɛnta",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16296,7 +16296,7 @@
  {
   "id": 1487,
   "text": "sentencja",
-  "translation": "maxim",
+  "translation": "sentence",
   "transcription": "sɛˈntɛnt͡sja",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16329,7 +16329,7 @@
  {
   "id": 1490,
   "text": "banał",
-  "translation": "platitude",
+  "translation": "banality",
   "transcription": "ˈbanaw",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16340,7 +16340,7 @@
  {
   "id": 1491,
   "text": "frazes",
-  "translation": "empty phrase",
+  "translation": "cliche",
   "transcription": "ˈfrazɛs",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16417,7 +16417,7 @@
  {
   "id": 1498,
   "text": "zapożyczenie",
-  "translation": "loanword",
+  "translation": "borrowing",
   "transcription": "zapɔʐɨˈt͡ʂɛɲɛ",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16428,7 +16428,7 @@
  {
   "id": 1499,
   "text": "kalka językowa",
-  "translation": "calque",
+  "translation": "linguistic tracing paper",
   "transcription": "ˈkalka jɛ̃zɨˈkɔva",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16450,7 +16450,7 @@
  {
   "id": 1501,
   "text": "frazeologizm",
-  "translation": "set phrase",
+  "translation": "phraseology",
   "transcription": "frazɛɔˈlɔgizm",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16494,7 +16494,7 @@
  {
   "id": 1505,
   "text": "groteska",
-  "translation": "the grotesque",
+  "translation": "grotesque",
   "transcription": "grɔˈtɛska",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16560,7 +16560,7 @@
  {
   "id": 1511,
   "text": "szyderstwo",
-  "translation": "scorn",
+  "translation": "sneer",
   "transcription": "ʂɨˈdɛrzdvɔ",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16571,7 +16571,7 @@
  {
   "id": 1512,
   "text": "uszczypliwość",
-  "translation": "snideness",
+  "translation": "causticity",
   "transcription": "uʂt͡ʂɨˈplivɔɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16582,7 +16582,7 @@
  {
   "id": 1513,
   "text": "złośliwość",
-  "translation": "spitefulness",
+  "translation": "malice",
   "transcription": "zwɔˈɕlivɔɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16604,7 +16604,7 @@
  {
   "id": 1515,
   "text": "docinek",
-  "translation": "taunt",
+  "translation": "jeer",
   "transcription": "dɔˈt͡ɕinɛk",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -16626,7 +16626,7 @@
  {
   "id": 1517,
   "text": "lakoniczny",
-  "translation": "laconic",
+  "translation": "curt",
   "transcription": "lakɔˈɲit͡ʂnɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -16637,7 +16637,7 @@
  {
   "id": 1518,
   "text": "rozwlekły",
-  "translation": "long-winded",
+  "translation": "wordy",
   "transcription": "rɔˈzvlɛkwɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -16648,7 +16648,7 @@
  {
   "id": 1519,
   "text": "zawiły",
-  "translation": "convoluted",
+  "translation": "intricate",
   "transcription": "zaˈviwɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -16659,7 +16659,7 @@
  {
   "id": 1520,
   "text": "pokrętny",
-  "translation": "tortuous, devious",
+  "translation": "twisting",
   "transcription": "pɔˈkrɛ̃tnɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -16670,7 +16670,7 @@
  {
   "id": 1521,
   "text": "mglisty",
-  "translation": "hazy, vague",
+  "translation": "foggy",
   "transcription": "ˈmglistɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -16692,7 +16692,7 @@
  {
   "id": 1523,
   "text": "przenośny",
-  "translation": "figurative",
+  "translation": "portable",
   "transcription": "bʐɛˈnɔɕnɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -16703,7 +16703,7 @@
  {
   "id": 1524,
   "text": "kunsztowny",
-  "translation": "elaborate",
+  "translation": "ingenious",
   "transcription": "kuˈnʂtɔvnɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -16736,7 +16736,7 @@
  {
   "id": 1527,
   "text": "wystawny",
-  "translation": "lavish",
+  "translation": "sumptuous",
   "transcription": "vɨˈstavnɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -16747,7 +16747,7 @@
  {
   "id": 1528,
   "text": "skromny w formie",
-  "translation": "understated",
+  "translation": "modest in form",
   "transcription": "ˈskrɔmnɨ f ˈfɔrmjɛ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -16758,7 +16758,7 @@
  {
   "id": 1529,
   "text": "oszczędny w słowach",
-  "translation": "sparing with words",
+  "translation": "sparing in words",
   "transcription": "ɔˈʂt͡ʂɛ̃dnɨ f ˈswɔvax",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -16769,7 +16769,7 @@
  {
   "id": 1530,
   "text": "dobitny",
-  "translation": "emphatic",
+  "translation": "distinct",
   "transcription": "dɔˈbitnɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -16780,7 +16780,7 @@
  {
   "id": 1531,
   "text": "sugestywny",
-  "translation": "evocative",
+  "translation": "suggestive",
   "transcription": "sugɛˈstɨvnɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -16813,7 +16813,7 @@
  {
   "id": 1534,
   "text": "porażający",
-  "translation": "devastating",
+  "translation": "shocking",
   "transcription": "pɔraʐaˈjɔ̃t͡sɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -16846,7 +16846,7 @@
  {
   "id": 1537,
   "text": "niepodważalny",
-  "translation": "incontrovertible",
+  "translation": "indisputable",
   "transcription": "ɲɛpɔdvaˈʐalnɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -16890,7 +16890,7 @@
  {
   "id": 1541,
   "text": "osobliwy w formie",
-  "translation": "singular",
+  "translation": "peculiar in form",
   "transcription": "ɔsɔˈblivɨ f ˈfɔrmjɛ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -16901,7 +16901,7 @@
  {
   "id": 1542,
   "text": "przewrotny w zamyśle",
-  "translation": "subversive",
+  "translation": "perverse in concept",
   "transcription": "bʐɛˈvrɔtnɨ f zaˈmɨɕlɛ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -16912,7 +16912,7 @@
  {
   "id": 1543,
   "text": "przenikliwy",
-  "translation": "piercing, shrewd",
+  "translation": "penetrating",
   "transcription": "bʐɛɲiˈklivɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -17018,7 +17018,7 @@
  {
   "id": 1553,
   "text": "prowizoryczny",
-  "translation": "makeshift",
+  "translation": "provisional",
   "transcription": "prɔvizɔˈrɨt͡ʂnɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -17051,7 +17051,7 @@
  {
   "id": 1556,
   "text": "zaniechanie",
-  "translation": "omission",
+  "translation": "failure",
   "transcription": "zaɲɛˈxaɲɛ",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -17106,7 +17106,7 @@
  {
   "id": 1561,
   "text": "zaległość",
-  "translation": "arrears, backlog",
+  "translation": "arrear",
   "transcription": "zaˈlɛgwɔɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -17128,7 +17128,7 @@
  {
   "id": 1563,
   "text": "niedobór",
-  "translation": "shortfall",
+  "translation": "deficiency",
   "transcription": "ɲɛˈdɔbur",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -17150,7 +17150,7 @@
  {
   "id": 1565,
   "text": "posucha",
-  "translation": "dry spell",
+  "translation": "drought",
   "transcription": "pɔˈsuxa",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -17161,7 +17161,7 @@
  {
   "id": 1566,
   "text": "skwar",
-  "translation": "scorching heat",
+  "translation": "scorcher",
   "transcription": "zgvar",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -17172,7 +17172,7 @@
  {
   "id": 1567,
   "text": "zawierucha",
-  "translation": "blizzard, turmoil",
+  "translation": "turmoil",
   "transcription": "zavjɛˈruxa",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -17194,7 +17194,7 @@
  {
   "id": 1569,
   "text": "rześkość",
-  "translation": "crispness",
+  "translation": "vigor",
   "transcription": "ˈʐɛɕkɔɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "C2",
@@ -17249,7 +17249,7 @@
  {
   "id": 1574,
   "text": "markotny",
-  "translation": "glum",
+  "translation": "moody",
   "transcription": "maˈrkɔtnɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -17260,7 +17260,7 @@
  {
   "id": 1575,
   "text": "strapiony",
-  "translation": "troubled",
+  "translation": "distressed",
   "transcription": "straˈpjɔnɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -17293,7 +17293,7 @@
  {
   "id": 1578,
   "text": "uradowany",
-  "translation": "overjoyed",
+  "translation": "rejoicing",
   "transcription": "uradɔˈvanɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -17304,7 +17304,7 @@
  {
   "id": 1579,
   "text": "rześki",
-  "translation": "brisk, fresh",
+  "translation": "brisk",
   "transcription": "ˈʐɛɕki",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -17315,7 +17315,7 @@
  {
   "id": 1580,
   "text": "krzepki",
-  "translation": "sturdy",
+  "translation": "robust",
   "transcription": "ˈgʐɛpki",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -17337,7 +17337,7 @@
  {
   "id": 1582,
   "text": "mizerny",
-  "translation": "sickly, meagre",
+  "translation": "haggard",
   "transcription": "miˈzɛrnɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -17348,7 +17348,7 @@
  {
   "id": 1583,
   "text": "rosły",
-  "translation": "strapping",
+  "translation": "they grew",
   "transcription": "ˈrɔswɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -17370,7 +17370,7 @@
  {
   "id": 1585,
   "text": "rozłożysty",
-  "translation": "spreading",
+  "translation": "wide-spreading",
   "transcription": "rɔzwɔˈʐɨstɨ",
   "partOfSpeech": "adj",
   "cefr": "C2",
@@ -17425,7 +17425,7 @@
  {
   "id": 1590,
   "text": "roztrząsać",
-  "translation": "to deliberate over",
+  "translation": "to discuss",
   "transcription": "rɔˈzdʐɔ̃sat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C2",
@@ -17436,7 +17436,7 @@
  {
   "id": 1591,
   "text": "dociekać",
-  "translation": "to inquire into",
+  "translation": "to investigate",
   "transcription": "dɔˈt͡ɕɛkat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C2",
@@ -17447,7 +17447,7 @@
  {
   "id": 1592,
   "text": "dowodzić tezy",
-  "translation": "to argue a thesis",
+  "translation": "prove a thesis",
   "transcription": "dɔˈvɔd͡ʑit͡ɕ ˈtɛzɨ",
   "partOfSpeech": "expr",
   "cefr": "C2",
@@ -17458,7 +17458,7 @@
  {
   "id": 1593,
   "text": "utrzymywać stanowisko",
-  "translation": "to maintain a position",
+  "translation": "maintain a position",
   "transcription": "udʐɨˈmɨvat͡ɕ stanɔˈviskɔ",
   "partOfSpeech": "expr",
   "cefr": "C2",
@@ -17469,7 +17469,7 @@
  {
   "id": 1594,
   "text": "podtrzymać",
-  "translation": "to uphold",
+  "translation": "to maintain",
   "transcription": "pɔˈddʐɨmat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C2",
@@ -17480,7 +17480,7 @@
  {
   "id": 1595,
   "text": "uchylić",
-  "translation": "to overturn",
+  "translation": "to repeal",
   "transcription": "uˈxɨlit͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C2",
@@ -17502,7 +17502,7 @@
  {
   "id": 1597,
   "text": "umorzyć",
-  "translation": "to discontinue, to write off",
+  "translation": "to cancel",
   "transcription": "uˈmɔʐɨt͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C2",
@@ -17514,7 +17514,7 @@
  {
   "id": 1598,
   "text": "zasądzić",
-  "translation": "to award, to rule",
+  "translation": "to judge",
   "transcription": "zaˈsɔ̃d͡ʑit͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C2",
@@ -17536,7 +17536,7 @@
  {
   "id": 1600,
   "text": "zaniechać działań",
-  "translation": "to desist",
+  "translation": "refrain from taking action",
   "transcription": "zaˈɲɛxat͡ɕ ˈd͡ʑawaɲ",
   "partOfSpeech": "expr",
   "cefr": "C2",
@@ -17547,7 +17547,7 @@
  {
   "id": 1601,
   "text": "wzbraniać się",
-  "translation": "to be reluctant",
+  "translation": "to refrain",
   "transcription": "ˈvzbraɲat͡ɕ ɕɛ̃",
   "partOfSpeech": "v",
   "cefr": "C2",
@@ -17624,7 +17624,7 @@
  {
   "id": 1608,
   "text": "piętnować",
-  "translation": "to condemn publicly",
+  "translation": "to stigmatize",
   "transcription": "pjɛ̃ˈtnɔvat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C2",
@@ -17646,7 +17646,7 @@
  {
   "id": 1610,
   "text": "deprecjonować",
-  "translation": "to disparage",
+  "translation": "to depreciate",
   "transcription": "dɛprɛt͡sjɔˈnɔvat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C2",
@@ -17668,7 +17668,7 @@
  {
   "id": 1612,
   "text": "uwiarygodnić",
-  "translation": "to lend credibility",
+  "translation": "to make it credible",
   "transcription": "uvjarɨˈgɔdɲit͡ɕ",
   "partOfSpeech": "v",
   "cefr": "C2",
@@ -17702,7 +17702,7 @@
  {
   "id": 1615,
   "text": "klasa",
-  "translation": "class, classroom",
+  "translation": "class",
   "transcription": "ˈklasa",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -17714,7 +17714,7 @@
  {
   "id": 1616,
   "text": "świadectwo",
-  "translation": "school report",
+  "translation": "certificate",
   "transcription": "ʑvjaˈdɛd͡zdvɔ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -17725,7 +17725,7 @@
  {
   "id": 1617,
   "text": "przedmiot",
-  "translation": "subject, object",
+  "translation": "item",
   "transcription": "ˈbʐɛdmjɔt",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -17748,7 +17748,7 @@
  {
   "id": 1619,
   "text": "historia",
-  "translation": "history, story",
+  "translation": "history",
   "transcription": "xiˈstɔrja",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -17815,7 +17815,7 @@
  {
   "id": 1625,
   "text": "dzwonek",
-  "translation": "bell, ringtone",
+  "translation": "bell",
   "transcription": "ˈd͡zvɔnɛk",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -17827,7 +17827,7 @@
  {
   "id": 1626,
   "text": "stołówka",
-  "translation": "canteen",
+  "translation": "cafeteria",
   "transcription": "stɔˈwufka",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -17862,7 +17862,7 @@
  {
   "id": 1629,
   "text": "semestr",
-  "translation": "semester",
+  "translation": "term",
   "transcription": "ˈsɛmɛstr",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -17873,7 +17873,7 @@
  {
   "id": 1630,
   "text": "sesja",
-  "translation": "exam session",
+  "translation": "session",
   "transcription": "ˈsɛsja",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -17895,7 +17895,7 @@
  {
   "id": 1632,
   "text": "akademik",
-  "translation": "student hall",
+  "translation": "dormitory",
   "transcription": "akaˈdɛmik",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -17939,7 +17939,7 @@
  {
   "id": 1636,
   "text": "licencjat",
-  "translation": "bachelor's degree",
+  "translation": "bachelor degree",
   "transcription": "liˈt͡sɛnt͡sjat",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -17961,7 +17961,7 @@
  {
   "id": 1638,
   "text": "ławka",
-  "translation": "desk, bench",
+  "translation": "bench",
   "transcription": "ˈwafka",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -17996,7 +17996,7 @@
  {
   "id": 1641,
   "text": "podręcznik",
-  "translation": "textbook",
+  "translation": "manual",
   "transcription": "pɔˈdrɛ̃t͡ʂɲik",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -18020,7 +18020,7 @@
  {
   "id": 1643,
   "text": "obecność",
-  "translation": "attendance",
+  "translation": "presence",
   "transcription": "ɔˈbɛt͡snɔɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -18031,7 +18031,7 @@
  {
   "id": 1644,
   "text": "skupienie",
-  "translation": "focus",
+  "translation": "focusing",
   "transcription": "skuˈpjɛɲɛ",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -18053,7 +18053,7 @@
  {
   "id": 1646,
   "text": "powtórka",
-  "translation": "revision",
+  "translation": "repeat",
   "transcription": "pɔˈfturka",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -18064,7 +18064,7 @@
  {
   "id": 1647,
   "text": "fiszka",
-  "translation": "flashcard",
+  "translation": "index card",
   "transcription": "ˈfiʂka",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -18121,7 +18121,7 @@
  {
   "id": 1652,
   "text": "kolega z pracy",
-  "translation": "colleague",
+  "translation": "a colleague from work",
   "transcription": "kɔˈlɛga s ˈprat͡sɨ",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -18145,7 +18145,7 @@
  {
   "id": 1654,
   "text": "urlop",
-  "translation": "leave, holiday",
+  "translation": "vacation",
   "transcription": "ˈurlɔp",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -18157,7 +18157,7 @@
  {
   "id": 1655,
   "text": "zwolnienie",
-  "translation": "sick note, dismissal",
+  "translation": "sick leave",
   "transcription": "zvɔˈlɲɛɲɛ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -18193,7 +18193,7 @@
  {
   "id": 1658,
   "text": "rozmowa kwalifikacyjna",
-  "translation": "job interview",
+  "translation": "interview",
   "transcription": "rɔˈzmɔva gvalifikaˈt͡sɨjna",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -18205,7 +18205,7 @@
  {
   "id": 1659,
   "text": "stanowisko",
-  "translation": "position, post",
+  "translation": "position",
   "transcription": "stanɔˈviskɔ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -18275,7 +18275,7 @@
  {
   "id": 1665,
   "text": "prowadzący",
-  "translation": "chair, host",
+  "translation": "leading",
   "transcription": "prɔvaˈd͡zɔ̃t͡sɨ",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -18309,7 +18309,7 @@
  {
   "id": 1668,
   "text": "telekonferencja",
-  "translation": "conference call",
+  "translation": "teleconference",
   "transcription": "tɛlɛkɔnfɛˈrɛnt͡sja",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -18405,7 +18405,7 @@
  {
   "id": 1676,
   "text": "marka",
-  "translation": "brand",
+  "translation": "mark",
   "transcription": "ˈmarka",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -18438,7 +18438,7 @@
  {
   "id": 1679,
   "text": "magazyn",
-  "translation": "warehouse, magazine",
+  "translation": "warehouse",
   "transcription": "maˈgazɨn",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -18461,7 +18461,7 @@
  {
   "id": 1681,
   "text": "kurs",
-  "translation": "exchange rate, course",
+  "translation": "course",
   "transcription": "kurs",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -18484,7 +18484,7 @@
  {
   "id": 1683,
   "text": "bankomat",
-  "translation": "cash machine",
+  "translation": "atm",
   "transcription": "baˈnkɔmat",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -18517,7 +18517,7 @@
  {
   "id": 1686,
   "text": "rata",
-  "translation": "instalment",
+  "translation": "installment",
   "transcription": "ˈrata",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -18583,7 +18583,7 @@
  {
   "id": 1692,
   "text": "dysk",
-  "translation": "disk, drive",
+  "translation": "disk",
   "transcription": "dɨsk",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -18684,7 +18684,7 @@
  {
   "id": 1701,
   "text": "logowanie",
-  "translation": "log-in",
+  "translation": "login",
   "transcription": "lɔgɔˈvaɲɛ",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -18707,7 +18707,7 @@
  {
   "id": 1703,
   "text": "bezpieczeństwo",
-  "translation": "security, safety",
+  "translation": "security",
   "transcription": "bɛspjɛˈt͡ʂɛɲzdvɔ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -18752,7 +18752,7 @@
  {
   "id": 1707,
   "text": "rozmowa",
-  "translation": "conversation, call",
+  "translation": "conversation",
   "transcription": "rɔˈzmɔva",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -18786,7 +18786,7 @@
  {
   "id": 1710,
   "text": "ekran dotykowy",
-  "translation": "touchscreen",
+  "translation": "touch screen",
   "transcription": "ˈɛkran dɔtɨˈkɔvɨ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -18832,7 +18832,7 @@
  {
   "id": 1714,
   "text": "blokada",
-  "translation": "lock",
+  "translation": "blockade",
   "transcription": "blɔˈkada",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -18876,7 +18876,7 @@
  {
   "id": 1718,
   "text": "biblioteka programistyczna",
-  "translation": "software library",
+  "translation": "programming library",
   "transcription": "bibljɔˈtɛka prɔgramiˈstɨt͡ʂna",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -18954,7 +18954,7 @@
  {
   "id": 1725,
   "text": "pionek",
-  "translation": "game piece",
+  "translation": "pawn",
   "transcription": "ˈpjɔnɛk",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -19093,7 +19093,7 @@
  {
   "id": 1737,
   "text": "rakieta",
-  "translation": "racket, rocket",
+  "translation": "rocket",
   "transcription": "raˈkjɛta",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -19115,7 +19115,7 @@
  {
   "id": 1739,
   "text": "pompka",
-  "translation": "push-up",
+  "translation": "pump",
   "transcription": "ˈpɔmpka",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -19126,7 +19126,7 @@
  {
   "id": 1740,
   "text": "sztanga",
-  "translation": "barbell",
+  "translation": "barbells",
   "transcription": "ˈʂtanga",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -19182,7 +19182,7 @@
  {
   "id": 1745,
   "text": "wytrzymałość",
-  "translation": "endurance",
+  "translation": "resilience",
   "transcription": "vɨdʐɨˈmawɔɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -19218,7 +19218,7 @@
  {
   "id": 1748,
   "text": "seans",
-  "translation": "screening",
+  "translation": "showing",
   "transcription": "ˈsɛans",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -19229,7 +19229,7 @@
  {
   "id": 1749,
   "text": "napisy",
-  "translation": "subtitles",
+  "translation": "writings",
   "transcription": "naˈpisɨ",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -19240,7 +19240,7 @@
  {
   "id": 1750,
   "text": "lektor",
-  "translation": "voice-over",
+  "translation": "lector",
   "transcription": "ˈlɛktɔr",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -19251,7 +19251,7 @@
  {
   "id": 1751,
   "text": "gatunek",
-  "translation": "genre, species",
+  "translation": "species",
   "transcription": "gaˈtunɛk",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -19420,7 +19420,7 @@
  {
   "id": 1766,
   "text": "wydawnictwo",
-  "translation": "publisher",
+  "translation": "publishing house",
   "transcription": "vɨdaˈvɲid͡zdvɔ",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -19478,7 +19478,7 @@
  {
   "id": 1771,
   "text": "zakładka",
-  "translation": "bookmark, tab",
+  "translation": "tab",
   "transcription": "zaˈkwatka",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -19535,7 +19535,7 @@
  {
   "id": 1776,
   "text": "majsterkowanie",
-  "translation": "do-it-yourself",
+  "translation": "diy",
   "transcription": "majstɛrkɔˈvaɲɛ",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -19651,7 +19651,7 @@
  {
   "id": 1786,
   "text": "ziemia",
-  "translation": "earth, ground",
+  "translation": "earth",
   "transcription": "ˈʑɛmja",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -19838,7 +19838,7 @@
  {
   "id": 1802,
   "text": "pąk",
-  "translation": "bud",
+  "translation": "pitch",
   "transcription": "pɔ̃k",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -19850,7 +19850,7 @@
  {
   "id": 1803,
   "text": "jak się nazywasz",
-  "translation": "what is your name",
+  "translation": "what's your name",
   "transcription": "jak ɕɛ̃ naˈzɨvaʂ",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -19884,7 +19884,7 @@
  {
   "id": 1806,
   "text": "jestem z Polski",
-  "translation": "I am from Poland",
+  "translation": "i'm from Poland",
   "transcription": "ˈjɛstɛm s ˈpɔlski",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -19920,7 +19920,7 @@
  {
   "id": 1809,
   "text": "czym się zajmujesz",
-  "translation": "what do you do",
+  "translation": "what do you do?",
   "transcription": "t͡ʂɨm ɕɛ̃ zaˈjmujɛʂ",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -19955,7 +19955,7 @@
  {
   "id": 1812,
   "text": "nie mówię po polsku",
-  "translation": "I do not speak Polish",
+  "translation": "i don't speak Polish",
   "transcription": "ɲɛ ˈmuvjɛ̃ pɔ ˈpɔlsku",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -19977,7 +19977,7 @@
  {
   "id": 1814,
   "text": "nie rozumiem",
-  "translation": "I do not understand",
+  "translation": "i don't understand",
   "transcription": "ɲɛ rɔˈzumjɛm",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -19988,7 +19988,7 @@
  {
   "id": 1815,
   "text": "czy możesz powtórzyć",
-  "translation": "could you repeat that",
+  "translation": "can you repeat that",
   "transcription": "t͡ʂɨ ˈmɔʐɛʂ pɔˈftuʐɨt͡ɕ",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -19999,7 +19999,7 @@
  {
   "id": 1816,
   "text": "mów wolniej",
-  "translation": "speak more slowly",
+  "translation": "speak slower",
   "transcription": "muf ˈvɔlɲɛj",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -20010,7 +20010,7 @@
  {
   "id": 1817,
   "text": "co to znaczy",
-  "translation": "what does that mean",
+  "translation": "what does it mean",
   "transcription": "t͡sɔ tɔ ˈznat͡ʂɨ",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -20021,7 +20021,7 @@
  {
   "id": 1818,
   "text": "jak to powiedzieć po polsku",
-  "translation": "how do you say it in Polish",
+  "translation": "how to say it in Polish",
   "transcription": "jak tɔ pɔˈvjɛd͡ʑɛt͡ɕ pɔ ˈpɔlsku",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20045,7 +20045,7 @@
  {
   "id": 1820,
   "text": "nie jestem pewien",
-  "translation": "I am not sure",
+  "translation": "i'm not sure",
   "transcription": "ɲɛ ˈjɛstɛm ˈpɛvjɛn",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20067,7 +20067,7 @@
  {
   "id": 1822,
   "text": "raczej nie",
-  "translation": "probably not",
+  "translation": "i don't think so",
   "transcription": "ˈrat͡ʂɛj ɲɛ",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20102,7 +20102,7 @@
  {
   "id": 1825,
   "text": "masz rację",
-  "translation": "you are right",
+  "translation": "you're right",
   "transcription": "maʂ ˈrat͡sjɛ̃",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20113,7 +20113,7 @@
  {
   "id": 1826,
   "text": "to prawda",
-  "translation": "that is true",
+  "translation": "that's true",
   "transcription": "tɔ ˈpravda",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -20124,7 +20124,7 @@
  {
   "id": 1827,
   "text": "to nieprawda",
-  "translation": "that is not true",
+  "translation": "it's not true",
   "transcription": "tɔ ɲɛˈpravda",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20202,7 +20202,7 @@
  {
   "id": 1834,
   "text": "trudno powiedzieć",
-  "translation": "hard to say",
+  "translation": "it's hard to say",
   "transcription": "ˈtrudnɔ pɔˈvjɛd͡ʑɛt͡ɕ",
   "partOfSpeech": "expr",
   "cefr": "B1",
@@ -20235,7 +20235,7 @@
  {
   "id": 1837,
   "text": "mam nadzieję",
-  "translation": "I hope so",
+  "translation": "i hope",
   "transcription": "mam naˈd͡ʑɛjɛ̃",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20246,7 +20246,7 @@
  {
   "id": 1838,
   "text": "obawiam się",
-  "translation": "I am afraid",
+  "translation": "i'm afraid",
   "transcription": "ɔˈbavjam ɕɛ̃",
   "partOfSpeech": "expr",
   "cefr": "B1",
@@ -20257,7 +20257,7 @@
  {
   "id": 1839,
   "text": "przykro mi",
-  "translation": "I am sorry",
+  "translation": "i'm sorry",
   "transcription": "ˈbʐɨkrɔ mi",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20269,7 +20269,7 @@
  {
   "id": 1840,
   "text": "cieszę się",
-  "translation": "I am glad",
+  "translation": "i'm glad",
   "transcription": "ˈt͡ɕɛʂɛ̃ ɕɛ̃",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20313,7 +20313,7 @@
  {
   "id": 1844,
   "text": "do usłyszenia",
-  "translation": "talk to you later",
+  "translation": "speak soon",
   "transcription": "dɔ uswɨˈʂɛɲa",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20359,7 +20359,7 @@
  {
   "id": 1848,
   "text": "zaraz wracam",
-  "translation": "I will be right back",
+  "translation": "be right back",
   "transcription": "ˈzaras ˈvrat͡sam",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20405,7 +20405,7 @@
  {
   "id": 1852,
   "text": "wesołych świąt",
-  "translation": "happy holidays",
+  "translation": "happy Christmas",
   "transcription": "vɛˈsɔwɨx ʑvjɔ̃t",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20429,7 +20429,7 @@
  {
   "id": 1854,
   "text": "szerokiej drogi",
-  "translation": "safe journey",
+  "translation": "have a nice trip",
   "transcription": "ʂɛˈrɔkjɛj ˈdrɔgi",
   "partOfSpeech": "expr",
   "cefr": "B1",
@@ -20453,7 +20453,7 @@
  {
   "id": 1856,
   "text": "wszystko w porządku",
-  "translation": "everything is fine",
+  "translation": "everything's all right",
   "transcription": "ˈfʂɨstkɔ f pɔˈʐɔ̃tku",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -20464,7 +20464,7 @@
  {
   "id": 1857,
   "text": "nie najlepiej",
-  "translation": "not so good",
+  "translation": "not the best",
   "transcription": "ɲɛ naˈjlɛpjɛj",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20476,7 +20476,7 @@
  {
   "id": 1858,
   "text": "jestem zmęczony",
-  "translation": "I am tired",
+  "translation": "i'm tired",
   "transcription": "ˈjɛstɛm zmɛ̃ˈt͡ʂɔnɨ",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -20488,7 +20488,7 @@
  {
   "id": 1859,
   "text": "jestem głodny",
-  "translation": "I am hungry",
+  "translation": "i'm hungry",
   "transcription": "ˈjɛstɛm ˈgwɔdnɨ",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -20499,7 +20499,7 @@
  {
   "id": 1860,
   "text": "chce mi się pić",
-  "translation": "I am thirsty",
+  "translation": "i'm thirsty",
   "transcription": "xt͡sɛ mi ɕɛ̃ pit͡ɕ",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20510,7 +20510,7 @@
  {
   "id": 1861,
   "text": "źle się czuję",
-  "translation": "I do not feel well",
+  "translation": "i feel bad",
   "transcription": "ʑlɛ ɕɛ̃ ˈt͡ʂujɛ̃",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20533,7 +20533,7 @@
  {
   "id": 1863,
   "text": "boli mnie brzuch",
-  "translation": "I have a stomach ache",
+  "translation": "my stomach hurts",
   "transcription": "ˈbɔli mɲɛ bʐux",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20569,7 +20569,7 @@
  {
   "id": 1866,
   "text": "czy mogę prosić o pomoc",
-  "translation": "could I ask for help",
+  "translation": "could you please help me",
   "transcription": "t͡ʂɨ ˈmɔgɛ̃ ˈprɔɕit͡ɕ ɔ ˈpɔmɔt͡s",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20603,7 +20603,7 @@
  {
   "id": 1869,
   "text": "czy mogę pomóc",
-  "translation": "can I help",
+  "translation": "can I help?",
   "transcription": "t͡ʂɨ ˈmɔgɛ̃ ˈpɔmut͡s",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -20614,7 +20614,7 @@
  {
   "id": 1870,
   "text": "ile to kosztuje",
-  "translation": "how much does it cost",
+  "translation": "how much is it",
   "transcription": "ˈilɛ tɔ kɔˈʂtujɛ",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -20626,7 +20626,7 @@
  {
   "id": 1871,
   "text": "to za drogie",
-  "translation": "that is too expensive",
+  "translation": "it's too expensive",
   "transcription": "tɔ za ˈdrɔgjɛ",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20649,7 +20649,7 @@
  {
   "id": 1873,
   "text": "czy mogę dostać paragon",
-  "translation": "could I have a receipt",
+  "translation": "can I get a receipt",
   "transcription": "t͡ʂɨ ˈmɔgɛ̃ ˈdɔstat͡ɕ paˈragɔn",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20660,7 +20660,7 @@
  {
   "id": 1874,
   "text": "czy mogę przymierzyć",
-  "translation": "may I try it on",
+  "translation": "can I try it on?",
   "transcription": "t͡ʂɨ ˈmɔgɛ̃ bʐɨˈmjɛʐɨt͡ɕ",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20672,7 +20672,7 @@
  {
   "id": 1875,
   "text": "czy jest w innym rozmiarze",
-  "translation": "do you have another size",
+  "translation": "is it available in a different size?",
   "transcription": "t͡ʂɨ jɛst f ˈinnɨm rɔˈzmjaʐɛ",
   "partOfSpeech": "expr",
   "cefr": "B1",
@@ -20684,7 +20684,7 @@
  {
   "id": 1876,
   "text": "gdzie jest kasa",
-  "translation": "where is the till",
+  "translation": "where is the cash register",
   "transcription": "gd͡ʑɛ jɛst ˈkasa",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -20695,7 +20695,7 @@
  {
   "id": 1877,
   "text": "poproszę rachunek",
-  "translation": "the bill, please",
+  "translation": "i would like the bill, please",
   "transcription": "pɔˈprɔʂɛ̃ raˈxunɛk",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -20707,7 +20707,7 @@
  {
   "id": 1878,
   "text": "czy jest wolny stolik",
-  "translation": "is there a free table",
+  "translation": "is there a free table?",
   "transcription": "t͡ʂɨ jɛst ˈvɔlnɨ ˈstɔlik",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20718,7 +20718,7 @@
  {
   "id": 1879,
   "text": "poproszę wodę",
-  "translation": "water, please",
+  "translation": "i'd like some water, please",
   "transcription": "pɔˈprɔʂɛ̃ ˈvɔdɛ̃",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -20740,7 +20740,7 @@
  {
   "id": 1881,
   "text": "na miejscu",
-  "translation": "to eat in",
+  "translation": "on site",
   "transcription": "na ˈmjɛjst͡su",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20763,7 +20763,7 @@
  {
   "id": 1883,
   "text": "jestem uczulony",
-  "translation": "I am allergic",
+  "translation": "i'm allergic",
   "transcription": "ˈjɛstɛm ut͡ʂuˈlɔnɨ",
   "partOfSpeech": "expr",
   "cefr": "B1",
@@ -20786,7 +20786,7 @@
  {
   "id": 1885,
   "text": "gdzie jest toaleta",
-  "translation": "where is the toilet",
+  "translation": "where is the restroom",
   "transcription": "gd͡ʑɛ jɛst tɔaˈlɛta",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -20797,7 +20797,7 @@
  {
   "id": 1886,
   "text": "gdzie jest najbliższy sklep",
-  "translation": "where is the nearest shop",
+  "translation": "where is the nearest store",
   "transcription": "gd͡ʑɛ jɛst naˈjbliʂʂɨ sklɛp",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20809,7 +20809,7 @@
  {
   "id": 1887,
   "text": "jak dojść do centrum",
-  "translation": "how do I get to the centre",
+  "translation": "how to get to the center",
   "transcription": "jak dɔjɕt͡ɕ dɔ ˈt͡sɛntrum",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20821,7 +20821,7 @@
  {
   "id": 1888,
   "text": "jak dojechać na dworzec",
-  "translation": "how do I get to the station",
+  "translation": "how to get to the station",
   "transcription": "jak dɔˈjɛxat͡ɕ na ˈdvɔʐɛt͡s",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20844,7 +20844,7 @@
  {
   "id": 1890,
   "text": "idź prosto",
-  "translation": "go straight on",
+  "translation": "go straight",
   "transcription": "it͡ɕ ˈprɔstɔ",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -20877,7 +20877,7 @@
  {
   "id": 1893,
   "text": "po lewej stronie",
-  "translation": "on the left",
+  "translation": "on the left side",
   "transcription": "pɔ ˈlɛvɛj ˈstrɔɲɛ",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -20888,7 +20888,7 @@
  {
   "id": 1894,
   "text": "po prawej stronie",
-  "translation": "on the right",
+  "translation": "on the right side",
   "transcription": "pɔ ˈpravɛj ˈstrɔɲɛ",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -20899,7 +20899,7 @@
  {
   "id": 1895,
   "text": "zgubiłem się",
-  "translation": "I am lost",
+  "translation": "i got lost",
   "transcription": "zguˈbiwɛm ɕɛ̃",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -20911,7 +20911,7 @@
  {
   "id": 1896,
   "text": "czy mogę prosić o mapę",
-  "translation": "could I have a map",
+  "translation": "can I have a map please?",
   "transcription": "t͡ʂɨ ˈmɔgɛ̃ ˈprɔɕit͡ɕ ɔ ˈmapɛ̃",
   "partOfSpeech": "expr",
   "cefr": "B1",
@@ -20945,7 +20945,7 @@
  {
   "id": 1899,
   "text": "o której godzinie",
-  "translation": "at what time",
+  "translation": "what time",
   "transcription": "ɔ ˈkturɛj gɔˈd͡ʑiɲɛ",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -20968,7 +20968,7 @@
  {
   "id": 1901,
   "text": "za godzinę",
-  "translation": "in an hour",
+  "translation": "per hour",
   "transcription": "za gɔˈd͡ʑinɛ̃",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -21057,7 +21057,7 @@
  {
   "id": 1909,
   "text": "nie mam czasu",
-  "translation": "I do not have time",
+  "translation": "i don't have time",
   "transcription": "ɲɛ mam ˈt͡ʂasu",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -21068,7 +21068,7 @@
  {
   "id": 1910,
   "text": "czy jest wolny pokój",
-  "translation": "do you have a room free",
+  "translation": "is there a room available",
   "transcription": "t͡ʂɨ jɛst ˈvɔlnɨ ˈpɔkuj",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -21137,7 +21137,7 @@
  {
   "id": 1916,
   "text": "zgubiłem bagaż",
-  "translation": "my luggage is lost",
+  "translation": "i lost my luggage",
   "transcription": "zguˈbiwɛm ˈbagaʂ",
   "partOfSpeech": "expr",
   "cefr": "B1",
@@ -21149,7 +21149,7 @@
  {
   "id": 1917,
   "text": "ile kosztuje bilet",
-  "translation": "how much is a ticket",
+  "translation": "how much is the ticket",
   "transcription": "ˈilɛ kɔˈʂtujɛ ˈbilɛt",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -21173,7 +21173,7 @@
  {
   "id": 1919,
   "text": "bilet w dwie strony",
-  "translation": "a return ticket",
+  "translation": "round-trip ticket",
   "transcription": "ˈbilɛt f dvjɛ ˈstrɔnɨ",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -21207,7 +21207,7 @@
  {
   "id": 1922,
   "text": "czy to miejsce jest wolne",
-  "translation": "is this seat taken",
+  "translation": "is this place free",
   "transcription": "t͡ʂɨ tɔ ˈmjɛjst͡sɛ jɛst ˈvɔlnɛ",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -21230,7 +21230,7 @@
  {
   "id": 1924,
   "text": "czy możemy się spotkać",
-  "translation": "can we meet",
+  "translation": "can we meet?",
   "transcription": "t͡ʂɨ mɔˈʐɛmɨ ɕɛ̃ ˈspɔtkat͡ɕ",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -21241,7 +21241,7 @@
  {
   "id": 1925,
   "text": "zaraz to sprawdzę",
-  "translation": "I will check that now",
+  "translation": "i'll check it out soon",
   "transcription": "ˈzaras tɔ ˈspravd͡zɛ̃",
   "partOfSpeech": "expr",
   "cefr": "B1",
@@ -21253,7 +21253,7 @@
  {
   "id": 1926,
   "text": "wrócę do ciebie",
-  "translation": "I will get back to you",
+  "translation": "i will come back to you",
   "transcription": "ˈvrut͡sɛ̃ dɔ ˈt͡ɕɛbjɛ",
   "partOfSpeech": "expr",
   "cefr": "B1",
@@ -21277,7 +21277,7 @@
  {
   "id": 1928,
   "text": "w miarę możliwości",
-  "translation": "as far as possible",
+  "translation": "as much as possible",
   "transcription": "f ˈmjarɛ̃ mɔʐliˈvɔɕt͡ɕi",
   "partOfSpeech": "expr",
   "cefr": "B2",
@@ -21299,7 +21299,7 @@
  {
   "id": 1930,
   "text": "nie podoba mi się",
-  "translation": "I do not like it",
+  "translation": "i don't like it",
   "transcription": "ɲɛ pɔˈdɔba mi ɕɛ̃",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -21354,7 +21354,7 @@
  {
   "id": 1935,
   "text": "poza tym",
-  "translation": "besides that",
+  "translation": "apart from that",
   "transcription": "ˈpɔza tɨm",
   "partOfSpeech": "expr",
   "cefr": "B1",
@@ -21365,7 +21365,7 @@
  {
   "id": 1936,
   "text": "to znaczy",
-  "translation": "that is to say",
+  "translation": "meaning",
   "transcription": "tɔ ˈznat͡ʂɨ",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -21410,7 +21410,7 @@
  {
   "id": 1940,
   "text": "w każdym razie",
-  "translation": "in any case",
+  "translation": "anyway",
   "transcription": "f ˈkaʐdɨm ˈraʑɛ",
   "partOfSpeech": "expr",
   "cefr": "B1",
@@ -21432,7 +21432,7 @@
  {
   "id": 1942,
   "text": "co więcej",
-  "translation": "what is more",
+  "translation": "what's more",
   "transcription": "t͡sɔ ˈvjɛ̃t͡sɛj",
   "partOfSpeech": "expr",
   "cefr": "B1",
@@ -21498,7 +21498,7 @@
  {
   "id": 1948,
   "text": "w gruncie rzeczy",
-  "translation": "essentially",
+  "translation": "in fact",
   "transcription": "f ˈgrunt͡ɕɛ ˈʐɛt͡ʂɨ",
   "partOfSpeech": "expr",
   "cefr": "C1",
@@ -21531,7 +21531,7 @@
  {
   "id": 1951,
   "text": "w związku z tym",
-  "translation": "consequently",
+  "translation": "in connection with",
   "transcription": "f ˈzvjɔ̃sku s tɨm",
   "partOfSpeech": "expr",
   "cefr": "B2",
@@ -21542,7 +21542,7 @@
  {
   "id": 1952,
   "text": "zwracam się z prośbą",
-  "translation": "I would like to request",
+  "translation": "i am asking you",
   "transcription": "ˈzvrat͡sam ɕɛ̃ s ˈprɔʑbɔ̃",
   "partOfSpeech": "expr",
   "cefr": "C1",
@@ -21565,7 +21565,7 @@
  {
   "id": 1954,
   "text": "z poważaniem",
-  "translation": "yours sincerely",
+  "translation": "kind regards",
   "transcription": "s pɔvaˈʐaɲɛm",
   "partOfSpeech": "expr",
   "cefr": "B1",
@@ -21576,7 +21576,7 @@
  {
   "id": 1955,
   "text": "nie martw się",
-  "translation": "do not worry",
+  "translation": "don't worry",
   "transcription": "ɲɛ mardf ɕɛ̃",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -21587,7 +21587,7 @@
  {
   "id": 1956,
   "text": "tak mi wstyd",
-  "translation": "I am so ashamed",
+  "translation": "i'm so ashamed",
   "transcription": "tak mi fstɨt",
   "partOfSpeech": "expr",
   "cefr": "B1",
@@ -21598,7 +21598,7 @@
  {
   "id": 1957,
   "text": "czy mógłby mi pan pomóc",
-  "translation": "could you help me",
+  "translation": "could you help me?",
   "transcription": "t͡ʂɨ ˈmugwbɨ mi pan ˈpɔmut͡s",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -21675,7 +21675,7 @@
  {
   "id": 1964,
   "text": "na razie",
-  "translation": "see you later",
+  "translation": "for now",
   "transcription": "na ˈraʑɛ",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -21686,7 +21686,7 @@
  {
   "id": 1965,
   "text": "proszę",
-  "translation": "please, here you are",
+  "translation": "please",
   "transcription": "ˈprɔʂɛ̃",
   "partOfSpeech": "part",
   "cefr": "A1",
@@ -21709,7 +21709,7 @@
  {
   "id": 1967,
   "text": "przepraszam",
-  "translation": "sorry, excuse me",
+  "translation": "sorry",
   "transcription": "bʐɛˈpraʂam",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -21720,7 +21720,7 @@
  {
   "id": 1968,
   "text": "nie ma za co",
-  "translation": "you are welcome",
+  "translation": "you're welcome",
   "transcription": "ɲɛ ma za t͡sɔ",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -21755,7 +21755,7 @@
  {
   "id": 1971,
   "text": "co słychać",
-  "translation": "what is new",
+  "translation": "what's up",
   "transcription": "t͡sɔ ˈswɨxat͡ɕ",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -21778,7 +21778,7 @@
  {
   "id": 1973,
   "text": "na zdrowie",
-  "translation": "cheers, bless you",
+  "translation": "cheers",
   "transcription": "na ˈzdrɔvjɛ",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -21814,7 +21814,7 @@
  {
   "id": 1976,
   "text": "witaj",
-  "translation": "welcome",
+  "translation": "hello",
   "transcription": "ˈvitaj",
   "partOfSpeech": "interj",
   "cefr": "A1",
@@ -21836,7 +21836,7 @@
  {
   "id": 1978,
   "text": "imię",
-  "translation": "first name",
+  "translation": "name",
   "transcription": "ˈimjɛ̃",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -21847,7 +21847,7 @@
  {
   "id": 1979,
   "text": "nazwisko",
-  "translation": "surname",
+  "translation": "last name",
   "transcription": "naˈzviskɔ",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -21858,7 +21858,7 @@
  {
   "id": 1980,
   "text": "wiek",
-  "translation": "age, century",
+  "translation": "age",
   "transcription": "vjɛk",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -21906,7 +21906,7 @@
  {
   "id": 1984,
   "text": "przedstawiać",
-  "translation": "to introduce",
+  "translation": "to present",
   "transcription": "bʐɛˈtstavjat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -21917,7 +21917,7 @@
  {
   "id": 1985,
   "text": "skąd",
-  "translation": "where from",
+  "translation": "from where",
   "transcription": "skɔ̃t",
   "partOfSpeech": "adv",
   "cefr": "A1",
@@ -21941,7 +21941,7 @@
  {
   "id": 1987,
   "text": "kawaler",
-  "translation": "bachelor",
+  "translation": "single",
   "transcription": "kaˈvalɛr",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -21953,7 +21953,7 @@
  {
   "id": 1988,
   "text": "żonaty",
-  "translation": "married (man)",
+  "translation": "married",
   "transcription": "ʐɔˈnatɨ",
   "partOfSpeech": "adj",
   "cefr": "A2",
@@ -22011,7 +22011,7 @@
  {
   "id": 1993,
   "text": "dziewczyna",
-  "translation": "girl, girlfriend",
+  "translation": "girl",
   "transcription": "d͡ʑɛˈft͡ʂɨna",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -22035,7 +22035,7 @@
  {
   "id": 1995,
   "text": "pan",
-  "translation": "sir, Mr",
+  "translation": "you",
   "transcription": "pan",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -22093,7 +22093,7 @@
  {
   "id": 2000,
   "text": "starszy",
-  "translation": "elderly, older",
+  "translation": "senior",
   "transcription": "ˈstarʂɨ",
   "partOfSpeech": "adj",
   "cefr": "A2",
@@ -22129,7 +22129,7 @@
  {
   "id": 2003,
   "text": "mieszkaniec",
-  "translation": "resident",
+  "translation": "inhabitant",
   "transcription": "mjɛˈʂkaɲɛt͡s",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -22141,7 +22141,7 @@
  {
   "id": 2004,
   "text": "sąsiad",
-  "translation": "neighbour",
+  "translation": "neighbor",
   "transcription": "ˈsɔ̃ɕat",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -22186,7 +22186,7 @@
  {
   "id": 2008,
   "text": "dziadek",
-  "translation": "grandfather",
+  "translation": "grandpa",
   "transcription": "ˈd͡ʑadɛk",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -22197,7 +22197,7 @@
  {
   "id": 2009,
   "text": "wnuk",
-  "translation": "grandson",
+  "translation": "grandchild",
   "transcription": "vnuk",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -22340,7 +22340,7 @@
  {
   "id": 2022,
   "text": "chrzestny",
-  "translation": "godfather",
+  "translation": "cartilaginous",
   "transcription": "ˈxʐɛstnɨ",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -22385,7 +22385,7 @@
  {
   "id": 2026,
   "text": "para",
-  "translation": "couple, pair",
+  "translation": "couple",
   "transcription": "ˈpara",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -22419,7 +22419,7 @@
  {
   "id": 2029,
   "text": "wesele",
-  "translation": "wedding party",
+  "translation": "wedding reception",
   "transcription": "vɛˈsɛlɛ",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -22497,7 +22497,7 @@
  {
   "id": 2036,
   "text": "koleżanka",
-  "translation": "friend (female)",
+  "translation": "girlfriend",
   "transcription": "kɔlɛˈʐanka",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -22508,7 +22508,7 @@
  {
   "id": 2037,
   "text": "tęsknić",
-  "translation": "to miss",
+  "translation": "to miss you",
   "transcription": "ˈtɛ̃skɲit͡ɕ",
   "partOfSpeech": "v",
   "cefr": "B1",
@@ -22586,7 +22586,7 @@
  {
   "id": 2044,
   "text": "pewny siebie",
-  "translation": "self-confident",
+  "translation": "confident",
   "transcription": "ˈpɛvnɨ ˈɕɛbjɛ",
   "partOfSpeech": "adj",
   "cefr": "B1",
@@ -22685,7 +22685,7 @@
  {
   "id": 2053,
   "text": "odważny",
-  "translation": "brave",
+  "translation": "bold",
   "transcription": "ɔˈdvaʐnɨ",
   "partOfSpeech": "adj",
   "cefr": "A2",
@@ -22731,7 +22731,7 @@
  {
   "id": 2057,
   "text": "towarzyski",
-  "translation": "sociable",
+  "translation": "social",
   "transcription": "tɔvaˈʐɨski",
   "partOfSpeech": "adj",
   "cefr": "B1",
@@ -22874,7 +22874,7 @@
  {
   "id": 2070,
   "text": "spokój",
-  "translation": "peace, calm",
+  "translation": "composure",
   "transcription": "ˈspɔkuj",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -22919,7 +22919,7 @@
  {
   "id": 2074,
   "text": "zdenerwowany",
-  "translation": "annoyed",
+  "translation": "upset",
   "transcription": "zdɛnɛrvɔˈvanɨ",
   "partOfSpeech": "adj",
   "cefr": "B1",
@@ -22985,7 +22985,7 @@
  {
   "id": 2080,
   "text": "broda",
-  "translation": "beard, chin",
+  "translation": "beard",
   "transcription": "ˈbrɔda",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -23020,7 +23020,7 @@
  {
   "id": 2083,
   "text": "blondynka",
-  "translation": "blonde woman",
+  "translation": "blonde",
   "transcription": "blɔˈndɨnka",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -23053,7 +23053,7 @@
  {
   "id": 2086,
   "text": "prosty",
-  "translation": "straight, simple",
+  "translation": "simple",
   "transcription": "ˈprɔstɨ",
   "partOfSpeech": "adj",
   "cefr": "A1",
@@ -23065,7 +23065,7 @@
  {
   "id": 2087,
   "text": "wzrost",
-  "translation": "height, growth",
+  "translation": "growth",
   "transcription": "vzrɔst",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -23076,7 +23076,7 @@
  {
   "id": 2088,
   "text": "waga",
-  "translation": "weight, scales",
+  "translation": "libra",
   "transcription": "ˈvaga",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -23178,7 +23178,7 @@
  {
   "id": 2097,
   "text": "cecha",
-  "translation": "feature, trait",
+  "translation": "characteristic",
   "transcription": "ˈt͡sɛxa",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -23200,7 +23200,7 @@
  {
   "id": 2099,
   "text": "zależność",
-  "translation": "dependency",
+  "translation": "dependence",
   "transcription": "zaˈlɛʐnɔɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -23211,7 +23211,7 @@
  {
   "id": 2100,
   "text": "związek przyczynowy",
-  "translation": "causal link",
+  "translation": "causal relationship",
   "transcription": "ˈzvjɔ̃zɛk bʐɨt͡ʂɨˈnɔvɨ",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -23249,7 +23249,7 @@
  {
   "id": 2104,
   "text": "okoliczność",
-  "translation": "circumstance",
+  "translation": "fact",
   "transcription": "ɔkɔˈlit͡ʂnɔɕt͡ɕ",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -23282,7 +23282,7 @@
  {
   "id": 2107,
   "text": "kwestia",
-  "translation": "issue, question",
+  "translation": "issue",
   "transcription": "ˈgvɛstja",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -23315,7 +23315,7 @@
  {
   "id": 2110,
   "text": "zakres",
-  "translation": "scope, range",
+  "translation": "range",
   "transcription": "ˈzakrɛs",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -23326,7 +23326,7 @@
  {
   "id": 2111,
   "text": "granica możliwości",
-  "translation": "limit",
+  "translation": "the limit of possibilities",
   "transcription": "graˈɲit͡sa mɔʐliˈvɔɕt͡ɕi",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -23346,7 +23346,7 @@
  {
   "id": 2113,
   "text": "norma",
-  "translation": "norm, standard",
+  "translation": "standard",
   "transcription": "ˈnɔrma",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -23357,7 +23357,7 @@
  {
   "id": 2114,
   "text": "zasada działania",
-  "translation": "principle",
+  "translation": "principle of operation",
   "transcription": "zaˈsada d͡ʑaˈwaɲa",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -23434,7 +23434,7 @@
  {
   "id": 2121,
   "text": "dowód",
-  "translation": "proof, evidence",
+  "translation": "evidence",
   "transcription": "ˈdɔvut",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -23456,7 +23456,7 @@
  {
   "id": 2123,
   "text": "kontrargument",
-  "translation": "counter-argument",
+  "translation": "counterargument",
   "transcription": "kɔntraˈrgumɛnt",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -23489,7 +23489,7 @@
  {
   "id": 2126,
   "text": "uogólnienie",
-  "translation": "generalisation",
+  "translation": "generalization",
   "transcription": "uɔguˈlɲɛɲɛ",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -23542,7 +23542,7 @@
  {
   "id": 2131,
   "text": "jednoznaczny",
-  "translation": "unambiguous",
+  "translation": "unequivocal",
   "transcription": "jɛdnɔˈznat͡ʂnɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -23562,7 +23562,7 @@
  {
   "id": 2133,
   "text": "zrozumiały",
-  "translation": "comprehensible",
+  "translation": "understandable",
   "transcription": "zrɔzuˈmjawɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -23593,7 +23593,7 @@
  {
   "id": 2136,
   "text": "prawdopodobny",
-  "translation": "probable",
+  "translation": "likely",
   "transcription": "pravdɔpɔˈdɔbnɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -23602,7 +23602,7 @@
  {
   "id": 2137,
   "text": "nieprawdopodobny",
-  "translation": "improbable",
+  "translation": "incredible",
   "transcription": "ɲɛpravdɔpɔˈdɔbnɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -23726,7 +23726,7 @@
  {
   "id": 2149,
   "text": "zbędny",
-  "translation": "unnecessary",
+  "translation": "redundant",
   "transcription": "ˈzbɛ̃dnɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -23735,7 +23735,7 @@
  {
   "id": 2150,
   "text": "niezbędny",
-  "translation": "essential",
+  "translation": "necessary",
   "transcription": "ɲɛˈzbɛ̃dnɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -23744,7 +23744,7 @@
  {
   "id": 2151,
   "text": "istotny",
-  "translation": "significant",
+  "translation": "relevant",
   "transcription": "iˈstɔtnɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -23786,7 +23786,7 @@
  {
   "id": 2155,
   "text": "dogłębny",
-  "translation": "thorough",
+  "translation": "profound",
   "transcription": "dɔˈgwɛ̃bnɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -23890,7 +23890,7 @@
  {
   "id": 2165,
   "text": "bezpodstawny",
-  "translation": "groundless",
+  "translation": "unfounded",
   "transcription": "bɛspɔˈtstavnɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -23901,7 +23901,7 @@
  {
   "id": 2166,
   "text": "uprawniony",
-  "translation": "entitled",
+  "translation": "authorized",
   "transcription": "upraˈvɲɔnɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -23945,7 +23945,7 @@
  {
   "id": 2170,
   "text": "nieświadomy",
-  "translation": "unaware",
+  "translation": "unconscious",
   "transcription": "ɲɛʑvjaˈdɔmɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -23954,7 +23954,7 @@
  {
   "id": 2171,
   "text": "celowy",
-  "translation": "deliberate",
+  "translation": "purposeful",
   "transcription": "t͡sɛˈlɔvɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -23965,7 +23965,7 @@
  {
   "id": 2172,
   "text": "przypadkowy",
-  "translation": "accidental",
+  "translation": "casual",
   "transcription": "bʐɨpaˈtkɔvɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -23985,7 +23985,7 @@
  {
   "id": 2174,
   "text": "nieumyślny",
-  "translation": "unintentional",
+  "translation": "involuntary",
   "transcription": "ɲɛuˈmɨɕlnɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -24005,7 +24005,7 @@
  {
   "id": 2176,
   "text": "gwałtowny",
-  "translation": "sudden, violent",
+  "translation": "violent",
   "transcription": "gvaˈwtɔvnɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -24016,7 +24016,7 @@
  {
   "id": 2177,
   "text": "trwały",
-  "translation": "lasting",
+  "translation": "durable",
   "transcription": "ˈtrvawɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -24036,7 +24036,7 @@
  {
   "id": 2179,
   "text": "stały",
-  "translation": "permanent, constant",
+  "translation": "constant",
   "transcription": "ˈstawɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -24080,7 +24080,7 @@
  {
   "id": 2183,
   "text": "jednostronny",
-  "translation": "one-sided",
+  "translation": "unilateral",
   "transcription": "jɛdnɔˈstrɔnnɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -24102,7 +24102,7 @@
  {
   "id": 2185,
   "text": "wspólny",
-  "translation": "shared",
+  "translation": "common",
   "transcription": "ˈfspulnɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -24257,7 +24257,7 @@
  {
   "id": 2201,
   "text": "zestawiać",
-  "translation": "to juxtapose",
+  "translation": "to put together",
   "transcription": "zɛˈstavjat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "B2",
@@ -24290,7 +24290,7 @@
  {
   "id": 2204,
   "text": "wnioskować",
-  "translation": "to infer",
+  "translation": "to conclude",
   "transcription": "vɲɔˈskɔvat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "B2",
@@ -24334,7 +24334,7 @@
  {
   "id": 2208,
   "text": "przyznawać",
-  "translation": "to admit, to grant",
+  "translation": "to admit",
   "transcription": "bʐɨˈznavat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "B2",
@@ -24345,7 +24345,7 @@
  {
   "id": 2209,
   "text": "uznawać",
-  "translation": "to recognise",
+  "translation": "to recognize",
   "transcription": "uˈznavat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "B2",
@@ -24389,7 +24389,7 @@
  {
   "id": 2213,
   "text": "oceniać",
-  "translation": "to assess",
+  "translation": "to evaluate",
   "transcription": "ɔˈt͡sɛɲat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "B2",
@@ -24422,7 +24422,7 @@
  {
   "id": 2216,
   "text": "sprawdzać się",
-  "translation": "to prove true",
+  "translation": "to test myself",
   "transcription": "ˈspravd͡zat͡ɕ ɕɛ̃",
   "partOfSpeech": "v",
   "cefr": "B2",
@@ -24431,7 +24431,7 @@
  {
   "id": 2217,
   "text": "okazywać się",
-  "translation": "to turn out",
+  "translation": "to show off",
   "transcription": "ɔkaˈzɨvat͡ɕ ɕɛ̃",
   "partOfSpeech": "v",
   "cefr": "B2",
@@ -24440,7 +24440,7 @@
  {
   "id": 2218,
   "text": "wynikać",
-  "translation": "to follow, to result",
+  "translation": "to result",
   "transcription": "vɨˈɲikat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "B2",
@@ -24469,7 +24469,7 @@
  {
   "id": 2221,
   "text": "wywoływać",
-  "translation": "to provoke",
+  "translation": "to evoke",
   "transcription": "vɨvɔˈwɨvat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "B2",
@@ -24533,7 +24533,7 @@
  {
   "id": 2227,
   "text": "ułatwiać",
-  "translation": "to facilitate",
+  "translation": "to make it easier",
   "transcription": "uˈwadvjat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "B2",
@@ -24542,7 +24542,7 @@
  {
   "id": 2228,
   "text": "utrudniać",
-  "translation": "to hinder",
+  "translation": "to make it difficult",
   "transcription": "uˈtrudɲat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "B2",
@@ -24595,7 +24595,7 @@
  {
   "id": 2233,
   "text": "utrzymywać poziom",
-  "translation": "to maintain a level",
+  "translation": "to maintain the level",
   "transcription": "udʐɨˈmɨvat͡ɕ ˈpɔʑɔm",
   "partOfSpeech": "v",
   "cefr": "B2",
@@ -24628,7 +24628,7 @@
  {
   "id": 2236,
   "text": "spełniać",
-  "translation": "to fulfil",
+  "translation": "to fulfill",
   "transcription": "ˈspɛwɲat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "B2",
@@ -24661,7 +24661,7 @@
  {
   "id": 2239,
   "text": "przestrzegać",
-  "translation": "to comply with",
+  "translation": "to follow",
   "transcription": "bʐɛˈzdʐɛgat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "B2",
@@ -24782,7 +24782,7 @@
  {
   "id": 2250,
   "text": "łagodzić",
-  "translation": "to mitigate",
+  "translation": "to soothe",
   "transcription": "waˈgɔd͡ʑit͡ɕ",
   "partOfSpeech": "v",
   "cefr": "B2",
@@ -24815,7 +24815,7 @@
  {
   "id": 2253,
   "text": "przyspieszyć decyzję",
-  "translation": "to expedite a decision",
+  "translation": "speed up the decision",
   "transcription": "bʐɨˈspjɛʂɨt͡ɕ dɛˈt͡sɨzjɛ̃",
   "partOfSpeech": "expr",
   "cefr": "B2",
@@ -24848,7 +24848,7 @@
  {
   "id": 2256,
   "text": "wdrożenie pilotażowe",
-  "translation": "pilot rollout",
+  "translation": "pilot implementation",
   "transcription": "vdrɔˈʐɛɲɛ pilɔtaˈʐɔvɛ",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -24859,7 +24859,7 @@
  {
   "id": 2257,
   "text": "awaria",
-  "translation": "breakdown, outage",
+  "translation": "malfunction",
   "transcription": "aˈvarja",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -24903,7 +24903,7 @@
  {
   "id": 2261,
   "text": "gwarancja",
-  "translation": "warranty",
+  "translation": "guarantee",
   "transcription": "gvaˈrant͡sja",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -24914,7 +24914,7 @@
  {
   "id": 2262,
   "text": "zwrot",
-  "translation": "return, refund",
+  "translation": "return",
   "transcription": "zvrɔt",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -24936,7 +24936,7 @@
  {
   "id": 2264,
   "text": "zaliczka",
-  "translation": "deposit",
+  "translation": "advance",
   "transcription": "zaˈlit͡ʂka",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -25002,7 +25002,7 @@
  {
   "id": 2270,
   "text": "obrót",
-  "translation": "turnover",
+  "translation": "rotation",
   "transcription": "ˈɔbrut",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -25024,7 +25024,7 @@
  {
   "id": 2272,
   "text": "zarząd",
-  "translation": "board",
+  "translation": "management",
   "transcription": "ˈzaʐɔ̃t",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -25047,7 +25047,7 @@
  {
   "id": 2274,
   "text": "ramię",
-  "translation": "shoulder, arm",
+  "translation": "arm",
   "transcription": "ˈramjɛ̃",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -25228,7 +25228,7 @@
  {
   "id": 2290,
   "text": "katar",
-  "translation": "runny nose",
+  "translation": "rhinitis",
   "transcription": "ˈkatar",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -25296,7 +25296,7 @@
  {
   "id": 2296,
   "text": "wizyta",
-  "translation": "appointment, visit",
+  "translation": "visit",
   "transcription": "viˈzɨta",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -25331,7 +25331,7 @@
  {
   "id": 2299,
   "text": "operacja",
-  "translation": "surgery, operation",
+  "translation": "operation",
   "transcription": "ɔpɛˈrat͡sja",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -25390,7 +25390,7 @@
  {
   "id": 2304,
   "text": "wyzdrowieć",
-  "translation": "to recover",
+  "translation": "to get better",
   "transcription": "vɨˈzdrɔvjɛt͡ɕ",
   "partOfSpeech": "v",
   "cefr": "B1",
@@ -25437,7 +25437,7 @@
  {
   "id": 2308,
   "text": "zastrzyk",
-  "translation": "injection",
+  "translation": "shot",
   "transcription": "ˈzazdʐɨk",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -25519,7 +25519,7 @@
  {
   "id": 2315,
   "text": "apteczka",
-  "translation": "first-aid kit",
+  "translation": "first aid kit",
   "transcription": "aˈptɛt͡ʂka",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -25624,7 +25624,7 @@
  {
   "id": 2324,
   "text": "kolejka",
-  "translation": "queue, turn",
+  "translation": "queue",
   "transcription": "kɔˈlɛjka",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -25647,7 +25647,7 @@
  {
   "id": 2326,
   "text": "izba przyjęć",
-  "translation": "accident and emergency",
+  "translation": "admission room",
   "transcription": "ˈizba ˈbʐɨjɛ̃t͡ɕ",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -25718,7 +25718,7 @@
  {
   "id": 2332,
   "text": "rejestracja",
-  "translation": "registration desk",
+  "translation": "registration",
   "transcription": "rɛjɛˈstrat͡sja",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -25774,7 +25774,7 @@
  {
   "id": 2337,
   "text": "ratownik",
-  "translation": "lifeguard, rescuer",
+  "translation": "lifeguard",
   "transcription": "raˈtɔvɲik",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -25830,7 +25830,7 @@
  {
   "id": 2342,
   "text": "zagrożenie",
-  "translation": "threat",
+  "translation": "danger",
   "transcription": "zagrɔˈʐɛɲɛ",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -25852,7 +25852,7 @@
  {
   "id": 2344,
   "text": "mandat",
-  "translation": "fine",
+  "translation": "mandate",
   "transcription": "ˈmandat",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -25947,7 +25947,7 @@
  {
   "id": 2352,
   "text": "sędzia",
-  "translation": "judge, referee",
+  "translation": "judge",
   "transcription": "ˈsɛ̃d͡ʑa",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -26015,7 +26015,7 @@
  {
   "id": 2358,
   "text": "ustawa",
-  "translation": "act, statute",
+  "translation": "act",
   "transcription": "uˈstava",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -26027,7 +26027,7 @@
  {
   "id": 2359,
   "text": "obrona",
-  "translation": "defence",
+  "translation": "defense",
   "transcription": "ɔˈbrɔna",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -26039,7 +26039,7 @@
  {
   "id": 2360,
   "text": "oskarżony",
-  "translation": "defendant",
+  "translation": "accused",
   "transcription": "ɔskaˈrʐɔnɨ",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -26094,7 +26094,7 @@
  {
   "id": 2365,
   "text": "poseł",
-  "translation": "member of parliament",
+  "translation": "envoy",
   "transcription": "ˈpɔsɛw",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -26237,7 +26237,7 @@
  {
   "id": 2378,
   "text": "Czechy",
-  "translation": "Czechia",
+  "translation": "The czech republic",
   "transcription": "ˈt͡ʂɛxɨ",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -26369,7 +26369,7 @@
  {
   "id": 2390,
   "text": "Kraków",
-  "translation": "Krakow",
+  "translation": "Cracow",
   "transcription": "ˈkrakuf",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -26425,7 +26425,7 @@
  {
   "id": 2395,
   "text": "centrum",
-  "translation": "centre",
+  "translation": "center",
   "transcription": "ˈt͡sɛntrum",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -26507,7 +26507,7 @@
  {
   "id": 2402,
   "text": "zabytek",
-  "translation": "monument, landmark",
+  "translation": "monument",
   "transcription": "zaˈbɨtɛk",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -26555,7 +26555,7 @@
  {
   "id": 2406,
   "text": "przewodnik",
-  "translation": "guide, guidebook",
+  "translation": "guide",
   "transcription": "bʐɛˈvɔdɲik",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -26622,7 +26622,7 @@
  {
   "id": 2412,
   "text": "wstęp",
-  "translation": "admission",
+  "translation": "entry",
   "transcription": "fstɛ̃p",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -26690,7 +26690,7 @@
  {
   "id": 2418,
   "text": "pokojówka",
-  "translation": "housekeeper",
+  "translation": "maid",
   "transcription": "pɔkɔˈjufka",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -26702,7 +26702,7 @@
  {
   "id": 2419,
   "text": "winda",
-  "translation": "lift",
+  "translation": "elevator",
   "transcription": "ˈvinda",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -26714,7 +26714,7 @@
  {
   "id": 2420,
   "text": "pościel",
-  "translation": "bedding",
+  "translation": "linen",
   "transcription": "ˈpɔɕt͡ɕɛl",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -26738,7 +26738,7 @@
  {
   "id": 2422,
   "text": "portier",
-  "translation": "doorman",
+  "translation": "porter",
   "transcription": "ˈpɔrtjɛr",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -26807,7 +26807,7 @@
  {
   "id": 2428,
   "text": "stewardessa",
-  "translation": "flight attendant",
+  "translation": "stewardess",
   "transcription": "stɛvaˈrdɛssa",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -26842,7 +26842,7 @@
  {
   "id": 2431,
   "text": "celnik",
-  "translation": "customs officer",
+  "translation": "publican",
   "transcription": "ˈt͡sɛlɲik",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -26865,7 +26865,7 @@
  {
   "id": 2433,
   "text": "metro",
-  "translation": "underground",
+  "translation": "subway",
   "transcription": "ˈmɛtrɔ",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -26920,7 +26920,7 @@
  {
   "id": 2438,
   "text": "benzyna",
-  "translation": "petrol",
+  "translation": "gas",
   "transcription": "bɛˈnzɨna",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -26986,7 +26986,7 @@
  {
   "id": 2444,
   "text": "wsiadać",
-  "translation": "to get on",
+  "translation": "to get in",
   "transcription": "ˈfɕadat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -27019,7 +27019,7 @@
  {
   "id": 2447,
   "text": "zakręt",
-  "translation": "bend",
+  "translation": "turn",
   "transcription": "ˈzakrɛ̃t",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -27030,7 +27030,7 @@
  {
   "id": 2448,
   "text": "skrzyżowanie",
-  "translation": "crossroads",
+  "translation": "intersection",
   "transcription": "zgʐɨʐɔˈvaɲɛ",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -27096,7 +27096,7 @@
  {
   "id": 2454,
   "text": "nad",
-  "translation": "above, over",
+  "translation": "over",
   "transcription": "nat",
   "partOfSpeech": "prep",
   "cefr": "A1",
@@ -27163,7 +27163,7 @@
  {
   "id": 2460,
   "text": "uczyć się polskiego",
-  "translation": "to learn Polish",
+  "translation": "learn Polish",
   "transcription": "ˈut͡ʂɨt͡ɕ ɕɛ̃ pɔˈlskjɛgɔ",
   "partOfSpeech": "expr",
   "cefr": "A1",
@@ -27317,7 +27317,7 @@
  {
   "id": 2474,
   "text": "kantor",
-  "translation": "currency exchange",
+  "translation": "cantor",
   "transcription": "ˈkantɔr",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -27339,7 +27339,7 @@
  {
   "id": 2476,
   "text": "chętnie",
-  "translation": "willingly",
+  "translation": "gladly",
   "transcription": "ˈxɛ̃tɲɛ",
   "partOfSpeech": "adv",
   "cefr": "A1",
@@ -27350,7 +27350,7 @@
  {
   "id": 2477,
   "text": "mieć ochotę na",
-  "translation": "to feel like",
+  "translation": "feel like",
   "transcription": "mjɛt͡ɕ ɔˈxɔtɛ̃ na",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -27449,7 +27449,7 @@
  {
   "id": 2486,
   "text": "zapiekanka",
-  "translation": "baked baguette",
+  "translation": "casserole",
   "transcription": "zapjɛˈkanka",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -27460,7 +27460,7 @@
  {
   "id": 2487,
   "text": "coś dobrze brzmi",
-  "translation": "that sounds good",
+  "translation": "something sounds good",
   "transcription": "t͡sɔɕ ˈdɔbʐɛ bʐmi",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -27482,7 +27482,7 @@
  {
   "id": 2489,
   "text": "nie żyje",
-  "translation": "has passed away",
+  "translation": "he is dead",
   "transcription": "ɲɛ ˈʐɨjɛ",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -27515,7 +27515,7 @@
  {
   "id": 2492,
   "text": "stuprocentowy",
-  "translation": "hundred per cent",
+  "translation": "one hundred percent",
   "transcription": "stuprɔt͡sɛˈntɔvɨ",
   "partOfSpeech": "adj",
   "cefr": "B1",
@@ -27526,7 +27526,7 @@
  {
   "id": 2493,
   "text": "umówić się",
-  "translation": "to arrange to meet",
+  "translation": "to make an appointment",
   "transcription": "uˈmuvit͡ɕ ɕɛ̃",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -27537,7 +27537,7 @@
  {
   "id": 2494,
   "text": "odbierać telefon",
-  "translation": "to answer the phone",
+  "translation": "answer the phone",
   "transcription": "ɔˈdbjɛrat͡ɕ tɛˈlɛfɔn",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -27548,7 +27548,7 @@
  {
   "id": 2495,
   "text": "mieć zasięg",
-  "translation": "to have signal",
+  "translation": "have range",
   "transcription": "mjɛt͡ɕ ˈzaɕɛ̃k",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -27570,7 +27570,7 @@
  {
   "id": 2497,
   "text": "odpisywać",
-  "translation": "to write back",
+  "translation": "to reply",
   "transcription": "ɔtpiˈsɨvat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -27581,7 +27581,7 @@
  {
   "id": 2498,
   "text": "szczęście",
-  "translation": "happiness",
+  "translation": "luck",
   "transcription": "ˈʂt͡ʂɛ̃ɕt͡ɕɛ",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -27592,7 +27592,7 @@
  {
   "id": 2499,
   "text": "jednocześnie",
-  "translation": "at the same time",
+  "translation": "simultaneously",
   "transcription": "jɛdnɔˈt͡ʂɛɕɲɛ",
   "partOfSpeech": "adv",
   "cefr": "B1",
@@ -27614,7 +27614,7 @@
  {
   "id": 2501,
   "text": "światła",
-  "translation": "traffic lights",
+  "translation": "lights",
   "transcription": "ˈʑvjatwa",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -27680,7 +27680,7 @@
  {
   "id": 2507,
   "text": "zgrzewka",
-  "translation": "shrink-wrapped pack",
+  "translation": "a pack",
   "transcription": "ˈzgʐɛfka",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -27713,7 +27713,7 @@
  {
   "id": 2510,
   "text": "nie cierpieć",
-  "translation": "to detest",
+  "translation": "not to suffer",
   "transcription": "ɲɛ ˈt͡ɕɛrpjɛt͡ɕ",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -27735,7 +27735,7 @@
  {
   "id": 2512,
   "text": "zależeć od",
-  "translation": "to depend on",
+  "translation": "depend on",
   "transcription": "zaˈlɛʐɛt͡ɕ ɔt",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -27801,7 +27801,7 @@
  {
   "id": 2518,
   "text": "modny",
-  "translation": "fashionable",
+  "translation": "trendy",
   "transcription": "ˈmɔdnɨ",
   "partOfSpeech": "adj",
   "cefr": "A2",
@@ -27812,7 +27812,7 @@
  {
   "id": 2519,
   "text": "marudny",
-  "translation": "grumpy",
+  "translation": "strenuous",
   "transcription": "maˈrudnɨ",
   "partOfSpeech": "adj",
   "cefr": "B1",
@@ -27889,7 +27889,7 @@
  {
   "id": 2526,
   "text": "kamienica",
-  "translation": "tenement house",
+  "translation": "tenement",
   "transcription": "kamjɛˈɲit͡sa",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -27922,7 +27922,7 @@
  {
   "id": 2529,
   "text": "przeprowadzać się",
-  "translation": "to move house",
+  "translation": "to move",
   "transcription": "bʐɛprɔˈvad͡zat͡ɕ ɕɛ̃",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -27955,7 +27955,7 @@
  {
   "id": 2532,
   "text": "jeśli chodzi o",
-  "translation": "as far as ... goes",
+  "translation": "when it comes to",
   "transcription": "ˈjɛɕli ˈxɔd͡ʑi ɔ",
   "partOfSpeech": "expr",
   "cefr": "B1",
@@ -27988,7 +27988,7 @@
  {
   "id": 2535,
   "text": "średniowiecze",
-  "translation": "the Middle Ages",
+  "translation": "middle Ages",
   "transcription": "ɕrɛdɲɔˈvjɛt͡ʂɛ",
   "partOfSpeech": "n",
   "cefr": "B1",
@@ -27999,7 +27999,7 @@
  {
   "id": 2536,
   "text": "obchodzić urodziny",
-  "translation": "to celebrate a birthday",
+  "translation": "celebrate a birthday",
   "transcription": "ɔˈbxɔd͡ʑit͡ɕ urɔˈd͡ʑinɨ",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -28043,7 +28043,7 @@
  {
   "id": 2540,
   "text": "zejść",
-  "translation": "to come down",
+  "translation": "to go down",
   "transcription": "zɛjɕt͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -28065,7 +28065,7 @@
  {
   "id": 2542,
   "text": "zabór",
-  "translation": "partition",
+  "translation": "annexation",
   "transcription": "ˈzabur",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -28087,7 +28087,7 @@
  {
   "id": 2544,
   "text": "międzywojenny",
-  "translation": "interwar",
+  "translation": "interwar period",
   "transcription": "mjɛ̃d͡zɨvɔˈjɛnnɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -28120,7 +28120,7 @@
  {
   "id": 2547,
   "text": "mieć na sobie",
-  "translation": "to be wearing",
+  "translation": "wear",
   "transcription": "mjɛt͡ɕ na ˈsɔbjɛ",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -28131,7 +28131,7 @@
  {
   "id": 2548,
   "text": "olśniewający",
-  "translation": "dazzling",
+  "translation": "resplendent",
   "transcription": "ɔlɕɲɛvaˈjɔ̃t͡sɨ",
   "partOfSpeech": "adj",
   "cefr": "B2",
@@ -28153,7 +28153,7 @@
  {
   "id": 2550,
   "text": "strzyżenie",
-  "translation": "haircut",
+  "translation": "clipping",
   "transcription": "zdʐɨˈʐɛɲɛ",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -28164,7 +28164,7 @@
  {
   "id": 2551,
   "text": "pozwolić na",
-  "translation": "to allow",
+  "translation": "allow for",
   "transcription": "pɔˈzvɔlit͡ɕ na",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -28175,7 +28175,7 @@
  {
   "id": 2552,
   "text": "wygląd zewnętrzny",
-  "translation": "outward appearance",
+  "translation": "external appearance",
   "transcription": "ˈvɨglɔ̃t zɛˈvnɛ̃dʐnɨ",
   "partOfSpeech": "n",
   "cefr": "A2",
@@ -28186,7 +28186,7 @@
  {
   "id": 2553,
   "text": "części ciała",
-  "translation": "parts of the body",
+  "translation": "body parts",
   "transcription": "ˈt͡ʂɛ̃ɕt͡ɕi ˈt͡ɕawa",
   "partOfSpeech": "n",
   "cefr": "A1",
@@ -28219,7 +28219,7 @@
  {
   "id": 2556,
   "text": "sprawa do załatwienia",
-  "translation": "errand",
+  "translation": "a matter to be dealt with",
   "transcription": "ˈsprava dɔ zawaˈdvjɛɲa",
   "partOfSpeech": "expr",
   "cefr": "B1",
@@ -28241,7 +28241,7 @@
  {
   "id": 2558,
   "text": "doładować kartę",
-  "translation": "to top up a card",
+  "translation": "top up your card",
   "transcription": "dɔwaˈdɔvat͡ɕ ˈkartɛ̃",
   "partOfSpeech": "expr",
   "cefr": "A2",
@@ -28252,7 +28252,7 @@
  {
   "id": 2559,
   "text": "korzystać",
-  "translation": "to make use of",
+  "translation": "to use",
   "transcription": "kɔˈʐɨstat͡ɕ",
   "partOfSpeech": "v",
   "cefr": "A2",
@@ -28263,7 +28263,7 @@
  {
   "id": 2560,
   "text": "zepsuć się",
-  "translation": "to break down",
+  "translation": "to spoil myself",
   "transcription": "ˈzɛpsut͡ɕ ɕɛ̃",
   "partOfSpeech": "v",
   "cefr": "A2",

@@ -3,10 +3,10 @@ ryż	rice	n	A1	food
 makaron	pasta	n	A1	food
 kasza	groats	n	A2	food
 kanapka	sandwich	n	A1	food
-ciastko	biscuit	n	A1	food
-lody	ice cream	n	A1	food
+ciastko	cookie	n	A1	food
+lody	ice-cream	n	A1	food
 czekolada	chocolate	n	A1	food
-cukierek	sweet	n	A1	food
+cukierek	candy	n	A1	food
 dżem	jam	n	A2	food
 pomidor	tomato	n	A1	food
 ogórek	cucumber	n	A1	food
@@ -25,40 +25,40 @@ winogrono	grape	n	A2	food
 orzech	nut	n	A2	food
 cytryna	lemon	n	A1	food
 woda mineralna	mineral water	n	A1	drinks
-woda gazowana	sparkling water	n	A2	drinks
+woda gazowana	carbonated water	n	A2	drinks
 lemoniada	lemonade	n	A2	drinks
-kompot	stewed fruit drink	n	A2	drinks
+kompot	compote	n	A2	drinks
 napój	drink	n	A1	drinks
 wódka	vodka	n	A2	drinks
 szampan	champagne	n	A2	drinks
-koktajl	cocktail, smoothie	n	A2	drinks
+koktajl	cocktail	n	A2	drinks
 kakao	cocoa	n	A1	drinks
 gorąca czekolada	hot chocolate	expr	A2	drinks
 kroić	to cut	v	A2	cooking
 smażyć	to fry	v	A2	cooking
 piec	to bake	v	A2	cooking
-mieszać	to stir, to mix	v	A2	cooking
+mieszać	to mix	v	A2	cooking
 przepis	recipe	n	A2	cooking
-składnik	ingredient	n	A2	cooking
-przyprawa	spice	n	A2	cooking
+składnik	component	n	A2	cooking
+przyprawa	seasoning	n	A2	cooking
 pieprz	pepper	n	A1	cooking,food
 olej	oil	n	A1	cooking,food
 ocet	vinegar	n	B1	cooking
 mąka	flour	n	A2	cooking,food
-ciasto	cake, dough	n	A1	cooking,food
+ciasto	cake	n	A1	cooking,food
 piekarnik	oven	n	A2	cooking,household
 wrzątek	boiling water	n	B1	cooking
-kasa	till, checkout	n	A1	shopping
+kasa	cash register	n	A1	shopping
 koszyk	basket	n	A1	shopping
-wózek	trolley	n	A2	shopping
+wózek	cart	n	A2	shopping
 promocja	special offer	n	A2	shopping
 wyprzedaż	sale	n	A2	shopping
 zniżka	discount	n	A2	shopping
 paragon	receipt	n	A2	shopping
 reklamacja	complaint	n	B1	shopping
 rozmiar	size	n	A1	shopping,clothing
-przymierzalnia	fitting room	n	B1	shopping,clothing
-centrum handlowe	shopping centre	n	A2	shopping,cities
+przymierzalnia	dressing room	n	B1	shopping,clothing
+centrum handlowe	shopping mall	n	A2	shopping,cities
 targ	market	n	A2	shopping,cities
 bluzka	blouse	n	A1	clothing
 koszulka	t-shirt	n	A1	clothing
@@ -66,17 +66,17 @@ marynarka	blazer	n	B1	clothing
 garnitur	suit	n	A2	clothing
 krawat	tie	n	A2	clothing
 pasek	belt	n	A2	clothing
-torebka	handbag	n	A1	clothing
+torebka	bag	n	A1	clothing
 portfel	wallet	n	A1	clothing,finance
-biżuteria	jewellery	n	A2	clothing
+biżuteria	jewelry	n	A2	clothing
 pierścionek	ring	n	A2	clothing
 naszyjnik	necklace	n	B1	clothing
-piżama	pyjamas	n	A2	clothing
+piżama	pajamas	n	A2	clothing
 bielizna	underwear	n	A2	clothing
 zegarek	watch	n	A1	clothing,time
-mieszkanie	flat	n	A1	home
+mieszkanie	apartment	n	A1	home
 balkon	balcony	n	A1	home
-piwnica	cellar	n	A2	home
+piwnica	basement	n	A2	home
 strych	attic	n	B1	home
 schody	stairs	n	A1	home
 korytarz	corridor	n	A2	home
@@ -85,23 +85,23 @@ brama	gate	n	A2	home
 płot	fence	n	B1	home
 garaż	garage	n	A1	home,transport
 meble	furniture	n	A1	home,household
-dywan	carpet	n	A2	home,household
-zasłony	curtains	n	A2	home,household
+dywan	rug	n	A2	home,household
+zasłony	drapes	n	A2	home,household
 poduszka	pillow	n	A1	home,household
 koc	blanket	n	A2	home,household
 lustro	mirror	n	A1	home,household
 sprzątać	to clean	v	A1	household
 odkurzać	to vacuum	v	A2	household
-zmywać	to wash up	v	A2	household
-prać	to do laundry	v	A2	household
+zmywać	to do the dishes	v	A2	household
+prać	to wash	v	A2	household
 prasować	to iron	v	A2	household
 ścierka	cloth	n	B1	household
 miotła	broom	n	B1	household
 odkurzacz	vacuum cleaner	n	A2	household
 pralka	washing machine	n	A1	household
 zmywarka	dishwasher	n	A2	household
-śmieci	rubbish	n	A1	household
-kosz	bin, basket	n	A1	household
+śmieci	garbage	n	A1	household
+kosz	bin	n	A1	household
 mydło	soap	n	A1	household
 ręcznik	towel	n	A1	household,hotel
 sekunda	second	n	A1	time
@@ -134,7 +134,7 @@ listopad	November	n	A1	dates
 grudzień	December	n	A1	dates
 data	date	n	A1	dates
 urodziny	birthday	n	A1	dates
-święto	holiday, feast	n	A2	dates
+święto	holiday	n	A2	dates
 rocznica	anniversary	n	B1	dates
 weekend	weekend	n	A1	dates,time
 wiosna	spring	n	A1	dates,weather
@@ -155,30 +155,30 @@ zero	zero	num	A1	numbers
 połowa	half	n	A1	numbers
 ćwierć	quarter	n	A2	numbers
 tuzin	dozen	n	B1	numbers
-procent	per cent	n	A2	numbers,finance
+procent	percent	n	A2	numbers,finance
 fioletowy	purple	adj	A1	colors
-granatowy	navy blue	adj	A2	colors
+granatowy	navy	adj	A2	colors
 beżowy	beige	adj	B1	colors
 srebrny	silver	adj	A2	colors
-złoty	golden, zloty	adj	A1	colors,finance
-jasny	light, bright	adj	A1	colors
+złoty	golden	adj	A1	colors,finance
+jasny	bright	adj	A1	colors
 ciemny	dark	adj	A1	colors
-kolorowy	colourful	adj	A2	colors
-odcień	shade	n	B1	colors
-koło	circle, wheel	n	A1	shapes,transport
+kolorowy	colorful	adj	A2	colors
+odcień	hue	n	B1	colors
+koło	wheel	n	A1	shapes,transport
 kwadrat	square	n	A1	shapes
 trójkąt	triangle	n	A1	shapes
 prostokąt	rectangle	n	A2	shapes
 owal	oval	n	B1	shapes
 linia	line	n	A1	shapes
-kąt	angle, corner	n	A2	shapes
+kąt	corner	n	A2	shapes
 okrągły	round	adj	A2	shapes
 kwadratowy	square	adj	A2	shapes
 płaski	flat	adj	A2	shapes
-ostry	sharp, spicy	adj	A2	shapes,food
+ostry	spicy	adj	A2	shapes,food
 jasne	sure, clear	part	A2	daily-conversation
-zgadza się	that is right	expr	A2	daily-conversation
-nie wiem	I do not know	expr	A1	daily-conversation
+zgadza się	that's right	expr	A2	daily-conversation
+nie wiem	i don't know	expr	A1	daily-conversation
 moim zdaniem	in my opinion	expr	B1	daily-conversation
 na przykład	for example	expr	A2	daily-conversation
 w porządku	all right	expr	A1	daily-conversation
