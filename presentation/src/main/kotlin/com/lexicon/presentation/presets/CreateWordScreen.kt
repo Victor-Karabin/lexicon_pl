@@ -3,7 +3,6 @@ package com.lexicon.presentation.presets
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,13 +17,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material.icons.filled.PhotoLibrary
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -51,6 +54,7 @@ import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.ExampleSentenceRow
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
@@ -66,6 +70,8 @@ import kotlin.time.Duration.Companion.minutes
 private const val PRESET_CHIP_LINES = 2
 
 private val CandidateSize = 104.dp
+private val ProgressSize = 18.dp
+private val ProgressStroke = 2.dp
 private val SelectedBorder = 3.dp
 private val ImageRowHeight = 112.dp
 
@@ -90,8 +96,12 @@ fun CreateWordScreen(
         onImageSelected = viewModel::onImageSelected,
         onOwnImageAdded = viewModel::onOwnImageAdded,
         onMoreImages = viewModel::onMoreImages,
+        onExampleChanged = viewModel::onExampleChanged,
+        onExampleRequested = viewModel::onExampleRequested,
+        onExamplePlayed = viewModel::onExamplePlayed,
         onPresetToggled = viewModel::onPresetToggled,
         onSave = viewModel::onSave,
+        onErrorShown = viewModel::onErrorShown,
         modifier = modifier,
     )
 }
@@ -105,12 +115,32 @@ private fun CreateWordContent(
     onImageSelected: (String) -> Unit,
     onOwnImageAdded: (String) -> Unit,
     onMoreImages: () -> Unit,
+    onExampleChanged: (String) -> Unit,
+    onExampleRequested: () -> Unit,
+    onExamplePlayed: () -> Unit,
     onPresetToggled: (PresetId, Boolean) -> Unit,
     onSave: () -> Unit,
+    onErrorShown: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val snackbar = remember { SnackbarHostState() }
+
+    val exampleFailed = stringResource(R.string.example_offline)
+    val presetFailed = stringResource(R.string.preset_change_failed)
+
+    LaunchedEffect(uiState.exampleFailed, uiState.presetFailed) {
+        val message = when {
+            uiState.exampleFailed -> exampleFailed
+            uiState.presetFailed -> presetFailed
+            else -> return@LaunchedEffect
+        }
+        snackbar.showSnackbar(message)
+        onErrorShown()
+    }
+
     Scaffold(
         modifier = modifier,
+        snackbarHost = { SnackbarHost(snackbar) },
         topBar = {
             TrainingTopBar(
                 title = stringResource(
@@ -178,6 +208,13 @@ private fun CreateWordContent(
 
             ImageSection(uiState, onImageSelected, onOwnImageAdded, onMoreImages)
 
+            ExampleSection(
+                uiState = uiState,
+                onExampleChanged = onExampleChanged,
+                onExampleRequested = onExampleRequested,
+                onExamplePlayed = onExamplePlayed,
+            )
+
             if (uiState.memberships.isNotEmpty()) {
                 SectionHeading(stringResource(R.string.create_word_presets))
                 PresetChips(
@@ -192,74 +229,132 @@ private fun CreateWordContent(
 }
 
 @Composable
+private fun ExampleSection(
+    uiState: CreateWordUiState,
+    onExampleChanged: (String) -> Unit,
+    onExampleRequested: () -> Unit,
+    onExamplePlayed: () -> Unit,
+) {
+    SectionHeading(stringResource(R.string.example_label))
+
+    if (!uiState.sentence.isBlank) {
+        ExampleSentenceRow(
+            example = uiState.sentence,
+            onPlay = onExamplePlayed,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+
+    OutlinedTextField(
+        value = uiState.sentence.text,
+        onValueChange = onExampleChanged,
+        label = { Text(stringResource(R.string.example_hint)) },
+        minLines = 2,
+        modifier = Modifier.fillMaxWidth(),
+        shape = LexiconShapes.small,
+        trailingIcon = {
+            if (uiState.isWritingExample) {
+                CircularProgressIndicator(modifier = Modifier.size(ProgressSize), strokeWidth = ProgressStroke)
+            } else {
+                IconButton(onClick = onExampleRequested, enabled = uiState.canWriteExample) {
+                    Icon(
+                        imageVector = Icons.Default.Refresh,
+                        contentDescription = stringResource(
+                            if (uiState.example.isBlank()) R.string.example_generate else R.string.example_refresh,
+                        ),
+                    )
+                }
+            }
+        },
+    )
+}
+
+@Composable
 private fun ImageSection(
     uiState: CreateWordUiState,
     onImageSelected: (String) -> Unit,
     onOwnImageAdded: (String) -> Unit,
     onMoreImages: () -> Unit,
 ) {
+    var isPicking by remember { mutableStateOf(false) }
+
+    SectionHeading(stringResource(R.string.create_word_image))
+
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        SectionHeading(stringResource(R.string.create_word_image))
-        if (uiState.imageCandidates.isNotEmpty()) {
-            TextButton(onClick = onMoreImages, enabled = !uiState.isLoadingImages) {
-                Text(stringResource(R.string.create_word_image_more))
-            }
-        }
-    }
-
-    val scroll = rememberScrollState()
-    RevealNewCandidates(
-        candidates = uiState.imageCandidates,
-        scroll = scroll,
-        leadingTiles = 1 + uiState.ownImages.size,
-    )
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .horizontalScroll(scroll),
-        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-    ) {
-        AddImageTile(onPicked = onOwnImageAdded)
-
-        uiState.ownImages.forEach { url ->
-            ImageCandidate(
-                url = url,
-                isSelected = url == uiState.selectedImage,
-                onClick = { onImageSelected(url) },
-            )
-        }
-        uiState.imageCandidates.forEach { url ->
-            ImageCandidate(
-                url = url,
-                isSelected = url == uiState.selectedImage,
-                onClick = { onImageSelected(url) },
-            )
-        }
-        if (uiState.isLoadingImages) {
-            Box(
-                modifier = Modifier.size(CandidateSize),
-                contentAlignment = Alignment.Center,
-            ) { CircularProgressIndicator() }
-        }
-    }
-
-    if (uiState.imageCandidates.isEmpty() && !uiState.isLoadingImages) {
-        Text(
-            text = stringResource(
-                if (uiState.hasSearchedImages) {
-                    R.string.create_word_image_empty
-                } else {
-                    R.string.create_word_image_none
-                },
-            ),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        ChosenImageTile(
+            url = uiState.selectedImage,
+            isLoading = uiState.isImageLoading,
+            onClick = { isPicking = true },
         )
+
+        TextButton(onClick = { isPicking = true }) {
+            Text(
+                stringResource(
+                    if (uiState.selectedImage == null) {
+                        R.string.create_word_image_choose
+                    } else {
+                        R.string.create_word_image_change
+                    },
+                ),
+            )
+        }
+    }
+
+    if (isPicking) {
+        ImagePickerDialog(
+            candidates = uiState.imageCandidates,
+            ownImages = uiState.ownImages,
+            selected = uiState.selectedImage,
+            isLoading = uiState.isLoadingImages,
+            onSelected = onImageSelected,
+            onOwnImageAdded = onOwnImageAdded,
+            onLoadMore = onMoreImages,
+            onDismiss = { isPicking = false },
+        )
+    }
+}
+
+@Composable
+private fun ChosenImageTile(
+    url: String?,
+    isLoading: Boolean,
+    onClick: () -> Unit,
+) {
+    Surface(
+        shape = LexiconShapes.small,
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        modifier = Modifier.size(CandidateSize).clickable(enabled = !isLoading, onClick = onClick),
+    ) {
+        if (url == null) {
+            Box(contentAlignment = Alignment.Center) {
+                if (isLoading) {
+                    CircularProgressIndicator()
+                } else {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = stringResource(R.string.create_word_image_add),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        } else {
+            SubcomposeAsyncImage(
+                model = url,
+                contentDescription = stringResource(R.string.create_word_image_selected),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize(),
+                loading = {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator()
+                    }
+                },
+                error = {},
+            )
+        }
     }
 }
 
@@ -408,8 +503,12 @@ private fun CreateWordPreview() {
             onImageSelected = {},
             onOwnImageAdded = {},
             onMoreImages = {},
+            onExampleChanged = {},
+            onExampleRequested = {},
+            onExamplePlayed = {},
             onPresetToggled = { _, _ -> },
             onSave = {},
+            onErrorShown = {},
         )
     }
 }
@@ -426,8 +525,12 @@ private fun CreateWordEmptyPreview() {
             onImageSelected = {},
             onOwnImageAdded = {},
             onMoreImages = {},
+            onExampleChanged = {},
+            onExampleRequested = {},
+            onExamplePlayed = {},
             onPresetToggled = { _, _ -> },
             onSave = {},
+            onErrorShown = {},
         )
     }
 }
@@ -449,8 +552,12 @@ private fun CreateWordDuplicatePreview() {
             onImageSelected = {},
             onOwnImageAdded = {},
             onMoreImages = {},
+            onExampleChanged = {},
+            onExampleRequested = {},
+            onExamplePlayed = {},
             onPresetToggled = { _, _ -> },
             onSave = {},
+            onErrorShown = {},
         )
     }
 }

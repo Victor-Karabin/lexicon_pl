@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.CreateProgramUseCase
+import com.lexicon.interactors.program.DeleteProgramUseCase
 import com.lexicon.interactors.program.EnrolInProgramUseCase
 import com.lexicon.interactors.program.GetProgramUseCase
 import com.lexicon.interactors.program.LeaveProgramUseCase
@@ -12,6 +13,7 @@ import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
 import com.lexicon.interactors.program.ProgramDraft
 import com.lexicon.interactors.program.ProgramDraftException
 import com.lexicon.interactors.program.ProgramDraftProblem
+import com.lexicon.interactors.program.ResetProgramUseCase
 import com.lexicon.interactors.program.UpdateProgramUseCase
 import com.lexicon.model.program.ProgramId
 import com.lexicon.presentation.main.programTrainings
@@ -25,6 +27,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 const val PROGRAM_ID_ARG = "programId"
+
+enum class ProgramAction { RESET, DELETE }
 
 const val MIN_NEW_WORDS_A_DAY = 10
 
@@ -40,6 +44,8 @@ data class CreateProgramUiState(
     val isSaved: Boolean = false,
     val isEditing: Boolean = false,
     val isEnrolled: Boolean = false,
+    val isDeleted: Boolean = false,
+    val confirming: ProgramAction? = null,
 ) {
     val maxNewWords: Int get() = maxOf(studySet, MIN_NEW_WORDS_A_DAY)
 
@@ -56,6 +62,8 @@ class CreateProgramViewModel(
     private val countStudySet: CountStudySetUseCase,
     private val enrol: EnrolInProgramUseCase,
     private val leave: LeaveProgramUseCase,
+    private val resetProgram: ResetProgramUseCase,
+    private val deleteProgram: DeleteProgramUseCase,
     observeActiveEnrolment: ObserveActiveEnrolmentUseCase,
 ) : ViewModel() {
     private val editing: ProgramId? = savedStateHandle.get<String>(PROGRAM_ID_ARG)?.let(::ProgramId)
@@ -95,6 +103,26 @@ class CreateProgramViewModel(
         val id = editing ?: return
         viewModelScope.launch {
             if (_uiState.value.isEnrolled) leave(id) else enrol(id)
+        }
+    }
+
+    fun onActionRequested(action: ProgramAction) = _uiState.update { it.copy(confirming = action) }
+
+    fun onActionDismissed() = _uiState.update { it.copy(confirming = null) }
+
+    fun onActionConfirmed() {
+        val id = editing ?: return
+        val action = _uiState.value.confirming ?: return
+        _uiState.update { it.copy(confirming = null) }
+
+        viewModelScope.launch {
+            when (action) {
+                ProgramAction.RESET -> resetProgram(id)
+                ProgramAction.DELETE -> {
+                    deleteProgram(id)
+                    _uiState.update { it.copy(isDeleted = true) }
+                }
+            }
         }
     }
 

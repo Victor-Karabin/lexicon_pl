@@ -27,6 +27,9 @@ interface WordDao {
         isInStudySet: Boolean,
     )
 
+    @Query("SELECT text FROM words WHERE text IN (:texts) AND isInStudySet = 1 AND isDeleted = 0")
+    suspend fun studySetTextsAmong(texts: List<String>): List<String>
+
     @Query("SELECT id FROM words WHERE isInStudySet = 1 AND isDeleted = 0")
     fun observeStudySetIds(): Flow<List<Long>>
 
@@ -108,6 +111,7 @@ interface WordDao {
             translation = :translation,
             transcription = :transcription,
             searchKey = :searchKey,
+            example = :example,
             isUserCreated = 1
         WHERE id = :id
         """,
@@ -118,6 +122,7 @@ interface WordDao {
         translation: String,
         transcription: String,
         searchKey: String,
+        example: String,
     )
 
     @Transaction

@@ -30,6 +30,10 @@ import com.lexicon.interactors.presets.CreateWordUseCase
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
+private const val VERB_PAGE = 40
+
+private const val PAGES_BEFORE_GIVING_UP = 20
+
 class LoadConjugationVerbsUseCaseImpl(
     private val conjugations: ConjugationRepository,
 ) : LoadConjugationVerbsUseCase {
@@ -42,6 +46,32 @@ class LoadConjugationVerbsUseCaseImpl(
             .filter { it.isTeachable }
             .filter { needle.isBlank() || it.matches(needle) }
             .toImmutableList()
+    }
+
+    /**
+     * The store pages and filters, so only what the screen shows is decoded. Unteachable
+     * verbs are the one thing SQL cannot judge — the forms live in a JSON column — so a
+     * page thinned by them is topped up from the next, and the walk stops rather than
+     * reading the whole table when a query matches almost nothing teachable.
+     */
+    override suspend fun page(
+        query: String,
+        skip: Int,
+    ): ImmutableList<VerbConjugation> {
+        val needle = query.trim()
+        val found = mutableListOf<VerbConjugation>()
+
+        var offset = skip
+        var reads = 0
+        while (found.size < VERB_PAGE && reads < PAGES_BEFORE_GIVING_UP) {
+            val batch = conjugations.verbPage(query = needle, limit = VERB_PAGE, offset = offset)
+            if (batch.isEmpty()) break
+
+            found += batch.map { it.toVerb() }.filter { it.isTeachable }
+            offset += batch.size
+            reads++
+        }
+        return found.take(VERB_PAGE).toImmutableList()
     }
 
     private fun VerbConjugation.matches(needle: String): Boolean =
@@ -170,12 +200,13 @@ class LoadVerbImageChoicesUseCaseImpl(
     override suspend fun invoke(
         infinitive: String,
         translation: String?,
+        skip: Int,
     ): ImmutableList<String> {
         val subject = translation?.takeIf { it.isNotBlank() }
             ?: runCatching { vocabulary.findWordByText(infinitive) }.getOrNull()?.translation
             ?: infinitive
 
-        return runCatching { imageProvider.searchImages(subject, CHOICE_COUNT) }
+        return runCatching { imageProvider.searchImages(subject, CHOICE_COUNT, skip) }
             .getOrDefault(emptyList())
             .toImmutableList()
     }
@@ -225,8 +256,7 @@ class ToggleVerbInStudySetUseCaseImpl(
 class LoadStudySetVerbsUseCaseImpl(
     private val vocabulary: VocabularyRepository,
 ) : LoadStudySetVerbsUseCase {
-    override suspend fun invoke(infinitives: List<String>): Set<String> =
-        infinitives.filter { vocabulary.findWordByText(it)?.isInStudySet == true }.toSet()
+    override suspend fun invoke(infinitives: List<String>): Set<String> = vocabulary.studySetTextsAmong(infinitives)
 }
 
 class SubmitConjugationAnswerUseCaseImpl(

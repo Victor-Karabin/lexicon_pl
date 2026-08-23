@@ -4,6 +4,7 @@ data class VerbConjugationBoundary(
     val infinitive: String,
     val forms: Map<String, List<String>>,
     val translation: String? = null,
+    val example: String = "",
 )
 
 data class ConjugationCourseBoundary(
@@ -26,6 +27,12 @@ interface ConjugationRepository {
     suspend fun countVerbs(): Int
 
     suspend fun verbs(): List<VerbConjugationBoundary>
+
+    suspend fun verbPage(
+        query: String,
+        limit: Int,
+        offset: Int,
+    ): List<VerbConjugationBoundary>
 
     suspend fun deleteVerb(infinitive: String)
 

@@ -31,6 +31,7 @@ import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.resolve
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.ExpandableFlowRow
+import com.lexicon.presentation.common.debounced
 import com.lexicon.presentation.theme.Dimens
 
 private val SheetMaxHeight = 420.dp
@@ -103,7 +104,7 @@ fun PresetChips(
         memberships.forEach { membership ->
             FilterChip(
                 selected = membership.isMember,
-                onClick = { onToggle(membership.preset.id, !membership.isMember) },
+                onClick = debounced { onToggle(membership.preset.id, !membership.isMember) },
                 label = { Text(membership.preset.title.resolve(languageTag)) },
                 leadingIcon = {
                     if (membership.isMember) {

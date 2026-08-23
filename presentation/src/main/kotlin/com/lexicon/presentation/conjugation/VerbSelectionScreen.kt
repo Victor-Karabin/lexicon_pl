@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -26,7 +28,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -41,7 +46,11 @@ import com.lexicon.presentation.common.SwipeToRevealContainer
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import org.koin.androidx.compose.koinViewModel
+
+private const val ROWS_BEFORE_THE_END = 5
 
 object VerbSelectionTestTags {
     const val SEARCH = "verb_selection_search"
@@ -80,6 +89,7 @@ fun VerbSelectionScreen(
         onStudySetToggled = viewModel::onStudySetToggled,
         onCreateCourse = viewModel::onCreateCourse,
         onVerbDeleted = viewModel::onVerbDeleted,
+        onMoreVerbs = viewModel::onMoreVerbs,
         onRestoreAll = viewModel::onRestoreAll,
         onClose = onClose,
         modifier = modifier,
@@ -94,6 +104,7 @@ private fun VerbSelectionContent(
     onStudySetToggled: (VerbConjugation) -> Unit,
     onCreateCourse: () -> Unit,
     onVerbDeleted: (String) -> Unit,
+    onMoreVerbs: () -> Unit,
     onRestoreAll: () -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
@@ -143,7 +154,17 @@ private fun VerbSelectionContent(
                 return@Column
             }
 
-            LazyColumn(modifier = Modifier.weight(1f).testTag(VerbSelectionTestTags.LIST)) {
+            val list = rememberLazyListState()
+            LoadWhenTheEndComesIntoView(
+                list = list,
+                isLoading = uiState.isLoadingMore,
+                onLoadMore = onMoreVerbs,
+            )
+
+            LazyColumn(
+                state = list,
+                modifier = Modifier.weight(1f).testTag(VerbSelectionTestTags.LIST),
+            ) {
                 items(uiState.verbs, key = { it.infinitive }) { verb ->
                     SwipeToRevealContainer(
                         revealWidth = DeleteActionWidth,
@@ -156,6 +177,17 @@ private fun VerbSelectionContent(
                             onToggled = { onVerbToggled(verb.infinitive) },
                             onStudySetToggled = { onStudySetToggled(verb) },
                         )
+                    }
+                }
+
+                if (uiState.isLoadingMore) {
+                    item {
+                        Box(
+                            modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            CircularProgressIndicator()
+                        }
                     }
                 }
             }
@@ -231,5 +263,26 @@ private fun VerbRow(
                 tint = if (isInStudySet) LexiconError else MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
+    }
+}
+
+@Composable
+private fun LoadWhenTheEndComesIntoView(
+    list: LazyListState,
+    isLoading: Boolean,
+    onLoadMore: () -> Unit,
+) {
+    val isNearTheEnd by remember(list) {
+        derivedStateOf {
+            val lastVisible = list.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: return@derivedStateOf false
+            lastVisible >= list.layoutInfo.totalItemsCount - ROWS_BEFORE_THE_END
+        }
+    }
+
+    LaunchedEffect(list, isLoading) {
+        snapshotFlow { isNearTheEnd }
+            .distinctUntilChanged()
+            .filter { it && !isLoading }
+            .collect { onLoadMore() }
     }
 }

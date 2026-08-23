@@ -54,6 +54,12 @@ class ConjugationRepositoryImpl(
 
     override suspend fun verbs(): List<VerbConjugationBoundary> = dao.verbs().map { it.toBoundary() }
 
+    override suspend fun verbPage(
+        query: String,
+        limit: Int,
+        offset: Int,
+    ): List<VerbConjugationBoundary> = dao.verbPage(query.trim(), limit, offset).map { it.toBoundary() }
+
     override suspend fun deleteVerb(infinitive: String) = dao.deleteVerb(infinitive)
 
     override suspend fun hasDeletedVerbs(): Boolean = dao.countVerbs() < assetVerbCount()
@@ -122,6 +128,7 @@ class ConjugationRepositoryImpl(
                     infinitive = verb.infinitive,
                     translation = verb.translation.orEmpty(),
                     formsJson = json.encodeToString(formsSerializer, verb.forms),
+                    example = verb.example,
                 )
             },
         )
@@ -132,5 +139,6 @@ class ConjugationRepositoryImpl(
             infinitive = infinitive,
             translation = translation.takeIf { it.isNotBlank() },
             forms = runCatching { json.decodeFromString(formsSerializer, formsJson) }.getOrDefault(emptyMap()),
+            example = example,
         )
 }

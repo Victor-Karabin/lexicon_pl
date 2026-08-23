@@ -10,6 +10,7 @@ import com.lexicon.interactors.program.MarkCardsSeenUseCase
 import com.lexicon.interactors.program.NextProgramTrainingUseCase
 import com.lexicon.interactors.program.WordCard
 import com.lexicon.model.program.ProgramId
+import com.lexicon.model.vocabulary.ExampleSentence
 import com.lexicon.presentation.dashboard.LaunchTraining
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -20,6 +21,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class WordCardsUiState(
+    val programId: String = "",
     val isLoading: Boolean = true,
     val cards: ImmutableList<WordCard> = persistentListOf(),
     val index: Int = 0,
@@ -41,7 +43,7 @@ class WordCardsViewModel(
 ) : ViewModel() {
     private val programId = ProgramId(savedStateHandle.get<String>(PROGRAM_ID_ARG).orEmpty())
 
-    private val _uiState = MutableStateFlow(WordCardsUiState())
+    private val _uiState = MutableStateFlow(WordCardsUiState(programId = programId.value))
     val uiState: StateFlow<WordCardsUiState> = _uiState.asStateFlow()
 
     init {
@@ -75,6 +77,12 @@ class WordCardsViewModel(
     }
 
     fun onPrevious() = _uiState.update { it.copy(index = (it.index - 1).coerceAtLeast(0)) }
+
+    fun onSpeakExample() {
+        val sentence = ExampleSentence.parse(_uiState.value.current?.example.orEmpty())
+        if (sentence.isBlank) return
+        viewModelScope.launch { runCatching { speechSynthesizer.speak(sentence.text) } }
+    }
 
     fun onPronounce() {
         val word = _uiState.value.current ?: return

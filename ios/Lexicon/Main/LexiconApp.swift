@@ -5,7 +5,11 @@ import Shared
 struct LexiconApp: App {
     init() {
 
-        IosKoinKt.doInitKoinIos(pexelsApiKey: Keys.pexels, pixabayApiKey: Keys.pixabay)
+        IosKoinKt.doInitKoinIos(
+            pexelsApiKey: Keys.pexels,
+            pixabayApiKey: Keys.pixabay,
+            googleTranslateApiKey: Keys.googleTranslate
+        )
     }
 
     var body: some Scene {

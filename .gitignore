@@ -99,3 +99,5 @@ ios/Lexicon/Support/Keys.generated.swift
 
 # Agent guidance, kept local
 CLAUDE.md
+tools/translate/.cache.json
+tools/vocabulary/.examples-cache.json

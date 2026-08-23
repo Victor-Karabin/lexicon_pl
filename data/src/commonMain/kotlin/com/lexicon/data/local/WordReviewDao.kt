@@ -47,4 +47,7 @@ interface WordReviewDao {
 
     @Query("SELECT wordId FROM word_review")
     suspend fun allScheduledWordIds(): List<Long>
+
+    @Query("DELETE FROM word_review WHERE wordId IN (:wordIds)")
+    suspend fun forget(wordIds: List<Long>)
 }

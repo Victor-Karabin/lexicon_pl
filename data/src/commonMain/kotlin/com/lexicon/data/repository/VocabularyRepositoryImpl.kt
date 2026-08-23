@@ -60,6 +60,7 @@ class VocabularyRepositoryImpl(
         text: String,
         translation: String,
         transcription: String,
+        example: String,
     ): Word {
         vocabularySeeder.ensureSeeded()
         val word = WordEntity(
@@ -68,6 +69,7 @@ class VocabularyRepositoryImpl(
             translation = translation,
             transcription = transcription,
             searchKey = searchKeyFor(text, translation),
+            example = example,
             isUserCreated = true,
         )
         wordDao.insert(word)
@@ -79,6 +81,7 @@ class VocabularyRepositoryImpl(
         text: String,
         translation: String,
         transcription: String,
+        example: String,
     ): Word {
         vocabularySeeder.ensureSeeded()
         wordDao.updateWord(
@@ -87,8 +90,15 @@ class VocabularyRepositoryImpl(
             translation = translation,
             transcription = transcription,
             searchKey = searchKeyFor(text, translation),
+            example = example,
         )
         return checkNotNull(wordDao.findById(id)) { "word $id vanished while being edited" }.toWord()
+    }
+
+    override suspend fun studySetTextsAmong(texts: List<String>): Set<String> {
+        if (texts.isEmpty()) return emptySet()
+        vocabularySeeder.ensureSeeded()
+        return texts.inBatches { wordDao.studySetTextsAmong(it) }.toSet()
     }
 
     override suspend fun findWordByText(text: String): Word? {

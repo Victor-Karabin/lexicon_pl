@@ -9,6 +9,7 @@ data class VocabularySeedItem(
     val translation: String,
     val transcription: String,
     val cefr: String = "",
+    val example: String = "",
 )
 
 fun VocabularySeedItem.toEntity(): WordEntity =
@@ -19,4 +20,5 @@ fun VocabularySeedItem.toEntity(): WordEntity =
         transcription = transcription,
         searchKey = searchKeyFor(text, translation),
         cefr = cefr,
+        example = example,
     )
