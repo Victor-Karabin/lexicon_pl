@@ -49,7 +49,7 @@ interface WordDao {
           AND isDeleted = 0
           AND (:ignoreLevels = 1 OR cefr IN (:levels))
         ORDER BY text
-        LIMIT :limit
+        LIMIT :limit OFFSET :offset
         """,
     )
     suspend fun search(
@@ -57,6 +57,7 @@ interface WordDao {
         levels: List<String>,
         ignoreLevels: Int,
         limit: Int,
+        offset: Int,
     ): List<WordEntity>
 
     @Update

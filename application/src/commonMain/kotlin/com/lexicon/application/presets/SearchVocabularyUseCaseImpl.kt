@@ -16,12 +16,13 @@ class SearchVocabularyUseCaseImpl(
         query: String,
         levels: Set<CefrLevel>,
         limit: Int,
+        skip: Int,
     ): ImmutableList<Word> {
         val folded = query.foldForSearch()
         if (folded.isEmpty() && levels.isEmpty()) return persistentListOf()
 
         return vocabularyRepository
-            .search(folded, levels.mapTo(mutableSetOf()) { it.name }, limit)
+            .search(folded, levels.mapTo(mutableSetOf()) { it.name }, limit, skip)
             .map { it }
             .toImmutableList()
     }

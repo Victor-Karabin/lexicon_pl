@@ -8,10 +8,11 @@ interface SearchVocabularyUseCase {
     suspend operator fun invoke(
         query: String = "",
         levels: Set<CefrLevel> = emptySet(),
-        limit: Int = DEFAULT_LIMIT,
+        limit: Int = PAGE,
+        skip: Int = 0,
     ): ImmutableList<Word>
 
     companion object {
-        const val DEFAULT_LIMIT = 5_000
+        const val PAGE = 40
     }
 }

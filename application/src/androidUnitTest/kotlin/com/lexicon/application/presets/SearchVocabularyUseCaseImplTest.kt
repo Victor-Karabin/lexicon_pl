@@ -1,6 +1,7 @@
 package com.lexicon.application.presets
 
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.interactors.presets.SearchVocabularyUseCase
 import com.lexicon.model.vocabulary.CefrLevel
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
@@ -97,13 +98,26 @@ class SearchVocabularyUseCaseImplTest {
         }
 
     @Test
-    fun `the default limit is above the size of the vocabulary`() =
+    fun `a level is read a page at a time rather than all at once`() =
         runTest {
             val limit = slot<Int>()
-            coEvery { vocabularyRepository.search(any(), any(), capture(limit)) } returns emptyList()
+            val offset = slot<Int>()
+            coEvery { vocabularyRepository.search(any(), any(), capture(limit), capture(offset)) } returns emptyList()
 
             useCase(levels = setOf(CefrLevel.A1))
 
-            assertTrue("a level must not be truncated, got ${limit.captured}", limit.captured >= 2_000)
+            assertEquals(SearchVocabularyUseCase.PAGE, limit.captured)
+            assertEquals(0, offset.captured)
+        }
+
+    @Test
+    fun `the next page starts where the last one stopped`() =
+        runTest {
+            val offset = slot<Int>()
+            coEvery { vocabularyRepository.search(any(), any(), any(), capture(offset)) } returns emptyList()
+
+            useCase(levels = setOf(CefrLevel.A1), skip = SearchVocabularyUseCase.PAGE)
+
+            assertEquals(SearchVocabularyUseCase.PAGE, offset.captured)
         }
 }

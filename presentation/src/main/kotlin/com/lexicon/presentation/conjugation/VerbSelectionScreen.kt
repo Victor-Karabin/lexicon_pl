@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.toggleable
@@ -28,10 +27,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -42,15 +38,12 @@ import com.lexicon.interactors.conjugation.VerbConjugation
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.DeleteAction
 import com.lexicon.presentation.common.DeleteActionWidth
+import com.lexicon.presentation.common.LoadMoreOnScroll
 import com.lexicon.presentation.common.SwipeToRevealContainer
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
 import org.koin.androidx.compose.koinViewModel
-
-private const val ROWS_BEFORE_THE_END = 5
 
 object VerbSelectionTestTags {
     const val SEARCH = "verb_selection_search"
@@ -155,7 +148,7 @@ private fun VerbSelectionContent(
             }
 
             val list = rememberLazyListState()
-            LoadWhenTheEndComesIntoView(
+            LoadMoreOnScroll(
                 list = list,
                 isLoading = uiState.isLoadingMore,
                 onLoadMore = onMoreVerbs,
@@ -263,26 +256,5 @@ private fun VerbRow(
                 tint = if (isInStudySet) LexiconError else MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-    }
-}
-
-@Composable
-private fun LoadWhenTheEndComesIntoView(
-    list: LazyListState,
-    isLoading: Boolean,
-    onLoadMore: () -> Unit,
-) {
-    val isNearTheEnd by remember(list) {
-        derivedStateOf {
-            val lastVisible = list.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: return@derivedStateOf false
-            lastVisible >= list.layoutInfo.totalItemsCount - ROWS_BEFORE_THE_END
-        }
-    }
-
-    LaunchedEffect(list, isLoading) {
-        snapshotFlow { isNearTheEnd }
-            .distinctUntilChanged()
-            .filter { it && !isLoading }
-            .collect { onLoadMore() }
     }
 }
