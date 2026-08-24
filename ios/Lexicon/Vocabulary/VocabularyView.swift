@@ -52,7 +52,16 @@ struct VocabularyView: View {
                                     Label("Delete", systemImage: "trash")
                                 }
                             }
+                            .onAppear {
+                                if word.id.value == model.words.last?.id.value {
+                                    Task { await model.moreWords() }
+                                }
+                            }
                             Divider()
+                        }
+
+                        if model.isLoadingMoreWords {
+                            ProgressView().padding(Spacing.medium)
                         }
                     }
                 }
@@ -131,9 +140,37 @@ private struct PresetTile: View {
                         .lineLimit(2)
                 }
                 Spacer()
+                PresetStudySetButton(state: preset.studySetState, skin: skin) {
+                    Task { await model.toggleInStudySet(preset) }
+                }
             }
-            StatChip(systemName: "character.book.closed", text: "\(preset.vocabularyIds.count) words", skin: skin)
+            StatChip(systemName: "character.book.closed", text: "\(preset.wordCount) words", skin: skin)
         }
+    }
+}
+
+/// Matches Android: filled for a preset wholly in the study set, broken for part of one,
+/// outlined for none, and red for anything but none.
+struct PresetStudySetButton: View {
+    let state: PresetStudySetState
+    let skin: TileSkin
+    let onToggle: () -> Void
+
+    private var symbol: String {
+        switch state {
+        case .all: return "heart.fill"
+        case .some: return "heart.slash.fill"
+        default: return "heart"
+        }
+    }
+
+    var body: some View {
+        Button(action: onToggle) {
+            Image(systemName: symbol)
+                .foregroundStyle(state == PresetStudySetState.none ? skin.onTile.muted : Palette.failure)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(state == PresetStudySetState.all ? "Remove from the study set" : "Add to the study set")
     }
 }
 
@@ -176,7 +213,8 @@ struct WordRow: View {
                     translation: "water",
                     transcription: "ˈvɔda",
                     isInStudySet: true,
-                    cefr: CefrLevel.a1
+                    cefr: CefrLevel.a1,
+                    example: "Piję **wodę** codziennie."
                 ),
                 isInStudySet: true,
                 onStudySet: {}
@@ -190,7 +228,8 @@ struct WordRow: View {
                     translation: "good morning",
                     transcription: "",
                     isInStudySet: false,
-                    cefr: CefrLevel.a1
+                    cefr: CefrLevel.a1,
+                    example: ""
                 ),
                 isInStudySet: false,
                 onStudySet: {}

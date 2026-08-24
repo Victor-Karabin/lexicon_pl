@@ -8,6 +8,8 @@ final class VocabularyModel: ObservableObject {
     @Published private(set) var presets: [VocabularyPreset] = []
     @Published private(set) var words: [Word] = []
     @Published private(set) var studySet: Set<Int64> = []
+    @Published private(set) var isLoadingMoreWords = false
+    @Published private(set) var hasMoreWords = true
 
     private var watcher: Cancellable?
 
@@ -26,15 +28,36 @@ final class VocabularyModel: ObservableObject {
         await search()
     }
 
+    /// Paged the way Android is: a level can be hundreds of words, and drawing them all
+    /// before showing the first is what made this slow.
     func search() async {
         guard !query.isEmpty || !levels.isEmpty else {
             words = []
+            hasMoreWords = true
             return
         }
-        words = (try? await deps.searchVocabulary.invoke(
+        let first = await page(skip: 0)
+        words = first
+        hasMoreWords = first.count >= Int(SearchVocabularyUseCaseCompanion.shared.PAGE)
+    }
+
+    func moreWords() async {
+        guard hasMoreWords, !isLoadingMoreWords, !words.isEmpty else { return }
+        isLoadingMoreWords = true
+        defer { isLoadingMoreWords = false }
+
+        let more = await page(skip: words.count)
+        let known = Set(words.map(\.id.value))
+        words += more.filter { !known.contains($0.id.value) }
+        hasMoreWords = more.count >= Int(SearchVocabularyUseCaseCompanion.shared.PAGE)
+    }
+
+    private func page(skip: Int) async -> [Word] {
+        (try? await deps.searchVocabulary.invoke(
             query: query,
             levels: levels,
-            limit: Int32(SearchVocabularyUseCaseCompanion.shared.DEFAULT_LIMIT)
+            limit: SearchVocabularyUseCaseCompanion.shared.PAGE,
+            skip: Int32(skip)
         )) ?? []
     }
 
@@ -44,6 +67,12 @@ final class VocabularyModel: ObservableObject {
     }
 
     func isInStudySet(_ word: Word) -> Bool { studySet.contains(word.id.value) }
+
+    func toggleInStudySet(_ preset: VocabularyPreset) async {
+        let wanted = preset.studySetState != PresetStudySetState.all
+        try? await deps.setPresetInStudySet.invoke(id: preset.id, isInStudySet: wanted)
+        presets = (try? await deps.getPresets.invoke()) ?? presets
+    }
 
     func toggleInStudySet(_ word: Word) async {
         try? await deps.toggleWordInStudySet.invoke(id: word.id, isInStudySet: !isInStudySet(word))
