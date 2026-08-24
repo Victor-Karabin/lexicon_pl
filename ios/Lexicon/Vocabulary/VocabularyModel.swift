@@ -38,7 +38,7 @@ final class VocabularyModel: ObservableObject {
         }
         let first = await page(skip: 0)
         words = first
-        hasMoreWords = first.count >= Int(SearchVocabularyUseCaseCompanion.shared.PAGE)
+        hasMoreWords = first.count >= Int(deps.searchPageSize)
     }
 
     func moreWords() async {
@@ -49,14 +49,14 @@ final class VocabularyModel: ObservableObject {
         let more = await page(skip: words.count)
         let known = Set(words.map(\.id.value))
         words += more.filter { !known.contains($0.id.value) }
-        hasMoreWords = more.count >= Int(SearchVocabularyUseCaseCompanion.shared.PAGE)
+        hasMoreWords = more.count >= Int(deps.searchPageSize)
     }
 
     private func page(skip: Int) async -> [Word] {
         (try? await deps.searchVocabulary.invoke(
             query: query,
             levels: levels,
-            limit: SearchVocabularyUseCaseCompanion.shared.PAGE,
+            limit: deps.searchPageSize,
             skip: Int32(skip)
         )) ?? []
     }

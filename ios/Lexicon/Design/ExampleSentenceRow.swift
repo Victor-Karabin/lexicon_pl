@@ -8,7 +8,7 @@ struct ExampleSentenceRow: View {
     let word: String
     var tint: Color = .secondary
 
-    private var parsed: ExampleSentence { ExampleSentence.companion.of(sentence: sentence, word: word) }
+    private var parsed: ExampleSentence { deps.exampleSentence(sentence: sentence, word: word) }
 
     var body: some View {
         let example = parsed
