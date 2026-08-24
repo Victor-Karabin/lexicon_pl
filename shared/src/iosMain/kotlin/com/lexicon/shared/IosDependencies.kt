@@ -84,6 +84,7 @@ import com.lexicon.interactors.wordcard.StartWordCardSessionUseCase
 import com.lexicon.interactors.wordmatch.StartWordMatchSessionUseCase
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultUseCase
 import com.lexicon.model.course.Course
+import com.lexicon.model.vocabulary.ExampleSentence
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.VocabularyPreset
 import kotlinx.coroutines.CoroutineScope
@@ -185,6 +186,18 @@ object IosDependencies : KoinComponent {
     val recordWordCardSeen: RecordWordCardSeenUseCase by inject()
 
     fun watchCatalogSync(onEach: (CatalogSeedStatus) -> Unit): Cancellable = seedCatalogs().watch(onEach)
+
+    /**
+     * A Kotlin companion reaches Swift as a `companion` property, which reads as Kotlin
+     * rather than Swift at the call site. Anything the app needs off one is named here
+     * instead, the same way use cases are.
+     */
+    val searchPageSize: Int get() = SearchVocabularyUseCase.PAGE
+
+    fun exampleSentence(
+        sentence: String,
+        word: String,
+    ): ExampleSentence = ExampleSentence.of(sentence, word)
 
     fun watchSettings(onEach: (AppSettings) -> Unit): Cancellable = observeSettings().watch(onEach)
 
