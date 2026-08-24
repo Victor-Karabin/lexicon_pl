@@ -7,6 +7,7 @@ struct WordFormView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var text = ""
     @State private var translation = ""
+    @State private var example = ""
     @State private var images: [String] = []
 
     @State private var ownImages: [String] = []
@@ -27,6 +28,12 @@ struct WordFormView: View {
                 TextField("Polish", text: $text)
                     .onChange(of: text) { _, _ in textWasFilledIn = false }
             }
+            Section("Example") {
+                ExampleSentenceRow(sentence: example, word: text)
+                TextField("A sentence using the word", text: $example, axis: .vertical)
+                    .lineLimit(2...4)
+            }
+
             Section("Picture") {
 
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -77,6 +84,7 @@ struct WordFormView: View {
         guard let word = try? await deps.getWord.invoke(id: VocabularyId(value: wordId)) else { return }
         text = word.text
         translation = word.translation
+        example = word.example
 
         chosenImage = try? await deps.getPinnedImage.invoke(translation: word.translation)
         if let pinned = chosenImage, isOwnImage(pinned) { ownImages = [pinned] }
@@ -109,6 +117,7 @@ struct WordFormView: View {
                     text: text,
                     translation: translation,
                     imageUrl: chosenImage,
+                    example: example,
                     presetIds: []
                 )
             } else {
@@ -116,6 +125,7 @@ struct WordFormView: View {
                     text: text,
                     translation: translation,
                     imageUrl: chosenImage,
+                    example: example,
                     presetIds: []
                 )
             }

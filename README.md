@@ -1,15 +1,19 @@
 # Lexicon
 
-An Android app for learning Polish, built for one learner and shaped around how the
-learning actually goes: you choose the words you want to know, practise them through a
-range of trainings, and a review schedule decides what comes back and when.
+An app for learning Polish, on Android and iOS, built for one learner and shaped around
+how the learning actually goes: you choose the words you want to know, practise them
+through a range of trainings, and a review schedule decides what comes back and when.
 
 ## What it does
 
-**A study set you choose.** The app ships with 2,563 Polish words graded A1 to C2, grouped
-into 73 presets by topic and frequency. You star what you want to learn, by word or by
-whole preset, and every training draws from that set. You can add words of your own; the
-IPA transcription is worked out for you.
+**A study set you choose.** The app ships with 2,562 Polish words graded A1 to C2, grouped
+into 73 presets across 10 categories by topic and frequency. You star what you want to
+learn, by word or by whole preset, and every training draws from that set. You can add
+words of your own; the IPA transcription is worked out for you.
+
+**Every word in a sentence.** 2,510 of the words and 4,464 of the verbs ship with an
+example showing the word in use, the word itself in bold and a button that reads the
+sentence aloud. You can rewrite one, or ask for another.
 
 **Fifteen ways to practise.** Dictation, Dictation Puzzle, Puzzle, Image Test, Word Match,
 True or False, Pronunciation Check, Read Aloud, Memory Cards, Crossword, Word Card, Read
@@ -25,11 +29,12 @@ its trainings as a queue. A *course* teaches a fixed body of material — the Kr
 textbook, with its own audio and exercises. A *conjugation course* drills the forms of
 verbs you pick from a catalogue of 4,545.
 
-**Written and spoken by machine where it helps.** Sentences for the reading trainings are
-written by OpenAI around the word being practised. Speech is synthesised through Google
-Cloud Text-to-Speech, with the device's own engine as a fallback, and pronunciation is
-judged by Google Cloud Speech-to-Text. Pictures come from Pexels, Pixabay, Unsplash and
-Openverse.
+**Written and spoken by machine where it helps.** Example sentences, and the passages the
+reading trainings use, are written by OpenAI around the word being practised. Translation
+looks in the shipped vocabulary first and asks Google Cloud Translation for whatever is not
+there. Speech is synthesised through Google Cloud Text-to-Speech, with the device's own
+engine as a fallback, and pronunciation is judged by Google Cloud Speech-to-Text. Pictures
+come from Pexels, Pixabay, Unsplash and Openverse.
 
 ## Screenshots
 
@@ -62,7 +67,8 @@ the conjugation course are here too; what is not yet is listed in
 | Networking | Retrofit 2 and OkHttp 4, kotlinx.serialization |
 | Images | Coil |
 | Speech | Google Cloud Text-to-Speech and Speech-to-Text, Android TTS and SpeechRecognizer as fallbacks |
-| Language model | OpenAI, for example sentences and translations |
+| Language model | OpenAI, for example sentences and reading passages |
+| Translation | Google Cloud Translation, behind the shipped vocabulary |
 | Testing | JUnit 4, MockK, Turbine |
 | Static analysis | ktlint, detekt, Android Lint |
 | Build | Gradle 8.12 with version catalogs, AGP 8.7 |
@@ -100,7 +106,7 @@ which is not tracked:
 ```
 openai.apiKey=...
 google.ttsApiKey=...
-deepl.apiKey=...
+google.translateApiKey=...   # optional; falls back to google.ttsApiKey
 pexels.apiKey=...
 pixabay.apiKey=...
 unsplash.accessKey=...
@@ -132,4 +138,5 @@ history with it. That makes a bump a deliberate act.
 
 ## Status
 
-Pre-release, version 0.1.0. 504 Kotlin files, 76 test files, no instrumentation tests.
+Pre-release, version 0.1.0. 518 Kotlin files and 42 Swift files, 78 test files, no
+instrumentation tests.

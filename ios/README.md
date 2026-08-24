@@ -51,12 +51,14 @@ group, so a new `.swift` file under `Lexicon/` needs no project edit.
 
 ## What is not here yet
 
-- **Landscape is enabled on iPad but unverified.** The layouts are vertical scrolls of
-  full-width tiles and should reflow, but nobody has looked.
 - **The program run.** The dashboard offers the day's next training; running a whole
   program day as a chain, as Android does, is not wired here.
+- **Unsplash.** Pexels, Pixabay and Openverse are wired; adding it is another
+  `RemoteImageSource`-shaped class in `iosMain`.
+- **Landscape is enabled on iPad but unverified.** The layouts are vertical scrolls of
+  full-width tiles and should reflow, but nobody has looked.
 
-- **DeepL.** Translation goes corpus first, then MyMemory, which needs no key.
-  Android also tries DeepL; adding it here is another `RemoteImageSource`-shaped
-  class in `iosMain`.
-- **Unsplash**, for the same reason — Pexels, Pixabay and Openverse are wired.
+Translation matches Android: the shipped vocabulary answers first, and Google Cloud
+Translation takes what it does not know, using `google.translateApiKey` from
+`local.properties` or falling back to `google.ttsApiKey`. Without either, the vocabulary
+answers alone.

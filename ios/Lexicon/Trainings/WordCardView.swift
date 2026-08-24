@@ -41,6 +41,7 @@ struct WordCardView: View {
                                 Image(systemName: "speaker.wave.2").foregroundStyle(skin.onTile)
                             }
                         }
+                        ExampleSentenceRow(sentence: step.example, word: step.text, tint: skin.onTile.muted)
                     }
                 } actions: {
                     HStack {
