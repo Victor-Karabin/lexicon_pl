@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -49,6 +50,7 @@ import com.lexicon.presentation.R
 import com.lexicon.presentation.common.DeleteAction
 import com.lexicon.presentation.common.DeleteActionWidth
 import com.lexicon.presentation.common.LightDarkPreview
+import com.lexicon.presentation.common.LoadMoreOnScroll
 import com.lexicon.presentation.common.SwipeToRevealContainer
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
@@ -107,6 +109,7 @@ fun VocabularyScreen(
         onChangePresets = viewModel::onChangePresetsRequested,
         onPresetDeleted = viewModel::onPresetDeleted,
         onEditWord = onEditWord,
+        onMoreWords = viewModel::onMoreWords,
         onAddWord = onAddWord,
         onAddPreset = onAddPreset,
         selection = selection,
@@ -141,6 +144,7 @@ private fun VocabularyContent(
     onChangePresets: (Word) -> Unit,
     onPresetDeleted: (VocabularyPreset) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
+    onMoreWords: () -> Unit,
     onAddWord: () -> Unit,
     onAddPreset: () -> Unit,
     selection: WordSelection,
@@ -176,6 +180,7 @@ private fun VocabularyContent(
                 onChangePresets = onChangePresets,
                 onPresetDeleted = onPresetDeleted,
                 onEditWord = onEditWord,
+                onMoreWords = onMoreWords,
                 selection = selection,
             )
         }
@@ -196,6 +201,7 @@ private fun VocabularyBody(
     onChangePresets: (Word) -> Unit,
     onPresetDeleted: (VocabularyPreset) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
+    onMoreWords: () -> Unit,
     selection: WordSelection,
     modifier: Modifier = Modifier,
 ) {
@@ -220,7 +226,16 @@ private fun VocabularyBody(
                 FilterRow(uiState, onCefrToggled, onFiltersCleared)
 
                 if (uiState.isSearchingWords) {
-                    WordResults(uiState, onWordStudySetToggled, onPronounceWord, onWordDeleted, onChangePresets, onEditWord, selection)
+                    WordResults(
+                        uiState = uiState,
+                        onWordStudySetToggled = onWordStudySetToggled,
+                        onPronounceWord = onPronounceWord,
+                        onWordDeleted = onWordDeleted,
+                        onChangePresets = onChangePresets,
+                        onEditWord = onEditWord,
+                        onMoreWords = onMoreWords,
+                        selection = selection,
+                    )
                 } else {
                     PresetResults(uiState, onPresetSelected, onPresetStudySetToggled, onPresetDeleted)
                 }
@@ -236,13 +251,18 @@ private fun WordResults(
     onWordDeleted: (Word) -> Unit,
     onChangePresets: (Word) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
+    onMoreWords: () -> Unit,
     selection: WordSelection,
 ) {
     if (uiState.hasNoMatchingWords) {
         Message(stringResource(R.string.vocabulary_search_no_matches, uiState.query))
         return
     }
-    LazyColumn(contentPadding = PaddingValues(vertical = Dimens.spacingSmall)) {
+
+    val list = rememberLazyListState()
+    LoadMoreOnScroll(list = list, isLoading = uiState.isLoadingMoreWords, onLoadMore = onMoreWords)
+
+    LazyColumn(state = list, contentPadding = PaddingValues(vertical = Dimens.spacingSmall)) {
         wordRows(
             words = uiState.words,
             onStudySetToggled = onWordStudySetToggled,
@@ -252,6 +272,17 @@ private fun WordResults(
             onEdit = { onEditWord(it.id) },
             selection = selection,
         )
+
+        if (uiState.isLoadingMoreWords) {
+            item {
+                Box(
+                    modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+        }
     }
 }
 
@@ -426,6 +457,7 @@ private fun VocabularyPresetsPreview() {
             onChangePresets = {},
             onPresetDeleted = {},
             onEditWord = {},
+            onMoreWords = {},
             onAddWord = {},
             onAddPreset = {},
             selection = WordSelection(),
@@ -460,6 +492,7 @@ private fun VocabularyWordSearchPreview() {
             onChangePresets = {},
             onPresetDeleted = {},
             onEditWord = {},
+            onMoreWords = {},
             onAddWord = {},
             onAddPreset = {},
             selection = WordSelection(),
@@ -486,6 +519,7 @@ private fun VocabularyNoMatchingWordsPreview() {
             onChangePresets = {},
             onPresetDeleted = {},
             onEditWord = {},
+            onMoreWords = {},
             onAddWord = {},
             onAddPreset = {},
             selection = WordSelection(),

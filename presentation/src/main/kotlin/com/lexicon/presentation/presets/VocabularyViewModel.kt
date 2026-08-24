@@ -97,14 +97,41 @@ class VocabularyViewModel(
             criteria.debounce(QUERY_DEBOUNCE_MS).collect { current ->
                 searchJob?.cancel()
                 searchJob = viewModelScope.launch(dispatchers.io) {
-                    val results = searchVocabulary(current.query, current.levels)
-                    updateLoaded { it.copy(words = results, isSearching = false) }
+                    val first = searchVocabulary(current.query, current.levels)
+                    updateLoaded {
+                        it.copy(
+                            words = first,
+                            isSearching = false,
+                            isLoadingMoreWords = false,
+                            hasMoreWords = first.size >= SearchVocabularyUseCase.PAGE,
+                        )
+                    }
                 }
             }
         }
     }
 
     private var searchJob: Job? = null
+    private var moreWordsJob: Job? = null
+
+    fun onMoreWords() {
+        val state = _uiState.value as? VocabularyUiState.Loaded ?: return
+        if (state.isSearching || state.isLoadingMoreWords || !state.hasMoreWords) return
+
+        updateLoaded { it.copy(isLoadingMoreWords = true) }
+        moreWordsJob?.cancel()
+        moreWordsJob = viewModelScope.launch(dispatchers.io) {
+            val current = criteria.value
+            val more = searchVocabulary(current.query, current.levels, skip = state.words.size)
+            updateLoaded {
+                it.copy(
+                    words = (it.words + more).distinctBy { word -> word.id.value }.toImmutableList(),
+                    isLoadingMoreWords = false,
+                    hasMoreWords = more.size >= SearchVocabularyUseCase.PAGE,
+                )
+            }
+        }
+    }
 
     fun onQueryChanged(value: String) {
         criteria.update { it.copy(query = value) }
@@ -223,4 +250,8 @@ private data class SearchCriteria(
 private fun <T> Set<T>.toggle(value: T): Set<T> = if (value in this) this - value else this + value
 
 private fun VocabularyUiState.Loaded.clearedWordsIfIdle(): VocabularyUiState.Loaded =
-    if (isSearchingWords) copy(isSearching = true) else copy(isSearching = false, words = persistentListOf())
+    if (isSearchingWords) {
+        copy(isSearching = true, isLoadingMoreWords = false, hasMoreWords = true)
+    } else {
+        copy(isSearching = false, isLoadingMoreWords = false, hasMoreWords = true, words = persistentListOf())
+    }

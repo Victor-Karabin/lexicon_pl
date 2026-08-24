@@ -43,6 +43,7 @@ class VocabularyRepositoryImpl(
         foldedQuery: String,
         levels: Set<String>,
         limit: Int,
+        offset: Int,
     ): List<Word> {
         vocabularySeeder.ensureSeeded()
         return wordDao
@@ -51,6 +52,7 @@ class VocabularyRepositoryImpl(
                 levels = levels.toList(),
                 ignoreLevels = if (levels.isEmpty()) 1 else 0,
                 limit = limit,
+                offset = offset,
             ).map { it.toWord() }
     }
 

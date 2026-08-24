@@ -27,6 +27,8 @@ sealed interface VocabularyUiState {
         val selectedCefrLevels: Set<CefrLevel> = emptySet(),
         val words: ImmutableList<Word> = persistentListOf(),
         val isSearching: Boolean = false,
+        val isLoadingMoreWords: Boolean = false,
+        val hasMoreWords: Boolean = true,
         val languageTag: String = "en",
         val studySetWordIds: Set<VocabularyId> = emptySet(),
         val lastDeleted: DeletedItem? = null,

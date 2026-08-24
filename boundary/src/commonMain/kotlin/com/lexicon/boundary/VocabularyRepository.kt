@@ -17,6 +17,7 @@ interface VocabularyRepository {
         foldedQuery: String,
         levels: Set<String>,
         limit: Int,
+        offset: Int = 0,
     ): List<Word>
 
     suspend fun countStudyWords(excludePhrases: Boolean = false): Int
