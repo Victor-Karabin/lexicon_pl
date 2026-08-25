@@ -34,6 +34,11 @@ ktlint = "12.1.2"
 junit = "4.13.2"
 mockk = "1.13.13"
 turbine = "1.2.0"
+androidxTest = "1.6.1"
+androidxTestJunit = "1.2.1"
+androidxTestRunner = "1.6.2"
+uiAutomator = "2.3.0"
+espresso = "3.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -82,9 +87,27 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 
+androidx-test-core = { group = "androidx.test", name = "core-ktx", version.ref = "androidxTest" }
+androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "androidxTest" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTestRunner" }
+androidx-test-junit = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidxTestJunit" }
+androidx-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiAutomator" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
+
 [bundles]
 compose = ["compose-ui", "compose-ui-graphics", "compose-ui-tooling-preview", "compose-material3"]
 unit-test = ["junit", "mockk", "kotlinx-coroutines-test", "turbine"]
+instrumented-test = [
+    "junit",
+    "androidx-test-core",
+    "androidx-test-junit",
+    "androidx-test-rules",
+    "androidx-test-runner",
+    "kotlinx-coroutines-test",
+]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
