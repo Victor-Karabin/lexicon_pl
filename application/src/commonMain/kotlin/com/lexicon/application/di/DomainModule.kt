@@ -2,17 +2,12 @@ package com.lexicon.application.di
 
 import com.lexicon.application.conjugation.ChooseVerbImageUseCaseImpl
 import com.lexicon.application.conjugation.CreateConjugationCourseUseCaseImpl
-import com.lexicon.application.conjugation.DeleteConjugationCourseUseCaseImpl
-import com.lexicon.application.conjugation.DeleteConjugationVerbUseCaseImpl
 import com.lexicon.application.conjugation.EnsureVerbWordUseCaseImpl
-import com.lexicon.application.conjugation.HasDeletedVerbsUseCaseImpl
 import com.lexicon.application.conjugation.LoadConjugationCoursesUseCaseImpl
 import com.lexicon.application.conjugation.LoadConjugationProgressUseCaseImpl
 import com.lexicon.application.conjugation.LoadConjugationVerbsUseCaseImpl
-import com.lexicon.application.conjugation.LoadStudySetVerbsUseCaseImpl
 import com.lexicon.application.conjugation.LoadVerbImageChoicesUseCaseImpl
 import com.lexicon.application.conjugation.NextConjugationTableUseCaseImpl
-import com.lexicon.application.conjugation.RestoreConjugationVerbsUseCaseImpl
 import com.lexicon.application.conjugation.SubmitConjugationAnswerUseCaseImpl
 import com.lexicon.application.conjugation.ToggleVerbInStudySetUseCaseImpl
 import com.lexicon.application.course.CheckExerciseAnswerUseCaseImpl
@@ -37,8 +32,6 @@ import com.lexicon.application.passage.StartPassageSessionUseCaseImpl
 import com.lexicon.application.passage.SubmitPassageAnswersUseCaseImpl
 import com.lexicon.application.presets.CreatePresetUseCaseImpl
 import com.lexicon.application.presets.CreateWordUseCaseImpl
-import com.lexicon.application.presets.DeletePresetUseCaseImpl
-import com.lexicon.application.presets.DeleteWordUseCaseImpl
 import com.lexicon.application.presets.GenerateWordExampleUseCaseImpl
 import com.lexicon.application.presets.GetPinnedImageUseCaseImpl
 import com.lexicon.application.presets.GetPresetCategoriesUseCaseImpl
@@ -46,11 +39,8 @@ import com.lexicon.application.presets.GetPresetVocabularyUseCaseImpl
 import com.lexicon.application.presets.GetVocabularyPresetUseCaseImpl
 import com.lexicon.application.presets.GetVocabularyPresetsUseCaseImpl
 import com.lexicon.application.presets.GetWordPresetMembershipsUseCaseImpl
-import com.lexicon.application.presets.GetWordUseCaseImpl
 import com.lexicon.application.presets.ObserveStudySetIdsUseCaseImpl
 import com.lexicon.application.presets.ObserveVocabularyPresetsUseCaseImpl
-import com.lexicon.application.presets.RestorePresetUseCaseImpl
-import com.lexicon.application.presets.RestoreWordUseCaseImpl
 import com.lexicon.application.presets.SearchImageCandidatesUseCaseImpl
 import com.lexicon.application.presets.SearchVocabularyUseCaseImpl
 import com.lexicon.application.presets.SetPresetInStudySetUseCaseImpl
@@ -60,9 +50,7 @@ import com.lexicon.application.presets.ToggleWordInStudySetUseCaseImpl
 import com.lexicon.application.presets.TranslateWordUseCaseImpl
 import com.lexicon.application.presets.UpdateWordUseCaseImpl
 import com.lexicon.application.program.AdvanceProgramDayUseCaseImpl
-import com.lexicon.application.program.CountStudySetUseCaseImpl
 import com.lexicon.application.program.CreateProgramUseCaseImpl
-import com.lexicon.application.program.DeleteProgramUseCaseImpl
 import com.lexicon.application.program.EnrolInProgramUseCaseImpl
 import com.lexicon.application.program.GetProgramDayUseCaseImpl
 import com.lexicon.application.program.GetProgramProgressUseCaseImpl
@@ -87,7 +75,6 @@ import com.lexicon.application.settings.ObserveSettingsUseCaseImpl
 import com.lexicon.application.settings.StepCountResolver
 import com.lexicon.application.settings.UpdateStepCountUseCaseImpl
 import com.lexicon.application.settings.UpdateThemeModeUseCaseImpl
-import com.lexicon.application.settings.UpdateVoiceUseCaseImpl
 import com.lexicon.application.sync.SeedCatalogsUseCaseImpl
 import com.lexicon.application.training.CheckTrainingReadinessUseCaseImpl
 import com.lexicon.application.training.RecordAnswerUseCaseImpl
@@ -97,6 +84,11 @@ import com.lexicon.application.wordcard.RecordWordCardSeenUseCaseImpl
 import com.lexicon.application.wordcard.StartWordCardSessionUseCaseImpl
 import com.lexicon.application.wordmatch.StartWordMatchSessionUseCaseImpl
 import com.lexicon.application.wordmatch.SubmitWordMatchStepResultUseCaseImpl
+import com.lexicon.boundary.ConjugationRepository
+import com.lexicon.boundary.ProgramRepository
+import com.lexicon.boundary.SettingsRepository
+import com.lexicon.boundary.VocabularyPresetRepository
+import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.conjugation.ChooseVerbImageUseCase
 import com.lexicon.interactors.conjugation.CreateConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
@@ -228,7 +220,10 @@ val domainModule = module {
     factoryOf(::ObserveSettingsUseCaseImpl) { bind<ObserveSettingsUseCase>() }
     factoryOf(::UpdateThemeModeUseCaseImpl) { bind<UpdateThemeModeUseCase>() }
     factoryOf(::UpdateStepCountUseCaseImpl) { bind<UpdateStepCountUseCase>() }
-    factoryOf(::UpdateVoiceUseCaseImpl) { bind<UpdateVoiceUseCase>() }
+    factory<UpdateVoiceUseCase> {
+        val settings = get<SettingsRepository>()
+        UpdateVoiceUseCase { settings.setVoiceId(it) }
+    }
     factoryOf(::StartMixSessionUseCaseImpl) { bind<StartMixSessionUseCase>() }
     factoryOf(::GetVocabularyPresetsUseCaseImpl) { bind<GetVocabularyPresetsUseCase>() }
     factoryOf(::GetPresetCategoriesUseCaseImpl) { bind<GetPresetCategoriesUseCase>() }
@@ -249,11 +244,17 @@ val domainModule = module {
     factoryOf(::GetStudyStreakUseCaseImpl) { bind<GetStudyStreakUseCase>() }
     factoryOf(::CreateProgramUseCaseImpl) { bind<CreateProgramUseCase>() }
     factoryOf(::UpdateProgramUseCaseImpl) { bind<UpdateProgramUseCase>() }
-    factoryOf(::DeleteProgramUseCaseImpl) { bind<DeleteProgramUseCase>() }
+    factory<DeleteProgramUseCase> {
+        val programs = get<ProgramRepository>()
+        DeleteProgramUseCase { programs.deleteProgram(it.value) }
+    }
     factoryOf(::ResetProgramUseCaseImpl) { bind<ResetProgramUseCase>() }
     factoryOf(::StartWordCardSessionUseCaseImpl) { bind<StartWordCardSessionUseCase>() }
     factoryOf(::RecordWordCardSeenUseCaseImpl) { bind<RecordWordCardSeenUseCase>() }
-    factoryOf(::CountStudySetUseCaseImpl) { bind<CountStudySetUseCase>() }
+    factory<CountStudySetUseCase> {
+        val vocabulary = get<VocabularyRepository>()
+        CountStudySetUseCase { vocabulary.studySetWordIds().size }
+    }
     factoryOf(::GetProgramDayUseCaseImpl) { bind<GetProgramDayUseCase>() }
     factoryOf(::AdvanceProgramDayUseCaseImpl) { bind<AdvanceProgramDayUseCase>() }
     factoryOf(::StartPassageSessionUseCaseImpl) { bind<StartPassageSessionUseCase>() }
@@ -261,20 +262,35 @@ val domainModule = module {
     factoryOf(::StartPronunciationSentencesUseCaseImpl) { bind<StartPronunciationSentencesUseCase>() }
 
     factoryOf(::LoadConjugationVerbsUseCaseImpl) { bind<LoadConjugationVerbsUseCase>() }
-    factoryOf(::DeleteConjugationVerbUseCaseImpl) { bind<DeleteConjugationVerbUseCase>() }
-    factoryOf(::RestoreConjugationVerbsUseCaseImpl) { bind<RestoreConjugationVerbsUseCase>() }
-    factoryOf(::HasDeletedVerbsUseCaseImpl) { bind<HasDeletedVerbsUseCase>() }
+    factory<DeleteConjugationVerbUseCase> {
+        val conjugations = get<ConjugationRepository>()
+        DeleteConjugationVerbUseCase { conjugations.deleteVerb(it) }
+    }
+    factory<RestoreConjugationVerbsUseCase> {
+        val conjugations = get<ConjugationRepository>()
+        RestoreConjugationVerbsUseCase { conjugations.restoreVerbs() }
+    }
+    factory<HasDeletedVerbsUseCase> {
+        val conjugations = get<ConjugationRepository>()
+        HasDeletedVerbsUseCase { conjugations.hasDeletedVerbs() }
+    }
     factoryOf(::NextConjugationTableUseCaseImpl) { bind<NextConjugationTableUseCase>() }
     factoryOf(::SubmitConjugationAnswerUseCaseImpl) { bind<SubmitConjugationAnswerUseCase>() }
     factoryOf(::LoadConjugationProgressUseCaseImpl) { bind<LoadConjugationProgressUseCase>() }
     factoryOf(::CreateConjugationCourseUseCaseImpl) { bind<CreateConjugationCourseUseCase>() }
     factoryOf(::LoadConjugationCoursesUseCaseImpl) { bind<LoadConjugationCoursesUseCase>() }
-    factoryOf(::DeleteConjugationCourseUseCaseImpl) { bind<DeleteConjugationCourseUseCase>() }
+    factory<DeleteConjugationCourseUseCase> {
+        val conjugations = get<ConjugationRepository>()
+        DeleteConjugationCourseUseCase { conjugations.deleteCourse(it) }
+    }
     factoryOf(::EnsureVerbWordUseCaseImpl) { bind<EnsureVerbWordUseCase>() }
     factoryOf(::LoadVerbImageChoicesUseCaseImpl) { bind<LoadVerbImageChoicesUseCase>() }
     factoryOf(::ChooseVerbImageUseCaseImpl) { bind<ChooseVerbImageUseCase>() }
     factoryOf(::ToggleVerbInStudySetUseCaseImpl) { bind<ToggleVerbInStudySetUseCase>() }
-    factoryOf(::LoadStudySetVerbsUseCaseImpl) { bind<LoadStudySetVerbsUseCase>() }
+    factory<LoadStudySetVerbsUseCase> {
+        val vocabulary = get<VocabularyRepository>()
+        LoadStudySetVerbsUseCase { vocabulary.studySetTextsAmong(it) }
+    }
     factoryOf(::SubmitPassageAnswersUseCaseImpl) { bind<SubmitPassageAnswersUseCase>() }
     factoryOf(::MarkCardsSeenUseCaseImpl) { bind<MarkCardsSeenUseCase>() }
     factoryOf(::GetWordCardsUseCaseImpl) { bind<GetWordCardsUseCase>() }
@@ -282,7 +298,10 @@ val domainModule = module {
     factoryOf(::UpdateWordUseCaseImpl) { bind<UpdateWordUseCase>() }
     factoryOf(::GenerateWordExampleUseCaseImpl) { bind<GenerateWordExampleUseCase>() }
     factoryOf(::SetWordPresetUseCaseImpl) { bind<SetWordPresetUseCase>() }
-    factoryOf(::GetWordUseCaseImpl) { bind<GetWordUseCase>() }
+    factory<GetWordUseCase> {
+        val vocabulary = get<VocabularyRepository>()
+        GetWordUseCase { vocabulary.getWord(it.value) }
+    }
     factoryOf(::CreatePresetUseCaseImpl) { bind<CreatePresetUseCase>() }
     factoryOf(::TranslateWordUseCaseImpl) { bind<TranslateWordUseCase>() }
     factoryOf(::SearchImageCandidatesUseCaseImpl) { bind<SearchImageCandidatesUseCase>() }
@@ -291,10 +310,22 @@ val domainModule = module {
     factoryOf(::CheckTrainingReadinessUseCaseImpl) { bind<CheckTrainingReadinessUseCase>() }
     factoryOf(::SearchVocabularyUseCaseImpl) { bind<SearchVocabularyUseCase>() }
     factoryOf(::SeedCatalogsUseCaseImpl) { bind<SeedCatalogsUseCase>() }
-    factoryOf(::DeleteWordUseCaseImpl) { bind<DeleteWordUseCase>() }
-    factoryOf(::RestoreWordUseCaseImpl) { bind<RestoreWordUseCase>() }
-    factoryOf(::DeletePresetUseCaseImpl) { bind<DeletePresetUseCase>() }
-    factoryOf(::RestorePresetUseCaseImpl) { bind<RestorePresetUseCase>() }
+    factory<DeleteWordUseCase> {
+        val vocabulary = get<VocabularyRepository>()
+        DeleteWordUseCase { vocabulary.deleteWord(it.value) }
+    }
+    factory<RestoreWordUseCase> {
+        val vocabulary = get<VocabularyRepository>()
+        RestoreWordUseCase { vocabulary.restoreWord(it.value) }
+    }
+    factory<DeletePresetUseCase> {
+        val presets = get<VocabularyPresetRepository>()
+        DeletePresetUseCase { presets.deletePreset(it.value) }
+    }
+    factory<RestorePresetUseCase> {
+        val presets = get<VocabularyPresetRepository>()
+        RestorePresetUseCase { presets.restorePreset(it.value) }
+    }
     factoryOf(::ObserveVocabularyPresetsUseCaseImpl) { bind<ObserveVocabularyPresetsUseCase>() }
     factoryOf(::ObserveCoursesUseCaseImpl) { bind<ObserveCoursesUseCase>() }
     factoryOf(::GetLessonUseCaseImpl) { bind<GetLessonUseCase>() }

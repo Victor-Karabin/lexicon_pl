@@ -5,7 +5,6 @@ import com.lexicon.boundary.ProgramRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.Clock
 import com.lexicon.interactors.program.ActivityConfig
-import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.CreateProgramUseCase
 import com.lexicon.interactors.program.DailyPlanConfig
 import com.lexicon.interactors.program.Program
@@ -141,10 +140,4 @@ private class ProgramWriter(
         )
 
     private fun failure(problem: ProgramDraftProblem): Result<Program> = Result.failure(ProgramDraftException(problem))
-}
-
-class CountStudySetUseCaseImpl(
-    private val vocabulary: VocabularyRepository,
-) : CountStudySetUseCase {
-    override suspend fun invoke(): Int = vocabulary.studySetWordIds().size
 }

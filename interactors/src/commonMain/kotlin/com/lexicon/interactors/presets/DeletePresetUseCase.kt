@@ -2,6 +2,6 @@ package com.lexicon.interactors.presets
 
 import com.lexicon.model.vocabulary.PresetId
 
-interface DeletePresetUseCase {
+fun interface DeletePresetUseCase {
     suspend operator fun invoke(id: PresetId)
 }

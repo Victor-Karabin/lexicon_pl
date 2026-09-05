@@ -3,7 +3,6 @@ package com.lexicon.application.program
 import com.lexicon.boundary.ProgramRepository
 import com.lexicon.boundary.ReviewScheduleRepository
 import com.lexicon.common.Clock
-import com.lexicon.interactors.program.DeleteProgramUseCase
 import com.lexicon.interactors.program.EnrolInProgramUseCase
 import com.lexicon.interactors.program.EnrolmentStatus
 import com.lexicon.interactors.program.GetProgramUseCase
@@ -92,10 +91,4 @@ class ResetProgramUseCaseImpl(
             )
         }
     }
-}
-
-class DeleteProgramUseCaseImpl(
-    private val repository: ProgramRepository,
-) : DeleteProgramUseCase {
-    override suspend fun invoke(id: ProgramId) = repository.deleteProgram(id.value)
 }

@@ -11,15 +11,15 @@ interface LoadConjugationVerbsUseCase {
     ): ImmutableList<VerbConjugation>
 }
 
-interface DeleteConjugationVerbUseCase {
+fun interface DeleteConjugationVerbUseCase {
     suspend operator fun invoke(infinitive: String)
 }
 
-interface HasDeletedVerbsUseCase {
+fun interface HasDeletedVerbsUseCase {
     suspend operator fun invoke(): Boolean
 }
 
-interface RestoreConjugationVerbsUseCase {
+fun interface RestoreConjugationVerbsUseCase {
     suspend operator fun invoke()
 }
 
@@ -31,7 +31,7 @@ interface LoadConjugationCoursesUseCase {
     suspend operator fun invoke(): ImmutableList<ConjugationCourse>
 }
 
-interface DeleteConjugationCourseUseCase {
+fun interface DeleteConjugationCourseUseCase {
     suspend operator fun invoke(courseId: String)
 }
 
@@ -86,7 +86,7 @@ interface ToggleVerbInStudySetUseCase {
     )
 }
 
-interface LoadStudySetVerbsUseCase {
+fun interface LoadStudySetVerbsUseCase {
     suspend operator fun invoke(infinitives: List<String>): Set<String>
 }
 

@@ -2,6 +2,6 @@ package com.lexicon.interactors.presets
 
 import com.lexicon.model.vocabulary.VocabularyId
 
-interface RestoreWordUseCase {
+fun interface RestoreWordUseCase {
     suspend operator fun invoke(id: VocabularyId)
 }

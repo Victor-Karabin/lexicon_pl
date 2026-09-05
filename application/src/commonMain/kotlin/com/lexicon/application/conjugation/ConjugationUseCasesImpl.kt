@@ -10,17 +10,12 @@ import com.lexicon.interactors.conjugation.ConjugationTable
 import com.lexicon.interactors.conjugation.ConjugationVariant
 import com.lexicon.interactors.conjugation.ConjugationVariantProgress
 import com.lexicon.interactors.conjugation.CreateConjugationCourseUseCase
-import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
-import com.lexicon.interactors.conjugation.DeleteConjugationVerbUseCase
 import com.lexicon.interactors.conjugation.EnsureVerbWordUseCase
-import com.lexicon.interactors.conjugation.HasDeletedVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationProgressUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
-import com.lexicon.interactors.conjugation.LoadStudySetVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadVerbImageChoicesUseCase
 import com.lexicon.interactors.conjugation.NextConjugationTableUseCase
-import com.lexicon.interactors.conjugation.RestoreConjugationVerbsUseCase
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerRequest
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerResponse
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
@@ -78,24 +73,6 @@ class LoadConjugationVerbsUseCaseImpl(
         infinitive.contains(needle, ignoreCase = true) || translation?.contains(needle, ignoreCase = true) == true
 }
 
-class DeleteConjugationVerbUseCaseImpl(
-    private val conjugations: ConjugationRepository,
-) : DeleteConjugationVerbUseCase {
-    override suspend fun invoke(infinitive: String) = conjugations.deleteVerb(infinitive)
-}
-
-class HasDeletedVerbsUseCaseImpl(
-    private val conjugations: ConjugationRepository,
-) : HasDeletedVerbsUseCase {
-    override suspend fun invoke(): Boolean = conjugations.hasDeletedVerbs()
-}
-
-class RestoreConjugationVerbsUseCaseImpl(
-    private val conjugations: ConjugationRepository,
-) : RestoreConjugationVerbsUseCase {
-    override suspend fun invoke() = conjugations.restoreVerbs()
-}
-
 class CreateConjugationCourseUseCaseImpl(
     private val conjugations: ConjugationRepository,
 ) : CreateConjugationCourseUseCase {
@@ -123,12 +100,6 @@ class LoadConjugationCoursesUseCaseImpl(
                     progress = conjugations.courseProgress(it.id),
                 )
             }.toImmutableList()
-}
-
-class DeleteConjugationCourseUseCaseImpl(
-    private val conjugations: ConjugationRepository,
-) : DeleteConjugationCourseUseCase {
-    override suspend fun invoke(courseId: String) = conjugations.deleteCourse(courseId)
 }
 
 class LoadConjugationProgressUseCaseImpl(
@@ -251,12 +222,6 @@ class ToggleVerbInStudySetUseCaseImpl(
         val id = existing?.id?.value ?: ensureWord(infinitive, translation) ?: return
         vocabulary.setInStudySet(listOf(id), isInStudySet)
     }
-}
-
-class LoadStudySetVerbsUseCaseImpl(
-    private val vocabulary: VocabularyRepository,
-) : LoadStudySetVerbsUseCase {
-    override suspend fun invoke(infinitives: List<String>): Set<String> = vocabulary.studySetTextsAmong(infinitives)
 }
 
 class SubmitConjugationAnswerUseCaseImpl(
