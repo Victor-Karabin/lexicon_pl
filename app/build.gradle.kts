@@ -30,6 +30,7 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "0.1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "PEXELS_API_KEY", "\"${localProperty("pexels.apiKey")}\"")
         buildConfigField("String", "PIXABAY_API_KEY", "\"${localProperty("pixabay.apiKey")}\"")
@@ -76,6 +77,14 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
     debugImplementation(libs.compose.ui.tooling)
+
+    androidTestImplementation(project.dependencies.platform(libs.compose.bom))
+    androidTestImplementation(libs.bundles.instrumented.test)
+    androidTestImplementation(libs.compose.ui.test.junit4)
+    androidTestImplementation(libs.androidx.uiautomator)
+    // Espresso before 3.7 calls InputManager.getInstance, which newer Android no longer has.
+    androidTestImplementation(libs.androidx.espresso.core)
+    debugImplementation(libs.compose.ui.test.manifest)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

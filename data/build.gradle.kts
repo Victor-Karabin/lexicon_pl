@@ -50,6 +50,10 @@ kotlin {
         androidUnitTest.dependencies {
             implementation(libs.bundles.unit.test)
         }
+        androidInstrumentedTest.dependencies {
+            implementation(libs.bundles.instrumented.test)
+            implementation(libs.room.testing)
+        }
     }
 }
 
@@ -70,6 +74,7 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {

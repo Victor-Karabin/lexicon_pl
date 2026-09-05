@@ -69,7 +69,7 @@ the conjugation course are here too; what is not yet is listed in
 | Speech | Google Cloud Text-to-Speech and Speech-to-Text, Android TTS and SpeechRecognizer as fallbacks |
 | Language model | OpenAI, for example sentences and reading passages |
 | Translation | Google Cloud Translation, behind the shipped vocabulary |
-| Testing | JUnit 4, MockK, Turbine |
+| Testing | JUnit 4, MockK, Turbine; Compose UI test and Espresso 3.7 for the end-to-end suite |
 | Static analysis | ktlint, detekt, Android Lint |
 | Build | Gradle 8.12 with version catalogs, AGP 8.7 |
 | Targets | Android 8.0 and up (minSdk 26, target 35); iPhone and iPad on iOS 17, linking the same shared framework — all fifteen trainings on both |
@@ -138,5 +138,5 @@ history with it. That makes a bump a deliberate act.
 
 ## Status
 
-Pre-release, version 0.1.0. 518 Kotlin files and 42 Swift files, 78 test files, no
-instrumentation tests.
+Pre-release, version 0.1.0. 518 Kotlin files and 42 Swift files. 78 unit-test files,
+seven instrumented tests over real SQLite, and five end-to-end tests driving the app.

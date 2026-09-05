@@ -78,13 +78,34 @@ costs a file read and no parse.
 
 ## Testing
 
-Unit tests only; there is no instrumentation or UI test infrastructure.
+Three layers, each testing what the one below it cannot.
+
+**Unit tests**, on the JVM, in the module that owns the logic:
 
 - **`model`** — pure domain tests: invariants, value-object rules, policies. No mocks.
 - **`application`** — orchestration, with ports faked or mocked.
 - **`data`** — mapping, seeding and the carve-outs that protect the learner's own data.
 - **`presentation`** — ViewModel state transitions.
 - **`app`** — a test that every Koin module's dependency graph resolves.
+
+**Instrumented tests** in `data/src/androidInstrumentedTest`, against real SQLite. They
+exist for the things a JVM test cannot see: how `LIKE` folds, whether pages follow one
+another without repeating, and what happens when a query binds more variables than SQLite
+takes — 999 on Android 8 to 11, which is fewer than a large study set.
+
+**End-to-end tests** in `app/src/androidTest`, driving the built app through Compose over
+the real database and the shipped catalogues. They cover the journeys rather than the
+screens: the app seeds and lands on its tabs, the catalogue is there and a preset can be
+starred, search narrows to the word asked for, every training is reachable, and words
+chosen in the catalogue are what a training then runs.
+
+    ./gradlew connectedDebugAndroidTest    # both, on a connected device or emulator
+
+They share one database and one install, so a test that needs a particular state puts the
+app into it rather than assuming the test before it did.
+
+Espresso is pinned to 3.7: earlier versions call `InputManager.getInstance`, which newer
+Android no longer has, and every Compose test fails at the first `waitForIdle`.
 
 ## Conventions
 
