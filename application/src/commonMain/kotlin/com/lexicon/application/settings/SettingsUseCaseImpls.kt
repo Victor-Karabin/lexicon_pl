@@ -6,7 +6,6 @@ import com.lexicon.interactors.settings.ObserveSettingsUseCase
 import com.lexicon.interactors.settings.ThemeMode
 import com.lexicon.interactors.settings.UpdateStepCountUseCase
 import com.lexicon.interactors.settings.UpdateThemeModeUseCase
-import com.lexicon.interactors.settings.UpdateVoiceUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -29,10 +28,4 @@ class UpdateStepCountUseCaseImpl(
         settingsRepository.setStepCount(
             stepCount.coerceIn(AppSettings.MIN_STEP_COUNT, AppSettings.MAX_STEP_COUNT),
         )
-}
-
-class UpdateVoiceUseCaseImpl(
-    private val settings: SettingsRepository,
-) : UpdateVoiceUseCase {
-    override suspend fun invoke(voiceId: String?) = settings.setVoiceId(voiceId)
 }

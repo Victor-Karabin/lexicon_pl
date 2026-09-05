@@ -1,5 +1,5 @@
 package com.lexicon.interactors.settings
 
-interface UpdateVoiceUseCase {
+fun interface UpdateVoiceUseCase {
     suspend operator fun invoke(voiceId: String?)
 }

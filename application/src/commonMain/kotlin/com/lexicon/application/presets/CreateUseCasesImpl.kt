@@ -8,7 +8,6 @@ import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.polishTranscription
 import com.lexicon.interactors.presets.CreatePresetUseCase
 import com.lexicon.interactors.presets.CreateWordUseCase
-import com.lexicon.interactors.presets.GetWordUseCase
 import com.lexicon.interactors.presets.PresetDraftException
 import com.lexicon.interactors.presets.PresetDraftProblem
 import com.lexicon.interactors.presets.SearchImageCandidatesUseCase
@@ -110,12 +109,6 @@ class UpdateWordUseCaseImpl(
 
         return Result.success(word)
     }
-}
-
-class GetWordUseCaseImpl(
-    private val vocabularyRepository: VocabularyRepository,
-) : GetWordUseCase {
-    override suspend fun invoke(id: VocabularyId): Word? = vocabularyRepository.getWord(id.value)
 }
 
 class CreatePresetUseCaseImpl(
