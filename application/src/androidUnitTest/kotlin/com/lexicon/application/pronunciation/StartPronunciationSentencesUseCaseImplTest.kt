@@ -131,4 +131,19 @@ class StartPronunciationSentencesUseCaseImplTest {
 
             assertEquals(PronunciationSentencesResult.Refused("busy"), useCase())
         }
+
+    @Test
+    fun `one sentence that does not come back leaves the rest to read`() =
+        runTest {
+            givenStudySet("okno", "dom", "kot")
+            coEvery { generator.generate(any()) } answers {
+                val word = firstArg<SentenceRequestBoundary>().word
+                if (word == "dom") SentenceResultBoundary.Offline else SentenceResultBoundary.Generated("To jest $word.")
+            }
+
+            val session = (useCase() as PronunciationSentencesResult.Ready).session
+
+            assertEquals(listOf(0, 1), session.steps.map { it.stepIndex })
+            assertTrue(session.steps.none { it.expectedText.contains("dom") })
+        }
 }
