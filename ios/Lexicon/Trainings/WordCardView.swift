@@ -5,6 +5,7 @@ struct WordCardView: View {
     let vocabularyIds: [Int64]
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.onTrainingFinished) private var onTrainingFinished
     @State private var steps: [WordCardStep] = []
     @State private var sessionId = ""
     @State private var index = 0
@@ -17,7 +18,7 @@ struct WordCardView: View {
                 let skin = TileSkin.standard(highlighted: true, scheme: scheme)
                 TrainingScaffold(step: index, total: steps.count, state: .unanswered) {
                     Tile(skin: skin) {
-                        if let url = step.imageUrl, let link = URL(string: url) {
+                        if let url = step.imageUrl, let link = imageURL(url) {
                             AsyncImage(url: link) { image in
                                 image.resizable().scaledToFill()
                             } placeholder: {
@@ -51,7 +52,7 @@ struct WordCardView: View {
                         Spacer()
                         Button(index == steps.count - 1 ? "Done" : "Next") {
                             if index == steps.count - 1 {
-                                dismiss()
+                                if let onTrainingFinished { onTrainingFinished() } else { dismiss() }
                             } else {
                                 index += 1
                                 Task { await record() }

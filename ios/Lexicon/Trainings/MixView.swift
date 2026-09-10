@@ -60,7 +60,7 @@ struct MixView: View {
                 Text(puzzle.step.clueText).font(.title3.weight(.semibold))
                 answerField
             case let test as MixStepImageTest:
-                if let url = test.step.imageUrl, let link = URL(string: url) {
+                if let url = test.step.imageUrl, let link = imageURL(url) {
                     AsyncImage(url: link) { $0.resizable().scaledToFit() } placeholder: {
                         Color.secondary.opacity(0.15)
                     }

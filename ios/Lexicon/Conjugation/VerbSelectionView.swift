@@ -12,6 +12,12 @@ struct VerbSelectionView: View {
     @State private var chosen: Set<String> = []
     @State private var loading = true
     @State private var saving = false
+    @State private var nextOffset: Int32 = 0
+    @State private var hasMore = true
+    @State private var loadingMore = false
+    @State private var generation = 0
+
+    private let searchSettleNanoseconds: UInt64 = 300_000_000
 
     var body: some View {
         Group {
@@ -21,13 +27,27 @@ struct VerbSelectionView: View {
                 List {
                     ForEach(verbs, id: \.infinitive) { verb in
                         row(verb)
+                            .onAppear {
+                                if verb.infinitive == verbs.last?.infinitive {
+                                    Task { await loadMore() }
+                                }
+                            }
+                    }
+                    if loadingMore {
+                        ProgressView().frame(maxWidth: .infinity)
                     }
                 }
                 .listStyle(.plain)
             }
         }
         .searchable(text: $query, prompt: "Search verb")
-        .onChange(of: query) { _, _ in Task { await load() } }
+        .task(id: query) {
+            if !loading {
+                try? await Task.sleep(nanoseconds: searchSettleNanoseconds)
+                guard !Task.isCancelled else { return }
+            }
+            await loadFirstPage()
+        }
         .navigationTitle("Choose verbs")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -48,7 +68,6 @@ struct VerbSelectionView: View {
                     .background(.bar)
             }
         }
-        .task { await load() }
     }
 
     private func row(_ verb: VerbConjugation) -> some View {
@@ -74,9 +93,30 @@ struct VerbSelectionView: View {
         .buttonStyle(.plain)
     }
 
-    private func load() async {
-        verbs = (try? await deps.loadConjugationVerbs.invoke(query: query)) as? [VerbConjugation] ?? []
+    private func loadFirstPage() async {
+        generation += 1
+        let current = generation
+        let page = try? await deps.loadConjugationVerbs.page(query: query, offset: 0)
+        guard current == generation else { return }
+        verbs = page?.verbs as? [VerbConjugation] ?? []
+        nextOffset = page?.nextOffset ?? 0
+        hasMore = !(page?.isLast ?? true)
+        loadingMore = false
         loading = false
+    }
+
+    private func loadMore() async {
+        guard hasMore, !loadingMore, !loading else { return }
+        let current = generation
+        loadingMore = true
+        let page = try? await deps.loadConjugationVerbs.page(query: query, offset: nextOffset)
+        guard current == generation else { return }
+        loadingMore = false
+        guard let page else { return }
+        let known = Set(verbs.map(\.infinitive))
+        verbs += (page.verbs as? [VerbConjugation] ?? []).filter { !known.contains($0.infinitive) }
+        nextOffset = page.nextOffset
+        hasMore = !page.isLast
     }
 
     private func create() async {

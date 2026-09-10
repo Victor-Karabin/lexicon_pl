@@ -48,7 +48,7 @@ struct ConjugationTrainingView: View {
 
     private func header(_ table: ConjugationTable) -> some View {
         VStack(spacing: Spacing.small) {
-            if let url = table.imageUrl, let link = URL(string: url) {
+            if let url = table.imageUrl, let link = imageURL(url) {
                 AsyncImage(url: link) { image in
                     image.resizable().scaledToFill()
                 } placeholder: {

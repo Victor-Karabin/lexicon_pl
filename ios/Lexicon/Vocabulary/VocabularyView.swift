@@ -26,30 +26,18 @@ struct VocabularyView: View {
                             .padding(.top, Spacing.xl)
                     } else {
                         ForEach(model.words, id: \.id.value) { word in
-                            NavigationLink {
-                                WordFormView(wordId: word.id.value)
-                            } label: {
-                                HStack(spacing: Spacing.small) {
-                                    if model.isSelecting {
-                                        Image(systemName: model.isSelected(word) ? "checkmark.circle.fill" : "circle")
-                                            .foregroundStyle(model.isSelected(word) ? Palette.accentDeep : .secondary)
+                            Group {
+                                if model.isSelecting {
+                                    Button { model.toggleSelected(word) } label: { wordRow(word) }
+                                        .buttonStyle(.plain)
+                                } else {
+                                    NavigationLink {
+                                        WordFormView(wordId: word.id.value)
+                                    } label: {
+                                        wordRow(word)
                                     }
-                                    WordRow(word: word, isInStudySet: model.isInStudySet(word)) {
-                                        Task { await model.toggleInStudySet(word) }
-                                    }
-                                }
-                            }
-                            .buttonStyle(.plain)
-
-                            .onLongPressGesture { model.startSelecting(word) }
-                            .simultaneousGesture(TapGesture().onEnded {
-                                if model.isSelecting { model.toggleSelected(word) }
-                            })
-                            .swipeActions(edge: .trailing) {
-                                Button(role: .destructive) {
-                                    Task { await model.delete(word) }
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
+                                    .buttonStyle(.plain)
+                                    .onLongPressGesture { model.startSelecting(word) }
                                 }
                             }
                             .onAppear {
@@ -94,6 +82,18 @@ struct VocabularyView: View {
                 }
             }
             .task { await model.load() }
+        }
+    }
+
+    private func wordRow(_ word: Word) -> some View {
+        HStack(spacing: Spacing.small) {
+            if model.isSelecting {
+                Image(systemName: model.isSelected(word) ? "checkmark.circle.fill" : "circle")
+                    .foregroundStyle(model.isSelected(word) ? Palette.accentDeep : .secondary)
+            }
+            WordRow(word: word, isInStudySet: model.isInStudySet(word)) {
+                Task { await model.toggleInStudySet(word) }
+            }
         }
     }
 

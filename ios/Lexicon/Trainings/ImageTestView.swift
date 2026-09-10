@@ -20,7 +20,7 @@ struct ImageTestView: View {
             } else if let step = steps[safe: index] {
                 TrainingScaffold(step: index, total: steps.count, state: state) {
                     VStack(spacing: Spacing.medium) {
-                        if let url = step.imageUrl, let link = URL(string: url) {
+                        if let url = step.imageUrl, let link = imageURL(url) {
                             AsyncImage(url: link) { image in
                                 image.resizable().scaledToFit()
                             } placeholder: {
@@ -77,7 +77,7 @@ struct ImageTestView: View {
         let response = try? await deps.startImageTest.invoke(
             request: StartImageTestSessionRequest(
                 stepCount: nil,
-                optionCount: StartImageTestSessionRequest.companion.DEFAULT_OPTION_COUNT,
+                optionCount: deps.imageTestOptionCount,
                 vocabularyIds: vocabularyIds.map { KotlinLong(value: $0) }
             )
         )

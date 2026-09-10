@@ -8,10 +8,10 @@ final class DashboardModel: ObservableObject {
     @Published private(set) var overall: Double = 0
     @Published private(set) var streak: Int = 0
     @Published private(set) var day: ProgramDay?
-    @Published private(set) var sessionWordIds: [Int64] = []
     @Published private(set) var nothingToPractise = false
 
     private var watcher: Cancellable?
+    private var turns = 0
 
     init() {
         watcher = deps.watchActiveEnrolment { [weak self] enrolment in
@@ -54,18 +54,27 @@ final class DashboardModel: ObservableObject {
 
     var isDayComplete: Bool { day?.isComplete ?? false }
 
-    func nextTraining() async -> String? {
+    func nextTraining() async -> ProgramTurn? {
         guard let program else { return nil }
-        if day?.nextTraining == nil {
+        let launch = try? await deps.nextProgramTraining.next(id: program.id)
+        return await turn(for: launch, in: program)
+    }
+
+    func advance() async -> ProgramTurn? {
+        guard let program else { return nil }
+        let launch = try? await deps.nextProgramTraining.advance(id: program.id)
+        return await turn(for: launch, in: program)
+    }
+
+    private func turn(for launch: ProgramLaunch?, in program: Program) async -> ProgramTurn? {
+        guard let launch, let entry = TrainingCatalog.entry(id: launch.training.id) else {
             day = try? await deps.getProgramDay.invoke(id: program.id)
-        }
-        guard let next = day?.nextTraining else {
             nothingToPractise = !isDayComplete
             return nil
         }
-        let session = try? await deps.startProgramSession.invoke(id: program.id)
-        sessionWordIds = (session?.wordIds ?? []).map { $0.value }
-        return next.training.id
+        turns += 1
+        let wordIds = (launch.wordIds as? [VocabularyId] ?? []).map { $0.value }
+        return ProgramTurn(id: turns, entry: entry, wordIds: wordIds)
     }
 
     func label(for type: ProgressMetricType) -> String {
@@ -85,6 +94,12 @@ final class DashboardModel: ObservableObject {
         default: return "\(metric.current) / \(metric.target)"
         }
     }
+}
+
+struct ProgramTurn: Identifiable, Hashable {
+    let id: Int
+    let entry: TrainingEntry
+    let wordIds: [Int64]
 }
 
 extension IosDependencies {
