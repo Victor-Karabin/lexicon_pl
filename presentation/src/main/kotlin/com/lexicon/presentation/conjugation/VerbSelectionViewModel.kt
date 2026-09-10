@@ -37,6 +37,7 @@ data class VerbSelectionUiState(
     val studySet: ImmutableSet<String> = persistentSetOf(),
     val isLoadingMore: Boolean = false,
     val hasMore: Boolean = true,
+    val nextOffset: Int = 0,
 ) {
     val count: Int get() = selected.size
 
@@ -83,14 +84,15 @@ class VerbSelectionViewModel(
 
         _uiState.update { it.copy(isLoadingMore = true) }
         pageJob = viewModelScope.launch(dispatchers.io) {
-            val more = loadVerbs.page(query = state.query, skip = state.verbs.size)
-            val starred = loadStudySet(more.map { it.infinitive })
+            val more = loadVerbs.page(query = state.query, offset = state.nextOffset)
+            val starred = loadStudySet(more.verbs.map { it.infinitive })
             _uiState.update {
                 it.copy(
-                    verbs = (it.verbs + more).distinctBy { verb -> verb.infinitive }.toImmutableList(),
+                    verbs = (it.verbs + more.verbs).distinctBy { verb -> verb.infinitive }.toImmutableList(),
                     studySet = (it.studySet + starred).toImmutableSet(),
                     isLoadingMore = false,
-                    hasMore = more.isNotEmpty(),
+                    nextOffset = more.nextOffset,
+                    hasMore = !more.isLast,
                 )
             }
         }
@@ -102,14 +104,15 @@ class VerbSelectionViewModel(
         pageJob = viewModelScope.launch(dispatchers.io) {
             val query = _uiState.value.query
             val first = loadVerbs.page(query = query)
-            val starred = loadStudySet(first.map { it.infinitive })
+            val starred = loadStudySet(first.verbs.map { it.infinitive })
             _uiState.update {
                 it.copy(
                     isLoading = false,
                     isLoadingMore = false,
-                    verbs = first,
+                    verbs = first.verbs,
                     studySet = starred.toImmutableSet(),
-                    hasMore = first.isNotEmpty(),
+                    nextOffset = first.nextOffset,
+                    hasMore = !first.isLast,
                 )
             }
         }

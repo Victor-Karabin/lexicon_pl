@@ -80,14 +80,24 @@ struct DashboardView: View {
                 }
             }
 
-            Button {
-                Task { await start() }
-            } label: {
-                Label(model.continueLabel, systemImage: model.showsCards ? "book" : "play.fill")
-                    .frame(maxWidth: .infinity)
+            if model.isDayComplete {
+                Text("Today is done. Come back tomorrow.")
+                    .font(.subheadline)
+                    .foregroundStyle(skin.onTile.muted)
+            } else if model.nothingToPractise {
+                Text("Nothing to practise right now. Add words to your study set, or come back once reviews are due.")
+                    .font(.subheadline)
+                    .foregroundStyle(skin.onTile.muted)
+            } else {
+                Button {
+                    Task { await start() }
+                } label: {
+                    Label(model.continueLabel, systemImage: model.showsCards ? "book" : "play.fill")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(skin.medallion)
             }
-            .buttonStyle(.borderedProminent)
-            .tint(skin.medallion)
         }
     }
 

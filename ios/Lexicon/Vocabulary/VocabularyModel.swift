@@ -31,26 +31,34 @@ final class VocabularyModel: ObservableObject {
     /// Paged the way Android is: a level can be hundreds of words, and drawing them all
     /// before showing the first is what made this slow.
     func search() async {
+        searchGeneration += 1
+        let generation = searchGeneration
+        isLoadingMoreWords = false
         guard !query.isEmpty || !levels.isEmpty else {
             words = []
             hasMoreWords = true
             return
         }
         let first = await page(skip: 0)
+        guard generation == searchGeneration else { return }
         words = first
         hasMoreWords = first.count >= Int(deps.searchPageSize)
     }
 
     func moreWords() async {
         guard hasMoreWords, !isLoadingMoreWords, !words.isEmpty else { return }
+        let generation = searchGeneration
         isLoadingMoreWords = true
-        defer { isLoadingMoreWords = false }
 
         let more = await page(skip: words.count)
+        guard generation == searchGeneration else { return }
+        isLoadingMoreWords = false
         let known = Set(words.map(\.id.value))
         words += more.filter { !known.contains($0.id.value) }
         hasMoreWords = more.count >= Int(deps.searchPageSize)
     }
+
+    private var searchGeneration = 0
 
     private func page(skip: Int) async -> [Word] {
         (try? await deps.searchVocabulary.invoke(

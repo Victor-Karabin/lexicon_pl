@@ -21,6 +21,7 @@ import com.lexicon.interactors.conjugation.SubmitConjugationAnswerResponse
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
 import com.lexicon.interactors.conjugation.ToggleVerbInStudySetUseCase
 import com.lexicon.interactors.conjugation.VerbConjugation
+import com.lexicon.interactors.conjugation.VerbPage
 import com.lexicon.interactors.presets.CreateWordUseCase
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -51,22 +52,31 @@ class LoadConjugationVerbsUseCaseImpl(
      */
     override suspend fun page(
         query: String,
-        skip: Int,
-    ): ImmutableList<VerbConjugation> {
+        offset: Int,
+    ): VerbPage {
         val needle = query.trim()
         val found = mutableListOf<VerbConjugation>()
 
-        var offset = skip
+        var cursor = offset
         var reads = 0
+        var isLast = false
         while (found.size < VERB_PAGE && reads < PAGES_BEFORE_GIVING_UP) {
-            val batch = conjugations.verbPage(query = needle, limit = VERB_PAGE, offset = offset)
-            if (batch.isEmpty()) break
-
-            found += batch.map { it.toVerb() }.filter { it.isTeachable }
-            offset += batch.size
+            val batchStart = cursor
+            val batch = conjugations.verbPage(query = needle, limit = VERB_PAGE, offset = batchStart)
             reads++
+
+            for (row in batch) {
+                cursor++
+                row.toVerb().takeIf { it.isTeachable }?.let { found += it }
+                if (found.size == VERB_PAGE) break
+            }
+
+            if (batch.size < VERB_PAGE && cursor == batchStart + batch.size) {
+                isLast = true
+                break
+            }
         }
-        return found.take(VERB_PAGE).toImmutableList()
+        return VerbPage(verbs = found.toImmutableList(), nextOffset = cursor, isLast = isLast)
     }
 
     private fun VerbConjugation.matches(needle: String): Boolean =

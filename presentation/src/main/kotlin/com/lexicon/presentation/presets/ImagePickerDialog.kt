@@ -57,6 +57,7 @@ fun ImagePickerDialog(
     ownImages: ImmutableList<String>,
     selected: String?,
     isLoading: Boolean,
+    canLoadMore: Boolean,
     onSelected: (String) -> Unit,
     onOwnImageAdded: (String) -> Unit,
     onLoadMore: () -> Unit,
@@ -64,7 +65,7 @@ fun ImagePickerDialog(
     modifier: Modifier = Modifier,
 ) {
     val grid = rememberLazyGridState()
-    LoadWhenTheEndComesIntoView(grid = grid, isLoading = isLoading, onLoadMore = onLoadMore)
+    LoadWhenTheEndComesIntoView(grid = grid, isLoading = isLoading, canLoadMore = canLoadMore, onLoadMore = onLoadMore)
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -117,6 +118,7 @@ fun ImagePickerDialog(
 private fun LoadWhenTheEndComesIntoView(
     grid: LazyGridState,
     isLoading: Boolean,
+    canLoadMore: Boolean,
     onLoadMore: () -> Unit,
 ) {
     val isNearTheEnd by remember(grid) {
@@ -126,10 +128,10 @@ private fun LoadWhenTheEndComesIntoView(
         }
     }
 
-    LaunchedEffect(grid, isLoading) {
+    LaunchedEffect(grid, isLoading, canLoadMore) {
         snapshotFlow { isNearTheEnd }
             .distinctUntilChanged()
-            .filter { it && !isLoading }
+            .filter { it && !isLoading && canLoadMore }
             .collect { onLoadMore() }
     }
 }

@@ -107,4 +107,14 @@ class ExampleSentenceTest {
     fun `a word too short to match safely emphasises nothing`() {
         assertTrue(ExampleSentence.of("To nie jest moje.", word = "w").emphasis.isEmpty())
     }
+
+    @Test
+    fun `text being edited keeps the space typed after the last word`() {
+        assertEquals("Ta kobieta ", ExampleSentence.editableText("Ta kobieta "))
+    }
+
+    @Test
+    fun `text being edited shows the sentence without its markers`() {
+        assertEquals("Ta kobieta jest miła.", ExampleSentence.editableText("Ta **kobieta** jest miła."))
+    }
 }

@@ -7,8 +7,8 @@ interface LoadConjugationVerbsUseCase {
 
     suspend fun page(
         query: String = "",
-        skip: Int = 0,
-    ): ImmutableList<VerbConjugation>
+        offset: Int = 0,
+    ): VerbPage
 }
 
 fun interface DeleteConjugationVerbUseCase {

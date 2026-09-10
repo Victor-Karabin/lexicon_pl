@@ -102,3 +102,9 @@ data class ConjugationCourse(
         private const val TITLE_VERBS = 3
     }
 }
+
+data class VerbPage(
+    val verbs: ImmutableList<VerbConjugation>,
+    val nextOffset: Int,
+    val isLast: Boolean,
+)

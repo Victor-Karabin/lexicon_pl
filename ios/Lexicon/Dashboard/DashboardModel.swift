@@ -9,6 +9,7 @@ final class DashboardModel: ObservableObject {
     @Published private(set) var streak: Int = 0
     @Published private(set) var day: ProgramDay?
     @Published private(set) var sessionWordIds: [Int64] = []
+    @Published private(set) var nothingToPractise = false
 
     private var watcher: Cancellable?
 
@@ -48,10 +49,20 @@ final class DashboardModel: ObservableObject {
         }
         streak = Int((try? await deps.getStudyStreak.invoke()) as? Int32 ?? 0)
         day = try? await deps.getProgramDay.invoke(id: program.id)
+        nothingToPractise = false
     }
 
+    var isDayComplete: Bool { day?.isComplete ?? false }
+
     func nextTraining() async -> String? {
-        guard let program, let next = day?.nextTraining else { return nil }
+        guard let program else { return nil }
+        if day?.nextTraining == nil {
+            day = try? await deps.getProgramDay.invoke(id: program.id)
+        }
+        guard let next = day?.nextTraining else {
+            nothingToPractise = !isDayComplete
+            return nil
+        }
         let session = try? await deps.startProgramSession.invoke(id: program.id)
         sessionWordIds = (session?.wordIds ?? []).map { $0.value }
         return next.training.id

@@ -321,6 +321,13 @@ private fun ActiveProgramCard(
                     )
                 }
 
+            uiState.nothingToPractise ->
+                Text(
+                    text = stringResource(R.string.dashboard_nothing_due),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = skin.muted(),
+                )
+
             else ->
                 Button(
                     onClick = onContinue,

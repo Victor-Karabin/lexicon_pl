@@ -160,6 +160,7 @@
     <string name="dashboard_go_to_plan">Go to Plan</string>
     <string name="dashboard_streak_unit">day streak</string>
     <string name="dashboard_day_done">Today is done. Come back tomorrow.</string>
+    <string name="dashboard_nothing_due">Nothing to practise right now. Add words to your study set, or come back once reviews are due.</string>
     <string name="dashboard_meet_words">Meet %1$d new words</string>
     <string name="cards_title">New words</string>
     <string name="cards_next">Next</string>
