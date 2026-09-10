@@ -18,30 +18,10 @@ data class ExampleSentence(
         fun parse(marked: String): ExampleSentence {
             val trimmed = marked.trim()
             if (trimmed.isEmpty()) return None
-
-            val plain = StringBuilder()
-            val emphasis = mutableListOf<IntRange>()
-
-            var cursor = 0
-            while (cursor < trimmed.length) {
-                val opening = trimmed.indexOf(MARKER, cursor)
-                if (opening < 0) break
-
-                val contentStart = opening + MARKER.length
-                val closing = trimmed.indexOf(MARKER, contentStart)
-                if (closing < 0) break
-
-                plain.append(trimmed, cursor, opening)
-                val from = plain.length
-                plain.append(trimmed, contentStart, closing)
-                if (plain.length > from) emphasis += from until plain.length
-
-                cursor = closing + MARKER.length
-            }
-            plain.append(trimmed, cursor, trimmed.length)
-
-            return ExampleSentence(text = plain.toString(), emphasis = emphasis.toImmutableList())
+            return unmarked(trimmed)
         }
+
+        fun editableText(marked: String): String = unmarked(marked).text
 
         fun of(
             sentence: String,
@@ -121,4 +101,29 @@ private fun String.tokens(): List<IntRange> {
     }
     if (start >= 0) tokens += start until length
     return tokens
+}
+
+private fun unmarked(source: String): ExampleSentence {
+    val plain = StringBuilder()
+    val emphasis = mutableListOf<IntRange>()
+
+    var cursor = 0
+    while (cursor < source.length) {
+        val opening = source.indexOf(MARKER, cursor)
+        if (opening < 0) break
+
+        val contentStart = opening + MARKER.length
+        val closing = source.indexOf(MARKER, contentStart)
+        if (closing < 0) break
+
+        plain.append(source, cursor, opening)
+        val from = plain.length
+        plain.append(source, contentStart, closing)
+        if (plain.length > from) emphasis += from until plain.length
+
+        cursor = closing + MARKER.length
+    }
+    plain.append(source, cursor, source.length)
+
+    return ExampleSentence(text = plain.toString(), emphasis = emphasis.toImmutableList())
 }

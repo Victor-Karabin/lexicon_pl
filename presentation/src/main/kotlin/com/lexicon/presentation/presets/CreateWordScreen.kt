@@ -246,7 +246,7 @@ private fun ExampleSection(
     }
 
     OutlinedTextField(
-        value = uiState.sentence.text,
+        value = uiState.exampleInput,
         onValueChange = onExampleChanged,
         label = { Text(stringResource(R.string.example_hint)) },
         minLines = 2,
@@ -310,6 +310,7 @@ private fun ImageSection(
             ownImages = uiState.ownImages,
             selected = uiState.selectedImage,
             isLoading = uiState.isLoadingImages,
+            canLoadMore = uiState.hasMoreImages,
             onSelected = onImageSelected,
             onOwnImageAdded = onOwnImageAdded,
             onLoadMore = onMoreImages,

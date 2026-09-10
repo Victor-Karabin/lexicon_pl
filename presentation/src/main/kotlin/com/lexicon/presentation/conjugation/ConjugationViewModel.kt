@@ -44,6 +44,7 @@ data class ConjugationUiState(
     val isPickingImage: Boolean = false,
     val imageChoices: ImmutableList<String> = persistentListOf(),
     val isLoadingImages: Boolean = false,
+    val hasMoreImages: Boolean = true,
 ) {
     val isAnswered: Boolean get() = answerState !is AnswerState.Unanswered
 
@@ -170,17 +171,17 @@ class ConjugationViewModel(
 
     fun onEditVerb() {
         val table = _uiState.value.table ?: return
-        _uiState.update { it.copy(isPickingImage = true, isLoadingImages = true) }
+        _uiState.update { it.copy(isPickingImage = true, isLoadingImages = true, hasMoreImages = true) }
         viewModelScope.launch(dispatchers.io) {
             val choices = loadImageChoices(table.infinitive, table.translation)
-            _uiState.update { it.copy(imageChoices = choices, isLoadingImages = false) }
+            _uiState.update { it.copy(imageChoices = choices, isLoadingImages = false, hasMoreImages = choices.isNotEmpty()) }
         }
     }
 
     fun onMoreVerbImages() {
         val state = _uiState.value
         val table = state.table ?: return
-        if (state.isLoadingImages) return
+        if (state.isLoadingImages || !state.hasMoreImages) return
 
         _uiState.update { it.copy(isLoadingImages = true) }
         viewModelScope.launch(dispatchers.io) {
@@ -189,6 +190,7 @@ class ConjugationViewModel(
                 it.copy(
                     imageChoices = (it.imageChoices + more).distinct().toImmutableList(),
                     isLoadingImages = false,
+                    hasMoreImages = more.isNotEmpty(),
                 )
             }
         }

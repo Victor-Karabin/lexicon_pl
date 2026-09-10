@@ -1,5 +1,7 @@
 package com.lexicon.data.remote.image
 
+private const val UNSPLASH_MAX_PER_PAGE = 30
+
 class UnsplashImageSource(
     private val api: UnsplashApi,
 ) : RemoteImageSource {
@@ -8,6 +10,6 @@ class UnsplashImageSource(
         count: Int,
     ): List<String> =
         runCatching {
-            api.search(query, perPage = count).results.map { it.urls.small }
+            api.search(query, perPage = count.coerceAtMost(UNSPLASH_MAX_PER_PAGE)).results.map { it.urls.small }
         }.getOrDefault(emptyList())
 }

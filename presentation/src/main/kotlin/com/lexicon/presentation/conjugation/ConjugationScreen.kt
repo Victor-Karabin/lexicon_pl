@@ -132,6 +132,7 @@ private fun ConjugationContent(
             ownImages = persistentListOf(),
             selected = uiState.table?.imageUrl,
             isLoading = uiState.isLoadingImages,
+            canLoadMore = uiState.hasMoreImages,
             onSelected = onImageChosen,
             onOwnImageAdded = onImageChosen,
             onLoadMore = onMoreVerbImages,

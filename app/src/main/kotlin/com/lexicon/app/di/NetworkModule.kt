@@ -67,9 +67,11 @@ val networkModule = module {
     single { Json { ignoreUnknownKeys = true } }
 
     single {
-        OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC })
-            .build()
+        val builder = OkHttpClient.Builder()
+        if (BuildConfig.DEBUG) {
+            builder.addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC })
+        }
+        builder.build()
     }
 
     single {

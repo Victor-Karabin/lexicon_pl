@@ -96,6 +96,7 @@ class VocabularyViewModel(
         viewModelScope.launch(dispatchers.io) {
             criteria.debounce(QUERY_DEBOUNCE_MS).collect { current ->
                 searchJob?.cancel()
+                moreWordsJob?.cancel()
                 searchJob = viewModelScope.launch(dispatchers.io) {
                     val first = searchVocabulary(current.query, current.levels)
                     updateLoaded {
@@ -123,6 +124,7 @@ class VocabularyViewModel(
         moreWordsJob = viewModelScope.launch(dispatchers.io) {
             val current = criteria.value
             val more = searchVocabulary(current.query, current.levels, skip = state.words.size)
+            if (criteria.value != current) return@launch
             updateLoaded {
                 it.copy(
                     words = (it.words + more).distinctBy { word -> word.id.value }.toImmutableList(),

@@ -7,6 +7,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import platform.Foundation.NSCharacterSet
 import platform.Foundation.NSData
 import platform.Foundation.NSHTTPURLResponse
+import platform.Foundation.NSMutableCharacterSet
 import platform.Foundation.NSMutableURLRequest
 import platform.Foundation.NSString
 import platform.Foundation.NSURL
@@ -41,9 +42,14 @@ suspend fun httpGet(
     }
 }
 
+private val queryValueCharacters: NSCharacterSet =
+    (NSCharacterSet.URLQueryAllowedCharacterSet.mutableCopy() as NSMutableCharacterSet).apply {
+        removeCharactersInString("&=+?#")
+    }
+
 fun String.urlEncoded(): String =
     (this as NSString)
-        .stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet)
+        .stringByAddingPercentEncodingWithAllowedCharacters(queryValueCharacters)
         ?: this
 
 private fun NSData.asText(): String? = NSString.create(data = this, encoding = NSUTF8StringEncoding) as String?

@@ -40,6 +40,7 @@ data class DashboardUiState(
     val day: ProgramDay? = null,
     val launch: LaunchTraining? = null,
     val openCards: Boolean = false,
+    val nothingToPractise: Boolean = false,
     val conjugationCourses: ImmutableList<ConjugationCourse> = persistentListOf(),
 ) {
     val hasConjugationCourse: Boolean get() = conjugationCourses.isNotEmpty()
@@ -97,6 +98,7 @@ class DashboardViewModel(
                     streakDays = getStreak(),
                     studySet = countStudySet(),
                     day = day,
+                    nothingToPractise = false,
                 )
             }
         }
@@ -112,7 +114,12 @@ class DashboardViewModel(
             return
         }
         viewModelScope.launch {
-            val next = queue.next(program.id) ?: return@launch
+            val next = queue.next(program.id)
+            if (next == null) {
+                val refreshed = getDay(program.id)
+                _uiState.update { it.copy(day = refreshed, nothingToPractise = refreshed?.isComplete != true) }
+                return@launch
+            }
             _uiState.update { it.copy(launch = LaunchTraining(next.training, next.wordIds)) }
         }
     }

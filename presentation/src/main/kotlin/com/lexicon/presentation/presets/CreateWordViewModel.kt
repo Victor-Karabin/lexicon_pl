@@ -53,6 +53,7 @@ data class CreateWordUiState(
     val languageTag: String = "en",
     val isTranslating: Boolean = false,
     val isLoadingImages: Boolean = false,
+    val hasMoreImages: Boolean = true,
     val hasSearchedImages: Boolean = false,
     val isSaving: Boolean = false,
     val problem: WordDraftProblem? = null,
@@ -63,6 +64,8 @@ data class CreateWordUiState(
     val isImageLoading: Boolean get() = selectedImage == null && isLoadingImages
 
     val sentence: ExampleSentence get() = ExampleSentence.of(example, word = text)
+
+    val exampleInput: String get() = ExampleSentence.editableText(example)
 
     val canWriteExample: Boolean get() = text.isNotBlank() && !isWritingExample
 }
@@ -91,6 +94,7 @@ class CreateWordViewModel(
 
     private var translateJob: Job? = null
     private var imageJob: Job? = null
+    private var moreImagesJob: Job? = null
     private val presetJobs = mutableMapOf<PresetId, Job>()
 
     private var shownImages = 0
@@ -215,17 +219,19 @@ class CreateWordViewModel(
     }
 
     fun onMoreImages() {
-        val query = _uiState.value.translation
-        if (query.isBlank()) return
-        imageJob?.cancel()
-        imageJob = viewModelScope.launch {
-            _uiState.update { it.copy(isLoadingImages = true) }
+        val state = _uiState.value
+        val query = state.translation
+        if (query.isBlank() || state.isLoadingImages || !state.hasMoreImages) return
+
+        _uiState.update { it.copy(isLoadingImages = true) }
+        moreImagesJob = viewModelScope.launch {
             val more = searchImageCandidates(query, skip = shownImages)
             shownImages += more.size
-            _uiState.update { state ->
-                state.copy(
-                    imageCandidates = (state.imageCandidates + more).distinct().toImmutableList(),
+            _uiState.update { current ->
+                current.copy(
+                    imageCandidates = (current.imageCandidates + more).distinct().toImmutableList(),
                     isLoadingImages = false,
+                    hasMoreImages = more.isNotEmpty(),
                     hasSearchedImages = true,
                 )
             }
@@ -330,6 +336,7 @@ class CreateWordViewModel(
                 ownImages = if (isOwn) persistentListOf(pinned!!) else it.ownImages,
                 selectedImage = pinned,
                 isLoadingImages = false,
+                hasMoreImages = candidates.isNotEmpty(),
                 hasSearchedImages = true,
             )
         }
@@ -337,12 +344,15 @@ class CreateWordViewModel(
 
     private fun scheduleImageSearch(query: String) {
         imageJob?.cancel()
+        moreImagesJob?.cancel()
         shownImages = 0
         if (query.isBlank()) {
             _uiState.update {
                 it.copy(
                     imageCandidates = persistentListOf(),
                     selectedImage = it.selectedImage.takeIf { url -> url in it.ownImages },
+                    isLoadingImages = false,
+                    hasMoreImages = true,
                     hasSearchedImages = false,
                 )
             }
@@ -359,6 +369,7 @@ class CreateWordViewModel(
                     imageCandidates = candidates,
                     selectedImage = it.selectedImage.takeIf { url -> url in it.ownImages },
                     isLoadingImages = false,
+                    hasMoreImages = candidates.isNotEmpty(),
                     hasSearchedImages = true,
                 )
             }
