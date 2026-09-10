@@ -24,8 +24,6 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
-private const val MILLIS_PER_DAY = 86_400_000L
-
 private val dayJson = Json { ignoreUnknownKeys = true }
 
 @Serializable
