@@ -31,7 +31,7 @@ struct RootView: View {
 
 @MainActor
 final class SettingsStore: ObservableObject {
-    @Published private(set) var settings: AppSettings = AppSettings.companion.Default
+    @Published private(set) var settings: AppSettings = deps.defaultSettings
 
     private var watcher: Cancellable?
 

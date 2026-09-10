@@ -4,8 +4,9 @@ import Shared
 struct DashboardView: View {
     @StateObject private var model = DashboardModel()
     @Environment(\.colorScheme) private var scheme
-    @State private var launching: TrainingEntry?
+    @State private var launching: ProgramTurn?
     @State private var showingCards = false
+    @State private var isAdvancing = false
 
     var body: some View {
         NavigationStack {
@@ -23,8 +24,10 @@ struct DashboardView: View {
                 }
             }
             .navigationTitle("Dashboard")
-            .navigationDestination(item: $launching) { entry in
-                TrainingHost(entry: entry, vocabularyIds: model.sessionWordIds)
+            .navigationDestination(item: $launching) { turn in
+                TrainingHost(entry: turn.entry, vocabularyIds: turn.wordIds)
+                    .id(turn.id)
+                    .environment(\.onTrainingFinished, { Task { await finishTurn() } })
             }
             .navigationDestination(isPresented: $showingCards) {
                 ProgramCardsView(programId: model.program?.id)
@@ -120,8 +123,15 @@ struct DashboardView: View {
             showingCards = true
             return
         }
-        guard let next = await model.nextTraining() else { return }
-        launching = TrainingCatalog.entry(id: next)
+        launching = await model.nextTraining()
+    }
+
+    private func finishTurn() async {
+        guard !isAdvancing else { return }
+        isAdvancing = true
+        defer { isAdvancing = false }
+        launching = await model.advance()
+        if launching == nil { await model.load() }
     }
 }
 

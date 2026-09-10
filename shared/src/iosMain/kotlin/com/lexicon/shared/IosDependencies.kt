@@ -13,6 +13,7 @@ import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
 import com.lexicon.interactors.course.ObserveCoursesUseCase
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
+import com.lexicon.interactors.crossword.StartCrosswordSessionRequest
 import com.lexicon.interactors.crossword.StartCrosswordSessionUseCase
 import com.lexicon.interactors.crossword.SubmitCrosswordUseCase
 import com.lexicon.interactors.dictation.StartDictationSessionUseCase
@@ -20,8 +21,10 @@ import com.lexicon.interactors.dictation.SubmitDictationAnswerUseCase
 import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionUseCase
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerUseCase
 import com.lexicon.interactors.fillword.StartFillwordSessionUseCase
+import com.lexicon.interactors.imagetest.StartImageTestSessionRequest
 import com.lexicon.interactors.imagetest.StartImageTestSessionUseCase
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
+import com.lexicon.interactors.memorycards.StartMemoryCardsSessionRequest
 import com.lexicon.interactors.memorycards.StartMemoryCardsSessionUseCase
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
 import com.lexicon.interactors.mix.StartMixSessionUseCase
@@ -51,6 +54,7 @@ import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
 import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.CreateProgramUseCase
+import com.lexicon.interactors.program.DeleteProgramUseCase
 import com.lexicon.interactors.program.EnrolInProgramUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramProgressUseCase
@@ -59,11 +63,12 @@ import com.lexicon.interactors.program.GetStudyStreakUseCase
 import com.lexicon.interactors.program.GetWordCardsUseCase
 import com.lexicon.interactors.program.LeaveProgramUseCase
 import com.lexicon.interactors.program.MarkCardsSeenUseCase
+import com.lexicon.interactors.program.NextProgramTrainingUseCase
 import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
 import com.lexicon.interactors.program.ObserveProgramsUseCase
 import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramEnrolment
-import com.lexicon.interactors.program.StartProgramSessionUseCase
+import com.lexicon.interactors.program.ResetProgramUseCase
 import com.lexicon.interactors.program.UpdateProgramUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSentencesUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
@@ -77,6 +82,7 @@ import com.lexicon.interactors.settings.UpdateThemeModeUseCase
 import com.lexicon.interactors.sync.CatalogSeedStatus
 import com.lexicon.interactors.sync.SeedCatalogsUseCase
 import com.lexicon.interactors.training.CheckTrainingReadinessUseCase
+import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionRequest
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
 import com.lexicon.interactors.wordcard.RecordWordCardSeenUseCase
@@ -141,7 +147,9 @@ object IosDependencies : KoinComponent {
     val observeActiveEnrolment: ObserveActiveEnrolmentUseCase by inject()
     val enrolInProgram: EnrolInProgramUseCase by inject()
     val leaveProgram: LeaveProgramUseCase by inject()
-    val startProgramSession: StartProgramSessionUseCase by inject()
+    val nextProgramTraining: NextProgramTrainingUseCase by inject()
+    val resetProgram: ResetProgramUseCase by inject()
+    val deleteProgram: DeleteProgramUseCase by inject()
     val getProgramProgress: GetProgramProgressUseCase by inject()
     val getStudyStreak: GetStudyStreakUseCase by inject()
     val getProgramDay: GetProgramDayUseCase by inject()
@@ -193,11 +201,21 @@ object IosDependencies : KoinComponent {
      * instead, the same way use cases are.
      */
     val searchPageSize: Int get() = SearchVocabularyUseCase.PAGE
+    val minStepCount: Int get() = AppSettings.MIN_STEP_COUNT
+    val maxStepCount: Int get() = AppSettings.MAX_STEP_COUNT
+    val defaultSettings: AppSettings get() = AppSettings.Default
+    val imageTestOptionCount: Int get() = StartImageTestSessionRequest.DEFAULT_OPTION_COUNT
+    val memoryCardsPairsPerStep: Int get() = StartMemoryCardsSessionRequest.DEFAULT_PAIRS_PER_STEP
+    val trueOrFalsePoolSize: Int get() = StartTrueOrFalseSessionRequest.DEFAULT_POOL_SIZE
+    val trueOrFalseCorrectProbability: Double get() = StartTrueOrFalseSessionRequest.DEFAULT_CORRECT_PROBABILITY
+    val crosswordWordCount: Int get() = StartCrosswordSessionRequest.DEFAULT_WORD_COUNT
 
     fun exampleSentence(
         sentence: String,
         word: String,
     ): ExampleSentence = ExampleSentence.of(sentence, word)
+
+    fun editableExample(marked: String): String = ExampleSentence.editableText(marked)
 
     fun watchSettings(onEach: (AppSettings) -> Unit): Cancellable = observeSettings().watch(onEach)
 

@@ -47,7 +47,7 @@ struct MemoryCardsView: View {
                     case .word(let text):
                         Text(text).font(.callout).padding(4).multilineTextAlignment(.center)
                     case .picture(let url, let fallback):
-                        if let link = URL(string: url) {
+                        if let link = imageURL(url) {
                             AsyncImage(url: link) { image in
                                 image.resizable().scaledToFill()
                             } placeholder: {
@@ -73,7 +73,7 @@ struct MemoryCardsView: View {
         let response = try? await deps.startMemoryCards.invoke(
             request: StartMemoryCardsSessionRequest(
                 stepCount: nil,
-                pairsPerStep: StartMemoryCardsSessionRequest.companion.DEFAULT_PAIRS_PER_STEP,
+                pairsPerStep: deps.memoryCardsPairsPerStep,
                 vocabularyIds: vocabularyIds.map { KotlinLong(value: $0) }
             )
         )

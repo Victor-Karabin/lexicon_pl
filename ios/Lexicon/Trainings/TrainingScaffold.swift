@@ -83,11 +83,23 @@ struct TrainingScaffold<Content: View, Actions: View>: View {
     }
 }
 
+private struct TrainingFinishedKey: EnvironmentKey {
+    static var defaultValue: (() -> Void)? { nil }
+}
+
+extension EnvironmentValues {
+    var onTrainingFinished: (() -> Void)? {
+        get { self[TrainingFinishedKey.self] }
+        set { self[TrainingFinishedKey.self] = newValue }
+    }
+}
+
 struct SessionResultView: View {
     let tally: SessionTally
     let onDone: () -> Void
 
     @Environment(\.colorScheme) private var scheme
+    @Environment(\.onTrainingFinished) private var onTrainingFinished
 
     var body: some View {
         VStack(spacing: Spacing.large) {
@@ -106,7 +118,9 @@ struct SessionResultView: View {
                 }
             }
             Spacer()
-            Button("Done", action: onDone)
+            Button("Done") {
+                if let onTrainingFinished { onTrainingFinished() } else { onDone() }
+            }
                 .buttonStyle(.borderedProminent)
                 .frame(maxWidth: .infinity)
         }
