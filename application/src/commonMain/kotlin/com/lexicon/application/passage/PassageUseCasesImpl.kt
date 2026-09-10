@@ -69,17 +69,18 @@ class StartPassageSessionUseCaseImpl(
                 }.awaitAll()
         }
 
-        generated.firstOrNull { it.second is SentenceResultBoundary.Offline }
-            ?.let { return PassageSessionResult.Offline }
-        generated.firstOrNull { it.second is SentenceResultBoundary.Refused }
-            ?.let { return PassageSessionResult.Refused((it.second as SentenceResultBoundary.Refused).reason) }
-
         val sentences = generated.mapNotNull { (word, result) ->
-            (result as SentenceResultBoundary.Generated).sentence
-                .gapping(word.text)
+            (result as? SentenceResultBoundary.Generated)?.sentence
+                ?.gapping(word.text)
                 ?.let { PassageSentence(it.toImmutableList()) }
         }.take(wanted)
-        if (sentences.isEmpty()) return PassageSessionResult.Refused("no sentence used the word it was given")
+        if (sentences.isEmpty()) {
+            val results = generated.map { it.second }
+            if (results.any { it is SentenceResultBoundary.Offline }) return PassageSessionResult.Offline
+            results.firstNotNullOfOrNull { it as? SentenceResultBoundary.Refused }
+                ?.let { return PassageSessionResult.Refused(it.reason) }
+            return PassageSessionResult.Refused("no sentence used the word it was given")
+        }
 
         val passage = Passage(level = level, sentences = sentences.toImmutableList())
         val answers = passage.gaps.map { it.answer }
