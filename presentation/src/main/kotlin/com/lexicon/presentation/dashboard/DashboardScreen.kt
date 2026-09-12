@@ -174,6 +174,8 @@ private fun DashboardContent(
                 } else {
                     ActiveProgramCard(uiState = uiState, onContinue = onContinue)
                 }
+
+                uiState.studyTime?.let { StudyTimeCard(history = it) }
             }
     }
 }

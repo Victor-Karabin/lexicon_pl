@@ -11,17 +11,23 @@ struct DashboardView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                if let program = model.program {
-                    card(program)
-                        .padding(Spacing.medium)
-                } else {
-                    VStack(spacing: Spacing.large) {
-                        Text("No program yet. Build one on the Plan tab and it will show up here.")
-                            .multilineTextAlignment(.center)
-                            .foregroundStyle(.secondary)
+                VStack(spacing: Spacing.medium) {
+                    if let program = model.program {
+                        card(program)
+                    } else {
+                        VStack(spacing: Spacing.large) {
+                            Text("No program yet. Build one on the Plan tab and it will show up here.")
+                                .multilineTextAlignment(.center)
+                                .foregroundStyle(.secondary)
+                        }
+                        .padding(Spacing.xl)
                     }
-                    .padding(Spacing.xl)
+
+                    if let studyTime = model.studyTime {
+                        StudyTimeCard(history: studyTime)
+                    }
                 }
+                .padding(Spacing.medium)
             }
             .navigationTitle("Dashboard")
             .navigationDestination(item: $launching) { turn in

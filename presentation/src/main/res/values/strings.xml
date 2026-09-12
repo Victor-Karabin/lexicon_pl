@@ -177,6 +177,14 @@
     <string name="dashboard_trainings_of">%1$d of %2$d trainings today</string>
     <string name="dashboard_metric_unmeasured">—</string>
     <string name="dashboard_metric_accuracy">Correct answers</string>
+    <string name="dashboard_study_time_week">Study time this week</string>
+    <string name="dashboard_study_time_best">Best day %1$s · %2$s</string>
+    <string name="dashboard_study_time_empty">Nothing studied this week yet. Finish a training and the time shows up here.</string>
+    <string name="dashboard_study_time_chart">Study time by day: %1$s</string>
+    <string name="dashboard_study_time_day">%1$s %2$s</string>
+    <string name="dashboard_study_time_nothing">nothing</string>
+    <string name="duration_minutes">%1$d min</string>
+    <string name="duration_hours_minutes">%1$d h %2$d min</string>
     <string name="training_dictation_blurb">Hear a word and type it</string>
     <string name="training_dictation_puzzle_blurb">Hear a word and build it from letters</string>
     <string name="training_puzzle_blurb">Put the letters in the right order</string>

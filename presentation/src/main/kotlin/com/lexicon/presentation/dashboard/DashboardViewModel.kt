@@ -6,6 +6,7 @@ import com.lexicon.interactors.conjugation.ConjugationCourse
 import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
 import com.lexicon.interactors.program.CountStudySetUseCase
+import com.lexicon.interactors.program.GetDailyStudyTimeUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramProgressUseCase
 import com.lexicon.interactors.program.GetProgramUseCase
@@ -14,6 +15,7 @@ import com.lexicon.interactors.program.NextProgramTrainingUseCase
 import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
 import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramDay
+import com.lexicon.interactors.program.StudyTimeHistory
 import com.lexicon.model.program.ProgramProgress
 import com.lexicon.model.training.TrainingType
 import com.lexicon.model.vocabulary.VocabularyId
@@ -41,6 +43,7 @@ data class DashboardUiState(
     val launch: LaunchTraining? = null,
     val openCards: Boolean = false,
     val nothingToPractise: Boolean = false,
+    val studyTime: StudyTimeHistory? = null,
     val conjugationCourses: ImmutableList<ConjugationCourse> = persistentListOf(),
 ) {
     val hasConjugationCourse: Boolean get() = conjugationCourses.isNotEmpty()
@@ -64,6 +67,7 @@ class DashboardViewModel(
     private val getDay: GetProgramDayUseCase,
     private val getStreak: GetStudyStreakUseCase,
     private val countStudySet: CountStudySetUseCase,
+    private val getDailyStudyTime: GetDailyStudyTimeUseCase,
     observeActiveEnrolment: ObserveActiveEnrolmentUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(DashboardUiState())
@@ -83,14 +87,18 @@ class DashboardViewModel(
                     streakDays = if (program == null) 0 else getStreak(),
                     studySet = if (program == null) 0 else countStudySet(),
                     day = program?.let { getDay(it.id) },
+                    studyTime = getDailyStudyTime(),
                 )
             }
         }
     }
 
     fun onResumed() {
-        val program = _uiState.value.program ?: return
         viewModelScope.launch {
+            val studyTime = getDailyStudyTime()
+            _uiState.update { it.copy(studyTime = studyTime) }
+
+            val program = _uiState.value.program ?: return@launch
             val day = getDay(program.id)
             _uiState.update {
                 it.copy(

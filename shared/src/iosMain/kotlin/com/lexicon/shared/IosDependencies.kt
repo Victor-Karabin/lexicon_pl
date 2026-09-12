@@ -56,6 +56,7 @@ import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.CreateProgramUseCase
 import com.lexicon.interactors.program.DeleteProgramUseCase
 import com.lexicon.interactors.program.EnrolInProgramUseCase
+import com.lexicon.interactors.program.GetDailyStudyTimeUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramProgressUseCase
 import com.lexicon.interactors.program.GetProgramUseCase
@@ -152,6 +153,7 @@ object IosDependencies : KoinComponent {
     val deleteProgram: DeleteProgramUseCase by inject()
     val getProgramProgress: GetProgramProgressUseCase by inject()
     val getStudyStreak: GetStudyStreakUseCase by inject()
+    val getDailyStudyTime: GetDailyStudyTimeUseCase by inject()
     val getProgramDay: GetProgramDayUseCase by inject()
     val markCardsSeen: MarkCardsSeenUseCase by inject()
     val getWordCards: GetWordCardsUseCase by inject()
