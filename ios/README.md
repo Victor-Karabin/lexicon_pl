@@ -51,8 +51,6 @@ group, so a new `.swift` file under `Lexicon/` needs no project edit.
 
 ## What is not here yet
 
-- **The program run.** The dashboard offers the day's next training; running a whole
-  program day as a chain, as Android does, is not wired here.
 - **Unsplash.** Pexels, Pixabay and Openverse are wired; adding it is another
   `RemoteImageSource`-shaped class in `iosMain`.
 - **Landscape is enabled on iPad but unverified.** The layouts are vertical scrolls of

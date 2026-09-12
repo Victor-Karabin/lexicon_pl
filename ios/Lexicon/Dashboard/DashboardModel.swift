@@ -9,6 +9,7 @@ final class DashboardModel: ObservableObject {
     @Published private(set) var streak: Int = 0
     @Published private(set) var day: ProgramDay?
     @Published private(set) var nothingToPractise = false
+    @Published private(set) var studyTime: StudyTimeHistory?
 
     private var watcher: Cancellable?
     private var turns = 0
@@ -38,6 +39,7 @@ final class DashboardModel: ObservableObject {
     }
 
     private func load(enrolment: ProgramEnrolment?) async {
+        studyTime = try? await deps.getDailyStudyTime.invoke()
         guard let enrolment, let program = try? await deps.getProgram.invoke(id: enrolment.programId) else {
             self.program = nil
             return
