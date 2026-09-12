@@ -15,6 +15,7 @@ struct WordFormView: View {
     @State private var problem: String?
     @State private var textWasFilledIn = false
     @State private var translationWasFilledIn = false
+    @State private var memberships: [PresetMembership]?
 
     var body: some View {
         Form {
@@ -30,7 +31,11 @@ struct WordFormView: View {
             }
             Section("Example") {
                 ExampleSentenceRow(sentence: example, word: text)
-                TextField("A sentence using the word", text: $example, axis: .vertical)
+                TextField(
+                    "A sentence using the word",
+                    text: Binding(get: { deps.editableExample(marked: example) }, set: { example = $0 }),
+                    axis: .vertical
+                )
                     .lineLimit(2...4)
             }
 
@@ -44,7 +49,7 @@ struct WordFormView: View {
                             chosenImage = url
                         }
                         ForEach(ownImages + images, id: \.self) { url in
-                            AsyncImage(url: URL(string: url)) { image in
+                            AsyncImage(url: imageURL(url)) { image in
                                 image.resizable().scaledToFill()
                             } placeholder: {
                                 Color.secondary.opacity(0.2)
@@ -85,6 +90,7 @@ struct WordFormView: View {
         text = word.text
         translation = word.translation
         example = word.example
+        memberships = await presetMemberships(of: wordId)
 
         chosenImage = try? await deps.getPinnedImage.invoke(translation: word.translation)
         if let pinned = chosenImage, isOwnImage(pinned) { ownImages = [pinned] }
@@ -109,16 +115,26 @@ struct WordFormView: View {
         if chosenImage == nil { chosenImage = images.first }
     }
 
+    private func presetMemberships(of wordId: Int64) async -> [PresetMembership]? {
+        (try? await deps.getWordPresetMemberships.invoke(wordId: VocabularyId(value: wordId))) as? [PresetMembership]
+    }
+
     private func save() async {
         do {
             if let wordId {
+                var known = memberships
+                if known == nil { known = await presetMemberships(of: wordId) }
+                guard let known else {
+                    problem = "The word's presets could not be read, so nothing was saved. Try again."
+                    return
+                }
                 _ = try await deps.updateWord.invoke(
                     id: VocabularyId(value: wordId),
                     text: text,
                     translation: translation,
                     imageUrl: chosenImage,
                     example: example,
-                    presetIds: []
+                    presetIds: known.filter { $0.isMember }.map { $0.preset.id }
                 )
             } else {
                 _ = try await deps.createWord.invoke(

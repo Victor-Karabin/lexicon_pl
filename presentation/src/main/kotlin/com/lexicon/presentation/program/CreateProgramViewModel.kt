@@ -42,6 +42,7 @@ data class CreateProgramUiState(
     val queue: ImmutableList<String> = persistentListOf(),
     val problem: ProgramDraftProblem? = null,
     val isSaved: Boolean = false,
+    val isSaving: Boolean = false,
     val isEditing: Boolean = false,
     val isEnrolled: Boolean = false,
     val isDeleted: Boolean = false,
@@ -51,7 +52,7 @@ data class CreateProgramUiState(
 
     val hasStudySet: Boolean get() = studySet > 0
 
-    val canSave: Boolean get() = queue.isNotEmpty() && hasStudySet
+    val canSave: Boolean get() = queue.isNotEmpty() && hasStudySet && !isSaving
 }
 
 class CreateProgramViewModel(
@@ -156,6 +157,9 @@ class CreateProgramViewModel(
         description: String,
     ) {
         val state = _uiState.value
+        if (!state.canSave) return
+        _uiState.update { it.copy(isSaving = true, problem = null) }
+
         val draft = ProgramDraft(
             title = name,
             description = description,
@@ -168,7 +172,7 @@ class CreateProgramViewModel(
             saved.onSuccess {
                 _uiState.update { it.copy(isSaved = true) }
             }.onFailure { error ->
-                _uiState.update { it.copy(problem = (error as? ProgramDraftException)?.problem) }
+                _uiState.update { it.copy(isSaving = false, problem = (error as? ProgramDraftException)?.problem) }
             }
         }
     }

@@ -15,7 +15,7 @@ struct ProgramCardsView: View {
                 let skin = TileSkin.standard(highlighted: true, scheme: scheme)
                 TrainingScaffold(step: index, total: cards.count, state: .unanswered) {
                     Tile(skin: skin) {
-                        if let url = card.imageUrl, let link = URL(string: url) {
+                        if let url = card.imageUrl, let link = imageURL(url) {
                             AsyncImage(url: link) { $0.resizable().scaledToFill() } placeholder: {
                                 Color.secondary.opacity(0.15)
                             }

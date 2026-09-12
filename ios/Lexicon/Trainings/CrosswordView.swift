@@ -109,7 +109,7 @@ struct CrosswordView: View {
     private func start() async {
         session = try? await deps.startCrossword.invoke(
             request: StartCrosswordSessionRequest(
-                wordCount: StartCrosswordSessionRequest.companion.DEFAULT_WORD_COUNT,
+                wordCount: deps.crosswordWordCount,
                 vocabularyIds: vocabularyIds.map { KotlinLong(value: $0) }
             )
         )

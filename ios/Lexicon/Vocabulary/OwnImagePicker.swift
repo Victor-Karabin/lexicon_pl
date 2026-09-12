@@ -6,6 +6,13 @@ private let ownImageDirectory = "word_images"
 
 func isOwnImage(_ url: String) -> Bool { url.hasPrefix("file:") }
 
+func imageURL(_ url: String) -> URL? {
+    guard isOwnImage(url), let stored = URL(string: url) else { return URL(string: url) }
+    return URL.documentsDirectory
+        .appendingPathComponent(ownImageDirectory, isDirectory: true)
+        .appendingPathComponent(stored.lastPathComponent)
+}
+
 struct AddImageTile: View {
     let onPicked: (String) -> Void
 

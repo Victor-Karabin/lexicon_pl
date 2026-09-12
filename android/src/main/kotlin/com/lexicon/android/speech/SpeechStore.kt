@@ -8,6 +8,8 @@ private const val SYNTHESIZE_DIR = ".synthesize"
 
 private const val EXTENSION = ".mp3"
 
+private const val PARTIAL_SUFFIX = ".part"
+
 interface SpeechStore {
     fun filePath(
         voice: String,
@@ -22,8 +24,10 @@ interface SpeechStore {
 }
 
 class AndroidSpeechStore(
-    private val context: Context,
+    private val root: File,
 ) : SpeechStore {
+    constructor(context: Context) : this(File(context.filesDir, SYNTHESIZE_DIR))
+
     override fun filePath(
         voice: String,
         text: String,
@@ -35,14 +39,19 @@ class AndroidSpeechStore(
         audio: ByteArray,
     ): String? {
         val file = file(voice, text) ?: return null
-        return runCatching { file.apply { writeBytes(audio) }.absolutePath }.getOrNull()
+        val partial = File(file.parentFile, file.name + PARTIAL_SUFFIX)
+        return runCatching {
+            partial.writeBytes(audio)
+            check(partial.renameTo(file)) { "could not move ${partial.name} into place" }
+            file.absolutePath
+        }.onFailure { partial.delete() }.getOrNull()
     }
 
     private fun file(
         voice: String,
         text: String,
     ): File? {
-        val directory = File(File(context.filesDir, SYNTHESIZE_DIR), voice)
+        val directory = File(root, voice)
         if (!directory.isDirectory && !directory.mkdirs()) return null
         return File(directory, text.fileName())
     }

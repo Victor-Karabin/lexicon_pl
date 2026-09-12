@@ -217,4 +217,21 @@ class StartPassageSessionUseCaseImplTest {
 
             assertEquals(session.passage.gaps.map { it.answer }.toSet(), session.bank.toSet())
         }
+
+    @Test
+    fun `one refused sentence does not cost the whole passage`() =
+        runTest {
+            givenStudySet("nowy", "okno", "dom")
+            coEvery { generator.generate(any()) } answers {
+                when (val word = firstArg<SentenceRequestBoundary>().word) {
+                    "dom" -> SentenceResultBoundary.Refused("busy")
+                    "nowy" -> SentenceResultBoundary.Generated("Mam nowy telefon.")
+                    else -> SentenceResultBoundary.Generated("Otwórz proszę $word.")
+                }
+            }
+
+            val session = run() as PassageSessionResult.Ready
+
+            assertEquals(listOf("nowy", "okno"), session.passage.gaps.map { it.word }.sorted())
+        }
 }

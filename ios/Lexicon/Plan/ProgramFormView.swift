@@ -13,6 +13,7 @@ struct ProgramFormView: View {
     @State private var queue: [String] = []
     @State private var isEnrolled = false
     @State private var loaded = false
+    @State private var confirming: ProgramAction?
 
     @State private var draggedFrom: Int?
     @State private var dragOffset: CGFloat = 0
@@ -107,6 +108,12 @@ struct ProgramFormView: View {
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.bordered)
+                    HStack {
+                        Button(ProgramAction.reset.title, role: .destructive) { confirming = .reset }
+                        Spacer()
+                        Button(ProgramAction.delete.title, role: .destructive) { confirming = .delete }
+                    }
+                    .font(.callout)
                 }
                 if queue.isEmpty {
                     Text("Add at least one training to save.").font(.caption).foregroundStyle(.secondary)
@@ -117,6 +124,16 @@ struct ProgramFormView: View {
             }
             .padding(Spacing.medium)
             .background(.bar)
+        }
+        .confirmationDialog(
+            confirming?.title ?? "",
+            isPresented: Binding(get: { confirming != nil }, set: { if !$0 { confirming = nil } }),
+            titleVisibility: .visible,
+            presenting: confirming
+        ) { action in
+            Button(action.title, role: .destructive) { Task { await perform(action) } }
+        } message: { action in
+            Text(action.message)
         }
     }
 
@@ -213,6 +230,17 @@ struct ProgramFormView: View {
         loaded = true
     }
 
+    private func perform(_ action: ProgramAction) async {
+        guard let programId else { return }
+        switch action {
+        case .reset:
+            try? await deps.resetProgram.invoke(id: programId)
+        case .delete:
+            try? await deps.deleteProgram.invoke(id: programId)
+            dismiss()
+        }
+    }
+
     private func save() async {
         let draft = ProgramDraft(
             title: "My program",
@@ -261,6 +289,27 @@ struct FlowLayout: Layout {
             view.place(at: CGPoint(x: x, y: y), proposal: ProposedViewSize(size))
             x += size.width + spacing
             lineHeight = max(lineHeight, size.height)
+        }
+    }
+}
+
+private enum ProgramAction {
+    case reset
+    case delete
+
+    var title: String {
+        switch self {
+        case .reset: return "Reset progress"
+        case .delete: return "Delete program"
+        }
+    }
+
+    var message: String {
+        switch self {
+        case .reset:
+            return "Today's plan, every completed day and the review schedule for this program's words are cleared. The program itself is kept."
+        case .delete:
+            return "The program and everything it recorded are removed. Your words stay in the study set."
         }
     }
 }

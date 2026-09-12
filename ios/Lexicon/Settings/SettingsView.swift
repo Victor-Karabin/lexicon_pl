@@ -41,7 +41,7 @@ struct SettingsView: View {
                                     Task { try? await deps.updateStepCount.invoke(stepCount: Int32(value.rounded())) }
                                 }
                             ),
-                            in: Double(AppSettings.companion.MIN_STEP_COUNT)...Double(AppSettings.companion.MAX_STEP_COUNT),
+                            in: Double(deps.minStepCount)...Double(deps.maxStepCount),
                             step: 1
                         )
                         Text("Applies to new training sessions only.")

@@ -52,8 +52,8 @@ struct TrueOrFalseView: View {
     private func start() async {
         let response = try? await deps.startTrueOrFalse.invoke(
             request: StartTrueOrFalseSessionRequest(
-                poolSize: StartTrueOrFalseSessionRequest.companion.DEFAULT_POOL_SIZE,
-                correctProbability: StartTrueOrFalseSessionRequest.companion.DEFAULT_CORRECT_PROBABILITY,
+                poolSize: deps.trueOrFalsePoolSize,
+                correctProbability: deps.trueOrFalseCorrectProbability,
                 vocabularyIds: vocabularyIds.map { KotlinLong(value: $0) }
             )
         )

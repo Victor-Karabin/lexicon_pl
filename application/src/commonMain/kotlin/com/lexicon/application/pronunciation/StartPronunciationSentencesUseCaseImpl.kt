@@ -47,22 +47,25 @@ class StartPronunciationSentencesUseCaseImpl(
                 }.awaitAll()
         }
 
-        generated.firstOrNull { it.second is SentenceResultBoundary.Offline }
-            ?.let { return PronunciationSentencesResult.Offline }
-        generated.firstOrNull { it.second is SentenceResultBoundary.Refused }
-            ?.let { return PronunciationSentencesResult.Refused((it.second as SentenceResultBoundary.Refused).reason) }
-
-        val steps = generated.mapIndexed { index, (word, result) ->
-            val sentence = (result as SentenceResultBoundary.Generated).sentence.trim()
-            PronunciationStepResponse(
-                stepIndex = index,
-                vocabularyItemId = word.id.value,
-                expectedText = sentence,
-                clueText = sentence,
-                transcription = "",
-            )
+        val steps = generated
+            .mapNotNull { (word, result) ->
+                (result as? SentenceResultBoundary.Generated)?.sentence?.trim()?.takeIf { it.isNotEmpty() }?.let { word to it }
+            }.mapIndexed { index, (word, sentence) ->
+                PronunciationStepResponse(
+                    stepIndex = index,
+                    vocabularyItemId = word.id.value,
+                    expectedText = sentence,
+                    clueText = sentence,
+                    transcription = "",
+                )
+            }
+        if (steps.isEmpty()) {
+            val results = generated.map { it.second }
+            if (results.any { it is SentenceResultBoundary.Offline }) return PronunciationSentencesResult.Offline
+            results.firstNotNullOfOrNull { it as? SentenceResultBoundary.Refused }
+                ?.let { return PronunciationSentencesResult.Refused(it.reason) }
+            return PronunciationSentencesResult.Refused("no sentence came back")
         }
-        if (steps.isEmpty()) return PronunciationSentencesResult.Refused("no sentence came back")
 
         return PronunciationSentencesResult.Ready(
             PronunciationSessionResponse(sessionId = Uuid.random().toString(), steps = steps),
