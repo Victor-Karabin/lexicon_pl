@@ -52,6 +52,7 @@ import com.lexicon.application.presets.UpdateWordUseCaseImpl
 import com.lexicon.application.program.AdvanceProgramDayUseCaseImpl
 import com.lexicon.application.program.CreateProgramUseCaseImpl
 import com.lexicon.application.program.EnrolInProgramUseCaseImpl
+import com.lexicon.application.program.GetDailyStudyTimeUseCaseImpl
 import com.lexicon.application.program.GetProgramDayUseCaseImpl
 import com.lexicon.application.program.GetProgramProgressUseCaseImpl
 import com.lexicon.application.program.GetProgramUseCaseImpl
@@ -152,6 +153,7 @@ import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.CreateProgramUseCase
 import com.lexicon.interactors.program.DeleteProgramUseCase
 import com.lexicon.interactors.program.EnrolInProgramUseCase
+import com.lexicon.interactors.program.GetDailyStudyTimeUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramProgressUseCase
 import com.lexicon.interactors.program.GetProgramUseCase
@@ -242,6 +244,7 @@ val domainModule = module {
     factoryOf(::StartProgramSessionUseCaseImpl) { bind<StartProgramSessionUseCase>() }
     factoryOf(::GetProgramProgressUseCaseImpl) { bind<GetProgramProgressUseCase>() }
     factoryOf(::GetStudyStreakUseCaseImpl) { bind<GetStudyStreakUseCase>() }
+    factoryOf(::GetDailyStudyTimeUseCaseImpl) { bind<GetDailyStudyTimeUseCase>() }
     factoryOf(::CreateProgramUseCaseImpl) { bind<CreateProgramUseCase>() }
     factoryOf(::UpdateProgramUseCaseImpl) { bind<UpdateProgramUseCase>() }
     factory<DeleteProgramUseCase> {
