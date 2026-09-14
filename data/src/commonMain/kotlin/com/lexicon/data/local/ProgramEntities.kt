@@ -18,14 +18,6 @@ data class ProgramEntity(
     val isUserCreated: Boolean = true,
 )
 
-@Entity(tableName = "program_enrolment")
-data class ProgramEnrolmentEntity(
-    @PrimaryKey val programId: String,
-    val startedAtEpochDay: Long,
-    val status: String,
-    val completedAtEpochDay: Long? = null,
-)
-
 @Entity(tableName = "program_day", primaryKeys = ["programId", "epochDay"], indices = [Index("programId")])
 data class ProgramDayEntity(
     val programId: String,

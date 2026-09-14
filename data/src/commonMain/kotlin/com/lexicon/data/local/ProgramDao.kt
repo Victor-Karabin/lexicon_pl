@@ -21,18 +21,6 @@ interface ProgramDao {
     @Query("SELECT COUNT(*) FROM programs")
     suspend fun countPrograms(): Int
 
-    @Query("SELECT * FROM program_enrolment WHERE programId = :programId")
-    suspend fun enrolment(programId: String): ProgramEnrolmentEntity?
-
-    @Query("SELECT * FROM program_enrolment WHERE status = :status LIMIT 1")
-    suspend fun enrolmentWithStatus(status: String): ProgramEnrolmentEntity?
-
-    @Query("SELECT * FROM program_enrolment WHERE status = :status LIMIT 1")
-    fun observeEnrolmentWithStatus(status: String): Flow<ProgramEnrolmentEntity?>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsertEnrolment(enrolment: ProgramEnrolmentEntity)
-
     @Query("SELECT * FROM program_day WHERE programId = :programId AND epochDay = :epochDay")
     suspend fun day(
         programId: String,
@@ -70,9 +58,6 @@ interface ProgramDao {
     @Query("DELETE FROM programs WHERE id = :programId")
     suspend fun deleteProgramRow(programId: String)
 
-    @Query("DELETE FROM program_enrolment WHERE programId = :programId")
-    suspend fun deleteEnrolment(programId: String)
-
     @Query("DELETE FROM program_day WHERE programId = :programId")
     suspend fun deleteDays(programId: String)
 
@@ -92,7 +77,6 @@ interface ProgramDao {
     @Transaction
     suspend fun deleteProgram(programId: String) {
         clearProgress(programId)
-        deleteEnrolment(programId)
         deleteProgramRow(programId)
     }
 }

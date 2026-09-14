@@ -153,16 +153,13 @@ class GetProgramProgressUseCaseImpl(
         }
 
         if (weights.consistency > 0) {
-            val enrolment = programs.enrolment(program.id.value)
             val today = clock.todayEpochDay()
+            val studiedDays = study.daysBetween(0, today).filter { it.answers > 0 }
+            val elapsed = studiedDays.minOfOrNull { it.epochDay }?.let { (today - it + 1).toInt() } ?: 0
 
-            val elapsed = enrolment?.let { (today - it.startedAtEpochDay + 1).toInt() } ?: 0
-            val studied = enrolment?.let {
-                study.daysBetween(it.startedAtEpochDay, today).count { day -> day.answers > 0 }
-            } ?: 0
             metrics += ProgressMetric(
                 type = ProgressMetricType.CONSISTENCY,
-                current = studied,
+                current = studiedDays.size,
                 target = elapsed.coerceAtLeast(1),
                 weight = weights.consistency,
             )

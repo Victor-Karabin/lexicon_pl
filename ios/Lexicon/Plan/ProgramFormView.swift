@@ -11,7 +11,6 @@ struct ProgramFormView: View {
     @State private var newWords = 10
     @State private var reviewWords = 10
     @State private var queue: [String] = []
-    @State private var isEnrolled = false
     @State private var loaded = false
     @State private var confirming: ProgramAction?
 
@@ -57,7 +56,7 @@ struct ProgramFormView: View {
                 Text("Trainings").font(.subheadline.weight(.semibold))
 
                 FlowLayout(spacing: Spacing.small) {
-                    ForEach(TrainingCatalog.all.filter { $0.id != "memory_cards" && $0.id != "crossword" }) { entry in
+                    ForEach(TrainingCatalog.all) { entry in
                         Button { queue.append(entry.id) } label: {
                             Label(entry.name, systemImage: entry.symbol)
                                 .font(.caption)
@@ -95,19 +94,6 @@ struct ProgramFormView: View {
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: Spacing.small) {
                 if programId != nil {
-                    AsyncButton {
-                        guard let programId else { return }
-                        if isEnrolled {
-                            try? await deps.leaveProgram.invoke(id: programId)
-                        } else {
-                            _ = try? await deps.enrolInProgram.invoke(id: programId)
-                        }
-                        isEnrolled.toggle()
-                    } label: {
-                        Text(isEnrolled ? "In progress · tap to stop" : "Start this program")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.bordered)
                     HStack {
                         Button(ProgramAction.reset.title, role: .destructive) { confirming = .reset }
                         Spacer()
@@ -224,8 +210,8 @@ struct ProgramFormView: View {
             newWords = min(max(Int(plan.newWords), minimumNewWords), max(studySet, minimumNewWords))
             reviewWords = min(Int(plan.reviewWords), max(studySet, minimumNewWords))
             queue = plan.queue
-            let active = try? await deps.observeActiveEnrolmentFirst()
-            isEnrolled = active?.programId.value == programId.value
+        } else if programId == nil {
+            queue = deps.prefilledProgramQueue
         }
         loaded = true
     }

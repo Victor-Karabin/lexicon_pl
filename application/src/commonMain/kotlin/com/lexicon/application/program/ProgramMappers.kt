@@ -1,12 +1,9 @@
 package com.lexicon.application.program
 
 import com.lexicon.boundary.ProgramBoundary
-import com.lexicon.boundary.ProgramEnrolmentBoundary
-import com.lexicon.interactors.program.EnrolmentStatus
 import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramConfig
 import com.lexicon.interactors.program.ProgramDifficulty
-import com.lexicon.interactors.program.ProgramEnrolment
 import com.lexicon.interactors.program.ProgramVisibility
 import com.lexicon.model.program.ProgramId
 import com.lexicon.model.vocabulary.LocalizedText
@@ -34,26 +31,8 @@ fun ProgramBoundary.toProgram(): Program =
         isUserCreated = isUserCreated,
     )
 
-fun ProgramEnrolmentBoundary.toEnrolment(): ProgramEnrolment =
-    ProgramEnrolment(
-        programId = ProgramId(programId),
-        startedAtEpochDay = startedAtEpochDay,
-        status = status.toStatus(),
-        completedAtEpochDay = completedAtEpochDay,
-    )
-
-fun ProgramEnrolment.toBoundary(): ProgramEnrolmentBoundary =
-    ProgramEnrolmentBoundary(
-        programId = programId.value,
-        startedAtEpochDay = startedAtEpochDay,
-        status = status.name,
-        completedAtEpochDay = completedAtEpochDay,
-    )
-
 private fun String.toDifficulty(): ProgramDifficulty =
     ProgramDifficulty.entries.firstOrNull { it.name == uppercase() } ?: ProgramDifficulty.BEGINNER
 
 private fun String.toVisibility(): ProgramVisibility =
     ProgramVisibility.entries.firstOrNull { it.name == uppercase() } ?: ProgramVisibility.PUBLIC
-
-private fun String.toStatus(): EnrolmentStatus = EnrolmentStatus.entries.firstOrNull { it.name == uppercase() } ?: EnrolmentStatus.ACTIVE

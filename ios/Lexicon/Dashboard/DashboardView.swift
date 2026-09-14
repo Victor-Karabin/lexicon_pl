@@ -16,7 +16,7 @@ struct DashboardView: View {
                         card(program)
                     } else {
                         VStack(spacing: Spacing.large) {
-                            Text("No program yet. Build one on the Plan tab and it will show up here.")
+                            Text("Nothing running yet. Add words to your study set and build a program on the Plan tab.")
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(.secondary)
                         }

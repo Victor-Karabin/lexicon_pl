@@ -9,10 +9,9 @@ import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.GetDailyStudyTimeUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramProgressUseCase
-import com.lexicon.interactors.program.GetProgramUseCase
 import com.lexicon.interactors.program.GetStudyStreakUseCase
 import com.lexicon.interactors.program.NextProgramTrainingUseCase
-import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
+import com.lexicon.interactors.program.ObserveActiveProgramUseCase
 import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramDay
 import com.lexicon.interactors.program.StudyTimeHistory
@@ -59,7 +58,6 @@ data class DashboardUiState(
 }
 
 class DashboardViewModel(
-    private val getProgram: GetProgramUseCase,
     private val getProgress: GetProgramProgressUseCase,
     private val queue: NextProgramTrainingUseCase,
     private val loadConjugationCourses: LoadConjugationCoursesUseCase,
@@ -68,16 +66,15 @@ class DashboardViewModel(
     private val getStreak: GetStudyStreakUseCase,
     private val countStudySet: CountStudySetUseCase,
     private val getDailyStudyTime: GetDailyStudyTimeUseCase,
-    observeActiveEnrolment: ObserveActiveEnrolmentUseCase,
+    observeActiveProgram: ObserveActiveProgramUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(DashboardUiState())
     val uiState: StateFlow<DashboardUiState> = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            observeActiveEnrolment().collect { enrolment ->
+            observeActiveProgram().collect { program ->
                 val courses = loadConjugationCourses()
-                val program = enrolment?.let { getProgram(it.programId) }
 
                 _uiState.value = DashboardUiState(
                     isLoading = false,

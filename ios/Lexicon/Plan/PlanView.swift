@@ -145,19 +145,19 @@ final class PlanModel: ObservableObject {
 
     private var programWatcher: Cancellable?
     private var courseWatcher: Cancellable?
-    private var enrolmentWatcher: Cancellable?
+    private var activeWatcher: Cancellable?
 
     init() {
         programWatcher = deps.watchPrograms { [weak self] value in self?.programs = value }
         courseWatcher = deps.watchCourses { [weak self] value in self?.courses = value }
-        enrolmentWatcher = deps.watchActiveEnrolment { [weak self] enrolment in
-            self?.activeProgramId = enrolment?.programId.value
+        activeWatcher = deps.watchActiveProgram { [weak self] program in
+            self?.activeProgramId = program?.id.value
         }
     }
 
     deinit {
         programWatcher?.cancel()
         courseWatcher?.cancel()
-        enrolmentWatcher?.cancel()
+        activeWatcher?.cancel()
     }
 }

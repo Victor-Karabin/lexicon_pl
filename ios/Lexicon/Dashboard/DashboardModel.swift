@@ -15,8 +15,8 @@ final class DashboardModel: ObservableObject {
     private var turns = 0
 
     init() {
-        watcher = deps.watchActiveEnrolment { [weak self] enrolment in
-            Task { await self?.load(enrolment: enrolment) }
+        watcher = deps.watchActiveProgram { [weak self] program in
+            Task { await self?.load(program: program) }
         }
     }
 
@@ -34,13 +34,13 @@ final class DashboardModel: ObservableObject {
     }
 
     func load() async {
-        let enrolment = try? await deps.observeActiveEnrolmentFirst()
-        await load(enrolment: enrolment)
+        let program = try? await deps.activeProgramFirst()
+        await load(program: program)
     }
 
-    private func load(enrolment: ProgramEnrolment?) async {
+    private func load(program: Program?) async {
         studyTime = try? await deps.getDailyStudyTime.invoke()
-        guard let enrolment, let program = try? await deps.getProgram.invoke(id: enrolment.programId) else {
+        guard let program else {
             self.program = nil
             return
         }
@@ -106,14 +106,14 @@ struct ProgramTurn: Identifiable, Hashable {
 
 extension IosDependencies {
 
-    func observeActiveEnrolmentFirst() async throws -> ProgramEnrolment? {
+    func activeProgramFirst() async throws -> Program? {
         try await withCheckedThrowingContinuation { continuation in
             var handle: Cancellable?
             var resumed = false
-            handle = watchActiveEnrolment { enrolment in
+            handle = watchActiveProgram { program in
                 guard !resumed else { return }
                 resumed = true
-                continuation.resume(returning: enrolment)
+                continuation.resume(returning: program)
                 handle?.cancel()
             }
         }

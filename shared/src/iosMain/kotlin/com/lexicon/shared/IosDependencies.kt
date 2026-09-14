@@ -55,22 +55,20 @@ import com.lexicon.interactors.presets.UpdateWordUseCase
 import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.CreateProgramUseCase
 import com.lexicon.interactors.program.DeleteProgramUseCase
-import com.lexicon.interactors.program.EnrolInProgramUseCase
 import com.lexicon.interactors.program.GetDailyStudyTimeUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramProgressUseCase
 import com.lexicon.interactors.program.GetProgramUseCase
 import com.lexicon.interactors.program.GetStudyStreakUseCase
 import com.lexicon.interactors.program.GetWordCardsUseCase
-import com.lexicon.interactors.program.LeaveProgramUseCase
 import com.lexicon.interactors.program.MarkCardsSeenUseCase
 import com.lexicon.interactors.program.NextProgramTrainingUseCase
-import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
+import com.lexicon.interactors.program.ObserveActiveProgramUseCase
 import com.lexicon.interactors.program.ObserveProgramsUseCase
 import com.lexicon.interactors.program.Program
-import com.lexicon.interactors.program.ProgramEnrolment
 import com.lexicon.interactors.program.ResetProgramUseCase
 import com.lexicon.interactors.program.UpdateProgramUseCase
+import com.lexicon.interactors.program.defaultProgramQueue
 import com.lexicon.interactors.pronunciation.StartPronunciationSentencesUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
@@ -145,9 +143,7 @@ object IosDependencies : KoinComponent {
     val createProgram: CreateProgramUseCase by inject()
     val updateProgram: UpdateProgramUseCase by inject()
     val countStudySet: CountStudySetUseCase by inject()
-    val observeActiveEnrolment: ObserveActiveEnrolmentUseCase by inject()
-    val enrolInProgram: EnrolInProgramUseCase by inject()
-    val leaveProgram: LeaveProgramUseCase by inject()
+    val observeActiveProgram: ObserveActiveProgramUseCase by inject()
     val nextProgramTraining: NextProgramTrainingUseCase by inject()
     val resetProgram: ResetProgramUseCase by inject()
     val deleteProgram: DeleteProgramUseCase by inject()
@@ -203,6 +199,7 @@ object IosDependencies : KoinComponent {
      * instead, the same way use cases are.
      */
     val searchPageSize: Int get() = SearchVocabularyUseCase.PAGE
+    val prefilledProgramQueue: List<String> get() = defaultProgramQueue
     val minStepCount: Int get() = AppSettings.MIN_STEP_COUNT
     val maxStepCount: Int get() = AppSettings.MAX_STEP_COUNT
     val defaultSettings: AppSettings get() = AppSettings.Default
@@ -229,7 +226,7 @@ object IosDependencies : KoinComponent {
 
     fun watchPrograms(onEach: (List<Program>) -> Unit): Cancellable = observePrograms().watch(onEach)
 
-    fun watchActiveEnrolment(onEach: (ProgramEnrolment?) -> Unit): Cancellable = observeActiveEnrolment().watch(onEach)
+    fun watchActiveProgram(onEach: (Program?) -> Unit): Cancellable = observeActiveProgram().watch(onEach)
 
     private fun <T> Flow<T>.watch(onEach: (T) -> Unit): Cancellable {
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)

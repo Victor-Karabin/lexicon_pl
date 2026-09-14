@@ -153,8 +153,8 @@ val trainingCatalog =
             icon = Icons.Default.AutoAwesome,
             blurb = R.string.training_mix_blurb,
         ),
-    )
+    ).sortedBy { it.displayName.lowercase() }
 
-val programTrainings = trainingCatalog.filter { it.isEnabled && it.id != TrainingIds.MEMORY_CARDS }
+val programTrainings = trainingCatalog.filter { it.isEnabled }
 
 fun trainingDisplayName(id: String): String = trainingCatalog.firstOrNull { it.id == id }?.displayName ?: id

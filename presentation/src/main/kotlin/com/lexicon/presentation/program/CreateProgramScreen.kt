@@ -102,7 +102,6 @@ fun CreateProgramScreen(
         onTurnRemoved = viewModel::onTurnRemoved,
         onMove = viewModel::onMove,
         onSave = { viewModel.onSave(name = name, description = description) },
-        onEnrolToggled = viewModel::onEnrolToggled,
         onActionRequested = viewModel::onActionRequested,
         onActionConfirmed = viewModel::onActionConfirmed,
         onActionDismissed = viewModel::onActionDismissed,
@@ -121,7 +120,6 @@ private fun CreateProgramContent(
     onTurnRemoved: (Int) -> Unit,
     onMove: (from: Int, to: Int) -> Unit,
     onSave: () -> Unit,
-    onEnrolToggled: () -> Unit,
     onActionRequested: (ProgramAction) -> Unit,
     onActionConfirmed: () -> Unit,
     onActionDismissed: () -> Unit,
@@ -148,13 +146,6 @@ private fun CreateProgramContent(
                     verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
                 ) {
                     if (uiState.isEditing) {
-                        OutlinedButton(onClick = onEnrolToggled, modifier = Modifier.fillMaxWidth()) {
-                            Text(
-                                stringResource(
-                                    if (uiState.isEnrolled) R.string.program_leave else R.string.program_start,
-                                ),
-                            )
-                        }
                         Row(horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
                             OutlinedButton(
                                 onClick = { onActionRequested(ProgramAction.RESET) },
@@ -522,7 +513,6 @@ private fun CreateProgramEmptyStudySetPreview() {
             onTurnRemoved = {},
             onMove = { _, _ -> },
             onSave = {},
-            onEnrolToggled = {},
             onActionRequested = {},
             onActionConfirmed = {},
             onActionDismissed = {},
@@ -548,7 +538,6 @@ private fun CreateProgramPreview() {
             onTurnRemoved = {},
             onMove = { _, _ -> },
             onSave = {},
-            onEnrolToggled = {},
             onActionRequested = {},
             onActionConfirmed = {},
             onActionDismissed = {},

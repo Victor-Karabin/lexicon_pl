@@ -62,7 +62,7 @@ enum TrainingCatalog {
         .init(id: "passage_bank", name: "Read and Choose", blurb: "Fill the gaps from a bank of words", symbol: "list.bullet.rectangle"),
         .init(id: "fillword", name: "Word Search", blurb: "Find the hidden words in the grid", symbol: "square.grid.3x3"),
         .init(id: "mix", name: "Mix", blurb: "A little of every training", symbol: "sparkles"),
-    ]
+    ].sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
 
     static func entry(id: String) -> TrainingEntry? { all.first { $0.id == id } }
 }

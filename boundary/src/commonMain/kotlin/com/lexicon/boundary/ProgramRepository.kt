@@ -15,14 +15,6 @@ interface ProgramRepository {
 
     suspend fun clearProgress(id: String)
 
-    suspend fun enrolment(programId: String): ProgramEnrolmentBoundary?
-
-    suspend fun activeEnrolment(): ProgramEnrolmentBoundary?
-
-    fun observeActiveEnrolment(): Flow<ProgramEnrolmentBoundary?>
-
-    suspend fun saveEnrolment(enrolment: ProgramEnrolmentBoundary)
-
     suspend fun day(
         programId: String,
         epochDay: Long,

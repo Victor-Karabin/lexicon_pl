@@ -1,6 +1,5 @@
 package com.lexicon.application.program
 
-import com.lexicon.boundary.ProgramEnrolmentBoundary
 import com.lexicon.boundary.ProgramRepository
 import com.lexicon.boundary.ReviewScheduleRepository
 import com.lexicon.interactors.program.GetProgramUseCase
@@ -16,27 +15,20 @@ import io.mockk.coEvery
 import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.slot
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-private const val NOW_MILLIS = 1_700_000_000_000
-private const val STARTED_LONG_AGO = 1L
-
 class ResetProgramUseCaseTest {
     private val id = ProgramId("mine")
-    private val clock = FixedClock(NOW_MILLIS)
 
     private val programs: ProgramRepository = mockk()
     private val reviews: ReviewScheduleRepository = mockk()
     private val getProgram: GetProgramUseCase = mockk()
     private val resolveScope: ResolveProgramScopeUseCase = mockk()
-    private val saved = slot<ProgramEnrolmentBoundary>()
 
-    private val reset = ResetProgramUseCaseImpl(programs, getProgram, resolveScope, reviews, clock)
+    private val reset = ResetProgramUseCaseImpl(programs, getProgram, resolveScope, reviews)
 
     @Before
     fun setUp() {
@@ -53,15 +45,7 @@ class ResetProgramUseCaseTest {
                 config = ProgramConfig(),
             )
         coEvery { resolveScope(any()) } returns listOf(1L, 2L, 3L).map(::VocabularyId).toImmutableList()
-        coEvery { programs.enrolment(id.value) } returns
-            ProgramEnrolmentBoundary(
-                programId = id.value,
-                startedAtEpochDay = STARTED_LONG_AGO,
-                status = "ACTIVE",
-                completedAtEpochDay = 4,
-            )
         coJustRun { programs.clearProgress(any()) }
-        coJustRun { programs.saveEnrolment(capture(saved)) }
         coJustRun { reviews.forget(any()) }
     }
 
@@ -79,14 +63,5 @@ class ResetProgramUseCaseTest {
             reset(id)
 
             coVerify { reviews.forget(listOf(1L, 2L, 3L)) }
-        }
-
-    @Test
-    fun `the enrolment starts again from today`() =
-        runTest {
-            reset(id)
-
-            assertEquals(clock.todayEpochDay(), saved.captured.startedAtEpochDay)
-            assertEquals(null, saved.captured.completedAtEpochDay)
         }
 }

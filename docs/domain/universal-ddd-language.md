@@ -84,7 +84,7 @@ under [Context-Specific Terminology](#context-specific-terminology) and must not
 | Streak | Consecutive study days | Scheduling | — | `GetStudyStreakUseCase` |
 | Program | A configuration that plans a learner's daily work | Program | *course*, *plan* | `ProgramId`, `Program` |
 | Program configuration | The stored, read-mostly description of a program | Program | *settings* | `ProgramConfig` — a stored format, not a domain object |
-| Enrolment | The learner's participation in a program | Program | *subscription* | `ProgramEnrolment`, `EnrolmentStatus` |
+| Active program | The program the dashboard runs: the first with a non-empty queue, whenever the study set holds words. There is no separate start or stop | Program | *enrolment*, *subscription* | `ObserveActiveProgramUseCase` |
 | Program day | One day's plan for a program, and how much of it is done | Program | *daily plan* | `ProgramDay` |
 | Queue | The ordered trainings a program day asks for | Program | *playlist* | `QueuedTraining` |
 | Activity | A unit of work in a program's plan, mapped to a training | Program | *task* | `ActivityType`, `PlannedActivity` |
@@ -205,7 +205,7 @@ indirection and buy nothing. What would be events are recorded facts or state tr
 | A step was answered | `RecordAnswerUseCase` |
 | A word became due | derived from `dueAtEpochDay` |
 | A day was completed | `ProgramDay.isComplete` |
-| A learner enrolled or left | `EnrolmentStatus` |
+| A program became active or idle | derived from the study set and the queue |
 | A milestone was reached | a row in `program_milestone` |
 | A catalogue changed | fingerprint mismatch |
 
@@ -221,7 +221,6 @@ Introducing an event type is a domain change and requires updating this document
 | Submit an answer | Mark one step against the session's expected answer | `Submit*UseCase` |
 | Record an answer | Store the result, advance the review schedule, credit the study day | `RecordAnswerUseCase` |
 | Advance the day | Mark the current training done and find the next runnable one | `NextProgramTrainingUseCase` |
-| Enrol / leave | Begin or abandon a program | `EnrolInProgramUseCase`, `LeaveProgramUseCase` |
 | Create a conjugation course | Fix a set of verbs as a course | `CreateConjugationCourseUseCase` |
 | Restore the verbs | Re-seed the verb catalogue from its asset | `RestoreConjugationVerbsUseCase` |
 | Seed the catalogues | Write shipped assets into the database | `SeedCatalogsUseCase` |
@@ -233,7 +232,7 @@ Introducing an event type is a domain change and requires updating this document
 | Step outcome | `CORRECT`, `INCORRECT`, `SKIPPED`, `SEEN` |
 | Step shape | `Question` (one word, one expected answer), `Board` (several words, paired) |
 | Preset membership | `NONE`, `SOME`, `ALL` |
-| Enrolment | `ACTIVE`, `COMPLETED`, `ABANDONED` |
+| Program | active (words starred and a queue), idle |
 | Catalogue step | `Pending`, `InProgress`, `Complete`, `Failed` |
 | Answer (UI) | `Unanswered`, `Correct`, `Incorrect`, `Skipped` |
 | Conjugation answer mode | `FULL_FORM`, `ENDING` |
