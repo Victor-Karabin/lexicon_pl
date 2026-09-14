@@ -156,7 +156,7 @@
     <string name="create_word_exists">“%1$s” is already in your vocabulary.</string>
     <string name="create_translating">Translating…</string>
 
-    <string name="dashboard_no_program">No program yet. Pick one on the Plan tab and it will show up here.</string>
+    <string name="dashboard_no_program">Nothing running yet. Add words to your study set and build a program on the Plan tab.</string>
     <string name="dashboard_go_to_plan">Go to Plan</string>
     <string name="dashboard_streak_unit">day streak</string>
     <string name="dashboard_day_done">Today is done. Come back tomorrow.</string>
@@ -177,6 +177,14 @@
     <string name="dashboard_trainings_of">%1$d of %2$d trainings today</string>
     <string name="dashboard_metric_unmeasured">—</string>
     <string name="dashboard_metric_accuracy">Correct answers</string>
+    <string name="dashboard_study_time_week">Study time this week</string>
+    <string name="dashboard_study_time_best">Best day %1$s · %2$s</string>
+    <string name="dashboard_study_time_empty">Nothing studied this week yet. Finish a training and the time shows up here.</string>
+    <string name="dashboard_study_time_chart">Study time by day: %1$s</string>
+    <string name="dashboard_study_time_day">%1$s %2$s</string>
+    <string name="dashboard_study_time_nothing">nothing</string>
+    <string name="duration_minutes">%1$d min</string>
+    <string name="duration_hours_minutes">%1$d h %2$d min</string>
     <string name="training_dictation_blurb">Hear a word and type it</string>
     <string name="training_dictation_puzzle_blurb">Hear a word and build it from letters</string>
     <string name="training_puzzle_blurb">Put the letters in the right order</string>
@@ -235,13 +243,6 @@
     <string name="plan_program_words">%1$d words</string>
     <string name="plan_program_new_a_day">%1$d new a day</string>
     <string name="plan_program_trainings">%1$d trainings</string>
-    <string name="program_start">Start this program</string>
-    <string name="program_leave">In progress · tap to stop</string>
-    <string name="program_reset">Reset progress</string>
-    <string name="program_reset_message">Today\'s plan, every completed day and the review schedule for this program\'s words are cleared. The program itself is kept.</string>
-    <string name="program_delete">Delete program</string>
-    <string name="program_delete_message">The program and everything it recorded are removed. Your words stay in the study set.</string>
-    <string name="action_cancel">Cancel</string>
     <string name="example_play">Play the example</string>
     <string name="example_label">Example</string>
     <string name="example_generate">Write me an example</string>

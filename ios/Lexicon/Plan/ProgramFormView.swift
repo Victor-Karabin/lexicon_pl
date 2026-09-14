@@ -11,9 +11,7 @@ struct ProgramFormView: View {
     @State private var newWords = 10
     @State private var reviewWords = 10
     @State private var queue: [String] = []
-    @State private var isEnrolled = false
     @State private var loaded = false
-    @State private var confirming: ProgramAction?
 
     @State private var draggedFrom: Int?
     @State private var dragOffset: CGFloat = 0
@@ -57,7 +55,7 @@ struct ProgramFormView: View {
                 Text("Trainings").font(.subheadline.weight(.semibold))
 
                 FlowLayout(spacing: Spacing.small) {
-                    ForEach(TrainingCatalog.all.filter { $0.id != "memory_cards" && $0.id != "crossword" }) { entry in
+                    ForEach(TrainingCatalog.all) { entry in
                         Button { queue.append(entry.id) } label: {
                             Label(entry.name, systemImage: entry.symbol)
                                 .font(.caption)
@@ -94,27 +92,6 @@ struct ProgramFormView: View {
         }
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: Spacing.small) {
-                if programId != nil {
-                    AsyncButton {
-                        guard let programId else { return }
-                        if isEnrolled {
-                            try? await deps.leaveProgram.invoke(id: programId)
-                        } else {
-                            _ = try? await deps.enrolInProgram.invoke(id: programId)
-                        }
-                        isEnrolled.toggle()
-                    } label: {
-                        Text(isEnrolled ? "In progress · tap to stop" : "Start this program")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.bordered)
-                    HStack {
-                        Button(ProgramAction.reset.title, role: .destructive) { confirming = .reset }
-                        Spacer()
-                        Button(ProgramAction.delete.title, role: .destructive) { confirming = .delete }
-                    }
-                    .font(.callout)
-                }
                 if queue.isEmpty {
                     Text("Add at least one training to save.").font(.caption).foregroundStyle(.secondary)
                 }
@@ -124,16 +101,6 @@ struct ProgramFormView: View {
             }
             .padding(Spacing.medium)
             .background(.bar)
-        }
-        .confirmationDialog(
-            confirming?.title ?? "",
-            isPresented: Binding(get: { confirming != nil }, set: { if !$0 { confirming = nil } }),
-            titleVisibility: .visible,
-            presenting: confirming
-        ) { action in
-            Button(action.title, role: .destructive) { Task { await perform(action) } }
-        } message: { action in
-            Text(action.message)
         }
     }
 
@@ -224,21 +191,10 @@ struct ProgramFormView: View {
             newWords = min(max(Int(plan.newWords), minimumNewWords), max(studySet, minimumNewWords))
             reviewWords = min(Int(plan.reviewWords), max(studySet, minimumNewWords))
             queue = plan.queue
-            let active = try? await deps.observeActiveEnrolmentFirst()
-            isEnrolled = active?.programId.value == programId.value
+        } else if programId == nil {
+            queue = deps.prefilledProgramQueue
         }
         loaded = true
-    }
-
-    private func perform(_ action: ProgramAction) async {
-        guard let programId else { return }
-        switch action {
-        case .reset:
-            try? await deps.resetProgram.invoke(id: programId)
-        case .delete:
-            try? await deps.deleteProgram.invoke(id: programId)
-            dismiss()
-        }
     }
 
     private func save() async {
@@ -289,27 +245,6 @@ struct FlowLayout: Layout {
             view.place(at: CGPoint(x: x, y: y), proposal: ProposedViewSize(size))
             x += size.width + spacing
             lineHeight = max(lineHeight, size.height)
-        }
-    }
-}
-
-private enum ProgramAction {
-    case reset
-    case delete
-
-    var title: String {
-        switch self {
-        case .reset: return "Reset progress"
-        case .delete: return "Delete program"
-        }
-    }
-
-    var message: String {
-        switch self {
-        case .reset:
-            return "Today's plan, every completed day and the review schedule for this program's words are cleared. The program itself is kept."
-        case .delete:
-            return "The program and everything it recorded are removed. Your words stay in the study set."
         }
     }
 }

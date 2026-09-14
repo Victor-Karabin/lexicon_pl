@@ -25,7 +25,6 @@ import androidx.room.RoomDatabaseConstructor
         WordReviewEntity::class,
         StudyDayEntity::class,
         ProgramEntity::class,
-        ProgramEnrolmentEntity::class,
         ProgramDayEntity::class,
         ProgramMilestoneEntity::class,
         ProgramRewardEntity::class,
@@ -34,7 +33,7 @@ import androidx.room.RoomDatabaseConstructor
         ConjugationCourseVerbEntity::class,
         ConjugationProgressEntity::class,
     ],
-    version = 24,
+    version = 25,
     exportSchema = false,
 )
 @ConstructedBy(AppDatabaseConstructor::class)

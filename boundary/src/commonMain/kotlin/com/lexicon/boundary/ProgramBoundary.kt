@@ -13,13 +13,6 @@ data class ProgramBoundary(
     val isUserCreated: Boolean = true,
 )
 
-data class ProgramEnrolmentBoundary(
-    val programId: String,
-    val startedAtEpochDay: Long,
-    val status: String,
-    val completedAtEpochDay: Long?,
-)
-
 data class ProgramDayBoundary(
     val programId: String,
     val epochDay: Long,

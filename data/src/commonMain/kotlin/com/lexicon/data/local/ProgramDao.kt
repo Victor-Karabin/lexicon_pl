@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -20,18 +19,6 @@ interface ProgramDao {
 
     @Query("SELECT COUNT(*) FROM programs")
     suspend fun countPrograms(): Int
-
-    @Query("SELECT * FROM program_enrolment WHERE programId = :programId")
-    suspend fun enrolment(programId: String): ProgramEnrolmentEntity?
-
-    @Query("SELECT * FROM program_enrolment WHERE status = :status LIMIT 1")
-    suspend fun enrolmentWithStatus(status: String): ProgramEnrolmentEntity?
-
-    @Query("SELECT * FROM program_enrolment WHERE status = :status LIMIT 1")
-    fun observeEnrolmentWithStatus(status: String): Flow<ProgramEnrolmentEntity?>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsertEnrolment(enrolment: ProgramEnrolmentEntity)
 
     @Query("SELECT * FROM program_day WHERE programId = :programId AND epochDay = :epochDay")
     suspend fun day(
@@ -66,33 +53,4 @@ interface ProgramDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPrograms(programs: List<ProgramEntity>)
-
-    @Query("DELETE FROM programs WHERE id = :programId")
-    suspend fun deleteProgramRow(programId: String)
-
-    @Query("DELETE FROM program_enrolment WHERE programId = :programId")
-    suspend fun deleteEnrolment(programId: String)
-
-    @Query("DELETE FROM program_day WHERE programId = :programId")
-    suspend fun deleteDays(programId: String)
-
-    @Query("DELETE FROM program_milestone WHERE programId = :programId")
-    suspend fun deleteMilestones(programId: String)
-
-    @Query("DELETE FROM program_reward WHERE programId = :programId")
-    suspend fun deleteRewards(programId: String)
-
-    @Transaction
-    suspend fun clearProgress(programId: String) {
-        deleteDays(programId)
-        deleteMilestones(programId)
-        deleteRewards(programId)
-    }
-
-    @Transaction
-    suspend fun deleteProgram(programId: String) {
-        clearProgress(programId)
-        deleteEnrolment(programId)
-        deleteProgramRow(programId)
-    }
 }

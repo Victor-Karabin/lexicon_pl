@@ -2,7 +2,6 @@ package com.lexicon.data.local
 
 import com.lexicon.boundary.ProgramBoundary
 import com.lexicon.boundary.ProgramDayBoundary
-import com.lexicon.boundary.ProgramEnrolmentBoundary
 import com.lexicon.boundary.ProgramMilestoneBoundary
 import com.lexicon.boundary.ProgramRewardBoundary
 
@@ -33,9 +32,6 @@ fun ProgramEntity.toBoundary(): ProgramBoundary =
         configJson = configJson,
         isUserCreated = isUserCreated,
     )
-
-fun ProgramEnrolmentEntity.toBoundary(): ProgramEnrolmentBoundary =
-    ProgramEnrolmentBoundary(programId, startedAtEpochDay, status, completedAtEpochDay)
 
 fun ProgramDayEntity.toBoundary(): ProgramDayBoundary =
     ProgramDayBoundary(programId, epochDay, activitiesJson, appliedRulesJson, isComplete)

@@ -3,11 +3,11 @@ package com.lexicon.presentation.course
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.interactors.course.ObserveCoursesUseCase
-import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
+import com.lexicon.interactors.program.ObserveActiveProgramUseCase
 import com.lexicon.interactors.program.ObserveProgramsUseCase
 import com.lexicon.interactors.program.Program
-import com.lexicon.interactors.program.ProgramEnrolment
 import com.lexicon.model.course.Course
+import com.lexicon.model.program.ProgramId
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.SharingStarted
@@ -21,7 +21,7 @@ sealed interface PlanUiState {
     data class Loaded(
         val programs: ImmutableList<Program> = persistentListOf(),
         val courses: ImmutableList<Course> = persistentListOf(),
-        val activeEnrolment: ProgramEnrolment? = null,
+        val activeProgramId: ProgramId? = null,
         val languageTag: String = "en",
     ) : PlanUiState
 }
@@ -32,15 +32,15 @@ val PlanUiState.Loaded.isEmpty: Boolean
 class PlanViewModel(
     observeCourses: ObserveCoursesUseCase,
     observePrograms: ObserveProgramsUseCase,
-    observeActiveEnrolment: ObserveActiveEnrolmentUseCase,
+    observeActiveProgram: ObserveActiveProgramUseCase,
 ) : ViewModel() {
     val uiState: StateFlow<PlanUiState> =
         combine(
             observePrograms(),
             observeCourses(),
-            observeActiveEnrolment(),
-        ) { programs, courses, enrolment ->
-            PlanUiState.Loaded(programs = programs, courses = courses, activeEnrolment = enrolment)
+            observeActiveProgram(),
+        ) { programs, courses, active ->
+            PlanUiState.Loaded(programs = programs, courses = courses, activeProgramId = active?.id)
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS),

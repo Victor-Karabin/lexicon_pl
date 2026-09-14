@@ -2,21 +2,17 @@ package com.lexicon.data.repository
 
 import com.lexicon.boundary.ProgramBoundary
 import com.lexicon.boundary.ProgramDayBoundary
-import com.lexicon.boundary.ProgramEnrolmentBoundary
 import com.lexicon.boundary.ProgramMilestoneBoundary
 import com.lexicon.boundary.ProgramRepository
 import com.lexicon.boundary.ProgramRewardBoundary
 import com.lexicon.data.local.ProgramDao
 import com.lexicon.data.local.ProgramDayEntity
-import com.lexicon.data.local.ProgramEnrolmentEntity
 import com.lexicon.data.local.ProgramMilestoneEntity
 import com.lexicon.data.local.ProgramRewardEntity
 import com.lexicon.data.local.toBoundary
 import com.lexicon.data.local.toUserEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-
-private const val ACTIVE = "ACTIVE"
 
 class ProgramRepositoryImpl(
     private val programDao: ProgramDao,
@@ -30,28 +26,6 @@ class ProgramRepositoryImpl(
 
     override suspend fun saveProgram(program: ProgramBoundary) {
         programDao.insertPrograms(listOf(program.toUserEntity()))
-    }
-
-    override suspend fun deleteProgram(id: String) = programDao.deleteProgram(id)
-
-    override suspend fun clearProgress(id: String) = programDao.clearProgress(id)
-
-    override suspend fun enrolment(programId: String): ProgramEnrolmentBoundary? = programDao.enrolment(programId)?.toBoundary()
-
-    override suspend fun activeEnrolment(): ProgramEnrolmentBoundary? = programDao.enrolmentWithStatus(ACTIVE)?.toBoundary()
-
-    override fun observeActiveEnrolment(): Flow<ProgramEnrolmentBoundary?> =
-        programDao.observeEnrolmentWithStatus(ACTIVE).map { it?.toBoundary() }
-
-    override suspend fun saveEnrolment(enrolment: ProgramEnrolmentBoundary) {
-        programDao.upsertEnrolment(
-            ProgramEnrolmentEntity(
-                programId = enrolment.programId,
-                startedAtEpochDay = enrolment.startedAtEpochDay,
-                status = enrolment.status,
-                completedAtEpochDay = enrolment.completedAtEpochDay,
-            ),
-        )
     }
 
     override suspend fun day(

@@ -2,7 +2,6 @@ package com.lexicon.app.di
 
 import com.lexicon.application.di.domainModule
 import com.lexicon.boundary.ConjugationRepository
-import com.lexicon.boundary.ProgramRepository
 import com.lexicon.boundary.SettingsRepository
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
@@ -17,9 +16,7 @@ import com.lexicon.interactors.presets.GetWordUseCase
 import com.lexicon.interactors.presets.RestorePresetUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.program.CountStudySetUseCase
-import com.lexicon.interactors.program.DeleteProgramUseCase
 import com.lexicon.interactors.settings.UpdateVoiceUseCase
-import com.lexicon.model.program.ProgramId
 import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
 import io.mockk.coEvery
@@ -47,7 +44,6 @@ class OneLineUseCaseBindingsTest : KoinTest {
     private val presets: VocabularyPresetRepository = mockk(relaxed = true)
     private val conjugations: ConjugationRepository = mockk(relaxed = true)
     private val settings: SettingsRepository = mockk(relaxed = true)
-    private val programs: ProgramRepository = mockk(relaxed = true)
 
     @Before
     fun start() {
@@ -59,7 +55,6 @@ class OneLineUseCaseBindingsTest : KoinTest {
                     single { presets }
                     single { conjugations }
                     single { settings }
-                    single { programs }
                 },
             )
         }
@@ -133,13 +128,5 @@ class OneLineUseCaseBindingsTest : KoinTest {
             get<UpdateVoiceUseCase>()("pl-PL-Standard-A")
 
             coVerify(exactly = 1) { settings.setVoiceId("pl-PL-Standard-A") }
-        }
-
-    @Test
-    fun `deleting a program reaches exactly that program`() =
-        runTest {
-            get<DeleteProgramUseCase>()(ProgramId("mine"))
-
-            coVerify(exactly = 1) { programs.deleteProgram("mine") }
         }
 }

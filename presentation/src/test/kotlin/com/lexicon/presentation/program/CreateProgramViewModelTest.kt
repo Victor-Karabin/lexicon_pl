@@ -3,16 +3,12 @@ package com.lexicon.presentation.program
 import androidx.lifecycle.SavedStateHandle
 import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.CreateProgramUseCase
-import com.lexicon.interactors.program.DeleteProgramUseCase
-import com.lexicon.interactors.program.ObserveActiveEnrolmentUseCase
 import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramDraft
-import com.lexicon.interactors.program.ProgramEnrolment
+import com.lexicon.interactors.program.defaultProgramQueue
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -42,11 +38,6 @@ class CreateProgramViewModelTest {
             }
         }
 
-    private val noActiveEnrolment =
-        object : ObserveActiveEnrolmentUseCase {
-            override fun invoke(): Flow<ProgramEnrolment?> = flowOf(null)
-        }
-
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
@@ -64,12 +55,24 @@ class CreateProgramViewModelTest {
             updateProgram = mockk(),
             getProgram = mockk(),
             countStudySet = CountStudySetUseCase { STUDY_SET },
-            enrol = mockk(),
-            leave = mockk(),
-            resetProgram = mockk(),
-            deleteProgram = DeleteProgramUseCase { },
-            observeActiveEnrolment = noActiveEnrolment,
         )
+
+    @Test
+    fun `a new program starts with every training queued in the default order`() =
+        runTest(testDispatcher) {
+            val viewModel = viewModel()
+            advanceUntilIdle()
+
+            assertEquals(defaultProgramQueue, viewModel.uiState.value.queue)
+            assertEquals(
+                listOf(
+                    "word_card", "image_test", "word_match", "true_or_false", "puzzle", "dictation_puzzle", "dictation",
+                    "passage_bank", "passage_write", "pronunciation_check", "pronunciation_sentences", "fillword",
+                    "memory_cards", "crossword",
+                ),
+                viewModel.uiState.value.queue,
+            )
+        }
 
     @Test
     fun `tapping save twice creates the program once`() =

@@ -17,15 +17,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DragHandle
 import androidx.compose.material.icons.filled.Translate
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -88,8 +85,8 @@ fun CreateProgramScreen(
     val name = stringResource(R.string.program_default_name)
     val description = stringResource(R.string.create_program_scope)
 
-    LaunchedEffect(uiState.isSaved, uiState.isDeleted) {
-        if (uiState.isSaved || uiState.isDeleted) onCreated()
+    LaunchedEffect(uiState.isSaved) {
+        if (uiState.isSaved) onCreated()
     }
 
     CreateProgramContent(
@@ -102,10 +99,6 @@ fun CreateProgramScreen(
         onTurnRemoved = viewModel::onTurnRemoved,
         onMove = viewModel::onMove,
         onSave = { viewModel.onSave(name = name, description = description) },
-        onEnrolToggled = viewModel::onEnrolToggled,
-        onActionRequested = viewModel::onActionRequested,
-        onActionConfirmed = viewModel::onActionConfirmed,
-        onActionDismissed = viewModel::onActionDismissed,
         modifier = modifier,
     )
 }
@@ -121,16 +114,8 @@ private fun CreateProgramContent(
     onTurnRemoved: (Int) -> Unit,
     onMove: (from: Int, to: Int) -> Unit,
     onSave: () -> Unit,
-    onEnrolToggled: () -> Unit,
-    onActionRequested: (ProgramAction) -> Unit,
-    onActionConfirmed: () -> Unit,
-    onActionDismissed: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    uiState.confirming?.let { action ->
-        ConfirmActionDialog(action = action, onConfirm = onActionConfirmed, onDismiss = onActionDismissed)
-    }
-
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -147,33 +132,6 @@ private fun CreateProgramContent(
                     modifier = Modifier.padding(Dimens.spacingMedium),
                     verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
                 ) {
-                    if (uiState.isEditing) {
-                        OutlinedButton(onClick = onEnrolToggled, modifier = Modifier.fillMaxWidth()) {
-                            Text(
-                                stringResource(
-                                    if (uiState.isEnrolled) R.string.program_leave else R.string.program_start,
-                                ),
-                            )
-                        }
-                        Row(horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
-                            OutlinedButton(
-                                onClick = { onActionRequested(ProgramAction.RESET) },
-                                modifier = Modifier.weight(1f),
-                            ) {
-                                Text(stringResource(R.string.program_reset))
-                            }
-                            OutlinedButton(
-                                onClick = { onActionRequested(ProgramAction.DELETE) },
-                                modifier = Modifier.weight(1f),
-                                colors = ButtonDefaults.outlinedButtonColors(
-                                    contentColor = MaterialTheme.colorScheme.error,
-                                ),
-                            ) {
-                                Text(stringResource(R.string.program_delete))
-                            }
-                        }
-                    }
-
                     if (uiState.queue.isEmpty()) {
                         Text(
                             text = stringResource(R.string.create_program_needs_training),
@@ -256,34 +214,6 @@ private fun CreateProgramContent(
             }
         }
     }
-}
-
-@Composable
-private fun ConfirmActionDialog(
-    action: ProgramAction,
-    onConfirm: () -> Unit,
-    onDismiss: () -> Unit,
-) {
-    val title = when (action) {
-        ProgramAction.RESET -> R.string.program_reset
-        ProgramAction.DELETE -> R.string.program_delete
-    }
-    val message = when (action) {
-        ProgramAction.RESET -> R.string.program_reset_message
-        ProgramAction.DELETE -> R.string.program_delete_message
-    }
-
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(stringResource(title)) },
-        text = { Text(stringResource(message)) },
-        confirmButton = {
-            TextButton(onClick = onConfirm) { Text(stringResource(title)) }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) }
-        },
-    )
 }
 
 @Composable
@@ -522,10 +452,6 @@ private fun CreateProgramEmptyStudySetPreview() {
             onTurnRemoved = {},
             onMove = { _, _ -> },
             onSave = {},
-            onEnrolToggled = {},
-            onActionRequested = {},
-            onActionConfirmed = {},
-            onActionDismissed = {},
         )
     }
 }
@@ -548,10 +474,6 @@ private fun CreateProgramPreview() {
             onTurnRemoved = {},
             onMove = { _, _ -> },
             onSave = {},
-            onEnrolToggled = {},
-            onActionRequested = {},
-            onActionConfirmed = {},
-            onActionDismissed = {},
         )
     }
 }

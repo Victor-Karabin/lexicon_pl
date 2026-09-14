@@ -40,11 +40,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.program.ActivityConfig
 import com.lexicon.interactors.program.DailyPlanConfig
-import com.lexicon.interactors.program.EnrolmentStatus
 import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramConfig
 import com.lexicon.interactors.program.ProgramDifficulty
-import com.lexicon.interactors.program.ProgramEnrolment
 import com.lexicon.interactors.program.ProgramGoal
 import com.lexicon.interactors.program.ProgramVisibility
 import com.lexicon.interactors.program.trainingsADay
@@ -130,7 +128,7 @@ private fun PlanContent(
                     ProgramTile(
                         program = program,
                         languageTag = uiState.languageTag,
-                        isActive = uiState.activeEnrolment?.programId == program.id,
+                        isActive = uiState.activeProgramId == program.id,
                         onClick = { onProgramSelected(program.id) },
                     )
                 }
@@ -515,11 +513,7 @@ private fun PlanProgramsPreview() {
                     previewProgram("a1", "A1", "Polish A1"),
                     previewProgram("a2", "A2", "Polish A2"),
                 ),
-                activeEnrolment = ProgramEnrolment(
-                    programId = ProgramId("a1"),
-                    startedAtEpochDay = 0,
-                    status = EnrolmentStatus.ACTIVE,
-                ),
+                activeProgramId = ProgramId("a1"),
             ),
             onCourseSelected = {},
             onProgramSelected = {},

@@ -75,6 +75,22 @@ class SeedCatalogsUseCaseImplTest {
         }
 
     @Test
+    fun `a database emptied by a schema change is seeded again under the same app version`() =
+        runTest {
+            coEvery { gate.isCurrent() } returns true
+            coEvery { vocabularyRepository.countWords() } returns 0
+            coEvery { vocabularyRepository.seedFromAsset() } returns outcome(2219, added = 2219)
+            coEvery { presetRepository.seedFromAsset() } returns outcome(72, added = 72)
+
+            val final = run().last()
+
+            assertTrue(final.isFinished)
+            assertEquals(SeedStepStatus.Complete(2219, 2219, 0, 0), final.vocabulary)
+            coVerify(exactly = 1) { vocabularyRepository.seedFromAsset() }
+            coVerify(exactly = 1) { conjugationRepository.seedFromAsset() }
+        }
+
+    @Test
     fun `a completed sync records the version so the next launch can skip it`() =
         runTest {
             coEvery { vocabularyRepository.seedFromAsset() } returns outcome(10)
