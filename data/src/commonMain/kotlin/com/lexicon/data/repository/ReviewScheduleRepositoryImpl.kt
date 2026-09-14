@@ -2,7 +2,6 @@ package com.lexicon.data.repository
 
 import com.lexicon.boundary.ReviewScheduleRepository
 import com.lexicon.data.local.WordReviewDao
-import com.lexicon.data.local.forEachBatch
 import com.lexicon.data.local.toEntity
 import com.lexicon.data.local.toState
 import com.lexicon.model.scheduling.ReviewState
@@ -26,11 +25,6 @@ class ReviewScheduleRepositoryImpl(
     ): List<Long> = wordReviewDao.dueWordIds(todayEpochDay, limit)
 
     override suspend fun scheduledWordIds(): Set<Long> = wordReviewDao.allScheduledWordIds().toSet()
-
-    override suspend fun forget(wordIds: List<Long>) {
-        if (wordIds.isEmpty()) return
-        wordIds.forEachBatch { wordReviewDao.forget(it) }
-    }
 
     override suspend fun countLearned(): Int = wordReviewDao.countLearned()
 

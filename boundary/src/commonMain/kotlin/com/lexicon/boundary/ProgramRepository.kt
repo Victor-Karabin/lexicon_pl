@@ -11,10 +11,6 @@ interface ProgramRepository {
 
     suspend fun saveProgram(program: ProgramBoundary)
 
-    suspend fun deleteProgram(id: String)
-
-    suspend fun clearProgress(id: String)
-
     suspend fun day(
         programId: String,
         epochDay: Long,

@@ -1,14 +1,11 @@
 package com.lexicon.application.program
 
 import com.lexicon.boundary.ProgramRepository
-import com.lexicon.boundary.ReviewScheduleRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.program.GetProgramUseCase
 import com.lexicon.interactors.program.ObserveActiveProgramUseCase
 import com.lexicon.interactors.program.ObserveProgramsUseCase
 import com.lexicon.interactors.program.Program
-import com.lexicon.interactors.program.ResetProgramUseCase
-import com.lexicon.interactors.program.ResolveProgramScopeUseCase
 import com.lexicon.model.program.ProgramId
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -49,19 +46,4 @@ class ObserveActiveProgramUseCaseImpl(
                     .firstOrNull { it.config.dailyPlan.queue.isNotEmpty() }
             }
         }.distinctUntilChanged()
-}
-
-class ResetProgramUseCaseImpl(
-    private val repository: ProgramRepository,
-    private val getProgram: GetProgramUseCase,
-    private val resolveScope: ResolveProgramScopeUseCase,
-    private val reviews: ReviewScheduleRepository,
-) : ResetProgramUseCase {
-    override suspend fun invoke(id: ProgramId) {
-        repository.clearProgress(id.value)
-
-        getProgram(id)?.let { program ->
-            reviews.forget(resolveScope(program).map { it.value })
-        }
-    }
 }

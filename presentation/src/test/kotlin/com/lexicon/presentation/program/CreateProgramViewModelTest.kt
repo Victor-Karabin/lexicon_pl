@@ -3,7 +3,6 @@ package com.lexicon.presentation.program
 import androidx.lifecycle.SavedStateHandle
 import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.CreateProgramUseCase
-import com.lexicon.interactors.program.DeleteProgramUseCase
 import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramDraft
 import com.lexicon.interactors.program.defaultProgramQueue
@@ -56,8 +55,6 @@ class CreateProgramViewModelTest {
             updateProgram = mockk(),
             getProgram = mockk(),
             countStudySet = CountStudySetUseCase { STUDY_SET },
-            resetProgram = mockk(),
-            deleteProgram = DeleteProgramUseCase { },
         )
 
     @Test

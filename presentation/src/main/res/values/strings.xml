@@ -243,11 +243,6 @@
     <string name="plan_program_words">%1$d words</string>
     <string name="plan_program_new_a_day">%1$d new a day</string>
     <string name="plan_program_trainings">%1$d trainings</string>
-    <string name="program_reset">Reset progress</string>
-    <string name="program_reset_message">Today\'s plan, every completed day and the review schedule for this program\'s words are cleared. The program itself is kept.</string>
-    <string name="program_delete">Delete program</string>
-    <string name="program_delete_message">The program and everything it recorded are removed. Your words stay in the study set.</string>
-    <string name="action_cancel">Cancel</string>
     <string name="example_play">Play the example</string>
     <string name="example_label">Example</string>
     <string name="example_generate">Write me an example</string>

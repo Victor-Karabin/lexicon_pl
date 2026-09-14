@@ -54,7 +54,6 @@ import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
 import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.CreateProgramUseCase
-import com.lexicon.interactors.program.DeleteProgramUseCase
 import com.lexicon.interactors.program.GetDailyStudyTimeUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramProgressUseCase
@@ -66,7 +65,6 @@ import com.lexicon.interactors.program.NextProgramTrainingUseCase
 import com.lexicon.interactors.program.ObserveActiveProgramUseCase
 import com.lexicon.interactors.program.ObserveProgramsUseCase
 import com.lexicon.interactors.program.Program
-import com.lexicon.interactors.program.ResetProgramUseCase
 import com.lexicon.interactors.program.UpdateProgramUseCase
 import com.lexicon.interactors.program.defaultProgramQueue
 import com.lexicon.interactors.pronunciation.StartPronunciationSentencesUseCase
@@ -145,8 +143,6 @@ object IosDependencies : KoinComponent {
     val countStudySet: CountStudySetUseCase by inject()
     val observeActiveProgram: ObserveActiveProgramUseCase by inject()
     val nextProgramTraining: NextProgramTrainingUseCase by inject()
-    val resetProgram: ResetProgramUseCase by inject()
-    val deleteProgram: DeleteProgramUseCase by inject()
     val getProgramProgress: GetProgramProgressUseCase by inject()
     val getStudyStreak: GetStudyStreakUseCase by inject()
     val getDailyStudyTime: GetDailyStudyTimeUseCase by inject()
