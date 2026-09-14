@@ -24,7 +24,7 @@ class SeedCatalogsUseCaseImpl(
 ) : SeedCatalogsUseCase {
     override fun invoke(): Flow<CatalogSeedStatus> =
         flow {
-            if (gate.isCurrent()) {
+            if (gate.isCurrent() && vocabularyRepository.countWords() > 0) {
                 emit(alreadyCurrent())
                 return@flow
             }
