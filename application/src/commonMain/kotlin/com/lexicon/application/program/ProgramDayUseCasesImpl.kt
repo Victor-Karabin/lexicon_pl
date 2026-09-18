@@ -3,7 +3,6 @@ package com.lexicon.application.program
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.ProgramDayBoundary
 import com.lexicon.boundary.ProgramRepository
-import com.lexicon.boundary.ReviewScheduleRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.Clock
 import com.lexicon.interactors.program.AdvanceProgramDayUseCase
@@ -11,10 +10,8 @@ import com.lexicon.interactors.program.GetProgramDayUseCase
 import com.lexicon.interactors.program.GetProgramUseCase
 import com.lexicon.interactors.program.GetWordCardsUseCase
 import com.lexicon.interactors.program.MarkCardsSeenUseCase
-import com.lexicon.interactors.program.Program
 import com.lexicon.interactors.program.ProgramDay
 import com.lexicon.interactors.program.QueuedTraining
-import com.lexicon.interactors.program.ResolveProgramScopeUseCase
 import com.lexicon.interactors.program.WordCard
 import com.lexicon.model.program.ProgramId
 import com.lexicon.model.training.TrainingType
@@ -28,7 +25,6 @@ private val dayJson = Json { ignoreUnknownKeys = true }
 
 @Serializable
 private data class StoredDay(
-    val newWords: List<Long> = emptyList(),
     val cardsSeen: Boolean = false,
     val done: Int = 0,
     val queueFingerprint: String = "",
@@ -36,15 +32,13 @@ private data class StoredDay(
 
 private fun fingerprintOf(
     queue: List<String>,
-    scope: List<Long>,
     newWordsADay: Int,
-): String = "${queue.joinToString("|")}#$newWordsADay#${scope.size}:${scope.joinToString(",").hashCode()}"
+): String = "${queue.joinToString("|")}#$newWordsADay"
 
 class GetProgramDayUseCaseImpl(
     private val getProgram: GetProgramUseCase,
-    private val resolveScope: ResolveProgramScopeUseCase,
     private val programs: ProgramRepository,
-    private val reviews: ReviewScheduleRepository,
+    private val vocabulary: VocabularyRepository,
     private val clock: Clock,
 ) : GetProgramDayUseCase {
     override suspend fun invoke(id: ProgramId): ProgramDay? {
@@ -52,43 +46,28 @@ class GetProgramDayUseCaseImpl(
         val today = clock.todayEpochDay()
 
         val queue = program.config.dailyPlan.queue
-        val scope = resolveScope(program).map { it.value }
-        val fingerprint = fingerprintOf(queue, scope, program.config.dailyPlan.newWords)
+        val fingerprint = fingerprintOf(queue, program.config.dailyPlan.newWords)
 
         val loaded = programs.day(id.value, today)?.let {
             runCatching { dayJson.decodeFromString(StoredDay.serializer(), it.activitiesJson) }.getOrNull()
         }
         val stored = when (loaded?.queueFingerprint) {
             fingerprint -> loaded
-            else -> generate(program, scope, fingerprint).also { save(id, today, it, queue.size) }
+            else -> generate(fingerprint).also { save(id, today, it, queue.size) }
         }
+
+        val learning = vocabulary.learningWordIds(program.config.dailyPlan.newWords.coerceAtLeast(0))
 
         return ProgramDay(
             programId = id,
             epochDay = today,
-            newWords = stored.newWords.map(::VocabularyId).toImmutableList(),
+            newWords = learning.map(::VocabularyId).toImmutableList(),
             cardsSeen = stored.cardsSeen,
             queue = queue.toQueue(stored.done),
         )
     }
 
-    private suspend fun generate(
-        program: Program,
-        scope: List<Long>,
-        fingerprint: String,
-    ): StoredDay {
-        val plan = program.config.dailyPlan
-        val met = reviews.scheduledWordIds()
-        val newWords = scope
-            .filterNot { it in met }
-            .take(plan.newWords.coerceAtLeast(0))
-
-        return StoredDay(
-            newWords = newWords,
-            cardsSeen = newWords.isEmpty(),
-            queueFingerprint = fingerprint,
-        )
-    }
+    private fun generate(fingerprint: String): StoredDay = StoredDay(queueFingerprint = fingerprint)
 
     private suspend fun save(
         id: ProgramId,

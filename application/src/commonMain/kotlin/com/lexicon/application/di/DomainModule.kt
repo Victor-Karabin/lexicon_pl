@@ -62,7 +62,6 @@ import com.lexicon.application.program.MarkCardsSeenUseCaseImpl
 import com.lexicon.application.program.NextProgramTrainingUseCaseImpl
 import com.lexicon.application.program.ObserveActiveProgramUseCaseImpl
 import com.lexicon.application.program.ObserveProgramsUseCaseImpl
-import com.lexicon.application.program.ResolveProgramScopeUseCaseImpl
 import com.lexicon.application.program.StartProgramSessionUseCaseImpl
 import com.lexicon.application.program.UpdateProgramUseCaseImpl
 import com.lexicon.application.pronunciation.StartPronunciationSentencesUseCaseImpl
@@ -159,7 +158,6 @@ import com.lexicon.interactors.program.MarkCardsSeenUseCase
 import com.lexicon.interactors.program.NextProgramTrainingUseCase
 import com.lexicon.interactors.program.ObserveActiveProgramUseCase
 import com.lexicon.interactors.program.ObserveProgramsUseCase
-import com.lexicon.interactors.program.ResolveProgramScopeUseCase
 import com.lexicon.interactors.program.StartProgramSessionUseCase
 import com.lexicon.interactors.program.UpdateProgramUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSentencesUseCase
@@ -231,7 +229,6 @@ val domainModule = module {
     factoryOf(::ObserveProgramsUseCaseImpl) { bind<ObserveProgramsUseCase>() }
     factoryOf(::GetProgramUseCaseImpl) { bind<GetProgramUseCase>() }
     factoryOf(::ObserveActiveProgramUseCaseImpl) { bind<ObserveActiveProgramUseCase>() }
-    factoryOf(::ResolveProgramScopeUseCaseImpl) { bind<ResolveProgramScopeUseCase>() }
     factoryOf(::StartProgramSessionUseCaseImpl) { bind<StartProgramSessionUseCase>() }
     factoryOf(::GetProgramProgressUseCaseImpl) { bind<GetProgramProgressUseCase>() }
     factoryOf(::GetStudyStreakUseCaseImpl) { bind<GetStudyStreakUseCase>() }
