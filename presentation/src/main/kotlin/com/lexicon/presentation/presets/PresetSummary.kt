@@ -17,7 +17,6 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.lexicon.model.vocabulary.PresetStudySetState
 import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.resolve
 import com.lexicon.presentation.R
@@ -42,9 +41,7 @@ fun presetTileSkin(preset: VocabularyPreset): TileSkin {
 fun PresetSummary(
     preset: VocabularyPreset,
     languageTag: String,
-    studySetState: PresetStudySetState,
     skin: TileSkin,
-    onStudySetToggled: () -> Unit,
     modifier: Modifier = Modifier,
     showTitle: Boolean = true,
 ) {
@@ -77,8 +74,6 @@ fun PresetSummary(
                     overflow = TextOverflow.Ellipsis,
                 )
             }
-
-            PresetInStudySetButton(state = studySetState, onClick = onStudySetToggled)
         }
 
         StatChip(

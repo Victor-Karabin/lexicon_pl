@@ -42,10 +42,10 @@ import com.lexicon.model.vocabulary.CefrLevel
 import com.lexicon.model.vocabulary.LocalizedText
 import com.lexicon.model.vocabulary.PresetCategory
 import com.lexicon.model.vocabulary.PresetId
-import com.lexicon.model.vocabulary.PresetStudySetState
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.WordStatus
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.DeleteAction
 import com.lexicon.presentation.common.DeleteActionWidth
@@ -102,8 +102,8 @@ fun VocabularyScreen(
         onCefrToggled = viewModel::onCefrToggled,
         onFiltersCleared = viewModel::onFiltersCleared,
         onPresetSelected = onPresetSelected,
-        onPresetStudySetToggled = viewModel::onPresetStudySetToggled,
-        onWordStudySetToggled = viewModel::onWordStudySetToggled,
+        onToLearnToggled = viewModel::onToLearnToggled,
+        onWordStatusCycled = viewModel::onWordStatusCycled,
         onPronounceWord = viewModel::onPronounceWord,
         onWordDeleted = viewModel::onWordDeleted,
         onChangePresets = viewModel::onChangePresetsRequested,
@@ -137,8 +137,8 @@ private fun VocabularyContent(
     onCefrToggled: (CefrLevel) -> Unit,
     onFiltersCleared: () -> Unit,
     onPresetSelected: (PresetId) -> Unit,
-    onPresetStudySetToggled: (PresetId, PresetStudySetState) -> Unit,
-    onWordStudySetToggled: (VocabularyId, Boolean) -> Unit,
+    onToLearnToggled: () -> Unit,
+    onWordStatusCycled: (VocabularyId) -> Unit,
     onPronounceWord: (Word) -> Unit,
     onWordDeleted: (Word) -> Unit,
     onChangePresets: (Word) -> Unit,
@@ -173,8 +173,8 @@ private fun VocabularyContent(
                 onCefrToggled = onCefrToggled,
                 onFiltersCleared = onFiltersCleared,
                 onPresetSelected = onPresetSelected,
-                onPresetStudySetToggled = onPresetStudySetToggled,
-                onWordStudySetToggled = onWordStudySetToggled,
+                onToLearnToggled = onToLearnToggled,
+                onWordStatusCycled = onWordStatusCycled,
                 onPronounceWord = onPronounceWord,
                 onWordDeleted = onWordDeleted,
                 onChangePresets = onChangePresets,
@@ -194,8 +194,8 @@ private fun VocabularyBody(
     onCefrToggled: (CefrLevel) -> Unit,
     onFiltersCleared: () -> Unit,
     onPresetSelected: (PresetId) -> Unit,
-    onPresetStudySetToggled: (PresetId, PresetStudySetState) -> Unit,
-    onWordStudySetToggled: (VocabularyId, Boolean) -> Unit,
+    onToLearnToggled: () -> Unit,
+    onWordStatusCycled: (VocabularyId) -> Unit,
     onPronounceWord: (Word) -> Unit,
     onWordDeleted: (Word) -> Unit,
     onChangePresets: (Word) -> Unit,
@@ -223,12 +223,12 @@ private fun VocabularyBody(
                         .padding(top = Dimens.spacingSmall),
                 )
 
-                FilterRow(uiState, onCefrToggled, onFiltersCleared)
+                FilterRow(uiState, onCefrToggled, onToLearnToggled, onFiltersCleared)
 
                 if (uiState.isSearchingWords) {
                     WordResults(
                         uiState = uiState,
-                        onWordStudySetToggled = onWordStudySetToggled,
+                        onWordStatusCycled = onWordStatusCycled,
                         onPronounceWord = onPronounceWord,
                         onWordDeleted = onWordDeleted,
                         onChangePresets = onChangePresets,
@@ -237,7 +237,7 @@ private fun VocabularyBody(
                         selection = selection,
                     )
                 } else {
-                    PresetResults(uiState, onPresetSelected, onPresetStudySetToggled, onPresetDeleted)
+                    PresetResults(uiState, onPresetSelected, onPresetDeleted)
                 }
             }
     }
@@ -246,7 +246,7 @@ private fun VocabularyBody(
 @Composable
 private fun WordResults(
     uiState: VocabularyUiState.Loaded,
-    onWordStudySetToggled: (VocabularyId, Boolean) -> Unit,
+    onWordStatusCycled: (VocabularyId) -> Unit,
     onPronounceWord: (Word) -> Unit,
     onWordDeleted: (Word) -> Unit,
     onChangePresets: (Word) -> Unit,
@@ -265,7 +265,8 @@ private fun WordResults(
     LazyColumn(state = list, contentPadding = PaddingValues(vertical = Dimens.spacingSmall)) {
         wordRows(
             words = uiState.words,
-            onStudySetToggled = onWordStudySetToggled,
+            statuses = uiState.wordStatuses,
+            onStatusCycled = onWordStatusCycled,
             onPronounce = onPronounceWord,
             onChangePresets = onChangePresets,
             onDelete = onWordDeleted,
@@ -290,7 +291,6 @@ private fun WordResults(
 private fun PresetResults(
     uiState: VocabularyUiState.Loaded,
     onPresetSelected: (PresetId) -> Unit,
-    onPresetStudySetToggled: (PresetId, PresetStudySetState) -> Unit,
     onPresetDeleted: (VocabularyPreset) -> Unit,
 ) {
     when {
@@ -301,7 +301,6 @@ private fun PresetResults(
                 verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
             ) {
                 items(uiState.presets, key = { it.id.value }) { preset ->
-                    val studySetState = preset.studySetState
                     SwipeToRevealContainer(
                         revealWidth = DeleteActionWidth,
                         backgroundContent = { DeleteAction(onClick = { onPresetDeleted(preset) }) },
@@ -309,9 +308,7 @@ private fun PresetResults(
                         PresetCard(
                             preset = preset,
                             languageTag = uiState.languageTag,
-                            studySetState = studySetState,
                             onClick = { onPresetSelected(preset.id) },
-                            onStudySetToggled = { onPresetStudySetToggled(preset.id, studySetState) },
                         )
                     }
                 }
@@ -323,6 +320,7 @@ private fun PresetResults(
 private fun FilterRow(
     uiState: VocabularyUiState.Loaded,
     onCefrToggled: (CefrLevel) -> Unit,
+    onToLearnToggled: () -> Unit,
     onFiltersCleared: () -> Unit,
 ) {
     Row(
@@ -333,7 +331,7 @@ private fun FilterRow(
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (uiState.selectedCefrLevels.isNotEmpty()) {
+        if (uiState.selectedCefrLevels.isNotEmpty() || uiState.toLearnOnly) {
             FilterChip(
                 selected = false,
                 onClick = onFiltersCleared,
@@ -341,6 +339,11 @@ private fun FilterRow(
                 leadingIcon = { Icon(Icons.Default.Clear, contentDescription = null) },
             )
         }
+        FilterChip(
+            selected = uiState.toLearnOnly,
+            onClick = onToLearnToggled,
+            label = { Text(stringResource(R.string.vocabulary_filter_to_learn)) },
+        )
         CefrLevel.entries.forEach { level ->
             FilterChip(
                 selected = level in uiState.selectedCefrLevels,
@@ -355,19 +358,11 @@ private fun FilterRow(
 private fun PresetCard(
     preset: VocabularyPreset,
     languageTag: String,
-    studySetState: PresetStudySetState,
     onClick: () -> Unit,
-    onStudySetToggled: () -> Unit,
 ) {
     val skin = presetTileSkin(preset)
     GradientTile(skin = skin, onClick = onClick) {
-        PresetSummary(
-            preset = preset,
-            languageTag = languageTag,
-            studySetState = studySetState,
-            skin = skin,
-            onStudySetToggled = onStudySetToggled,
-        )
+        PresetSummary(preset = preset, languageTag = languageTag, skin = skin)
     }
 }
 
@@ -448,10 +443,10 @@ private fun VocabularyPresetsPreview() {
             ),
             onQueryChanged = {},
             onCefrToggled = {},
+            onToLearnToggled = {},
             onFiltersCleared = {},
             onPresetSelected = {},
-            onPresetStudySetToggled = { _, _ -> },
-            onWordStudySetToggled = { _, _ -> },
+            onWordStatusCycled = {},
             onPronounceWord = {},
             onWordDeleted = {},
             onChangePresets = {},
@@ -476,17 +471,17 @@ private fun VocabularyWordSearchPreview() {
                 query = "wod",
                 presets = previewPresets,
                 words = persistentListOf(
-                    Word(VocabularyId(1), "woda", "water", "ˈvɔda", isInStudySet = true, cefr = CefrLevel.A1),
+                    Word(VocabularyId(1), "woda", "water", "ˈvɔda", status = WordStatus.TO_LEARN, cefr = CefrLevel.A1),
                     Word(VocabularyId(2), "wodospad", "waterfall", "vɔˈdɔspat", cefr = CefrLevel.B1),
                     Word(VocabularyId(3), "woda mineralna", "mineral water", "ˈvɔda miɲɛˈralna", cefr = CefrLevel.A1),
                 ),
             ),
             onQueryChanged = {},
             onCefrToggled = {},
+            onToLearnToggled = {},
             onFiltersCleared = {},
             onPresetSelected = {},
-            onPresetStudySetToggled = { _, _ -> },
-            onWordStudySetToggled = { _, _ -> },
+            onWordStatusCycled = {},
             onPronounceWord = {},
             onWordDeleted = {},
             onChangePresets = {},
@@ -510,10 +505,10 @@ private fun VocabularyNoMatchingWordsPreview() {
             uiState = VocabularyUiState.Loaded(query = "qqq", presets = previewPresets),
             onQueryChanged = {},
             onCefrToggled = {},
+            onToLearnToggled = {},
             onFiltersCleared = {},
             onPresetSelected = {},
-            onPresetStudySetToggled = { _, _ -> },
-            onWordStudySetToggled = { _, _ -> },
+            onWordStatusCycled = {},
             onPronounceWord = {},
             onWordDeleted = {},
             onChangePresets = {},

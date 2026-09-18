@@ -21,7 +21,7 @@ data class Word(
     val text: String,
     val translation: String,
     val transcription: String,
-    val isInStudySet: Boolean = false,
+    val status: WordStatus = WordStatus.UNDEFINED,
     val cefr: CefrLevel? = null,
     val example: String = "",
 ) {
@@ -33,9 +33,9 @@ data class Word(
 
     val isPhrase: Boolean get() = text.contains(' ')
 
-    fun addToStudySet(): Word = if (isInStudySet) this else copy(isInStudySet = true)
+    val isInStudySet: Boolean get() = status.isLearning
 
-    fun removeFromStudySet(): Word = if (isInStudySet) copy(isInStudySet = false) else this
+    fun withStatus(status: WordStatus): Word = if (status == this.status) this else copy(status = status)
 
     fun edited(
         text: String = this.text,

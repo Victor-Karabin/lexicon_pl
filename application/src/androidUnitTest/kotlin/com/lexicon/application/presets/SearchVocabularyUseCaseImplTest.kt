@@ -5,6 +5,7 @@ import com.lexicon.interactors.presets.SearchVocabularyUseCase
 import com.lexicon.model.vocabulary.CefrLevel
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.WordStatus
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -19,13 +20,13 @@ class SearchVocabularyUseCaseImplTest {
     private val useCase = SearchVocabularyUseCaseImpl(vocabularyRepository)
 
     private fun repositoryReturns(vararg items: Word) {
-        coEvery { vocabularyRepository.search(any(), any(), any()) } returns items.toList()
+        coEvery { vocabularyRepository.search(any(), any(), any(), any(), any()) } returns items.toList()
     }
 
     @Test
     fun `results are mapped into words, level included`() =
         runTest {
-            repositoryReturns(Word(VocabularyId(1), "woda", "water", "ˈvɔda", isInStudySet = true, cefr = CefrLevel.A1))
+            repositoryReturns(Word(VocabularyId(1), "woda", "water", "ˈvɔda", status = WordStatus.TO_LEARN, cefr = CefrLevel.A1))
 
             val word = useCase("woda").single()
 
@@ -39,7 +40,7 @@ class SearchVocabularyUseCaseImplTest {
     fun `the query reaches the repository folded`() =
         runTest {
             val sent = slot<String>()
-            coEvery { vocabularyRepository.search(capture(sent), any(), any()) } returns emptyList()
+            coEvery { vocabularyRepository.search(capture(sent), any(), any(), any(), any()) } returns emptyList()
 
             useCase("ŻÓŁW")
 
@@ -50,7 +51,7 @@ class SearchVocabularyUseCaseImplTest {
     fun `case and surrounding spaces do not change the query`() =
         runTest {
             val sent = slot<String>()
-            coEvery { vocabularyRepository.search(capture(sent), any(), any()) } returns emptyList()
+            coEvery { vocabularyRepository.search(capture(sent), any(), any(), any(), any()) } returns emptyList()
 
             useCase("  Apple  ")
 
@@ -62,7 +63,7 @@ class SearchVocabularyUseCaseImplTest {
         runTest {
             val query = slot<String>()
             val levels = slot<Set<String>>()
-            coEvery { vocabularyRepository.search(capture(query), capture(levels), any()) } returns emptyList()
+            coEvery { vocabularyRepository.search(capture(query), capture(levels), any(), any(), any()) } returns emptyList()
 
             useCase(levels = setOf(CefrLevel.A1, CefrLevel.A2))
 
@@ -75,7 +76,7 @@ class SearchVocabularyUseCaseImplTest {
         runTest {
             val query = slot<String>()
             val levels = slot<Set<String>>()
-            coEvery { vocabularyRepository.search(capture(query), capture(levels), any()) } returns emptyList()
+            coEvery { vocabularyRepository.search(capture(query), capture(levels), any(), any(), any()) } returns emptyList()
 
             useCase("wod", setOf(CefrLevel.B1))
 
@@ -87,14 +88,14 @@ class SearchVocabularyUseCaseImplTest {
     fun `no query and no levels returns nothing and never reaches the repository`() =
         runTest {
             assertTrue(useCase().isEmpty())
-            coVerify(exactly = 0) { vocabularyRepository.search(any(), any(), any()) }
+            coVerify(exactly = 0) { vocabularyRepository.search(any(), any(), any(), any(), any()) }
         }
 
     @Test
     fun `a query of only spaces is treated as empty`() =
         runTest {
             assertTrue(useCase("   ").isEmpty())
-            coVerify(exactly = 0) { vocabularyRepository.search(any(), any(), any()) }
+            coVerify(exactly = 0) { vocabularyRepository.search(any(), any(), any(), any(), any()) }
         }
 
     @Test
@@ -102,7 +103,7 @@ class SearchVocabularyUseCaseImplTest {
         runTest {
             val limit = slot<Int>()
             val offset = slot<Int>()
-            coEvery { vocabularyRepository.search(any(), any(), capture(limit), capture(offset)) } returns emptyList()
+            coEvery { vocabularyRepository.search(any(), any(), any(), capture(limit), capture(offset)) } returns emptyList()
 
             useCase(levels = setOf(CefrLevel.A1))
 
@@ -114,10 +115,21 @@ class SearchVocabularyUseCaseImplTest {
     fun `the next page starts where the last one stopped`() =
         runTest {
             val offset = slot<Int>()
-            coEvery { vocabularyRepository.search(any(), any(), any(), capture(offset)) } returns emptyList()
+            coEvery { vocabularyRepository.search(any(), any(), any(), any(), capture(offset)) } returns emptyList()
 
             useCase(levels = setOf(CefrLevel.A1), skip = SearchVocabularyUseCase.PAGE)
 
             assertEquals(SearchVocabularyUseCase.PAGE, offset.captured)
+        }
+
+    @Test
+    fun `asking for the learning list alone passes that to the repository`() =
+        runTest {
+            val learningOnly = slot<Boolean>()
+            coEvery { vocabularyRepository.search(any(), any(), capture(learningOnly), any(), any()) } returns emptyList()
+
+            useCase(learningOnly = true)
+
+            assertTrue("an empty query still searches when the filter is on", learningOnly.captured)
         }
 }

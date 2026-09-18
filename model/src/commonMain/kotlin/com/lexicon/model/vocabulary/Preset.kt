@@ -22,26 +22,4 @@ data class VocabularyPreset(
     val estimatedDuration: Duration,
     val vocabularyIds: ImmutableList<VocabularyId>,
     val wordCount: Int = vocabularyIds.size,
-    val studySetCount: Int = 0,
-) {
-    val studySetState: PresetStudySetState get() = PresetStudySetState.of(wordCount, studySetCount)
-}
-
-enum class PresetStudySetState {
-    NONE,
-    SOME,
-    ALL,
-    ;
-
-    companion object {
-        fun of(
-            wordCount: Int,
-            studySetCount: Int,
-        ): PresetStudySetState =
-            when {
-                studySetCount <= 0 -> NONE
-                studySetCount >= wordCount -> ALL
-                else -> SOME
-            }
-    }
-}
+)

@@ -6,6 +6,7 @@ import com.lexicon.common.foldForSearch
 import com.lexicon.model.vocabulary.CefrLevel
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.WordStatus
 
 @Entity(tableName = "words")
 data class WordEntity(
@@ -13,7 +14,7 @@ data class WordEntity(
     val text: String,
     val translation: String,
     val transcription: String,
-    val isInStudySet: Boolean = false,
+    val status: String = WordStatus.UNDEFINED.name,
     val searchKey: String = "",
     val cefr: String = "",
     val example: String = "",
@@ -34,7 +35,7 @@ fun WordEntity.toWord(): Word =
         text = text,
         translation = translation,
         transcription = transcription,
-        isInStudySet = isInStudySet,
+        status = WordStatus.ofName(status),
         cefr = CefrLevel.ofName(cefr.ifEmpty { null }),
         example = example,
     )

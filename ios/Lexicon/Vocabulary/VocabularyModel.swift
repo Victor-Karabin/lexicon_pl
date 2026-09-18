@@ -7,7 +7,8 @@ final class VocabularyModel: ObservableObject {
     @Published private(set) var levels: Set<CefrLevel> = []
     @Published private(set) var presets: [VocabularyPreset] = []
     @Published private(set) var words: [Word] = []
-    @Published private(set) var studySet: Set<Int64> = []
+    @Published private(set) var statuses: [Int64: WordStatus] = [:]
+    @Published private(set) var toLearnOnly = false
     @Published private(set) var isLoadingMoreWords = false
     @Published private(set) var hasMoreWords = true
 
@@ -16,8 +17,13 @@ final class VocabularyModel: ObservableObject {
     let allLevels: [CefrLevel] = [.a1, .a2, .b1, .b2, .c1, .c2]
 
     init() {
-        watcher = deps.watchStudySetWordIds { [weak self] ids in
-            self?.studySet = Set(ids.compactMap { ($0 as? VocabularyId)?.value })
+        watcher = deps.watchWordStatuses { [weak self] statuses in
+            self?.statuses = Dictionary(
+                uniqueKeysWithValues: statuses.compactMap { key, value in
+                    guard let id = (key as? VocabularyId)?.value, let status = value as? WordStatus else { return nil }
+                    return (id, status)
+                }
+            )
         }
     }
 
@@ -34,7 +40,7 @@ final class VocabularyModel: ObservableObject {
         searchGeneration += 1
         let generation = searchGeneration
         isLoadingMoreWords = false
-        guard !query.isEmpty || !levels.isEmpty else {
+        guard !query.isEmpty || !levels.isEmpty || toLearnOnly else {
             words = []
             hasMoreWords = true
             return
@@ -64,6 +70,7 @@ final class VocabularyModel: ObservableObject {
         (try? await deps.searchVocabulary.invoke(
             query: query,
             levels: levels,
+            learningOnly: toLearnOnly,
             limit: deps.searchPageSize,
             skip: Int32(skip)
         )) ?? []
@@ -74,16 +81,15 @@ final class VocabularyModel: ObservableObject {
         await search()
     }
 
-    func isInStudySet(_ word: Word) -> Bool { studySet.contains(word.id.value) }
+    func status(of word: Word) -> WordStatus { statuses[word.id.value] ?? word.status }
 
-    func toggleInStudySet(_ preset: VocabularyPreset) async {
-        let wanted = preset.studySetState != PresetStudySetState.all
-        try? await deps.setPresetInStudySet.invoke(id: preset.id, isInStudySet: wanted)
-        presets = (try? await deps.getPresets.invoke()) ?? presets
+    func toggleToLearnOnly() async {
+        toLearnOnly.toggle()
+        await search()
     }
 
-    func toggleInStudySet(_ word: Word) async {
-        try? await deps.toggleWordInStudySet.invoke(id: word.id, isInStudySet: !isInStudySet(word))
+    func cycleStatus(_ word: Word) async {
+        try? await deps.setWordStatus.invoke(id: word.id, status: status(of: word).next())
     }
 
     func name(of level: CefrLevel) -> String { level.name }

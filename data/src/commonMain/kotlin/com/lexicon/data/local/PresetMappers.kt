@@ -38,7 +38,6 @@ fun PresetEntity.toBoundary(
         estimatedSeconds = estimatedSeconds,
         vocabularyIds = vocabularyIds,
         wordCount = counts?.wordCount ?: vocabularyIds.size,
-        studySetCount = counts?.studySetCount ?: 0,
     )
 
 fun PresetCategoryAsset.toEntity(): PresetCategoryEntity =

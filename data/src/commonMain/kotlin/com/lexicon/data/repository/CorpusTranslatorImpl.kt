@@ -19,7 +19,14 @@ class CorpusTranslatorImpl(
         vocabularySeeder.ensureSeeded()
 
         return wordDao
-            .search(foldedQuery = needle, levels = emptyList(), ignoreLevels = 1, limit = CORPUS_MATCH_LIMIT, offset = 0)
+            .search(
+                foldedQuery = needle,
+                levels = emptyList(),
+                ignoreLevels = 1,
+                learningOnly = 0,
+                limit = CORPUS_MATCH_LIMIT,
+                offset = 0,
+            )
             .firstNotNullOfOrNull { word ->
                 when (direction) {
                     TranslationDirection.EN_TO_PL -> word.text.takeIf { word.translation.foldForSearch() == needle }

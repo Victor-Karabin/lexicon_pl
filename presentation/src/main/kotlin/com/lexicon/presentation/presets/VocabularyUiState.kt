@@ -5,6 +5,7 @@ import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.WordStatus
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -25,18 +26,19 @@ sealed interface VocabularyUiState {
         val query: String = "",
         val presets: ImmutableList<VocabularyPreset> = persistentListOf(),
         val selectedCefrLevels: Set<CefrLevel> = emptySet(),
+        val toLearnOnly: Boolean = false,
         val words: ImmutableList<Word> = persistentListOf(),
         val isSearching: Boolean = false,
         val isLoadingMoreWords: Boolean = false,
         val hasMoreWords: Boolean = true,
         val languageTag: String = "en",
-        val studySetWordIds: Set<VocabularyId> = emptySet(),
+        val wordStatuses: Map<VocabularyId, WordStatus> = emptyMap(),
         val lastDeleted: DeletedItem? = null,
     ) : VocabularyUiState
 }
 
 val VocabularyUiState.Loaded.isSearchingWords: Boolean
-    get() = query.isNotBlank() || selectedCefrLevels.isNotEmpty()
+    get() = query.isNotBlank() || selectedCefrLevels.isNotEmpty() || toLearnOnly
 
 val VocabularyUiState.Loaded.hasNoMatchingWords: Boolean
     get() = isSearchingWords && !isSearching && words.isEmpty()

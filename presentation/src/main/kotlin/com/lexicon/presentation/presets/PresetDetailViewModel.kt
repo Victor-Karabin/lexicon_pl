@@ -9,16 +9,15 @@ import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
-import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
+import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
-import com.lexicon.interactors.presets.SetPresetInStudySetUseCase
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
-import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
+import com.lexicon.interactors.presets.SetWordStatusUseCase
 import com.lexicon.model.vocabulary.PresetId
-import com.lexicon.model.vocabulary.PresetStudySetState
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.WordStatus
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -40,7 +39,7 @@ sealed interface PresetDetailUiState {
     data class Loaded(
         val preset: VocabularyPreset,
         val words: ImmutableList<Word> = persistentListOf(),
-        val studySetState: PresetStudySetState = PresetStudySetState.NONE,
+        val wordStatuses: Map<VocabularyId, WordStatus> = emptyMap(),
         val languageTag: String = "en",
         val isLoadingWords: Boolean = true,
         val lastDeleted: DeletedItem? = null,
@@ -53,11 +52,10 @@ class PresetDetailViewModel(
     savedStateHandle: SavedStateHandle,
     private val getPreset: GetVocabularyPresetUseCase,
     private val getPresetVocabulary: GetPresetVocabularyUseCase,
-    private val toggleWordInStudySet: ToggleWordInStudySetUseCase,
+    private val setWordStatus: SetWordStatusUseCase,
     private val deleteWord: DeleteWordUseCase,
     private val restoreWord: RestoreWordUseCase,
-    private val setPresetInStudySet: SetPresetInStudySetUseCase,
-    observeStudySetIds: ObserveStudySetIdsUseCase,
+    observeWordStatuses: ObserveWordStatusesUseCase,
     getWordPresetMemberships: GetWordPresetMembershipsUseCase,
     setWordPresetMembership: SetWordPresetMembershipUseCase,
     private val dispatchers: DispatcherProvider,
@@ -97,7 +95,7 @@ class PresetDetailViewModel(
     ) = changePresets.toggle(presetId, isMember)
 
     val uiState: StateFlow<PresetDetailUiState> =
-        combine(content, observeStudySetIds()) { loaded, studySet ->
+        combine(content, observeWordStatuses()) { loaded, statuses ->
             when {
                 loaded == null -> PresetDetailUiState.Loading
                 loaded.preset == null -> PresetDetailUiState.NotFound
@@ -105,9 +103,8 @@ class PresetDetailViewModel(
                     PresetDetailUiState.Loaded(
                         preset = loaded.preset,
                         words = loaded.words
-                            .map { it.copy(isInStudySet = it.id in studySet) }
                             .toImmutableList(),
-                        studySetState = studySetStateOf(loaded.preset, studySet),
+                        wordStatuses = statuses,
                         isLoadingWords = !loaded.wordsLoaded,
                         lastDeleted = loaded.lastDeleted,
                     )
@@ -194,33 +191,17 @@ class PresetDetailViewModel(
         }
     }
 
-    fun onWordStudySetToggled(
-        id: VocabularyId,
-        isInStudySet: Boolean,
-    ) {
-        viewModelScope.launch(dispatchers.io) { toggleWordInStudySet(id, isInStudySet) }
-    }
+    fun onWordStatusCycled(id: VocabularyId) {
+        val loaded = uiState.value as? PresetDetailUiState.Loaded ?: return
+        val current = loaded.wordStatuses[id] ?: loaded.words.firstOrNull { it.id == id }?.status ?: WordStatus.UNDEFINED
 
-    fun onPresetStudySetToggled(current: PresetStudySetState) {
-        viewModelScope.launch(dispatchers.io) {
-            setPresetInStudySet(presetId, current != PresetStudySetState.ALL)
-        }
+        viewModelScope.launch(dispatchers.io) { setWordStatus(id, current.next()) }
     }
 
     private companion object {
         const val STOP_TIMEOUT_MS = 5_000L
     }
 }
-
-internal fun studySetStateOf(
-    preset: VocabularyPreset,
-    studySet: Set<VocabularyId>,
-): PresetStudySetState =
-    when {
-        preset.vocabularyIds.none { it in studySet } -> PresetStudySetState.NONE
-        preset.vocabularyIds.all { it in studySet } -> PresetStudySetState.ALL
-        else -> PresetStudySetState.SOME
-    }
 
 private val polishCollator: Collator = Collator.getInstance(Locale.forLanguageTag("pl"))
 

@@ -9,7 +9,7 @@ struct VocabularyView: View {
         NavigationStack {
             ScrollView {
                 LazyVStack(spacing: Spacing.small) {
-                    levelFilters
+                    filters
 
                     if model.query.isEmpty && model.levels.isEmpty {
                         ForEach(model.presets, id: \.id.value) { preset in
@@ -91,15 +91,28 @@ struct VocabularyView: View {
                 Image(systemName: model.isSelected(word) ? "checkmark.circle.fill" : "circle")
                     .foregroundStyle(model.isSelected(word) ? Palette.accentDeep : .secondary)
             }
-            WordRow(word: word, isInStudySet: model.isInStudySet(word)) {
-                Task { await model.toggleInStudySet(word) }
+            WordRow(word: word, status: model.status(of: word)) {
+                Task { await model.cycleStatus(word) }
             }
         }
     }
 
-    private var levelFilters: some View {
+    private var filters: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: Spacing.small) {
+                Button {
+                    Task { await model.toggleToLearnOnly() }
+                } label: {
+                    Text("To learn")
+                        .font(.callout)
+                        .padding(.horizontal, Spacing.medium)
+                        .padding(.vertical, Spacing.small)
+                        .background(model.toLearnOnly ? Palette.primary.opacity(0.35) : Color.clear)
+                        .overlay(Capsule().stroke(Color.secondary.opacity(0.4)))
+                        .clipShape(Capsule())
+                }
+                .buttonStyle(.plain)
+
                 ForEach(model.allLevels, id: \.self) { level in
                     let on = model.levels.contains(level)
                     Button {
@@ -140,9 +153,6 @@ private struct PresetTile: View {
                         .lineLimit(2)
                 }
                 Spacer()
-                PresetStudySetButton(state: preset.studySetState, skin: skin) {
-                    Task { await model.toggleInStudySet(preset) }
-                }
             }
             StatChip(systemName: "character.book.closed", text: "\(preset.wordCount) words", skin: skin)
         }
@@ -151,32 +161,9 @@ private struct PresetTile: View {
 
 /// Matches Android: filled for a preset wholly in the study set, broken for part of one,
 /// outlined for none, and red for anything but none.
-struct PresetStudySetButton: View {
-    let state: PresetStudySetState
-    let skin: TileSkin
-    let onToggle: () -> Void
-
-    private var symbol: String {
-        switch state {
-        case .all: return "heart.fill"
-        case .some: return "heart.slash.fill"
-        default: return "heart"
-        }
-    }
-
-    var body: some View {
-        Button(action: onToggle) {
-            Image(systemName: symbol)
-                .foregroundStyle(state == PresetStudySetState.none ? skin.onTile.muted : Palette.failure)
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel(state == PresetStudySetState.all ? "Remove from the study set" : "Add to the study set")
-    }
-}
-
 struct WordRow: View {
     let word: Word
-    let isInStudySet: Bool
+    let status: WordStatus
     let onStudySet: () -> Void
 
     var body: some View {
@@ -194,7 +181,8 @@ struct WordRow: View {
             }
             .buttonStyle(.plain)
             Button(action: onStudySet) {
-                Image(systemName: isInStudySet ? "heart.fill" : "heart")
+                Image(systemName: status.symbolName)
+                    .foregroundStyle(status.tint)
             }
             .buttonStyle(.plain)
             .padding(.leading, Spacing.small)
@@ -212,11 +200,11 @@ struct WordRow: View {
                     text: "woda",
                     translation: "water",
                     transcription: "ˈvɔda",
-                    isInStudySet: true,
+                    status: WordStatus.toLearn,
                     cefr: CefrLevel.a1,
                     example: "Piję **wodę** codziennie."
                 ),
-                isInStudySet: true,
+                status: WordStatus.toLearn,
                 onStudySet: {}
             )
             Divider()
@@ -227,13 +215,33 @@ struct WordRow: View {
                     text: "dzień dobry",
                     translation: "good morning",
                     transcription: "",
-                    isInStudySet: false,
+                    status: WordStatus.undefined,
                     cefr: CefrLevel.a1,
                     example: ""
                 ),
-                isInStudySet: false,
+                status: WordStatus.undefined,
                 onStudySet: {}
             )
+        }
+    }
+}
+
+extension WordStatus {
+    var symbolName: String {
+        switch self {
+        case .toLearn: return "graduationcap"
+        case .favourite: return "heart.fill"
+        case .known: return "checkmark.circle.fill"
+        default: return "heart"
+        }
+    }
+
+    var tint: Color {
+        switch self {
+        case .toLearn: return Palette.accentDeep
+        case .favourite: return Palette.failure
+        case .known: return Palette.success
+        default: return .secondary
         }
     }
 }

@@ -41,15 +41,14 @@ import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.GetWordUseCase
-import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
 import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
+import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
 import com.lexicon.interactors.presets.RestorePresetUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SearchImageCandidatesUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
-import com.lexicon.interactors.presets.SetPresetInStudySetUseCase
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
-import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
+import com.lexicon.interactors.presets.SetWordStatusUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
 import com.lexicon.interactors.program.CountStudySetUseCase
@@ -90,6 +89,7 @@ import com.lexicon.model.course.Course
 import com.lexicon.model.vocabulary.ExampleSentence
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.VocabularyPreset
+import com.lexicon.model.vocabulary.WordStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -112,9 +112,8 @@ object IosDependencies : KoinComponent {
     val getPresetCategories: GetPresetCategoriesUseCase by inject()
     val getPresetVocabulary: GetPresetVocabularyUseCase by inject()
     val searchVocabulary: SearchVocabularyUseCase by inject()
-    val toggleWordInStudySet: ToggleWordInStudySetUseCase by inject()
-    val setPresetInStudySet: SetPresetInStudySetUseCase by inject()
-    val observeStudySetIds: ObserveStudySetIdsUseCase by inject()
+    val setWordStatus: SetWordStatusUseCase by inject()
+    val observeWordStatuses: ObserveWordStatusesUseCase by inject()
     val getWordPresetMemberships: GetWordPresetMembershipsUseCase by inject()
     val setWordPresetMembership: SetWordPresetMembershipUseCase by inject()
 
@@ -216,7 +215,7 @@ object IosDependencies : KoinComponent {
 
     fun watchPresets(onEach: (List<VocabularyPreset>) -> Unit): Cancellable = observePresets().watch(onEach)
 
-    fun watchStudySetWordIds(onEach: (Set<VocabularyId>) -> Unit): Cancellable = observeStudySetIds().watch(onEach)
+    fun watchWordStatuses(onEach: (Map<VocabularyId, WordStatus>) -> Unit): Cancellable = observeWordStatuses().watch(onEach)
 
     fun watchCourses(onEach: (List<Course>) -> Unit): Cancellable = observeCourses().watch(onEach)
 

@@ -23,6 +23,7 @@ import com.lexicon.interactors.conjugation.ToggleVerbInStudySetUseCase
 import com.lexicon.interactors.conjugation.VerbConjugation
 import com.lexicon.interactors.conjugation.VerbPage
 import com.lexicon.interactors.presets.CreateWordUseCase
+import com.lexicon.model.vocabulary.WordStatus
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
@@ -230,7 +231,7 @@ class ToggleVerbInStudySetUseCaseImpl(
         if (existing == null && !isInStudySet) return
 
         val id = existing?.id?.value ?: ensureWord(infinitive, translation) ?: return
-        vocabulary.setInStudySet(listOf(id), isInStudySet)
+        vocabulary.setStatus(listOf(id), if (isInStudySet) WordStatus.TO_LEARN else WordStatus.UNDEFINED)
     }
 }
 
