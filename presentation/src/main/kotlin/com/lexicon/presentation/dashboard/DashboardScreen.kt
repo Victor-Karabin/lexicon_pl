@@ -17,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoStories
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Translate
@@ -91,6 +92,7 @@ fun DashboardScreen(
     onOpenCards: (programId: String) -> Unit,
     onGoToPlan: () -> Unit,
     onOpenConjugation: (String) -> Unit,
+    onReviewWords: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DashboardViewModel = koinViewModel(),
 ) {
@@ -119,6 +121,7 @@ fun DashboardScreen(
         onContinue = viewModel::onContinue,
         onGoToPlan = onGoToPlan,
         onOpenConjugation = onOpenConjugation,
+        onReviewWords = onReviewWords,
         onRemoveConjugation = viewModel::onConjugationCourseRemoved,
         modifier = modifier,
     )
@@ -130,6 +133,7 @@ private fun DashboardContent(
     onContinue: () -> Unit,
     onGoToPlan: () -> Unit,
     onOpenConjugation: (String) -> Unit,
+    onReviewWords: () -> Unit,
     onRemoveConjugation: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -173,6 +177,10 @@ private fun DashboardContent(
                     }
                 } else {
                     ActiveProgramCard(uiState = uiState, onContinue = onContinue)
+                }
+
+                if (uiState.wordsToReview > 0) {
+                    ReviewWordsCard(waiting = uiState.wordsToReview, onClick = onReviewWords)
                 }
 
                 uiState.studyTime?.let { StudyTimeCard(history = it) }
@@ -359,6 +367,36 @@ private fun ActiveProgramCard(
 }
 
 @Composable
+private fun ReviewWordsCard(
+    waiting: Int,
+    onClick: () -> Unit,
+) {
+    val skin = tileSkin()
+
+    GradientTile(skin = skin, onClick = onClick) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Medallion(skin = skin) { MedallionIcon(Icons.Default.Inbox, skin) }
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = stringResource(R.string.dashboard_review_words),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = skin.onTile,
+                )
+                Text(
+                    text = stringResource(R.string.dashboard_review_words_waiting, waiting),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = skin.muted(),
+                )
+            }
+        }
+    }
+}
+
+@Composable
 private fun ProgressRing(
     fraction: Float,
     skin: TileSkin,
@@ -483,6 +521,7 @@ private fun DashboardNoProgramPreview() {
             onContinue = {},
             onGoToPlan = {},
             onOpenConjugation = {},
+            onReviewWords = {},
             onRemoveConjugation = {},
         )
     }
@@ -520,6 +559,7 @@ private fun DashboardActivePreview() {
             onContinue = {},
             onGoToPlan = {},
             onOpenConjugation = {},
+            onReviewWords = {},
             onRemoveConjugation = {},
         )
     }

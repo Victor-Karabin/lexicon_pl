@@ -30,6 +30,7 @@ import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
 import com.lexicon.interactors.mix.StartMixSessionUseCase
 import com.lexicon.interactors.passage.StartPassageSessionUseCase
 import com.lexicon.interactors.passage.SubmitPassageAnswersUseCase
+import com.lexicon.interactors.presets.CountWordsToReviewUseCase
 import com.lexicon.interactors.presets.CreatePresetUseCase
 import com.lexicon.interactors.presets.CreateWordUseCase
 import com.lexicon.interactors.presets.DeletePresetUseCase
@@ -41,6 +42,7 @@ import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.GetWordUseCase
+import com.lexicon.interactors.presets.GetWordsToReviewUseCase
 import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
 import com.lexicon.interactors.presets.RestorePresetUseCase
@@ -113,6 +115,8 @@ object IosDependencies : KoinComponent {
     val getPresetVocabulary: GetPresetVocabularyUseCase by inject()
     val searchVocabulary: SearchVocabularyUseCase by inject()
     val setWordStatus: SetWordStatusUseCase by inject()
+    val getWordsToReview: GetWordsToReviewUseCase by inject()
+    val countWordsToReview: CountWordsToReviewUseCase by inject()
     val observeWordStatuses: ObserveWordStatusesUseCase by inject()
     val getWordPresetMemberships: GetWordPresetMembershipsUseCase by inject()
     val setWordPresetMembership: SetWordPresetMembershipUseCase by inject()
@@ -194,6 +198,7 @@ object IosDependencies : KoinComponent {
      * instead, the same way use cases are.
      */
     val searchPageSize: Int get() = SearchVocabularyUseCase.PAGE
+    val wordsToReviewBatch: Int get() = GetWordsToReviewUseCase.BATCH
     val prefilledProgramQueue: List<String> get() = defaultProgramQueue
     val minStepCount: Int get() = AppSettings.MIN_STEP_COUNT
     val maxStepCount: Int get() = AppSettings.MAX_STEP_COUNT

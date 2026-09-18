@@ -52,6 +52,7 @@ import com.lexicon.presentation.program.WordCardsScreen
 import com.lexicon.presentation.pronunciation.PRONUNCIATION_SENTENCES_ARG
 import com.lexicon.presentation.pronunciation.PronunciationScreen
 import com.lexicon.presentation.puzzle.PuzzleScreen
+import com.lexicon.presentation.review.ReviewWordsScreen
 import com.lexicon.presentation.trueorfalse.TrueOrFalseScreen
 import com.lexicon.presentation.wordcard.WordCardScreen
 import com.lexicon.presentation.wordmatch.WordMatchScreen
@@ -107,7 +108,12 @@ fun LexiconNavHost(
                 onCreateProgram = { navController.navigate(LexiconDestinations.CREATE_PROGRAM) },
                 onConjugationSelected = { navController.navigate(LexiconDestinations.CONJUGATION_VERBS) },
                 onTrainConjugation = { navController.navigate(LexiconDestinations.conjugationCourse(it)) },
+                onReviewWords = { navController.navigate(LexiconDestinations.REVIEW_WORDS) },
             )
+        }
+
+        composable(LexiconDestinations.REVIEW_WORDS) {
+            ReviewWordsScreen(onClose = { navController.popBackStack() })
         }
 
         composable(LexiconDestinations.CREATE_WORD) {

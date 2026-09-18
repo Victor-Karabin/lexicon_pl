@@ -10,6 +10,7 @@ final class DashboardModel: ObservableObject {
     @Published private(set) var day: ProgramDay?
     @Published private(set) var nothingToPractise = false
     @Published private(set) var studyTime: StudyTimeHistory?
+    @Published private(set) var wordsToReview = 0
 
     private var watcher: Cancellable?
     private var turns = 0
@@ -40,6 +41,7 @@ final class DashboardModel: ObservableObject {
 
     private func load(program: Program?) async {
         studyTime = try? await deps.getDailyStudyTime.invoke()
+        wordsToReview = Int((try? await deps.countWordsToReview.invoke()) as? Int32 ?? 0)
         guard let program else {
             self.program = nil
             return

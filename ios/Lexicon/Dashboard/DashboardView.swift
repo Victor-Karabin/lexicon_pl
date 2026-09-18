@@ -23,6 +23,11 @@ struct DashboardView: View {
                         .padding(Spacing.xl)
                     }
 
+                    if model.wordsToReview > 0 {
+                        NavigationLink { ReviewWordsView() } label: { reviewCard(model.wordsToReview) }
+                            .buttonStyle(.plain)
+                    }
+
                     if let studyTime = model.studyTime {
                         StudyTimeCard(history: studyTime)
                     }
@@ -106,6 +111,23 @@ struct DashboardView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(skin.medallion)
+            }
+        }
+    }
+
+    private func reviewCard(_ waiting: Int) -> some View {
+        let skin = TileSkin.standard(scheme: scheme)
+        return Tile(skin: skin) {
+            HStack(spacing: Spacing.medium) {
+                Medallion(skin: skin) { MedallionIcon(systemName: "tray.full", skin: skin) }
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Review words").font(.headline).foregroundStyle(skin.onTile)
+                    Text("\(waiting) words have no mark yet")
+                        .font(.caption)
+                        .foregroundStyle(skin.onTile.muted)
+                }
+                Spacer()
+                Image(systemName: "chevron.right").foregroundStyle(skin.onTile.muted)
             }
         }
     }

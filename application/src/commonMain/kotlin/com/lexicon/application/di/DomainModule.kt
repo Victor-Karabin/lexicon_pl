@@ -30,6 +30,7 @@ import com.lexicon.application.memorycards.SubmitMemoryCardsStepResultUseCaseImp
 import com.lexicon.application.mix.StartMixSessionUseCaseImpl
 import com.lexicon.application.passage.StartPassageSessionUseCaseImpl
 import com.lexicon.application.passage.SubmitPassageAnswersUseCaseImpl
+import com.lexicon.application.presets.CountWordsToReviewUseCaseImpl
 import com.lexicon.application.presets.CreatePresetUseCaseImpl
 import com.lexicon.application.presets.CreateWordUseCaseImpl
 import com.lexicon.application.presets.GenerateWordExampleUseCaseImpl
@@ -39,6 +40,7 @@ import com.lexicon.application.presets.GetPresetVocabularyUseCaseImpl
 import com.lexicon.application.presets.GetVocabularyPresetUseCaseImpl
 import com.lexicon.application.presets.GetVocabularyPresetsUseCaseImpl
 import com.lexicon.application.presets.GetWordPresetMembershipsUseCaseImpl
+import com.lexicon.application.presets.GetWordsToReviewUseCaseImpl
 import com.lexicon.application.presets.ObserveVocabularyPresetsUseCaseImpl
 import com.lexicon.application.presets.ObserveWordStatusesUseCaseImpl
 import com.lexicon.application.presets.SearchImageCandidatesUseCaseImpl
@@ -119,6 +121,7 @@ import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
 import com.lexicon.interactors.mix.StartMixSessionUseCase
 import com.lexicon.interactors.passage.StartPassageSessionUseCase
 import com.lexicon.interactors.passage.SubmitPassageAnswersUseCase
+import com.lexicon.interactors.presets.CountWordsToReviewUseCase
 import com.lexicon.interactors.presets.CreatePresetUseCase
 import com.lexicon.interactors.presets.CreateWordUseCase
 import com.lexicon.interactors.presets.DeletePresetUseCase
@@ -131,6 +134,7 @@ import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.GetWordUseCase
+import com.lexicon.interactors.presets.GetWordsToReviewUseCase
 import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
 import com.lexicon.interactors.presets.RestorePresetUseCase
@@ -292,6 +296,8 @@ val domainModule = module {
     factoryOf(::SearchImageCandidatesUseCaseImpl) { bind<SearchImageCandidatesUseCase>() }
     factoryOf(::GetPinnedImageUseCaseImpl) { bind<GetPinnedImageUseCase>() }
     factoryOf(::ObserveWordStatusesUseCaseImpl) { bind<ObserveWordStatusesUseCase>() }
+    factoryOf(::GetWordsToReviewUseCaseImpl) { bind<GetWordsToReviewUseCase>() }
+    factoryOf(::CountWordsToReviewUseCaseImpl) { bind<CountWordsToReviewUseCase>() }
     factoryOf(::CheckTrainingReadinessUseCaseImpl) { bind<CheckTrainingReadinessUseCase>() }
     factoryOf(::SearchVocabularyUseCaseImpl) { bind<SearchVocabularyUseCase>() }
     factoryOf(::SeedCatalogsUseCaseImpl) { bind<SeedCatalogsUseCase>() }

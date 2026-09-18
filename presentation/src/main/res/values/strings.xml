@@ -101,6 +101,16 @@
     <string name="word_status_favourite">Favourite. Tap to mark as known</string>
     <string name="word_status_known">Known. Tap to clear</string>
     <string name="vocabulary_filter_to_learn">To learn</string>
+    <string name="review_words_title">Review words</string>
+    <string name="review_words_waiting">%1$d still to sort</string>
+    <string name="review_words_to_learn">To learn</string>
+    <string name="review_words_favourite">Favourite</string>
+    <string name="review_words_known">Known</string>
+    <string name="review_words_delete">Delete this word</string>
+    <string name="review_words_done">Nothing left to sort. You went through %1$d words.</string>
+    <string name="review_words_close">Done</string>
+    <string name="dashboard_review_words">Review words</string>
+    <string name="dashboard_review_words_waiting">%1$d words have no mark yet</string>
     <string name="training_not_enough_words_title">Not enough words</string>
     <string name="training_not_enough_words_body">%1$s needs at least %2$d words, and your study set has %3$d.</string>
     <string name="training_not_enough_words_hint">Add words to your study set with the heart button in the Words tab.</string>

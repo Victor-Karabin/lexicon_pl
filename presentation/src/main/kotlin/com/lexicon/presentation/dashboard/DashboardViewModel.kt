@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.lexicon.interactors.conjugation.ConjugationCourse
 import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
+import com.lexicon.interactors.presets.CountWordsToReviewUseCase
 import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.program.GetDailyStudyTimeUseCase
 import com.lexicon.interactors.program.GetProgramDayUseCase
@@ -37,6 +38,7 @@ data class DashboardUiState(
     val progress: ProgramProgress? = null,
     val streakDays: Int = 0,
     val studySet: Int = 0,
+    val wordsToReview: Int = 0,
     val languageTag: String = "en",
     val day: ProgramDay? = null,
     val launch: LaunchTraining? = null,
@@ -65,6 +67,7 @@ class DashboardViewModel(
     private val getDay: GetProgramDayUseCase,
     private val getStreak: GetStudyStreakUseCase,
     private val countStudySet: CountStudySetUseCase,
+    private val countWordsToReview: CountWordsToReviewUseCase,
     private val getDailyStudyTime: GetDailyStudyTimeUseCase,
     observeActiveProgram: ObserveActiveProgramUseCase,
 ) : ViewModel() {
@@ -85,6 +88,7 @@ class DashboardViewModel(
                     studySet = if (program == null) 0 else countStudySet(),
                     day = program?.let { getDay(it.id) },
                     studyTime = getDailyStudyTime(),
+                    wordsToReview = countWordsToReview(),
                 )
             }
         }
@@ -93,7 +97,8 @@ class DashboardViewModel(
     fun onResumed() {
         viewModelScope.launch {
             val studyTime = getDailyStudyTime()
-            _uiState.update { it.copy(studyTime = studyTime) }
+            val wordsToReview = countWordsToReview()
+            _uiState.update { it.copy(studyTime = studyTime, wordsToReview = wordsToReview) }
 
             val program = _uiState.value.program ?: return@launch
             val day = getDay(program.id)
