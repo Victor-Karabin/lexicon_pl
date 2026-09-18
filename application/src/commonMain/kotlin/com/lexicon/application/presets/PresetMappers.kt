@@ -24,5 +24,4 @@ fun VocabularyPresetBoundary.toPreset(category: PresetCategory): VocabularyPrese
         estimatedDuration = estimatedSeconds.seconds,
         vocabularyIds = vocabularyIds.map(::VocabularyId).toImmutableList(),
         wordCount = wordCount,
-        studySetCount = studySetCount,
     )

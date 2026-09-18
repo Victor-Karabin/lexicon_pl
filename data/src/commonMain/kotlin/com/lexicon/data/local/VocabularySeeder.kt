@@ -53,7 +53,7 @@ class VocabularySeeder(
         val changed = asset.mapNotNull { incoming ->
             val current = existing[incoming.id] ?: return@mapNotNull null
             incoming
-                .copy(isInStudySet = current.isInStudySet, isDeleted = current.isDeleted)
+                .copy(status = current.status, isDeleted = current.isDeleted)
                 .takeIf { it != current }
         }
         wordDao.reconcile(added = added, removedIds = removed.toList(), changed = changed)

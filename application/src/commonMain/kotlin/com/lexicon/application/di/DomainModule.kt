@@ -39,14 +39,13 @@ import com.lexicon.application.presets.GetPresetVocabularyUseCaseImpl
 import com.lexicon.application.presets.GetVocabularyPresetUseCaseImpl
 import com.lexicon.application.presets.GetVocabularyPresetsUseCaseImpl
 import com.lexicon.application.presets.GetWordPresetMembershipsUseCaseImpl
-import com.lexicon.application.presets.ObserveStudySetIdsUseCaseImpl
 import com.lexicon.application.presets.ObserveVocabularyPresetsUseCaseImpl
+import com.lexicon.application.presets.ObserveWordStatusesUseCaseImpl
 import com.lexicon.application.presets.SearchImageCandidatesUseCaseImpl
 import com.lexicon.application.presets.SearchVocabularyUseCaseImpl
-import com.lexicon.application.presets.SetPresetInStudySetUseCaseImpl
 import com.lexicon.application.presets.SetWordPresetMembershipUseCaseImpl
 import com.lexicon.application.presets.SetWordPresetUseCaseImpl
-import com.lexicon.application.presets.ToggleWordInStudySetUseCaseImpl
+import com.lexicon.application.presets.SetWordStatusUseCaseImpl
 import com.lexicon.application.presets.TranslateWordUseCaseImpl
 import com.lexicon.application.presets.UpdateWordUseCaseImpl
 import com.lexicon.application.program.AdvanceProgramDayUseCaseImpl
@@ -132,16 +131,15 @@ import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.GetWordUseCase
-import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
 import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
+import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
 import com.lexicon.interactors.presets.RestorePresetUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SearchImageCandidatesUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
-import com.lexicon.interactors.presets.SetPresetInStudySetUseCase
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.SetWordPresetUseCase
-import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
+import com.lexicon.interactors.presets.SetWordStatusUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
 import com.lexicon.interactors.program.AdvanceProgramDayUseCase
@@ -223,8 +221,7 @@ val domainModule = module {
     factoryOf(::GetPresetCategoriesUseCaseImpl) { bind<GetPresetCategoriesUseCase>() }
     factoryOf(::GetVocabularyPresetUseCaseImpl) { bind<GetVocabularyPresetUseCase>() }
     factoryOf(::GetPresetVocabularyUseCaseImpl) { bind<GetPresetVocabularyUseCase>() }
-    factoryOf(::ToggleWordInStudySetUseCaseImpl) { bind<ToggleWordInStudySetUseCase>() }
-    factoryOf(::SetPresetInStudySetUseCaseImpl) { bind<SetPresetInStudySetUseCase>() }
+    factoryOf(::SetWordStatusUseCaseImpl) { bind<SetWordStatusUseCase>() }
     factoryOf(::GetWordPresetMembershipsUseCaseImpl) { bind<GetWordPresetMembershipsUseCase>() }
     factoryOf(::SetWordPresetMembershipUseCaseImpl) { bind<SetWordPresetMembershipUseCase>() }
     factoryOf(::ObserveProgramsUseCaseImpl) { bind<ObserveProgramsUseCase>() }
@@ -294,7 +291,7 @@ val domainModule = module {
     factoryOf(::TranslateWordUseCaseImpl) { bind<TranslateWordUseCase>() }
     factoryOf(::SearchImageCandidatesUseCaseImpl) { bind<SearchImageCandidatesUseCase>() }
     factoryOf(::GetPinnedImageUseCaseImpl) { bind<GetPinnedImageUseCase>() }
-    factoryOf(::ObserveStudySetIdsUseCaseImpl) { bind<ObserveStudySetIdsUseCase>() }
+    factoryOf(::ObserveWordStatusesUseCaseImpl) { bind<ObserveWordStatusesUseCase>() }
     factoryOf(::CheckTrainingReadinessUseCaseImpl) { bind<CheckTrainingReadinessUseCase>() }
     factoryOf(::SearchVocabularyUseCaseImpl) { bind<SearchVocabularyUseCase>() }
     factoryOf(::SeedCatalogsUseCaseImpl) { bind<SeedCatalogsUseCase>() }

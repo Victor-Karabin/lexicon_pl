@@ -12,6 +12,7 @@ import com.lexicon.data.local.nextUserWordId
 import com.lexicon.data.local.searchKeyFor
 import com.lexicon.data.local.toWord
 import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.WordStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -42,6 +43,7 @@ class VocabularyRepositoryImpl(
     override suspend fun search(
         foldedQuery: String,
         levels: Set<String>,
+        learningOnly: Boolean,
         limit: Int,
         offset: Int,
     ): List<Word> {
@@ -51,6 +53,7 @@ class VocabularyRepositoryImpl(
                 foldedQuery = foldedQuery,
                 levels = levels.toList(),
                 ignoreLevels = if (levels.isEmpty()) 1 else 0,
+                learningOnly = if (learningOnly) 1 else 0,
                 limit = limit,
                 offset = offset,
             ).map { it.toWord() }
@@ -145,14 +148,16 @@ class VocabularyRepositoryImpl(
         wordDao.setDeleted(id, isDeleted = false)
     }
 
-    override suspend fun setInStudySet(
+    override suspend fun setStatus(
         ids: List<Long>,
-        isInStudySet: Boolean,
+        status: WordStatus,
     ) {
-        if (ids.isEmpty()) return
         vocabularySeeder.ensureSeeded()
-        ids.forEachBatch { wordDao.setInStudySet(it, isInStudySet) }
+        ids.forEachBatch { wordDao.setStatus(it, status.name) }
     }
 
     override fun observeStudySetIds(): Flow<Set<Long>> = wordDao.observeStudySetIds().map { it.toSet() }
+
+    override fun observeWordStatuses(): Flow<Map<Long, WordStatus>> =
+        wordDao.observeStatuses().map { rows -> rows.associate { it.id to WordStatus.ofName(it.status) } }
 }

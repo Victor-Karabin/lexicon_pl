@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.WordStatus
 import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconShapes
@@ -67,7 +68,8 @@ private fun Word.detailLine(): String? {
 @Composable
 fun VocabularyWordRow(
     word: Word,
-    onStudySetToggled: () -> Unit,
+    status: WordStatus,
+    onStatusCycled: () -> Unit,
     onPronounce: () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -120,12 +122,6 @@ fun VocabularyWordRow(
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        StudySetButton(
-            isInStudySet = word.isInStudySet,
-            contentDescription = stringResource(
-                if (word.isInStudySet) R.string.study_set_remove else R.string.study_set_add,
-            ),
-            onClick = onStudySetToggled,
-        )
+        WordStatusButton(status = status, onClick = onStatusCycled)
     }
 }

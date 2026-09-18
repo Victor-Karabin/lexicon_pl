@@ -5,7 +5,7 @@ struct PresetDetailView: View {
     let preset: VocabularyPreset
 
     @State private var words: [Word] = []
-    @State private var studySet: Set<Int64> = []
+    @State private var statuses: [Int64: WordStatus] = [:]
     @Environment(\.colorScheme) private var scheme
 
     var body: some View {
@@ -25,12 +25,9 @@ struct PresetDetailView: View {
                 .padding(.bottom, Spacing.medium)
 
                 ForEach(words, id: \.id.value) { word in
-                    WordRow(word: word, isInStudySet: studySet.contains(word.id.value)) {
+                    WordRow(word: word, status: statuses[word.id.value] ?? word.status) {
                         Task {
-                            try? await deps.toggleWordInStudySet.invoke(
-                                id: word.id,
-                                isInStudySet: !studySet.contains(word.id.value)
-                            )
+                            try? await deps.setWordStatus.invoke(id: word.id, status: (statuses[word.id.value] ?? word.status).next())
                             await load()
                         }
                     }
@@ -46,6 +43,6 @@ struct PresetDetailView: View {
 
     private func load() async {
         words = (try? await deps.getPresetVocabulary.invoke(id: preset.id)) ?? []
-        studySet = Set(words.filter { $0.isInStudySet }.map { $0.id.value })
+        statuses = Dictionary(uniqueKeysWithValues: words.map { ($0.id.value, $0.status) })
     }
 }

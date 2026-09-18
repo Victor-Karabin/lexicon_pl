@@ -7,18 +7,17 @@ import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
-import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
+import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
-import com.lexicon.interactors.presets.SetPresetInStudySetUseCase
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
-import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
+import com.lexicon.interactors.presets.SetWordStatusUseCase
 import com.lexicon.model.vocabulary.LocalizedText
 import com.lexicon.model.vocabulary.PresetCategory
 import com.lexicon.model.vocabulary.PresetId
-import com.lexicon.model.vocabulary.PresetStudySetState
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.WordStatus
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -50,7 +49,7 @@ class PresetDetailViewModelDeleteTest {
     private val pies = Word(VocabularyId(2L), "pies", "dog", "pjɛs")
 
     private var storedWords = listOf(kot, pies)
-    private val studySet = MutableStateFlow<Set<VocabularyId>>(emptySet())
+    private val statuses = MutableStateFlow<Map<VocabularyId, WordStatus>>(emptyMap())
 
     private fun presetOf(words: List<Word>) =
         VocabularyPreset(
@@ -101,11 +100,10 @@ class PresetDetailViewModelDeleteTest {
             savedStateHandle = SavedStateHandle(mapOf(PRESET_ID_ARG to "food")),
             getPreset = getPreset,
             getPresetVocabulary = getPresetVocabulary,
-            toggleWordInStudySet = mockk<ToggleWordInStudySetUseCase>(relaxed = true),
+            setWordStatus = mockk<SetWordStatusUseCase>(relaxed = true),
             deleteWord = deleteWord,
             restoreWord = restoreWord,
-            setPresetInStudySet = mockk<SetPresetInStudySetUseCase>(relaxed = true),
-            observeStudySetIds = mockk<ObserveStudySetIdsUseCase> { every { this@mockk() } returns studySet },
+            observeWordStatuses = mockk<ObserveWordStatusesUseCase> { every { this@mockk() } returns statuses },
             getWordPresetMemberships = mockk<GetWordPresetMembershipsUseCase>(relaxed = true),
             setWordPresetMembership = setWordPresetMembership,
             dispatchers = object : DispatcherProvider {
@@ -123,7 +121,7 @@ class PresetDetailViewModelDeleteTest {
     fun tearDown() {
         Dispatchers.resetMain()
         storedWords = listOf(kot, pies)
-        studySet.value = emptySet()
+        statuses.value = emptyMap()
     }
 
     private fun TestScope.started(): PresetDetailViewModel =
@@ -197,17 +195,17 @@ class PresetDetailViewModelDeleteTest {
         }
 
     @Test
-    fun `starring what is left reads as fully in the study set`() =
+    fun `a status set elsewhere reaches the words that are left`() =
         runTest(dispatcher) {
             val viewModel = started()
             advanceUntilIdle()
             viewModel.onWordDeleted(kot)
             advanceUntilIdle()
 
-            studySet.value = setOf(VocabularyId(2L))
+            statuses.value = mapOf(VocabularyId(2L) to WordStatus.TO_LEARN)
             advanceUntilIdle()
 
-            assertEquals(PresetStudySetState.ALL, loaded(viewModel).studySetState)
+            assertEquals(mapOf(VocabularyId(2L) to WordStatus.TO_LEARN), loaded(viewModel).wordStatuses)
         }
 
     @Test

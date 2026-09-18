@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WordDao {
-    @Query("SELECT * FROM words WHERE isInStudySet = 1 AND isDeleted = 0 ORDER BY RANDOM() LIMIT :count")
+    @Query("SELECT * FROM words WHERE status IN ('TO_LEARN', 'FAVOURITE') AND isDeleted = 0 ORDER BY RANDOM() LIMIT :count")
     suspend fun getRandomForStudy(count: Int): List<WordEntity>
 
     @Query("SELECT * FROM words WHERE id IN (:ids) AND isDeleted = 0 ORDER BY RANDOM() LIMIT :count")
@@ -21,22 +21,25 @@ interface WordDao {
     @Query("SELECT * FROM words WHERE id IN (:ids) AND isDeleted = 0")
     suspend fun getByIds(ids: List<Long>): List<WordEntity>
 
-    @Query("UPDATE words SET isInStudySet = :isInStudySet WHERE id IN (:ids)")
-    suspend fun setInStudySet(
+    @Query("UPDATE words SET status = :status WHERE id IN (:ids)")
+    suspend fun setStatus(
         ids: List<Long>,
-        isInStudySet: Boolean,
+        status: String,
     )
 
-    @Query("SELECT text FROM words WHERE text IN (:texts) AND isInStudySet = 1 AND isDeleted = 0")
+    @Query("SELECT text FROM words WHERE text IN (:texts) AND status IN ('TO_LEARN', 'FAVOURITE') AND isDeleted = 0")
     suspend fun studySetTextsAmong(texts: List<String>): List<String>
 
-    @Query("SELECT id FROM words WHERE isInStudySet = 1 AND isDeleted = 0")
+    @Query("SELECT id FROM words WHERE status IN ('TO_LEARN', 'FAVOURITE') AND isDeleted = 0")
     fun observeStudySetIds(): Flow<List<Long>>
+
+    @Query("SELECT id, status FROM words WHERE status != 'UNDEFINED' AND isDeleted = 0")
+    fun observeStatuses(): Flow<List<WordStatusRow>>
 
     @Query(
         """
         SELECT COUNT(*) FROM words
-        WHERE isInStudySet = 1 AND isDeleted = 0
+        WHERE status IN ('TO_LEARN', 'FAVOURITE') AND isDeleted = 0
           AND (:excludePhrases = 0 OR text NOT LIKE '% %')
         """,
     )
@@ -48,6 +51,7 @@ interface WordDao {
         WHERE searchKey LIKE '%' || :foldedQuery || '%'
           AND isDeleted = 0
           AND (:ignoreLevels = 1 OR cefr IN (:levels))
+          AND (:learningOnly = 0 OR status IN ('TO_LEARN', 'FAVOURITE'))
         ORDER BY text
         LIMIT :limit OFFSET :offset
         """,
@@ -56,6 +60,7 @@ interface WordDao {
         foldedQuery: String,
         levels: List<String>,
         ignoreLevels: Int,
+        learningOnly: Int,
         limit: Int,
         offset: Int,
     ): List<WordEntity>
@@ -102,7 +107,7 @@ interface WordDao {
     @Query("SELECT id FROM words WHERE isDeleted = 0 AND cefr = :level ORDER BY id")
     suspend fun wordIdsForLevel(level: String): List<Long>
 
-    @Query("SELECT id FROM words WHERE isDeleted = 0 AND isInStudySet = 1 ORDER BY id")
+    @Query("SELECT id FROM words WHERE isDeleted = 0 AND status IN ('TO_LEARN', 'FAVOURITE') ORDER BY id")
     suspend fun studySetWordIds(): List<Long>
 
     @Query(

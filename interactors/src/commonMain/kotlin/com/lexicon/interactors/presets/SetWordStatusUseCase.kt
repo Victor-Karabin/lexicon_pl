@@ -1,10 +1,11 @@
 package com.lexicon.interactors.presets
 
 import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.WordStatus
 
-interface ToggleWordInStudySetUseCase {
+interface SetWordStatusUseCase {
     suspend operator fun invoke(
         id: VocabularyId,
-        isInStudySet: Boolean,
+        status: WordStatus,
     )
 }

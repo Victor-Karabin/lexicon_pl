@@ -24,14 +24,14 @@ class WordTest {
 
     @Test
     fun `starring a word already in the study set changes nothing`() {
-        val starred = woda.addToStudySet()
+        val starred = woda.withStatus(WordStatus.TO_LEARN)
         assertTrue(starred.isInStudySet)
-        assertTrue(starred === starred.addToStudySet())
+        assertTrue(starred === starred.withStatus(WordStatus.TO_LEARN))
     }
 
     @Test
     fun `a word can leave the study set`() {
-        assertFalse(woda.addToStudySet().removeFromStudySet().isInStudySet)
+        assertFalse(woda.withStatus(WordStatus.TO_LEARN).withStatus(WordStatus.UNDEFINED).isInStudySet)
     }
 
     @Test

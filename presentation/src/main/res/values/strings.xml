@@ -96,8 +96,11 @@
     <string name="word_pronounce">Play “%1$s”</string>
     <string name="study_set_add">Add to study set</string>
     <string name="study_set_remove">Remove from study set</string>
-    <string name="study_set_preset_add">Add every word to study set</string>
-    <string name="study_set_preset_remove">Remove every word from study set</string>
+    <string name="word_status_undefined">Not set. Tap to mark as to learn</string>
+    <string name="word_status_to_learn">To learn. Tap to mark as favourite</string>
+    <string name="word_status_favourite">Favourite. Tap to mark as known</string>
+    <string name="word_status_known">Known. Tap to clear</string>
+    <string name="vocabulary_filter_to_learn">To learn</string>
     <string name="training_not_enough_words_title">Not enough words</string>
     <string name="training_not_enough_words_body">%1$s needs at least %2$d words, and your study set has %3$d.</string>
     <string name="training_not_enough_words_hint">Add words to your study set with the heart button in the Words tab.</string>

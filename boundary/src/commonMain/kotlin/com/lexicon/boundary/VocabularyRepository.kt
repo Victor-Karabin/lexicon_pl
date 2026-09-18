@@ -1,6 +1,7 @@
 package com.lexicon.boundary
 
 import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.WordStatus
 import kotlinx.coroutines.flow.Flow
 
 interface VocabularyRepository {
@@ -16,6 +17,7 @@ interface VocabularyRepository {
     suspend fun search(
         foldedQuery: String,
         levels: Set<String>,
+        learningOnly: Boolean = false,
         limit: Int,
         offset: Int = 0,
     ): List<Word>
@@ -47,12 +49,14 @@ interface VocabularyRepository {
 
     suspend fun restoreWord(id: Long)
 
-    suspend fun setInStudySet(
+    suspend fun setStatus(
         ids: List<Long>,
-        isInStudySet: Boolean,
+        status: WordStatus,
     )
 
     fun observeStudySetIds(): Flow<Set<Long>>
+
+    fun observeWordStatuses(): Flow<Map<Long, WordStatus>>
 
     suspend fun allWordIds(): List<Long>
 

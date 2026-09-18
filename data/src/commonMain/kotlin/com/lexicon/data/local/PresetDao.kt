@@ -52,8 +52,7 @@ interface PresetDao {
     @Query(
         """
         SELECT pw.presetId AS presetId,
-               COUNT(*) AS wordCount,
-               SUM(CASE WHEN w.isInStudySet THEN 1 ELSE 0 END) AS studySetCount
+               COUNT(*) AS wordCount
         FROM preset_words pw
         INNER JOIN words w ON w.id = pw.wordId
         WHERE w.isDeleted = 0

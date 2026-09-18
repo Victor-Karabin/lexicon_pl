@@ -9,11 +9,12 @@ import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
 import com.lexicon.interactors.course.Lesson
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
-import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
-import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
+import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
+import com.lexicon.interactors.presets.SetWordStatusUseCase
 import com.lexicon.model.course.LessonId
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.WordStatus
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -33,6 +34,7 @@ sealed interface LessonUiState {
     data class Loaded(
         val lesson: Lesson,
         val words: ImmutableList<Word> = persistentListOf(),
+        val wordStatuses: Map<VocabularyId, WordStatus> = emptyMap(),
         val isLoadingWords: Boolean = true,
     ) : LessonUiState
 }
@@ -44,8 +46,8 @@ class LessonViewModel(
     private val getLesson: GetLessonUseCase,
     private val getLessonVocabulary: GetLessonVocabularyUseCase,
     private val setLessonCompleted: SetLessonCompletedUseCase,
-    private val toggleWordInStudySet: ToggleWordInStudySetUseCase,
-    observeStudySetIds: ObserveStudySetIdsUseCase,
+    private val setWordStatus: SetWordStatusUseCase,
+    observeWordStatuses: ObserveWordStatusesUseCase,
     private val dispatchers: DispatcherProvider,
     private val speechSynthesizer: SpeechSynthesizer,
 ) : ViewModel() {
@@ -60,16 +62,15 @@ class LessonViewModel(
     private val content = MutableStateFlow<Content?>(null)
 
     val uiState: StateFlow<LessonUiState> =
-        combine(content, observeStudySetIds()) { loaded, studySet ->
+        combine(content, observeWordStatuses()) { loaded, statuses ->
             when {
                 loaded == null -> LessonUiState.Loading
                 loaded.lesson == null -> LessonUiState.NotFound
                 else ->
                     LessonUiState.Loaded(
                         lesson = loaded.lesson,
-                        words = loaded.words
-                            .map { it.copy(isInStudySet = it.id in studySet) }
-                            .toImmutableList(),
+                        words = loaded.words.toImmutableList(),
+                        wordStatuses = statuses,
                         isLoadingWords = !loaded.wordsLoaded,
                     )
             }
@@ -96,11 +97,11 @@ class LessonViewModel(
         }
     }
 
-    fun onWordStudySetToggled(
-        id: VocabularyId,
-        isInStudySet: Boolean,
-    ) {
-        viewModelScope.launch(dispatchers.io) { toggleWordInStudySet(id, isInStudySet) }
+    fun onWordStatusCycled(id: VocabularyId) {
+        val loaded = uiState.value as? LessonUiState.Loaded ?: return
+        val current = loaded.wordStatuses[id] ?: loaded.words.firstOrNull { it.id == id }?.status ?: WordStatus.UNDEFINED
+
+        viewModelScope.launch(dispatchers.io) { setWordStatus(id, current.next()) }
     }
 
     private suspend fun load() {

@@ -96,7 +96,7 @@ class WordDaoTest {
             val all = (1L..OVER_THE_VARIABLE_LIMIT).toList()
             words.insertAll(all.map { word(it, "word$it", "gloss$it") })
 
-            all.forEachBatch { words.setInStudySet(it, true) }
+            all.forEachBatch { words.setStatus(it, "TO_LEARN") }
 
             assertEquals(OVER_THE_VARIABLE_LIMIT, words.studySetWordIds().size)
         }
@@ -106,7 +106,7 @@ class WordDaoTest {
         runTest {
             val all = (1L..OVER_THE_VARIABLE_LIMIT).toList()
             words.insertAll(all.map { word(it, "word$it", "gloss$it") })
-            all.take(3).forEachBatch { words.setInStudySet(it, true) }
+            all.take(3).forEachBatch { words.setStatus(it, "TO_LEARN") }
 
             val texts = all.map { "word$it" }
             val starred = texts.inBatches { words.studySetTextsAmong(it) }

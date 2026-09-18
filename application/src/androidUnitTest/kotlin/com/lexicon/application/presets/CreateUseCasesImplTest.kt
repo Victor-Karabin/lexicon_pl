@@ -14,6 +14,7 @@ import com.lexicon.interactors.presets.WordDraftProblem
 import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.WordStatus
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -36,7 +37,7 @@ class CreateUseCasesImplTest {
         text = "smok",
         translation = "dragon",
         transcription = "",
-        isInStudySet = false,
+        status = WordStatus.UNDEFINED,
         cefr = null,
     )
 

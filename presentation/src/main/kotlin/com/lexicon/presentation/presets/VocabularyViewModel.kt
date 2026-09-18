@@ -7,20 +7,19 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.DeletePresetUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
-import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
 import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
+import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
 import com.lexicon.interactors.presets.RestorePresetUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
-import com.lexicon.interactors.presets.SetPresetInStudySetUseCase
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
-import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
+import com.lexicon.interactors.presets.SetWordStatusUseCase
 import com.lexicon.model.vocabulary.CefrLevel
 import com.lexicon.model.vocabulary.PresetId
-import com.lexicon.model.vocabulary.PresetStudySetState
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.WordStatus
 import com.lexicon.model.vocabulary.resolve
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -38,13 +37,12 @@ private const val QUERY_DEBOUNCE_MS = 200L
 class VocabularyViewModel(
     private val observePresets: ObserveVocabularyPresetsUseCase,
     private val searchVocabulary: SearchVocabularyUseCase,
-    private val setPresetInStudySet: SetPresetInStudySetUseCase,
-    private val toggleWordInStudySet: ToggleWordInStudySetUseCase,
+    private val setWordStatus: SetWordStatusUseCase,
     private val deleteWord: DeleteWordUseCase,
     private val restoreWord: RestoreWordUseCase,
     private val deletePreset: DeletePresetUseCase,
     private val restorePreset: RestorePresetUseCase,
-    private val observeStudySetIds: ObserveStudySetIdsUseCase,
+    private val observeWordStatuses: ObserveWordStatusesUseCase,
     getWordPresetMemberships: GetWordPresetMembershipsUseCase,
     setWordPresetMembership: SetWordPresetMembershipUseCase,
     private val dispatchers: DispatcherProvider,
@@ -84,8 +82,8 @@ class VocabularyViewModel(
             }
         }
         viewModelScope.launch(dispatchers.io) {
-            observeStudySetIds().collect { studySet ->
-                updateLoaded { it.copy(studySetWordIds = studySet) }
+            observeWordStatuses().collect { statuses ->
+                updateLoaded { it.copy(wordStatuses = statuses) }
             }
         }
         observeQuery()
@@ -98,7 +96,7 @@ class VocabularyViewModel(
                 searchJob?.cancel()
                 moreWordsJob?.cancel()
                 searchJob = viewModelScope.launch(dispatchers.io) {
-                    val first = searchVocabulary(current.query, current.levels)
+                    val first = searchVocabulary(current.query, current.levels, current.toLearnOnly)
                     updateLoaded {
                         it.copy(
                             words = first,
@@ -123,7 +121,7 @@ class VocabularyViewModel(
         moreWordsJob?.cancel()
         moreWordsJob = viewModelScope.launch(dispatchers.io) {
             val current = criteria.value
-            val more = searchVocabulary(current.query, current.levels, skip = state.words.size)
+            val more = searchVocabulary(current.query, current.levels, current.toLearnOnly, skip = state.words.size)
             if (criteria.value != current) return@launch
             updateLoaded {
                 it.copy(
@@ -147,18 +145,15 @@ class VocabularyViewModel(
         updateLoaded { it.copy(selectedCefrLevels = updated).clearedWordsIfIdle() }
     }
 
-    fun onFiltersCleared() {
-        criteria.update { it.copy(levels = emptySet()) }
-        updateLoaded { it.copy(selectedCefrLevels = emptySet()).clearedWordsIfIdle() }
+    fun onToLearnToggled() {
+        val wanted = (_uiState.value as? VocabularyUiState.Loaded)?.toLearnOnly?.not() ?: return
+        criteria.update { it.copy(toLearnOnly = wanted) }
+        updateLoaded { it.copy(toLearnOnly = wanted).clearedWordsIfIdle() }
     }
 
-    fun onPresetStudySetToggled(
-        id: PresetId,
-        current: PresetStudySetState,
-    ) {
-        viewModelScope.launch(dispatchers.io) {
-            setPresetInStudySet(id, current != PresetStudySetState.ALL)
-        }
+    fun onFiltersCleared() {
+        criteria.update { it.copy(levels = emptySet(), toLearnOnly = false) }
+        updateLoaded { it.copy(selectedCefrLevels = emptySet(), toLearnOnly = false).clearedWordsIfIdle() }
     }
 
     fun onPronounceWord(word: Word) {
@@ -167,11 +162,13 @@ class VocabularyViewModel(
         }
     }
 
-    fun onWordStudySetToggled(
-        id: VocabularyId,
-        isInStudySet: Boolean,
-    ) {
-        viewModelScope.launch(dispatchers.io) { toggleWordInStudySet(id, isInStudySet) }
+    fun onWordStatusCycled(id: VocabularyId) {
+        val state = _uiState.value as? VocabularyUiState.Loaded ?: return
+        val current = state.wordStatuses[id] ?: state.words.firstOrNull { it.id == id }?.status ?: WordStatus.UNDEFINED
+        val next = current.next()
+
+        updateLoaded { it.copy(wordStatuses = it.wordStatuses + (id to next)) }
+        viewModelScope.launch(dispatchers.io) { setWordStatus(id, next) }
     }
 
     fun onWordDeleted(word: Word) {
@@ -235,7 +232,7 @@ class VocabularyViewModel(
 
     private suspend fun refreshWords() {
         val current = criteria.value
-        val results = searchVocabulary(current.query, current.levels)
+        val results = searchVocabulary(current.query, current.levels, current.toLearnOnly)
         updateLoaded { it.copy(words = results) }
     }
 
@@ -247,6 +244,7 @@ class VocabularyViewModel(
 private data class SearchCriteria(
     val query: String = "",
     val levels: Set<CefrLevel> = emptySet(),
+    val toLearnOnly: Boolean = false,
 )
 
 private fun <T> Set<T>.toggle(value: T): Set<T> = if (value in this) this - value else this + value

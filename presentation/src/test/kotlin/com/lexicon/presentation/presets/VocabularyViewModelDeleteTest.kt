@@ -4,14 +4,13 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.DeletePresetUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
-import com.lexicon.interactors.presets.ObserveStudySetIdsUseCase
 import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
+import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
 import com.lexicon.interactors.presets.RestorePresetUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
-import com.lexicon.interactors.presets.SetPresetInStudySetUseCase
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
-import com.lexicon.interactors.presets.ToggleWordInStudySetUseCase
+import com.lexicon.interactors.presets.SetWordStatusUseCase
 import com.lexicon.model.vocabulary.LocalizedText
 import com.lexicon.model.vocabulary.PresetCategory
 import com.lexicon.model.vocabulary.PresetId
@@ -58,21 +57,20 @@ class VocabularyViewModelDeleteTest {
     private val observePresets: ObserveVocabularyPresetsUseCase = mockk {
         every { this@mockk() } returns presets
     }
-    private val observeStudySet: ObserveStudySetIdsUseCase = mockk {
-        every { this@mockk() } returns flowOf(emptySet())
+    private val observeStatuses: ObserveWordStatusesUseCase = mockk {
+        every { this@mockk() } returns flowOf(emptyMap())
     }
 
     private fun viewModel() =
         VocabularyViewModel(
             observePresets = observePresets,
             searchVocabulary = searchVocabulary,
-            setPresetInStudySet = mockk<SetPresetInStudySetUseCase>(relaxed = true),
-            toggleWordInStudySet = mockk<ToggleWordInStudySetUseCase>(relaxed = true),
+            setWordStatus = mockk<SetWordStatusUseCase>(relaxed = true),
             deleteWord = deleteWord,
             restoreWord = restoreWord,
             deletePreset = mockk<DeletePresetUseCase>(relaxed = true),
             restorePreset = mockk<RestorePresetUseCase>(relaxed = true),
-            observeStudySetIds = observeStudySet,
+            observeWordStatuses = observeStatuses,
             getWordPresetMemberships = mockk<GetWordPresetMembershipsUseCase>(relaxed = true),
             setWordPresetMembership = mockk<SetWordPresetMembershipUseCase>(relaxed = true),
             dispatchers = object : DispatcherProvider {

@@ -8,6 +8,7 @@ interface SearchVocabularyUseCase {
     suspend operator fun invoke(
         query: String = "",
         levels: Set<CefrLevel> = emptySet(),
+        learningOnly: Boolean = false,
         limit: Int = PAGE,
         skip: Int = 0,
     ): ImmutableList<Word>

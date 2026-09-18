@@ -34,7 +34,6 @@ import com.lexicon.interactors.presets.PresetDraftProblem
 import com.lexicon.model.vocabulary.LocalizedText
 import com.lexicon.model.vocabulary.PresetCategory
 import com.lexicon.model.vocabulary.PresetId
-import com.lexicon.model.vocabulary.PresetStudySetState
 import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.ExpandableFlowRow
@@ -106,9 +105,7 @@ private fun CreatePresetContent(
                     PresetSummary(
                         preset = preview,
                         languageTag = LocalizedText.DEFAULT_LANGUAGE,
-                        studySetState = PresetStudySetState.NONE,
                         skin = skin,
-                        onStudySetToggled = {},
                     )
                 }
             }
