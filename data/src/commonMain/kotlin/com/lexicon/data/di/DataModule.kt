@@ -46,7 +46,6 @@ import com.lexicon.data.repository.FallbackTranslatorImpl
 import com.lexicon.data.repository.InMemorySessionStore
 import com.lexicon.data.repository.MergingTranslationSuggester
 import com.lexicon.data.repository.MergingWordLevelGuesser
-import com.lexicon.data.repository.ProgramRepositoryImpl
 import com.lexicon.data.repository.ReviewScheduleRepositoryImpl
 import com.lexicon.data.repository.StudyRecordRepositoryImpl
 import com.lexicon.data.repository.TrainingHistoryRepositoryImpl

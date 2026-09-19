@@ -64,7 +64,7 @@ class TranslationVariantsTest {
     @Test
     fun `the corpus offers only the words whose other side matches exactly`() =
         runTest {
-            coEvery { wordDao.search(any(), any(), any(), any(), any(), any()) } returns listOf(
+            coEvery { wordDao.withTranslationContaining(any(), any()) } returns listOf(
                 entity("woda", "water"),
                 entity("wodospad", "waterfall"),
                 entity("wódka", "Water"),
@@ -81,7 +81,7 @@ class TranslationVariantsTest {
     @Test
     fun `the level of a new word is the easiest the corpus knows for that meaning`() =
         runTest {
-            coEvery { wordDao.search(any(), any(), any(), any(), any(), any()) } returns listOf(
+            coEvery { wordDao.withTranslationContaining(any(), any()) } returns listOf(
                 entity("hydrant", "water", cefr = "B2"),
                 entity("woda", "water", cefr = "A1"),
                 entity("wodospad", "waterfall", cefr = "A2"),
@@ -95,7 +95,7 @@ class TranslationVariantsTest {
     @Test
     fun `a meaning the corpus does not carry leaves the level unknown`() =
         runTest {
-            coEvery { wordDao.search(any(), any(), any(), any(), any(), any()) } returns emptyList()
+            coEvery { wordDao.withTranslationContaining(any(), any()) } returns emptyList()
 
             val guesser = CorpusWordLevelGuesser(wordDao, seeder)
 
@@ -105,7 +105,7 @@ class TranslationVariantsTest {
     @Test
     fun `an entry carrying several senses matches on any of them, verbs without their to`() =
         runTest {
-            coEvery { wordDao.search(any(), any(), any(), any(), any(), any()) } returns listOf(
+            coEvery { wordDao.withTranslationContaining(any(), any()) } returns listOf(
                 entity("blisko", "near, by"),
                 entity("jechać", "to travel, to drive"),
                 entity("obok", "beside"),
@@ -120,12 +120,27 @@ class TranslationVariantsTest {
     @Test
     fun `a Polish word with several senses offers each sense as its own variant`() =
         runTest {
-            coEvery { wordDao.search(any(), any(), any(), any(), any(), any()) } returns listOf(
+            coEvery { wordDao.withTextStarting("droga", any()) } returns listOf(
                 entity("droga", "road, way"),
             )
 
             val suggester = CorpusTranslationSuggester(wordDao, seeder)
 
             assertEquals(listOf("road", "way"), suggester.suggest("droga", TranslationDirection.PL_TO_EN, limit = 4))
+        }
+
+    @Test
+    fun `the corpus is asked for the meaning itself, not for every word that contains its letters`() =
+        runTest {
+            coEvery { wordDao.withTranslationContaining("go", CORPUS_LOOKUP_LIMIT) } returns listOf(
+                entity("iść", "to go", cefr = "A1"),
+                entity("gorący", "hot", cefr = "A1"),
+            )
+
+            val suggester = CorpusTranslationSuggester(wordDao, seeder)
+            val guesser = CorpusWordLevelGuesser(wordDao, seeder)
+
+            assertEquals(listOf("iść"), suggester.suggest("go", TranslationDirection.EN_TO_PL, limit = 4))
+            assertEquals(CefrLevel.A1, guesser.guess("chodzić", "to go"))
         }
 }
