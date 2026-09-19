@@ -87,6 +87,18 @@ interface WordDao {
         offset: Int,
     ): List<WordEntity>
 
+    @Query("SELECT * FROM words WHERE isDeleted = 0 AND translation LIKE '%' || :sense || '%' LIMIT :limit")
+    suspend fun withTranslationContaining(
+        sense: String,
+        limit: Int,
+    ): List<WordEntity>
+
+    @Query("SELECT * FROM words WHERE isDeleted = 0 AND (searchKey LIKE :foldedText || ' %') LIMIT :limit")
+    suspend fun withTextStarting(
+        foldedText: String,
+        limit: Int,
+    ): List<WordEntity>
+
     @Update
     suspend fun updateAll(words: List<WordEntity>)
 

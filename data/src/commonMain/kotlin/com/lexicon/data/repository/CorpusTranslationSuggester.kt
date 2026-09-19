@@ -6,7 +6,7 @@ import com.lexicon.common.foldForSearch
 import com.lexicon.data.local.VocabularySeeder
 import com.lexicon.data.local.WordDao
 
-private const val CORPUS_LOOKUP_LIMIT = 40
+internal const val CORPUS_LOOKUP_LIMIT = 500
 
 private val SENSE_SEPARATORS = Regex("[,;/]")
 
@@ -33,15 +33,13 @@ class CorpusTranslationSuggester(
         if (needle.isEmpty()) return emptyList()
         vocabularySeeder.ensureSeeded()
 
-        return wordDao
-            .search(
-                foldedQuery = needle,
-                levels = emptyList(),
-                ignoreLevels = 1,
-                learningOnly = 0,
-                limit = CORPUS_LOOKUP_LIMIT,
-                offset = 0,
-            ).flatMap { word ->
+        val candidates = when (direction) {
+            TranslationDirection.EN_TO_PL -> wordDao.withTranslationContaining(needle, CORPUS_LOOKUP_LIMIT)
+            TranslationDirection.PL_TO_EN -> wordDao.withTextStarting(text.foldForSearch(), CORPUS_LOOKUP_LIMIT)
+        }
+
+        return candidates
+            .flatMap { word ->
                 when (direction) {
                     TranslationDirection.EN_TO_PL -> listOfNotNull(word.text.takeIf { word.translation.hasSense(needle) })
                     TranslationDirection.PL_TO_EN -> if (word.text.asSenseKey() == needle) senses(word.translation) else emptyList()

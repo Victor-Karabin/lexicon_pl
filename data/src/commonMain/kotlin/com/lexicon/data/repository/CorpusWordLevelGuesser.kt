@@ -5,8 +5,6 @@ import com.lexicon.data.local.VocabularySeeder
 import com.lexicon.data.local.WordDao
 import com.lexicon.model.vocabulary.CefrLevel
 
-private const val CORPUS_LOOKUP_LIMIT = 40
-
 class CorpusWordLevelGuesser(
     private val wordDao: WordDao,
     private val vocabularySeeder: VocabularySeeder,
@@ -20,13 +18,9 @@ class CorpusWordLevelGuesser(
         vocabularySeeder.ensureSeeded()
 
         return wordDao
-            .search(
-                foldedQuery = meaning,
-                levels = emptyList(),
-                ignoreLevels = 1,
-                learningOnly = 0,
-                limit = CORPUS_LOOKUP_LIMIT,
-                offset = 0,
+            .withTranslationContaining(
+                meaning,
+                CORPUS_LOOKUP_LIMIT,
             ).filter { it.translation.hasSense(meaning) }
             .mapNotNull { CefrLevel.ofName(it.cefr.ifEmpty { null }) }
             .minByOrNull { it.ordinal }
