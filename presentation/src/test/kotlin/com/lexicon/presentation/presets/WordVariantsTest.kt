@@ -17,9 +17,12 @@ import io.mockk.mockk
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -131,4 +134,22 @@ class WordVariantsTest {
 
             assertEquals(persistentListOf<String>(), viewModel.uiState.value.translationVariants)
         }
+
+    @Test
+    fun `the translation fills in without waiting for a slow suggester`() =
+        runTest(dispatcher) {
+            coEvery { translateWord("water", toPolish = true) } returns "woda"
+            coEvery { suggestTranslations("water", toPolish = true) } coAnswers { awaitCancellation() }
+            val viewModel = viewModel()
+
+            viewModel.onTranslationChanged("water")
+            advanceTimeBy(TYPING_SETTLE_FOR_TEST)
+            runCurrent()
+
+            assertEquals("woda", viewModel.uiState.value.text)
+        }
+
+    private companion object {
+        const val TYPING_SETTLE_FOR_TEST = 700L
+    }
 }

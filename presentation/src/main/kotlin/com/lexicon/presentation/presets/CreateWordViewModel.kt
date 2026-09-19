@@ -313,30 +313,37 @@ class CreateWordViewModel(
         translateJob = viewModelScope.launch {
             delay(TYPING_SETTLE_MS)
 
+            if (wantsFill) fillIn(from, toPolish, target)
+
             val variants = suggestTranslations(from, toPolish = toPolish)
             _uiState.update { state ->
                 if (toPolish) state.copy(textVariants = variants) else state.copy(translationVariants = variants)
             }
-            if (!wantsFill) return@launch
-
-            _uiState.update { it.copy(isTranslating = true) }
-            val translated = translateWord(from, toPolish = toPolish)
-
-            val fills = translated != null && target(_uiState.value).isBlank()
-
-            if (fills) {
-                if (toPolish) textWasFilledIn = true else translationWasFilledIn = true
-            }
-            _uiState.update { state ->
-                when {
-                    !fills -> state.copy(isTranslating = false)
-                    toPolish -> state.copy(text = translated.orEmpty(), isTranslating = false)
-                    else -> state.copy(translation = translated.orEmpty(), isTranslating = false)
-                }
-            }
-
-            if (!toPolish) scheduleImageSearch(_uiState.value.translation)
         }
+    }
+
+    private suspend fun fillIn(
+        from: String,
+        toPolish: Boolean,
+        target: (CreateWordUiState) -> String,
+    ) {
+        _uiState.update { it.copy(isTranslating = true) }
+        val translated = translateWord(from, toPolish = toPolish)
+
+        val fills = translated != null && target(_uiState.value).isBlank()
+
+        if (fills) {
+            if (toPolish) textWasFilledIn = true else translationWasFilledIn = true
+        }
+        _uiState.update { state ->
+            when {
+                !fills -> state.copy(isTranslating = false)
+                toPolish -> state.copy(text = translated.orEmpty(), isTranslating = false)
+                else -> state.copy(translation = translated.orEmpty(), isTranslating = false)
+            }
+        }
+
+        if (!toPolish) scheduleImageSearch(_uiState.value.translation)
     }
 
     private suspend fun loadImagesFor(

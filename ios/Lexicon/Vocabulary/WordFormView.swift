@@ -139,18 +139,20 @@ struct WordFormView: View {
     private func fillPolish(from english: String) async {
         guard !english.isEmpty else { return }
         await lookUpImages(for: english)
+
+        if text.isEmpty || textWasFilledIn {
+            let filled = try? await deps.translateWord.invoke(text: english, toPolish: true)
+            guard !Task.isCancelled else { return }
+            if let filled, !filled.isEmpty {
+                placedPolish = filled
+                text = filled
+                textWasFilledIn = true
+            }
+        }
+
         let offered = await variants(of: english, toPolish: true)
         guard !Task.isCancelled else { return }
         polishVariants = offered
-        guard text.isEmpty || textWasFilledIn else { return }
-
-        let filled = try? await deps.translateWord.invoke(text: english, toPolish: true)
-        guard !Task.isCancelled else { return }
-        if let filled, !filled.isEmpty {
-            placedPolish = filled
-            text = filled
-            textWasFilledIn = true
-        }
     }
 
     private func suggestEnglish(for polish: String) async {
