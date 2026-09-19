@@ -192,7 +192,8 @@
   "cefr": "A1",
   "topics": [
    "time",
-   "dates"
+   "dates",
+   "false-friends"
   ],
   "example": "Za **rok** pojadę do Gdańska."
  },
@@ -377,7 +378,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "time"
+   "time",
+   "false-friends"
   ],
   "example": "Nie mam **czasu**."
  },
@@ -548,7 +550,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "home"
+   "home",
+   "false-friends"
   ],
   "example": "Mój **dom** jest blisko."
  },
@@ -773,7 +776,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "countries"
+   "countries",
+   "false-friends"
   ],
   "example": "Polska to mój **kraj**."
  },
@@ -810,7 +814,8 @@
   "partOfSpeech": "n",
   "cefr": "A2",
   "topics": [
-   "books"
+   "books",
+   "false-friends"
   ],
   "example": "Zapisz to na drugiej **stronie**."
  },
@@ -1440,7 +1445,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "family"
+   "family",
+   "false-friends"
   ],
   "example": "Mój **brat** gra w piłkę."
  },
@@ -1464,7 +1470,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "family"
+   "family",
+   "false-friends"
   ],
   "example": "Moja **rodzina** je obiad."
  },
@@ -1524,7 +1531,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "time"
+   "time",
+   "false-friends"
   ],
   "example": "**Rano** piję herbatę."
  },
@@ -1574,7 +1582,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "time"
+   "time",
+   "false-friends"
   ],
   "example": "Mam jedną **godzinę** wolnego."
  },
@@ -1637,7 +1646,8 @@
   "cefr": "A1",
   "topics": [
    "time",
-   "dates"
+   "dates",
+   "false-friends"
   ],
   "example": "**Jutro** idę do szkoły."
  },
@@ -1734,7 +1744,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "drinks"
+   "drinks",
+   "false-friends"
   ],
   "example": "Piję **sok** rano."
  },
@@ -1771,7 +1782,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "food"
+   "food",
+   "false-friends"
   ],
   "example": "Ten **owoc** jest słodki."
  },
@@ -1918,7 +1930,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "food"
+   "food",
+   "false-friends"
   ],
   "example": "Jemy **kolację** o osiemnastej."
  },
@@ -1978,7 +1991,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "shopping"
+   "shopping",
+   "false-friends"
   ],
   "example": "Idę do **sklepu**."
  },
@@ -2115,7 +2129,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "transport"
+   "transport",
+   "false-friends"
   ],
   "example": "Mój **rower** stoi pod domem."
  },
@@ -2944,7 +2959,9 @@
   "transcription": "ʐɛt͡ʂ",
   "partOfSpeech": "n",
   "cefr": "A1",
-  "topics": [],
+  "topics": [
+   "false-friends"
+  ],
   "example": "To jest moja **rzecz**."
  },
  {
@@ -3343,7 +3360,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "sports"
+   "sports",
+   "false-friends"
   ],
   "example": "Dzisiaj jest **mecz**."
  },
@@ -3391,7 +3409,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "animals"
+   "animals",
+   "false-friends"
   ],
   "example": "Mój **kot** je."
  },
@@ -3504,7 +3523,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "nature"
+   "nature",
+   "false-friends"
   ],
   "example": "Na **polu** rośnie zboże."
  },
@@ -3893,7 +3913,8 @@
   "partOfSpeech": "adj",
   "cefr": "A1",
   "topics": [
-   "appearance"
+   "appearance",
+   "false-friends"
   ],
   "example": "Ten kot jest **gruby**."
  },
@@ -4763,7 +4784,8 @@
   "cefr": "A1",
   "topics": [
    "home",
-   "hotel"
+   "hotel",
+   "false-friends"
   ],
   "example": "Ten **pokój** jest duży."
  },
@@ -4885,7 +4907,8 @@
   "cefr": "A1",
   "topics": [
    "home",
-   "household"
+   "household",
+   "false-friends"
   ],
   "example": "Książka leży na **stole**."
  },
@@ -4898,7 +4921,8 @@
   "cefr": "A1",
   "topics": [
    "home",
-   "household"
+   "household",
+   "false-friends"
   ],
   "example": "To **krzesło** jest wygodne."
  },
@@ -5264,7 +5288,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "office"
+   "office",
+   "false-friends"
   ],
   "example": "Dostałem **list** od babci."
  },
@@ -5349,7 +5374,8 @@
   "partOfSpeech": "n",
   "cefr": "A2",
   "topics": [
-   "finance"
+   "finance",
+   "false-friends"
   ],
   "example": "Mam tylko trochę **gotówki**."
  },
@@ -5449,7 +5475,8 @@
   "cefr": "A1",
   "topics": [
    "transport",
-   "travel"
+   "travel",
+   "false-friends"
   ],
   "example": "Spotkajmy się na **dworcu**."
  },
@@ -5550,7 +5577,8 @@
   "cefr": "A1",
   "topics": [
    "hotel",
-   "home"
+   "home",
+   "false-friends"
   ],
   "example": "Gdzie jest mój **klucz**?"
  },
@@ -5823,7 +5851,8 @@
   "partOfSpeech": "adj",
   "cefr": "A2",
   "topics": [
-   "emergency"
+   "emergency",
+   "false-friends"
   ],
   "example": "Tu jest **bezpiecznie**."
  },
@@ -6330,7 +6359,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "studying"
+   "studying",
+   "false-friends"
   ],
   "example": "To był mały **błąd**."
  },
@@ -6378,7 +6408,8 @@
   "partOfSpeech": "n",
   "cefr": "A2",
   "topics": [
-   "professions"
+   "professions",
+   "false-friends"
   ],
   "example": "Mój **zawód** jest ciekawy."
  },
@@ -7399,7 +7430,8 @@
   "partOfSpeech": "n",
   "cefr": "B1",
   "topics": [
-   "books"
+   "books",
+   "false-friends"
   ],
   "example": "Czytam ciekawą **powieść**."
  },
@@ -7559,7 +7591,8 @@
   "cefr": "A2",
   "topics": [
    "games",
-   "sports"
+   "sports",
+   "false-friends"
   ],
   "example": "Każdy **gracz** czeka na start."
  },
@@ -8423,7 +8456,8 @@
   "partOfSpeech": "n",
   "cefr": "B1",
   "topics": [
-   "birds"
+   "birds",
+   "false-friends"
   ],
   "example": "W parku siedzi **kruk**."
  },
@@ -9146,7 +9180,8 @@
   "cefr": "B2",
   "topics": [
    "trees",
-   "forest"
+   "forest",
+   "false-friends"
   ],
   "example": "W parku rośnie **buk**."
  },
@@ -9219,7 +9254,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "flowers"
+   "flowers",
+   "false-friends"
   ],
   "example": "Ta **róża** pachnie ładnie."
  },
@@ -9267,7 +9303,8 @@
   "partOfSpeech": "n",
   "cefr": "B1",
   "topics": [
-   "flowers"
+   "flowers",
+   "false-friends"
   ],
   "example": "Na polu kwitnie **mak**."
  },
@@ -9376,7 +9413,8 @@
   "partOfSpeech": "n",
   "cefr": "A2",
   "topics": [
-   "mountains"
+   "mountains",
+   "false-friends"
   ],
   "example": "Na **szczyt** weszliśmy rano."
  },
@@ -10308,7 +10346,8 @@
   "partOfSpeech": "v",
   "cefr": "A1",
   "topics": [
-   "daily-conversation"
+   "daily-conversation",
+   "false-friends"
   ],
   "example": "**Pytam** o drogę."
  },
@@ -10686,7 +10725,8 @@
   "partOfSpeech": "n",
   "cefr": "A2",
   "topics": [
-   "food"
+   "food",
+   "false-friends"
   ],
   "example": "Ten **smak** jest słodki."
  },
@@ -11339,7 +11379,9 @@
   "transcription": "ˈʂkɔda",
   "partOfSpeech": "n",
   "cefr": "A2",
-  "topics": [],
+  "topics": [
+   "false-friends"
+  ],
   "example": "To **szkoda**, że nie przyjdziesz."
  },
  {
@@ -11478,7 +11520,8 @@
   "partOfSpeech": "adv",
   "cefr": "A2",
   "topics": [
-   "time"
+   "time",
+   "false-friends"
   ],
   "example": "**Nagle** zaczęło padać."
  },
@@ -14313,7 +14356,8 @@
   "partOfSpeech": "n",
   "cefr": "B1",
   "topics": [
-   "body"
+   "body",
+   "false-friends"
   ],
   "example": "W muzeum widziałem ludzką **czaszka**."
  },
@@ -15479,7 +15523,8 @@
   "partOfSpeech": "n",
   "cefr": "A2",
   "topics": [
-   "food"
+   "food",
+   "false-friends"
   ],
   "example": "Ta **sałata** jest świeża."
  },
@@ -15928,7 +15973,8 @@
   "partOfSpeech": "n",
   "cefr": "A2",
   "topics": [
-   "shopping"
+   "shopping",
+   "false-friends"
   ],
   "example": "Ta **promocja** trwa do jutra."
  },
@@ -15964,7 +16010,8 @@
   "partOfSpeech": "n",
   "cefr": "A2",
   "topics": [
-   "shopping"
+   "shopping",
+   "false-friends"
   ],
   "example": "Schowaj **paragon** do portfela."
  },
@@ -15976,7 +16023,8 @@
   "partOfSpeech": "n",
   "cefr": "B1",
   "topics": [
-   "shopping"
+   "shopping",
+   "false-friends"
   ],
   "example": "Złożę **reklamację** w sklepie."
  },
@@ -16185,7 +16233,8 @@
   "partOfSpeech": "n",
   "cefr": "A2",
   "topics": [
-   "clothing"
+   "clothing",
+   "false-friends"
   ],
   "example": "Moja **bielizna** jest czysta."
  },
@@ -16306,7 +16355,8 @@
   "partOfSpeech": "n",
   "cefr": "B1",
   "topics": [
-   "home"
+   "home",
+   "false-friends"
   ],
   "example": "Mamy nowy **płot**."
  },
@@ -16345,7 +16395,8 @@
   "cefr": "A2",
   "topics": [
    "home",
-   "household"
+   "household",
+   "false-friends"
   ],
   "example": "Na podłodze leży **dywan**."
  },
@@ -16890,7 +16941,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "dates"
+   "dates",
+   "false-friends"
   ],
   "example": "W **listopadzie** jest szaro."
  },
@@ -16914,7 +16966,8 @@
   "partOfSpeech": "n",
   "cefr": "A1",
   "topics": [
-   "dates"
+   "dates",
+   "false-friends"
   ],
   "example": "Jaka jest **data** dzisiaj?"
  },
@@ -19531,7 +19584,8 @@
   "partOfSpeech": "n",
   "cefr": "B1",
   "topics": [
-   "university"
+   "university",
+   "false-friends"
   ],
   "example": "Mieszkam w **akademiku**."
  },
@@ -19830,7 +19884,8 @@
   "cefr": "A2",
   "topics": [
    "office",
-   "finance"
+   "finance",
+   "false-friends"
   ],
   "example": "Moja **pensja** jest wyższa."
  },
@@ -20122,7 +20177,8 @@
   "cefr": "A2",
   "topics": [
    "business",
-   "books"
+   "books",
+   "false-friends"
   ],
   "example": "Towar leży w **magazynie**."
  },
@@ -20207,7 +20263,8 @@
   "partOfSpeech": "n",
   "cefr": "B1",
   "topics": [
-   "finance"
+   "finance",
+   "false-friends"
   ],
   "example": "Płacę jedną **ratę** co miesiąc."
  },
@@ -20822,7 +20879,8 @@
   "cefr": "A1",
   "topics": [
    "sports",
-   "fitness"
+   "fitness",
+   "false-friends"
   ],
   "example": "Idę na **basen**."
  },
@@ -21215,7 +21273,8 @@
   "partOfSpeech": "n",
   "cefr": "B2",
   "topics": [
-   "books"
+   "books",
+   "false-friends"
   ],
   "example": "Mam jeden **egzemplarz** książki."
  },
@@ -21467,7 +21526,8 @@
   "cefr": "B1",
   "topics": [
    "nature",
-   "weather"
+   "weather",
+   "false-friends"
   ],
   "example": "Po deszczu jest **błoto**."
  },
@@ -25156,7 +25216,8 @@
   "partOfSpeech": "n",
   "cefr": "A2",
   "topics": [
-   "appearance"
+   "appearance",
+   "false-friends"
   ],
   "example": "Mierzę swój **wzrost** rano."
  },
@@ -27609,7 +27670,8 @@
   "cefr": "A2",
   "topics": [
    "health",
-   "pharmacy"
+   "pharmacy",
+   "false-friends"
   ],
   "example": "Lekarz dał mi **receptę**."
  },
@@ -28965,7 +29027,8 @@
   "partOfSpeech": "n",
   "cefr": "A2",
   "topics": [
-   "tourism"
+   "tourism",
+   "false-friends"
   ],
   "example": "Nasz **przewodnik** mówił ciekawie."
  },
@@ -29202,7 +29265,8 @@
   "cefr": "A1",
   "topics": [
    "airport",
-   "transport"
+   "transport",
+   "false-friends"
   ],
   "example": "Mój **lot** jest jutro."
  },
@@ -30854,5 +30918,1229 @@
    "personality"
   ],
   "example": "To było **nieodpowiedzialne** zachowanie."
+ },
+ {
+  "id": 2563,
+  "text": "puszka",
+  "translation": "can, tin",
+  "transcription": "ˈpuʂka",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Kupiłem **puszkę** fasoli."
+ },
+ {
+  "id": 2564,
+  "text": "dynia",
+  "translation": "pumpkin",
+  "transcription": "ˈdɨɲa",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Na Halloween wydrążyliśmy **dynię**."
+ },
+ {
+  "id": 2565,
+  "text": "głaz",
+  "translation": "boulder",
+  "transcription": "gwas",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Na szlaku leżał ogromny **głaz**."
+ },
+ {
+  "id": 2566,
+  "text": "grób",
+  "translation": "grave",
+  "transcription": "grup",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Zapaliliśmy znicz na **grobie** dziadka."
+ },
+ {
+  "id": 2567,
+  "text": "kit",
+  "translation": "putty",
+  "transcription": "kit",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Szybę w oknie trzeba uszczelnić **kitem**."
+ },
+ {
+  "id": 2568,
+  "text": "kwas",
+  "translation": "acid",
+  "transcription": "gvas",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Cytryna zawiera dużo **kwasu**."
+ },
+ {
+  "id": 2569,
+  "text": "łaska",
+  "translation": "mercy, grace",
+  "transcription": "ˈwaska",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Król okazał więźniowi **łaskę**."
+ },
+ {
+  "id": 2570,
+  "text": "młodzieniec",
+  "translation": "young man",
+  "transcription": "mwɔˈd͡ʑɛɲɛt͡s",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Do sklepu wszedł wysoki **młodzieniec**."
+ },
+ {
+  "id": 2571,
+  "text": "palacz",
+  "translation": "smoker",
+  "transcription": "ˈpalat͡ʂ",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Mój wujek jest nałogowym **palaczem**."
+ },
+ {
+  "id": 2572,
+  "text": "pamiętnik",
+  "translation": "diary",
+  "transcription": "paˈmjɛ̃tɲik",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Codziennie piszę w **pamiętniku**."
+ },
+ {
+  "id": 2573,
+  "text": "sad",
+  "translation": "orchard",
+  "transcription": "sat",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Za domem mamy **sad** jabłoniowy."
+ },
+ {
+  "id": 2574,
+  "text": "szyna",
+  "translation": "rail",
+  "transcription": "ˈʂɨna",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Tramwaj jedzie po **szynach**."
+ },
+ {
+  "id": 2575,
+  "text": "uroda",
+  "translation": "beauty, looks",
+  "transcription": "uˈrɔda",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Zachwycała wszystkich swoją **urodą**."
+ },
+ {
+  "id": 2576,
+  "text": "angielski",
+  "translation": "English",
+  "transcription": "aˈngjɛlski",
+  "partOfSpeech": "adj",
+  "cefr": "A1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Uczę się języka **angielskiego**."
+ },
+ {
+  "id": 2577,
+  "text": "belka",
+  "translation": "beam",
+  "transcription": "ˈbɛlka",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Sufit podtrzymuje drewniana **belka**."
+ },
+ {
+  "id": 2578,
+  "text": "wełna",
+  "translation": "wool",
+  "transcription": "ˈvɛwna",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Ten sweter jest zrobiony z **wełny**."
+ },
+ {
+  "id": 2579,
+  "text": "zakaz",
+  "translation": "ban, prohibition",
+  "transcription": "ˈzakas",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Tu obowiązuje **zakaz** palenia."
+ },
+ {
+  "id": 2580,
+  "text": "żyletka",
+  "translation": "razor blade",
+  "transcription": "ʐɨˈlɛtka",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Ostrożnie, **żyletka** jest bardzo ostra."
+ },
+ {
+  "id": 2581,
+  "text": "urok",
+  "translation": "charm",
+  "transcription": "ˈurɔk",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "To miasteczko ma swój **urok**."
+ },
+ {
+  "id": 2582,
+  "text": "dzieło",
+  "translation": "work (of art)",
+  "transcription": "ˈd͡ʑɛwɔ",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "To jest najważniejsze **dzieło** tego malarza."
+ },
+ {
+  "id": 2583,
+  "text": "szczęka",
+  "translation": "jaw",
+  "transcription": "ˈʂt͡ʂɛ̃ka",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Po uderzeniu bolała go **szczęka**."
+ },
+ {
+  "id": 2584,
+  "text": "łuk",
+  "translation": "bow, arch",
+  "transcription": "wuk",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Łucznik napiął **łuk**."
+ },
+ {
+  "id": 2585,
+  "text": "pieczeń",
+  "translation": "roast",
+  "transcription": "ˈpjɛt͡ʂɛɲ",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Na obiad jest **pieczeń** wołowa."
+ },
+ {
+  "id": 2586,
+  "text": "brak",
+  "translation": "lack, shortage",
+  "transcription": "brak",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Z powodu **braku** czasu nie przyszedłem."
+ },
+ {
+  "id": 2587,
+  "text": "broń",
+  "translation": "weapon",
+  "transcription": "brɔɲ",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Żołnierz trzymał **broń** w ręku."
+ },
+ {
+  "id": 2588,
+  "text": "gadać",
+  "translation": "to chat, to natter",
+  "transcription": "ˈgadat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Całą noc **gadałyśmy** o wszystkim."
+ },
+ {
+  "id": 2589,
+  "text": "gęba",
+  "translation": "mouth, gob",
+  "transcription": "ˈgɛ̃ba",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Uśmiechał się od ucha do ucha, na całą **gębę**."
+ },
+ {
+  "id": 2590,
+  "text": "autokar",
+  "translation": "coach",
+  "transcription": "auˈtɔkar",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Na wycieczkę pojedziemy **autokarem**."
+ },
+ {
+  "id": 2591,
+  "text": "batonik",
+  "translation": "chocolate bar",
+  "transcription": "baˈtɔɲik",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Zjadłem **batonik** na drugie śniadanie."
+ },
+ {
+  "id": 2592,
+  "text": "pozór",
+  "translation": "appearance, pretence",
+  "transcription": "ˈpɔzur",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "**Pozory** mylą."
+ },
+ {
+  "id": 2593,
+  "text": "ordynarny",
+  "translation": "vulgar, crude",
+  "transcription": "ɔrdɨˈnarnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Nie lubię jego **ordynarnych** żartów."
+ },
+ {
+  "id": 2594,
+  "text": "aktualny",
+  "translation": "current, up to date",
+  "transcription": "aktuˈalnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Czy ta oferta jest nadal **aktualna**?"
+ },
+ {
+  "id": 2595,
+  "text": "aktualnie",
+  "translation": "currently",
+  "transcription": "aktuˈalɲɛ",
+  "partOfSpeech": "adv",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "**Aktualnie** pracuję w banku."
+ },
+ {
+  "id": 2596,
+  "text": "ewentualnie",
+  "translation": "possibly, alternatively",
+  "transcription": "ɛvɛntuˈalɲɛ",
+  "partOfSpeech": "adv",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Spotkajmy się jutro, **ewentualnie** w piątek."
+ },
+ {
+  "id": 2597,
+  "text": "akurat",
+  "translation": "just, exactly",
+  "transcription": "aˈkurat",
+  "partOfSpeech": "adv",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "**Akurat** wychodziłem, kiedy zadzwoniłeś."
+ },
+ {
+  "id": 2598,
+  "text": "dres",
+  "translation": "tracksuit",
+  "transcription": "drɛs",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Na siłownię zakładam **dres**."
+ },
+ {
+  "id": 2599,
+  "text": "fabryka",
+  "translation": "factory",
+  "transcription": "faˈbrɨka",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Mój ojciec pracuje w **fabryce** samochodów."
+ },
+ {
+  "id": 2600,
+  "text": "lunatyk",
+  "translation": "sleepwalker",
+  "transcription": "luˈnatɨk",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Mój brat jest **lunatykiem** i chodzi po nocach."
+ },
+ {
+  "id": 2601,
+  "text": "prezerwatywa",
+  "translation": "condom",
+  "transcription": "prɛzɛrvaˈtɨva",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "**Prezerwatywy** można kupić w aptece."
+ },
+ {
+  "id": 2602,
+  "text": "sympatia",
+  "translation": "liking, sweetheart",
+  "transcription": "sɨˈmpatja",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Poczułam do niego **sympatię**."
+ },
+ {
+  "id": 2603,
+  "text": "patetyczny",
+  "translation": "pompous, grandiloquent",
+  "transcription": "patɛˈtɨt͡ʂnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Jego przemowa była zbyt **patetyczna**."
+ },
+ {
+  "id": 2604,
+  "text": "konkurs",
+  "translation": "competition, contest",
+  "transcription": "ˈkɔnkurs",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Wygrała **konkurs** piosenki."
+ },
+ {
+  "id": 2605,
+  "text": "ekspedientka",
+  "translation": "shop assistant",
+  "transcription": "ɛkspɛˈdjɛntka",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "**Ekspedientka** zapakowała mi zakupy."
+ },
+ {
+  "id": 2606,
+  "text": "renta",
+  "translation": "disability pension",
+  "transcription": "ˈrɛnta",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Po wypadku dostał **rentę**."
+ },
+ {
+  "id": 2607,
+  "text": "regał",
+  "translation": "bookcase, shelving",
+  "transcription": "ˈrɛgaw",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Postawiłem książki na **regale**."
+ },
+ {
+  "id": 2608,
+  "text": "rejs",
+  "translation": "cruise, voyage",
+  "transcription": "rɛjs",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Latem popłynęliśmy w **rejs** po Bałtyku."
+ },
+ {
+  "id": 2609,
+  "text": "transparent",
+  "translation": "banner",
+  "transcription": "traˈnsparɛnt",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Demonstranci nieśli wielki **transparent**."
+ },
+ {
+  "id": 2610,
+  "text": "klozet",
+  "translation": "toilet",
+  "transcription": "ˈklɔzɛt",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Ktoś zapomniał spuścić wodę w **klozecie**."
+ },
+ {
+  "id": 2611,
+  "text": "stadium",
+  "translation": "stage, phase",
+  "transcription": "ˈstadjum",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Choroba była we wczesnym **stadium**."
+ },
+ {
+  "id": 2612,
+  "text": "obligacja",
+  "translation": "bond",
+  "transcription": "ɔbliˈgat͡sja",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Zainwestował w **obligacje** skarbowe."
+ },
+ {
+  "id": 2613,
+  "text": "frekwencja",
+  "translation": "turnout, attendance",
+  "transcription": "frɛˈgvɛnt͡sja",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "**Frekwencja** w wyborach była wysoka."
+ },
+ {
+  "id": 2614,
+  "text": "dyrekcja",
+  "translation": "management",
+  "transcription": "dɨˈrɛkt͡sja",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "**Dyrekcja** szkoły ogłosiła dzień wolny."
+ },
+ {
+  "id": 2615,
+  "text": "facet",
+  "translation": "guy",
+  "transcription": "ˈfat͡sɛt",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Ten **facet** mieszka obok nas."
+ },
+ {
+  "id": 2616,
+  "text": "pupil",
+  "translation": "pet, favourite",
+  "transcription": "ˈpupil",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Kot jest **pupilem** całej rodziny."
+ },
+ {
+  "id": 2617,
+  "text": "szop",
+  "translation": "raccoon",
+  "transcription": "ʂɔp",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "W ogrodzie widzieliśmy **szopa**."
+ },
+ {
+  "id": 2618,
+  "text": "spinacz",
+  "translation": "paper clip",
+  "transcription": "ˈspinat͡ʂ",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Połącz te kartki **spinaczem**."
+ },
+ {
+  "id": 2619,
+  "text": "klej",
+  "translation": "glue",
+  "transcription": "klɛj",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Skleiłem wazon **klejem**."
+ },
+ {
+  "id": 2620,
+  "text": "but",
+  "translation": "shoe",
+  "transcription": "but",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Zgubiłem jeden **but**."
+ },
+ {
+  "id": 2621,
+  "text": "bak",
+  "translation": "fuel tank",
+  "transcription": "bak",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Zatankowałem pełny **bak**."
+ },
+ {
+  "id": 2622,
+  "text": "bat",
+  "translation": "whip",
+  "transcription": "bat",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Woźnica strzelił z **bata**."
+ },
+ {
+  "id": 2623,
+  "text": "hurt",
+  "translation": "wholesale",
+  "transcription": "xurt",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Kupujemy kawę w **hurcie**."
+ },
+ {
+  "id": 2624,
+  "text": "herb",
+  "translation": "coat of arms",
+  "transcription": "xɛrp",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Orzeł to **herb** Polski."
+ },
+ {
+  "id": 2625,
+  "text": "handel",
+  "translation": "trade",
+  "transcription": "ˈxandɛl",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "**Handel** z zagranicą rośnie."
+ },
+ {
+  "id": 2626,
+  "text": "post",
+  "translation": "fast (abstaining from food)",
+  "transcription": "pɔst",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "W piątek obowiązuje **post**."
+ },
+ {
+  "id": 2627,
+  "text": "kat",
+  "translation": "executioner",
+  "transcription": "kat",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "**Kat** czekał na skazańca."
+ },
+ {
+  "id": 2628,
+  "text": "car",
+  "translation": "tsar",
+  "transcription": "t͡sar",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "**Car** rządził Rosją przez trzydzieści lat."
+ },
+ {
+  "id": 2629,
+  "text": "rak",
+  "translation": "crayfish, cancer",
+  "transcription": "rak",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "W rzece żyją **raki**."
+ },
+ {
+  "id": 2630,
+  "text": "raj",
+  "translation": "paradise",
+  "transcription": "raj",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Ta plaża to prawdziwy **raj**."
+ },
+ {
+  "id": 2631,
+  "text": "tort",
+  "translation": "layer cake",
+  "transcription": "tɔrt",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Na urodziny upiekłam **tort** czekoladowy."
+ },
+ {
+  "id": 2632,
+  "text": "blankiet",
+  "translation": "blank form",
+  "transcription": "ˈblankjɛt",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Wypełnij ten **blankiet** na poczcie."
+ },
+ {
+  "id": 2633,
+  "text": "grom",
+  "translation": "thunderbolt",
+  "transcription": "grɔm",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Wiadomość spadła na nas jak **grom** z jasnego nieba."
+ },
+ {
+  "id": 2634,
+  "text": "fart",
+  "translation": "luck",
+  "transcription": "fart",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Ale miałeś **fart**!"
+ },
+ {
+  "id": 2635,
+  "text": "gust",
+  "translation": "taste (in style)",
+  "transcription": "gust",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Ona ma dobry **gust**."
+ },
+ {
+  "id": 2636,
+  "text": "kask",
+  "translation": "helmet",
+  "transcription": "kask",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Na rowerze zawsze noszę **kask**."
+ },
+ {
+  "id": 2637,
+  "text": "knot",
+  "translation": "wick",
+  "transcription": "knɔt",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Zapal **knot** świecy."
+ },
+ {
+  "id": 2638,
+  "text": "pasta",
+  "translation": "paste",
+  "transcription": "ˈpasta",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Kupiłam nową **pastę** do zębów."
+ },
+ {
+  "id": 2639,
+  "text": "paw",
+  "translation": "peacock",
+  "transcription": "paf",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "**Paw** rozłożył kolorowy ogon."
+ },
+ {
+  "id": 2640,
+  "text": "prom",
+  "translation": "ferry",
+  "transcription": "prɔm",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Popłynęliśmy **promem** do Szwecji."
+ },
+ {
+  "id": 2641,
+  "text": "step",
+  "translation": "steppe",
+  "transcription": "stɛp",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Konie pędziły przez **step**."
+ },
+ {
+  "id": 2642,
+  "text": "szalet",
+  "translation": "public toilet",
+  "transcription": "ˈʂalɛt",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Najbliższy **szalet** jest przy parku."
+ },
+ {
+  "id": 2643,
+  "text": "talon",
+  "translation": "voucher, coupon",
+  "transcription": "ˈtalɔn",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Dostałem **talon** na zakupy."
+ },
+ {
+  "id": 2644,
+  "text": "wagary",
+  "translation": "truancy",
+  "transcription": "vaˈgarɨ",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Poszli na **wagary** zamiast na lekcję."
+ },
+ {
+  "id": 2645,
+  "text": "walet",
+  "translation": "jack (playing card)",
+  "transcription": "ˈvalɛt",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Zagrał **waletem** kier."
+ },
+ {
+  "id": 2646,
+  "text": "apartament",
+  "translation": "luxury flat, suite",
+  "transcription": "apaˈrtamɛnt",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Wynajęli **apartament** z widokiem na morze."
+ },
+ {
+  "id": 2647,
+  "text": "audycja",
+  "translation": "broadcast",
+  "transcription": "auˈdɨt͡sja",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Słucham **audycji** radiowej o historii."
+ },
+ {
+  "id": 2648,
+  "text": "akord",
+  "translation": "chord",
+  "transcription": "ˈakɔrt",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Zagraj **akord** C-dur na gitarze."
+ },
+ {
+  "id": 2649,
+  "text": "boks",
+  "translation": "boxing",
+  "transcription": "bɔks",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Mój brat trenuje **boks**."
+ },
+ {
+  "id": 2650,
+  "text": "manifestacja",
+  "translation": "demonstration, rally",
+  "transcription": "maɲifɛˈstat͡sja",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Na placu odbyła się **manifestacja**."
+ },
+ {
+  "id": 2651,
+  "text": "resort",
+  "translation": "ministry, department",
+  "transcription": "ˈrɛsɔrt",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Minister kieruje **resortem** zdrowia."
+ },
+ {
+  "id": 2652,
+  "text": "sympatyczny",
+  "translation": "nice, likeable",
+  "transcription": "sɨmpaˈtɨt͡ʂnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Twój kolega jest bardzo **sympatyczny**."
+ },
+ {
+  "id": 2653,
+  "text": "fatalny",
+  "translation": "terrible, awful",
+  "transcription": "faˈtalnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Mam dziś **fatalny** dzień."
+ },
+ {
+  "id": 2654,
+  "text": "genialny",
+  "translation": "brilliant",
+  "transcription": "gɛˈɲalnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "To jest **genialny** pomysł!"
+ },
+ {
+  "id": 2655,
+  "text": "kaucja",
+  "translation": "deposit",
+  "transcription": "kaˈut͡sja",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Przy wynajmie trzeba zapłacić **kaucję**."
+ },
+ {
+  "id": 2656,
+  "text": "lektura",
+  "translation": "set reading, reading",
+  "transcription": "lɛˈktura",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Ta książka jest **lekturą** szkolną."
+ },
+ {
+  "id": 2657,
+  "text": "komunikacja",
+  "translation": "public transport",
+  "transcription": "kɔmuɲiˈkat͡sja",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Jeżdżę do pracy **komunikacją** miejską."
+ },
+ {
+  "id": 2658,
+  "text": "pilot",
+  "translation": "remote control",
+  "transcription": "ˈpilɔt",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Gdzie jest **pilot** do telewizora?"
+ },
+ {
+  "id": 2659,
+  "text": "lokal",
+  "translation": "premises, venue",
+  "transcription": "ˈlɔkal",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Wynajęliśmy **lokal** na wesele."
+ },
+ {
+  "id": 2660,
+  "text": "kombinezon",
+  "translation": "overalls, jumpsuit",
+  "transcription": "kɔmbiˈnɛzɔn",
+  "partOfSpeech": "n",
+  "cefr": "B2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Mechanik miał na sobie **kombinezon**."
+ },
+ {
+  "id": 2661,
+  "text": "karawan",
+  "translation": "hearse",
+  "transcription": "kaˈravan",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Za **karawanem** szli żałobnicy."
+ },
+ {
+  "id": 2662,
+  "text": "dudy",
+  "translation": "bagpipes",
+  "transcription": "ˈdudɨ",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Szkot grał na **dudach**."
+ },
+ {
+  "id": 2663,
+  "text": "chart",
+  "translation": "greyhound",
+  "transcription": "xart",
+  "partOfSpeech": "n",
+  "cefr": "C1",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "**Chart** to bardzo szybki pies."
+ },
+ {
+  "id": 2664,
+  "text": "sztuka",
+  "translation": "art",
+  "transcription": "ˈʂtuka",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "false-friends"
+  ],
+  "example": "Interesuję się **sztuką** współczesną."
  }
 ]

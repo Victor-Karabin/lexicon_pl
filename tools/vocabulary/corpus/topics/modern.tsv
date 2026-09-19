@@ -17,7 +17,7 @@ wydział	faculty	n	B1	university
 semestr	term	n	A2	university
 sesja	session	n	B1	university
 stypendium	scholarship	n	B1	university
-akademik	dormitory	n	B1	university
+akademik	dormitory	n	B1	university,false-friends
 rektor	rector	n	B2	university
 dziekan	dean	n	B2	university
 praca magisterska	master's thesis	n	B2	university
@@ -41,7 +41,7 @@ kolega z pracy	a colleague from work	n	A2	office,work
 nadgodziny	overtime	n	B1	office,work
 urlop	vacation	n	A2	office,work
 zwolnienie	sick leave	n	B1	office,work
-pensja	salary	n	A2	office,finance
+pensja	salary	n	A2	office,finance,false-friends
 awans	promotion	n	B1	office,work
 rozmowa kwalifikacyjna	interview	n	B1	office,work
 stanowisko	position	n	B1	office,work
@@ -64,14 +64,14 @@ akcje	shares	n	B2	business,finance
 marka	mark	n	A2	business
 strategia	strategy	n	B1	business
 dostawca	supplier	n	B1	business
-magazyn	warehouse	n	A2	business,books
+magazyn	warehouse	n	A2	business,books,false-friends
 waluta	currency	n	A2	finance
 kurs	course	n	A2	finance,studying
 przelew	transfer	n	B1	finance
 bankomat	atm	n	A1	finance
 odsetki	interest	n	B2	finance
 pożyczka	loan	n	B1	finance
-rata	installment	n	B1	finance
+rata	installment	n	B1	finance,false-friends
 emerytura	pension	n	B1	finance
 ubezpieczenie	insurance	n	B1	finance
 inflacja	inflation	n	B2	finance
@@ -121,7 +121,7 @@ remis	draw	n	A2	sports,games
 zwycięzca	winner	n	A2	sports,games
 przeciwnik	opponent	n	B1	sports,games
 kort	court	n	B1	sports
-basen	swimming pool	n	A1	sports,fitness
+basen	swimming pool	n	A1	sports,fitness,false-friends
 rakieta	rocket	n	A2	sports
 przysiad	squat	n	B1	fitness
 pompka	pump	n	B1	fitness
@@ -153,7 +153,7 @@ festiwal	festival	n	A2	music,hobbies
 taniec	dance	n	A1	music,hobbies
 wydawnictwo	publishing house	n	B2	books
 tłumaczenie	translation	n	A2	books,studying
-egzemplarz	copy	n	B2	books
+egzemplarz	copy	n	B2	books,false-friends
 bohater	hero, protagonist	n	A2	books,movies
 fabuła	plot	n	B1	books,movies
 zakładka	tab	n	A2	books,internet
@@ -173,7 +173,7 @@ powietrze	air	n	A2	nature,weather
 ogień	fire	n	A1	nature,emergency
 ziemia	earth	n	A1	nature
 kamień	stone	n	A1	nature,mountains
-błoto	mud	n	B1	nature,weather
+błoto	mud	n	B1	nature,weather,false-friends
 strumień	stream	n	B1	nature,forest
 wodospad	waterfall	n	B1	nature,mountains
 łąka	meadow	n	B1	nature,plants

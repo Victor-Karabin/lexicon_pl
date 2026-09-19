@@ -18,7 +18,7 @@ przy	near, by	prep	A1	directions
 tylko	just	adv	A1	daily-conversation
 bardzo	very	adv	A1	daily-conversation
 już	already	adv	A1	time
-rok	year	n	A1	time,dates
+rok	year	n	A1	time,dates,false-friends
 człowiek	person, human	n	A1	people
 gdy	when	conj	A1	time
 czy	whether	part	A1	daily-conversation
@@ -34,7 +34,7 @@ jeszcze	still	adv	A1	time
 nawet	even	adv	A2
 dzień	day	n	A1	time,dates
 wiedzieć	to know	v	A1	daily-conversation
-czas	time	n	A1	time
+czas	time	n	A1	time,false-friends
 oni	they	prn	A1	introductions
 ono	it	prn	A1
 chcieć	to want	v	A1	daily-conversation
@@ -49,7 +49,7 @@ duży	big	adj	A1	shapes
 mały	small	adj	A1	shapes
 praca	work	n	A1	work,office
 życie	life	n	A1
-dom	house	n	A1	home
+dom	house	n	A1	home,false-friends
 świat	world	n	A1	nature
 robić	to do	v	A1	daily-conversation
 iść	to go	v	A1	directions
@@ -68,10 +68,10 @@ mężczyzna	man	n	A1	people
 dziecko	kid	n	A1	family
 miejsce	place	n	A1	directions
 miasto	city	n	A1	cities
-kraj	country	n	A1	countries
+kraj	country	n	A1	countries,false-friends
 droga	road, way	n	A1	directions,transport
 głowa	head	n	A1	body
-strona	side	n	A2	books
+strona	side	n	A2	books,false-friends
 myśleć	to think	v	A1	daily-conversation
 widzieć	to see	v	A1	body
 dawać	to give	v	A1
@@ -128,23 +128,23 @@ matka	mother	n	A1	family
 ojciec	father	n	A1	family
 syn	son	n	A1	family
 córka	daughter	n	A1	family
-brat	brother	n	A1	family
+brat	brother	n	A1	family,false-friends
 siostra	sister	n	A1	family
-rodzina	family	n	A1	family
+rodzina	family	n	A1	family,false-friends
 przyjaciel	friend	n	A1	relationships
 mama	mum	n	A1	family
 tata	dad	n	A1	family
 noc	night	n	A1	time
-rano	in the morning	n	A1	time
+rano	in the morning	n	A1	time,false-friends
 wieczór	evening	n	A1	time
 tydzień	week	n	A1	time,dates
 miesiąc	month	n	A1	time,dates
-godzina	hour	n	A1	time
+godzina	hour	n	A1	time,false-friends
 minuta	minute	n	A1	time
 chwila	one sec	n	A2	time
 dzisiaj	today	adv	A1	time,dates
 wczoraj	yesterday	adv	A1	time,dates
-jutro	tomorrow	adv	A1	time,dates
+jutro	tomorrow	adv	A1	time,dates,false-friends
 jedzenie	food	n	A1	food
 chleb	bread	n	A1	food
 mleko	milk	n	A1	drinks,food
@@ -152,10 +152,10 @@ kawa	coffee	n	A1	drinks
 herbata	tea	n	A1	drinks
 piwo	beer	n	A1	drinks
 wino	wine	n	A1	drinks
-sok	juice	n	A1	drinks
+sok	juice	n	A1	drinks,false-friends
 mięso	meat	n	A1	food
 ryba	fish	n	A1	food,fish
-owoc	fruit	n	A1	food
+owoc	fruit	n	A1	food,false-friends
 warzywo	vegetable	n	A1	food
 jabłko	apple	n	A1	food
 ziemniak	potato	n	A1	food
@@ -167,12 +167,12 @@ masło	butter	n	A1	food
 zupa	soup	n	A1	food,cooking
 obiad	lunch	n	A1	food
 śniadanie	breakfast	n	A1	food
-kolacja	dinner	n	A1	food
+kolacja	dinner	n	A1	food,false-friends
 jeść	to eat	v	A1	food
 pić	to drink	v	A1	drinks
 gotować	to cook	v	A1	cooking
 kupować	to buy	v	A1	shopping
-sklep	store	n	A1	shopping
+sklep	store	n	A1	shopping,false-friends
 pieniądze	money	n	A1	shopping,finance
 cena	price	n	A1	shopping,finance
 drogi	dear	adj	A1	shopping
@@ -183,7 +183,7 @@ samochód	car	n	A1	transport
 pociąg	train	n	A1	transport
 autobus	bus	n	A1	transport
 samolot	plane	n	A1	transport,airport
-rower	bicycle	n	A1	transport
+rower	bicycle	n	A1	transport,false-friends
 ulica	street	n	A1	directions,cities
 sklepik	corner shop	n	B1	shopping
 szkoła	school	n	A1	school
@@ -255,7 +255,7 @@ sprawa	matter, affair	n	A2
 powód	reason	n	B1
 wynik	result	n	B1
 przykład	example	n	A2
-rzecz	thing	n	A1
+rzecz	thing	n	A1	false-friends
 część	part	n	A2
 grupa	group	n	A1
 liczba	number	n	A1	numbers
@@ -290,11 +290,11 @@ muzyka	music	n	A1	music
 piosenka	song	n	A1	music
 gra	game	n	A1	games
 sport	sport	n	A1	sports
-mecz	match	n	A1	sports
+mecz	match	n	A1	sports,false-friends
 drużyna	team	n	A2	sports
 zwierzę	animal	n	A1	animals
 pies	dog	n	A1	animals
-kot	cat	n	A1	animals
+kot	cat	n	A1	animals,false-friends
 ptak	bird	n	A1	birds
 drzewo	tree	n	A1	trees,nature
 kwiat	flower	n	A1	flowers,nature
@@ -303,7 +303,7 @@ góra	mountain	n	A1	mountains,nature
 morze	sea	n	A1	sea,nature
 rzeka	river	n	A1	nature
 jezioro	lake	n	A1	nature
-pole	field	n	A1	nature
+pole	field	n	A1	nature,false-friends
 niebo	sky	n	A1	nature,weather
 słońce	sun	n	A1	weather,nature
 księżyc	moon	n	A1	nature
@@ -335,7 +335,7 @@ wysoki	tall	adj	A1	appearance,shapes
 niski	low, short	adj	A1	appearance,shapes
 szeroki	wide	adj	A2	shapes
 wąski	narrow	adj	A2	shapes
-gruby	fat	adj	A1	appearance
+gruby	fat	adj	A1	appearance,false-friends
 cienki	thin	adj	A2	shapes
 ciężki	heavy	adj	A1
 lekki	light (weight)	adj	A1
@@ -409,7 +409,7 @@ czapka	hat	n	A1	clothing
 szalik	scarf	n	A1	clothing
 rękawiczki	gloves	n	A2	clothing
 skarpetki	socks	n	A1	clothing
-pokój	room	n	A1	home,hotel
+pokój	room	n	A1	home,hotel,false-friends
 kuchnia	kitchen	n	A1	home,cooking
 łazienka	bathroom	n	A1	home
 sypialnia	bedroom	n	A1	home
@@ -419,8 +419,8 @@ drzwi	door	n	A1	home
 ściana	wall	n	A1	home
 podłoga	floor	n	A1	home
 sufit	ceiling	n	A2	home
-stół	table	n	A1	home,household
-krzesło	chair	n	A1	home,household
+stół	table	n	A1	home,household,false-friends
+krzesło	chair	n	A1	home,household,false-friends
 łóżko	bed	n	A1	home,household
 szafa	wardrobe	n	A1	home,household
 lampa	lamp	n	A1	home,household
@@ -449,14 +449,14 @@ drukarka	printer	n	A2	computer,office
 biuro	office	n	A1	office,work
 dokument	document	n	A2	office
 podpis	signature	n	B1	office
-list	letter	n	A1	office
+list	letter	n	A1	office,false-friends
 koperta	envelope	n	A2	office
 paczka	package	n	A2	shopping
 poczta	post	n	A1	cities
 bank	bank	n	A1	finance
 konto	account	n	A2	finance
 karta	card	n	A1	finance,shopping
-gotówka	cash	n	A2	finance
+gotówka	cash	n	A2	finance,false-friends
 rachunek	bill	n	A2	finance,shopping
 podatek	tax	n	B1	finance
 kredyt	loan	n	B1	finance
@@ -464,7 +464,7 @@ oszczędzać	to save (money)	v	B1	finance
 zarabiać	to earn money	v	A2	finance,work
 wydawać	to spend	v	A2	finance
 lotnisko	airport	n	A1	airport,travel
-dworzec	station	n	A1	transport,travel
+dworzec	station	n	A1	transport,travel,false-friends
 przystanek	stop	n	A1	transport
 bilet	ticket	n	A1	transport,travel
 bagaż	luggage	n	A1	airport,travel
@@ -472,7 +472,7 @@ walizka	suitcase	n	A1	travel
 paszport	passport	n	A1	airport,travel
 hotel	hotel	n	A1	hotel,travel
 recepcja	reception	n	A2	hotel
-klucz	key	n	A1	hotel,home
+klucz	key	n	A1	hotel,home,false-friends
 rezerwacja	reservation	n	A2	hotel,travel
 wakacje	holidays	n	A1	tourism,travel
 podróż	journey	n	A1	travel,tourism
@@ -494,7 +494,7 @@ straż pożarna	fire brigade	n	A2	emergency
 pogotowie	emergency service	n	A2	emergency,hospital
 wypadek	accident	n	A2	emergency
 niebezpieczny	dangerous	adj	A2	emergency
-bezpieczny	safe	adj	A2	emergency
+bezpieczny	safe	adj	A2	emergency,false-friends
 ratować	to rescue	v	B1	emergency
 uwaga	attention	n	A1	emergency
 sąd	court	n	B1	law
@@ -535,11 +535,11 @@ notatka	note	n	A2	studying,office
 zapisywać	to write down	v	A2	studying
 tłumaczyć	to translate	v	A2	studying
 ćwiczenie	exercise	n	A2	studying,fitness
-błąd	mistake	n	A1	studying
+błąd	mistake	n	A1	studying,false-friends
 poprawiać	to improve	v	A2	studying
 wiedza	knowledge	n	B1	studying
 nauka	science	n	A2	studying
-zawód	occupation	n	A2	professions
+zawód	occupation	n	A2	professions,false-friends
 inżynier	engineer	n	A2	professions
 kierowca	driver	n	A1	professions,transport
 sprzedawca	seller	n	A2	professions,shopping
@@ -621,7 +621,7 @@ reżyser	director	n	B1	movies,professions
 rola	role	n	A2	movies
 widz	spectator	n	B1	movies
 bilet do kina	cinema ticket	expr	A2	movies
-powieść	novel	n	B1	books
+powieść	novel	n	B1	books,false-friends
 opowiadanie	story	n	B1	books
 wiersz	row	n	B1	books
 autor	author	n	A2	books
@@ -634,7 +634,7 @@ szachy	chess	n	A2	games
 karty	cards	n	A1	games
 kostka	ankle	n	A2	games,shapes
 puzzle	jigsaw	n	A2	games
-gracz	player	n	A2	games,sports
+gracz	player	n	A2	games,sports,false-friends
 wygrywać	to win	v	A1	games,sports
 przegrywać	to lose	v	A1	games,sports
 zasady	rules	n	A2	games,law
@@ -704,7 +704,7 @@ orzeł	eagle	n	A2	birds
 sokół	falcon	n	B1	birds
 bocian	stork	n	A2	birds
 jaskółka	swallow	n	B1	birds
-kruk	raven	n	B1	birds
+kruk	raven	n	B1	birds,false-friends
 wrona	crow	n	B1	birds
 sikorka	titmouse	n	B2	birds
 dzięcioł	woodpecker	n	B2	birds,forest
@@ -762,17 +762,17 @@ sosna	pine	n	A2	trees,forest
 świerk	spruce	n	B1	trees,forest
 klon	maple	n	B1	trees
 wierzba	willow	n	B1	trees
-buk	beech	n	B2	trees,forest
+buk	beech	n	B2	trees,forest,false-friends
 lipa	lime tree	n	B1	trees
 jabłoń	apple tree	n	B1	trees
 gałąź	branch	n	A2	trees,plants
 kora	bark	n	B2	trees
 pień	trunk	n	B1	trees
-róża	rose	n	A1	flowers
+róża	rose	n	A1	flowers,false-friends
 tulipan	tulip	n	A2	flowers
 stokrotka	daisy	n	B1	flowers
 słonecznik	sunflower	n	A2	flowers
-mak	poppy	n	B1	flowers
+mak	poppy	n	B1	flowers,false-friends
 fiołek	violet	n	B2	flowers
 konwalia	lily of the valley	n	C1	flowers
 bez	lilac	n	B2	flowers
@@ -781,7 +781,7 @@ goździk	carnation	n	B2	flowers
 płatek	petal	n	B1	flowers
 bukiet	bouquet	n	A2	flowers
 wazon	vase	n	A2	flowers,household
-szczyt	peak	n	A2	mountains
+szczyt	peak	n	A2	mountains,false-friends
 dolina	valley	n	A2	mountains,nature
 skała	scale	n	A2	mountains,nature
 jaskinia	cave	n	B1	mountains,nature
@@ -861,7 +861,7 @@ radzić	to advise	v	B1
 proponować	to propose	v	A2	meetings
 wyjaśniać	to explain	v	B1	studying
 opowiadać	to tell	v	A2	books
-pytać	to ask	v	A1	daily-conversation
+pytać	to ask	v	A1	daily-conversation,false-friends
 odpowiadać	to answer	v	A1	daily-conversation
 krzyczeć	to scream	v	A2	emotions
 szeptać	to whisper	v	B1
@@ -894,7 +894,7 @@ kształt	form	n	A2	shapes
 kolor	color	n	A1	colors
 dźwięk	sound	n	A2	music
 zapach	smell	n	A2	food
-smak	taste	n	A2	food
+smak	taste	n	A2	food,false-friends
 widok	view	n	A2	tourism
 obraz	picture	n	A1	hobbies
 rysunek	drawing	n	A2	hobbies
@@ -950,7 +950,7 @@ jakość	quality	n	A2	shopping
 ilość	quantity	n	A2	numbers
 wartość	value	n	B1	finance
 korzyść	advantage	n	B2	business
-szkoda	pity	n	A2
+szkoda	pity	n	A2	false-friends
 ryzyko	risk	n	B1	emergency
 szansa	chance	n	A2
 sukces	success	n	A2	work
@@ -962,7 +962,7 @@ cicho	quiet	adv	A1	music
 razem z	together with	prep	A2	relationships
 osobno	separately	adv	B1
 zwykle	usually	adv	A1	time
-nagle	suddenly	adv	A2	time
+nagle	suddenly	adv	A2	time,false-friends
 powoli	slowly	adv	A1
 natychmiast	immediately	adv	B1	time
 wkrótce	soon	adv	A2	time
