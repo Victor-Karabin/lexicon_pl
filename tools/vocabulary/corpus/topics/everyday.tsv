@@ -14,7 +14,7 @@ marchewka	carrot	n	A1	food
 cebula	onion	n	A1	food,cooking
 czosnek	garlic	n	A2	food,cooking
 kapusta	cabbage	n	A2	food
-sałata	lettuce	n	A2	food
+sałata	lettuce	n	A2	food,false-friends
 banan	banana	n	A1	food
 pomarańcza	orange	n	A1	food
 gruszka	pear	n	A1	food
@@ -51,11 +51,11 @@ wrzątek	boiling water	n	B1	cooking
 kasa	cash register	n	A1	shopping
 koszyk	basket	n	A1	shopping
 wózek	cart	n	A2	shopping
-promocja	special offer	n	A2	shopping
+promocja	special offer	n	A2	shopping,false-friends
 wyprzedaż	sale	n	A2	shopping
 zniżka	discount	n	A2	shopping
-paragon	receipt	n	A2	shopping
-reklamacja	complaint	n	B1	shopping
+paragon	receipt	n	A2	shopping,false-friends
+reklamacja	complaint	n	B1	shopping,false-friends
 rozmiar	size	n	A1	shopping,clothing
 przymierzalnia	dressing room	n	B1	shopping,clothing
 centrum handlowe	shopping mall	n	A2	shopping,cities
@@ -72,7 +72,7 @@ biżuteria	jewelry	n	A2	clothing
 pierścionek	ring	n	A2	clothing
 naszyjnik	necklace	n	B1	clothing
 piżama	pajamas	n	A2	clothing
-bielizna	underwear	n	A2	clothing
+bielizna	underwear	n	A2	clothing,false-friends
 zegarek	watch	n	A1	clothing,time
 mieszkanie	apartment	n	A1	home
 balkon	balcony	n	A1	home
@@ -82,10 +82,10 @@ schody	stairs	n	A1	home
 korytarz	corridor	n	A2	home
 dach	roof	n	A2	home
 brama	gate	n	A2	home
-płot	fence	n	B1	home
+płot	fence	n	B1	home,false-friends
 garaż	garage	n	A1	home,transport
 meble	furniture	n	A1	home,household
-dywan	rug	n	A2	home,household
+dywan	rug	n	A2	home,household,false-friends
 zasłony	drapes	n	A2	home,household
 poduszka	pillow	n	A1	home,household
 koc	blanket	n	A2	home,household
@@ -130,9 +130,9 @@ lipiec	July	n	A1	dates
 sierpień	August	n	A1	dates
 wrzesień	September	n	A1	dates
 październik	October	n	A1	dates
-listopad	November	n	A1	dates
+listopad	November	n	A1	dates,false-friends
 grudzień	December	n	A1	dates
-data	date	n	A1	dates
+data	date	n	A1	dates,false-friends
 urodziny	birthday	n	A1	dates
 święto	holiday	n	A2	dates
 rocznica	anniversary	n	B1	dates

@@ -1,0 +1,105 @@
+# Words that look or sound like an English or Russian word but mean something else.
+# Kept last so the ids of every earlier word stay the same on installed apps.
+# Columns: polish <TAB> english <TAB> pos <TAB> cefr <TAB> topics (comma separated, may be empty)
+puszka	can, tin	n	A2	false-friends
+dynia	pumpkin	n	B1	false-friends
+głaz	boulder	n	C1	false-friends
+grób	grave	n	B1	false-friends
+kit	putty	n	C1	false-friends
+kwas	acid	n	B2	false-friends
+łaska	mercy, grace	n	C1	false-friends
+młodzieniec	young man	n	C1	false-friends
+palacz	smoker	n	B2	false-friends
+pamiętnik	diary	n	B1	false-friends
+sad	orchard	n	B1	false-friends
+szyna	rail	n	B2	false-friends
+uroda	beauty, looks	n	B1	false-friends
+angielski	English	adj	A1	false-friends
+belka	beam	n	C1	false-friends
+wełna	wool	n	B1	false-friends
+zakaz	ban, prohibition	n	B1	false-friends
+żyletka	razor blade	n	C1	false-friends
+urok	charm	n	B2	false-friends
+dzieło	work (of art)	n	B2	false-friends
+szczęka	jaw	n	B2	false-friends
+łuk	bow, arch	n	B2	false-friends
+pieczeń	roast	n	B2	false-friends
+brak	lack, shortage	n	A2	false-friends
+broń	weapon	n	B1	false-friends
+gadać	to chat, to natter	v	B1	false-friends
+gęba	mouth, gob	n	B2	false-friends
+autokar	coach	n	A2	false-friends
+batonik	chocolate bar	n	A2	false-friends
+pozór	appearance, pretence	n	B2	false-friends
+ordynarny	vulgar, crude	adj	B2	false-friends
+aktualny	current, up to date	adj	B1	false-friends
+aktualnie	currently	adv	B1	false-friends
+ewentualnie	possibly, alternatively	adv	B2	false-friends
+akurat	just, exactly	adv	B1	false-friends
+dres	tracksuit	n	B1	false-friends
+fabryka	factory	n	A2	false-friends
+lunatyk	sleepwalker	n	C1	false-friends
+prezerwatywa	condom	n	B2	false-friends
+sympatia	liking, sweetheart	n	B2	false-friends
+patetyczny	pompous, grandiloquent	adj	C1	false-friends
+konkurs	competition, contest	n	A2	false-friends
+ekspedientka	shop assistant	n	B2	false-friends
+renta	disability pension	n	B2	false-friends
+regał	bookcase, shelving	n	B1	false-friends
+rejs	cruise, voyage	n	B2	false-friends
+transparent	banner	n	C1	false-friends
+klozet	toilet	n	C1	false-friends
+stadium	stage, phase	n	C1	false-friends
+obligacja	bond	n	C1	false-friends
+frekwencja	turnout, attendance	n	C1	false-friends
+dyrekcja	management	n	B2	false-friends
+facet	guy	n	B1	false-friends
+pupil	pet, favourite	n	C1	false-friends
+szop	raccoon	n	B2	false-friends
+spinacz	paper clip	n	B2	false-friends
+klej	glue	n	B1	false-friends
+but	shoe	n	A1	false-friends
+bak	fuel tank	n	B2	false-friends
+bat	whip	n	C1	false-friends
+hurt	wholesale	n	C1	false-friends
+herb	coat of arms	n	B2	false-friends
+handel	trade	n	B1	false-friends
+post	fast (abstaining from food)	n	B2	false-friends
+kat	executioner	n	C1	false-friends
+car	tsar	n	C1	false-friends
+rak	crayfish, cancer	n	B1	false-friends
+raj	paradise	n	B1	false-friends
+tort	layer cake	n	A2	false-friends
+blankiet	blank form	n	C1	false-friends
+grom	thunderbolt	n	C1	false-friends
+fart	luck	n	C1	false-friends
+gust	taste (in style)	n	B2	false-friends
+kask	helmet	n	B1	false-friends
+knot	wick	n	C1	false-friends
+pasta	paste	n	A2	false-friends
+paw	peacock	n	B2	false-friends
+prom	ferry	n	B1	false-friends
+step	steppe	n	C1	false-friends
+szalet	public toilet	n	C1	false-friends
+talon	voucher, coupon	n	C1	false-friends
+wagary	truancy	n	C1	false-friends
+walet	jack (playing card)	n	B2	false-friends
+apartament	luxury flat, suite	n	B1	false-friends
+audycja	broadcast	n	B2	false-friends
+akord	chord	n	B2	false-friends
+boks	boxing	n	B1	false-friends
+manifestacja	demonstration, rally	n	B2	false-friends
+resort	ministry, department	n	C1	false-friends
+sympatyczny	nice, likeable	adj	A2	false-friends
+fatalny	terrible, awful	adj	B1	false-friends
+genialny	brilliant	adj	B1	false-friends
+kaucja	deposit	n	B2	false-friends
+lektura	set reading, reading	n	B1	false-friends
+komunikacja	public transport	n	B1	false-friends
+pilot	remote control	n	A2	false-friends
+lokal	premises, venue	n	B2	false-friends
+kombinezon	overalls, jumpsuit	n	B2	false-friends
+karawan	hearse	n	C1	false-friends
+dudy	bagpipes	n	C1	false-friends
+chart	greyhound	n	C1	false-friends
+sztuka	art	n	A2	false-friends

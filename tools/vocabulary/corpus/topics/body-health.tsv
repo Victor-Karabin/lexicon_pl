@@ -1,7 +1,7 @@
 # The body inside and out, what goes wrong with it, and what is done about it.
 # Glossed in English like the rest of the corpus; the presets body, health and
 # medicine select on the topics below and were empty until this file existed.
-czaszka	skull	n	B1	body
+czaszka	skull	n	B1	body,false-friends
 kark	nape, back of the neck	n	B1	body
 biodro	hip	n	A2	body
 podudzie	shank	n	B2	body

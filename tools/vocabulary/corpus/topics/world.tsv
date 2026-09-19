@@ -22,7 +22,7 @@ alergia	allergy	n	A2	health
 rana	wound	n	B1	health,medicine
 badanie	examination	n	A2	health,hospital
 wizyta	visit	n	A1	health
-recepta	prescription	n	A2	health,pharmacy
+recepta	prescription	n	A2	health,pharmacy,false-friends
 szczepienie	vaccination	n	B1	health,medicine
 operacja	operation	n	B1	health,hospital
 dieta	diet	n	A2	health,food
@@ -131,7 +131,7 @@ zabytek	monument	n	B1	cities,tourism
 pomnik	statue	n	B1	cities,tourism
 kościół	church	n	A1	cities,tourism
 zamek	castle, lock	n	A1	cities,tourism
-przewodnik	guide	n	A2	tourism
+przewodnik	guide	n	A2	tourism,false-friends
 muzeum	museum	n	A1	tourism
 wystawa	exhibition	n	A2	tourism
 pamiątka	souvenir	n	A2	tourism,shopping
@@ -150,7 +150,7 @@ sejf	safe	n	B1	hotel,finance
 portier	porter	n	B2	hotel,professions
 odlot	departure	n	A2	airport
 przylot	arrival	n	A2	airport
-lot	flight	n	A1	airport,transport
+lot	flight	n	A1	airport,transport,false-friends
 odprawa	check-in (airport)	n	B1	airport
 bramka	gate, goal	n	A2	airport,sports
 stewardessa	stewardess	n	A2	airport,professions
