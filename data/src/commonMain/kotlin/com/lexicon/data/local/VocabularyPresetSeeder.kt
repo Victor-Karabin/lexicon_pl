@@ -9,6 +9,7 @@ class VocabularyPresetSeeder(
     private val presetDao: PresetDao,
     private val loader: VocabularyPresetAssetLoader,
     private val syncStore: CatalogSeedStore,
+    private val vocabularySeeder: VocabularySeeder,
 ) {
     private val mutex = Mutex()
 
@@ -33,8 +34,9 @@ class VocabularyPresetSeeder(
         presetDao.deletePreset(presetId)
     }
 
-    suspend fun sync(): SeedOutcomeBoundary =
-        mutex.withLock {
+    suspend fun sync(): SeedOutcomeBoundary {
+        vocabularySeeder.ensureSeeded()
+        return mutex.withLock {
             val fingerprint = loader.fingerprint()
             val stored = presetDao.countPresets()
             if (fingerprint == syncStore.syncedPresetFingerprint() && stored > 0) {
@@ -60,4 +62,5 @@ class VocabularyPresetSeeder(
                 removed = (stored - presets.size).coerceAtLeast(0),
             )
         }
+    }
 }
