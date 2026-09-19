@@ -10,11 +10,11 @@ the code and this document disagree, that is a defect in one of them; the
 
 ## Domain Overview
 
-Lexicon teaches Polish to an English speaker. The learner keeps a **study set** of words
-they want to know, practises them through **trainings**, and their answers feed a
+Lexicon teaches Polish to an English speaker. The learner gives words a **status** —
+to learn, favourite, known — practises them through **trainings**, and their answers feed a
 **review schedule** that decides what comes back and when. Longer-running structures sit
-above that: a **program** plans a day's work, and **courses** teach a fixed body of
-material.
+above that: the **vocabulary course** cycles a queue of trainings over the words the
+learner marked, and **courses** teach a fixed body of material.
 
 Everything the learner practises comes from one of three sources: the shipped
 **vocabulary catalogue**, the **course** content, or the **verb catalogue**.
@@ -42,7 +42,7 @@ Five of the seven contexts have their model there; Conjugation and Catalogue do 
 | Vocabulary | Words, presets, the study set, images and translations | `model.vocabulary` | `interactors.presets` |
 | Training | A single practice session and what it records | `model.training` | `interactors.<training>` × 13 |
 | Scheduling | Review intervals, mastery, study days, streaks | `model.scheduling` | — |
-| Program | The daily plan and its queue of trainings | `model.program` | `interactors.program` |
+| Vocabulary course | The always-on course: its settings, its queue and where the learner is in it | `model.vocabularycourse` | `interactors.vocabularycourse` |
 | Course | Fixed teaching material — lessons and exercises | `model.course` | `interactors.course` |
 | Conjugation | Verbs, their forms, and courses over them | — | `interactors.conjugation` |
 | Catalogue | Seeding shipped data into the database | — | `interactors.sync` |
@@ -63,10 +63,12 @@ under [Context-Specific Terminology](#context-specific-terminology) and must not
 | Term | Definition | Context | Avoid | Code |
 | --- | --- | --- | --- | --- |
 | Word | A Polish word or phrase with its English translation, IPA and optional picture | Vocabulary | *entry*, *item*, *term* | `Word`, `VocabularyId` |
-| Study set | The words the learner has chosen to practise | Vocabulary | *favourites* | `isInStudySet`, `studySetWordIds()` |
+| Word status | Where a word stands for the learner: not defined, to learn, favourite or known. One tap moves it to the next | Vocabulary | *heart*, *star* | `WordStatus`, `SetWordStatusUseCase` |
+| Study set | The words marked to learn or favourite | Vocabulary | *starred words* | `WordStatus.isLearning`, `studySetWordIds()` |
+| Review words | Sorting the words that have no status yet, one card at a time | Vocabulary | *inbox* | `GetWordsToReviewUseCase` |
 | Preset | A named, shipped or hand-made grouping of words by topic | Vocabulary | *category* | `VocabularyPreset`, `PresetId` |
 | Preset category | A grouping of presets | Vocabulary | *topic* | `PresetCategory` |
-| Membership | Whether a word belongs to a preset, and how much of a preset the study set holds | Vocabulary | *link*, *relation* | `PresetStudySetState` |
+| Membership | Whether a word belongs to a preset | Vocabulary | *link*, *relation* | `PresetMembership`, `SetWordPresetUseCase` |
 | CEFR level | How hard a word is, A1 to C2 | Vocabulary | *difficulty* (that is an ordering) | `CefrLevel` |
 | Training | A kind of exercise — dictation, crossword, word search | Training | *game*, *test* | `TrainingType` |
 | Session | One run of one training, start to result screen | Training | *training*, *round* | `Session`, `SessionId` |
@@ -82,15 +84,15 @@ under [Context-Specific Terminology](#context-specific-terminology) and must not
 | Word mastery | A word whose review interval has passed the settings' threshold | Scheduling | *learned* | `ReviewState.isMastered` |
 | Study day | A calendar day on which the learner practised, with its totals | Scheduling | *session day* | `StudyDayBoundary` |
 | Streak | Consecutive study days | Scheduling | — | `GetStudyStreakUseCase` |
-| Program | A configuration that plans a learner's daily work | Program | *course*, *plan* | `ProgramId`, `Program` |
-| Program configuration | The stored, read-mostly description of a program | Program | *settings* | `ProgramConfig` — a stored format, not a domain object |
-| Active program | The program the dashboard runs: the first with a non-empty queue, whenever the study set holds words. There is no separate start or stop | Program | *enrolment*, *subscription* | `ObserveActiveProgramUseCase` |
-| Program day | One day's plan for a program, and how much of it is done | Program | *daily plan* | `ProgramDay` |
-| Queue | The ordered trainings a program day asks for | Program | *playlist* | `QueuedTraining` |
-| Activity | A unit of work in a program's plan, mapped to a training | Program | *task* | `ActivityType`, `PlannedActivity` |
-| Scope | Where a program's words come from, and in what order | Program | *filter* | `ScopeSourceType`, `ScopeOrdering` |
-| Progress | Configured metrics combined by weight into one figure | Program | *score* | `ProgramProgress`, `ProgressMetric` |
-| Word card | A word shown for learning rather than testing, before the day's trainings | Program | *flashcard* | `WordCard` |
+| Vocabulary course | The one course that always runs on the dashboard, over the words the learner marked. There is nothing to create, start or stop | Vocabulary course | *program*, *plan* | `VocabularyCourse` |
+| Course settings | New words a day, reviews a day and the queue — all the learner configures | Vocabulary course | *config* | `CourseSettings` |
+| New words | The words being learnt this round: up to the day's number, favourites before words merely marked to learn. They stay the same until their status changes | Vocabulary course | *daily words* | `VocabularyCourse.newWords`, `learningWordIds()` |
+| Reviews | Known words drawn at random into each session | Vocabulary course | *due words* | `randomKnownWordIds()` |
+| Queue | The ordered trainings the course runs, over and over | Vocabulary course | *playlist*, *day* | `CourseSettings.queue` |
+| Round | One pass through the queue. Finishing the last training starts the next round; there is no finished day | Vocabulary course | *day* | `VocabularyCourse.round` |
+| Reset | Going back to the first training of the queue, with the new-word cards offered again | Vocabulary course | *restart* | `ResetCourseQueueUseCase` |
+| Progress | Words known out of words known or being learnt, and today's accuracy | Vocabulary course | *score* | `CourseProgress`, `ProgressMetric` |
+| Word card | A word shown for learning rather than testing, before the first training of a round | Vocabulary course | *flashcard* | `WordCard` |
 | Course | Fixed teaching material — a sequence of lessons | Course | *program*, *class* | `Course`, `CourseId` |
 | Lesson | One unit of a course, with its words, audio and exercises | Course | *chapter*, *unit* | `Lesson`, `LessonId` |
 | Exercise | A question inside a lesson, of a fixed authored shape | Course | *training*, *step* | `LessonExercise` |
@@ -113,10 +115,10 @@ Objects with identity that persists across changes.
 
 | Entity | Identity | Context | Behaviour it carries |
 | --- | --- | --- | --- |
-| Word | `VocabularyId` | Vocabulary | `addToStudySet`, `removeFromStudySet`, `edited`, `isPhrase` |
-| Preset | `PresetId` | Vocabulary | `wordCount`, `studySetState` |
+| Word | `VocabularyId` | Vocabulary | `withStatus`, `edited`, `isPhrase` |
+| Preset | `PresetId` | Vocabulary | `wordCount` |
 | Session | `SessionId` | Training | `answer`, `currentStep`, `isComplete`, the tallies |
-| Program | `ProgramId` | Program | — (configuration is read whole) |
+| Vocabulary course | the single stored row | Vocabulary course | `nextTraining`, `showCardsNext`, `roundFraction` |
 | Course | `CourseId` | Course | `completedCount`, `currentLesson`, `isComplete` |
 | Lesson | `LessonId` | Course | — |
 | Conjugation course | `ConjugationCourse.id` | Conjugation | — |
@@ -126,16 +128,15 @@ Objects with identity that persists across changes.
 
 Defined wholly by their values, with no identity.
 
-**Vocabulary** — `VocabularyId`, `PresetId`, `CefrLevel`, `LocalizedText`,
-`PresetCategory`, `PresetStudySetState`
+**Vocabulary** — `VocabularyId`, `PresetId`, `CefrLevel`, `WordStatus`, `LocalizedText`,
+`PresetCategory`
 
 **Training** — `SessionId`, `TrainingType`, `StepOutcome`, `Step` (`Question` | `Board`)
 
 **Scheduling** — `RecallQuality`, `ReviewState`, `ReviewSettings`, `StudyTimePolicy`
 
-**Program** — `ProgramId`, `ProgressMetric`, `ProgressMetricType`, `ProgressWeights`,
-`ScopeOrdering`, `ScopeSourceType`, `ActivityType`, `TargetType`, `LearningStrategy`,
-`AdaptationTrigger`, `AdaptationAction`
+**Vocabulary course** — `CourseSettings`, `CourseProgress`, `ProgressMetric`,
+`ProgressMetricType`, `CourseLaunch`
 
 **Course** — `CourseId`, `LessonId`, `LessonSummary`, `LessonExercise` and its item types
 
@@ -154,9 +155,9 @@ reads its parts back out is ceremony.
 | Aggregate Root | Contains | Invariant | Enforced? |
 | --- | --- | --- | --- |
 | **Session** | its ordered steps and their outcomes | a session has at least one step; steps are numbered from zero in order; a step is answered exactly once; the expected answer is the session's, not the caller's | **Yes** — `require`, `StepAlreadyAnswered`, `NoSuchStep` |
-| **Word** | its own text, translation, transcription and study-set flag | a word always has text; study-set transitions go through the entity | **Yes** — `require` |
+| **Word** | its own text, translation, transcription and status | a word always has text; status changes go through `withStatus` | **Yes** — `require` |
 | Preset | its words and membership overrides | a hand-made membership survives a catalogue re-seed | In the seeder, with tests that fail if the carve-out is reverted. Owning a thousand words to protect it would cost more than it saves |
-| Program | its config, days, milestones and rewards | a day's queue matches the config that produced it | By construction: the day is generated from the config and stored with it |
+| Vocabulary course | its settings and its place in the queue | the queue is never empty; the place is always inside the queue | In the use cases: `UpdateCourseSettingsUseCase` keeps the previous queue rather than store an empty one, and the place is clamped on read |
 | Course | its lessons, their words, audio and exercises | lesson progress belongs to exactly one course | By the schema — progress is keyed by lesson |
 | Conjugation course | its chosen verbs and their per-variant progress | progress is scoped to one course, so two courses over one verb do not share it | By the schema — progress is keyed by course |
 | Verb | its forms per person | a form is never invented; absent means absent | By construction — forms are read from the asset, never derived |
@@ -170,10 +171,7 @@ Operations that belong to no single entity.
 | Review scheduler | Turns an outcome into the next due date | `ReviewState.next()` |
 | Recall grading | Turns a step outcome into a recall quality, or nothing for a word only shown | `StepOutcome.recallQuality()` |
 | Study time policy | Decides how much of a gap between answers was studying | `StudyTimePolicy.creditedSeconds()` |
-| Scope resolver | Turns a program's declared sources into words | `ResolveProgramScopeUseCase` |
-| Scope ordering | Puts a program's words in the order it asks for | `ScopeOrdering.applyTo()` |
-| Queue resolver | Finds the next training a day can actually run | `NextProgramTrainingUseCase` |
-| Membership state | Decides whether a preset is fully, partly or not at all in the study set | `PresetStudySetState.of()` |
+| Queue resolver | Finds the next training the course can actually run with the words it has, and keeps the step over any it cannot | `NextCourseTrainingUseCase` |
 | Answer normaliser | Decides whether a written or spoken answer matches | `AnswerNormalizer` |
 | Conjugation splitter | Derives stem and endings from a verb's own forms | `VerbConjugation.split()` |
 | Voice choice | The voice the learner will hear: theirs, or the first on offer | `List<SpeechVoice>.chosen()` |
@@ -184,7 +182,7 @@ Everything the domain needs from the outside, declared in `boundary` and impleme
 `data` (persistence) or `android` (device and network).
 
 **Repositories** — `VocabularyRepository`, `VocabularyPresetRepository`,
-`CourseRepository`, `ConjugationRepository`, `ProgramRepository`,
+`CourseRepository`, `ConjugationRepository`, `VocabularyCourseRepository`,
 `TrainingHistoryRepository`, `ReviewScheduleRepository`, `StudyRecordRepository`,
 `SettingsRepository`, `SessionStore`
 
@@ -204,9 +202,8 @@ indirection and buy nothing. What would be events are recorded facts or state tr
 | --- | --- |
 | A step was answered | `RecordAnswerUseCase` |
 | A word became due | derived from `dueAtEpochDay` |
-| A day was completed | `ProgramDay.isComplete` |
-| A program became active or idle | derived from the study set and the queue |
-| A milestone was reached | a row in `program_milestone` |
+| A round was completed | `VocabularyCourse.round` goes up |
+| A word's status changed | the `status` column; the course's new words follow it on the next read |
 | A catalogue changed | fingerprint mismatch |
 
 Introducing an event type is a domain change and requires updating this document.
@@ -215,12 +212,14 @@ Introducing an event type is a domain change and requires updating this document
 
 | Operation | Meaning | Entry point |
 | --- | --- | --- |
-| Star a word | Add it to the study set, creating it if it does not exist | `ToggleWordInStudySetUseCase`, `ToggleVerbInStudySetUseCase` |
-| Star a preset | Put every word of a preset into the study set, or take them out | `SetPresetInStudySetUseCase` |
+| Mark a word | Move a word to its next status | `SetWordStatusUseCase` |
+| Star a verb | Add a verb to the study set as a word, creating it if it does not exist | `ToggleVerbInStudySetUseCase` |
 | Start a session | Draw words and open a session over them | `Start*SessionUseCase` |
 | Submit an answer | Mark one step against the session's expected answer | `Submit*UseCase` |
 | Record an answer | Store the result, advance the review schedule, credit the study day | `RecordAnswerUseCase` |
-| Advance the day | Mark the current training done and find the next runnable one | `NextProgramTrainingUseCase` |
+| Advance the course | Mark the current training done and find the next runnable one, starting a new round after the last | `NextCourseTrainingUseCase` |
+| Reset the queue | Go back to the first training and offer the new-word cards again | `ResetCourseQueueUseCase` |
+| Change the course | Store new settings; a changed queue starts from its first training | `UpdateCourseSettingsUseCase` |
 | Create a conjugation course | Fix a set of verbs as a course | `CreateConjugationCourseUseCase` |
 | Restore the verbs | Re-seed the verb catalogue from its asset | `RestoreConjugationVerbsUseCase` |
 | Seed the catalogues | Write shipped assets into the database | `SeedCatalogsUseCase` |
@@ -231,34 +230,31 @@ Introducing an event type is a domain change and requires updating this document
 | --- | --- |
 | Step outcome | `CORRECT`, `INCORRECT`, `SKIPPED`, `SEEN` |
 | Step shape | `Question` (one word, one expected answer), `Board` (several words, paired) |
-| Preset membership | `NONE`, `SOME`, `ALL` |
-| Program | active (words starred and a queue), idle |
+| Word status | `UNDEFINED`, `TO_LEARN`, `FAVOURITE`, `KNOWN`, in that cycle |
 | Catalogue step | `Pending`, `InProgress`, `Complete`, `Failed` |
 | Answer (UI) | `Unanswered`, `Correct`, `Incorrect`, `Skipped` |
 | Conjugation answer mode | `FULL_FORM`, `ENDING` |
 | Verb completeness | complete, partial, unusable |
-| Scope ordering | `AS_LISTED`, `FREQUENCY`, `DIFFICULTY`, `ALPHABETICAL`, `RANDOM` |
 
 **Verb completeness** is domain-significant: the source records verbs with every person,
 verbs with only some (`boleć` has only the third persons), and verbs with none. Only
 usable forms become questions.
 
-**Frequency is the catalogue own numbering.** The shipped vocabulary is ordered by how
-common a word is — the Top 100 preset is ids 1..100 — so `FREQUENCY` orders by id and
-`DIFFICULTY` orders by CEFR level.
+**Frequency is the catalogue's own numbering.** The shipped vocabulary is ordered by how
+common a word is — the Top 100 preset is ids 1..100 — so the course's new words, taken in
+id order within each status, come most common first.
 
 ## Relationships Between Concepts
 
 ```
-Preset --< Word >-- Study set
+Preset --< Word --> Status
                       |
                       +--> Session --< Step --> Outcome --> Training result
                       |                                          |
                       |                                          v
                       |                                    Review schedule
-                      |                                          |
-                      v                                          v
-                  Program --> Program day --> Queue --> Training
+                      v
+              Vocabulary course --> Queue --> Training --> (next round)
 
 Course --< Lesson --< Exercise
 Verb --< Conjugated form        Conjugation course --< Verb
@@ -276,15 +272,16 @@ These words carry different meanings in different contexts and must not be unifi
 | Word | In one context | In another |
 | --- | --- | --- |
 | **Course** | Course — a sequence of authored lessons (Krok po kroku) | Conjugation course — a chosen set of verbs |
+| | | Vocabulary course — the always-on queue over the learner's marked words |
 | **Mastery** | Scheduling: a word whose review interval passed the threshold (21 days by default) | Conjugation: a variant answered correctly twice in a row |
-| **Progress** | Program: weighted metrics combined into a figure | Conjugation: variants mastered out of total |
+| **Progress** | Vocabulary course: words known out of words known or being learnt | Conjugation: variants mastered out of total |
 | | | Course: lessons completed |
 | **Step** | Training: one question in a session | Conjugation: one person row inside a table |
 | | | Catalogue: one catalogue being seeded |
-| **Difficulty** | Vocabulary: the CEFR level of a word | Program: an ordering, which reads the CEFR level |
 | **Variant** | Conjugation: a verb-and-person pairing | UI: a styling option (`AnswerChipVariant`) — not domain |
 | **Word** | Vocabulary: an entity in the study set | Word search: a string hidden in a grid |
-| **Session** | Training: one run of a training | Program: `ProgramSession`, the words for the next activity |
+| **Session** | Training: one run of a training | — |
+| **Favourite** | Vocabulary: a word status, ahead of *to learn* for the course | — (no longer a name for the study set) |
 
 ## Known gaps
 
@@ -296,9 +293,6 @@ this document describes.
   are well modelled; they are simply in the application layer.
 - **Catalogue has no model package.** Seeding is orchestration over ports, with the only
   rule — the fingerprint comparison — inside the repositories.
-- **`ProgramConfig` is a stored format**, `@Serializable`, in `interactors`. Its enums are
-  in the model because the rules switch on them; the structures around them are not
-  duplicated because no rule needs them.
 - **The preset list carries word ids it no longer displays.** Since counts and membership
   state come from SQL, the ids are dead weight; removing them needs a read-model type so
   that `vocabularyIds` is not silently empty for listed presets.
@@ -307,7 +301,11 @@ this document describes.
 
 | Term | Status | Use instead |
 | --- | --- | --- |
-| Favourite | Two names for one concept | Study set — the term is gone from the codebase |
+| Favourite (as the study set) | Two names for one concept | Study set. *Favourite* is now one word status |
+| Star, heart | Replaced by four statuses | Word status |
+| Program, active program | Removed — there is one course and it always runs | Vocabulary course |
+| Program day, day complete | Removed — the queue cycles | Round |
+| Program configuration, milestones, rewards, scope | Removed — nothing configured them | Course settings |
 | Sync / `syncFromSource` | Renamed | Seeding / `seedFromAsset` |
 | `ConjugationQuestion` | Renamed | `ConjugationTable` |
 | Per-training outcome enums | Removed, nine of them | `StepOutcome` |
@@ -317,7 +315,7 @@ this document describes.
 | `TrainingIds` | Derived from the model rather than declaring a second encoding | `TrainingType.id` |
 | `VocabularyItemBoundary` | Removed — an anemic twin of the word | `Word` |
 | `PresetWord` | Renamed — it was never preset-specific | `Word` |
-| `ProgramQueue` | Moved out of the presentation module | `NextProgramTrainingUseCase` |
+| `ProgramQueue` | Moved out of the presentation module, then replaced | `NextCourseTrainingUseCase` |
 | `TrainingType.PASSAGE` | Removed — it stood in for both variants | `PASSAGE_WRITE`, `PASSAGE_BANK` |
 | Selection (conjugation) | Removed | A conjugation course |
 | Reset the course | Removed | Delete the course |
@@ -338,6 +336,9 @@ this document describes.
 | 2026-08-19 | **Voice choice given one home** | Three places answered "which voice will the learner hear" differently |
 | 2026-08-19 | *Favourite* renamed to **study set** throughout the code | The interface had always said study set |
 | 2026-08-19 | Module **`domain` renamed to `application`** | It held use-case implementations, not a domain model |
+| 2026-09-18 | **Study set flag replaced by `WordStatus`** | The learner asked for four states — not defined, to learn, favourite, known — cycled by one tap |
+| 2026-09-19 | **Program replaced by the vocabulary course** | There was only ever one program, and the learner should not have to build, start or delete it. Its generic configuration — goals, scope, milestones, rewards, adaptation — had no editor and no reader |
+| 2026-09-19 | *Program day* replaced by **round** | The queue cycles; a day can no longer be finished |
 
 ## Enforcement
 

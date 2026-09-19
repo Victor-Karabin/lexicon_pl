@@ -69,8 +69,8 @@ into a screen.
 
 Room, with a single `AppDatabase`. The schema takes the destructive fallback rather than
 migrations: the project is pre-release, and a version bump drops and re-seeds. What the
-seeders cannot refill — the study set, hand-written words and presets, training history,
-review schedules, program state — goes with it, so a bump is a deliberate act.
+seeders cannot refill — word statuses, hand-written words and presets, training history,
+review schedules, the vocabulary course's place in its queue — goes with it, so a bump is a deliberate act.
 
 Shipped data lives in `data/src/androidMain/assets` and is seeded on first launch and
 whenever the app version changes. Each catalogue is fingerprinted, so an unchanged asset

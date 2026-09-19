@@ -141,4 +141,35 @@ class WordDaoTest {
             assertTrue(words.search(foldedQuery = "kot", levels = emptyList(), ignoreLevels = 1, limit = 10, offset = 0).isEmpty())
             assertEquals(1, words.countIncludingDeleted())
         }
+
+    @Test
+    fun favouritesComeBeforeWordsMerelyMarkedToLearn() =
+        runTest {
+            words.insertAll(
+                listOf(
+                    word(1L, "kot", "cat").copy(status = "TO_LEARN"),
+                    word(2L, "pies", "dog").copy(status = "FAVOURITE"),
+                    word(3L, "dom", "house").copy(status = "TO_LEARN"),
+                    word(4L, "woda", "water").copy(status = "FAVOURITE"),
+                    word(5L, "chleb", "bread").copy(status = "KNOWN"),
+                    word(6L, "mleko", "milk").copy(status = "UNDEFINED"),
+                ),
+            )
+
+            assertEquals(listOf(2L, 4L, 1L, 3L), words.learningWordIds(limit = 10))
+        }
+
+    @Test
+    fun onlyKnownWordsAreDrawnForReview() =
+        runTest {
+            words.insertAll(
+                listOf(
+                    word(1L, "kot", "cat").copy(status = "TO_LEARN"),
+                    word(2L, "pies", "dog").copy(status = "KNOWN"),
+                    word(3L, "dom", "house").copy(status = "KNOWN"),
+                ),
+            )
+
+            assertEquals(listOf(2L, 3L), words.randomKnownWordIds(limit = 10).sorted())
+        }
 }

@@ -1,0 +1,27 @@
+package com.lexicon.application.vocabularycourse
+
+import com.lexicon.boundary.StudyRecordRepository
+import com.lexicon.common.Clock
+import com.lexicon.interactors.vocabularycourse.DailyStudyTime
+import com.lexicon.interactors.vocabularycourse.GetDailyStudyTimeUseCase
+import com.lexicon.interactors.vocabularycourse.StudyTimeHistory
+import kotlinx.collections.immutable.toImmutableList
+
+private const val DAYS_SHOWN = 7
+
+class GetDailyStudyTimeUseCaseImpl(
+    private val study: StudyRecordRepository,
+    private val clock: Clock,
+) : GetDailyStudyTimeUseCase {
+    override suspend fun invoke(): StudyTimeHistory {
+        val today = clock.todayEpochDay()
+        val from = today - DAYS_SHOWN + 1
+        val studied = study.daysBetween(from, today).associate { it.epochDay to it.studiedSeconds }
+
+        return StudyTimeHistory(
+            days = (from..today)
+                .map { DailyStudyTime(epochDay = it, studiedSeconds = studied[it] ?: 0L) }
+                .toImmutableList(),
+        )
+    }
+}

@@ -15,14 +15,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AutoStories
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material.icons.filled.Translate
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -38,27 +37,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.lexicon.interactors.program.ActivityConfig
-import com.lexicon.interactors.program.DailyPlanConfig
-import com.lexicon.interactors.program.Program
-import com.lexicon.interactors.program.ProgramConfig
-import com.lexicon.interactors.program.ProgramDifficulty
-import com.lexicon.interactors.program.ProgramGoal
-import com.lexicon.interactors.program.ProgramVisibility
-import com.lexicon.interactors.program.trainingsADay
+import com.lexicon.interactors.vocabularycourse.VocabularyCourse
 import com.lexicon.model.course.Course
 import com.lexicon.model.course.CourseId
 import com.lexicon.model.course.LessonId
 import com.lexicon.model.course.LessonSummary
-import com.lexicon.model.program.ActivityType
-import com.lexicon.model.program.ProgramId
-import com.lexicon.model.program.TargetType
 import com.lexicon.model.vocabulary.CefrLevel
 import com.lexicon.model.vocabulary.LocalizedText
 import com.lexicon.model.vocabulary.resolve
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
-import com.lexicon.presentation.program.ProgramMedallion
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
@@ -71,6 +59,7 @@ import com.lexicon.presentation.theme.component.StatChip
 import com.lexicon.presentation.theme.component.TileChips
 import com.lexicon.presentation.theme.component.muted
 import com.lexicon.presentation.theme.component.tileSkin
+import com.lexicon.presentation.vocabularycourse.CourseMedallion
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import org.koin.androidx.compose.koinViewModel
@@ -84,8 +73,7 @@ private const val TRACK_ALPHA = 0.25f
 @Composable
 fun PlanScreen(
     onCourseSelected: (CourseId) -> Unit,
-    onProgramSelected: (ProgramId) -> Unit,
-    onCreateProgram: () -> Unit,
+    onOpenCourseSettings: () -> Unit,
     onConjugationSelected: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PlanViewModel = koinViewModel(),
@@ -94,8 +82,7 @@ fun PlanScreen(
     PlanContent(
         uiState = uiState,
         onCourseSelected = onCourseSelected,
-        onProgramSelected = onProgramSelected,
-        onCreateProgram = onCreateProgram,
+        onOpenCourseSettings = onOpenCourseSettings,
         onConjugationSelected = onConjugationSelected,
         modifier = modifier,
     )
@@ -105,8 +92,7 @@ fun PlanScreen(
 private fun PlanContent(
     uiState: PlanUiState,
     onCourseSelected: (CourseId) -> Unit,
-    onProgramSelected: (ProgramId) -> Unit,
-    onCreateProgram: () -> Unit,
+    onOpenCourseSettings: () -> Unit,
     onConjugationSelected: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -123,18 +109,8 @@ private fun PlanContent(
                 contentPadding = PaddingValues(Dimens.spacingMedium),
                 verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
             ) {
-                item(key = "programs-heading") { SectionHeading(stringResource(R.string.plan_programs)) }
-                items(uiState.programs, key = { it.id.value }) { program ->
-                    ProgramTile(
-                        program = program,
-                        languageTag = uiState.languageTag,
-                        isActive = uiState.activeProgramId == program.id,
-                        onClick = { onProgramSelected(program.id) },
-                    )
-                }
-
-                if (uiState.programs.isEmpty()) {
-                    item(key = "create-program") { CreateProgramTile(onClick = onCreateProgram) }
+                item(key = "vocabulary-course") {
+                    VocabularyCourseTile(course = uiState.course, onClick = onOpenCourseSettings)
                 }
 
                 item(key = "courses-heading") { SectionHeading(stringResource(R.string.plan_courses)) }
@@ -186,10 +162,6 @@ private fun ConjugationCourseTile(
 }
 
 @Composable
-private fun Program.displayTitle(languageTag: String): String =
-    if (isUserCreated) stringResource(R.string.program_default_name) else title.resolve(languageTag)
-
-@Composable
 private fun SectionHeading(text: String) {
     Text(
         text = text,
@@ -202,30 +174,28 @@ private fun SectionHeading(text: String) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun ProgramTile(
-    program: Program,
-    languageTag: String,
-    isActive: Boolean,
+private fun VocabularyCourseTile(
+    course: VocabularyCourse,
     onClick: () -> Unit,
 ) {
-    val skin = tileSkin(highlighted = isActive)
+    val skin = tileSkin(highlighted = true)
 
     GradientTile(skin = skin, onClick = onClick) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            ProgramMedallion(skin = skin)
+            CourseMedallion(skin = skin)
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = program.displayTitle(languageTag),
+                    text = stringResource(R.string.vocabulary_course_title),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
                     color = skin.onTile,
                 )
                 Text(
-                    text = program.description.resolve(languageTag),
+                    text = stringResource(R.string.vocabulary_course_settings_scope),
                     style = MaterialTheme.typography.bodySmall,
                     color = skin.muted(),
                     maxLines = DESCRIPTION_LINES,
@@ -233,77 +203,28 @@ private fun ProgramTile(
                 )
             }
 
-            if (isActive) {
-                Icon(
-                    imageVector = Icons.Default.PlayArrow,
-                    contentDescription = stringResource(R.string.plan_program_active),
-                    tint = skin.onTile,
-                )
-            } else {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                    contentDescription = null,
-                    tint = skin.muted(),
-                )
-            }
+            Icon(
+                imageVector = Icons.Default.Tune,
+                contentDescription = null,
+                tint = skin.onTile,
+            )
         }
 
         TileChips {
-            program.config.goals
-                .firstOrNull { it.type == TargetType.VOCABULARY }
-                ?.let { goal ->
-                    StatChip(
-                        icon = Icons.Default.Translate,
-                        text = stringResource(R.string.plan_program_words, goal.target),
-                        skin = skin,
-                    )
-                }
-            val plan = program.config.dailyPlan
-            if (plan.newWords > 0) {
-                StatChip(
-                    icon = Icons.Default.AutoStories,
-                    text = stringResource(R.string.plan_program_new_a_day, plan.newWords),
-                    skin = skin,
-                )
-            }
-            if (plan.trainingsADay > 0) {
-                StatChip(
-                    icon = Icons.Default.FitnessCenter,
-                    text = stringResource(R.string.plan_program_trainings, plan.trainingsADay),
-                    skin = skin,
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun CreateProgramTile(onClick: () -> Unit) {
-    val skin = tileSkin()
-
-    GradientTile(skin = skin, onClick = onClick) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Medallion(skin = skin) { MedallionIcon(Icons.Default.Add, skin) }
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = stringResource(R.string.plan_program_create),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
-                    color = skin.onTile,
-                )
-                Text(
-                    text = stringResource(R.string.plan_program_create_hint),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = skin.muted(),
-                )
-            }
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                contentDescription = null,
-                tint = skin.muted(),
+            StatChip(
+                icon = Icons.Default.AutoStories,
+                text = stringResource(R.string.vocabulary_course_new_a_day, course.settings.newWordsADay),
+                skin = skin,
+            )
+            StatChip(
+                icon = Icons.Default.Translate,
+                text = stringResource(R.string.vocabulary_course_reviews_a_day, course.settings.reviewsADay),
+                skin = skin,
+            )
+            StatChip(
+                icon = Icons.Default.FitnessCenter,
+                text = stringResource(R.string.vocabulary_course_trainings_count, course.totalTrainings),
+                skin = skin,
             )
         }
     }
@@ -466,58 +387,7 @@ private fun PlanPreview() {
         PlanContent(
             uiState = PlanUiState.Loaded(courses = persistentListOf(previewCourse())),
             onCourseSelected = {},
-            onProgramSelected = {},
-            onCreateProgram = {},
-            onConjugationSelected = {},
-        )
-    }
-}
-
-private fun previewProgram(
-    id: String,
-    level: String,
-    title: String,
-): Program =
-    Program(
-        id = ProgramId(id),
-        level = level,
-        order = 1,
-        title = LocalizedText(mapOf("en" to title)),
-        description = LocalizedText(mapOf("en" to "The thousand words that carry ordinary Polish.")),
-        difficulty = ProgramDifficulty.BEGINNER,
-        estimatedDays = 84,
-        visibility = ProgramVisibility.PUBLIC,
-        config = ProgramConfig(
-            goals = listOf(ProgramGoal(id = "words", type = TargetType.VOCABULARY, target = 1000)),
-            dailyPlan = DailyPlanConfig(
-                newWords = 10,
-                queue = listOf("word_match", "dictation"),
-                activities = listOf(
-                    ActivityConfig(
-                        id = "learn",
-                        type = ActivityType.LEARN,
-                        trainings = listOf("word_match", "dictation"),
-                    ),
-                ),
-            ),
-        ),
-    )
-
-@LightDarkPreview
-@Composable
-private fun PlanProgramsPreview() {
-    LexiconTheme {
-        PlanContent(
-            uiState = PlanUiState.Loaded(
-                programs = persistentListOf(
-                    previewProgram("a1", "A1", "Polish A1"),
-                    previewProgram("a2", "A2", "Polish A2"),
-                ),
-                activeProgramId = ProgramId("a1"),
-            ),
-            onCourseSelected = {},
-            onProgramSelected = {},
-            onCreateProgram = {},
+            onOpenCourseSettings = {},
             onConjugationSelected = {},
         )
     }
@@ -530,8 +400,7 @@ private fun PlanEmptyPreview() {
         PlanContent(
             uiState = PlanUiState.Loaded(courses = persistentListOf()),
             onCourseSelected = {},
-            onProgramSelected = {},
-            onCreateProgram = {},
+            onOpenCourseSettings = {},
             onConjugationSelected = {},
         )
     }

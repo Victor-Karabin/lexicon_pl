@@ -158,6 +158,29 @@ class VocabularyRepositoryImpl(
 
     override fun observeStudySetIds(): Flow<Set<Long>> = wordDao.observeStudySetIds().map { it.toSet() }
 
+    override suspend fun wordsWithStatus(
+        status: WordStatus,
+        limit: Int,
+    ): List<Word> {
+        vocabularySeeder.ensureSeeded()
+        return wordDao.withStatus(status.name, limit).map { it.toWord() }
+    }
+
+    override suspend fun countWithStatus(status: WordStatus): Int {
+        vocabularySeeder.ensureSeeded()
+        return wordDao.countWithStatus(status.name)
+    }
+
+    override suspend fun learningWordIds(limit: Int): List<Long> {
+        vocabularySeeder.ensureSeeded()
+        return wordDao.learningWordIds(limit)
+    }
+
+    override suspend fun randomKnownWordIds(limit: Int): List<Long> {
+        vocabularySeeder.ensureSeeded()
+        return wordDao.randomKnownWordIds(limit)
+    }
+
     override fun observeWordStatuses(): Flow<Map<Long, WordStatus>> =
         wordDao.observeStatuses().map { rows -> rows.associate { it.id to WordStatus.ofName(it.status) } }
 }

@@ -6,17 +6,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.VolumeUp
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -27,30 +21,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import coil.compose.SubcomposeAsyncImage
 import com.lexicon.interactors.wordcard.WordCardStep
-import com.lexicon.model.vocabulary.ExampleSentence
 import com.lexicon.presentation.R
-import com.lexicon.presentation.common.ExampleSentenceRow
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.WordCardFace
 import com.lexicon.presentation.theme.Dimens
-import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconTheme
-import com.lexicon.presentation.theme.component.GradientTile
 import com.lexicon.presentation.theme.component.LexiconProgressBar
-import com.lexicon.presentation.theme.component.muted
-import com.lexicon.presentation.theme.component.tileSkin
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
-
-private val CardImageHeight = 220.dp
 
 @Composable
 fun WordCardScreen(
@@ -150,84 +132,18 @@ private fun WordCardContent(
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
-                    Card(
-                        card = uiState.current!!,
+                    WordCardFace(
+                        text = uiState.current!!.text,
+                        translation = uiState.current!!.translation,
+                        transcription = uiState.current!!.transcription,
+                        imageUrl = uiState.current!!.imageUrl,
+                        example = uiState.current!!.example,
                         onPronounce = onPronounce,
                         onSpeakExample = onSpeakExample,
                         onEdit = onEdit,
                     )
                 }
         }
-    }
-}
-
-@Composable
-private fun Card(
-    card: WordCardStep,
-    onPronounce: () -> Unit,
-    onSpeakExample: () -> Unit,
-    onEdit: () -> Unit,
-) {
-    val skin = tileSkin(highlighted = true)
-
-    GradientTile(skin = skin) {
-        card.imageUrl?.let { url ->
-            SubcomposeAsyncImage(
-                model = url,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxWidth().height(CardImageHeight).clip(LexiconShapes.small),
-                loading = {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator(color = skin.onTile)
-                    }
-                },
-                error = {},
-            )
-        }
-
-        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = card.translation,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = skin.muted(),
-                )
-                Text(
-                    text = card.text,
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.SemiBold,
-                    color = skin.onTile,
-                )
-                if (card.transcription.isNotBlank()) {
-                    Text(
-                        text = "[${card.transcription}]",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = skin.muted(),
-                    )
-                }
-            }
-            IconButton(onClick = onPronounce) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.VolumeUp,
-                    contentDescription = stringResource(R.string.word_pronounce, card.text),
-                    tint = skin.onTile,
-                )
-            }
-            IconButton(onClick = onEdit) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = stringResource(R.string.cards_edit),
-                    tint = skin.onTile,
-                )
-            }
-        }
-
-        ExampleSentenceRow(
-            example = ExampleSentence.of(card.example, word = card.text),
-            onPlay = onSpeakExample,
-            color = skin.muted(),
-        )
     }
 }
 

@@ -33,6 +33,28 @@ interface WordDao {
     @Query("SELECT id FROM words WHERE status IN ('TO_LEARN', 'FAVOURITE') AND isDeleted = 0")
     fun observeStudySetIds(): Flow<List<Long>>
 
+    @Query("SELECT * FROM words WHERE status = :status AND isDeleted = 0 ORDER BY id LIMIT :limit")
+    suspend fun withStatus(
+        status: String,
+        limit: Int,
+    ): List<WordEntity>
+
+    @Query("SELECT COUNT(*) FROM words WHERE status = :status AND isDeleted = 0")
+    suspend fun countWithStatus(status: String): Int
+
+    @Query(
+        """
+        SELECT id FROM words
+        WHERE status IN ('FAVOURITE', 'TO_LEARN') AND isDeleted = 0
+        ORDER BY CASE status WHEN 'FAVOURITE' THEN 0 ELSE 1 END, id
+        LIMIT :limit
+        """,
+    )
+    suspend fun learningWordIds(limit: Int): List<Long>
+
+    @Query("SELECT id FROM words WHERE status = 'KNOWN' AND isDeleted = 0 ORDER BY RANDOM() LIMIT :limit")
+    suspend fun randomKnownWordIds(limit: Int): List<Long>
+
     @Query("SELECT id, status FROM words WHERE status != 'UNDEFINED' AND isDeleted = 0")
     fun observeStatuses(): Flow<List<WordStatusRow>>
 

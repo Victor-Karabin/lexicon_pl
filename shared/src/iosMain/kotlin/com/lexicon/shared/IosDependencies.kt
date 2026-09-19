@@ -30,6 +30,7 @@ import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
 import com.lexicon.interactors.mix.StartMixSessionUseCase
 import com.lexicon.interactors.passage.StartPassageSessionUseCase
 import com.lexicon.interactors.passage.SubmitPassageAnswersUseCase
+import com.lexicon.interactors.presets.CountWordsToReviewUseCase
 import com.lexicon.interactors.presets.CreatePresetUseCase
 import com.lexicon.interactors.presets.CreateWordUseCase
 import com.lexicon.interactors.presets.DeletePresetUseCase
@@ -41,6 +42,7 @@ import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.GetWordUseCase
+import com.lexicon.interactors.presets.GetWordsToReviewUseCase
 import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
 import com.lexicon.interactors.presets.RestorePresetUseCase
@@ -51,21 +53,6 @@ import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.SetWordStatusUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
-import com.lexicon.interactors.program.CountStudySetUseCase
-import com.lexicon.interactors.program.CreateProgramUseCase
-import com.lexicon.interactors.program.GetDailyStudyTimeUseCase
-import com.lexicon.interactors.program.GetProgramDayUseCase
-import com.lexicon.interactors.program.GetProgramProgressUseCase
-import com.lexicon.interactors.program.GetProgramUseCase
-import com.lexicon.interactors.program.GetStudyStreakUseCase
-import com.lexicon.interactors.program.GetWordCardsUseCase
-import com.lexicon.interactors.program.MarkCardsSeenUseCase
-import com.lexicon.interactors.program.NextProgramTrainingUseCase
-import com.lexicon.interactors.program.ObserveActiveProgramUseCase
-import com.lexicon.interactors.program.ObserveProgramsUseCase
-import com.lexicon.interactors.program.Program
-import com.lexicon.interactors.program.UpdateProgramUseCase
-import com.lexicon.interactors.program.defaultProgramQueue
 import com.lexicon.interactors.pronunciation.StartPronunciationSentencesUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
@@ -81,6 +68,17 @@ import com.lexicon.interactors.training.CheckTrainingReadinessUseCase
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionRequest
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
+import com.lexicon.interactors.vocabularycourse.GetCourseProgressUseCase
+import com.lexicon.interactors.vocabularycourse.GetDailyStudyTimeUseCase
+import com.lexicon.interactors.vocabularycourse.GetStudyStreakUseCase
+import com.lexicon.interactors.vocabularycourse.GetVocabularyCourseUseCase
+import com.lexicon.interactors.vocabularycourse.GetWordCardsUseCase
+import com.lexicon.interactors.vocabularycourse.MarkCourseCardsSeenUseCase
+import com.lexicon.interactors.vocabularycourse.NextCourseTrainingUseCase
+import com.lexicon.interactors.vocabularycourse.ObserveVocabularyCourseUseCase
+import com.lexicon.interactors.vocabularycourse.ResetCourseQueueUseCase
+import com.lexicon.interactors.vocabularycourse.UpdateCourseSettingsUseCase
+import com.lexicon.interactors.vocabularycourse.VocabularyCourse
 import com.lexicon.interactors.wordcard.RecordWordCardSeenUseCase
 import com.lexicon.interactors.wordcard.StartWordCardSessionUseCase
 import com.lexicon.interactors.wordmatch.StartWordMatchSessionUseCase
@@ -113,6 +111,8 @@ object IosDependencies : KoinComponent {
     val getPresetVocabulary: GetPresetVocabularyUseCase by inject()
     val searchVocabulary: SearchVocabularyUseCase by inject()
     val setWordStatus: SetWordStatusUseCase by inject()
+    val getWordsToReview: GetWordsToReviewUseCase by inject()
+    val countWordsToReview: CountWordsToReviewUseCase by inject()
     val observeWordStatuses: ObserveWordStatusesUseCase by inject()
     val getWordPresetMemberships: GetWordPresetMembershipsUseCase by inject()
     val setWordPresetMembership: SetWordPresetMembershipUseCase by inject()
@@ -135,18 +135,15 @@ object IosDependencies : KoinComponent {
     val setLessonCompleted: SetLessonCompletedUseCase by inject()
     val checkExerciseAnswer: CheckExerciseAnswerUseCase by inject()
 
-    val observePrograms: ObserveProgramsUseCase by inject()
-    val getProgram: GetProgramUseCase by inject()
-    val createProgram: CreateProgramUseCase by inject()
-    val updateProgram: UpdateProgramUseCase by inject()
-    val countStudySet: CountStudySetUseCase by inject()
-    val observeActiveProgram: ObserveActiveProgramUseCase by inject()
-    val nextProgramTraining: NextProgramTrainingUseCase by inject()
-    val getProgramProgress: GetProgramProgressUseCase by inject()
+    val observeVocabularyCourse: ObserveVocabularyCourseUseCase by inject()
+    val getVocabularyCourse: GetVocabularyCourseUseCase by inject()
+    val updateCourseSettings: UpdateCourseSettingsUseCase by inject()
+    val nextCourseTraining: NextCourseTrainingUseCase by inject()
+    val resetCourseQueue: ResetCourseQueueUseCase by inject()
+    val markCourseCardsSeen: MarkCourseCardsSeenUseCase by inject()
+    val getCourseProgress: GetCourseProgressUseCase by inject()
     val getStudyStreak: GetStudyStreakUseCase by inject()
     val getDailyStudyTime: GetDailyStudyTimeUseCase by inject()
-    val getProgramDay: GetProgramDayUseCase by inject()
-    val markCardsSeen: MarkCardsSeenUseCase by inject()
     val getWordCards: GetWordCardsUseCase by inject()
 
     val checkTrainingReadiness: CheckTrainingReadinessUseCase by inject()
@@ -194,7 +191,7 @@ object IosDependencies : KoinComponent {
      * instead, the same way use cases are.
      */
     val searchPageSize: Int get() = SearchVocabularyUseCase.PAGE
-    val prefilledProgramQueue: List<String> get() = defaultProgramQueue
+    val wordsToReviewBatch: Int get() = GetWordsToReviewUseCase.BATCH
     val minStepCount: Int get() = AppSettings.MIN_STEP_COUNT
     val maxStepCount: Int get() = AppSettings.MAX_STEP_COUNT
     val defaultSettings: AppSettings get() = AppSettings.Default
@@ -219,9 +216,7 @@ object IosDependencies : KoinComponent {
 
     fun watchCourses(onEach: (List<Course>) -> Unit): Cancellable = observeCourses().watch(onEach)
 
-    fun watchPrograms(onEach: (List<Program>) -> Unit): Cancellable = observePrograms().watch(onEach)
-
-    fun watchActiveProgram(onEach: (Program?) -> Unit): Cancellable = observeActiveProgram().watch(onEach)
+    fun watchVocabularyCourse(onEach: (VocabularyCourse) -> Unit): Cancellable = observeVocabularyCourse().watch(onEach)
 
     private fun <T> Flow<T>.watch(onEach: (T) -> Unit): Cancellable {
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)

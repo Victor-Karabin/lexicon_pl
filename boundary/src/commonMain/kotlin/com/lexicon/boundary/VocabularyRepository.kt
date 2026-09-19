@@ -58,6 +58,17 @@ interface VocabularyRepository {
 
     fun observeWordStatuses(): Flow<Map<Long, WordStatus>>
 
+    suspend fun wordsWithStatus(
+        status: WordStatus,
+        limit: Int,
+    ): List<Word>
+
+    suspend fun countWithStatus(status: WordStatus): Int
+
+    suspend fun learningWordIds(limit: Int): List<Long>
+
+    suspend fun randomKnownWordIds(limit: Int): List<Long>
+
     suspend fun allWordIds(): List<Long>
 
     suspend fun wordIdsForLevel(level: String): List<Long>
