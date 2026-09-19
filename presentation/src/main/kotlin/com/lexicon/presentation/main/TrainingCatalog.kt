@@ -155,6 +155,6 @@ val trainingCatalog =
         ),
     ).sortedBy { it.displayName.lowercase() }
 
-val programTrainings = trainingCatalog.filter { it.isEnabled }
+val courseTrainings = trainingCatalog.filter { it.isEnabled }
 
 fun trainingDisplayName(id: String): String = trainingCatalog.firstOrNull { it.id == id }?.displayName ?: id

@@ -43,13 +43,12 @@ fun MainScreen(
     onTrainingSelected: (id: String) -> Unit,
     onPresetSelected: (id: String) -> Unit,
     onCourseSelected: (id: String) -> Unit,
-    onProgramSelected: (id: String) -> Unit,
-    onStartTraining: (training: String, wordIds: List<Long>, programId: String) -> Unit,
-    onOpenCards: (programId: String) -> Unit,
+    onOpenCourseSettings: () -> Unit,
+    onStartTraining: (training: String, wordIds: List<Long>) -> Unit,
+    onOpenCards: () -> Unit,
     onEditWord: (id: Long) -> Unit,
     onAddWord: () -> Unit,
     onAddPreset: () -> Unit,
-    onCreateProgram: () -> Unit,
     onConjugationSelected: () -> Unit,
     onTrainConjugation: (String) -> Unit,
     onReviewWords: () -> Unit,
@@ -78,11 +77,8 @@ fun MainScreen(
             MainTab.TRAININGS -> TrainingsScreen(onTrainingSelected = onTrainingSelected, modifier = content)
             MainTab.DASHBOARD ->
                 DashboardScreen(
-                    onStartTraining = { training, words, programId ->
-                        onStartTraining(training, words.map { it.value }, programId)
-                    },
+                    onStartTraining = { training, words -> onStartTraining(training, words.map { it.value }) },
                     onOpenCards = onOpenCards,
-                    onGoToPlan = { selectedTab = MainTab.PLAN },
                     onOpenConjugation = onTrainConjugation,
                     onReviewWords = onReviewWords,
                     modifier = content,
@@ -98,8 +94,7 @@ fun MainScreen(
             MainTab.PLAN ->
                 PlanScreen(
                     onCourseSelected = { onCourseSelected(it.value) },
-                    onProgramSelected = { onProgramSelected(it.value) },
-                    onCreateProgram = onCreateProgram,
+                    onOpenCourseSettings = onOpenCourseSettings,
                     onConjugationSelected = onConjugationSelected,
                     modifier = content,
                 )

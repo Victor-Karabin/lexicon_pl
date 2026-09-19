@@ -1,6 +1,7 @@
 package com.lexicon.app.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -13,6 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.lexicon.model.training.TrainingType
+import com.lexicon.presentation.common.LocalCourseReset
 import com.lexicon.presentation.common.SessionResultScreen
 import com.lexicon.presentation.common.TRAINING_WORDS_ARG
 import com.lexicon.presentation.common.TrainingGate
@@ -43,17 +45,15 @@ import com.lexicon.presentation.presets.CreateWordScreen
 import com.lexicon.presentation.presets.PRESET_ID_ARG
 import com.lexicon.presentation.presets.PresetDetailScreen
 import com.lexicon.presentation.presets.WORD_ID_ARG
-import com.lexicon.presentation.program.CreateProgramScreen
-import com.lexicon.presentation.program.DayCompleteScreen
-import com.lexicon.presentation.program.PROGRAM_ID_ARG
-import com.lexicon.presentation.program.ProgramRunStep
-import com.lexicon.presentation.program.ProgramRunViewModel
-import com.lexicon.presentation.program.WordCardsScreen
 import com.lexicon.presentation.pronunciation.PRONUNCIATION_SENTENCES_ARG
 import com.lexicon.presentation.pronunciation.PronunciationScreen
 import com.lexicon.presentation.puzzle.PuzzleScreen
 import com.lexicon.presentation.review.ReviewWordsScreen
 import com.lexicon.presentation.trueorfalse.TrueOrFalseScreen
+import com.lexicon.presentation.vocabularycourse.CourseRunStep
+import com.lexicon.presentation.vocabularycourse.CourseRunViewModel
+import com.lexicon.presentation.vocabularycourse.CourseSettingsScreen
+import com.lexicon.presentation.vocabularycourse.WordCardsScreen
 import com.lexicon.presentation.wordcard.WordCardScreen
 import com.lexicon.presentation.wordmatch.WordMatchScreen
 import org.koin.androidx.compose.koinViewModel
@@ -95,17 +95,14 @@ fun LexiconNavHost(
                 onTrainingSelected = { route -> navController.navigate(route) },
                 onPresetSelected = { id -> navController.navigate(LexiconDestinations.presetDetail(id)) },
                 onCourseSelected = { id -> navController.navigate(LexiconDestinations.course(id)) },
-                onProgramSelected = { id -> navController.navigate(LexiconDestinations.editProgram(id)) },
-                onStartTraining = { training, wordIds, programId ->
-                    navController.navigate(
-                        LexiconDestinations.scopedTraining(training, wordIds, programId),
-                    )
+                onOpenCourseSettings = { navController.navigate(LexiconDestinations.COURSE_SETTINGS) },
+                onStartTraining = { training, wordIds ->
+                    navController.navigate(LexiconDestinations.scopedTraining(training, wordIds, inCourse = true))
                 },
-                onOpenCards = { id -> navController.navigate(LexiconDestinations.programCards(id)) },
+                onOpenCards = { navController.navigate(LexiconDestinations.COURSE_CARDS) },
                 onEditWord = { id -> navController.navigate(LexiconDestinations.editWord(id)) },
                 onAddWord = { navController.navigate(LexiconDestinations.CREATE_WORD) },
                 onAddPreset = { navController.navigate(LexiconDestinations.CREATE_PRESET) },
-                onCreateProgram = { navController.navigate(LexiconDestinations.CREATE_PROGRAM) },
                 onConjugationSelected = { navController.navigate(LexiconDestinations.CONJUGATION_VERBS) },
                 onTrainConjugation = { navController.navigate(LexiconDestinations.conjugationCourse(it)) },
                 onReviewWords = { navController.navigate(LexiconDestinations.REVIEW_WORDS) },
@@ -133,31 +130,8 @@ fun LexiconNavHost(
             )
         }
 
-        composable(LexiconDestinations.CREATE_PROGRAM) {
-            CreateProgramScreen(
-                onClose = { navController.popBackStack() },
-                onGoToVocabulary = {
-                    navController.navigate(LexiconDestinations.main(MainTab.VOCABULARY)) {
-                        popUpTo(LexiconDestinations.MAIN) { inclusive = true }
-                    }
-                },
-                onCreated = { navController.popBackStack() },
-            )
-        }
-
-        composable(
-            route = LexiconDestinations.EDIT_PROGRAM,
-            arguments = listOf(navArgument(PROGRAM_ID_ARG) { type = NavType.StringType }),
-        ) {
-            CreateProgramScreen(
-                onClose = { navController.popBackStack() },
-                onGoToVocabulary = {
-                    navController.navigate(LexiconDestinations.main(MainTab.VOCABULARY)) {
-                        popUpTo(LexiconDestinations.MAIN) { inclusive = true }
-                    }
-                },
-                onCreated = { navController.popBackStack() },
-            )
+        composable(LexiconDestinations.COURSE_SETTINGS) {
+            CourseSettingsScreen(onClose = { navController.popBackStack() })
         }
 
         composable(LexiconDestinations.CREATE_PRESET) {
@@ -177,20 +151,17 @@ fun LexiconNavHost(
             )
         }
 
-        composable(
-            route = LexiconDestinations.PROGRAM_CARDS,
-            arguments = listOf(navArgument(PROGRAM_ID_ARG) { type = NavType.StringType }),
-        ) {
+        composable(LexiconDestinations.COURSE_CARDS) {
             WordCardsScreen(
                 onClose = { navController.popBackStack() },
-                onStartTraining = { training, wordIds, programId ->
+                onStartTraining = { training, wordIds ->
                     val route = LexiconDestinations.scopedTraining(
                         training = training,
                         wordIds = wordIds.map { id -> id.value },
-                        programId = programId,
+                        inCourse = true,
                     )
                     navController.navigate(route) {
-                        popUpTo(LexiconDestinations.PROGRAM_CARDS) { inclusive = true }
+                        popUpTo(LexiconDestinations.COURSE_CARDS) { inclusive = true }
                     }
                 },
                 onFinished = { navController.popBackStack() },
@@ -236,14 +207,14 @@ fun LexiconNavHost(
         }
 
         fun onStepSessionComplete(training: String): (String) -> (Int, Int, Int, Int) -> Unit =
-            { programRun ->
+            { courseRun ->
                 { correct, incorrect, skipped, tipsUsed ->
                     val route = LexiconDestinations.sessionResult(
                         correct = correct,
                         incorrect = incorrect,
                         skipped = skipped,
                         tipsUsed = tipsUsed,
-                        programId = programRun.takeIf { it.isNotEmpty() },
+                        inCourse = courseRun.isNotEmpty(),
                     )
                     navController.navigate(route) {
                         popUpTo(LexiconDestinations.trainingRoute(training)) { inclusive = true }
@@ -261,6 +232,7 @@ fun LexiconNavHost(
 
         trainingDestination(
             training = LexiconDestinations.DICTATION,
+            navController = navController,
             minimumWords = TrainingType.DICTATION.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
@@ -270,6 +242,7 @@ fun LexiconNavHost(
         }
         trainingDestination(
             training = LexiconDestinations.DICTATION_PUZZLE,
+            navController = navController,
             minimumWords = TrainingType.DICTATION.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
@@ -279,6 +252,7 @@ fun LexiconNavHost(
         }
         trainingDestination(
             training = LexiconDestinations.TRUE_OR_FALSE,
+            navController = navController,
             minimumWords = TrainingType.TRUE_OR_FALSE.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
@@ -288,6 +262,7 @@ fun LexiconNavHost(
         }
         trainingDestination(
             training = LexiconDestinations.WORD_MATCH,
+            navController = navController,
             minimumWords = TrainingType.WORD_MATCH.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
@@ -297,6 +272,7 @@ fun LexiconNavHost(
         }
         trainingDestination(
             training = LexiconDestinations.PRONUNCIATION_CHECK,
+            navController = navController,
             minimumWords = TrainingType.DICTATION.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
@@ -306,6 +282,7 @@ fun LexiconNavHost(
         }
         trainingDestination(
             training = LexiconDestinations.PUZZLE,
+            navController = navController,
             minimumWords = TrainingType.DICTATION.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
@@ -315,6 +292,7 @@ fun LexiconNavHost(
         }
         trainingDestination(
             training = LexiconDestinations.IMAGE_TEST,
+            navController = navController,
             minimumWords = TrainingType.IMAGE_TEST.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
@@ -324,6 +302,7 @@ fun LexiconNavHost(
         }
         trainingDestination(
             training = LexiconDestinations.MEMORY_CARDS,
+            navController = navController,
             minimumWords = TrainingType.MEMORY_CARDS.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
@@ -333,6 +312,7 @@ fun LexiconNavHost(
         }
         trainingDestination(
             training = LexiconDestinations.CROSSWORD,
+            navController = navController,
             minimumWords = TrainingType.CROSSWORD.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
@@ -348,35 +328,35 @@ fun LexiconNavHost(
                     type = NavType.StringType
                     defaultValue = ""
                 },
-                navArgument(LexiconDestinations.PROGRAM_RUN_ARG) {
+                navArgument(LexiconDestinations.COURSE_RUN_ARG) {
                     type = NavType.StringType
                     defaultValue = ""
                 },
             ),
         ) { entry ->
             val scopedWords = entry.arguments?.getString(TRAINING_WORDS_ARG).orEmpty()
-            val programRun = entry.arguments?.getString(LexiconDestinations.PROGRAM_RUN_ARG).orEmpty()
-            val run: ProgramRunViewModel = koinViewModel()
+            val courseRun = entry.arguments?.getString(LexiconDestinations.COURSE_RUN_ARG).orEmpty()
 
-            ProgramRunHandoff(run = run, programRun = programRun, navController = navController)
-
-            TrainingGate(
-                minimumWords = if (scopedWords.isEmpty()) TrainingType.DICTATION.minimumWords else 0,
-                trainingName = trainingDisplayName(LexiconDestinations.WORD_CARD),
-                onClose = closeToMain,
-                onGoToVocabulary = goToVocabulary,
-            ) {
-                WordCardScreen(
+            CourseRunScope(courseRun = courseRun, navController = navController) { run ->
+                TrainingGate(
+                    minimumWords = if (scopedWords.isEmpty()) TrainingType.DICTATION.minimumWords else 0,
+                    trainingName = trainingDisplayName(LexiconDestinations.WORD_CARD),
                     onClose = closeToMain,
-                    onFinished = {
-                        if (programRun.isEmpty()) closeToMain() else run.onTrainingFinished(programRun)
-                    },
-                    onEditWord = { id -> navController.navigate(LexiconDestinations.editWord(id)) },
-                )
+                    onGoToVocabulary = goToVocabulary,
+                ) {
+                    WordCardScreen(
+                        onClose = closeToMain,
+                        onFinished = {
+                            if (courseRun.isEmpty()) closeToMain() else run.onTrainingFinished()
+                        },
+                        onEditWord = { id -> navController.navigate(LexiconDestinations.editWord(id)) },
+                    )
+                }
             }
         }
         trainingDestination(
             training = LexiconDestinations.MIX,
+            navController = navController,
             minimumWords = TrainingType.MIX.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
@@ -393,32 +373,31 @@ fun LexiconNavHost(
                     navArgument("incorrect") { type = NavType.IntType },
                     navArgument("skipped") { type = NavType.IntType },
                     navArgument("tipsUsed") { type = NavType.IntType },
-                    navArgument(LexiconDestinations.PROGRAM_RUN_ARG) {
+                    navArgument(LexiconDestinations.COURSE_RUN_ARG) {
                         type = NavType.StringType
                         defaultValue = ""
                     },
                 ),
         ) { backStackEntry ->
             val args = backStackEntry.arguments
-            val programRun = args?.getString(LexiconDestinations.PROGRAM_RUN_ARG).orEmpty()
-            val run: ProgramRunViewModel = koinViewModel()
+            val courseRun = args?.getString(LexiconDestinations.COURSE_RUN_ARG).orEmpty()
 
-            ProgramRunHandoff(run = run, programRun = programRun, navController = navController)
-
-            SessionResultScreen(
-                correct = args?.getInt("correct").orDefault(),
-                incorrect = args?.getInt("incorrect").orDefault(),
-                skipped = args?.getInt("skipped").orDefault(),
-                tipsUsed = args?.getInt("tipsUsed").orDefault(),
-                isProgramRun = programRun.isNotEmpty(),
-                onDone = {
-                    if (programRun.isEmpty()) {
-                        navController.popBackStack(LexiconDestinations.MAIN, inclusive = false)
-                    } else {
-                        run.onTrainingFinished(programRun)
-                    }
-                },
-            )
+            CourseRunScope(courseRun = courseRun, navController = navController) { run ->
+                SessionResultScreen(
+                    correct = args?.getInt("correct").orDefault(),
+                    incorrect = args?.getInt("incorrect").orDefault(),
+                    skipped = args?.getInt("skipped").orDefault(),
+                    tipsUsed = args?.getInt("tipsUsed").orDefault(),
+                    isCourseRun = courseRun.isNotEmpty(),
+                    onDone = {
+                        if (courseRun.isEmpty()) {
+                            navController.popBackStack(LexiconDestinations.MAIN, inclusive = false)
+                        } else {
+                            run.onTrainingFinished()
+                        }
+                    },
+                )
+            }
         }
 
         listOf(
@@ -432,7 +411,7 @@ fun LexiconNavHost(
                         type = NavType.StringType
                         defaultValue = ""
                     },
-                    navArgument(LexiconDestinations.PROGRAM_RUN_ARG) {
+                    navArgument(LexiconDestinations.COURSE_RUN_ARG) {
                         type = NavType.StringType
                         defaultValue = ""
                     },
@@ -442,13 +421,14 @@ fun LexiconNavHost(
                     },
                 ),
             ) { entry ->
-                PassageScreen(
-                    withWordBank = withWordBank,
-                    onSessionComplete = onStepSessionComplete(training)(
-                        entry.arguments?.getString(LexiconDestinations.PROGRAM_RUN_ARG).orEmpty(),
-                    ),
-                    onClose = closeToMain,
-                )
+                val courseRun = entry.arguments?.getString(LexiconDestinations.COURSE_RUN_ARG).orEmpty()
+                CourseRunScope(courseRun = courseRun, navController = navController) {
+                    PassageScreen(
+                        withWordBank = withWordBank,
+                        onSessionComplete = onStepSessionComplete(training)(courseRun),
+                        onClose = closeToMain,
+                    )
+                }
             }
         }
 
@@ -459,7 +439,7 @@ fun LexiconNavHost(
                     type = NavType.StringType
                     defaultValue = ""
                 },
-                navArgument(LexiconDestinations.PROGRAM_RUN_ARG) {
+                navArgument(LexiconDestinations.COURSE_RUN_ARG) {
                     type = NavType.StringType
                     defaultValue = ""
                 },
@@ -469,17 +449,19 @@ fun LexiconNavHost(
                 },
             ),
         ) { entry ->
-            PronunciationScreen(
-                readsSentences = true,
-                onSessionComplete = onStepSessionComplete(LexiconDestinations.PRONUNCIATION_SENTENCES)(
-                    entry.arguments?.getString(LexiconDestinations.PROGRAM_RUN_ARG).orEmpty(),
-                ),
-                onClose = closeToMain,
-            )
+            val courseRun = entry.arguments?.getString(LexiconDestinations.COURSE_RUN_ARG).orEmpty()
+            CourseRunScope(courseRun = courseRun, navController = navController) {
+                PronunciationScreen(
+                    readsSentences = true,
+                    onSessionComplete = onStepSessionComplete(LexiconDestinations.PRONUNCIATION_SENTENCES)(courseRun),
+                    onClose = closeToMain,
+                )
+            }
         }
 
         trainingDestination(
             training = LexiconDestinations.FILLWORD,
+            navController = navController,
             minimumWords = TrainingType.DICTATION.minimumWords,
             onClose = closeToMain,
             onGoToVocabulary = goToVocabulary,
@@ -504,33 +486,25 @@ fun LexiconNavHost(
                 onClose = closeToMain,
             )
         }
-
-        composable(
-            route = LexiconDestinations.DAY_COMPLETE,
-            arguments = listOf(navArgument(PROGRAM_ID_ARG) { type = NavType.StringType }),
-        ) {
-            DayCompleteScreen(
-                onDone = { navController.popBackStack(LexiconDestinations.MAIN, inclusive = false) },
-            )
-        }
     }
 }
 
 @Composable
-private fun ProgramRunHandoff(
-    run: ProgramRunViewModel,
-    programRun: String,
+private fun CourseRunScope(
+    courseRun: String,
     navController: NavHostController,
+    content: @Composable (run: CourseRunViewModel) -> Unit,
 ) {
+    val run: CourseRunViewModel = koinViewModel()
     val step by run.step.collectAsState()
 
     LaunchedEffect(step) {
         when (val current = step) {
-            is ProgramRunStep.Next -> {
+            is CourseRunStep.Next -> {
                 val route = LexiconDestinations.scopedTraining(
                     training = current.training.id,
                     wordIds = current.wordIds.map { it.value },
-                    programId = programRun,
+                    inCourse = true,
                 )
                 navController.navigate(route) {
                     popUpTo(LexiconDestinations.MAIN) { inclusive = false }
@@ -538,24 +512,34 @@ private fun ProgramRunHandoff(
                 run.onStepHandled()
             }
 
-            ProgramRunStep.DayComplete -> {
-                navController.navigate(LexiconDestinations.dayComplete(programRun)) {
+            CourseRunStep.Cards -> {
+                navController.navigate(LexiconDestinations.COURSE_CARDS) {
                     popUpTo(LexiconDestinations.MAIN) { inclusive = false }
                 }
+                run.onStepHandled()
+            }
+
+            CourseRunStep.NothingToPractise -> {
+                navController.popBackStack(LexiconDestinations.MAIN, inclusive = false)
                 run.onStepHandled()
             }
 
             else -> Unit
         }
     }
+
+    CompositionLocalProvider(LocalCourseReset provides if (courseRun.isEmpty()) null else run::onReset) {
+        content(run)
+    }
 }
 
 private fun NavGraphBuilder.trainingDestination(
     training: String,
+    navController: NavHostController,
     minimumWords: Int,
     onClose: () -> Unit,
     onGoToVocabulary: () -> Unit,
-    onComplete: (programRun: String) -> (Int, Int, Int, Int) -> Unit,
+    onComplete: (courseRun: String) -> (Int, Int, Int, Int) -> Unit,
     screen: @Composable (onComplete: (Int, Int, Int, Int) -> Unit) -> Unit,
 ) {
     composable(
@@ -565,22 +549,24 @@ private fun NavGraphBuilder.trainingDestination(
                 type = NavType.StringType
                 defaultValue = ""
             },
-            navArgument(LexiconDestinations.PROGRAM_RUN_ARG) {
+            navArgument(LexiconDestinations.COURSE_RUN_ARG) {
                 type = NavType.StringType
                 defaultValue = ""
             },
         ),
     ) { backStackEntry ->
         val scopedWords = backStackEntry.arguments?.getString(TRAINING_WORDS_ARG).orEmpty()
-        val programRun = backStackEntry.arguments?.getString(LexiconDestinations.PROGRAM_RUN_ARG).orEmpty()
-        TrainingGate(
-            minimumWords = if (scopedWords.isEmpty()) minimumWords else 0,
-            trainingName = trainingDisplayName(training),
-            onClose = onClose,
-            onGoToVocabulary = onGoToVocabulary,
-            excludePhrases = training == LexiconDestinations.CROSSWORD,
-        ) {
-            screen(onComplete(programRun))
+        val courseRun = backStackEntry.arguments?.getString(LexiconDestinations.COURSE_RUN_ARG).orEmpty()
+        CourseRunScope(courseRun = courseRun, navController = navController) {
+            TrainingGate(
+                minimumWords = if (scopedWords.isEmpty()) minimumWords else 0,
+                trainingName = trainingDisplayName(training),
+                onClose = onClose,
+                onGoToVocabulary = onGoToVocabulary,
+                excludePhrases = training == LexiconDestinations.CROSSWORD,
+            ) {
+                screen(onComplete(courseRun))
+            }
         }
     }
 }

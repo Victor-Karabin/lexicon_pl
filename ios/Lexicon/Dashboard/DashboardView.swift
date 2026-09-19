@@ -4,7 +4,7 @@ import Shared
 struct DashboardView: View {
     @StateObject private var model = DashboardModel()
     @Environment(\.colorScheme) private var scheme
-    @State private var launching: ProgramTurn?
+    @State private var launching: CourseTurn?
     @State private var showingCards = false
     @State private var isAdvancing = false
 
@@ -12,20 +12,17 @@ struct DashboardView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: Spacing.medium) {
-                    if let program = model.program {
-                        card(program)
-                    } else {
-                        VStack(spacing: Spacing.large) {
-                            Text("Nothing running yet. Add words to your study set and build a program on the Plan tab.")
-                                .multilineTextAlignment(.center)
-                                .foregroundStyle(.secondary)
-                        }
-                        .padding(Spacing.xl)
+                    if model.course != nil {
+                        card
                     }
 
                     if model.wordsToReview > 0 {
-                        NavigationLink { ReviewWordsView() } label: { reviewCard(model.wordsToReview) }
-                            .buttonStyle(.plain)
+                        NavigationLink {
+                            ReviewWordsView()
+                        } label: {
+                            reviewCard(model.wordsToReview)
+                        }
+                        .buttonStyle(.plain)
                     }
 
                     if let studyTime = model.studyTime {
@@ -39,26 +36,36 @@ struct DashboardView: View {
                 TrainingHost(entry: turn.entry, vocabularyIds: turn.wordIds)
                     .id(turn.id)
                     .environment(\.onTrainingFinished, { Task { await finishTurn() } })
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button { Task { await resetQueue() } } label: {
+                                Image(systemName: "arrow.counterclockwise")
+                            }
+                            .accessibilityLabel("Start the queue again")
+                        }
+                    }
             }
             .navigationDestination(isPresented: $showingCards) {
-                ProgramCardsView(programId: model.program?.id)
+                CourseCardsView()
             }
             .task { await model.load() }
             .refreshable { await model.load() }
         }
     }
 
-    private func card(_ program: Program) -> some View {
+    private var card: some View {
         let skin = TileSkin.standard(highlighted: true, scheme: scheme)
         return Tile(skin: skin) {
             HStack(spacing: Spacing.medium) {
-                ProgressRing(fraction: model.overall, skin: skin) {
+                ProgressRing(fraction: model.roundFraction, skin: skin) {
                     Medallion(skin: skin) { MedallionIcon(systemName: "heart.fill", skin: skin) }
                 }
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Continuing").font(.caption).foregroundStyle(skin.onTile.muted)
-                    Text(program.title.text()).font(.title3.weight(.semibold)).foregroundStyle(skin.onTile)
-                    Text("\(Int(model.overall * 100))% through").font(.callout).foregroundStyle(skin.onTile.muted)
+                    Text("Vocabulary course").font(.title3.weight(.semibold)).foregroundStyle(skin.onTile)
+                    Text("Round \(model.round) · \(model.doneTrainings) of \(model.totalTrainings) trainings")
+                        .font(.callout).foregroundStyle(skin.onTile.muted)
+                    Text("\(model.learning) to learn · \(model.known) known")
+                        .font(.caption).foregroundStyle(skin.onTile.muted)
                 }
                 Spacer()
                 if model.streak > 0 {
@@ -70,36 +77,12 @@ struct DashboardView: View {
                 }
             }
 
-            ForEach(model.metrics, id: \.type) { metric in
-                metricRow(metric, skin: skin)
+            if let accuracy = model.accuracy {
+                accuracyRow(accuracy, skin: skin)
             }
 
-            if model.totalTrainings > 0 {
-                VStack(alignment: .leading, spacing: Spacing.small) {
-                    HStack {
-                        Text("Trainings today").font(.caption).foregroundStyle(skin.onTile.muted)
-                        Spacer()
-                        Text("\(model.doneTrainings) / \(model.totalTrainings)")
-                            .font(.caption.weight(.semibold))
-                            .foregroundStyle(skin.onTile)
-                    }
-
-                    HStack(spacing: Spacing.tiny) {
-                        ForEach(0..<model.totalTrainings, id: \.self) { i in
-                            Circle()
-                                .fill(i < model.doneTrainings ? skin.onTile : skin.onTile.opacity(0.25))
-                                .frame(width: 10, height: 10)
-                        }
-                    }
-                }
-            }
-
-            if model.isDayComplete {
-                Text("Today is done. Come back tomorrow.")
-                    .font(.subheadline)
-                    .foregroundStyle(skin.onTile.muted)
-            } else if model.nothingToPractise {
-                Text("Nothing to practise right now. Add words to your study set, or come back once reviews are due.")
+            if model.nothingToPractise {
+                Text("Nothing to practise yet. Mark words To learn or Known in the Words tab, or sort some in Review words.")
                     .font(.subheadline)
                     .foregroundStyle(skin.onTile.muted)
             } else {
@@ -132,17 +115,17 @@ struct DashboardView: View {
         }
     }
 
-    private func metricRow(_ metric: ProgressMetric, skin: TileSkin) -> some View {
+    private func accuracyRow(_ metric: ProgressMetric, skin: TileSkin) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             HStack {
-                Text(model.label(for: metric.type)).font(.caption).foregroundStyle(skin.onTile.muted)
+                Text("Correct answers").font(.caption).foregroundStyle(skin.onTile.muted)
                 Spacer()
-                Text(model.value(for: metric)).font(.caption.weight(.semibold)).foregroundStyle(skin.onTile)
+                Text(metric.isMeasured ? "\(metric.current)%" : "—")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(skin.onTile)
             }
-            if metric.type != .consistency {
-                ProgressView(value: min(Double(metric.current), Double(metric.target)), total: Double(max(metric.target, 1)))
-                    .tint(skin.onTile)
-            }
+            ProgressView(value: min(Double(metric.current), Double(metric.target)), total: Double(max(metric.target, 1)))
+                .tint(skin.onTile)
         }
     }
 
@@ -159,7 +142,21 @@ struct DashboardView: View {
         isAdvancing = true
         defer { isAdvancing = false }
         launching = await model.advance()
-        if launching == nil { await model.load() }
+    }
+
+    private func resetQueue() async {
+        guard !isAdvancing else { return }
+        isAdvancing = true
+        defer { isAdvancing = false }
+        switch await model.reset() {
+        case .training(let turn):
+            launching = turn
+        case .cards:
+            launching = nil
+            showingCards = true
+        case .nothing:
+            launching = nil
+        }
     }
 }
 

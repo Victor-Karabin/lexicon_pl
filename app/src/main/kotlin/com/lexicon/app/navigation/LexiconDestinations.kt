@@ -6,7 +6,6 @@ import com.lexicon.presentation.course.COURSE_ID_ARG
 import com.lexicon.presentation.main.MainTab
 import com.lexicon.presentation.main.TrainingIds
 import com.lexicon.presentation.presets.WORD_ID_ARG
-import com.lexicon.presentation.program.PROGRAM_ID_ARG
 
 internal object LexiconDestinations {
     const val SPLASH = "splash"
@@ -37,14 +36,14 @@ internal object LexiconDestinations {
 
     fun conjugationCourse(courseId: String) = "conjugation/$courseId"
 
-    fun trainingRoute(training: String) = "$training?$TRAINING_WORDS_ARG={$TRAINING_WORDS_ARG}&$PROGRAM_RUN_ARG={$PROGRAM_RUN_ARG}"
+    fun trainingRoute(training: String) = "$training?$TRAINING_WORDS_ARG={$TRAINING_WORDS_ARG}&$COURSE_RUN_ARG={$COURSE_RUN_ARG}"
 
     fun scopedTraining(
         training: String,
         wordIds: List<Long>,
-        programId: String? = null,
+        inCourse: Boolean = false,
     ) = "$training?$TRAINING_WORDS_ARG=${wordIds.asTrainingWordsArgument()}" +
-        "&$PROGRAM_RUN_ARG=${programId.orEmpty()}"
+        "&$COURSE_RUN_ARG=${inCourse.asCourseRun()}"
 
     const val PRESET_DETAIL = "preset/{presetId}"
 
@@ -52,18 +51,12 @@ internal object LexiconDestinations {
 
     const val CREATE_WORD = "create/word"
     const val CREATE_PRESET = "create/preset"
-    const val CREATE_PROGRAM = "create/program"
-    const val EDIT_PROGRAM = "edit/program/{programId}"
-
-    fun editProgram(id: String): String = "edit/program/$id"
+    const val COURSE_SETTINGS = "vocabulary-course/settings"
+    const val COURSE_CARDS = "vocabulary-course/cards"
 
     const val EDIT_WORD = "word/{$WORD_ID_ARG}/edit"
 
     fun editWord(wordId: Long) = "word/$wordId/edit"
-
-    const val PROGRAM_CARDS = "program/{$PROGRAM_ID_ARG}/cards"
-
-    fun programCards(programId: String) = "program/$programId/cards"
 
     const val COURSE = "course/{$COURSE_ID_ARG}"
 
@@ -80,20 +73,20 @@ internal object LexiconDestinations {
         exerciseId: String,
     ) = "lesson/$lessonId/exercise/$exerciseId"
 
-    const val PROGRAM_RUN_ARG = "programRun"
+    const val COURSE_RUN_ARG = "courseRun"
 
     const val SESSION_RESULT =
-        "session_result/{correct}/{incorrect}/{skipped}/{tipsUsed}?$PROGRAM_RUN_ARG={$PROGRAM_RUN_ARG}"
+        "session_result/{correct}/{incorrect}/{skipped}/{tipsUsed}?$COURSE_RUN_ARG={$COURSE_RUN_ARG}"
 
     fun sessionResult(
         correct: Int,
         incorrect: Int,
         skipped: Int,
         tipsUsed: Int,
-        programId: String? = null,
-    ) = "session_result/$correct/$incorrect/$skipped/$tipsUsed?$PROGRAM_RUN_ARG=${programId.orEmpty()}"
+        inCourse: Boolean = false,
+    ) = "session_result/$correct/$incorrect/$skipped/$tipsUsed?$COURSE_RUN_ARG=${inCourse.asCourseRun()}"
 
-    const val DAY_COMPLETE = "program/{programId}/day_complete"
+    private fun Boolean.asCourseRun(): String = if (this) COURSE_RUN else ""
 
-    fun dayComplete(programId: String) = "program/$programId/day_complete"
+    private const val COURSE_RUN = "1"
 }

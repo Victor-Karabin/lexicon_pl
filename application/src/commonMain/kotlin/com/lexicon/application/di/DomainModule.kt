@@ -50,20 +50,6 @@ import com.lexicon.application.presets.SetWordPresetUseCaseImpl
 import com.lexicon.application.presets.SetWordStatusUseCaseImpl
 import com.lexicon.application.presets.TranslateWordUseCaseImpl
 import com.lexicon.application.presets.UpdateWordUseCaseImpl
-import com.lexicon.application.program.AdvanceProgramDayUseCaseImpl
-import com.lexicon.application.program.CreateProgramUseCaseImpl
-import com.lexicon.application.program.GetDailyStudyTimeUseCaseImpl
-import com.lexicon.application.program.GetProgramDayUseCaseImpl
-import com.lexicon.application.program.GetProgramProgressUseCaseImpl
-import com.lexicon.application.program.GetProgramUseCaseImpl
-import com.lexicon.application.program.GetStudyStreakUseCaseImpl
-import com.lexicon.application.program.GetWordCardsUseCaseImpl
-import com.lexicon.application.program.MarkCardsSeenUseCaseImpl
-import com.lexicon.application.program.NextProgramTrainingUseCaseImpl
-import com.lexicon.application.program.ObserveActiveProgramUseCaseImpl
-import com.lexicon.application.program.ObserveProgramsUseCaseImpl
-import com.lexicon.application.program.StartProgramSessionUseCaseImpl
-import com.lexicon.application.program.UpdateProgramUseCaseImpl
 import com.lexicon.application.pronunciation.StartPronunciationSentencesUseCaseImpl
 import com.lexicon.application.pronunciation.StartPronunciationSessionUseCaseImpl
 import com.lexicon.application.pronunciation.SubmitPronunciationResultUseCaseImpl
@@ -78,6 +64,16 @@ import com.lexicon.application.training.CheckTrainingReadinessUseCaseImpl
 import com.lexicon.application.training.RecordAnswerUseCaseImpl
 import com.lexicon.application.trueorfalse.StartTrueOrFalseSessionUseCaseImpl
 import com.lexicon.application.trueorfalse.SubmitTrueOrFalseAnswerUseCaseImpl
+import com.lexicon.application.vocabularycourse.GetCourseProgressUseCaseImpl
+import com.lexicon.application.vocabularycourse.GetDailyStudyTimeUseCaseImpl
+import com.lexicon.application.vocabularycourse.GetStudyStreakUseCaseImpl
+import com.lexicon.application.vocabularycourse.GetVocabularyCourseUseCaseImpl
+import com.lexicon.application.vocabularycourse.GetWordCardsUseCaseImpl
+import com.lexicon.application.vocabularycourse.MarkCourseCardsSeenUseCaseImpl
+import com.lexicon.application.vocabularycourse.NextCourseTrainingUseCaseImpl
+import com.lexicon.application.vocabularycourse.ObserveVocabularyCourseUseCaseImpl
+import com.lexicon.application.vocabularycourse.ResetCourseQueueUseCaseImpl
+import com.lexicon.application.vocabularycourse.UpdateCourseSettingsUseCaseImpl
 import com.lexicon.application.wordcard.RecordWordCardSeenUseCaseImpl
 import com.lexicon.application.wordcard.StartWordCardSessionUseCaseImpl
 import com.lexicon.application.wordmatch.StartWordMatchSessionUseCaseImpl
@@ -145,21 +141,6 @@ import com.lexicon.interactors.presets.SetWordPresetUseCase
 import com.lexicon.interactors.presets.SetWordStatusUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
-import com.lexicon.interactors.program.AdvanceProgramDayUseCase
-import com.lexicon.interactors.program.CountStudySetUseCase
-import com.lexicon.interactors.program.CreateProgramUseCase
-import com.lexicon.interactors.program.GetDailyStudyTimeUseCase
-import com.lexicon.interactors.program.GetProgramDayUseCase
-import com.lexicon.interactors.program.GetProgramProgressUseCase
-import com.lexicon.interactors.program.GetProgramUseCase
-import com.lexicon.interactors.program.GetStudyStreakUseCase
-import com.lexicon.interactors.program.GetWordCardsUseCase
-import com.lexicon.interactors.program.MarkCardsSeenUseCase
-import com.lexicon.interactors.program.NextProgramTrainingUseCase
-import com.lexicon.interactors.program.ObserveActiveProgramUseCase
-import com.lexicon.interactors.program.ObserveProgramsUseCase
-import com.lexicon.interactors.program.StartProgramSessionUseCase
-import com.lexicon.interactors.program.UpdateProgramUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSentencesUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
@@ -174,6 +155,16 @@ import com.lexicon.interactors.training.CheckTrainingReadinessUseCase
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
+import com.lexicon.interactors.vocabularycourse.GetCourseProgressUseCase
+import com.lexicon.interactors.vocabularycourse.GetDailyStudyTimeUseCase
+import com.lexicon.interactors.vocabularycourse.GetStudyStreakUseCase
+import com.lexicon.interactors.vocabularycourse.GetVocabularyCourseUseCase
+import com.lexicon.interactors.vocabularycourse.GetWordCardsUseCase
+import com.lexicon.interactors.vocabularycourse.MarkCourseCardsSeenUseCase
+import com.lexicon.interactors.vocabularycourse.NextCourseTrainingUseCase
+import com.lexicon.interactors.vocabularycourse.ObserveVocabularyCourseUseCase
+import com.lexicon.interactors.vocabularycourse.ResetCourseQueueUseCase
+import com.lexicon.interactors.vocabularycourse.UpdateCourseSettingsUseCase
 import com.lexicon.interactors.wordcard.RecordWordCardSeenUseCase
 import com.lexicon.interactors.wordcard.StartWordCardSessionUseCase
 import com.lexicon.interactors.wordmatch.StartWordMatchSessionUseCase
@@ -188,7 +179,6 @@ val domainModule = module {
     single { ReviewSettings() }
     single { StudyTimePolicy() }
 
-    factoryOf(::NextProgramTrainingUseCaseImpl) { bind<NextProgramTrainingUseCase>() }
     factoryOf(::AnswerNormalizer)
     factoryOf(::RecordAnswerUseCaseImpl) { bind<RecordAnswerUseCase>() }
     factoryOf(::StepCountResolver)
@@ -226,23 +216,18 @@ val domainModule = module {
     factoryOf(::SetWordStatusUseCaseImpl) { bind<SetWordStatusUseCase>() }
     factoryOf(::GetWordPresetMembershipsUseCaseImpl) { bind<GetWordPresetMembershipsUseCase>() }
     factoryOf(::SetWordPresetMembershipUseCaseImpl) { bind<SetWordPresetMembershipUseCase>() }
-    factoryOf(::ObserveProgramsUseCaseImpl) { bind<ObserveProgramsUseCase>() }
-    factoryOf(::GetProgramUseCaseImpl) { bind<GetProgramUseCase>() }
-    factoryOf(::ObserveActiveProgramUseCaseImpl) { bind<ObserveActiveProgramUseCase>() }
-    factoryOf(::StartProgramSessionUseCaseImpl) { bind<StartProgramSessionUseCase>() }
-    factoryOf(::GetProgramProgressUseCaseImpl) { bind<GetProgramProgressUseCase>() }
-    factoryOf(::GetStudyStreakUseCaseImpl) { bind<GetStudyStreakUseCase>() }
-    factoryOf(::GetDailyStudyTimeUseCaseImpl) { bind<GetDailyStudyTimeUseCase>() }
-    factoryOf(::CreateProgramUseCaseImpl) { bind<CreateProgramUseCase>() }
-    factoryOf(::UpdateProgramUseCaseImpl) { bind<UpdateProgramUseCase>() }
     factoryOf(::StartWordCardSessionUseCaseImpl) { bind<StartWordCardSessionUseCase>() }
     factoryOf(::RecordWordCardSeenUseCaseImpl) { bind<RecordWordCardSeenUseCase>() }
-    factory<CountStudySetUseCase> {
-        val vocabulary = get<VocabularyRepository>()
-        CountStudySetUseCase { vocabulary.studySetWordIds().size }
-    }
-    factoryOf(::GetProgramDayUseCaseImpl) { bind<GetProgramDayUseCase>() }
-    factoryOf(::AdvanceProgramDayUseCaseImpl) { bind<AdvanceProgramDayUseCase>() }
+    factoryOf(::GetCourseProgressUseCaseImpl) { bind<GetCourseProgressUseCase>() }
+    factoryOf(::GetDailyStudyTimeUseCaseImpl) { bind<GetDailyStudyTimeUseCase>() }
+    factoryOf(::GetStudyStreakUseCaseImpl) { bind<GetStudyStreakUseCase>() }
+    factoryOf(::GetVocabularyCourseUseCaseImpl) { bind<GetVocabularyCourseUseCase>() }
+    factoryOf(::GetWordCardsUseCaseImpl) { bind<GetWordCardsUseCase>() }
+    factoryOf(::MarkCourseCardsSeenUseCaseImpl) { bind<MarkCourseCardsSeenUseCase>() }
+    factoryOf(::NextCourseTrainingUseCaseImpl) { bind<NextCourseTrainingUseCase>() }
+    factoryOf(::ObserveVocabularyCourseUseCaseImpl) { bind<ObserveVocabularyCourseUseCase>() }
+    factoryOf(::ResetCourseQueueUseCaseImpl) { bind<ResetCourseQueueUseCase>() }
+    factoryOf(::UpdateCourseSettingsUseCaseImpl) { bind<UpdateCourseSettingsUseCase>() }
     factoryOf(::StartPassageSessionUseCaseImpl) { bind<StartPassageSessionUseCase>() }
     factoryOf(::StartFillwordSessionUseCaseImpl) { bind<StartFillwordSessionUseCase>() }
     factoryOf(::StartPronunciationSentencesUseCaseImpl) { bind<StartPronunciationSentencesUseCase>() }
@@ -278,8 +263,6 @@ val domainModule = module {
         LoadStudySetVerbsUseCase { vocabulary.studySetTextsAmong(it) }
     }
     factoryOf(::SubmitPassageAnswersUseCaseImpl) { bind<SubmitPassageAnswersUseCase>() }
-    factoryOf(::MarkCardsSeenUseCaseImpl) { bind<MarkCardsSeenUseCase>() }
-    factoryOf(::GetWordCardsUseCaseImpl) { bind<GetWordCardsUseCase>() }
     factoryOf(::CreateWordUseCaseImpl) { bind<CreateWordUseCase>() }
     factoryOf(::UpdateWordUseCaseImpl) { bind<UpdateWordUseCase>() }
     factoryOf(::GenerateWordExampleUseCaseImpl) { bind<GenerateWordExampleUseCase>() }

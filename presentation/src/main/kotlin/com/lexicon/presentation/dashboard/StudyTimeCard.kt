@@ -26,8 +26,8 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.lexicon.interactors.program.DailyStudyTime
-import com.lexicon.interactors.program.StudyTimeHistory
+import com.lexicon.interactors.vocabularycourse.DailyStudyTime
+import com.lexicon.interactors.vocabularycourse.StudyTimeHistory
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.theme.Dimens

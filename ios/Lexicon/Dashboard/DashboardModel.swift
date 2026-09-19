@@ -3,11 +3,9 @@ import Shared
 
 @MainActor
 final class DashboardModel: ObservableObject {
-    @Published private(set) var program: Program?
+    @Published private(set) var course: VocabularyCourse?
     @Published private(set) var metrics: [ProgressMetric] = []
-    @Published private(set) var overall: Double = 0
     @Published private(set) var streak: Int = 0
-    @Published private(set) var day: ProgramDay?
     @Published private(set) var nothingToPractise = false
     @Published private(set) var studyTime: StudyTimeHistory?
     @Published private(set) var wordsToReview = 0
@@ -16,108 +14,84 @@ final class DashboardModel: ObservableObject {
     private var turns = 0
 
     init() {
-        watcher = deps.watchActiveProgram { [weak self] program in
-            Task { await self?.load(program: program) }
+        watcher = deps.watchVocabularyCourse { [weak self] course in
+            Task { await self?.show(course) }
         }
     }
 
     deinit { watcher?.cancel() }
 
-    var totalTrainings: Int { Int(day?.totalTrainings ?? 0) }
-    var doneTrainings: Int { Int(day?.completedTrainings ?? 0) }
-    var showsCards: Bool { day?.showCardsNext ?? false }
+    var totalTrainings: Int { Int(course?.totalTrainings ?? 0) }
+    var doneTrainings: Int { Int(course?.completedInRound ?? 0) }
+    var round: Int { Int(course?.round ?? 0) + 1 }
+    var roundFraction: Double { Double(course?.roundFraction ?? 0) }
+    var showsCards: Bool { course?.showCardsNext ?? false }
+
+    var known: Int { Int(metric(.vocabulary)?.current ?? 0) }
+    var learning: Int { Int((metric(.vocabulary)?.target ?? 0) - (metric(.vocabulary)?.current ?? 0)) }
+    var accuracy: ProgressMetric? { metric(.accuracy) }
 
     var continueLabel: String {
-        if showsCards, let count = day?.newWords.count {
+        if showsCards, let count = course?.newWords.count {
             return "Meet \(count) new words"
         }
         return "Continue"
     }
 
     func load() async {
-        let program = try? await deps.activeProgramFirst()
-        await load(program: program)
+        if let course = try? await deps.getVocabularyCourse.invoke() {
+            await show(course)
+        }
     }
 
-    private func load(program: Program?) async {
+    private func show(_ course: VocabularyCourse) async {
+        self.course = course
         studyTime = try? await deps.getDailyStudyTime.invoke()
         wordsToReview = Int((try? await deps.countWordsToReview.invoke()) as? Int32 ?? 0)
-        guard let program else {
-            self.program = nil
-            return
-        }
-        self.program = program
-        if let progress = try? await deps.getProgramProgress.invoke(program: program) {
-            metrics = progress.metrics
-            overall = progress.overall
-        }
+        metrics = (try? await deps.getCourseProgress.invoke())?.metrics as? [ProgressMetric] ?? []
         streak = Int((try? await deps.getStudyStreak.invoke()) as? Int32 ?? 0)
-        day = try? await deps.getProgramDay.invoke(id: program.id)
         nothingToPractise = false
     }
 
-    var isDayComplete: Bool { day?.isComplete ?? false }
-
-    func nextTraining() async -> ProgramTurn? {
-        guard let program else { return nil }
-        let launch = try? await deps.nextProgramTraining.next(id: program.id)
-        return await turn(for: launch, in: program)
+    func nextTraining() async -> CourseTurn? {
+        turn(for: try? await deps.nextCourseTraining.next())
     }
 
-    func advance() async -> ProgramTurn? {
-        guard let program else { return nil }
-        let launch = try? await deps.nextProgramTraining.advance(id: program.id)
-        return await turn(for: launch, in: program)
+    func advance() async -> CourseTurn? {
+        turn(for: try? await deps.nextCourseTraining.advance())
     }
 
-    private func turn(for launch: ProgramLaunch?, in program: Program) async -> ProgramTurn? {
+    func reset() async -> CourseStep {
+        try? await deps.resetCourseQueue.invoke()
+        await load()
+        if showsCards { return .cards }
+        if let turn = await nextTraining() { return .training(turn) }
+        return .nothing
+    }
+
+    private func turn(for launch: CourseLaunch?) -> CourseTurn? {
         guard let launch, let entry = TrainingCatalog.entry(id: launch.training.id) else {
-            day = try? await deps.getProgramDay.invoke(id: program.id)
-            nothingToPractise = !isDayComplete
+            nothingToPractise = true
             return nil
         }
         turns += 1
         let wordIds = (launch.wordIds as? [VocabularyId] ?? []).map { $0.value }
-        return ProgramTurn(id: turns, entry: entry, wordIds: wordIds)
+        return CourseTurn(id: turns, entry: entry, wordIds: wordIds)
     }
 
-    func label(for type: ProgressMetricType) -> String {
-        switch type {
-        case .vocabulary: return "Words mastered"
-        case .milestones: return "Milestones"
-        case .accuracy: return "Correct answers"
-        case .consistency: return "Days studied"
-        default: return "Study time"
-        }
-    }
-
-    func value(for metric: ProgressMetric) -> String {
-        switch metric.type {
-        case .consistency: return "\(metric.current)"
-        case .accuracy: return "\(metric.current)%"
-        default: return "\(metric.current) / \(metric.target)"
-        }
+    private func metric(_ type: ProgressMetricType) -> ProgressMetric? {
+        metrics.first { $0.type == type }
     }
 }
 
-struct ProgramTurn: Identifiable, Hashable {
+struct CourseTurn: Identifiable, Hashable {
     let id: Int
     let entry: TrainingEntry
     let wordIds: [Int64]
 }
 
-extension IosDependencies {
-
-    func activeProgramFirst() async throws -> Program? {
-        try await withCheckedThrowingContinuation { continuation in
-            var handle: Cancellable?
-            var resumed = false
-            handle = watchActiveProgram { program in
-                guard !resumed else { return }
-                resumed = true
-                continuation.resume(returning: program)
-                handle?.cancel()
-            }
-        }
-    }
+enum CourseStep {
+    case training(CourseTurn)
+    case cards
+    case nothing
 }
