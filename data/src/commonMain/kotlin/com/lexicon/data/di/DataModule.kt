@@ -4,7 +4,6 @@ import com.lexicon.boundary.CatalogSeedGate
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.ImageProvider
-import com.lexicon.boundary.ProgramRepository
 import com.lexicon.boundary.ReviewScheduleRepository
 import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.SettingsRepository
@@ -12,6 +11,7 @@ import com.lexicon.boundary.StudyRecordRepository
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.TranslationSuggester
 import com.lexicon.boundary.Translator
+import com.lexicon.boundary.VocabularyCourseRepository
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.boundary.WordLevelGuesser
@@ -50,6 +50,7 @@ import com.lexicon.data.repository.ProgramRepositoryImpl
 import com.lexicon.data.repository.ReviewScheduleRepositoryImpl
 import com.lexicon.data.repository.StudyRecordRepositoryImpl
 import com.lexicon.data.repository.TrainingHistoryRepositoryImpl
+import com.lexicon.data.repository.VocabularyCourseRepositoryImpl
 import com.lexicon.data.repository.VocabularyPresetRepositoryImpl
 import com.lexicon.data.repository.VocabularyRepositoryImpl
 import com.lexicon.data.settings.SettingsRepositoryImpl
@@ -80,7 +81,7 @@ val dataModule = module {
     factory { get<AppDatabase>().courseDao() }
     factory { get<AppDatabase>().wordReviewDao() }
     factory { get<AppDatabase>().studyDayDao() }
-    factory { get<AppDatabase>().programDao() }
+    factory { get<AppDatabase>().vocabularyCourseDao() }
     factory { get<AppDatabase>().conjugationDao() }
 
     single(settingsDataStoreQualifier) { get<DataStorePathResolver>().createDataStore(SETTINGS_STORE_NAME) }
@@ -90,7 +91,7 @@ val dataModule = module {
     singleOf(::TrainingHistoryRepositoryImpl) { bind<TrainingHistoryRepository>() }
     singleOf(::ReviewScheduleRepositoryImpl) { bind<ReviewScheduleRepository>() }
     singleOf(::StudyRecordRepositoryImpl) { bind<StudyRecordRepository>() }
-    factoryOf(::ProgramRepositoryImpl) { bind<ProgramRepository>() }
+    factoryOf(::VocabularyCourseRepositoryImpl) { bind<VocabularyCourseRepository>() }
     singleOf(::CachingImageProviderImpl) { bind<ImageProvider>() }
     single<SettingsRepository> { SettingsRepositoryImpl(get(settingsDataStoreQualifier)) }
     factoryOf(::VocabularyPresetRepositoryImpl) { bind<VocabularyPresetRepository>() }

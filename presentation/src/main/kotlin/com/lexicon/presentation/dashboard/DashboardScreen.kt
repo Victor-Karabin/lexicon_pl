@@ -17,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoStories
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Translate
@@ -36,27 +37,22 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.conjugation.ConjugationCourse
-import com.lexicon.model.program.ProgramId
-import com.lexicon.model.program.ProgramProgress
-import com.lexicon.model.program.ProgressMetric
-import com.lexicon.model.program.ProgressMetricType
-import com.lexicon.model.vocabulary.LocalizedText
+import com.lexicon.interactors.vocabularycourse.VocabularyCourse
 import com.lexicon.model.vocabulary.VocabularyId
-import com.lexicon.model.vocabulary.resolve
+import com.lexicon.model.vocabularycourse.CourseProgress
+import com.lexicon.model.vocabularycourse.ProgressMetric
+import com.lexicon.model.vocabularycourse.ProgressMetricType
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.DeleteAction
 import com.lexicon.presentation.common.DeleteActionWidth
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SwipeToRevealContainer
-import com.lexicon.presentation.program.ProgramMedallion
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.GradientTile
@@ -68,6 +64,7 @@ import com.lexicon.presentation.theme.component.TileChips
 import com.lexicon.presentation.theme.component.TileSkin
 import com.lexicon.presentation.theme.component.muted
 import com.lexicon.presentation.theme.component.tileSkin
+import com.lexicon.presentation.vocabularycourse.CourseMedallion
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
 
@@ -87,10 +84,10 @@ private const val TRACK_ALPHA = 0.25f
 
 @Composable
 fun DashboardScreen(
-    onStartTraining: (training: String, wordIds: List<VocabularyId>, programId: String) -> Unit,
-    onOpenCards: (programId: String) -> Unit,
-    onGoToPlan: () -> Unit,
+    onStartTraining: (training: String, wordIds: List<VocabularyId>) -> Unit,
+    onOpenCards: () -> Unit,
     onOpenConjugation: (String) -> Unit,
+    onReviewWords: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DashboardViewModel = koinViewModel(),
 ) {
@@ -98,13 +95,13 @@ fun DashboardScreen(
 
     LaunchedEffect(uiState.launch) {
         uiState.launch?.let {
-            onStartTraining(it.training.id, it.wordIds, uiState.program?.id?.value.orEmpty())
+            onStartTraining(it.training.id, it.wordIds)
             viewModel.onLaunchHandled()
         }
     }
     LaunchedEffect(uiState.openCards) {
         if (uiState.openCards) {
-            uiState.program?.let { onOpenCards(it.id.value) }
+            onOpenCards()
             viewModel.onLaunchHandled()
         }
     }
@@ -117,8 +114,8 @@ fun DashboardScreen(
     DashboardContent(
         uiState = uiState,
         onContinue = viewModel::onContinue,
-        onGoToPlan = onGoToPlan,
         onOpenConjugation = onOpenConjugation,
+        onReviewWords = onReviewWords,
         onRemoveConjugation = viewModel::onConjugationCourseRemoved,
         modifier = modifier,
     )
@@ -128,8 +125,8 @@ fun DashboardScreen(
 private fun DashboardContent(
     uiState: DashboardUiState,
     onContinue: () -> Unit,
-    onGoToPlan: () -> Unit,
     onOpenConjugation: (String) -> Unit,
+    onReviewWords: () -> Unit,
     onRemoveConjugation: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -155,24 +152,10 @@ private fun DashboardContent(
                     )
                 }
 
-                if (uiState.program == null && !uiState.hasConjugationCourse) {
-                    Column(
-                        modifier = Modifier.fillMaxWidth().padding(Dimens.spacingXl),
-                        verticalArrangement = Arrangement.spacedBy(Dimens.spacingLarge),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Text(
-                            text = stringResource(R.string.dashboard_no_program),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            textAlign = TextAlign.Center,
-                        )
-                        Button(onClick = onGoToPlan) {
-                            Text(stringResource(R.string.dashboard_go_to_plan))
-                        }
-                    }
-                } else {
-                    ActiveProgramCard(uiState = uiState, onContinue = onContinue)
+                CourseCard(uiState = uiState, onContinue = onContinue)
+
+                if (uiState.wordsToReview > 0) {
+                    ReviewWordsCard(waiting = uiState.wordsToReview, onClick = onReviewWords)
                 }
 
                 uiState.studyTime?.let { StudyTimeCard(history = it) }
@@ -245,54 +228,37 @@ private fun ConjugationCourseCard(
 }
 
 @Composable
-private fun ActiveProgramCard(
+private fun CourseCard(
     uiState: DashboardUiState,
     onContinue: () -> Unit,
 ) {
-    val program = uiState.program ?: return
-    val progress = uiState.progress
+    val course = uiState.course ?: return
     val skin = tileSkin(highlighted = true)
+    val round = stringResource(R.string.vocabulary_course_round, course.round + 1, course.completedInRound, course.totalTrainings)
 
     GradientTile(skin = skin) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            ProgressRing(
-                fraction = uiState.trainingsFraction,
-                skin = skin,
-                description = stringResource(
-                    R.string.dashboard_trainings_of,
-                    uiState.trainingsDone,
-                    uiState.trainingsTotal,
-                ),
-            ) {
-                ProgramMedallion(skin = skin)
+            ProgressRing(fraction = course.roundFraction, skin = skin, description = round) {
+                CourseMedallion(skin = skin)
             }
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = stringResource(R.string.dashboard_continuing),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = skin.muted(),
-                )
-                Text(
-                    text = if (program.isUserCreated) {
-                        stringResource(R.string.program_default_name)
-                    } else {
-                        program.title.resolve(uiState.languageTag)
-                    },
+                    text = stringResource(R.string.vocabulary_course_title),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.SemiBold,
                     color = skin.onTile,
                 )
-
                 Text(
-                    text = pluralStringResource(
-                        R.plurals.dashboard_word_total,
-                        uiState.studySet,
-                        uiState.studySet,
-                    ),
+                    text = round,
                     style = MaterialTheme.typography.bodyMedium,
+                    color = skin.muted(),
+                )
+                Text(
+                    text = stringResource(R.string.vocabulary_course_learning, uiState.learningWords, uiState.knownWords),
+                    style = MaterialTheme.typography.bodySmall,
                     color = skin.muted(),
                 )
             }
@@ -301,59 +267,70 @@ private fun ActiveProgramCard(
             }
         }
 
-        progress?.metrics
-            ?.firstOrNull { it.type == ProgressMetricType.ACCURACY }
+        uiState.progress
+            ?.metric(ProgressMetricType.ACCURACY)
             ?.let { MetricRow(it, skin) }
 
-        when {
-            uiState.isDayComplete ->
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.CheckCircle,
-                        contentDescription = null,
-                        tint = skin.onTile,
-                    )
-                    Text(
-                        text = stringResource(R.string.dashboard_day_done),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = skin.muted(),
-                    )
-                }
-
-            uiState.nothingToPractise ->
+        if (uiState.nothingToPractise) {
+            Text(
+                text = stringResource(R.string.dashboard_nothing_due),
+                style = MaterialTheme.typography.bodyMedium,
+                color = skin.muted(),
+            )
+        } else {
+            Button(
+                onClick = onContinue,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = skin.medallion,
+                    contentColor = skin.onMedallion,
+                ),
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                val newWords = course.newWords.size.takeIf { course.showCardsNext }
+                Icon(
+                    imageVector = if (newWords != null) Icons.Default.AutoStories else Icons.Default.PlayArrow,
+                    contentDescription = null,
+                    modifier = Modifier.size(ButtonIconSize),
+                )
                 Text(
-                    text = stringResource(R.string.dashboard_nothing_due),
-                    style = MaterialTheme.typography.bodyMedium,
+                    text = if (newWords != null) {
+                        stringResource(R.string.dashboard_meet_words, newWords)
+                    } else {
+                        stringResource(R.string.dashboard_continue)
+                    },
+                    modifier = Modifier.padding(start = Dimens.spacingSmall),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ReviewWordsCard(
+    waiting: Int,
+    onClick: () -> Unit,
+) {
+    val skin = tileSkin()
+
+    GradientTile(skin = skin, onClick = onClick) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Medallion(skin = skin) { MedallionIcon(Icons.Default.Inbox, skin) }
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = stringResource(R.string.dashboard_review_words),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = skin.onTile,
+                )
+                Text(
+                    text = stringResource(R.string.dashboard_review_words_waiting, waiting),
+                    style = MaterialTheme.typography.bodySmall,
                     color = skin.muted(),
                 )
-
-            else ->
-                Button(
-                    onClick = onContinue,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = skin.medallion,
-                        contentColor = skin.onMedallion,
-                    ),
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    val newWords = uiState.day?.takeIf { it.showCardsNext }?.newWords?.size
-                    Icon(
-                        imageVector = if (newWords != null) Icons.Default.AutoStories else Icons.Default.PlayArrow,
-                        contentDescription = null,
-                        modifier = Modifier.size(ButtonIconSize),
-                    )
-                    Text(
-                        text = if (newWords != null) {
-                            stringResource(R.string.dashboard_meet_words, newWords)
-                        } else {
-                            stringResource(R.string.dashboard_continue)
-                        },
-                        modifier = Modifier.padding(start = Dimens.spacingSmall),
-                    )
-                }
+            }
         }
     }
 }
@@ -468,58 +445,34 @@ private fun MetricRow(
 private fun ProgressMetricType.label(): Int =
     when (this) {
         ProgressMetricType.VOCABULARY -> R.string.dashboard_metric_vocabulary
-        ProgressMetricType.MILESTONES -> R.string.dashboard_metric_milestones
-        ProgressMetricType.CONSISTENCY -> R.string.dashboard_metric_consistency
-        ProgressMetricType.STUDY_TIME -> R.string.dashboard_metric_study_time
         ProgressMetricType.ACCURACY -> R.string.dashboard_metric_accuracy
     }
 
 @LightDarkPreview
 @Composable
-private fun DashboardNoProgramPreview() {
-    LexiconTheme {
-        DashboardContent(
-            uiState = DashboardUiState(isLoading = false),
-            onContinue = {},
-            onGoToPlan = {},
-            onOpenConjugation = {},
-            onRemoveConjugation = {},
-        )
-    }
-}
-
-@LightDarkPreview
-@Composable
-private fun DashboardActivePreview() {
+private fun DashboardPreview() {
     LexiconTheme {
         DashboardContent(
             uiState = DashboardUiState(
                 isLoading = false,
-                program = com.lexicon.interactors.program.Program(
-                    id = ProgramId("a1-essentials"),
-                    level = "A1",
-                    order = 1,
-                    title = LocalizedText(mapOf("en" to "Polish A1")),
-                    description = LocalizedText(emptyMap()),
-                    difficulty = com.lexicon.interactors.program.ProgramDifficulty.BEGINNER,
-                    estimatedDays = 84,
-                    visibility = com.lexicon.interactors.program.ProgramVisibility.PUBLIC,
-                    config = com.lexicon.interactors.program.ProgramConfig(),
+                course = VocabularyCourse(
+                    position = 3,
+                    round = 1,
+                    cardsSeen = true,
+                    newWords = persistentListOf(VocabularyId(1), VocabularyId(2)),
                 ),
-                progress = ProgramProgress(
-                    programId = ProgramId("a1-essentials"),
+                progress = CourseProgress(
                     metrics = persistentListOf(
-                        ProgressMetric(ProgressMetricType.VOCABULARY, current = 128, target = 1000, weight = 40),
-                        ProgressMetric(ProgressMetricType.MILESTONES, current = 1, target = 5, weight = 20),
-                        ProgressMetric(ProgressMetricType.ACCURACY, current = 87, target = 100, weight = 20),
-                        ProgressMetric(ProgressMetricType.CONSISTENCY, current = 9, target = 12, weight = 20),
+                        ProgressMetric(ProgressMetricType.VOCABULARY, current = 128, target = 150),
+                        ProgressMetric(ProgressMetricType.ACCURACY, current = 87, target = 100),
                     ),
                 ),
                 streakDays = 9,
+                wordsToReview = 2400,
             ),
             onContinue = {},
-            onGoToPlan = {},
             onOpenConjugation = {},
+            onReviewWords = {},
             onRemoveConjugation = {},
         )
     }

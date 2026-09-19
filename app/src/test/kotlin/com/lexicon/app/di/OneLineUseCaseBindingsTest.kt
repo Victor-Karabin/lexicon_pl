@@ -15,16 +15,13 @@ import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetWordUseCase
 import com.lexicon.interactors.presets.RestorePresetUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
-import com.lexicon.interactors.program.CountStudySetUseCase
 import com.lexicon.interactors.settings.UpdateVoiceUseCase
 import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
-import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.After
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.koin.core.context.startKoin
@@ -88,14 +85,6 @@ class OneLineUseCaseBindingsTest : KoinTest {
             get<RestorePresetUseCase>()(PresetId("food"))
 
             coVerify(exactly = 1) { presets.restorePreset("food") }
-        }
-
-    @Test
-    fun `the study set count is the number of words in it`() =
-        runTest {
-            coEvery { vocabulary.studySetWordIds() } returns listOf(1L, 2L, 3L)
-
-            assertEquals(3, get<CountStudySetUseCase>()())
         }
 
     @Test

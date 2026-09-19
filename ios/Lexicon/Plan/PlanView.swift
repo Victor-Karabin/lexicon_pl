@@ -9,22 +9,11 @@ struct PlanView: View {
         NavigationStack {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: Spacing.small) {
-                    Text("Programs").font(.subheadline.weight(.semibold)).foregroundStyle(.secondary)
-
-                    ForEach(model.programs, id: \.id.value) { program in
+                    if let course = model.course {
                         NavigationLink {
-                            ProgramFormView(programId: program.id)
+                            CourseSettingsView()
                         } label: {
-                            programTile(program)
-                        }
-                        .buttonStyle(.plain)
-                    }
-
-                    if model.programs.isEmpty {
-                        NavigationLink {
-                            ProgramFormView(programId: nil)
-                        } label: {
-                            createTile
+                            courseSettingsTile(course)
                         }
                         .buttonStyle(.plain)
                     }
@@ -70,50 +59,28 @@ struct PlanView: View {
         }
     }
 
-    private func programTile(_ program: Program) -> some View {
-        let active = model.activeProgramId == program.id.value
-        let skin = TileSkin.standard(highlighted: active, scheme: scheme)
+    private func courseSettingsTile(_ course: VocabularyCourse) -> some View {
+        let skin = TileSkin.standard(highlighted: true, scheme: scheme)
         return Tile(skin: skin) {
             HStack(spacing: Spacing.medium) {
                 Medallion(skin: skin) { MedallionIcon(systemName: "heart.fill", skin: skin) }
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(program.title.text()).font(.headline).foregroundStyle(skin.onTile)
-                    Text(program.description_.text()).font(.caption).foregroundStyle(skin.onTile.muted)
-                }
-                Spacer()
-                Image(systemName: active ? "play.fill" : "chevron.right").foregroundStyle(skin.onTile.muted)
-            }
-
-            FlowLayout(spacing: Spacing.small) {
-                if let words = program.config.goals.first(where: { $0.type == .vocabulary })?.target {
-                    StatChip(systemName: "character.book.closed", text: "\(words) words", skin: skin)
-                }
-                if program.config.dailyPlan.newWords > 0 {
-                    StatChip(systemName: "book", text: "\(program.config.dailyPlan.newWords) new a day", skin: skin)
-                }
-                if !program.config.dailyPlan.queue.isEmpty {
-                    StatChip(
-                        systemName: "figure.strengthtraining.traditional",
-                        text: "\(program.config.dailyPlan.queue.count) trainings",
-                        skin: skin
-                    )
-                }
-            }
-        }
-    }
-
-    private var createTile: some View {
-        let skin = TileSkin.standard(scheme: scheme)
-        return Tile(skin: skin) {
-            HStack(spacing: Spacing.medium) {
-                Medallion(skin: skin) { MedallionIcon(systemName: "plus", skin: skin) }
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Build your own").font(.headline).foregroundStyle(skin.onTile)
-                    Text("A daily plan over the words in your study set")
+                    Text("Vocabulary course").font(.headline).foregroundStyle(skin.onTile)
+                    Text("Words you mark To learn come first, favourites before the rest.")
                         .font(.caption).foregroundStyle(skin.onTile.muted)
                 }
                 Spacer()
-                Image(systemName: "chevron.right").foregroundStyle(skin.onTile.muted)
+                Image(systemName: "slider.horizontal.3").foregroundStyle(skin.onTile.muted)
+            }
+
+            FlowLayout(spacing: Spacing.small) {
+                StatChip(systemName: "book", text: "\(course.settings.newWordsADay) new a day", skin: skin)
+                StatChip(systemName: "character.book.closed", text: "\(course.settings.reviewsADay) reviews a day", skin: skin)
+                StatChip(
+                    systemName: "figure.strengthtraining.traditional",
+                    text: "\(course.totalTrainings) trainings",
+                    skin: skin
+                )
             }
         }
     }
@@ -139,25 +106,19 @@ struct PlanView: View {
 
 @MainActor
 final class PlanModel: ObservableObject {
-    @Published private(set) var programs: [Program] = []
+    @Published private(set) var course: VocabularyCourse?
     @Published private(set) var courses: [Course] = []
-    @Published private(set) var activeProgramId: String?
 
-    private var programWatcher: Cancellable?
+    private var vocabularyWatcher: Cancellable?
     private var courseWatcher: Cancellable?
-    private var activeWatcher: Cancellable?
 
     init() {
-        programWatcher = deps.watchPrograms { [weak self] value in self?.programs = value }
+        vocabularyWatcher = deps.watchVocabularyCourse { [weak self] value in self?.course = value }
         courseWatcher = deps.watchCourses { [weak self] value in self?.courses = value }
-        activeWatcher = deps.watchActiveProgram { [weak self] program in
-            self?.activeProgramId = program?.id.value
-        }
     }
 
     deinit {
-        programWatcher?.cancel()
+        vocabularyWatcher?.cancel()
         courseWatcher?.cancel()
-        activeWatcher?.cancel()
     }
 }

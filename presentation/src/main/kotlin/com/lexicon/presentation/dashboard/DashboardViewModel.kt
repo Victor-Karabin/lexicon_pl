@@ -5,19 +5,18 @@ import androidx.lifecycle.viewModelScope
 import com.lexicon.interactors.conjugation.ConjugationCourse
 import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
-import com.lexicon.interactors.program.CountStudySetUseCase
-import com.lexicon.interactors.program.GetDailyStudyTimeUseCase
-import com.lexicon.interactors.program.GetProgramDayUseCase
-import com.lexicon.interactors.program.GetProgramProgressUseCase
-import com.lexicon.interactors.program.GetStudyStreakUseCase
-import com.lexicon.interactors.program.NextProgramTrainingUseCase
-import com.lexicon.interactors.program.ObserveActiveProgramUseCase
-import com.lexicon.interactors.program.Program
-import com.lexicon.interactors.program.ProgramDay
-import com.lexicon.interactors.program.StudyTimeHistory
-import com.lexicon.model.program.ProgramProgress
+import com.lexicon.interactors.presets.CountWordsToReviewUseCase
+import com.lexicon.interactors.vocabularycourse.GetCourseProgressUseCase
+import com.lexicon.interactors.vocabularycourse.GetDailyStudyTimeUseCase
+import com.lexicon.interactors.vocabularycourse.GetStudyStreakUseCase
+import com.lexicon.interactors.vocabularycourse.NextCourseTrainingUseCase
+import com.lexicon.interactors.vocabularycourse.ObserveVocabularyCourseUseCase
+import com.lexicon.interactors.vocabularycourse.StudyTimeHistory
+import com.lexicon.interactors.vocabularycourse.VocabularyCourse
 import com.lexicon.model.training.TrainingType
 import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabularycourse.CourseProgress
+import com.lexicon.model.vocabularycourse.ProgressMetricType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,59 +32,49 @@ data class LaunchTraining(
 
 data class DashboardUiState(
     val isLoading: Boolean = true,
-    val program: Program? = null,
-    val progress: ProgramProgress? = null,
+    val course: VocabularyCourse? = null,
+    val progress: CourseProgress? = null,
     val streakDays: Int = 0,
-    val studySet: Int = 0,
-    val languageTag: String = "en",
-    val day: ProgramDay? = null,
+    val wordsToReview: Int = 0,
     val launch: LaunchTraining? = null,
     val openCards: Boolean = false,
     val nothingToPractise: Boolean = false,
     val studyTime: StudyTimeHistory? = null,
     val conjugationCourses: ImmutableList<ConjugationCourse> = persistentListOf(),
 ) {
-    val hasConjugationCourse: Boolean get() = conjugationCourses.isNotEmpty()
+    val knownWords: Int get() = progress?.metric(ProgressMetricType.VOCABULARY)?.current ?: 0
 
-    val trainingsDone: Int get() = day?.completedTrainings ?: 0
-
-    val trainingsTotal: Int get() = day?.totalTrainings ?: 0
-
-    val isDayComplete: Boolean get() = day?.isComplete == true
-
-    val trainingsFraction: Float
-        get() = if (trainingsTotal <= 0) 0f else trainingsDone.toFloat() / trainingsTotal
+    val learningWords: Int
+        get() = progress?.metric(ProgressMetricType.VOCABULARY)?.let { it.target - it.current } ?: 0
 }
 
 class DashboardViewModel(
-    private val getProgress: GetProgramProgressUseCase,
-    private val queue: NextProgramTrainingUseCase,
+    private val getProgress: GetCourseProgressUseCase,
+    private val queue: NextCourseTrainingUseCase,
     private val loadConjugationCourses: LoadConjugationCoursesUseCase,
     private val deleteConjugationCourse: DeleteConjugationCourseUseCase,
-    private val getDay: GetProgramDayUseCase,
     private val getStreak: GetStudyStreakUseCase,
-    private val countStudySet: CountStudySetUseCase,
+    private val countWordsToReview: CountWordsToReviewUseCase,
     private val getDailyStudyTime: GetDailyStudyTimeUseCase,
-    observeActiveProgram: ObserveActiveProgramUseCase,
+    observeCourse: ObserveVocabularyCourseUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(DashboardUiState())
     val uiState: StateFlow<DashboardUiState> = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            observeActiveProgram().collect { program ->
+            observeCourse().collect { course ->
+                val progress = getProgress()
                 val courses = loadConjugationCourses()
-
-                _uiState.value = DashboardUiState(
-                    isLoading = false,
-                    conjugationCourses = courses,
-                    program = program,
-                    progress = program?.let { getProgress(it) },
-                    streakDays = if (program == null) 0 else getStreak(),
-                    studySet = if (program == null) 0 else countStudySet(),
-                    day = program?.let { getDay(it.id) },
-                    studyTime = getDailyStudyTime(),
-                )
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        course = course,
+                        progress = progress,
+                        conjugationCourses = courses,
+                        nothingToPractise = false,
+                    )
+                }
             }
         }
     }
@@ -93,16 +82,15 @@ class DashboardViewModel(
     fun onResumed() {
         viewModelScope.launch {
             val studyTime = getDailyStudyTime()
-            _uiState.update { it.copy(studyTime = studyTime) }
-
-            val program = _uiState.value.program ?: return@launch
-            val day = getDay(program.id)
+            val wordsToReview = countWordsToReview()
+            val streakDays = getStreak()
+            val progress = getProgress()
             _uiState.update {
                 it.copy(
-                    progress = getProgress(program),
-                    streakDays = getStreak(),
-                    studySet = countStudySet(),
-                    day = day,
+                    studyTime = studyTime,
+                    wordsToReview = wordsToReview,
+                    streakDays = streakDays,
+                    progress = progress,
                     nothingToPractise = false,
                 )
             }
@@ -110,22 +98,20 @@ class DashboardViewModel(
     }
 
     fun onContinue() {
-        val state = _uiState.value
-        val program = state.program ?: return
-        val day = state.day ?: return
+        val course = _uiState.value.course ?: return
 
-        if (day.showCardsNext) {
+        if (course.showCardsNext) {
             _uiState.update { it.copy(openCards = true) }
             return
         }
         viewModelScope.launch {
-            val next = queue.next(program.id)
-            if (next == null) {
-                val refreshed = getDay(program.id)
-                _uiState.update { it.copy(day = refreshed, nothingToPractise = refreshed?.isComplete != true) }
-                return@launch
+            val next = queue.next()
+            _uiState.update {
+                when (next) {
+                    null -> it.copy(nothingToPractise = true)
+                    else -> it.copy(launch = LaunchTraining(next.training, next.wordIds))
+                }
             }
-            _uiState.update { it.copy(launch = LaunchTraining(next.training, next.wordIds)) }
         }
     }
 

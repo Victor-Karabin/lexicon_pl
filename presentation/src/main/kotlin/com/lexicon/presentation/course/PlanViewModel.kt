@@ -3,11 +3,9 @@ package com.lexicon.presentation.course
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.interactors.course.ObserveCoursesUseCase
-import com.lexicon.interactors.program.ObserveActiveProgramUseCase
-import com.lexicon.interactors.program.ObserveProgramsUseCase
-import com.lexicon.interactors.program.Program
+import com.lexicon.interactors.vocabularycourse.ObserveVocabularyCourseUseCase
+import com.lexicon.interactors.vocabularycourse.VocabularyCourse
 import com.lexicon.model.course.Course
-import com.lexicon.model.program.ProgramId
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,28 +17,19 @@ sealed interface PlanUiState {
     data object Loading : PlanUiState
 
     data class Loaded(
-        val programs: ImmutableList<Program> = persistentListOf(),
+        val course: VocabularyCourse = VocabularyCourse(),
         val courses: ImmutableList<Course> = persistentListOf(),
-        val activeProgramId: ProgramId? = null,
         val languageTag: String = "en",
     ) : PlanUiState
 }
 
-val PlanUiState.Loaded.isEmpty: Boolean
-    get() = programs.isEmpty() && courses.all { it.lessons.isEmpty() }
-
 class PlanViewModel(
     observeCourses: ObserveCoursesUseCase,
-    observePrograms: ObserveProgramsUseCase,
-    observeActiveProgram: ObserveActiveProgramUseCase,
+    observeCourse: ObserveVocabularyCourseUseCase,
 ) : ViewModel() {
     val uiState: StateFlow<PlanUiState> =
-        combine(
-            observePrograms(),
-            observeCourses(),
-            observeActiveProgram(),
-        ) { programs, courses, active ->
-            PlanUiState.Loaded(programs = programs, courses = courses, activeProgramId = active?.id)
+        combine(observeCourse(), observeCourses()) { course, courses ->
+            PlanUiState.Loaded(course = course, courses = courses)
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS),
