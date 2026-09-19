@@ -19,6 +19,8 @@ struct AddImageTile: View {
     @State private var libraryItem: PhotosPickerItem?
     @State private var isTakingPhoto = false
     @State private var isChoosing = false
+    @State private var takenPhoto: UIImage?
+    @State private var toPosition: PendingCrop?
 
     private var hasCamera: Bool { UIImagePickerController.isSourceTypeAvailable(.camera) }
 
@@ -47,21 +49,45 @@ struct AddImageTile: View {
         .onChange(of: libraryItem) { _, item in
             guard let item else { return }
             Task {
-                if let data = try? await item.loadTransferable(type: Data.self),
-                   let url = writeOwnImage(data) {
-                    onPicked(url)
+                if let data = try? await item.loadTransferable(type: Data.self), let image = UIImage(data: data) {
+                    place(image)
                 }
                 libraryItem = nil
             }
         }
-        .fullScreenCover(isPresented: $isTakingPhoto) {
+        .fullScreenCover(isPresented: $isTakingPhoto, onDismiss: placeTakenPhoto) {
             CameraPicker { image in
+                takenPhoto = image
                 isTakingPhoto = false
-                guard let data = image?.jpegData(compressionQuality: 0.9), let url = writeOwnImage(data) else { return }
-                onPicked(url)
             }
             .ignoresSafeArea()
         }
+        .sheet(item: $toPosition) { pending in
+            ImageCropView(image: pending.image) { cropped in
+                toPosition = nil
+                if let cropped { keep(cropped) }
+            }
+        }
+    }
+
+    private func placeTakenPhoto() {
+        guard let photo = takenPhoto else { return }
+        takenPhoto = nil
+        place(photo)
+    }
+
+    private func place(_ image: UIImage) {
+        let upright = uprightImage(image)
+        if CropWindow(imageSize: upright.size).needsPositioning {
+            toPosition = PendingCrop(image: upright)
+        } else {
+            keep(upright)
+        }
+    }
+
+    private func keep(_ image: UIImage) {
+        guard let data = image.jpegData(compressionQuality: 0.9), let url = writeOwnImage(data) else { return }
+        onPicked(url)
     }
 }
 

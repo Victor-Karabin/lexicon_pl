@@ -1,5 +1,6 @@
 package com.lexicon.presentation.presets
 
+import android.net.Uri
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -64,6 +65,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import org.koin.androidx.compose.koinViewModel
+import java.io.File
 import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.minutes
 
@@ -381,7 +383,22 @@ private fun RevealNewCandidates(
 @Composable
 internal fun AddImageTile(onPicked: (String) -> Unit) {
     var isChoosing by remember { mutableStateOf(false) }
-    val picker = rememberOwnImagePicker(onPicked = onPicked)
+    var toPosition by remember { mutableStateOf<String?>(null) }
+    val picker = rememberOwnImagePicker(onPicked = { toPosition = it })
+
+    toPosition?.let { picked ->
+        ImageCropDialog(
+            picked = picked,
+            onCropped = {
+                toPosition = null
+                onPicked(it)
+            },
+            onDismiss = {
+                toPosition = null
+                Uri.parse(picked).path?.let(::File)?.delete()
+            },
+        )
+    }
 
     Box {
         Surface(
