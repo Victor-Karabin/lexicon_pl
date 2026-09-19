@@ -13,6 +13,7 @@ import com.lexicon.interactors.presets.GetWordUseCase
 import com.lexicon.interactors.presets.PresetMembership
 import com.lexicon.interactors.presets.SearchImageCandidatesUseCase
 import com.lexicon.interactors.presets.SetWordPresetUseCase
+import com.lexicon.interactors.presets.SuggestTranslationsUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
 import com.lexicon.interactors.presets.WordDraftException
@@ -42,6 +43,8 @@ data class CreateWordUiState(
     val isMissing: Boolean = false,
     val text: String = "",
     val translation: String = "",
+    val textVariants: ImmutableList<String> = persistentListOf(),
+    val translationVariants: ImmutableList<String> = persistentListOf(),
     val memberships: ImmutableList<PresetMembership> = persistentListOf(),
     val imageCandidates: ImmutableList<String> = persistentListOf(),
     val ownImages: ImmutableList<String> = persistentListOf(),
@@ -76,6 +79,7 @@ class CreateWordViewModel(
     private val updateWord: UpdateWordUseCase,
     private val getWord: GetWordUseCase,
     private val translateWord: TranslateWordUseCase,
+    private val suggestTranslations: SuggestTranslationsUseCase,
     private val searchImageCandidates: SearchImageCandidatesUseCase,
     private val getPresets: GetVocabularyPresetsUseCase,
     private val getWordPresetMemberships: GetWordPresetMembershipsUseCase,
@@ -132,15 +136,30 @@ class CreateWordViewModel(
 
     fun onTextChanged(text: String) {
         textWasFilledIn = false
-        _uiState.update { it.copy(text = text, problem = null) }
+        _uiState.update { it.copy(text = text, problem = null, translationVariants = persistentListOf()) }
         scheduleTranslation(from = text, toPolish = false)
     }
 
     fun onTranslationChanged(translation: String) {
         translationWasFilledIn = false
-        _uiState.update { it.copy(translation = translation, problem = null) }
+        _uiState.update { it.copy(translation = translation, problem = null, textVariants = persistentListOf()) }
         scheduleTranslation(from = translation, toPolish = true)
         scheduleImageSearch(translation)
+    }
+
+    fun onVariantChosen(
+        variant: String,
+        forPolish: Boolean,
+    ) {
+        translateJob?.cancel()
+        if (forPolish) {
+            textWasFilledIn = false
+            _uiState.update { it.copy(text = variant, problem = null) }
+        } else {
+            translationWasFilledIn = false
+            _uiState.update { it.copy(translation = variant, problem = null) }
+            scheduleImageSearch(variant)
+        }
     }
 
     fun onImageSelected(url: String) = _uiState.update { it.copy(selectedImage = if (it.selectedImage == url) null else url) }
@@ -289,28 +308,42 @@ class CreateWordViewModel(
         }
         if (from.isBlank()) return
         val target = { state: CreateWordUiState -> if (toPolish) state.text else state.translation }
-        if (target(_uiState.value).isNotBlank()) return
+        val wantsFill = target(_uiState.value).isBlank()
 
         translateJob = viewModelScope.launch {
             delay(TYPING_SETTLE_MS)
-            _uiState.update { it.copy(isTranslating = true) }
-            val translated = translateWord(from, toPolish = toPolish)
 
-            val fills = translated != null && target(_uiState.value).isBlank()
+            if (wantsFill) fillIn(from, toPolish, target)
 
-            if (fills) {
-                if (toPolish) textWasFilledIn = true else translationWasFilledIn = true
-            }
+            val variants = suggestTranslations(from, toPolish = toPolish)
             _uiState.update { state ->
-                when {
-                    !fills -> state.copy(isTranslating = false)
-                    toPolish -> state.copy(text = translated.orEmpty(), isTranslating = false)
-                    else -> state.copy(translation = translated.orEmpty(), isTranslating = false)
-                }
+                if (toPolish) state.copy(textVariants = variants) else state.copy(translationVariants = variants)
             }
-
-            if (!toPolish) scheduleImageSearch(_uiState.value.translation)
         }
+    }
+
+    private suspend fun fillIn(
+        from: String,
+        toPolish: Boolean,
+        target: (CreateWordUiState) -> String,
+    ) {
+        _uiState.update { it.copy(isTranslating = true) }
+        val translated = translateWord(from, toPolish = toPolish)
+
+        val fills = translated != null && target(_uiState.value).isBlank()
+
+        if (fills) {
+            if (toPolish) textWasFilledIn = true else translationWasFilledIn = true
+        }
+        _uiState.update { state ->
+            when {
+                !fills -> state.copy(isTranslating = false)
+                toPolish -> state.copy(text = translated.orEmpty(), isTranslating = false)
+                else -> state.copy(translation = translated.orEmpty(), isTranslating = false)
+            }
+        }
+
+        if (!toPolish) scheduleImageSearch(_uiState.value.translation)
     }
 
     private suspend fun loadImagesFor(

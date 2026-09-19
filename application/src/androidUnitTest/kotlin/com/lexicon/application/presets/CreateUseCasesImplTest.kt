@@ -7,10 +7,12 @@ import com.lexicon.boundary.Translator
 import com.lexicon.boundary.VocabularyPresetBoundary
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.boundary.WordLevelGuesser
 import com.lexicon.interactors.presets.PresetDraftException
 import com.lexicon.interactors.presets.PresetDraftProblem
 import com.lexicon.interactors.presets.WordDraftException
 import com.lexicon.interactors.presets.WordDraftProblem
+import com.lexicon.model.vocabulary.CefrLevel
 import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
@@ -28,8 +30,9 @@ class CreateUseCasesImplTest {
     private val vocabularyRepository: VocabularyRepository = mockk(relaxed = true)
     private val presetRepository: VocabularyPresetRepository = mockk(relaxed = true)
     private val imageProvider: ImageProvider = mockk(relaxed = true)
+    private val levelGuesser: WordLevelGuesser = mockk(relaxed = true)
 
-    private val createWord = CreateWordUseCaseImpl(vocabularyRepository, presetRepository, imageProvider)
+    private val createWord = CreateWordUseCaseImpl(vocabularyRepository, presetRepository, imageProvider, levelGuesser)
     private val updateWord = UpdateWordUseCaseImpl(vocabularyRepository, presetRepository, imageProvider)
 
     private val stored = Word(
@@ -43,7 +46,8 @@ class CreateUseCasesImplTest {
 
     private fun wordExists(exists: Boolean) {
         coEvery { vocabularyRepository.findWordByText(any()) } returns if (exists) stored else null
-        coEvery { vocabularyRepository.createWord(any(), any(), any()) } returns stored
+        coEvery { levelGuesser.guess(any(), any()) } returns CefrLevel.A2
+        coEvery { vocabularyRepository.createWord(any(), any(), any(), any(), any()) } returns stored
     }
 
     @Test
@@ -60,7 +64,7 @@ class CreateUseCasesImplTest {
 
             assertTrue(result.isSuccess)
 
-            coVerify { vocabularyRepository.createWord("smok", "dragon", "smɔk") }
+            coVerify { vocabularyRepository.createWord("smok", "dragon", "smɔk", "", CefrLevel.A2) }
 
             coVerify(exactly = 1) { presetRepository.setWordInPreset("fantasy", -1, true) }
             coVerify(exactly = 1) { presetRepository.setWordInPreset("animals", -1, true) }
@@ -76,7 +80,7 @@ class CreateUseCasesImplTest {
             val result = createWord(text = "smok", translation = "dragon")
 
             assertEquals(WordDraftProblem.ALREADY_EXISTS, (result.exceptionOrNull() as WordDraftException).problem)
-            coVerify(exactly = 0) { vocabularyRepository.createWord(any(), any(), any()) }
+            coVerify(exactly = 0) { vocabularyRepository.createWord(any(), any(), any(), any(), any()) }
         }
 
     @Test
@@ -213,5 +217,17 @@ class CreateUseCasesImplTest {
 
             assertNull(translate("   ", toPolish = true))
             assertNull(translate("gibberish", toPolish = true))
+        }
+
+    @Test
+    fun `a word whose level cannot be guessed is stored without one`() =
+        runTest {
+            wordExists(false)
+            coEvery { levelGuesser.guess(any(), any()) } throws IllegalStateException("offline")
+
+            val result = createWord(text = "smok", translation = "dragon")
+
+            assertTrue(result.isSuccess)
+            coVerify { vocabularyRepository.createWord("smok", "dragon", "smɔk", "", null) }
         }
 }

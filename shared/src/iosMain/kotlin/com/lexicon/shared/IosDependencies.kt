@@ -51,6 +51,7 @@ import com.lexicon.interactors.presets.SearchImageCandidatesUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.SetWordStatusUseCase
+import com.lexicon.interactors.presets.SuggestTranslationsUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSentencesUseCase
@@ -126,6 +127,7 @@ object IosDependencies : KoinComponent {
     val deletePreset: DeletePresetUseCase by inject()
     val restorePreset: RestorePresetUseCase by inject()
     val translateWord: TranslateWordUseCase by inject()
+    val suggestTranslations: SuggestTranslationsUseCase by inject()
     val searchImageCandidates: SearchImageCandidatesUseCase by inject()
     val getPinnedImage: GetPinnedImageUseCase by inject()
 

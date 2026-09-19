@@ -1,5 +1,6 @@
 package com.lexicon.boundary
 
+import com.lexicon.model.vocabulary.CefrLevel
 import com.lexicon.model.vocabulary.Word
 import com.lexicon.model.vocabulary.WordStatus
 import kotlinx.coroutines.flow.Flow
@@ -31,6 +32,7 @@ interface VocabularyRepository {
         translation: String,
         transcription: String,
         example: String = "",
+        cefr: CefrLevel? = null,
     ): Word
 
     suspend fun updateWord(

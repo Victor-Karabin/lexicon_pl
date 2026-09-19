@@ -9,10 +9,12 @@ import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.SettingsRepository
 import com.lexicon.boundary.StudyRecordRepository
 import com.lexicon.boundary.TrainingHistoryRepository
+import com.lexicon.boundary.TranslationSuggester
 import com.lexicon.boundary.Translator
 import com.lexicon.boundary.VocabularyCourseRepository
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.boundary.WordLevelGuesser
 import com.lexicon.common.Clock
 import com.lexicon.common.DefaultDispatcherProvider
 import com.lexicon.common.DispatcherProvider
@@ -35,11 +37,16 @@ import com.lexicon.data.local.createDataStore
 import com.lexicon.data.repository.CachingImageProviderImpl
 import com.lexicon.data.repository.CatalogSeedGateImpl
 import com.lexicon.data.repository.ConjugationRepositoryImpl
+import com.lexicon.data.repository.CorpusTranslationSuggester
 import com.lexicon.data.repository.CorpusTranslatorImpl
+import com.lexicon.data.repository.CorpusWordLevelGuesser
 import com.lexicon.data.repository.CourseRepositoryImpl
 import com.lexicon.data.repository.FallbackImageProviderImpl
 import com.lexicon.data.repository.FallbackTranslatorImpl
 import com.lexicon.data.repository.InMemorySessionStore
+import com.lexicon.data.repository.MergingTranslationSuggester
+import com.lexicon.data.repository.MergingWordLevelGuesser
+import com.lexicon.data.repository.ProgramRepositoryImpl
 import com.lexicon.data.repository.ReviewScheduleRepositoryImpl
 import com.lexicon.data.repository.StudyRecordRepositoryImpl
 import com.lexicon.data.repository.TrainingHistoryRepositoryImpl
@@ -57,6 +64,8 @@ internal val settingsDataStoreQualifier = named(SETTINGS_STORE_NAME)
 internal val vocabularySyncDataStoreQualifier = named(VOCABULARY_SYNC_STORE_NAME)
 
 val translatorChainQualifier = named("translator-chain")
+val suggesterChainQualifier = named("translation-suggester-chain")
+val levelGuesserChainQualifier = named("word-level-guesser-chain")
 
 val dataModule = module {
     single<SessionStore> { InMemorySessionStore() }
@@ -92,6 +101,11 @@ val dataModule = module {
 
     singleOf(::CorpusTranslatorImpl)
     single<Translator> { FallbackTranslatorImpl(get(translatorChainQualifier)) }
+
+    singleOf(::CorpusTranslationSuggester)
+    singleOf(::CorpusWordLevelGuesser)
+    single<TranslationSuggester> { MergingTranslationSuggester(get(suggesterChainQualifier)) }
+    single<WordLevelGuesser> { MergingWordLevelGuesser(get(levelGuesserChainQualifier)) }
 
     factoryOf(::VocabularySeedAssetLoader)
     factoryOf(::VocabularyPresetAssetLoader)

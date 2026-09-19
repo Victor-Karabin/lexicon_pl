@@ -7,6 +7,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +21,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.AssistChip
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -95,6 +98,7 @@ fun CreateWordScreen(
         onClose = onClose,
         onTextChanged = viewModel::onTextChanged,
         onTranslationChanged = viewModel::onTranslationChanged,
+        onVariantChosen = viewModel::onVariantChosen,
         onImageSelected = viewModel::onImageSelected,
         onOwnImageAdded = viewModel::onOwnImageAdded,
         onMoreImages = viewModel::onMoreImages,
@@ -114,6 +118,7 @@ private fun CreateWordContent(
     onClose: () -> Unit,
     onTextChanged: (String) -> Unit,
     onTranslationChanged: (String) -> Unit,
+    onVariantChosen: (String, Boolean) -> Unit,
     onImageSelected: (String) -> Unit,
     onOwnImageAdded: (String) -> Unit,
     onMoreImages: () -> Unit,
@@ -189,6 +194,8 @@ private fun CreateWordContent(
                 shape = LexiconShapes.small,
             )
 
+            VariantChips(variants = uiState.translationVariants, onChosen = { onVariantChosen(it, false) })
+
             OutlinedTextField(
                 value = uiState.text,
                 onValueChange = onTextChanged,
@@ -207,6 +214,8 @@ private fun CreateWordContent(
                 modifier = Modifier.fillMaxWidth(),
                 shape = LexiconShapes.small,
             )
+
+            VariantChips(variants = uiState.textVariants, onChosen = { onVariantChosen(it, true) })
 
             ImageSection(uiState, onImageSelected, onOwnImageAdded, onMoreImages)
 
@@ -269,6 +278,21 @@ private fun ExampleSection(
             }
         },
     )
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun VariantChips(
+    variants: ImmutableList<String>,
+    onChosen: (String) -> Unit,
+) {
+    if (variants.isEmpty()) return
+
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
+        variants.forEach { variant ->
+            AssistChip(onClick = { onChosen(variant) }, label = { Text(variant) })
+        }
+    }
 }
 
 @Composable
@@ -518,6 +542,7 @@ private fun CreateWordPreview() {
             onClose = {},
             onTextChanged = {},
             onTranslationChanged = {},
+            onVariantChosen = { _, _ -> },
             onImageSelected = {},
             onOwnImageAdded = {},
             onMoreImages = {},
@@ -540,6 +565,7 @@ private fun CreateWordEmptyPreview() {
             onClose = {},
             onTextChanged = {},
             onTranslationChanged = {},
+            onVariantChosen = { _, _ -> },
             onImageSelected = {},
             onOwnImageAdded = {},
             onMoreImages = {},
@@ -567,6 +593,7 @@ private fun CreateWordDuplicatePreview() {
             onClose = {},
             onTextChanged = {},
             onTranslationChanged = {},
+            onVariantChosen = { _, _ -> },
             onImageSelected = {},
             onOwnImageAdded = {},
             onMoreImages = {},

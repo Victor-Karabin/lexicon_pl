@@ -11,6 +11,7 @@ import com.lexicon.data.local.inBatches
 import com.lexicon.data.local.nextUserWordId
 import com.lexicon.data.local.searchKeyFor
 import com.lexicon.data.local.toWord
+import com.lexicon.model.vocabulary.CefrLevel
 import com.lexicon.model.vocabulary.Word
 import com.lexicon.model.vocabulary.WordStatus
 import kotlinx.coroutines.flow.Flow
@@ -66,6 +67,7 @@ class VocabularyRepositoryImpl(
         translation: String,
         transcription: String,
         example: String,
+        cefr: CefrLevel?,
     ): Word {
         vocabularySeeder.ensureSeeded()
         val word = WordEntity(
@@ -74,6 +76,7 @@ class VocabularyRepositoryImpl(
             translation = translation,
             transcription = transcription,
             searchKey = searchKeyFor(text, translation),
+            cefr = cefr?.name.orEmpty(),
             example = example,
             isUserCreated = true,
         )
