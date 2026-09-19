@@ -4,7 +4,11 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import com.lexicon.BuildConfig
 import com.lexicon.boundary.ExampleSentenceGenerator
 import com.lexicon.boundary.SentenceGenerator
+import com.lexicon.boundary.TranslationSuggester
 import com.lexicon.boundary.Translator
+import com.lexicon.boundary.WordLevelGuesser
+import com.lexicon.data.di.levelGuesserChainQualifier
+import com.lexicon.data.di.suggesterChainQualifier
 import com.lexicon.data.di.translatorChainQualifier
 import com.lexicon.data.remote.image.OpenverseApi
 import com.lexicon.data.remote.image.OpenverseImageSource
@@ -17,9 +21,13 @@ import com.lexicon.data.remote.image.UnsplashImageSource
 import com.lexicon.data.remote.sentence.OpenAiApi
 import com.lexicon.data.remote.sentence.OpenAiExampleGenerator
 import com.lexicon.data.remote.sentence.OpenAiSentenceGenerator
+import com.lexicon.data.remote.sentence.OpenAiTranslationSuggester
+import com.lexicon.data.remote.sentence.OpenAiWordLevelGuesser
 import com.lexicon.data.remote.translate.GoogleTranslateApi
 import com.lexicon.data.remote.translate.GoogleTranslator
+import com.lexicon.data.repository.CorpusTranslationSuggester
 import com.lexicon.data.repository.CorpusTranslatorImpl
+import com.lexicon.data.repository.CorpusWordLevelGuesser
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
@@ -126,6 +134,20 @@ val networkModule = module {
         }
     }
 
+    factory<List<TranslationSuggester>>(suggesterChainQualifier) {
+        buildList {
+            add(get<CorpusTranslationSuggester>())
+            if (hasOpenAiKey) add(OpenAiTranslationSuggester(get()))
+        }
+    }
+
+    factory<List<WordLevelGuesser>>(levelGuesserChainQualifier) {
+        buildList {
+            add(get<CorpusWordLevelGuesser>())
+            if (hasOpenAiKey) add(OpenAiWordLevelGuesser(get()))
+        }
+    }
+
     factoryOf(::PexelsImageSource)
     factoryOf(::PixabayImageSource)
     factoryOf(::UnsplashImageSource)
@@ -134,3 +156,5 @@ val networkModule = module {
 }
 
 val hasGoogleTranslateKey: Boolean get() = BuildConfig.GOOGLE_TRANSLATE_API_KEY.isNotBlank()
+
+val hasOpenAiKey: Boolean get() = BuildConfig.OPENAI_API_KEY.isNotBlank()

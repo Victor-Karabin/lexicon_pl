@@ -5,6 +5,7 @@ import com.lexicon.boundary.TranslationDirection
 import com.lexicon.boundary.Translator
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.boundary.WordLevelGuesser
 import com.lexicon.common.polishTranscription
 import com.lexicon.interactors.presets.CreatePresetUseCase
 import com.lexicon.interactors.presets.CreateWordUseCase
@@ -30,6 +31,7 @@ class CreateWordUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,
     private val presetRepository: VocabularyPresetRepository,
     private val imageProvider: ImageProvider,
+    private val levelGuesser: WordLevelGuesser,
 ) : CreateWordUseCase {
     override suspend fun invoke(
         text: String,
@@ -52,6 +54,7 @@ class CreateWordUseCaseImpl(
             translation = english,
             transcription = polishTranscription(polish),
             example = example.trim(),
+            cefr = runCatching { levelGuesser.guess(polish, english) }.getOrNull(),
         )
 
         for (presetId in presetIds.distinct()) {

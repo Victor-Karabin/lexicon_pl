@@ -16,18 +16,57 @@ struct WordFormView: View {
     @State private var textWasFilledIn = false
     @State private var translationWasFilledIn = false
     @State private var memberships: [PresetMembership]?
+    @State private var polishVariants: [String] = []
+    @State private var englishVariants: [String] = []
+    @State private var placedPolish: String?
+    @State private var placedEnglish: String?
+    @State private var englishTyping: Task<Void, Never>?
+    @State private var polishTyping: Task<Void, Never>?
+
+    private let typingSettle: Duration = .milliseconds(600)
 
     var body: some View {
         Form {
             Section("English") {
                 TextField("English", text: $translation)
                     .onChange(of: translation) { _, value in
-                        Task { await fillPolish(from: value) }
+                        guard value != placedEnglish else { return }
+                        placedEnglish = nil
+                        polishVariants = []
+                        englishTyping?.cancel()
+                        englishTyping = Task {
+                            try? await Task.sleep(for: typingSettle)
+                            guard !Task.isCancelled else { return }
+                            await fillPolish(from: value)
+                        }
                     }
+                variantChips(englishVariants) { chosen in
+                    englishTyping?.cancel()
+                    placedEnglish = chosen
+                    translation = chosen
+                    Task { await lookUpImages(for: chosen) }
+                }
             }
             Section("Polish") {
                 TextField("Polish", text: $text)
-                    .onChange(of: text) { _, _ in textWasFilledIn = false }
+                    .onChange(of: text) { _, value in
+                        guard value != placedPolish else { return }
+                        placedPolish = nil
+                        textWasFilledIn = false
+                        englishVariants = []
+                        polishTyping?.cancel()
+                        polishTyping = Task {
+                            try? await Task.sleep(for: typingSettle)
+                            guard !Task.isCancelled else { return }
+                            await suggestEnglish(for: value)
+                        }
+                    }
+                variantChips(polishVariants) { chosen in
+                    englishTyping?.cancel()
+                    placedPolish = chosen
+                    text = chosen
+                    textWasFilledIn = false
+                }
             }
             Section("Example") {
                 ExampleSentenceRow(sentence: example, word: text)
@@ -100,12 +139,47 @@ struct WordFormView: View {
     private func fillPolish(from english: String) async {
         guard !english.isEmpty else { return }
         await lookUpImages(for: english)
+        let offered = await variants(of: english, toPolish: true)
+        guard !Task.isCancelled else { return }
+        polishVariants = offered
         guard text.isEmpty || textWasFilledIn else { return }
 
         let filled = try? await deps.translateWord.invoke(text: english, toPolish: true)
+        guard !Task.isCancelled else { return }
         if let filled, !filled.isEmpty {
+            placedPolish = filled
             text = filled
             textWasFilledIn = true
+        }
+    }
+
+    private func suggestEnglish(for polish: String) async {
+        guard !polish.isEmpty else { return }
+        let offered = await variants(of: polish, toPolish: false)
+        guard !Task.isCancelled else { return }
+        englishVariants = offered
+    }
+
+    private func variants(of word: String, toPolish: Bool) async -> [String] {
+        let found = try? await deps.suggestTranslations.invoke(text: word, toPolish: toPolish)
+        return (found as? [String]) ?? []
+    }
+
+    @ViewBuilder
+    private func variantChips(_ variants: [String], onChosen: @escaping (String) -> Void) -> some View {
+        if !variants.isEmpty {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: Spacing.small) {
+                    ForEach(variants, id: \.self) { variant in
+                        Button(variant) { onChosen(variant) }
+                            .font(.caption)
+                            .padding(.horizontal, Spacing.small)
+                            .padding(.vertical, Spacing.tiny)
+                            .background(Palette.accentDeep.opacity(0.12), in: Capsule())
+                            .buttonStyle(.plain)
+                    }
+                }
+            }
         }
     }
 
