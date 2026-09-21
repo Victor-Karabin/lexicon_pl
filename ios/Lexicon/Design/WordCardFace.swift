@@ -38,7 +38,7 @@ struct WordCardFace: View {
                     Button(action: onEdit) {
                         Image(systemName: "pencil").foregroundStyle(skin.onTile)
                     }
-                    .accessibilityLabel("Edit word")
+                    .accessibilityLabel(Strings.cardsEdit)
                 }
             }
             ExampleSentenceRow(sentence: example, word: text, tint: skin.onTile.muted)

@@ -13,7 +13,7 @@ ios/bootstrap.sh
 ```
 
 That builds the `Shared` XCFramework, writes the API keys out of
-`local.properties` and generates the `Strings` accessor. Build phases do all three on every build afterwards, but the first
+`local.properties`. Build phases do both on every build afterwards, but the first
 build needs them already there: `xcodebuild` resolves the framework reference and
 the source file list before any phase runs.
 
@@ -53,8 +53,9 @@ them up by name. One source of truth, read by both platforms.
 "Generate strings" build phase runs `ios/strings.py`, which turns
 `presentation/src/main/res/values/strings.xml` into `Localizable.strings`,
 `Localizable.stringsdict` for plurals and `InfoPlist.strings` for the permission
-prompts, all in the bundle. It also writes `Support/Strings.generated.swift`, a typed
-`Strings` enum with one member per key: `R.string.review_words_title` on Android is
+prompts, all in the bundle. It also generates a typed `Strings` enum into the build's
+derived files, where Xcode compiles it, so nothing generated lands in the repo. The
+enum has one member per key: `R.string.review_words_title` on Android is
 `Strings.reviewWordsTitle` on iOS, and a string with arguments becomes a function
 (`Strings.reviewWordsDone(count)`). To add text, add the key to `strings.xml`,
 reusing an existing key where Android already says the same thing.
