@@ -50,7 +50,7 @@ class WordDaoTest {
         runTest {
             words.insertAll(listOf(word(1, "kość", "bone"), word(2, "kot", "cat")))
 
-            val found = words.search(foldedQuery = "kosc", levels = emptyList(), ignoreLevels = 1, limit = 10, offset = 0)
+            val found = words.search(foldedQuery = "kosc", levels = emptyList(), ignoreLevels = 1, learningOnly = 0, limit = 10, offset = 0)
 
             assertEquals(listOf("kość"), found.map { it.text })
         }
@@ -60,9 +60,23 @@ class WordDaoTest {
         runTest {
             words.insertAll((1..25).map { word(it.toLong(), "word$it", "gloss$it") })
 
-            val first = words.search(foldedQuery = "word", levels = emptyList(), ignoreLevels = 1, limit = 10, offset = 0)
-            val second = words.search(foldedQuery = "word", levels = emptyList(), ignoreLevels = 1, limit = 10, offset = 10)
-            val third = words.search(foldedQuery = "word", levels = emptyList(), ignoreLevels = 1, limit = 10, offset = 20)
+            val first = words.search(foldedQuery = "word", levels = emptyList(), ignoreLevels = 1, learningOnly = 0, limit = 10, offset = 0)
+            val second = words.search(
+                foldedQuery = "word",
+                levels = emptyList(),
+                ignoreLevels = 1,
+                learningOnly = 0,
+                limit = 10,
+                offset = 10,
+            )
+            val third = words.search(
+                foldedQuery = "word",
+                levels = emptyList(),
+                ignoreLevels = 1,
+                learningOnly = 0,
+                limit = 10,
+                offset = 20,
+            )
 
             assertEquals(10, first.size)
             assertEquals(10, second.size)
@@ -80,7 +94,7 @@ class WordDaoTest {
                 ),
             )
 
-            val found = words.search(foldedQuery = "", levels = listOf("B2"), ignoreLevels = 0, limit = 10, offset = 0)
+            val found = words.search(foldedQuery = "", levels = listOf("B2"), ignoreLevels = 0, learningOnly = 0, limit = 10, offset = 0)
 
             assertEquals(listOf("abstrakcyjny"), found.map { it.text })
         }
@@ -138,7 +152,16 @@ class WordDaoTest {
 
             words.setDeleted(1, true)
 
-            assertTrue(words.search(foldedQuery = "kot", levels = emptyList(), ignoreLevels = 1, limit = 10, offset = 0).isEmpty())
+            assertTrue(
+                words.search(
+                    foldedQuery = "kot",
+                    levels = emptyList(),
+                    ignoreLevels = 1,
+                    learningOnly = 0,
+                    limit = 10,
+                    offset = 0,
+                ).isEmpty(),
+            )
             assertEquals(1, words.countIncludingDeleted())
         }
 
@@ -171,5 +194,27 @@ class WordDaoTest {
             )
 
             assertEquals(listOf(2L, 3L), words.randomKnownWordIds(limit = 10).sorted())
+        }
+
+    @Test
+    fun aMeaningIsFoundByItsTranslationWhateverElseSharesItsLetters() =
+        runTest {
+            val crowd = (1L..60L).map { word(it, "aaa$it", "going $it") }
+            words.insertAll(crowd + word(100, "iść", "to go") + word(101, "robić", "to do"))
+
+            val found = words.withTranslationContaining("go", limit = 500).map { it.text }
+
+            assertTrue("iść" in found)
+            assertTrue(words.withTranslationContaining("do", limit = 500).any { it.text == "robić" })
+        }
+
+    @Test
+    fun aPolishWordIsFoundByTheStartOfItsSearchKey() =
+        runTest {
+            words.insertAll(listOf(word(1, "dom", "house"), word(2, "domek", "little house"), word(3, "dom towarowy", "department store")))
+
+            val found = words.withTextStarting("dom", limit = 500).map { it.text }.toSet()
+
+            assertEquals(setOf("dom", "dom towarowy"), found)
         }
 }

@@ -95,9 +95,10 @@ takes — 999 on Android 8 to 11, which is fewer than a large study set.
 
 **End-to-end tests** in `app/src/androidTest`, driving the built app through Compose over
 the real database and the shipped catalogues. They cover the journeys rather than the
-screens: the app seeds and lands on its tabs, the catalogue is there and a preset can be
-starred, search narrows to the word asked for, every training is reachable, and words
-chosen in the catalogue are what a training then runs.
+screens: the app seeds and lands on its tabs, search narrows to the word asked for and a
+word found that way can be marked to learn, every training is reachable, words sorted in
+Review words are what a training then runs, and the vocabulary course launches a training
+that offers its reset button.
 
     ./gradlew connectedDebugAndroidTest    # both, on a connected device or emulator
 
