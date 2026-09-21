@@ -17,12 +17,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.wordcard.WordCardStep
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
@@ -42,7 +42,7 @@ fun WordCardScreen(
     modifier: Modifier = Modifier,
     viewModel: WordCardViewModel = koinViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(uiState.isFinished) {
         if (uiState.isFinished) onFinished()

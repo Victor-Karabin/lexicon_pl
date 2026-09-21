@@ -31,7 +31,6 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -51,6 +50,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.vocabularycourse.CourseSettings
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
@@ -81,7 +81,7 @@ fun CourseSettingsScreen(
     modifier: Modifier = Modifier,
     viewModel: CourseSettingsViewModel = koinViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val done = { viewModel.onDone(onClose) }
 
     BackHandler(onBack = done)

@@ -3,9 +3,9 @@ package com.lexicon.app.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -496,7 +496,7 @@ private fun CourseRunScope(
     content: @Composable (run: CourseRunViewModel) -> Unit,
 ) {
     val run: CourseRunViewModel = koinViewModel()
-    val step by run.step.collectAsState()
+    val step by run.step.collectAsStateWithLifecycle()
 
     LaunchedEffect(step) {
         when (val current = step) {
