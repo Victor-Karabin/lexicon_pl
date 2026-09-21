@@ -1,5 +1,9 @@
 package com.lexicon.data.remote.image
 
+import android.util.Log
+
+private const val TAG = "PexelsImageSource"
+
 private const val PEXELS_MAX_PER_PAGE = 80
 
 class PexelsImageSource(
@@ -11,5 +15,6 @@ class PexelsImageSource(
     ): List<String> =
         runCatching {
             api.search(query, perPage = count.coerceAtMost(PEXELS_MAX_PER_PAGE)).photos.map { it.src.medium }
-        }.getOrDefault(emptyList())
+        }.onFailure { Log.w(TAG, "Pexels could not be searched", it) }
+            .getOrThrow()
 }

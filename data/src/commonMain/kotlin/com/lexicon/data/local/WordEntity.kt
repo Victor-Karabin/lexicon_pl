@@ -1,6 +1,7 @@
 package com.lexicon.data.local
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.lexicon.common.foldForSearch
 import com.lexicon.model.vocabulary.CefrLevel
@@ -8,7 +9,7 @@ import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
 import com.lexicon.model.vocabulary.WordStatus
 
-@Entity(tableName = "words")
+@Entity(tableName = "words", indices = [Index("status")])
 data class WordEntity(
     @PrimaryKey val id: Long,
     val text: String,

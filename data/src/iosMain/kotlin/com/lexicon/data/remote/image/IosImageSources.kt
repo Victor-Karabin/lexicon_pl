@@ -11,6 +11,8 @@ private const val PEXELS_MAX_PER_PAGE = 80
 private const val PIXABAY_MIN_PER_PAGE = 3
 private const val PIXABAY_MAX_PER_PAGE = 200
 
+class ImageSourceUnavailable(reason: String) : Exception(reason)
+
 class OpenverseIosImageSource : RemoteImageSource {
     override suspend fun searchImageUrls(
         query: String,
@@ -18,10 +20,10 @@ class OpenverseIosImageSource : RemoteImageSource {
     ): List<String> {
         val pageSize = count.coerceAtMost(OPENVERSE_ANONYMOUS_MAX_PAGE_SIZE)
         val body = httpGet("https://api.openverse.org/v1/images/?q=${query.urlEncoded()}&page_size=$pageSize")
-            ?: return emptyList()
+            ?: throw ImageSourceUnavailable("no answer")
         return runCatching {
             json.decodeFromString<OpenverseSearchResponse>(body).results.map { it.url }
-        }.getOrDefault(emptyList())
+        }.getOrElse { throw ImageSourceUnavailable("unreadable answer") }
     }
 }
 
@@ -36,10 +38,10 @@ class PexelsIosImageSource(
         val body = httpGet(
             url = "https://api.pexels.com/v1/search?query=${query.urlEncoded()}&per_page=${count.coerceAtMost(PEXELS_MAX_PER_PAGE)}",
             headers = mapOf("Authorization" to apiKey),
-        ) ?: return emptyList()
+        ) ?: throw ImageSourceUnavailable("no answer")
         return runCatching {
             json.decodeFromString<PexelsSearchResponse>(body).photos.map { it.src.medium }
-        }.getOrDefault(emptyList())
+        }.getOrElse { throw ImageSourceUnavailable("unreadable answer") }
     }
 }
 
@@ -54,9 +56,9 @@ class PixabayIosImageSource(
         val perPage = count.coerceIn(PIXABAY_MIN_PER_PAGE, PIXABAY_MAX_PER_PAGE)
         val body = httpGet(
             "https://pixabay.com/api/?key=$apiKey&q=${query.urlEncoded()}&per_page=$perPage",
-        ) ?: return emptyList()
+        ) ?: throw ImageSourceUnavailable("no answer")
         return runCatching {
             json.decodeFromString<PixabaySearchResponse>(body).hits.map { it.webformatURL }
-        }.getOrDefault(emptyList())
+        }.getOrElse { throw ImageSourceUnavailable("unreadable answer") }
     }
 }

@@ -3,6 +3,7 @@
 package com.lexicon.application.wordcard
 
 import com.lexicon.application.settings.StepCountResolver
+import com.lexicon.application.training.picturesFor
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.training.RecordAnswerUseCase
@@ -27,6 +28,8 @@ class StartWordCardSessionUseCaseImpl(
         val stepCount = stepCountResolver.resolve(null)
         val words = vocabulary.getRandomItems(stepCount, request.vocabularyIds)
 
+        val pictures = imageProvider.picturesFor(words.map { it.translation })
+
         val steps = words.mapIndexed { index, word ->
             WordCardStep(
                 stepIndex = index,
@@ -34,7 +37,7 @@ class StartWordCardSessionUseCaseImpl(
                 text = word.text,
                 translation = word.translation,
                 transcription = word.transcription,
-                imageUrl = runCatching { imageProvider.searchImage(word.translation) }.getOrNull(),
+                imageUrl = pictures[index],
                 example = word.example,
             )
         }

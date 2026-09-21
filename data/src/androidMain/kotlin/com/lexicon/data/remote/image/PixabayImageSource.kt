@@ -1,5 +1,9 @@
 package com.lexicon.data.remote.image
 
+import android.util.Log
+
+private const val TAG = "PixabayImageSource"
+
 private const val PIXABAY_MIN_PER_PAGE = 3
 private const val PIXABAY_MAX_PER_PAGE = 200
 
@@ -16,5 +20,6 @@ class PixabayImageSource(
                 .hits
                 .map { it.webformatURL }
                 .take(count)
-        }.getOrDefault(emptyList())
+        }.onFailure { Log.w(TAG, "Pixabay could not be searched", it) }
+            .getOrThrow()
 }

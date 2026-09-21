@@ -1,5 +1,6 @@
 package com.lexicon.application.vocabularycourse
 
+import com.lexicon.application.training.picturesFor
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.StudyRecordRepository
 import com.lexicon.boundary.VocabularyCourseBoundary
@@ -197,15 +198,17 @@ class GetWordCardsUseCaseImpl(
         if (ids.isEmpty()) return persistentListOf()
         val words = vocabulary.getItemsByIds(ids.map { it.value }).associateBy { it.id.value }
 
-        return ids
-            .mapNotNull { words[it.value] }
-            .map { word ->
+        val found = ids.mapNotNull { words[it.value] }
+        val pictures = imageProvider.picturesFor(found.map { it.translation })
+
+        return found
+            .mapIndexed { index, word ->
                 WordCard(
                     id = word.id,
                     text = word.text,
                     translation = word.translation,
                     transcription = word.transcription,
-                    imageUrl = runCatching { imageProvider.searchImage(word.translation) }.getOrNull(),
+                    imageUrl = pictures[index],
                     example = word.example,
                 )
             }.toImmutableList()

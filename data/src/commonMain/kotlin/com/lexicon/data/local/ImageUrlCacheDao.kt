@@ -7,8 +7,8 @@ import androidx.room.Query
 
 @Dao
 interface ImageUrlCacheDao {
-    @Query("SELECT imageUrl FROM image_url_cache WHERE query = :query")
-    suspend fun get(query: String): String?
+    @Query("SELECT * FROM image_url_cache WHERE query = :query")
+    suspend fun find(query: String): ImageUrlCacheEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: ImageUrlCacheEntity)
