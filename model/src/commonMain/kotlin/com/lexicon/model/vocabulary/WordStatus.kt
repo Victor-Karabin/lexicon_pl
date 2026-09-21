@@ -15,3 +15,5 @@ enum class WordStatus {
         fun ofName(name: String?): WordStatus = entries.firstOrNull { it.name == name } ?: UNDEFINED
     }
 }
+
+fun Map<VocabularyId, WordStatus>.statusOf(id: VocabularyId): WordStatus = this[id] ?: WordStatus.UNDEFINED

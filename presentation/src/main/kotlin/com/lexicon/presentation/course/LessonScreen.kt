@@ -42,6 +42,7 @@ import com.lexicon.model.course.LessonId
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
 import com.lexicon.model.vocabulary.WordStatus
+import com.lexicon.model.vocabulary.statusOf
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
@@ -240,7 +241,7 @@ private fun LazyListScope.wordsBlock(
     itemsIndexed(uiState.words, key = { _, word -> word.id.value }) { index, word ->
         VocabularyWordRow(
             word = word,
-            status = uiState.wordStatuses[word.id] ?: word.status,
+            status = uiState.wordStatuses.statusOf(word.id),
             onStatusCycled = { onWordStatusCycled(word.id) },
             onPronounce = { onPronounceWord(word) },
             onClick = { onEditWord(word.id) },

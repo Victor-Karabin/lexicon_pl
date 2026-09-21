@@ -81,7 +81,7 @@ final class VocabularyModel: ObservableObject {
         await search()
     }
 
-    func status(of word: Word) -> WordStatus { statuses[word.id.value] ?? word.status }
+    func status(of word: Word) -> WordStatus { statuses[word.id.value] ?? .undefined }
 
     func toggleToLearnOnly() async {
         toLearnOnly.toggle()

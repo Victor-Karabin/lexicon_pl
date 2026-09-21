@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
 import com.lexicon.model.vocabulary.WordStatus
+import com.lexicon.model.vocabulary.statusOf
 import com.lexicon.presentation.common.SwipeToRevealContainer
 import com.lexicon.presentation.common.WordRowActions
 import com.lexicon.presentation.common.WordRowActionsWidth
@@ -37,7 +38,7 @@ fun LazyListScope.wordRows(
         ) {
             VocabularyWordRow(
                 word = word,
-                status = statuses[word.id] ?: word.status,
+                status = statuses.statusOf(word.id),
                 onStatusCycled = { onStatusCycled(word.id) },
                 onPronounce = { onPronounce(word) },
                 onClick = { if (selection.isActive) selection.toggle(word.id) else onEdit(word) },

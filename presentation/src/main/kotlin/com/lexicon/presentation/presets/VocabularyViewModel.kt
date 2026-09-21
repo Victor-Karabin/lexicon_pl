@@ -19,8 +19,8 @@ import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.Word
-import com.lexicon.model.vocabulary.WordStatus
 import com.lexicon.model.vocabulary.resolve
+import com.lexicon.model.vocabulary.statusOf
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.FlowPreview
@@ -164,7 +164,7 @@ class VocabularyViewModel(
 
     fun onWordStatusCycled(id: VocabularyId) {
         val state = _uiState.value as? VocabularyUiState.Loaded ?: return
-        val current = state.wordStatuses[id] ?: state.words.firstOrNull { it.id == id }?.status ?: WordStatus.UNDEFINED
+        val current = state.wordStatuses.statusOf(id)
         val next = current.next()
 
         updateLoaded { it.copy(wordStatuses = it.wordStatuses + (id to next)) }
