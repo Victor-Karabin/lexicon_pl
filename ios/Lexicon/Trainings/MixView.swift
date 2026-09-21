@@ -23,13 +23,13 @@ struct MixView: View {
                 } actions: {
                     HStack {
                         if !state.isAnswered {
-                            Button("Skip") { Task { await submit(step, skipped: true) } }
+                            Button(Strings.actionSkip) { Task { await submit(step, skipped: true) } }
                             Spacer()
-                            AsyncButton { await submit(step, skipped: false) } label: { Text("Check") }
+                            AsyncButton { await submit(step, skipped: false) } label: { Text(Strings.actionCheck) }
                                 .buttonStyle(.borderedProminent)
                         } else {
                             Spacer()
-                            Button("Next") { advance() }.buttonStyle(.borderedProminent)
+                            Button(Strings.actionNext) { advance() }.buttonStyle(.borderedProminent)
                         }
                     }
                 }
@@ -46,13 +46,13 @@ struct MixView: View {
             switch step {
             case let dictation as MixStepDictation:
                 Button { Speech.shared.speak(dictation.step.expectedText) } label: {
-                    Label("Listen again", systemImage: "speaker.wave.2.fill")
+                    Label(Strings.actionListenAgain, systemImage: "speaker.wave.2.fill")
                 }
                 Text(dictation.step.translationText).font(.title3.weight(.semibold))
                 answerField
             case let puzzle as MixStepDictationPuzzle:
                 Button { Speech.shared.speak(puzzle.step.expectedText) } label: {
-                    Label("Listen again", systemImage: "speaker.wave.2.fill")
+                    Label(Strings.actionListenAgain, systemImage: "speaker.wave.2.fill")
                 }
                 Text(puzzle.step.translationText).font(.title3.weight(.semibold))
                 answerField
@@ -71,13 +71,13 @@ struct MixView: View {
             case let tf as MixStepTrueOrFalse:
                 Text(tf.step.word).font(.largeTitle.bold())
                 Text(tf.step.displayedTranslation).font(.title3).foregroundStyle(.secondary)
-                Text("Type “true” or “false”").font(.caption).foregroundStyle(.secondary)
+                Text(Strings.mixTrueFalseHint).font(.caption).foregroundStyle(.secondary)
                 answerField
             case let say as MixStepPronunciation:
                 Text(say.step.expectedText).font(.largeTitle.bold())
                 Text(say.step.clueText).font(.title3).foregroundStyle(.secondary)
                 Button { Speech.shared.speak(say.step.expectedText) } label: {
-                    Label("Listen", systemImage: "speaker.wave.2")
+                    Label(Strings.actionListen, systemImage: "speaker.wave.2")
                 }
             default:
                 EmptyView()
@@ -86,7 +86,7 @@ struct MixView: View {
     }
 
     private var answerField: some View {
-        TextField("Your answer", text: $typed)
+        TextField(Strings.mixAnswerHint, text: $typed)
             .textFieldStyle(.roundedBorder)
             .autocorrectionDisabled()
             .textInputAutocapitalization(.never)

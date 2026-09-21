@@ -12,7 +12,7 @@ struct SettingsView: View {
                     let skin = TileSkin.standard(scheme: scheme)
 
                     Tile(skin: skin) {
-                        heading("paintpalette", "Appearance", skin)
+                        heading("paintpalette", Strings.settingsAppearance, skin)
                         ForEach(themeModes, id: \.self) { mode in
                             Button {
                                 Task { try? await deps.updateThemeMode.invoke(themeMode: mode) }
@@ -28,9 +28,9 @@ struct SettingsView: View {
                     }
 
                     Tile(skin: skin) {
-                        heading("figure.strengthtraining.traditional", "Training", skin)
+                        heading("figure.strengthtraining.traditional", Strings.settingsTraining, skin)
                         HStack {
-                            Text("Steps per session").foregroundStyle(skin.onTile)
+                            Text(Strings.settingsStepCount).foregroundStyle(skin.onTile)
                             Spacer()
                             Text("\(store.settings.stepCount)").bold().foregroundStyle(skin.onTile)
                         }
@@ -44,14 +44,14 @@ struct SettingsView: View {
                             in: Double(deps.minStepCount)...Double(deps.maxStepCount),
                             step: 1
                         )
-                        Text("Applies to new training sessions only.")
+                        Text(Strings.settingsStepCountNote)
                             .font(.caption)
                             .foregroundStyle(skin.onTile.muted)
                     }
                 }
                 .padding(Spacing.medium)
             }
-            .navigationTitle("Settings")
+            .navigationTitle(Strings.tabSettings)
         }
     }
 
@@ -59,9 +59,9 @@ struct SettingsView: View {
 
     private func label(for mode: ThemeMode) -> String {
         switch mode {
-        case .light: return "Light"
-        case .dark: return "Dark"
-        default: return "System"
+        case .light: return Strings.settingsThemeLight
+        case .dark: return Strings.settingsThemeDark
+        default: return Strings.settingsThemeSystem
         }
     }
 

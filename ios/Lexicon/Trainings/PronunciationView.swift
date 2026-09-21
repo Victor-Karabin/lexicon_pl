@@ -23,16 +23,16 @@ struct PronunciationView: View {
                     VStack(spacing: Spacing.small) {
                         Text(step.expectedText).font(.largeTitle.bold())
                         if !step.transcription.isEmpty {
-                            Text("IPA: /\(step.transcription)/").font(.callout).foregroundStyle(.secondary)
+                            Text(Strings.pronunciationIpaFormat(step.transcription)).font(.callout).foregroundStyle(.secondary)
                         }
                         Text(step.clueText).font(.title3).foregroundStyle(.secondary)
                         Button { Speech.shared.speak(step.expectedText) } label: {
-                            Label("Listen", systemImage: "speaker.wave.2")
+                            Label(Strings.actionListen, systemImage: "speaker.wave.2")
                         }
                         .padding(.top, Spacing.small)
 
                         if !recognizer.heard.isEmpty {
-                            Text("Heard: \(recognizer.heard)").font(.callout)
+                            Text(Strings.pronunciationHeardFormat(recognizer.heard)).font(.callout)
                         }
                         if let error = recognizer.error {
                             Text(error).font(.callout).foregroundStyle(Palette.failure).multilineTextAlignment(.center)
@@ -41,9 +41,9 @@ struct PronunciationView: View {
                 } actions: {
                     HStack(spacing: Spacing.small) {
                         if !state.isAnswered {
-                            Button("Skip") { Task { await submit(skipped: true) } }
+                            Button(Strings.actionSkip) { Task { await submit(skipped: true) } }
                             Spacer()
-                            Button(recognizer.isRecording ? "Listening…" : "Record") {
+                            Button(recognizer.isRecording ? Strings.pronunciationListening : Strings.pronunciationRecord) {
                                 Task {
                                     if recognizer.isRecording {
                                         recognizer.stop()
@@ -56,7 +56,7 @@ struct PronunciationView: View {
                             .buttonStyle(.borderedProminent)
                         } else {
                             Spacer()
-                            Button("Next") { advance() }.buttonStyle(.borderedProminent)
+                            Button(Strings.actionNext) { advance() }.buttonStyle(.borderedProminent)
                         }
                     }
                 }
@@ -125,11 +125,11 @@ final class SpeechRecognizer: ObservableObject {
         heard = ""
 
         guard await authorised() else {
-            error = "Speech recognition isn't available until it is allowed in Settings."
+            error = Strings.pronunciationPermissionDenied
             return
         }
         guard let recognizer, recognizer.isAvailable else {
-            error = "Polish speech recognition isn't available on this device."
+            error = Strings.pronunciationPolishUnavailable
             return
         }
 
@@ -150,7 +150,7 @@ final class SpeechRecognizer: ObservableObject {
             try engine.start()
             isRecording = true
         } catch {
-            self.error = "The microphone could not be started."
+            self.error = Strings.pronunciationMicrophoneFailed
             return
         }
 

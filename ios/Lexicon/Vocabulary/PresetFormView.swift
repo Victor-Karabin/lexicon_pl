@@ -24,13 +24,13 @@ struct PresetFormView: View {
 
     var body: some View {
         Form {
-            Section("Name") {
-                TextField("Name", text: $title)
+            Section(Strings.createPresetName) {
+                TextField(Strings.createPresetName, text: $title)
             }
-            Section("Description (optional)") {
-                TextField("Description", text: $description)
+            Section(Strings.createPresetDescription) {
+                TextField(Strings.createPresetDescription, text: $description)
             }
-            Section("Icon") {
+            Section(Strings.createPresetIcon) {
                 FlowLayout(spacing: Spacing.small) {
                     ForEach(icons, id: \.self) { name in
                         Button { icon = name } label: {
@@ -43,7 +43,7 @@ struct PresetFormView: View {
                     }
                 }
             }
-            Section("Colour") {
+            Section(Strings.createPresetColor) {
                 FlowLayout(spacing: Spacing.small) {
                     ForEach(colours, id: \.self) { hex in
                         Button { colour = hex } label: {
@@ -60,11 +60,11 @@ struct PresetFormView: View {
                 Text(problem).foregroundStyle(Palette.failure)
             }
         }
-        .navigationTitle("New preset")
+        .navigationTitle(Strings.createPresetTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                AsyncButton { await save() } label: { Text("Save") }
+                AsyncButton { await save() } label: { Text(Strings.createSave) }
             }
         }
     }
@@ -77,7 +77,7 @@ struct PresetFormView: View {
 
     private func save() async {
         guard !title.trimmingCharacters(in: .whitespaces).isEmpty else {
-            problem = "Give the preset a name."
+            problem = Strings.createPresetNameMissing
             return
         }
         _ = try? await deps.createPreset.invoke(

@@ -21,7 +21,7 @@ struct VocabularyView: View {
                             .buttonStyle(.plain)
                         }
                     } else if model.words.isEmpty {
-                        Text("No results")
+                        Text(Strings.vocabularySearchNoMatches)
                             .foregroundStyle(.secondary)
                             .padding(.top, Spacing.xl)
                     } else {
@@ -55,21 +55,21 @@ struct VocabularyView: View {
                 }
                 .padding(Spacing.medium)
             }
-            .searchable(text: $model.query, prompt: "Search words")
+            .searchable(text: $model.query, prompt: Strings.vocabularySearchHint)
             .onChange(of: model.query) { Task { await model.search() } }
-            .navigationTitle("Vocabulary")
+            .navigationTitle(Strings.vocabularyTitle)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     if model.isSelecting {
                         Button(role: .destructive) {
                             Task { await model.deleteSelected() }
                         } label: {
-                            Label("Delete", systemImage: "trash")
+                            Label(Strings.vocabularyDelete, systemImage: "trash")
                         }
                     } else {
                         Menu {
-                            NavigationLink { WordFormView(wordId: nil) } label: { Label("Add word", systemImage: "text.badge.plus") }
-                            NavigationLink { PresetFormView() } label: { Label("Add preset", systemImage: "folder.badge.plus") }
+                            NavigationLink { WordFormView(wordId: nil) } label: { Label(Strings.vocabularyAddWord, systemImage: "text.badge.plus") }
+                            NavigationLink { PresetFormView() } label: { Label(Strings.vocabularyAddPreset, systemImage: "folder.badge.plus") }
                         } label: {
                             Image(systemName: "plus")
                         }
@@ -77,7 +77,7 @@ struct VocabularyView: View {
                 }
                 ToolbarItem(placement: .topBarLeading) {
                     if model.isSelecting {
-                        Button("Stop selecting") { model.stopSelecting() }
+                        Button(Strings.selectionCancel) { model.stopSelecting() }
                     }
                 }
             }
@@ -103,7 +103,7 @@ struct VocabularyView: View {
                 Button {
                     Task { await model.toggleToLearnOnly() }
                 } label: {
-                    Text("To learn")
+                    Text(Strings.vocabularyFilterToLearn)
                         .font(.callout)
                         .padding(.horizontal, Spacing.medium)
                         .padding(.vertical, Spacing.small)
@@ -154,7 +154,7 @@ private struct PresetTile: View {
                 }
                 Spacer()
             }
-            StatChip(systemName: "character.book.closed", text: "\(preset.wordCount) words", skin: skin)
+            StatChip(systemName: "character.book.closed", text: "\(preset.wordCount) \(Strings.presetsWordCountLabel(Int(preset.wordCount)))", skin: skin)
         }
     }
 }

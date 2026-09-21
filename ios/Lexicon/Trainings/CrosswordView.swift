@@ -26,7 +26,7 @@ struct CrosswordView: View {
                 }
                 .safeAreaInset(edge: .bottom) {
                     AsyncButton { await check(session) } label: {
-                        Text("Check").frame(maxWidth: .infinity)
+                        Text(Strings.actionCheck).frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
                     .padding(Spacing.medium)
@@ -83,7 +83,7 @@ struct CrosswordView: View {
         VStack(alignment: .leading, spacing: Spacing.small) {
             ForEach(session.words, id: \.vocabularyItemId) { placement in
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("\(placement.direction == .across ? "Across" : "Down") · \(placement.expectedText.count) letters")
+                    Text(placement.direction == .across ? Strings.crosswordAcrossFormat(placement.expectedText.count) : Strings.crosswordDownFormat(placement.expectedText.count))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     HStack {

@@ -28,15 +28,15 @@ struct TrueOrFalseView: View {
                     HStack(spacing: Spacing.medium) {
                         if !state.isAnswered {
                             AsyncButton { await submit(answeredTrue: true) } label: {
-                                Text("True").frame(maxWidth: .infinity)
+                                Text(Strings.actionTrue).frame(maxWidth: .infinity)
                             }
                             .buttonStyle(.borderedProminent)
                             AsyncButton { await submit(answeredTrue: false) } label: {
-                                Text("False").frame(maxWidth: .infinity)
+                                Text(Strings.actionFalse).frame(maxWidth: .infinity)
                             }
                             .buttonStyle(.bordered)
                         } else {
-                            Button("Next") { advance() }
+                            Button(Strings.actionNext) { advance() }
                                 .buttonStyle(.borderedProminent)
                                 .frame(maxWidth: .infinity)
                         }
@@ -78,7 +78,7 @@ struct TrueOrFalseView: View {
             state = .correct
             tally.correct += 1
         } else {
-            state = .incorrect(expected: step.isDisplayedTranslationCorrect ? "True" : "False")
+            state = .incorrect(expected: step.isDisplayedTranslationCorrect ? Strings.actionTrue : Strings.actionFalse)
             tally.incorrect += 1
         }
     }

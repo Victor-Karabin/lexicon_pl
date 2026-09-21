@@ -22,7 +22,7 @@ struct ExampleSentenceRow: View {
                     Image(systemName: "speaker.wave.2").foregroundStyle(tint)
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel("Play the example")
+                .accessibilityLabel(Strings.examplePlay)
             }
         }
     }

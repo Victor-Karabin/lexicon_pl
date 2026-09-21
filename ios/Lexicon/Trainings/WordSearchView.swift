@@ -49,9 +49,9 @@ struct WordSearchView: View {
         HStack {
             Spacer()
             if remaining.isEmpty || checked {
-                Button("Finish") { finished = true }.buttonStyle(.borderedProminent)
+                Button(Strings.actionFinish) { finished = true }.buttonStyle(.borderedProminent)
             } else {
-                Button("Check") { reveal() }.buttonStyle(.borderedProminent)
+                Button(Strings.actionCheck) { reveal() }.buttonStyle(.borderedProminent)
             }
         }
         .padding(Spacing.medium)

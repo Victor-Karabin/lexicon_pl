@@ -19,9 +19,9 @@ enum AnswerState: Equatable {
 
     var label: String {
         switch self {
-        case .correct: return "✓ Correct"
-        case .incorrect: return "✗ Incorrect"
-        case .skipped: return "Skipped"
+        case .correct: return Strings.statusCorrect
+        case .incorrect: return Strings.statusIncorrect
+        case .skipped: return Strings.statusSkipped
         case .unanswered: return ""
         }
     }
@@ -69,7 +69,7 @@ struct TrainingScaffold<Content: View, Actions: View>: View {
                         VStack(spacing: Spacing.tiny) {
                             Text(state.label).foregroundStyle(state.tint).font(.headline)
                             if let expected = state.expected {
-                                Text("Expected: \(expected)").font(.callout).foregroundStyle(.secondary)
+                                Text(Strings.expectedFormat(expected)).font(.callout).foregroundStyle(.secondary)
                             }
                         }
                     }
@@ -106,7 +106,7 @@ struct SessionResultView: View {
             let skin = TileSkin.standard(highlighted: true, scheme: scheme)
             Tile(skin: skin) {
                 Text("\(tally.accuracy)%").font(.system(size: 44, weight: .bold)).foregroundStyle(skin.onTile)
-                Text("answered correctly").font(.callout).foregroundStyle(skin.onTile.muted)
+                Text(Strings.resultAccuracy).font(.callout).foregroundStyle(skin.onTile.muted)
                 FlowLayout(spacing: Spacing.small) {
                     StatChip(systemName: "checkmark", text: "\(tally.correct)", skin: skin)
                     if tally.incorrect > 0 {
@@ -118,7 +118,7 @@ struct SessionResultView: View {
                 }
             }
             Spacer()
-            Button("Done") {
+            Button(Strings.resultDone) {
                 if let onTrainingFinished { onTrainingFinished() } else { onDone() }
             }
                 .buttonStyle(.borderedProminent)
@@ -131,8 +131,8 @@ struct SessionResultView: View {
 /// Shown when a training drew nothing it could ask. The Android app gained the same
 /// screen when seven of its trainings were found sitting on a spinner instead.
 struct TrainingUnavailableView: View {
-    var title = "Nothing to practise here"
-    var message = "This training could not build a round from your study set. Try another training, or add a few more words."
+    var title = Strings.trainingUnavailableTitle
+    var message = Strings.trainingUnavailableBody
 
     @Environment(\.dismiss) private var dismiss
 
@@ -146,7 +146,7 @@ struct TrainingUnavailableView: View {
                 .font(.callout)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
-            Button("Go back") { dismiss() }
+            Button(Strings.trainingUnavailableAction) { dismiss() }
                 .buttonStyle(.borderedProminent)
                 .padding(.top, Spacing.small)
         }

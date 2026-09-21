@@ -24,11 +24,11 @@ struct StudyTimeCard: View {
             HStack(spacing: Spacing.medium) {
                 Medallion(skin: skin) { MedallionIcon(systemName: "clock", skin: skin) }
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Study time this week")
+                    Text(Strings.dashboardStudyTimeWeek)
                         .font(.caption)
                         .foregroundStyle(skin.onTile.muted)
                     if history.isEmpty {
-                        Text("Nothing studied this week yet. Finish a training and the time shows up here.")
+                        Text(Strings.dashboardStudyTimeEmpty)
                             .font(.subheadline)
                             .foregroundStyle(skin.onTile.muted)
                     } else {
@@ -36,7 +36,7 @@ struct StudyTimeCard: View {
                             .font(.title3.weight(.semibold))
                             .foregroundStyle(skin.onTile)
                         if let best = history.busiest {
-                            Text("Best day \(weekdayName(of: best)) · \(durationText(minutes: Int(best.studiedMinutes)))")
+                            Text(Strings.dashboardStudyTimeBest(weekdayName(of: best), durationText(minutes: Int(best.studiedMinutes))))
                                 .font(.caption)
                                 .foregroundStyle(skin.onTile.muted)
                         }
@@ -95,7 +95,7 @@ private struct StudyTimeChart: View {
             }
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Study time by day: \(spokenDays)")
+        .accessibilityLabel(Strings.dashboardStudyTimeChart(spokenDays))
     }
 
     private func bar(for day: DailyStudyTime, plot: CGFloat) -> some View {
@@ -111,16 +111,16 @@ private struct StudyTimeChart: View {
     private var spokenDays: String {
         days
             .map { day in
-                let spent = day.wasStudied ? durationText(minutes: Int(day.studiedMinutes)) : "nothing"
-                return "\(weekdayName(of: day)) \(spent)"
+                let spent = day.wasStudied ? durationText(minutes: Int(day.studiedMinutes)) : Strings.dashboardStudyTimeNothing
+                return Strings.dashboardStudyTimeDay(weekdayName(of: day), spent)
             }
             .joined(separator: ", ")
     }
 }
 
 private func durationText(minutes: Int) -> String {
-    guard minutes >= minutesPerHour else { return "\(minutes) min" }
-    return "\(minutes / minutesPerHour) h \(minutes % minutesPerHour) min"
+    guard minutes >= minutesPerHour else { return Strings.durationMinutes(minutes) }
+    return Strings.durationHoursMinutes(minutes / minutesPerHour, minutes % minutesPerHour)
 }
 
 private let weekdayFormatter: DateFormatter = {

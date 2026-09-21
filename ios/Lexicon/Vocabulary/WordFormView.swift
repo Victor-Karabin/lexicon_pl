@@ -28,8 +28,8 @@ struct WordFormView: View {
 
     var body: some View {
         Form {
-            Section("English") {
-                TextField("English", text: $translation)
+            Section(Strings.createWordBase) {
+                TextField(Strings.createWordBase, text: $translation)
                     .onChange(of: translation) { _, value in
                         guard value != placedEnglish else { return }
                         placedEnglish = nil
@@ -48,8 +48,8 @@ struct WordFormView: View {
                     Task { await lookUpImages(for: chosen) }
                 }
             }
-            Section("Polish") {
-                TextField("Polish", text: $text)
+            Section(Strings.createWordTranslation) {
+                TextField(Strings.createWordTranslation, text: $text)
                     .onChange(of: text) { _, value in
                         guard value != placedPolish else { return }
                         placedPolish = nil
@@ -69,17 +69,17 @@ struct WordFormView: View {
                     textWasFilledIn = false
                 }
             }
-            Section("Example") {
+            Section(Strings.exampleLabel) {
                 ExampleSentenceRow(sentence: example, word: text)
                 TextField(
-                    "A sentence using the word",
+                    Strings.exampleHint,
                     text: Binding(get: { deps.editableExample(marked: example) }, set: { example = $0 }),
                     axis: .vertical
                 )
                     .lineLimit(2...4)
             }
 
-            Section("Picture") {
+            Section(Strings.createWordImage) {
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: Spacing.small) {
@@ -105,10 +105,10 @@ struct WordFormView: View {
                     }
                 }
                 if let chosenImage {
-                    AsyncButton { await adjust(chosenImage) } label: { Text("Adjust") }
+                    AsyncButton { await adjust(chosenImage) } label: { Text(Strings.createWordImageAdjust) }
                 }
                 if images.isEmpty {
-                    Text("Type a word to look for a picture.")
+                    Text(Strings.createWordImageNone)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -117,11 +117,11 @@ struct WordFormView: View {
                 Text(problem).foregroundStyle(Palette.failure)
             }
         }
-        .navigationTitle(wordId == nil ? "New word" : "Edit word")
+        .navigationTitle(wordId == nil ? Strings.createWordTitle : Strings.editWordTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                AsyncButton { await save() } label: { Text("Save") }
+                AsyncButton { await save() } label: { Text(Strings.createSave) }
             }
         }
         .task { await load() }
@@ -137,7 +137,7 @@ struct WordFormView: View {
 
     private func adjust(_ url: String) async {
         guard let picture = await loadPicture(url) else {
-            problem = "Couldn't load this picture."
+            problem = Strings.createWordImageLoadFailed
             return
         }
         toAdjust = PendingCrop(image: picture)
@@ -221,7 +221,7 @@ struct WordFormView: View {
                 var known = memberships
                 if known == nil { known = await presetMemberships(of: wordId) }
                 guard let known else {
-                    problem = "The word's presets could not be read, so nothing was saved. Try again."
+                    problem = Strings.createWordPresetsFailed
                     return
                 }
                 _ = try await deps.updateWord.invoke(
@@ -243,7 +243,7 @@ struct WordFormView: View {
             }
             dismiss()
         } catch {
-            problem = "That word could not be saved. Check both fields are filled in."
+            problem = Strings.createWordSaveFailed
         }
     }
 }

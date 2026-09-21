@@ -20,7 +20,7 @@ struct PresetDetailView: View {
                             .foregroundStyle(skin.onTile.muted)
                         Spacer()
                     }
-                    StatChip(systemName: "character.book.closed", text: "\(preset.wordCount) words", skin: skin)
+                    StatChip(systemName: "character.book.closed", text: "\(preset.wordCount) \(Strings.presetsWordCountLabel(Int(preset.wordCount)))", skin: skin)
                 }
                 .padding(.bottom, Spacing.medium)
 

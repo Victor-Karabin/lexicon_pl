@@ -96,6 +96,8 @@ ios/build/
 ios/**/xcuserdata/
 # Written by the iOS build from local.properties; holds API keys.
 ios/Lexicon/Support/Keys.generated.swift
+# Written by the iOS build from the Android strings.xml.
+ios/Lexicon/Support/Strings.generated.swift
 
 # Agent guidance, kept local
 CLAUDE.md

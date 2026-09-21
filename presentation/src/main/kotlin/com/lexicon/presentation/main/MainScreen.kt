@@ -1,5 +1,6 @@
 package com.lexicon.presentation.main
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.EventNote
@@ -21,18 +22,23 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import com.lexicon.presentation.R
 import com.lexicon.presentation.course.PlanScreen
 import com.lexicon.presentation.dashboard.DashboardScreen
 import com.lexicon.presentation.presets.VocabularyScreen
 import com.lexicon.presentation.settings.SettingsScreen
 
-enum class MainTab(val label: String, val icon: ImageVector) {
-    DASHBOARD("Home", Icons.Default.Dashboard),
-    TRAININGS("Trainings", Icons.Default.School),
-    VOCABULARY("Words", Icons.AutoMirrored.Filled.MenuBook),
-    PLAN("Plan", Icons.AutoMirrored.Filled.EventNote),
-    SETTINGS("Settings", Icons.Default.Settings),
+enum class MainTab(
+    @StringRes val label: Int,
+    val icon: ImageVector,
+) {
+    DASHBOARD(R.string.tab_home, Icons.Default.Dashboard),
+    TRAININGS(R.string.tab_trainings, Icons.Default.School),
+    VOCABULARY(R.string.tab_words, Icons.AutoMirrored.Filled.MenuBook),
+    PLAN(R.string.tab_plan, Icons.AutoMirrored.Filled.EventNote),
+    SETTINGS(R.string.tab_settings, Icons.Default.Settings),
 }
 
 private val MainTabSaver = Saver<MainTab, String>(save = { it.name }, restore = { MainTab.valueOf(it) })
@@ -66,7 +72,7 @@ fun MainScreen(
                         selected = tab == selectedTab,
                         onClick = { selectedTab = tab },
                         icon = { Icon(imageVector = tab.icon, contentDescription = null) },
-                        label = { Text(tab.label, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                        label = { Text(stringResource(tab.label), maxLines = 1, overflow = TextOverflow.Ellipsis) },
                     )
                 }
             }

@@ -32,7 +32,7 @@ struct PassageView: View {
             if finished {
                 SessionResultView(tally: tally) { dismiss() }
             } else if let message = unavailable {
-                TrainingUnavailableView(title: "Nothing to read yet", message: message)
+                TrainingUnavailableView(message: message)
             } else if let passage {
                 ScrollView {
                     VStack(alignment: .leading, spacing: Spacing.large) {
@@ -44,7 +44,7 @@ struct PassageView: View {
                 }
                 .safeAreaInset(edge: .bottom) { actions }
             } else {
-                ProgressView("Writing your sentences…")
+                ProgressView(Strings.trainingWritingSentences)
             }
         }
         .task { await start() }
@@ -54,9 +54,9 @@ struct PassageView: View {
         HStack {
             Spacer()
             if isChecked {
-                Button("Finish") { finished = true }.buttonStyle(.borderedProminent)
+                Button(Strings.actionFinish) { finished = true }.buttonStyle(.borderedProminent)
             } else {
-                AsyncButton { await check() } label: { Text("Check") }
+                AsyncButton { await check() } label: { Text(Strings.actionCheck) }
                     .buttonStyle(.borderedProminent)
                     .disabled(answers.contains(where: \.isEmpty))
             }
@@ -144,7 +144,7 @@ struct PassageView: View {
                             Text(result.translation).font(.caption).foregroundStyle(.secondary)
                         }
                         if !result.isCorrect && !result.submitted.isEmpty {
-                            Text("You wrote \(result.submitted)").font(.caption).foregroundStyle(.secondary)
+                            Text(Strings.passageYouWrote(result.submitted)).font(.caption).foregroundStyle(.secondary)
                         }
                     }
                 }
@@ -181,11 +181,11 @@ struct PassageView: View {
             bank = ready.bank as? [String] ?? []
             answers = Array(repeating: "", count: (ready.passage.gaps as? [PassageSegmentGap] ?? []).count)
         case is PassageSessionResultOffline:
-            unavailable = "The sentences are written on demand and the network is not answering."
+            unavailable = Strings.passageOffline
         case let refused as PassageSessionResultRefused:
             unavailable = refused.reason
         default:
-            unavailable = "Add a few words to your study set and this will have something to write about."
+            unavailable = Strings.passageNone
         }
     }
 

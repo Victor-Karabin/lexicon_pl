@@ -18,7 +18,7 @@ struct PlanView: View {
                         .buttonStyle(.plain)
                     }
 
-                    Text("Courses").font(.subheadline.weight(.semibold)).foregroundStyle(.secondary)
+                    Text(Strings.planCourses).font(.subheadline.weight(.semibold)).foregroundStyle(.secondary)
                         .padding(.top, Spacing.small)
 
                     ForEach(model.courses, id: \.id.value) { course in
@@ -39,7 +39,7 @@ struct PlanView: View {
                 }
                 .padding(Spacing.medium)
             }
-            .navigationTitle("Plan")
+            .navigationTitle(Strings.tabPlan)
         }
     }
 
@@ -49,8 +49,8 @@ struct PlanView: View {
             HStack(spacing: Spacing.medium) {
                 Medallion(skin: skin) { MedallionIcon(systemName: "textformat.abc", skin: skin) }
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Verb Conjugation").font(.headline).foregroundStyle(skin.onTile)
-                    Text("Pick verbs and learn how they change by person")
+                    Text(Strings.conjugationTitle).font(.headline).foregroundStyle(skin.onTile)
+                    Text(Strings.trainingConjugationBlurb)
                         .font(.subheadline).foregroundStyle(skin.onTile.muted)
                 }
                 Spacer()
@@ -65,8 +65,8 @@ struct PlanView: View {
             HStack(spacing: Spacing.medium) {
                 Medallion(skin: skin) { MedallionIcon(systemName: "heart.fill", skin: skin) }
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Vocabulary course").font(.headline).foregroundStyle(skin.onTile)
-                    Text("Words you mark To learn come first, favourites before the rest.")
+                    Text(Strings.vocabularyCourseTitle).font(.headline).foregroundStyle(skin.onTile)
+                    Text(Strings.vocabularyCourseSettingsScope)
                         .font(.caption).foregroundStyle(skin.onTile.muted)
                 }
                 Spacer()
@@ -74,11 +74,11 @@ struct PlanView: View {
             }
 
             FlowLayout(spacing: Spacing.small) {
-                StatChip(systemName: "book", text: "\(course.settings.newWordsADay) new a day", skin: skin)
-                StatChip(systemName: "character.book.closed", text: "\(course.settings.reviewsADay) reviews a day", skin: skin)
+                StatChip(systemName: "book", text: Strings.vocabularyCourseNewADay(Int(course.settings.newWordsADay)), skin: skin)
+                StatChip(systemName: "character.book.closed", text: Strings.vocabularyCourseReviewsADay(Int(course.settings.reviewsADay)), skin: skin)
                 StatChip(
                     systemName: "figure.strengthtraining.traditional",
-                    text: "\(course.totalTrainings) trainings",
+                    text: Strings.vocabularyCourseTrainingsCount(Int(course.totalTrainings)),
                     skin: skin
                 )
             }
@@ -93,7 +93,7 @@ struct PlanView: View {
                 Medallion(skin: skin) { MedallionText(text: course.level?.name ?? "", skin: skin) }
                 VStack(alignment: .leading, spacing: 2) {
                     Text(course.title.text()).font(.headline).foregroundStyle(skin.onTile)
-                    Text("\(done) of \(course.lessons.count) lessons done")
+                    Text(Strings.courseProgress(done, course.lessons.count))
                         .font(.caption).foregroundStyle(skin.onTile.muted)
                 }
                 Spacer()

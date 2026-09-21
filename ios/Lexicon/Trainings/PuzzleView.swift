@@ -29,7 +29,7 @@ struct PuzzleView: View {
                             Button {
                                 Speech.shared.speak(expected[index])
                             } label: {
-                                Label("Listen again", systemImage: "speaker.wave.2.fill").font(.title3)
+                                Label(Strings.actionListenAgain, systemImage: "speaker.wave.2.fill").font(.title3)
                             }
                         } else if let url = images[safe: index] ?? nil, let link = imageURL(url) {
                             AsyncImage(url: link) { image in
@@ -51,15 +51,15 @@ struct PuzzleView: View {
                 } actions: {
                     HStack(spacing: Spacing.small) {
                         if !state.isAnswered {
-                            Button("Undo") { undo() }.disabled(picked.isEmpty)
-                            Button("Skip") { Task { await submit(skipped: true) } }
+                            Button(Strings.actionUndo) { undo() }.disabled(picked.isEmpty)
+                            Button(Strings.actionSkip) { Task { await submit(skipped: true) } }
                             Spacer()
-                            AsyncButton { await submit(skipped: false) } label: { Text("Check") }
+                            AsyncButton { await submit(skipped: false) } label: { Text(Strings.actionCheck) }
                                 .buttonStyle(.borderedProminent)
                                 .disabled(picked.count != tiles.count)
                         } else {
                             Spacer()
-                            Button("Next") { advance() }.buttonStyle(.borderedProminent)
+                            Button(Strings.actionNext) { advance() }.buttonStyle(.borderedProminent)
                         }
                     }
                 }

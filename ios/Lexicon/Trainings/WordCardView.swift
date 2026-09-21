@@ -25,10 +25,10 @@ struct WordCardView: View {
                 } actions: {
                     HStack {
                         if index > 0 {
-                            Button("Back") { index -= 1 }
+                            Button(Strings.cardsBack) { index -= 1 }
                         }
                         Spacer()
-                        Button(index == steps.count - 1 ? "Done" : "Next") {
+                        Button(index == steps.count - 1 ? Strings.actionDone : Strings.actionNext) {
                             if index == steps.count - 1 {
                                 if let onTrainingFinished { onTrainingFinished() } else { dismiss() }
                             } else {

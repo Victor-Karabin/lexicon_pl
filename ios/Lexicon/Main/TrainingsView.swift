@@ -18,7 +18,7 @@ struct TrainingsView: View {
                 }
                 .padding(Spacing.medium)
             }
-            .navigationTitle("Trainings")
+            .navigationTitle(Strings.tabTrainings)
         }
     }
 
@@ -47,21 +47,21 @@ struct TrainingEntry: Identifiable {
 
 enum TrainingCatalog {
     static let all: [TrainingEntry] = [
-        .init(id: "dictation", name: "Dictation", blurb: "Hear a word and type it", symbol: "headphones"),
-        .init(id: "dictation_puzzle", name: "Dictation Puzzle", blurb: "Hear a word and build it from letters", symbol: "keyboard"),
-        .init(id: "puzzle", name: "Puzzle", blurb: "Put the letters in the right order", symbol: "puzzlepiece"),
-        .init(id: "image_test", name: "Image Test", blurb: "Pick the word that matches the picture", symbol: "photo"),
-        .init(id: "word_match", name: "Word Match", blurb: "Pair each word with its translation", symbol: "link"),
-        .init(id: "true_or_false", name: "True or False", blurb: "Say whether the translation is right", symbol: "questionmark"),
-        .init(id: "pronunciation_check", name: "Pronunciation Check", blurb: "Say the word out loud and be heard", symbol: "waveform"),
-        .init(id: "pronunciation_sentences", name: "Read Aloud", blurb: "Read a sentence aloud and hear how close you got", symbol: "mic"),
-        .init(id: "memory_cards", name: "Memory Cards", blurb: "Turn the cards over and find the pairs", symbol: "square.stack"),
-        .init(id: "crossword", name: "Crossword", blurb: "Fill the grid from the clues", symbol: "grid"),
-        .init(id: "word_card", name: "Word Card", blurb: "Read the word, its picture and how it sounds", symbol: "creditcard"),
-        .init(id: "passage_write", name: "Read and Write", blurb: "Fill the gaps in a short passage", symbol: "text.alignleft"),
-        .init(id: "passage_bank", name: "Read and Choose", blurb: "Fill the gaps from a bank of words", symbol: "list.bullet.rectangle"),
-        .init(id: "fillword", name: "Word Search", blurb: "Find the hidden words in the grid", symbol: "square.grid.3x3"),
-        .init(id: "mix", name: "Mix", blurb: "A little of every training", symbol: "sparkles"),
+        .init(id: "dictation", name: Strings.dictationTitle, blurb: Strings.trainingDictationBlurb, symbol: "headphones"),
+        .init(id: "dictation_puzzle", name: Strings.dictationPuzzleTitle, blurb: Strings.trainingDictationPuzzleBlurb, symbol: "keyboard"),
+        .init(id: "puzzle", name: Strings.puzzleTitle, blurb: Strings.trainingPuzzleBlurb, symbol: "puzzlepiece"),
+        .init(id: "image_test", name: Strings.imageTestTitle, blurb: Strings.trainingImageTestBlurb, symbol: "photo"),
+        .init(id: "word_match", name: Strings.wordMatchTitle, blurb: Strings.trainingWordMatchBlurb, symbol: "link"),
+        .init(id: "true_or_false", name: Strings.trueOrFalseTitle, blurb: Strings.trainingTrueOrFalseBlurb, symbol: "questionmark"),
+        .init(id: "pronunciation_check", name: Strings.pronunciationTitle, blurb: Strings.trainingPronunciationBlurb, symbol: "waveform"),
+        .init(id: "pronunciation_sentences", name: Strings.pronunciationSentencesTitle, blurb: Strings.trainingPronunciationSentencesBlurb, symbol: "mic"),
+        .init(id: "memory_cards", name: Strings.memoryCardsTitle, blurb: Strings.trainingMemoryCardsBlurb, symbol: "square.stack"),
+        .init(id: "crossword", name: Strings.crosswordTitle, blurb: Strings.trainingCrosswordBlurb, symbol: "grid"),
+        .init(id: "word_card", name: Strings.wordCardTitle, blurb: Strings.trainingWordCardBlurb, symbol: "creditcard"),
+        .init(id: "passage_write", name: Strings.passageWriteTitle, blurb: Strings.trainingPassageWriteBlurb, symbol: "text.alignleft"),
+        .init(id: "passage_bank", name: Strings.passageBankTitle, blurb: Strings.trainingPassageBankBlurb, symbol: "list.bullet.rectangle"),
+        .init(id: "fillword", name: Strings.fillwordTitle, blurb: Strings.trainingFillwordBlurb, symbol: "square.grid.3x3"),
+        .init(id: "mix", name: Strings.mixTitle, blurb: Strings.trainingMixBlurb, symbol: "sparkles"),
     ].sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
 
     static func entry(id: String) -> TrainingEntry? { all.first { $0.id == id } }
@@ -89,7 +89,7 @@ struct TrainingHost: View {
             case "passage_bank": PassageView(withWordBank: true)
             case "fillword": WordSearchView()
             case "mix": MixView(vocabularyIds: vocabularyIds)
-            default: Text("Unknown training")
+            default: Text(Strings.trainingUnknown)
             }
         }
         .navigationTitle(entry.name)

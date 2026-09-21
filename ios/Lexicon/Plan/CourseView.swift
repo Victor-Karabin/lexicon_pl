@@ -14,7 +14,7 @@ struct CourseView: View {
                 Tile(skin: skin) {
                     HStack(spacing: Spacing.medium) {
                         Medallion(skin: skin) { MedallionText(text: course.level?.name ?? "", skin: skin) }
-                        Text("\(done) of \(course.lessons.count) lessons done")
+                        Text(Strings.courseProgress(done, course.lessons.count))
                             .foregroundStyle(skin.onTile.muted)
                         Spacer()
                     }
@@ -29,9 +29,9 @@ struct CourseView: View {
                             Image(systemName: lesson.isCompleted ? "checkmark.circle.fill" : lesson.isUnlocked ? "circle" : "lock.fill")
                                 .foregroundStyle(lesson.isCompleted ? Palette.success : .secondary)
                             VStack(alignment: .leading, spacing: 2) {
-                                Text("Lesson \(lesson.number)").font(.caption).foregroundStyle(.secondary)
+                                Text(Strings.courseLessonNumber(Int(lesson.number))).font(.caption).foregroundStyle(.secondary)
                                 Text(lesson.title).font(.body.weight(.medium))
-                                Text("\(lesson.wordCount) words").font(.caption).foregroundStyle(.secondary)
+                                Text("\(lesson.wordCount) \(Strings.presetsWordCountLabel(Int(lesson.wordCount)))").font(.caption).foregroundStyle(.secondary)
                             }
                             Spacer()
                         }
@@ -70,7 +70,7 @@ struct LessonView: View {
                                 vocabularyIds: lesson.vocabularyIds.map { $0.value }
                             )
                         } label: {
-                            Label("Train this lesson", systemImage: "play.fill")
+                            Label(Strings.lessonTrain, systemImage: "play.fill")
                         }
                         .buttonStyle(.borderedProminent)
 
@@ -78,14 +78,14 @@ struct LessonView: View {
                             try? await deps.setLessonCompleted.invoke(id: lessonId, isCompleted: !lesson.isCompleted)
                             await load()
                         } label: {
-                            Label(lesson.isCompleted ? "Done" : "Mark as done", systemImage: "checkmark.circle")
+                            Label(lesson.isCompleted ? Strings.actionDone : Strings.lessonMarkComplete, systemImage: "checkmark.circle")
                         }
                         .buttonStyle(.bordered)
                     }
                 }
 
                 if let lesson, !lesson.audio.isEmpty {
-                    Text("Recordings").font(.subheadline.weight(.semibold))
+                    Text(Strings.lessonRecordings).font(.subheadline.weight(.semibold))
                     FlowLayout(spacing: Spacing.small) {
                         ForEach(lesson.audio, id: \.file) { track in
                             AsyncButton {
@@ -102,7 +102,7 @@ struct LessonView: View {
                     }
                 }
 
-                Text("New words").font(.subheadline.weight(.semibold))
+                Text(Strings.lessonWords).font(.subheadline.weight(.semibold))
                 ForEach(words, id: \.id.value) { word in
                     WordRow(word: word, status: word.status) {
                         Task {

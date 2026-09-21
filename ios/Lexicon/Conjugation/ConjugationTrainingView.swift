@@ -26,8 +26,8 @@ struct ConjugationTrainingView: View {
                 ProgressView()
             } else if finished || table == nil {
                 TrainingUnavailableView(
-                    title: "Nothing left to drill",
-                    message: "Every form in this course is mastered. Add another course to keep going."
+                    title: Strings.conjugationDoneTitle,
+                    message: Strings.conjugationComplete
                 )
             } else if let table {
                 ScrollView {
@@ -41,7 +41,7 @@ struct ConjugationTrainingView: View {
                 .safeAreaInset(edge: .bottom) { actions }
             }
         }
-        .navigationTitle("Conjugation")
+        .navigationTitle(Strings.conjugationTitle)
         .navigationBarTitleDisplayMode(.inline)
         .task { await load() }
     }
@@ -65,7 +65,7 @@ struct ConjugationTrainingView: View {
                 Text("/\(ipa)/").font(.callout).foregroundStyle(.secondary)
             }
             Button { Speech.shared.speak(table.infinitive) } label: {
-                Label("Listen", systemImage: "speaker.wave.2")
+                Label(Strings.actionListen, systemImage: "speaker.wave.2")
             }
         }
     }
@@ -123,7 +123,7 @@ struct ConjugationTrainingView: View {
 
     private func bank(_ table: ConjugationTable) -> some View {
         VStack(alignment: .leading, spacing: Spacing.small) {
-            Text(picking.map { "Pick for \($0.label)" } ?? "Tap a row, then pick its ending")
+            Text(picking.map { Strings.conjugationPickFor($0.label) } ?? Strings.conjugationTapRow)
                 .font(.caption)
                 .foregroundStyle(.secondary)
             FlowLayout(spacing: Spacing.small) {
@@ -143,10 +143,10 @@ struct ConjugationTrainingView: View {
         HStack {
             Spacer()
             if isChecked {
-                AsyncButton { await load() } label: { Text("Next verb") }
+                AsyncButton { await load() } label: { Text(Strings.conjugationNextVerb) }
                     .buttonStyle(.borderedProminent)
             } else {
-                AsyncButton { await check() } label: { Text("Check") }
+                AsyncButton { await check() } label: { Text(Strings.actionCheck) }
                     .buttonStyle(.borderedProminent)
                     .disabled(!isAnswered)
             }
