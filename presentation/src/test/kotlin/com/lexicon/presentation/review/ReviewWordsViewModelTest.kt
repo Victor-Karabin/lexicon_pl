@@ -5,6 +5,8 @@ import com.lexicon.interactors.presets.CountWordsToReviewUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.GetWordsToReviewUseCase
 import com.lexicon.interactors.presets.SetWordStatusUseCase
+import com.lexicon.interactors.vocabularycourse.GetWordCardsUseCase
+import com.lexicon.interactors.vocabularycourse.WordCard
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
 import com.lexicon.model.vocabulary.WordStatus
@@ -12,6 +14,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -46,6 +49,13 @@ class ReviewWordsViewModelTest {
     }
     private val setWordStatus: SetWordStatusUseCase = mockk(relaxed = true)
     private val deleteWord: DeleteWordUseCase = mockk(relaxed = true)
+    private val getWordCards: GetWordCardsUseCase = mockk {
+        coEvery { this@mockk(any()) } answers {
+            firstArg<List<VocabularyId>>().map { id ->
+                WordCard(id = id, text = "", translation = "", transcription = "", imageUrl = "https://img/${id.value}.jpg")
+            }.toImmutableList()
+        }
+    }
 
     private fun viewModel() =
         ReviewWordsViewModel(
@@ -53,6 +63,7 @@ class ReviewWordsViewModelTest {
             countWordsToReview = countWordsToReview,
             setWordStatus = setWordStatus,
             deleteWord = deleteWord,
+            getWordCards = getWordCards,
             speechSynthesizer = mockk(relaxed = true),
             dispatchers = object : DispatcherProvider {
                 override val io: CoroutineDispatcher get() = dispatcher
@@ -149,5 +160,22 @@ class ReviewWordsViewModelTest {
             assertNull(viewModel.uiState.value.current)
             assertTrue(viewModel.uiState.value.isFinished)
             assertEquals(2, viewModel.uiState.value.reviewed)
+        }
+
+    @Test
+    fun `the card shows the word's picture, and the next word's is fetched ahead`() =
+        runTest(dispatcher) {
+            val viewModel = viewModel()
+            advanceUntilIdle()
+
+            assertEquals("https://img/1.jpg", viewModel.uiState.value.currentPicture)
+            coVerify(exactly = 1) { getWordCards(listOf(kot.id, pies.id)) }
+
+            viewModel.onStatusChosen(WordStatus.KNOWN)
+            advanceTimeBy(AFTER_IT_SETTLES_MS)
+            advanceUntilIdle()
+
+            assertEquals("https://img/2.jpg", viewModel.uiState.value.currentPicture)
+            coVerify(exactly = 1) { getWordCards(any()) }
         }
 }

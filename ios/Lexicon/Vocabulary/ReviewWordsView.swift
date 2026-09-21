@@ -11,17 +11,23 @@ final class ReviewWordsModel: ObservableObject {
     @Published private(set) var waiting = 0
     @Published private(set) var loading = true
     @Published private(set) var chosen: WordStatus?
+    @Published private(set) var pictures: [Int64: String] = [:]
 
     private var settle: Task<Void, Never>?
+    private var picturesAsked: Set<Int64> = []
+    private let picturesAhead = 2
 
     var current: Word? { words.indices.contains(index) ? words[index] : nil }
 
     var isFinished: Bool { !loading && current == nil }
 
+    var currentPicture: String? { current.flatMap { pictures[$0.id.value] } }
+
     func load() async {
         waiting = Int((try? await deps.countWordsToReview.invoke()) as? Int32 ?? 0)
         words = (try? await deps.getWordsToReview.invoke(limit: Int32(deps.wordsToReviewBatch))) as? [Word] ?? []
         loading = false
+        await loadPictures()
     }
 
     func choose(_ status: WordStatus) {
@@ -55,17 +61,26 @@ final class ReviewWordsModel: ObservableObject {
         reviewed += 1
         waiting = max(waiting - 1, 0)
         chosen = nil
-        guard index >= words.count else { return }
+        if index >= words.count {
+            words = (try? await deps.getWordsToReview.invoke(limit: Int32(deps.wordsToReviewBatch))) as? [Word] ?? []
+            index = 0
+        }
+        await loadPictures()
+    }
 
-        words = (try? await deps.getWordsToReview.invoke(limit: Int32(deps.wordsToReviewBatch))) as? [Word] ?? []
-        index = 0
+    private func loadPictures() async {
+        let wanted = words.dropFirst(index).prefix(picturesAhead).map(\.id).filter { picturesAsked.insert($0.value).inserted }
+        guard !wanted.isEmpty else { return }
+        let cards = (try? await deps.getWordCards.invoke(ids: wanted)) as? [WordCard] ?? []
+        for card in cards {
+            if let url = card.imageUrl { pictures[card.id.value] = url }
+        }
     }
 }
 
 struct ReviewWordsView: View {
     @StateObject private var model = ReviewWordsModel()
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.colorScheme) private var scheme
 
     var body: some View {
         Group {
@@ -87,7 +102,18 @@ struct ReviewWordsView: View {
                             .foregroundStyle(.secondary)
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        card(word)
+                        WordCardFace(
+                            text: word.text,
+                            translation: word.translation,
+                            transcription: word.transcription,
+                            imageUrl: model.currentPicture,
+                            example: word.example
+                        )
+                    }
+                    .padding(Spacing.medium)
+                }
+                .safeAreaInset(edge: .bottom) {
+                    VStack(spacing: Spacing.medium) {
                         choices
                         Button(role: .destructive) { model.delete() } label: {
                             Label("Delete this word", systemImage: "trash").frame(maxWidth: .infinity)
@@ -95,33 +121,13 @@ struct ReviewWordsView: View {
                         .buttonStyle(.bordered)
                     }
                     .padding(Spacing.medium)
+                    .background(.bar)
                 }
             }
         }
         .navigationTitle("Review words")
         .navigationBarTitleDisplayMode(.inline)
         .task { await model.load() }
-    }
-
-    private func card(_ word: Word) -> some View {
-        let skin = TileSkin.standard(highlighted: true, scheme: scheme)
-        return Tile(skin: skin) {
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(word.translation).font(.title3).foregroundStyle(skin.onTile.muted)
-                    Text(word.text).font(.largeTitle.weight(.semibold)).foregroundStyle(skin.onTile)
-                    if !word.transcription.isEmpty {
-                        Text("[\(word.transcription)]").font(.callout).foregroundStyle(skin.onTile.muted)
-                    }
-                }
-                Spacer()
-                Button { Speech.shared.speak(word.text) } label: {
-                    Image(systemName: "speaker.wave.2").foregroundStyle(skin.onTile)
-                }
-            }
-
-            ExampleSentenceRow(sentence: word.example, word: word.text, tint: skin.onTile.muted)
-        }
     }
 
     private var choices: some View {

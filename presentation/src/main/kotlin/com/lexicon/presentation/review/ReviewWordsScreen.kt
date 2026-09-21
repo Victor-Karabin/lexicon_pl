@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -80,6 +81,11 @@ private fun ReviewWordsContent(
     Scaffold(
         modifier = modifier,
         topBar = { TrainingTopBar(title = stringResource(R.string.review_words_title), onClose = onClose) },
+        bottomBar = {
+            if (!uiState.isLoading && !uiState.isFinished) {
+                ReviewChoices(chosen = uiState.chosen, onStatusChosen = onStatusChosen, onDeleted = onDeleted)
+            }
+        },
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
             when {
@@ -118,59 +124,74 @@ private fun ReviewWordsContent(
                                 text = word.text,
                                 translation = word.translation,
                                 transcription = word.transcription,
-                                imageUrl = null,
+                                imageUrl = uiState.currentPicture,
                                 example = word.example,
                                 onPronounce = onPronounce,
                                 onSpeakExample = onSpeakExample,
                             )
                         }
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-                        ) {
-                            Choice(
-                                label = stringResource(R.string.review_words_to_learn),
-                                icon = Icons.Default.School,
-                                isChosen = uiState.chosen == WordStatus.TO_LEARN,
-                                onClick = { onStatusChosen(WordStatus.TO_LEARN) },
-                                modifier = Modifier.weight(1f),
-                            )
-                            Choice(
-                                label = stringResource(R.string.review_words_favourite),
-                                icon = Icons.Default.Favorite,
-                                isChosen = uiState.chosen == WordStatus.FAVOURITE,
-                                tint = LexiconError,
-                                onClick = { onStatusChosen(WordStatus.FAVOURITE) },
-                                modifier = Modifier.weight(1f),
-                            )
-                            Choice(
-                                label = stringResource(R.string.review_words_known),
-                                icon = Icons.Default.CheckCircle,
-                                isChosen = uiState.chosen == WordStatus.KNOWN,
-                                tint = LexiconSuccess,
-                                onClick = { onStatusChosen(WordStatus.KNOWN) },
-                                modifier = Modifier.weight(1f),
-                            )
-                        }
-
-                        OutlinedButton(
-                            onClick = onDeleted,
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error),
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.DeleteOutline,
-                                contentDescription = null,
-                                modifier = Modifier.size(ChoiceIconSize),
-                            )
-                            Text(
-                                text = stringResource(R.string.review_words_delete),
-                                modifier = Modifier.padding(start = Dimens.spacingSmall),
-                            )
-                        }
                     }
             }
+        }
+    }
+}
+
+@Composable
+private fun ReviewChoices(
+    chosen: WordStatus?,
+    onStatusChosen: (WordStatus) -> Unit,
+    onDeleted: () -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .navigationBarsPadding()
+            .padding(Dimens.spacingMedium),
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+        ) {
+            Choice(
+                label = stringResource(R.string.review_words_to_learn),
+                icon = Icons.Default.School,
+                isChosen = chosen == WordStatus.TO_LEARN,
+                onClick = { onStatusChosen(WordStatus.TO_LEARN) },
+                modifier = Modifier.weight(1f),
+            )
+            Choice(
+                label = stringResource(R.string.review_words_favourite),
+                icon = Icons.Default.Favorite,
+                isChosen = chosen == WordStatus.FAVOURITE,
+                tint = LexiconError,
+                onClick = { onStatusChosen(WordStatus.FAVOURITE) },
+                modifier = Modifier.weight(1f),
+            )
+            Choice(
+                label = stringResource(R.string.review_words_known),
+                icon = Icons.Default.CheckCircle,
+                isChosen = chosen == WordStatus.KNOWN,
+                tint = LexiconSuccess,
+                onClick = { onStatusChosen(WordStatus.KNOWN) },
+                modifier = Modifier.weight(1f),
+            )
+        }
+
+        OutlinedButton(
+            onClick = onDeleted,
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error),
+        ) {
+            Icon(
+                imageVector = Icons.Default.DeleteOutline,
+                contentDescription = null,
+                modifier = Modifier.size(ChoiceIconSize),
+            )
+            Text(
+                text = stringResource(R.string.review_words_delete),
+                modifier = Modifier.padding(start = Dimens.spacingSmall),
+            )
         }
     }
 }
