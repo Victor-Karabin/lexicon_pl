@@ -118,7 +118,7 @@
     <string name="training_go_to_vocabulary">Go to Words</string>
     <string name="training_not_enough_words_action">Back to trainings</string>
     <string name="vocabulary_search_hint">Search words</string>
-    <string name="vocabulary_search_no_matches">No words match “%1$s”.</string>
+    <string name="vocabulary_search_no_matches">No results</string>
     <string name="sync_step_vocabulary">Vocabulary</string>
     <string name="sync_step_presets">Presets</string>
     <string name="sync_step_course">Course</string>
