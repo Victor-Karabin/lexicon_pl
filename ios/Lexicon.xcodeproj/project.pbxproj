@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A1000080 /* Strings.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000081 /* Strings.generated.swift */; };
 		A1000002 /* Shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1000001 /* Shared.xcframework */; };
 		A1000003 /* Shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A1000001 /* Shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -26,6 +27,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A1000081 /* Strings.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.generated.swift; sourceTree = DERIVED_FILE_DIR; };
 		A1000000 /* Lexicon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lexicon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000001 /* Shared.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Shared.xcframework; path = ../shared/build/XCFrameworks/release/Shared.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				A1000010 /* Lexicon */,
+				A1000081 /* Strings.generated.swift */,
 				A1000041 /* Frameworks */,
 				A1000042 /* Products */,
 			);
@@ -203,18 +206,23 @@
 		};
 		A1000037 /* Generate strings */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/../presentation/src/main/res/values/strings.xml",
+				"$(SRCROOT)/strings.py",
 			);
 			name = "Generate strings";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Strings.generated.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/en.lproj/Localizable.strings",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/en.lproj/Localizable.stringsdict",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/en.lproj/InfoPlist.strings",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/..\" || exit 1\npython3 ios/strings.py presentation/src/main/res/values/strings.xml ios/Lexicon/Support/Strings.generated.swift \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/en.lproj\"\n";
+			shellScript = "cd \"$SRCROOT/..\" || exit 1\npython3 ios/strings.py presentation/src/main/res/values/strings.xml \"$SCRIPT_OUTPUT_FILE_0\" \"$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/en.lproj\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -223,6 +231,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1000080 /* Strings.generated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
