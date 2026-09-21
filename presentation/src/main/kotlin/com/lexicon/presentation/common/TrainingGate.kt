@@ -18,7 +18,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.training.TrainingReadiness
 import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.Dimens
@@ -45,7 +45,7 @@ fun TrainingGate(
     viewModel: TrainingGateViewModel = koinViewModel(),
     content: @Composable () -> Unit,
 ) {
-    val readiness by viewModel.readiness.collectAsState()
+    val readiness by viewModel.readiness.collectAsStateWithLifecycle()
 
     LaunchedEffect(minimumWords, excludePhrases) { viewModel.check(minimumWords, excludePhrases) }
 

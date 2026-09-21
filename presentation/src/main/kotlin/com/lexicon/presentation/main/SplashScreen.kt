@@ -30,7 +30,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,6 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.sync.CatalogSeedStatus
 import com.lexicon.interactors.sync.SeedStepStatus
 import com.lexicon.interactors.sync.isBlocked
@@ -70,7 +70,7 @@ fun SplashScreen(
     modifier: Modifier = Modifier,
     viewModel: SplashViewModel = koinViewModel(),
 ) {
-    val status by viewModel.status.collectAsState()
+    val status by viewModel.status.collectAsStateWithLifecycle()
 
     LaunchedEffect(status.isFinished, status.isBlocked) {
         if (status.isFinished && !status.isBlocked) onFinished()

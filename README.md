@@ -6,12 +6,15 @@ through a range of trainings, and a review schedule decides what comes back and 
 
 ## What it does
 
-**A study set you choose.** The app ships with 2,562 Polish words graded A1 to C2, grouped
-into 73 presets across 10 categories by topic and frequency. You star what you want to
-learn, by word or by whole preset, and every training draws from that set. You can add
-words of your own; the IPA transcription is worked out for you.
+**Words you mark.** The app ships with 2,664 Polish words graded A1 to C2, grouped into
+74 presets across 11 categories by topic and frequency — among them 164 false friends that
+look like an English or Russian word and mean something else. Every word carries a status
+you change with one tap: to learn, favourite or known. *Review words* deals out the ones
+with no status yet, one card at a time. You can add words of your own; the IPA
+transcription and the CEFR level are worked out for you, and translations are suggested
+as you type.
 
-**Every word in a sentence.** 2,510 of the words and 4,464 of the verbs ship with an
+**Every word in a sentence.** 2,612 of the words and 4,464 of the verbs ship with an
 example showing the word in use, the word itself in bold and a button that reads the
 sentence aloud. You can rewrite one, or ask for another.
 
@@ -24,8 +27,10 @@ a word aloud and ask you to type it; some show a picture; some listen to you say
 word you know comes back in three weeks and a word you miss comes back tomorrow. Study
 days, streaks and accuracy are recorded as you go.
 
-**Longer structures on top.** A *program* plans a day's work over your study set and runs
-its trainings as a queue. A *course* teaches a fixed body of material — the Krok po kroku
+**A course that always runs.** The *vocabulary course* is on the dashboard from the first
+launch: the words you mark to learn, favourites first, plus known words for review, through
+a queue of trainings that repeats round after round. You tune it on the Plan tab. A
+*course* teaches a fixed body of material — the Krok po kroku
 textbook, with its own audio and exercises. A *conjugation course* drills the forms of
 verbs you pick from a catalogue of 4,545.
 
@@ -43,9 +48,9 @@ come from Pexels, Pixabay, Unsplash and Openverse.
 | | | |
 | :---: | :---: | :---: |
 | <img src="docs/screenshots/home.png" width="240"> | <img src="docs/screenshots/trainings.png" width="240"> | <img src="docs/screenshots/training.png" width="240"> |
-| **Home** — the day's work, from the program you are running | **Trainings** — fifteen ways to practise the same study set | **Image Test** — pick the word the picture is of |
+| **Home** — the vocabulary course, words waiting for a mark, and the week's study time | **Trainings** — fifteen ways to practise | **Image Test** — pick the word the picture is of |
 | <img src="docs/screenshots/words.png" width="240"> | <img src="docs/screenshots/plan.png" width="240"> | <img src="docs/screenshots/settings.png" width="240"> |
-| **Words** — presets to star by topic and frequency | **Plan** — programs you build, and courses to follow | **Settings** — theme, session length, and the voice you hear |
+| **Words** — every word with its status: to learn, favourite or known | **Plan** — the vocabulary course's settings, and courses to follow | **Settings** — theme, session length, and the voice you hear |
 
 **iOS**
 
@@ -124,7 +129,7 @@ on first launch and after an app update. Each is fingerprinted, so an unchanged 
 costs a file read and no parse.
 
 The schema takes Room's destructive fallback rather than migrations — the project is
-pre-release, so a version bump drops the database and re-seeds it, taking the study set and
+pre-release, so a version bump drops the database and re-seeds it, taking word statuses and
 history with it. That makes a bump a deliberate act.
 
 ## Documentation

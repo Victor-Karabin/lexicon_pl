@@ -28,7 +28,6 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -38,6 +37,7 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.model.vocabulary.CefrLevel
 import com.lexicon.model.vocabulary.LocalizedText
 import com.lexicon.model.vocabulary.PresetCategory
@@ -71,8 +71,8 @@ fun VocabularyScreen(
     modifier: Modifier = Modifier,
     viewModel: VocabularyViewModel = koinViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-    val changePresets by viewModel.changePresetsState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val changePresets by viewModel.changePresetsState.collectAsStateWithLifecycle()
 
     val selection = rememberWordSelection()
 

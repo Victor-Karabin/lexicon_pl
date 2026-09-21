@@ -18,12 +18,12 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.course.LessonExercise
 import com.lexicon.interactors.course.questionCount
 import com.lexicon.presentation.R
@@ -39,7 +39,7 @@ fun ExerciseScreen(
     modifier: Modifier = Modifier,
     viewModel: ExerciseViewModel = koinViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     ExerciseContent(
         uiState = uiState,
