@@ -30,6 +30,14 @@ final class ReviewWordsModel: ObservableObject {
         await loadPictures()
     }
 
+    func refreshCurrent() async {
+        guard let id = current?.id,
+              let word = try? await deps.getWord.invoke(id: id) else { return }
+        let cards = (try? await deps.getWordCards.invoke(ids: [id])) as? [WordCard] ?? []
+        words = words.map { $0.id.value == id.value ? word : $0 }
+        pictures[id.value] = cards.first?.imageUrl
+    }
+
     func choose(_ status: WordStatus) {
         guard let word = current else { return }
         chosen = status
@@ -80,6 +88,7 @@ final class ReviewWordsModel: ObservableObject {
 
 struct ReviewWordsView: View {
     @StateObject private var model = ReviewWordsModel()
+    @State private var editing: Int64?
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -107,7 +116,8 @@ struct ReviewWordsView: View {
                             translation: word.translation,
                             transcription: word.transcription,
                             imageUrl: model.currentPicture,
-                            example: word.example
+                            example: word.example,
+                            onEdit: { editing = word.id.value }
                         )
                     }
                     .padding(Spacing.medium)
@@ -127,7 +137,10 @@ struct ReviewWordsView: View {
         }
         .navigationTitle("Review words")
         .navigationBarTitleDisplayMode(.inline)
-        .task { await model.load() }
+        .navigationDestination(item: $editing) { WordFormView(wordId: $0) }
+        .task {
+            if model.loading { await model.load() } else { await model.refreshCurrent() }
+        }
     }
 
     private var choices: some View {
