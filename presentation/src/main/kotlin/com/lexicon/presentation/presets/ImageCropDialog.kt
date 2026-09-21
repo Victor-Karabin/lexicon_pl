@@ -1,10 +1,8 @@
 package com.lexicon.presentation.presets
 
+import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
 import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -31,10 +29,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
+import coil.imageLoader
+import coil.request.ErrorResult
+import coil.request.ImageRequest
+import coil.request.SuccessResult
 import com.lexicon.common.CARD_IMAGE_ASPECT
 import com.lexicon.common.CropRect
 import com.lexicon.common.CropWindow
@@ -44,7 +48,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
-import kotlin.math.max
 
 private const val TAG = "ImageCropDialog"
 
@@ -59,24 +62,30 @@ fun ImageCropDialog(
     picked: String,
     onCropped: (String) -> Unit,
     onDismiss: () -> Unit,
+    alwaysAsk: Boolean = false,
+    replacesPicked: Boolean = true,
 ) {
+    val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val file = remember(picked) { Uri.parse(picked).path?.let(::File) }
 
     var bitmap by remember(picked) { mutableStateOf<Bitmap?>(null) }
     var focus by remember(picked) { mutableFloatStateOf(CENTRE) }
     var isSaving by remember { mutableStateOf(false) }
 
     LaunchedEffect(picked) {
-        val decoded = file?.let { withContext(Dispatchers.IO) { decodeUpright(it) } }
+        val loaded = context.loadUpright(picked)
         when {
-            decoded == null -> onCropped(picked)
-            !CropWindow(decoded.width, decoded.height).needsPositioning -> onCropped(picked)
-            else -> bitmap = decoded
+            loaded == null -> if (alwaysAsk) onDismiss() else onCropped(picked)
+            !alwaysAsk && !CropWindow(loaded.width, loaded.height).needsPositioning -> onCropped(picked)
+            else -> bitmap = loaded
         }
     }
 
-    val shown = bitmap ?: return
+    val shown = bitmap
+    if (shown == null) {
+        if (alwaysAsk) LoadingDialog(onDismiss)
+        return
+    }
     val window = remember(shown) { CropWindow(shown.width, shown.height) }
     val image = remember(shown) { shown.asImageBitmap() }
 
@@ -109,12 +118,14 @@ fun ImageCropDialog(
         },
         confirmButton = {
             TextButton(
-                enabled = !isSaving && file != null,
+                enabled = !isSaving,
                 onClick = {
-                    val source = file ?: return@TextButton
                     isSaving = true
                     scope.launch {
-                        val cropped = withContext(Dispatchers.IO) { writeCrop(shown, window.rectAt(focus), source) }
+                        val source = Uri.parse(picked).takeIf { replacesPicked && it.scheme == "file" }?.path?.let(::File)
+                        val cropped = withContext(Dispatchers.IO) {
+                            context.writeCrop(shown, window.rectAt(focus))?.also { source?.delete() }
+                        }
                         onCropped(cropped ?: picked)
                     }
                 },
@@ -158,39 +169,44 @@ private fun CropPreview(
     }
 }
 
-private fun decodeUpright(file: File): Bitmap? =
-    runCatching {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            ImageDecoder.decodeBitmap(ImageDecoder.createSource(file)) { decoder, info, _ ->
-                val side = max(info.size.width, info.size.height)
-                if (side > MAX_DECODED_SIDE) {
-                    decoder.setTargetSize(
-                        info.size.width * MAX_DECODED_SIDE / side,
-                        info.size.height * MAX_DECODED_SIDE / side,
-                    )
-                }
-                decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE
+@Composable
+private fun LoadingDialog(onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.create_word_image_position)) },
+        text = {
+            Box(modifier = Modifier.fillMaxWidth().aspectRatio(CARD_IMAGE_ASPECT), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
             }
-        } else {
-            val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-            BitmapFactory.decodeFile(file.path, bounds)
-            var sample = 1
-            while (max(bounds.outWidth, bounds.outHeight) / sample > MAX_DECODED_SIDE) sample *= 2
-            BitmapFactory.decodeFile(file.path, BitmapFactory.Options().apply { inSampleSize = sample })
-        }
-    }.onFailure { Log.w(TAG, "The picked picture could not be decoded, so it is kept uncropped", it) }
-        .getOrNull()
+        },
+        confirmButton = {},
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },
+    )
+}
 
-private fun writeCrop(
+private suspend fun Context.loadUpright(url: String): Bitmap? {
+    val request = ImageRequest.Builder(this)
+        .data(url)
+        .size(MAX_DECODED_SIDE)
+        .allowHardware(false)
+        .build()
+    return when (val result = imageLoader.execute(request)) {
+        is SuccessResult -> result.drawable.toBitmap()
+        is ErrorResult -> {
+            Log.w(TAG, "The picture could not be loaded for positioning", result.throwable)
+            null
+        }
+    }
+}
+
+private fun Context.writeCrop(
     bitmap: Bitmap,
     rect: CropRect,
-    source: File,
 ): String? =
     runCatching {
         val cropped = Bitmap.createBitmap(bitmap, rect.left, rect.top, rect.width, rect.height)
-        val target = File(source.parentFile, "${source.nameWithoutExtension}-cropped.jpg")
+        val target = newOwnImageFile()
         target.outputStream().use { cropped.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, it) }
-        source.delete()
         target.toUri().toString()
     }.onFailure { Log.w(TAG, "The crop could not be written, so the picture is kept whole", it) }
         .getOrNull()

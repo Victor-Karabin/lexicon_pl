@@ -163,6 +163,7 @@
     <string name="create_word_image_position">Position the picture</string>
     <string name="create_word_image_position_hint">Drag the photo so the part you want sits in the frame.</string>
     <string name="create_word_image_use">Use</string>
+    <string name="create_word_image_adjust">Adjust</string>
     <string name="create_word_image_more">More</string>
     <string name="create_word_image_none">Type a word to look for a picture.</string>
     <string name="create_word_image_empty">No pictures were found for this word.</string>

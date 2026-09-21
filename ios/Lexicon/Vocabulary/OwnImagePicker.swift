@@ -87,16 +87,25 @@ struct AddImageTile: View {
     }
 
     private func keep(_ image: UIImage) {
-        guard let data = image.jpegData(compressionQuality: 0.9), let url = writeOwnImage(data) else { return }
+        guard let url = storeOwnImage(image) else { return }
         onPicked(url)
     }
 }
 
-private func writeOwnImage(_ data: Data) -> String? {
+func storeOwnImage(_ image: UIImage) -> String? {
+    guard let data = image.jpegData(compressionQuality: 0.9) else { return nil }
     let directory = URL.documentsDirectory.appendingPathComponent(ownImageDirectory, isDirectory: true)
     try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
     let file = directory.appendingPathComponent("\(UUID().uuidString).jpg")
     return (try? data.write(to: file)) == nil ? nil : file.absoluteString
+}
+
+func loadPicture(_ url: String) async -> UIImage? {
+    guard let location = imageURL(url) else { return nil }
+    let data = location.isFileURL
+        ? try? Data(contentsOf: location)
+        : try? await URLSession.shared.data(from: location).0
+    return data.flatMap(UIImage.init(data:)).map(uprightImage)
 }
 
 private struct CameraPicker: UIViewControllerRepresentable {

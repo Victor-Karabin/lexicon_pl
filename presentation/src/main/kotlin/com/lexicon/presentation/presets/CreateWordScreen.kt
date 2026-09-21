@@ -303,6 +303,7 @@ private fun ImageSection(
     onMoreImages: () -> Unit,
 ) {
     var isPicking by remember { mutableStateOf(false) }
+    var isAdjusting by remember { mutableStateOf(false) }
 
     SectionHeading(stringResource(R.string.create_word_image))
 
@@ -328,6 +329,25 @@ private fun ImageSection(
                 ),
             )
         }
+
+        if (uiState.selectedImage != null) {
+            TextButton(onClick = { isAdjusting = true }) {
+                Text(stringResource(R.string.create_word_image_adjust))
+            }
+        }
+    }
+
+    uiState.selectedImage?.takeIf { isAdjusting }?.let { picture ->
+        ImageCropDialog(
+            picked = picture,
+            alwaysAsk = true,
+            replacesPicked = false,
+            onCropped = { cropped ->
+                isAdjusting = false
+                if (cropped != picture) onOwnImageAdded(cropped)
+            },
+            onDismiss = { isAdjusting = false },
+        )
     }
 
     if (isPicking) {
