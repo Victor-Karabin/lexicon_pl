@@ -26,6 +26,9 @@ xcodebuild -project ios/Lexicon.xcodeproj -scheme Lexicon -sdk iphonesimulator -
 `SKIP_GRADLE=1` skips the framework rebuild when only Swift has changed, which is
 most of the time and saves several minutes.
 
+The framework is built for devices and for Apple silicon simulators only; an Intel
+Mac's simulator would need the `iosX64` target added back in every shared module.
+
 ## How it is put together
 
 **The Swift side owns the presentation, the Kotlin side owns everything else.** A

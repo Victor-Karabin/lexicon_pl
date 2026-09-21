@@ -95,7 +95,8 @@ data android  application     adapters     use-case implementations
 ## Building
 
 ```
-./gradlew build          # everything, with tests and static analysis
+./gradlew check          # tests and static analysis: the everyday check, about 2 minutes
+./gradlew build          # check, plus release APKs and every iOS framework
 ./gradlew :app:installDebug
 ```
 
