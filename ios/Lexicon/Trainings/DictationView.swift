@@ -25,15 +25,15 @@ struct DictationView: View {
                         Button {
                             Speech.shared.speak(step.expectedText)
                         } label: {
-                            Label("Listen again", systemImage: "speaker.wave.2.fill").font(.title3)
+                            Label(Strings.actionListenAgain, systemImage: "speaker.wave.2.fill").font(.title3)
                         }
                         Text(step.translationText).font(.title2.weight(.semibold))
                         if tipUsed {
-                            Text("Hint: \(String(step.expectedText.prefix(1)))…")
+                            Text(Strings.hintFormat(String(step.expectedText.prefix(1))))
                                 .font(.callout)
                                 .foregroundStyle(.secondary)
                         }
-                        TextField("Type what you heard", text: $typed)
+                        TextField(Strings.dictationTypeWhatYouHeard, text: $typed)
                             .textFieldStyle(.roundedBorder)
                             .autocorrectionDisabled()
                             .textInputAutocapitalization(.never)
@@ -42,15 +42,15 @@ struct DictationView: View {
                 } actions: {
                     HStack(spacing: Spacing.small) {
                         if !state.isAnswered {
-                            Button("Tip") { tipUsed = true }
-                            Button("Skip") { Task { await submit(skipped: true) } }
+                            Button(Strings.actionTip) { tipUsed = true }
+                            Button(Strings.actionSkip) { Task { await submit(skipped: true) } }
                             Spacer()
-                            AsyncButton { await submit(skipped: false) } label: { Text("Check") }
+                            AsyncButton { await submit(skipped: false) } label: { Text(Strings.actionCheck) }
                                 .buttonStyle(.borderedProminent)
                                 .disabled(typed.isEmpty)
                         } else {
                             Spacer()
-                            Button("Next") { advance() }.buttonStyle(.borderedProminent)
+                            Button(Strings.actionNext) { advance() }.buttonStyle(.borderedProminent)
                         }
                     }
                 }

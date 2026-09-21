@@ -28,4 +28,7 @@ enum Keys {
 }
 SWIFT
 
+echo "Writing the strings…"
+python3 ios/strings.py presentation/src/main/res/values/strings.xml ios/Lexicon/Support/Strings.generated.swift
+
 echo "Ready. Open ios/Lexicon.xcodeproj, or build with SKIP_GRADLE=1 xcodebuild …"

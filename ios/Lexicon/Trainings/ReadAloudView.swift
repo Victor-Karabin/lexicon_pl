@@ -20,7 +20,7 @@ struct ReadAloudView: View {
             if finished {
                 SessionResultView(tally: tally) { dismiss() }
             } else if let message = unavailable {
-                TrainingUnavailableView(title: "Nothing to read yet", message: message)
+                TrainingUnavailableView(message: message)
             } else if let step = steps[safe: index] {
                 TrainingScaffold(step: index, total: steps.count, state: state) {
                     VStack(spacing: Spacing.medium) {
@@ -34,10 +34,10 @@ struct ReadAloudView: View {
                                 .multilineTextAlignment(.center)
                         }
                         Button { Speech.shared.speak(step.expectedText) } label: {
-                            Label("Listen", systemImage: "speaker.wave.2")
+                            Label(Strings.actionListen, systemImage: "speaker.wave.2")
                         }
                         if !recognizer.heard.isEmpty {
-                            Text("Heard: \(recognizer.heard)").font(.callout)
+                            Text(Strings.pronunciationHeardFormat(recognizer.heard)).font(.callout)
                         }
                         if let error = recognizer.error {
                             Text(error).font(.callout).foregroundStyle(Palette.failure).multilineTextAlignment(.center)
@@ -46,9 +46,9 @@ struct ReadAloudView: View {
                 } actions: {
                     HStack(spacing: Spacing.small) {
                         if !state.isAnswered {
-                            Button("Skip") { Task { await submit(skipped: true) } }
+                            Button(Strings.actionSkip) { Task { await submit(skipped: true) } }
                             Spacer()
-                            Button(recognizer.isRecording ? "Listening…" : "Record") {
+                            Button(recognizer.isRecording ? Strings.pronunciationListening : Strings.pronunciationRecord) {
                                 Task {
                                     if recognizer.isRecording {
                                         recognizer.stop()
@@ -61,12 +61,12 @@ struct ReadAloudView: View {
                             .buttonStyle(.borderedProminent)
                         } else {
                             Spacer()
-                            Button("Next") { advance() }.buttonStyle(.borderedProminent)
+                            Button(Strings.actionNext) { advance() }.buttonStyle(.borderedProminent)
                         }
                     }
                 }
             } else {
-                ProgressView("Writing your sentences…")
+                ProgressView(Strings.trainingWritingSentences)
             }
         }
         .task { await start() }
@@ -79,13 +79,13 @@ struct ReadAloudView: View {
         case let ready as PronunciationSentencesResultReady:
             sessionId = ready.session.sessionId
             steps = ready.session.steps
-            if steps.isEmpty { unavailable = "No sentence came back for the words in your study set." }
+            if steps.isEmpty { unavailable = Strings.pronunciationSentencesRefused }
         case is PronunciationSentencesResultOffline:
-            unavailable = "The sentences are written on demand and the network is not answering."
+            unavailable = Strings.pronunciationSentencesOffline
         case let refused as PronunciationSentencesResultRefused:
             unavailable = refused.reason
         default:
-            unavailable = "Add a few words to your study set and this will have something to read."
+            unavailable = Strings.pronunciationSentencesNone
         }
     }
 

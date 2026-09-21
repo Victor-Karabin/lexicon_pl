@@ -23,11 +23,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Take a photograph to use as the picture on one of your own words.</string>
+	<string>ios_camera_usage</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Pronunciation Check listens to you saying a word so it can tell you whether it came out right.</string>
+	<string>ios_microphone_usage</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Pronunciation Check turns what you said into text so it can compare it with the word on screen.</string>
+	<string>ios_speech_recognition_usage</string>
 	<key>UILaunchScreen</key>
 	<dict/>
 	<key>UIRequiredDeviceCapabilities</key>

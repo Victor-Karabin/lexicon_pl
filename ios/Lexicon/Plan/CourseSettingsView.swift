@@ -24,7 +24,7 @@ struct CourseSettingsView: View {
                 ProgressView()
             }
         }
-        .navigationTitle("Vocabulary course")
+        .navigationTitle(Strings.vocabularyCourseSettingsTitle)
         .navigationBarTitleDisplayMode(.inline)
         .task { await load() }
         .onDisappear { Task { await save() } }
@@ -35,14 +35,14 @@ struct CourseSettingsView: View {
             VStack(alignment: .leading, spacing: Spacing.medium) {
                 let skin = TileSkin.standard(scheme: scheme)
 
-                Text("Words you mark To learn come first, favourites before the rest. Reviews are picked at random from the words you know.")
+                Text(Strings.vocabularyCourseSettingsScope)
                     .font(.callout)
                     .foregroundStyle(.secondary)
 
-                slider("New words a day", value: $newWords, range: 1...maxWordsADay)
-                slider("Reviews a day", value: $reviews, range: 0...maxWordsADay)
+                slider(Strings.vocabularyCourseNewWords, value: $newWords, range: 1...maxWordsADay)
+                slider(Strings.vocabularyCourseReviews, value: $reviews, range: 0...maxWordsADay)
 
-                Text("Trainings").font(.subheadline.weight(.semibold))
+                Text(Strings.vocabularyCourseTrainings).font(.subheadline.weight(.semibold))
 
                 FlowLayout(spacing: Spacing.small) {
                     ForEach(TrainingCatalog.all) { entry in
@@ -60,11 +60,11 @@ struct CourseSettingsView: View {
                     }
                 }
 
-                Text("Queue").font(.subheadline.weight(.semibold))
+                Text(Strings.vocabularyCourseQueue).font(.subheadline.weight(.semibold))
                 Text(
                     keptLastTraining
-                        ? "The queue needs at least one training, so the last one stays."
-                        : "\(queue.count) trainings, in this order, over and over"
+                        ? Strings.vocabularyCourseQueueKeepsOne
+                        : Strings.vocabularyCourseQueueNote(queue.count)
                 )
                 .font(.caption).foregroundStyle(.secondary)
 
@@ -99,8 +99,8 @@ struct CourseSettingsView: View {
             .foregroundStyle(skin.onTile)
         }
 
-        .accessibilityAction(named: "Move earlier") { move(i, by: -1) }
-        .accessibilityAction(named: "Move later") { move(i, by: 1) }
+        .accessibilityAction(named: Text(Strings.vocabularyCourseMoveEarlier)) { move(i, by: -1) }
+        .accessibilityAction(named: Text(Strings.vocabularyCourseMoveLater)) { move(i, by: 1) }
     }
 
     private var step: CGFloat { rowHeight + Spacing.medium }

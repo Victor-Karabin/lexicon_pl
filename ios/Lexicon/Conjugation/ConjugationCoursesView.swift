@@ -27,7 +27,7 @@ struct ConjugationCoursesView: View {
                 .listStyle(.insetGrouped)
             }
         }
-        .navigationTitle("Verb Conjugation")
+        .navigationTitle(Strings.conjugationTitle)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button { choosing = true } label: { Image(systemName: "plus") }
@@ -44,10 +44,10 @@ struct ConjugationCoursesView: View {
     private var empty: some View {
         VStack(spacing: Spacing.medium) {
             Image(systemName: "textformat.abc").font(.system(size: 44)).foregroundStyle(.secondary)
-            Text("No course yet").font(.title3.weight(.semibold))
-            Text("Pick the verbs you want to drill and they become a course you can come back to.")
+            Text(Strings.conjugationNoCourse).font(.title3.weight(.semibold))
+            Text(Strings.conjugationNoCourseBody)
                 .font(.callout).foregroundStyle(.secondary).multilineTextAlignment(.center)
-            Button("Choose verbs") { choosing = true }.buttonStyle(.borderedProminent)
+            Button(Strings.conjugationSelectTitle) { choosing = true }.buttonStyle(.borderedProminent)
         }
         .padding(Spacing.xl)
     }
@@ -55,7 +55,7 @@ struct ConjugationCoursesView: View {
     private func row(_ course: ConjugationCourse) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(course.title).font(.headline)
-            Text("\(course.progress.mastered) of \(course.progress.total) forms mastered")
+            Text(Strings.conjugationProgress(Int(course.progress.mastered), Int(course.progress.total)))
                 .font(.caption).foregroundStyle(.secondary)
             ProgressView(value: Double(course.progress.fraction))
         }

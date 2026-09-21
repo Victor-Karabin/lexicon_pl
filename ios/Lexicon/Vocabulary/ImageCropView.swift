@@ -44,7 +44,7 @@ struct ImageCropView: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: Spacing.medium) {
-                Text("Drag the photo so the part you want sits in the frame.")
+                Text(Strings.createWordImagePositionHint)
                     .font(.callout)
                     .foregroundStyle(.secondary)
 
@@ -77,14 +77,14 @@ struct ImageCropView: View {
                 Spacer()
             }
             .padding(Spacing.medium)
-            .navigationTitle("Position the picture")
+            .navigationTitle(Strings.createWordImagePosition)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { onFinished(nil) }
+                    Button(Strings.actionCancel) { onFinished(nil) }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Use") { onFinished(cropped()) }
+                    Button(Strings.createWordImageUse) { onFinished(cropped()) }
                 }
             }
         }

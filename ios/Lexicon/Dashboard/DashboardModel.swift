@@ -33,9 +33,9 @@ final class DashboardModel: ObservableObject {
 
     var continueLabel: String {
         if showsCards, let count = course?.newWords.count {
-            return "Meet \(count) new words"
+            return Strings.dashboardMeetWords(Int(count))
         }
-        return "Continue"
+        return Strings.dashboardContinue
     }
 
     func load() async {

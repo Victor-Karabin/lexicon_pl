@@ -31,7 +31,7 @@ struct DashboardView: View {
                 }
                 .padding(Spacing.medium)
             }
-            .navigationTitle("Dashboard")
+            .navigationTitle(Strings.dashboardTitle)
             .navigationDestination(item: $launching) { turn in
                 TrainingHost(entry: turn.entry, vocabularyIds: turn.wordIds)
                     .id(turn.id)
@@ -41,7 +41,7 @@ struct DashboardView: View {
                             Button { Task { await resetQueue() } } label: {
                                 Image(systemName: "arrow.counterclockwise")
                             }
-                            .accessibilityLabel("Start the queue again")
+                            .accessibilityLabel(Strings.vocabularyCourseReset)
                         }
                     }
             }
@@ -61,10 +61,10 @@ struct DashboardView: View {
                     Medallion(skin: skin) { MedallionIcon(systemName: "heart.fill", skin: skin) }
                 }
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Vocabulary course").font(.title3.weight(.semibold)).foregroundStyle(skin.onTile)
-                    Text("Round \(model.round) · \(model.doneTrainings) of \(model.totalTrainings) trainings")
+                    Text(Strings.vocabularyCourseTitle).font(.title3.weight(.semibold)).foregroundStyle(skin.onTile)
+                    Text(Strings.vocabularyCourseRound(Int(model.round), Int(model.doneTrainings), Int(model.totalTrainings)))
                         .font(.callout).foregroundStyle(skin.onTile.muted)
-                    Text("\(model.learning) to learn · \(model.known) known")
+                    Text(Strings.vocabularyCourseLearning(Int(model.learning), Int(model.known)))
                         .font(.caption).foregroundStyle(skin.onTile.muted)
                 }
                 Spacer()
@@ -72,7 +72,7 @@ struct DashboardView: View {
                     VStack(spacing: 0) {
                         Image(systemName: "flame.fill").foregroundStyle(skin.onTile)
                         Text("\(model.streak)").font(.headline).foregroundStyle(skin.onTile)
-                        Text("day streak").font(.caption2).foregroundStyle(skin.onTile.muted)
+                        Text(Strings.dashboardStreakUnit).font(.caption2).foregroundStyle(skin.onTile.muted)
                     }
                 }
             }
@@ -82,7 +82,7 @@ struct DashboardView: View {
             }
 
             if model.nothingToPractise {
-                Text("Nothing to practise yet. Mark words To learn or Known in the Words tab, or sort some in Review words.")
+                Text(Strings.dashboardNothingDue)
                     .font(.subheadline)
                     .foregroundStyle(skin.onTile.muted)
             } else {
@@ -105,8 +105,8 @@ struct DashboardView: View {
             HStack(spacing: Spacing.medium) {
                 Medallion(skin: skin) { MedallionIcon(systemName: "tray.full", skin: skin) }
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Review words").font(.headline).foregroundStyle(skin.onTile)
-                    Text("\(waiting) words have no mark yet")
+                    Text(Strings.dashboardReviewWords).font(.headline).foregroundStyle(skin.onTile)
+                    Text(Strings.dashboardReviewWordsWaiting(Int(waiting)))
                         .font(.caption)
                         .foregroundStyle(skin.onTile.muted)
                 }
@@ -119,9 +119,9 @@ struct DashboardView: View {
     private func accuracyRow(_ metric: ProgressMetric, skin: TileSkin) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             HStack {
-                Text("Correct answers").font(.caption).foregroundStyle(skin.onTile.muted)
+                Text(Strings.dashboardMetricAccuracy).font(.caption).foregroundStyle(skin.onTile.muted)
                 Spacer()
-                Text(metric.isMeasured ? "\(metric.current)%" : "—")
+                Text(metric.isMeasured ? "\(metric.current)%" : Strings.dashboardMetricUnmeasured)
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(skin.onTile)
             }

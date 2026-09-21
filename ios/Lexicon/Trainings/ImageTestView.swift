@@ -51,11 +51,11 @@ struct ImageTestView: View {
                 } actions: {
                     HStack {
                         if !state.isAnswered {
-                            Button("Skip") { Task { await submit(skipped: true) } }
+                            Button(Strings.actionSkip) { Task { await submit(skipped: true) } }
                             Spacer()
                         } else {
                             Spacer()
-                            Button("Next") { advance() }.buttonStyle(.borderedProminent)
+                            Button(Strings.actionNext) { advance() }.buttonStyle(.borderedProminent)
                         }
                     }
                 }

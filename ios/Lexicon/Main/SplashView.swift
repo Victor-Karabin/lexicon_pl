@@ -13,26 +13,26 @@ struct SplashView: View {
             Image(systemName: "book.closed.fill")
                 .font(.system(size: 56))
                 .foregroundStyle(Palette.primary)
-            Text("Lexicon").font(.largeTitle.bold())
-            Text("Polish vocabulary, one session at a time")
+            Text(Strings.splashTitle).font(.largeTitle.bold())
+            Text(Strings.splashTagline)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
 
             VStack(alignment: .leading, spacing: Spacing.small) {
-                step("Vocabulary", status?.vocabulary)
-                step("Presets", status?.presets)
-                step("Course", status?.course)
-                step("Verbs", status?.verbs)
+                step(Strings.syncStepVocabulary, status?.vocabulary)
+                step(Strings.syncStepPresets, status?.presets)
+                step(Strings.syncStepCourse, status?.course)
+                step(Strings.syncStepVerbs, status?.verbs)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(Spacing.medium)
 
             if isBlocked {
-                Text("The bundled vocabulary could not be loaded, so there is nothing to study yet.")
+                Text(Strings.syncBlocked)
                     .font(.callout)
                     .foregroundStyle(Palette.failure)
                     .multilineTextAlignment(.center)
-                Button("Try again") { start() }
+                Button(Strings.syncRetry) { start() }
             }
             Spacer()
         }
@@ -58,7 +58,7 @@ struct SplashView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Text(name).font(.callout)
                 if let complete = state as? SeedStepStatusComplete {
-                    Text("\(complete.total) ready").font(.caption).foregroundStyle(.secondary)
+                    Text(Strings.syncUpToDate(String(complete.total))).font(.caption).foregroundStyle(.secondary)
                 }
 
                 if let failed = state as? SeedStepStatusFailed {

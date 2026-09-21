@@ -88,16 +88,16 @@ struct ReviewWordsView: View {
                 ProgressView()
             } else if model.isFinished {
                 VStack(spacing: Spacing.large) {
-                    Text("Nothing left to sort. You went through \(model.reviewed) words.")
+                    Text(Strings.reviewWordsDone(model.reviewed))
                         .multilineTextAlignment(.center)
                         .foregroundStyle(.secondary)
-                    Button("Done") { dismiss() }.buttonStyle(.borderedProminent)
+                    Button(Strings.reviewWordsClose) { dismiss() }.buttonStyle(.borderedProminent)
                 }
                 .padding(Spacing.xl)
             } else if let word = model.current {
                 ScrollView {
                     VStack(spacing: Spacing.medium) {
-                        Text("\(model.waiting) still to sort")
+                        Text(Strings.reviewWordsWaiting(model.waiting))
                             .font(.caption)
                             .foregroundStyle(.secondary)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -116,7 +116,7 @@ struct ReviewWordsView: View {
                     VStack(spacing: Spacing.medium) {
                         choices
                         Button(role: .destructive) { model.delete() } label: {
-                            Label("Delete this word", systemImage: "trash").frame(maxWidth: .infinity)
+                            Label(Strings.reviewWordsDelete, systemImage: "trash").frame(maxWidth: .infinity)
                         }
                         .buttonStyle(.bordered)
                     }
@@ -125,16 +125,16 @@ struct ReviewWordsView: View {
                 }
             }
         }
-        .navigationTitle("Review words")
+        .navigationTitle(Strings.reviewWordsTitle)
         .navigationBarTitleDisplayMode(.inline)
         .task { await model.load() }
     }
 
     private var choices: some View {
         HStack(spacing: Spacing.small) {
-            choice("To learn", systemImage: "graduationcap", status: .toLearn, tint: Palette.accentDeep)
-            choice("Favourite", systemImage: "heart.fill", status: .favourite, tint: Palette.failure)
-            choice("Known", systemImage: "checkmark.circle.fill", status: .known, tint: Palette.success)
+            choice(Strings.reviewWordsToLearn, systemImage: "graduationcap", status: .toLearn, tint: Palette.accentDeep)
+            choice(Strings.reviewWordsFavourite, systemImage: "heart.fill", status: .favourite, tint: Palette.failure)
+            choice(Strings.reviewWordsKnown, systemImage: "checkmark.circle.fill", status: .known, tint: Palette.success)
         }
     }
 

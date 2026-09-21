@@ -28,8 +28,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.SubcomposeAsyncImage
+import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
@@ -82,7 +84,7 @@ private fun MemoryCardsScreenContent(
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = { TrainingTopBar(title = "Memory Cards", onClose = onClose) },
+        topBar = { TrainingTopBar(title = stringResource(R.string.memory_cards_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
             MemoryCardsUiState.Unavailable ->
@@ -131,11 +133,11 @@ private fun MemoryCardsScreenContent(
                         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
                     ) {
                         TextButton(onClick = onSkip, enabled = uiState.canSkip) {
-                            Text("Skip")
+                            Text(stringResource(R.string.action_skip))
                         }
                         if (uiState.awaitingNext) {
                             Button(onClick = onNext) {
-                                Text("Next")
+                                Text(stringResource(R.string.action_next))
                             }
                         }
                     }

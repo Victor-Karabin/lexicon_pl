@@ -40,7 +40,7 @@ struct VerbSelectionView: View {
                 .listStyle(.plain)
             }
         }
-        .searchable(text: $query, prompt: "Search verb")
+        .searchable(text: $query, prompt: Strings.conjugationSearchHint)
         .task(id: query) {
             if !loading {
                 try? await Task.sleep(nanoseconds: searchSettleNanoseconds)
@@ -48,20 +48,20 @@ struct VerbSelectionView: View {
             }
             await loadFirstPage()
         }
-        .navigationTitle("Choose verbs")
+        .navigationTitle(Strings.conjugationSelectTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel") { dismiss() }
+                Button(Strings.actionCancel) { dismiss() }
             }
             ToolbarItem(placement: .confirmationAction) {
-                AsyncButton { await create() } label: { Text("Create") }
+                AsyncButton { await create() } label: { Text(Strings.conjugationCreate) }
                     .disabled(chosen.isEmpty || saving)
             }
         }
         .safeAreaInset(edge: .bottom) {
             if !chosen.isEmpty {
-                Text("\(chosen.count) chosen")
+                Text(Strings.conjugationSelectedCount(chosen.count))
                     .font(.callout).foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity)
                     .padding(Spacing.small)
@@ -83,7 +83,7 @@ struct VerbSelectionView: View {
                         Text(translation).font(.caption).foregroundStyle(.secondary)
                     }
                     if !verb.isComplete {
-                        Text("\(verb.persons.count) of 6 forms").font(.caption2).foregroundStyle(.secondary)
+                        Text(Strings.conjugationPartial(verb.persons.count)).font(.caption2).foregroundStyle(.secondary)
                     }
                 }
                 Spacer()

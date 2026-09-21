@@ -30,13 +30,13 @@ struct AddImageTile: View {
             Button {
                 isChoosing = true
             } label: {
-                Label("Choose a photo", systemImage: "photo.on.rectangle")
+                Label(Strings.createWordImageFromLibrary, systemImage: "photo.on.rectangle")
             }
             if hasCamera {
                 Button {
                     isTakingPhoto = true
                 } label: {
-                    Label("Take a photo", systemImage: "camera")
+                    Label(Strings.createWordImageFromCamera, systemImage: "camera")
                 }
             }
         } label: {
@@ -44,7 +44,7 @@ struct AddImageTile: View {
                 .fill(Color.secondary.opacity(0.15))
                 .frame(width: 96, height: 96)
                 .overlay(Image(systemName: "plus").foregroundStyle(.secondary))
-                .accessibilityLabel("Add a picture of your own")
+                .accessibilityLabel(Strings.createWordImageAdd)
         }
         .photosPicker(isPresented: $isChoosing, selection: $libraryItem, matching: .images)
         .onChange(of: libraryItem) { _, item in

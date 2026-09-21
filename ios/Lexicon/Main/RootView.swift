@@ -10,15 +10,15 @@ struct RootView: View {
             if hasSynced {
                 TabView {
                     DashboardView()
-                        .tabItem { Label("Home", systemImage: "square.grid.2x2") }
+                        .tabItem { Label(Strings.tabHome, systemImage: "square.grid.2x2") }
                     TrainingsView()
-                        .tabItem { Label("Trainings", systemImage: "graduationcap") }
+                        .tabItem { Label(Strings.tabTrainings, systemImage: "graduationcap") }
                     VocabularyView()
-                        .tabItem { Label("Words", systemImage: "book") }
+                        .tabItem { Label(Strings.tabWords, systemImage: "book") }
                     PlanView()
-                        .tabItem { Label("Plan", systemImage: "calendar") }
+                        .tabItem { Label(Strings.tabPlan, systemImage: "calendar") }
                     SettingsView()
-                        .tabItem { Label("Settings", systemImage: "gearshape") }
+                        .tabItem { Label(Strings.tabSettings, systemImage: "gearshape") }
                 }
             } else {
                 SplashView { hasSynced = true }

@@ -20,9 +20,9 @@ struct CourseCardsView: View {
                     )
                 } actions: {
                     HStack {
-                        if index > 0 { Button("Back") { index -= 1 } }
+                        if index > 0 { Button(Strings.cardsBack) { index -= 1 } }
                         Spacer()
-                        Button(index == cards.count - 1 ? "Start training" : "Next") {
+                        Button(index == cards.count - 1 ? Strings.cardsStartTraining : Strings.cardsNext) {
                             if index == cards.count - 1 {
                                 Task {
                                     try? await deps.markCourseCardsSeen.invoke()
@@ -39,7 +39,7 @@ struct CourseCardsView: View {
                 ProgressView()
             }
         }
-        .navigationTitle("New words")
+        .navigationTitle(Strings.cardsTitle)
         .navigationBarTitleDisplayMode(.inline)
         .task { await load() }
     }
