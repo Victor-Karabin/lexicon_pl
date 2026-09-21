@@ -1,4 +1,4 @@
-package com.lexicon.presentation.presets
+package com.lexicon.common
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse

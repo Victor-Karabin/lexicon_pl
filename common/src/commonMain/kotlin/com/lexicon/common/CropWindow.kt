@@ -1,4 +1,4 @@
-package com.lexicon.presentation.presets
+package com.lexicon.common
 
 import kotlin.math.abs
 import kotlin.math.roundToInt

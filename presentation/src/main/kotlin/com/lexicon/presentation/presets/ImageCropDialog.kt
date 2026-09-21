@@ -35,6 +35,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.core.net.toUri
+import com.lexicon.common.CARD_IMAGE_ASPECT
+import com.lexicon.common.CropRect
+import com.lexicon.common.CropWindow
 import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.LexiconShapes
 import kotlinx.coroutines.Dispatchers
