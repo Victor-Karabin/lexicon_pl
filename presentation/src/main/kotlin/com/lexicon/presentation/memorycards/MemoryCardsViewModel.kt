@@ -13,13 +13,12 @@ import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.SessionTally
 import com.lexicon.presentation.common.trainingVocabularyIds
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -39,15 +38,12 @@ class MemoryCardsViewModel(
 
     private val _uiState = MutableStateFlow<MemoryCardsUiState>(MemoryCardsUiState.Loading)
     val uiState: StateFlow<MemoryCardsUiState> = _uiState.asStateFlow()
+    private val tally = SessionTally(lastSessionResultsHolder)
 
-    private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
-    val navigationEvents: SharedFlow<SessionNavigationEvent> = _navigationEvents.asSharedFlow()
+    val navigationEvents: SharedFlow<SessionNavigationEvent> = tally.events
 
     private lateinit var sessionId: String
     private var steps: List<MemoryCardsStepResponse> = emptyList()
-    private var correctCount = 0
-    private var incorrectCount = 0
-    private var skippedCount = 0
 
     init {
         startSession()
@@ -147,8 +143,8 @@ class MemoryCardsViewModel(
                 ),
             )
         when (response.outcome) {
-            StepOutcome.CORRECT -> correctCount++
-            StepOutcome.INCORRECT -> incorrectCount++
+            StepOutcome.CORRECT -> tally.record(AnswerState.Correct)
+            StepOutcome.INCORRECT -> tally.record(AnswerState.Incorrect())
             StepOutcome.SKIPPED -> Unit
 
             StepOutcome.SEEN -> Unit
@@ -171,7 +167,7 @@ class MemoryCardsViewModel(
                     skipped = true,
                 ),
             )
-            skippedCount++
+            tally.record(AnswerState.Skipped())
             updateLoaded {
                 it.copy(
                     matchedItemIds = step.pairs.map { pair -> pair.vocabularyItemId }.toSet(),
@@ -195,8 +191,7 @@ class MemoryCardsViewModel(
         if (nextIndex >= steps.size) {
             updateLoaded { it.copy(isSessionComplete = true) }
 
-            lastSessionResultsHolder.wordResults = emptyList()
-            _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount))
+            tally.complete()
             return
         }
         openStep(nextIndex)

@@ -14,14 +14,12 @@ import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
-import com.lexicon.presentation.common.WordResultEntry
+import com.lexicon.presentation.common.SessionTally
 import com.lexicon.presentation.common.trainingVocabularyIds
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -41,17 +39,12 @@ class DictationViewModel(
 
     private val _uiState = MutableStateFlow<DictationUiState>(DictationUiState.Loading)
     val uiState: StateFlow<DictationUiState> = _uiState.asStateFlow()
+    private val tally = SessionTally(lastSessionResultsHolder)
 
-    private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
-    val navigationEvents: SharedFlow<SessionNavigationEvent> = _navigationEvents.asSharedFlow()
+    val navigationEvents: SharedFlow<SessionNavigationEvent> = tally.events
 
     private lateinit var sessionId: String
     private var steps: List<DictationStepResponse> = emptyList()
-    private var correctCount = 0
-    private var incorrectCount = 0
-    private var skippedCount = 0
-    private var tipsUsedCount = 0
-    private val wordResults = mutableListOf<WordResultEntry>()
 
     init {
         startSession()
@@ -90,7 +83,7 @@ class DictationViewModel(
         val state = _uiState.value as? DictationUiState.Loaded ?: return
         if (!state.canUseTip) return
         val step = currentStepOrNull() ?: return
-        tipsUsedCount++
+        tally.countTip()
         updateLoaded { it.copy(tipUsed = true, tipTranslation = step.translationText) }
     }
 
@@ -138,30 +131,19 @@ class DictationViewModel(
         val step = currentStepOrNull()
         when (outcome) {
             StepOutcome.CORRECT -> {
-                correctCount++
-                step?.let {
-                    wordResults += WordResultEntry(it.expectedText, it.translationText, AnswerState.Correct, tipUsed)
-                }
+                tally.record(AnswerState.Correct, step?.expectedText, step?.translationText.orEmpty(), tipUsed)
                 updateLoaded { it.copy(answerState = AnswerState.Correct) }
                 delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                 advanceToNextStep()
             }
             StepOutcome.INCORRECT -> {
-                incorrectCount++
-                step?.let {
-                    wordResults +=
-                        WordResultEntry(it.expectedText, it.translationText, AnswerState.Incorrect(expectedText), tipUsed)
-                }
+                tally.record(AnswerState.Incorrect(expectedText), step?.expectedText, step?.translationText.orEmpty(), tipUsed)
                 updateLoaded {
                     it.copy(answerState = AnswerState.Incorrect(expectedText), isSubmitting = false)
                 }
             }
             StepOutcome.SKIPPED -> {
-                skippedCount++
-                step?.let {
-                    wordResults +=
-                        WordResultEntry(it.expectedText, it.translationText, AnswerState.Skipped(expectedText), tipUsed)
-                }
+                tally.record(AnswerState.Skipped(expectedText), step?.expectedText, step?.translationText.orEmpty(), tipUsed)
                 updateLoaded {
                     it.copy(answerState = AnswerState.Skipped(expectedText))
                 }
@@ -185,10 +167,7 @@ class DictationViewModel(
         val nextIndex = state.stepIndex + 1
         if (nextIndex >= steps.size) {
             updateLoaded { it.copy(isSessionComplete = true, isSubmitting = false) }
-            lastSessionResultsHolder.wordResults = wordResults.toList()
-            _navigationEvents.emit(
-                SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount, tipsUsedCount),
-            )
+            tally.complete()
             return
         }
         _uiState.update {

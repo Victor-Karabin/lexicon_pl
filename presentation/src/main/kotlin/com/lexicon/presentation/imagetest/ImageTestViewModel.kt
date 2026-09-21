@@ -13,14 +13,12 @@ import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
-import com.lexicon.presentation.common.WordResultEntry
+import com.lexicon.presentation.common.SessionTally
 import com.lexicon.presentation.common.trainingVocabularyIds
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -39,16 +37,12 @@ class ImageTestViewModel(
 
     private val _uiState = MutableStateFlow<ImageTestUiState>(ImageTestUiState.Loading)
     val uiState: StateFlow<ImageTestUiState> = _uiState.asStateFlow()
+    private val tally = SessionTally(lastSessionResultsHolder)
 
-    private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
-    val navigationEvents: SharedFlow<SessionNavigationEvent> = _navigationEvents.asSharedFlow()
+    val navigationEvents: SharedFlow<SessionNavigationEvent> = tally.events
 
     private lateinit var sessionId: String
     private var steps: List<ImageTestStepResponse> = emptyList()
-    private var correctCount = 0
-    private var incorrectCount = 0
-    private var skippedCount = 0
-    private val wordResults = mutableListOf<WordResultEntry>()
 
     init {
         startSession()
@@ -126,20 +120,17 @@ class ImageTestViewModel(
     ) {
         when (outcome) {
             StepOutcome.CORRECT -> {
-                correctCount++
-                wordResults += WordResultEntry(correctOption, step.clueText, AnswerState.Correct)
+                tally.record(AnswerState.Correct, correctOption, step.clueText)
                 updateLoaded { it.copy(answerState = AnswerState.Correct, correctOption = correctOption) }
                 delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
                 advanceToNextStep()
             }
             StepOutcome.INCORRECT -> {
-                incorrectCount++
-                wordResults += WordResultEntry(correctOption, step.clueText, AnswerState.Incorrect(correctOption))
+                tally.record(AnswerState.Incorrect(correctOption), correctOption, step.clueText)
                 updateLoaded { it.copy(answerState = AnswerState.Incorrect(), correctOption = correctOption) }
             }
             StepOutcome.SKIPPED -> {
-                skippedCount++
-                wordResults += WordResultEntry(correctOption, step.clueText, AnswerState.Skipped(correctOption))
+                tally.record(AnswerState.Skipped(correctOption), correctOption, step.clueText)
                 updateLoaded { it.copy(answerState = AnswerState.Skipped(), correctOption = correctOption) }
                 delay(SKIPPED_ANSWER_ADVANCE_DELAY_MS)
                 advanceToNextStep()
@@ -160,8 +151,7 @@ class ImageTestViewModel(
         val nextIndex = state.stepIndex + 1
         if (nextIndex >= steps.size) {
             updateLoaded { it.copy(isSessionComplete = true) }
-            lastSessionResultsHolder.wordResults = wordResults.toList()
-            _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount))
+            tally.complete()
             return
         }
         openStep(nextIndex)

@@ -13,15 +13,13 @@ import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
-import com.lexicon.presentation.common.WordResultEntry
+import com.lexicon.presentation.common.SessionTally
 import com.lexicon.presentation.common.trainingVocabularyIds
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -37,17 +35,13 @@ class TrueOrFalseViewModel(
 
     private val _uiState = MutableStateFlow<TrueOrFalseUiState>(TrueOrFalseUiState.Loading)
     val uiState: StateFlow<TrueOrFalseUiState> = _uiState.asStateFlow()
+    private val tally = SessionTally(lastSessionResultsHolder)
 
-    private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
-    val navigationEvents: SharedFlow<SessionNavigationEvent> = _navigationEvents.asSharedFlow()
+    val navigationEvents: SharedFlow<SessionNavigationEvent> = tally.events
 
     private lateinit var sessionId: String
     private var steps: List<TrueOrFalseStepResponse> = emptyList()
-    private var correctCount = 0
-    private var incorrectCount = 0
-    private var skippedCount = 0
     private var timerJob: Job? = null
-    private val wordResults = mutableListOf<WordResultEntry>()
 
     init {
         startSession()
@@ -117,17 +111,14 @@ class TrueOrFalseViewModel(
     ) {
         when (outcome) {
             StepOutcome.CORRECT -> {
-                correctCount++
-                wordResults += WordResultEntry(step.word, step.displayedTranslation, AnswerState.Correct)
+                tally.record(AnswerState.Correct, step.word, step.displayedTranslation)
             }
             StepOutcome.INCORRECT -> {
-                incorrectCount++
-                wordResults += WordResultEntry(step.word, step.displayedTranslation, AnswerState.Incorrect())
+                tally.record(AnswerState.Incorrect(), step.word, step.displayedTranslation)
             }
 
             StepOutcome.SKIPPED -> {
-                skippedCount++
-                wordResults += WordResultEntry(step.word, step.displayedTranslation, AnswerState.Skipped())
+                tally.record(AnswerState.Skipped(), step.word, step.displayedTranslation)
             }
 
             StepOutcome.SEEN -> Unit
@@ -150,8 +141,7 @@ class TrueOrFalseViewModel(
         val state = _uiState.value as? TrueOrFalseUiState.Loaded ?: return
         if (state.isSessionComplete) return
         updateLoaded { it.copy(isSessionComplete = true) }
-        lastSessionResultsHolder.wordResults = wordResults.toList()
-        _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skipped = skippedCount))
+        tally.complete()
         timerJob?.cancel()
     }
 
