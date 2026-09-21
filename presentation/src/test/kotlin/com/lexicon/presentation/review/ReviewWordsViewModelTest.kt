@@ -3,6 +3,7 @@ package com.lexicon.presentation.review
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.CountWordsToReviewUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
+import com.lexicon.interactors.presets.GetWordUseCase
 import com.lexicon.interactors.presets.GetWordsToReviewUseCase
 import com.lexicon.interactors.presets.SetWordStatusUseCase
 import com.lexicon.interactors.vocabularycourse.GetWordCardsUseCase
@@ -49,6 +50,7 @@ class ReviewWordsViewModelTest {
     }
     private val setWordStatus: SetWordStatusUseCase = mockk(relaxed = true)
     private val deleteWord: DeleteWordUseCase = mockk(relaxed = true)
+    private val getWord: GetWordUseCase = mockk()
     private val getWordCards: GetWordCardsUseCase = mockk {
         coEvery { this@mockk(any()) } answers {
             firstArg<List<VocabularyId>>().map { id ->
@@ -63,6 +65,7 @@ class ReviewWordsViewModelTest {
             countWordsToReview = countWordsToReview,
             setWordStatus = setWordStatus,
             deleteWord = deleteWord,
+            getWord = getWord,
             getWordCards = getWordCards,
             speechSynthesizer = mockk(relaxed = true),
             dispatchers = object : DispatcherProvider {
@@ -86,6 +89,25 @@ class ReviewWordsViewModelTest {
 
             assertEquals(kot, viewModel.uiState.value.current)
             assertEquals(2, viewModel.uiState.value.waiting)
+        }
+
+    @Test
+    fun `an edited word is shown as saved when the review is back in view`() =
+        runTest(dispatcher) {
+            val edited = kot.copy(text = "kotek", translation = "kitten")
+            coEvery { getWord(kot.id) } returns edited
+            coEvery { getWordCards(listOf(kot.id)) } returns persistentListOf(
+                WordCard(kot.id, "kotek", "kitten", "", imageUrl = "file:///own/kotek.jpg"),
+            )
+            val viewModel = viewModel()
+            advanceUntilIdle()
+
+            viewModel.refreshCurrent()
+            advanceUntilIdle()
+
+            assertEquals(edited, viewModel.uiState.value.current)
+            assertEquals("file:///own/kotek.jpg", viewModel.uiState.value.currentPicture)
+            assertEquals(0, viewModel.uiState.value.index)
         }
 
     @Test

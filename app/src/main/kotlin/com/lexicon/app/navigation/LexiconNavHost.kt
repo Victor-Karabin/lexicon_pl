@@ -110,7 +110,10 @@ fun LexiconNavHost(
         }
 
         composable(LexiconDestinations.REVIEW_WORDS) {
-            ReviewWordsScreen(onClose = { navController.popBackStack() })
+            ReviewWordsScreen(
+                onClose = { navController.popBackStack() },
+                onEditWord = { id -> navController.navigate(LexiconDestinations.editWord(id.value)) },
+            )
         }
 
         composable(LexiconDestinations.CREATE_WORD) {

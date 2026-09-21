@@ -6,6 +6,7 @@ import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.CountWordsToReviewUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
+import com.lexicon.interactors.presets.GetWordUseCase
 import com.lexicon.interactors.presets.GetWordsToReviewUseCase
 import com.lexicon.interactors.presets.SetWordStatusUseCase
 import com.lexicon.interactors.vocabularycourse.GetWordCardsUseCase
@@ -52,6 +53,7 @@ class ReviewWordsViewModel(
     private val countWordsToReview: CountWordsToReviewUseCase,
     private val setWordStatus: SetWordStatusUseCase,
     private val deleteWord: DeleteWordUseCase,
+    private val getWord: GetWordUseCase,
     private val getWordCards: GetWordCardsUseCase,
     private val speechSynthesizer: SpeechSynthesizer,
     private val dispatchers: DispatcherProvider,
@@ -92,6 +94,23 @@ class ReviewWordsViewModel(
             delay(SETTLE_MS)
             deleteWord(word.id)
             advance()
+        }
+    }
+
+    fun refreshCurrent() {
+        val id = _uiState.value.current?.id ?: return
+
+        viewModelScope.launch(dispatchers.io) {
+            val word = getWord(id) ?: return@launch
+            val picture = getWordCards(listOf(id)).firstOrNull()?.imageUrl
+            _uiState.update { state ->
+                state.copy(
+                    words = state.words.map { if (it.id == id) word else it }.toImmutableList(),
+                    pictures = state.pictures.toPersistentMap().let { pictures ->
+                        picture?.let { pictures.put(id, it) } ?: pictures.remove(id)
+                    },
+                )
+            }
         }
     }
 

@@ -25,6 +25,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,10 +53,13 @@ private val ChoiceIconSize = 20.dp
 @Composable
 fun ReviewWordsScreen(
     onClose: () -> Unit,
+    onEditWord: (VocabularyId) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ReviewWordsViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) { viewModel.refreshCurrent() }
 
     ReviewWordsContent(
         uiState = uiState,
@@ -64,6 +68,7 @@ fun ReviewWordsScreen(
         onDeleted = viewModel::onDeleted,
         onPronounce = viewModel::onPronounce,
         onSpeakExample = viewModel::onSpeakExample,
+        onEdit = { uiState.current?.let { word -> onEditWord(word.id) } },
         modifier = modifier,
     )
 }
@@ -76,6 +81,7 @@ private fun ReviewWordsContent(
     onDeleted: () -> Unit,
     onPronounce: () -> Unit,
     onSpeakExample: () -> Unit,
+    onEdit: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -128,6 +134,7 @@ private fun ReviewWordsContent(
                                 example = word.example,
                                 onPronounce = onPronounce,
                                 onSpeakExample = onSpeakExample,
+                                onEdit = onEdit,
                             )
                         }
                     }
@@ -246,6 +253,7 @@ private fun ReviewWordsPreview() {
             onDeleted = {},
             onPronounce = {},
             onSpeakExample = {},
+            onEdit = {},
         )
     }
 }

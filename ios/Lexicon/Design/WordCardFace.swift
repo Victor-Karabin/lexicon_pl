@@ -6,6 +6,7 @@ struct WordCardFace: View {
     let transcription: String
     let imageUrl: String?
     let example: String
+    var onEdit: (() -> Void)?
 
     @Environment(\.colorScheme) private var scheme
 
@@ -32,6 +33,12 @@ struct WordCardFace: View {
                 Spacer()
                 Button { Speech.shared.speak(text) } label: {
                     Image(systemName: "speaker.wave.2").foregroundStyle(skin.onTile)
+                }
+                if let onEdit {
+                    Button(action: onEdit) {
+                        Image(systemName: "pencil").foregroundStyle(skin.onTile)
+                    }
+                    .accessibilityLabel("Edit word")
                 }
             }
             ExampleSentenceRow(sentence: example, word: text, tint: skin.onTile.muted)
