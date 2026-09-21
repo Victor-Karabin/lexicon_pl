@@ -129,6 +129,26 @@ class VocabularyStatusTest {
         }
 
     @Test
+    fun `a learning word reset to nothing moves on from nothing, not from how it was loaded`() =
+        runTest(dispatcher) {
+            val learning = kot.copy(status = WordStatus.KNOWN)
+            coEvery { searchVocabulary(any(), any(), any(), any(), any()) } returns persistentListOf(learning)
+            statuses.value = mapOf(kot.id to WordStatus.KNOWN)
+            val viewModel = viewModel()
+            advanceUntilIdle()
+
+            viewModel.onWordStatusCycled(kot.id)
+            advanceUntilIdle()
+            statuses.value = emptyMap()
+            advanceUntilIdle()
+            viewModel.onWordStatusCycled(kot.id)
+            advanceUntilIdle()
+
+            coVerify { setWordStatus(kot.id, WordStatus.UNDEFINED) }
+            coVerify { setWordStatus(kot.id, WordStatus.TO_LEARN) }
+        }
+
+    @Test
     fun `the to learn filter asks the search for the learning list alone`() =
         runTest(dispatcher) {
             val learningOnly = slot<Boolean>()

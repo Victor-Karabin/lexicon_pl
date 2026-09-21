@@ -18,6 +18,7 @@ import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.Word
 import com.lexicon.model.vocabulary.WordStatus
+import com.lexicon.model.vocabulary.statusOf
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -193,7 +194,7 @@ class PresetDetailViewModel(
 
     fun onWordStatusCycled(id: VocabularyId) {
         val loaded = uiState.value as? PresetDetailUiState.Loaded ?: return
-        val current = loaded.wordStatuses[id] ?: loaded.words.firstOrNull { it.id == id }?.status ?: WordStatus.UNDEFINED
+        val current = loaded.wordStatuses.statusOf(id)
 
         viewModelScope.launch(dispatchers.io) { setWordStatus(id, current.next()) }
     }

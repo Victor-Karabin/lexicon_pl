@@ -11,7 +11,7 @@ struct VocabularyView: View {
                 LazyVStack(spacing: Spacing.small) {
                     filters
 
-                    if model.query.isEmpty && model.levels.isEmpty {
+                    if model.query.isEmpty && model.levels.isEmpty && !model.toLearnOnly {
                         ForEach(model.presets, id: \.id.value) { preset in
                             NavigationLink {
                                 PresetDetailView(preset: preset)
