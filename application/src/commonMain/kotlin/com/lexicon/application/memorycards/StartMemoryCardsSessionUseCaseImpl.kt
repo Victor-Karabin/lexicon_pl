@@ -45,7 +45,7 @@ class StartMemoryCardsSessionUseCaseImpl(
         pairsPerStep: Int,
         vocabularyIds: List<Long>,
     ): MemoryCardsStepResponse {
-        val words = vocabularyRepository.getRandomItems(pairsPerStep, vocabularyIds).map { it }
+        val words = vocabularyRepository.getRandomItems(pairsPerStep, vocabularyIds)
         val pairs =
             coroutineScope {
                 words.map { word -> async { buildPair(word) } }.map { it.await() }

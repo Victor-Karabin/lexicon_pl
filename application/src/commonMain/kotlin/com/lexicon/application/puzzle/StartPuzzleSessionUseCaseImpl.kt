@@ -26,7 +26,7 @@ class StartPuzzleSessionUseCaseImpl(
 ) : StartPuzzleSessionUseCase {
     override suspend fun invoke(request: StartPuzzleSessionRequest): PuzzleSessionResponse {
         val stepCount = stepCountResolver.resolve(request.stepCount)
-        val words = vocabularyRepository.getRandomItems(stepCount, request.vocabularyIds).map { it }
+        val words = vocabularyRepository.getRandomItems(stepCount, request.vocabularyIds)
         val steps = coroutineScope {
             words.mapIndexed { index, word ->
                 async { buildStep(index, word) }

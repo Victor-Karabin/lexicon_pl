@@ -114,16 +114,6 @@ class VocabularyRepositoryImpl(
         return wordDao.findByText(text)?.toWord()
     }
 
-    override suspend fun allWordIds(): List<Long> {
-        vocabularySeeder.ensureSeeded()
-        return wordDao.allWordIds()
-    }
-
-    override suspend fun wordIdsForLevel(level: String): List<Long> {
-        vocabularySeeder.ensureSeeded()
-        return wordDao.wordIdsForLevel(level)
-    }
-
     override suspend fun studySetWordIds(): List<Long> {
         vocabularySeeder.ensureSeeded()
         return wordDao.studySetWordIds()
@@ -158,8 +148,6 @@ class VocabularyRepositoryImpl(
         vocabularySeeder.ensureSeeded()
         ids.forEachBatch { wordDao.setStatus(it, status.name) }
     }
-
-    override fun observeStudySetIds(): Flow<Set<Long>> = wordDao.observeStudySetIds().map { it.toSet() }
 
     override suspend fun wordsWithStatus(
         status: WordStatus,

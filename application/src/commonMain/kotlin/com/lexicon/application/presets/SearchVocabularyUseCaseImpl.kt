@@ -24,7 +24,6 @@ class SearchVocabularyUseCaseImpl(
 
         return vocabularyRepository
             .search(folded, levels.mapTo(mutableSetOf()) { it.name }, learningOnly, limit, skip)
-            .map { it }
             .toImmutableList()
     }
 }

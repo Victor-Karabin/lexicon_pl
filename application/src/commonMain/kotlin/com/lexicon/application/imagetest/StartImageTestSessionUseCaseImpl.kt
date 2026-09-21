@@ -30,7 +30,7 @@ class StartImageTestSessionUseCaseImpl(
     override suspend fun invoke(request: StartImageTestSessionRequest): ImageTestSessionResponse {
         val stepCount = stepCountResolver.resolve(request.stepCount)
         val poolSize = maxOf(maxOf(stepCount, request.optionCount) * POOL_MULTIPLIER, MIN_POOL_SIZE)
-        val pool = vocabularyRepository.getRandomItems(poolSize, request.vocabularyIds).map { it }
+        val pool = vocabularyRepository.getRandomItems(poolSize, request.vocabularyIds)
         val subjects = subjectsWithEnoughDistractors(pool, request.optionCount).take(stepCount)
 
         val steps =

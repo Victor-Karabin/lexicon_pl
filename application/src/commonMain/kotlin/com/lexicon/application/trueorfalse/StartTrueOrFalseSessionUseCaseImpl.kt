@@ -24,7 +24,6 @@ class StartTrueOrFalseSessionUseCaseImpl(
         val pool =
             vocabularyRepository
                 .getRandomItems(request.poolSize * DISTRACTOR_POOL_MULTIPLIER, request.vocabularyIds)
-                .map { it }
         val subjects = pool.take(request.poolSize)
 
         val steps =

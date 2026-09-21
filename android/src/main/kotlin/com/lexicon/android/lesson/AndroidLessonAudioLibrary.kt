@@ -23,8 +23,6 @@ class AndroidLessonAudioLibrary(
 
     override fun localPathOrNull(file: String): String? = directory?.resolve(file)?.takeIf { it.isFile }?.absolutePath
 
-    override fun availableFiles(): Set<String> = directory?.list()?.toSet().orEmpty()
-
     override suspend fun pathOrNull(
         file: String,
         remoteId: String?,

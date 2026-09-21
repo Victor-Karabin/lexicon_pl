@@ -30,9 +30,6 @@ interface WordDao {
     @Query("SELECT text FROM words WHERE text IN (:texts) AND status IN ('TO_LEARN', 'FAVOURITE') AND isDeleted = 0")
     suspend fun studySetTextsAmong(texts: List<String>): List<String>
 
-    @Query("SELECT id FROM words WHERE status IN ('TO_LEARN', 'FAVOURITE') AND isDeleted = 0")
-    fun observeStudySetIds(): Flow<List<Long>>
-
     @Query("SELECT * FROM words WHERE status = :status AND isDeleted = 0 ORDER BY id LIMIT :limit")
     suspend fun withStatus(
         status: String,
@@ -134,12 +131,6 @@ interface WordDao {
 
     @Query("SELECT * FROM words WHERE id = :id")
     suspend fun findById(id: Long): WordEntity?
-
-    @Query("SELECT id FROM words WHERE isDeleted = 0 ORDER BY id")
-    suspend fun allWordIds(): List<Long>
-
-    @Query("SELECT id FROM words WHERE isDeleted = 0 AND cefr = :level ORDER BY id")
-    suspend fun wordIdsForLevel(level: String): List<Long>
 
     @Query("SELECT id FROM words WHERE isDeleted = 0 AND status IN ('TO_LEARN', 'FAVOURITE') ORDER BY id")
     suspend fun studySetWordIds(): List<Long>

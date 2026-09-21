@@ -56,8 +56,6 @@ interface VocabularyRepository {
         status: WordStatus,
     )
 
-    fun observeStudySetIds(): Flow<Set<Long>>
-
     fun observeWordStatuses(): Flow<Map<Long, WordStatus>>
 
     suspend fun wordsWithStatus(
@@ -70,10 +68,6 @@ interface VocabularyRepository {
     suspend fun learningWordIds(limit: Int): List<Long>
 
     suspend fun randomKnownWordIds(limit: Int): List<Long>
-
-    suspend fun allWordIds(): List<Long>
-
-    suspend fun wordIdsForLevel(level: String): List<Long>
 
     suspend fun studySetWordIds(): List<Long>
 
