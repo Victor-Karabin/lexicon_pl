@@ -17,7 +17,6 @@ kotlin {
     }
     iosArm64()
     iosSimulatorArm64()
-    iosX64()
 
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
@@ -61,7 +60,6 @@ dependencies {
     add("kspAndroid", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)
     add("kspIosSimulatorArm64", libs.room.compiler)
-    add("kspIosX64", libs.room.compiler)
 }
 
 room {

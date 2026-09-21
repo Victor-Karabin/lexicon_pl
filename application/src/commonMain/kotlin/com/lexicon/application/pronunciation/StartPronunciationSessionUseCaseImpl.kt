@@ -20,7 +20,7 @@ class StartPronunciationSessionUseCaseImpl(
 ) : StartPronunciationSessionUseCase {
     override suspend fun invoke(request: StartPronunciationSessionRequest): PronunciationSessionResponse {
         val stepCount = stepCountResolver.resolve(request.stepCount)
-        val words = vocabularyRepository.getRandomItems(stepCount, request.vocabularyIds).map { it }
+        val words = vocabularyRepository.getRandomItems(stepCount, request.vocabularyIds)
         val steps =
             words.mapIndexed { index, word ->
                 PronunciationStepResponse(

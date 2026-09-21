@@ -91,6 +91,7 @@ struct DashboardView: View {
                 } label: {
                     Label(model.continueLabel, systemImage: model.showsCards ? "book" : "play.fill")
                         .frame(maxWidth: .infinity)
+                        .foregroundStyle(skin.onMedallion)
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(skin.medallion)

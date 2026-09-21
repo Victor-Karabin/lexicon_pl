@@ -17,7 +17,6 @@ class StartCrosswordSessionUseCaseImpl(
 ) : StartCrosswordSessionUseCase {
     override suspend fun invoke(request: StartCrosswordSessionRequest): CrosswordSessionResponse {
         val words = vocabularyRepository.getRandomItems(CANDIDATE_POOL_SIZE, request.vocabularyIds)
-            .map { it }
             .filterNot { it.isPhrase }
             .take(request.wordCount)
 

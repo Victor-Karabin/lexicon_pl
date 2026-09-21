@@ -1,11 +1,9 @@
 package com.lexicon.data.repository
 
-import com.lexicon.boundary.AccuracyBoundary
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.TrainingResultBoundary
 import com.lexicon.data.local.TrainingResultDao
 import com.lexicon.data.local.TrainingResultEntity
-import com.lexicon.model.training.StepOutcome
 
 class TrainingHistoryRepositoryImpl(
     private val trainingResultDao: TrainingResultDao,
@@ -28,23 +26,4 @@ class TrainingHistoryRepositoryImpl(
     }
 
     override suspend fun lastAnsweredAtEpochMillis(): Long? = trainingResultDao.lastAnsweredAtEpochMillis()
-
-    override suspend fun accuracyBetween(
-        fromEpochMillis: Long,
-        toEpochMillis: Long,
-    ): AccuracyBoundary =
-        AccuracyBoundary(
-            answers = trainingResultDao.countAnswersBetween(SEEN, fromEpochMillis, toEpochMillis),
-            correct = trainingResultDao.countCorrectBetween(CORRECT, fromEpochMillis, toEpochMillis),
-        )
-
-    override suspend fun countSessionsBetween(
-        fromEpochMillis: Long,
-        toEpochMillis: Long,
-    ): Int = trainingResultDao.countSessionsBetween(fromEpochMillis, toEpochMillis)
-
-    private companion object {
-        val CORRECT = StepOutcome.CORRECT.name
-        val SEEN = StepOutcome.SEEN.name
-    }
 }

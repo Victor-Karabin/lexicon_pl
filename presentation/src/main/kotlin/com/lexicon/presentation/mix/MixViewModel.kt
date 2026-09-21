@@ -27,16 +27,14 @@ import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.SessionNavigationEvent
-import com.lexicon.presentation.common.WordResultEntry
+import com.lexicon.presentation.common.SessionTally
 import com.lexicon.presentation.common.shuffleIntoTiles
 import com.lexicon.presentation.common.trainingVocabularyIds
 import com.lexicon.presentation.pronunciation.RecordingState
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -62,17 +60,12 @@ class MixViewModel(
 
     private val _uiState = MutableStateFlow<MixUiState>(MixUiState.Loading)
     val uiState: StateFlow<MixUiState> = _uiState.asStateFlow()
+    private val tally = SessionTally(lastSessionResultsHolder)
 
-    private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
-    val navigationEvents: SharedFlow<SessionNavigationEvent> = _navigationEvents.asSharedFlow()
+    val navigationEvents: SharedFlow<SessionNavigationEvent> = tally.events
 
     private lateinit var sessionId: String
     private var steps: List<MixStep> = emptyList()
-    private var correctCount = 0
-    private var incorrectCount = 0
-    private var skippedCount = 0
-    private var tipsUsedCount = 0
-    private val wordResults = mutableListOf<WordResultEntry>()
 
     init {
         startSession()
@@ -150,7 +143,7 @@ class MixViewModel(
             is MixStep.Pronunciation -> step.step.transcription
             else -> return
         }
-        tipsUsedCount++
+        tally.countTip()
         updateLoaded { it.copy(tipUsed = true, tipText = hint) }
     }
 
@@ -342,12 +335,7 @@ class MixViewModel(
             isCorrect -> AnswerState.Correct
             else -> AnswerState.Incorrect(revealed)
         }
-        when {
-            skipped -> skippedCount++
-            isCorrect -> correctCount++
-            else -> incorrectCount++
-        }
-        wordResults += WordResultEntry(word, translation, outcome, state.tipUsed)
+        tally.record(outcome, word, translation, state.tipUsed)
 
         updateLoaded { it.copy(answerState = outcome, isSubmitting = false) }
         if (outcome is AnswerState.Incorrect) return
@@ -367,10 +355,7 @@ class MixViewModel(
         val state = _uiState.value as? MixUiState.Loaded ?: return
         val nextIndex = state.stepIndex + 1
         if (nextIndex >= steps.size) {
-            lastSessionResultsHolder.wordResults = wordResults.toList()
-            _navigationEvents.emit(
-                SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skippedCount, tipsUsedCount),
-            )
+            tally.complete()
             return
         }
         openStep(nextIndex)

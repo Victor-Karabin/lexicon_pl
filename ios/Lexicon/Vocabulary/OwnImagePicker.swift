@@ -1,4 +1,5 @@
 import PhotosUI
+import Shared
 import SwiftUI
 import UIKit
 
@@ -78,7 +79,7 @@ struct AddImageTile: View {
 
     private func place(_ image: UIImage) {
         let upright = uprightImage(image)
-        if CropWindow(imageSize: upright.size).needsPositioning {
+        if cropWindow(for: upright.size).needsPositioning {
             toPosition = PendingCrop(image: upright)
         } else {
             keep(upright)

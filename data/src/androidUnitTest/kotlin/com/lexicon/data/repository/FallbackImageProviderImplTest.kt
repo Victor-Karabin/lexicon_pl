@@ -141,4 +141,21 @@ class FallbackImageProviderImplTest {
             assertEquals(listOf("a"), provider.searchImages("kot", count = 3))
             assertEquals(emptyList<String>(), provider.searchImages("kot", count = 3, skip = 3))
         }
+
+    @Test
+    fun `nothing from any source that answered is a real absence`() =
+        runTest {
+            assertEquals(ImageLookup.NoneFound, provider.lookUp("że"))
+        }
+
+    @Test
+    fun `a source that fails makes the absence uncertain, but a later source can still find one`() =
+        runTest {
+            coEvery { pexels.searchImageUrl(any()) } throws java.io.IOException("offline")
+
+            assertEquals(ImageLookup.Unavailable, provider.lookUp("że"))
+
+            coEvery { pixabay.searchImageUrl("kot") } returns "https://pixabay/kot.jpg"
+            assertEquals(ImageLookup.Found("https://pixabay/kot.jpg"), provider.lookUp("kot"))
+        }
 }

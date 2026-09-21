@@ -1,5 +1,9 @@
 package com.lexicon.data.remote.image
 
+import android.util.Log
+
+private const val TAG = "UnsplashImageSource"
+
 private const val UNSPLASH_MAX_PER_PAGE = 30
 
 class UnsplashImageSource(
@@ -11,5 +15,6 @@ class UnsplashImageSource(
     ): List<String> =
         runCatching {
             api.search(query, perPage = count.coerceAtMost(UNSPLASH_MAX_PER_PAGE)).results.map { it.urls.small }
-        }.getOrDefault(emptyList())
+        }.onFailure { Log.w(TAG, "Unsplash could not be searched", it) }
+            .getOrThrow()
 }

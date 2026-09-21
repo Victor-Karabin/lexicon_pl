@@ -12,14 +12,12 @@ import com.lexicon.interactors.wordmatch.WordMatchStepResponse
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
-import com.lexicon.presentation.common.WordResultEntry
+import com.lexicon.presentation.common.SessionTally
 import com.lexicon.presentation.common.trainingVocabularyIds
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -37,15 +35,12 @@ class WordMatchViewModel(
 
     private val _uiState = MutableStateFlow<WordMatchUiState>(WordMatchUiState.Loading)
     val uiState: StateFlow<WordMatchUiState> = _uiState.asStateFlow()
+    private val tally = SessionTally(lastSessionResultsHolder)
 
-    private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
-    val navigationEvents: SharedFlow<SessionNavigationEvent> = _navigationEvents.asSharedFlow()
+    val navigationEvents: SharedFlow<SessionNavigationEvent> = tally.events
 
     private lateinit var sessionId: String
     private var steps: List<WordMatchStepResponse> = emptyList()
-    private var correctCount = 0
-    private var incorrectCount = 0
-    private val wordResults = mutableListOf<WordResultEntry>()
 
     private val incorrectItemIds = mutableSetOf<Long>()
 
@@ -131,8 +126,7 @@ class WordMatchViewModel(
         )
         step.pairs.forEach { pair ->
             val outcome = if (pair.vocabularyItemId in incorrectItemIds) AnswerState.Incorrect() else AnswerState.Correct
-            if (outcome == AnswerState.Correct) correctCount++ else incorrectCount++
-            wordResults += WordResultEntry(pair.word, pair.translation, outcome)
+            tally.record(outcome, pair.word, pair.translation)
         }
         delay(CORRECT_ANSWER_ADVANCE_DELAY_MS)
         advanceToNextStep()
@@ -143,8 +137,7 @@ class WordMatchViewModel(
         val nextIndex = state.stepIndex + 1
         if (nextIndex >= steps.size) {
             updateLoaded { it.copy(isSessionComplete = true) }
-            lastSessionResultsHolder.wordResults = wordResults.toList()
-            _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correctCount, incorrectCount, skipped = 0))
+            tally.complete()
             return
         }
         openStep(nextIndex)

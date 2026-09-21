@@ -140,7 +140,7 @@ The two stores are kept current differently, and the difference is the point:
 | | Vocabulary | Presets |
 | --- | --- | --- |
 | Strategy | reconcile row by row | replace wholesale |
-| Why | rows carry the user's study set, which is not the asset's to overwrite | nothing user-owned lives on them — a preset's heart is stored on its words |
+| Why | rows carry the user's word statuses, which are not the asset's to overwrite | nothing user-owned lives on them — statuses are stored on the words |
 
 Both skip their work when a fingerprint of the asset matches the last synced value, so an
 unchanged asset costs a file read and no JSON parse. Row counts are still checked, because a
@@ -177,29 +177,31 @@ The one assumption to preserve: a preset references vocabulary **by id**. A sour
 brings its own words must first insert them into the vocabulary store and reference the
 resulting ids, rather than embedding words in the preset.
 
-## The study set
+## Word statuses and the study set
 
-A word can be marked with a heart, on its own row in the detail screen, from search results,
-or in bulk from a preset's heart. **Trainings draw from the study set and nothing
+Every word has a status: not defined, which is where every word starts, then to learn,
+favourite and known. One tap on a word's status button — in a preset, in search results, in a
+lesson — moves it to the next, and after known it goes back to not defined. The **study set**
+is the words marked to learn or favourite, and **trainings draw from the study set and nothing
 else.** A user with an empty study set therefore has nothing to train on, which is what
 `TrainingGate` exists to explain rather than leave as an empty session.
 
-A preset's heart is tri-state — `NONE`, `SOME`, `ALL` — because a preset can be partly
-in the study set and a boolean would have to lie about that. Partly-in counts as off, so
-one tap completes the preset rather than clearing it. The bulk toggle writes every word in a
-single call; word by word, a thousand-word preset would emit a thousand updates.
+Presets carry no status of their own. The preset heart went with the move to four states: a
+mark on a whole preset had no single meaning once a word could be known as well as starred.
+*Review words* on the dashboard is the quick way through many words — it deals the ones with
+no status yet one card at a time, with a button for each status and one to delete the word.
 
 Two consequences worth knowing:
 
 - A study set of **very few** words no longer degrades trainings silently. Every training is
   fronted by `TrainingGate`, which checks the study-set size against that training's minimum
   (`TrainingType.minimumWords`) and shows a "not enough words" screen naming both numbers instead
-  of starting a session it cannot build. Before this, an Image Test with three starred words ran
+  of starting a session it cannot build. Before this, an Image Test with three marked words ran
   with three options, and a training with none spun forever — `openStep(0)` returns early on
   an empty session, so the screen never left Loading.
-- `getRandomForStudy` is plain SQL, and the project has no Robolectric or instrumentation
-  setup, so **the study-set query itself is not covered by a unit test**. Everything above it
-  — the use cases, the tri-state derivation, the sorting — is.
+- The status queries are plain SQL, covered by the instrumented `WordDaoTest`, which needs a
+  device or emulator. Everything above them — the use cases, the status cycle, the sorting —
+  has unit tests.
 
 ## Word search
 
@@ -218,8 +220,8 @@ every word carries its level, and the level chips list every word at the levels 
 and the query narrow together.
 
 Matching is by either language — "apple", "jabłko" and "jablko" all find the same entry — and
-each result carries the same heart as the preset detail screen, so search is also how you add
-a single word to the study set.
+each result carries the same status button as the preset detail screen, so search is also how
+you mark a single word. The first chip, *To learn*, narrows the list to the study set.
 
 Presets are narrowed by the filter chips rather than by typing. A preset list is 77 items with
 names you can see; a vocabulary is 1,767 words you cannot, so the box is worth more pointed at
