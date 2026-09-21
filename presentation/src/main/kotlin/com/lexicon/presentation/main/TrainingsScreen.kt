@@ -34,12 +34,14 @@ fun TrainingsScreen(
     onTrainingSelected: (id: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val trainings = trainingCatalog.sortedByTitle()
+
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(Dimens.spacingMedium),
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
     ) {
-        items(trainingCatalog, key = { it.id }) { entry ->
+        items(trainings, key = { it.id }) { entry ->
             TrainingTile(entry = entry, onClick = { onTrainingSelected(entry.id) })
         }
     }
@@ -61,7 +63,7 @@ private fun TrainingTile(
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = entry.displayName,
+                    text = stringResource(entry.title),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
                     color = skin.onTile,

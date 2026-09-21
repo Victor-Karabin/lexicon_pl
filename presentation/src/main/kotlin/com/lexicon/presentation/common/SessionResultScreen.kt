@@ -156,12 +156,12 @@ private fun WordResultRow(
         else -> MaterialTheme.colorScheme.outline
     }
     val statusLabel = if (entry.tipUsed) {
-        "Tip used"
+        stringResource(R.string.result_tip_used)
     } else {
         when (entry.outcome) {
-            is AnswerState.Correct -> "Correct"
-            is AnswerState.Incorrect -> "Incorrect"
-            is AnswerState.Skipped -> "Skipped"
+            is AnswerState.Correct -> stringResource(R.string.result_correct)
+            is AnswerState.Incorrect -> stringResource(R.string.result_incorrect)
+            is AnswerState.Skipped -> stringResource(R.string.status_skipped)
             is AnswerState.Unanswered -> ""
         }
     }

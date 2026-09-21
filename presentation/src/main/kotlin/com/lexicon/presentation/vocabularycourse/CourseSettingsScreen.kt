@@ -51,6 +51,7 @@ import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.main.courseTrainings
+import com.lexicon.presentation.main.sortedByTitle
 import com.lexicon.presentation.main.trainingDisplayName
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
@@ -194,10 +195,10 @@ private fun AmountSlider(
 @Composable
 private fun TrainingPicker(onAdd: (String) -> Unit) {
     FlowRow(horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
-        courseTrainings.forEach { entry ->
+        courseTrainings.sortedByTitle().forEach { entry ->
             AssistChip(
                 onClick = { onAdd(entry.id) },
-                label = { Text(entry.displayName) },
+                label = { Text(stringResource(entry.title)) },
                 leadingIcon = {
                     Icon(imageVector = entry.icon, contentDescription = null, modifier = Modifier.size(MoveIconSize))
                 },

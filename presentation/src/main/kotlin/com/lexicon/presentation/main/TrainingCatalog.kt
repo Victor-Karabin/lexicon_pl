@@ -1,5 +1,6 @@
 package com.lexicon.presentation.main
 
+import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Notes
 import androidx.compose.material.icons.filled.AutoAwesome
@@ -15,7 +16,12 @@ import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.QuestionMark
 import androidx.compose.material.icons.filled.RecordVoiceOver
 import androidx.compose.material.icons.filled.Style
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import com.lexicon.model.training.TrainingType
 import com.lexicon.presentation.R
 
@@ -40,121 +46,129 @@ object TrainingIds {
 
 data class TrainingCatalogEntry(
     val id: String,
-    val displayName: String,
+    @StringRes val title: Int,
     val isEnabled: Boolean,
     val icon: ImageVector,
-    val blurb: Int,
+    @StringRes val blurb: Int,
 )
 
 val trainingCatalog =
     listOf(
         TrainingCatalogEntry(
             id = TrainingIds.DICTATION,
-            displayName = "Dictation",
+            title = R.string.dictation_title,
             isEnabled = true,
             icon = Icons.Default.Headphones,
             blurb = R.string.training_dictation_blurb,
         ),
         TrainingCatalogEntry(
             id = TrainingIds.DICTATION_PUZZLE,
-            displayName = "Dictation Puzzle",
+            title = R.string.dictation_puzzle_title,
             isEnabled = true,
             icon = Icons.Default.Keyboard,
             blurb = R.string.training_dictation_puzzle_blurb,
         ),
         TrainingCatalogEntry(
             id = TrainingIds.PUZZLE,
-            displayName = "Puzzle",
+            title = R.string.puzzle_title,
             isEnabled = true,
             icon = Icons.Default.Extension,
             blurb = R.string.training_puzzle_blurb,
         ),
         TrainingCatalogEntry(
             id = TrainingIds.IMAGE_TEST,
-            displayName = "Image Test",
+            title = R.string.image_test_title,
             isEnabled = true,
             icon = Icons.Default.Image,
             blurb = R.string.training_image_test_blurb,
         ),
         TrainingCatalogEntry(
             id = TrainingIds.WORD_MATCH,
-            displayName = "Word Match",
+            title = R.string.word_match_title,
             isEnabled = true,
             icon = Icons.Default.Link,
             blurb = R.string.training_word_match_blurb,
         ),
         TrainingCatalogEntry(
             id = TrainingIds.TRUE_OR_FALSE,
-            displayName = "True or False",
+            title = R.string.true_or_false_title,
             isEnabled = true,
             icon = Icons.Default.QuestionMark,
             blurb = R.string.training_true_or_false_blurb,
         ),
         TrainingCatalogEntry(
             id = TrainingIds.PRONUNCIATION_CHECK,
-            displayName = "Pronunciation Check",
+            title = R.string.pronunciation_title,
             isEnabled = true,
             icon = Icons.Default.RecordVoiceOver,
             blurb = R.string.training_pronunciation_blurb,
         ),
         TrainingCatalogEntry(
             id = TrainingIds.PRONUNCIATION_SENTENCES,
-            displayName = "Read Aloud",
+            title = R.string.pronunciation_sentences_title,
             isEnabled = true,
             icon = Icons.Default.Mic,
             blurb = R.string.training_pronunciation_sentences_blurb,
         ),
         TrainingCatalogEntry(
             id = TrainingIds.MEMORY_CARDS,
-            displayName = "Memory Cards",
+            title = R.string.memory_cards_title,
             isEnabled = true,
             icon = Icons.Default.Style,
             blurb = R.string.training_memory_cards_blurb,
         ),
         TrainingCatalogEntry(
             id = TrainingIds.CROSSWORD,
-            displayName = "Crossword",
+            title = R.string.crossword_title,
             isEnabled = true,
             icon = Icons.Default.GridOn,
             blurb = R.string.training_crossword_blurb,
         ),
         TrainingCatalogEntry(
             id = TrainingIds.WORD_CARD,
-            displayName = "Word Card",
+            title = R.string.word_card_title,
             isEnabled = true,
             icon = Icons.Default.CreditCard,
             blurb = R.string.training_word_card_blurb,
         ),
         TrainingCatalogEntry(
             id = TrainingIds.PASSAGE_WRITE,
-            displayName = "Read and Write",
+            title = R.string.passage_write_title,
             isEnabled = true,
             icon = Icons.AutoMirrored.Filled.Notes,
             blurb = R.string.training_passage_write_blurb,
         ),
         TrainingCatalogEntry(
             id = TrainingIds.PASSAGE_BANK,
-            displayName = "Read and Choose",
+            title = R.string.passage_bank_title,
             isEnabled = true,
             icon = Icons.Default.Ballot,
             blurb = R.string.training_passage_bank_blurb,
         ),
         TrainingCatalogEntry(
             id = TrainingIds.FILLWORD,
-            displayName = "Word Search",
+            title = R.string.fillword_title,
             isEnabled = true,
             icon = Icons.Default.GridOn,
             blurb = R.string.training_fillword_blurb,
         ),
         TrainingCatalogEntry(
             id = TrainingIds.MIX,
-            displayName = "Mix",
+            title = R.string.mix_title,
             isEnabled = true,
             icon = Icons.Default.AutoAwesome,
             blurb = R.string.training_mix_blurb,
         ),
-    ).sortedBy { it.displayName.lowercase() }
+    )
 
 val courseTrainings = trainingCatalog.filter { it.isEnabled }
 
-fun trainingDisplayName(id: String): String = trainingCatalog.firstOrNull { it.id == id }?.displayName ?: id
+@Composable
+fun List<TrainingCatalogEntry>.sortedByTitle(): List<TrainingCatalogEntry> {
+    val resources = LocalContext.current.resources
+    val configuration = LocalConfiguration.current
+    return remember(this, configuration) { sortedBy { resources.getString(it.title).lowercase() } }
+}
+
+@Composable
+fun trainingDisplayName(id: String): String = trainingCatalog.firstOrNull { it.id == id }?.let { stringResource(it.title) } ?: id
