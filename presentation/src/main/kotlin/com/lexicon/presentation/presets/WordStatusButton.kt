@@ -3,7 +3,7 @@ package com.lexicon.presentation.presets
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,7 +23,7 @@ fun WordStatusButton(
     modifier: Modifier = Modifier,
 ) {
     val icon = when (status) {
-        WordStatus.UNDEFINED -> Icons.Default.FavoriteBorder
+        WordStatus.UNDEFINED -> Icons.Default.RadioButtonUnchecked
         WordStatus.TO_LEARN -> Icons.Default.School
         WordStatus.FAVOURITE -> Icons.Default.Favorite
         WordStatus.KNOWN -> Icons.Default.CheckCircle

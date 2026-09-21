@@ -232,7 +232,7 @@ extension WordStatus {
         case .toLearn: return "graduationcap"
         case .favourite: return "heart.fill"
         case .known: return "checkmark.circle.fill"
-        default: return "heart"
+        default: return "circle"
         }
     }
 
