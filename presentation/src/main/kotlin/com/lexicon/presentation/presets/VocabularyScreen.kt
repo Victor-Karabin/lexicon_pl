@@ -255,7 +255,7 @@ private fun WordResults(
     selection: WordSelection,
 ) {
     if (uiState.hasNoMatchingWords) {
-        Message(stringResource(R.string.vocabulary_search_no_matches, uiState.query))
+        Message(stringResource(R.string.vocabulary_search_no_matches))
         return
     }
 

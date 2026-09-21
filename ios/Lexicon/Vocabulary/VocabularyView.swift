@@ -21,7 +21,7 @@ struct VocabularyView: View {
                             .buttonStyle(.plain)
                         }
                     } else if model.words.isEmpty {
-                        Text("No words match “\(model.query)”.")
+                        Text("No results")
                             .foregroundStyle(.secondary)
                             .padding(.top, Spacing.xl)
                     } else {
