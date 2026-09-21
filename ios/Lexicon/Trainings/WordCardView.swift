@@ -10,40 +10,18 @@ struct WordCardView: View {
     @State private var sessionId = ""
     @State private var index = 0
     @State private var seen: Set<Int> = []
-    @Environment(\.colorScheme) private var scheme
 
     var body: some View {
         Group {
             if let step = steps[safe: index] {
-                let skin = TileSkin.standard(highlighted: true, scheme: scheme)
                 TrainingScaffold(step: index, total: steps.count, state: .unanswered) {
-                    Tile(skin: skin) {
-                        if let url = step.imageUrl, let link = imageURL(url) {
-                            AsyncImage(url: link) { image in
-                                image.resizable().scaledToFill()
-                            } placeholder: {
-                                Color.secondary.opacity(0.15)
-                            }
-                            .frame(height: 200)
-                            .frame(maxWidth: .infinity)
-                            .clipped()
-                            .clipShape(RoundedRectangle(cornerRadius: Radius.small))
-                        }
-                        HStack {
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(step.translation).font(.title3).foregroundStyle(skin.onTile.muted)
-                                Text(step.text).font(.largeTitle.weight(.semibold)).foregroundStyle(skin.onTile)
-                                if !step.transcription.isEmpty {
-                                    Text("[\(step.transcription)]").font(.callout).foregroundStyle(skin.onTile.muted)
-                                }
-                            }
-                            Spacer()
-                            Button { Speech.shared.speak(step.text) } label: {
-                                Image(systemName: "speaker.wave.2").foregroundStyle(skin.onTile)
-                            }
-                        }
-                        ExampleSentenceRow(sentence: step.example, word: step.text, tint: skin.onTile.muted)
-                    }
+                    WordCardFace(
+                        text: step.text,
+                        translation: step.translation,
+                        transcription: step.transcription,
+                        imageUrl: step.imageUrl,
+                        example: step.example
+                    )
                 } actions: {
                     HStack {
                         if index > 0 {
