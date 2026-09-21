@@ -1,7 +1,6 @@
 package com.lexicon.presentation.vocabularycourse
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,20 +14,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DragHandle
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -60,6 +55,7 @@ import com.lexicon.presentation.main.trainingDisplayName
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.GradientTile
+import com.lexicon.presentation.theme.component.LexiconSlider
 import com.lexicon.presentation.theme.component.Medallion
 import com.lexicon.presentation.theme.component.MedallionText
 import com.lexicon.presentation.theme.component.TileSkin
@@ -71,8 +67,6 @@ import org.koin.androidx.compose.koinViewModel
 import kotlin.math.roundToInt
 
 private val QueueMedallionSize = 32.dp
-private val SliderThumbSize = 20.dp
-private val SliderTrackHeight = 4.dp
 private val MoveIconSize = 20.dp
 
 @Composable
@@ -173,7 +167,6 @@ private fun CourseSettingsContent(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AmountSlider(
     label: String,
@@ -193,26 +186,7 @@ private fun AmountSlider(
                 fontWeight = FontWeight.Bold,
             )
         }
-        Slider(
-            value = value.coerceIn(range).toFloat(),
-            onValueChange = { onChange(it.roundToInt()) },
-            valueRange = range.first.toFloat()..range.last.toFloat(),
-            thumb = {
-                Box(
-                    modifier = Modifier
-                        .size(SliderThumbSize)
-                        .background(MaterialTheme.colorScheme.primary, CircleShape),
-                )
-            },
-            track = { state ->
-                SliderDefaults.Track(
-                    sliderState = state,
-                    modifier = Modifier.height(SliderTrackHeight),
-                    thumbTrackGapSize = 0.dp,
-                    drawStopIndicator = null,
-                )
-            },
-        )
+        LexiconSlider(value = value, range = range, onValueChange = onChange)
     }
 }
 

@@ -21,7 +21,6 @@ import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -48,13 +47,13 @@ import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.GradientTile
+import com.lexicon.presentation.theme.component.LexiconSlider
 import com.lexicon.presentation.theme.component.Medallion
 import com.lexicon.presentation.theme.component.MedallionIcon
 import com.lexicon.presentation.theme.component.TileSkin
 import com.lexicon.presentation.theme.component.muted
 import com.lexicon.presentation.theme.component.tileSkin
 import org.koin.androidx.compose.koinViewModel
-import kotlin.math.roundToInt
 
 private val HeadingIconSize = 36.dp
 
@@ -152,11 +151,10 @@ private fun SettingsScreenContent(
                 )
             }
 
-            Slider(
-                value = settings.stepCount.toFloat(),
-                onValueChange = { onStepCountChanged(it.roundToInt()) },
-                valueRange = AppSettings.MIN_STEP_COUNT.toFloat()..AppSettings.MAX_STEP_COUNT.toFloat(),
-                steps = AppSettings.MAX_STEP_COUNT - AppSettings.MIN_STEP_COUNT - 1,
+            LexiconSlider(
+                value = settings.stepCount,
+                range = AppSettings.MIN_STEP_COUNT..AppSettings.MAX_STEP_COUNT,
+                onValueChange = onStepCountChanged,
             )
 
             Text(
