@@ -12,6 +12,7 @@ struct WordFormView: View {
 
     @State private var ownImages: [String] = []
     @State private var chosenImage: String?
+    @State private var toAdjust: PendingCrop?
     @State private var problem: String?
     @State private var textWasFilledIn = false
     @State private var translationWasFilledIn = false
@@ -103,6 +104,9 @@ struct WordFormView: View {
                         }
                     }
                 }
+                if let chosenImage {
+                    AsyncButton { await adjust(chosenImage) } label: { Text("Adjust") }
+                }
                 if images.isEmpty {
                     Text("Type a word to look for a picture.")
                         .font(.caption)
@@ -121,6 +125,22 @@ struct WordFormView: View {
             }
         }
         .task { await load() }
+        .sheet(item: $toAdjust) { pending in
+            ImageCropView(image: pending.image) { cropped in
+                toAdjust = nil
+                guard let cropped, let url = storeOwnImage(cropped) else { return }
+                ownImages = ([url] + ownImages).uniqued()
+                chosenImage = url
+            }
+        }
+    }
+
+    private func adjust(_ url: String) async {
+        guard let picture = await loadPicture(url) else {
+            problem = "Couldn't load this picture."
+            return
+        }
+        toAdjust = PendingCrop(image: picture)
     }
 
     private func load() async {

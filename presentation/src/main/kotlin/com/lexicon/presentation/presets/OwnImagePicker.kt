@@ -78,7 +78,7 @@ fun rememberOwnImagePicker(onPicked: (String) -> Unit): OwnImagePicker {
 
 private fun Context.ownImageDir(): File = File(filesDir, OWN_IMAGE_DIR).apply { mkdirs() }
 
-private fun Context.newOwnImageFile(): File = File(ownImageDir(), "${UUID.randomUUID()}.jpg")
+internal fun Context.newOwnImageFile(): File = File(ownImageDir(), "${UUID.randomUUID()}.jpg")
 
 private fun Context.copyIntoOwnImages(uri: Uri): File? {
     val file = newOwnImageFile()
