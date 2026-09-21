@@ -18,9 +18,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.debounced
 import com.lexicon.presentation.theme.Dimens
@@ -30,7 +32,7 @@ import com.lexicon.presentation.theme.LexiconTheme
 fun PlayButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    label: String = "Listen again",
+    label: String = stringResource(R.string.action_listen_again),
     playing: Boolean = false,
 ) {
     Row(

@@ -228,6 +228,9 @@
     <string name="result_done">Done</string>
     <string name="result_next_training">Next training</string>
     <string name="result_accuracy">answered correctly</string>
+    <string name="result_tip_used">Tip used</string>
+    <string name="result_correct">Correct</string>
+    <string name="result_incorrect">Incorrect</string>
     <string name="vocabulary_course_title">Vocabulary course</string>
     <string name="vocabulary_course_round">Round %1$d · %2$d of %3$d trainings</string>
     <string name="vocabulary_course_learning">%1$d to learn · %2$d known</string>
