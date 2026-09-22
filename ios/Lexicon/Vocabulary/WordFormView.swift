@@ -79,12 +79,10 @@ struct WordFormView: View {
                     .lineLimit(2...4)
             }
 
-            Section(Strings.createWordImage) {
-
+            Section {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: Spacing.small) {
                         AddImageTile { url in
-
                             ownImages = ([url] + ownImages).uniqued()
                             chosenImage = url
                         }
@@ -94,7 +92,7 @@ struct WordFormView: View {
                             } placeholder: {
                                 Color.secondary.opacity(0.2)
                             }
-                            .frame(width: 96, height: 96)
+                            .frame(width: ImageTile.width, height: ImageTile.height)
                             .clipShape(RoundedRectangle(cornerRadius: Radius.small))
                             .overlay(
                                 RoundedRectangle(cornerRadius: Radius.small)
@@ -104,13 +102,21 @@ struct WordFormView: View {
                         }
                     }
                 }
-                if let chosenImage {
-                    AsyncButton { await adjust(chosenImage) } label: { Text(Strings.createWordImageAdjust) }
-                }
                 if images.isEmpty {
                     Text(Strings.createWordImageNone)
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                }
+            } header: {
+                HStack {
+                    Text(Strings.createWordImage)
+                    Spacer()
+                    if let chosenImage {
+                        AsyncButton { await adjust(chosenImage) } label: {
+                            Image(systemName: "crop").font(.body)
+                        }
+                        .accessibilityLabel(Strings.createWordImageAdjust)
+                    }
                 }
             }
             if let problem {

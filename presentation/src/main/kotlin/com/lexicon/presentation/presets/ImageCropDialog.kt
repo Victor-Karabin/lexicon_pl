@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -26,13 +28,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.ClipOp
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import coil.imageLoader
@@ -43,6 +50,7 @@ import com.lexicon.common.CARD_IMAGE_ASPECT
 import com.lexicon.common.CropRect
 import com.lexicon.common.CropWindow
 import com.lexicon.presentation.R
+import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconShapes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -56,6 +64,12 @@ private const val MAX_DECODED_SIDE = 2048
 private const val JPEG_QUALITY = 90
 
 private const val CENTRE = 0.5f
+
+private const val SCRIM_ALPHA = 0.6f
+
+private val PreviewMaxHeight = 420.dp
+
+private val FrameStroke = 2.dp
 
 @Composable
 fun ImageCropDialog(
@@ -100,17 +114,14 @@ fun ImageCropDialog(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(CARD_IMAGE_ASPECT)
-                        .clip(LexiconShapes.small),
+                    modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium),
                     contentAlignment = Alignment.Center,
                 ) {
                     CropPreview(
                         image = image,
                         window = window,
                         focus = focus,
-                        onDrag = { drag, frame -> focus = window.focusAfterDrag(focus, drag, frame) },
+                        onDrag = { drag, shown -> focus = window.focusAfterFrameDrag(focus, drag, shown) },
                     )
                     if (isSaving) CircularProgressIndicator()
                 }
@@ -142,12 +153,16 @@ private fun CropPreview(
     image: ImageBitmap,
     window: CropWindow,
     focus: Float,
-    onDrag: (dragPixels: Float, framePixels: Float) -> Unit,
+    onDrag: (dragPixels: Float, shownImagePixels: Float) -> Unit,
 ) {
+    val scrim = MaterialTheme.colorScheme.scrim.copy(alpha = SCRIM_ALPHA)
+    val frame = MaterialTheme.colorScheme.primary
+
     Canvas(
         modifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(CARD_IMAGE_ASPECT)
+            .heightIn(max = PreviewMaxHeight)
+            .aspectRatio(image.width.toFloat() / image.height)
+            .clip(LexiconShapes.small)
             .pointerInput(window) {
                 detectDragGestures { change, drag ->
                     change.consume()
@@ -159,13 +174,23 @@ private fun CropPreview(
                 }
             },
     ) {
+        drawImage(image = image, dstSize = IntSize(size.width.toInt(), size.height.toInt()))
+
+        val scale = size.width / image.width
         val rect = window.rectAt(focus)
-        drawImage(
-            image = image,
-            srcOffset = IntOffset(rect.left, rect.top),
-            srcSize = IntSize(rect.width, rect.height),
-            dstSize = IntSize(size.width.toInt(), size.height.toInt()),
-        )
+        val cropTopLeft = Offset(rect.left * scale, rect.top * scale)
+        val cropSize = Size(rect.width * scale, rect.height * scale)
+
+        clipRect(
+            left = cropTopLeft.x,
+            top = cropTopLeft.y,
+            right = cropTopLeft.x + cropSize.width,
+            bottom = cropTopLeft.y + cropSize.height,
+            clipOp = ClipOp.Difference,
+        ) {
+            drawRect(color = scrim)
+        }
+        drawRect(color = frame, topLeft = cropTopLeft, size = cropSize, style = Stroke(width = FrameStroke.toPx()))
     }
 }
 

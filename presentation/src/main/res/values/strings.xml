@@ -162,7 +162,7 @@
     <string name="create_word_image_from_library">Choose a photo</string>
     <string name="create_word_image_from_camera">Take a photo</string>
     <string name="create_word_image_position">Position the picture</string>
-    <string name="create_word_image_position_hint">Drag the photo so the part you want sits in the frame.</string>
+    <string name="create_word_image_position_hint">Drag the frame over the part of the picture you want.</string>
     <string name="create_word_image_use">Use</string>
     <string name="create_word_image_adjust">Adjust</string>
     <string name="create_word_image_more">More</string>

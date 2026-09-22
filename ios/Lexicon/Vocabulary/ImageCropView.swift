@@ -3,6 +3,9 @@ import SwiftUI
 import UIKit
 
 private let maxImageSide: CGFloat = 2048
+private let scrimOpacity = 0.6
+private let frameStroke: CGFloat = 2
+private let maxPreviewHeight: CGFloat = 480
 
 func cropWindow(for size: CGSize) -> CropWindow {
     CropWindow(
@@ -49,29 +52,39 @@ struct ImageCropView: View {
                     .foregroundStyle(.secondary)
 
                 GeometryReader { proxy in
-                    let frame = proxy.size
-                    let scale = frame.width / CGFloat(window.width)
+                    let shown = proxy.size
+                    let scale = shown.width / image.size.width
                     let crop = window.rectAt(focus: focus).cgRect
-                    Image(uiImage: image)
-                        .resizable()
-                        .frame(width: image.size.width * scale, height: image.size.height * scale)
-                        .offset(x: -crop.minX * scale, y: -crop.minY * scale)
-                        .frame(width: frame.width, height: frame.height, alignment: .topLeading)
-                        .clipped()
-                        .contentShape(Rectangle())
-                        .gesture(
-                            DragGesture()
-                                .onChanged { drag in
-                                    let start = dragStart ?? focus
-                                    dragStart = start
-                                    focus = window.movesHorizontally
-                                        ? window.focusAfterDrag(focus: start, dragPixels: Float(drag.translation.width), framePixels: Float(frame.width))
-                                        : window.focusAfterDrag(focus: start, dragPixels: Float(drag.translation.height), framePixels: Float(frame.height))
-                                }
-                                .onEnded { _ in dragStart = nil }
-                        )
+                    let frame = CGRect(x: crop.minX * scale, y: crop.minY * scale, width: crop.width * scale, height: crop.height * scale)
+                    ZStack(alignment: .topLeading) {
+                        Image(uiImage: image)
+                            .resizable()
+                            .frame(width: shown.width, height: shown.height)
+                        Path { path in
+                            path.addRect(CGRect(origin: .zero, size: shown))
+                            path.addRect(frame)
+                        }
+                        .fill(Color.black.opacity(scrimOpacity), style: FillStyle(eoFill: true))
+                        Rectangle()
+                            .stroke(Palette.accentDeep, lineWidth: frameStroke)
+                            .frame(width: frame.width, height: frame.height)
+                            .offset(x: frame.minX, y: frame.minY)
+                    }
+                    .contentShape(Rectangle())
+                    .gesture(
+                        DragGesture()
+                            .onChanged { drag in
+                                let start = dragStart ?? focus
+                                dragStart = start
+                                focus = window.movesHorizontally
+                                    ? window.focusAfterFrameDrag(focus: start, dragPixels: Float(drag.translation.width), shownImagePixels: Float(shown.width))
+                                    : window.focusAfterFrameDrag(focus: start, dragPixels: Float(drag.translation.height), shownImagePixels: Float(shown.height))
+                            }
+                            .onEnded { _ in dragStart = nil }
+                    )
                 }
-                .aspectRatio(CGFloat(CropWindowKt.CARD_IMAGE_ASPECT), contentMode: .fit)
+                .aspectRatio(image.size.width / image.size.height, contentMode: .fit)
+                .frame(maxWidth: .infinity, maxHeight: maxPreviewHeight)
                 .clipShape(RoundedRectangle(cornerRadius: Radius.small))
 
                 Spacer()
