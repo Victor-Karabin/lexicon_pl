@@ -90,6 +90,7 @@ class VocabularyRepositoryImpl(
         translation: String,
         transcription: String,
         example: String,
+        picture: String?,
     ): Word {
         vocabularySeeder.ensureSeeded()
         wordDao.updateWord(
@@ -99,6 +100,7 @@ class VocabularyRepositoryImpl(
             transcription = transcription,
             searchKey = searchKeyFor(text, translation),
             example = example,
+            picture = picture,
         )
         return checkNotNull(wordDao.findById(id)) { "word $id vanished while being edited" }.toWord()
     }

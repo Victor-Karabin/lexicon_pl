@@ -24,6 +24,7 @@ data class Word(
     val status: WordStatus = WordStatus.UNDEFINED,
     val cefr: CefrLevel? = null,
     val example: String = "",
+    val picture: String? = null,
 ) {
     init {
         require(text.isNotBlank()) { "a word must have text" }
@@ -32,6 +33,13 @@ data class Word(
     val hasExample: Boolean get() = example.isNotBlank()
 
     val isPhrase: Boolean get() = text.contains(' ')
+
+    val pictureSubject: String?
+        get() = when {
+            picture == null -> translation
+            picture.isBlank() -> null
+            else -> picture
+        }
 
     val isInStudySet: Boolean get() = status.isLearning
 

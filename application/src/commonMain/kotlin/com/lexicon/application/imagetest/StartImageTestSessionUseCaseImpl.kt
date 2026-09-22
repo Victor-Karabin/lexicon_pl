@@ -4,6 +4,7 @@ package com.lexicon.application.imagetest
 
 import com.lexicon.application.settings.StepCountResolver
 import com.lexicon.application.training.open
+import com.lexicon.application.training.pictureOf
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.VocabularyRepository
@@ -31,7 +32,10 @@ class StartImageTestSessionUseCaseImpl(
         val stepCount = stepCountResolver.resolve(request.stepCount)
         val poolSize = maxOf(maxOf(stepCount, request.optionCount) * POOL_MULTIPLIER, MIN_POOL_SIZE)
         val pool = vocabularyRepository.getRandomItems(poolSize, request.vocabularyIds)
-        val subjects = subjectsWithEnoughDistractors(pool, request.optionCount).take(stepCount)
+        val subjects = subjectsWithEnoughDistractors(pool, request.optionCount)
+            .filter { it.pictureSubject != null }
+            .ifEmpty { pool }
+            .take(stepCount)
 
         val steps =
             coroutineScope {
@@ -71,7 +75,7 @@ class StartImageTestSessionUseCaseImpl(
         return ImageTestStepResponse(
             stepIndex = index,
             vocabularyItemId = subject.id.value,
-            imageUrl = imageProvider.searchImage(subject.translation),
+            imageUrl = imageProvider.pictureOf(subject),
             clueText = subject.translation,
             options = options,
             correctOption = subject.text,

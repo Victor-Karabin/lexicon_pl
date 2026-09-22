@@ -122,6 +122,50 @@ class CreateUseCasesImplTest {
         }
 
     @Test
+    fun `an edit that keeps the meaning keeps the picture phrase and pins under it`() =
+        runTest {
+            val pictured = stored.copy(picture = "dragon statue")
+            coEvery { vocabularyRepository.findWordByText(any()) } returns null
+            coEvery { vocabularyRepository.getWord(-1) } returns pictured
+            coEvery { vocabularyRepository.updateWord(any(), any(), any(), any(), any(), any()) } returns pictured
+            coEvery { presetRepository.getPresetIdsForWord(any()) } returns emptyList()
+
+            updateWord(id = VocabularyId(-1), text = "smok", translation = "dragon", imageUrl = "https://img/1.jpg")
+
+            coVerify { vocabularyRepository.updateWord(-1, "smok", "dragon", "smɔk", "", "dragon statue") }
+            coVerify { imageProvider.pinImage(query = "dragon statue", imageUrl = "https://img/1.jpg") }
+        }
+
+    @Test
+    fun `a new translation drops the old picture phrase`() =
+        runTest {
+            coEvery { vocabularyRepository.findWordByText(any()) } returns null
+            coEvery { vocabularyRepository.getWord(-1) } returns stored.copy(picture = "dragon statue")
+            coEvery { vocabularyRepository.updateWord(any(), any(), any(), any(), any(), any()) } returns stored
+            coEvery { presetRepository.getPresetIdsForWord(any()) } returns emptyList()
+
+            updateWord(id = VocabularyId(-1), text = "smok", translation = "kite")
+
+            coVerify { vocabularyRepository.updateWord(-1, "smok", "kite", "smɔk", "", null) }
+        }
+
+    @Test
+    fun `choosing a picture for a word marked unpicturable lets its translation carry it`() =
+        runTest {
+            val unpicturable = stored.copy(translation = "without", picture = "")
+            coEvery { vocabularyRepository.findWordByText(any()) } returns null
+            coEvery { vocabularyRepository.getWord(-1) } returns unpicturable
+            coEvery { vocabularyRepository.updateWord(any(), any(), any(), any(), any(), any()) } returns
+                unpicturable.copy(picture = null)
+            coEvery { presetRepository.getPresetIdsForWord(any()) } returns emptyList()
+
+            updateWord(id = VocabularyId(-1), text = "bez", translation = "without", imageUrl = "https://img/2.jpg")
+
+            coVerify { vocabularyRepository.updateWord(-1, "bez", "without", any(), "", null) }
+            coVerify { imageProvider.pinImage(query = "without", imageUrl = "https://img/2.jpg") }
+        }
+
+    @Test
     fun `an edit onto another word's spelling is refused`() =
         runTest {
             coEvery { vocabularyRepository.findWordByText("woda") } returns stored.copy(id = VocabularyId(42))

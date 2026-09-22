@@ -76,12 +76,29 @@ def load_examples() -> dict[tuple[str, str], str]:
     return examples
 
 
+def load_pictures() -> dict[tuple[str, str], str]:
+    """Photo search phrases from build_pictures.py, keyed like the examples.
+
+    An empty phrase is kept: it means no photo can show this sense, and the app then
+    shows no picture rather than searching for the bare gloss.
+    """
+    path = TOOLS / "pictures.tsv"
+    if not path.exists():
+        return {}
+    return {
+        (cols[0].strip().lower(), cols[1].strip().lower()): (cols[2].strip() if len(cols) > 2 else "")
+        for _, cols in read_tsv(path)
+        if len(cols) >= 2
+    }
+
+
 def load_words() -> list[dict]:
     """Core first so ids follow frequency, then topical files in a stable order."""
     words: list[dict] = []
     seen: dict[tuple[str, str], int] = {}
 
     examples = load_examples()
+    pictures = load_pictures()
 
     sources = [(TOOLS / "corpus" / "core.tsv", True)]
     sources += [(p, False) for p in sorted((TOOLS / "corpus" / "topics").glob("*.tsv"))]
@@ -121,6 +138,7 @@ def load_words() -> list[dict]:
                     "cefr": cefr,
                     "topics": topics,
                     "example": examples.get(key, ""),
+                    "picture": pictures.get(key),
                     # Rank exists only for the core list; topical extras are not ranked.
                     "frequencyRank": len(words) + 1 if is_core else None,
                 }
@@ -236,7 +254,11 @@ def main() -> int:
 
     ASSETS.mkdir(parents=True, exist_ok=True)
     vocabulary_asset = [
-        {k: w[k] for k in ("id", "text", "translation", "transcription", "partOfSpeech", "cefr", "topics", "example")}
+        {
+            k: w[k]
+            for k in ("id", "text", "translation", "transcription", "partOfSpeech", "cefr", "topics", "example", "picture")
+            if k != "picture" or w[k] is not None
+        }
         for w in words
     ]
     (ASSETS / "vocabulary_pl.json").write_text(
@@ -251,6 +273,7 @@ def main() -> int:
     with_examples = sum(1 for w in words if w["example"])
     print(f"{len(words)} words ({ranked} ranked), {len(presets)} presets in {len(categories)} categories")
     print(f"  with an example sentence: {with_examples}")
+    print(f"  with a picture phrase: {sum(1 for w in words if w['picture'])}, marked unpicturable: {sum(1 for w in words if w['picture'] == '')}")
     levels = {level: sum(1 for w in words if w["cefr"] == level) for level in CEFR_LEVELS}
     print("  by level: " + ", ".join(f"{lvl} {n}" for lvl, n in levels.items()))
     smallest = min(presets, key=lambda p: p["wordCount"])

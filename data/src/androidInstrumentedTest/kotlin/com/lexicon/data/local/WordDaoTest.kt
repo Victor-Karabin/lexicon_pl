@@ -140,9 +140,30 @@ class WordDaoTest {
                 transcription = "",
                 searchKey = searchKeyFor("kobieta", "lady"),
                 example = "Ta **kobieta** jest miła.",
+                picture = null,
             )
 
             assertEquals("Ta **kobieta** jest miła.", words.findById(1)?.example)
+        }
+
+    @Test
+    fun aWordKeepsItsPicturePhraseAndAnEditCanClearIt() =
+        runTest {
+            words.insertAll(listOf(word(1, "bez", "lilac").copy(picture = "lilac flowers")))
+
+            assertEquals("lilac flowers", words.findById(1)?.toWord()?.pictureSubject)
+
+            words.updateWord(
+                id = 1,
+                text = "bez",
+                translation = "elder",
+                transcription = "",
+                searchKey = searchKeyFor("bez", "elder"),
+                example = "",
+                picture = null,
+            )
+
+            assertEquals("elder", words.findById(1)?.toWord()?.pictureSubject)
         }
 
     @Test

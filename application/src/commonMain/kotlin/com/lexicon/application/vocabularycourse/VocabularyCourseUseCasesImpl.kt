@@ -199,7 +199,7 @@ class GetWordCardsUseCaseImpl(
         val words = vocabulary.getItemsByIds(ids.map { it.value }).associateBy { it.id.value }
 
         val found = ids.mapNotNull { words[it.value] }
-        val pictures = imageProvider.picturesFor(found.map { it.translation })
+        val pictures = imageProvider.picturesFor(found)
 
         return found
             .mapIndexed { index, word ->

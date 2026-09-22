@@ -21,6 +21,7 @@ data class WordEntity(
     val example: String = "",
     val isDeleted: Boolean = false,
     val isUserCreated: Boolean = false,
+    val picture: String? = null,
 )
 
 fun nextUserWordId(lowestExistingId: Long?): Long = minOf(lowestExistingId ?: 0L, 0L) - 1
@@ -39,4 +40,5 @@ fun WordEntity.toWord(): Word =
         status = WordStatus.ofName(status),
         cefr = CefrLevel.ofName(cefr.ifEmpty { null }),
         example = example,
+        picture = picture,
     )

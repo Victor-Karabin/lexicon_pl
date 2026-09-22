@@ -4,6 +4,7 @@ package com.lexicon.application.memorycards
 
 import com.lexicon.application.settings.StepCountResolver
 import com.lexicon.application.training.openBoards
+import com.lexicon.application.training.pictureOf
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.VocabularyRepository
@@ -56,7 +57,7 @@ class StartMemoryCardsSessionUseCaseImpl(
     private suspend fun buildPair(word: Word): MemoryCardsPairResponse =
         MemoryCardsPairResponse(
             vocabularyItemId = word.id.value,
-            imageUrl = imageProvider.searchImage(word.translation),
+            imageUrl = imageProvider.pictureOf(word),
             imageFallbackText = word.text,
             text = word.translation,
         )

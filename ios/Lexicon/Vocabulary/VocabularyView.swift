@@ -202,7 +202,8 @@ struct WordRow: View {
                     transcription: "ˈvɔda",
                     status: WordStatus.toLearn,
                     cefr: CefrLevel.a1,
-                    example: "Piję **wodę** codziennie."
+                    example: "Piję **wodę** codziennie.",
+                    picture: nil
                 ),
                 status: WordStatus.toLearn,
                 onStudySet: {}
@@ -217,7 +218,8 @@ struct WordRow: View {
                     transcription: "",
                     status: WordStatus.undefined,
                     cefr: CefrLevel.a1,
-                    example: ""
+                    example: "",
+                    picture: nil
                 ),
                 status: WordStatus.undefined,
                 onStudySet: {}

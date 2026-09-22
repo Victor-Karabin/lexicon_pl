@@ -28,7 +28,7 @@ class StartWordCardSessionUseCaseImpl(
         val stepCount = stepCountResolver.resolve(null)
         val words = vocabulary.getRandomItems(stepCount, request.vocabularyIds)
 
-        val pictures = imageProvider.picturesFor(words.map { it.translation })
+        val pictures = imageProvider.picturesFor(words)
 
         val steps = words.mapIndexed { index, word ->
             WordCardStep(

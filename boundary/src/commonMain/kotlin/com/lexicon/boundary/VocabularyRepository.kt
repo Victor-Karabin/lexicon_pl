@@ -41,6 +41,7 @@ interface VocabularyRepository {
         translation: String,
         transcription: String,
         example: String = "",
+        picture: String? = null,
     ): Word
 
     suspend fun findWordByText(text: String): Word?
