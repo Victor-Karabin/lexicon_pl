@@ -165,9 +165,20 @@ struct ReviewWordsView: View {
             .frame(maxWidth: .infinity)
             .padding(.vertical, Spacing.small)
         }
-        .buttonStyle(.bordered)
-        .tint(tint)
-        .background(model.chosen == status ? tint.opacity(0.25) : Color.clear)
-        .clipShape(RoundedRectangle(cornerRadius: Radius.small))
+        .buttonStyle(ChoiceButtonStyle(tint: tint, isChosen: model.chosen == status))
+    }
+}
+
+private struct ChoiceButtonStyle: ButtonStyle {
+    let tint: Color
+    let isChosen: Bool
+
+    func makeBody(configuration: Configuration) -> some View {
+        let isFilled = isChosen || configuration.isPressed
+        let shape = RoundedRectangle(cornerRadius: Radius.small)
+        return configuration.label
+            .foregroundStyle(isFilled ? Color(uiColor: .systemBackground) : tint)
+            .background(shape.fill(isFilled ? tint : Color.clear))
+            .overlay(shape.stroke(tint, lineWidth: 1))
     }
 }

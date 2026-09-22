@@ -1,5 +1,8 @@
 package com.lexicon.presentation.review
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,8 +30,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -49,6 +54,8 @@ import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
 
 private val ChoiceIconSize = 20.dp
+
+private val ChoiceBorder = 1.dp
 
 @Composable
 fun ReviewWordsScreen(
@@ -210,19 +217,22 @@ private fun Choice(
     isChosen: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    tint: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.primary,
+    tint: Color = MaterialTheme.colorScheme.primary,
 ) {
-    val colors = if (isChosen) {
-        ButtonDefaults.buttonColors(containerColor = tint)
-    } else {
-        ButtonDefaults.outlinedButtonColors(contentColor = tint)
-    }
+    val interaction = remember { MutableInteractionSource() }
+    val isPressed by interaction.collectIsPressedAsState()
+    val isFilled = isChosen || isPressed
 
-    if (isChosen) {
-        Button(onClick = onClick, colors = colors, modifier = modifier) { ChoiceLabel(label, icon) }
-    } else {
-        OutlinedButton(onClick = onClick, colors = colors, modifier = modifier) { ChoiceLabel(label, icon) }
-    }
+    OutlinedButton(
+        onClick = onClick,
+        modifier = modifier,
+        interactionSource = interaction,
+        border = BorderStroke(ChoiceBorder, tint),
+        colors = ButtonDefaults.outlinedButtonColors(
+            containerColor = if (isFilled) tint else Color.Transparent,
+            contentColor = if (isFilled) MaterialTheme.colorScheme.surface else tint,
+        ),
+    ) { ChoiceLabel(label, icon) }
 }
 
 @Composable
