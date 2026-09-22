@@ -91,12 +91,15 @@ class UpdateWordUseCaseImpl(
             return Result.failure(WordDraftException(WordDraftProblem.ALREADY_EXISTS))
         }
 
+        val before = vocabularyRepository.getWord(id.value)
+        val keepsPicture = before?.translation == english && !(imageUrl != null && before.pictureSubject == null)
         val word = vocabularyRepository.updateWord(
             id = id.value,
             text = polish,
             translation = english,
             transcription = polishTranscription(polish),
             example = example.trim(),
+            picture = before?.picture.takeIf { keepsPicture },
         )
 
         val wanted = presetIds.mapTo(mutableSetOf()) { it.value }
@@ -108,7 +111,8 @@ class UpdateWordUseCaseImpl(
             presetRepository.setWordInPreset(presetId = presetId, wordId = id.value, isMember = false)
         }
 
-        if (!imageUrl.isNullOrBlank()) imageProvider.pinImage(query = english, imageUrl = imageUrl)
+        val subject = word.pictureSubject
+        if (!imageUrl.isNullOrBlank() && subject != null) imageProvider.pinImage(query = subject, imageUrl = imageUrl)
 
         return Result.success(word)
     }
@@ -163,12 +167,12 @@ class TranslateWordUseCaseImpl(
 }
 
 class GetPinnedImageUseCaseImpl(
+    private val vocabularyRepository: VocabularyRepository,
     private val imageProvider: ImageProvider,
 ) : com.lexicon.interactors.presets.GetPinnedImageUseCase {
-    override suspend fun invoke(translation: String): String? {
-        val trimmed = translation.trim()
-        if (trimmed.isEmpty()) return null
-        return runCatching { imageProvider.searchImage(trimmed) }.getOrNull()
+    override suspend fun invoke(id: VocabularyId): String? {
+        val subject = vocabularyRepository.getWord(id.value)?.pictureSubject ?: return null
+        return runCatching { imageProvider.searchImage(subject) }.getOrNull()
     }
 }
 

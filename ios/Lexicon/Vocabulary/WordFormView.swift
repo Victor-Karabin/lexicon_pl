@@ -151,9 +151,9 @@ struct WordFormView: View {
         example = word.example
         memberships = await presetMemberships(of: wordId)
 
-        chosenImage = try? await deps.getPinnedImage.invoke(translation: word.translation)
+        chosenImage = try? await deps.getPinnedImage.invoke(id: word.id)
         if let pinned = chosenImage, isOwnImage(pinned) { ownImages = [pinned] }
-        await lookUpImages(for: word.translation)
+        await lookUpImages(for: word.pictureSubject ?? word.translation)
     }
 
     private func fillPolish(from english: String) async {

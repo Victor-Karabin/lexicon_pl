@@ -20,6 +20,10 @@ loses the markers, or marks more than one span, is dropped rather than shipped.
 Checking that the marked span belongs to the word asked about is not possible from
 the spelling: Polish alternates stems, so brać becomes biorę and iść becomes idę.
 
+Entries are keyed by word and meaning, not the spelling alone: bez is both "without"
+and "lilac", and each sense needs its own sentence. The part of speech and topics go
+into the prompt so the model writes about the sense asked for.
+
 Sentences are cached in tools/vocabulary/.examples-cache.json, so a second run costs
 nothing and an interrupted run resumes. Pass --refresh to ask again for everything.
 """
@@ -59,9 +63,12 @@ Rules:
 * Make the meaning of the target word clear from the sentence itself.
 * Prefer everyday situations over literary, archaic or regional language.
 
-Return ONLY a JSON object mapping each target word, exactly as given, to its sentence.
+* The sentence must use the target word in the meaning given, never in another sense
+  the same spelling can have.
 
-Entries, one per line, as "word | meaning | level":
+Return ONLY a JSON object mapping each entry number, as a string, to its sentence.
+
+Entries, one per line, as "number | word | meaning | part of speech | topics | level":
 
 {{entries}}
 """
@@ -83,10 +90,28 @@ def api_key() -> str:
     raise BuildError("no openai.apiKey in local.properties")
 
 
-def ask(key: str, entries: list[tuple[str, str, str]]) -> dict[str, str]:
-    prompt = PROMPT.replace(
-        "{{entries}}", "\n".join(f"{word} | {gloss} | {level}" for word, gloss, level in entries)
+def entry_key(entry: dict) -> str:
+    return f"{entry['word']}\t{entry['gloss']}"
+
+
+def entry_lines(entries: list[dict], fields: list[str]) -> str:
+    return "\n".join(
+        " | ".join([str(number)] + [entry.get(field) or "-" for field in fields])
+        for number, entry in enumerate(entries, start=1)
     )
+
+
+def ask(key: str, entries: list[dict]) -> dict[str, str]:
+    prompt = PROMPT.replace("{{entries}}", entry_lines(entries, ["word", "gloss", "pos", "topics", "level"]))
+    answer = request(key, prompt)
+    return {
+        entry_key(entries[int(n) - 1]): v
+        for n, v in answer.items()
+        if isinstance(v, str) and n.isdigit() and 0 < int(n) <= len(entries)
+    }
+
+
+def request(key: str, prompt: str) -> dict[str, str]:
     body = json.dumps(
         {
             "model": MODEL,
@@ -132,7 +157,7 @@ def parse(answer: dict) -> dict[str, str]:
         parsed = json.loads(text[start : end + 1])
     except json.JSONDecodeError:
         return {}
-    return {k: v for k, v in parsed.items() if isinstance(v, str)}
+    return {k: v for k, v in parsed.items() if isinstance(v, (str, dict))}
 
 
 def usable(word: str, sentence: str) -> bool:
@@ -156,17 +181,29 @@ def read_tsv(path: Path) -> list[list[str]]:
     return rows
 
 
-def corpus_entries() -> list[tuple[str, str, str]]:
+def corpus_entries() -> list[dict]:
     entries = []
     for path in [CORPUS / "core.tsv", *sorted((CORPUS / "topics").glob("*.tsv"))]:
         for cols in read_tsv(path):
             if len(cols) >= 4:
-                entries.append((cols[0].strip(), cols[1].strip(), cols[3].strip()))
+                entries.append(
+                    {
+                        "word": cols[0].strip(),
+                        "gloss": cols[1].strip(),
+                        "pos": cols[2].strip(),
+                        "level": cols[3].strip(),
+                        "topics": cols[4].strip() if len(cols) > 4 else "",
+                    }
+                )
     return entries
 
 
-def verb_entries(verbs: list[dict]) -> list[tuple[str, str, str]]:
-    return [(v["bezokolicznik"], v.get("translation", ""), "B1") for v in verbs if v.get("bezokolicznik")]
+def verb_entries(verbs: list[dict]) -> list[dict]:
+    return [
+        {"word": v["bezokolicznik"], "gloss": v.get("translation", ""), "pos": "v", "level": "B1", "topics": ""}
+        for v in verbs
+        if v.get("bezokolicznik")
+    ]
 
 
 class Writer:
@@ -179,8 +216,23 @@ class Writer:
     def save(self) -> None:
         CACHE.write_text(json.dumps(self.cache, ensure_ascii=False, indent=0, sort_keys=True), encoding="utf-8")
 
-    def warm(self, key: str, entries: list[tuple[str, str, str]], label: str) -> None:
-        pending = [e for e in entries if e[0] not in self.cache]
+    def adopt_spelling_keys(self, words: list[dict], verbs: list[dict]) -> None:
+        homographs = {w["word"] for w in words if sum(1 for o in words if o["word"] == w["word"]) > 1}
+        old = {k: v for k, v in self.cache.items() if "\t" not in k}
+        for entry in words + verbs:
+            sentence = old.get(entry["word"])
+            if sentence is not None and entry["word"] not in homographs:
+                self.cache.setdefault(entry_key(entry), sentence)
+        for word in old:
+            del self.cache[word]
+        if EXAMPLES.exists():
+            shipped = {f"{cols[0]}\t{cols[1]}": cols[2] for cols in read_tsv(EXAMPLES) if len(cols) >= 3}
+            for entry in words:
+                if entry["word"] not in homographs and entry_key(entry) in shipped:
+                    self.cache[entry_key(entry)] = shipped[entry_key(entry)]
+
+    def warm(self, key: str, entries: list[dict], label: str) -> None:
+        pending = [e for e in entries if entry_key(e) not in self.cache]
         if not pending:
             print(f"  {label}: already written")
             return
@@ -188,10 +240,10 @@ class Writer:
         for start in range(0, len(pending), BATCH):
             batch = pending[start : start + BATCH]
             written = ask(key, batch)
-            for word, _, _ in batch:
-                sentence = written.get(word, "").strip()
-                self.cache[word] = sentence if usable(word, sentence) else ""
-                if not self.cache[word]:
+            for entry in batch:
+                sentence = written.get(entry_key(entry), "").strip()
+                self.cache[entry_key(entry)] = sentence if usable(entry["word"], sentence) else ""
+                if not self.cache[entry_key(entry)]:
                     self.rejected += 1
             print(f"  {label}: {min(start + BATCH, len(pending))}/{len(pending)}", end="\r", flush=True)
             if start % (BATCH * 20) == 0:
@@ -199,8 +251,8 @@ class Writer:
         self.save()
         print()
 
-    def sentence(self, word: str) -> str:
-        return self.cache.get(word, "")
+    def sentence(self, entry: dict) -> str:
+        return self.cache.get(entry_key(entry), "")
 
 
 def main() -> int:
@@ -220,9 +272,10 @@ def main() -> int:
     words = corpus_entries()
     verbs = json.loads(CONJUGATIONS.read_text(encoding="utf-8"))
 
-    OTHER_HEADWORDS.update(word.casefold() for word, _, _ in words)
+    OTHER_HEADWORDS.update(entry["word"].casefold() for entry in words)
     OTHER_HEADWORDS.update(v["bezokolicznik"].casefold() for v in verbs if v.get("bezokolicznik"))
 
+    writer.adopt_spelling_keys(words, verb_entries(verbs))
     print(f"{len(words)} corpus words, {len(verbs)} verbs")
     try:
         if not arguments.verbs_only:
@@ -237,18 +290,18 @@ def main() -> int:
     if not arguments.verbs_only:
         lines = ["# Generated by build_examples.py. Columns: polish <TAB> english <TAB> sentence."]
         written = 0
-        for word, gloss, _ in words:
-            sentence = writer.sentence(word)
+        for entry in words:
+            sentence = writer.sentence(entry)
             if sentence:
-                lines.append(f"{word}\t{gloss}\t{sentence}")
+                lines.append(f"{entry['word']}\t{entry['gloss']}\t{sentence}")
                 written += 1
         EXAMPLES.write_text("\n".join(lines) + "\n", encoding="utf-8")
         print(f"examples.tsv: {written} of {len(words)} words")
 
     if not arguments.words_only:
         written = 0
-        for verb in verbs:
-            sentence = writer.sentence(verb.get("bezokolicznik", ""))
+        for verb, entry in zip([v for v in verbs if v.get("bezokolicznik")], verb_entries(verbs)):
+            sentence = writer.sentence(entry)
             if sentence:
                 verb["example"] = sentence
                 written += 1

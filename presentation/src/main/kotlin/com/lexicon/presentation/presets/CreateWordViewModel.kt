@@ -131,7 +131,7 @@ class CreateWordViewModel(
                 memberships = getWordPresetMemberships(id),
             )
         }
-        loadImagesFor(word.translation, pinned = getPinnedImage(word.translation))
+        loadImagesFor(word.pictureSubject ?: word.translation, pinned = getPinnedImage(id))
     }
 
     fun onTextChanged(text: String) {

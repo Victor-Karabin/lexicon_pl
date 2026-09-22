@@ -143,6 +143,7 @@ interface WordDao {
             transcription = :transcription,
             searchKey = :searchKey,
             example = :example,
+            picture = :picture,
             isUserCreated = 1
         WHERE id = :id
         """,
@@ -154,6 +155,7 @@ interface WordDao {
         transcription: String,
         searchKey: String,
         example: String,
+        picture: String?,
     )
 
     @Transaction

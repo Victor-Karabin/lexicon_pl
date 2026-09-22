@@ -101,3 +101,4 @@ ios/Lexicon/Support/Keys.generated.swift
 CLAUDE.md
 tools/translate/.cache.json
 tools/vocabulary/.examples-cache.json
+tools/vocabulary/.pictures-cache.json

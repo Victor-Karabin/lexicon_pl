@@ -4,6 +4,7 @@ package com.lexicon.application.puzzle
 
 import com.lexicon.application.settings.StepCountResolver
 import com.lexicon.application.training.open
+import com.lexicon.application.training.pictureOf
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.VocabularyRepository
@@ -44,7 +45,7 @@ class StartPuzzleSessionUseCaseImpl(
             stepIndex = index,
             vocabularyItemId = word.id.value,
             expectedText = word.text,
-            imageUrl = imageProvider.searchImage(word.translation),
+            imageUrl = imageProvider.pictureOf(word),
             clueText = word.translation,
         )
 }
