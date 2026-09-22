@@ -33,14 +33,14 @@ class CropWindowTest {
     }
 
     @Test
-    fun `dragging the photo down shows more of its top, and stops at the edge`() {
+    fun `dragging the frame down moves it down the photo, and stops at the edge`() {
         val window = CropWindow(imageWidth = 1200, imageHeight = 1600)
 
-        val frameHeight = 375f
-        val moved = window.focusAfterDrag(focus = 0.5f, dragPixels = 100f, framePixels = frameHeight)
+        val shownHeight = 400f
+        val moved = window.focusAfterFrameDrag(focus = 0.5f, dragPixels = 100f, shownImagePixels = shownHeight)
 
-        assertEquals(0.5f - (100f * 750 / frameHeight) / 850, moved, 0.0001f)
-        assertEquals(0f, window.focusAfterDrag(focus = 0.1f, dragPixels = 1000f, framePixels = frameHeight), 0f)
-        assertEquals(1f, window.focusAfterDrag(focus = 0.9f, dragPixels = -1000f, framePixels = frameHeight), 0f)
+        assertEquals(0.5f + (100f * 1600 / shownHeight) / 850, moved, 0.0001f)
+        assertEquals(1f, window.focusAfterFrameDrag(focus = 0.9f, dragPixels = 1000f, shownImagePixels = shownHeight), 0f)
+        assertEquals(0f, window.focusAfterFrameDrag(focus = 0.1f, dragPixels = -1000f, shownImagePixels = shownHeight), 0f)
     }
 }

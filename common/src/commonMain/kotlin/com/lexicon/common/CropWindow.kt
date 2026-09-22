@@ -41,14 +41,14 @@ data class CropWindow(
         }
     }
 
-    fun focusAfterDrag(
+    fun focusAfterFrameDrag(
         focus: Float,
         dragPixels: Float,
-        framePixels: Float,
+        shownImagePixels: Float,
     ): Float {
-        if (slack == 0 || framePixels <= 0f) return focus
-        val windowPixels = if (isWider) width else height
-        val imagePixelsMoved = dragPixels * windowPixels / framePixels
-        return (focus - imagePixelsMoved / slack).coerceIn(0f, 1f)
+        if (slack == 0 || shownImagePixels <= 0f) return focus
+        val imagePixels = if (isWider) imageWidth else imageHeight
+        val imagePixelsMoved = dragPixels * imagePixels / shownImagePixels
+        return (focus + imagePixelsMoved / slack).coerceIn(0f, 1f)
     }
 }

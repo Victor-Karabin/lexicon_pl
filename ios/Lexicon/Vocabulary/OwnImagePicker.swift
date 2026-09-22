@@ -14,6 +14,11 @@ func imageURL(_ url: String) -> URL? {
         .appendingPathComponent(stored.lastPathComponent)
 }
 
+enum ImageTile {
+    static let height: CGFloat = 72
+    static let width: CGFloat = height * CGFloat(CropWindowKt.CARD_IMAGE_ASPECT)
+}
+
 struct AddImageTile: View {
     let onPicked: (String) -> Void
 
@@ -42,7 +47,7 @@ struct AddImageTile: View {
         } label: {
             RoundedRectangle(cornerRadius: Radius.small)
                 .fill(Color.secondary.opacity(0.15))
-                .frame(width: 96, height: 96)
+                .frame(width: ImageTile.width, height: ImageTile.height)
                 .overlay(Image(systemName: "plus").foregroundStyle(.secondary))
                 .accessibilityLabel(Strings.createWordImageAdd)
         }

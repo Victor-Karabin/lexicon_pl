@@ -37,7 +37,7 @@ object ImagePickerTestTags {
     const val GRID = "image_picker_grid"
 }
 
-private const val COLUMNS = 3
+private const val COLUMNS = 2
 
 private val GridMinHeight = 240.dp
 private val GridMaxHeight = 420.dp

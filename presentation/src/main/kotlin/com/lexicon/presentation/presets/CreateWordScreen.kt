@@ -1,7 +1,6 @@
 package com.lexicon.presentation.presets
 
 import android.net.Uri
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,14 +9,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Crop
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material.icons.filled.Refresh
@@ -44,12 +46,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.SubcomposeAsyncImage
+import com.lexicon.common.CARD_IMAGE_ASPECT
 import com.lexicon.interactors.presets.PresetMembership
 import com.lexicon.interactors.presets.WordDraftProblem
 import com.lexicon.model.vocabulary.LocalizedText
@@ -69,12 +71,11 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import org.koin.androidx.compose.koinViewModel
 import java.io.File
-import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.minutes
 
 private const val PRESET_CHIP_LINES = 2
 
-private val CandidateSize = 104.dp
+private val CandidateHeight = 72.dp
 private val ProgressSize = 18.dp
 private val ProgressStroke = 2.dp
 private val SelectedBorder = 3.dp
@@ -331,8 +332,12 @@ private fun ImageSection(
         }
 
         if (uiState.selectedImage != null) {
-            TextButton(onClick = { isAdjusting = true }) {
-                Text(stringResource(R.string.create_word_image_adjust))
+            IconButton(onClick = { isAdjusting = true }) {
+                Icon(
+                    imageVector = Icons.Default.Crop,
+                    contentDescription = stringResource(R.string.create_word_image_adjust),
+                    tint = MaterialTheme.colorScheme.primary,
+                )
             }
         }
     }
@@ -374,7 +379,10 @@ private fun ChosenImageTile(
     Surface(
         shape = LexiconShapes.small,
         color = MaterialTheme.colorScheme.surfaceContainerHigh,
-        modifier = Modifier.size(CandidateSize).clickable(enabled = !isLoading, onClick = onClick),
+        modifier = Modifier
+            .height(CandidateHeight)
+            .aspectRatio(CARD_IMAGE_ASPECT)
+            .clickable(enabled = !isLoading, onClick = onClick),
     ) {
         if (url == null) {
             Box(contentAlignment = Alignment.Center) {
@@ -406,25 +414,6 @@ private fun ChosenImageTile(
 }
 
 @Composable
-private fun RevealNewCandidates(
-    candidates: ImmutableList<String>,
-    scroll: ScrollState,
-    leadingTiles: Int,
-) {
-    val tileWidth = with(LocalDensity.current) { (CandidateSize + Dimens.spacingSmall).toPx() }
-    var shown by remember { mutableStateOf<List<String>>(emptyList()) }
-
-    LaunchedEffect(candidates) {
-        val appended = candidates.size > shown.size && candidates.take(shown.size) == shown
-        when {
-            appended -> scroll.animateScrollTo(((leadingTiles + shown.size) * tileWidth).roundToInt())
-            candidates != shown -> scroll.scrollTo(0)
-        }
-        shown = candidates
-    }
-}
-
-@Composable
 internal fun AddImageTile(onPicked: (String) -> Unit) {
     var isChoosing by remember { mutableStateOf(false) }
     var toPosition by remember { mutableStateOf<String?>(null) }
@@ -449,7 +438,8 @@ internal fun AddImageTile(onPicked: (String) -> Unit) {
             shape = LexiconShapes.small,
             color = MaterialTheme.colorScheme.surfaceContainerHigh,
             modifier = Modifier
-                .size(CandidateSize)
+                .fillMaxWidth()
+                .aspectRatio(CARD_IMAGE_ASPECT)
                 .clickable { isChoosing = true },
         ) {
             Box(contentAlignment = Alignment.Center) {
@@ -492,7 +482,8 @@ internal fun ImageCandidate(
         shape = LexiconShapes.small,
         color = MaterialTheme.colorScheme.surfaceContainerHigh,
         modifier = Modifier
-            .size(CandidateSize)
+            .fillMaxWidth()
+            .aspectRatio(CARD_IMAGE_ASPECT)
             .then(
                 if (isSelected) {
                     Modifier.border(SelectedBorder, MaterialTheme.colorScheme.primary, LexiconShapes.small)
