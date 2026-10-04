@@ -12,7 +12,7 @@ internal suspend fun ImageProvider.picturesFor(words: List<Word>): List<String?>
         words.map { word -> async { pictureOf(word) } }.awaitAll()
     }
 
-internal suspend fun ImageProvider.pictureOf(word: Word): String? = word.pictureSubject?.let { pictureOrNull(it) }
+internal suspend fun ImageProvider.pictureOf(word: Word): String? = pictureOrNull(word.pictureSubject)
 
 private suspend fun ImageProvider.pictureOrNull(query: String): String? =
     try {

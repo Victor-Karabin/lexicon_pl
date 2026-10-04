@@ -60,6 +60,19 @@ class ConjugationRepositoryImpl(
         offset: Int,
     ): List<VerbConjugationBoundary> = dao.verbPage(query.trim(), limit, offset).map { it.toBoundary() }
 
+    override suspend fun saveVerb(verb: VerbConjugationBoundary) {
+        dao.saveVerbs(
+            listOf(
+                ConjugationVerbEntity(
+                    infinitive = verb.infinitive,
+                    translation = verb.translation.orEmpty(),
+                    formsJson = json.encodeToString(formsSerializer, verb.forms),
+                    example = verb.example,
+                ),
+            ),
+        )
+    }
+
     override suspend fun deleteVerb(infinitive: String) = dao.deleteVerb(infinitive)
 
     override suspend fun hasDeletedVerbs(): Boolean = dao.countVerbs() < assetVerbCount()

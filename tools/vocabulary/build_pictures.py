@@ -15,9 +15,9 @@ Then run build_assets.py to fold pictures.tsv into vocabulary_pl.json.
 
 The app used to search for pictures by the bare English gloss, so "lilac" found the
 colour, "right" found anything, and "without" found nothing useful at all. The phrase
-names what a photo should show for this one sense, and is left empty when no ordinary
-photo would make the meaning recognisable: the app then shows no picture rather than
-a misleading one.
+names what a photo should show for this one sense. Where no
+photo could show on its own, the phrase pictures the situation of its example sentence,
+so every word and phrase has something to show.
 
 Phrases are cached in tools/vocabulary/.pictures-cache.json. Pass --refresh to ask again.
 """
@@ -34,23 +34,23 @@ from build_examples import BATCH, TOOLS, BuildError, api_key, corpus_entries, en
 PICTURES = TOOLS / "pictures.tsv"
 CACHE = TOOLS / ".pictures-cache.json"
 
-UNPICTURABLE = {"prep", "conj", "part", "prn", "interj"}
+PROMPT = """For each Polish vocabulary entry below, write the English search phrase that finds
+a stock photo a learner would connect with that meaning.
 
-PROMPT = """For each Polish vocabulary entry below, decide whether a stock photo can show
-its meaning, and if it can, write the English search phrase that finds that photo.
+Rules:
+* Two to five plain English words, the way people search a photo site.
+* Name something a camera can capture: an object, animal, place, or a person doing
+  something. Add the detail that rules out other senses of the same spelling:
+  bez "lilac" is "lilac flowers in bloom", never the colour; zamek "lock" is "door lock".
+* Every entry gets a phrase. For a word no photo can show on its own - grammar words,
+  degree words, abstract ideas - picture the situation its example sentence describes,
+  so the photo carries the sentence rather than the bare word:
+  bez "without", "Idę bez kurtki." -> "person walking in shirt sleeves".
+  bardzo "very", "Bardzo lubię kawę." -> "woman enjoying coffee".
+  trzeba "one must" -> "person checking a to-do list".
+* Never answer with text, letters, signs or writing in the photo.
 
-Answer "yes" only when a learner shown a typical photo for your phrase would guess
-this exact meaning. Answer "no" for meanings a photo cannot pin down: grammar words,
-degree words, states of being, abstract ideas and most adverbs.
-  być "to be": no.  bardzo "very": no.  bez "without": no.  wolność "freedom": no.
-  bez "lilac": yes, "lilac flowers in bloom" (never the colour).
-  zamek "lock": yes, "door lock".  biegać "to run": yes, "person jogging in park".
-
-The phrase: two to five plain English words, the way people search a photo site,
-naming something a camera can capture, with the detail that rules out other senses.
-
-Return ONLY a JSON object mapping each entry number, as a string, to an object
-{"visual": "yes" or "no", "phrase": "..."}. Leave the phrase empty for "no".
+Return ONLY a JSON object mapping each entry number, as a string, to its phrase.
 
 Entries, one per line, as "number | word | meaning | part of speech | topics | example":
 
@@ -68,13 +68,11 @@ def examples() -> dict[str, str]:
 def ask(key: str, entries: list[dict]) -> dict[str, str]:
     prompt = PROMPT.replace("{{entries}}", entry_lines(entries, ["word", "gloss", "pos", "topics", "example"]))
     answer = request(key, prompt)
-    phrases = {}
-    for n, reply in answer.items():
-        if not (n.isdigit() and 0 < int(n) <= len(entries)) or not isinstance(reply, dict):
-            continue
-        visual = str(reply.get("visual", "")).strip().lower() == "yes"
-        phrases[entry_key(entries[int(n) - 1])] = str(reply.get("phrase", "")).strip() if visual else ""
-    return phrases
+    return {
+        entry_key(entries[int(n) - 1]): phrase.strip()
+        for n, phrase in answer.items()
+        if isinstance(phrase, str) and phrase.strip() and n.isdigit() and 0 < int(n) <= len(entries)
+    }
 
 
 def main() -> int:
@@ -97,9 +95,6 @@ def main() -> int:
     for entry in words:
         entry["example"] = sentences.get(entry_key(entry), "")
 
-    for entry in words:
-        if entry["pos"] in UNPICTURABLE:
-            cache[entry_key(entry)] = ""
     pending = [e for e in words if entry_key(e) not in cache]
     print(f"{len(words)} corpus words, {len(pending)} to ask")
     try:
@@ -126,6 +121,8 @@ def main() -> int:
             pictured += bool(cache[entry_key(entry)])
     PICTURES.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"pictures.tsv: {pictured} words with a phrase, {len(lines) - 1 - pictured} with none")
+    if pictured < len(words):
+        print("every word should have one; run again to fill the rest in")
     missing = sum(1 for e in words if entry_key(e) not in cache)
     if missing:
         print(f"{missing} words got no reply; run again to fill them in")

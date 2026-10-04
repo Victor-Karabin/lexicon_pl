@@ -321,7 +321,13 @@
     <string name="grammar_gender_feminine">feminine</string>
     <string name="grammar_gender_neuter">neuter</string>
     <string name="grammar_gender_plural_only">plural only</string>
-    <string name="grammar_plural">plural</string>
+    <string name="grammar_case_nominative">nominative</string>
+    <string name="grammar_case_genitive">genitive</string>
+    <string name="grammar_case_dative">dative</string>
+    <string name="grammar_case_accusative">accusative</string>
+    <string name="grammar_case_instrumental">instrumental</string>
+    <string name="grammar_case_locative">locative</string>
+    <string name="grammar_case_vocative">vocative</string>
     <string name="grammar_masculine">masculine</string>
     <string name="grammar_feminine">feminine</string>
     <string name="grammar_neuter">neuter</string>

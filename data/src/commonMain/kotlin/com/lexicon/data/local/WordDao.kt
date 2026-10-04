@@ -158,6 +158,24 @@ interface WordDao {
         picture: String?,
     )
 
+    @Query(
+        """
+        UPDATE words
+        SET partOfSpeech = :partOfSpeech,
+            gender = :gender,
+            declension = :declension,
+            adjectiveForms = :adjectiveForms
+        WHERE id = :id
+        """,
+    )
+    suspend fun setGrammar(
+        id: Long,
+        partOfSpeech: String,
+        gender: String,
+        declension: String,
+        adjectiveForms: String,
+    )
+
     @Transaction
     suspend fun reconcile(
         added: List<WordEntity>,

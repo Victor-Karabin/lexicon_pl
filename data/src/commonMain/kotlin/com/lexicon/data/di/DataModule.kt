@@ -53,6 +53,8 @@ import com.lexicon.data.repository.VocabularyCourseRepositoryImpl
 import com.lexicon.data.repository.VocabularyPresetRepositoryImpl
 import com.lexicon.data.repository.VocabularyRepositoryImpl
 import com.lexicon.data.settings.SettingsRepositoryImpl
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -70,6 +72,7 @@ val dataModule = module {
     single<SessionStore> { InMemorySessionStore() }
 
     singleOf(::DefaultDispatcherProvider) { bind<DispatcherProvider>() }
+    single<CoroutineScope> { CoroutineScope(SupervisorJob() + get<DispatcherProvider>().io) }
     singleOf(::SystemClock) { bind<Clock>() }
 
     single { get<AppDatabaseBuilderFactory>().buildAppDatabase() }

@@ -20,7 +20,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.presets.GetWordGrammarUseCase
 import com.lexicon.interactors.presets.WordGrammar
+import com.lexicon.model.vocabulary.CaseForms
 import com.lexicon.model.vocabulary.Gender
+import com.lexicon.model.vocabulary.GrammaticalCase
 import com.lexicon.model.vocabulary.PartOfSpeech
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.presentation.R
@@ -83,7 +85,9 @@ private fun partOfSpeechLabel(grammar: WordGrammar): String {
 private fun grammarRows(grammar: WordGrammar): List<Pair<String, String>> =
     when (grammar) {
         is WordGrammar.Noun ->
-            listOfNotNull(grammar.plural?.let { stringResource(R.string.grammar_plural) to it })
+            GrammaticalCase.entries.mapNotNull { case ->
+                grammar.declension[case]?.let { stringResource(case.labelId()) to it.joined() }
+            }
 
         is WordGrammar.Adjective ->
             listOf(
@@ -101,6 +105,19 @@ private fun grammarRows(grammar: WordGrammar): List<Pair<String, String>> =
                 }.orEmpty()
 
         is WordGrammar.Plain -> emptyList()
+    }
+
+private fun CaseForms.joined(): String = listOfNotNull(singular, plural).joinToString(" / ")
+
+private fun GrammaticalCase.labelId(): Int =
+    when (this) {
+        GrammaticalCase.NOMINATIVE -> R.string.grammar_case_nominative
+        GrammaticalCase.GENITIVE -> R.string.grammar_case_genitive
+        GrammaticalCase.DATIVE -> R.string.grammar_case_dative
+        GrammaticalCase.ACCUSATIVE -> R.string.grammar_case_accusative
+        GrammaticalCase.INSTRUMENTAL -> R.string.grammar_case_instrumental
+        GrammaticalCase.LOCATIVE -> R.string.grammar_case_locative
+        GrammaticalCase.VOCATIVE -> R.string.grammar_case_vocative
     }
 
 private fun PartOfSpeech.labelId(): Int =

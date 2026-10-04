@@ -5,7 +5,9 @@ import com.lexicon.boundary.VerbConjugationBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.conjugation.GrammaticalPerson
 import com.lexicon.interactors.presets.WordGrammar
+import com.lexicon.model.vocabulary.CaseForms
 import com.lexicon.model.vocabulary.Gender
+import com.lexicon.model.vocabulary.GrammaticalCase
 import com.lexicon.model.vocabulary.PartOfSpeech
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
@@ -23,6 +25,12 @@ class GetWordGrammarUseCaseImplTest {
 
     private val getWordGrammar = GetWordGrammarUseCaseImpl(vocabulary, conjugations)
 
+    private val declension =
+        mapOf(
+            GrammaticalCase.NOMINATIVE to CaseForms("kot", "koty"),
+            GrammaticalCase.GENITIVE to CaseForms("kota", "kotów"),
+        )
+
     private fun stored(
         text: String,
         partOfSpeech: PartOfSpeech?,
@@ -33,9 +41,9 @@ class GetWordGrammarUseCaseImplTest {
     fun `a noun carries its gender and plural`() =
         runTest {
             coEvery { vocabulary.getWord(1) } returns
-                stored("kot", PartOfSpeech.NOUN, WordForms.Noun(Gender.MASCULINE_ANIMATE, "koty"))
+                stored("kot", PartOfSpeech.NOUN, WordForms.Noun(Gender.MASCULINE_ANIMATE, declension))
 
-            assertEquals(WordGrammar.Noun(Gender.MASCULINE_ANIMATE, "koty"), getWordGrammar(VocabularyId(1)))
+            assertEquals(WordGrammar.Noun(Gender.MASCULINE_ANIMATE, declension), getWordGrammar(VocabularyId(1)))
         }
 
     @Test

@@ -13,7 +13,7 @@ data class VocabularySeedItem(
     val picture: String? = null,
     val partOfSpeech: String = "",
     val gender: String = "",
-    val plural: String = "",
+    val declension: String = "",
     val forms: List<String> = emptyList(),
 )
 
@@ -29,6 +29,6 @@ fun VocabularySeedItem.toEntity(): WordEntity =
         picture = picture,
         partOfSpeech = partOfSpeech,
         gender = gender,
-        plural = plural,
+        declension = declension,
         adjectiveForms = forms.joinForms(),
     )

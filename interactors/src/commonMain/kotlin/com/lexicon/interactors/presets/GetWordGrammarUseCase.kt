@@ -1,7 +1,9 @@
 package com.lexicon.interactors.presets
 
 import com.lexicon.interactors.conjugation.VerbConjugation
+import com.lexicon.model.vocabulary.CaseForms
 import com.lexicon.model.vocabulary.Gender
+import com.lexicon.model.vocabulary.GrammaticalCase
 import com.lexicon.model.vocabulary.PartOfSpeech
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.WordForms
@@ -15,7 +17,7 @@ sealed interface WordGrammar {
 
     data class Noun(
         val gender: Gender,
-        val plural: String?,
+        val declension: Map<GrammaticalCase, CaseForms>,
     ) : WordGrammar {
         override val partOfSpeech: PartOfSpeech get() = PartOfSpeech.NOUN
     }

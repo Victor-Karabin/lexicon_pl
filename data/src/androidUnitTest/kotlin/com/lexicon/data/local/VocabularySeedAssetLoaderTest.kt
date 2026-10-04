@@ -1,6 +1,8 @@
 package com.lexicon.data.local
 
+import com.lexicon.model.vocabulary.CaseForms
 import com.lexicon.model.vocabulary.Gender
+import com.lexicon.model.vocabulary.GrammaticalCase
 import com.lexicon.model.vocabulary.PartOfSpeech
 import com.lexicon.model.vocabulary.WordForms
 import io.mockk.every
@@ -34,7 +36,7 @@ class VocabularySeedAssetLoaderTest {
             """
             [
               {"id": 1, "text": "kot", "translation": "cat", "transcription": "kɔt", "partOfSpeech": "n",
-               "gender": "masculine animate", "plural": "koty"},
+               "gender": "masculine animate", "declension": "kot|koty;kota|kotów"},
               {"id": 2, "text": "dobry", "translation": "good", "transcription": "", "partOfSpeech": "adj",
                "forms": ["dobry", "dobra", "dobre", "dobrzy", "dobre"]}
             ]
@@ -44,7 +46,17 @@ class VocabularySeedAssetLoaderTest {
         val words = VocabularySeedAssetLoader(assets).load().map { it.toWord() }
 
         assertEquals(PartOfSpeech.NOUN, words[0].partOfSpeech)
-        assertEquals(WordForms.Noun(Gender.MASCULINE_ANIMATE, "koty"), words[0].forms)
+        assertEquals(
+            WordForms.Noun(
+                Gender.MASCULINE_ANIMATE,
+                mapOf(
+                    GrammaticalCase.NOMINATIVE to CaseForms("kot", "koty"),
+                    GrammaticalCase.GENITIVE to CaseForms("kota", "kotów"),
+                ),
+            ),
+            words[0].forms,
+        )
+        assertEquals("koty", (words[0].forms as WordForms.Noun).plural)
         assertEquals(PartOfSpeech.ADJECTIVE, words[1].partOfSpeech)
         assertEquals(WordForms.Adjective("dobry", "dobra", "dobre", "dobrzy", "dobre"), words[1].forms)
     }

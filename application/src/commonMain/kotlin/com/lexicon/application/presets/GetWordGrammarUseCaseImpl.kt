@@ -18,7 +18,7 @@ class GetWordGrammarUseCaseImpl(
         val partOfSpeech = word.partOfSpeech ?: return null
 
         return when (val forms = word.forms) {
-            is WordForms.Noun -> WordGrammar.Noun(forms.gender, forms.plural)
+            is WordForms.Noun -> WordGrammar.Noun(forms.gender, forms.declension)
             is WordForms.Adjective -> WordGrammar.Adjective(forms)
             null ->
                 if (partOfSpeech == PartOfSpeech.VERB) {

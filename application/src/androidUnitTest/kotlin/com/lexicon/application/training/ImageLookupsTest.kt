@@ -59,12 +59,12 @@ class ImageLookupsTest {
         }
 
     @Test
-    fun `a word no photo can show gets no picture and no search`() =
+    fun `a word with no phrase of its own is searched by its translation`() =
         runTest {
-            val without = word("without", picture = "")
+            val own = word("cat", picture = null)
 
-            assertEquals(listOf(null), slowProvider.picturesFor(listOf(without)))
-            assertEquals(emptyList<String>(), asked)
+            assertEquals("https://img/cat.jpg", slowProvider.pictureOf(own))
+            assertEquals(listOf("cat"), asked)
         }
 
     private fun word(

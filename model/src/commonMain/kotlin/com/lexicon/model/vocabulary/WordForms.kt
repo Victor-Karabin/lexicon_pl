@@ -33,11 +33,35 @@ enum class Gender(val tag: String) {
     }
 }
 
+enum class GrammaticalCase(val tag: String) {
+    NOMINATIVE("nominative"),
+    GENITIVE("genitive"),
+    DATIVE("dative"),
+    ACCUSATIVE("accusative"),
+    INSTRUMENTAL("instrumental"),
+    LOCATIVE("locative"),
+    VOCATIVE("vocative"),
+    ;
+
+    companion object {
+        fun ofTag(tag: String?): GrammaticalCase? = entries.firstOrNull { it.tag == tag?.trim() }
+    }
+}
+
+data class CaseForms(
+    val singular: String?,
+    val plural: String?,
+) {
+    val isEmpty: Boolean get() = singular.isNullOrBlank() && plural.isNullOrBlank()
+}
+
 sealed interface WordForms {
     data class Noun(
         val gender: Gender,
-        val plural: String?,
-    ) : WordForms
+        val declension: Map<GrammaticalCase, CaseForms> = emptyMap(),
+    ) : WordForms {
+        val plural: String? get() = declension[GrammaticalCase.NOMINATIVE]?.plural
+    }
 
     data class Adjective(
         val masculine: String,

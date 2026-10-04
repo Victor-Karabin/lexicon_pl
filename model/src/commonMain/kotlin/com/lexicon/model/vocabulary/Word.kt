@@ -36,12 +36,7 @@ data class Word(
 
     val isPhrase: Boolean get() = text.contains(' ')
 
-    val pictureSubject: String?
-        get() = when {
-            picture == null -> translation
-            picture.isBlank() -> null
-            else -> picture
-        }
+    val pictureSubject: String get() = picture?.takeIf { it.isNotBlank() } ?: translation
 
     val isInStudySet: Boolean get() = status.isLearning
 

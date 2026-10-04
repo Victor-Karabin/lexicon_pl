@@ -40,7 +40,11 @@ struct WordGrammarRows: View {
 
     private func rows(of grammar: WordGrammar) -> [(label: String, value: String)] {
         if let noun = grammar as? WordGrammarNoun {
-            return noun.plural.map { [(Strings.grammarPlural, $0)] } ?? []
+            return GrammaticalCase.entries.compactMap { grammaticalCase in
+                guard let forms = noun.declension[grammaticalCase] else { return nil }
+                let shown = [forms.singular, forms.plural].compactMap { $0 }.joined(separator: " / ")
+                return shown.isEmpty ? nil : (caseName(grammaticalCase), shown)
+            }
         }
         if let adjective = (grammar as? WordGrammarAdjective)?.forms {
             return [
@@ -70,6 +74,18 @@ struct WordGrammarRows: View {
         case .particle: return Strings.grammarPosPart
         case .interjection: return Strings.grammarPosInterj
         default: return Strings.grammarPosExpr
+        }
+    }
+
+    private func caseName(_ grammaticalCase: GrammaticalCase) -> String {
+        switch grammaticalCase {
+        case .nominative: return Strings.grammarCaseNominative
+        case .genitive: return Strings.grammarCaseGenitive
+        case .dative: return Strings.grammarCaseDative
+        case .accusative: return Strings.grammarCaseAccusative
+        case .instrumental: return Strings.grammarCaseInstrumental
+        case .locative: return Strings.grammarCaseLocative
+        default: return Strings.grammarCaseVocative
         }
     }
 

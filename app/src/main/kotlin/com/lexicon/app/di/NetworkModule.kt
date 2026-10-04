@@ -6,10 +6,12 @@ import com.lexicon.boundary.ExampleSentenceGenerator
 import com.lexicon.boundary.SentenceGenerator
 import com.lexicon.boundary.TranslationSuggester
 import com.lexicon.boundary.Translator
+import com.lexicon.boundary.WordGrammarGenerator
 import com.lexicon.boundary.WordLevelGuesser
 import com.lexicon.data.di.levelGuesserChainQualifier
 import com.lexicon.data.di.suggesterChainQualifier
 import com.lexicon.data.di.translatorChainQualifier
+import com.lexicon.data.remote.grammar.OpenAiGrammarGenerator
 import com.lexicon.data.remote.image.OpenverseApi
 import com.lexicon.data.remote.image.OpenverseImageSource
 import com.lexicon.data.remote.image.PexelsApi
@@ -118,6 +120,7 @@ val networkModule = module {
 
     single<SentenceGenerator> { OpenAiSentenceGenerator(get()) }
     single<ExampleSentenceGenerator> { OpenAiExampleGenerator(get()) }
+    single<WordGrammarGenerator> { OpenAiGrammarGenerator(get()) }
 
     single {
         val client =

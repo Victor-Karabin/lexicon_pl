@@ -9,6 +9,7 @@ import com.lexicon.boundary.WordLevelGuesser
 import com.lexicon.common.polishTranscription
 import com.lexicon.interactors.presets.CreatePresetUseCase
 import com.lexicon.interactors.presets.CreateWordUseCase
+import com.lexicon.interactors.presets.FillWordGrammarUseCase
 import com.lexicon.interactors.presets.PresetDraftException
 import com.lexicon.interactors.presets.PresetDraftProblem
 import com.lexicon.interactors.presets.SearchImageCandidatesUseCase
@@ -24,6 +25,8 @@ import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 private const val IMAGE_CANDIDATES = 3
 
@@ -32,6 +35,8 @@ class CreateWordUseCaseImpl(
     private val presetRepository: VocabularyPresetRepository,
     private val imageProvider: ImageProvider,
     private val levelGuesser: WordLevelGuesser,
+    private val fillWordGrammar: FillWordGrammarUseCase,
+    private val appScope: CoroutineScope,
 ) : CreateWordUseCase {
     override suspend fun invoke(
         text: String,
@@ -62,6 +67,7 @@ class CreateWordUseCaseImpl(
         }
 
         if (!imageUrl.isNullOrBlank()) imageProvider.pinImage(query = english, imageUrl = imageUrl)
+        appScope.launch { runCatching { fillWordGrammar(word.id) } }
 
         return Result.success(word)
     }
@@ -71,6 +77,8 @@ class UpdateWordUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,
     private val presetRepository: VocabularyPresetRepository,
     private val imageProvider: ImageProvider,
+    private val fillWordGrammar: FillWordGrammarUseCase,
+    private val appScope: CoroutineScope,
 ) : UpdateWordUseCase {
     override suspend fun invoke(
         id: VocabularyId,
@@ -92,7 +100,7 @@ class UpdateWordUseCaseImpl(
         }
 
         val before = vocabularyRepository.getWord(id.value)
-        val keepsPicture = before?.translation == english && !(imageUrl != null && before.pictureSubject == null)
+        val keepsPicture = before?.translation == english
         val word = vocabularyRepository.updateWord(
             id = id.value,
             text = polish,
@@ -111,8 +119,10 @@ class UpdateWordUseCaseImpl(
             presetRepository.setWordInPreset(presetId = presetId, wordId = id.value, isMember = false)
         }
 
-        val subject = word.pictureSubject
-        if (!imageUrl.isNullOrBlank() && subject != null) imageProvider.pinImage(query = subject, imageUrl = imageUrl)
+        if (!imageUrl.isNullOrBlank()) imageProvider.pinImage(query = word.pictureSubject, imageUrl = imageUrl)
+        if (before?.text != polish || before.translation != english) {
+            appScope.launch { runCatching { fillWordGrammar(word.id) } }
+        }
 
         return Result.success(word)
     }

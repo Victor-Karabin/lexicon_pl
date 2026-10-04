@@ -35,6 +35,7 @@ import com.lexicon.interactors.presets.CreatePresetUseCase
 import com.lexicon.interactors.presets.CreateWordUseCase
 import com.lexicon.interactors.presets.DeletePresetUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
+import com.lexicon.interactors.presets.FillWordGrammarUseCase
 import com.lexicon.interactors.presets.GetPinnedImageUseCase
 import com.lexicon.interactors.presets.GetPresetCategoriesUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
@@ -133,6 +134,8 @@ object IosDependencies : KoinComponent {
     val getPinnedImage: GetPinnedImageUseCase by inject()
 
     val getWordGrammar: GetWordGrammarUseCase by inject()
+
+    val fillWordGrammar: FillWordGrammarUseCase by inject()
 
     val observeCourses: ObserveCoursesUseCase by inject()
     val getLesson: GetLessonUseCase by inject()
