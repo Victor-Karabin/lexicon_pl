@@ -20,7 +20,8 @@ struct WordCardView: View {
                         translation: step.translation,
                         transcription: step.transcription,
                         imageUrl: step.imageUrl,
-                        example: step.example
+                        example: step.example,
+                        wordId: VocabularyId(value: step.vocabularyItemId)
                     )
                 } actions: {
                     HStack {

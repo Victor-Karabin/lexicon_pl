@@ -40,6 +40,7 @@ import com.lexicon.interactors.presets.GetPresetCategoriesUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
+import com.lexicon.interactors.presets.GetWordGrammarUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.GetWordUseCase
 import com.lexicon.interactors.presets.GetWordsToReviewUseCase
@@ -130,6 +131,8 @@ object IosDependencies : KoinComponent {
     val suggestTranslations: SuggestTranslationsUseCase by inject()
     val searchImageCandidates: SearchImageCandidatesUseCase by inject()
     val getPinnedImage: GetPinnedImageUseCase by inject()
+
+    val getWordGrammar: GetWordGrammarUseCase by inject()
 
     val observeCourses: ObserveCoursesUseCase by inject()
     val getLesson: GetLessonUseCase by inject()

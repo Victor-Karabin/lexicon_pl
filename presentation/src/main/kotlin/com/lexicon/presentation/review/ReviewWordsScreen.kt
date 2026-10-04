@@ -46,6 +46,7 @@ import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.WordCardFace
+import com.lexicon.presentation.common.rememberWordGrammar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
@@ -141,6 +142,7 @@ private fun ReviewWordsContent(
                                 example = word.example,
                                 onPronounce = onPronounce,
                                 onSpeakExample = onSpeakExample,
+                                grammar = rememberWordGrammar(word.id),
                                 onEdit = onEdit,
                             )
                         }

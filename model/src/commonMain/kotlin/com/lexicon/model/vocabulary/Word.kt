@@ -25,6 +25,8 @@ data class Word(
     val cefr: CefrLevel? = null,
     val example: String = "",
     val picture: String? = null,
+    val partOfSpeech: PartOfSpeech? = null,
+    val forms: WordForms? = null,
 ) {
     init {
         require(text.isNotBlank()) { "a word must have text" }

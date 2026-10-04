@@ -16,7 +16,8 @@ struct CourseCardsView: View {
                         translation: card.translation,
                         transcription: card.transcription,
                         imageUrl: card.imageUrl,
-                        example: card.example
+                        example: card.example,
+                        wordId: card.id
                     )
                 } actions: {
                     HStack {

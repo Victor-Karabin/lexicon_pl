@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
+import com.lexicon.interactors.presets.WordGrammar
 import com.lexicon.model.vocabulary.ExampleSentence
 import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.LexiconShapes
@@ -42,6 +43,7 @@ fun WordCardFace(
     onPronounce: () -> Unit,
     onSpeakExample: () -> Unit,
     modifier: Modifier = Modifier,
+    grammar: WordGrammar? = null,
     onEdit: (() -> Unit)? = null,
 ) {
     val skin = tileSkin(highlighted = true)
@@ -99,6 +101,10 @@ fun WordCardFace(
                     )
                 }
             }
+        }
+
+        grammar?.let {
+            WordGrammarSection(grammar = it, color = skin.onTile, mutedColor = skin.muted())
         }
 
         ExampleSentenceRow(

@@ -203,7 +203,9 @@ struct WordRow: View {
                     status: WordStatus.toLearn,
                     cefr: CefrLevel.a1,
                     example: "Piję **wodę** codziennie.",
-                    picture: nil
+                    picture: nil,
+                    partOfSpeech: nil,
+                    forms: nil
                 ),
                 status: WordStatus.toLearn,
                 onStudySet: {}
@@ -219,7 +221,9 @@ struct WordRow: View {
                     status: WordStatus.undefined,
                     cefr: CefrLevel.a1,
                     example: "",
-                    picture: nil
+                    picture: nil,
+                    partOfSpeech: nil,
+                    forms: nil
                 ),
                 status: WordStatus.undefined,
                 onStudySet: {}

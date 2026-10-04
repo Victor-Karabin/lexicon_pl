@@ -1,3 +1,4 @@
+import Shared
 import SwiftUI
 
 struct WordCardFace: View {
@@ -6,6 +7,7 @@ struct WordCardFace: View {
     let transcription: String
     let imageUrl: String?
     let example: String
+    var wordId: VocabularyId?
     var onEdit: (() -> Void)?
 
     @Environment(\.colorScheme) private var scheme
@@ -41,6 +43,10 @@ struct WordCardFace: View {
                     .accessibilityLabel(Strings.cardsEdit)
                 }
             }
+            if let wordId {
+                WordGrammarRows(wordId: wordId, tint: skin.onTile, mutedTint: skin.onTile.muted)
+            }
+
             ExampleSentenceRow(sentence: example, word: text, tint: skin.onTile.muted)
         }
     }

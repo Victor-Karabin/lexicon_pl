@@ -24,10 +24,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.wordcard.WordCardStep
+import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.WordCardFace
+import com.lexicon.presentation.common.rememberWordGrammar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.LexiconProgressBar
@@ -140,6 +142,7 @@ private fun WordCardContent(
                         example = uiState.current!!.example,
                         onPronounce = onPronounce,
                         onSpeakExample = onSpeakExample,
+                        grammar = rememberWordGrammar(VocabularyId(uiState.current!!.vocabularyItemId)),
                         onEdit = onEdit,
                     )
                 }

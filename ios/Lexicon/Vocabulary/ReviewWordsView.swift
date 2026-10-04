@@ -117,6 +117,7 @@ struct ReviewWordsView: View {
                             transcription: word.transcription,
                             imageUrl: model.currentPicture,
                             example: word.example,
+                            wordId: word.id,
                             onEdit: { editing = word.id.value }
                         )
                     }
