@@ -42,7 +42,7 @@ class FillWordGrammarUseCaseImplTest {
             fillWordGrammar(VocabularyId(-1))
 
             coVerify { vocabulary.setGrammar(-1, PartOfSpeech.NOUN, forms) }
-            coVerify(exactly = 0) { conjugations.saveVerb(any()) }
+            coVerify(exactly = 0) { conjugations.saveUserVerb(any()) }
         }
 
     @Test
@@ -55,7 +55,7 @@ class FillWordGrammarUseCaseImplTest {
             fillWordGrammar(VocabularyId(-1))
 
             coVerify {
-                conjugations.saveVerb(
+                conjugations.saveUserVerb(
                     VerbConjugationBoundary(
                         infinitive = "kotkować",
                         forms = mapOf("ja" to listOf("kotkuję")),

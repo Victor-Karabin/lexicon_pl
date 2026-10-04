@@ -1,5 +1,6 @@
 package com.lexicon.application.presets
 
+import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.PresetCategoryBoundary
 import com.lexicon.boundary.TranslationDirection
@@ -33,13 +34,14 @@ class CreateUseCasesImplTest {
     private val presetRepository: VocabularyPresetRepository = mockk(relaxed = true)
     private val imageProvider: ImageProvider = mockk(relaxed = true)
     private val levelGuesser: WordLevelGuesser = mockk(relaxed = true)
+    private val conjugations: ConjugationRepository = mockk(relaxed = true)
     private val fillWordGrammar: FillWordGrammarUseCase = mockk(relaxed = true)
     private val appScope = TestScope()
 
     private val createWord =
         CreateWordUseCaseImpl(vocabularyRepository, presetRepository, imageProvider, levelGuesser, fillWordGrammar, appScope)
     private val updateWord =
-        UpdateWordUseCaseImpl(vocabularyRepository, presetRepository, imageProvider, fillWordGrammar, appScope)
+        UpdateWordUseCaseImpl(vocabularyRepository, presetRepository, imageProvider, conjugations, fillWordGrammar, appScope)
 
     private val stored = Word(
         id = VocabularyId(-1),
@@ -223,6 +225,7 @@ class CreateUseCasesImplTest {
             appScope.testScheduler.advanceUntilIdle()
 
             coVerify(exactly = 0) { fillWordGrammar(any()) }
+            coVerify(exactly = 0) { vocabularyRepository.setGrammar(any(), any(), any()) }
         }
 
     @Test
@@ -236,7 +239,22 @@ class CreateUseCasesImplTest {
             updateWord(id = VocabularyId(-1), text = "smok", translation = "kite")
             appScope.testScheduler.advanceUntilIdle()
 
+            coVerify { vocabularyRepository.setGrammar(-1, null, null) }
             coVerify { fillWordGrammar(stored.id) }
+            coVerify(exactly = 0) { conjugations.deleteUserVerb(any()) }
+        }
+
+    @Test
+    fun `a renamed word gives up the conjugation written for its old spelling`() =
+        runTest {
+            coEvery { vocabularyRepository.findWordByText(any()) } returns null
+            coEvery { vocabularyRepository.getWord(-1) } returns stored.copy(text = "smokowac")
+            coEvery { vocabularyRepository.updateWord(any(), any(), any(), any(), any(), any()) } returns stored
+            coEvery { presetRepository.getPresetIdsForWord(any()) } returns emptyList()
+
+            updateWord(id = VocabularyId(-1), text = "smok", translation = "dragon")
+
+            coVerify { conjugations.deleteUserVerb("smokowac") }
         }
 
     @Test

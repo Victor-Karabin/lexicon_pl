@@ -34,7 +34,11 @@ interface ConjugationRepository {
         offset: Int,
     ): List<VerbConjugationBoundary>
 
-    suspend fun saveVerb(verb: VerbConjugationBoundary)
+    suspend fun verb(infinitive: String): VerbConjugationBoundary?
+
+    suspend fun saveUserVerb(verb: VerbConjugationBoundary)
+
+    suspend fun deleteUserVerb(infinitive: String)
 
     suspend fun deleteVerb(infinitive: String)
 

@@ -60,7 +60,12 @@ class ConjugationRepositoryImpl(
         offset: Int,
     ): List<VerbConjugationBoundary> = dao.verbPage(query.trim(), limit, offset).map { it.toBoundary() }
 
-    override suspend fun saveVerb(verb: VerbConjugationBoundary) {
+    override suspend fun verb(infinitive: String): VerbConjugationBoundary? = dao.verb(infinitive.trim())?.toBoundary()
+
+    override suspend fun saveUserVerb(verb: VerbConjugationBoundary) {
+        val existing = dao.verb(verb.infinitive)
+        if (existing != null && !existing.isUserCreated) return
+
         dao.saveVerbs(
             listOf(
                 ConjugationVerbEntity(
@@ -68,14 +73,17 @@ class ConjugationRepositoryImpl(
                     translation = verb.translation.orEmpty(),
                     formsJson = json.encodeToString(formsSerializer, verb.forms),
                     example = verb.example,
+                    isUserCreated = true,
                 ),
             ),
         )
     }
 
+    override suspend fun deleteUserVerb(infinitive: String) = dao.deleteUserVerb(infinitive)
+
     override suspend fun deleteVerb(infinitive: String) = dao.deleteVerb(infinitive)
 
-    override suspend fun hasDeletedVerbs(): Boolean = dao.countVerbs() < assetVerbCount()
+    override suspend fun hasDeletedVerbs(): Boolean = dao.countBundledVerbs() < assetVerbCount()
 
     override suspend fun restoreVerbs() = lock.withLock { seed() }
 

@@ -91,7 +91,12 @@ class OpenAiGrammarGenerator(
             return null
         }
 
-        val partOfSpeech = PartOfSpeech.ofTag(parsed.string("part_of_speech")) ?: return null
+        val answered = parsed.string("part_of_speech").trim()
+        val partOfSpeech = PartOfSpeech.entries.firstOrNull { it.tag == answered || it.name.equals(answered, ignoreCase = true) }
+        if (partOfSpeech == null) {
+            Log.w(TAG, "The grammar written for a new word named an unknown part of speech: '$answered'")
+            return null
+        }
         return GeneratedGrammarBoundary(
             partOfSpeech = partOfSpeech,
             forms = parsed.formsOf(partOfSpeech),

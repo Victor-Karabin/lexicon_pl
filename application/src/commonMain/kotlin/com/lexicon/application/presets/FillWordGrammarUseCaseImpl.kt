@@ -20,7 +20,7 @@ class FillWordGrammarUseCaseImpl(
         vocabularyRepository.setGrammar(id = id.value, partOfSpeech = generated.partOfSpeech, forms = generated.forms)
 
         if (generated.partOfSpeech == PartOfSpeech.VERB && generated.conjugation.isNotEmpty()) {
-            conjugations.saveVerb(
+            conjugations.saveUserVerb(
                 VerbConjugationBoundary(
                     infinitive = word.text,
                     forms = generated.conjugation,

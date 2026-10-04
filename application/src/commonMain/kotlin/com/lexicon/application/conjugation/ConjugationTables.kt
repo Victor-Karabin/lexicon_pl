@@ -14,8 +14,6 @@ import kotlinx.collections.immutable.toImmutableList
 
 internal const val OPTION_TARGET = 4
 
-private const val LOOKUP_LIMIT = 5
-
 internal fun VerbConjugationBoundary.toVerb(): VerbConjugation =
     VerbConjugation(
         infinitive = infinitive,
@@ -28,10 +26,7 @@ internal fun VerbConjugationBoundary.toVerb(): VerbConjugation =
     )
 
 internal suspend fun ConjugationRepository.conjugationOf(infinitive: String): VerbConjugation? =
-    verbPage(query = infinitive, limit = LOOKUP_LIMIT, offset = 0)
-        .firstOrNull { it.infinitive.equals(infinitive, ignoreCase = true) }
-        ?.toVerb()
-        ?.takeIf { it.isTeachable }
+    verb(infinitive)?.toVerb()?.takeIf { it.isTeachable }
 
 internal suspend fun ConjugationRepository.courseVerbs(courseId: String): List<VerbConjugation> {
     val chosen = courses().firstOrNull { it.id == courseId }?.infinitives.orEmpty().toSet()

@@ -1,5 +1,6 @@
 package com.lexicon.application.presets
 
+import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.TranslationDirection
 import com.lexicon.boundary.Translator
@@ -77,6 +78,7 @@ class UpdateWordUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,
     private val presetRepository: VocabularyPresetRepository,
     private val imageProvider: ImageProvider,
+    private val conjugations: ConjugationRepository,
     private val fillWordGrammar: FillWordGrammarUseCase,
     private val appScope: CoroutineScope,
 ) : UpdateWordUseCase {
@@ -121,6 +123,8 @@ class UpdateWordUseCaseImpl(
 
         if (!imageUrl.isNullOrBlank()) imageProvider.pinImage(query = word.pictureSubject, imageUrl = imageUrl)
         if (before?.text != polish || before.translation != english) {
+            vocabularyRepository.setGrammar(id = id.value, partOfSpeech = null, forms = null)
+            before?.text?.takeIf { it != polish }?.let { conjugations.deleteUserVerb(it) }
             appScope.launch { runCatching { fillWordGrammar(word.id) } }
         }
 

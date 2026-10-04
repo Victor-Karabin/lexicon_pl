@@ -1,5 +1,6 @@
 package com.lexicon.presentation.common
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.presets.GetWordGrammarUseCase
 import com.lexicon.interactors.presets.WordGrammar
 import com.lexicon.model.vocabulary.CaseForms
@@ -27,7 +29,11 @@ import com.lexicon.model.vocabulary.PartOfSpeech
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.Dimens
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
+
+private const val TAG = "WordGrammar"
 
 private val LabelWidth = 96.dp
 
@@ -35,10 +41,22 @@ private val LabelWidth = 96.dp
 fun rememberWordGrammar(
     id: VocabularyId?,
     getWordGrammar: GetWordGrammarUseCase = koinInject(),
+    dispatchers: DispatcherProvider = koinInject(),
 ): WordGrammar? {
     var grammar by remember(id) { mutableStateOf<WordGrammar?>(null) }
 
-    LaunchedEffect(id) { grammar = id?.let { getWordGrammar(it) } }
+    LaunchedEffect(id) {
+        if (id == null) return@LaunchedEffect
+        grammar =
+            try {
+                withContext(dispatchers.io) { getWordGrammar(id) }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Log.w(TAG, "The grammar of a word could not be read", e)
+                null
+            }
+    }
 
     return grammar
 }

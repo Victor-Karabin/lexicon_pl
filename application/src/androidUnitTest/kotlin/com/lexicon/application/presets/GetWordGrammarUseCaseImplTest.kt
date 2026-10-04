@@ -59,11 +59,8 @@ class GetWordGrammarUseCaseImplTest {
     fun `a verb is given the conjugation the verb trainings already use`() =
         runTest {
             coEvery { vocabulary.getWord(1) } returns stored("mieć", PartOfSpeech.VERB)
-            coEvery { conjugations.verbPage("mieć", any(), 0) } returns
-                listOf(
-                    VerbConjugationBoundary(infinitive = "mieć bardzo", forms = mapOf("ja" to listOf("x"))),
-                    VerbConjugationBoundary(infinitive = "mieć", forms = mapOf("ja" to listOf("mam"))),
-                )
+            coEvery { conjugations.verb("mieć") } returns
+                VerbConjugationBoundary(infinitive = "mieć", forms = mapOf("ja" to listOf("mam")))
 
             val grammar = getWordGrammar(VocabularyId(1)) as WordGrammar.Verb
 
@@ -75,7 +72,7 @@ class GetWordGrammarUseCaseImplTest {
     fun `a verb with no conjugation on file still says it is a verb`() =
         runTest {
             coEvery { vocabulary.getWord(1) } returns stored("abakować", PartOfSpeech.VERB)
-            coEvery { conjugations.verbPage(any(), any(), any()) } returns emptyList()
+            coEvery { conjugations.verb(any()) } returns null
 
             assertEquals(WordGrammar.Verb(null), getWordGrammar(VocabularyId(1)))
         }

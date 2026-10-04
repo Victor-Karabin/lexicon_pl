@@ -33,6 +33,7 @@ import com.lexicon.application.passage.SubmitPassageAnswersUseCaseImpl
 import com.lexicon.application.presets.CountWordsToReviewUseCaseImpl
 import com.lexicon.application.presets.CreatePresetUseCaseImpl
 import com.lexicon.application.presets.CreateWordUseCaseImpl
+import com.lexicon.application.presets.DeleteWordUseCaseImpl
 import com.lexicon.application.presets.FillWordGrammarUseCaseImpl
 import com.lexicon.application.presets.GenerateWordExampleUseCaseImpl
 import com.lexicon.application.presets.GetPinnedImageUseCaseImpl
@@ -45,6 +46,7 @@ import com.lexicon.application.presets.GetWordPresetMembershipsUseCaseImpl
 import com.lexicon.application.presets.GetWordsToReviewUseCaseImpl
 import com.lexicon.application.presets.ObserveVocabularyPresetsUseCaseImpl
 import com.lexicon.application.presets.ObserveWordStatusesUseCaseImpl
+import com.lexicon.application.presets.RestoreWordUseCaseImpl
 import com.lexicon.application.presets.SearchImageCandidatesUseCaseImpl
 import com.lexicon.application.presets.SearchVocabularyUseCaseImpl
 import com.lexicon.application.presets.SetWordPresetMembershipUseCaseImpl
@@ -290,14 +292,8 @@ val domainModule = module {
     factoryOf(::CheckTrainingReadinessUseCaseImpl) { bind<CheckTrainingReadinessUseCase>() }
     factoryOf(::SearchVocabularyUseCaseImpl) { bind<SearchVocabularyUseCase>() }
     factoryOf(::SeedCatalogsUseCaseImpl) { bind<SeedCatalogsUseCase>() }
-    factory<DeleteWordUseCase> {
-        val vocabulary = get<VocabularyRepository>()
-        DeleteWordUseCase { vocabulary.deleteWord(it.value) }
-    }
-    factory<RestoreWordUseCase> {
-        val vocabulary = get<VocabularyRepository>()
-        RestoreWordUseCase { vocabulary.restoreWord(it.value) }
-    }
+    factoryOf(::DeleteWordUseCaseImpl) { bind<DeleteWordUseCase>() }
+    factoryOf(::RestoreWordUseCaseImpl) { bind<RestoreWordUseCase>() }
     factory<DeletePresetUseCase> {
         val presets = get<VocabularyPresetRepository>()
         DeletePresetUseCase { presets.deletePreset(it.value) }
