@@ -15,6 +15,7 @@ import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.SessionTally
+import com.lexicon.presentation.common.speakQuietly
 import com.lexicon.presentation.common.trainingVocabularyIds
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -72,7 +73,7 @@ class DictationViewModel(
 
     private suspend fun speakCurrentStep() {
         val step = currentStepOrNull() ?: return
-        speechSynthesizer.speak(step.expectedText)
+        speechSynthesizer.speakQuietly(step.expectedText)
     }
 
     fun onAnswerChanged(text: String) {

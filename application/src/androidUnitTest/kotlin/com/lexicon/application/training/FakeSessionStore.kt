@@ -16,4 +16,9 @@ class FakeSessionStore : SessionStore {
     override suspend fun remove(id: SessionId) {
         sessions.remove(id)
     }
+
+    override suspend fun update(
+        id: SessionId,
+        transform: (Session) -> Session,
+    ): Session? = sessions[id]?.let(transform)?.also { sessions[id] = it }
 }

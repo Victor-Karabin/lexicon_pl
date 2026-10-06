@@ -154,3 +154,15 @@ struct TrainingUnavailableView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
+
+struct TrainingLoadingView: View {
+    let isLoaded: Bool
+
+    var body: some View {
+        if isLoaded {
+            TrainingUnavailableView()
+        } else {
+            ProgressView()
+        }
+    }
+}

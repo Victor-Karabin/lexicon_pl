@@ -111,8 +111,9 @@ class MemoryCardsViewModel(
 
         if (first.vocabularyItemId == second.vocabularyItemId) {
             val matched = state.matchedItemIds + first.vocabularyItemId
-            updateLoaded { it.copy(matchedItemIds = matched, flippedCardIds = emptyList()) }
-            if (matched.size == state.cards.size / 2) {
+            val isLastPair = matched.size == state.cards.size / 2
+            updateLoaded { it.copy(matchedItemIds = matched, flippedCardIds = emptyList(), isSubmitting = isLastPair) }
+            if (isLastPair) {
                 viewModelScope.launch(dispatchers.io) { completeStep() }
             }
         } else {
@@ -157,6 +158,7 @@ class MemoryCardsViewModel(
         val state = _uiState.value as? MemoryCardsUiState.Loaded ?: return
         if (!state.canSkip) return
         val step = currentStepOrNull() ?: return
+        updateLoaded { it.copy(isSubmitting = true) }
         viewModelScope.launch(dispatchers.io) {
             submitStepResultUseCase(
                 SubmitMemoryCardsStepResultRequest(

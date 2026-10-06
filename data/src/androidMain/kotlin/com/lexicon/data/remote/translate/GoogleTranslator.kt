@@ -2,6 +2,7 @@ package com.lexicon.data.remote.translate
 
 import com.lexicon.boundary.TranslationDirection
 import com.lexicon.boundary.Translator
+import com.lexicon.common.runSuspendCatching
 
 class GoogleTranslator(
     private val api: GoogleTranslateApi,
@@ -12,7 +13,7 @@ class GoogleTranslator(
     ): String? {
         val (source, target) = direction.languages()
 
-        return runCatching {
+        return runSuspendCatching {
             api
                 .translate(text = text, source = source, target = target)
                 .data

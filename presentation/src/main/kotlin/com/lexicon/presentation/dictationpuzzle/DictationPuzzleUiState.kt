@@ -18,17 +18,18 @@ sealed interface DictationPuzzleUiState {
         val tipTranslation: String? = null,
         val tipUsed: Boolean = false,
         val isSessionComplete: Boolean = false,
+        val isSubmitting: Boolean = false,
     ) : DictationPuzzleUiState {
         val availableTiles: List<LetterTile> get() = stepTiles.filterNot { tile -> placedTiles.any { it.id == tile.id } }
         val builtAnswer: String get() = placedTiles.joinToString(separator = "") { it.char.toString() }
 
         val revealedAnswer: String? get() = answerState.revealedAnswer
-        val isEditable: Boolean get() = answerState is AnswerState.Unanswered
+        val isEditable: Boolean get() = answerState is AnswerState.Unanswered && !isSubmitting
         val canCheck: Boolean get() = isEditable && stepTiles.isNotEmpty() && availableTiles.isEmpty()
         val canUseTip: Boolean get() = isEditable && !tipUsed
         val canSkip: Boolean get() = isEditable
         val canUndo: Boolean get() = isEditable && placedTiles.isNotEmpty()
 
-        val awaitingNext: Boolean get() = answerState is AnswerState.Incorrect
+        val awaitingNext: Boolean get() = answerState is AnswerState.Incorrect && !isSubmitting
     }
 }

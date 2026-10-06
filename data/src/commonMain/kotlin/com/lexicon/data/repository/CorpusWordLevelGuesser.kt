@@ -1,6 +1,7 @@
 package com.lexicon.data.repository
 
 import com.lexicon.boundary.WordLevelGuesser
+import com.lexicon.common.runSuspendCatching
 import com.lexicon.data.local.VocabularySeeder
 import com.lexicon.data.local.WordDao
 import com.lexicon.model.vocabulary.CefrLevel
@@ -35,6 +36,6 @@ class MergingWordLevelGuesser(
         translation: String,
     ): CefrLevel? =
         guessers.firstNotNullOfOrNull { guesser ->
-            runCatching { guesser.guess(text, translation) }.getOrNull()
+            runSuspendCatching { guesser.guess(text, translation) }.getOrNull()
         }
 }

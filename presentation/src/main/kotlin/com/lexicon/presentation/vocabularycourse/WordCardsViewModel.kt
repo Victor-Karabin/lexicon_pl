@@ -9,6 +9,7 @@ import com.lexicon.interactors.vocabularycourse.MarkCourseCardsSeenUseCase
 import com.lexicon.interactors.vocabularycourse.NextCourseTrainingUseCase
 import com.lexicon.interactors.vocabularycourse.WordCard
 import com.lexicon.model.vocabulary.ExampleSentence
+import com.lexicon.presentation.common.speakQuietly
 import com.lexicon.presentation.dashboard.LaunchTraining
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -74,11 +75,11 @@ class WordCardsViewModel(
     fun onSpeakExample() {
         val sentence = ExampleSentence.parse(_uiState.value.current?.example.orEmpty())
         if (sentence.isBlank) return
-        viewModelScope.launch { runCatching { speechSynthesizer.speak(sentence.text) } }
+        viewModelScope.launch { speechSynthesizer.speakQuietly(sentence.text) }
     }
 
     fun onPronounce() {
         val word = _uiState.value.current ?: return
-        viewModelScope.launch { runCatching { speechSynthesizer.speak(word.text) } }
+        viewModelScope.launch { speechSynthesizer.speakQuietly(word.text) }
     }
 }

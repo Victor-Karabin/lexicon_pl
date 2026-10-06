@@ -1,6 +1,7 @@
 package com.lexicon.data.remote.image
 
 import android.util.Log
+import com.lexicon.common.runSuspendCatching
 
 private const val TAG = "OpenverseImageSource"
 
@@ -13,7 +14,7 @@ class OpenverseImageSource(
         query: String,
         count: Int,
     ): List<String> =
-        runCatching {
+        runSuspendCatching {
             api.search(query, pageSize = count.coerceAtMost(OPENVERSE_ANONYMOUS_MAX_PAGE_SIZE)).results.map { it.url }
         }.onFailure { Log.w(TAG, "Openverse could not be searched", it) }
             .getOrThrow()

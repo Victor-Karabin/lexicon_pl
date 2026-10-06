@@ -16,21 +16,23 @@ class SubmitWordMatchStepResultUseCaseImpl(
 ) : SubmitWordMatchStepResultUseCase {
     override suspend fun invoke(request: SubmitWordMatchStepResultRequest): SubmitWordMatchStepResultResponse {
         val outcome = resolveOutcome(request)
-        sessions.recordOutcome(request.sessionId, request.stepIndex, outcome)
+        val isFirstAnswer = sessions.recordOutcome(request.sessionId, request.stepIndex, outcome)
 
-        request.vocabularyItemIds.forEach { vocabularyItemId ->
-            recordAnswer(
-                RecordedAnswer(
-                    sessionId = request.sessionId,
-                    trainingType = TrainingType.WORD_MATCH,
-                    stepIndex = request.stepIndex,
-                    vocabularyItemId = vocabularyItemId,
-                    expectedAnswer = "matched",
-                    submittedAnswer = request.incorrectAttempts.toString(),
-                    outcome = outcome,
-                    tipUsed = false,
-                ),
-            )
+        if (isFirstAnswer) {
+            request.vocabularyItemIds.forEach { vocabularyItemId ->
+                recordAnswer(
+                    RecordedAnswer(
+                        sessionId = request.sessionId,
+                        trainingType = TrainingType.WORD_MATCH,
+                        stepIndex = request.stepIndex,
+                        vocabularyItemId = vocabularyItemId,
+                        expectedAnswer = "matched",
+                        submittedAnswer = request.incorrectAttempts.toString(),
+                        outcome = outcome,
+                        tipUsed = false,
+                    ),
+                )
+            }
         }
 
         return SubmitWordMatchStepResultResponse(outcome = outcome)

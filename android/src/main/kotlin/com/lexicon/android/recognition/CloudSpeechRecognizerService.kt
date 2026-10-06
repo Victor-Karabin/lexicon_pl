@@ -9,6 +9,7 @@ import com.lexicon.boundary.SpeechRecognitionFailed
 import com.lexicon.boundary.SpeechRecognitionResult
 import com.lexicon.boundary.SpeechRecognizerService
 import com.lexicon.common.DispatcherProvider
+import com.lexicon.common.runSuspendCatching
 import kotlinx.coroutines.withContext
 import java.io.File
 
@@ -27,7 +28,7 @@ class CloudSpeechRecognizerService(
         }
 
         val transcript = withContext(dispatchers.io) {
-            runCatching { api.recognize(File(path).readBytes(), POLISH_LANGUAGE_TAG, RECORDING_SAMPLE_RATE_HZ) }
+            runSuspendCatching { api.recognize(File(path).readBytes(), POLISH_LANGUAGE_TAG, RECORDING_SAMPLE_RATE_HZ) }
                 .onFailure { failure -> Log.e(TAG, "Cloud recognition threw", failure) }
                 .getOrNull()
         }

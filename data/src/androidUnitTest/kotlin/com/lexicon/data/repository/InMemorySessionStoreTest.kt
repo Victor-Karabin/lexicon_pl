@@ -67,4 +67,29 @@ class InMemorySessionStoreTest {
 
             assertNotNull(store.find(SessionId("keep")))
         }
+
+    @Test
+    fun `each update builds on the session the previous one left`() =
+        runTest {
+            val id = SessionId("a")
+            store.save(
+                Session(
+                    id = id,
+                    training = TrainingType.DICTATION,
+                    steps = List(2) { Step.Question(it, VocabularyId(it.toLong()), "woda") }.toImmutableList(),
+                ),
+            )
+
+            store.update(id) { it.answer(0, com.lexicon.model.training.StepOutcome.CORRECT) }
+            store.update(id) { it.answer(1, com.lexicon.model.training.StepOutcome.CORRECT) }
+
+            assertEquals(2, store.find(id)?.correctCount)
+        }
+
+    @Test
+    fun `updating a missing session leaves the store empty`() =
+        runTest {
+            assertNull(store.update(SessionId("gone")) { it })
+            assertNull(store.find(SessionId("gone")))
+        }
 }

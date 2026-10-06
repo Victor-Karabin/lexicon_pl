@@ -21,20 +21,22 @@ class SubmitPronunciationResultUseCaseImpl(
         val step = sessions.stepAt(request.sessionId, request.stepIndex)
         val expectedText = step?.expectedAnswer ?: request.expectedText
         val outcome = resolveOutcome(request, expectedText)
-        sessions.recordOutcome(request.sessionId, request.stepIndex, outcome, request.tipUsed)
+        val isFirstAnswer = sessions.recordOutcome(request.sessionId, request.stepIndex, outcome, request.tipUsed)
 
-        recordAnswer(
-            RecordedAnswer(
-                sessionId = request.sessionId,
-                trainingType = TrainingType.PRONUNCIATION_CHECK,
-                stepIndex = request.stepIndex,
-                vocabularyItemId = step?.wordId?.value ?: request.vocabularyItemId,
-                expectedAnswer = expectedText,
-                submittedAnswer = request.recognizedText,
-                outcome = outcome,
-                tipUsed = request.tipUsed,
-            ),
-        )
+        if (isFirstAnswer) {
+            recordAnswer(
+                RecordedAnswer(
+                    sessionId = request.sessionId,
+                    trainingType = TrainingType.PRONUNCIATION_CHECK,
+                    stepIndex = request.stepIndex,
+                    vocabularyItemId = step?.wordId?.value ?: request.vocabularyItemId,
+                    expectedAnswer = expectedText,
+                    submittedAnswer = request.recognizedText,
+                    outcome = outcome,
+                    tipUsed = request.tipUsed,
+                ),
+            )
+        }
 
         return SubmitPronunciationResultResponse(outcome = outcome, expectedText = expectedText)
     }

@@ -62,10 +62,15 @@ suspend fun SessionStore.recordOutcome(
     stepIndex: Int,
     outcome: StepOutcome,
     tipUsed: Boolean = false,
-) {
-    val id = SessionId(sessionId)
-    val session = find(id) ?: return
-    val step = session.steps.getOrNull(stepIndex) ?: return
-    if (step.isAnswered) return
-    save(session.answer(stepIndex, outcome, tipUsed))
+): Boolean {
+    var alreadyAnswered = false
+    update(SessionId(sessionId)) { session ->
+        val step = session.steps.getOrNull(stepIndex)
+        when {
+            step == null -> session
+            step.isAnswered -> session.also { alreadyAnswered = true }
+            else -> session.answer(stepIndex, outcome, tipUsed)
+        }
+    }
+    return !alreadyAnswered
 }

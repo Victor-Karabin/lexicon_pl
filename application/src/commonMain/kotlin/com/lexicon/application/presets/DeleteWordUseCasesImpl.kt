@@ -2,6 +2,7 @@ package com.lexicon.application.presets
 
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.FillWordGrammarUseCase
 import com.lexicon.interactors.presets.RestoreWordUseCase
@@ -31,7 +32,7 @@ class RestoreWordUseCaseImpl(
         vocabularyRepository.restoreWord(id.value)
         val word = vocabularyRepository.getWord(id.value) ?: return
         if (word.partOfSpeech == PartOfSpeech.VERB && conjugations.verb(word.text) == null) {
-            appScope.launch { runCatching { fillWordGrammar(id) } }
+            appScope.launch { runSuspendCatching { fillWordGrammar(id) } }
         }
     }
 }

@@ -17,6 +17,7 @@ import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.SessionTally
 import com.lexicon.presentation.common.shuffleIntoTiles
+import com.lexicon.presentation.common.speakQuietly
 import com.lexicon.presentation.common.trainingVocabularyIds
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -83,7 +84,7 @@ class DictationPuzzleViewModel(
 
     private suspend fun speakCurrentStep() {
         val step = currentStepOrNull() ?: return
-        speechSynthesizer.speak(step.expectedText)
+        speechSynthesizer.speakQuietly(step.expectedText)
     }
 
     fun onTileSelected(tile: LetterTile) {
@@ -125,6 +126,7 @@ class DictationPuzzleViewModel(
     ) {
         val step = currentStepOrNull() ?: return
         val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
+        updateLoaded { it.copy(isSubmitting = true) }
         viewModelScope.launch(dispatchers.io) {
             val response =
                 submitAnswerUseCase(
@@ -157,7 +159,7 @@ class DictationPuzzleViewModel(
             }
             StepOutcome.INCORRECT -> {
                 tally.record(AnswerState.Incorrect(expectedText), step?.expectedText, step?.translationText.orEmpty(), tipUsed)
-                updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText)) }
+                updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText), isSubmitting = false) }
             }
             StepOutcome.SKIPPED -> {
                 tally.record(AnswerState.Skipped(expectedText), step?.expectedText, step?.translationText.orEmpty(), tipUsed)
@@ -173,6 +175,7 @@ class DictationPuzzleViewModel(
     fun onNext() {
         val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
         if (!state.awaitingNext) return
+        updateLoaded { it.copy(isSubmitting = true) }
         viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
     }
 

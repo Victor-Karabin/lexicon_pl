@@ -17,6 +17,7 @@ import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.WordResultEntry
+import com.lexicon.presentation.common.speakQuietly
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf
@@ -166,7 +167,7 @@ class ConjugationViewModel(
 
     fun onSpeak(form: String) {
         if (form.isBlank()) return
-        viewModelScope.launch(dispatchers.io) { runCatching { speechSynthesizer.speak(form) } }
+        viewModelScope.launch(dispatchers.io) { speechSynthesizer.speakQuietly(form) }
     }
 
     fun onEditVerb() {

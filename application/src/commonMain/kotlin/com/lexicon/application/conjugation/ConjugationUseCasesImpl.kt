@@ -3,6 +3,7 @@ package com.lexicon.application.conjugation
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.conjugation.ChooseVerbImageUseCase
 import com.lexicon.interactors.conjugation.ConjugationCourse
 import com.lexicon.interactors.conjugation.ConjugationCourseProgress
@@ -143,9 +144,9 @@ class NextConjugationTableUseCaseImpl(
     }
 
     private suspend fun ConjugationTable.withLearningAids(): ConjugationTable {
-        val word = runCatching { vocabulary.findWordByText(infinitive) }.getOrNull()
+        val word = runSuspendCatching { vocabulary.findWordByText(infinitive) }.getOrNull()
         val subject = translation?.takeIf { it.isNotBlank() } ?: word?.translation ?: infinitive
-        val image = runCatching { imageProvider.searchImage(subject) }.getOrNull()
+        val image = runSuspendCatching { imageProvider.searchImage(subject) }.getOrNull()
 
         return copy(
             imageUrl = image,
@@ -168,7 +169,7 @@ class EnsureVerbWordUseCaseImpl(
         val english = translation?.trim().orEmpty()
         if (english.isEmpty()) return null
 
-        val image = runCatching { imageProvider.searchImage(english) }.getOrNull()
+        val image = runSuspendCatching { imageProvider.searchImage(english) }.getOrNull()
         createWord(text = infinitive, translation = english, imageUrl = image, presetIds = emptyList())
 
         return vocabulary.findWordByText(infinitive)?.id?.value
@@ -185,10 +186,10 @@ class LoadVerbImageChoicesUseCaseImpl(
         skip: Int,
     ): ImmutableList<String> {
         val subject = translation?.takeIf { it.isNotBlank() }
-            ?: runCatching { vocabulary.findWordByText(infinitive) }.getOrNull()?.translation
+            ?: runSuspendCatching { vocabulary.findWordByText(infinitive) }.getOrNull()?.translation
             ?: infinitive
 
-        return runCatching { imageProvider.searchImages(subject, CHOICE_COUNT, skip) }
+        return runSuspendCatching { imageProvider.searchImages(subject, CHOICE_COUNT, skip) }
             .getOrDefault(emptyList())
             .toImmutableList()
     }

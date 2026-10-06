@@ -6,6 +6,7 @@ import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.SeedOutcomeBoundary
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.sync.CatalogSeedStatus
 import com.lexicon.interactors.sync.SeedCatalogsUseCase
 import com.lexicon.interactors.sync.SeedStepStatus
@@ -96,7 +97,7 @@ class SeedCatalogsUseCaseImpl(
 
     private suspend fun settled(count: suspend () -> Int): SeedStepStatus =
         SeedStepStatus.Complete(
-            total = runCatching { count() }.getOrDefault(0),
+            total = runSuspendCatching { count() }.getOrDefault(0),
             added = 0,
             updated = 0,
             removed = 0,
@@ -106,18 +107,20 @@ class SeedCatalogsUseCaseImpl(
         sync: suspend () -> SeedOutcomeBoundary,
         storeHasData: suspend () -> Boolean,
     ): SeedStepStatus =
-        try {
-            val outcome = sync()
-            SeedStepStatus.Complete(
-                total = outcome.total,
-                added = outcome.added,
-                updated = outcome.updated,
-                removed = outcome.removed,
-            )
-        } catch (error: Exception) {
-            SeedStepStatus.Failed(
-                reason = error.message ?: error::class.simpleName.orEmpty(),
-                canContinue = runCatching { storeHasData() }.getOrDefault(false),
-            )
-        }
+        runSuspendCatching { sync() }.fold(
+            onSuccess = { outcome ->
+                SeedStepStatus.Complete(
+                    total = outcome.total,
+                    added = outcome.added,
+                    updated = outcome.updated,
+                    removed = outcome.removed,
+                )
+            },
+            onFailure = { error ->
+                SeedStepStatus.Failed(
+                    reason = error.message ?: error::class.simpleName.orEmpty(),
+                    canContinue = runSuspendCatching { storeHasData() }.getOrDefault(false),
+                )
+            },
+        )
 }

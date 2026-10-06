@@ -16,21 +16,23 @@ class SubmitMemoryCardsStepResultUseCaseImpl(
 ) : SubmitMemoryCardsStepResultUseCase {
     override suspend fun invoke(request: SubmitMemoryCardsStepResultRequest): SubmitMemoryCardsStepResultResponse {
         val outcome = resolveOutcome(request)
-        sessions.recordOutcome(request.sessionId, request.stepIndex, outcome)
+        val isFirstAnswer = sessions.recordOutcome(request.sessionId, request.stepIndex, outcome)
 
-        request.vocabularyItemIds.forEach { vocabularyItemId ->
-            recordAnswer(
-                RecordedAnswer(
-                    sessionId = request.sessionId,
-                    trainingType = TrainingType.MEMORY_CARDS,
-                    stepIndex = request.stepIndex,
-                    vocabularyItemId = vocabularyItemId,
-                    expectedAnswer = "matched",
-                    submittedAnswer = request.incorrectAttempts.toString(),
-                    outcome = outcome,
-                    tipUsed = false,
-                ),
-            )
+        if (isFirstAnswer) {
+            request.vocabularyItemIds.forEach { vocabularyItemId ->
+                recordAnswer(
+                    RecordedAnswer(
+                        sessionId = request.sessionId,
+                        trainingType = TrainingType.MEMORY_CARDS,
+                        stepIndex = request.stepIndex,
+                        vocabularyItemId = vocabularyItemId,
+                        expectedAnswer = "matched",
+                        submittedAnswer = request.incorrectAttempts.toString(),
+                        outcome = outcome,
+                        tipUsed = false,
+                    ),
+                )
+            }
         }
 
         return SubmitMemoryCardsStepResultResponse(outcome = outcome)

@@ -12,18 +12,27 @@ class InMemorySessionStore : SessionStore {
     private val lock = Mutex()
     private val sessions = LinkedHashMap<SessionId, Session>()
 
-    override suspend fun save(session: Session) =
-        lock.withLock {
-            sessions.remove(session.id)
-            sessions[session.id] = session
-            while (sessions.size > REMEMBERED_SESSIONS) {
-                sessions.remove(sessions.keys.first())
-            }
-        }
+    override suspend fun save(session: Session) = lock.withLock { remember(session) }
 
     override suspend fun find(id: SessionId): Session? = lock.withLock { sessions[id] }
 
     override suspend fun remove(id: SessionId) {
         lock.withLock { sessions.remove(id) }
+    }
+
+    override suspend fun update(
+        id: SessionId,
+        transform: (Session) -> Session,
+    ): Session? =
+        lock.withLock {
+            sessions[id]?.let(transform)?.also(::remember)
+        }
+
+    private fun remember(session: Session) {
+        sessions.remove(session.id)
+        sessions[session.id] = session
+        while (sessions.size > REMEMBERED_SESSIONS) {
+            sessions.remove(sessions.keys.first())
+        }
     }
 }

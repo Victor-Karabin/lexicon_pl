@@ -1,8 +1,8 @@
 package com.lexicon.data.repository
 
 import com.lexicon.boundary.ImageProvider
+import com.lexicon.common.runSuspendCatching
 import com.lexicon.data.remote.image.RemoteImageSource
-import kotlinx.coroutines.CancellationException
 
 sealed interface ImageLookup {
     data class Found(val url: String) : ImageLookup
@@ -20,14 +20,9 @@ class FallbackImageProviderImpl(
     suspend fun lookUp(query: String): ImageLookup {
         var anyUnavailable = false
         for (source in sources) {
-            val url = try {
-                source.searchImageUrl(query)
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                anyUnavailable = true
-                null
-            }
+            val url = runSuspendCatching { source.searchImageUrl(query) }
+                .onFailure { anyUnavailable = true }
+                .getOrNull()
             if (!url.isNullOrBlank()) return ImageLookup.Found(url)
         }
         return if (anyUnavailable) ImageLookup.Unavailable else ImageLookup.NoneFound
@@ -45,7 +40,7 @@ class FallbackImageProviderImpl(
     ): List<String> {
         val wanted = skip + count
         val perSource = sources.map { source ->
-            runCatching { source.searchImageUrls(query, wanted) }
+            runSuspendCatching { source.searchImageUrls(query, wanted) }
                 .getOrDefault(emptyList())
                 .filter { it.isNotBlank() }
         }

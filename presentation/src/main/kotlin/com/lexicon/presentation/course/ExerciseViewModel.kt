@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.lexicon.boundary.LessonAudioLibrary
 import com.lexicon.boundary.LessonAudioPlayer
 import com.lexicon.common.DispatcherProvider
+import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.LessonExercise
@@ -122,7 +123,7 @@ class ExerciseViewModel(
                 content.update { it?.copy(isAudioMissing = true) }
                 return@launch
             }
-            runCatching { audioPlayer.play(file, path) }
+            runSuspendCatching { audioPlayer.play(file, path) }
         }
     }
 

@@ -12,6 +12,7 @@ struct ImageTestView: View {
     @State private var state: AnswerState = .unanswered
     @State private var tally = SessionTally()
     @State private var finished = false
+    @State private var loaded = false
 
     var body: some View {
         Group {
@@ -60,7 +61,7 @@ struct ImageTestView: View {
                     }
                 }
             } else {
-                ProgressView()
+                TrainingLoadingView(isLoaded: loaded)
             }
         }
         .task { await start() }
@@ -74,6 +75,7 @@ struct ImageTestView: View {
     }
 
     private func start() async {
+        defer { loaded = true }
         let response = try? await deps.startImageTest.invoke(
             request: StartImageTestSessionRequest(
                 stepCount: nil,

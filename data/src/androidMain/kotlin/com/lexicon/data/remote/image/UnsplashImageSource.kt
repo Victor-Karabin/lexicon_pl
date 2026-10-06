@@ -1,6 +1,7 @@
 package com.lexicon.data.remote.image
 
 import android.util.Log
+import com.lexicon.common.runSuspendCatching
 
 private const val TAG = "UnsplashImageSource"
 
@@ -13,7 +14,7 @@ class UnsplashImageSource(
         query: String,
         count: Int,
     ): List<String> =
-        runCatching {
+        runSuspendCatching {
             api.search(query, perPage = count.coerceAtMost(UNSPLASH_MAX_PER_PAGE)).results.map { it.urls.small }
         }.onFailure { Log.w(TAG, "Unsplash could not be searched", it) }
             .getOrThrow()

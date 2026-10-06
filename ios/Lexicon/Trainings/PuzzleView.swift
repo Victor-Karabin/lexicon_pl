@@ -17,6 +17,7 @@ struct PuzzleView: View {
     @State private var state: AnswerState = .unanswered
     @State private var tally = SessionTally()
     @State private var finished = false
+    @State private var loaded = false
 
     var body: some View {
         Group {
@@ -65,7 +66,7 @@ struct PuzzleView: View {
                 }
                 .onAppear { if fromAudio { Speech.shared.speak(expected[index]) } }
             } else {
-                ProgressView()
+                TrainingLoadingView(isLoaded: loaded)
             }
         }
         .task { await start() }
@@ -93,6 +94,7 @@ struct PuzzleView: View {
     }
 
     private func start() async {
+        defer { loaded = true }
         if fromAudio {
             let response = try? await deps.startDictationPuzzle.invoke(
                 request: StartDictationPuzzleSessionRequest(stepCount: nil, vocabularyIds: vocabularyIds.map { KotlinLong(value: $0) })

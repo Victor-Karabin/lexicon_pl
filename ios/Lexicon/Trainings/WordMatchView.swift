@@ -15,6 +15,7 @@ struct WordMatchView: View {
     @State private var attempts = 0
     @State private var tally = SessionTally()
     @State private var finished = false
+    @State private var loaded = false
 
     var body: some View {
         Group {
@@ -40,7 +41,7 @@ struct WordMatchView: View {
                     }
                 } actions: { EmptyView() }
             } else {
-                ProgressView()
+                TrainingLoadingView(isLoaded: loaded)
             }
         }
         .task { await start() }
@@ -64,6 +65,7 @@ struct WordMatchView: View {
     }
 
     private func start() async {
+        defer { loaded = true }
         let response = try? await deps.startWordMatch.invoke(
             request: StartWordMatchSessionRequest(stepCount: nil, vocabularyIds: vocabularyIds.map { KotlinLong(value: $0) })
         )

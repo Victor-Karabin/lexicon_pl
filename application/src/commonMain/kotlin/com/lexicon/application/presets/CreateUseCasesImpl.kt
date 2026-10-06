@@ -8,6 +8,7 @@ import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.boundary.WordLevelGuesser
 import com.lexicon.common.polishTranscription
+import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.presets.CreatePresetUseCase
 import com.lexicon.interactors.presets.CreateWordUseCase
 import com.lexicon.interactors.presets.FillWordGrammarUseCase
@@ -60,7 +61,7 @@ class CreateWordUseCaseImpl(
             translation = english,
             transcription = polishTranscription(polish),
             example = example.trim(),
-            cefr = runCatching { levelGuesser.guess(polish, english) }.getOrNull(),
+            cefr = runSuspendCatching { levelGuesser.guess(polish, english) }.getOrNull(),
         )
 
         for (presetId in presetIds.distinct()) {
@@ -68,7 +69,7 @@ class CreateWordUseCaseImpl(
         }
 
         if (!imageUrl.isNullOrBlank()) imageProvider.pinImage(query = english, imageUrl = imageUrl)
-        appScope.launch { runCatching { fillWordGrammar(word.id) } }
+        appScope.launch { runSuspendCatching { fillWordGrammar(word.id) } }
 
         return Result.success(word)
     }
@@ -125,7 +126,7 @@ class UpdateWordUseCaseImpl(
         if (before?.text != polish || before.translation != english) {
             vocabularyRepository.setGrammar(id = id.value, partOfSpeech = null, forms = null)
             before?.text?.takeIf { it != polish }?.let { conjugations.deleteUserVerb(it) }
-            appScope.launch { runCatching { fillWordGrammar(word.id) } }
+            appScope.launch { runSuspendCatching { fillWordGrammar(word.id) } }
         }
 
         return Result.success(word)
@@ -186,7 +187,7 @@ class GetPinnedImageUseCaseImpl(
 ) : com.lexicon.interactors.presets.GetPinnedImageUseCase {
     override suspend fun invoke(id: VocabularyId): String? {
         val subject = vocabularyRepository.getWord(id.value)?.pictureSubject ?: return null
-        return runCatching { imageProvider.searchImage(subject) }.getOrNull()
+        return runSuspendCatching { imageProvider.searchImage(subject) }.getOrNull()
     }
 }
 

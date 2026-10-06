@@ -11,6 +11,7 @@ import com.lexicon.interactors.settings.ThemeMode
 import com.lexicon.interactors.settings.UpdateStepCountUseCase
 import com.lexicon.interactors.settings.UpdateThemeModeUseCase
 import com.lexicon.interactors.settings.UpdateVoiceUseCase
+import com.lexicon.presentation.common.speakQuietly
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -48,7 +49,7 @@ class SettingsViewModel(
     fun onVoiceSelected(voice: SpeechVoice) {
         viewModelScope.launch(dispatchers.io) {
             updateVoice(voice.id)
-            runCatching { speechSynthesizer.speak(SAMPLE) }
+            speechSynthesizer.speakQuietly(SAMPLE)
         }
     }
 

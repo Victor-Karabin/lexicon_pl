@@ -3,6 +3,7 @@ package com.lexicon.data.repository
 import com.lexicon.boundary.TranslationDirection
 import com.lexicon.boundary.TranslationSuggester
 import com.lexicon.common.foldForSearch
+import com.lexicon.common.runSuspendCatching
 import com.lexicon.data.local.VocabularySeeder
 import com.lexicon.data.local.WordDao
 
@@ -64,7 +65,7 @@ class MergingTranslationSuggester(
             val missing = limit - found.size
             if (missing <= 0) break
 
-            val more = runCatching { suggester.suggest(text, direction, missing) }.getOrDefault(emptyList())
+            val more = runSuspendCatching { suggester.suggest(text, direction, missing) }.getOrDefault(emptyList())
             found += more.filterNot { candidate -> found.any { it.equals(candidate, ignoreCase = true) } }
         }
         return found.take(limit)

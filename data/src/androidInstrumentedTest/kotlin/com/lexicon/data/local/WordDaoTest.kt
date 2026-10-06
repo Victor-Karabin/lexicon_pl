@@ -3,6 +3,8 @@ package com.lexicon.data.local
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -237,5 +239,17 @@ class WordDaoTest {
             val found = words.withTextStarting("dom", limit = 500).map { it.text }.toSet()
 
             assertEquals(setOf("dom", "dom towarowy"), found)
+        }
+
+    @Test
+    fun userWordsSavedTogetherEachGetTheirOwnId() =
+        runTest {
+            words.insertAll(listOf(word(1, "kot", "cat")))
+
+            val created = List(5) { index -> async { words.insertUserWord(word(0, "słowo$index", "word$index")) } }.awaitAll()
+
+            assertEquals(5, created.map { it.id }.toSet().size)
+            assertTrue(created.all { it.id < 0 })
+            assertEquals(6, words.count())
         }
 }
