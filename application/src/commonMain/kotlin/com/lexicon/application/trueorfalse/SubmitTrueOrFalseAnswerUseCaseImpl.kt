@@ -18,20 +18,22 @@ class SubmitTrueOrFalseAnswerUseCaseImpl(
     override suspend fun invoke(request: SubmitTrueOrFalseAnswerRequest): SubmitTrueOrFalseAnswerResponse {
         val step = sessions.stepAt(request.sessionId, request.stepIndex)
         val outcome = resolveOutcome(request)
-        sessions.recordOutcome(request.sessionId, request.stepIndex, outcome)
+        val isFirstAnswer = sessions.recordOutcome(request.sessionId, request.stepIndex, outcome)
 
-        recordAnswer(
-            RecordedAnswer(
-                sessionId = request.sessionId,
-                trainingType = TrainingType.TRUE_OR_FALSE,
-                stepIndex = request.stepIndex,
-                vocabularyItemId = step?.wordId?.value ?: request.vocabularyItemId,
-                expectedAnswer = request.isDisplayedTranslationCorrect.toString(),
-                submittedAnswer = request.userAnsweredTrue.toString(),
-                outcome = outcome,
-                tipUsed = false,
-            ),
-        )
+        if (isFirstAnswer) {
+            recordAnswer(
+                RecordedAnswer(
+                    sessionId = request.sessionId,
+                    trainingType = TrainingType.TRUE_OR_FALSE,
+                    stepIndex = request.stepIndex,
+                    vocabularyItemId = step?.wordId?.value ?: request.vocabularyItemId,
+                    expectedAnswer = request.isDisplayedTranslationCorrect.toString(),
+                    submittedAnswer = request.userAnsweredTrue.toString(),
+                    outcome = outcome,
+                    tipUsed = false,
+                ),
+            )
+        }
 
         return SubmitTrueOrFalseAnswerResponse(
             outcome = outcome,

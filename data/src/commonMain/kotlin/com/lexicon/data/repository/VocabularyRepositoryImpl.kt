@@ -10,7 +10,6 @@ import com.lexicon.data.local.forEachBatch
 import com.lexicon.data.local.inBatches
 import com.lexicon.data.local.joinDeclension
 import com.lexicon.data.local.joinForms
-import com.lexicon.data.local.nextUserWordId
 import com.lexicon.data.local.searchKeyFor
 import com.lexicon.data.local.toWord
 import com.lexicon.model.vocabulary.CefrLevel
@@ -74,17 +73,18 @@ class VocabularyRepositoryImpl(
         cefr: CefrLevel?,
     ): Word {
         vocabularySeeder.ensureSeeded()
-        val word = WordEntity(
-            id = nextUserWordId(wordDao.lowestId()),
-            text = text,
-            translation = translation,
-            transcription = transcription,
-            searchKey = searchKeyFor(text, translation),
-            cefr = cefr?.name.orEmpty(),
-            example = example,
-            isUserCreated = true,
+        val word = wordDao.insertUserWord(
+            WordEntity(
+                id = 0,
+                text = text,
+                translation = translation,
+                transcription = transcription,
+                searchKey = searchKeyFor(text, translation),
+                cefr = cefr?.name.orEmpty(),
+                example = example,
+                isUserCreated = true,
+            ),
         )
-        wordDao.insert(word)
         return word.toWord()
     }
 

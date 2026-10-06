@@ -19,20 +19,22 @@ class SubmitImageTestAnswerUseCaseImpl(
         val step = sessions.stepAt(request.sessionId, request.stepIndex)
         val correctOption = step?.expectedAnswer ?: request.correctOption
         val outcome = resolveOutcome(request, correctOption)
-        sessions.recordOutcome(request.sessionId, request.stepIndex, outcome)
+        val isFirstAnswer = sessions.recordOutcome(request.sessionId, request.stepIndex, outcome)
 
-        recordAnswer(
-            RecordedAnswer(
-                sessionId = request.sessionId,
-                trainingType = TrainingType.IMAGE_TEST,
-                stepIndex = request.stepIndex,
-                vocabularyItemId = step?.wordId?.value ?: request.vocabularyItemId,
-                expectedAnswer = correctOption,
-                submittedAnswer = request.selectedOption.orEmpty(),
-                outcome = outcome,
-                tipUsed = false,
-            ),
-        )
+        if (isFirstAnswer) {
+            recordAnswer(
+                RecordedAnswer(
+                    sessionId = request.sessionId,
+                    trainingType = TrainingType.IMAGE_TEST,
+                    stepIndex = request.stepIndex,
+                    vocabularyItemId = step?.wordId?.value ?: request.vocabularyItemId,
+                    expectedAnswer = correctOption,
+                    submittedAnswer = request.selectedOption.orEmpty(),
+                    outcome = outcome,
+                    tipUsed = false,
+                ),
+            )
+        }
 
         return SubmitImageTestAnswerResponse(outcome = outcome, correctOption = correctOption)
     }

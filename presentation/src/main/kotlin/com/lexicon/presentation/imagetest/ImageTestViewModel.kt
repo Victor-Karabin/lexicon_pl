@@ -97,6 +97,7 @@ class ImageTestViewModel(
         skipped: Boolean,
     ) {
         val step = currentStepOrNull() ?: return
+        updateLoaded { it.copy(isSubmitting = true) }
         viewModelScope.launch(dispatchers.io) {
             val response =
                 submitAnswerUseCase(
@@ -127,7 +128,7 @@ class ImageTestViewModel(
             }
             StepOutcome.INCORRECT -> {
                 tally.record(AnswerState.Incorrect(correctOption), correctOption, step.clueText)
-                updateLoaded { it.copy(answerState = AnswerState.Incorrect(), correctOption = correctOption) }
+                updateLoaded { it.copy(answerState = AnswerState.Incorrect(), correctOption = correctOption, isSubmitting = false) }
             }
             StepOutcome.SKIPPED -> {
                 tally.record(AnswerState.Skipped(correctOption), correctOption, step.clueText)
@@ -143,6 +144,7 @@ class ImageTestViewModel(
     fun onNext() {
         val state = _uiState.value as? ImageTestUiState.Loaded ?: return
         if (!state.awaitingNext) return
+        updateLoaded { it.copy(isSubmitting = true) }
         viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
     }
 

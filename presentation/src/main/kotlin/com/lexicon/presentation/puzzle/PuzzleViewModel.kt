@@ -115,6 +115,7 @@ class PuzzleViewModel(
     ) {
         val step = currentStepOrNull() ?: return
         val state = _uiState.value as? PuzzleUiState.Loaded ?: return
+        updateLoaded { it.copy(isSubmitting = true) }
         viewModelScope.launch(dispatchers.io) {
             val response =
                 submitAnswerUseCase(
@@ -148,7 +149,7 @@ class PuzzleViewModel(
 
             StepOutcome.INCORRECT -> {
                 tally.record(AnswerState.Incorrect(expectedText), step?.expectedText, step?.clueText.orEmpty(), tipUsed)
-                updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText)) }
+                updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText), isSubmitting = false) }
             }
 
             StepOutcome.SKIPPED -> {
@@ -165,6 +166,7 @@ class PuzzleViewModel(
     fun onNext() {
         val state = _uiState.value as? PuzzleUiState.Loaded ?: return
         if (!state.awaitingNext) return
+        updateLoaded { it.copy(isSubmitting = true) }
         viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
     }
 

@@ -1,10 +1,13 @@
 package com.lexicon.application.dictation
 
 import com.lexicon.application.training.FakeSessionStore
+import com.lexicon.application.training.open
 import com.lexicon.interactors.dictation.SubmitDictationAnswerRequest
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.model.training.StepOutcome
+import com.lexicon.model.training.TrainingType
+import com.lexicon.model.vocabulary.VocabularyId
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -13,11 +16,12 @@ import org.junit.Test
 
 class SubmitDictationAnswerUseCaseImplTest {
     private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
+    private val sessions = FakeSessionStore()
     private val useCase =
         SubmitDictationAnswerUseCaseImpl(
             recordAnswer = recordAnswer,
             answerNormalizer = AnswerNormalizer(),
-            sessions = FakeSessionStore(),
+            sessions = sessions,
         )
 
     private fun request(
@@ -91,5 +95,16 @@ class SubmitDictationAnswerUseCaseImplTest {
         runTest {
             val response = useCase(request(submittedText = "wrong"))
             assertEquals("kot", response.expectedText)
+        }
+
+    @Test
+    fun `answering the same step twice records it to history once`() =
+        runTest {
+            val sessionId = sessions.open(TrainingType.DICTATION, listOf(VocabularyId(1L) to "kot")).value
+
+            useCase(request(submittedText = "kot").copy(sessionId = sessionId))
+            useCase(request(submittedText = "kot").copy(sessionId = sessionId))
+
+            coVerify(exactly = 1) { recordAnswer(any()) }
         }
 }

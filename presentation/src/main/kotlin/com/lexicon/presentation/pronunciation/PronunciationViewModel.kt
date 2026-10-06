@@ -8,6 +8,7 @@ import com.lexicon.boundary.SpeechRecognitionFailed
 import com.lexicon.boundary.SpeechRecognizerService
 import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
+import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.pronunciation.PronunciationSentencesResult
 import com.lexicon.interactors.pronunciation.PronunciationStepResponse
 import com.lexicon.interactors.pronunciation.StartPronunciationSentencesUseCase
@@ -156,7 +157,7 @@ class PronunciationViewModel(
         val path = state.recordedAudioPath ?: return
         if (!state.canPlayRecording) return
         viewModelScope.launch(dispatchers.io) {
-            runCatching { audioPlayer.play(path) }
+            runSuspendCatching { audioPlayer.play(path) }
         }
     }
 

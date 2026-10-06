@@ -9,8 +9,8 @@ import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.boundary.SpeechVoice
 import com.lexicon.boundary.VoiceGender
 import com.lexicon.boundary.chosen
+import com.lexicon.common.runSuspendCatching
 import kotlinx.coroutines.CancellableContinuation
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -77,15 +77,10 @@ class AndroidSpeechSynthesizer(
     }
 
     override suspend fun voices(): List<SpeechVoice> {
-        val tts =
-            try {
-                engine()
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: SpeechSynthesisFailed) {
-                Log.w(TAG, "The device voice is unavailable", e)
-                return emptyList()
-            }
+        val tts = runSuspendCatching { engine() }.getOrElse { failure ->
+            Log.w(TAG, "The device voice is unavailable", failure)
+            return emptyList()
+        }
         return tts.voices
             .orEmpty()
             .filter { it.locale.language == POLISH.language }

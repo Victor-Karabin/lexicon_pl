@@ -126,6 +126,7 @@ class DictationPuzzleViewModel(
     ) {
         val step = currentStepOrNull() ?: return
         val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
+        updateLoaded { it.copy(isSubmitting = true) }
         viewModelScope.launch(dispatchers.io) {
             val response =
                 submitAnswerUseCase(
@@ -158,7 +159,7 @@ class DictationPuzzleViewModel(
             }
             StepOutcome.INCORRECT -> {
                 tally.record(AnswerState.Incorrect(expectedText), step?.expectedText, step?.translationText.orEmpty(), tipUsed)
-                updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText)) }
+                updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText), isSubmitting = false) }
             }
             StepOutcome.SKIPPED -> {
                 tally.record(AnswerState.Skipped(expectedText), step?.expectedText, step?.translationText.orEmpty(), tipUsed)
@@ -174,6 +175,7 @@ class DictationPuzzleViewModel(
     fun onNext() {
         val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
         if (!state.awaitingNext) return
+        updateLoaded { it.copy(isSubmitting = true) }
         viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
     }
 

@@ -126,6 +126,9 @@ interface WordDao {
     @Query("SELECT MIN(id) FROM words")
     suspend fun lowestId(): Long?
 
+    @Transaction
+    suspend fun insertUserWord(word: WordEntity): WordEntity = word.copy(id = nextUserWordId(lowestId())).also { insert(it) }
+
     @Query("SELECT * FROM words WHERE text = :text COLLATE NOCASE LIMIT 1")
     suspend fun findByText(text: String): WordEntity?
 

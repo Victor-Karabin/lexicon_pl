@@ -7,7 +7,7 @@ import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.boundary.SpeechVoice
 import com.lexicon.boundary.chosen
 import com.lexicon.common.DispatcherProvider
-import kotlinx.coroutines.CancellationException
+import com.lexicon.common.runSuspendCatching
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -28,14 +28,9 @@ class CloudSpeechSynthesizer(
 
         val cloud = lock.withLock {
             cached ?: withContext(dispatchers.io) {
-                try {
-                    nameVoices(api.voices(LANGUAGE_CODE))
-                } catch (e: CancellationException) {
-                    throw e
-                } catch (e: Exception) {
-                    Log.e(TAG, "Could not list Cloud voices", e)
-                    emptyList()
-                }
+                runSuspendCatching { nameVoices(api.voices(LANGUAGE_CODE)) }
+                    .onFailure { failure -> Log.e(TAG, "Could not list Cloud voices", failure) }
+                    .getOrDefault(emptyList())
             }.also { if (it.isNotEmpty()) cached = it }
         }
 
@@ -50,12 +45,8 @@ class CloudSpeechSynthesizer(
             Log.w(TAG, "No Cloud audio; speaking with the device voice instead")
             fallback.speak(text)
         } else {
-            try {
-                player.play(path)
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                Log.w(TAG, "Playing Cloud audio failed; speaking with the device voice instead", e)
+            runSuspendCatching { player.play(path) }.onFailure { failure ->
+                Log.w(TAG, "Playing Cloud audio failed; speaking with the device voice instead", failure)
                 fallback.speak(text)
             }
         }
@@ -67,15 +58,9 @@ class CloudSpeechSynthesizer(
 
         store.filePath(voice, text)?.let { return it }
 
-        val audio =
-            try {
-                api.synthesize(text, voice, LANGUAGE_CODE)
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                Log.e(TAG, "Synthesis threw for $voice", e)
-                null
-            } ?: return null
+        val audio = runSuspendCatching { api.synthesize(text, voice, LANGUAGE_CODE) }
+            .onFailure { failure -> Log.e(TAG, "Synthesis threw for $voice", failure) }
+            .getOrNull() ?: return null
 
         return store.store(voice, text, audio)
             ?: null.also { Log.w(TAG, "Could not keep the audio for $voice") }

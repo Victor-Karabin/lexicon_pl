@@ -2,16 +2,10 @@ package com.lexicon.presentation.common
 
 import android.util.Log
 import com.lexicon.boundary.SpeechSynthesizer
-import kotlinx.coroutines.CancellationException
+import com.lexicon.common.runSuspendCatching
 
 private const val TAG = "Speech"
 
 suspend fun SpeechSynthesizer.speakQuietly(text: String) {
-    try {
-        speak(text)
-    } catch (e: CancellationException) {
-        throw e
-    } catch (e: Exception) {
-        Log.w(TAG, "Speaking failed", e)
-    }
+    runSuspendCatching { speak(text) }.onFailure { failure -> Log.w(TAG, "Speaking failed", failure) }
 }

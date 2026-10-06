@@ -133,7 +133,7 @@ private fun DictationPuzzleScreenContent(
                             modifier = Modifier.padding(top = Dimens.spacingMedium),
                         )
 
-                        if (uiState.isEditable) {
+                        if (uiState.answerState is AnswerState.Unanswered) {
                             uiState.tipTranslation?.let { hint ->
                                 Text(
                                     text = stringResource(R.string.hint_format, hint),

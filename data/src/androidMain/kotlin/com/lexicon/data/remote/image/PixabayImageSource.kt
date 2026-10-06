@@ -1,6 +1,7 @@
 package com.lexicon.data.remote.image
 
 import android.util.Log
+import com.lexicon.common.runSuspendCatching
 
 private const val TAG = "PixabayImageSource"
 
@@ -14,7 +15,7 @@ class PixabayImageSource(
         query: String,
         count: Int,
     ): List<String> =
-        runCatching {
+        runSuspendCatching {
             api
                 .search(query, perPage = count.coerceIn(PIXABAY_MIN_PER_PAGE, PIXABAY_MAX_PER_PAGE))
                 .hits

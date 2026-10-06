@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
+import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.crossword.CrosswordWordSubmission
 import com.lexicon.interactors.crossword.StartCrosswordSessionRequest
 import com.lexicon.interactors.crossword.StartCrosswordSessionUseCase
@@ -172,7 +173,7 @@ class CrosswordViewModel(
                     tipUsed = word.revealedLetterCount > 0,
                 )
             }
-            val response = runCatching {
+            val response = runSuspendCatching {
                 submitCrosswordUseCase(SubmitCrosswordRequest(sessionId, submissions))
             }.getOrElse {
                 updateLoaded { it.copy(isSubmitting = false, submitFailed = true) }

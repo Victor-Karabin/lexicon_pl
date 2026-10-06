@@ -3,6 +3,7 @@ package com.lexicon.application.presets
 import com.lexicon.boundary.ExampleRequestBoundary
 import com.lexicon.boundary.ExampleSentenceGenerator
 import com.lexicon.boundary.SentenceResultBoundary
+import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.presets.GenerateWordExampleUseCase
 import com.lexicon.model.vocabulary.ExampleSentence
 
@@ -18,7 +19,7 @@ class GenerateWordExampleUseCaseImpl(
         if (word.isEmpty()) return null
 
         val request = ExampleRequestBoundary(word = word, translation = translation.trim(), level = level)
-        val result = runCatching { generator.generate(request) }.getOrNull()
+        val result = runSuspendCatching { generator.generate(request) }.getOrNull()
 
         return (result as? SentenceResultBoundary.Generated)
             ?.sentence

@@ -17,11 +17,12 @@ sealed interface ImageTestUiState {
         val correctOption: String? = null,
         val answerState: AnswerState = AnswerState.Unanswered,
         val isSessionComplete: Boolean = false,
+        val isSubmitting: Boolean = false,
     ) : ImageTestUiState {
-        val isEditable: Boolean get() = answerState is AnswerState.Unanswered
+        val isEditable: Boolean get() = answerState is AnswerState.Unanswered && !isSubmitting
         val canCheck: Boolean get() = isEditable && selectedOption != null
         val canSkip: Boolean get() = isEditable
 
-        val awaitingNext: Boolean get() = answerState is AnswerState.Incorrect
+        val awaitingNext: Boolean get() = answerState is AnswerState.Incorrect && !isSubmitting
     }
 }

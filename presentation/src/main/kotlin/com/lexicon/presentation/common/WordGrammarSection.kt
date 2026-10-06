@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.lexicon.common.DispatcherProvider
+import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.presets.GetWordGrammarUseCase
 import com.lexicon.interactors.presets.WordGrammar
 import com.lexicon.model.vocabulary.CaseForms
@@ -29,7 +30,6 @@ import com.lexicon.model.vocabulary.PartOfSpeech
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.Dimens
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 
@@ -47,15 +47,9 @@ fun rememberWordGrammar(
 
     LaunchedEffect(id) {
         if (id == null) return@LaunchedEffect
-        grammar =
-            try {
-                withContext(dispatchers.io) { getWordGrammar(id) }
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                Log.w(TAG, "The grammar of a word could not be read", e)
-                null
-            }
+        grammar = runSuspendCatching { withContext(dispatchers.io) { getWordGrammar(id) } }
+            .onFailure { failure -> Log.w(TAG, "The grammar of a word could not be read", failure) }
+            .getOrNull()
     }
 
     return grammar
