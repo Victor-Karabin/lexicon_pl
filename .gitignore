@@ -102,3 +102,4 @@ CLAUDE.md
 tools/translate/.cache.json
 tools/vocabulary/.examples-cache.json
 tools/vocabulary/.pictures-cache.json
+tools/vocabulary/.grammar-cache.json

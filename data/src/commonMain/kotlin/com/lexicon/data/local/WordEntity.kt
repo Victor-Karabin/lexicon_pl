@@ -4,9 +4,14 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.lexicon.common.foldForSearch
+import com.lexicon.model.vocabulary.CaseForms
 import com.lexicon.model.vocabulary.CefrLevel
+import com.lexicon.model.vocabulary.Gender
+import com.lexicon.model.vocabulary.GrammaticalCase
+import com.lexicon.model.vocabulary.PartOfSpeech
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.WordForms
 import com.lexicon.model.vocabulary.WordStatus
 
 @Entity(tableName = "words", indices = [Index("status")])
@@ -22,6 +27,10 @@ data class WordEntity(
     val isDeleted: Boolean = false,
     val isUserCreated: Boolean = false,
     val picture: String? = null,
+    val partOfSpeech: String = "",
+    val gender: String = "",
+    val declension: String = "",
+    val adjectiveForms: String = "",
 )
 
 fun nextUserWordId(lowestExistingId: Long?): Long = minOf(lowestExistingId ?: 0L, 0L) - 1
@@ -41,4 +50,47 @@ fun WordEntity.toWord(): Word =
         cefr = CefrLevel.ofName(cefr.ifEmpty { null }),
         example = example,
         picture = picture,
+        partOfSpeech = PartOfSpeech.ofTag(partOfSpeech),
+        forms = formsOf(partOfSpeech = partOfSpeech, gender = gender, declension = declension, adjectiveForms = adjectiveForms),
     )
+
+private const val FORM_SEPARATOR = '|'
+
+private const val CASE_SEPARATOR = ';'
+
+private const val ADJECTIVE_FORM_COUNT = 5
+
+fun List<String>.joinForms(): String = joinToString(FORM_SEPARATOR.toString())
+
+fun Map<GrammaticalCase, CaseForms>.joinDeclension(): String =
+    GrammaticalCase.entries.joinToString(CASE_SEPARATOR.toString()) { case ->
+        this[case]?.let { "${it.singular.orEmpty()}$FORM_SEPARATOR${it.plural.orEmpty()}" }.orEmpty()
+    }
+
+private fun declensionOf(stored: String): Map<GrammaticalCase, CaseForms> =
+    stored
+        .split(CASE_SEPARATOR)
+        .mapIndexedNotNull { index, forms ->
+            val case = GrammaticalCase.entries.getOrNull(index) ?: return@mapIndexedNotNull null
+            val parts = forms.split(FORM_SEPARATOR)
+            CaseForms(parts.firstOrNull()?.ifBlank { null }, parts.getOrNull(1)?.ifBlank { null })
+                .takeUnless { it.isEmpty }
+                ?.let { case to it }
+        }.toMap()
+
+private fun formsOf(
+    partOfSpeech: String,
+    gender: String,
+    declension: String,
+    adjectiveForms: String,
+): WordForms? =
+    when (PartOfSpeech.ofTag(partOfSpeech)) {
+        PartOfSpeech.NOUN -> Gender.ofTag(gender)?.let { WordForms.Noun(it, declensionOf(declension)) }
+        PartOfSpeech.ADJECTIVE ->
+            adjectiveForms
+                .split(FORM_SEPARATOR)
+                .takeIf { forms -> forms.size == ADJECTIVE_FORM_COUNT && forms.all { it.isNotBlank() } }
+                ?.let { WordForms.Adjective(it[0], it[1], it[2], it[3], it[4]) }
+
+        else -> null
+    }

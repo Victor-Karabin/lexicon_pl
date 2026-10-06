@@ -8,11 +8,15 @@ import com.lexicon.data.local.WordDao
 import com.lexicon.data.local.WordEntity
 import com.lexicon.data.local.forEachBatch
 import com.lexicon.data.local.inBatches
+import com.lexicon.data.local.joinDeclension
+import com.lexicon.data.local.joinForms
 import com.lexicon.data.local.nextUserWordId
 import com.lexicon.data.local.searchKeyFor
 import com.lexicon.data.local.toWord
 import com.lexicon.model.vocabulary.CefrLevel
+import com.lexicon.model.vocabulary.PartOfSpeech
 import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.WordForms
 import com.lexicon.model.vocabulary.WordStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -109,6 +113,25 @@ class VocabularyRepositoryImpl(
         if (texts.isEmpty()) return emptySet()
         vocabularySeeder.ensureSeeded()
         return texts.inBatches { wordDao.studySetTextsAmong(it) }.toSet()
+    }
+
+    override suspend fun setGrammar(
+        id: Long,
+        partOfSpeech: PartOfSpeech?,
+        forms: WordForms?,
+    ) {
+        vocabularySeeder.ensureSeeded()
+        val noun = forms as? WordForms.Noun
+        val adjective = forms as? WordForms.Adjective
+        wordDao.setGrammar(
+            id = id,
+            partOfSpeech = partOfSpeech?.tag.orEmpty(),
+            gender = noun?.gender?.tag.orEmpty(),
+            declension = noun?.declension?.joinDeclension().orEmpty(),
+            adjectiveForms = adjective
+                ?.let { listOf(it.masculine, it.feminine, it.neuter, it.pluralPersonal, it.pluralOther).joinForms() }
+                .orEmpty(),
+        )
     }
 
     override suspend fun findWordByText(text: String): Word? {

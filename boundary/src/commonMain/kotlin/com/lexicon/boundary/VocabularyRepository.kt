@@ -1,7 +1,9 @@
 package com.lexicon.boundary
 
 import com.lexicon.model.vocabulary.CefrLevel
+import com.lexicon.model.vocabulary.PartOfSpeech
 import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.WordForms
 import com.lexicon.model.vocabulary.WordStatus
 import kotlinx.coroutines.flow.Flow
 
@@ -43,6 +45,12 @@ interface VocabularyRepository {
         example: String = "",
         picture: String? = null,
     ): Word
+
+    suspend fun setGrammar(
+        id: Long,
+        partOfSpeech: PartOfSpeech?,
+        forms: WordForms?,
+    )
 
     suspend fun findWordByText(text: String): Word?
 

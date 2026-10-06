@@ -92,6 +92,33 @@ def load_pictures() -> dict[tuple[str, str], str]:
     }
 
 
+def load_grammar() -> dict[tuple[str, str], dict]:
+    """Gender and the seven cases for nouns, the five nominative forms for adjectives.
+
+    Verbs are absent on purpose: their conjugations live in conjugations.json, which the
+    verb trainings already read.
+    """
+    path = TOOLS / "grammar.tsv"
+    if not path.exists():
+        return {}
+
+    grammar: dict[tuple[str, str], dict] = {}
+    for number, cols in read_tsv(path):
+        if len(cols) < 9:
+            raise BuildError(f"{path.name}:{number}: expected nine columns, got {len(cols)}")
+        text, translation, gender, declension, *forms = (c.strip() for c in cols[:9])
+        entry = {}
+        if gender:
+            entry["gender"] = gender
+            if declension.strip(";|"):
+                entry["declension"] = declension
+        if all(forms):
+            entry["forms"] = forms
+        if entry:
+            grammar[(text.lower(), translation.lower())] = entry
+    return grammar
+
+
 def load_words() -> list[dict]:
     """Core first so ids follow frequency, then topical files in a stable order."""
     words: list[dict] = []
@@ -99,6 +126,7 @@ def load_words() -> list[dict]:
 
     examples = load_examples()
     pictures = load_pictures()
+    grammar = load_grammar()
 
     sources = [(TOOLS / "corpus" / "core.tsv", True)]
     sources += [(p, False) for p in sorted((TOOLS / "corpus" / "topics").glob("*.tsv"))]
@@ -139,6 +167,7 @@ def load_words() -> list[dict]:
                     "topics": topics,
                     "example": examples.get(key, ""),
                     "picture": pictures.get(key),
+                    **grammar.get(key, {}),
                     # Rank exists only for the core list; topical extras are not ranked.
                     "frequencyRank": len(words) + 1 if is_core else None,
                 }
@@ -256,8 +285,8 @@ def main() -> int:
     vocabulary_asset = [
         {
             k: w[k]
-            for k in ("id", "text", "translation", "transcription", "partOfSpeech", "cefr", "topics", "example", "picture")
-            if k != "picture" or w[k] is not None
+            for k in ("id", "text", "translation", "transcription", "partOfSpeech", "cefr", "topics", "example", "picture", "gender", "declension", "forms")
+            if k in w and (k != "picture" or w[k] is not None)
         }
         for w in words
     ]
@@ -273,6 +302,7 @@ def main() -> int:
     with_examples = sum(1 for w in words if w["example"])
     print(f"{len(words)} words ({ranked} ranked), {len(presets)} presets in {len(categories)} categories")
     print(f"  with an example sentence: {with_examples}")
+    print(f"  with gender and declension: {sum(1 for w in words if w.get('declension'))}, with adjective forms: {sum(1 for w in words if w.get('forms'))}")
     print(f"  with a picture phrase: {sum(1 for w in words if w['picture'])}, marked unpicturable: {sum(1 for w in words if w['picture'] == '')}")
     levels = {level: sum(1 for w in words if w["cefr"] == level) for level in CEFR_LEVELS}
     print("  by level: " + ", ".join(f"{lvl} {n}" for lvl, n in levels.items()))

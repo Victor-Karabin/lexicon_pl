@@ -32,10 +32,7 @@ class StartImageTestSessionUseCaseImpl(
         val stepCount = stepCountResolver.resolve(request.stepCount)
         val poolSize = maxOf(maxOf(stepCount, request.optionCount) * POOL_MULTIPLIER, MIN_POOL_SIZE)
         val pool = vocabularyRepository.getRandomItems(poolSize, request.vocabularyIds)
-        val subjects = subjectsWithEnoughDistractors(pool, request.optionCount)
-            .filter { it.pictureSubject != null }
-            .ifEmpty { pool }
-            .take(stepCount)
+        val subjects = subjectsWithEnoughDistractors(pool, request.optionCount).take(stepCount)
 
         val steps =
             coroutineScope {

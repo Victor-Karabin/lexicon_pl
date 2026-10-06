@@ -5,6 +5,7 @@ import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.SettingsRepository
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.boundary.WordGrammarGenerator
 import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.DeleteConjugationVerbUseCase
 import com.lexicon.interactors.conjugation.HasDeletedVerbsUseCase
@@ -20,6 +21,8 @@ import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -52,6 +55,8 @@ class OneLineUseCaseBindingsTest : KoinTest {
                     single { presets }
                     single { conjugations }
                     single { settings }
+                    single<WordGrammarGenerator> { mockk(relaxed = true) }
+                    single<CoroutineScope> { TestScope() }
                 },
             )
         }

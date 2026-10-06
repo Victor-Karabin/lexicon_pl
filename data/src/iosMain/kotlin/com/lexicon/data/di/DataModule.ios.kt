@@ -4,11 +4,13 @@ import com.lexicon.boundary.AppVersionProvider
 import com.lexicon.boundary.ExampleSentenceGenerator
 import com.lexicon.boundary.TranslationSuggester
 import com.lexicon.boundary.Translator
+import com.lexicon.boundary.WordGrammarGenerator
 import com.lexicon.boundary.WordLevelGuesser
 import com.lexicon.data.local.AppDatabaseBuilderFactory
 import com.lexicon.data.local.AssetReader
 import com.lexicon.data.local.DataStorePathResolver
 import com.lexicon.data.local.iosAppVersionProvider
+import com.lexicon.data.remote.grammar.IosWordGrammarGenerator
 import com.lexicon.data.remote.image.OpenverseIosImageSource
 import com.lexicon.data.remote.image.PexelsIosImageSource
 import com.lexicon.data.remote.image.PixabayIosImageSource
@@ -30,6 +32,7 @@ fun dataIosModule(
     single { AssetReader() }
     single<AppVersionProvider> { iosAppVersionProvider() }
     single<ExampleSentenceGenerator> { IosExampleSentenceGenerator() }
+    single<WordGrammarGenerator> { IosWordGrammarGenerator() }
 
     factory<List<RemoteImageSource>> {
         listOf(

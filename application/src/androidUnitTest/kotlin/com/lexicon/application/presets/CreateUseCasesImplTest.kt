@@ -1,5 +1,6 @@
 package com.lexicon.application.presets
 
+import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.PresetCategoryBoundary
 import com.lexicon.boundary.TranslationDirection
@@ -8,6 +9,7 @@ import com.lexicon.boundary.VocabularyPresetBoundary
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.boundary.WordLevelGuesser
+import com.lexicon.interactors.presets.FillWordGrammarUseCase
 import com.lexicon.interactors.presets.PresetDraftException
 import com.lexicon.interactors.presets.PresetDraftProblem
 import com.lexicon.interactors.presets.WordDraftException
@@ -20,6 +22,7 @@ import com.lexicon.model.vocabulary.WordStatus
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -31,9 +34,14 @@ class CreateUseCasesImplTest {
     private val presetRepository: VocabularyPresetRepository = mockk(relaxed = true)
     private val imageProvider: ImageProvider = mockk(relaxed = true)
     private val levelGuesser: WordLevelGuesser = mockk(relaxed = true)
+    private val conjugations: ConjugationRepository = mockk(relaxed = true)
+    private val fillWordGrammar: FillWordGrammarUseCase = mockk(relaxed = true)
+    private val appScope = TestScope()
 
-    private val createWord = CreateWordUseCaseImpl(vocabularyRepository, presetRepository, imageProvider, levelGuesser)
-    private val updateWord = UpdateWordUseCaseImpl(vocabularyRepository, presetRepository, imageProvider)
+    private val createWord =
+        CreateWordUseCaseImpl(vocabularyRepository, presetRepository, imageProvider, levelGuesser, fillWordGrammar, appScope)
+    private val updateWord =
+        UpdateWordUseCaseImpl(vocabularyRepository, presetRepository, imageProvider, conjugations, fillWordGrammar, appScope)
 
     private val stored = Word(
         id = VocabularyId(-1),
@@ -150,18 +158,16 @@ class CreateUseCasesImplTest {
         }
 
     @Test
-    fun `choosing a picture for a word marked unpicturable lets its translation carry it`() =
+    fun `a word with no phrase of its own has its picture pinned under its translation`() =
         runTest {
-            val unpicturable = stored.copy(translation = "without", picture = "")
+            val own = stored.copy(translation = "without", picture = null)
             coEvery { vocabularyRepository.findWordByText(any()) } returns null
-            coEvery { vocabularyRepository.getWord(-1) } returns unpicturable
-            coEvery { vocabularyRepository.updateWord(any(), any(), any(), any(), any(), any()) } returns
-                unpicturable.copy(picture = null)
+            coEvery { vocabularyRepository.getWord(-1) } returns own
+            coEvery { vocabularyRepository.updateWord(any(), any(), any(), any(), any(), any()) } returns own
             coEvery { presetRepository.getPresetIdsForWord(any()) } returns emptyList()
 
             updateWord(id = VocabularyId(-1), text = "bez", translation = "without", imageUrl = "https://img/2.jpg")
 
-            coVerify { vocabularyRepository.updateWord(-1, "bez", "without", any(), "", null) }
             coVerify { imageProvider.pinImage(query = "without", imageUrl = "https://img/2.jpg") }
         }
 
@@ -194,6 +200,61 @@ class CreateUseCasesImplTest {
             coVerify(exactly = 1) { presetRepository.setWordInPreset("fantasy", -1, false) }
 
             coVerify(exactly = 0) { presetRepository.setWordInPreset("animals", -1, any()) }
+        }
+
+    @Test
+    fun `a new word has its grammar written in the background`() =
+        runTest {
+            wordExists(false)
+
+            createWord(text = "smok", translation = "dragon")
+            appScope.testScheduler.advanceUntilIdle()
+
+            coVerify { fillWordGrammar(stored.id) }
+        }
+
+    @Test
+    fun `an edit that changes neither spelling nor meaning leaves the grammar alone`() =
+        runTest {
+            coEvery { vocabularyRepository.findWordByText(any()) } returns null
+            coEvery { vocabularyRepository.getWord(-1) } returns stored
+            coEvery { vocabularyRepository.updateWord(any(), any(), any(), any(), any(), any()) } returns stored
+            coEvery { presetRepository.getPresetIdsForWord(any()) } returns emptyList()
+
+            updateWord(id = VocabularyId(-1), text = "smok", translation = "dragon")
+            appScope.testScheduler.advanceUntilIdle()
+
+            coVerify(exactly = 0) { fillWordGrammar(any()) }
+            coVerify(exactly = 0) { vocabularyRepository.setGrammar(any(), any(), any()) }
+        }
+
+    @Test
+    fun `an edit that changes the meaning has the grammar written again`() =
+        runTest {
+            coEvery { vocabularyRepository.findWordByText(any()) } returns null
+            coEvery { vocabularyRepository.getWord(-1) } returns stored
+            coEvery { vocabularyRepository.updateWord(any(), any(), any(), any(), any(), any()) } returns stored
+            coEvery { presetRepository.getPresetIdsForWord(any()) } returns emptyList()
+
+            updateWord(id = VocabularyId(-1), text = "smok", translation = "kite")
+            appScope.testScheduler.advanceUntilIdle()
+
+            coVerify { vocabularyRepository.setGrammar(-1, null, null) }
+            coVerify { fillWordGrammar(stored.id) }
+            coVerify(exactly = 0) { conjugations.deleteUserVerb(any()) }
+        }
+
+    @Test
+    fun `a renamed word gives up the conjugation written for its old spelling`() =
+        runTest {
+            coEvery { vocabularyRepository.findWordByText(any()) } returns null
+            coEvery { vocabularyRepository.getWord(-1) } returns stored.copy(text = "smokowac")
+            coEvery { vocabularyRepository.updateWord(any(), any(), any(), any(), any(), any()) } returns stored
+            coEvery { presetRepository.getPresetIdsForWord(any()) } returns emptyList()
+
+            updateWord(id = VocabularyId(-1), text = "smok", translation = "dragon")
+
+            coVerify { conjugations.deleteUserVerb("smokowac") }
         }
 
     @Test

@@ -14,6 +14,7 @@ data class ConjugationVerbEntity(
     val translation: String,
     val formsJson: String,
     val example: String = "",
+    val isUserCreated: Boolean = false,
 )
 
 @Entity(tableName = "conjugation_course")
@@ -51,6 +52,15 @@ data class ConjugationProgressEntity(
 interface ConjugationDao {
     @Query("SELECT COUNT(*) FROM conjugation_verb")
     suspend fun countVerbs(): Int
+
+    @Query("SELECT COUNT(*) FROM conjugation_verb WHERE isUserCreated = 0")
+    suspend fun countBundledVerbs(): Int
+
+    @Query("SELECT * FROM conjugation_verb WHERE infinitive = :infinitive LIMIT 1")
+    suspend fun verb(infinitive: String): ConjugationVerbEntity?
+
+    @Query("DELETE FROM conjugation_verb WHERE infinitive = :infinitive AND isUserCreated = 1")
+    suspend fun deleteUserVerb(infinitive: String)
 
     @Query("SELECT * FROM conjugation_verb ORDER BY infinitive")
     suspend fun verbs(): List<ConjugationVerbEntity>

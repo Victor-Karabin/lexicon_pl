@@ -25,6 +25,8 @@ data class Word(
     val cefr: CefrLevel? = null,
     val example: String = "",
     val picture: String? = null,
+    val partOfSpeech: PartOfSpeech? = null,
+    val forms: WordForms? = null,
 ) {
     init {
         require(text.isNotBlank()) { "a word must have text" }
@@ -34,12 +36,7 @@ data class Word(
 
     val isPhrase: Boolean get() = text.contains(' ')
 
-    val pictureSubject: String?
-        get() = when {
-            picture == null -> translation
-            picture.isBlank() -> null
-            else -> picture
-        }
+    val pictureSubject: String get() = picture?.takeIf { it.isNotBlank() } ?: translation
 
     val isInStudySet: Boolean get() = status.isLearning
 

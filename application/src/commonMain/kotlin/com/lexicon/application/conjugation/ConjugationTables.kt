@@ -25,6 +25,9 @@ internal fun VerbConjugationBoundary.toVerb(): VerbConjugation =
             }.toMap(),
     )
 
+internal suspend fun ConjugationRepository.conjugationOf(infinitive: String): VerbConjugation? =
+    verb(infinitive)?.toVerb()?.takeIf { it.isTeachable }
+
 internal suspend fun ConjugationRepository.courseVerbs(courseId: String): List<VerbConjugation> {
     val chosen = courses().firstOrNull { it.id == courseId }?.infinitives.orEmpty().toSet()
     return verbs().filter { it.infinitive in chosen }.map { it.toVerb() }.filter { it.isTeachable }

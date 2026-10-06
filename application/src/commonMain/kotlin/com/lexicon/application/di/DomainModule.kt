@@ -33,16 +33,20 @@ import com.lexicon.application.passage.SubmitPassageAnswersUseCaseImpl
 import com.lexicon.application.presets.CountWordsToReviewUseCaseImpl
 import com.lexicon.application.presets.CreatePresetUseCaseImpl
 import com.lexicon.application.presets.CreateWordUseCaseImpl
+import com.lexicon.application.presets.DeleteWordUseCaseImpl
+import com.lexicon.application.presets.FillWordGrammarUseCaseImpl
 import com.lexicon.application.presets.GenerateWordExampleUseCaseImpl
 import com.lexicon.application.presets.GetPinnedImageUseCaseImpl
 import com.lexicon.application.presets.GetPresetCategoriesUseCaseImpl
 import com.lexicon.application.presets.GetPresetVocabularyUseCaseImpl
 import com.lexicon.application.presets.GetVocabularyPresetUseCaseImpl
 import com.lexicon.application.presets.GetVocabularyPresetsUseCaseImpl
+import com.lexicon.application.presets.GetWordGrammarUseCaseImpl
 import com.lexicon.application.presets.GetWordPresetMembershipsUseCaseImpl
 import com.lexicon.application.presets.GetWordsToReviewUseCaseImpl
 import com.lexicon.application.presets.ObserveVocabularyPresetsUseCaseImpl
 import com.lexicon.application.presets.ObserveWordStatusesUseCaseImpl
+import com.lexicon.application.presets.RestoreWordUseCaseImpl
 import com.lexicon.application.presets.SearchImageCandidatesUseCaseImpl
 import com.lexicon.application.presets.SearchVocabularyUseCaseImpl
 import com.lexicon.application.presets.SetWordPresetMembershipUseCaseImpl
@@ -122,12 +126,14 @@ import com.lexicon.interactors.presets.CreatePresetUseCase
 import com.lexicon.interactors.presets.CreateWordUseCase
 import com.lexicon.interactors.presets.DeletePresetUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
+import com.lexicon.interactors.presets.FillWordGrammarUseCase
 import com.lexicon.interactors.presets.GenerateWordExampleUseCase
 import com.lexicon.interactors.presets.GetPinnedImageUseCase
 import com.lexicon.interactors.presets.GetPresetCategoriesUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
+import com.lexicon.interactors.presets.GetWordGrammarUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.GetWordUseCase
 import com.lexicon.interactors.presets.GetWordsToReviewUseCase
@@ -278,20 +284,16 @@ val domainModule = module {
     factoryOf(::SuggestTranslationsUseCaseImpl) { bind<SuggestTranslationsUseCase>() }
     factoryOf(::SearchImageCandidatesUseCaseImpl) { bind<SearchImageCandidatesUseCase>() }
     factoryOf(::GetPinnedImageUseCaseImpl) { bind<GetPinnedImageUseCase>() }
+    factoryOf(::GetWordGrammarUseCaseImpl) { bind<GetWordGrammarUseCase>() }
+    factoryOf(::FillWordGrammarUseCaseImpl) { bind<FillWordGrammarUseCase>() }
     factoryOf(::ObserveWordStatusesUseCaseImpl) { bind<ObserveWordStatusesUseCase>() }
     factoryOf(::GetWordsToReviewUseCaseImpl) { bind<GetWordsToReviewUseCase>() }
     factoryOf(::CountWordsToReviewUseCaseImpl) { bind<CountWordsToReviewUseCase>() }
     factoryOf(::CheckTrainingReadinessUseCaseImpl) { bind<CheckTrainingReadinessUseCase>() }
     factoryOf(::SearchVocabularyUseCaseImpl) { bind<SearchVocabularyUseCase>() }
     factoryOf(::SeedCatalogsUseCaseImpl) { bind<SeedCatalogsUseCase>() }
-    factory<DeleteWordUseCase> {
-        val vocabulary = get<VocabularyRepository>()
-        DeleteWordUseCase { vocabulary.deleteWord(it.value) }
-    }
-    factory<RestoreWordUseCase> {
-        val vocabulary = get<VocabularyRepository>()
-        RestoreWordUseCase { vocabulary.restoreWord(it.value) }
-    }
+    factoryOf(::DeleteWordUseCaseImpl) { bind<DeleteWordUseCase>() }
+    factoryOf(::RestoreWordUseCaseImpl) { bind<RestoreWordUseCase>() }
     factory<DeletePresetUseCase> {
         val presets = get<VocabularyPresetRepository>()
         DeletePresetUseCase { presets.deletePreset(it.value) }
