@@ -7,6 +7,7 @@ struct WordCardView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.onTrainingFinished) private var onTrainingFinished
     @State private var steps: [WordCardStep] = []
+    @State private var loaded = false
     @State private var sessionId = ""
     @State private var index = 0
     @State private var seen: Set<Int> = []
@@ -41,7 +42,7 @@ struct WordCardView: View {
                     }
                 }
             } else {
-                ProgressView()
+                TrainingLoadingView(isLoaded: loaded)
             }
         }
         .task {
@@ -51,6 +52,7 @@ struct WordCardView: View {
     }
 
     private func start() async {
+        defer { loaded = true }
         let response = try? await deps.startWordCard.invoke(
             request: StartWordCardSessionRequest(vocabularyIds: vocabularyIds.map { KotlinLong(value: $0) })
         )

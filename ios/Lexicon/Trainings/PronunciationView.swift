@@ -13,6 +13,7 @@ struct PronunciationView: View {
     @State private var state: AnswerState = .unanswered
     @State private var tally = SessionTally()
     @State private var finished = false
+    @State private var loaded = false
 
     var body: some View {
         Group {
@@ -61,13 +62,14 @@ struct PronunciationView: View {
                     }
                 }
             } else {
-                ProgressView()
+                TrainingLoadingView(isLoaded: loaded)
             }
         }
         .task { await start() }
     }
 
     private func start() async {
+        defer { loaded = true }
         let response = try? await deps.startPronunciation.invoke(
             request: StartPronunciationSessionRequest(stepCount: nil, vocabularyIds: vocabularyIds.map { KotlinLong(value: $0) })
         )

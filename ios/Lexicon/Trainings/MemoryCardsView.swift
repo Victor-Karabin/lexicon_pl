@@ -14,13 +14,14 @@ struct MemoryCardsView: View {
     @State private var attempts = 0
     @State private var tally = SessionTally()
     @State private var finished = false
+    @State private var loaded = false
 
     var body: some View {
         Group {
             if finished {
                 SessionResultView(tally: tally) { dismiss() }
             } else if steps.isEmpty {
-                ProgressView()
+                TrainingLoadingView(isLoaded: loaded)
             } else {
                 TrainingScaffold(step: index, total: steps.count, state: .unanswered) {
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: Spacing.small) {
@@ -70,6 +71,7 @@ struct MemoryCardsView: View {
     }
 
     private func start() async {
+        defer { loaded = true }
         let response = try? await deps.startMemoryCards.invoke(
             request: StartMemoryCardsSessionRequest(
                 stepCount: nil,

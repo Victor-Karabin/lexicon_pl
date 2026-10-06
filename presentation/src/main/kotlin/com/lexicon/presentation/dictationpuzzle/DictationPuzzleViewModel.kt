@@ -17,6 +17,7 @@ import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.SessionTally
 import com.lexicon.presentation.common.shuffleIntoTiles
+import com.lexicon.presentation.common.speakQuietly
 import com.lexicon.presentation.common.trainingVocabularyIds
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -83,7 +84,7 @@ class DictationPuzzleViewModel(
 
     private suspend fun speakCurrentStep() {
         val step = currentStepOrNull() ?: return
-        speechSynthesizer.speak(step.expectedText)
+        speechSynthesizer.speakQuietly(step.expectedText)
     }
 
     fun onTileSelected(tile: LetterTile) {

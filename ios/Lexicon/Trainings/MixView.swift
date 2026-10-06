@@ -12,6 +12,7 @@ struct MixView: View {
     @State private var state: AnswerState = .unanswered
     @State private var tally = SessionTally()
     @State private var finished = false
+    @State private var loaded = false
 
     var body: some View {
         Group {
@@ -34,7 +35,7 @@ struct MixView: View {
                     }
                 }
             } else {
-                ProgressView()
+                TrainingLoadingView(isLoaded: loaded)
             }
         }
         .task { await start() }
@@ -94,6 +95,7 @@ struct MixView: View {
     }
 
     private func start() async {
+        defer { loaded = true }
         let response = try? await deps.startMix.invoke(
             request: StartMixSessionRequest(
                 stepCount: nil,

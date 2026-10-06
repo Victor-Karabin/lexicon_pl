@@ -20,6 +20,8 @@ import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.SessionTally
+import com.lexicon.presentation.common.deleteRecording
+import com.lexicon.presentation.common.speakQuietly
 import com.lexicon.presentation.common.trainingVocabularyIds
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,7 +30,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.io.File
 
 private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 400L
 private const val SKIPPED_ANSWER_ADVANCE_DELAY_MS = 700L
@@ -101,7 +102,7 @@ class PronunciationViewModel(
 
     private suspend fun speakReferenceAudio() {
         val step = currentStepOrNull() ?: return
-        runCatching { speechSynthesizer.speak(step.expectedText) }
+        speechSynthesizer.speakQuietly(step.expectedText)
     }
 
     fun onTipRequested() {
@@ -119,7 +120,7 @@ class PronunciationViewModel(
     fun onRecordRequested() {
         val state = _uiState.value as? PronunciationUiState.Loaded ?: return
         if (!state.canRecord) return
-        deleteCachedRecording(state.recordedAudioPath)
+        deleteRecording(state.recordedAudioPath)
         updateLoaded {
             it.copy(
                 recordingState = RecordingState.RECORDING,
@@ -237,7 +238,7 @@ class PronunciationViewModel(
 
     private suspend fun advanceToNextStep() {
         val state = _uiState.value as? PronunciationUiState.Loaded ?: return
-        deleteCachedRecording(state.recordedAudioPath)
+        deleteRecording(state.recordedAudioPath)
         val nextIndex = state.stepIndex + 1
         if (nextIndex >= steps.size) {
             updateLoaded { it.copy(isSessionComplete = true, isSubmitting = false) }
@@ -259,8 +260,8 @@ class PronunciationViewModel(
         return steps.getOrNull(state.stepIndex)
     }
 
-    private fun deleteCachedRecording(path: String?) {
-        path?.let { runCatching { File(it).delete() } }
+    override fun onCleared() {
+        deleteRecording((_uiState.value as? PronunciationUiState.Loaded)?.recordedAudioPath)
     }
 
     private inline fun updateLoaded(transform: (PronunciationUiState.Loaded) -> PronunciationUiState.Loaded) {

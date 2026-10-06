@@ -21,6 +21,7 @@ import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.Word
 import com.lexicon.model.vocabulary.resolve
 import com.lexicon.model.vocabulary.statusOf
+import com.lexicon.presentation.common.speakQuietly
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.FlowPreview
@@ -158,7 +159,7 @@ class VocabularyViewModel(
 
     fun onPronounceWord(word: Word) {
         viewModelScope.launch(dispatchers.io) {
-            runCatching { speechSynthesizer.speak(word.text) }
+            speechSynthesizer.speakQuietly(word.text)
         }
     }
 

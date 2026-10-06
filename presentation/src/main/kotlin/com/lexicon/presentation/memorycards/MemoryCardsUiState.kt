@@ -25,8 +25,9 @@ sealed interface MemoryCardsUiState {
         val incorrectAttempts: Int = 0,
         val answerState: AnswerState = AnswerState.Unanswered,
         val isSessionComplete: Boolean = false,
+        val isSubmitting: Boolean = false,
     ) : MemoryCardsUiState {
-        val isInteractive: Boolean get() = answerState is AnswerState.Unanswered
+        val isInteractive: Boolean get() = answerState is AnswerState.Unanswered && !isSubmitting
         val canSkip: Boolean get() = isInteractive
 
         val awaitingNext: Boolean get() = false

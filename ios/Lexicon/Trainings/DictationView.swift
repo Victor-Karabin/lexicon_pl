@@ -14,6 +14,7 @@ struct DictationView: View {
     @State private var tipUsed = false
     @State private var tally = SessionTally()
     @State private var finished = false
+    @State private var loaded = false
 
     var body: some View {
         Group {
@@ -57,13 +58,14 @@ struct DictationView: View {
                 .onChange(of: index) { speakCurrent() }
                 .onAppear { speakCurrent() }
             } else {
-                ProgressView()
+                TrainingLoadingView(isLoaded: loaded)
             }
         }
         .task { await start() }
     }
 
     private func start() async {
+        defer { loaded = true }
         let response = try? await deps.startDictation.invoke(
             request: StartDictationSessionRequest(stepCount: nil, vocabularyIds: vocabularyIds.map { KotlinLong(value: $0) })
         )

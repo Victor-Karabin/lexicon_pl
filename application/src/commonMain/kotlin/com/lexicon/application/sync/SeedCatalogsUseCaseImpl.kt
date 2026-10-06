@@ -10,6 +10,7 @@ import com.lexicon.interactors.sync.CatalogSeedStatus
 import com.lexicon.interactors.sync.SeedCatalogsUseCase
 import com.lexicon.interactors.sync.SeedStepStatus
 import com.lexicon.interactors.sync.isBlocked
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -114,6 +115,8 @@ class SeedCatalogsUseCaseImpl(
                 updated = outcome.updated,
                 removed = outcome.removed,
             )
+        } catch (error: CancellationException) {
+            throw error
         } catch (error: Exception) {
             SeedStepStatus.Failed(
                 reason = error.message ?: error::class.simpleName.orEmpty(),

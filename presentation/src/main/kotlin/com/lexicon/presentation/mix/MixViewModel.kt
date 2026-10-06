@@ -28,7 +28,9 @@ import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.SessionTally
+import com.lexicon.presentation.common.deleteRecording
 import com.lexicon.presentation.common.shuffleIntoTiles
+import com.lexicon.presentation.common.speakQuietly
 import com.lexicon.presentation.common.trainingVocabularyIds
 import com.lexicon.presentation.pronunciation.RecordingState
 import kotlinx.coroutines.delay
@@ -94,9 +96,9 @@ class MixViewModel(
                 stepTiles = step.tilesOrEmpty(),
             )
         }
-        if (step is MixStep.Dictation) speechSynthesizer.speak(step.step.expectedText)
-        if (step is MixStep.DictationPuzzle) speechSynthesizer.speak(step.step.expectedText)
-        if (step is MixStep.Pronunciation) speechSynthesizer.speak(step.step.expectedText)
+        if (step is MixStep.Dictation) speechSynthesizer.speakQuietly(step.step.expectedText)
+        if (step is MixStep.DictationPuzzle) speechSynthesizer.speakQuietly(step.step.expectedText)
+        if (step is MixStep.Pronunciation) speechSynthesizer.speakQuietly(step.step.expectedText)
     }
 
     private fun MixStep.tilesOrEmpty(): List<LetterTile> =
@@ -114,7 +116,7 @@ class MixViewModel(
             is MixStep.Pronunciation -> step.step.expectedText
             else -> return
         }
-        viewModelScope.launch(dispatchers.io) { speechSynthesizer.speak(text) }
+        viewModelScope.launch(dispatchers.io) { speechSynthesizer.speakQuietly(text) }
     }
 
     fun onAnswerChanged(text: String) {
@@ -154,6 +156,7 @@ class MixViewModel(
         viewModelScope.launch(dispatchers.io) {
             try {
                 val result = speechRecognizerService.recognize()
+                deleteRecording(result.audioFilePath)
                 updateLoaded {
                     it.copy(
                         recordingState = RecordingState.RECORDED,

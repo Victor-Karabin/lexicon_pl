@@ -4,12 +4,18 @@ import android.content.Context
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.speech.tts.Voice
+import android.util.Log
 import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.boundary.SpeechVoice
 import com.lexicon.boundary.VoiceGender
 import com.lexicon.boundary.chosen
+import kotlinx.coroutines.CancellableContinuation
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
@@ -17,25 +23,69 @@ class AndroidSpeechSynthesizer(
     private val context: Context,
     private val settings: VoicePreference,
 ) : SpeechSynthesizer {
-    private var engine: TextToSpeech? = null
+    private val engineLock = Mutex()
 
-    private suspend fun engine(): TextToSpeech =
-        engine ?: suspendCancellableCoroutine { continuation ->
+    @Volatile private var engine: TextToSpeech? = null
+    private val pending = ConcurrentHashMap<String, CancellableContinuation<Unit>>()
+
+    private suspend fun engine(): TextToSpeech = engine ?: engineLock.withLock { engine ?: createEngine().also { engine = it } }
+
+    private suspend fun createEngine(): TextToSpeech =
+        suspendCancellableCoroutine { continuation ->
             lateinit var tts: TextToSpeech
             tts =
                 TextToSpeech(context) { status ->
                     if (status == TextToSpeech.SUCCESS) {
-                        engine = tts
-                        continuation.resume(tts)
+                        tts.setOnUtteranceProgressListener(listener)
+                        if (continuation.isActive) continuation.resume(tts) else tts.shutdown()
                     } else {
+                        tts.shutdown()
                         val message = "TextToSpeech engine failed to initialize (status=$status)"
-                        continuation.resumeWithException(SpeechSynthesisFailed(message))
+                        if (continuation.isActive) continuation.resumeWithException(SpeechSynthesisFailed(message))
                     }
                 }
         }
 
+    private val listener =
+        object : UtteranceProgressListener() {
+            override fun onStart(utteranceId: String?) = Unit
+
+            override fun onDone(utteranceId: String?) {
+                finish(utteranceId)
+            }
+
+            override fun onStop(
+                utteranceId: String?,
+                interrupted: Boolean,
+            ) {
+                finish(utteranceId)
+            }
+
+            @Deprecated("Deprecated in TextToSpeech", ReplaceWith(""))
+            override fun onError(utteranceId: String?) {
+                finish(utteranceId, SpeechSynthesisFailed("Playback failed for utterance $utteranceId"))
+            }
+        }
+
+    private fun finish(
+        utteranceId: String?,
+        failure: Throwable? = null,
+    ) {
+        val continuation = utteranceId?.let { pending.remove(it) } ?: return
+        if (!continuation.isActive) return
+        if (failure == null) continuation.resume(Unit) else continuation.resumeWithException(failure)
+    }
+
     override suspend fun voices(): List<SpeechVoice> {
-        val tts = runCatching { engine() }.getOrNull() ?: return emptyList()
+        val tts =
+            try {
+                engine()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: SpeechSynthesisFailed) {
+                Log.w(TAG, "The device voice is unavailable", e)
+                return emptyList()
+            }
         return tts.voices
             .orEmpty()
             .filter { it.locale.language == POLISH.language }
@@ -64,25 +114,12 @@ class AndroidSpeechSynthesizer(
         }
         val utteranceId = UUID.randomUUID().toString()
         suspendCancellableCoroutine<Unit> { continuation ->
-            tts.setOnUtteranceProgressListener(
-                object : UtteranceProgressListener() {
-                    override fun onStart(utteranceId: String?) = Unit
-
-                    override fun onDone(utteranceId: String?) {
-                        if (continuation.isActive) continuation.resume(Unit)
-                    }
-
-                    @Deprecated("Deprecated in TextToSpeech", ReplaceWith(""))
-                    override fun onError(utteranceId: String?) {
-                        if (continuation.isActive) {
-                            continuation.resumeWithException(SpeechSynthesisFailed("Playback failed for utterance $utteranceId"))
-                        }
-                    }
-                },
-            )
-            val result = tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, utteranceId)
-            if (result == TextToSpeech.ERROR && continuation.isActive) {
-                continuation.resumeWithException(SpeechSynthesisFailed("speak() returned ERROR for \"$text\""))
+            pending[utteranceId] = continuation
+            continuation.invokeOnCancellation {
+                if (pending.remove(utteranceId) != null) tts.stop()
+            }
+            if (tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, utteranceId) == TextToSpeech.ERROR) {
+                finish(utteranceId, SpeechSynthesisFailed("speak() returned ERROR"))
             }
         }
     }
@@ -108,3 +145,5 @@ private val VOICE_NAMES = listOf(
 )
 
 class SpeechSynthesisFailed(message: String) : Exception(message)
+
+private const val TAG = "AndroidSpeechSynthesizer"

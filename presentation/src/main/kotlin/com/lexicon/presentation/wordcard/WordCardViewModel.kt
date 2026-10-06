@@ -11,6 +11,7 @@ import com.lexicon.interactors.wordcard.StartWordCardSessionRequest
 import com.lexicon.interactors.wordcard.StartWordCardSessionUseCase
 import com.lexicon.interactors.wordcard.WordCardStep
 import com.lexicon.model.vocabulary.ExampleSentence
+import com.lexicon.presentation.common.speakQuietly
 import com.lexicon.presentation.common.trainingVocabularyIds
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -82,12 +83,12 @@ class WordCardViewModel(
     fun onSpeakExample() {
         val sentence = ExampleSentence.parse(_uiState.value.current?.example.orEmpty())
         if (sentence.isBlank) return
-        viewModelScope.launch { runCatching { speechSynthesizer.speak(sentence.text) } }
+        viewModelScope.launch { speechSynthesizer.speakQuietly(sentence.text) }
     }
 
     fun onPronounce() {
         val card = _uiState.value.current ?: return
-        viewModelScope.launch { runCatching { speechSynthesizer.speak(card.text) } }
+        viewModelScope.launch { speechSynthesizer.speakQuietly(card.text) }
     }
 
     private fun recordCurrent() {

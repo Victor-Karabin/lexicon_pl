@@ -21,6 +21,7 @@ import com.lexicon.interactors.presets.WordDraftProblem
 import com.lexicon.model.vocabulary.ExampleSentence
 import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.presentation.common.speakQuietly
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -102,6 +103,7 @@ class CreateWordViewModel(
     private val presetJobs = mutableMapOf<PresetId, Job>()
 
     private var shownImages = 0
+    private var imageQuery = ""
 
     private var textWasFilledIn = false
     private var translationWasFilledIn = false
@@ -198,7 +200,7 @@ class CreateWordViewModel(
     fun onExamplePlayed() {
         val sentence = _uiState.value.sentence
         if (sentence.isBlank) return
-        viewModelScope.launch { runCatching { speechSynthesizer.speak(sentence.text) } }
+        viewModelScope.launch { speechSynthesizer.speakQuietly(sentence.text) }
     }
 
     /**
@@ -239,7 +241,7 @@ class CreateWordViewModel(
 
     fun onMoreImages() {
         val state = _uiState.value
-        val query = state.translation
+        val query = imageQuery
         if (query.isBlank() || state.isLoadingImages || !state.hasMoreImages) return
 
         _uiState.update { it.copy(isLoadingImages = true) }
@@ -350,6 +352,7 @@ class CreateWordViewModel(
         query: String,
         pinned: String? = null,
     ) {
+        imageQuery = query
         if (query.isBlank()) {
             _uiState.update { it.copy(isLoadingImages = false) }
             return
@@ -379,6 +382,7 @@ class CreateWordViewModel(
         imageJob?.cancel()
         moreImagesJob?.cancel()
         shownImages = 0
+        imageQuery = query
         if (query.isBlank()) {
             _uiState.update {
                 it.copy(

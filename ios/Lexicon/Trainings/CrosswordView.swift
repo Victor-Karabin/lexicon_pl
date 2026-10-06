@@ -11,12 +11,13 @@ struct CrosswordView: View {
     @State private var results: [Int64: StepOutcome] = [:]
     @State private var tally = SessionTally()
     @State private var finished = false
+    @State private var loaded = false
 
     var body: some View {
         Group {
             if finished {
                 SessionResultView(tally: tally) { dismiss() }
-            } else if let session {
+            } else if let session, !session.words.isEmpty {
                 ScrollView {
                     VStack(spacing: Spacing.medium) {
                         grid(session)
@@ -32,7 +33,7 @@ struct CrosswordView: View {
                     .padding(Spacing.medium)
                 }
             } else {
-                ProgressView()
+                TrainingLoadingView(isLoaded: loaded)
             }
         }
         .task { await start() }
@@ -107,6 +108,7 @@ struct CrosswordView: View {
     }
 
     private func start() async {
+        defer { loaded = true }
         session = try? await deps.startCrossword.invoke(
             request: StartCrosswordSessionRequest(
                 wordCount: deps.crosswordWordCount,

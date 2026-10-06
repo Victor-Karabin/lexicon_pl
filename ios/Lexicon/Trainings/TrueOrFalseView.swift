@@ -11,6 +11,7 @@ struct TrueOrFalseView: View {
     @State private var state: AnswerState = .unanswered
     @State private var tally = SessionTally()
     @State private var finished = false
+    @State private var loaded = false
 
     var body: some View {
         Group {
@@ -43,13 +44,14 @@ struct TrueOrFalseView: View {
                     }
                 }
             } else {
-                ProgressView()
+                TrainingLoadingView(isLoaded: loaded)
             }
         }
         .task { await start() }
     }
 
     private func start() async {
+        defer { loaded = true }
         let response = try? await deps.startTrueOrFalse.invoke(
             request: StartTrueOrFalseSessionRequest(
                 poolSize: deps.trueOrFalsePoolSize,

@@ -15,6 +15,7 @@ import com.lexicon.interactors.passage.SubmitPassageAnswersUseCase
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.WordResultEntry
+import com.lexicon.presentation.common.speakQuietly
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -106,7 +107,7 @@ class PassageViewModel(
                         is PassageSegment.Text -> segment.text
                         is PassageSegment.Gap -> segment.answer
                     }
-                    if (spoken.isNotBlank()) runCatching { speechSynthesizer.speak(spoken) }
+                    if (spoken.isNotBlank()) speechSynthesizer.speakQuietly(spoken)
                     if (segment is PassageSegment.Gap) delay(GAP_PAUSE_MS)
                 }
                 delay(SENTENCE_PAUSE_MS)

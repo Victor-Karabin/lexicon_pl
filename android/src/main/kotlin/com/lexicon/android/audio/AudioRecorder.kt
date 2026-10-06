@@ -6,6 +6,7 @@ import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.util.Log
 import com.lexicon.common.DispatcherProvider
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -68,7 +69,7 @@ class AndroidAudioRecorder(
                 return@withContext null
             }
 
-            val pcm = runCatching { recorder.capture(minimum) }
+            val pcm = runCatching { recorder.capture(minimum) { isActive } }
                 .onFailure { failure -> Log.e(TAG, "Recording failed", failure) }
                 .getOrNull()
             runCatching { recorder.stop() }
@@ -79,7 +80,10 @@ class AndroidAudioRecorder(
             pcm?.takeIf { it.isNotEmpty() }?.let { writeWav(it) }
         }
 
-    private fun AudioRecord.capture(bufferSize: Int): ByteArray {
+    private fun AudioRecord.capture(
+        bufferSize: Int,
+        keepGoing: () -> Boolean,
+    ): ByteArray {
         val out = ByteArrayOutputStream()
         val buffer = ByteArray(bufferSize)
         val started = System.currentTimeMillis()
@@ -87,7 +91,7 @@ class AndroidAudioRecorder(
         var quietSince: Long? = null
 
         startRecording()
-        while (true) {
+        while (keepGoing()) {
             val read = read(buffer, 0, buffer.size)
             if (read <= 0) break
             out.write(buffer, 0, read)

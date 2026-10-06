@@ -17,6 +17,7 @@ import com.lexicon.presentation.common.TRAINING_WORDS_ARG
 import com.lexicon.presentation.common.WordResultEntry
 import com.lexicon.presentation.common.asTrainingWordsArgument
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -25,6 +26,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -114,5 +116,28 @@ class MemoryCardsViewModelTest {
                 assertEquals(0, event.incorrect)
                 assertEquals(1, event.skipped)
             }
+        }
+
+    @Test
+    fun `skip is refused while the matched board is being submitted, so the next board is not jumped over`() =
+        runTest {
+            val oneStep = session().steps.single()
+            coEvery { startUseCase(any()) } returns
+                session().copy(steps = listOf(oneStep, oneStep.copy(stepIndex = 1)))
+            coEvery { submitUseCase(any()) } returns SubmitMemoryCardsStepResultResponse(StepOutcome.CORRECT)
+
+            val viewModel = viewModel()
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            viewModel.onCardSelected(0)
+            viewModel.onCardSelected(1)
+            assertFalse((viewModel.uiState.value as MemoryCardsUiState.Loaded).canSkip)
+            viewModel.onSkip()
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            coVerify(exactly = 1) { submitUseCase(any()) }
+            val state = viewModel.uiState.value as MemoryCardsUiState.Loaded
+            assertEquals(1, state.stepIndex)
+            assertTrue(state.canSkip)
         }
 }

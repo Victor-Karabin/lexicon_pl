@@ -14,6 +14,7 @@ import com.lexicon.model.vocabulary.ExampleSentence
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
 import com.lexicon.model.vocabulary.WordStatus
+import com.lexicon.presentation.common.speakQuietly
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf
@@ -116,7 +117,7 @@ class ReviewWordsViewModel(
 
     fun onPronounce() {
         val word = _uiState.value.current ?: return
-        viewModelScope.launch(dispatchers.io) { runCatching { speechSynthesizer.speak(word.text) } }
+        viewModelScope.launch(dispatchers.io) { speechSynthesizer.speakQuietly(word.text) }
     }
 
     fun onSpeakExample() {
@@ -124,7 +125,7 @@ class ReviewWordsViewModel(
         val sentence = ExampleSentence.of(word.example, word = word.text)
         if (sentence.isBlank) return
 
-        viewModelScope.launch(dispatchers.io) { runCatching { speechSynthesizer.speak(sentence.text) } }
+        viewModelScope.launch(dispatchers.io) { speechSynthesizer.speakQuietly(sentence.text) }
     }
 
     private suspend fun advance() {
