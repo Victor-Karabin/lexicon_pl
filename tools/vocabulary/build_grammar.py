@@ -1,25 +1,28 @@
 #!/usr/bin/env python3
-"""Writes the grammar every shipped word needs, using OpenAI.
+"""Writes the grammar every shipped word needs, from SGJP first and OpenAI only for the rest.
 
 Run from anywhere:  python3 tools/vocabulary/build_grammar.py
 
 Reads
-    local.properties                        openai.apiKey
+    tools/vocabulary/.cache/sgjp-*.tab.gz   the Grammatical Dictionary of Polish, see sgjp.py
+    local.properties                        openai.apiKey, only when SGJP leaves words open
     tools/vocabulary/corpus/**/*.tsv        the words and their part of speech
     tools/vocabulary/examples.tsv           each word's example sentence, as context
     data/src/androidMain/assets/conjugations.json
 
 Writes
-    tools/vocabulary/grammar.tsv            word, gloss, gender, plural, adjective forms
-    data/src/androidMain/assets/conjugations.json   conjugations for verbs that had none
+    tools/vocabulary/grammar.tsv            word, gloss, gender, declension, adjective forms
+    data/src/androidMain/assets/conjugations.json   present tense and aspect of every verb
 
 Then run build_assets.py to fold grammar.tsv into vocabulary_pl.json.
 
-A learner meeting kot needs to know it is a masculine noun that goes kot, kota, kotu, and
-meeting dobry needs dobra, dobre and dobrzy. The part of speech already ships; the
-forms did not exist anywhere. Verbs are the exception: conjugations.json already holds
-the present tense for most of them, and the verb trainings read it, so the verbs
-missing from it are written back into that same file rather than into a second place.
+SGJP is the reference grammar of Polish, maintained at the Polish Academy of Sciences:
+it knows that mąż is masculine personal, that stół gives stołowi and nazywać gives
+nazywają, and whether a verb is perfective. An earlier version of this script asked
+OpenAI for all of it and shipped hundreds of wrong forms, and left a third of the verbs
+without any conjugation. OpenAI now answers only for what SGJP does not cover: words it
+does not list, homonyms it cannot tell apart without a meaning, and nouns that have no
+plural in normal use, which SGJP does not mark.
 
 Answers are cached in tools/vocabulary/.grammar-cache.json. Pass --refresh to ask again.
 """
@@ -30,6 +33,7 @@ import argparse
 import json
 import sys
 
+import sgjp
 from build_examples import BATCH, CONJUGATIONS, TOOLS, BuildError, api_key, corpus_entries, entry_key, entry_lines, read_tsv, request
 
 GRAMMAR = TOOLS / "grammar.tsv"
@@ -37,9 +41,11 @@ CACHE = TOOLS / ".grammar-cache.json"
 
 GENDERS = {"masculine personal", "masculine animate", "masculine inanimate", "feminine", "neuter", "plural only"}
 
-CASES = ["nominative", "genitive", "dative", "accusative", "instrumental", "locative", "vocative"]
+CASES = list(sgjp.CASES)
 
-PERSONS = ["ja", "ty", "on/ona/ono", "my", "wy", "oni/one"]
+PERSONS = list(sgjp.PERSONS)
+
+ADJECTIVE_FIELDS = ["masculine", "feminine", "neuter", "pluralPersonal", "pluralOther"]
 
 NOUN_PROMPT = """For each Polish noun below, give its gender and its declension.
 
@@ -134,7 +140,7 @@ def usable_noun(reply: dict[str, str]) -> bool:
 
 def warm(key: str, pending: list[dict], prompt: str, fields: list[str], cache: dict, label: str) -> None:
     if not pending:
-        print(f"  {label}: already written")
+        print(f"  {label}: nothing to ask OpenAI")
         return
 
     for start in range(0, len(pending), BATCH):
@@ -144,7 +150,7 @@ def warm(key: str, pending: list[dict], prompt: str, fields: list[str], cache: d
             reply = written.get(entry_key(entry))
             if isinstance(reply, dict):
                 cache[entry_key(entry)] = cleaned(reply, fields)
-        print(f"  {label}: {min(start + BATCH, len(pending))}/{len(pending)}", end="\r", flush=True)
+        print(f"  {label}: {min(start + BATCH, len(pending))}/{len(pending)} asked of OpenAI", end="\r", flush=True)
         save(cache)
     print()
 
@@ -153,62 +159,108 @@ def save(cache: dict) -> None:
     CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=0, sort_keys=True), encoding="utf-8")
 
 
-def write_grammar(words: list[dict], cache: dict) -> None:
+def cached_cases(answer: dict | None) -> dict[str, tuple[str, str]]:
+    if not answer:
+        return {}
+    cases = {}
+    for case in CASES:
+        singular, _, plural = answer.get(case, "").partition("/")
+        cases[case] = (singular.strip(), plural.strip())
+    return cases
+
+
+def ambiguous(candidates: list[sgjp.Lexeme]) -> bool:
+    plain = [lexeme for lexeme in candidates if lexeme.part_of_speech == "n" and not lexeme.qualifiers]
+    shapes = {(lexeme.gender, tuple(map(tuple, sgjp.declension(lexeme)["nominative"]))) for lexeme in plain}
+    return len(shapes) > 1
+
+
+def noun_from_sgjp(word: str, lexicon: dict, cached: dict | None) -> dict | None:
+    candidates = [lexeme for lexeme in lexicon.get(word, []) if lexeme.part_of_speech == "n"]
+    if not candidates:
+        return None
+    ours = cached_cases(cached)
+    if ours:
+        gender = cached.get("gender", "")
+        lexeme = sgjp.closest(
+            candidates,
+            "n",
+            lambda candidate: sgjp.noun_mismatches(candidate, ours) + ([gender] if candidate.gender != gender else []),
+        )
+    elif ambiguous(candidates):
+        return None
+    else:
+        lexeme = sgjp.best(candidates, "n")
+    if lexeme is None or lexeme.gender is None:
+        return None
+
+    singular_only = bool(ours) and not any(plural for _, plural in ours.values())
+    answer = {"gender": lexeme.gender}
+    for case, (singular, plural) in sgjp.declension(lexeme).items():
+        first_singular = singular[0] if singular else ""
+        first_plural = "" if singular_only else (plural[0] if plural else "")
+        answer[case] = f"{first_singular}/{first_plural}"
+    if not answer["nominative"].strip("/"):
+        return None
+    return answer
+
+
+def adjective_from_sgjp(word: str, lexicon: dict) -> dict | None:
+    lexeme = sgjp.best(lexicon.get(word, []), "adj")
+    if lexeme is None:
+        return None
+    forms = sgjp.adjective_forms(lexeme)
+    answer = {name: (forms[name][0] if forms[name] else "") for name in ADJECTIVE_FIELDS}
+    return answer if all(answer.values()) else None
+
+
+def verb_from_sgjp(infinitive: str, lexicon: dict, existing: dict | None) -> tuple[dict, str | None] | None:
+    lemma, reflexive = sgjp.verb_lemma(infinitive)
+    candidates = [lexeme for lexeme in lexicon.get(lemma, []) if lexeme.part_of_speech == "v"]
+    if not candidates:
+        return None
+    mine = {person: sgjp.variants((existing or {}).get(person) or "") for person in PERSONS}
+    if any(mine.values()):
+        lexeme = sgjp.closest(
+            candidates,
+            "v",
+            lambda candidate: [
+                person
+                for person, forms in sgjp.present_tense(candidate).items()
+                if mine[person] and not set(mine[person]) <= set(forms)
+            ],
+        )
+    else:
+        lexeme = sgjp.best(candidates, "v")
+    if lexeme is None:
+        return None
+    tense = sgjp.present_tense(lexeme)
+    if not any(tense.values()):
+        return None
+    forms = {person: "; ".join(form + reflexive for form in tense[person]) for person in PERSONS}
+    return forms, lexeme.aspect
+
+
+def write_grammar(lines_in: list[tuple[dict, dict]]) -> None:
     lines = [
-        "# Generated by build_grammar.py. Columns: polish <TAB> english <TAB> gender <TAB> declension "
-        "(seven cases, ; between cases, singular|plural) <TAB> masculine <TAB> feminine <TAB> neuter "
-        "<TAB> plural personal <TAB> plural other."
+        "# Generated by build_grammar.py from SGJP, with OpenAI for what SGJP lacks. Columns: polish <TAB> english "
+        "<TAB> gender <TAB> declension (seven cases, ; between cases, singular|plural) <TAB> masculine <TAB> "
+        "feminine <TAB> neuter <TAB> plural personal <TAB> plural other."
     ]
-    nouns = adjectives = 0
-    for entry in words:
-        answer = cache.get(entry_key(entry))
-        if not answer:
-            continue
-        if entry["pos"] == "n" and usable_noun(answer):
+    for entry, answer in lines_in:
+        if entry["pos"] == "n":
             cases = ";".join(answer.get(case, "").replace("/", "|") for case in CASES)
             lines.append(f"{entry['word']}\t{entry['gloss']}\t{answer['gender']}\t{cases}\t\t\t\t\t")
-            nouns += 1
-        elif entry["pos"] == "adj" and answer.get("masculine"):
-            forms = [answer["masculine"], answer["feminine"], answer["neuter"], answer["pluralPersonal"], answer["pluralOther"]]
+        else:
+            forms = [answer[name] for name in ADJECTIVE_FIELDS]
             lines.append(f"{entry['word']}\t{entry['gloss']}\t\t\t" + "\t".join(forms))
-            adjectives += 1
     GRAMMAR.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"grammar.tsv: {nouns} nouns, {adjectives} adjectives")
-
-
-def write_conjugations(verbs: list[dict], cache: dict, sentences: dict[str, str]) -> None:
-    entries = json.loads(CONJUGATIONS.read_text(encoding="utf-8"))
-    known = {entry.get("bezokolicznik") for entry in entries}
-    added = 0
-    for entry in verbs:
-        answer = cache.get(entry_key(entry))
-        if entry["word"] in known or not answer or not any(answer.get(person) for person in PERSONS):
-            continue
-        entries.append(
-            {
-                "bezokolicznik": entry["word"],
-                **{person: answer.get(person, "") for person in PERSONS},
-                "translation": entry["gloss"],
-                "example": sentences.get(entry_key(entry), ""),
-            }
-        )
-        added += 1
-    if added:
-        entries.sort(key=lambda it: it.get("bezokolicznik", ""))
-        CONJUGATIONS.write_text(json.dumps(entries, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"conjugations.json: {added} verbs added, {len(entries)} in total")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--refresh", action="store_true", help="ignore the cache and ask again for everything")
+    parser.add_argument("--refresh", action="store_true", help="ignore the cache and ask OpenAI again")
     arguments = parser.parse_args()
-
-    try:
-        key = api_key()
-    except BuildError as error:
-        print(f"error: {error}", file=sys.stderr)
-        return 1
 
     cache: dict[str, dict] = {}
     if CACHE.exists() and not arguments.refresh:
@@ -219,29 +271,106 @@ def main() -> int:
     for entry in words:
         entry["example"] = sentences.get(entry_key(entry), "")
 
-    conjugated = {entry.get("bezokolicznik") for entry in json.loads(CONJUGATIONS.read_text(encoding="utf-8"))}
+    conjugations = json.loads(CONJUGATIONS.read_text(encoding="utf-8"))
+    by_infinitive = {verb.get("bezokolicznik"): verb for verb in conjugations}
     nouns = [e for e in words if e["pos"] == "n"]
     adjectives = [e for e in words if e["pos"] == "adj"]
-    verbs = [e for e in words if e["pos"] == "v" and e["word"] not in conjugated]
-    pending = lambda group: [e for e in group if entry_key(e) not in cache]  # noqa: E731
+    new_verbs = [e for e in words if e["pos"] == "v" and e["word"] not in by_infinitive]
 
-    print(f"{len(nouns)} nouns, {len(adjectives)} adjectives, {len(verbs)} verbs without a conjugation")
+    lemmas = {e["word"] for e in nouns + adjectives}
+    lemmas |= {sgjp.verb_lemma(infinitive)[0] for infinitive in by_infinitive if infinitive}
+    lemmas |= {sgjp.verb_lemma(e["word"])[0] for e in new_verbs}
     try:
-        warm(key, pending(nouns), NOUN_PROMPT, ["gender"] + CASES, cache, "nouns")
-        warm(key, pending(adjectives), ADJECTIVE_PROMPT, ["masculine", "feminine", "neuter", "pluralPersonal", "pluralOther"], cache, "adjectives")
-        warm(key, pending(verbs), VERB_PROMPT, PERSONS, cache, "verbs")
-    except BuildError as error:
-        save(cache)
+        lexicon = sgjp.load(lemmas)
+    except FileNotFoundError as error:
         print(f"error: {error}", file=sys.stderr)
         return 1
 
-    save(cache)
-    write_grammar(words, cache)
-    write_conjugations(verbs, cache, sentences)
+    from_sgjp = {
+        entry_key(e): answer
+        for e in nouns
+        if (answer := noun_from_sgjp(e["word"], lexicon, cache.get(entry_key(e)))) is not None
+    }
+    from_sgjp |= {
+        entry_key(e): answer for e in adjectives if (answer := adjective_from_sgjp(e["word"], lexicon)) is not None
+    }
 
-    missing = [e for e in nouns + adjectives + verbs if entry_key(e) not in cache]
-    if missing:
-        print(f"{len(missing)} words got no reply; run again to fill them in")
+    open_nouns = [e for e in nouns if entry_key(e) not in from_sgjp and entry_key(e) not in cache]
+    open_adjectives = [e for e in adjectives if entry_key(e) not in from_sgjp and entry_key(e) not in cache]
+    open_verbs = [
+        e for e in new_verbs if verb_from_sgjp(e["word"], lexicon, None) is None and entry_key(e) not in cache
+    ]
+    print(f"{len(nouns)} nouns, {len(adjectives)} adjectives, {len(conjugations)} verbs, {len(new_verbs)} new verbs")
+    print(f"  SGJP answers {len(from_sgjp)} nouns and adjectives; OpenAI is needed for {len(open_nouns) + len(open_adjectives) + len(open_verbs)}")
+
+    if open_nouns or open_adjectives or open_verbs:
+        try:
+            key = api_key()
+            warm(key, open_nouns, NOUN_PROMPT, ["gender"] + CASES, cache, "nouns")
+            warm(key, open_adjectives, ADJECTIVE_PROMPT, ADJECTIVE_FIELDS, cache, "adjectives")
+            warm(key, open_verbs, VERB_PROMPT, PERSONS, cache, "verbs")
+        except BuildError as error:
+            save(cache)
+            print(f"warning: {error}; those words keep no grammar until this runs again", file=sys.stderr)
+        save(cache)
+
+    rows: list[tuple[dict, dict]] = []
+    sources = {"SGJP": 0, "OpenAI": 0}
+    for entry in nouns + adjectives:
+        answer = from_sgjp.get(entry_key(entry))
+        source = "SGJP"
+        if answer is None:
+            answer = cache.get(entry_key(entry))
+            source = "OpenAI"
+            if entry["pos"] == "n" and noun_from_sgjp(entry["word"], lexicon, answer) is not None:
+                answer = noun_from_sgjp(entry["word"], lexicon, answer)
+                source = "SGJP"
+        if not answer:
+            continue
+        if entry["pos"] == "n" and not usable_noun(answer):
+            continue
+        if entry["pos"] == "adj" and not answer.get("masculine"):
+            continue
+        rows.append((entry, answer))
+        sources[source] += 1
+    write_grammar(rows)
+    print(f"grammar.tsv: {len(rows)} words, {sources['SGJP']} from SGJP, {sources['OpenAI']} from OpenAI")
+
+    verb_sources = {"SGJP": 0, "kept": 0, "added": 0}
+    for verb in conjugations:
+        infinitive = verb.get("bezokolicznik", "")
+        found = verb_from_sgjp(infinitive, lexicon, verb) if infinitive else None
+        if found is None:
+            verb.pop("aspect", None)
+            verb_sources["kept"] += 1
+            continue
+        forms, aspect = found
+        verb.update(forms)
+        if aspect:
+            verb["aspect"] = aspect
+        else:
+            verb.pop("aspect", None)
+        verb_sources["SGJP"] += 1
+    for entry in new_verbs:
+        found = verb_from_sgjp(entry["word"], lexicon, None)
+        if found is not None:
+            forms, aspect = found
+        else:
+            answer = cache.get(entry_key(entry))
+            if not answer or not any(answer.get(person) for person in PERSONS):
+                continue
+            forms, aspect = {person: answer.get(person, "") for person in PERSONS}, None
+        added = {"bezokolicznik": entry["word"], **forms, "translation": entry["gloss"], "example": sentences.get(entry_key(entry), "")}
+        if aspect:
+            added["aspect"] = aspect
+        conjugations.append(added)
+        verb_sources["added"] += 1
+    conjugations.sort(key=lambda it: it.get("bezokolicznik", ""))
+    CONJUGATIONS.write_text(json.dumps(conjugations, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(
+        f"conjugations.json: {len(conjugations)} verbs, {verb_sources['SGJP']} from SGJP, "
+        f"{verb_sources['kept']} kept as they were, {verb_sources['added']} added"
+    )
     return 0
 
 

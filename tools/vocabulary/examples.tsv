@@ -750,7 +750,7 @@ korzeń	root	Ten **korzeń** jest gruby.
 nasiono	kernel	W ziemi leży małe **nasiono**.
 trawa	grass	Na łące rośnie **trawa**.
 krzak	bush	Za **krzakiem** stoi pies.
-mech	down	Na kamieniu rośnie **mech**.
+mech	moss	Na kamieniu rośnie **mech**.
 grzyb	mushroom	Zebrałem jeden **grzyb**.
 paproć	fern	W lesie rośnie **paproć**.
 dąb	oak	Stoi stary **dąb**.
@@ -1981,7 +1981,7 @@ rodzice	parents	Moi **rodzice** są w domu.
 rodzeństwo	siblings	Mam troje **rodzeństwa**.
 bliźniak	twin	Mój **bliźniak** jest wyższy.
 krewny	relative	Ten **krewny** mieszka daleko.
-chrzestny	cartilaginous	Lekarz bada **chrzęstny** staw.
+chrzestny	godfather	Mój **chrzestny** przyjechał na chrzciny.
 miłość	love	**Miłość** jest ważna.
 przyjaźń	friendship	Nasza **przyjaźń** trwa długo.
 związek	relationship	Ich **związek** jest udany.

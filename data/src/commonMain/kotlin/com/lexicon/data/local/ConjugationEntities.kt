@@ -15,6 +15,7 @@ data class ConjugationVerbEntity(
     val formsJson: String,
     val example: String = "",
     val isUserCreated: Boolean = false,
+    val aspect: String = "",
 )
 
 @Entity(tableName = "conjugation_course")

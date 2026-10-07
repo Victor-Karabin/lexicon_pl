@@ -1,6 +1,7 @@
 package com.lexicon.data.local
 
 import com.lexicon.boundary.VerbConjugationBoundary
+import com.lexicon.model.vocabulary.Aspect
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -10,7 +11,9 @@ import java.io.File
 private const val SAMPLE = """
 [
   {"bezokolicznik":"chodzić","translation":"to walk","ja":"chodzę","ty":"chodzisz","on/ona/ono":"chodzi",
-   "my":"chodzimy","wy":"chodzicie","oni/one":"chodzą"},
+   "my":"chodzimy","wy":"chodzicie","oni/one":"chodzą","aspect":"imperfective"},
+  {"bezokolicznik":"kupić","ja":"kupię","ty":"kupisz","on/ona/ono":"kupi",
+   "my":"kupimy","wy":"kupicie","oni/one":"kupią","aspect":"perfective"},
   {"bezokolicznik":"być","ja":"jestem","ty":"jesteś","on/ona/ono":"jest",
    "my":"jesteśmy","wy":"jesteście","oni/one":"są"},
   {"bezokolicznik":"bać się","ja":"boję się","ty":"boisz się","on/ona/ono":"boi się",
@@ -36,6 +39,13 @@ class ConjugationAssetLoaderTest {
         assertEquals(6, of("chodzić").forms.size)
         assertEquals(listOf("chodzę"), of("chodzić").forms[PERSON_JA])
         assertEquals(listOf("chodzą"), of("chodzić").forms[PERSON_ONI])
+    }
+
+    @Test
+    fun `the aspect is read when the verb has one and left unknown when it does not`() {
+        assertEquals(Aspect.IMPERFECTIVE, of("chodzić").aspect)
+        assertEquals(Aspect.PERFECTIVE, of("kupić").aspect)
+        assertNull(of("być").aspect)
     }
 
     @Test
@@ -100,5 +110,7 @@ class ConjugationAssetLoaderTest {
         assertTrue(parsed.any { it.forms.isEmpty() })
         assertTrue(parsed.any { it.infinitive.endsWith(" się") })
         assertTrue("every verb should carry a translation", parsed.all { !it.translation.isNullOrBlank() })
+        assertTrue("SGJP conjugates nearly every verb", parsed.count { it.forms.size == PERSON_KEYS.size } > 4_300)
+        assertTrue("SGJP gives nearly every verb its aspect", parsed.count { it.aspect != null } > 4_300)
     }
 }

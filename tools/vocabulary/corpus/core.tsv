@@ -753,7 +753,7 @@ korzeń	root	n	B1	plants
 nasiono	kernel	n	B1	plants
 trawa	grass	n	A1	plants,nature
 krzak	bush	n	B1	plants,nature
-mech	down	n	B2	plants,forest
+mech	moss	n	B2	plants,forest
 grzyb	mushroom	n	A2	plants,forest,food
 paproć	fern	n	C1	plants,forest
 dąb	oak	n	A2	trees,forest

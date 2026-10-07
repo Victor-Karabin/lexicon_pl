@@ -17,6 +17,7 @@ import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.FitnessCenter
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -170,6 +171,24 @@ private fun SettingsScreenContent(
                 selectedId = settings.voiceId,
                 skin = skin,
                 onVoiceSelected = onVoiceSelected,
+            )
+        }
+
+        GradientTile(skin = skin) {
+            SettingHeading(
+                icon = Icons.Default.Info,
+                text = stringResource(R.string.settings_sources),
+                skin = skin,
+            )
+            Text(
+                text = stringResource(R.string.settings_sources_sgjp),
+                style = MaterialTheme.typography.bodyMedium,
+                color = skin.onTile,
+            )
+            Text(
+                text = stringResource(R.string.settings_sources_sgjp_licence),
+                style = MaterialTheme.typography.bodySmall,
+                color = skin.muted(),
             )
         }
     }

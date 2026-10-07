@@ -643,7 +643,7 @@
   "example": "Mój **dom** jest blisko.",
   "picture": "family house exterior",
   "gender": "masculine inanimate",
-  "declension": "dom|domy;domu|domów;domowi|domom;dom|domy;domem|domami;domu|domach;domu|domy"
+  "declension": "dom|domy;domu|domów;domowi|domom;dom|domy;domem|domami;domu|domach;domie|domy"
  },
  {
   "id": 49,
@@ -658,7 +658,7 @@
   "example": "**Świat** jest duży.",
   "picture": "Earth from space",
   "gender": "masculine inanimate",
-  "declension": "świat|światy;świata|światów;światowi|światom;świat|światy;światem|światami;świecie|światach;świecie|światy"
+  "declension": "świat|światy;świata|światów;światu|światom;świat|światy;światem|światami;świecie|światach;świecie|światy"
  },
  {
   "id": 50,
@@ -1497,7 +1497,7 @@
    "cały",
    "cała",
    "całe",
-   "cały",
+   "cali",
    "całe"
   ]
  },
@@ -1719,7 +1719,7 @@
   "example": "Moja **siostra** czyta książkę.",
   "picture": "girl reading book",
   "gender": "feminine",
-  "declension": "siostra|siostry;siostry|siostr;siostrze|siostrom;siostrę|siostry;siostrą|siostrami;siostrze|siostrach;siostro|siostry"
+  "declension": "siostra|siostry;siostry|sióstr;siostrze|siostrom;siostrę|siostry;siostrą|siostrami;siostrze|siostrach;siostro|siostry"
  },
  {
   "id": 129,
@@ -1780,7 +1780,7 @@
   "example": "Mój **tata** pracuje dziś.",
   "picture": "man working at desk",
   "gender": "masculine personal",
-  "declension": "tata|tatusiowie;taty|tatusiów;tacie|tatusiom;tatę|tatusiów;tatą|tatusiami;tacie|tatusiach;tato|tatusiowie"
+  "declension": "tata|tatowie;taty|tatów;tacie|tatom;tatę|tatów;tatą|tatami;tacie|tatach;tato|tatowie"
  },
  {
   "id": 133,
@@ -1811,7 +1811,7 @@
   "example": "**Rano** piję herbatę.",
   "picture": "morning tea cup",
   "gender": "neuter",
-  "declension": "rano|rana;rano|ran;ranu|ranom;rano|rana;ranem|ranami;ranie|ranach;rano|rana"
+  "declension": "rano|rana;rana|ran;ranu|ranom;rano|rana;ranem|ranami;ranie|ranach;rano|rana"
  },
  {
   "id": 135,
@@ -1826,7 +1826,7 @@
   "example": "**Wieczorem** oglądam film.",
   "picture": "evening movie watching",
   "gender": "masculine inanimate",
-  "declension": "wieczór|wieczory;wieczoru|wieczorów;wieczorowi|wieczorom;wieczór|wieczory;wieczorem|wieczorami;wieczorze|wieczorach;wieczorze|wieczory"
+  "declension": "wieczór|wieczory;wieczora|wieczorów;wieczorowi|wieczorom;wieczór|wieczory;wieczorem|wieczorami;wieczorze|wieczorach;wieczorze|wieczory"
  },
  {
   "id": 136,
@@ -2053,7 +2053,7 @@
   "example": "To **wino** jest czerwone.",
   "picture": "glass of red wine",
   "gender": "neuter",
-  "declension": "wino|wina;wina|Win;winu|winom;wino|wina;winem|winami;winie|winach;wino|wina"
+  "declension": "wino|wina;wina|win;winu|winom;wino|wina;winem|winami;winie|winach;wino|wina"
  },
  {
   "id": 151,
@@ -2238,7 +2238,7 @@
   "example": "Na chlebie jest **masło**.",
   "picture": "butter on bread",
   "gender": "neuter",
-  "declension": "masło|masła;masła|masł;maśle|masłom;masło|masła;masłem|masłami;maśle|masłach;masło|masła"
+  "declension": "masło|masła;masła|maseł;masłu|masłom;masło|masła;masłem|masłami;maśle|masłach;masło|masła"
  },
  {
   "id": 163,
@@ -2269,7 +2269,7 @@
   "example": "Mamy dobry **obiad**.",
   "picture": "family lunch",
   "gender": "masculine inanimate",
-  "declension": "obiad|obiady;obiadu|obiadów;obiadowi|obiadom;obiad|obiady;obiadem|obiadami;obiedzie|obiadach;obiadzie|obiady"
+  "declension": "obiad|obiady;obiadu|obiadów;obiadowi|obiadom;obiad|obiady;obiadem|obiadami;obiedzie|obiadach;obiedzie|obiady"
  },
  {
   "id": 165,
@@ -2622,7 +2622,7 @@
   "example": "Ten **uczeń** pisze dobrze.",
   "picture": "schoolboy writing",
   "gender": "masculine personal",
-  "declension": "uczeń|uczniowie;ucznia|uczniów;uczniowi|uczniom;ucznia|uczniów;uczniem|uczniami;uczniu|uczniach;uczniu|uczniowie"
+  "declension": "uczeń|uczniowie;ucznia|uczni;uczniowi|uczniom;ucznia|uczni;uczniem|uczniami;uczniu|uczniach;uczniu|uczniowie"
  },
  {
   "id": 188,
@@ -3640,7 +3640,7 @@
   "example": "Mój **cel** jest jasny.",
   "picture": "person aiming target",
   "gender": "masculine inanimate",
-  "declension": "cel|cele;celu|celów;celowi|celom;cel|cele;celem|celami;celu|celach;celo|cele"
+  "declension": "cel|cele;celu|celów;celowi|celom;cel|cele;celem|celami;celu|celach;celu|cele"
  },
  {
   "id": 266,
@@ -3710,7 +3710,7 @@
   ],
   "example": "**Rząd** podał nowe informacje.",
   "picture": "government building",
-  "gender": "masculine personal",
+  "gender": "masculine inanimate",
   "declension": "rząd|rządy;rządu|rządów;rządowi|rządom;rząd|rządy;rządem|rządami;rządzie|rządach;rządzie|rządy"
  },
  {
@@ -3910,7 +3910,7 @@
   "example": "Słucham **radia** w aucie.",
   "picture": "person listening radio",
   "gender": "neuter",
-  "declension": "radio|radia;radia|radi;radiu|radiom;radio|radia;radiem|radiami;radiu|radiach;radio|radia"
+  "declension": "radio|radia;radia|radiów;radiu|radiom;radio|radia;radiem|radiami;radiu|radiach;radio|radia"
  },
  {
   "id": 284,
@@ -4109,7 +4109,7 @@
   "example": "Ten **kwiat** pachnie ładnie.",
   "picture": "flower in bloom",
   "gender": "masculine inanimate",
-  "declension": "kwiat|kwiaty;kwiatu|kwiatów;kwiatowi|kwiatom;kwiat|kwiaty;kwiatem|kwiatami;kwiecie|kwiatach;kwiacie|kwiaty"
+  "declension": "kwiat|kwiaty;kwiatu|kwiatów;kwiatowi|kwiatom;kwiat|kwiaty;kwiatem|kwiatami;kwiecie|kwiatach;kwiecie|kwiaty"
  },
  {
   "id": 297,
@@ -4280,7 +4280,7 @@
   "example": "**Deszcz** pada od rana.",
   "picture": "falling rain",
   "gender": "masculine inanimate",
-  "declension": "deszcz|deszcze;deszczu|deszczów;deszczowi|deszczom;deszcz|deszcze;deszczem|deszczami;deszczu|deszczach;deszczu|deszcze"
+  "declension": "deszcz|deszcze;deszczu|deszczy;deszczowi|deszczom;deszcz|deszcze;deszczem|deszczami;deszczu|deszczach;deszczu|deszcze"
  },
  {
   "id": 308,
@@ -4518,7 +4518,7 @@
    "zielony",
    "zielona",
    "zielone",
-   "zieloni",
+   "zieleni",
    "zielone"
   ]
  },
@@ -4658,7 +4658,7 @@
    "długi",
    "długa",
    "długie",
-   "długie",
+   "dłudzy",
    "długie"
   ]
  },
@@ -4678,7 +4678,7 @@
    "krótki",
    "krótka",
    "krótkie",
-   "krótkie",
+   "krótcy",
    "krótkie"
   ]
  },
@@ -4893,7 +4893,7 @@
    "stary",
    "stara",
    "stare",
-   "starsi",
+   "starzy",
    "stare"
   ]
  },
@@ -5035,7 +5035,7 @@
    "wesoły",
    "wesoła",
    "wesołe",
-   "wesoli",
+   "weseli",
    "wesołe"
   ]
  },
@@ -5213,9 +5213,9 @@
   "forms": [
    "ciekawy",
    "ciekawa",
-   "ciekawie",
+   "ciekawe",
    "ciekawi",
-   "ciekawie"
+   "ciekawe"
   ]
  },
  {
@@ -5319,7 +5319,7 @@
   "example": "Jestem **pewny** odpowiedzi.",
   "picture": "confident person answering",
   "forms": [
-   "pewny",
+   "pewien",
    "pewna",
    "pewne",
    "pewni",
@@ -5436,7 +5436,7 @@
    "pusty",
    "pusta",
    "puste",
-   "pusti",
+   "puści",
    "puste"
   ]
  },
@@ -5451,7 +5451,7 @@
   "example": "Kubek jest **pełny** herbaty.",
   "picture": "full mug of tea",
   "forms": [
-   "pełny",
+   "pełen",
    "pełna",
    "pełne",
    "pełni",
@@ -5588,7 +5588,7 @@
   "example": "Mam **ból** głowy.",
   "picture": "person with headache",
   "gender": "masculine inanimate",
-  "declension": "ból|bóle;bólu|bólów;bólowi|bólom;ból|bóle;bólem|bólami;bólu|bólach;bólu|bóle"
+  "declension": "ból|bóle;bólu|bóli;bólowi|bólom;ból|bóle;bólem|bólami;bólu|bólach;bólu|bóle"
  },
  {
   "id": 378,
@@ -5618,7 +5618,7 @@
   "example": "Dbam o **zdrowie**.",
   "picture": "healthy person",
   "gender": "neuter",
-  "declension": "zdrowie|zdrowia;zdrowia|zdrow;zdrowiu|zdrowiom;zdrowie|zdrowia;zdrowiem|zdrowiami;zdrowiu|zdrowiach;zdrowie|zdrowia"
+  "declension": "zdrowie|zdrowia;zdrowia|zdrowi;zdrowiu|zdrowiom;zdrowie|zdrowia;zdrowiem|zdrowiami;zdrowiu|zdrowiach;zdrowie|zdrowia"
  },
  {
   "id": 380,
@@ -5679,7 +5679,7 @@
   "example": "Mam skaleczony **palec**.",
   "picture": "injured finger",
   "gender": "masculine animate",
-  "declension": "palec|palce;palca|palców;palcowi|palcom;palec|palce;palcem|palcami;palcu|palcach;palcu|palce"
+  "declension": "palec|palce;palca|palców;palcowi|palcom;palca|palce;palcem|palcami;palcu|palcach;palcu|palce"
  },
  {
   "id": 384,
@@ -5738,8 +5738,8 @@
   ],
   "example": "Boli mnie **ząb**.",
   "picture": "toothache",
-  "gender": "masculine animate",
-  "declension": "ząb|zęby;zęba|zębów;zębowi|zębom;zęba|zęby;zębem|zębami;zębie|zębach;zębie|zęby"
+  "gender": "masculine inanimate",
+  "declension": "ząb|zęby;zęba|zębów;zębowi|zębom;ząb|zęby;zębem|zębami;zębie|zębach;zębie|zęby"
  },
  {
   "id": 388,
@@ -5937,7 +5937,7 @@
   "example": "Zakładam **kurtkę**.",
   "picture": "putting on jacket",
   "gender": "feminine",
-  "declension": "kurtka|kurtki;kurtki|kuretek;kurtce|kurtkom;kurtkę|kurtki;kurtką|kurtkami;kurtce|kurtkach;kurtko|kurtki"
+  "declension": "kurtka|kurtki;kurtki|kurtek;kurtce|kurtkom;kurtkę|kurtki;kurtką|kurtkami;kurtce|kurtkach;kurtko|kurtki"
  },
  {
   "id": 401,
@@ -6059,7 +6059,7 @@
   "example": "Ten **pokój** jest duży.",
   "picture": "large room",
   "gender": "masculine inanimate",
-  "declension": "pokój|pokoje;pokoju|pokojów;pokojowi|pokojom;pokój|pokoje;pokojem|pokojami;pokoju|pokojach;pokoju|pokoje"
+  "declension": "pokój|pokoje;pokoju|pokoi;pokojowi|pokojom;pokój|pokoje;pokojem|pokojami;pokoju|pokojach;pokoju|pokoje"
  },
  {
   "id": 409,
@@ -6075,7 +6075,7 @@
   "example": "Nasza **kuchnia** jest mała.",
   "picture": "small kitchen",
   "gender": "feminine",
-  "declension": "kuchnia|kuchnie;kuchni|kuchni;kuchni|kuchniom;kuchnię|kuchnie;kuchnią|kuchniami;kuchni|kuchniach;kuchnio|kuchnie"
+  "declension": "kuchnia|kuchnie;kuchni|kuchen;kuchni|kuchniom;kuchnię|kuchnie;kuchnią|kuchniami;kuchni|kuchniach;kuchnio|kuchnie"
  },
  {
   "id": 410,
@@ -6212,7 +6212,7 @@
   "example": "Książka leży na **stole**.",
   "picture": "dining table",
   "gender": "masculine inanimate",
-  "declension": "stół|stoły;stołu|stołów;stółowi|stołom;stół|stoły;stołem|stołami;stole|stołach;stole|stoły"
+  "declension": "stół|stoły;stołu|stołów;stołowi|stołom;stół|stoły;stołem|stołami;stole|stołach;stole|stoły"
  },
  {
   "id": 419,
@@ -6277,7 +6277,7 @@
   "example": "Ta **lampa** świeci jasno.",
   "picture": "table lamp",
   "gender": "feminine",
-  "declension": "lampa|lampy;lampy|lam p;lampie|lampom;lampę|lampy;lampą|lampami;lampie|lampach;lampo|lampy"
+  "declension": "lampa|lampy;lampy|lamp;lampie|lampom;lampę|lampy;lampą|lampami;lampie|lampach;lampo|lampy"
  },
  {
   "id": 423,
@@ -6387,8 +6387,8 @@
   ],
   "example": "Mam **widelec** przy talerzu.",
   "picture": "table fork",
-  "gender": "masculine animate",
-  "declension": "widelec|widelce;widelca|widelców;widelcowi|widelcom;widelca|widelce;widelcem|widelcami;widelcu|widelcach;widelcu|widelce"
+  "gender": "masculine inanimate",
+  "declension": "widelec|widelce;widelca|widelców;widelcowi|widelcom;widelec|widelce;widelcem|widelcami;widelcu|widelcach;widelcu|widelce"
  },
  {
   "id": 430,
@@ -6403,8 +6403,8 @@
   ],
   "example": "Ten **nóż** jest ostry.",
   "picture": "kitchen knife",
-  "gender": "masculine animate",
-  "declension": "nóż|noże;noża|noży;nożowi|nożom;noża|noże;nożem|nożami;nożu|nożach;nożu|noże"
+  "gender": "masculine inanimate",
+  "declension": "nóż|noże;noża|noży;nożowi|nożom;nóż|noże;nożem|nożami;nożu|nożach;nożu|noże"
  },
  {
   "id": 431,
@@ -6590,7 +6590,7 @@
   "example": "Moja **klawiatura** nie działa.",
   "picture": "computer keyboard",
   "gender": "feminine",
-  "declension": "klawiatura|klawiatury;klawiatury|klawiatur;klawiaturze|klawiaturom;klawiaturę|klawiatury;klawiaturą|klawiaturami;klawiaturze|klawiaturach;klawiatoro|klawiatury"
+  "declension": "klawiatura|klawiatury;klawiatury|klawiatur;klawiaturze|klawiaturom;klawiaturę|klawiatury;klawiaturą|klawiaturami;klawiaturze|klawiaturach;klawiaturo|klawiatury"
  },
  {
   "id": 443,
@@ -6713,7 +6713,7 @@
   "example": "Czekam na **paczkę**.",
   "picture": "delivered parcel",
   "gender": "feminine",
-  "declension": "paczka|paczki;paczki|paczek;paczkce|paczkom;paczkę|paczki;paczką|paczkami;paczce|paczkach;paczko|paczki"
+  "declension": "paczka|paczki;paczki|paczek;paczce|paczkom;paczkę|paczki;paczką|paczkami;paczce|paczkach;paczko|paczki"
  },
  {
   "id": 451,
@@ -6924,7 +6924,7 @@
   "example": "Czekam na **przystanku**.",
   "picture": "bus stop shelter",
   "gender": "masculine inanimate",
-  "declension": "przystanek|przystanki;przystanku|przystanków;przystankowi|przystankom;przystanek|przystanki;przystankiem|przystankami;przystanku|przystankach;przystanku|przystanki"
+  "declension": "przystanek|przystanki;przystanka|przystanków;przystankowi|przystankom;przystanek|przystanki;przystankiem|przystankami;przystanku|przystankach;przystanku|przystanki"
  },
  {
   "id": 465,
@@ -7767,7 +7767,7 @@
   "example": "**Kreda** jest biała.",
   "picture": "white chalk sticks",
   "gender": "feminine",
-  "declension": "kreda|krety;kredy|kred;kredzie|kredom;kredę|krety;kredą|kredami;kredzie|kredach;kredo|krety"
+  "declension": "kreda|kredy;kredy|kred;kredzie|kredom;kredę|kredy;kredą|kredami;kredzie|kredach;kredo|kredy"
  },
  {
   "id": 520,
@@ -7994,7 +7994,7 @@
   "example": "To był mały **błąd**.",
   "picture": "school mistake",
   "gender": "masculine inanimate",
-  "declension": "błąd|błędy;błędu|błędów;błędowi|błędom;błąd|błędy;błędem|błędami;błędzie|błędach;błądzie|błędy"
+  "declension": "błąd|błędy;błędu|błędów;błędowi|błędom;błąd|błędy;błędem|błędami;błędzie|błędach;błędzie|błędy"
  },
  {
   "id": 535,
@@ -8022,7 +8022,7 @@
   "example": "Twoja **wiedza** jest duża.",
   "picture": "person studying",
   "gender": "feminine",
-  "declension": "wiedza|wiedze;wiedzy|wiedzy;wiedzy|wiedzom;wiedzę|wiedze;wiedzą|wiedzami;wiedzy|wiedzach;wiedzo|wiedze"
+  "declension": "wiedza|wiedze;wiedzy|wiedz;wiedzy|wiedzom;wiedzę|wiedze;wiedzą|wiedzami;wiedzy|wiedzach;wiedzo|wiedze"
  },
  {
   "id": 537,
@@ -8752,8 +8752,8 @@
   ],
   "example": "Ten **serwer** jest dziś wolny.",
   "picture": "computer server rack",
-  "gender": "masculine personal",
-  "declension": "serwer|serwery;serwera|serwerów;serwerowi|serwerom;serwera|serwery;serwerem|serwerami;serwerze|serwerach;serwerze|serwery"
+  "gender": "masculine inanimate",
+  "declension": "serwer|serwery;serwera|serwerów;serwerowi|serwerom;serwer|serwery;serwerem|serwerami;serwerze|serwerach;serwerze|serwery"
  },
  {
   "id": 584,
@@ -9018,7 +9018,7 @@
   "example": "To **nagranie** jest bardzo dobre.",
   "picture": "audio recording device",
   "gender": "neuter",
-  "declension": "nagranie|nagrania;nagrania|nagrań;nagraniu|nagraniom;nagranie|nagrania;nagranie|nagraniami;nagraniu|nagraniach;nagranie|nagrania"
+  "declension": "nagranie|nagrania;nagrania|nagrań;nagraniu|nagraniom;nagranie|nagrania;nagraniem|nagraniami;nagraniu|nagraniach;nagranie|nagrania"
  },
  {
   "id": 602,
@@ -9048,7 +9048,7 @@
   ],
   "example": "Mój **zespół** wygrał mecz.",
   "picture": "sports team celebrating",
-  "gender": "masculine personal",
+  "gender": "masculine inanimate",
   "declension": "zespół|zespoły;zespołu|zespołów;zespołowi|zespołom;zespół|zespoły;zespołem|zespołami;zespole|zespołach;zespole|zespoły"
  },
  {
@@ -9195,7 +9195,7 @@
   "example": "Wieczorem idę do **kina**.",
   "picture": "movie theater interior",
   "gender": "neuter",
-  "declension": "kino|kiny;kina|kin;kinu|kinom;kino|kiny;kinem|kinami;kinie|kinach;kino|kiny"
+  "declension": "kino|kina;kina|kin;kinu|kinom;kino|kina;kinem|kinami;kinie|kinach;kino|kina"
  },
  {
   "id": 614,
@@ -9242,7 +9242,7 @@
   "example": "Ten **reżyser** jest znany.",
   "picture": "film director on set",
   "gender": "masculine personal",
-  "declension": "reżyser|reżyserzy;reżysera|reżyserów;reżyserowi|reżyserom;reżysera|reżyserów;reżyserem|reżyserami;reżyserze|reżyserach;reżyserze|reżyserzy"
+  "declension": "reżyser|reżyserowie;reżysera|reżyserów;reżyserowi|reżyserom;reżysera|reżyserów;reżyserem|reżyserami;reżyserze|reżyserach;reżyserze|reżyserowie"
  },
  {
   "id": 617,
@@ -9346,7 +9346,7 @@
   "example": "Autorem książki jest znany **autor**.",
   "picture": "book author portrait",
   "gender": "masculine personal",
-  "declension": "autor|autorzy;autora|autorów;autorowi|autorom;autora|autorów;autorem|autorami;autorze|autorach;autorze|autorzy"
+  "declension": "autor|autorowie;autora|autorów;autorowi|autorom;autora|autorów;autorem|autorami;autorze|autorach;autorze|autorowie"
  },
  {
   "id": 624,
@@ -9408,7 +9408,7 @@
   "example": "Idę do **księgarni** po książkę.",
   "picture": "bookstore interior",
   "gender": "feminine",
-  "declension": "księgarnia|księgarnie;księgarni|księgarń;księgarni|księgarniom;księgarnię|księgarnie;księgarnią|księgarniami;księgarni|księgarniach;księgarnio|księgarnie"
+  "declension": "księgarnia|księgarnie;księgarni|księgarni;księgarni|księgarniom;księgarnię|księgarnie;księgarnią|księgarniami;księgarni|księgarniach;księgarnio|księgarnie"
  },
  {
   "id": 628,
@@ -9775,7 +9775,7 @@
   "example": "Dziś są **zawody** na stadionie.",
   "picture": "sports competition",
   "gender": "plural only",
-  "declension": "zawody|zawody;zawodów|zawodów;zawodom|zawodom;zawody|zawody;zawodami|zawodami;zawodach|zawodach;zawody|zawody"
+  "declension": "|zawody;|zawodów;|zawodom;|zawody;|zawodami;|zawodach;|zawody"
  },
  {
   "id": 652,
@@ -9805,7 +9805,7 @@
   "example": "Nasz zespół ma duży **puchar**.",
   "picture": "sports trophy",
   "gender": "masculine inanimate",
-  "declension": "puchar|puchary;pucharu|pucharów;pucharowi|puchrom;puchar|puchary;pucharem|pucharami;pucharze|pucharach;pucharze|puchary"
+  "declension": "puchar|puchary;pucharu|pucharów;pucharowi|pucharom;puchar|puchary;pucharem|pucharami;pucharze|pucharach;pucharze|puchary"
  },
  {
   "id": 654,
@@ -10009,7 +10009,7 @@
   "example": "Ta **krowa** daje mleko.",
   "picture": "dairy cow",
   "gender": "feminine",
-  "declension": "krowa|krowy;krowy|krow;krowie|krowom;krowę|krowy;krową|krowami;krowie|krowach;krowo|krowy"
+  "declension": "krowa|krowy;krowy|krów;krowie|krowom;krowę|krowy;krową|krowami;krowie|krowach;krowo|krowy"
  },
  {
   "id": 668,
@@ -10054,7 +10054,7 @@
   "example": "Nasza **koza** je trawę.",
   "picture": "goat eating grass",
   "gender": "feminine",
-  "declension": "koza|kozy;kozy|koz;kozie|kozom;kozę|kozy;kozą|kozami;kozie|kozach;kozo|kozy"
+  "declension": "koza|kozy;kozy|kóz;kozie|kozom;kozę|kozy;kozą|kozami;kozie|kozach;kozo|kozy"
  },
  {
   "id": 671,
@@ -10211,7 +10211,7 @@
   "example": "Na polu skoczył **zając**.",
   "picture": "hare in field",
   "gender": "masculine animate",
-  "declension": "zając|zające;zająca|zajęcy;zającowi|zającom;zająca|zające;zającem|zającami;zającu|zającach;zającu|zające"
+  "declension": "zając|zające;zająca|zająców;zającowi|zającom;zająca|zające;zającem|zającami;zającu|zającach;zającu|zające"
  },
  {
   "id": 681,
@@ -10259,7 +10259,7 @@
   "example": "Na łące stała **sarna**.",
   "picture": "roe deer meadow",
   "gender": "feminine",
-  "declension": "sarna|sarny;sarny|saren;sarnie|sarnom;sarnę|sarny;sarną|sarnami;sarnie|sarnach;sarna|sarny"
+  "declension": "sarna|sarny;sarny|saren;sarnie|sarnom;sarnę|sarny;sarną|sarnami;sarnie|sarnach;sarno|sarny"
  },
  {
   "id": 684,
@@ -10607,7 +10607,7 @@
   ],
   "example": "Na drzewie stuka **dzięcioł**.",
   "picture": "woodpecker on tree",
-  "gender": "masculine inanimate",
+  "gender": "masculine animate",
   "declension": "dzięcioł|dzięcioły;dzięcioła|dzięciołów;dzięciołowi|dzięciołom;dzięcioła|dzięcioły;dzięciołem|dzięciołami;dzięciole|dzięciołach;dzięciole|dzięcioły"
  },
  {
@@ -10716,7 +10716,7 @@
   "example": "Ptak ma mały **dziób**.",
   "picture": "bird beak",
   "gender": "masculine inanimate",
-  "declension": "dziób|dzioby;dzioba|dzióbów;dziobowi|dziobom;dziób|dzioby;dziobem|dziobami;dziobie|dziobach;dziobie|dzioby"
+  "declension": "dziób|dzioby;dzioba|dziobów;dziobowi|dziobom;dziób|dzioby;dziobem|dziobami;dziobie|dziobach;dziobie|dzioby"
  },
  {
   "id": 714,
@@ -10794,8 +10794,8 @@
   ],
   "example": "Na talerzu leży **dorsz**.",
   "picture": "cod fish on plate",
-  "gender": "masculine inanimate",
-  "declension": "dorsz|dorsze;dorsza|dorszy;dorszowi|dorszom;dorsz|dorsze;dorszem|dorszami;dorszu|dorszach;dorszu|dorsze"
+  "gender": "masculine animate",
+  "declension": "dorsz|dorsze;dorsza|dorszy;dorszowi|dorszom;dorsza|dorsze;dorszem|dorszami;dorszu|dorszach;dorszu|dorsze"
  },
  {
   "id": 719,
@@ -11040,7 +11040,7 @@
   "example": "W ogrodzie leci **motyl**.",
   "picture": "butterfly in garden",
   "gender": "masculine animate",
-  "declension": "motyl|motyle;motyla|motyli;motylowi|motylom;motyla|motyle;motylem|motylami;motylu|moty lach;motylu|motyle"
+  "declension": "motyl|motyle;motyla|motyli;motylowi|motylom;motyla|motyle;motylem|motylami;motylu|motylach;motylu|motyle"
  },
  {
   "id": 735,
@@ -11084,8 +11084,8 @@
   ],
   "example": "W jabłku jest **robak**.",
   "picture": "worm in apple",
-  "gender": "masculine inanimate",
-  "declension": "robak|robaki;robaka|robaków;robakowi|robakom;robak|robaki;robakiem|robakami;robaku|robakach;robaku|robaki"
+  "gender": "masculine animate",
+  "declension": "robak|robaki;robaka|robaków;robakowi|robakom;robaka|robaki;robakiem|robakami;robaku|robakach;robaku|robaki"
  },
  {
   "id": 738,
@@ -11145,7 +11145,7 @@
   "example": "Przy lampie lata **ćma**.",
   "picture": "moth by lamp",
   "gender": "feminine",
-  "declension": "ćma|ćmy;ćmy|ćm;ćmie|ćmom;ćmę|ćmy;ćmą|ćmami;ćmie|ćmach;ćmo|ćmy"
+  "declension": "ćma|ćmy;ćmy|ciem;ćmie|ćmom;ćmę|ćmy;ćmą|ćmami;ćmie|ćmach;ćmo|ćmy"
  },
  {
   "id": 742,
@@ -11176,7 +11176,7 @@
   "example": "Lubię jeść **miód**.",
   "picture": "honey in jar",
   "gender": "masculine inanimate",
-  "declension": "miód|miod y;miodu|miodów;miodowi|miodom;miód|miod y;miodem|miodami;miodzie|miodach;miodzie|miod y"
+  "declension": "miód|miody;miodu|miodów;miodowi|miodom;miód|miody;miodem|miodami;miodzie|miodach;miodzie|miody"
  },
  {
   "id": 744,
@@ -11305,7 +11305,7 @@
  {
   "id": 752,
   "text": "mech",
-  "translation": "down",
+  "translation": "moss",
   "transcription": "mɛx",
   "partOfSpeech": "n",
   "cefr": "B2",
@@ -11316,7 +11316,7 @@
   "example": "Na kamieniu rośnie **mech**.",
   "picture": "moss on stone",
   "gender": "masculine inanimate",
-  "declension": "mech|mechy;mechu|mechów;mechowi|mechom;mech|mechy;mchem|mechami;mechu|mechach;mechu|mechy"
+  "declension": "mech|mchy;mchu|mchów;mchowi|mchom;mech|mchy;mchem|mchami;mchu|mchach;mchu|mchy"
  },
  {
   "id": 753,
@@ -11413,7 +11413,7 @@
   "example": "W ogrodzie stoi **świerk**.",
   "picture": "spruce tree in garden",
   "gender": "masculine inanimate",
-  "declension": "świerk|świerki;świerka|świerków;świerkowi|świerkom;świerk|świerki;świerkiem|świerkami;świerku|świerkach;świerku|świerki"
+  "declension": "świerk|świerki;świerku|świerków;świerkowi|świerkom;świerk|świerki;świerkiem|świerkami;świerku|świerkach;świerku|świerki"
  },
  {
   "id": 759,
@@ -11643,7 +11643,7 @@
   "example": "W lesie znalazłem **konwalię**.",
   "picture": "lily of the valley flowers",
   "gender": "feminine",
-  "declension": "konwalia|konwalie;konwalii|konwalii;konwalii|konwaliom;konwalię|konwalie;konwalią|konwaliami;konwalii|konwaliach;konwaling|konwalie"
+  "declension": "konwalia|konwalie;konwalii|konwalii;konwalii|konwaliom;konwalię|konwalie;konwalią|konwaliami;konwalii|konwaliach;konwalio|konwalie"
  },
  {
   "id": 774,
@@ -11658,7 +11658,7 @@
   "example": "W ogrodzie kwitnie **bez**.",
   "picture": "lilac flowers in bloom",
   "gender": "masculine inanimate",
-  "declension": "bez|bez;bzu|bezów;bzowi|bezom;bez|bez;bezem|bezami;bzie|bezach;bzie|bez"
+  "declension": "bez|bzy;bzu|bzów;bzowi|bzom;bez|bzy;bzem|bzami;bzie|bzach;bzie|bzy"
  },
  {
   "id": 775,
@@ -11782,7 +11782,7 @@
   "example": "Ta **skała** jest bardzo twarda.",
   "picture": "rock face cliff",
   "gender": "feminine",
-  "declension": "skała|skały;skały|skał;skale|skalom;skałę|skały;skałą|skałami;skale|skałach;skało|skały"
+  "declension": "skała|skały;skały|skał;skale|skałom;skałę|skały;skałą|skałami;skale|skałach;skało|skały"
  },
  {
   "id": 783,
@@ -11955,7 +11955,7 @@
   "example": "Znalazłem **muszlę** nad morzem.",
   "picture": "seashell on beach",
   "gender": "feminine",
-  "declension": "muszla|muszle;muszli|muszli;muszli|muszlom;muszlę|muszle;muszlą|muszlami;muszli|muszlach;muszlo|muszle"
+  "declension": "muszla|muszle;muszli|muszel;muszli|muszlom;muszlę|muszle;muszlą|muszlami;muszli|muszlach;muszlo|muszle"
  },
  {
   "id": 794,
@@ -12139,7 +12139,7 @@
   "example": "Latem jest duży **upał**.",
   "picture": "hot summer day",
   "gender": "masculine inanimate",
-  "declension": "upał|upały;upału|upałów;upałowi|upałom;upał|upały;upałem|upałami;upał|u w upałach;upałe|upały"
+  "declension": "upał|upały;upału|upałów;upałowi|upałom;upał|upały;upałem|upałami;upale|upałach;upale|upały"
  },
  {
   "id": 806,
@@ -12308,7 +12308,7 @@
    "suchy",
    "sucha",
    "suche",
-   "suchi",
+   "susi",
    "suche"
   ]
  },
@@ -12328,7 +12328,7 @@
    "mokry",
    "mokra",
    "mokre",
-   "mokry",
+   "mokrzy",
    "mokre"
   ]
  },
@@ -13083,7 +13083,7 @@
   "example": "Siedzę z **przodu**.",
   "picture": "front row seat",
   "gender": "masculine inanimate",
-  "declension": "przód|przody;przodu|przodów;przodowi|przodom;przód|przody;przodem|przodami;przodzie|przodach;przodzie|przody"
+  "declension": "przód|przody;przodu|przodów;przodowi|przodom;przód|przody;przodem|przodami;przedzie|przodach;przedzie|przody"
  },
  {
   "id": 880,
@@ -13280,7 +13280,7 @@
   "example": "Jest ładny **zapach**.",
   "picture": "fresh food smell",
   "gender": "masculine inanimate",
-  "declension": "zapach|zapachy;zapachu|zapachów;zapachowi|zapachom;zapach|zapachy;zapachem|zapachami;zapache|zapachach;zapache|zapachy"
+  "declension": "zapach|zapachy;zapachu|zapachów;zapachowi|zapachom;zapach|zapachy;zapachem|zapachami;zapachu|zapachach;zapachu|zapachy"
  },
  {
   "id": 893,
@@ -13734,7 +13734,7 @@
   "example": "Miałem dziwny **sen**.",
   "picture": "person sleeping dream",
   "gender": "masculine inanimate",
-  "declension": "sen|sny;snu|senów;senowi|senom;sen|sny;snem|senami;śnie|senach;śnie|sny"
+  "declension": "sen|sny;snu|snów;snowi|snom;sen|sny;snem|snami;śnie|snach;śnie|sny"
  },
  {
   "id": 924,
@@ -14013,7 +14013,7 @@
   "example": "Ta **moda** wraca.",
   "picture": "trendy clothing style",
   "gender": "feminine",
-  "declension": "moda|mody;mody|mod;modzie|modom;modę|mody;modą|modami;modzie|modach;modo|mody"
+  "declension": "moda|mody;mody|mód;modzie|modom;modę|mody;modą|modami;modzie|modach;modo|mody"
  },
  {
   "id": 943,
@@ -15072,7 +15072,7 @@
    "zwięzły",
    "zwięzła",
    "zwięzłe",
-   "zwięzli",
+   "zwięźli",
    "zwięzłe"
   ]
  },
@@ -16500,7 +16500,7 @@
   "example": "Ta bajka to **alegoria**.",
   "picture": "storybook illustration",
   "gender": "feminine",
-  "declension": "alegoria|alegorie;alegorii|alegorii;alegorii|alegoriom;alegorię|alegorie;alegorią|alegoriami;alegorii|alegiach;alegorio|alegorie"
+  "declension": "alegoria|alegorie;alegorii|alegorii;alegorii|alegoriom;alegorię|alegorie;alegorią|alegoriami;alegorii|alegoriach;alegorio|alegorie"
  },
  {
   "id": 1116,
@@ -16936,7 +16936,7 @@
   "example": "**Pycha** często prowadzi do błędu.",
   "picture": "proud person looking down",
   "gender": "feminine",
-  "declension": "pycha|pychy;pychy|pych;przywdze|pychom;pychę|pychy;pychą|pychami;przywdze|pychach;pycho|pychy"
+  "declension": "pycha|pychy;pychy|pych;pysze|pychom;pychę|pychy;pychą|pychami;pysze|pychach;pycho|pychy"
  },
  {
   "id": 1145,
@@ -16996,7 +16996,7 @@
   "example": "Dziękuję za twoją **wyrozumiałość**.",
   "picture": "understanding teacher listening",
   "gender": "feminine",
-  "declension": "wyrozumiałość|wyrozumiałości;wyrozumiałości|wyrozumiałości;wyrozumiałości|wyrozumiałości;wyrozumiałość|wyrozumiałości;wyrozumiałością|wyrozumiałościami;wyrozumiałości|wyrozumiałościach;wyrozumiałości|wyrozumiałości"
+  "declension": "wyrozumiałość|wyrozumiałości;wyrozumiałości|wyrozumiałości;wyrozumiałości|wyrozumiałościom;wyrozumiałość|wyrozumiałości;wyrozumiałością|wyrozumiałościami;wyrozumiałości|wyrozumiałościach;wyrozumiałości|wyrozumiałości"
  },
  {
   "id": 1149,
@@ -17011,7 +17011,7 @@
   "example": "Jego **pobłażliwość** mnie dziwi.",
   "picture": "lenient judge",
   "gender": "feminine",
-  "declension": "pobłażliwość|pobłażliwości;pobłażliwości|pobłażliwości;pobłażliwości|pobłażliwości;pobłażliwość|pobłażliwości;pobłażliwością|pobłażliwościami;pobłażliwości|pobłażliwościach;pobłażliwości|pobłażliwości"
+  "declension": "pobłażliwość|pobłażliwości;pobłażliwości|pobłażliwości;pobłażliwości|pobłażliwościom;pobłażliwość|pobłażliwości;pobłażliwością|pobłażliwościami;pobłażliwości|pobłażliwościach;pobłażliwości|pobłażliwości"
  },
  {
   "id": 1150,
@@ -17026,7 +17026,7 @@
   "example": "**Surowość** nauczyciela była duża.",
   "picture": "strict teacher in classroom",
   "gender": "feminine",
-  "declension": "surowość|surowości;surowości|surowości;surowości|surowości;surowość|surowości;surowością|surowościami;surowości|surowościach;surowości|surowości"
+  "declension": "surowość|surowości;surowości|surowości;surowości|surowościom;surowość|surowości;surowością|surowościami;surowości|surowościach;surowości|surowości"
  },
  {
   "id": 1151,
@@ -17041,7 +17041,7 @@
   "example": "Sędzia zachował **bezstronność**.",
   "picture": "impartial judge",
   "gender": "feminine",
-  "declension": "bezstronność|bezstronności;bezstronności|bezstronności;bezstronności|bezstronności;bezstronność|bezstronności;bezstronnością|bezstronnościami;bezstronności|bezstronnościach;bezstronności|bezstronności"
+  "declension": "bezstronność|bezstronności;bezstronności|bezstronności;bezstronności|bezstronnościom;bezstronność|bezstronności;bezstronnością|bezstronnościami;bezstronności|bezstronnościach;bezstronności|bezstronności"
  },
  {
   "id": 1152,
@@ -17057,7 +17057,7 @@
   "example": "Widać jego **stronniczość**.",
   "picture": "biased politician",
   "gender": "feminine",
-  "declension": "stronniczość|stronniczości;stronniczości|stronniczości;stronniczości|stronniczości;stronniczość|stronniczości;stronniczością|stronniczościami;stronniczości|stronniczościach;stronniczości|stronniczości"
+  "declension": "stronniczość|stronniczości;stronniczości|stronniczości;stronniczości|stronniczościom;stronniczość|stronniczości;stronniczością|stronniczościami;stronniczości|stronniczościach;stronniczości|stronniczości"
  },
  {
   "id": 1153,
@@ -17721,7 +17721,7 @@
   "example": "W muzeum widziałem ludzką **czaszka**.",
   "picture": "human skull museum",
   "gender": "feminine",
-  "declension": "czaszka|czaszki;czaszki|czasek;czaszce|czaszkom;czaszke|czaszki;czaszka|czaszkami;czaszce|czaszkach;czaszko|czaszki"
+  "declension": "czaszka|czaszki;czaszki|czaszek;czaszce|czaszkom;czaszkę|czaszki;czaszką|czaszkami;czaszce|czaszkach;czaszko|czaszki"
  },
  {
   "id": 1201,
@@ -17781,7 +17781,7 @@
   "example": "Mam siniak na **goleni**.",
   "picture": "shin bruise",
   "gender": "feminine",
-  "declension": "goleń|golenie;goleni|goleni;goleni|goleniom;goleń|golenie;golenią|goleniami;goleni|goleniach;goleń|golenie"
+  "declension": "goleń|golenie;goleni|goleni;goleni|goleniom;goleń|golenie;golenią|goleniami;goleni|goleniach;goleni|golenie"
  },
  {
   "id": 1205,
@@ -17961,7 +17961,7 @@
   "example": "Boli mnie **udo**.",
   "picture": "human thigh",
   "gender": "neuter",
-  "declension": "udo|uda;uda|ud;ud u|udom;udo|uda;udem|udami;udzie|udach;udo|uda"
+  "declension": "udo|uda;uda|ud;udu|udom;udo|uda;udem|udami;udzie|udach;udo|uda"
  },
  {
   "id": 1217,
@@ -18006,7 +18006,7 @@
   "example": "Mam zimną **dłoń**.",
   "picture": "open hand",
   "gender": "feminine",
-  "declension": "dłoń|dłonie;dłoni|dłoni;dłoni|dłoniom;dłoń|dłonie;dłonią|dłońmi;dłoni|dłoniach;dłoni|dłonie"
+  "declension": "dłoń|dłonie;dłoni|dłoni;dłoni|dłoniom;dłoń|dłonie;dłonią|dłoniami;dłoni|dłoniach;dłoni|dłonie"
  },
  {
   "id": 1220,
@@ -18200,8 +18200,8 @@
   ],
   "example": "Po imprezie mam **kac**.",
   "picture": "person with hangover",
-  "gender": "masculine inanimate",
-  "declension": "kac|kace;kaca|kaców;kacowi|kacom;kac|kace;kacem|kacami;kacu|kacach;kacu|kace"
+  "gender": "masculine animate",
+  "declension": "kac|kace;kaca|kaców;kacowi|kacom;kaca|kace;kacem|kacami;kacu|kacach;kacu|kace"
  },
  {
   "id": 1233,
@@ -18426,7 +18426,7 @@
   "example": "Założyłam szary **kardigan**.",
   "picture": "woman wearing cardigan",
   "gender": "masculine inanimate",
-  "declension": "kardigan|kardigany;kardiganu|kardiganów;kardiganowi|kardiganom;kardigan|kardigany;kardiganem|kardiganami;kardiganie|kardiganach;kardiganie|kardigany"
+  "declension": "kardigan|kardigany;kardigana|kardiganów;kardiganowi|kardiganom;kardigan|kardigany;kardiganem|kardiganami;kardiganie|kardiganach;kardiganie|kardigany"
  },
  {
   "id": 1248,
@@ -18936,7 +18936,7 @@
   "example": "Wziąłem **parasol**.",
   "picture": "open umbrella",
   "gender": "masculine inanimate",
-  "declension": "parasol|parasole;parasola|parasolów;parasolowi|parasolom;parasol|parasole;parasolem|parasolami;parasolu|parasolach;parasolu|parasole"
+  "declension": "parasol|parasole;parasola|parasoli;parasolowi|parasolom;parasol|parasole;parasolem|parasolami;parasolu|parasolach;parasolu|parasole"
  },
  {
   "id": 1282,
@@ -19026,7 +19026,7 @@
   "example": "Latem jem **lody**.",
   "picture": "ice cream cone",
   "gender": "plural only",
-  "declension": "lody|lody;lodów|lodów;lodom|lodom;lody|lody;lodami|lodami;lodach|lodach;lody|lody"
+  "declension": "|lody;|lodów;|lodom;|lody;|lodami;|lodach;|lody"
  },
  {
   "id": 1288,
@@ -19055,8 +19055,8 @@
   ],
   "example": "Daj mi jeden **cukierek**.",
   "picture": "wrapped candy",
-  "gender": "masculine animate",
-  "declension": "cukierek|cukierki;cukierka|cukierków;cukierkowi|cukierkom;cukierka|cukierki;cukierkiem|cukierkami;cukierku|cukierkach;cukierku|cukierki"
+  "gender": "masculine inanimate",
+  "declension": "cukierek|cukierki;cukierka|cukierków;cukierkowi|cukierkom;cukierek|cukierki;cukierkiem|cukierkami;cukierku|cukierkach;cukierku|cukierki"
  },
  {
   "id": 1290,
@@ -19085,8 +19085,8 @@
   ],
   "example": "Ten **pomidor** jest czerwony.",
   "picture": "red tomato",
-  "gender": "masculine animate",
-  "declension": "pomidor|pomidory;pomidora|pomidorów;pomidorowi|pomidorom;pomidora|pomidory;pomidorem|pomidorami;pomidorze|pomidorach;pomidorze|pomidory"
+  "gender": "masculine inanimate",
+  "declension": "pomidor|pomidory;pomidora|pomidorów;pomidorowi|pomidorom;pomidor|pomidory;pomidorem|pomidorami;pomidorze|pomidorach;pomidorze|pomidory"
  },
  {
   "id": 1292,
@@ -19100,8 +19100,8 @@
   ],
   "example": "Kroję **ogórek** na sałatkę.",
   "picture": "sliced cucumber",
-  "gender": "masculine animate",
-  "declension": "ogórek|ogórki;ogórka|ogórków;ogórkowi|ogórkom;ogórka|ogórki;ogórkiem|ogórkami;ogórku|ogórkach;ogórku|ogórki"
+  "gender": "masculine inanimate",
+  "declension": "ogórek|ogórki;ogórka|ogórków;ogórkowi|ogórkom;ogórek|ogórki;ogórkiem|ogórkami;ogórku|ogórkach;ogórku|ogórki"
  },
  {
   "id": 1293,
@@ -19209,7 +19209,7 @@
   "example": "Obieram **pomarańcza**.",
   "picture": "person peeling orange",
   "gender": "feminine",
-  "declension": "pomarańcza|pomarańcze;pomarańczy|pomarańczy;pomarańczy|pomarańczom;pomarańczę|pomarańcze;pomarańczą|pomarańczami;pomarańczy|pomarańczach;pomarańczo|pomarańcze"
+  "declension": "pomarańcza|pomarańcze;pomarańczy|pomarańcz;pomarańczy|pomarańczom;pomarańczę|pomarańcze;pomarańczą|pomarańczami;pomarańczy|pomarańczach;pomarańczo|pomarańcze"
  },
  {
   "id": 1300,
@@ -19374,7 +19374,7 @@
   "example": "Babcia robi **kompot**.",
   "picture": "glass of compote",
   "gender": "masculine inanimate",
-  "declension": "kompot|kompoty;kompotu|kompotów;kompotowi|kompotom;kompot|kompoty;kompotem|kompotami;kompocie|kompotach;kompot|kompoty"
+  "declension": "kompot|kompoty;kompotu|kompotów;kompotowi|kompotom;kompot|kompoty;kompotem|kompotami;kompocie|kompotach;kompocie|kompoty"
  },
  {
   "id": 1311,
@@ -19389,7 +19389,7 @@
   "example": "Ten **napój** jest zimny.",
   "picture": "cold drink glass",
   "gender": "masculine inanimate",
-  "declension": "napój|napoje;napoju|napojów;napojowi|napojom;napój|napoje;napojem|napojami;napoju|napojach;napoju|napoje"
+  "declension": "napój|napoje;napoju|napoi;napojowi|napojom;napój|napoje;napojem|napojami;napoju|napojach;napoju|napoje"
  },
  {
   "id": 1312,
@@ -19418,8 +19418,8 @@
   ],
   "example": "Na urodzinach pijemy **szampana**.",
   "picture": "bottle of champagne",
-  "gender": "masculine animate",
-  "declension": "szampan|szampony;szampana|szampanów;szampanowi|szampanom;szampana|szampany;szampanem|szampanami;szampanie|szampanach;szampanie|szampany"
+  "gender": "masculine inanimate",
+  "declension": "szampan|szampany;szampana|szampanów;szampanowi|szampanom;szampan|szampany;szampanem|szampanami;szampanie|szampanach;szampanie|szampany"
  },
  {
   "id": 1314,
@@ -19591,7 +19591,7 @@
   "example": "Wlej **olej** na patelnię.",
   "picture": "bottle of oil",
   "gender": "masculine inanimate",
-  "declension": "olej|oleje;oleju|olejów;olejowi|olejom;olej|oleje;olejem|olejami;oleju|olejach;oleju|oleje"
+  "declension": "olej|oleje;oleju|olei;olejowi|olejom;olej|oleje;olejem|olejami;oleju|olejach;oleju|oleje"
  },
  {
   "id": 1326,
@@ -19824,7 +19824,7 @@
   "example": "Idę do **przymierzalni**.",
   "picture": "fitting room",
   "gender": "feminine",
-  "declension": "przymierzalnia|przymierzalnie;przymierzalni|przymieralni;przymierzalni|przymierzalniom;przymierzalnię|przymierzalnie;przymierzalnią|przymierzalniami;przymierzalni|przymierzalniach;przymierzalnio|przymierzalnie"
+  "declension": "przymierzalnia|przymierzalnie;przymierzalni|przymierzalni;przymierzalni|przymierzalniom;przymierzalnię|przymierzalnie;przymierzalnią|przymierzalniami;przymierzalni|przymierzalniach;przymierzalnio|przymierzalnie"
  },
  {
   "id": 1341,
@@ -20302,7 +20302,7 @@
   "example": "Wieczorem mam ciepły **koc**.",
   "picture": "warm blanket on sofa",
   "gender": "masculine inanimate",
-  "declension": "koc|kocy;koca|koców;kocowi|kocom;koc|kocy;kocem|kocami;kocu|kocach;kocu|kocy"
+  "declension": "koc|koce;koca|koców;kocowi|kocom;koc|koce;kocem|kocami;kocu|kocach;kocu|koce"
  },
  {
   "id": 1372,
@@ -20318,7 +20318,7 @@
   "example": "Patrzę w **lustro**.",
   "picture": "person looking in mirror",
   "gender": "neuter",
-  "declension": "lustro|lustra;lustra|luster;lustru|lustom;lustro|lustra;lustrem|lustrami;lustrze|lustrach;lustro|lustra"
+  "declension": "lustro|lustra;lustra|luster;lustru|lustrom;lustro|lustra;lustrem|lustrami;lustrze|lustrach;lustro|lustra"
  },
  {
   "id": 1373,
@@ -20398,7 +20398,7 @@
   "example": "Umyj stół **ścierką**.",
   "picture": "cleaning cloth",
   "gender": "feminine",
-  "declension": "ścierka|ścierki;ścierki|ścierk;ścierce|ścierkom;ścierkę|ścierki;ścierką|ścierkami;ścierce|ścierkach;ścierko|ścierki"
+  "declension": "ścierka|ścierki;ścierki|ścierek;ścierce|ścierkom;ścierkę|ścierki;ścierką|ścierkami;ścierce|ścierkach;ścierko|ścierki"
  },
  {
   "id": 1379,
@@ -20549,7 +20549,7 @@
   "example": "Czekałem cały **kwadrans**.",
   "picture": "waiting fifteen minutes",
   "gender": "masculine inanimate",
-  "declension": "kwadrans|kwadranse;kwadransu|kwadransów;kwadransowi|kwadransom;kwadrans|kwadranse;kwadransem|kwadransami;kwadransie|kwadransach;kwadransie|kwadranse"
+  "declension": "kwadrans|kwadranse;kwadransa|kwadransów;kwadransowi|kwadransom;kwadrans|kwadranse;kwadransem|kwadransami;kwadransie|kwadransach;kwadransie|kwadranse"
  },
  {
   "id": 1389,
@@ -20766,7 +20766,7 @@
   "example": "W **styczniu** jest zimno.",
   "picture": "January snowfall",
   "gender": "masculine inanimate",
-  "declension": "styczeń|stycznie;stycznia|styczniów;styczniowi|styczniom;styczeń|stycznie;styczniem|styczniami;styczniu|styczniach;styczniu|stycznie"
+  "declension": "styczeń|stycznie;stycznia|styczni;styczniowi|styczniom;styczeń|stycznie;styczniem|styczniami;styczniu|styczniach;styczniu|stycznie"
  },
  {
   "id": 1404,
@@ -20781,7 +20781,7 @@
   "example": "W **lutym** pada śnieg.",
   "picture": "February snow",
   "gender": "masculine inanimate",
-  "declension": "luty|lutego;lutego|lutych;lutemu|lutym;luty|lutego;lutym|lutymi;lutym|lutych;luty|lutego"
+  "declension": "luty|lute;lutego|lutych;lutemu|lutym;luty|lute;lutym|lutymi;lutym|lutych;luty|lute"
  },
  {
   "id": 1405,
@@ -20811,7 +20811,7 @@
   "example": "W **kwietniu** kwitną kwiaty.",
   "picture": "April flowers blooming",
   "gender": "masculine inanimate",
-  "declension": "kwiecień|kwietnie;kwietnia|kwietniów;kwietniowi|kwietniom;kwiecień|kwietnie;kwietniem|kwietniami;kwietniu|kwietniach;kwietniu|kwietnie"
+  "declension": "kwiecień|kwietnie;kwietnia|kwietni;kwietniowi|kwietniom;kwiecień|kwietnie;kwietniem|kwietniami;kwietniu|kwietniach;kwietniu|kwietnie"
  },
  {
   "id": 1407,
@@ -20826,7 +20826,7 @@
   "example": "W **maju** jest ciepło.",
   "picture": "May sunny meadow",
   "gender": "masculine inanimate",
-  "declension": "maj|maje;maja|majów;majowi|majom;maj|maje;majem|majamI;maju|majach;maju|maje"
+  "declension": "maj|maje;maja|majów;majowi|majom;maj|maje;majem|majami;maju|majach;maju|maje"
  },
  {
   "id": 1408,
@@ -20841,7 +20841,7 @@
   "example": "W **czerwcu** są wakacje.",
   "picture": "June summer vacation",
   "gender": "masculine inanimate",
-  "declension": "czerwiec|czerwce;czerwca|czerwców;czerwcowi|czerwcom;czerwiec|czerwce;czerwcem|czerwcamI;czerwcu|czerwcach;czerwcu|czerwce"
+  "declension": "czerwiec|czerwce;czerwca|czerwców;czerwcowi|czerwcom;czerwiec|czerwce;czerwcem|czerwcami;czerwcu|czerwcach;czerwcu|czerwce"
  },
  {
   "id": 1409,
@@ -20871,7 +20871,7 @@
   "example": "W **sierpniu** jest gorąco.",
   "picture": "August heat",
   "gender": "masculine inanimate",
-  "declension": "sierpień|sierpnie;sierpnia|sierpniów;sierpniowi|sierpniom;sierpień|sierpnie;sierpniem|sierpniami;sierpniu|sierpniach;sierpniu|sierpnie"
+  "declension": "sierpień|sierpnie;sierpnia|sierpni;sierpniowi|sierpniom;sierpień|sierpnie;sierpniem|sierpniami;sierpniu|sierpniach;sierpniu|sierpnie"
  },
  {
   "id": 1411,
@@ -20886,7 +20886,7 @@
   "example": "We **wrześniu** idę do szkoły.",
   "picture": "September school child",
   "gender": "masculine inanimate",
-  "declension": "wrzesień|wrześnie;września|wrześniów;wrześniowi|wrześniom;wrzesień|wrześnie;wrześniem|wrześniami;wrześniu|wrześniach;wrześniu|wrześnie"
+  "declension": "wrzesień|wrześnie;września|wrześni;wrześniowi|wrześniom;wrzesień|wrześnie;wrześniem|wrześniami;wrześniu|wrześniach;wrześniu|wrześnie"
  },
  {
   "id": 1412,
@@ -20932,7 +20932,7 @@
   "example": "W **grudniu** mam wolne.",
   "picture": "December holiday break",
   "gender": "masculine inanimate",
-  "declension": "grudzień|grudnie;grudnia|grudniów;grudniowi|grudniom;grudzień|grudnie;grudniem|grudniami;grudniu|grudniach;grudniu|grudnie"
+  "declension": "grudzień|grudnie;grudnia|grudni;grudniowi|grudniom;grudzień|grudnie;grudniem|grudniami;grudniu|grudniach;grudniu|grudnie"
  },
  {
   "id": 1415,
@@ -21231,7 +21231,7 @@
   "example": "Zjadłem **połowę** ciasta.",
   "picture": "half eaten cake",
   "gender": "feminine",
-  "declension": "połowa|połowy;połowy|połówek;połowie|połówkom;połowę|połowy;połową|połówkami;połowie|połówkach;połowo|połowy"
+  "declension": "połowa|połowy;połowy|połów;połowie|połowom;połowę|połowy;połową|połowami;połowie|połowach;połowo|połowy"
  },
  {
   "id": 1436,
@@ -21246,7 +21246,7 @@
   "example": "Piję **ćwierć** litra wody.",
   "picture": "quarter glass water",
   "gender": "feminine",
-  "declension": "ćwierć|ćwierci;ćwierci|ćwierci;ćwierci|ćwierciom;ćwierć|ćwierci;ćwiercią|ćwiartkami;ćwierci|ćwierciach;ćwierci|ćwierci"
+  "declension": "ćwierć|ćwierci;ćwierci|ćwierci;ćwierci|ćwierciom;ćwierć|ćwierci;ćwiercią|ćwierciami;ćwierci|ćwierciach;ćwierci|ćwierci"
  },
  {
   "id": 1437,
@@ -21261,7 +21261,7 @@
   "example": "Kupiłem **tuzin** jajek.",
   "picture": "dozen eggs",
   "gender": "masculine inanimate",
-  "declension": "tuzin|tuziny;tuzinu|tuzinów;tuzinowi|tuzinom;tuzin|tuziny;tuzinem|tuzinami;tuzinie|tuzinach;tuzinie|tuziny"
+  "declension": "tuzin|tuziny;tuzina|tuzinów;tuzinowi|tuzinom;tuzin|tuziny;tuzinem|tuzinami;tuzinie|tuzinach;tuzinie|tuziny"
  },
  {
   "id": 1438,
@@ -21277,7 +21277,7 @@
   "example": "Mam dziesięć **procent**.",
   "picture": "percentage symbol",
   "gender": "masculine inanimate",
-  "declension": "procent|procenty;procentu|procentów;procentowi|procentom;procent|procenty;procentem|procentami;procentcie|procentach;procentcie|procenty"
+  "declension": "procent|procenty;procentu|procentów;procentowi|procentom;procent|procenty;procentem|procentami;procencie|procentach;procencie|procenty"
  },
  {
   "id": 1439,
@@ -21544,7 +21544,7 @@
   "example": "Narysuj prostą **linię**.",
   "picture": "straight line",
   "gender": "feminine",
-  "declension": "linia|linie;linii|linii;linii|liniom;linię|linie;linią|liniami;linii|liniach;lino|linie"
+  "declension": "linia|linie;linii|linii;linii|liniom;linię|linie;linią|liniami;linii|liniach;linio|linie"
  },
  {
   "id": 1454,
@@ -21956,7 +21956,7 @@
   "example": "Na lekcji była długa **dysputa**.",
   "picture": "university debate",
   "gender": "feminine",
-  "declension": "dysputa|dysputy;dysputy|dysput;dysputcie|dysputom;dysputę|dysputy;dysputą|dysputami;dysputcie|dysputach;dysputo|dysputy"
+  "declension": "dysputa|dysputy;dysputy|dysput;dyspucie|dysputom;dysputę|dysputy;dysputą|dysputami;dyspucie|dysputach;dysputo|dysputy"
  },
  {
   "id": 1481,
@@ -22046,7 +22046,7 @@
   "example": "**Morał** był prosty.",
   "picture": "lesson moral",
   "gender": "masculine inanimate",
-  "declension": "morał|morały;morału|morałów;morałowi|morałom;morał|morały;morałem|morałami;moralne|morałach;moralne|morały"
+  "declension": "morał|morały;morału|morałów;morałowi|morałom;morał|morały;morałem|morałami;morale|morałach;morale|morały"
  },
  {
   "id": 1487,
@@ -22121,7 +22121,7 @@
   "example": "To brzmi jak pusty **frazes**.",
   "picture": "empty political slogan",
   "gender": "masculine inanimate",
-  "declension": "frazes|frazy;frazesu|frazesów;frazesowi|frazesom;frazes|frazy;frazesem|frazesami;frazesie|frazesach;frazesie|frazy"
+  "declension": "frazes|frazesy;frazesu|frazesów;frazesowi|frazesom;frazes|frazesy;frazesem|frazesami;frazesie|frazesach;frazesie|frazesy"
  },
  {
   "id": 1492,
@@ -22210,7 +22210,7 @@
   ],
   "example": "„Smog” to **neologizm**.",
   "picture": "newly coined word",
-  "gender": "neuter",
+  "gender": "masculine inanimate",
   "declension": "neologizm|neologizmy;neologizmu|neologizmów;neologizmowi|neologizmom;neologizm|neologizmy;neologizmem|neologizmami;neologizmie|neologizmach;neologizmie|neologizmy"
  },
  {
@@ -22391,7 +22391,7 @@
   "example": "To była zwykła **kpina**.",
   "picture": "mocking facial expression",
   "gender": "feminine",
-  "declension": "kpina|kpiny;kpiny|kpin;kpienie|kpinom;kpinę|kpiny;kpiną|kpinami;kpienie|kpinach;kpino|kpiny"
+  "declension": "kpina|kpiny;kpiny|kpin;kpinie|kpinom;kpinę|kpiny;kpiną|kpinami;kpinie|kpinach;kpino|kpiny"
  },
  {
   "id": 1510,
@@ -22481,7 +22481,7 @@
   "example": "Jego **docinek** mnie rozbawił.",
   "picture": "teasing smirk",
   "gender": "masculine inanimate",
-  "declension": "docinek|docinki;docinku|docinków;docinkowi|docinkom;docinek|docinki;docinkiem|docinkami;docinku|docinkach;docinku|docinki"
+  "declension": "docinek|docinki;docinka|docinków;docinkowi|docinkom;docinek|docinki;docinkiem|docinkami;docinku|docinkach;docinku|docinki"
  },
  {
   "id": 1516,
@@ -22559,7 +22559,7 @@
    "zawiły",
    "zawiła",
    "zawiłe",
-   "zawiłi",
+   "zawili",
    "zawiłe"
   ]
  },
@@ -22939,7 +22939,7 @@
    "niezbity",
    "niezbita",
    "niezbite",
-   "niezbitni",
+   "niezbici",
    "niezbite"
   ]
  },
@@ -23302,7 +23302,7 @@
   "example": "To było drobne **przewinienie**.",
   "picture": "minor misconduct",
   "gender": "neuter",
-  "declension": "przewinienie|przewinienia;przewinienia|przewinień;przewinieniu|przewiniom;przewinienie|przewinienia;przewinieniem|przewinieniami;przewinieniu|przewinieniach;przewinienie|przewinienia"
+  "declension": "przewinienie|przewinienia;przewinienia|przewinień;przewinieniu|przewinieniom;przewinienie|przewinienia;przewinieniem|przewinieniami;przewinieniu|przewinieniach;przewinienie|przewinienia"
  },
  {
   "id": 1558,
@@ -23467,7 +23467,7 @@
   "example": "W pokoju jest okropny **zaduch**.",
   "picture": "stuffy room interior",
   "gender": "masculine inanimate",
-  "declension": "zaduch|zaduchy;zaduchu|zaduchów;zaduchowi|zaduchom;zaduch|zaduchy;zaduchiem|zaduchami;zaduchu|zaduchach;zaduchu|zaduchy"
+  "declension": "zaduch|zaduchy;zaduchu|zaduchów;zaduchowi|zaduchom;zaduch|zaduchy;zaduchem|zaduchami;zaduchu|zaduchach;zaduchu|zaduchy"
  },
  {
   "id": 1569,
@@ -23497,7 +23497,7 @@
   "example": "Dziś rano był lekki **przymrozek**.",
   "picture": "light ground frost",
   "gender": "masculine inanimate",
-  "declension": "przymrozek|przymrozki;przymrozku|przymrozków;przymrozkowi|przymrozkom;przymrozek|przymrozki;przymrozkiem|przymrozkami;przymrozku|przymrozkach;przymrozku|przymrozki"
+  "declension": "przymrozek|przymrozki;przymrozka|przymrozków;przymrozkowi|przymrozkom;przymrozek|przymrozki;przymrozkiem|przymrozkami;przymrozku|przymrozkach;przymrozku|przymrozki"
  },
  {
   "id": 1571,
@@ -23790,7 +23790,7 @@
    "rozłożysty",
    "rozłożysta",
    "rozłożyste",
-   "rozłożysty",
+   "rozłożyści",
    "rozłożyste"
   ]
  },
@@ -24194,7 +24194,7 @@
   "example": "**Dyrektor** szkoły mówi.",
   "picture": "school director speaking",
   "gender": "masculine personal",
-  "declension": "dyrektor|dyrektorzy;dyrektora|dyrektorów;dyrektorowi|dyrektorom;dyrektora|dyrektorów;dyrektorem|dyrektorami;dyrektorze|dyrektorach;dyrektorze|dyrektorzy"
+  "declension": "dyrektor|dyrektorowie;dyrektora|dyrektorów;dyrektorowi|dyrektorom;dyrektora|dyrektorów;dyrektorem|dyrektorami;dyrektorze|dyrektorach;dyrektorze|dyrektorowie"
  },
  {
   "id": 1615,
@@ -24425,7 +24425,7 @@
   "example": "Nowy **semestr** zaczyna się jutro.",
   "picture": "university semester calendar",
   "gender": "masculine inanimate",
-  "declension": "semestr|semestry;semestru|semestrów;semestrze|semestrach;semestr|semestry;semestrze|semestrami;semestrze|semestrach;semestrze|semestry"
+  "declension": "semestr|semestry;semestru|semestrów;semestrowi|semestrom;semestr|semestry;semestrem|semestrami;semestrze|semestrach;semestrze|semestry"
  },
  {
   "id": 1630,
@@ -24470,8 +24470,8 @@
   ],
   "example": "Mieszkam w **akademiku**.",
   "picture": "university dorm room",
-  "gender": "masculine animate",
-  "declension": "akademik|akademiki;akademika|akademików;akademikowi|akademikom;akademika|akademiki;akademikiem|akademikami;akademiku|akademikach;akademiku|akademiki"
+  "gender": "masculine inanimate",
+  "declension": "akademik|akademiki;akademika|akademików;akademikowi|akademikom;akademik|akademiki;akademikiem|akademikami;akademiku|akademikach;akademiku|akademiki"
  },
  {
   "id": 1633,
@@ -24486,7 +24486,7 @@
   "example": "**Rektor** mówi dziś do studentów.",
   "picture": "university rector speaking",
   "gender": "masculine personal",
-  "declension": "rektor|rektorzy;rektora|rektorów;rektorowi|rektorom;rektora|rektorów;rektorem|rektorami;rektorze|rektorach;rektorze|rektorzy"
+  "declension": "rektor|rektorowie;rektora|rektorów;rektorowi|rektorom;rektora|rektorów;rektorem|rektorami;rektorze|rektorach;rektorze|rektorowie"
  },
  {
   "id": 1634,
@@ -25111,7 +25111,7 @@
   "example": "Jaki jest **koszt** biletu?",
   "picture": "ticket price",
   "gender": "masculine inanimate",
-  "declension": "koszt|koszty;kosztu|kosztów;kosztowi|kosztom;koszt|koszty;kosztem|kosztami;koszcie|kosztach;koszcie|koszty"
+  "declension": "koszt|koszta;kosztu|kosztów;kosztowi|kosztom;koszt|koszta;kosztem|kosztami;koszcie|kosztach;koszcie|koszta"
  },
  {
   "id": 1674,
@@ -25266,7 +25266,7 @@
   "example": "Wypłaciłem pieniądze z **bankomatu**.",
   "picture": "cash machine",
   "gender": "masculine inanimate",
-  "declension": "bankomat|bankomaty;bankomatu|bankomatów;bankomatowi|bankautom;bankomat|bankomaty;bankomatem|bankomatami;bankomacie|bankomatach;bankomacie|bankomaty"
+  "declension": "bankomat|bankomaty;bankomatu|bankomatów;bankomatowi|bankomatom;bankomat|bankomaty;bankomatem|bankomatami;bankomacie|bankomatach;bankomacie|bankomaty"
  },
  {
   "id": 1684,
@@ -25447,7 +25447,7 @@
   "example": "Zdjęcia są w tym **folderze**.",
   "picture": "file folder",
   "gender": "masculine inanimate",
-  "declension": "folder|foldery;folderu|folderów;folderowi|folderom;folder|foldery;folderem|folderami;folderze|folderach;folderze|foldery"
+  "declension": "folder|foldery;foldera|folderów;folderowi|folderom;folder|foldery;folderem|folderami;folderze|folderach;folderze|foldery"
  },
  {
   "id": 1696,
@@ -25505,7 +25505,7 @@
   "example": "Kliknij ten **link**.",
   "picture": "web link icon",
   "gender": "masculine inanimate",
-  "declension": "link|linki;linku|linków;linkowi|linkom;link|linki;linkiem|linkami;linku|linkach;linku|linki"
+  "declension": "link|linki;linka|linków;linkowi|linkom;link|linki;linkiem|linkami;linku|linkach;linku|linki"
  },
  {
   "id": 1700,
@@ -25550,8 +25550,8 @@
   ],
   "example": "Mój komputer ma **wirus**.",
   "picture": "computer virus",
-  "gender": "masculine animate",
-  "declension": "wirus|wirusy;wirusa|wirusów;wirusowi|wirusom;wirusa|wirusy;wirusem|wirusami;wirusie|wirusach;wirusie|wirusy"
+  "gender": "masculine inanimate",
+  "declension": "wirus|wirusy;wirusa|wirusów;wirusowi|wirusom;wirus|wirusy;wirusem|wirusami;wirusie|wirusach;wirusie|wirusy"
  },
  {
   "id": 1703,
@@ -25900,7 +25900,7 @@
   ],
   "example": "Mój **pionek** poszedł dalej.",
   "picture": "board game pawn",
-  "gender": "masculine animate",
+  "gender": "masculine personal",
   "declension": "pionek|pionki;pionka|pionków;pionkowi|pionkom;pionka|pionki;pionkiem|pionkami;pionku|pionkach;pionku|pionki"
  },
  {
@@ -25932,7 +25932,7 @@
   "example": "Nowa **konsola** stoi w salonie.",
   "picture": "game console on table",
   "gender": "feminine",
-  "declension": "konsola|konsol;konsoli|konsol;konsoli|konsolom;konsolę|konsole;konsolą|konsolami;konsoli|konsolach;konsolo|konsole"
+  "declension": "konsola|konsole;konsoli|konsol;konsoli|konsolom;konsolę|konsole;konsolą|konsolami;konsoli|konsolach;konsolo|konsole"
  },
  {
   "id": 1728,
@@ -25978,8 +25978,8 @@
   ],
   "example": "Padł piękny **gol**.",
   "picture": "soccer ball in net",
-  "gender": "masculine inanimate",
-  "declension": "gol|gole;gola|goli;golowi|golom;gol|gole;golem|golami;golu|golach;golu|gole"
+  "gender": "masculine animate",
+  "declension": "gol|gole;gola|goli;golowi|golom;gola|gole;golem|golami;golu|golach;golu|gole"
  },
  {
   "id": 1731,
@@ -26104,7 +26104,7 @@
   "example": "Robię jeden **przysiad**.",
   "picture": "person doing squat",
   "gender": "masculine inanimate",
-  "declension": "przysiad|przysiady;przysiadu|przysiadów;przysiadom|przysiadom;przysiad|przysiady;przysiadem|przysiadami;przysiadzie|przysiadach;przysiadzie|przysiady"
+  "declension": "przysiad|przysiady;przysiadu|przysiadów;przysiadowi|przysiadom;przysiad|przysiady;przysiadem|przysiadami;przysiadzie|przysiadach;przysiadzie|przysiady"
  },
  {
   "id": 1739,
@@ -26149,7 +26149,7 @@
   "example": "Te **hantle** są ciężkie.",
   "picture": "pair of dumbbells",
   "gender": "plural only",
-  "declension": "hantle|hantli;hantli|hantli;hantlom|hantlom;hantle|hantli;hantlami|hantlami;hantlach|hantlach;hantle|hantle"
+  "declension": "|hantle;|hantli;|hantlom;|hantle;|hantlami;|hantlach;|hantle"
  },
  {
   "id": 1742,
@@ -26468,7 +26468,7 @@
   ],
   "example": "**Chór** śpiewał pięknie.",
   "picture": "choir singing together",
-  "gender": "masculine personal",
+  "gender": "masculine inanimate",
   "declension": "chór|chóry;chóru|chórów;chórowi|chórom;chór|chóry;chórem|chórami;chórze|chórach;chórze|chóry"
  },
  {
@@ -26596,7 +26596,7 @@
   "example": "",
   "picture": "story plot scene",
   "gender": "feminine",
-  "declension": "fabuła|fabuły;fabuły|fabuł;fabułe|fabułom;fabułę|fabuły;fabułą|fabułami;fabule|fabułach;fabuło|fabuły"
+  "declension": "fabuła|fabuły;fabuły|fabuł;fabule|fabułom;fabułę|fabuły;fabułą|fabułami;fabule|fabułach;fabuło|fabuły"
  },
  {
   "id": 1771,
@@ -26704,7 +26704,7 @@
   "example": "Rano ćwiczę **jogę**.",
   "picture": "person doing yoga pose",
   "gender": "feminine",
-  "declension": "joga|jogi;jogi|jóg;jodze|jogom;jogę|jogi;jogą|jogami;jodze|jogach;jogo|jogi"
+  "declension": "joga|jogi;jogi|jog;jodze|jogom;jogę|jogi;jogą|jogami;jodze|jogach;jogo|jogi"
  },
  {
   "id": 1778,
@@ -26767,7 +26767,7 @@
   "example": "W szkole uczymy się o **przyrodzie**.",
   "picture": "forest plants and animals",
   "gender": "feminine",
-  "declension": "przyroda|przyrody;przyrody|przyrod;przyrodzie|przyrodom;przyrodę|przyrody;przyrodą|przyrodami;przyrodzie|przyrodach;przyrodo|przyrody"
+  "declension": "przyroda|przyrody;przyrody|przyród;przyrodzie|przyrodom;przyrodę|przyrody;przyrodą|przyrodami;przyrodzie|przyrodach;przyrodo|przyrody"
  },
  {
   "id": 1782,
@@ -26813,7 +26813,7 @@
   "example": "Dziś **powietrze** jest świeże.",
   "picture": "fresh air outdoors",
   "gender": "neuter",
-  "declension": "powietrze|powietrza;powietrza|powietrz;powietrzu|powietrzom;powietrze|powietrza;powietrzem|powietrzami;powietrzu|powietrzach;powietrze|powietrza"
+  "declension": "powietrze|powietrza;powietrza|powietrzy;powietrzu|powietrzom;powietrze|powietrza;powietrzem|powietrzami;powietrzu|powietrzach;powietrze|powietrza"
  },
  {
   "id": 1785,
@@ -26828,7 +26828,7 @@
   ],
   "example": "**Ogień** jest gorący.",
   "picture": "campfire flames at night",
-  "gender": "neuter",
+  "gender": "masculine inanimate",
   "declension": "ogień|ognie;ognia|ogni;ogniowi|ogniom;ogień|ognie;ogniem|ogniami;ogniu|ogniach;ogniu|ognie"
  },
  {
@@ -27075,7 +27075,7 @@
   "example": "**Bluszcz** rośnie po murze.",
   "picture": "ivy climbing wall",
   "gender": "masculine inanimate",
-  "declension": "bluszcz|bluszcze;bluszczu|bluszczów;bluszczowi|bluszczom;bluszcz|bluszcze;bluszczem|bluszczami;bluszczu|bluszczach;bluszczu|bluszcze"
+  "declension": "bluszcz|bluszcze;bluszczu|bluszczy;bluszczowi|bluszczom;bluszcz|bluszcze;bluszczem|bluszczami;bluszczu|bluszczach;bluszczu|bluszcze"
  },
  {
   "id": 1802,
@@ -29560,7 +29560,7 @@
   "example": "On jest **obcokrajowcem**.",
   "picture": "foreign tourist",
   "gender": "masculine personal",
-  "declension": "obcokrajowiec|obcokrajowcy;obcokrajowca|obcokrajowców;obcokrajowcowi|obcokrajowcom;obcokrajowca|obcokrajowców;obcokrajowcem|obcokrajowcami;obcokrajowcu|obcokrajowcach;obcokrajowcze|obcokrajowcy"
+  "declension": "obcokrajowiec|obcokrajowcy;obcokrajowca|obcokrajowców;obcokrajowcowi|obcokrajowcom;obcokrajowca|obcokrajowców;obcokrajowcem|obcokrajowcami;obcokrajowcu|obcokrajowcach;obcokrajowcu|obcokrajowcy"
  },
  {
   "id": 1987,
@@ -29576,7 +29576,7 @@
   "example": "Mój brat jest **kawalerem**.",
   "picture": "single man",
   "gender": "masculine personal",
-  "declension": "kawaler|kawalerzy;kawalera|kawalerów;kawalerowi|kawalerom;kawalera|kawalerów;kawalerem|kawalerami;kawalerze|kawalerach;kawalerze|kawalerzy"
+  "declension": "kawaler|kawalerowie;kawalera|kawalerów;kawalerowi|kawalerom;kawalera|kawalerów;kawalerem|kawalerami;kawalerze|kawalerach;kawalerze|kawalerowie"
  },
  {
   "id": 1988,
@@ -29696,7 +29696,7 @@
   "example": "Mój **chłopak** jest miły.",
   "picture": "young couple smiling",
   "gender": "masculine personal",
-  "declension": "chłopak|chłopaki;chłopaka|chłopaków;chłopakowi|chłopakom;chłopaka|chłopaków;chłopakiem|chłopakami;chłopaku|chłopakach;chłopaku|chłopaki"
+  "declension": "chłopak|chłopacy;chłopaka|chłopaków;chłopakowi|chłopakom;chłopaka|chłopaków;chłopakiem|chłopakami;chłopaku|chłopakach;chłopaku|chłopacy"
  },
  {
   "id": 1995,
@@ -29728,7 +29728,7 @@
   "example": "Dzień dobry, **pani** Anno.",
   "picture": "adult woman greeting",
   "gender": "feminine",
-  "declension": "pani|panie;pani|pan;pani|paniom;panią|panie;panią|paniami;pani|paniach;pani|panie"
+  "declension": "pani|panie;pani|pań;pani|paniom;panią|panie;panią|paniami;pani|paniach;pani|panie"
  },
  {
   "id": 1997,
@@ -29758,7 +29758,7 @@
   "example": "Mój brat jest **nastolatkiem**.",
   "picture": "teenager standing",
   "gender": "masculine personal",
-  "declension": "nastolatek|nastolatki;nastolatka|nastolatków;nastolatkowi|nastolatkom;nastolatka|nastolatków;nastolatkiem|nastolatkami;nastolatku|nastolatkach;nastolatku|nastolatki"
+  "declension": "nastolatek|nastolatkowie;nastolatka|nastolatków;nastolatkowi|nastolatkom;nastolatka|nastolatków;nastolatkiem|nastolatkami;nastolatku|nastolatkach;nastolatku|nastolatkowie"
  },
  {
   "id": 1999,
@@ -29826,7 +29826,7 @@
   ],
   "example": "Mamy dziś **gościa**.",
   "picture": "hotel guest",
-  "gender": "masculine animate",
+  "gender": "masculine personal",
   "declension": "gość|goście;gościa|gości;gościowi|gościom;gościa|gości;gościem|gośćmi;gościu|gościach;gościu|goście"
  },
  {
@@ -29888,7 +29888,7 @@
   ],
   "example": "Mój **mąż** pracuje dziś.",
   "picture": "husband at work",
-  "gender": "masculine animate",
+  "gender": "masculine personal",
   "declension": "mąż|mężowie;męża|mężów;mężowi|mężom;męża|mężów;mężem|mężami;mężu|mężach;mężu|mężowie"
  },
  {
@@ -29904,7 +29904,7 @@
   "example": "Moja **babcia** piecze ciasto.",
   "picture": "grandmother baking cake",
   "gender": "feminine",
-  "declension": "babcia|babcie;babci|babc;babci|babciom;babcię|babcie;babcią|babciami;babci|babciach;babciu|babcie"
+  "declension": "babcia|babcie;babci|babci;babci|babciom;babcię|babcie;babcią|babciami;babci|babciach;babciu|babcie"
  },
  {
   "id": 2008,
@@ -29918,7 +29918,7 @@
   ],
   "example": "Mój **dziadek** czyta gazetę.",
   "picture": "grandfather reading newspaper",
-  "gender": "masculine animate",
+  "gender": "masculine personal",
   "declension": "dziadek|dziadkowie;dziadka|dziadków;dziadkowi|dziadkom;dziadka|dziadków;dziadkiem|dziadkami;dziadku|dziadkach;dziadku|dziadkowie"
  },
  {
@@ -29933,8 +29933,8 @@
   ],
   "example": "Mój **wnuk** lubi lody.",
   "picture": "grandchild eating ice cream",
-  "gender": "masculine animate",
-  "declension": "wnuk|wnuki;wnuka|wnuków;wnukowi|wnukom;wnuka|wnuków;wnukiem|wnukami;wnuku|wnukach;wnuku|wnuki"
+  "gender": "masculine personal",
+  "declension": "wnuk|wnukowie;wnuka|wnuków;wnukowi|wnukom;wnuka|wnuków;wnukiem|wnukami;wnuku|wnukach;wnuku|wnukowie"
  },
  {
   "id": 2010,
@@ -29964,7 +29964,7 @@
   "example": "Moja **ciocia** mieszka w Krakowie.",
   "picture": "aunt in city",
   "gender": "feminine",
-  "declension": "ciocia|ciocie;cioci|ciotek;cioci|ciotkom;ciocię|ciocie;ciocią|ciotkami;cioci|ciotkach;ciociu|ciocie"
+  "declension": "ciocia|ciocie;cioci|cioci;cioci|ciociom;ciocię|ciocie;ciocią|ciociami;cioci|ciociach;ciociu|ciocie"
  },
  {
   "id": 2012,
@@ -29978,7 +29978,7 @@
   ],
   "example": "Mój **wujek** ma samochód.",
   "picture": "uncle with car",
-  "gender": "masculine animate",
+  "gender": "masculine personal",
   "declension": "wujek|wujkowie;wujka|wujków;wujkowi|wujkom;wujka|wujków;wujkiem|wujkami;wujku|wujkach;wujku|wujkowie"
  },
  {
@@ -30119,17 +30119,17 @@
  {
   "id": 2022,
   "text": "chrzestny",
-  "translation": "cartilaginous",
+  "translation": "godfather",
   "transcription": "ˈxʐɛstnɨ",
   "partOfSpeech": "n",
   "cefr": "B2",
   "topics": [
    "family"
   ],
-  "example": "Lekarz bada **chrzęstny** staw.",
-  "picture": "doctor examining cartilage",
-  "gender": "masculine inanimate",
-  "declension": "chrzestny|chrzestne;chrzestnego|chrzestnych;chrzestnemu|chrzestnym;chrzestny|chrzestne;chrzestnym|chrzestnymi;chrzestnym|chrzestnych;chrzestny|chrzestne"
+  "example": "Mój **chrzestny** przyjechał na chrzciny.",
+  "picture": "godfather holding baby at christening",
+  "gender": "masculine personal",
+  "declension": "chrzestny|chrzestni;chrzestnego|chrzestnych;chrzestnemu|chrzestnym;chrzestnego|chrzestnych;chrzestnym|chrzestnymi;chrzestnym|chrzestnych;chrzestny|chrzestni"
  },
  {
   "id": 2023,
@@ -30282,7 +30282,7 @@
   "example": "Musisz mieć **zaufanie**.",
   "picture": "friends shaking hands",
   "gender": "neuter",
-  "declension": "zaufanie|zaufania;zaufania|zaufan;zaufaniu|zaufaniom;zaufanie|zaufania;zaufaniem|zaufaniami;zaufaniu|zaufaniach;zaufanie|zaufania"
+  "declension": "zaufanie|zaufania;zaufania|zaufań;zaufaniu|zaufaniom;zaufanie|zaufania;zaufaniem|zaufaniami;zaufaniu|zaufaniach;zaufanie|zaufania"
  },
  {
   "id": 2033,
@@ -30944,7 +30944,7 @@
   "example": "Potrzebuję **spokoju**.",
   "picture": "peaceful quiet room",
   "gender": "masculine inanimate",
-  "declension": "spokój|spokoje;spokoju|spokoiów;spokojowi|spokojom;spokój|spokoje;spokojem|spokojami;spokoju|spokojach;spokoju|spokoje"
+  "declension": "spokój|spokoje;spokoju|spokojów;spokojowi|spokojom;spokój|spokoje;spokojem|spokojami;spokoju|spokojach;spokoju|spokoje"
  },
  {
   "id": 2071,
@@ -31126,7 +31126,7 @@
   "example": "Ten pan ma długą **brodę**.",
   "picture": "man with beard",
   "gender": "feminine",
-  "declension": "broda|brody;brody|brod;brodzie|brodom;brodę|brody;brodą|brodami;brodzie|brodach;brodo|brody"
+  "declension": "broda|brody;brody|bród;brodzie|brodom;brodę|brody;brodą|brodami;brodzie|brodach;brodo|brody"
  },
  {
   "id": 2081,
@@ -31347,7 +31347,7 @@
   "example": "Ma **bliznę** na czole.",
   "picture": "facial scar",
   "gender": "feminine",
-  "declension": "blizna|blizny;blizny|blizn;bliznie|bliznom;bliznę|blizny;blizną|bliznami;bliznie|bliznach;blizno|blizny"
+  "declension": "blizna|blizny;blizny|blizn;bliźnie|bliznom;bliznę|blizny;blizną|bliznami;bliźnie|bliznach;blizno|blizny"
  },
  {
   "id": 2094,
@@ -31862,7 +31862,7 @@
   "example": "Jest mały **niuans** w tej sprawie.",
   "picture": "subtle difference",
   "gender": "masculine inanimate",
-  "declension": "niuans|niuansy;niuansu|niuansów;niuansowi|niuansom;niuans|niuansy;niuansem|niuansami;niuansie|niuansach;niuansie|niuansy"
+  "declension": "niuans|niuanse;niuansu|niuansów;niuansowi|niuansom;niuans|niuanse;niuansem|niuansami;niuansie|niuansach;niuansie|niuanse"
  },
  {
   "id": 2129,
@@ -31928,7 +31928,7 @@
    "niejasny",
    "niejasna",
    "niejasne",
-   "niejasni",
+   "niejaśni",
    "niejasne"
   ]
  },
@@ -32659,7 +32659,7 @@
   "example": "Był **nieświadomy** zagrożenia.",
   "picture": "unconscious person",
   "forms": [
-   "nieświadomy",
+   "nieświadom",
    "nieświadoma",
    "nieświadome",
    "nieświadomi",
@@ -34256,7 +34256,7 @@
   "example": "**Szyja** mnie boli.",
   "picture": "painful neck",
   "gender": "feminine",
-  "declension": "szyja|szyje;szyi|szyj;szyi|szyjom;szyję|szyje;szyją|szyjami;szyi|szyjach;szyjo|szyje"
+  "declension": "szyja|szyje;szyi|szyi;szyi|szyjom;szyję|szyje;szyją|szyjami;szyi|szyjach;szyjo|szyje"
  },
  {
   "id": 2279,
@@ -34302,7 +34302,7 @@
   "example": "Dotknąłem **czoła**.",
   "picture": "forehead touch",
   "gender": "neuter",
-  "declension": "czoło|czoła;czoła|czoł;czołu|czołom;czoło|czoła;czołem|czołami;czole|czołach;czoło|czoła"
+  "declension": "czoło|czoła;czoła|czół;czołu|czołom;czoło|czoła;czołem|czołami;czole|czołach;czoło|czoła"
  },
  {
   "id": 2282,
@@ -34331,7 +34331,7 @@
   ],
   "example": "Złamałem **paznokieć**.",
   "picture": "broken fingernail",
-  "gender": "masculine inanimate",
+  "gender": "masculine animate",
   "declension": "paznokieć|paznokcie;paznokcia|paznokci;paznokciowi|paznokciom;paznokieć|paznokcie;paznokciem|paznokciami;paznokciu|paznokciach;paznokciu|paznokcie"
  },
  {
@@ -34426,7 +34426,7 @@
   "example": "Męczy mnie **kaszel**.",
   "picture": "person coughing",
   "gender": "masculine inanimate",
-  "declension": "kaszel|kaszczele;kaszlu|kaszli;kaszlowi|kaszlom;kaszel|kaszczele;kaszlem|kaszlami;kaszlu|kaszlach;kaszlu|kaszle"
+  "declension": "kaszel|kaszle;kaszlu|kaszlów;kaszlowi|kaszlom;kaszel|kaszle;kaszlem|kaszlami;kaszlu|kaszlach;kaszlu|kaszle"
  },
  {
   "id": 2290,
@@ -34700,7 +34700,7 @@
   "example": "Na ranę dałam **maść**.",
   "picture": "ointment tube",
   "gender": "feminine",
-  "declension": "maść|maście;maści|maści;maści|maściom;maść|maście;maścią|maściami;maści|maściach;maści|maście"
+  "declension": "maść|maści;maści|maści;maści|maściom;maść|maści;maścią|maściami;maści|maściach;maści|maści"
  },
  {
   "id": 2308,
@@ -34780,7 +34780,7 @@
   "example": "Nakleiłam **plaster** na palec.",
   "picture": "adhesive bandage",
   "gender": "masculine inanimate",
-  "declension": "plaster|plastry;plastra|plastrów;plastrowi|plastrom;plaster|plastry;plasterem|plastrami;plastrze|plastrach;plastrze|plastry"
+  "declension": "plaster|plastry;plastra|plastrów;plastrowi|plastrom;plaster|plastry;plastrem|plastrami;plastrze|plastrach;plastrze|plastry"
  },
  {
   "id": 2313,
@@ -34795,7 +34795,7 @@
   "example": "Pielęgniarka założyła mi **bandaż**.",
   "picture": "arm in bandage",
   "gender": "masculine inanimate",
-  "declension": "bandaż|bandaże;bandażu|bandaży;bandażowi|bandażom;bandaż|bandaże;bandażem|bandażami;bandażu|bandażach;bandażu|bandaże"
+  "declension": "bandaż|bandaże;bandaża|bandaży;bandażowi|bandażom;bandaż|bandaże;bandażem|bandażami;bandażu|bandażach;bandażu|bandaże"
  },
  {
   "id": 2314,
@@ -35212,7 +35212,7 @@
   "example": "**Ofiara** wypadku trafiła do szpitala.",
   "picture": "injured accident victim",
   "gender": "feminine",
-  "declension": "ofiara|ofiary;ofiary|ofiar;oferze|ofiarom;ofiarę|ofiary;ofiarą|ofiarami;oferze|ofiarach;ofiaro|ofiary"
+  "declension": "ofiara|ofiary;ofiary|ofiar;ofierze|ofiarom;ofiarę|ofiary;ofiarą|ofiarami;ofierze|ofiarach;ofiaro|ofiary"
  },
  {
   "id": 2341,
@@ -35396,7 +35396,7 @@
   "example": "**Sędzia** słuchał stron.",
   "picture": "judge in courtroom",
   "gender": "masculine personal",
-  "declension": "sędzia|sędziowie;sędziego|sędziów;sędziemu|sędziom;sędziego|sędziów;sędzią|sędziami;sędzim|sędziach;sędzio|sędziowie"
+  "declension": "sędzia|sędziowie;sędzi|sędziów;sędzi|sędziom;sędziego|sędziów;sędzią|sędziami;sędzi|sędziach;sędzio|sędziowie"
  },
  {
   "id": 2353,
@@ -35864,7 +35864,7 @@
   "example": "Zimą chcę pojechać do **Norwegii**.",
   "picture": "Norway map outline",
   "gender": "feminine",
-  "declension": "Norwegia|Norwegie;Norwegii|Norwegii;Norwegii|Norwegom;Norwegię|Norwegie;Norwegią|Norwegiami;Norwegii|Norwegiach;Norwegio|Norwegie"
+  "declension": "Norwegia|Norwegie;Norwegii|Norwegii;Norwegii|Norwegiom;Norwegię|Norwegie;Norwegią|Norwegiami;Norwegii|Norwegiach;Norwegio|Norwegie"
  },
  {
   "id": 2384,
@@ -35968,7 +35968,7 @@
   ],
   "example": "Wczoraj byłem w **Krakowie**.",
   "picture": "Krakow city skyline",
-  "gender": "masculine animate",
+  "gender": "masculine inanimate",
   "declension": "Kraków|Krakowy;Krakowa|Krakowów;Krakowowi|Krakowom;Kraków|Krakowy;Krakowem|Krakowami;Krakowie|Krakowach;Krakowie|Krakowy"
  },
  {
@@ -35983,7 +35983,7 @@
   ],
   "example": "Pociąg jedzie do **Gdańska**.",
   "picture": "Gdansk city skyline",
-  "gender": "masculine animate",
+  "gender": "masculine inanimate",
   "declension": "Gdańsk|Gdański;Gdańska|Gdańsków;Gdańskowi|Gdańskom;Gdańsk|Gdański;Gdańskiem|Gdańskami;Gdańsku|Gdańskach;Gdańsku|Gdański"
  },
  {
@@ -35998,8 +35998,8 @@
   ],
   "example": "Siostra studiuje we **Wrocławiu**.",
   "picture": "Wroclaw city skyline",
-  "gender": "masculine animate",
-  "declension": "Wrocław|Wrocławie;Wrocławia|Wrocławiów;Wrocławiowi|Wrocławiom;Wrocław|Wrocławie;Wrocławiem|Wrocławami;Wrocławiu|Wrocławiach;Wrocławiu|Wrocławie"
+  "gender": "masculine inanimate",
+  "declension": "Wrocław|Wrocławie;Wrocławia|Wrocławi;Wrocławiowi|Wrocławiom;Wrocław|Wrocławie;Wrocławiem|Wrocławiami;Wrocławiu|Wrocławiach;Wrocławiu|Wrocławie"
  },
  {
   "id": 2393,
@@ -36013,7 +36013,7 @@
   ],
   "example": "Tata pracuje w **Poznaniu**.",
   "picture": "Poznan city skyline",
-  "gender": "masculine animate",
+  "gender": "masculine inanimate",
   "declension": "Poznań|Poznanie;Poznania|Poznani;Poznaniowi|Poznaniom;Poznań|Poznanie;Poznaniem|Poznaniami;Poznaniu|Poznaniach;Poznaniu|Poznanie"
  },
  {
@@ -36077,7 +36077,7 @@
   "example": "Spotykamy się dziś przy **ratuszu**.",
   "picture": "town hall building",
   "gender": "masculine inanimate",
-  "declension": "ratusz|ratusze;ratusza|ratuszów;ratuszowi|ratuszom;ratusz|ratusze;ratuszem|ratuszami;ratuszu|ratuszach;ratuszu|ratusze"
+  "declension": "ratusz|ratusze;ratusza|ratuszy;ratuszowi|ratuszom;ratusz|ratusze;ratuszem|ratuszami;ratuszu|ratuszach;ratuszu|ratusze"
  },
  {
   "id": 2398,
@@ -36155,7 +36155,7 @@
   ],
   "example": "Ten kościół to stary **zabytek**.",
   "picture": "old stone monument",
-  "gender": "masculine animate",
+  "gender": "masculine inanimate",
   "declension": "zabytek|zabytki;zabytku|zabytków;zabytkowi|zabytkom;zabytek|zabytki;zabytkiem|zabytkami;zabytku|zabytkach;zabytku|zabytki"
  },
  {
@@ -36171,7 +36171,7 @@
   ],
   "example": "Na rynku stoi **pomnik** króla.",
   "picture": "king statue in square",
-  "gender": "masculine animate",
+  "gender": "masculine inanimate",
   "declension": "pomnik|pomniki;pomnika|pomników;pomnikowi|pomnikom;pomnik|pomniki;pomnikiem|pomnikami;pomniku|pomnikach;pomniku|pomniki"
  },
  {
@@ -36452,7 +36452,7 @@
   "example": "Dokumenty są w **sejfie**.",
   "picture": "hotel safe box",
   "gender": "masculine inanimate",
-  "declension": "sejf|sejfy;sejfu|sejfów;sejfowi|sejfrom;sejf|sejfy;sejfem|sejfami;sejfie|sejfach;sejfie|sejfy"
+  "declension": "sejf|sejfy;sejfu|sejfów;sejfowi|sejfom;sejf|sejfy;sejfem|sejfami;sejfie|sejfach;sejfie|sejfy"
  },
  {
   "id": 2422,
@@ -36515,7 +36515,7 @@
   "example": "Mój **lot** jest jutro.",
   "picture": "airplane taking off",
   "gender": "masculine inanimate",
-  "declension": "lot|loty;lotu|lotów;lotowi|lotom;lot|loty;lotem|lotami;locie|lotach;locie|loty"
+  "declension": "lot|loty;lota|lotów;lotowi|lotom;lot|loty;lotem|lotami;locie|lotach;locie|loty"
  },
  {
   "id": 2426,
@@ -36624,7 +36624,7 @@
   "example": "Spotkajmy się w **terminalu**.",
   "picture": "airport terminal",
   "gender": "masculine inanimate",
-  "declension": "terminal|terminale;terminalu|terminali;terminalowi|terminalom;terminal|terminale;terminalem|terminalami;terminalu|terminalach;terminalu|terminale"
+  "declension": "terminal|terminale;terminala|terminali;terminalowi|terminalom;terminal|terminale;terminalem|terminalami;terminalu|terminalach;terminalu|terminale"
  },
  {
   "id": 2433,
@@ -36639,7 +36639,7 @@
   "example": "Jadę dziś **metrem**.",
   "picture": "subway train",
   "gender": "neuter",
-  "declension": "metro|metro;metra|metros;metru|metrom;metro|metro;metrem|metro;metrze|metrach;metro|metro"
+  "declension": "metro|metra;metra|metr;metru|metrom;metro|metra;metrem|metrami;metrze|metrach;metro|metra"
  },
  {
   "id": 2434,
@@ -36873,7 +36873,7 @@
   "example": "",
   "picture": "roundabout",
   "gender": "neuter",
-  "declension": "rondo|ronda;ronda|rond;rondzie|random;rondo|ronda;rondem|rondami;rondzie|rondach;rondo|ronda"
+  "declension": "rondo|ronda;ronda|rond;rondu|rondom;rondo|ronda;rondem|rondami;rondzie|rondach;rondo|ronda"
  },
  {
   "id": 2450,
@@ -38135,7 +38135,7 @@
   "example": "W **średniowieczu** były zamki.",
   "picture": "medieval castle city",
   "gender": "neuter",
-  "declension": "średniowiecze|średniowiecza;średniowiecza|średniowiecz;średniowieczu|średniowieczom;średniowiecze|średniowiecza;średniowieczem|średniowieczami;średniowieczu|średniowieczach;średniowiecze|średniowiecza"
+  "declension": "średniowiecze|średniowiecza;średniowiecza|średniowieczy;średniowieczu|średniowieczom;średniowiecze|średniowiecza;średniowieczem|średniowieczami;średniowieczu|średniowieczach;średniowiecze|średniowiecza"
  },
  {
   "id": 2536,
@@ -38882,7 +38882,7 @@
   "example": "Na obiad jest **pieczeń** wołowa.",
   "picture": "roast beef dinner",
   "gender": "feminine",
-  "declension": "pieczeń|pieczenie;pieczeni|pieczeni;pieczeni|pieczeniom;pieczeń|pieczenie;pieczeń|pieczeniami;pieczeni|pieczeniach;pieczeni|pieczenie"
+  "declension": "pieczeń|pieczenie;pieczeni|pieczeni;pieczeni|pieczeniom;pieczeń|pieczenie;pieczenią|pieczeniami;pieczeni|pieczeniach;pieczeni|pieczenie"
  },
  {
   "id": 2586,
@@ -38912,7 +38912,7 @@
   "example": "Żołnierz trzymał **broń** w ręku.",
   "picture": "soldier holding gun",
   "gender": "feminine",
-  "declension": "broń|bronie;broni|broni;broni|bronim;broń|bronie;bronią|broniami;broni|broniach;broni|bronie"
+  "declension": "broń|bronie;broni|broni;broni|broniom;broń|bronie;bronią|broniami;broni|broniach;broni|bronie"
  },
  {
   "id": 2588,
@@ -38940,7 +38940,7 @@
   "example": "Uśmiechał się od ucha do ucha, na całą **gębę**.",
   "picture": "smiling mouth",
   "gender": "feminine",
-  "declension": "gęba|gęby;gęby|gęb;gębie|gębom;gębę|gęby;gębą|gębami;gębie|gębach;gębo|gęby"
+  "declension": "gęba|gęby;gęby|gąb;gębie|gębom;gębę|gęby;gębą|gębami;gębie|gębach;gębo|gęby"
  },
  {
   "id": 2590,
@@ -39249,7 +39249,7 @@
   "example": "Demonstranci nieśli wielki **transparent**.",
   "picture": "crowd holding banner",
   "gender": "masculine inanimate",
-  "declension": "transparent|transparenciki;transparentu|transparentów;transparentowi|transparentom;transparent|transparenty;transparentem|transparentami;transparencie|transparentach;transparencie|transparenty"
+  "declension": "transparent|transparenty;transparentu|transparentów;transparentowi|transparentom;transparent|transparenty;transparentem|transparentami;transparencie|transparentach;transparencie|transparenty"
  },
  {
   "id": 2610,
@@ -39339,7 +39339,7 @@
   "example": "Ten **facet** mieszka obok nas.",
   "picture": "young man next door",
   "gender": "masculine personal",
-  "declension": "facet|facety;faceta|facetów;facetowi|facetom;faceta|facetów;facetem|facetami;facecie|facetach;facecie|facety"
+  "declension": "facet|faceci;faceta|facetów;facetowi|facetom;faceta|facetów;facetem|facetami;facecie|facetach;facecie|faceci"
  },
  {
   "id": 2616,
@@ -39353,8 +39353,8 @@
   ],
   "example": "Kot jest **pupilem** całej rodziny.",
   "picture": "family pet cat",
-  "gender": "masculine animate",
-  "declension": "pupil|pupile;pupila|pupili;pupilowi|pupilom;pupila|pupile;pupilem|pupilami;pupilu|pupilach;pupilu|pupile"
+  "gender": "masculine personal",
+  "declension": "pupil|pupile;pupila|pupili;pupilowi|pupilom;pupila|pupili;pupilem|pupilami;pupilu|pupilach;pupilu|pupile"
  },
  {
   "id": 2617,
@@ -39413,7 +39413,7 @@
   ],
   "example": "Zgubiłem jeden **but**.",
   "picture": "single shoe",
-  "gender": "masculine inanimate",
+  "gender": "masculine animate",
   "declension": "but|buty;buta|butów;butowi|butom;but|buty;butem|butami;bucie|butach;bucie|buty"
  },
  {
@@ -39489,7 +39489,7 @@
   "example": "**Handel** z zagranicą rośnie.",
   "picture": "international trade cargo",
   "gender": "masculine inanimate",
-  "declension": "handel|handel;handlu|handli;handlowi|handlom;handel|handel;handlem|handlami;handlu|handlach;handlu|handel"
+  "declension": "handel|handle;handlu|handli;handlowi|handlom;handel|handle;handlem|handlami;handlu|handlach;handlu|handle"
  },
  {
   "id": 2626,
@@ -39578,7 +39578,7 @@
   ],
   "example": "Na urodziny upiekłam **tort** czekoladowy.",
   "picture": "chocolate layer cake",
-  "gender": "masculine inanimate",
+  "gender": "masculine animate",
   "declension": "tort|torty;tortu|tortów;tortowi|tortom;tort|torty;tortem|tortami;torcie|tortach;torcie|torty"
  },
  {
@@ -39623,8 +39623,8 @@
   ],
   "example": "Ale miałeś **fart**!",
   "picture": "lucky person smiling",
-  "gender": "masculine inanimate",
-  "declension": "fart|farty;fartu|fartów;fartowi|fartom;fart|farty;fartem|fartami;fartcie|fartach;fartcie|farty"
+  "gender": "masculine animate",
+  "declension": "fart|farty;farta|fartów;fartowi|fartom;fart|farty;fartem|fartami;farcie|fartach;farcie|farty"
  },
  {
   "id": 2635,
@@ -39639,7 +39639,7 @@
   "example": "Ona ma dobry **gust**.",
   "picture": "fashionable woman outfit",
   "gender": "masculine inanimate",
-  "declension": "gust|gusty;gustu|gustów;gustowi|gustom;gust|gusty;gustem|gustami;guście|gustach;guście|gusty"
+  "declension": "gust|gusta;gustu|gustów;gustowi|gustom;gust|gusta;gustem|gustami;guście|gustach;guście|gusta"
  },
  {
   "id": 2636,
@@ -39668,7 +39668,7 @@
   ],
   "example": "Zapal **knot** świecy.",
   "picture": "candle wick",
-  "gender": "masculine inanimate",
+  "gender": "masculine animate",
   "declension": "knot|knoty;knota|knotów;knotowi|knotom;knot|knoty;knotem|knotami;knocie|knotach;knocie|knoty"
  },
  {
@@ -39699,7 +39699,7 @@
   "example": "**Paw** rozłożył kolorowy ogon.",
   "picture": "peacock with tail",
   "gender": "masculine animate",
-  "declension": "paw|pawy;pawa|pawów;pawowi|pawom;pawa|pawy;pawem|pawami;pawie|pawach;pawie|pawy"
+  "declension": "paw|pawie;pawia|pawi;pawiowi|pawiom;pawia|pawie;pawiem|pawiami;pawiu|pawiach;pawiu|pawie"
  },
  {
   "id": 2640,
@@ -39728,7 +39728,7 @@
   ],
   "example": "Konie pędziły przez **step**.",
   "picture": "open grassland steppe",
-  "gender": "feminine",
+  "gender": "masculine inanimate",
   "declension": "step|stepy;stepu|stepów;stepowi|stepom;step|stepy;stepem|stepami;stepie|stepach;stepie|stepy"
  },
  {
@@ -39774,7 +39774,7 @@
   "example": "Poszli na **wagary** zamiast na lekcję.",
   "picture": "schoolchildren skipping class",
   "gender": "plural only",
-  "declension": "|wagar y;|wagar;|wagarom;|wagary;|wagarami;|wagarach;|wagary"
+  "declension": "|wagary;|wagarów;|wagarom;|wagary;|wagarami;|wagarach;|wagary"
  },
  {
   "id": 2645,
@@ -39804,7 +39804,7 @@
   "example": "Wynajęli **apartament** z widokiem na morze.",
   "picture": "luxury apartment interior",
   "gender": "masculine inanimate",
-  "declension": "apartament|apartamenty;apartamentu|apartamentów;apartamentowi|apartamentom;apartament|apartamenty;apartamentem|apartamentami;apartamencie|apartamentach;apartamencie|apartamenty"
+  "declension": "apartament|apartamenta;apartamentu|apartamentów;apartamentowi|apartamentom;apartament|apartamenta;apartamentem|apartamentami;apartamencie|apartamentach;apartamencie|apartamenta"
  },
  {
   "id": 2647,
@@ -40043,8 +40043,8 @@
   ],
   "example": "Za **karawanem** szli żałobnicy.",
   "picture": "funeral hearse",
-  "gender": "masculine animate",
-  "declension": "karawan|karawany;karawana|karawanów;karawanowi|karawanom;karawana|karawany;karawanem|karawanami;karawanie|karawanach;karawanie|karawany"
+  "gender": "masculine inanimate",
+  "declension": "karawan|karawany;karawanu|karawanów;karawanowi|karawanom;karawan|karawany;karawanem|karawanami;karawanie|karawanach;karawanie|karawany"
  },
  {
   "id": 2662,

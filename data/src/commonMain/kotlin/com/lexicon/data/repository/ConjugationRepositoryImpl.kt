@@ -13,6 +13,7 @@ import com.lexicon.data.local.ConjugationCourseVerbEntity
 import com.lexicon.data.local.ConjugationDao
 import com.lexicon.data.local.ConjugationProgressEntity
 import com.lexicon.data.local.ConjugationVerbEntity
+import com.lexicon.model.vocabulary.Aspect
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.builtins.ListSerializer
@@ -74,6 +75,7 @@ class ConjugationRepositoryImpl(
                     formsJson = json.encodeToString(formsSerializer, verb.forms),
                     example = verb.example,
                     isUserCreated = true,
+                    aspect = verb.aspect?.tag.orEmpty(),
                 ),
             ),
         )
@@ -150,6 +152,7 @@ class ConjugationRepositoryImpl(
                     translation = verb.translation.orEmpty(),
                     formsJson = json.encodeToString(formsSerializer, verb.forms),
                     example = verb.example,
+                    aspect = verb.aspect?.tag.orEmpty(),
                 )
             },
         )
@@ -161,5 +164,6 @@ class ConjugationRepositoryImpl(
             translation = translation.takeIf { it.isNotBlank() },
             forms = runCatching { json.decodeFromString(formsSerializer, formsJson) }.getOrDefault(emptyMap()),
             example = example,
+            aspect = Aspect.ofTag(aspect),
         )
 }

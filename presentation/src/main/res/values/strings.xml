@@ -65,6 +65,9 @@
     <string name="settings_step_count">Steps per session</string>
     <string name="settings_voice">Voice</string>
     <string name="settings_voice_note">Tap a name to hear it.</string>
+    <string name="settings_sources">Sources</string>
+    <string name="settings_sources_sgjp">Word grammar comes from the Grammatical Dictionary of Polish (SGJP, sgjp.pl), Copyright © 2007–2026 Marcin Woliński, Zbigniew Bronk, Włodzimierz Gruszczyński, Witold Kieraś, Zygmunt Saloni, Danuta Skowrońska, Robert Wołosz. All rights reserved.</string>
+    <string name="settings_sources_sgjp_licence">Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. THIS SOFTWARE IS PROVIDED BY COPYRIGHT HOLDERS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="settings_step_count_note">Sets how many words each training asks about, and how many sentences the reading trainings write. Takes effect next session.</string>
 
     <!-- Verb conjugation course -->
@@ -321,6 +324,8 @@
     <string name="grammar_gender_feminine">feminine</string>
     <string name="grammar_gender_neuter">neuter</string>
     <string name="grammar_gender_plural_only">plural only</string>
+    <string name="grammar_aspect_imperfective">imperfective, present tense</string>
+    <string name="grammar_aspect_perfective">perfective, future tense</string>
     <string name="grammar_case_nominative">nominative</string>
     <string name="grammar_case_genitive">genitive</string>
     <string name="grammar_case_dative">dative</string>

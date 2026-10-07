@@ -6,6 +6,7 @@ import com.lexicon.boundary.WordGrammarGenerator
 import com.lexicon.data.remote.sentence.OpenAiAnswer
 import com.lexicon.data.remote.sentence.OpenAiApi
 import com.lexicon.data.remote.sentence.ask
+import com.lexicon.model.vocabulary.Aspect
 import com.lexicon.model.vocabulary.CaseForms
 import com.lexicon.model.vocabulary.Gender
 import com.lexicon.model.vocabulary.GrammaticalCase
@@ -46,7 +47,8 @@ Decide what kind of word it is, then give the forms that kind needs.
   dobry -> dobry, dobra, dobre, dobrzy, dobre. wysoki -> wysoki, wysoka, wysokie, wysocy, wysokie.
 * A verb gets the present tense for all six persons, keeping się where the word has it.
   A perfective verb gets its simple future instead. An impersonal verb such as trzeba
-  fills on/ona/ono only.
+  fills on/ona/ono only. A verb also gets its aspect, perfective or imperfective:
+  kupić is perfective, kupować imperfective.
 * Any other kind of word gets the part of speech and nothing else.
 
 ## Output
@@ -58,7 +60,8 @@ Return only a JSON object, no Markdown and no explanation:
  "accusative": "kota/koty", "instrumental": "kotem/kotami", "locative": "kocie/kotach",
  "vocative": "kocie/koty"},
  "adjective": {"masculine": "", "feminine": "", "neuter": "", "pluralPersonal": "", "pluralOther": ""},
- "conjugation": {"ja": "", "ty": "", "on/ona/ono": "", "my": "", "wy": "", "oni/one": ""}}
+ "conjugation": {"ja": "", "ty": "", "on/ona/ono": "", "my": "", "wy": "", "oni/one": ""},
+ "aspect": ""}
 
 Leave out the parts that do not apply to this word.
 """
@@ -101,6 +104,7 @@ class OpenAiGrammarGenerator(
             partOfSpeech = partOfSpeech,
             forms = parsed.formsOf(partOfSpeech),
             conjugation = if (word.isBlank()) emptyMap() else parsed.conjugation(),
+            aspect = Aspect.ofTag(parsed.string("aspect").lowercase()),
         )
     }
 }

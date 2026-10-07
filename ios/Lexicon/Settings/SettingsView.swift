@@ -48,6 +48,16 @@ struct SettingsView: View {
                             .font(.caption)
                             .foregroundStyle(skin.onTile.muted)
                     }
+
+                    Tile(skin: skin) {
+                        heading("books.vertical", Strings.settingsSources, skin)
+                        Text(Strings.settingsSourcesSgjp)
+                            .font(.callout)
+                            .foregroundStyle(skin.onTile)
+                        Text(Strings.settingsSourcesSgjpLicence)
+                            .font(.caption)
+                            .foregroundStyle(skin.onTile.muted)
+                    }
                 }
                 .padding(Spacing.medium)
             }

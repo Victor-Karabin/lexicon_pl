@@ -27,6 +27,7 @@ class FillWordGrammarUseCaseImpl(
                     forms = generated.conjugation,
                     translation = word.translation,
                     example = word.example,
+                    aspect = generated.aspect,
                 ),
             )
         }

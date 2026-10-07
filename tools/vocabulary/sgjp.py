@@ -13,6 +13,7 @@ Dot-joined values list every slot the form fills.
 from __future__ import annotations
 
 import gzip
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -207,3 +208,42 @@ def adjective_forms(lexeme: Lexeme) -> dict[str, list[str]]:
 
 def present_tense(lexeme: Lexeme) -> dict[str, list[str]]:
     return {person: lexeme.texts(number, who, head="fin") for person, (number, who) in PERSONS.items()}
+
+
+def split_cases(declension: str) -> dict[str, tuple[str, str]]:
+    cases = {}
+    for name, cell in zip(CASES, declension.split(";")):
+        singular, _, plural = cell.partition("|")
+        cases[name] = (singular.strip(), plural.strip())
+    return cases
+
+
+def variants(cell: str) -> list[str]:
+    usable = re.sub(r"\bN/A\b", "", cell, flags=re.IGNORECASE)
+    parts = [part.strip() for part in usable.replace(";", "/").split("/")]
+    return [part for part in parts if part]
+
+
+def verb_lemma(infinitive: str) -> tuple[str, str]:
+    if infinitive.endswith(" się"):
+        return infinitive[: -len(" się")], " się"
+    return infinitive, ""
+
+
+def noun_mismatches(lexeme: Lexeme, ours: dict[str, tuple[str, str]]) -> list[str]:
+    preferred = declension(lexeme)
+    wrong = []
+    for case, (singular, plural) in ours.items():
+        for number, mine, shown in (("sg", singular, preferred[case][0]), ("pl", plural, preferred[case][1])):
+            allowed = lexeme.all_texts(number, CASES[case], head="subst")
+            if mine and allowed and mine not in allowed:
+                wrong.append(f"{case} {number}: {mine} → {'/'.join(shown) or '/'.join(sorted(allowed))}")
+    return wrong
+
+
+def closest(candidates: list[Lexeme], part_of_speech: str, mismatches) -> Lexeme | None:
+    fitting = [lexeme for lexeme in candidates if lexeme.part_of_speech == part_of_speech]
+    if not fitting:
+        return None
+    fallback = best(fitting, part_of_speech)
+    return min(fitting, key=lambda lexeme: (len(mismatches(lexeme)), lexeme is not fallback))

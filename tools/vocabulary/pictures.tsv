@@ -750,7 +750,7 @@ korzeń	root	plant root
 nasiono	kernel	seed in soil
 trawa	grass	grass in meadow
 krzak	bush	bush in yard
-mech	down	moss on stone
+mech	moss	moss on stone
 grzyb	mushroom	forest mushroom
 paproć	fern	fern in forest
 dąb	oak	old oak tree
@@ -2020,7 +2020,7 @@ rodzice	parents	parents at home
 rodzeństwo	siblings	siblings together
 bliźniak	twin	twin brothers
 krewny	relative	distant relative
-chrzestny	cartilaginous	doctor examining cartilage
+chrzestny	godfather	godfather holding baby at christening
 miłość	love	couple in love
 przyjaźń	friendship	friends hugging
 związek	relationship	happy couple relationship
