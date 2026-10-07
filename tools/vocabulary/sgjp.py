@@ -141,16 +141,16 @@ class Lexeme:
         return None
 
 
-def dictionary_file() -> Path:
-    found = sorted(CACHE.glob("sgjp-*.tab.gz"))
+def dictionary_file(name: str = "sgjp") -> Path:
+    found = sorted(CACHE.glob(f"{name}-*.tab.gz"))
     if not found:
-        raise FileNotFoundError(f"put sgjp-YYYYMMDD.tab.gz from https://morfeusz.sgjp.pl/download/ into {CACHE}")
+        raise FileNotFoundError(f"put {name}-YYYYMMDD.tab.gz from https://morfeusz.sgjp.pl/download/ into {CACHE}")
     return found[-1]
 
 
-def load(lemmas: set[str]) -> dict[str, list[Lexeme]]:
+def load(lemmas: set[str], name: str = "sgjp") -> dict[str, list[Lexeme]]:
     lexemes: dict[tuple[str, str], Lexeme] = {}
-    with gzip.open(dictionary_file(), "rt", encoding="utf-8") as lines:
+    with gzip.open(dictionary_file(name), "rt", encoding="utf-8") as lines:
         for line in lines:
             if line.startswith("#") or "\t" not in line:
                 continue
@@ -224,10 +224,12 @@ def variants(cell: str) -> list[str]:
     return [part for part in parts if part]
 
 
-def verb_lemma(infinitive: str) -> tuple[str, str]:
-    if infinitive.endswith(" się"):
-        return infinitive[: -len(" się")], " się"
-    return infinitive, ""
+def verb_lemma(infinitive: str) -> tuple[str, str, str]:
+    words = infinitive.split(" ")
+    at = next((index for index, word in enumerate(words) if word.endswith(("ć", "c"))), 0)
+    before = "".join(word + " " for word in words[:at])
+    after = "".join(" " + word for word in words[at + 1 :])
+    return words[at], before, after
 
 
 def noun_mismatches(lexeme: Lexeme, ours: dict[str, tuple[str, str]]) -> list[str]:

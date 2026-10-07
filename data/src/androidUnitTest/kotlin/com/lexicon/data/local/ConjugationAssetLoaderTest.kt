@@ -107,7 +107,7 @@ class ConjugationAssetLoaderTest {
         assertTrue(parsed.none { it.infinitive.isBlank() })
         assertTrue(parsed.all { entry -> entry.forms.values.all { forms -> forms.none(String::isBlank) } })
         assertTrue(parsed.all { entry -> entry.forms.keys.all { it in PERSON_KEYS } })
-        assertTrue(parsed.any { it.forms.isEmpty() })
+        assertTrue("every shipped verb can be practised", parsed.none { it.forms.isEmpty() })
         assertTrue(parsed.any { it.infinitive.endsWith(" się") })
         assertTrue("every verb should carry a translation", parsed.all { !it.translation.isNullOrBlank() })
         assertTrue("SGJP conjugates nearly every verb", parsed.count { it.forms.size == PERSON_KEYS.size } > 4_300)

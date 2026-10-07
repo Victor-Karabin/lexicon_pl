@@ -94,7 +94,7 @@ def compare_adjectives(words: list[dict], grammar: dict, lexicon: dict, report: 
 def compare_verbs(conjugations: list[dict], lexicon: dict, report: Report) -> None:
     for verb in conjugations:
         infinitive = verb.get("bezokolicznik", "")
-        lemma, reflexive = sgjp.verb_lemma(infinitive)
+        lemma, before, after = sgjp.verb_lemma(infinitive)
         mine_by_person = {person: sgjp.variants(verb.get(person) or "") for person in PERSONS}
         lexeme = sgjp.closest(
             lexicon.get(lemma, []),
@@ -102,7 +102,7 @@ def compare_verbs(conjugations: list[dict], lexicon: dict, report: Report) -> No
             lambda candidate: [
                 person
                 for person, forms in sgjp.present_tense(candidate).items()
-                if mine_by_person[person] and not {form + reflexive for form in forms} >= set(mine_by_person[person])
+                if mine_by_person[person] and not {before + form + after for form in forms} >= set(mine_by_person[person])
             ],
         )
         if lexeme is None:
@@ -115,7 +115,7 @@ def compare_verbs(conjugations: list[dict], lexicon: dict, report: Report) -> No
         wrong = []
         for person in PERSONS:
             mine = sgjp.variants(verb.get(person) or "")
-            allowed = {form + reflexive for form in theirs[person]}
+            allowed = {before + form + after for form in theirs[person]}
             if not mine:
                 report.count("verb forms missing" if allowed else "verb forms SGJP lacks too")
                 continue

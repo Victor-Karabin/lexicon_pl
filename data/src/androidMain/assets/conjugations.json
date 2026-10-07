@@ -8,18 +8,8 @@
     "wy": "SMS-ujecie",
     "oni/one": "SMS-ują",
     "translation": "to text",
-    "example": "Wieczorem **SMS-uję** do mamy."
-  },
-  {
-    "bezokolicznik": "abakować",
-    "ja": "abakuję",
-    "ty": "abakujesz",
-    "on/ona/ono": "abakuje",
-    "my": "abakujemy",
-    "wy": "abakujecie",
-    "oni/one": "abakują",
-    "translation": "to bark",
-    "example": "Wczoraj wiatr **abakował**."
+    "example": "Wieczorem **SMS-uję** do mamy.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "abdykować",
@@ -214,17 +204,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "aferować",
-    "ja": "aferuję",
-    "ty": "aferujesz",
-    "on/ona/ono": "aferuje",
-    "my": "aferujemy",
-    "wy": "aferujecie",
-    "oni/one": "aferują",
-    "translation": "to bungle",
-    "example": "Nie **aferuj** się tak."
-  },
-  {
     "bezokolicznik": "afirmować",
     "ja": "afirmuję",
     "ty": "afirmujesz",
@@ -345,17 +324,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "amarykować",
-    "ja": "amarykuję",
-    "ty": "amarykujesz",
-    "on/ona/ono": "amarykuje",
-    "my": "amarykujemy",
-    "wy": "amarykujecie",
-    "oni/one": "amarykują",
-    "translation": "to mess about",
-    "example": "Oni chcą **amarykować** ten tekst."
-  },
-  {
     "bezokolicznik": "amnestionować",
     "ja": "amnestionuję",
     "ty": "amnestionujesz",
@@ -392,17 +360,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "amtować",
-    "ja": "amtuję",
-    "ty": "amtujesz",
-    "on/ona/ono": "amtuje",
-    "my": "amtujemy",
-    "wy": "amtujecie",
-    "oni/one": "amtują",
-    "translation": "to be worth",
-    "example": "Chcę **amtować** ten plik."
-  },
-  {
     "bezokolicznik": "analizować",
     "ja": "analizuję",
     "ty": "analizujesz",
@@ -425,17 +382,6 @@
     "translation": "to annex",
     "example": "Kraj chce **anektować** wyspę.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "antretenować",
-    "ja": "antretenuję",
-    "ty": "antretenujesz",
-    "on/ona/ono": "antretenuje",
-    "my": "antretenujemy",
-    "wy": "antretenujecie",
-    "oni/one": "antretenują",
-    "translation": "to train",
-    "example": "Nie umiem **antretenować** tego słowa."
   },
   {
     "bezokolicznik": "antydatować",
@@ -606,17 +552,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "astrologować",
-    "ja": "astrologuję",
-    "ty": "astrologujesz",
-    "on/ona/ono": "astrologuje",
-    "my": "astrologujemy",
-    "wy": "astrologujecie",
-    "oni/one": "astrologują",
-    "translation": "to astrologize",
-    "example": "Ona lubi **astrologować** wieczorem."
-  },
-  {
     "bezokolicznik": "asystować",
     "ja": "asystuję",
     "ty": "asystujesz",
@@ -639,17 +574,6 @@
     "translation": "to attack",
     "example": "Pies **atakował** bramę.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "atandzić",
-    "ja": "atandzę",
-    "ty": "atandzisz",
-    "on/ona/ono": "atandzi",
-    "my": "atandzimy",
-    "wy": "atandzicie",
-    "oni/one": "atandzą",
-    "translation": "to fool around",
-    "example": "Napastnik **atandził** piłkę."
   },
   {
     "bezokolicznik": "ateizować",
@@ -758,17 +682,6 @@
     "translation": "to splash",
     "example": "Dzieci **bachały się** na podwórku.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "bachować",
-    "ja": "bachuję",
-    "ty": "bachujesz",
-    "on/ona/ono": "bachuje",
-    "my": "bachujemy",
-    "wy": "bachujecie",
-    "oni/one": "bachują",
-    "translation": "to bang",
-    "example": "Oni **bachowali** na dyskotece."
   },
   {
     "bezokolicznik": "baczyć",
@@ -951,17 +864,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "bankrócić",
-    "ja": "bankrócę",
-    "ty": "bankrócisz",
-    "on/ona/ono": "bankróci",
-    "my": "bankrócimy",
-    "wy": "bankrócicie",
-    "oni/one": "bankrócą",
-    "translation": "to go bankrupt",
-    "example": "Firma może **bankrócić** jutro."
-  },
-  {
     "bezokolicznik": "baraszkować",
     "ja": "baraszkuję",
     "ty": "baraszkujesz",
@@ -1118,17 +1020,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "bałamoncić",
-    "ja": "bałamoncę",
-    "ty": "bałamoncisz",
-    "on/ona/ono": "bałamonci",
-    "my": "bałamoncimy",
-    "wy": "bałamoncicie",
-    "oni/one": "bałamoncą",
-    "translation": "to ramble",
-    "example": "Przestań **bałamoncić** i mów jasno."
-  },
-  {
     "bezokolicznik": "bałamucić",
     "ja": "bałamucę",
     "ty": "bałamucisz",
@@ -1261,17 +1152,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "biegnąć",
-    "ja": "bięgnę",
-    "ty": "biegniesz",
-    "on/ona/ono": "biegnie",
-    "my": "biegniemy",
-    "wy": "biegniecie",
-    "oni/one": "biegną",
-    "translation": "to run",
-    "example": "Muszę **biegnąć** na przystanek."
-  },
-  {
     "bezokolicznik": "bielić",
     "ja": "bielę",
     "ty": "bielisz",
@@ -1340,7 +1220,8 @@
     "wy": "biglujecie",
     "oni/one": "biglują",
     "translation": "to calender",
-    "example": "Ta sukienka dobrze się **bigluje**."
+    "example": "Ta sukienka dobrze się **bigluje**.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "bigować",
@@ -1459,7 +1340,8 @@
     "wy": "blachujecie",
     "oni/one": "blachują",
     "translation": "to plate",
-    "example": "Słońce **blachuje** dach."
+    "example": "Słońce **blachuje** dach.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "blaknąć",
@@ -1532,17 +1414,6 @@
     "translation": "to blaspheme",
     "example": "Nie **bluźnij** w kościele.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "blyndować",
-    "ja": "blynduję",
-    "ty": "blyndujesz",
-    "on/ona/ono": "blynduje",
-    "my": "blyndujemy",
-    "wy": "blyndujecie",
-    "oni/one": "blyndują",
-    "translation": "to fool around",
-    "example": "Na stole **blynduję** warzywa."
   },
   {
     "bezokolicznik": "boczyć się",
@@ -1725,18 +1596,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "brandzlować się",
-    "ja": "brandzluję się",
-    "ty": "brandzlujesz się",
-    "on/ona/ono": "brandzluje się",
-    "my": "brandzlujemy się",
-    "wy": "brandzlujecie się",
-    "oni/one": "brandzlują się",
-    "translation": "to masturbate",
-    "example": "Nie **brandzluj się** w domu.",
-    "aspect": "imperfective"
-  },
-  {
     "bezokolicznik": "bratać się",
     "ja": "bratam się",
     "ty": "bratasz się",
@@ -1747,17 +1606,6 @@
     "translation": "to fraternize",
     "example": "Koledzy **bratają się** po pracy.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "brawędzić",
-    "ja": "brawędzę",
-    "ty": "brawędzisz",
-    "on/ona/ono": "brawędzi",
-    "my": "brawędzimy",
-    "wy": "brawędzicie",
-    "oni/one": "brawędzą",
-    "translation": "to brag",
-    "example": "On ciągle **brawędzi** o aucie."
   },
   {
     "bezokolicznik": "brać",
@@ -1818,17 +1666,6 @@
     "translation": "to gnaw",
     "example": "Woda głęboka, więc **brnę** powoli.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "brodacieć",
-    "ja": "brodacieję",
-    "ty": "brodaciejesz",
-    "on/ona/ono": "brodacieje",
-    "my": "brodaciejemy",
-    "wy": "brodaciejecie",
-    "oni/one": "brodacieją",
-    "translation": "to become bearded",
-    "example": "Mój dziadek **brodacieje** po zimie."
   },
   {
     "bezokolicznik": "brodzić",
@@ -1937,17 +1774,6 @@
     "translation": "to polish",
     "example": "On **brusi** nóż.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "bruszyć",
-    "ja": "bruszę",
-    "ty": "bruszysz",
-    "on/ona/ono": "bruszy",
-    "my": "bruszymy",
-    "wy": "bruszycie",
-    "oni/one": "bruszą",
-    "translation": "to scour",
-    "example": "Chłopcy **bruszą** po lekcjach."
   },
   {
     "bezokolicznik": "brykać",
@@ -2358,17 +2184,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "bąbelkować",
-    "ja": "bąbelkuję",
-    "ty": "bąbelkujesz",
-    "on/ona/ono": "bąbelkuje",
-    "my": "bąbelkujemy",
-    "wy": "bąbelkujecie",
-    "oni/one": "bąbelkują",
-    "translation": "to bubble",
-    "example": "Woda **bąbelkuje** w szklance."
-  },
-  {
     "bezokolicznik": "bębnić",
     "ja": "bębnię",
     "ty": "bębnisz",
@@ -2729,17 +2544,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "chabić",
-    "ja": "chabię",
-    "ty": "chabisz",
-    "on/ona/ono": "chabi",
-    "my": "chabimy",
-    "wy": "chabicie",
-    "oni/one": "chabią",
-    "translation": "to spoil",
-    "example": "Nie chcę, żebyś **chabił** kolegę."
-  },
-  {
     "bezokolicznik": "chadzać",
     "ja": "chadzam",
     "ty": "chadzasz",
@@ -2870,17 +2674,6 @@
     "translation": "to want",
     "example": "**Chcę** kawę.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "chechłać",
-    "ja": "chechłam",
-    "ty": "chechłasz",
-    "on/ona/ono": "chechła",
-    "my": "chechłamy",
-    "wy": "chechłacie",
-    "oni/one": "chechłają",
-    "translation": "to rummage",
-    "example": "On **chechła** pieniądze na gry."
   },
   {
     "bezokolicznik": "chichotać",
@@ -3145,17 +2938,6 @@
     "translation": "to hide oneself",
     "example": "Kot **chowa się** pod łóżko.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "chrabęścić",
-    "ja": "chrabęszczę",
-    "ty": "chrabęścisz",
-    "on/ona/ono": "chrabęści",
-    "my": "chrabęścimy",
-    "wy": "chrabęścicie",
-    "oni/one": "chrabęszczą",
-    "translation": "to clatter",
-    "example": "W kuchni coś **chrabęści** w torbie."
   },
   {
     "bezokolicznik": "chrapać",
@@ -3674,17 +3456,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "cierlić",
-    "ja": "cierlę",
-    "ty": "cierlisz",
-    "on/ona/ono": "cierli",
-    "my": "cierlimy",
-    "wy": "cierlicie",
-    "oni/one": "cierlą",
-    "translation": "to peck",
-    "example": "Dziecko **cierli** z bólu."
-  },
-  {
     "bezokolicznik": "cierpieć",
     "ja": "cierpię",
     "ty": "cierpisz",
@@ -3695,17 +3466,6 @@
     "translation": "to suffer",
     "example": "Ona **cierpi** po wypadku.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "cierzpać",
-    "ja": "cierzpam",
-    "ty": "cierzpasz",
-    "on/ona/ono": "cierzpa",
-    "my": "cierzpamy",
-    "wy": "cierzpacie",
-    "oni/one": "cierzpają",
-    "translation": "to peck",
-    "example": "On **cierzpa** przez całą noc."
   },
   {
     "bezokolicznik": "cieszyć",
@@ -3792,28 +3552,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "ciulać",
-    "ja": "ciulam",
-    "ty": "ciulasz",
-    "on/ona/ono": "ciula",
-    "my": "ciulamy",
-    "wy": "ciulacie",
-    "oni/one": "ciulają",
-    "translation": "to stash",
-    "example": "Przez rok **ciulam** na rower."
-  },
-  {
-    "bezokolicznik": "ciulnąć",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to stash",
-    "example": "Nie chcę **ciulnąć** dziś wieczorem."
-  },
-  {
     "bezokolicznik": "ciupać",
     "ja": "ciupię",
     "ty": "ciupiesz",
@@ -3823,18 +3561,6 @@
     "oni/one": "ciupią",
     "translation": "to peck",
     "example": "Chłopcy **ciupią** piłkę pod domem.",
-    "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "ciupciać",
-    "ja": "ciupciam",
-    "ty": "ciupciasz",
-    "on/ona/ono": "ciupcia",
-    "my": "ciupciamy",
-    "wy": "ciupciacie",
-    "oni/one": "ciupciają",
-    "translation": "to cuddle",
-    "example": "Nie mogę **ciupciać** w domu.",
     "aspect": "imperfective"
   },
   {
@@ -4099,17 +3825,6 @@
     "translation": "to canter",
     "example": "Koń zaczął **cwałować** po łące.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "cwelić",
-    "ja": "cwelę",
-    "ty": "cwelisz",
-    "on/ona/ono": "cweli",
-    "my": "cwelimy",
-    "wy": "cwelicie",
-    "oni/one": "cwelą",
-    "translation": "to sodomize",
-    "example": "Nie przestawaj **cwelić** pod nosem."
   },
   {
     "bezokolicznik": "cyckać",
@@ -4674,17 +4389,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "deewangelizować",
-    "ja": "deewangelizuję",
-    "ty": "deewangelizujesz",
-    "on/ona/ono": "deewangelizuje",
-    "my": "deewangelizujemy",
-    "wy": "deewangelizujecie",
-    "oni/one": "deewangelizują",
-    "translation": "to de-evangelize",
-    "example": "On chce **deewangelizować** kraj."
-  },
-  {
     "bezokolicznik": "defilować",
     "ja": "defiluję",
     "ty": "defilujesz",
@@ -5150,17 +4854,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "depaletyzować",
-    "ja": "depaletyzuję",
-    "ty": "depaletyzujesz",
-    "on/ona/ono": "depaletyzuje",
-    "my": "depaletyzujemy",
-    "wy": "depaletyzujecie",
-    "oni/one": "depaletyzują",
-    "translation": "to depalletize",
-    "example": "Roboty **depaletyzują** towar."
-  },
-  {
     "bezokolicznik": "depilować",
     "ja": "depiluję",
     "ty": "depilujesz",
@@ -5302,17 +4995,6 @@
     "translation": "to designate",
     "example": "Premier **desygnował** nowego ministra.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "desztaplować",
-    "ja": "desztapluję",
-    "ty": "desztaplujesz",
-    "on/ona/ono": "desztapluje",
-    "my": "desztaplujemy",
-    "wy": "desztaplujecie",
-    "oni/one": "desztaplują",
-    "translation": "to unstack",
-    "example": "Muszę **desztaplować** te pudełka."
   },
   {
     "bezokolicznik": "determinować",
@@ -6105,18 +5787,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "dojebać",
-    "ja": "dojebię",
-    "ty": "dojebiesz",
-    "on/ona/ono": "dojebie",
-    "my": "dojebiemy",
-    "wy": "dojebiecie",
-    "oni/one": "dojebią",
-    "translation": "to fuck up",
-    "example": "Chciał mu **dojebać** za kłamstwo.",
-    "aspect": "perfective"
-  },
-  {
     "bezokolicznik": "dojechać",
     "ja": "dojadę",
     "ty": "dojedziesz",
@@ -6391,17 +6061,6 @@
     "translation": "to chip in",
     "example": "Zawsze **dokładam się** do prezentu.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "dolaryzować",
-    "ja": "dolaryzuję",
-    "ty": "dolaryzujeszsz",
-    "on/ona/ono": "dolaryzujesz",
-    "my": "dolaryzujeszmy",
-    "wy": "dolaryzujeszcie",
-    "oni/one": "dolaryzują",
-    "translation": "to dollarize",
-    "example": "Kraj chce **dolaryzować** gospodarkę."
   },
   {
     "bezokolicznik": "dolatywać",
@@ -6811,18 +6470,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "dopierdalać",
-    "ja": "dopierdalam",
-    "ty": "dopierdalasz",
-    "on/ona/ono": "dopierdala",
-    "my": "dopierdalamy",
-    "wy": "dopierdalacie",
-    "oni/one": "dopierdalają",
-    "translation": "to fuck up",
-    "example": "Przestań mi **dopierdalać** pytaniami.",
-    "aspect": "imperfective"
-  },
-  {
     "bezokolicznik": "dopilnować",
     "ja": "dopilnuję",
     "ty": "dopilnujesz",
@@ -7204,17 +6851,6 @@
     "translation": "to grow up",
     "example": "Dzieci szybko **dorastają**.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "dordzewieć",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to rust through",
-    "example": "Rower może **dordzewieć** na deszczu."
   },
   {
     "bezokolicznik": "dorobić",
@@ -8524,18 +8160,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "dymać",
-    "ja": "dymam",
-    "ty": "dymasz",
-    "on/ona/ono": "dyma",
-    "my": "dymamy",
-    "wy": "dymacie",
-    "oni/one": "dymają",
-    "translation": "to puff",
-    "example": "Nie będę **dymać** dziś z tobą.",
-    "aspect": "imperfective"
-  },
-  {
     "bezokolicznik": "dymisjonować",
     "ja": "dymisjonuję",
     "ty": "dymisjonujesz",
@@ -8846,17 +8470,6 @@
     "translation": "to peck",
     "example": "Ptak **dziobnął** mnie w palec.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "dziunąć",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to do a quick jab",
-    "example": "Marek **dziunął** go w ramię."
   },
   {
     "bezokolicznik": "dziurawić",
@@ -9339,17 +8952,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "euroizować",
-    "ja": "euroizuję",
-    "ty": "euroizujeszsz",
-    "on/ona/ono": "euroizujesz",
-    "my": "euroizujeszmy",
-    "wy": "euroizujeszcie",
-    "oni/one": "euroizują",
-    "translation": "to Europeanize",
-    "example": "Rząd chce **euroizować** gospodarkę."
-  },
-  {
     "bezokolicznik": "europeizować",
     "ja": "europeizuję",
     "ty": "europeizujesz",
@@ -9481,28 +9083,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "fandzolić",
-    "ja": "fandzolę",
-    "ty": "fandzolisz",
-    "on/ona/ono": "fandzoli",
-    "my": "fandzolimy",
-    "wy": "fandzolicie",
-    "oni/one": "fandzolą",
-    "translation": "to babble",
-    "example": "Ona lubi **fandzolić** o serialach."
-  },
-  {
-    "bezokolicznik": "fanzolić",
-    "ja": "fanzolę",
-    "ty": "fanzolisz",
-    "on/ona/ono": "fanzoli",
-    "my": "fanzolimy",
-    "wy": "fanzolicie",
-    "oni/one": "fanzolą",
-    "translation": "to babble",
-    "example": "Nie przestaje **fanzolić** o aktorze."
-  },
-  {
     "bezokolicznik": "farbować",
     "ja": "farbuję",
     "ty": "farbujesz",
@@ -9585,17 +9165,6 @@
     "translation": "to mine",
     "example": "Mama **fedruje** niemowlę i śpiewa.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "feksyrować",
-    "ja": "feksyruję",
-    "ty": "feksyrujesz",
-    "on/ona/ono": "feksyruje",
-    "my": "feksyrujemy",
-    "wy": "feksyrujecie",
-    "oni/one": "feksyrują",
-    "translation": "to hassle",
-    "example": "Nie wiem, jak **feksyrować** ten problem."
   },
   {
     "bezokolicznik": "fermentować",
@@ -9813,17 +9382,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "fragować",
-    "ja": "fraguję",
-    "ty": "fragujesz",
-    "on/ona/ono": "fraguje",
-    "my": "fragujemy",
-    "wy": "fragujecie",
-    "oni/one": "fragują",
-    "translation": "to frag",
-    "example": "Programiści **fragują** pliki."
-  },
-  {
     "bezokolicznik": "frezować",
     "ja": "frezuję",
     "ty": "frezujesz",
@@ -9858,17 +9416,6 @@
     "translation": "to trade",
     "example": "Nie **frymarcz** swoim czasem.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "fujarkować",
-    "ja": "fujarkuję",
-    "ty": "fujarkujesz",
-    "on/ona/ono": "fujarkuje",
-    "my": "fujarkujemy",
-    "wy": "fujarkujecie",
-    "oni/one": "fujarkują",
-    "translation": "to strum",
-    "example": "Pasterz **fujarkuje** na łące."
   },
   {
     "bezokolicznik": "fundnąć",
@@ -10099,17 +9646,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "gerować",
-    "ja": "geruję",
-    "ty": "gerujesz",
-    "on/ona/ono": "geruje",
-    "my": "gerujemy",
-    "wy": "gerujecie",
-    "oni/one": "gerują",
-    "translation": "to rule",
-    "example": "W pracy **geruje** całe tłumaczenie."
-  },
-  {
     "bezokolicznik": "gestykulować",
     "ja": "gestykuluję",
     "ty": "gestykulujesz",
@@ -10122,17 +9658,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "giercować",
-    "ja": "giercuję",
-    "ty": "giercujesz",
-    "on/ona/ono": "giercuje",
-    "my": "giercujemy",
-    "wy": "giercujecie",
-    "oni/one": "giercują",
-    "translation": "to card",
-    "example": "Dzieci **giercują** po lekcjach."
-  },
-  {
     "bezokolicznik": "giglać",
     "ja": "giglam",
     "ty": "giglasz",
@@ -10141,18 +9666,8 @@
     "wy": "giglacie",
     "oni/one": "giglają",
     "translation": "to tickle",
-    "example": "Babcia **gigla** wnuka po brzuchu."
-  },
-  {
-    "bezokolicznik": "gilać",
-    "ja": "gilam",
-    "ty": "gilasz",
-    "on/ona/ono": "gila",
-    "my": "gilamy",
-    "wy": "gilacie",
-    "oni/one": "gilają",
-    "translation": "to tickle",
-    "example": "Ptak **gila** głośno nad drzewem."
+    "example": "Babcia **gigla** wnuka po brzuchu.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "ginąć",
@@ -10323,17 +9838,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "godać",
-    "ja": "godam",
-    "ty": "godasz",
-    "on/ona/ono": "goda",
-    "my": "godamy",
-    "wy": "godacie",
-    "oni/one": "godają",
-    "translation": "to speak",
-    "example": "Rodzina **goda** święta razem."
-  },
-  {
     "bezokolicznik": "godować",
     "ja": "goduję",
     "ty": "godujesz",
@@ -10402,7 +9906,8 @@
     "wy": "googlujecie",
     "oni/one": "googlują",
     "translation": "to google",
-    "example": "Wieczorem **googluję** przepis na ciasto."
+    "example": "Wieczorem **googluję** przepis na ciasto.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "gorszyć",
@@ -10645,17 +10150,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "grygolić",
-    "ja": "grygolę",
-    "ty": "grygolisz",
-    "on/ona/ono": "grygoli",
-    "my": "grygolimy",
-    "wy": "grygolicie",
-    "oni/one": "grygolą",
-    "translation": "to scribble",
-    "example": "Mały syn **grygoli** po zeszycie."
-  },
-  {
     "bezokolicznik": "grzebać",
     "ja": "grzebię",
     "ty": "grzebiesz",
@@ -10726,28 +10220,6 @@
     "translation": "to get lost",
     "example": "W lesie łatwo **gubię się**.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "guglać",
-    "ja": "guglam",
-    "ty": "guglasz",
-    "on/ona/ono": "gugla",
-    "my": "guglamy",
-    "wy": "guglacie",
-    "oni/one": "guglają",
-    "translation": "to google",
-    "example": "Muszę **guglać** ten adres."
-  },
-  {
-    "bezokolicznik": "guglować",
-    "ja": "gugluję",
-    "ty": "guglujesz",
-    "on/ona/ono": "gugluje",
-    "my": "guglujemy",
-    "wy": "guglujecie",
-    "oni/one": "guglują",
-    "translation": "to google",
-    "example": "Wieczorem **guglowałem** przepis."
   },
   {
     "bezokolicznik": "gumować",
@@ -11130,7 +10602,8 @@
     "wy": "hardkodujecie",
     "oni/one": "hardkodują",
     "translation": "to hardcode",
-    "example": "Programista **hardkodował** hasło."
+    "example": "Programista **hardkodował** hasło.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "harować",
@@ -11181,28 +10654,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "heftować",
-    "ja": "heftuję",
-    "ty": "heftujesz",
-    "on/ona/ono": "heftuje",
-    "my": "heftujemy",
-    "wy": "heftujecie",
-    "oni/one": "heftują",
-    "translation": "to rivet",
-    "example": "Stolarz **heftuje** deskę."
-  },
-  {
-    "bezokolicznik": "hejcić",
-    "ja": "hejcę",
-    "ty": "hejcisz",
-    "on/ona/ono": "hejci",
-    "my": "hejcimy",
-    "wy": "hejcicie",
-    "oni/one": "hejcą",
-    "translation": "to hate",
-    "example": "Nie **hejcij** kolegi."
-  },
-  {
     "bezokolicznik": "hejtować",
     "ja": "hejtuję",
     "ty": "hejtujesz",
@@ -11213,17 +10664,6 @@
     "translation": "to hate",
     "example": "Ludzie **hejtują** ją w sieci.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "heklować",
-    "ja": "hekluję",
-    "ty": "heklujesz",
-    "on/ona/ono": "hekluje",
-    "my": "heklujemy",
-    "wy": "heklujecie",
-    "oni/one": "heklują",
-    "translation": "to crochet",
-    "example": "Publiczność **heklowała** aktora."
   },
   {
     "bezokolicznik": "histeryzować",
@@ -11592,7 +11032,8 @@
     "wy": "interagujecie",
     "oni/one": "interagują",
     "translation": "to interact",
-    "example": "Dzieci lubią **interagować** z psem."
+    "example": "Dzieci lubią **interagować** z psem.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "interesować",
@@ -11775,17 +11216,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "japić",
-    "ja": "japię",
-    "ty": "japisz",
-    "on/ona/ono": "japi",
-    "my": "japimy",
-    "wy": "japicie",
-    "oni/one": "japią",
-    "translation": "to run",
-    "example": "Po lekcji zaczynam **japić**."
-  },
-  {
     "bezokolicznik": "jarać",
     "ja": "jaram",
     "ty": "jarasz",
@@ -11796,30 +11226,6 @@
     "translation": "to fuel",
     "example": "On lubi **jarać** papierosy.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "jebać",
-    "ja": "jebię",
-    "ty": "jebiesz",
-    "on/ona/ono": "jebie",
-    "my": "jebiemy",
-    "wy": "jebiecie",
-    "oni/one": "jebią",
-    "translation": "to fuck",
-    "example": "On chciał **jebać** wszystko.",
-    "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "jebnąć",
-    "ja": "jebnę",
-    "ty": "jebniesz",
-    "on/ona/ono": "jebnie",
-    "my": "jebniemy",
-    "wy": "jebniecie",
-    "oni/one": "jebną",
-    "translation": "to fuck up",
-    "example": "On chciał **jebnąć** drzwiami.",
-    "aspect": "perfective"
   },
   {
     "bezokolicznik": "jechać",
@@ -12000,17 +11406,6 @@
     "translation": "to film",
     "example": "Operator będzie **kamerować** koncert.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "kampić",
-    "ja": "kampię",
-    "ty": "kampisz",
-    "on/ona/ono": "kampi",
-    "my": "kampimy",
-    "wy": "kampicie",
-    "oni/one": "kampią",
-    "translation": "to camp",
-    "example": "Latem **kampię** z rodziną nad jeziorem."
   },
   {
     "bezokolicznik": "kamuflować",
@@ -12312,28 +11707,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "kiciorować",
-    "ja": "kicioruję",
-    "ty": "kiciorujesz",
-    "on/ona/ono": "kicioruje",
-    "my": "kiciorujemy",
-    "wy": "kiciorujecie",
-    "oni/one": "kiciorują",
-    "translation": "to dawdle",
-    "example": "Nie **kicioruj** przy teście."
-  },
-  {
-    "bezokolicznik": "kielczyć się",
-    "ja": "kielczę się",
-    "ty": "kielczysz się",
-    "on/ona/ono": "kielczy się",
-    "my": "kielczymy się",
-    "wy": "kielczycie się",
-    "oni/one": "kielczą się",
-    "translation": "to cuddle",
-    "example": "Zęby **kielczą się** ze stresu."
-  },
-  {
     "bezokolicznik": "kiereszować",
     "ja": "kiereszuję",
     "ty": "kiereszujesz",
@@ -12442,17 +11815,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "kitrać",
-    "ja": "kitram",
-    "ty": "kitrasz",
-    "on/ona/ono": "kitra",
-    "my": "kitramy",
-    "wy": "kitracie",
-    "oni/one": "kitrają",
-    "translation": "to hide away",
-    "example": "On **kitra** sok w nosie."
-  },
-  {
     "bezokolicznik": "kiwać",
     "ja": "kiwam",
     "ty": "kiwasz",
@@ -12501,17 +11863,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "klajdać",
-    "ja": "klajdam",
-    "ty": "klajdasz",
-    "on/ona/ono": "klajda",
-    "my": "klajdamy",
-    "wy": "klajdacie",
-    "oni/one": "klajdają",
-    "translation": "to lug",
-    "example": "Nie **klajdaj**, ja wiem."
-  },
-  {
     "bezokolicznik": "klaskać",
     "ja": "klaskam; klaszczę",
     "ty": "klaskasz; klaszczesz",
@@ -12546,17 +11897,6 @@
     "translation": "to classify",
     "example": "Nauczyciel **klasyfikuje** te książki.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "klatkować",
-    "ja": "klatkuję",
-    "ty": "klatkujesz",
-    "on/ona/ono": "klatkuje",
-    "my": "klatkujemy",
-    "wy": "klatkujecie",
-    "oni/one": "klatkują",
-    "translation": "to cage",
-    "example": "Nie wolno **klatkować** psa."
   },
   {
     "bezokolicznik": "klecić",
@@ -12605,28 +11945,6 @@
     "translation": "to click",
     "example": "Musisz **kliknąć** tutaj.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "klopnąć",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to knock",
-    "example": "Ona mnie **klopnęła** w ramię."
-  },
-  {
-    "bezokolicznik": "kludzić",
-    "ja": "kludzę",
-    "ty": "kludzisz",
-    "on/ona/ono": "kludzi",
-    "my": "kludzimy",
-    "wy": "kludzicie",
-    "oni/one": "kludzą",
-    "translation": "to lead",
-    "example": "On ciągle **kludzi** o pracy."
   },
   {
     "bezokolicznik": "kląć",
@@ -12735,17 +12053,6 @@
     "translation": "to code",
     "example": "Programista **koduje** aplikację.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "kodzić",
-    "ja": "kodzę",
-    "ty": "kodzisz",
-    "on/ona/ono": "kodzi",
-    "my": "kodzimy",
-    "wy": "kodzicie",
-    "oni/one": "kodzą",
-    "translation": "to police",
-    "example": "Uczeń **kodzi** prostą grę."
   },
   {
     "bezokolicznik": "koić",
@@ -12914,17 +12221,6 @@
     "translation": "to mass together",
     "example": "Władze chcą **komasować** te działki.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "kombajnować",
-    "ja": "kombajnuję",
-    "ty": "kombajnujesz",
-    "on/ona/ono": "kombajnuje",
-    "my": "kombajnujemy",
-    "wy": "kombajnujecie",
-    "oni/one": "kombajnują",
-    "translation": "to combine harvesters",
-    "example": "Rolnik będzie **kombajnować** jutro rano."
   },
   {
     "bezokolicznik": "komentować",
@@ -13599,17 +12895,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "kujonić",
-    "ja": "kujonię",
-    "ty": "kujonisz",
-    "on/ona/ono": "kujoni",
-    "my": "kujonimy",
-    "wy": "kujonicie",
-    "oni/one": "kujonią",
-    "translation": "to act like a know-it-all",
-    "example": "On ciągle **kujoni** przed testem."
-  },
-  {
     "bezokolicznik": "kukać",
     "ja": "kukam",
     "ty": "kukasz",
@@ -13620,17 +12905,6 @@
     "translation": "to coo",
     "example": "W lesie **kuka** kukułka.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "kukować",
-    "ja": "kukuję",
-    "ty": "kukujesz",
-    "on/ona/ono": "kukuje",
-    "my": "kukujemy",
-    "wy": "kukujecie",
-    "oni/one": "kukują",
-    "translation": "to caw",
-    "example": "Dziecko **kukuje** w drzwi."
   },
   {
     "bezokolicznik": "kulać",
@@ -13690,18 +12964,6 @@
     "oni/one": "kupują",
     "translation": "to buy",
     "example": "Muszę **kupować** chleb.",
-    "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "kurwić",
-    "ja": "kurwię",
-    "ty": "kurwisz",
-    "on/ona/ono": "kurwi",
-    "my": "kurwimy",
-    "wy": "kurwicie",
-    "oni/one": "kurwią",
-    "translation": "to fuck",
-    "example": "Nie **kurwij** na ulicy.",
     "aspect": "imperfective"
   },
   {
@@ -13825,17 +13087,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "kętnarować",
-    "ja": "kętnaruję",
-    "ty": "kętnarujesz",
-    "on/ona/ono": "kętnaruje",
-    "my": "kętnarujemy",
-    "wy": "kętnarujecie",
-    "oni/one": "kętnarują",
-    "translation": "to fence",
-    "example": "Przez deszcz włosy się **kętnarują**."
-  },
-  {
     "bezokolicznik": "kłamać",
     "ja": "kłamię",
     "ty": "kłamiesz",
@@ -13930,17 +13181,6 @@
     "translation": "to like",
     "example": "Lubię **lajkować** zdjęcia.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "lajsnąć",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to tap lightly",
-    "example": "Ten film mi **lajsnął**."
   },
   {
     "bezokolicznik": "lansować",
@@ -15418,17 +14658,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "nalinić",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to thread",
-    "example": "Rzemieślnik **nalinił** kartkę."
-  },
-  {
     "bezokolicznik": "namalować",
     "ja": "namaluję",
     "ty": "namalujesz",
@@ -15678,30 +14907,6 @@
     "oni/one": "napełnią",
     "translation": "to fill",
     "example": "Muszę **napełnić** butelkę.",
-    "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "napierdalać",
-    "ja": "napierdalam",
-    "ty": "napierdalasz",
-    "on/ona/ono": "napierdala",
-    "my": "napierdalamy",
-    "wy": "napierdalacie",
-    "oni/one": "napierdalają",
-    "translation": "to beat up",
-    "example": "Przestań **napierdalać** głupoty.",
-    "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "napierdolić",
-    "ja": "napierdolę",
-    "ty": "napierdolisz",
-    "on/ona/ono": "napierdoli",
-    "my": "napierdolimy",
-    "wy": "napierdolicie",
-    "oni/one": "napierdolą",
-    "translation": "to beat up",
-    "example": "Nie **napierdoliłem** się tym.",
     "aspect": "perfective"
   },
   {
@@ -16448,15 +15653,16 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "niedocenić",
-    "ja": "niedocenię",
-    "ty": "niedocenisz",
-    "on/ona/ono": "niedoceni",
-    "my": "niedocenimy",
-    "wy": "niedocenicie",
-    "oni/one": "niedocenią",
+    "bezokolicznik": "nie docenić",
+    "ja": "nie docenię",
+    "ty": "nie docenisz",
+    "on/ona/ono": "nie doceni",
+    "my": "nie docenimy",
+    "wy": "nie docenicie",
+    "oni/one": "nie docenią",
     "translation": "to underestimate",
-    "example": "Łatwo **niedocenić** ten problem."
+    "example": "Łatwo **nie docenić** tego problemu.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "niedomagać",
@@ -16663,17 +15869,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "nołlajfić",
-    "ja": "nołlajfię",
-    "ty": "nołlajfisz",
-    "on/ona/ono": "nołlajfi",
-    "my": "nołlajfimy",
-    "wy": "nołlajficie",
-    "oni/one": "nołlajfią",
-    "translation": "to be a no-lifer",
-    "example": "On cały weekend **nołlajfił**."
-  },
-  {
     "bezokolicznik": "nucić",
     "ja": "nucę",
     "ty": "nucisz",
@@ -16756,17 +15951,6 @@
     "translation": "to harass",
     "example": "Sąsiad **nęka** mnie telefonami.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "obabuchać",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to rub all over",
-    "example": "Bomba **obabuchała** w nocy."
   },
   {
     "bezokolicznik": "obalać",
@@ -18190,17 +17374,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "ociulać",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to trim",
-    "example": "Po diecie **ociulałem** trzy kilo."
-  },
-  {
     "bezokolicznik": "oclić",
     "ja": "oclę",
     "ty": "oclisz",
@@ -18848,17 +18021,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "odgarować",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to mortise",
-    "example": "Muszę **odgarować** mięso."
-  },
-  {
     "bezokolicznik": "odgradzać",
     "ja": "odgradzam",
     "ty": "odgradzasz",
@@ -19027,18 +18189,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "odjebać",
-    "ja": "odjebię",
-    "ty": "odjebiesz",
-    "on/ona/ono": "odjebie",
-    "my": "odjebiemy",
-    "wy": "odjebiecie",
-    "oni/one": "odjebią",
-    "translation": "to fuck up",
-    "example": "Spadaj i **odjebać** się ode mnie.",
-    "aspect": "perfective"
-  },
-  {
     "bezokolicznik": "odjechać",
     "ja": "odjadę",
     "ty": "odjedziesz",
@@ -19085,28 +18235,6 @@
     "translation": "to be jailed",
     "example": "Musi **odkiblować** tę rurę.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "odkitować",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to bullshit",
-    "example": "Musisz **odkitować** zlew."
-  },
-  {
-    "bezokolicznik": "odkluczyć",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to unlock",
-    "example": "Nie mogę **odkluczyć** drzwi."
   },
   {
     "bezokolicznik": "odkochać się",
@@ -19253,17 +18381,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "odmałpować",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to ape",
-    "example": "Przestań **odmałpować** brata."
-  },
-  {
     "bezokolicznik": "odmierzać",
     "ja": "odmierzam",
     "ty": "odmierzasz",
@@ -19408,17 +18525,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "odowadzić",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to lead away",
-    "example": "Muszę **odowadzić** psa z drogi."
-  },
-  {
     "bezokolicznik": "odpadać",
     "ja": "odpadam",
     "ty": "odpadasz",
@@ -19489,18 +18595,6 @@
     "translation": "to fuck off",
     "example": "Nie **odpieprz się** ode mnie.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "odpierdalać",
-    "ja": "odpierdalam",
-    "ty": "odpierdalasz",
-    "on/ona/ono": "odpierdala",
-    "my": "odpierdalamy",
-    "wy": "odpierdalacie",
-    "oni/one": "odpierdalają",
-    "translation": "to fuck off",
-    "example": "Co ty **odpierdalasz**?",
-    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "odpisać",
@@ -20775,17 +19869,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "omurzyć",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to wall up",
-    "example": "Dym **omurza** ściany."
-  },
-  {
     "bezokolicznik": "omówić",
     "ja": "omówię",
     "ty": "omówisz",
@@ -21086,30 +20169,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "opierdalać",
-    "ja": "opierdalam",
-    "ty": "opierdalasz",
-    "on/ona/ono": "opierdala",
-    "my": "opierdalamy",
-    "wy": "opierdalacie",
-    "oni/one": "opierdalają",
-    "translation": "to fuck around",
-    "example": "On cały dzień **opierdala** się w domu.",
-    "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "opierdolić",
-    "ja": "opierdolę",
-    "ty": "opierdolisz",
-    "on/ona/ono": "opierdoli",
-    "my": "opierdolimy",
-    "wy": "opierdolicie",
-    "oni/one": "opierdolą",
-    "translation": "to fuck up",
-    "example": "Szef mnie **opierdolił** za spóźnienie.",
-    "aspect": "perfective"
-  },
-  {
     "bezokolicznik": "opiewać",
     "ja": "opiewam",
     "ty": "opiewasz",
@@ -21326,17 +20385,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "opękać",
-    "ja": "opękam",
-    "ty": "opękasz",
-    "on/ona/ono": "opęka",
-    "my": "opękamy",
-    "wy": "opękacie",
-    "oni/one": "opękają",
-    "translation": "to crack",
-    "example": "Szkło może **opękać** od mrozu."
-  },
-  {
     "bezokolicznik": "opłacać",
     "ja": "opłacam",
     "ty": "opłacasz",
@@ -21469,17 +20517,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "ostracyzować",
-    "ja": "ostracyzuję",
-    "ty": "ostracyzujesz",
-    "on/ona/ono": "ostracyzuje",
-    "my": "ostracyzujemy",
-    "wy": "ostracyzujecie",
-    "oni/one": "ostracyzują",
-    "translation": "to ostracize",
-    "example": "Koledzy chcą **ostracyzować** nowego ucznia."
-  },
-  {
     "bezokolicznik": "ostrzegać",
     "ja": "ostrzegam",
     "ty": "ostrzegasz",
@@ -21586,17 +20623,6 @@
     "translation": "to swindle",
     "example": "Sprzedawca próbował **oszwabić** klienta.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "oszyldwachować",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to put in the watchdog",
-    "example": "Plotkarz **oszyldwachował** sąsiada."
   },
   {
     "bezokolicznik": "osądzać",
@@ -22366,17 +21392,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "pedalić się",
-    "ja": "pedalę się",
-    "ty": "pedalisz się",
-    "on/ona/ono": "pedali się",
-    "my": "pedalimy się",
-    "wy": "pedalicie się",
-    "oni/one": "pedalą się",
-    "translation": "to engage in anal sex",
-    "example": "Dzieci **pedalą się** po parku."
-  },
-  {
     "bezokolicznik": "pedałować",
     "ja": "pedałuję",
     "ty": "pedałujesz",
@@ -22409,7 +21424,8 @@
     "wy": "perfekcjonujecie",
     "oni/one": "perfekcjonują",
     "translation": "to perfect",
-    "example": "Chcę **perfekcjonować** swój angielski."
+    "example": "Chcę **perfekcjonować** swój angielski.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "perorować",
@@ -22591,78 +21607,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "pierdnąć",
-    "ja": "pierdnę",
-    "ty": "pierdniesz",
-    "on/ona/ono": "pierdnie",
-    "my": "pierdniemy",
-    "wy": "pierdniecie",
-    "oni/one": "pierdną",
-    "translation": "to fart",
-    "example": "Dziecko chciało **pierdnąć**.",
-    "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "pierdolić",
-    "ja": "pierdolę",
-    "ty": "pierdolisz",
-    "on/ona/ono": "pierdoli",
-    "my": "pierdolimy",
-    "wy": "pierdolicie",
-    "oni/one": "pierdolą",
-    "translation": "to talk trash",
-    "example": "Nie **pierdol** takich rzeczy.",
-    "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "pierdolnąć",
-    "ja": "pierdolnę",
-    "ty": "pierdolniesz",
-    "on/ona/ono": "pierdolnie",
-    "my": "pierdolniemy",
-    "wy": "pierdolniecie",
-    "oni/one": "pierdolną",
-    "translation": "to blurt out",
-    "example": "Mogę cię **pierdolnąć**.",
-    "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "pierdyknąć",
-    "ja": "pierdyknę",
-    "ty": "pierdykniesz",
-    "on/ona/ono": "pierdyknie",
-    "my": "pierdykniemy",
-    "wy": "pierdykniecie",
-    "oni/one": "pierdykną",
-    "translation": "to blurt out",
-    "example": "Stary pies **pierdyknął** głośno.",
-    "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "pierdzielić",
-    "ja": "pierdzielę",
-    "ty": "pierdzielisz",
-    "on/ona/ono": "pierdzieli",
-    "my": "pierdzielimy",
-    "wy": "pierdzielicie",
-    "oni/one": "pierdzielą",
-    "translation": "to ramble",
-    "example": "Nie **pierdziel** bzdur.",
-    "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "pierdzieć",
-    "ja": "pierdzę",
-    "ty": "pierdzisz",
-    "on/ona/ono": "pierdzi",
-    "my": "pierdzimy",
-    "wy": "pierdzicie",
-    "oni/one": "pierdzą",
-    "translation": "to fart",
-    "example": "Mały pies zaczął **pierdzieć**.",
-    "aspect": "imperfective"
-  },
-  {
     "bezokolicznik": "pierniczyć",
     "ja": "pierniczę",
     "ty": "pierniczysz",
@@ -22673,17 +21617,6 @@
     "translation": "to babble",
     "example": "Przestań **pierniczyć**.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "pieskować",
-    "ja": "pieskuję",
-    "ty": "pieskujesz",
-    "on/ona/ono": "pieskuje",
-    "my": "pieskujemy",
-    "wy": "pieskujecie",
-    "oni/one": "pieskują",
-    "translation": "to act coy",
-    "example": "Lubię **pieskować** kota wieczorem."
   },
   {
     "bezokolicznik": "pieścić",
@@ -22758,28 +21691,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "piwkować",
-    "ja": "piwkuję",
-    "ty": "piwkujesz",
-    "on/ona/ono": "piwkuje",
-    "my": "piwkujemy",
-    "wy": "piwkujecie",
-    "oni/one": "piwkują",
-    "translation": "to drink beer",
-    "example": "Wieczorem lubi **piwkować** z kolegą."
-  },
-  {
-    "bezokolicznik": "piznąć",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to fart loudly",
-    "example": "On chce **piznąć** piwo."
-  },
-  {
     "bezokolicznik": "piąć się",
     "ja": "pnę się",
     "ty": "pniesz się",
@@ -22828,18 +21739,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "piździć",
-    "ja": "piżdżę",
-    "ty": "piździsz",
-    "on/ona/ono": "piździ",
-    "my": "piździmy",
-    "wy": "piździcie",
-    "oni/one": "piżdżą",
-    "translation": "to blow hard",
-    "example": "Nie wolno **piździć** ludzi.",
-    "aspect": "imperfective"
-  },
-  {
     "bezokolicznik": "planować",
     "ja": "planuję",
     "ty": "planujesz",
@@ -22874,17 +21773,6 @@
     "translation": "to gossip",
     "example": "One lubią **plotkować** po pracy.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "plożyć",
-    "ja": "plożę",
-    "ty": "plożysz",
-    "on/ona/ono": "ploży",
-    "my": "plożymy",
-    "wy": "plożycie",
-    "oni/one": "plożą",
-    "translation": "to lay",
-    "example": "Dziecko zaczęło **plożyć**."
   },
   {
     "bezokolicznik": "pluskać",
@@ -23187,17 +22075,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "pochynąć",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to bend",
-    "example": "Dziecko **pochynęło** się przez okno."
-  },
-  {
     "bezokolicznik": "pochłaniać",
     "ja": "pochłaniam",
     "ty": "pochłaniasz",
@@ -23376,17 +22253,6 @@
     "translation": "to feel",
     "example": "Dziś **poczułem się** lepiej.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "poczworzyć",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to make fourfold",
-    "example": "Nie mogę **poczworzyć** tego drzewa."
   },
   {
     "bezokolicznik": "poczynać",
@@ -23700,18 +22566,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "podpierdalać",
-    "ja": "podpierdalam",
-    "ty": "podpierdalasz",
-    "on/ona/ono": "podpierdala",
-    "my": "podpierdalamy",
-    "wy": "podpierdalacie",
-    "oni/one": "podpierdalają",
-    "translation": "to hustle",
-    "example": "Nie **podpierdalaj** ludziom samochodu.",
-    "aspect": "imperfective"
-  },
-  {
     "bezokolicznik": "podpisać",
     "ja": "podpiszę",
     "ty": "podpiszesz",
@@ -23985,17 +22839,6 @@
     "translation": "to dictate",
     "example": "Nauczycielka **podyktowała** zdania.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "podziałkować",
-    "ja": "podziałkuję",
-    "ty": "podziałkujesz",
-    "on/ona/ono": "podziałkuje",
-    "my": "podziałkujemy",
-    "wy": "podziałkujecie",
-    "oni/one": "podziałkują",
-    "translation": "to score with lines",
-    "example": "Trzeba **podziałkować** tę tablicę."
   },
   {
     "bezokolicznik": "podzielić",
@@ -24560,17 +23403,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "pomajtać",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to wag",
-    "example": "Dzieci **pomajtały** nogami w wodzie."
-  },
-  {
     "bezokolicznik": "pomalować",
     "ja": "pomaluję",
     "ty": "pomalujesz",
@@ -24787,17 +23619,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "ponsowieć",
-    "ja": "ponsowieję",
-    "ty": "ponsowiejesz",
-    "on/ona/ono": "ponsowieje",
-    "my": "ponsowiejemy",
-    "wy": "ponsowiejecie",
-    "oni/one": "ponsowieją",
-    "translation": "to turn pink",
-    "example": "Jego policzki **ponsowiały** ze wstydu."
-  },
-  {
     "bezokolicznik": "poopalać",
     "ja": "poopalam",
     "ty": "poopalasz",
@@ -24928,17 +23749,6 @@
     "translation": "to popularize",
     "example": "Szkoła chce **popularyzować** sport.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "popylać",
-    "ja": "popylam",
-    "ty": "popylasz",
-    "on/ona/ono": "popyla",
-    "my": "popylamy",
-    "wy": "popylacie",
-    "oni/one": "popylają",
-    "translation": "to rush",
-    "example": "Babcia **popyla** buty."
   },
   {
     "bezokolicznik": "poradzić",
@@ -25690,7 +24500,7 @@
     "on/ona/ono": "powinien; powinna; powinno",
     "my": "powinniśmy; powinnyśmy",
     "wy": "powinniście; powinnyście",
-    "oni/one": "powinni, powinny",
+    "oni/one": "powinni; powinny",
     "translation": "should"
   },
   {
@@ -26505,7 +25315,8 @@
     "wy": "prowadzicie do",
     "oni/one": "prowadzą do",
     "translation": "to lead to",
-    "example": "To **prowadzi do** kłótni."
+    "example": "To **prowadzi do** kłótni.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "prowiantować",
@@ -26988,17 +25799,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "przekarnawałować",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to carouse",
-    "example": "W lutym **przekarnawałowaliśmy** całe miasto."
-  },
-  {
     "bezokolicznik": "przekazywać",
     "ja": "przekazuję",
     "ty": "przekazujesz",
@@ -27021,17 +25821,6 @@
     "translation": "to curse",
     "example": "Nie **przeklinaj** przy dzieciach.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "przekludzić",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to move in",
-    "example": "Wieś chce **przekludzić** nowe rodziny."
   },
   {
     "bezokolicznik": "przekonać",
@@ -27274,17 +26063,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "przepierdolić",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to fuck up",
-    "example": "Nie mogę tego **przepierdolić**."
-  },
-  {
     "bezokolicznik": "przepijać",
     "ja": "przepijam",
     "ty": "przepijasz",
@@ -27427,17 +26205,6 @@
     "translation": "to let through",
     "example": "Nie mogę cię **przepuścić**.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "przepękać",
-    "ja": "przepękam",
-    "ty": "przepękasz",
-    "on/ona/ono": "przepęka",
-    "my": "przepękamy",
-    "wy": "przepękacie",
-    "oni/one": "przepękają",
-    "translation": "to suffer",
-    "example": "Balon nagle **przepękał**."
   },
   {
     "bezokolicznik": "przepływać",
@@ -27653,28 +26420,6 @@
     "translation": "to hinder",
     "example": "Muzyka mi **przeszkadza**.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "przeszkopić",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to copy across",
-    "example": "Nauczyciel **przeszkopił** uczniów do innej klasy."
-  },
-  {
-    "bezokolicznik": "przeszrubować",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to bolt together",
-    "example": "Nie **przeszrubuj** tej śruby."
   },
   {
     "bezokolicznik": "przesłać",
@@ -28144,17 +26889,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "przykinać",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to hammer in",
-    "example": "Babcia **przykina** głową."
-  },
-  {
     "bezokolicznik": "przyklejać",
     "ja": "przyklejam",
     "ty": "przyklejasz",
@@ -28575,17 +27309,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "przyturać",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to drag up",
-    "example": "Chcę **przyturać** przed latem."
-  },
-  {
     "bezokolicznik": "przywieźć",
     "ja": "przywiozę",
     "ty": "przywieziesz",
@@ -28766,17 +27489,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "pszczyć",
-    "ja": "pszczę",
-    "ty": "pszczysz",
-    "on/ona/ono": "pszczy",
-    "my": "pszczymy",
-    "wy": "pszczycie",
-    "oni/one": "pszczą",
-    "translation": "to spit",
-    "example": "Deszcz **pszczy** kwiaty w ogrodzie."
-  },
-  {
     "bezokolicznik": "ptaszkować",
     "ja": "ptaszkuję",
     "ty": "ptaszkujesz",
@@ -28825,17 +27537,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "puczyć się",
-    "ja": "puczę się",
-    "ty": "puczysz się",
-    "on/ona/ono": "puczy się",
-    "my": "puczymy się",
-    "wy": "puczycie się",
-    "oni/one": "puczą się",
-    "translation": "to puff up",
-    "example": "Chłopcy **puczą się** przed meczem."
-  },
-  {
     "bezokolicznik": "pudłować",
     "ja": "pudłuję",
     "ty": "pudłujesz",
@@ -28858,17 +27559,6 @@
     "translation": "to knock",
     "example": "Kto **puka** do drzwi?",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "pulać się",
-    "ja": "pulam się",
-    "ty": "pulasz się",
-    "on/ona/ono": "pula się",
-    "my": "pulamy się",
-    "wy": "pulacie się",
-    "oni/one": "pulają się",
-    "translation": "to lie down",
-    "example": "Dzieci **pulają się** w jeziorze."
   },
   {
     "bezokolicznik": "pustoszyć",
@@ -28989,17 +27679,6 @@
     "translation": "to blush",
     "example": "Dziewczynka **pąsowieje** ze wstydu.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "pęchcić",
-    "ja": "pęchcę",
-    "ty": "pęchcisz",
-    "on/ona/ono": "pęchci",
-    "my": "pęchcimy",
-    "wy": "pęchcicie",
-    "oni/one": "pęchcą",
-    "translation": "to cause to swell",
-    "example": "Brzuch **pęchci** po jedzeniu."
   },
   {
     "bezokolicznik": "pęcznieć",
@@ -29541,17 +28220,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "rerać",
-    "ja": "reram",
-    "ty": "rerasz",
-    "on/ona/ono": "rera",
-    "my": "reramy",
-    "wy": "reracie",
-    "oni/one": "rerają",
-    "translation": "to snarl",
-    "example": "Mechanik **rera** silnik."
-  },
-  {
     "bezokolicznik": "resetować",
     "ja": "resetuję",
     "ty": "resetujesz",
@@ -29610,17 +28278,6 @@
     "translation": "to reserve",
     "example": "Chcę **rezerwować** stolik.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "rezultować",
-    "ja": "rezultuję",
-    "ty": "rezultujesz",
-    "on/ona/ono": "rezultuje",
-    "my": "rezultujemy",
-    "wy": "rezultujecie",
-    "oni/one": "rezultują",
-    "translation": "to result",
-    "example": "Ta praca **rezultuje** sukcesem."
   },
   {
     "bezokolicznik": "robić",
@@ -30365,18 +29022,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "rozjebać",
-    "ja": "rozjebię",
-    "ty": "rozjebiesz",
-    "on/ona/ono": "rozjebie",
-    "my": "rozjebiemy",
-    "wy": "rozjebiecie",
-    "oni/one": "rozjebią",
-    "translation": "to screw up",
-    "example": "On **rozjebał** telefon.",
-    "aspect": "perfective"
-  },
-  {
     "bezokolicznik": "rozkazywać",
     "ja": "rozkazuję",
     "ty": "rozkazujesz",
@@ -30579,17 +29224,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "rozmarasić",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to dishevel",
-    "example": "Po obiedzie dzieci się **rozmarasiły**."
-  },
-  {
     "bezokolicznik": "rozmawiać",
     "ja": "rozmawiam",
     "ty": "rozmawiasz",
@@ -30755,18 +29389,6 @@
     "oni/one": "rozpadną się",
     "translation": "to fall apart",
     "example": "Mój parasol może **rozpaść się** jutro.",
-    "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "rozpierdolić",
-    "ja": "rozpierdolę",
-    "ty": "rozpierdolisz",
-    "on/ona/ono": "rozpierdoli",
-    "my": "rozpierdolimy",
-    "wy": "rozpierdolicie",
-    "oni/one": "rozpierdolą",
-    "translation": "to fuck up",
-    "example": "Złość może wszystko **rozpierdolić**.",
     "aspect": "perfective"
   },
   {
@@ -31706,18 +30328,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "ruchać",
-    "ja": "rucham",
-    "ty": "ruchasz",
-    "on/ona/ono": "rucha",
-    "my": "ruchamy",
-    "wy": "ruchacie",
-    "oni/one": "ruchają",
-    "translation": "to have sex",
-    "example": "Nie używaj słowa **ruchać** przy dzieciach.",
-    "aspect": "imperfective"
-  },
-  {
     "bezokolicznik": "rujnować",
     "ja": "rujnuję",
     "ty": "rujnujesz",
@@ -32277,7 +30887,8 @@
     "wy": "saunujecie",
     "oni/one": "saunują",
     "translation": "to use a sauna",
-    "example": "Lubię **saunować** po treningu."
+    "example": "Lubię **saunować** po treningu.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "scentralizować",
@@ -32434,17 +31045,6 @@
     "translation": "to cool down",
     "example": "Chcę **schłodzić** sok.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "seedować",
-    "ja": "seeduję",
-    "ty": "seedujesz",
-    "on/ona/ono": "seeduje",
-    "my": "seedujemy",
-    "wy": "seedujecie",
-    "oni/one": "seedują",
-    "translation": "to seed",
-    "example": "Muszę **seedować** ten plik."
   },
   {
     "bezokolicznik": "segregować",
@@ -32903,17 +31503,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "skibać",
-    "ja": "skibam",
-    "ty": "skibasz",
-    "on/ona/ono": "skiba",
-    "my": "skibamy",
-    "wy": "skibacie",
-    "oni/one": "skibają",
-    "translation": "to chip",
-    "example": "Na ferie chcę **skibać** w górach."
-  },
-  {
     "bezokolicznik": "skierować",
     "ja": "skieruję",
     "ty": "skierujesz",
@@ -32936,17 +31525,6 @@
     "translation": "to head for",
     "example": "Proszę **skierować się** do recepcji.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "skitrać",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to hide",
-    "example": "Dzieci **skitrały** cukierki w szafie."
   },
   {
     "bezokolicznik": "sklasyfikować",
@@ -33789,30 +32367,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "spierdalać",
-    "ja": "spierdalam",
-    "ty": "spierdalasz",
-    "on/ona/ono": "spierdala",
-    "my": "spierdalamy",
-    "wy": "spierdalacie",
-    "oni/one": "spierdalają",
-    "translation": "to fuck off",
-    "example": "**Spierdalaj** z mojego pokoju.",
-    "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "spierdolić",
-    "ja": "spierdolę",
-    "ty": "spierdolisz",
-    "on/ona/ono": "spierdoli",
-    "my": "spierdolimy",
-    "wy": "spierdolicie",
-    "oni/one": "spierdolą",
-    "translation": "to fuck up",
-    "example": "Ktoś mógł to **spierdolić**.",
-    "aspect": "perfective"
-  },
-  {
     "bezokolicznik": "spieszyć",
     "ja": "spieszę",
     "ty": "spieszysz",
@@ -33967,17 +32521,6 @@
     "translation": "to sponsor",
     "example": "Firma chce **sponsorować** mecz.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "sponsowieć",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to blush",
-    "example": "Chcą **sponsowieć** lokalny festyn."
   },
   {
     "bezokolicznik": "spopularyzować",
@@ -34191,7 +32734,8 @@
     "wy": "sprejujecie",
     "oni/one": "sprejują",
     "translation": "to spray",
-    "example": "Chłopiec lubi **sprejować** mur."
+    "example": "Chłopiec lubi **sprejować** mur.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "sproszkować",
@@ -34552,29 +33096,6 @@
     "translation": "to flow",
     "example": "Łódka **spłynęła** rzeką.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "srać",
-    "ja": "sram",
-    "ty": "srasz",
-    "on/ona/ono": "sra",
-    "my": "sramy",
-    "wy": "sracie",
-    "oni/one": "srają",
-    "translation": "to shit",
-    "example": "Kot chce **srać**.",
-    "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "stablicować",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to table",
-    "example": "Nie umiem **stablicować** danych."
   },
   {
     "bezokolicznik": "stalować się",
@@ -35356,17 +33877,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "szaperonować",
-    "ja": "szaperonuję",
-    "ty": "szaperonujesz",
-    "on/ona/ono": "szaperonuje",
-    "my": "szaperonujemy",
-    "wy": "szaperonujecie",
-    "oni/one": "szaperonują",
-    "translation": "to chaperone",
-    "example": "Dziś **szaperonujemy** urodziny Ani."
-  },
-  {
     "bezokolicznik": "szarpać",
     "ja": "szarpię",
     "ty": "szarpiesz",
@@ -35679,17 +34189,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "szpekać",
-    "ja": "szpekam",
-    "ty": "szpekasz",
-    "on/ona/ono": "szpeka",
-    "my": "szpekamy",
-    "wy": "szpekacie",
-    "oni/one": "szpekają",
-    "translation": "to gossip",
-    "example": "Dziewczynka **szpeka** przez dziurkę."
-  },
-  {
     "bezokolicznik": "szperać",
     "ja": "szperam",
     "ty": "szperasz",
@@ -35700,17 +34199,6 @@
     "translation": "to pry",
     "example": "Nie **szperaj** w szufladzie.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "szporować",
-    "ja": "szporuję",
-    "ty": "szporujesz",
-    "on/ona/ono": "szporuje",
-    "my": "szporujemy",
-    "wy": "szporujecie",
-    "oni/one": "szporują",
-    "translation": "to save",
-    "example": "Babcia **szporuje** buty pastą."
   },
   {
     "bezokolicznik": "szprechać",
@@ -35735,17 +34223,6 @@
     "translation": "to staple",
     "example": "Pracownicy **sztaplują** kartony.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "sztrykować",
-    "ja": "sztrykuję",
-    "ty": "sztrykujesz",
-    "on/ona/ono": "sztrykuje",
-    "my": "sztrykujemy",
-    "wy": "sztrykujecie",
-    "oni/one": "sztrykują",
-    "translation": "to knit",
-    "example": "Babcia **sztrikuje** nową sukienkę."
   },
   {
     "bezokolicznik": "sztukować",
@@ -35976,17 +34453,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "tablicować",
-    "ja": "tablicuję",
-    "ty": "tablicujesz",
-    "on/ona/ono": "tablicuje",
-    "my": "tablicujemy",
-    "wy": "tablicujecie",
-    "oni/one": "tablicują",
-    "translation": "to table",
-    "example": "Na wsi **tablicują** drogę."
-  },
-  {
     "bezokolicznik": "tankować",
     "ja": "tankuję",
     "ty": "tankujesz",
@@ -36071,17 +34537,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "taśtać",
-    "ja": "taśtam",
-    "ty": "taśtasz",
-    "on/ona/ono": "taśta",
-    "my": "taśtamy",
-    "wy": "taśtacie",
-    "oni/one": "taśtają",
-    "translation": "to shuffle",
-    "example": "On **taśta** mapę na ścianie."
-  },
-  {
     "bezokolicznik": "tchórzyć",
     "ja": "tchórzę",
     "ty": "tchórzysz",
@@ -36140,17 +34595,6 @@
     "translation": "to test",
     "example": "Musimy **testować** nową aplikację.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "tetrać",
-    "ja": "tetram",
-    "ty": "tetrasz",
-    "on/ona/ono": "tetra",
-    "my": "tetramy",
-    "wy": "tetracie",
-    "oni/one": "tetrają",
-    "translation": "to thresh",
-    "example": "W laboratorium **tetrą** próbkę wody."
   },
   {
     "bezokolicznik": "tezauryzować",
@@ -36223,17 +34667,6 @@
     "translation": "to tolerate",
     "example": "Nie **toleruję** hałasu.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "tonkać",
-    "ja": "tonkam",
-    "ty": "tonkasz",
-    "on/ona/ono": "tonka",
-    "my": "tonkamy",
-    "wy": "tonkacie",
-    "oni/one": "tonkają",
-    "translation": "to knock",
-    "example": "Ptak **tonka** w lesie."
   },
   {
     "bezokolicznik": "tonąć",
@@ -36582,17 +35015,6 @@
     "translation": "to trivialize",
     "example": "Nie **trywializuj** tego problemu.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "tryźnić",
-    "ja": "tryźnię",
-    "ty": "tryźnisz",
-    "on/ona/ono": "tryźni",
-    "my": "tryźnimy",
-    "wy": "tryźnicie",
-    "oni/one": "tryźnią",
-    "translation": "to embalm",
-    "example": "Muszę **tryźnić** nowy program."
   },
   {
     "bezokolicznik": "trzaskać",
@@ -36952,17 +35374,6 @@
     "translation": "to make more attractive",
     "example": "Chcemy **uatrakcyjnić** stronę internetową.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "ubaczyć",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to see",
-    "example": "Nie mogę ci tego **ubaczyć**."
   },
   {
     "bezokolicznik": "ubezpieczać",
@@ -37716,17 +36127,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "ufajdolić",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to dirty",
-    "example": "Nie **ufajdolę** mu tajemnicy."
-  },
-  {
     "bezokolicznik": "ufarbować",
     "ja": "ufarbuję",
     "ty": "ufarbujesz",
@@ -38170,17 +36570,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "ukrychać",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to defecate",
-    "example": "Dziecko chce **ukrychać** zabawkę."
-  },
-  {
     "bezokolicznik": "ukrywać",
     "ja": "ukrywam",
     "ty": "ukrywasz",
@@ -38587,17 +36976,6 @@
     "translation": "to die",
     "example": "Stary pies może **umrzeć**.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "umurzyć",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to plaster",
-    "example": "Dym **umurzył** ścianę."
   },
   {
     "bezokolicznik": "umyć",
@@ -39470,17 +37848,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "uskrómnić",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to tame",
-    "example": "Musimy **uskrómnić** konia."
-  },
-  {
     "bezokolicznik": "uspokajać",
     "ja": "uspokajam",
     "ty": "uspokajasz",
@@ -39708,17 +38075,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "uszporać",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to arrange",
-    "example": "Trzeba **uszporać** pokój."
-  },
-  {
     "bezokolicznik": "usłyszeć",
     "ja": "usłyszę",
     "ty": "usłyszysz",
@@ -39847,7 +38203,8 @@
     "wy": "utrzymujecie poziom",
     "oni/one": "utrzymują poziom",
     "translation": "to maintain the level",
-    "example": "Woda **utrzymuje poziom** wody."
+    "example": "Woda **utrzymuje poziom** wody.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "utrzymywać się",
@@ -39908,17 +38265,6 @@
     "translation": "to take into account",
     "example": "**Uważaj** na schodach.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "uwenerować",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to arm with weapons",
-    "example": "Chcę **uwenerować** przed wakacjami."
   },
   {
     "bezokolicznik": "uwiarygodnić",
@@ -40029,17 +38375,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "uwspólnotowić",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to communalize",
-    "example": "Państwo chce **uwspólnotowić** ziemię."
-  },
-  {
     "bezokolicznik": "uwypuklić",
     "ja": "uwypuklę",
     "ty": "uwypuklisz",
@@ -40074,28 +38409,6 @@
     "translation": "to take into account",
     "example": "Trzeba **uwzględnić** koszty.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "uzajebistnić",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to make ultra-cool",
-    "example": "Nowy pokój **uzajebistnił** nasz dom."
-  },
-  {
-    "bezokolicznik": "uzajebiścić",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to make fucking awesome",
-    "example": "Po tym piwie byłem **uzajebiścić**."
   },
   {
     "bezokolicznik": "uzależnić",
@@ -40504,17 +38817,6 @@
     "translation": "to flinch",
     "example": "Piłka **wahnęła** w bok.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "wahować",
-    "ja": "wahuję",
-    "ty": "wahujesz",
-    "on/ona/ono": "wahuje",
-    "my": "wahujemy",
-    "wy": "wahujecie",
-    "oni/one": "wahują",
-    "translation": "to waver",
-    "example": "Nie **wahuję** się długo."
   },
   {
     "bezokolicznik": "wakować",
@@ -41236,17 +39538,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "winkować",
-    "ja": "winkuję",
-    "ty": "winkujesz",
-    "on/ona/ono": "winkuje",
-    "my": "winkujemy",
-    "wy": "winkujecie",
-    "oni/one": "winkują",
-    "translation": "to wine and dine",
-    "example": "Nie **winkuj** mnie za spóźnienie."
-  },
-  {
     "bezokolicznik": "winszować",
     "ja": "winszuję",
     "ty": "winszujesz",
@@ -41439,18 +39730,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "wkurwiać",
-    "ja": "wkurwiam",
-    "ty": "wkurwiasz",
-    "on/ona/ono": "wkurwia",
-    "my": "wkurwiamy",
-    "wy": "wkurwiacie",
-    "oni/one": "wkurwiają",
-    "translation": "to piss off",
-    "example": "Hałas **wkurwia** mnie codziennie.",
-    "aspect": "imperfective"
-  },
-  {
     "bezokolicznik": "wkładać",
     "ja": "wkładam",
     "ty": "wkładasz",
@@ -41627,18 +39906,6 @@
     "oni/one": "wpadają",
     "translation": "to fall in",
     "example": "Czasem **wpadam** do babci po szkole.",
-    "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "wpierdalać",
-    "ja": "wpierdalam",
-    "ty": "wpierdalasz",
-    "on/ona/ono": "wpierdala",
-    "my": "wpierdalamy",
-    "wy": "wpierdalacie",
-    "oni/one": "wpierdalają",
-    "translation": "to fuck into",
-    "example": "On **wpierdala** chipsy cały wieczór.",
     "aspect": "imperfective"
   },
   {
@@ -42335,18 +40602,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "wychujać",
-    "ja": "wychujam",
-    "ty": "wychujasz",
-    "on/ona/ono": "wychuja",
-    "my": "wychujamy",
-    "wy": "wychujacie",
-    "oni/one": "wychujają",
-    "translation": "to fuck over",
-    "example": "On chciał mnie **wychujać**.",
-    "aspect": "perfective"
-  },
-  {
     "bezokolicznik": "wychwalać",
     "ja": "wychwalam",
     "ty": "wychwalasz",
@@ -42900,14 +41155,15 @@
   },
   {
     "bezokolicznik": "wygooglować",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
+    "ja": "wygoogluję",
+    "ty": "wygooglujesz",
+    "on/ona/ono": "wygoogluje",
+    "my": "wygooglujemy",
+    "wy": "wygooglujecie",
+    "oni/one": "wygooglują",
     "translation": "to google",
-    "example": "Muszę to **wygooglować** teraz."
+    "example": "Muszę to **wygooglować** teraz.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "wygramolić się",
@@ -42944,17 +41200,6 @@
     "translation": "to win",
     "example": "Chcę **wygrywać** częściej.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "wyguglać",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to google",
-    "example": "Spróbuję to **wyguglać** później."
   },
   {
     "bezokolicznik": "wygwizdywać",
@@ -43257,26 +41502,16 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "wykrzaczać",
-    "ja": "wykrzaczam",
-    "ty": "wykrzaczasz",
-    "on/ona/ono": "wykrzacza",
-    "my": "wykrzaczamy",
-    "wy": "wykrzaczacie",
-    "oni/one": "wykrzaczają",
-    "translation": "to crash",
-    "example": "Komputer znów **wykrzacza** podczas gry."
-  },
-  {
     "bezokolicznik": "wykrzaczyć",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
+    "ja": "wykrzaczę",
+    "ty": "wykrzaczysz",
+    "on/ona/ono": "wykrzaczy",
+    "my": "wykrzaczymy",
+    "wy": "wykrzaczycie",
+    "oni/one": "wykrzaczą",
     "translation": "to crash",
-    "example": "Program **wykrzaczył** nagle."
+    "example": "Program **wykrzaczył** nagle.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "wykształcać",
@@ -43816,30 +42051,6 @@
     "oni/one": "wypieprzą",
     "translation": "to screw up",
     "example": "Chcę **wypieprzyć** ten stary stół.",
-    "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "wypierdalać",
-    "ja": "wypierdalam",
-    "ty": "wypierdalasz",
-    "on/ona/ono": "wypierdala",
-    "my": "wypierdalamy",
-    "wy": "wypierdalacie",
-    "oni/one": "wypierdalają",
-    "translation": "to fuck off",
-    "example": "**Wypierdalaj** stąd natychmiast.",
-    "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "wypierdolić",
-    "ja": "wypierdolę",
-    "ty": "wypierdolisz",
-    "on/ona/ono": "wypierdoli",
-    "my": "wypierdolimy",
-    "wy": "wypierdolicie",
-    "oni/one": "wypierdolą",
-    "translation": "to fuck up",
-    "example": "Chcę **wypierdolić** ten stary stół.",
     "aspect": "perfective"
   },
   {
@@ -44540,14 +42751,15 @@
   },
   {
     "bezokolicznik": "wytentegować",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
+    "ja": "wytenteguję",
+    "ty": "wytentegujesz",
+    "on/ona/ono": "wytenteguje",
+    "my": "wytentegujemy",
+    "wy": "wytentegujecie",
+    "oni/one": "wytentegują",
     "translation": "to tinker",
-    "example": "Muszę **wytentegować** wszystko dziś."
+    "example": "Muszę **wytentegować** wszystko dziś.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "wytrzebić",
@@ -44932,17 +43144,6 @@
     "translation": "to display",
     "example": "Ekran **wyświetla** godzinę i datę.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "wyżulić",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to wheedle",
-    "example": "Nie **wyżulić** tej gumy."
   },
   {
     "bezokolicznik": "wyżłopać",
@@ -46012,17 +44213,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "zacyganić",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to swindle",
-    "example": "Nie chcę, by mnie **zacyganił**."
-  },
-  {
     "bezokolicznik": "zacytować",
     "ja": "zacytuję",
     "ty": "zacytujesz",
@@ -47003,7 +45193,8 @@
     "wy": "zakluczycie",
     "oni/one": "zakluczą",
     "translation": "to lock up",
-    "example": "Musi **zakluczyć** drzwi na noc."
+    "example": "Musi **zakluczyć** drzwi na noc.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "zakodować",
@@ -47834,28 +46025,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "zanietrzeźwiać się",
-    "ja": "zanietrzeźwiam się",
-    "ty": "zanietrzeźwiasz się",
-    "on/ona/ono": "zanietrzeźwia się",
-    "my": "zanietrzeźwiamy się",
-    "wy": "zanietrzeźwiacie się",
-    "oni/one": "zanietrzeźwiają się",
-    "translation": "to sober up slightly",
-    "example": "Po śnie zaczął się **zanietrzeźwiać**."
-  },
-  {
-    "bezokolicznik": "zanietrzeźwić się",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to sober up",
-    "example": "Po kawie chory **zanietrzeźwił się**."
-  },
-  {
     "bezokolicznik": "zanikać",
     "ja": "zanikam",
     "ty": "zanikasz",
@@ -48264,30 +46433,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "zapierdalać",
-    "ja": "zapierdalam",
-    "ty": "zapierdalasz",
-    "on/ona/ono": "zapierdala",
-    "my": "zapierdalamy",
-    "wy": "zapierdalacie",
-    "oni/one": "zapierdalają",
-    "translation": "to run like hell",
-    "example": "**Zapierdalaj** stąd teraz!",
-    "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "zapierdolić",
-    "ja": "zapierdolę",
-    "ty": "zapierdolisz",
-    "on/ona/ono": "zapierdoli",
-    "my": "zapierdolimy",
-    "wy": "zapierdolicie",
-    "oni/one": "zapierdolą",
-    "translation": "to fuck up",
-    "example": "On **zapierdolił** projekt.",
-    "aspect": "perfective"
-  },
-  {
     "bezokolicznik": "zapinać",
     "ja": "zapinam",
     "ty": "zapinasz",
@@ -48394,17 +46539,6 @@
     "translation": "to prevent",
     "example": "Ruch pomaga **zapobiegać** chorobom.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "zapobiegnąć",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to prevent",
-    "example": "To może **zapobiec** wypadkom."
   },
   {
     "bezokolicznik": "zapoczątkować",
@@ -50788,14 +48922,15 @@
   },
   {
     "bezokolicznik": "zborsuczyć się",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
+    "ja": "zborsuczę się",
+    "ty": "zborsuczysz się",
+    "on/ona/ono": "zborsuczy się",
+    "my": "zborsuczymy się",
+    "wy": "zborsuczycie się",
+    "oni/one": "zborsuczą się",
     "translation": "to get into a quarrel",
-    "example": "Mój sweter **zborsuczył się** po pracy."
+    "example": "Mój sweter **zborsuczył się** po pracy.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "zbratać",
@@ -51575,17 +49710,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "zdolaryzować",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to dollarize",
-    "example": "Rząd chce **zdolaryzować** gospodarkę."
-  },
-  {
     "bezokolicznik": "zdopingować",
     "ja": "zdopinguję",
     "ty": "zdopingujesz",
@@ -51946,18 +50070,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "zesrać się",
-    "ja": "zesram się",
-    "ty": "zesrasz się",
-    "on/ona/ono": "zesra się",
-    "my": "zesramy się",
-    "wy": "zesracie się",
-    "oni/one": "zesrają się",
-    "translation": "to shit oneself",
-    "example": "Przepraszam, **zesrałem się** ze strachu.",
-    "aspect": "perfective"
-  },
-  {
     "bezokolicznik": "zestawiać",
     "ja": "zestawiam",
     "ty": "zestawiasz",
@@ -52004,17 +50116,6 @@
     "translation": "to wipe off oneself",
     "example": "Kolor **starł się** z kurtki.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "zeuroizować",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to euroize",
-    "example": "Rząd chce **zeuroizować** kraj."
   },
   {
     "bezokolicznik": "zeuropeizować",
@@ -52472,18 +50573,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "zjebać",
-    "ja": "zjebię",
-    "ty": "zjebiesz",
-    "on/ona/ono": "zjebie",
-    "my": "zjebiemy",
-    "wy": "zjebiecie",
-    "oni/one": "zjebią",
-    "translation": "to fuck up",
-    "example": "Nie chcę nic **zjebać**.",
-    "aspect": "perfective"
-  },
-  {
     "bezokolicznik": "zjednoczyć",
     "ja": "zjednoczę",
     "ty": "zjednoczysz",
@@ -52602,17 +50691,6 @@
     "aspect": "perfective"
   },
   {
-    "bezokolicznik": "zląc się",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to be angry",
-    "example": "Stary pies łatwo się **zlął**."
-  },
-  {
     "bezokolicznik": "zlęknąć się",
     "ja": "zlęknę się",
     "ty": "zlękniesz się",
@@ -52635,28 +50713,6 @@
     "translation": "to struggle",
     "example": "Ona **zmaga się** z bólem.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "zmarasić",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to mess up",
-    "example": "Chłopiec **zmarasił** czoło."
-  },
-  {
-    "bezokolicznik": "zmarmurzać",
-    "ja": "zmarmurzam",
-    "ty": "zmarmurzasz",
-    "on/ona/ono": "zmarmurza",
-    "my": "zmarmurzamy",
-    "wy": "zmarmurzacie",
-    "oni/one": "zmarmurzają",
-    "translation": "to marble",
-    "example": "Stary pan **zmarmurza** twarz."
   },
   {
     "bezokolicznik": "zmarnować",
@@ -52885,17 +50941,6 @@
     "translation": "to squint",
     "example": "Musiałem **zmrużyć** oczy.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "zmulczować",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to mulch",
-    "example": "Trzeba **zmulczować** grządki."
   },
   {
     "bezokolicznik": "zmuszać",
@@ -53268,17 +51313,6 @@
     "translation": "to depict",
     "example": "Rysunek dobrze **zobrazuje** sytuację.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "zolicić",
-    "ja": "zolicę",
-    "ty": "zolicisz",
-    "on/ona/ono": "zolici",
-    "my": "zolicimy",
-    "wy": "zolicicie",
-    "oni/one": "zolicą",
-    "translation": "to embolden",
-    "example": "Muszę **zolicić** rachunek dziś."
   },
   {
     "bezokolicznik": "zorganizować",
@@ -53784,17 +51818,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "zwodociągować",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to water supply",
-    "example": "Chcą **zwodociągować** wieś w tym roku."
-  },
-  {
     "bezokolicznik": "zwoływać",
     "ja": "zwołuję",
     "ty": "zwołujesz",
@@ -53841,17 +51864,6 @@
     "translation": "to triumph",
     "example": "Nasi mogą dziś **zwyciężyć**.",
     "aspect": "perfective"
-  },
-  {
-    "bezokolicznik": "zwymiarować",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
-    "translation": "to dimension",
-    "example": "Muszę **zwymiarować** pokój przed remontem."
   },
   {
     "bezokolicznik": "zwymiotować",
@@ -54107,14 +52119,15 @@
   },
   {
     "bezokolicznik": "ćpnąć",
-    "ja": "",
-    "ty": "",
-    "on/ona/ono": "",
-    "my": "",
-    "wy": "",
-    "oni/one": "",
+    "ja": "ćpnę",
+    "ty": "ćpniesz",
+    "on/ona/ono": "ćpnie",
+    "my": "ćpniemy",
+    "wy": "ćpniecie",
+    "oni/one": "ćpną",
     "translation": "to shoot up",
-    "example": "Po imprezie chciał **ćpnąć** coś mocniejszego."
+    "example": "Po imprezie chciał **ćpnąć** coś mocniejszego.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "ćwiczyć",
@@ -54307,17 +52320,6 @@
     "translation": "to lie",
     "example": "Nie **łgaj** teraz.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "łobzować",
-    "ja": "łobzuję",
-    "ty": "łobzujesz",
-    "on/ona/ono": "łobzuje",
-    "my": "łobzujemy",
-    "wy": "łobzujecie",
-    "oni/one": "łobzują",
-    "translation": "to blubber",
-    "example": "Ten **łobzować** znów kradnie."
   },
   {
     "bezokolicznik": "łoić",
@@ -54704,17 +52706,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "śmierdolić",
-    "ja": "śmierdolę",
-    "ty": "śmierdolisz",
-    "on/ona/ono": "śmierdoli",
-    "my": "śmierdolimy",
-    "wy": "śmierdolicie",
-    "oni/one": "śmierdolą",
-    "translation": "to stink",
-    "example": "Tu **śmierdoli** po śmieciach."
-  },
-  {
     "bezokolicznik": "śmierdzieć",
     "ja": "śmierdzę",
     "ty": "śmierdzisz",
@@ -54835,28 +52826,6 @@
     "aspect": "imperfective"
   },
   {
-    "bezokolicznik": "śrupać",
-    "ja": "śrupam",
-    "ty": "śrupasz",
-    "on/ona/ono": "śrupa",
-    "my": "śrupamy",
-    "wy": "śrupacie",
-    "oni/one": "śrupają",
-    "translation": "to gnaw",
-    "example": "Dziecko **śrupa** chipsy."
-  },
-  {
-    "bezokolicznik": "śtrykować",
-    "ja": "śtrykuję",
-    "ty": "śtrykujesz",
-    "on/ona/ono": "śtrykuje",
-    "my": "śtrykujemy",
-    "wy": "śtrykujecie",
-    "oni/one": "śtrykują",
-    "translation": "to knit",
-    "example": "On **strzyka** wodę z butelki."
-  },
-  {
     "bezokolicznik": "świadczyć",
     "ja": "świadczę",
     "ty": "świadczysz",
@@ -54877,7 +52846,8 @@
     "wy": "świadczycie o",
     "oni/one": "świadczą o",
     "translation": "to testify about",
-    "example": "To **świadczy o** jego sile."
+    "example": "To **świadczy o** jego sile.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "świadkować",
@@ -54902,17 +52872,6 @@
     "translation": "to shine",
     "example": "Słońce **świeci** mocno.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "świgać",
-    "ja": "świgam",
-    "ty": "świgasz",
-    "on/ona/ono": "świga",
-    "my": "świgamy",
-    "wy": "świgacie",
-    "oni/one": "świgają",
-    "translation": "to skip",
-    "example": "Chłopiec **świga** przez park."
   },
   {
     "bezokolicznik": "żachnąć się",
@@ -55068,17 +53027,6 @@
     "translation": "to gnaw",
     "example": "Mój pies ciągle chce **żreć**.",
     "aspect": "imperfective"
-  },
-  {
-    "bezokolicznik": "żulić",
-    "ja": "żulę",
-    "ty": "żulisz",
-    "on/ona/ono": "żuli",
-    "my": "żulimy",
-    "wy": "żulicie",
-    "oni/one": "żulą",
-    "translation": "to beg",
-    "example": "Nie **żuli** chleba przy stole."
   },
   {
     "bezokolicznik": "żuć",

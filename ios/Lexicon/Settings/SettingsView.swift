@@ -51,10 +51,10 @@ struct SettingsView: View {
 
                     Tile(skin: skin) {
                         heading("books.vertical", Strings.settingsSources, skin)
-                        Text(Strings.settingsSourcesSgjp)
+                        Text(Strings.settingsSourcesGrammar)
                             .font(.callout)
                             .foregroundStyle(skin.onTile)
-                        Text(Strings.settingsSourcesSgjpLicence)
+                        Text(Strings.settingsSourcesLicence)
                             .font(.caption)
                             .foregroundStyle(skin.onTile.muted)
                     }

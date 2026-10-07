@@ -181,12 +181,12 @@ private fun SettingsScreenContent(
                 skin = skin,
             )
             Text(
-                text = stringResource(R.string.settings_sources_sgjp),
+                text = stringResource(R.string.settings_sources_grammar),
                 style = MaterialTheme.typography.bodyMedium,
                 color = skin.onTile,
             )
             Text(
-                text = stringResource(R.string.settings_sources_sgjp_licence),
+                text = stringResource(R.string.settings_sources_licence),
                 style = MaterialTheme.typography.bodySmall,
                 color = skin.muted(),
             )

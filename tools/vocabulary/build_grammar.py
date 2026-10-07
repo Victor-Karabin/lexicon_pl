@@ -5,6 +5,8 @@ Run from anywhere:  python3 tools/vocabulary/build_grammar.py
 
 Reads
     tools/vocabulary/.cache/sgjp-*.tab.gz   the Grammatical Dictionary of Polish, see sgjp.py
+    tools/vocabulary/.cache/polimorf-*.tab.gz   PoliMorf, for verbs SGJP does not list
+    tools/vocabulary/unlisted_verbs.tsv     hand-written forms for the few verbs neither lists
     local.properties                        openai.apiKey, only when SGJP leaves words open
     tools/vocabulary/corpus/**/*.tsv        the words and their part of speech
     tools/vocabulary/examples.tsv           each word's example sentence, as context
@@ -24,6 +26,11 @@ without any conjugation. OpenAI now answers only for what SGJP does not cover: w
 does not list, homonyms it cannot tell apart without a meaning, and nouns that have no
 plural in normal use, which SGJP does not mark.
 
+The conjugation trainer's list is pruned on the way: a verb SGJP marks vulgar, or built on
+a vulgar root, is dropped, and so is a verb no dictionary lists unless it is a word of
+the corpus or written out in unlisted_verbs.tsv. The list had grown invented and
+misspelt verbs (abakować, biegnąć), which a learner would only memorise wrongly.
+
 Answers are cached in tools/vocabulary/.grammar-cache.json. Pass --refresh to ask again.
 """
 
@@ -31,6 +38,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 
 import sgjp
@@ -38,6 +46,9 @@ from build_examples import BATCH, CONJUGATIONS, TOOLS, BuildError, api_key, corp
 
 GRAMMAR = TOOLS / "grammar.tsv"
 CACHE = TOOLS / ".grammar-cache.json"
+UNLISTED = TOOLS / "unlisted_verbs.tsv"
+
+VULGAR = re.compile(r"jeb|pierd|kurw|cwel|pedal|chuj|pizd")
 
 GENDERS = {"masculine personal", "masculine animate", "masculine inanimate", "feminine", "neuter", "plural only"}
 
@@ -215,7 +226,7 @@ def adjective_from_sgjp(word: str, lexicon: dict) -> dict | None:
 
 
 def verb_from_sgjp(infinitive: str, lexicon: dict, existing: dict | None) -> tuple[dict, str | None] | None:
-    lemma, reflexive = sgjp.verb_lemma(infinitive)
+    lemma, before, after = sgjp.verb_lemma(infinitive)
     candidates = [lexeme for lexeme in lexicon.get(lemma, []) if lexeme.part_of_speech == "v"]
     if not candidates:
         return None
@@ -227,7 +238,7 @@ def verb_from_sgjp(infinitive: str, lexicon: dict, existing: dict | None) -> tup
             lambda candidate: [
                 person
                 for person, forms in sgjp.present_tense(candidate).items()
-                if mine[person] and not set(mine[person]) <= set(forms)
+                if mine[person] and not set(mine[person]) <= {before + form + after for form in forms}
             ],
         )
     else:
@@ -237,8 +248,26 @@ def verb_from_sgjp(infinitive: str, lexicon: dict, existing: dict | None) -> tup
     tense = sgjp.present_tense(lexeme)
     if not any(tense.values()):
         return None
-    forms = {person: "; ".join(form + reflexive for form in tense[person]) for person in PERSONS}
+    forms = {person: "; ".join(before + form + after for form in tense[person]) for person in PERSONS}
     return forms, lexeme.aspect
+
+
+def verbs_in(lexicon: dict, infinitive: str) -> list[sgjp.Lexeme]:
+    return [lexeme for lexeme in lexicon.get(sgjp.verb_lemma(infinitive)[0], []) if lexeme.part_of_speech == "v"]
+
+
+def vulgar(infinitive: str, candidates: list[sgjp.Lexeme]) -> bool:
+    if VULGAR.search(infinitive):
+        return True
+    return bool(candidates) and all("wulg" in lexeme.qualifiers for lexeme in candidates)
+
+
+def unlisted_verbs() -> dict[str, tuple[dict, str]]:
+    return {
+        cols[0]: ({person: cols[2 + index] for index, person in enumerate(PERSONS)}, cols[1])
+        for cols in read_tsv(UNLISTED)
+        if len(cols) >= 2 + len(PERSONS)
+    }
 
 
 def write_grammar(lines_in: list[tuple[dict, dict]]) -> None:
@@ -336,13 +365,33 @@ def main() -> int:
     write_grammar(rows)
     print(f"grammar.tsv: {len(rows)} words, {sources['SGJP']} from SGJP, {sources['OpenAI']} from OpenAI")
 
-    verb_sources = {"SGJP": 0, "kept": 0, "added": 0}
+    unknown = {sgjp.verb_lemma(i)[0] for i in by_infinitive if i and not verbs_in(lexicon, i)}
+    polimorf = sgjp.load(unknown, "polimorf")
+    unlisted = unlisted_verbs()
+    corpus_verbs = {e["word"] for e in words if e["pos"] == "v"}
+    verb_sources = {"SGJP": 0, "PoliMorf": 0, "hand-written": 0, "kept": 0, "added": 0}
+    dropped: dict[str, list[str]] = {"vulgar": [], "in no dictionary": []}
+    kept_verbs = []
     for verb in conjugations:
         infinitive = verb.get("bezokolicznik", "")
-        found = verb_from_sgjp(infinitive, lexicon, verb) if infinitive else None
-        if found is None:
+        if not infinitive:
+            continue
+        if vulgar(infinitive, verbs_in(lexicon, infinitive) or verbs_in(polimorf, infinitive)):
+            dropped["vulgar"].append(infinitive)
+            continue
+        if infinitive in unlisted:
+            found, source = unlisted[infinitive], "hand-written"
+        elif (found := verb_from_sgjp(infinitive, lexicon, verb)) is not None:
+            source = "SGJP"
+        elif (found := verb_from_sgjp(infinitive, polimorf, verb)) is not None:
+            source = "PoliMorf"
+        elif infinitive in corpus_verbs:
             verb.pop("aspect", None)
             verb_sources["kept"] += 1
+            kept_verbs.append(verb)
+            continue
+        else:
+            dropped["in no dictionary"].append(infinitive)
             continue
         forms, aspect = found
         verb.update(forms)
@@ -350,7 +399,9 @@ def main() -> int:
             verb["aspect"] = aspect
         else:
             verb.pop("aspect", None)
-        verb_sources["SGJP"] += 1
+        verb_sources[source] += 1
+        kept_verbs.append(verb)
+    conjugations = kept_verbs
     for entry in new_verbs:
         found = verb_from_sgjp(entry["word"], lexicon, None)
         if found is not None:
@@ -367,10 +418,9 @@ def main() -> int:
         verb_sources["added"] += 1
     conjugations.sort(key=lambda it: it.get("bezokolicznik", ""))
     CONJUGATIONS.write_text(json.dumps(conjugations, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(
-        f"conjugations.json: {len(conjugations)} verbs, {verb_sources['SGJP']} from SGJP, "
-        f"{verb_sources['kept']} kept as they were, {verb_sources['added']} added"
-    )
+    print(f"conjugations.json: {len(conjugations)} verbs, " + ", ".join(f"{n} {source}" for source, n in verb_sources.items()))
+    for reason, verbs in dropped.items():
+        print(f"  dropped, {reason}: {len(verbs)}: {', '.join(verbs)}")
     return 0
 
 

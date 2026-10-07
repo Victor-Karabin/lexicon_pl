@@ -84,12 +84,13 @@ def main() -> int:
     walk = sgjp.present_tense(sgjp.best(words["dreptać"], "v"))
     check("rare variants give way to the standard ones", walk["ja"], ["drepczę", "drepcę"], failures)
 
-    check("się is set aside to look a verb up", sgjp.verb_lemma("bać się"), ("bać", " się"), failures)
+    check("się is set aside to look a verb up", sgjp.verb_lemma("bać się"), ("bać", "", " się"), failures)
+    check("the verb is found inside a phrase", sgjp.verb_lemma("nie docenić"), ("docenić", "nie ", ""), failures)
     check("N/A and separators are not forms", sgjp.variants("baję; bajam / N/A"), ["baję", "bajam"], failures)
 
     for failure in failures:
         print(f"FAIL {failure}")
-    print(f"{12 - len(failures)}/12 passed")
+    print(f"{13 - len(failures)}/13 passed")
     return 1 if failures else 0
 
 
