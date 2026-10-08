@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
-"""Adds the everyday words and phrases the corpus lacks, found in Tatoeba's real sentences.
+"""Adds the frequent words and phrases the corpus lacks, from Tatoeba and KWJP.
 
-Run from anywhere:  python3 tools/vocabulary/build_tatoeba.py
+Run from anywhere:  python3 tools/vocabulary/build_new_entries.py
 
 Reads
-    tools/vocabulary/.cache/                Tatoeba exports and SGJP, see tatoeba.py and sgjp.py
+    tools/vocabulary/.cache/                Tatoeba, KWJP and SGJP, see tatoeba.py, kwjp.py and sgjp.py
     local.properties                        openai.apiKey
     tools/vocabulary/corpus/**/*.tsv        the words already taught
 
 Writes
     tools/vocabulary/corpus/topics/zzzz-tatoeba-phrases.tsv   set phrases, as corpus rows
     tools/vocabulary/corpus/topics/zzzz-tatoeba-words.tsv     new words, most frequent first
+    tools/vocabulary/corpus/topics/zzzzz-kwjp-words.tsv       frequent words of written Polish
+    tools/vocabulary/corpus/topics/zzzzz-kwjp-phrases.tsv     expressions among its frequent sequences
     tools/vocabulary/tatoeba_examples.tsv   a real sentence for each new word, with its translation
     tools/vocabulary/tatoeba_credits.tsv    id and author of every Tatoeba sentence used
 
-Then run build_grammar.py, build_examples.py, build_pictures.py and build_assets.py.
+Then run build_grammar.py, build_examples.py, check_spelling.py --drop, build_pictures.py,
+build_frequency.py and build_assets.py.
 
 The corpus was written from frequency lists of single words, so it misses what people say
 to each other. Tatoeba's 78,000 Polish sentences with English translations are that
@@ -32,6 +35,13 @@ same: where a short Tatoeba sentence uses them in their meaning, it replaces the
 OpenAI wrote, which was sometimes odd (Zimny wiatr dygotał miastem). A sentence is used
 only when SGJP knows every word in it: Tatoeba's contributors make typos too (podróźy,
 jeśle), and a sentence opening with a name (Yanni, Ziri) says little about the word.
+
+Tatoeba is speech, so the most frequent words of written Polish (jako, lub, czyli,
+działanie, rozwiązanie) are taken from KWJP, the balanced corpus of the Polish Academy of
+Sciences, and reviewed the same way. Its most frequent word sequences are reviewed for
+expressions too (z punktu widzenia, na dłuższą metę); the reply gives the expression in
+full, and is kept only when SGJP or PoliMorf knows every word of it and a second review
+rates it at least MIN_RATING: a sequence like do mnie is frequent but nothing to learn.
 
 Phrases come from short sentences whose words recur, in that order, inside at least
 PHRASE_RECURRENCE other sentences: nie wiem, mam nadzieję and w porządku do, light the
@@ -51,13 +61,16 @@ import sys
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+import kwjp
 import sgjp
 import tatoeba
 from build_examples import BATCH, CONJUGATIONS, TOOLS, BuildError, api_key, read_tsv, request
 
-CACHE = TOOLS / ".tatoeba-cache.json"
+CACHE = TOOLS / ".new-entries-cache.json"
 WORDS = TOOLS / "corpus" / "topics" / "zzzz-tatoeba-words.tsv"
 PHRASES = TOOLS / "corpus" / "topics" / "zzzz-tatoeba-phrases.tsv"
+KWJP_WORDS = TOOLS / "corpus" / "topics" / "zzzzz-kwjp-words.tsv"
+KWJP_PHRASES = TOOLS / "corpus" / "topics" / "zzzzz-kwjp-phrases.tsv"
 EXAMPLES = TOOLS / "tatoeba_examples.tsv"
 CREDITS = TOOLS / "tatoeba_credits.tsv"
 
@@ -71,6 +84,9 @@ PHRASE_BATCH = 100
 MAX_EXAMPLE_WORDS = 10
 EXAMPLE_BATCH = 50
 PARALLEL_REQUESTS = 8
+KWJP_TOP = 5000
+NGRAM_TOP = {2: 3000, 3: 2000}
+NGRAM_BATCH = 100
 
 POS_TAGS = {"n", "v", "adj", "adv", "prn", "num", "prep", "conj", "part", "interj"}
 CEFR_LEVELS = {"A1", "A2", "B1", "B2", "C1", "C2"}
@@ -99,6 +115,46 @@ Entries:
 
 {{entries}}
 """
+
+NGRAM_PROMPT = """Below are word sequences that occur very often in Polish newspapers, books and
+factual writing. A few are expressions a learner should learn as a whole (przede
+wszystkim, na przykład, z punktu widzenia, w pewnym sensie, wzruszył ramionami); most are
+words that merely stand side by side (się w, w tym roku), names, institutions or
+abbreviations.
+
+Pick only the expressions. For each, give it the way a learner should learn it: complete
+a fragment (punktu widzenia -> z punktu widzenia) and put a verb in the infinitive
+(wzruszył ramionami -> wzruszyć ramionami). Give a short natural English gloss in
+lowercase, the CEFR level (A1 to C2), and up to two of these topics if they fit: {{topics}}
+
+Return ONLY a JSON object mapping the number of each picked sequence, as a string, to
+{"phrase": "...", "gloss": "...", "cefr": "B1", "topics": []}. Leave the others out.
+
+Sequences:
+
+{{entries}}
+"""
+
+RATING_PROMPT = """Rate each Polish expression below by how much a learner gains from learning it
+as one unit rather than word by word:
+
+5  an idiom or fixed expression whose meaning or form does not follow from its words:
+   w ogóle, po prostu, ze względu na, na dłuższą metę, chodzi o
+4  a stock phrase every speaker uses as a whole: na przykład, tym razem, zgodnie z
+3  a common combination that is clear from its words: na początku, w życiu
+2  words that merely stand together: do mnie, a ja, czy to
+1  a fragment that is not complete on its own: w związku, z drugiej, w ten
+
+Return ONLY a JSON object mapping each number, as a string, to the score as a string.
+
+Expressions:
+
+{{entries}}
+"""
+
+MIN_RATING = 4
+
+PLAIN_PHRASE = re.compile(r"^[a-ząćęłńóśźż]+(?:[ ,-]+[a-ząćęłńóśźż]+)+$")
 
 EXAMPLE_PROMPT = """Each Polish entry below has its meaning and real sentences that use it.
 
@@ -202,6 +258,47 @@ def ask_example_choices(key: str, batch: list[dict]) -> dict[str, str]:
     }
 
 
+def ask_ngrams(key: str, batch: list[str], topics: list[str]) -> dict[str, dict]:
+    entries = "\n".join(f"{n}. {text}" for n, text in enumerate(batch, start=1))
+    answer = request(key, NGRAM_PROMPT.replace("{{topics}}", ", ".join(topics)).replace("{{entries}}", entries))
+    return {
+        batch[int(n) - 1]: reply
+        for n, reply in answer.items()
+        if isinstance(reply, dict) and n.isdigit() and 0 < int(n) <= len(batch)
+    }
+
+
+def ask_ratings(key: str, batch: list[str]) -> dict[str, int]:
+    entries = "\n".join(f"{n}. {text}" for n, text in enumerate(batch, start=1))
+    answer = request(key, RATING_PROMPT.replace("{{entries}}", entries))
+    return {
+        batch[int(n) - 1]: int(score)
+        for n, score in answer.items()
+        if n.isdigit() and 0 < int(n) <= len(batch) and str(score).isdigit()
+    }
+
+
+def run_parallel(batches: list, ask, store, label: str) -> None:
+    def answer(batch):
+        try:
+            return ask(batch)
+        except BuildError as error:
+            print(f"\n  a {label} batch failed and is left for the next run: {error}", file=sys.stderr)
+            return None
+
+    done, total = 0, sum(len(batch) for batch in batches)
+    with ThreadPoolExecutor(max_workers=PARALLEL_REQUESTS) as pool:
+        futures = {pool.submit(answer, batch): batch for batch in batches}
+        for future in as_completed(futures):
+            replies = future.result()
+            if replies is None:
+                continue
+            store(futures[future], replies)
+            done += len(futures[future])
+            print(f"  {label}: {done}/{total}", end="\r", flush=True)
+    print()
+
+
 def ask_phrases(key: str, batch: list[tatoeba.Pair], topics: list[str]) -> dict[str, dict]:
     entries = "\n".join(f"{n}. {pair.polish} = {pair.english}" for n, pair in enumerate(batch, start=1))
     prompt = PHRASE_PROMPT.replace("{{topics}}", ", ".join(topics)).replace("{{entries}}", entries)
@@ -211,6 +308,10 @@ def ask_phrases(key: str, batch: list[tatoeba.Pair], topics: list[str]) -> dict[
         for n, reply in answer.items()
         if isinstance(reply, dict) and n.isdigit() and 0 < int(n) <= len(batch)
     }
+
+
+def inside(words: list[str], longer: list[str]) -> bool:
+    return len(words) < len(longer) and any(longer[i : i + len(words)] == words for i in range(len(longer) - len(words) + 1))
 
 
 def save(cache: dict) -> None:
@@ -232,7 +333,7 @@ def main() -> int:
     if CACHE.exists() and not arguments.refresh:
         cache = json.loads(CACHE.read_text(encoding="utf-8"))
 
-    shipped_files = {WORDS.name, PHRASES.name}
+    shipped_files = {WORDS.name, PHRASES.name, KWJP_WORDS.name, KWJP_PHRASES.name}
     corpus = [
         e
         for path in [TOOLS / "corpus" / "core.tsv", *sorted((TOOLS / "corpus" / "topics").glob("*.tsv"))]
@@ -271,16 +372,32 @@ def main() -> int:
         and lemma not in lemmatiser.vulgar
         and not sgjp.VULGAR_ROOT.search(lemma)
     ]
-    lexicon = sgjp.load(set(ranked))
+    frequent = kwjp.lemma_frequency()
+    in_tatoeba = set(ranked)
+    written = [
+        lemma
+        for lemma, _ in sorted(frequent.items(), key=lambda item: -item[1])[:KWJP_TOP]
+        if len(lemma) >= MIN_WORD_LENGTH and lemma not in taught and lemma not in in_tatoeba and not sgjp.VULGAR_ROOT.search(lemma)
+    ]
+    lexicon = sgjp.load(in_tatoeba | set(written))
+    written = [
+        lemma
+        for lemma in written
+        if lexicon.get(lemma) and not all("wulg" in lexeme.qualifiers for lexeme in lexicon[lemma])
+    ]
     candidates = [
         {
             "word": lemma,
             "kinds": sorted({lexeme.part_of_speech for lexeme in lexicon.get(lemma, []) if lexeme.part_of_speech}),
             "contexts": contexts(lemma, by_lemma),
+            "source": source,
         }
-        for lemma in ranked
+        for lemma, source in [*((lemma, "tatoeba") for lemma in ranked), *((lemma, "kwjp") for lemma in written)]
     ]
-    print(f"{len(sentences)} Tatoeba sentences with a translation, {len(counts)} lemmas, {len(candidates)} new candidates")
+    print(
+        f"{len(sentences)} Tatoeba sentences with a translation, {len(counts)} lemmas, "
+        f"{len(ranked)} new candidates from Tatoeba and {len(written)} more from KWJP"
+    )
 
     short_pairs: dict[str, list[tatoeba.Pair]] = {}
     for lemma, found in by_lemma.items():
@@ -322,6 +439,17 @@ def main() -> int:
         seen_phrases.add(key)
         short.append(pair)
     print(f"{len(short)} short sentences to look through for set phrases")
+
+    sequences = {**kwjp.ngram_frequency(2, top=NGRAM_TOP[2]), **kwjp.ngram_frequency(3, top=NGRAM_TOP[3])}
+    spelled = sgjp.known_forms({word for words in sequences for word in words})
+    ngrams = [
+        " ".join(words)
+        for words, _ in sorted(sequences.items(), key=lambda item: -item[1])
+        if all(word in spelled for word in words)
+        and " ".join(words) not in taught_phrases
+        and not any(sgjp.VULGAR_ROOT.search(word) for word in words)
+    ]
+    print(f"{len(ngrams)} frequent KWJP word sequences to look through for expressions")
     if arguments.dry_run:
         print("  first candidates: " + ", ".join(c["word"] for c in candidates[:40]))
         return 0
@@ -329,15 +457,32 @@ def main() -> int:
     try:
         key = None
         pending_words = [c for c in candidates if f"word:{c['word']}" not in cache]
-        for start in range(0, len(pending_words), BATCH):
+        pending_ngrams = [text for text in ngrams if f"ngram:{text}" not in cache]
+        if pending_words or pending_ngrams:
             key = key or api_key()
-            batch = pending_words[start : start + BATCH]
-            replies = ask_words(key, batch, topics)
+
+        def store_words(batch: list[dict], replies: dict[str, dict]) -> None:
             for candidate in batch:
                 cache[f"word:{candidate['word']}"] = replies.get(candidate["word"], {"keep": False, "unanswered": True})
             save(cache)
-            print(f"  words: {min(start + BATCH, len(pending_words))}/{len(pending_words)}", end="\r", flush=True)
-        print()
+
+        def store_ngrams(batch: list[str], replies: dict[str, dict]) -> None:
+            for text in batch:
+                cache[f"ngram:{text}"] = replies.get(text, {})
+            save(cache)
+
+        run_parallel(
+            [pending_words[i : i + BATCH] for i in range(0, len(pending_words), BATCH)],
+            lambda batch: ask_words(key, batch, topics),
+            store_words,
+            "words",
+        )
+        run_parallel(
+            [pending_ngrams[i : i + NGRAM_BATCH] for i in range(0, len(pending_ngrams), NGRAM_BATCH)],
+            lambda batch: ask_ngrams(key, batch, topics),
+            store_ngrams,
+            "sequences",
+        )
         pending_phrases = [p for p in short if f"phrase:{p.id}" not in cache]
         for start in range(0, len(pending_phrases), PHRASE_BATCH):
             key = key or api_key()
@@ -352,27 +497,13 @@ def main() -> int:
         batches = [pending_examples[start : start + EXAMPLE_BATCH] for start in range(0, len(pending_examples), EXAMPLE_BATCH)]
         if batches:
             key = key or api_key()
-        def answer(batch: list[dict]) -> dict[str, int] | None:
-            try:
-                return ask_examples(key, batch)
-            except BuildError as error:
-                print(f"\n  a batch failed and is left for the next run: {error}", file=sys.stderr)
-                return None
+        def store_examples(batch: list[dict], replies: dict[str, int]) -> None:
+            for entry in batch:
+                entry_key = f"{entry['word']}\t{entry['gloss']}"
+                cache[f"example:{entry_key}"] = {"sentence": replies.get(entry_key, 0)}
+            save(cache)
 
-        done = 0
-        with ThreadPoolExecutor(max_workers=PARALLEL_REQUESTS) as pool:
-            futures = {pool.submit(answer, batch): batch for batch in batches}
-            for future in as_completed(futures):
-                batch, replies = futures[future], future.result()
-                if replies is None:
-                    continue
-                for entry in batch:
-                    entry_key = f"{entry['word']}\t{entry['gloss']}"
-                    cache[f"example:{entry_key}"] = {"sentence": replies.get(entry_key, 0)}
-                save(cache)
-                done += len(batch)
-                print(f"  examples: {done}/{len(pending_examples)}", end="\r", flush=True)
-        print()
+        run_parallel(batches, lambda batch: ask_examples(key, batch), store_examples, "examples")
     except BuildError as error:
         save(cache)
         print(f"error: {error}", file=sys.stderr)
@@ -397,7 +528,15 @@ def main() -> int:
             verb = sgjp.best(lexicon.get(candidate["word"], []), "v")
             aspect = verb.aspect if verb else None
         new_words.append(
-            {"word": candidate["word"], "gloss": gloss, "pos": pos, "cefr": cefr, "topics": clean_topics(reply, allowed_topics), "aspect": aspect}
+            {
+                "word": candidate["word"],
+                "gloss": gloss,
+                "pos": pos,
+                "cefr": cefr,
+                "topics": clean_topics(reply, allowed_topics),
+                "aspect": aspect,
+                "source": candidate["source"],
+            }
         )
         index = reply.get("sentence")
         if isinstance(index, int) and 0 < index <= len(candidate["contexts"]):
@@ -429,6 +568,50 @@ def main() -> int:
         new_phrases.append({"word": text, "gloss": gloss, "pos": "expr", "cefr": cefr, "topics": clean_topics(reply, allowed_topics)})
         credits[pair.id] = (pair.id, pair.author, pair.english_id, pair.english_author)
 
+    picked = {text: cache.get(f"ngram:{text}", {}) for text in ngrams}
+    phrase_words = {
+        word.lower()
+        for reply in picked.values()
+        for word in tatoeba.TOKEN.findall(str(reply.get("phrase", "")))
+    }
+    spelled |= sgjp.known_forms(phrase_words - spelled)
+    expressions = []
+    seen_phrases = set(taught_phrases) | {normalised(p["word"]) for p in new_phrases}
+    longer_phrases = [phrase.split() for phrase in seen_phrases if " " in phrase]
+    for text, reply in picked.items():
+        phrase = str(reply.get("phrase", "")).strip()
+        gloss = str(reply.get("gloss", "")).strip()
+        cefr = str(reply.get("cefr", "")).strip().upper()
+        words = [word.lower() for word in tatoeba.TOKEN.findall(phrase)]
+        if not phrase or not gloss or cefr not in CEFR_LEVELS or len(words) < 2 or not PLAIN_PHRASE.match(phrase):
+            continue
+        if not all(word in spelled for word in words) or normalised(phrase) in seen_phrases:
+            continue
+        if any(inside(words, longer) for longer in longer_phrases):
+            continue
+        if gloss.lower() in used_glosses:
+            continue
+        seen_phrases.add(normalised(phrase))
+        used_glosses.add(gloss.lower())
+        expressions.append({"word": phrase, "gloss": gloss, "pos": "expr", "cefr": cefr, "topics": clean_topics(reply, allowed_topics)})
+
+    unrated = [e["word"] for e in expressions if f"rating:{e['word']}" not in cache]
+    if unrated:
+        key = api_key()
+
+        def store_ratings(batch: list[str], replies: dict[str, int]) -> None:
+            for text in batch:
+                cache[f"rating:{text}"] = {"score": replies.get(text, 0)}
+            save(cache)
+
+        run_parallel(
+            [unrated[i : i + NGRAM_BATCH] for i in range(0, len(unrated), NGRAM_BATCH)],
+            lambda batch: ask_ratings(key, batch),
+            store_ratings,
+            "ratings",
+        )
+    expressions = [e for e in expressions if cache.get(f"rating:{e['word']}", {}).get("score", 0) >= MIN_RATING]
+
     replaced = 0
     for entry in shown:
         index = cache.get(f"example:{entry['word']}\t{entry['gloss']}", {}).get("sentence")
@@ -441,10 +624,20 @@ def main() -> int:
                 replaced += 1
     print(f"{replaced} taught words and verbs get a Tatoeba example")
 
-    header = "# Generated by build_tatoeba.py. Columns as in core.tsv."
+    header = "# Generated by build_new_entries.py. Columns as in core.tsv."
     WORDS.write_text(
         header + " Words frequent in Tatoeba's sentences, most frequent first.\n"
-        + "".join(f"{w['word']}\t{w['gloss']}\t{w['pos']}\t{w['cefr']}\t{w['topics']}\n" for w in new_words),
+        + "".join(f"{w['word']}\t{w['gloss']}\t{w['pos']}\t{w['cefr']}\t{w['topics']}\n" for w in new_words if w["source"] == "tatoeba"),
+        encoding="utf-8",
+    )
+    KWJP_WORDS.write_text(
+        header + " Words frequent in written Polish (KWJP, CC BY 4.0) that Tatoeba's sentences rarely use.\n"
+        + "".join(f"{w['word']}\t{w['gloss']}\t{w['pos']}\t{w['cefr']}\t{w['topics']}\n" for w in new_words if w["source"] == "kwjp"),
+        encoding="utf-8",
+    )
+    KWJP_PHRASES.write_text(
+        header + " Expressions among the most frequent word sequences of written Polish (KWJP, CC BY 4.0).\n"
+        + "".join(f"{p['word']}\t{p['gloss']}\t{p['pos']}\t{p['cefr']}\t{p['topics']}\n" for p in expressions),
         encoding="utf-8",
     )
     PHRASES.write_text(
@@ -453,17 +646,21 @@ def main() -> int:
         encoding="utf-8",
     )
     EXAMPLES.write_text(
-        "# Generated by build_tatoeba.py. Columns: polish <TAB> english <TAB> sentence <TAB> its translation <TAB> Tatoeba id.\n"
+        "# Generated by build_new_entries.py. Columns: polish <TAB> english <TAB> sentence <TAB> its translation <TAB> Tatoeba id.\n"
         + "".join(f"{w}\t{g}\t{m}\t{p.english}\t{p.id}\n" for w, g, m, p in examples),
         encoding="utf-8",
     )
     CREDITS.write_text(
-        "# Generated by build_tatoeba.py. Tatoeba sentences used, CC BY 2.0 FR: "
+        "# Generated by build_new_entries.py. Tatoeba sentences used, CC BY 2.0 FR: "
         "Polish id <TAB> author <TAB> English id <TAB> author. See https://tatoeba.org/sentences/show/<id>.\n"
         + "".join("\t".join(row) + "\n" for row in sorted(credits.values(), key=lambda row: int(row[0]))),
         encoding="utf-8",
     )
-    print(f"{len(new_words)} new words ({len(examples)} with a Tatoeba example), {len(new_phrases)} new phrases, {len(credits)} sentences credited")
+    print(
+        f"{sum(w['source'] == 'tatoeba' for w in new_words)} new words from Tatoeba, "
+        f"{sum(w['source'] == 'kwjp' for w in new_words)} from KWJP, {len(new_phrases)} phrases from Tatoeba, "
+        f"{len(expressions)} from KWJP; {len(examples)} Tatoeba examples, {len(credits)} sentences credited"
+    )
     return 0
 
 

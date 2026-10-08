@@ -76,6 +76,31 @@ def load_examples() -> dict[tuple[str, str], str]:
     return examples
 
 
+def load_frequency() -> dict[tuple[str, str], float]:
+    """ARF per million words from KWJP, written by build_frequency.py."""
+    path = TOOLS / "frequency.tsv"
+    if not path.exists():
+        return {}
+    return {
+        (cols[0].strip().lower(), cols[1].strip().lower()): float(cols[2])
+        for _, cols in read_tsv(path)
+        if len(cols) >= 3
+    }
+
+
+def rank_by_frequency(words: list[dict]) -> None:
+    """Rank 1 is the most frequent entry; entries KWJP never saw stay unranked."""
+    frequency = load_frequency()
+    ranked = sorted(
+        (w for w in words if (w["text"].lower(), w["translation"].lower()) in frequency),
+        key=lambda w: (-frequency[(w["text"].lower(), w["translation"].lower())], w["id"]),
+    )
+    for w in words:
+        w["frequencyRank"] = None
+    for rank, w in enumerate(ranked, start=1):
+        w["frequencyRank"] = rank
+
+
 def load_pictures() -> dict[tuple[str, str], str]:
     """Photo search phrases from build_pictures.py, keyed like the examples.
 
@@ -120,7 +145,7 @@ def load_grammar() -> dict[tuple[str, str], dict]:
 
 
 def load_words() -> list[dict]:
-    """Core first so ids follow frequency, then topical files in a stable order."""
+    """Core first, then topical files in a stable order, so a word keeps its id when others are added."""
     words: list[dict] = []
     seen: dict[tuple[str, str], int] = {}
 
@@ -128,10 +153,9 @@ def load_words() -> list[dict]:
     pictures = load_pictures()
     grammar = load_grammar()
 
-    sources = [(TOOLS / "corpus" / "core.tsv", True)]
-    sources += [(p, False) for p in sorted((TOOLS / "corpus" / "topics").glob("*.tsv"))]
+    sources = [TOOLS / "corpus" / "core.tsv", *sorted((TOOLS / "corpus" / "topics").glob("*.tsv"))]
 
-    for path, is_core in sources:
+    for path in sources:
         for number, cols in read_tsv(path):
             if len(cols) < 4:
                 raise BuildError(f"{path.name}:{number}: expected at least 4 columns, got {len(cols)}")
@@ -168,10 +192,10 @@ def load_words() -> list[dict]:
                     "example": examples.get(key, ""),
                     "picture": pictures.get(key),
                     **grammar.get(key, {}),
-                    # Rank exists only for the core list; topical extras are not ranked.
-                    "frequencyRank": len(words) + 1 if is_core else None,
+                    "frequencyRank": None,
                 }
             )
+    rank_by_frequency(words)
     return words
 
 

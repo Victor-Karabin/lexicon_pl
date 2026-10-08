@@ -60,6 +60,9 @@ struct SettingsView: View {
                         Text(Strings.settingsSourcesTatoeba)
                             .font(.callout)
                             .foregroundStyle(skin.onTile)
+                        Text(Strings.settingsSourcesKwjp)
+                            .font(.callout)
+                            .foregroundStyle(skin.onTile)
                     }
                 }
                 .padding(Spacing.medium)

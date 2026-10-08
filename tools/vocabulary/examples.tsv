@@ -163,7 +163,7 @@ sól	salt	"Podaj mi **sól**, proszę." "Proszę bardzo."
 masło	butter	Nie przepadam za **masłem**. Wolę margarynę.
 zupa	soup	Kelner, w mojej **zupie** pływa mucha!
 obiad	lunch	Miałbyś ochotę zjeść z nami **obiad**?
-śniadanie	breakfast	Iris, co zazwyczaj jesz na **śniadanie**?
+śniadanie	breakfast	Po skończeniu **śniadania** pospieszyłem do szkoły.
 kolacja	dinner	Tomek prawdopodobnie spóźni się na **kolację**.
 jeść	to eat	Nie obchodzi mnie, gdzie **jesz** lunch.
 pić	to drink	Tom nie **pije** wystarczającej ilości wody.
@@ -630,7 +630,7 @@ czytelnik	reader	Twoi **czytelnicy** to docenią.
 szachy	chess	Gramy w **szachy** wieczorem.
 karty	cards	Gram w **karty** z bratem.
 kostka	ankle	Potknąłem się o kamień, skręcając **kostkę**.
-puzzle	jigsaw	Nie mogę skończyć tego fragmentu **puzzli**.
+puzzle	jigsaw	Te **puzzle** mają 500 elementów.
 gracz	player	Zespół składa się z jedenastu **graczy**.
 wygrywać	to win	Nie jest ważne która drużyna **wygrywa** mecz.
 przegrywać	to lose	Nikt nie lubi **przegrywać**.
@@ -793,7 +793,7 @@ fala	wave	Wielka **fala** przewróciła jego kajak.
 piasek	sand	Dzieci uwielbiają kopać w **piasku**.
 muszla	seashell	Zbierali **muszle** na plaży.
 wyspa	island	Na **wyspie** jest tylko jeden sklep.
-port	port	Parostatek wypływa właśnie z **portu**.
+port	port	Ten statek zaraz opuszcza **port**.
 statek	ship	**Statek** przewiózł do Stanów setki emigrantów.
 łódź	boat	**Łódź** rybacka skierowała się na brzeg.
 żagiel	sail	Wiatr napełnił **żagiel**.
@@ -903,7 +903,7 @@ adres	address	Jaki jest **adres** tej nowej księgarni?
 kontynent	continent	Australia jest najmniejszym **kontynentem** na świecie.
 region	region	Województwo śląskie jest najgęściej zaludnionym **regionem** Polski.
 teren	area	Na tym **terenie** rzadko pada śnieg.
-przestrzeń	space	Zawsze jest **przestrzeń** na udoskonalenia.
+przestrzeń	space	Pokolorował **przestrzeń** kosmiczną na delikatny żółty kolor.
 odcinek	episode	Ten **odcinek** autostrady ma zostać rozszerzony do trzech pasów.
 warunek	condition	Tamtejsze **warunki** są nie do opisania.
 zasada	principle, rule	Tu są **zasady** korzystania z basenu.
@@ -1239,7 +1239,7 @@ odcisk	imprint	Twoje **odciski** palców były na pistolecie.
 wapno	calcium carbonate	Ta ściana ma dużo **wapna**.
 opatrunek	dressing	Na ranę dał **opatrunek**.
 figi	figs	Te **figi** są bardzo smaczne.
-majtki	panties	To są moje **majtki**.
+majtki	panties	To moje **majtki**.
 boksery	boxers	Noszę wygodne **boksery**.
 kąpielówki	swimming trunks	Nie zapomnij o **kąpielówkach**.
 podkoszulek	undershirt	Założyłem biały **podkoszulek**.
@@ -1359,7 +1359,7 @@ mieszkanie	apartment	Moje **mieszkanie** jest małe.
 balkon	balcony	Tom wyszedł na **balkon**.
 piwnica	basement	Tom odstawił nasz stary komputer do **piwnicy**.
 strych	attic	Trzymam to na **strychu**.
-schody	stairs	Czy wchodzenie po **schodach** jest trudne?
+schody	stairs	Te **schody** są nieco śliskie, więc proszę uważaj.
 korytarz	corridor	Ivan spotkał Rimę w głównym **korytarzu**.
 dach	roof	Spójrz na dom z czerwonym **dachem**.
 brama	gate	Ta **brama** jest zbyt wąska dla samochodu.
@@ -1571,7 +1571,7 @@ rześkość	vigor	Poranny chłód dał mi **rześkość**.
 przymrozek	ground frost	Rano był silny **przymrozek**.
 odwilż	thaw	Ta rzeka czasami wylewa po **odwilży**.
 posępny	sombre	Rano miałem bardzo **posępny** nastrój.
-ponury	gloomy	Jesteś **ponury**.
+ponury	gloomy	Twarz strażaka była **ponura**, kiedy wychodził z płonącego domu.
 markotny	moody	Po kłótni był **markotny**.
 strapiony	distressed	Mama była **strapiona** chorobą.
 udręczony	tormented	Był **udręczony** bólem.
@@ -2037,7 +2037,7 @@ ulga	relief	To była **ulga** usłyszeć tę wiadomość.
 spokój	composure	Tomowi nie było łatwo zachować **spokój**.
 stres	stress	Tom jest oczywiście w sporym **stresie**.
 nastrój	mood	Jesteś w dobrym **nastroju**?
-uczucie	feeling	Miłość to bardzo silne **uczucie**.
+uczucie	feeling	Kocham ją, ale to nieodwzajemnione **uczucie**.
 zdenerwowany	upset	Jestem dziś **zdenerwowany**.
 podekscytowany	excited	Jestem **podekscytowany** wycieczką.
 rozczarowany	disappointed	Byłem **rozczarowany** wynikiem.
@@ -2518,7 +2518,7 @@ części ciała	body parts	Znam nazwy wszystkich **części ciała**.
 zażywać	to take medicine	**Zażywaj** ten lek dwa razy dziennie.
 przypadek	case	W tym **przypadku**, powiadomić jego rodzinę.
 sprawa do załatwienia	a matter to be dealt with	Mam dziś ważną **sprawę do załatwienia**.
-usługi	services	Firma zdecydowała się zlecić **usługi** serwisowe podwykonawcy.
+usługi	services	Zawsze dążymy do polepszenia jakości **usług**.
 doładować kartę	top up your card	Muszę **doładować kartę** w kiosku.
 korzystać	to use	Czy **korzystasz** ze środków transportu publicznego?
 zepsuć się	to spoil myself	Nasz autobus **zepsuł** się po drodze.
@@ -2539,7 +2539,7 @@ szyna	rail	Tramwaj jedzie po **szynach**.
 uroda	beauty, looks	Jej **uroda** jest niezrównana.
 angielski	English	Zatrudnię kogoś, kto mówi po **angielsku**.
 belka	beam	Sufit podtrzymuje drewniana **belka**.
-wełna	wool	Nie jestem na sto procent pewna, czy to **wełna**.
+wełna	wool	Koty uwielbiają biegać za kłębkiem **wełny**.
 zakaz	ban, prohibition	**Zakaz** wprowadzania psów.
 żyletka	razor blade	Bądź ostrożna z **żyletką**.
 urok	charm	Na przyjęciu wszyscy byli oczarowani jej **urokiem**.
@@ -2880,7 +2880,6 @@ zostawić	to leave (perfective)	Tom **zostawił** w metrze swoją teczkę.
 podobać	to like	Jak ci się **podoba** klimat Japonii?
 bać	to fear	**Boję** się, że mamy duży problem.
 pojechać	to go (perfective)	Następnego lata chcę **pojechać** do Bostonu.
-ulubiony	favourite	Moim **ulubionym** sportem jest piłka nożna.
 sądzić	to think	Nie **sądzę**, aby Tom lubił szpinak.
 zmienić	to change (perfective)	Czy myślisz, że sytuacja się **zmieni**?
 zabić	to kill	Ta bomba może **zabić** dużo ludzi.
@@ -2917,19 +2916,20 @@ udać	to succeed	Rad jestem, że ci się **udało**.
 przyjechać	to arrive (perfective)	**Przyjechał** tak szybko, jak tylko mógł.
 patrzyć	to look	**Patrz** na te kaczki na stawie.
 usłyszeć	to hear (perfective)	Kliknij obrazek aby **usłyszeć** dźwięk zwierzęcia.
+ulubić	favourite	Moim **ulubionym** sportem jest piłka nożna.
 japoński	japanese	Umiesz przetłumaczyć z angielskiego na **japoński**?
 własny	own	Zaczynam zapominać swój **własny** język ojczysty.
 podczas	during	Paczki musiały zostać uszkodzone **podczas** transportu.
 śmiać	to laugh	Dlaczego wszyscy się ze mnie **śmieją**?
 wysłać	to send (perfective)	**Wysłał** list adresowany do swojego wujka.
 jeździć	to ride	Nigdy wcześniej nie **jeździłem** na koniu.
-złapać	to catch	Czy można **złapać** rybę gołymi rękoma?
+złapać	to catch (perfective)	Czy można **złapać** rybę gołymi rękoma?
 nazywać	to call	Jak **nazywa** się główny bohater komiksu?
 niektóry	some	**Niektórzy** unikają jedzenia ryb z mlekiem.
 odpowiedzieć	to answer (perfective)	Proszę **odpowiedz** mi na to pytanie.
 dziwny	strange	Słyszę jakieś **dziwne** dźwięki w lesie.
 śmierć	death	**Śmierć** jest i końcem i początkiem.
-spojrzeć	to glance	Ani razu na mnie nie **spojrzała**.
+spojrzeć	to glance (perfective)	**Spojrzał** na zegarek.
 rada	advice	Czy zastosowałeś się do jego **rady**?
 spędzić	to spend (perfective)	Tom chciał **spędzić** Sylwestra z Mary.
 założyć	to found	Myślę o **założeniu** nowej strony internetowej.
@@ -3031,11 +3031,12 @@ winny	guilty	Słyszałem że uznali ją za **winną**.
 porządek	in order	Wszystko z nim w **porządku**, prawda?
 mylić	to confuse	Ona zawsze **myli** cukier z solą.
 długo	longer	Szkoda, że nie możesz zostać **dłużej**.
+ulubiony	favourite	To był **ulubiony** krawat mojego ojca.
 spory	a lot	Dzięki jego radzie zaoszczędziłem **sporo** pieniędzy.
 stacja	station	**Stacja** metra znajduje się na placu.
 pora	time	Przyjdź o każdej **porze** po dziewiątej.
 butelka	bottle	Tom kupił **butelkę** oliwy z oliwek.
-otrzymać	to receive	Sami **otrzymał** długą wiadomość od Layli.
+otrzymać	to receive (perfective)	Sami **otrzymał** długą wiadomość od Layli.
 znajdować	to be located	Nawet nie wiedział gdzie się **znajduje**.
 obchodzić	to care	Nie **obchodzi** mnie, gdzie jesz lunch.
 sprzedawać	to sell	**Sprzedawane** są tu odzież i obuwie.
@@ -3044,7 +3045,7 @@ polityk	politician	Skontaktowali się ze swoimi lokalnymi **politykami**.
 budynek	building	To najwyższy **budynek**, jaki kiedykolwiek widziałam.
 zaczekać	to wait (perfective)	Proszę **zaczekać**. Podam go do telefonu.
 świetny	great	Pomysł był **świetny**, ale wykonanie okropne.
-minąć	to pass	**Minęło** 5 lat, odkąd przybyli do Japonii.
+minąć	to pass (perfective)	**Minęło** 5 lat, odkąd przybyli do Japonii.
 opowiedzieć	to tell (perfective)	**Opowiedz** mi historię w jednym zdaniu.
 jakby	as if	On wygląda, **jakby** miał się rozchorować.
 wasz	your	Jak się miewa **wasza** matka?
@@ -3086,7 +3087,7 @@ ranny	wounded	Czy Tom był poważnie **ranny**?
 wspaniały	wonderful	Jedzenie na imprezie było naprawdę **wspaniałe**.
 wyjechać	leave (perfective)	Wiedziałaś, że Tom **wyjechał** z miasta?
 wymagać	require	Twój plan **wymaga** dużych nakładów finansowych.
-posprzątać	clean up	Chcę **posprzątać** dom, zanim wrócą rodzice.
+posprzątać	clean up (perfective)	Chcę **posprzątać** dom, zanim wrócą rodzice.
 planeta	planet	Wenus jest drugą **planetą** od Słońca.
 wrażenie	impression	Odnoszę **wrażenie**, że jest trochę arogancki.
 zależeć	depend	To całkowicie będzie **zależało** od niego.
@@ -3097,9 +3098,9 @@ potwór	monster	Ich córka twierdzi, że widuje **potwory**.
 zawierać	contain	Ta książka **zawiera** wiele krótkich opowiadań.
 umierać	die	Kwiaty **umierają** jeśli nie mają wody.
 znieść	bear (perfective)	Nie mogę **znieść** widoku jej płaczu.
-zagrać	play	**Zagrajmy** w karty zamiast oglądać telewizję.
-okazać	turn out	**Okazało** się, że otrzymaliśmy milion dolarów.
-popatrzyć	look	**Popatrzmy** jeszcze raz na algierską mapę.
+zagrać	play (perfective)	**Zagrajmy** w karty zamiast oglądać telewizję.
+okazać	turn out (perfective)	Plan **okazał** się dobry.
+popatrzyć	look (perfective)	**Popatrzmy** jeszcze raz na algierską mapę.
 lecieć	fly	Widziałem mnóstwo ptaków **lecących** na południe.
 dopiero	just	Tom **dopiero** co przyszedł do domu.
 kłopot	trouble	Mam ten sam **kłopot** co ty.
@@ -3129,7 +3130,7 @@ wróg	enemy	Przychodzisz jako sojusznik czy jako **wróg**?
 fakt	fact	Ten **fakt** nie może zostać zapomniany.
 pojawić	to appear (perfective)	Na jego twarzy **pojawiła** się wysypka.
 życzyć	to wish	**Życzę** ci, żebyś spadł z urwiska.
-odkryć	to discover	Był miłym człowiekiem, co **odkryłem** później.
+odkryć	to discover (perfective)	Był miłym człowiekiem, co **odkryłem** później.
 okazja	occasion	Chciałem to zatrzymać na specjalną **okazję**.
 chronić	to protect	Tom zrobiłby wszystko, aby **chronić** Mary.
 trząść	to shake	W Haiti było wielkie **trzęsienie** ziemi.
@@ -3141,7 +3142,7 @@ zapalić	to smoke (perfective)	Będzie ci przeszkadzać, jeśli tu **zapalę**?
 zbudować	to build (perfective)	Mówią, że wielka tama zostanie **zbudowana**.
 słodki	sweet	Cukier jest **słodki**, masło jest tłuste.
 zamiar	intention	Mam **zamiar** zatrudnić kogoś znającego angielski.
-zebrać	to gather	Ludzie **zebrali** się dokoła okrągłego stołu.
+zebrać	to gather (perfective)	Muszę **zebrać** książki.
 obcy	foreign	Tom obudził się w **obcym** pokoju.
 zginąć	to die (perfective)	Tom **zginął** na skutek porażenia prądem.
 pozostać	to remain	Postanowiliśmy **pozostać** w środku, bo padało.
@@ -3208,7 +3209,7 @@ samotny	lonely	Czuję się **samotna** w tym mieście.
 nauczycielka	teacher	**Nauczycielka** miała o mnie złą opinię.
 pizza	pizza	Mój ojciec bardzo lubi **pizzę**.
 esperanto	esperanto	**Esperanto** to więcej niż język.
-włączyć	turn on	Żeby **włączyć** urządzenie, naciśnij ten przycisk.
+włączyć	turn on (perfective)	Żeby **włączyć** urządzenie, naciśnij ten przycisk.
 znosić	hate	Tom nie **znosi** chodzenia do szkoły.
 jedynie	only	Jeśli potrzebujesz pomocy, musisz **jedynie** zadzwonić.
 posiadać	have	Każdy z nich **posiada** element układanki.
@@ -3254,7 +3255,7 @@ pomalować	paint (perfective)	Tom **pomalował** swój pokój na biało.
 nieść	carry	Tom wszedł do pokoju **niosąc** książkę.
 dół	downstairs	Tom i Mary pracują na **dole**.
 ukończyć	complete (perfective)	Tama została **ukończona** w dwa tysiące trzynastym.
-zmusić	to force	W końcu został **zmuszony** do zrezygnowania.
+zmusić	to force (perfective)	Zostałem **zmuszony** zrobić to wszystko sam.
 zaśpiewać	to sing (perfective)	Proszę, **zaśpiewaj** tę piosenkę jeszcze raz.
 klub	club	Nie wstąpiłeś do tego **klubu**, prawda?
 jen	yen	Nowy rower kosztował mnie aż 50000 **jenów**.
@@ -3337,7 +3338,7 @@ zapominać	forget	Nie **zapominaj**, że mamy zadanie domowe.
 filiżanka	cup	Zawsze piję rano dwie **filiżanki** kawy.
 pański	your	Ile szkół jest w **pańskim** mieście?
 okłamać	lie to (perfective)	Bardzo cię przepraszam, że cię **okłamałem**.
-ograniczyć	limit	Lekarz powiedział mu żeby **ograniczył** palenie.
+ograniczyć	limit (perfective)	Lekarz powiedział mu żeby **ograniczył** palenie.
 obejrzeć	watch (perfective)	Chciałem **obejrzeć** ten film z tobą.
 wybuchnąć	explode	Już miałem wychodzić, gdy **wybuchła** bomba.
 odbyć	take place (perfective)	Kilka dni później **odbył** się ślub.
@@ -3361,7 +3362,7 @@ internetowy	online	Myślę o założeniu nowej strony **internetowej**.
 podejrzeć	to suspect (perfective)	Ona jest **podejrzana** o bycie szpiegiem.
 przewidzieć	to predict (perfective)	Nie mogę **przewidzieć**, co się stanie.
 zdarzać	to happen	To coś, co **zdarzało** się wielokrotnie.
-opisać	to describe	Nie da się tego **opisać** słowami.
+opisać	to describe (perfective)	Czy możesz **opisać** ten dom?
 inteligentny	intelligent	Nie jest tak **inteligentna** jak ty.
 rozbić	to break (perfective)	Do zrobienia omleta musisz **rozbić** jajko.
 unikać	to avoid	Oto lista pokarmów, których powinieneś **unikać**.
@@ -3412,7 +3413,6 @@ nieco	a little	Jest **nieco** szurnięty, nie sądzisz?
 wolność	freedom	Daj mi albo **wolność** albo śmierć.
 wezwać	to call (perfective)	Wyglądasz blado. Mam **wezwać** lekarza?
 włoski	italian	Jak to się mówi po **włosku**?
-słodycze	sweets	Nie ma **słodyczy** bez potu.
 dotrzymać	to keep (perfective)	Złożył obietnicę, ale nie **dotrzymał** słowa.
 szczerza	frankly	**Szczerze** mówiąc, należało się tym pasożytom.
 przyjemność	pleasure	Musi ci to naprawdę sprawiać **przyjemność**.
@@ -3436,14 +3436,14 @@ uważnie	carefully	Proszę, przeczytaj to bardzo **uważnie**.
 spalić	to burn (perfective)	**Spaliłem** wszystkie swoje stare książki.
 odpowiedni	suitable	Ta książka jest **odpowiednia** dla początkujących.
 nawzajem	each other	Musimy uczyć się od siebie **nawzajem**.
-upaść	to fall	Moja babcia **upadła** i złamała biodro.
+upaść	to fall (perfective)	Moja babcia **upadła** i złamała biodro.
 niezły	pretty good	Myślę, że mam całkiem **niezły** pomysł.
 moneta	coin	Tom wyjął z kieszeni trochę **monet**.
 kąpiel	bath	Ile razy w tygodniu bierzesz **kąpiel**?
 ładnie	nicely	Tom jest bardzo **ładnie** ubrany.
 dyskusja	discussion	To pytanie jest poddane pod **dyskusję**.
-utrzymać	support	Pracowałem ciężko aby **utrzymać** moją rodzinę.
-urządzić	organize	On **urządził** imprezę w zeszły tydzień.
+utrzymać	support (perfective)	Pracowałem ciężko aby **utrzymać** moją rodzinę.
+urządzić	organize (perfective)	On **urządził** imprezę w zeszły tydzień.
 społeczny	social	Tom nie ma umiejętności **społecznych**.
 uprawiać	do sports	Rozmawiając o sporcie, który sport **uprawiasz**?
 niebezpieczeństwo	danger	Jeśli jesteś w **niebezpieczeństwie**, krzycz "POMOCY!".
@@ -3452,7 +3452,7 @@ humor	mood	Kocham cię, pomimo twojego złego **humoru**.
 zbliżać	approach	Tom zobaczył, że Mary się **zbliża**.
 równy	equal	Szanse zwycięstwa i porażki są **równe**.
 przechodzić	cross	Widzieliśmy, jak **przechodzi** przez ulicę.
-wyciągnąć	pull out	Michael **wyciągnął** rower z błota.
+wyciągnąć	pull out (perfective)	**Wyciągnął** klucze z kieszeni.
 kanapa	sofa	Tom znalazł pierścionek Mary pod **kanapą**.
 denerwować	annoy	**Denerwuje** mnie długie czekanie na kolegę.
 świecić	shine	Słońce **świeci** jasno na niebie.
@@ -3488,7 +3488,7 @@ bezpiecznie	safely	Mam nadzieję, że każdy **bezpiecznie** dotarł.
 kontrola	control	To wszystko wymknęło się spod **kontroli**.
 doskonały	excellent	Posiłek był **doskonały**, ale bardzo drogi.
 niesamowity	amazing	Twój kraj jest **niesamowity**!
-ciąża	pregnancy	Myślę, że znów jestem w **ciąży**.
+ciążyć	pregnant	Była już wtedy w **ciąży**.
 świeczka	candle	**Świeczka** paliła się całą noc.
 piętnaście	fifteen	Na tym zdjęciu miałem **piętnaście** lat.
 lokalny	local	Ten obraz jest autorstwa **lokalnego** artysty.
@@ -3500,10 +3500,10 @@ doczekać	look forward to	Nie mogę się **doczekać** końca wojny.
 stanąć	stop (perfective)	Zegar **stanął**. Potrzebna jest nowa bateria.
 modlić	pray	**Modlę** się o lepszą przyszłość.
 dziesiąty	tenth	Rok szkolny rozpoczyna się **dziesiątego** kwietnia.
-stwierdzić	state	Trudno **stwierdzić**, który pojazd jest piękniejszy.
+stwierdzić	state (perfective)	Trudno **stwierdzić**, który pojazd jest piękniejszy.
 lalka	doll	Czy sieroty bawiły się swoimi **lalkami**?
-uniknąć	avoid	Za wszelką cenę musimy **uniknąć** wojny.
-chwycić	grab	Tom **chwycił** gaśnicę i ugasił pożar.
+uniknąć	avoid (perfective)	Za wszelką cenę musimy **uniknąć** wojny.
+chwycić	grab (perfective)	Tom **chwycił** gaśnicę i ugasił pożar.
 zwracać	pay attention	**Zwracali** niewiele uwagi na moje słowa.
 wyczerpać	run out (perfective)	Oszczędności Toma wkrótce się **wyczerpią**.
 ślepy	blind	Tom jest **ślepy** na jedno oko.
@@ -3514,7 +3514,7 @@ pomimo	despite	**Pomimo** deszczu, graliśmy w piłkę nożną.
 poranek	morning	Każdego **poranka** sama mielę ziarna kawy.
 tchórz	coward	Nie jestem **tchórzem**. Jestem po prostu ostrożny.
 właściwy	right	Myślę, że jestem we **właściwym** miejscu.
-przemówić	to persuade	Mogę spróbować **przemówić** Tomowi do rozsądku.
+przemówić	to persuade (perfective)	Mogę spróbować **przemówić** Tomowi do rozsądku.
 uczynić	to make (perfective)	**Uczyniłaś** mnie najszczęśliwszym mężczyzną na świecie.
 miejscowy	local	Tom pracował w **miejscowym** więzieniu.
 polubić	to like (perfective)	Z czasem ludzie **polubili** jej obrazy.
@@ -3537,16 +3537,16 @@ papieros	cigarette	Nigdy w życiu nie paliłam **papierosa**.
 komputerowy	computer	Wszyscy moi przyjaciele lubią gry **komputerowe**.
 dookoła	around	Było mnóstwo denerwujących owadów latających **dookoła**.
 los	fate	Nasz **los** jest w twoich rękach.
-uspokoić	calm down	**Uspokój** się i zachowuj się naturalnie.
+uspokoić	calm down (perfective)	Twoje słowa mnie **uspokoiły**.
 pogadać	chat	Tom przyszedł, żeby **pogadać** z Mary.
 wprowadzić	introduce (perfective)	Przepraszam, jeśli cię **wprowadziłem** w błąd.
 pojazd	vehicle	Samochody, autobusy i ciężarówki to **pojazdy**.
 nieszczęśliwy	unhappy	Nie wiedziałem, że Tomek był **nieszczęśliwy**.
-zgadnąć	guess	**Zgadnij**, kto jest właścicielem tego domu.
+zgadnąć	guess (perfective)	**Zgadnij**, kto jest właścicielem tego domu.
 przemyśleć	think over	Muszę to **przemyśleć** zanim ci odpowiem.
 kilogram	kilogram	Ile kosztuje **kilogram** cukru w Algierii?
 postarać	try (perfective)	**Postaram** się zdobyć wszystko czego potrzebujemy.
-poinformować	inform	**Poinformował** mnie o zmianach w planie.
+poinformować	inform (perfective)	**Poinformował** mnie o zmianach w planie.
 odwrócić	turn over	Tom podniósł kartkę i ją **odwrócił**.
 zignorować	ignore	Tom postanowił **zignorować** twoją radę.
 rosyjski	russian	Mówisz po ukraińsku, czy po **rosyjsku**?
@@ -3587,7 +3587,7 @@ próba	rehearsal	**Próba** chóru została przesunięta o tydzień.
 rozpoznać	to recognize (perfective)	Od razu **rozpoznałem** Twój głos.
 odzyskać	to regain	Zemdlała, ale szybko **odzyskała** świadomość.
 szacunek	respect	Powinieneś traktować ludzi z większym **szacunkiem**.
-wylądować	to land	Samolot **wylądował** na farmie mojego ojca.
+wylądować	to land (perfective)	Samolot **wylądował** na farmie mojego ojca.
 marnować	to waste	Przestań **marnować** czas i wracaj do pracy.
 sztuczny	artificial	Jak dużo wiesz o **sztucznej** inteligencji?
 słoneczny	sunny	Rośliny potrzebują światła **słonecznego**, żeby rosnąć.
@@ -3620,7 +3620,7 @@ skazać	to sentence	Sędzia **skazał** go na rok więzienia.
 przesadzać	to exaggerate	Tom ma skłonność do **przesadzania**.
 spokojnie	calmly	Pracuj **spokojniej**, aby popełniać mniej błędów.
 cień	shadow	Żyje w **cieniu** swojego słynnego ojca.
-zgasić	to turn off	Masz coś przeciwko, żebym **zgasił** światło?
+zgasić	to turn off (perfective)	Masz coś przeciwko, żebym **zgasił** światło?
 płynnie	fluently	Słyszałem, jak **płynnie** mówił po angielsku.
 ochrona	protection	Kładli nacisk na **ochronę** środowiska.
 gdziekolwiek	anywhere	Tom może być teraz **gdziekolwiek**.
@@ -3640,7 +3640,6 @@ spacerować	walk	Nie ma wątpliwości, że lubi **spacerować**.
 elektryczny	electric	Parowozy zostały wyparte przez lokomotywy **elektryczne**.
 wstrzymać	hold back	Tom **wstrzymał** się od głosu.
 rządzić	rule	Birma **rządzona** jest przez wojskową juntę.
-przewodniczący	chairman	**Przewodniczący** powinien wziąć pod uwagę opinię mniejszości.
 wczesny	early	Mama zawsze budzi się **wczesnym** rankiem.
 wspiąć	climb	Pomogłem Tomowi **wspiąć** się po ścianie.
 ekspert	expert	Twierdził, że jest **ekspertem** w finansach.
@@ -3658,7 +3657,7 @@ skoczyć	go	Dawaj **skoczymy** do baru na drinka.
 wahać	hesitate	**Wahał** się czy powiedzieć jej prawdę.
 zabijać	kill time	**Zabijaliśmy** czas grą w karty.
 euro	euro	Mały kubek kawy kosztuje dwa **euro**.
-wymienić	replace	Zegarkom mojego dziadka trzeba **wymienić** baterie.
+wymienić	replace (perfective)	Zegarkom mojego dziadka trzeba **wymienić** baterie.
 nieźle	quite well	Naprawdę całkiem **nieźle** mówisz po francusku.
 niemal	almost	Podróżowanie **niemal** całkowicie zanikło podczas pandemii.
 wołać	call	Tom usłyszał, jak ktoś go **woła**.
@@ -3725,12 +3724,12 @@ igła	needle	Mary zemdlała, gdy tylko zobaczyła **igłę**.
 wczorajszy	yesterday's	**Wczorajsza** pogoda nie była zbyt dobra.
 węgiel	coal	**Węgiel** nie zawsze jest czarny.
 strzała	arrow	Mam łuk, ale nie mam **strzał**.
-skomplikować	complicated	To pytanie wydaje się **skomplikowane**.
+skomplikować	complicated (perfective)	To zadanie się **skomplikowało**.
 przegapić	to miss	Tom prawdopodobnie **przegapił** swój autobus.
 czynić	to do	**Czyńcie** dobro tym, którzy was nienawidzą.
 szczekać	to bark	Czy twój pies **szczeka** na Toma?
 wszechświat	universe	We **wszechświecie** są miliardy gwiazd.
-wrzucić	to throw in	Tom **wrzucił** list Mary do ognia.
+wrzucić	to throw in (perfective)	**Wrzucił** papiery z powrotem do szuflady.
 miewać	to be	Tom zapytał Mary, jak się **miewa**.
 niezbyt	not very	Tego ranka Tatoeba **niezbyt** dobrze działa.
 oblać	to fail	Żaden z moich studentów nie **oblał**.
@@ -3768,7 +3767,7 @@ wart	worth	Zapomnij. To nie jest tego **warte**.
 wysiąść	get off	Czy powie mi pan, gdzie mam **wysiąść**?
 tworzyć	create	Programiści **tworzą** nowe aplikacje.
 drogowy	traffic	Jak doszło do tego wypadku **drogowego**?
-ogłosić	announce	Tom **ogłosił** swoje zaręczyny z Mary.
+ogłosić	announce (perfective)	Tom **ogłosił** swoje zaręczyny z Mary.
 przyjeżdżać	come	Tom **przyjeżdża** z nami do Bostonu.
 wygląd	appearance	Nie należy osądzać ludzi po **wyglądzie**.
 kapitan	captain	On jest **kapitanem** drużyny piłkarskiej.
@@ -3842,6 +3841,7 @@ pośpiech	hurry	Nie ma **pośpiechu**. Mamy mnóstwo czasu.
 skręcić	to turn (perfective)	**Skręć** w prawo na światłach.
 bitwa	battle	Osiemnaście minut później **bitwa** była zakończona.
 piosenkarka	singer	Moja ulubiona **piosenkarka** to Kylie Minogue.
+przewodniczyć	to chair	Nauczyciel będzie **przewodniczyć** zebraniu.
 arabski	arabic	Zapis **arabski** został zastąpiony alfabetem rzymskim.
 podwyżka	raise	Nie dostałem **podwyżki** od dwóch lat!
 pobawić	to play (perfective)	**Pobawmy** się w tę niedzielę.
@@ -3850,7 +3850,7 @@ dodawać	to add	**Dodaję** soli do swojego jedzenia.
 krzywda	harm	Ten pies nie zrobi Ci **krzywdy**.
 zastrzelić	to shoot (perfective)	Tom wyjął broń i **zastrzelił** Mary.
 bałagan	mess	Czy to ty narobiłeś tego **bałaganu**?
-zastąpić	to replace	Czy sztuczna inteligencja będzie w stanie **zastąpić** ludzi?
+zastąpić	to replace (perfective)	Zapis arabski został **zastąpiony** alfabetem rzymskim.
 prawidłowy	correct	Żadna z dwóch odpowiedzi nie jest **prawidłowa**.
 pobić	to beat (perfective)	Tom został **pobity** prawie na śmierć.
 znudzić	bored	Jestem **znudzona** i nie mam co robić.
@@ -3880,7 +3880,7 @@ odnaleźć	to find (perfective)	Dzieci, które zaginęły, zostały **odnalezion
 prywatny	private	Zatrudniła **prywatnego** detektywa, żeby śledzić męża.
 młodość	youth	Przyszło wielu moich przyjaciół z **młodości**.
 klimat	climate	Jak ci się podoba **klimat** Japonii?
-związać	to bind	Ręce Toma były **związane** za jego plecami.
+związać	to bind (perfective)	Ręce Toma były **związane** za jego plecami.
 morderstwo	murder	Policja pytała Tomasza o dzień **morderstwa**.
 zawiązać	to tie	Możesz mi pokazać jak **zawiązać** krawat?
 chłodny	cool	Dziś jest **chłodno** nad jeziorem.
@@ -3898,7 +3898,6 @@ potwierdzić	to confirm (perfective)	Może pan **potwierdzić** otrzymanie tej p
 dogonić	to catch up	Idź wolno, a ja Ciebie **dogonię**.
 rozważyć	to consider (perfective)	**Rozważmy**, co może się wydarzyć najgorszego.
 stawiać	to put	Nie **stawiaj** szklanki przy krawędzi stołu.
-druty	knitting needles	Ona jest pochłonięta robieniem na **drutach**.
 klasyczny	classical	Nie mogę traktować literatury **klasycznej** poważnie.
 szczególnie	particularly	Trawa jest tam **szczególnie** świeża.
 zatrzymywać	to stop	Pociąg o 9:35 **zatrzymuje** się w Bambury.
@@ -3943,6 +3942,7 @@ pomocny	helpful	To może być **pomocne**.
 dym	smoke	Pokój był pełny **dymu**.
 uzyskać	get	Bez trudu **uzyskała** to, co chciała.
 przekroczyć	exceed	**Przekroczyliśmy** budżet o 2 tysiące jenów.
+słodycze	sweets	Moja siostra lubi **słodycze**.
 polować	hunt	Mężczyźni poszli **polować** na lwy.
 objąć	embrace	Mary **objęła** Toma za szyję.
 przeciw	against	Tom jest za, Mary **przeciw**.
@@ -3989,7 +3989,7 @@ przywitać	to welcome (perfective)	Nauczyciel **przywitał** nowych uczniów.
 maska	mask	Uważam, że powinniśmy założyć **maski**.
 przysługa	favor	Przepraszam, czy mógłbyś mi wyświadczyć **przysługę**?
 katastrofa	disaster	Powódź była **katastrofą** dla ich społeczności.
-powstać	to arise	Podczas wojny może **powstać** anarchia.
+powstać	to arise (perfective)	Podczas wojny może **powstać** anarchia.
 romans	affair	Zwierzył mi się ze swojego **romansu**.
 krzyk	cry	Tom wydał z siebie **krzyk** przerażenia.
 kopnąć	to kick	Tom **kopnął** mnie pod stołem.
@@ -4058,12 +4058,13 @@ blady	pale	„Wyglądasz **blado**. Jesteś chory?” „Nie do końca.”
 zaczerwienić	to blush (perfective)	Tom **zaczerwienił** się i odwrócił.
 gospodarka	economy	Amerykańska **gospodarka** jest największa na świecie.
 przyłożyć	to hold	Tom **przyłożył** palec do ust.
+drut	to knit	Ona jest pochłonięta robieniem na **drutach**.
 piłkarz	football player	Jego brat jest słynnym **piłkarzem**.
 biznes	business	Nie umiem sobie radzić w świecie **biznesu**.
 obrać	to peel	**Obierz** pomarańczę i daj mi kawałek.
 rozwój	development	Przyczynił się znacznie do **rozwoju** gospodarki.
 deser	dessert	Nie chcę jeść lodów na **deser**.
-zaoferować	to offer	Nie możemy **zaoferować** ci żadnych pieniędzy.
+zaoferować	to offer (perfective)	Nie możemy **zaoferować** ci żadnych pieniędzy.
 wymówka	excuse	Nie chcę słyszeć twoich kiepskich **wymówek**.
 stosować	to apply	Tę zasadę można **stosować** w każdym przypadku.
 słychać	how are you	Dobry wieczór, co **słychać** u pana?
@@ -4085,6 +4086,7 @@ medyczny	medical	Musimy kupić jakieś środki **medyczne**.
 lina	rope	Tom zawiązał sobie **linę** wokół talii.
 wykopać	to dig	Tom **wykopał** dół na swoim podwórku.
 dotąd	so far	Apelacje Samiego jak **dotąd** były nieudane.
+słodycz	sweets	Nie powinienem był pozwalać Tomowi jeść tyle **słodyczy**.
 dżungla	jungle	Odgłosy dochodzące z **dżungli** wystraszyły badaczy.
 byk	bull	Musisz chwycić **byka** za rogi.
 świętować	to celebrate	Prawosławni **świętują** Boże Narodzenie siódmego stycznia.
@@ -4131,7 +4133,7 @@ religijny	religious	Tom nie jest tak **religijny** jak Mary.
 choćby	even if	Jesteśmy z tobą, **choćby** nie wiem co.
 publiczność	audience	**Publiczność** głośno klaskała po jego przemówieniu.
 zbieg	coincidence	Jestem pewien, że to **zbieg** okoliczności.
-określić	define	Nauczyciel **określił** Tomcia jako niezapisaną tablicę.
+określić	define (perfective)	Nauczyciel **określił** Tomcia jako niezapisaną tablicę.
 praktyka	practice	Powszechną **praktyką** jest odczekanie dwóch tygodni.
 inteligencja	intelligence	Jak dużo wiesz o sztucznej **inteligencji**?
 emocja	emotion	Po prostu chcę dać ujście **emocjom**.
@@ -4186,6 +4188,7 @@ masa	lot	Mam **masę** pracy do zrobienia przed wyjściem.
 okres	period	Myślę, że trzy lata to długi **okres**.
 ekscytować	to excite	Czym ty się tak **ekscytujesz**?
 użądlić	to sting (perfective)	Tom został **użądlony** przez pszczołę.
+przeczucie	hunch	Mam **przeczucie**, że będzie padać.
 nieuprzejmy	rude	Dlaczego jesteś dla nas taki **nieuprzejmy**?
 grozić	to threaten	Dziewczyna Toma **groziła**, że go zostawi.
 pasja	passion	Nauka języków to moja **pasja**.
@@ -4204,7 +4207,7 @@ sprawiedliwy	fair	Nie wydaje mi się to **sprawiedliwe**.
 okej	okay	**Okej**, to mnie kompletnie zaskoczyło...
 nietoperz	bat	Wielu myśli, że **nietoperze** to ptaki.
 winylowy	vinyl	Tom słuchał starego nagrania **winylowego**.
-spanikować	panic	Tom **spanikował**.
+spanikować	panic (perfective)	Tom **spanikował**.
 odzywać	speak	Tom się do nikogo nie **odzywa**.
 zgoda	consent	Uznałem twoje milczenie za **zgodę**.
 zagraniczny	foreign	On wie dużo o sprawach **zagranicznych**.
@@ -4218,12 +4221,12 @@ schodzić	go down	Słyszałem jak **schodził** po schodach.
 ach	ah	**Ach**, kiedy znów się spotkają?
 ciasny	tight	Mój strój kąpielowy jest za **ciasny**.
 tonąć	drown	Szczury uciekają z **tonącego** statku.
-wciągnąć	get involved	Przepraszam, że Cię w to **wciągnąłem**.
+wciągnąć	get involved (perfective)	Przepraszam, że Cię w to **wciągnąłem**.
 popsuć	break down	Stary samochód Santiago się **popsuł**.
 pakować	pack	On **pakuje** swoje rzeczy do pudełek.
 drżeć	tremble	Było tak zimno, że aż **drżał**.
 łatwość	ease	Teraz praca może być wykonana z **łatwością**.
-skinąć	nod	**Skinąłem** głową, lecz nie poruszyłem się.
+skinąć	nod (perfective)	Kasia **skinęła** głową.
 wybiec	run out (perfective)	**Wybiegłem** stamtąd i złapałem taksówkę.
 pozycja	position	Jaka jest najlepsza **pozycja** do spania?
 nadwaga	overweight	Tom może mieć lekką **nadwagę**.
@@ -4293,7 +4296,7 @@ zmartwić	to worry (perfective)	Powiedziała, że jest **zmartwiona**.
 dostarczać	to provide	Ofiarom powodzi **dostarczaliśmy** pożywienie oraz odzież.
 następować	to occur	Bakteryjna kolonizacja jelit **następuje** po urodzeniu.
 ciasteczko	cookie	Czy zostawisz mi trochę **ciasteczek**?
-wycofać	to withdraw	W naszej szkole **wycofano** mundurki w zeszłym roku.
+wycofać	to withdraw (perfective)	W naszej szkole **wycofano** mundurki w zeszłym roku.
 trakt	during	Bądź cicho w **trakcie** lekcji.
 czeski	czech	Bardzo trudno jest przetłumaczyć **czeski** tekst.
 przygoda	adventure	Opowiedział dzieciom o swoich **przygodach** w Afryce.
@@ -4317,7 +4320,7 @@ obrócić	to rotate (perfective)	**Obróć** ekran aby zobaczyć inne obrazki.
 zachwycić	to delight	Byłem **zachwycony** na wieść o jej sukcesie.
 urwać	to break off	Kiedy chwyciłem klamkę, **urwała** się.
 krwawić	to bleed	Rana zaczęła **krwawić**.
-przekłuć	to pierce	Właśnie **przekłuła** sobie uszy.
+przekłuć	to pierce (perfective)	Właśnie **przekłuła** sobie uszy.
 zjawić	to show up	Jestem pewien, że Tom się **zjawi**.
 przysięgnąć	to swear (perfective)	**Przysiągłem**, że nigdy tego nikomu nie zrobię.
 widywać	to see often	**Widujemy** ją od czasu do czasu.
@@ -4346,8 +4349,8 @@ produkować	to produce	Niemiecki przemysł samochodowy **produkuje** doskonałe 
 kontrakt	contract	On negocjuje nowe **kontrakty** w Rosji.
 zaciąć	to get stuck (perfective)	Zamek **zaciął** mi się w kurtce.
 współczesny	modern	Tom ma oko do sztuki **współczesnej**.
-pokrywać	to cover	Woda **pokrywa** około 70% powierzchni Ziemi.
 wieczny	eternal	Niektórzy ludzie wierzą w życie **wieczne** po śmierci.
+pokrywać	to cover	Woda **pokrywa** około 70% powierzchni Ziemi.
 płyn	liquid	Ten **płyn** nie odcedza się dobrze.
 wpisać	to enter (perfective)	**Wpisz** nazwę użytkownika, a później hasło.
 setka	hundred	Przeczytałem już około **setki** książek.
@@ -4396,7 +4399,7 @@ własność	property	Tom sprzedał całą swoją **własność**.
 chwilka	moment	Masz **chwilkę**? Tak, dlaczego pytasz?
 były	former	Poniżej znajduje się lista **byłych** administratorów.
 posadzić	to plant (perfective)	Tom **posadził** małą morelę przed swoim domem.
-rozwinąć	to develop	Handel pomaga narodom **rozwinąć** się.
+rozwinąć	to develop (perfective)	Firma chce **rozwinąć** sprzedaż.
 zapukać	to knock (perfective)	Jeśli **zapukasz** trzy razy, Tom ci otworzy.
 punktualny	punctual	Poradził jej, by była **punktualna**.
 szczęściarz	lucky person	Tom nie wie jakim jest **szczęściarzem**.
@@ -4408,9 +4411,9 @@ wróżka	fairy	**Wróżki** istnieją tylko w bajkach.
 fryzura	hairstyle	Mam tę samą **fryzurę** od lat.
 głuchy	deaf	Wiem, że Tom jest **głuchy**.
 obracać	to rotate	Ziemia **obraca** się wokół własnej osi.
-swędzić	to itch	**Swędzi** mnie noga. Chyba coś mnie ugryzło.
+swędzieć	to itch	**Swędzi** mnie noga. Chyba coś mnie ugryzło.
 morderca	murderer	Nie wierzę, że Tom jest **mordercą**.
-zszokować	to shock	Wszyscy oprócz Toma byli **zszokowani**.
+zszokować	to shock (perfective)	Wszyscy oprócz Toma byli **zszokowani**.
 proces	process	To jest skomplikowany **proces**.
 normalnie	normally	Niech pan oddycha **normalnie**.
 postępować	to behave	Nie jestem pewien, jak **postępować**.
@@ -4446,7 +4449,6 @@ zmrużyć	to sleep (perfective)	Nie **zmrużyłem** oka w nocy.
 stromy	steep	To jest bardzo **strome** zbocze.
 odrabiać	to do homework	Dlaczego **odrabiasz** zadanie domowe o tej porze?
 gwóźdź	nail	Wbiła **gwóźdź** w ścianę i powiesiła obraz.
-przeczucie	hunch	Mam **przeczucie**, że będziesz bardzo dobrym prawnikiem.
 wcisnąć	to press (perfective)	Nie wiem, który przycisk mam **wcisnąć**.
 substancja	substance	Ta **substancja** jest w stanie ciekłym.
 podrapać	to scratch	Tom **podrapał** się po głowie.
@@ -4459,7 +4461,7 @@ zgasnąć	go out	Nagle **zgasły** wszystkie światła.
 naukowy	scientific	Ta teoria **naukowa** jest kontrowersyjna.
 wielkość	size	Te pudełka są tej samej **wielkości**.
 treść	content	Podsumuj **treść** po angielsku w 60 słowach.
-pokłócić	argue	Wczoraj **pokłóciłem** się ze starszym bratem.
+pokłócić	argue (perfective)	Oni znów się **pokłócili**.
 wygodnie	comfortably	Mam nadzieję, że będzie ci tu **wygodnie**.
 pokroić	cut up	**Pokrój** łososia na małe kawałki.
 starzec	old man	**Starzec** oparł się o swoją laskę.
@@ -4481,8 +4483,8 @@ ugasić	to extinguish	Strażacy szybko **ugasili** ogień.
 nieznajomy	stranger	Nie wsiadaj do samochodu z **nieznajomymi**!
 medium	medium	Telewizja jest ważnym **medium** przekazywania informacji.
 wuj	uncle	Mój **wuj** uczy angielskiego na uniwersytecie.
-gabinet	office	Tom otworzył drzwi do swojego **gabinetu**.
 wypowiedzieć	to utter	Tom nie **wypowiedział** ani jednego słowa.
+gabinet	office	Tom otworzył drzwi do swojego **gabinetu**.
 sprawozdanie	report	Przetłumaczysz mi to **sprawozdanie** na włoski?
 łeb	neck and neck	Dwaj kandydaci idą **łeb** w łeb.
 zagranica	abroad	Zamówiliśmy parę nowych książek z **zagranicy**.
@@ -4512,7 +4514,6 @@ wykorzystywać	to use	Myślę, że powinniśmy nieco konstruktywniej **wykorzyst
 poczerwienieć	to blush (perfective)	Zaczęła **poczerwienieć** ze wstydu.
 podchodzić	to approach	Nie **podchodź** zbyt blisko ognia.
 wołowina	beef	**Wołowina** jest droga w dzisiejszych czasach.
-wypracowanie	essay	Nauczyciel kazał mu przepisać **wypracowanie**.
 przylecieć	to arrive (perfective)	**Przyleciałem** na Naritę dziś rano.
 starczyć	to suffice	**Starczy** miejsca dla wszystkich.
 ryzykowny	risky	To może zadziałać, ale jest zbyt **ryzykowne**.
@@ -4520,7 +4521,6 @@ pszenica	wheat	Rosja importowała **pszenicę** ze Stanów Zjednoczonych.
 poranny	morning	W oknie pojawiło się **poranne** słońce.
 konieczny	necessary	Nic z tego nie jest **konieczne**.
 sztuczka	trick	**Sztuczki** magika zadziwiły nas.
-kuzynka	cousin	To moja **kuzynka** ze strony mamy.
 książę	prince	**Książę** stał się królem tego dnia.
 srebro	silver	**Srebro** jest dużo tańsze od złota.
 załamać	to break down (perfective)	**Załamał** się gdy usłyszał złe wieści.
@@ -4583,9 +4583,7 @@ sofa	sofa	Siedzieli na **sofie** w naszym salonie.
 równowaga	balance	Tom utrzymał **równowagę**.
 pech	bad luck	No to **pech**.
 bezrobotny	unemployed	Mary powiedziała mi, że jest **bezrobotna**.
-frytki	fries	Zuchwała mewa ciągle kradła mi **frytki**.
-trujący	poisonous	Który grzyb jest najbardziej **trujący**?
-przeszukać	search	**Przeszukaliśmy** las w poszukiwaniu zaginionego dziecka.
+przeszukać	search (perfective)	Policja **przeszukała** dom i biuro Toma.
 guma	chewing gum	Wgryzł się w **gumę** do żucia.
 westchnąć	to sigh	Tom **westchnął** głęboko.
 plama	stain	Chłopiec miał na koszuli **plamę** farby.
@@ -4612,7 +4610,7 @@ zakłopotać	embarrassed	Tom wygląda na naprawdę **zakłopotanego**.
 spłukać	broke	Mam nadzieję, że Tom nie jest **spłukany**.
 ślimak	snail	Jakie zwierzęta są wolniejsze od **ślimaka**?
 sześćdziesiąt	sixty	Jedna minuta ma **sześćdziesiąt** sekund.
-zareagować	to react	Chcą zobaczyć, jak **zareagujemy**.
+zareagować	to react (perfective)	Bez wątpienia ja też źle **zareagowałem**.
 ukąsić	to sting (perfective)	Pszczoła **ukąsiła** mnie w rękę.
 zaplanować	to plan (perfective)	Naprawdę **zaplanowałeś** to wszystko sam?
 wydostać	to get out	Tom **wydostał** się z więzienia.
@@ -4631,7 +4629,7 @@ autostrada	motorway	**Autostrada** M1 łączy Londyn z Leeds.
 chrapać	to snore	Muszę wam się przyznać, że **chrapię**...
 atakować	to attack	Wilki zazwyczaj nie **atakują** ludzi.
 gładki	smooth	Jej skóra jest **gładka**.
-oświadczyć	to declare	Ta firma wydała **oświadczenie** dla prasy.
+oświadczyć	to declare (perfective)	Ta firma wydała **oświadczenie** dla prasy.
 szesnaście	sixteen	"Ile masz lat?" "Mam **szesnaście** lat".
 niewinność	innocence	Przekonał nas o jej **niewinności**.
 satelita	satellite	Kiedy miało miejsce wystrzelenie pierwszego **satelity**?
@@ -4657,7 +4655,7 @@ chwała	glory	Pobiegliśmy na **chwałę** szkoły.
 pocztowy	postal	Jaki jest twój kod **pocztowy**?
 zaginiony	missing	Przeszukaliśmy las w poszukiwaniu **zaginionego** dziecka.
 następnie	next	Ugotuj groch, a **następnie** odcedź go w durszlaku.
-zorientować	to realize	Kiedy dotarłem do domu, **zorientowałem** się, że zgubiłem portfel.
+zorientować	to realize (perfective)	Nagle **zorientowałem** się w błędzie.
 obejmować	to include	Czy cena **obejmuje** śniadanie?
 zaciągnąć	to join (perfective)	**Zaciągnąłem** się do wojska.
 podlegać	to be subject to	To nie **podlega** zwykłym rabatom.
@@ -4679,6 +4677,7 @@ myśliwy	hunter	**Myśliwy** wycelował strzelbę w kierunku stada ptaków.
 rozwiązywać	to solve	Nie ma sensu **rozwiązywanie** tej łamigłówki.
 studnia	well	W **studni** było mało wody.
 kula	ball	Widziana z daleka Ziemia jest niebieską **kulą**.
+wypracowanie	essay	Nauczyciel kazał mu przepisać **wypracowanie**.
 wewnętrzny	internal	Żołądek jest jednym z organów **wewnętrznych**.
 kontrolować	to control	Nie możemy **kontrolować** pogody.
 zatłoczyć	crowded	Myślałem, że zemdleję w **zatłoczonym** pociągu.
@@ -4763,8 +4762,8 @@ osioł	donkey	Dlaczego **osioł** ma takie długie uszy?
 błędny	wrong	Myślę, że twoja teoria jest **błędna**.
 przyzwoity	decent	Myślę, że Tom jest naprawdę **przyzwoity**.
 przemoc	violence	**Przemocy** nauczyliśmy się od was.
-weterynarz	veterinarian	Lepiej zaprowadź go do **weterynarza**.
 karma	dog food	Zwykle dawał swemu psu tanią **karmę**.
+weterynarz	veterinarian	Lepiej zaprowadź go do **weterynarza**.
 importować	to import	Rosja **importowała** pszenicę ze Stanów Zjednoczonych.
 strefa	zone	Do jakiej **strefy** czasowej należy kraj?
 doznać	to suffer (perfective)	Nauczyciel **doznał** wypalenia zawodowego.
@@ -4787,7 +4786,7 @@ zdechnąć	to die (perfective)	Wiele ryb **zdechło**.
 społeczność	community	Powódź była katastrofą dla ich **społeczności**.
 akt	act	Ta sztuka ma trzy **akty**.
 księgowy	accountant	Tom jest **księgowym**.
-zażądać	demand	Stanęła przed nim i **zażądała** przeprosin.
+zażądać	demand (perfective)	Stanęła przed nim i **zażądała** przeprosin.
 słony	salty	W kuchni mamy **słone** mięso.
 pirat	pirate	**Piraci** nigdy nie piją wody.
 ochotnik	volunteer	Nikt nie zgłasza się na **ochotnika**.
@@ -4800,8 +4799,8 @@ klacz	mare	**Klacz** jest to koń płci żeńskiej.
 ostrożność	caution	Nigdy za wiele **ostrożności** przechodząc przez ulicę.
 przywrócić	restore	**Przywróciłeś** mi wiarę w ludzkość.
 ogarnąć	cope	Tom tego nie **ogarnie**.
-obrońca	defender	Sami jest największym **obrońcą** swojej córki.
 relacja	relationship	Tom ma trudną **relację** ze swoim ojcem.
+obrońca	defender	Sami jest największym **obrońcą** swojej córki.
 czasowy	temporary	To ustawienie jest tylko **czasowe**.
 entuzjazm	enthusiasm	Widziałem, jak robiła to z **entuzjazmem**.
 realista	realist	Jestem **realistą**.
@@ -4821,3 +4820,2195 @@ wylot	inside out	On zna to miasto na **wylot**.
 koronawirus	coronavirus	**Koronawirus** pojawił się w Chinach.
 fartuch	apron	Moja matka ma czerwony **fartuch**.
 sód	sodium	Za dużo **sodu** może być zabójcze.
+po prostu	simply	**Po prostu** nie mam czasu.
+jak i	as well as	Jan **jak i** Anna przyszli.
+w ogóle	at all	Nie rozumiem cię **w ogóle**.
+po raz	for the ...th time	**Po raz** trzeci dzwonię.
+na początku	at the beginning	**Na początku** było cicho.
+tym razem	this time	**Tym razem** przyjdę wcześniej.
+ze względu na	because of	Zamknęli biuro **ze względu na** remont.
+po raz pierwszy	for the first time	**Po raz pierwszy** jadę sam.
+po co	what for	**Po co** to robisz?
+do tej pory	so far	**Do tej pory** wszystko działa.
+cały czas	all the time	**Cały czas** padał deszcz.
+tak naprawdę	actually	**Tak naprawdę** lubię tę pracę.
+mimo że	although	**Mimo że** pada, idę.
+nawet jeśli	even if	**Nawet jeśli** pada, pójdę.
+dzięki temu	thanks to this	Padało, **dzięki temu** trawa rośnie.
+przy okazji	by the way	Kup chleb, **przy okazji** mleko.
+między innymi	among other things	Lubię sport, **między innymi** piłkę nożną.
+gdyby nie	if it weren't for	**Gdyby nie** ty, spóźniłbym się.
+tyle że	except that	Chciałem iść, **tyle że** jestem chory.
+nie da się	can't be done	Bez klucza **nie da się** wejść.
+wziąć pod uwagę	take into account	Musisz **wziąć pod uwagę** pogodę.
+w pierwszej kolejności	in the first place	**W pierwszej kolejności** zrób lekcje.
+za pomocą	by means of	Obraz zrobiłem **za pomocą** farby.
+na koniec	at the end	**Na koniec** zjedliśmy ciasto.
+w sumie	all in all	**W sumie** było miło.
+w pewnym sensie	in a sense	**W pewnym sensie** masz rację.
+mieć do czynienia	deal with	W pracy często **mam do czynienia** z klientami.
+zdawać sobie sprawę	be aware	Jestem **zdaję sobie sprawę**?
+o wiele	much	To jest **o wiele** lepsze.
+tak jakby	as if	Patrzył **tak jakby** mnie znał.
+niezależnie od	regardless of	Idę, **niezależnie od** pogody.
+w życie	into life	Plan wejdzie **w życie** jutro.
+podczas gdy	while	Ty śpisz, **podczas gdy** ja pracuję.
+w stosunku do	with regard to	Mamy pytania **w stosunku do** ceny.
+po drugie	secondly	**Po drugie**, trzeba oszczędzać.
+mniej więcej	more or less	Mam **mniej więcej** dziesięć lat.
+w zasadzie	basically	**W zasadzie** zgadzam się z tobą.
+na poziomie	at the level of	Jestem **na poziomie** B1.
+prawo do	the right to	Mam **prawo do** głosu.
+jest w stanie	is able to	Ona **jest w stanie** biec szybko.
+na ten temat	on this topic	**Na ten temat** czytałem dziś.
+dostęp do	access to	Mam **dostęp do** internetu.
+polega na	consists in	To **polega na** pracy zespołowej.
+za każdym razem	every time	On płacze **za każdym razem**.
+tym bardziej że	all the more so because	Nie wychodzi, **tym bardziej że** pada.
+wiadomo że	it is known that	**Wiadomo że** jutro będzie lekcja.
+sprawia że	causes	Deszcz **sprawia że** ulice są mokre.
+uważam że	i think that	**Uważam że** to dobry pomysł.
+mówi się	it is said	**Mówi się** o tym w szkole.
+w praktyce	in practice	**W praktyce** to działa inaczej.
+wydaje mi się	it seems to me	**Wydaje mi się** to proste.
+w przeciwieństwie do	in contrast to	**W przeciwieństwie do** brata, jest cichy.
+za sprawą	thanks to	Sukces jest **za sprawą** pracy.
+zdaje się	seems	On **zdaje się** zmęczony.
+nie sposób	it is impossible	Tu **nie sposób** spać.
+mieć na celu	aim to	To ma **mieć na celu** pomoc dzieciom.
+w zależności od	depending on	Cena zależy **w zależności od** wieku.
+z okazji	on the occasion of	**Z okazji** świąt kupiłem ciastka.
+w porównaniu z	compared with	**W porównaniu z** wczoraj jest ciepło.
+mieć wspólnego z	have to do with	To **ma wspólnego z** moją pracą.
+mimo wszystko	all the same	Jest zimno, **mimo wszystko** idę.
+z punktu widzenia	from the point of view of	**Z punktu widzenia** firmy to ważne.
+tylko dlatego że	only because	Płacze **tylko dlatego że** jest zmęczony.
+jak najbardziej	absolutely	Tak, **jak najbardziej**.
+po południu	in the afternoon	Spotkamy się **po południu**.
+jego zdaniem	in his opinion	**Jego zdaniem** to dobry pomysł.
+w imieniu	on behalf of	Przemówiłem **w imieniu** zespołu.
+w obliczu	in the face of	**W obliczu** deszczu wróciliśmy.
+w imię	in the name of	Mówimy **w imię** prawa.
+w skali	on the scale of	Liczba rośnie **w skali** kraju.
+związek z	relationship with	Mam **związek z** tym projektem.
+na potrzeby	for the needs of	To zdjęcie jest **na potrzeby** reklamy.
+są w stanie	are able to	Oni **są w stanie** pomóc.
+a zatem	therefore	Pada, **a zatem** zostajemy.
+w obronie	in defense of	Bronił go **w obronie** prawdy.
+w dużej mierze	to a large extent	To zależy **w dużej mierze** od ciebie.
+wręcz przeciwnie	quite the opposite	Nie jest zimno, **wręcz przeciwnie**.
+w takim razie	in that case	Nie ma biletu? **W takim razie** nie jedziesz.
+dzień w dzień	day in, day out	**Dzień w dzień** pracuje tutaj.
+w ostatniej chwili	at the last minute	Przyszedł **w ostatniej chwili**.
+do dyspozycji	at one's disposal	Masz samochód **do dyspozycji**.
+co jakiś czas	every now and then	**Co jakiś czas** dzwoni mama.
+w tym celu	for this purpose	**W tym celu** kupiłem mapę.
+zwrócić uwagę	to draw attention	Muszę **zwrócić uwagę** na błędy.
+tak dalej	and so on	Kupuję chleb, mleko, **tak dalej**.
+niezależnie od tego	regardless of that	**Niezależnie od tego** idę do pracy.
+w każdej chwili	at any moment	Zadzwoń **w każdej chwili**.
+z reguły	as a rule	**Z reguły** jem śniadanie rano.
+w zamian za	in exchange for	Dał mi długopis **w zamian za** jabłko.
+na ogół	generally	**Na ogół** piję herbatę.
+w naszym kraju	in our country	**W naszym kraju** pada często.
+celem jest	the aim is	**Celem jest** lepsza sprzedaż.
+za wszelką cenę	at all costs	Chce schudnąć **za wszelką cenę**.
+wskazywać na to	indicate that	To **wskazuje na to**, że pada.
+ze względu na to	because of that	Nie wyszłam, **ze względu na to**.
+na bieżąco	up to date	Sprawdzam pocztę **na bieżąco**.
+to po prostu	it's simply	**To po prostu** za drogie.
+wiązać się z	be associated with	To **wiąże się z** ryzykiem.
+pierwszy rzut oka	first glance	**Na pierwszy rzut oka** jest miły.
+z dnia na dzień	from day to day	Pogoda zmienia się **z dnia na dzień**.
+dnia na dzień	day by day	Zdrowieję **dnia na dzień**.
+nic z tego	nothing of it	Chciałem ci pomóc, ale **nic z tego**.
+w żaden sposób	in no way	To nie pomaga **w żaden sposób**.
+nie ma sensu	it makes no sense	Kupowanie tego **nie ma sensu**.
+w oparciu o	based on	Uczę się **w oparciu o** książkę.
+ii wojny światowej	second world war	Mój dziadek pamięta **ii wojny światowej**.
+rzecznik prasowy	press spokesman	**Rzecznik prasowy** mówił dziś.
+na jaw	to light / out into the open	Prawda wyszła **na jaw**.
+odbywać się	to take place	Konferencja **odbywa** się co roku.
+nie wiadomo czy	it is not known whether	**Nie wiadomo czy** wróci.
+nie mieć nic wspólnego z	to have nothing to do with	Ona **nie ma nic wspólnego z** tym.
+z całą pewnością	with complete certainty	**Z całą pewnością** przyjdę jutro.
+prędzej czy później	sooner or later	**Prędzej czy później** zadzwoni.
+z kolei	in turn; on the other hand	Ty idziesz, **z kolei** ja zostaję.
+jak wynika z	as follows from	**Jak wynika z** raportu, ceny spadły.
+w życiu nie	not in a million years	**W życiu nie** pójdę tam.
+mówi się o	it is said about	Dużo mówi się **o** tej pracy.
+rok na rok	year by year	**Rok na rok** jest coraz lepiej.
+i tym razem	and this time	**I tym razem** się spóźnił.
+mówi się że	it is said that	**Mówi się że** będzie padać.
+nie wiadomo co	who knows what	Dziś dostałem **nie wiadomo co**.
+od tej pory	from then on	**Od tej pory** będę ostrożny.
+tu i teraz	here and now	Wybierajmy **tu i teraz**.
+raz na zawsze	once and for all	Musimy to zrobić **raz na zawsze**.
+trzeba przyznać, że	it must be admitted that	**Trzeba przyznać, że** masz rację.
+a przy okazji	and by the way	Kupiłem chleb, **a przy okazji** mleko.
+już na pewno	certainly already	To **już na pewno** koniec.
+w momencie, gdy	at the moment when	**W momencie, gdy** zadzwonił, wyszłam.
+tak po prostu	just like that	On odszedł **tak po prostu**.
+ale w końcu	but in the end	Chciałem iść, **ale w końcu** zostałem.
+i z powrotem	and back	Wróciłem **i z powrotem** do domu.
+obawiam się, że	i’m afraid that	**Obawiam się, że** się spóźnię.
+a może i	and perhaps even	Pójdę dziś, **a może i** jutro.
+i być może	and perhaps	**I być może** wrócę wcześniej.
+na czym polega	what something consists in	**Na czym polega** ten problem?
+mieć na myśli	mean	Co **masz na myśli**?
+pozwolić sobie na	afford	Nie mogę **pozwolić sobie na** wakacje.
+to z kolei	which in turn	On jest zmęczony, **to z kolei** spowalnia pracę.
+jak się okazuje	as it turns out	Chciałem pomóc, **jak się okazuje**, źle.
+wszystko wskazuje na	everything points to	**Wszystko wskazuje na** deszcz.
+raz po raz	over and over	**Raz po raz** dzwonię do ciebie.
+nie ma wątpliwości	there is no doubt	**Nie ma wątpliwości**, że przyjdzie.
+nie ma szans	no chance	Dziś **nie ma szans** na spacer.
+mówiąc już o	speaking of	**Mówiąc już o** jedzeniu, jestem głodny.
+na własne oczy	with one's own eyes	Widziałem to **na własne oczy**.
+raz w życiu	once in a lifetime	To się zdarza **raz w życiu**.
+zwrócić uwagę na to	to pay attention to it	Proszę **zwrócić uwagę na to**.
+na własną rękę	on one’s own	Naprawiłem to **na własną rękę**.
+już za późno	already too late	Teraz jest **już za późno**.
+zgodnie z prawem	according to law	To jest **zgodnie z prawem**.
+zdarzało się że	it happened that	**Zdarzało się że** padało latem.
+na swój sposób	in one's own way	Jest uparty **na swój sposób**.
+zdaje sobie sprawę	realizes	**Zdaje sobie sprawę**, że się spóźnił.
+w ślad za	following	**W ślad za** nim poszli inni.
+w przeciwnym razie	otherwise	Załóż kurtkę, **w przeciwnym razie** zmarzniesz.
+a tym bardziej	let alone	Nie mam pieniędzy, **a tym bardziej** na samochód.
+w tym tygodniu	this week	**W tym tygodniu** mam egzamin.
+o to chodzi	that's the point	Nie rozumiem, **o to chodzi**?
+tylko i wyłącznie	only and exclusively	Kupuję **tylko i wyłącznie** chleb.
+chodzi tylko o	it is only about	Tu chodzi **tylko o** pieniądze.
+sam na sam	one on one	Rozmawiamy **sam na sam**.
+a w szczególności	and in particular	Lubię owoce, a **w szczególności** jabłka.
+imię i nazwisko	full name	Podaj swoje **imię i nazwisko**.
+do góry nogami	upside down	Obraz wisi **do góry nogami**.
+i tak jest	and it is so	Dziś pada, ale **i tak jest** ciepło.
+krok po kroku	step by step	Ucz się **krok po kroku**.
+szacuje się, że	it is estimated that	**Szacuje się, że** będzie drożej.
+z tej okazji	on this occasion	Kupimy kwiaty **z tej okazji**.
+w wielu przypadkach	in many cases	**W wielu przypadkach** to pomaga.
+w mediach społecznościowych	on social media	Lubię zdjęcia **w mediach społecznościowych**.
+w oczekiwaniu na	in ожид of	Czekam **w oczekiwaniu na** autobus.
+jednym z głównych	one of the main	To **jednym z głównych** problemów.
+na wyciągnięcie ręki	within reach	Sklep jest **na wyciągnięcie ręki**.
+jest o wiele	is much	Mój pokój **jest o wiele** większy.
+w sam raz	just right	Ta sukienka jest **w sam raz**.
+w ostatnich miesiącach	in recent months	**W ostatnich miesiącach** dużo padało.
+na dłuższą metę	in the long run	Oszczędzanie pomaga **na dłuższą metę**.
+zgodnie z przepisami	according to the regulations	Działamy **zgodnie z przepisami**.
+w krótkim czasie	in a short time	Naprawili to **w krótkim czasie**.
+w ciągu trzech	within three	Przyjadę **w ciągu trzech** dni.
+przez cały rok	throughout the year	Basen jest otwarty **przez cały rok**.
+nie bez znaczenia	not without importance	To jest **nie bez znaczenia**.
+za jakiś czas	after a while	Pójdziemy tam **za jakiś czas**.
+nigdy w życiu	never in my life	**Nigdy w życiu** nie skoczę.
+na całe życie	for life	Pies zostaje **na całe życie**.
+nie do pomyślenia	unthinkable	To było **nie do pomyślenia**.
+w razie czego	if anything happens	Zadzwoń **w razie czego**.
+muszę przyznać, że	i must admit that	**Muszę przyznać, że** się myliłem.
+że po prostu	that simply	Wiem, **że po prostu** nie chce.
+na tej podstawie	on this basis	**Na tej podstawie** wybrał lepiej.
+sprowadzać się do	boil down to	To **sprowadza się do** pieniędzy.
+zbliżać się do	approach	Idziemy **zbliżać się do** domu.
+zwracać uwagę na	pay attention to	**Zwracaj uwagę na** znaki.
+wchodzić w życie	come into force	Nowa ustawa **wchodzi w życie** jutro.
+dowód na to	proof of that	To jest **dowód na to**.
+prawda jest taka	the truth is	**Prawda jest taka**, że pada.
+samo w sobie	in itself	To samo **samo w sobie** nie wystarczy.
+do pewnego stopnia	to some extent	**Do pewnego stopnia** masz rację.
+przyczynić się do	contribute to	Deszcz **przyczynił się do** powodzi.
+mieć na imię	be called	Jak **ma na imię** twoja siostra?
+zamieniać się w	turn into	Woda **zamienia się w** lód.
+tak długo jak	as long as	Poczekam, **tak długo jak** trzeba.
+na równi z	on a par with	On gra **na równi z** najlepszymi.
+kojarzyć się z	to be associated with	Szkoła **kojarzy się z** obowiązkami.
+nie mieć pojęcia	to have no idea	Nie **mam pojęcia**.
+na własnej skórze	personally, firsthand	Czułem to **na własnej skórze**.
+brać pod uwagę	to take into account	Musimy **brać pod uwagę** pogodę.
+na tym polega	that's what it consists in	**Na tym polega** zabawa.
+mieć pewność że	to be sure that	Jestem pewien, **że** przyjdzie.
+co nie znaczy	which does not mean	Jestem zmęczony, **co nie znaczy** chory.
+z nadzieją że	with hope that	Patrzył **z nadzieją że** wrócisz.
+tego było mało	to make matters worse	Spóźniłem się, a **tego było mało**.
+móc liczyć na	can count on	**Mogę liczyć na** ciebie.
+w roli głównej	in the main role	Tu gra ona **w roli głównej**.
+śledztwo w sprawie	investigation into	Trwa **śledztwo w sprawie** kradzieży.
+w pewnej chwili	at one point	**W pewnej chwili** zadzwonił telefon.
+w pierwszym rzędzie	first and foremost	**w pierwszym rzędzie** dbam o rodzinę.
+co i jak	what and how	Powiedz mi **co i jak**.
+jestem pewien że	i am sure that	**Jestem pewien że** przyjdziesz jutro.
+chcieć nie chcąc	willingly or not	**Chcieć nie chcąc** poszedłem do lekarza.
+w nadziei że	in the hope that	**W nadziei że** wróci, czekam.
+móc doprowadzić do	can lead to	To **może doprowadzić do** kłótni.
+w okresie od	in the period from	**W okresie od** maja do lipca.
+zapoznać się z	familiarize oneself with	Chcę **zapoznać się z** regulaminem.
+w wieku od	aged from	Dzieci **w wieku od** pięciu lat.
+z całych sił	with all one's strength	Biegł **z całych sił** do mety.
+udać się do	go to	Muszę **udać się do** szkoły.
+pierwszy w historii	first in history	To był **pierwszy w historii** lot.
+nie mieć mowy o	there is no question of	**Nie ma mowy o** wyjściu dziś.
+po ii wojnie	after the second world war	**Po II wojnie** miasto się zmieniło.
+dokładnie tak jak	exactly as	Zrobił to **dokładnie tak jak** mówiliśmy.
+z widokiem na	overlooking	Mieszkam **z widokiem na** park.
+szkoda że nie	it's a pity that not	**Szkoda że nie** przyszedłeś wczoraj.
+jeden z pierwszych	one of the first	Był **jednym z pierwszych** klientów.
+odbyć się w	take place in	Spotkanie **odbyło się w** szkole.
+na terenie	in the area of	Na **terenie** parku stoi fontanna.
+twarzą w twarz	face to face	Rozmawialiśmy **twarzą w twarz**.
+wyjść na jaw	come to light	Prawda **wyjdzie na jaw**.
+jak gdyby nigdy nie	as if nothing had happened	Zachował się **jak gdyby nigdy nie** był chory.
+lub	or	Herbata **lub** kawa?
+potem	then	Najpierw jem obiad, **potem** idę spać.
+czyli	that is	Ona wraca w następną niedzielę, **czyli** dziesiątego.
+lecz	but	Chciałem wyjść, **lecz** padało.
+bowiem	for	Zostań w domu, **bowiem** pada deszcz.
+związany	related	To jest **związane** z pracą.
+zresztą	besides	Nie chcę iść, a **zresztą** i tak jest za późno.
+znany	famous	On jest **znanym** aktorem.
+podobnie	similarly	Pierwotni ludzie mieli ciężkie życie, **podobnie** jak ich dzieci.
+pewno	probably	On **pewno** już wrócił.
+zaś	however	Tom wygląda na spiętego, Mary **zaś** nie.
+wraz	together with	Przeszedłem całą drogę **wraz** z nauczycielem.
+mocno	harder	Musisz mówić **mocno**.
+wiadomo	known	Już **wiadomo**, kto dzwonił.
+pojawiać	appear	Na niebie zaczynają **pojawiać** się gwiazdy.
+znaczenie	meaning	Co oznacza to **znaczenie**?
+skoro	since	**Skoro** pada, zostajemy.
+wówczas	then	Wszyscy byliśmy **wówczas** zajęci.
+europejski	european	Jakie jest twoje ulubione **europejskie** miasto?
+tym	therefore	Nie mam czasu, **tym** idę.
+efekt	effect	Cała kawa, którą wypiła, nie miała żadnego **efektu**.
+wydarzenie	event	To **wydarzenie** było bardzo ważne.
+zatem	therefore	Jest zimno, **zatem** zostajemy w domu.
+element	element	Zdrowie jest istotnym **elementem** szczęścia.
+działalność	activity	Sami był zamieszany w **działalność** niezgodną z prawem.
+tymczasem	meanwhile	**Tymczasem** ja zrobię herbatę.
+ramy	framework	Musimy ustalić jasne **ramy**.
+urząd	office	Ten polityk został usunięty z **urzędu**.
+rozwiązanie	solution	To **rozwiązanie** działa dobrze.
+pozostały	remaining	Ona ma trzy siostry: jedna jest pielęgniarką, a **pozostałe** nauczycielkami.
+warunki	conditions	Te **warunki** są trudne.
+poczucie	feeling	Mam dobre **poczucie** humoru.
+wręcz	even	To jest **wręcz** niemożliwe.
+podkreślać	emphasize	Nauczyciel **podkreślał** wagę codziennych ćwiczeń.
+prezes	president	Pan Smith jest teraz **prezesem** tej firmy.
+pojęcie	concept	Nie rozumiem tego **pojęcia**.
+warszawski	warsaw	Mieszkam w **warszawskim** mieszkaniu.
+dodatek	addition	Językiem ojczystym Mary jest portugalski, mówi też płynnie po angielsku i hiszpańsku, a w **dodatku** dobrze zna esperanto.
+przedstawiciel	representative	Jestem **przedstawicielem** handlowym.
+funkcjonować	function	To nadal **funkcjonuje**.
+gmina	municipality	Nasza **gmina** buduje drogę.
+współpraca	cooperation	Chciałbym ci podziękować za **współpracę**.
+perspektywa	perspective	Powinniśmy spróbować spojrzeć na ten problem z innych **perspektyw**.
+instytucja	institution	To zachwiało moim zaufaniem w **instytucje** rządowe.
+informować	inform	**Informuj** mnie o rozwoju sytuacji.
+równie	similarly	Ja lubię herbatę, **równie** kawę.
+jednostka	unit	Kilogram jest podstawową **jednostką** miary.
+organizować	organize	Kto **organizował** to spotkanie?
+całość	the whole	**Całość** jest większa niż suma poszczególnych części.
+gospodarczy	economic	Wolność **gospodarcza** poprawia jakość życia.
+spółka	company	Nie możesz założyć **spółki** bez ludzi.
+przekonanie	belief	Mam **przekonanie**, że jutro wygram.
+komisja	committee	**Komisja** spotka się dziś rano.
+państwowy	state	To jest **państwowy** budynek.
+zakład	factory	Powierzchnia **zakładu** to 1000 metrów kwadratowych.
+zainteresowanie	interest	Mam duże **zainteresowanie** muzyką.
+realizować	carry out	Musi **realizować** ten plan.
+nastąpić	occur	Po deszczu **nastąpił** spadek temperatury.
+zachodni	western	Mieszkam blisko **zachodniej** granicy.
+wsparcie	support	Dziękuję za twoje **wsparcie**.
+zawodowy	professional	Zawsze chciałem być **zawodowym** koszykarzem.
+świadczyć	testify	Nigdy bym nie **świadczył** przeciwko swojej żonie.
+samo	same	Został **samo** w domu.
+spojrzenie	glance	Dała mi szybkie **spojrzenie**.
+rozwijać	develop	Chcemy **rozwijać** firmę.
+prawny	legal	To nie jest porada **prawna**.
+wspomnienie	memory	To moje miłe **wspomnienie**.
+nowoczesny	modern	Oboje przekształcili chemię w **nowoczesną** naukę.
+fragment	part	Nie mogę skończyć tego **fragmentu** puzzli.
+realizacja	realization	**Realizacja** planu trwa długo.
+wprost	straight	Nie mógł powiedzieć tego bardziej **wprost**.
+ośrodek	medium	Radio to ważny **ośrodek** informacji.
+powstawać	to arise	Jak **powstaje** grad?
+etap	stage	Nadal jest na **etapie** testów.
+dobro	good	Wiem, jaka jest różnica między **dobrem** i złem.
+krajowy	domestic	Jakie jest twoje ulubione **krajowe** piwo?
+historyczny	historical	Jaki jest twój ulubiony film **historyczny**?
+wola	will	Gdzie jest **wola**, tam jest i sposób.
+widzenie	vision	Mam dobre **widzenie** po operacji.
+zdecydowanie	definitely	**Zdecydowanie** chcę iść.
+kwota	amount	Ta **kwota** zawiera podatek.
+wizja	vision	Jego **wizja** była bardzo ciekawa.
+opisywać	to describe	Ten rozdział w książce **opisuje** zbrodnię widzianą z perspektywy przestępcy.
+skala	scale	Ta piosenka ma prostą **skalę**.
+dany	given	W tym **danym** dniu padało.
+tło	background	Na tym zdjęciu w **tle** widać zamek.
+prezentować	to present	Dziś **prezentuję** projekt.
+wnętrze	interior	Bardzo chciałbym zobaczyć **wnętrze** domu Toma.
+postępowanie	procedure	To **postępowanie** jest zgodne z prawem.
+niczym	like	Biegnie **niczym** wilk.
+wyjście	exit	Gdzie jest **wyjście** na dworzec?
+wyborczy	electoral	Przyszły rok jest rokiem **wyborczym**.
+obowiązywać	be in effect	Ten przepis wciąż **obowiązuje**.
+głęboko	deeply	Byłem **głęboko** wzruszony.
+więzienie	prison	Trafił do **więzienia**.
+toczyć	go on	Spór **toczy się** dalej.
+ministerstwo	ministry	Pracuję w **ministerstwie** zdrowia.
+pełnia	full moon	Tego dnia była **pełnia** księżyca.
+określać	determine	Ilość pieniędzy pozyskiwanych przez państwo z podatków **określa** możliwości wydatkowania ich na cele społeczne.
+dodatkowo	additionally	Dostałem kawę **dodatkowo**.
+ciężko	harder	Pracuj **ciężej** jeśli planujesz odnieść sukces.
+młodzież	young people	Nie pojmuje całkiem, co mówi **młodzież**.
+wymiar	dimension	Jakie są dokładne **wymiary** tego pokoju?
+unia	union	**Unia** Europejska to grupa 27 krajów w Europie.
+zarzut	complaint	Jeden z moich głównych **zarzutów** wobec iPhone'a to ten, że nie obsługuje Flasha.
+paść	fall	Przybywszy do domu, **padłam** ze zmęczenia.
+dziwić	surprise	Nie **dziwi** mnie, że nie pamiętasz.
+grunt	ground	Szkoda pozostawiać **grunt** bez uprawy.
+powołać	appoint	Została **powołana** na przewodniczącą.
+pełnić	serve	Będę **pełnić** dyżur jutro.
+zapowiadać	announce	Jest zimno, ale nie aż tak jak **zapowiadano**.
+poszczególny	individual	Całość jest większa niż suma **poszczególnych** części.
+postawa	posture	Masz złą **postawę** przy biurku.
+sprzęt	equipment	Powiedziano mi właśnie, że mam wziąć swój własny **sprzęt**.
+lekko	slightly	Jest mi **lekko** zimno.
+wschodni	eastern	Mieszkam we **wschodniej** Polsce.
+oficjalny	official	To jest **oficjalna** strona.
+dokonywać	to do	Nie wolno **dokonywać** oszustw.
+twórca	creator	On jest **twórcą** tej gry.
+odbierać	answer	Mary nie **odbiera** telefonu.
+niby	apparently	Tom **niby** nie miał tego robić.
+boży	divine	To **boży** dar.
+urzędnik	official	Niektórzy **urzędnicy** mogli zostać skorumpowani.
+zjednoczyć	to unite	Wojna **zjednoczyła** Amerykanów.
+powszechny	common	**Powszechną** praktyką jest odczekanie dwóch tygodni.
+bądź	or	Weź wodę **bądź** sok.
+tradycyjny	traditional	Sumo to **tradycyjny** japoński sport.
+oddawać	to return	Pamiętam, jak **oddawałem** książkę do biblioteki.
+struktura	structure	Ta molekuła ma krystaliczną **strukturę**.
+gest	gesture	Często używamy **gestów**, aby przekazać proste wiadomości.
+podnosić	to raise	W sezonie turystycznym wiele hoteli **podnosi** ceny.
+krótko	shortest	Którędy będzie **najkrócej**?
+szeroko	widely	Spójrzmy **szerzej**.
+ubiegły	last	W **ubiegłym** roku byłem w Chinach.
+ukazać	to show (perfective)	Interpunkcja pomaga **ukazać** zależności gramatyczne i, przynajmniej w angielskim, jest także używana do zaznaczenia intonacji.
+pozytywny	positive	Film otrzymał **pozytywne** recenzje.
+oferować	to offer	Ten zajazd **oferuje** dobrą obsługę.
+świetnie	great	To brzmi **świetnie**.
+zarazem	at once	Jest zmęczony i **zarazem** szczęśliwy.
+trafiać	to arrive	Paczka **trafia** jutro.
+powiat	county	Mieszkam w tym **powiecie**.
+widoczny	visible	Tamta gwiazda **widoczna** jest gołym okiem.
+kryć	to hide	Nie **kryje**, że jest gejem.
+podobno	apparently	**Podobno** pada jutro.
+wspólnota	community	Ta **wspólnota** pomaga sąsiadom.
+centralny	central	Dworzec jest w **centralnej** części miasta.
+pomieszczenie	room	W kuchni jest małe **pomieszczenie**.
+przekazywać	to transmit	Telewizja jest ważnym medium **przekazywania** informacji.
+nowo	anew	Zrobiłem to **nowo**.
+porównanie	comparison	To dobre **porównanie**.
+bieg	gear	Wrzuć **bieg**.
+dotychczasowy	current	Mój **dotychczasowy** plan jest dobry.
+realny	real	Jakie jest **realne** zagrożenie ze strony terrorystów?
+ekonomiczny	economic	To ważne dla **ekonomicznego** rozwoju.
+funkcjonariusz	officer	**Funkcjonariusz** policji założył Tomowi kajdanki.
+prasowy	press	Kiedy ma miejsce ta konferencja **prasowa**?
+przekonany	convinced	Jestem **przekonany**, że zdążymy.
+wyzwanie	challenge	To trudne **wyzwanie** dla mnie.
+kojarzyć	to associate	Mamy tendencję do **kojarzenia** polityków z hipokryzją.
+ostateczny	final	Decyzja jeszcze nie jest **ostateczna**.
+wyjątkowo	exceptionally	Dziś jest **wyjątkowo** ciepło.
+reprezentować	to represent	Matka i córka **reprezentowały** dwa pokolenia.
+inicjatywa	initiative	Firma ceni sobie pracowników jak Carlos, którzy wykazują **inicjatywę**.
+rzecznik	spokesperson	**Rzecznik** firmy mówił dziś.
+kluczowy	vital	Kwestią **kluczową** dla zdrowia jest świadomość tego, co i ile jemy.
+artystyczny	artistic	Każdy człowiek ma prawo do ochrony moralnych i materialnych korzyści wynikających z jakiejkolwiek jego działalności naukowej, literackiej lub **artystycznej**.
+nieznany	unknown	To **nieznany** numer telefonu.
+domagać	to demand	Oni **domagają** się przeprosin.
+otrzymywać	to receive	Tutejsi studenci **otrzymują** podręczniki za darmo.
+placówka	facility	Nowa **placówka** jest już otwarta.
+wypowiedź	statement	Przygotuj zawczasu swoją **wypowiedź**.
+wprawdzie	admittedly	**Wprawdzie** pada, ale idę.
+wyraźny	clear	Między nimi istnieje **wyraźna** różnica.
+czynność	activity	Mój robot będzie przygotowywał posiłki, sprzątał, zmywał naczynia i wykonywał inne domowe **czynności**.
+faktycznie	actually	To **faktycznie** działa.
+fotel	armchair	Tom usiadł w **fotelu**.
+charakterystyczny	distinctive	Brzozy mają **charakterystyczną** białą korę, która odchodzi cienkimi warstwami.
+województwo	voivodeship	**Województwo** śląskie jest najgęściej zaludnionym regionem Polski.
+udzielać	to provide	Niestety, Apple nie **udziela** gwarancji na przypadkowe uszkodzenia.
+techniczny	technical	Informatyk naprawia problem **techniczny** z serwerem.
+owszem	yes	**Owszem**, pójdę z tobą.
+stowarzyszenie	association	**Stowarzyszenie** ma trzydziestu członków.
+podział	division	Taki **podział** jest sprawiedliwy.
+zewnętrzny	external	Nie mieliśmy żadnego kontaktu ze światem **zewnętrznym**.
+zrealizować	to accomplish	Myślę, że Tom mógłby **zrealizować** wszystko, co sobie postanowi.
+lider	leader	Tom jest **liderem** naszej grupy.
+spór	dispute	Po wielu negocjacjach, strony **sporu** osiągnęły kompromis.
+prokuratura	prosecutor's office	Przed wszczęciem sprawy przeciwko Bartłomiejowi Z., **prokuratura** musiała wpierw dowieść jego poczytalności.
+początkowo	initially	**Początkowo** nie lubiła koniny.
+bezpośrednio	directly	Zadzwoń **bezpośrednio** do szefa.
+transport	transport	Czy korzystasz ze środków **transportu** publicznego?
+urządzenie	device	To **urządzenie** działa bardzo dobrze.
+szereg	series	Ten wypadek miał **szereg** przyczyn.
+miejscowość	town	Jaka jest różnica między księgarnią w małej **miejscowości** a tą w dużym mieście?
+otoczenie	surroundings	Piękne **otoczenie** uspokaja mnie.
+seria	series	Czytasz nową **serię** książek?
+zyskać	gain (perfective)	Nic nie **zyskał** mówiąc mi to.
+sygnał	signal	Puścisz nam **sygnał**?
+oczekiwanie	expectation	Mam duże **oczekiwanie** przed wyjazdem.
+blok	block of flats	Mieszkam w **bloku**.
+zadowolony	satisfied	Jestem **zadowolony** z wyniku.
+instytut	institute	Mój brat studiuje w **instytucie**.
+podmiot	subject	W zdaniu zwykle jest **podmiot** i czasownik.
+założenie	assumption	To tylko **założenie**, nie fakt.
+opis	description	Tom napisał bardzo szczegółowy **opis**.
+sprzed	before	W porównaniu z ceną **sprzed** roku, teraz jest znacznie taniej.
+męski	manly	Z pewnością wie jak to znieść po **męsku**.
+obywatelski	civil	Mamy dziś **obywatelski** obowiązek.
+zapaść	collapse	MIT przewiduje globalną **zapaść** finansową do roku 2030.
+zauważać	notice	Przebiegł nie **zauważając** jej.
+myślenie	thinking	Twoje **myślenie** jest bardzo spokojne.
+organ	organ	Ten **organ** jest bardzo ważny.
+specjalnie	intentionally	Myślę, że Tom zrobił to **specjalnie**.
+napięcie	tension	Czuję silne **napięcie** przed klasówką.
+próg	threshold	Boże Narodzenie już za **progiem**.
+utwór	piece	Zagrał dziewczynie **utwór**, który sam napisał.
+zachęcać	encourage	**Zachęcamy** naszych mieszkańców do interakcji z innymi.
+producent	producer	Stany Zjednoczone to największy na świecie **producent** sera.
+radny	councilor	**Radny** spotkał się z mieszkańcami.
+podejście	approach	Lubię twoje **podejście** do dzieci.
+siedziba	headquarters	Ich **siedziba** jest blisko stacji.
+wejście	entrance	Sklep ma nowe **wejście** od ulicy.
+przeżywać	experience	Tom **przeżywał** silne bóle i zawroty głowy.
+południowy	southern	Tom mieszka w **południowej** części Bostonu.
+przedsiębiorca	entrepreneur	Mój ojciec jest **przedsiębiorcą**.
+dostrzegać	notice	Nie **dostrzega** swoich własnych wad.
+ówczesny	former	Mieszkał tam w **ówczesnym** domu.
+mechanizm	mechanism	Badacze wciąż są dalecy od zrozumienia **mechanizmu** choroby Alzheimera.
+scenariusz	screenplay	Pisze **scenariusze**.
+koncepcja	concept	Nie sądzę, abym miał odpowiednie wykształcenie, by mówić o swojej pracy w innym języku. Moje słownictwo jest zbyt ograniczone, by omawiać złożone **koncepcje**.
+indywidualny	individual	**Indywidualny** tok nauczania jest dobry dla wybitnych uczniów.
+układać	arrange	**Układać** kwiaty w wazonie.
+utworzyć	form (perfective)	**Utworzyły** nowy rząd.
+protest	protest	Liczba **protestów** prawdopodobnie wzrośnie.
+sprzyjać	favor	Oby szczęście ci **sprzyjało**.
+baza	base	Ta **baza** zawiera bardzo dużo błędów.
+portal	portal	Probowałeś **portali** randkowych?
+procedura	procedure	Ta **procedura** trwa bardzo długo.
+żal	regret	Dla mnie, **żal** jest najcięższą karą.
+wyciągać	to draw	**Wyciągać** pieniądze z portfela.
+znaczny	significant	**Znaczna** część tych budynków jest na liście światowego dziedzictwa Unesco.
+reagować	to react	**Reagujesz** emocjonalnie.
+wyznaczyć	to appoint	Szef ma **wyznaczyć** nowego kierownika.
+ludowy	folk	Lubię **ludowe** piosenki.
+wpłynąć	to affect (perfective)	Czy to rzeczywiście **wpłynie** na ich relacje?
+określony	specific	Potrzebuję **określonego** terminu.
+wybitny	outstanding	Indywidualny tok nauczania jest dobry dla **wybitnych** uczniów.
+zajęcia	classes	Mam dziś dwa **zajęcia**.
+dziennik	diary	Prowadzenie **dziennika** to dobry zwyczaj.
+zapis	record	**Zapis** arabski został zastąpiony alfabetem rzymskim.
+fundacja	foundation	**Fundacja** postanowiła odrestaurować ten uroczy, stary dom.
+aktywność	activity	**Aktywności** fizyczne - od grabienia liści po chodzenie do sklepu spożywczego - mogą pomóc seniorom zachować szarą materię w mózgu.
+komenda	command	Mój pies, Cookie, rozumie **komendy** po francusku i po angielsku.
+oblicze	face	Chcę zobaczyć twoje prawdziwe **oblicze**.
+dopuścić	to allow (perfective)	Nie mogę do tego **dopuścić**.
+sfera	realm	W pracy ważna jest ta **sfera**.
+odczuwać	to feel	Gdy tylko tu przychodzę, **odczuwam** spokój.
+przewodniczący	chairman	**Przewodniczący** odrzucił wniosek.
+rezultat	result	Nie można winić twoich rodziców za taki **rezultat**.
+solidarność	solidarity	Musimy okazać **solidarność** z ofiarami trzęsienia ziemi.
+skutecznie	efficiently	Komputer działa **skutecznie**.
+północny	northern	Wyjechał na ekspedycję na biegun **północny**.
+dystans	distance	Czterdzieści mil to dobry **dystans**.
+komentować	to comment	Nie chcę **komentować** tej sprawy.
+wojewódzki	provincial	To **wojewódzkie** miasto jest duże.
+milczenie	silence	Zapanowało nagłe **milczenie**.
+dekada	decade	Tom nie pracował od ponad **dekady**.
+krakowski	krakow	Kupiliśmy **krakowski** obiad.
+dysponować	have	On **dysponuje** jedynie powierzchowną wiedzą na ten temat.
+znikać	disappear	Lody szybko **znikają** ze stołu.
+ucieczka	escape	Jego **ucieczka** z więzienia była dobrze przemyślana.
+rozpoczynać	begin	Dzieci **rozpoczynają** lekcję o ósmej.
+postrzegać	perceive	Ludzie **postrzegają** ją jako liderkę.
+muzyczny	musical	Czy umiesz grać na jakimś instrumencie **muzycznym**?
+zabezpieczyć	secure	Wzmocnili wały, żeby **zabezpieczyć** wioskę przed powodzią.
+grono	group	Całe **grono** uczniów czekało.
+dotychczas	so far	**Dotychczas** nie mieliśmy z tym żadnych problemów.
+życiowy	life	Jego celem **życiowym** jest oszczędzanie pieniędzy.
+docierać	arrive	On zawsze **dociera** na czas.
+otaczać	surround	Liny **otaczają** to miejsce.
+tragedia	tragedy	To była prawdziwa **tragedia**.
+ocenić	assess	Próbujemy to **ocenić**.
+utrata	loss	Po chorobie była duża **utrata** wagi.
+głosić	preach	Świadkowie Jehowy są znani z **głoszenia** od drzwi do drzwi.
+opór	resistance	Stawili **opór** najeźdźcy.
+literacki	literary	Każdy człowiek ma prawo do ochrony moralnych i materialnych korzyści wynikających z jakiejkolwiek jego działalności naukowej, **literackiej** lub artystycznej.
+zza	from behind	Słońce wyszło **zza** chmur.
+zło	evil	Wiem, jaka jest różnica między dobrem i **złem**.
+skomplikowany	complicated	To bardzo **skomplikowany** plan.
+czemu	why	**Czemu** płaczesz teraz?
+karny	criminal	Jest autorytetem w zakresie prawa **karnego**.
+zmarły	late	Często myślę o mojej **zmarłej** matce.
+wypełniać	fill out	Nowe procedury księgowe wymagają od nas **wypełniania** różnych formularzy w celu raportowania wydatków.
+wymieniać	replace	Latarnie sodowe **wymieniane** są na LED-y.
+organizator	organizer	**Organizator** spotkania już przyjechał.
+remont	renovation	Szpital, do którego zwykle chodzę, jest zamknięty z powodu **remontu**.
+wizerunek	image	Jej **wizerunek** jest bardzo dobry.
+finansować	finance	Firma chce **finansować** nowy projekt.
+moralny	moral	To było bardzo **moralne**.
+straż	fire brigade	Dzwoń na **straż** pożarną!
+przeciwnie	on the contrary	Wręcz **przeciwnie**, Tom wpływa pozytywnie na moje życie odkąd go znam.
+przełom	breakthrough	Co było dla ciebie **przełomem**?
+żydowski	jewish	Kiedy już prawie był czas na **żydowską** Paschę, Jezus poszedł do Jerozolimy.
+ekipa	crew	Nasza **ekipa** pracuje dziś razem.
+byle	anything	Kobiety są rzeczywiście bardziej gadatliwe niż mężczyźni; spędzają cały dzień gadając o **byle** czym.
+zaprezentować	present (perfective)	Jutro **zaprezentuję** projekt.
+zbiór	set	Oczywiście, teoria ta jest prawdziwa dla **zbiorów** skończonych.
+status	status	Mój **status** jest już znany.
+dążyć	strive	Zawsze **dążymy** do polepszenia jakości usług.
+platforma	platform	Ta **platforma** działa na komputerze.
+wypowiadać	express	Często **wypowiadam** swoje zdanie.
+powstanie	uprising	**Powstanie** było ważne dla kraju.
+przedsiębiorstwo	company	To **przedsiębiorstwo** zostało założone w roku 1974.
+czynnik	factor	Rozważyłem różne **czynniki** zanim podjąłem działania.
+łącznie	in total	Zapłaciłem **łącznie** trzydzieści złotych.
+branża	industry	Daniel ma znajomości w **branży** filmowej.
+niedawny	recent	Wszystko było wspaniale do **niedawna**.
+filmowy	film	Daniel ma znajomości w branży **filmowej**.
+negatywny	negative	Ona ma **negatywne** podejście do życia.
+sumienie	conscience	Nie dręczy mnie **sumienie**.
+odpowiednio	appropriately	Dzieci siedzą **odpowiednio** przy stole.
+publikacja	publication	Nie wszystkie teksty zasługują na **publikację**.
+spośród	among	Musimy wybrać jedną **spośród** tych aplikacji.
+epoka	era	Dzięki internetowi żyjemy w **epoce** kunktatorstwa.
+zdobywać	gain	Z każdym dniem **zdobywamy** coraz większą wiedzę.
+seksualny	sexual	Nie chce, byś mówił mu o swoim życiu **seksualnym**.
+tryb	mode	Tego programu nie można uruchomić w **trybie** DOS.
+agencja	agency	Tom pracuje dla **agencji** tłumaczeniowej.
+modlitwa	prayer	Moje **modlitwy** zostały wysłuchane.
+standard	standard	To jest nasz szkolny **standard**.
+cmentarz	cemetery	Na którym **cmentarzu** jest pochowany Tom?
+powrócić	return (perfective)	Tom **powrócił** do swojego rodzinnego miasta.
+kształtować	shape	Tylko marzenie może **kształtować** przyszłość.
+ograniczenie	restriction	To **ograniczenie** utrudnia pracę.
+spadek	drop	Pandemia spowodowała **spadek** w podróży międzynarodowej.
+konstrukcja	construction	Ta **konstrukcja** jest bardzo mocna.
+osiedle	settlement	Nie jest jasne, czy ten obszar był stałym **osiedlem**.
+cierpienie	suffering	Jej **cierpienie** było widoczne.
+ewentualny	possible	To jest **ewentualny** problem.
+duchowy	spiritual	Przypuszczam, że to co rozumiemy pod pojęciem piękna jest tym obiektem **duchowym** lub fizycznym, częściej fizycznym, który zadowala nasz zmysł estetyczny.
+opłata	fee	Ile wynosi **opłata** za wstęp?
+wątek	thread	Zacząłem ten **wątek**.
+tor	track	**Tory** biegną równolegle do drogi.
+administracja	administration	**Administracja** pracuje dzisiaj wolno.
+izba	ward	Pacjent leży na **izbie**.
+podejrzany	suspicious	Ten człowiek jest **podejrzany**.
+troska	concern	Powiedziałem Tomowi, że rozumiem jego **troskę**.
+prasa	press	**Prasa** oszaleje na punkcie tej historii.
+analizować	analyse	Musimy **analizować** wyniki testu.
+wypadać	be appropriate	Nie **wypada** krzyczeć na rodziców.
+kulturowy	cultural	Moskiewski Kreml jest obiektem **kulturowego** dziedzictwa.
+liga	league	Nasza **liga** zaczyna się jutro.
+wydanie	edition	Nowe **wydanie** książki jest droższe.
+sprawca	perpetrator	**Sprawca** uciekł z miejsca.
+oficer	officer	**Oficer** uchwycił go za ramię.
+posługiwać	use	Potrafię **posługiwać** się tabletem.
+krytyka	criticism	Tom nie jest otwarty na **krytykę**.
+pałac	palace	Uwielbiam zwiedzać piękne zamki i **pałace**.
+technika	technique	W dżudo **technika** jest ważniejsza niż siła.
+dowodzić	command	Kapitan **dowodzi** statkiem i załogą.
+skupiać	focus	Staram się **skupiać** na nauce.
+cykl	cycle	Możemy jasno dostrzec **cykl** pór roku w Kanadzie.
+nawiązywać	relate to	To **nawiązuje** do naszej rozmowy.
+działacz	activist	Ten **działacz** mówi o wyborach.
+ulegać	yield to	Nie **ulegać** presji kolegów.
+barwa	colour	Ta **barwa** jest bardzo jasna.
+odgrywać	play a role	Mamy erę informatyki - komputery **odgrywają** coraz ważniejszą rolę w naszym życiu codziennym.
+interpretacja	interpretation	Moja **interpretacja** wiersza jest inna.
+zapowiedzieć	announce (perfective)	Wczoraj nauczyciel **zapowiedział**, że dziś zrobi nam sprawdzian.
+uczelnia	university	Studiuję na dobrej **uczelni**.
+przeszkoda	obstacle	Deszcz był jedyną **przeszkodą**.
+zdecydowany	determined	Jest bardzo **zdecydowany** dziś.
+powiatowy	district	To **powiatowy** urząd zdrowia.
+wyposażyć	equip	Żołnierze byli **wyposażeni** w broń.
+nabrać	take on (perfective)	Kiedy odnalazłem swoją tożsamość, życie **nabrało** sensu.
+potencjalny	potential	Firma zaprosiła **potencjalnych** klientów na imprezę.
+pragnienie	thirst	Umieram z **pragnienia**. Daj mi wody!
+oficjalnie	officially	Sprawa została **oficjalnie** zatwierdzona.
+pochodzenie	origin	Znasz jego **pochodzenie**?
+groźny	dangerous	Aligator to bardzo **groźne** zwierzę.
+generalny	general	Tom jest nowym sekretarzem **generalnym** Organizacji Narodów Zjednoczonych.
+zgłaszać	apply	Chcę się **zgłaszać** na kurs.
+zaznaczyć	mark (perfective)	**Zaznacz** słowa, których nie rozumiesz.
+msza	mass	W niedzielę idziemy na **mszę**.
+regionalny	regional	To dialekt **regionalny**.
+śląski	silesian	Województwo **śląskie** jest najgęściej zaludnionym regionem Polski.
+krąg	ring	Na palcu mam złoty **krąg**.
+sprowadzić	to fetch	Idź i **sprowadź** Toma.
+nieruchomość	property	Ceny **nieruchomości** idą w górę.
+redakcja	editorial office	W **redakcji** pracuje mój brat.
+obniżyć	to lower (perfective)	Czy może Pan **obniżyć** cenę odrobinę?
+ująć	to phrase	Czy można to **ująć** inaczej?
+pięknie	beautifully	Lato jest porą, kiedy kobiety wyglądają **najpiękniej**.
+rządowy	governmental	To nie jest projekt **rządowy**.
+promować	to promote	Ta organizacja **promuje** umiejętność czytania i pisania na obszarach rolnych.
+opracować	to develop (perfective)	Studenci z Nowej Zelandii **opracowali** trwałe materiały z liści kapusty i lnu, które wkrótce mogą zostać wykorzystane do produkcji nart, kajaków i deskorolek o wysokich osiągach.
+zwolennik	supporter	**Zwolennicy** zdrowego stylu życia przeforsowali ustawodawstwo ograniczające palenie w miejscu pracy.
+mina	face	Nie rób takiej **miny**.
+znaczący	significant	To **znaczący** krok dla szkoły.
+finał	final	Nasz zespół gra w **finale**.
+pojedynczy	single	Chciałbym zarezerwować **pojedynczy** pokój na 3 czerwca.
+reforma	reform	Partia Demokratyczna potrzebuje gruntownej **reformy**.
+przywieźć	to bring back	**Przywiózł** kilka pamiątek.
+unijny	european union	To jest **unijny** przepis.
+cywilny	civil	Jaki jest pana stan **cywilny**?
+dno	bottom	Jej pierścionek wpadł do rzeki i opadł na **dno**.
+odmiana	change	Czym jest **odmiana**?
+wyprawa	expedition	Był członkiem **wyprawy**, która weszła na Mount Everest.
+zrozumienie	understanding	Potrzebuję twojego **zrozumienia**.
+stawka	hourly pay	Ile wynosi twoja **stawka** za godzinę?
+usiłować	to try	Tom **usiłował** mnie zabić.
+wybudować	to build (perfective)	Tę salę koncertową **wybudowano** w 2013 roku.
+rejon	area	W tym **rejonie** policja szuka zbiegłego przestępcy.
+twórczość	creativity	Jego **twórczość** jest bardzo ciekawa.
+masowy	mass	To był **masowy** protest ludzi.
+występ	performance	Bilety na piątkowy **występ** nie były dostępne.
+plus	plus	Ile to jest dwa **plus** trzy?
+ciąża	pregnancy	Myślę, że znów jestem w **ciąży**.
+sądowy	judicial	Byłaś kiedyś świadkiem w sprawie **sądowej**?
+galeria	mall	Chcesz iść z nami do **galerii** handlowej?
+deklaracja	declaration	Proszę wypełnić **deklarację** celną.
+szczerze	honestly	**Szczerze**, nie wiem.
+unosić	float	Liście **unoszą** się na wodzie.
+wynagrodzenie	salary	Moje **wynagrodzenie** jest dziś wyższe.
+budowlany	construction	Materiały **budowlane** są teraz drogie.
+przygotowanie	preparation	Dobre **przygotowanie** pomaga na sprawdzianie.
+demokratyczny	democratic	To była **demokratyczna** decyzja.
+sprowadzać	import	**Sprowadzamy** z Australii dużo rzeczy.
+środkowy	middle	**Środkowy** głośnik jest za głośny.
+określenie	term	To trudne **określenie** znaczenia.
+przejście	passage	Wejdź przez to **przejście**.
+oryginalny	original	Uważam to zdanie za dość **oryginalne**.
+księga	book	Świętą **księgą** muzułmanów jest Koran.
+pozostawiać	leave	Nie **pozostawiasz** mi wielkiego wyboru, co nie?
+intensywny	intense	Możliwe, że z powodu **intensywnych** opadów śniegu odwołają jutro szkołę.
+dosłownie	literally	Wziął to **dosłownie**.
+otóż	well then	**Otóż** nie mam czasu.
+interwencja	intervention	Policja zrobiła **interwencję**.
+poparcie	support	Ma moje **poparcie** w wyborach.
+akademia	academy	Witaj w **akademii** policyjnej.
+pracodawca	employer	Jego **pracodawca** potrącił 50 dolarów z jego zarobków.
+wzmocnić	to strengthen	**Wzmocnili** wały, żeby zabezpieczyć wioskę przed powodzią.
+ciągły	constant	Irytuje nas ten **ciągły** hałas.
+kulturalny	polite	Był bardzo **kulturalny** wobec sąsiadki.
+debata	debate	Przez całą **debatę** milczał.
+elektroniczny	electronic	Jak sprawdzasz pocztę **elektroniczną**?
+dolny	lower	Schodzimy na **dolne** piętro.
+regularnie	regularly	Musisz jeść **regularnie**.
+wiejski	rural	Krajobraz **wiejski** jest piękny na wiosnę.
+czerpać	derive	**Czerpał** wiele przyjemności z książek.
+dialog	dialogue	**Dialog** w tej książce jest bardzo nierealistyczny.
+papież	pope	Czy **papież** jest katolikiem?
+chrześcijański	christian	W wierze **chrześcijańskiej**, wierzący myślą, że jest tylko jeden Bóg, a Jezus Chrystus to syn Boży.
+ukazywać	show	Zdjęcie **ukazuje** nasz dom.
+potraktować	treat (perfective)	**Potraktowali** mnie jak dziecko.
+potencjał	potential	Ma w sobie duży **potencjał**.
+słabo	weakly	Mówił **słabo** i cicho.
+protestować	protest	Wielu Amerykanów **protestowało** przeciw zakupowi Alaski.
+poprawa	improvement	Jej znajomość angielskiego uległa radykalnej **poprawie**.
+infrastruktura	infrastructure	Nasza **infrastruktura** jest nowa.
+zgodny	consistent	To co mówisz teraz, nie jest **zgodne** z tym, co powiedziałeś wcześniej.
+niekiedy	sometimes	Szczęście jest **niekiedy** utożsamiane z pieniędzmi.
+uderzać	to hit	Chłopiec **uderzał** w bęben.
+zaangażowanie	commitment	Doceniam twoje **zaangażowanie**.
+dzieje	history	Czytam **dzieje** Polski.
+komunistyczny	communist	Mój dziadek był **komunistyczny**.
+uświadomić	to realize (perfective)	To **uświadomiło** mi błąd.
+parlament	parliament	**Parlament** jest w stolicy.
+miniony	past	Dziękuję za **minioną** noc.
+sprawować	to exercise	Obecnie w większości krajów europejskich władzę **sprawują** socjaldemokraci, ale zauważalny jest wzrost prawicowego ekstremizmu.
+legenda	legend	**Legenda** mówi, że była syreną.
+tragiczny	tragic	**Tragiczne** wiadomości doprowadziły jego matkę do szaleństwa.
+elita	elite	Ta firma ma własną **elitę**.
+żądać	demand	**Żądają** skrócenia czasu pracy.
+kobiecy	female	To jest **kobiecy** głos.
+publikować	to publish	Jest **publikowane** co roku.
+spoglądać	to look at	On **spogląda** na coś, co kiedyś było biurkiem ojca.
+oparcie	support	Mama daje mi **oparcie**.
+odniesienie	reference	To dobre **odniesienie** w książce.
+zasługa	merit	To twoja **zasługa**.
+wypaść	to turn out	Egzamin **wypadł** dobrze.
+delikatnie	gently	Pielęgniarka **delikatnie** owinęła bandaż dookoła mojej głowy.
+gospodarstwo	farm	Mam **gospodarstwo** niedaleko stąd.
+sektor	sector	Ten **sektor** rośnie bardzo szybko.
+dramatyczny	dramatic	To był **dramatyczny** film.
+komunikat	announcement	Dostałem **komunikat** od szefa.
+zmuszać	to force	Nie **zmuszaj** się do robienia rzeczy, których nie lubisz.
+śledczy	investigative	Policja prowadzi **śledczy** raport.
+dziecięcy	children's	Tom jest psychologiem **dziecięcym**, prawda?
+deska	board	Muszę kupić nową **deskę** do krojenia.
+istnienie	existence	Wierzę w **istnienie** innych światów.
+zestaw	set	Kupiłem nowy **zestaw** noży.
+odwoływać	to refer	Często **odwołuję** się do książki.
+przystąpić	to take (perfective)	Muszę **przystąpić** do egzaminu.
+olbrzymi	huge	Między tymi dwiema teoriami jest **olbrzymia** różnica.
+symboliczny	symbolic	To bardzo **symboliczne**.
+spektakl	show	Ten **spektakl** był bardzo ciekawy.
+wzywać	to call for	Słyszałem, jak młoda dziewczynka **wzywa** pomoc.
+powyżej	above	Ludzie **powyżej** osiemnastu lat mogą prowadzić.
+otwarcie	openly	Powiedział to **otwarcie** przed wszystkimi.
+inwestor	investor	85% zagranicznych **inwestorów** w Kazachstanie uważa ten kraj za najatrakcyjniejszy rynek WNP.
+gwarantować	to guarantee	Osobiście ci to **gwarantuję**.
+niechęć	reluctance	Okazał dużą **niechęć** do pomocy.
+robotnik	worker	**Robotnicy** budują domy przez cały dzień.
+przyczynić	to contribute	Twoja pomoc **przyczyni** się do sukcesu.
+administracyjny	administrative	To musi być błąd **administracyjny**.
+intencja	intention	Nie wiem, jakie są jej **intencje**.
+ściągnąć	to download (perfective)	Tom **ściągnął** już nową aplikację Tatoeby.
+refleksja	reflection	Jej **refleksja** była bardzo głęboka.
+stamtąd	from there	Wybiegłem **stamtąd** i złapałem taksówkę.
+wyjaśnienie	explanation	Potrzebuję prostego **wyjaśnienia** zadania.
+chociażby	even if	Przyjdę, **chociażby** padał deszcz.
+dostosować	to adapt (perfective)	Można **dostosować** to biurko do wzrostu każdego dziecka.
+odległy	distant	Używamy teleskopów, aby widzieć **odległe** obiekty.
+przewaga	advantage	Ona ma nade mną **przewagę**.
+przebiegać	to run	Między naszymi domami **przebiega** długa droga.
+resztka	leftovers	Nasza mama musiała zrobić kolację z **resztek**.
+unieść	to raise (perfective)	Nie mogłem **unieść** tej walizki.
+gromadzić	to gather	Rachunki wciąż się **gromadzą**.
+nisko	low	Mieszkają piętro **niżej**.
+przemiana	transformation	Ta **przemiana** trwała kilka lat.
+nieliczny	few	Zostało nam **nieliczne** grono.
+odmienny	different	To samo zdarzenie może u różnych osób wywołać **odmienne** reakcje.
+podejrzenie	suspicion	Policja ma **podejrzenie** wobec niego.
+zbiorowy	collective	Podjęliśmy **zbiorowy** protest.
+odkrywać	to discover	Lubię **odkrywać** nowe miejsca.
+podwójny	double	Czy masz **podwójne** łóżko?
+obserwacja	observation	Nauka jest oparta na dokładnej **obserwacji**.
+niepodległość	independence	Gdy Katalonia uzyska **niepodległość**, pojadę tam.
+osobowy	personal	Mamy zasadę, że nie ujawniamy danych **osobowych**.
+stosunki	relations	Nasze **stosunki** są teraz lepsze.
+radykalny	radical	Niektórzy są umiarkowani, niektórzy **radykalni**.
+faza	phase	Negocjacje wkroczyły w nową **fazę**.
+front	front	On był na **froncie** przez trzy miesiące.
+oświadczenie	statement	Firma wydała **oświadczenie** dziś rano.
+policyjny	police	**Policyjny** helikopter zlokalizował samochód Dana.
+dar	gift	Muzyka to **dar** od Boga.
+interesujący	interesting	To bardzo **interesujący** film.
+rozmaity	various	Ta szuflada jest pełna **rozmaitych** rzeczy.
+powoływać	to invoke	Prawnik **powoływał** się na ustawę.
+rocznie	annually	Japońska gospodarka nadal wzrastała o ponad 5% **rocznie**.
+kapitał	capital	Moje zdrowie to mój jedyny **kapitał**.
+przekaz	message	Łapię **przekaz**.
+nawiązać	to establish (perfective)	**Nawiązaliśmy** przyjazne stosunki z rządem tego kraju.
+bieżący	current	Mamy **bieżący** raport sprzedaży.
+jasno	clearly	Tłumacz to **jasno**.
+wyróżniać	stand out	Ten zawodnik się **wyróżnia**.
+hala	hall	Nowa **hala** jest dwa razy większa od starej.
+edycja	edition	Nowa **edycja** książki jest ładna.
+pierwotny	original	Podobnie jak kolor niebieski, gronostaje są jedną z rzeczy, które przemawiają do mnie na **pierwotnym** poziomie.
+krytyczny	critical	Ten chory chłopiec jest w stanie **krytycznym**.
+wnieść	bring in	Muszę **wnieść** krzesło do domu.
+materialny	material	Najlepsze rzeczy w życiu to nie rzeczy **materialne**.
+uznanie	recognition	Jego praca zdobyła **uznanie**.
+satysfakcja	satisfaction	Mam dużą **satysfakcję** z pracy.
+nadzór	supervision	Praca jest pod ścisłym **nadzorem**.
+podatkowy	tax	Istnieją ulgi **podatkowe** pomagające skompensować koszty.
+ponosić	carry away	Czasami mnie **ponosi**.
+niekoniecznie	not necessarily	Film musi mieć początek, środek i zakończenie... ale **niekoniecznie** w tej kolejności.
+rzeczywisty	real	Nie są **rzeczywiste**.
+powszechnie	widely	Żelazo jest **najpowszechniej** używanym metalem.
+wytwarzać	produce	Kilka firm obecnie **wytwarza** produkty kosmetyczne zawierające wyciągi z łożyska zwierzęcego.
+rozgrywać	take place	Akcja **rozgrywa się** w Paryżu.
+działka	plot	Ta **działka** jest moją własnością.
+życzenie	wish	Mam jedno **życzenie**.
+pokaz	show	Odwołaliśmy kilka **pokazów**.
+deklarować	declare	Firma **deklaruje** zysk.
+udany	successful	To był bardzo **udany** projekt.
+historyk	historian	On jest **historykiem**.
+nałożyć	impose (perfective)	Na importowane samochody został **nałożony** specjalny podatek.
+profil	profile	Ten portret ukazuje **profil** pięknej kobiety.
+ukochany	beloved	Mój **ukochany** brat przyjechał.
+współpracownik	coworker	Mój **współpracownik** pomaga mi.
+rozłożyć	to spread	Mary **rozłożyła** na stole wielką mapę.
+płeć	gender	Niektóre zwierzęta zmieniają **płeć**.
+kodeks	code	Musisz przestrzegać **kodeksu** drogowego.
+górny	upper	Boli mnie **górny** prawy ząb mądrości.
+wykonawca	performer	Gdy na scenę wszedł następny **wykonawca**, zaczęło padać.
+korzystny	beneficial	Regularne ćwiczenie jest **korzystne** dla zdrowia.
+poszukiwanie	search	Trwa **poszukiwanie** tego dokumentu.
+kolejność	order	Zapisz rzeczy w tej **kolejności**.
+zasób	resource	Ten **zasób** jest bardzo ważny.
+złoto	gold	Milczenie jest **złotem**.
+powracać	to return	Ptaki **powracają** na wiosnę.
+regulacja	regulation	Nowa **regulacja** jest trudna.
+intelektualny	intellectual	Lubię **intelektualne** rozmowy.
+oderwać	to take off	Nie mogła **oderwać** od niego wzroku.
+niewątpliwie	undoubtedly	Jest **niewątpliwie** najpopularniejszym reżyserem filmowym na świecie.
+pozyskać	to get (perfective)	Chcemy **pozyskać** nowych klientów.
+dziesiątek	dozens	Czekają na ciebie **dziesiątki** listów.
+szczeciński	from szczecin	To jest **szczeciński** tramwaj.
+zaliczyć	to pass (perfective)	**Zaliczyłeś** egzamin z matematyki?
+zatrudniać	to employ	**Zatrudniają** pracowników tymczasowych.
+rozegrać	to play (perfective)	Drużyna **rozegrała** mecz wczoraj.
+ściśle	strictly	**Ściśle** mówiąc, pomidor jest owocem.
+naruszyć	to violate (perfective)	Sami **naruszył** warunki umowy serwisowej.
+oddalić	to dismiss	Skarga została **oddalona**.
+nieustannie	constantly	On **nieustannie** mówi.
+strzał	shot	Została raniona **strzałem** w nogę.
+wystawiać	to present	Galeria **wystawia** nowe obrazy.
+zastępca	deputy	Mój ojciec jest **zastępcą**, a nie ministrem.
+uzasadnienie	justification	To moje **uzasadnienie** decyzji.
+marsz	march	**Marsz** trochę ich zmęczył.
+psychiczny	mental	Twoje zdrowie **psychiczne** nie podlega dyskusji.
+kadra	staff	Nasza **kadra** trenuje codziennie.
+zamach	attack	**Zamachy** stanu to coś normalnego w krajach afrykańskich.
+tylny	rear	Twój samochód ma zepsute **tylne** światło.
+swoisty	specific	To ma **swoisty** smak.
+zakończenie	ending	Podobało mi się **zakończenie** filmu.
+szkolenie	training	Mamy dziś **szkolenie** w pracy.
+informacyjny	informational	To **informacyjny** plakat w szkole.
+tegoroczny	this year's	Jest sześciu nominowanych do **tegorocznej** nagrody.
+polecenie	instruction	Nauczyciel dał proste **polecenie**.
+serial	tv series	Jaki jest twój ulubiony **serial** telewizyjny?
+pijany	drunk	On jest dziś **pijany**.
+zbliżyć	to approach (perfective)	Musimy **zbliżyć** się do domu.
+równocześnie	simultaneously	Sami i Layla powiedzieli to **równocześnie**.
+utracić	to lose (perfective)	Wygląda na to, że te dane na komputerze **utraciłeś** już bezpowrotnie.
+pośrednictwo	mediation	Potrzebne jest **pośrednictwo** prawnika.
+likwidacja	liquidation	Firma ma plan **likwidacji**.
+nabyć	to acquire	**Nabył** amerykańskie obywatelstwo.
+powiązać	to bind (perfective)	Pomóż mi **powiązać** gazety w paczki.
+przemysłowy	industrial	Wielu ludzi pracuje w miastach **przemysłowych**.
+redaktor	editor	**Redaktor** i wydawca są obaj moimi kuzynami.
+sylwetka	figure	Ma sportową **sylwetkę**.
+generał	general	**Generał** jest wysoko postawionym oficerem.
+tygodnik	weekly	Czytałem ten **tygodnik** wczoraj.
+wstępny	initial	To tylko **wstępny** plan.
+wieloletni	long-term	To był **wieloletni** projekt.
+wydobyć	to extract (perfective)	Lekarz chce **wydobyć** ciało obce.
+wpisywać	to enter	Proszę **wpisywać** nazwisko tutaj.
+przybywać	to arrive	**Przybywam**.
+zawartość	contents	Pudełko zostało uszkodzone, ale jego **zawartość** jest nietknięta.
+tamtejszy	local	**Tamtejsze** warunki są nie do opisania.
+poprzeć	to support (perfective)	Mam nadzieję, że cię **poprze**.
+terytorium	territory	Poszerzyli swoje **terytorium** przez podbój.
+towarzysz	companion	Mój **towarzysz** pomógł mi.
+kościelny	church	Wielu Japończyków bierze ślub **kościelny**.
+terapia	therapy	Myślę, że powinien pójść na **terapię**.
+ujawniać	to disclose	Mamy zasadę, że nie **ujawniamy** danych osobowych.
+autorytet	authority	Jest **autorytetem** w zakresie prawa karnego.
+pobliski	nearby	Mieszkam w **pobliskim** hotelu.
+cywilizacja	civilization	Starożytna **cywilizacja** budowała miasta.
+mit	myth	A to nie jest tylko **mit**?
+rozgrywka	match	Dzisiaj gramy ważną **rozgrywkę**.
+zatrudnienie	employment	Po studiach mam **zatrudnienie**.
+swoboda	freedom	W pracy cenię **swobodę** wyboru.
+stale	constantly	On **stale** spóźnia się do szkoły.
+teatralny	theatrical	Uczęszczam na zajęcia **teatralne**.
+poświęcać	devote	**Poświęcam** około trzech godzin tygodniowo na naukę gry na wiolonczeli.
+godność	dignity	Dla zachowania **godności** poświęcił znakomitą karierę.
+cios	blow	Ten **cios** był bardzo mocny.
+wykształcenie	education	Mam dobre **wykształcenie** techniczne.
+niepotrzebny	unnecessary	Usuń **niepotrzebne** pliki aby zwolnić pamięć.
+zlikwidować	delete	Nie wiem jak **zlikwidować** swój ostatni wpis.
+nurt	current	Ten **nurt** rzeki jest szybki.
+zarzucać	cast	**Zarzucam** żyłkę do morza.
+areszt	custody	Policja ma jednego z porywaczy w **areszcie**.
+angażować	get involved	Nie chcę **angażować** się w spór.
+zlecenie	order	Dostałem nowe **zlecenie** w firmie.
+odwracać	turn away	Nie **odwracaj** się do mnie plecami.
+dzienny	daily	Tom i Mary zrobili przemeblowanie w pokoju **dziennym**.
+pustka	emptiness	W pokoju była tylko **pustka**.
+godzić	reconcile	Musimy **godzić** ich po kłótni.
+nabierać	take on	Wszystko zaczyna **nabierać** sensu.
+cytować	quote	On często **cytuje** Shakespeare'a.
+opłacać	be worth	Ta naprawa nie **opłaca** się.
+dyspozycja	disposal	Mam bardzo mało czasu do **dyspozycji**.
+ukraiński	ukrainian	Mówisz po **ukraińsku**, czy po rosyjsku?
+wyznaczać	to designate	Granicę więzienia **wyznacza** duży płot.
+zaglądać	to peer	Lubię **zaglądać** do kuchni.
+umożliwić	to enable (perfective)	Stypendium **umożliwiło** mu dalszą naukę.
+regulować	to regulate	Lekarz chce **regulować** ciśnienie.
+odnotować	to note	Twój sprzeciw został **odnotowany**.
+pieśń	song	Dziecko śpiewało **pieśń** w szkole.
+gwałtownie	rapidly	Temperatury w Arktyce **gwałtownie** rosną.
+metalowy	metal	Czy to jest drewniane czy **metalowe**?
+rezygnacja	resignation	Mój szef został zmuszony do **rezygnacji**.
+odciąć	to cut off	**Odciął** dwa metry liny.
+narracja	narration	Ta **narracja** w filmie jest jasna.
+słuszny	right	Czy nie robisz tego, co uważasz za **słuszne**?
+sowiecki	soviet	W czasach Zimnej Wojny, na Kubie i w Wietnamie istniały **sowieckie** bazy marynarki i lotnictwa.
+odbijać	to lose it	Myślałem, że mi **odbija**.
+radziecki	soviet	Moi dziadkowie mieszkali w **radzieckim** bloku.
+posiedzenie	session	Na **posiedzeniu** omówiono budżet.
+świadczenie	benefit	Dostał nowe **świadczenie** z urzędu.
+figura	figure	Podjadanie pomiędzy posiłkami źle wpływa na **figurę**.
+ograniczony	limited	Mam **ograniczony** czas dziś wieczorem.
+stwarzać	to create	Ten plan **stwarza** problemy.
+dwójka	two	On jest ojcem **dwójki** dzieci.
+sąsiedni	adjacent	Proszę, przynieś krzesło z **sąsiedniego** pokoju.
+kancelaria	office	Kwity z Panamy ukazują, w jaki sposób panamska **kancelaria** prawna pomogła swoim klientom założyć firmy fasadowe w rajach podatkowych dookoła świata.
+samodzielny	independent	Mój syn jest już **samodzielny**.
+postanowienie	resolution	Mam **postanowienie**: codziennie ćwiczę.
+kółko	circle	Czerwone **kółka** na mapie oznaczają szkoły.
+oskarżenie	accusation	Padło na mnie fałszywe **oskarżenie**.
+okręgowy	district	Sąd **okręgowy** rozpoczął sprawę.
+więź	bond	Między nimi była silna **więź**.
+królewski	royal	Pałac **królewski** zbudowano na wzgórzu.
+klęska	disaster	Trzęsienia ziemi i powodzie to **klęski** żywiołowe.
+szczególność	particularity	Ta **szczególność** trudno ją wyjaśnić.
+tajny	secret	Czy to jakiś rodzaj **tajnego** kodu?
+zwłoki	corpse	Lekarz stwierdził **zwłoki** po wypadku.
+jakże	how	**Jakże** piękny jest ten kwiat.
+prezydencki	presidential	Niestety, brak mu środków na kampanię **prezydencką**.
+zapowiedź	forecast	Dzisiejsza **zapowiedź** mówi o deszczu.
+dane	data	Te **dane** są zapisane w komputerze.
+piekło	hell	Ta lekcja to prawdziwe **piekło**.
+globalny	global	Nasz temat na ten tydzień to **globalne** ocieplenie.
+reprezentacja	representation	Ta **reprezentacja** spotkała się z ministrem.
+wykazywać	show	Nasi studenci **wykazują** niezwykły postęp.
+niegdyś	formerly	W tym miejscu była **niegdyś** świątynia.
+emocjonalny	emotional	Jesteś **emocjonalny**.
+przesuwać	move	**Przesuwam** krzesło pod okno.
+przywoływać	hail	Nie ma potrzeby **przywoływać** taksówki.
+strażnik	guard	Tom jest **strażnikiem**.
+badacz	researcher	**Badacze** wciąż są dalecy od zrozumienia mechanizmu choroby Alzheimera.
+wbić	to hammer	**Wbiła** gwóźdź w ścianę i powiesiła obraz.
+leczenie	treatment	To **leczenie** pomaga po operacji.
+czynienie	making	**Czynienie** dobra jest ważne.
+zaznaczać	to mark	Kościoły są **zaznaczane** na mapach krzyżami.
+nakładać	to overlap	Te koła **nakładają** się na siebie.
+specyficzny	specific	Ten zwyczaj jest **specyficzny** dla Japonii.
+uderzenie	impact	Silne **uderzenie** uszkodziło drzwi.
+kadencja	cadence	W tej piosence podoba mi się **kadencja**.
+omawiać	to discuss	Tom i Mary **omawiali** problem prawie godzinę.
+osiągnięcie	achievement	To duże **osiągnięcie** dla naszej klasy.
+złudzenie	illusion	To tylko **złudzenie**.
+wkładać	to put	Nie **wkładaj** wszystkich jajek do jednego koszyka.
+przyspieszyć	to speed up	Pociąg **przyspieszył**.
+wzbudzać	to arouse	Wrodzona wyższość wszystkich koziorożców nie powinna już więcej **wzbudzać** wątpliwości.
+wóz	cart	Nie chcę być piątym kołem u **wozu**.
+podziemny	underground	Wody **podziemne** są skażone.
+portret	portrait	Na ścianie wisiał **portret** starego mężczyzny.
+począć	to do (perfective)	Cóż ja mam **począć**?
+akceptować	to accept	**Akceptuję** to.
+przechowywać	to store	To mięso nie może być długo **przechowywane**.
+samorządowy	municipal	Urząd **samorządowy** działa blisko domu.
+zdziwienie	surprise	Moje **zdziwienie** było ogromne.
+staranie	effort	Dziękuję za twoje **staranie**.
+krytyk	critic	**Krytycy** czasem sami nie wiedzą, co krytykują.
+wypracować	to write (perfective)	W jego **wypracowaniu** jest mało błędów, jeśli w ogóle.
+parafia	parish	Jedenaście Iat temu w **parafii** był pożar.
+doświadczać	experience	To dlatego lubię podróże i chciałbym **doświadczać** wielu różnych kultur.
+solidny	sturdy	Weź to krzesło. Jest **solidne**.
+silnie	strongly	Wiatr wieje **silnie**.
+upływ	passage	Zauważyłem **upływ** czasu.
+zarzucić	accuse	Policja **zarzuciła** mu kradzież.
+ponowny	again	Musimy powstrzymać Toma przed **ponownym** zrobieniem tego.
+odbiór	receipt	Proszę potwierdzić **odbiór**!
+chaos	chaos	Sytuacja w Kirgistanie to kompletny **chaos**.
+wyposażenie	equipment	Nowe **wyposażenie** pokoju jest drogie.
+kompleks	complex	Najgorsze w **kompleksie** niższości jest to, że mają go nie ci ludzie, którzy powinni.
+uwzględniać	take into account	Musimy **uwzględniać** pogodę.
+ustanowić	establish	Tom Jackson **ustanowił** nowy rekord świata.
+przeżycie	experience	Ta podróż była wielkim **przeżyciem**.
+rezygnować	give up	Tom nie chciał **rezygnować** z planu.
+sprawny	efficient	Ten program jest bardzo **sprawny**.
+medialny	media	To **medialny** temat dnia.
+modernizacja	modernization	Miasto planuje **modernizację** rynku.
+użytek	use	Powinieneś zrobić **użytek** z tej szansy.
+inwestować	invest	**Inwestuję** w swoją przyszłość.
+rozmówca	interlocutor	Pan Lee jest świetnym **rozmówcą**.
+korona	crown	Filiżanka kawy kosztuje jedną **koronę**.
+narastać	grow	Cisza **narasta** jak nowotwór.
+fundament	foundation	To jest **fundament** domu.
+wystąpienie	speech	Miał krótkie **wystąpienie** na zebraniu.
+rywal	rival	Tom podpali dom **rywala** z zazdrości.
+czyjś	someone's	Przez pomyłkę wszedłem do **czyjegoś** pokoju.
+stulecie	century	Przez **stulecia** Kraków był stolicą Polski.
+rozszerzyć	expand	Próbuję **rozszerzyć** swoją sieć.
+operacyjny	operating	Zakaz wstępu na salę **operacyjną**.
+serwis	service	Ja być dobrym współuczestnikiem w **serwisie** Tatoeba?
+ścisły	strict	Doktor zalecił jej przejście na **ścisłą** dietę.
+wzmacniać	strengthen	Ćwiczenia **wzmacniają** mięśnie.
+panna	miss	To prezent od **panny** Yumi.
+partyjny	party	To **partyjny** działacz.
+echo	echo	Nie oczekuj niczego szczególnego od **echa**.
+stosunkowo	relatively	Osada jest **stosunkowo** odizolowana.
+samotność	loneliness	Jakie jest najlepsze lekarstwo na **samotność**?
+dziedzictwo	heritage	Moskiewski Kreml jest obiektem kulturowego **dziedzictwa**.
+gigantyczny	gigantic	Mają **gigantyczny** ogród.
+świąteczny	festive	Czy już wysłałeś mu kartkę **świąteczną**?
+wzbudzić	arouse	Jego niezwyczajne zachowanie **wzbudziło** nasze podejrzenie.
+osobowość	personality	Twarz jest zwierciadłem naszej **osobowości**.
+startować	run	Nie będę **startował** na burmistrza.
+ponoć	apparently	Burmistrz **ponoć** wziął w łapę.
+walić	to bang	Tom zaczął **walić** w drzwi.
+doradca	adviser	Mój **doradca** pomógł mi.
+opiekun	caregiver	Potrzebujemy więcej wykwalifikowanych **opiekunów**.
+rozrywka	pastime	Gra na fortepianie to jej ulubiona **rozrywka**.
+rywalizacja	competition	Jesteś gotowy na **rywalizację**?
+byt	entity	Nie należy mnożyć **bytów** bez potrzeby.
+warsztat	workshop	Celem **warsztatów** jest wyobrażenie sobie, jak będzie wyglądać świat za dziesięć lat.
+przerażony	frightened	Był **przerażony** ciemnością.
+przejazd	fare	Ile kosztuje **przejazd** z Osaki do Akity?
+liberalny	liberal	Czy jesteś **liberalny**?
+miano	title	Ta książka ma **miano** klasyki.
+pretensja	grievance	Mam o to **pretensję**, uważam, że to nie było w porządku.
+dokumentacja	documentary	Próbujemy zrobić **dokumentację**.
+wywodzić	originate	Ta rodzina **wywodzi** się z Krakowa.
+mazowiecki	masovian	To **mazowiecki** zespół ludowy.
+siatka	net	Chłopiec złapał ptaka **siatką**.
+przekładać	translate	Matematycy są jak Francuzi: cokolwiek im powiesz, **przekładają** to na własny język i wychodzi z tego zupełnie coś innego.
+absolutny	absolute	Zero **absolutne** jest najniższą możliwą temperaturą.
+słusznie	rightly	Jestem pewien, że Tom postąpi **słusznie**.
+notować	record	**Notujcie**.
+potęga	power	Wiedza to **potęga**.
+ubogi	poor	**Ubogi** człowiek ostatecznie został wielkim artystą.
+przysługiwać	be entitled	Od wyroku **przysługuje** apelacja w ciągu dziesięciu dni.
+leśny	forest	Inne **leśne** zwierzęta przyszły oglądać weselne tańce, a wkrótce i one ruszyły w tan w księżycową noc.
+wymóg	requirement	Spełniasz ten **wymóg**?
+wyobrażenie	image	Mam inne **wyobrażenie** tego miejsca.
+zbrojny	armed	Policja zatrzymała **zbrojny** napastnik.
+uchodzić	be considered	On **uchodzi** za eksperta.
+ostro	sharply	Drzwi otworzyły się **ostro**.
+lekarski	medical	Potrzebuję **lekarskiej** pomocy.
+roczny	annual	Jego **roczny** dochód przekracza 100.000 dolarów.
+pochylić	lean forward	Proszę się **pochylić**.
+włączać	turn on	Włączam **włączam** komputer.
+agresja	aggression	Jego **agresja** nie pomogła.
+agent	agent	Jest **agentem** nieruchomości.
+trybunał	tribunal	Sprawę zbadał **trybunał**.
+lewica	left	**Lewica** wygrała wybory.
+wystarczająco	enough	Mam **wystarczająco** czasu.
+formalny	formal	On nie miał prawie żadnego **formalnego** wykształcenia.
+następujący	following	To jest **następujący** krok.
+energetyczny	energy	Na tym etapie nie ma wciąż jasnej polityki **energetycznej** odnośnie dostarczania zdecentralizowanej energii do obszarów rolniczych.
+objaw	symptom	Pierwsze **objawy** choroby to gorączka i ból gardła.
+inspiracja	inspiration	Jesteś **inspiracją** dla nas wszystkich.
+dowiadywać	find out	Muszę **dowiadywać** się o wyniki.
+afera	scandal	Nigdy nie miałem nic wspólnego z tą **aferą**.
+przedstawienie	performance	To było świetne **przedstawienie**.
+rozpacz	despair	**Rozpacz** doprowadziła go do próby samobójczej.
+blask	glow	Po deszczu widać **blask** słońca.
+kamienny	stone	Mieszkam w tym **kamiennym** domu na górze.
+przywołać	summon	Dlaczego byliśmy tutaj **przywołani**?
+wygrana	victory	Nasza drużyna miała **wygraną**.
+rozglądać	look around	Muszę **rozglądać** się po sklepie.
+gdański	gdańsk	Odwiedziliśmy **gdański** port.
+bieda	poverty	**Bieda** jest u źródeł wszelkiego zła.
+pośród	among	Jesteśmy **pośród** chmur.
+rozstrzygnąć	decide	Jest za wcześnie by to **rozstrzygnąć**.
+postulat	proposal	Szef przedstawił nowy **postulat**.
+twórczy	creative	Pozwoliłem sobie na pewną swobodę **twórczą**. Mam nadzieję, że nie masz nic przeciwko.
+niejeden	many a	**Niejeden** uczeń spóźnił się dziś.
+edukacyjny	educational	Jaki jest twój ulubiony program **edukacyjny** w telewizji?
+złożony	complex	Program ma bardzo **złożony** kod.
+gminny	municipal	To sprawa **gminnego** urzędu.
+agresywny	aggressive	Uważam, że Tom jest **agresywny**.
+dwukrotnie	twice	Sprawdziłem wynik **dwukrotnie**.
+samodzielnie	independently	Uczę się **samodzielnie** w domu.
+trend	trend	Widać nowy **trend** w sklepach.
+skrajny	extreme	To **skrajny** przypadek.
+zagrażać	threaten	Grypa może **zagrażać** dzieciom.
+statystyka	statistics	Ta **statystyka** pokazuje wzrost cen.
+podporządkować	submit	Pracownik musi **podporządkować** się regulaminowi.
+pędzić	rush	Klienci **pędzili** chodnikiem na zakupy.
+przepaść	fail	Szef, wszystko **przepadło**! Zdejmują mu gips! On wyjeżdża!
+wezwanie	summons	Dostałem **wezwanie** na policję.
+powstały	created	To **powstały** rząd działa szybko.
+wariant	variant	Ten **wariant** jest łatwiejszy.
+blokować	block	Proszę nie **blokować** drzwi państwa mieniem lub odzieżą.
+formuła	formula	Matematyka nie jest jedynie zapamiętywaniem **formuł**.
+skandal	scandal	Nigdy nie byłem zamieszany w ten **skandal**.
+obowiązujący	binding	To jest **obowiązujący** przepis.
+snuć	spin	Babcia lubi **snuć** opowieści.
+apelować	appeal	**Apeluję** w imieniu ofiar klęski głodu.
+wjechać	drive in (perfective)	Tom **wjechał** na stację benzynową.
+straszyć	scare	Nie chcę cię **straszyć**.
+wyrosnąć	outgrow	On wkrótce **wyrośnie** z zabawy zabawkami.
+boczny	side	Wybierz **boczny** parking.
+czynny	open	To muzeum nie jest **czynne** w poniedziałki.
+zachwyt	delight	Jej twarz promieniała **zachwytem**.
+turystyczny	tourist	To **turystyczny** autobus do centrum.
+lada	counter	Pomarańcza spadła z **lady**.
+służbowy	business	Mam nadzieję że twoja podróż **służbowa** do Francji była udana?
+forum	forum	Nie mam konta na tym **forum**.
+komunista	communist	Nie jestem **komunistą**.
+zastać	find	Tom **zastał** zamknięte drzwi do biura.
+przetarg	tender	Firma wygrała **przetarg** na most.
+podtrzymywać	support	Te kolumny **podtrzymują** scenę.
+relacjonować	report	Dziennikarz **relacjonował** mecz na żywo.
+epidemia	epidemic	W mieście wybuchła **epidemia** grypy.
+zieleń	green	Wiosną wszędzie widać **zieleń** drzew.
+ideologia	ideology	Imperializm to **ideologia** i praktyka potężnych grup próbujących zabezpieczyć i poszerzyć swoje przywileje poprzez dominację innych grup.
+instalacja	installation	Nowa **instalacja** programu trwała godzinę.
+duchowny	clergy	Na ślubie był **duchowny**.
+zapadać	to fall	Zimą szybko **zapada** noc.
+starannie	carefully	Wszystko należy czynić **starannie**.
+logika	logic	**Logika** zabierze cię z punku A do B. Wyobraźnia zabierze cię dokąd chcesz.
+wpatrywać	to stare at	Patrzysz i **wpatrujesz** się w okno.
+stwierdzenie	statement	Twoje **stwierdzenie** było prawdziwe.
+żywo	quickly	Pociąg pojechał **żywo** do przodu.
+zastępować	to replace	Slogany nie **zastępują** rozwiązań.
+królestwo	kingdom	**Królestwa** były ciągle w stanie wojny.
+obojętny	indifferent	Chcesz wyjść czy zostać w domu? Mnie to jest **obojętne**.
+wychowanie	upbringing	Dobre **wychowanie** widać przy stole.
+okrutny	cruel	**Okrutny** czarodziej przemienił chłopca w rzepę.
+wyznanie	confession	Jego **wyznanie** zaskoczyło wszystkich.
+wystarczający	sufficient	To było **wystarczające** na dziś.
+oznajmić	to announce	Tom **oznajmił** wszystkim, że jest bezrobotny.
+brutalny	violent	To było **brutalne** przestępstwo.
+wyborca	voter	Jeśli zostanę wybrany, zrobię wszystko dla moich **wyborców**.
+wyznać	to confess	**Wyznałem** swoje grzechy.
+cudzy	someone else's	Nie bierz **cudzej** książki.
+ułatwić	to facilitate	Ta instrukcja **ułatwi** pracę.
+jednoznacznie	unambiguously	Powiedział to **jednoznacznie**.
+trop	confuse	To zbiło mnie z **tropu**.
+czysto	cleanly	Umyj ręce **czysto**.
+niespodziewanie	unexpectedly	**Niespodziewanie** zadzwonił telefon.
+psychologiczny	psychological	To ma **psychologiczny** wpływ na dzieci.
+zamieniać	turn into	Zimą woda **zamienia się** w lód.
+namawiać	persuade	Marek **namawiał** mnie na spacer.
+powyższy	above-mentioned	Wysłałem **powyższy** dokument.
+przedłużyć	extend	Proszę **przedłużyć** tę wizę.
+rozkładać	lay out	Zaczęła **rozkładać** talerze na stole.
+pozwolenie	permit	Potrzebujesz **pozwolenia** na wjazd.
+okoliczny	local	**Okoliczne** sklepy są zamknięte.
+maksymalny	maximum	Celem jest zawsze **maksymalny** zysk.
+dowódca	commander	Nie mogę zignorować rozkazów mojego **dowódcy**.
+tona	ton	Kupiłem jedną **tonę** węgla.
+wznosić	raise	Budują tu nowy blok i **wznoszą** wieżę.
+narzucać	impose	On ciągle **narzuca** swoje zdanie.
+radosny	cheerful	On jest zawsze **radosny** i uśmiechnięty.
+zamieścić	post (perfective)	Nie umiem skasować tego, co właśnie **zamieściłem** w internecie.
+zagospodarować	develop (perfective)	Miasto **zagospodarowało** pusty teren.
+nowość	novelty	To dla mnie **nowość**.
+ogłaszać	announce	Firma **ogłasza** nową ofertę.
+skok	jump	Kot przykucnął, gotowy do **skoku**.
+obowiązkowy	mandatory	Angielski to przedmiot **obowiązkowy**.
+bunt	mutiny	Żołnierze rozpoczęli **bunt**.
+zainteresowany	interested	Jestem **zainteresowany** tą pracą.
+wydobywać	to emerge	Z ziemi **wydobywa** się dym.
+formacja	formation	Ich **formacja** ćwiczy razem.
+prawica	right side	Ma bliznę po prawej **prawicy**.
+udostępnić	make available	Proszę **udostępnić** plik.
+przeglądać	to browse	Zawsze, przed śniadaniem, **przeglądam** gazetę.
+ród	lineage	To stary **ród** szlachecki.
+plastikowy	plastic	Większość konsumentów jest przeciwnych **plastikowym** torebkom.
+przejaw	manifestation	Milczenie to **przejaw** strachu.
+pomijać	to skip	Tom zazwyczaj **pomija** śniadanie.
+doświadczony	experienced	To **doświadczony** lekarz.
+miłośnik	lover	Jest **miłośnikiem** opery.
+generować	generate	Nie lubię sztuki **generowanej** komputerowo.
+sprawnie	skillfully	Ona **sprawnie** obsługuje kasę.
+sprzeczny	conflicting	To są **sprzeczne** informacje.
+litr	liter	Metr sześcienny odpowiada 1000 **litrów**.
+wymaganie	requirement	To ważne **wymaganie** pracy.
+uzupełniać	complete	Dobre brandy **uzupełnia** smaczny posiłek.
+narzucić	impose (perfective)	Armia **narzuciła** dyktaturę.
+wnosić	propose	**Wnoszę** o natychmiastowe zatrzymanie rozlewu krwi.
+regularny	regular	**Regularne** ćwiczenie jest korzystne dla zdrowia.
+przypaść	appeal (perfective)	Pomysł Mary niezbyt **przypadł** Tomowi do gustu.
+wszak	after all	Jest zimno, **wszak** pada śnieg.
+wspomagać	support	Ten lek **wspomaga** serce.
+zgłoszenie	application	Złożyłem **zgłoszenie** do szkoły.
+niepełnosprawny	disabled	Mój brat jest **niepełnosprawny**.
+pakiet	parcel	Co jest w **pakiecie**?
+awantura	row	Po obiedzie była głośna **awantura**.
+magiczny	magical	Przyjaźń jest **magiczna**.
+wyzwolić	liberate	Wojsko **wyzwoliło** miasto.
+niespełna	less than	Można stąd dojechać samochodem do miasta w **niespełna** 20 minut.
+lubelski	from lublin	To **lubelski** rynek.
+sporządzić	compile	Chciałbym, żebyś **sporządził** listę ostatnio opublikowanych książek.
+zwalczać	combat	Musimy **zwalczać** grypę.
+definicja	definition	Nauczyciel podał **definicja** słowa.
+bohaterka	heroine	**Bohaterka** tej powieści popełniła samobójstwo.
+psycholog	psychologist	Tom jest **psychologiem** dziecięcym, prawda?
+zamieszkiwać	inhabit	Chociaż lasy deszczowe stanowią jedynie 2 proc. powierzchni Ziemi, to **zamieszkuje** je ponad połowa gatunków dzikich roślin, zwierząt i owadów.
+projektować	design	**Projektujemy** technologie dla zwykłych ludzi.
+akademicki	academic	To jest **akademicki** podręcznik.
+wszcząć	initiate	Policja **wszczęła** dochodzenie w sprawie morderstwa.
+powieka	eyelid	Wielbłądy mają trzy **powieki**.
+gimnazjum	junior high school	W **gimnazjum** nigdy nie dostawałem dobrych stopni.
+organizacyjny	organizational	Musimy zrobić plan **organizacyjny**.
+wędrować	wander	Lubię **wędrować** po mieście.
+powierzyć	entrust	**Powierzyłem** swojej żonie finanse rodzinne.
+inspirować	inspire	Ta książka może **inspirować**.
+konkretnie	exactly	O co ci **konkretnie** chodzi?
+starcie	clash	Było ostre **starcie** na boisku.
+pięść	fist	Użyj **pięści**.
+zacisnąć	tighten	Musisz **zacisnąć** węzeł.
+groźba	threat	Dostałem **groźbę** przez telefon.
+gniew	anger	Tom nie mógł powstrzymać swojego **gniewu**.
+tymczasowy	temporary	To **tymczasowe** hasło straci ważność za siedem dni.
+łańcuch	chain	**Łańcuch** jest zrobiony z wielu linek.
+niedzielny	sunday	On nie pracuje w **niedzielną** noc.
+końcowy	final	Zgodnie z żądaniem, przedstawiamy nasz **końcowy** raport.
+szklany	glass	Ci, którzy mieszkają w **szklanych** domach, nie powinni rzucać kamieniami.
+ujęcie	shot	To było dobre **ujęcie** piłki.
+załatwiać	do business	Muszę dziś **załatwiać** sprawy w domu.
+architektura	architecture	**Architektura** starego miasta w Warszawie zawsze mnie fascynowała.
+przypadać	fall on	Boże Narodzenie **przypada** 25 grudnia.
+przekształcić	transform	Oboje **przekształcili** chemię w nowoczesną naukę.
+badawczy	research	Prowadzę **badawczy** projekt na uczelni.
+szlachetny	noble	Oni powinni mieć **szlachetne** umysły.
+transakcja	transaction	Ta **transakcja** trwała krótko.
+komendant	chief	Tom je lunch z **komendantem** policji.
+posłużyć	serve (perfective)	To pudełko **posłuży** za stół.
+pochować	bury	Tom został **pochowany** w poniedziałek.
+nadzwyczajny	extraordinary	Nie ma nic **nadzwyczajnego**.
+zwalniać	release	**Zwalnia** go.
+swobodnie	freely	Niektórzy wierzą, że niedźwiedzie polarne chodzą **swobodnie** ulicami Norwegii. Na szczęście to bzdura.
+podpisywać	sign	Nic nie **podpisywałem**.
+zapas	supplies	Brakuje nam **zapasów** w kuchni.
+pokonywać	to beat	Potrafimy **pokonywać** silne drużyny.
+zabójstwo	murder	Policja zaczęła badać sprawę **zabójstwa**.
+orkiestra	orchestra	Jakie są instrumenty **orkiestry** symfonicznej?
+mundurowy	uniformed	**Mundurowy** policjant stał przy drzwiach.
+ścigać	to chase	Nie chcę, żeby ci goście mnie **ścigali**.
+bariera	barrier	Niektóre ptaki potrafią przekroczyć **barierę** dźwięku.
+strategiczny	strategic	To był **strategiczny** ruch firmy.
+znacząco	significantly	Ceny wzrosły **znacząco**.
+przebić	to pierce (perfective)	Strzały nie mogą **przebić** łusek smoka.
+odsłonić	to uncover	Mogę **odsłonić** zasłonkę?
+odwrotnie	the other way	Douglas doszedł do wniosku, że najlepszym sposobem na sukces jest robienie wszystkiego **odwrotnie** niż dotychczas.
+dotacja	grant	To badanie umożliwiła **dotacja** od Narodowej Fundacji Naukowej.
+katedra	cathedral	Zwiedziliśmy piękną **katedrę**.
+żelazny	iron	Moja babcia ma **żelazną** patelnię.
+niepokojący	concerning	Mam **niepokojący** wynik badania.
+zaliczać	to classify	Wieloryby **zaliczane** są do ssaków.
+ideał	ideal	Jak zwykle zaczął rozmawiać o swoich **ideałach**.
+opadać	to fall	Liście zaczynają **opadać** w październiku.
+dowolny	any	Możesz przyjść jutro po południu, o **dowolnej** godzinie.
+zaniepokoić	to worry (perfective)	Byliśmy **zaniepokojeni** o dziadka i babcie.
+proboszcz	parish priest	**Proboszcz** mówił dziś w kościele.
+koncern	corporation	Ten **koncern** ma biura w Polsce.
+wyrastać	to grow out	Nie wiedziałem, że jabłonie **wyrastają** z nasion.
+puszczać	to play	Pamiętasz tę piosenkę, którą **puszczali** w radiu?
+przedwojenny	prewar	Widziałem **przedwojenny** dom w centrum.
+kochany	dear	Mój **kochany** brat dzwoni codziennie.
+przegląd	inspection	Generał dokonał **przeglądu** wojsk.
+konsultacja	consultation	Lekarz dał mi **konsultację**.
+obchód	celebration	Przyjaciele urządzili mi **obchody** urodzin.
+teoretycznie	theoretically	**Teoretycznie** rzecz biorąc nie ma różnicy między praktyką a teorią; praktycznie rzecz biorąc - jest.
+narodzić	originate (perfective)	Z tej komórki może **narodzić** się nowe życie.
+królowa	queen	**Królowa** mieszka w pałacu.
+mundur	uniform	Czemu nie jesteś w swoim **mundurze**?
+zapanować	prevail	W pokoju **zapanowała** cisza.
+zaspokoić	satisfy	Pieniądze nie mogą **zaspokoić** wszystkich pragnień.
+nakład	costs	Twój plan wymaga dużych **nakładów** finansowych.
+dyscyplina	sport	Jaka jest twoja ulubiona **dyscyplina**?
+przewieźć	transport (perfective)	**Przewieziono** go do miejscowego szpitala.
+miło	nicely	To było **miło**.
+rozkład	schedule	Sprawdźmy **rozkład** pociągów.
+archiwum	archive	Aby zainstalować grę, wyodrębnij **archiwum** i uruchom instalator.
+socjalny	social	To jest **socjalny** problem.
+bankowy	banking	Pieniądz krąży przez system **bankowy**.
+mistrzostwa	championship	Cała drużyna była w siódmym niebie po zdobyciu **mistrzostwa** w piłce nożnej.
+odegrać	play (perfective)	**Odegrał** Hamleta na scenie.
+turniej	tournament	Wygrał pierwszą nagrodę na **turnieju** szachowym.
+zaplecze	back room	W **zapleczu** stoi lodówka.
+świeżo	freshly	Chleb jest **świeżo** upieczony.
+żądanie	demand	Firma złożyła **żądanie**.
+krwawy	bloody	Mam **krwawe** stolce.
+uzyskiwać	obtain	Chcę **uzyskiwać** dobre wyniki.
+lokalizacja	location	**Lokalizacja** w centrum zapewnia łatwy dostęp do sklepów i biur.
+uroczysty	ceremonial	Mieliśmy **uroczysty** obiad.
+przesłuchanie	interrogation	Było długie **przesłuchanie**.
+skutkować	result	Nieprzestrzeganie przepisów będzie **skutkowało** karą.
+wypłata	salary	Tom nie zasługuje na **wypłatę**, którą od nas dostaje.
+republika	republic	Stany Zjednoczone są **republiką** - Zjednoczone Królestwo nie.
+stanowczo	firmly	Ona mówiła **stanowczo**.
+autentyczny	genuine	Ten produkt jest **autentyczny**.
+kwestionować	question	Tego faktu nie możemy **kwestionować**.
+pozytywnie	positively	Musimy myśleć **pozytywnie**.
+trup	corpse	W filmie był **trup**.
+wyliczać	itemize	Musisz **wyliczać** koszty.
+uspokajać	calm down	Dziecko trzeba **uspokajać**.
+wyznawać	profess	To nie istotne jaką religię **wyznajesz**.
+niecały	under	Będziemy tam za **niecałe** trzy godziny.
+odkrycie	discovery	To było ważne **odkrycie**.
+podobieństwo	similarity	Zauważyłeś **podobieństwo** w wymowie po polsku i po portugalsku?
+schemat	scheme	Ten **schemat** jest prosty.
+ranga	rank	Ma wysoką **rangę**.
+podziw	admiration	Nie potrafiłem powstrzymać **podziwu** dla wytrwałości Toma.
+materia	matter	Aktywności fizyczne - od grabienia liści po chodzenie do sklepu spożywczego - mogą pomóc seniorom zachować szarą **materię** w mózgu.
+przeznaczenie	purpose	Każdy ma swoje **przeznaczenie**.
+rejonowy	district	Sąd **rejonowy** jest blisko.
+skuteczność	effectiveness	Ta terapia ma wysoką **skuteczność**.
+dorobek	achievements	Jego **dorobek** jest duży.
+narodzenie	birth	Po **narodzeniu** dziecka świętowaliśmy.
+konserwatywny	conservative	Tom jest dosyć **konserwatywny**, czyż nie?
+kopalnia	made of money	Myślisz, że jestem **kopalnią** pieniędzy?
+nerwowo	nervously	Mówiła **nerwowo** do telefonu.
+profesjonalny	professional	Byłem **profesjonalnym** muzykiem.
+bezpłatny	free	To jest **bezpłatne**.
+konstytucyjny	constitutional	W 1948 roku apartheid został **konstytucyjnym** prawem w RPA.
+biznesowy	business	Sami i Layla mieli spotkanie **biznesowe**.
+mniejszość	minority	Jak wiele **mniejszości** żyje w Rosji?
+filozof	philosopher	Jeśli **filozof** nie ma długiej, białej brody, nie ufam mu.
+wyrzut	remorse	On nie ma żadnych **wyrzutów** sumienia.
+powiększyć	enlarge	Muszę **powiększyć** zdjęcie.
+porządny	decent	Czy masz **porządny** garnitur?
+położony	located	Hotel jest **położony** nad rzeką.
+rozczarowanie	disappointment	To było wielkie **rozczarowanie**.
+skarżyć	complain	Dziecko zaczęło **skarżyć** ból brzucha.
+spływać	flow	Łzy **spływały** jej po policzkach.
+apel	appeal	Firma odpowiedziała na **apel** i dokona darowizny w wysokości dwudziestu pięciu tysięcy euro.
+szczebel	level	Na niższym **szczeblu** pracuje biuro.
+charakteryzować	characterize	Nauczyciel **charakteryzuje** bohatera.
+wymusić	to force (perfective)	Miłości nie można **wymusić**.
+wystawać	to stick out	Koszula **wystaje** z kurtki.
+wykonanie	execution	Szybkie **wykonanie** planu pomogło.
+wykryć	to detect	**Wykryłem** duży błąd.
+załoga	crew	Kapitan dowodzi statkiem i **załogą**.
+odgłos	sound	Usłyszałem dziwny **odgłos** w lesie.
+zgromadzenie	assembly	**Zgromadzenie** rozpoczęło debatę.
+tęsknota	longing	Czuję **tęsknotę** za domem.
+zjazd	reunion	Na **zjeździe** spotkaliśmy dawnych kolegów.
+społecznościowy	social	Mamy nowy profil **społecznościowy**.
+błyskawicznie	quickly	**Błyskawicznie** ocenił sytuację i zaczął działać.
+jezdnia	roadway	Auto stoi na **jezdni**.
+niepewność	uncertainty	Czuję dużą **niepewność**.
+niejako	sort of	To **niejako** nowy początek.
+sterować	to steer	Samolotem **sterowały** dwie małpy.
+wypalić	to burn out	Praca go **wypaliła**.
+ogólnopolski	nationwide	To **ogólnopolski** konkurs.
+lewicowy	left-wing	Ma **lewicowe** poglądy.
+ambitny	ambitious	Uwielbiam pomagać ludziom którzy są **ambitni**.
+rozważanie	reflection	Twoje **rozważanie** mnie zaciekawiło.
+zmagać	to struggle	Muszę **zmagać** się z bólem.
+wartościowy	valuable	Ona nosi **wartościowy** pierścionek.
+pociągać	to pull	Teraz Tom **pociąga** za sznurki.
+przyjęcie	party	Idę na **przyjęcie** u Ani.
+panika	panic	Sami zaczął mieć atak **paniki**.
+niebawem	soon	**Niebawem** będziesz lepiej grał w tenisa.
+łódzki	lodz	Mój **łódzki** kuzyn przyjechał.
+ekologiczny	organic	Warzywa **ekologiczne** są popularne, bo są bezpieczne i smaczne.
+fantazja	fantasy	Czasem trudno odróżnić rzeczywistość od **fantazji**.
+wybić	break (perfective)	Tom nie był tym, kto **wybił** okno.
+mieszkaniowy	housing	Sytuacja **mieszkaniowa** raczej nie rokowała nadziei na poprawę.
+warsztaty	workshop	Na **warsztatach** pisaliśmy teksty.
+czołowy	leading	To nasz **czołowy** zawodnik.
+prowincja	province	Zoo w Fuzhou w chińskiej **prowincji** Fujian zrobiło więcej niż inne w dziedzinie tresury pand.
+wyłożyć	line (perfective)	Ścieżka wiodąca od tego domku do lasku bambusowego **wyłożona** była kamieniami.
+autorski	copyright	Nie dodawaj zdań ze źródeł objętych prawami **autorskimi**.
+identyczny	identical	Te wzory są **identyczne**.
+zamieszanie	confusion	W klasie było duże **zamieszanie**.
+słuchacz	listener	Każdy **słuchacz** słuchał uważnie.
+uzasadniać	justify	Musi **uzasadniać** swoją decyzję.
+ustawiać	set up	Muszę **ustawiać** drukarkę od nowa.
+rynkowy	market	To jest cena **rynkowa**.
+kwartał	quarter	Zyski korporacji w pierwszym **kwartale** były niezadowalające.
+oczyścić	clean up (perfective)	Muszę **oczyścić** stół po kolacji.
+konwencja	convention	Ta **konwencja** trwa trzy dni.
+donosić	report	Jak **donoszą** media, jacyś ludzie zabili i zjedli pewne zwierzęta w miejscowym zoo.
+wyciąć	cut down	Wszystkie jabłonie zostały **wycięte**.
+osadzić	embed	Program potrafi **osadzić** film na stronie.
+diagnoza	diagnosis	Gdybym powiedziała lekarzowi prawdę, **diagnoza** byłaby trafniejsza.
+nadmierny	excessive	Naczynia krwionośne żyrafy mają zastawki, które zapobiegają **nadmiernemu** przepływowi krwi do mózgu.
+wkroczyć	enter upon	Negocjacje **wkroczyły** w nową fazę.
+sekcja	section	Otwórz tę **sekcję** książki.
+ustępować	give way	Maszyny do pisania **ustępują** miejsca procesorom tekstu.
+omijać	avoid	Zawsze kiedy mnie widzi, **omija** mnie szerokim łukiem.
+inwestycyjny	investment	Ten fundusz **inwestycyjny** inwestuje tylko w te firmy, które prowadzą działalność w sposób etyczny.
+cyfrowy	digital	Tom twierdzi, że **cyfrowym** nagraniom brakuje ciepła winylowych nagrań.
+racjonalny	rational	Jesteśmy **racjonalni**.
+inspektor	inspector	**Inspektor** sprawdził dokumenty.
+margines	margin	W naszych szacunkach założyliśmy **margines** błędu.
+katolik	catholic	Czy papież jest **katolikiem**?
+rzekomo	allegedly	**Rzekomo** ukradł telefon.
+nakazać	order (perfective)	Lekarz **nakazał** odpoczynek.
+pogrążyć	absorb (perfective)	Byłem **pogrążony** w lekturze powieści.
+bliskość	closeness	Najważniejsze są uczucia i **bliskość** partnerów, która zmniejsza stres i wprowadza odpowiednią atmosferę.
+popatrzeć	look (perfective)	Nie mogła nawet na niego **popatrzeć**.
+zdziwiony	surprised	Byłem **zdziwiony** twoją odpowiedzią.
+automatycznie	automatically	Komputer zapisuje pliki **automatycznie**.
+odpad	waste	Po remoncie mamy dużo **odpadu**.
+zdrada	treason	Niektórzy nawet oskarżyli go o **zdradę**.
+specjalistyczny	specialized	Ten rodzaj wiedzy **specjalistycznej** ma niewiele wspólnego z życiem codziennym.
+wrażliwość	sensitivity	Ma dużą **wrażliwość** na krytykę.
+miesięcznie	monthly	On zarabia w tej pracy ponad 500 dolarów **miesięcznie**.
+obszerny	extensive	To jest **najobszerniejszy** jednojęzyczny słownik.
+wyczuć	sense (perfective)	Niezłe **wyczucie** czasu.
+widnieć	be visible	Na ścianie **widnieje** plakat.
+uporządkować	organize (perfective)	**Uporządkuj** książki.
+władca	ruler	Był **władcą** imperium Inków.
+sojusz	alliance	Czarnobrody zawarł **sojusz** z piratami.
+uchwalić	pass (perfective)	Sejm **uchwalić** ustawę jutro.
+nakazywać	require	Regulamin szkoły **nakazuje** uczniom noszenie fartuszków.
+kraina	land	Ta **kraina** ma wiele jezior.
+kierownictwo	management	**Kierownictwo** powiedziało, że podwyżka płac jest wykluczona.
+wędrówka	walk	Lubię długą **wędrówka** po lesie.
+reżim	regime	W tym kraju panuje surowy **reżim**.
+jedność	unity	Cesarz jest symbolem **jedności** narodu.
+umieszczać	place	Dlaczego to tutaj **umieszczasz**?
+dobiegać	come from	Lady Canterville zwykle bardzo mało spała w nocy z powodu tajemniczych dźwięków, które **dobiegały** z korytarza i biblioteki.
+wpis	post	Nie wiem jak zlikwidować swój ostatni **wpis**.
+alternatywa	alternative	Mają kilka **alternatyw**.
+składka	dues	Tom nie płaci **składek**.
+ruina	ruins	Znaleźli na pustyni **ruiny** tajemniczego miasta.
+następca	successor	Mój **następca** zacznie jutro pracę.
+zarobek	wages	Jego pracodawca potrącił 50 dolarów z jego **zarobków**.
+pretekst	pretext	...a powód? Czy szukasz tylko **pretekstu**?
+graniczny	border	Zatrzymaliśmy się przy **graniczny** przejściu.
+przykryć	to cover (perfective)	Łóżko Toma jest **przykryte** kocem z Pikachu.
+kurier	courier	Wczoraj **kurier** dostarczył moje zamówienie
+końcówka	end	Umyj bakłażany i poobcinaj im **końcówki**.
+tradycyjnie	traditionally	**tradycyjnie** jemy pierogi w Wigilię.
+przybrać	to gain (perfective)	Tom **przybrał** na wadze przez zimę.
+wymierzyć	to strike	**Wymierzyła** mu policzek.
+skarbowy	tax	Urząd zrobił **skarbowy** kontrolę.
+opaść	to fall (perfective)	Liście **opadły**.
+codzienność	everyday life	Moja **codzienność** jest spokojna.
+wojewoda	voivode	**wojewoda** odwiedził dziś szkołę.
+akta	files	Policja zabrała **akta** sprawy.
+bezwzględny	ruthless	Jesteś **bezwzględny**.
+przerażający	terrifying	To był **przerażający** sen.
+zasiadać	to sit	Ministrowie będą **zasiadać** dziś na sali.
+operator	operator	Tom pracuje jako **operator** wózka widłowego.
+przypisywać	to attribute	Autorstwo tego obrazu jest **przypisywane** Monetowi.
+przyciągnąć	to attract	Jej sukienka **przyciągnęła** uwagę wszystkich na imprezie.
+śpiew	singing	Słyszysz jej **śpiew**?
+pomorski	maritime	Poczuliśmy **pomorski** wiatr nad morzem.
+skrócić	to shorten	Kończył się nam czas, więc musieliśmy **skrócić** wywiad.
+nadmiar	surplus	Mamy **nadmiar** cukru w domu.
+dopaść	to catch (perfective)	Pies szybko **dopaść** kota.
+rekord	record	Tom Jackson ustanowił nowy **rekord** świata.
+natychmiastowy	instant	Ten lek dał **natychmiastową** ulgę.
+jednakże	however	Chciałem iść, **jednakże** padał deszcz.
+priorytet	priority	Naprawdę nie masz właściwych **priorytetów**.
+szum	fuss	O co tyle **szumu**?
+parlamentarny	parliamentary	Dyskusja trwała na **parlamentarny** komisji.
+dobrać	to match	Muszę **dobrać** buty do sukienki.
+odszkodowanie	compensation	Firma zapłaciła mi **odszkodowanie**.
+poznański	from poznan	Mój **poznański** kolega przyjechał dziś.
+zatytułować	to title	Chcę **zatytułować** ten tekst.
+świadomie	consciously	Musisz **świadomie** wybrać tę drogę.
+zadecydować	to decide (perfective)	**Zadecyduj**.
+tunel	tunnel	Nie przechodź przez ten **tunel**.
+czystość	cleanliness	Utrzymuje swój pokój w **czystości**.
+lądować	to land	Jak będziesz **lądował** w Naricie, będzie już ciemno.
+rozumienie	understanding	Dobre **rozumienie** tekstu pomaga w szkole.
+mrok	darkness	Zapada **mrok**.
+dynamiczny	dynamic	Ona jest bardzo **dynamiczny** w pracy.
+uniwersalny	universal	Jajko jest **uniwersalnym** symbolem życia i odrodzenia.
+naśladować	to imitate	Dzieci **naśladują** przyjaciół niż rodziców.
+mroczny	dark	Pokój był **mroczny** i cichy.
+wznieść	to rise	Góry **wznieść** się nie mogą.
+reprezentant	representative	W pewnym sensie jest **reprezentantem** swojej firmy.
+honorowy	honorable	Jesteś **honorowy**.
+brzmienie	sound	To **brzmienie** jest bardzo ciepłe.
+kult	cult	Tom dołączył do **kultu** UFO.
+pandemia	pandemic	**Pandemia** spowodowała spadek w podróży międzynarodowej.
+spisać	do well	W pracy **spisała** się świetnie.
+dopytywać	ask about	Nie **dopytuj** mnie o to.
+chwytać	grab	Wszyscy z trudem **chwytają** powietrze.
+podatnik	taxpayer	Wszyscy **podatnicy** mają prawo wiedzieć, na co idą ich pieniądze.
+alternatywny	alternative	Mam **alternatywny** plan podróży.
+komplet	full set	Cała klasa dziś w **komplecie**.
+zachwycać	delight	Żadne sztuki mnie nie **zachwycają**, z wyjątkiem tych Plauta.
+autorstwo	authorship	**Autorstwo** tego obrazu jest przypisywane Monetowi.
+radiowy	radio	W tamtych dniach nie było w Japonii odbiorników **radiowych**.
+zasłaniać	cover	**Zasłaniaj** usta kiedy kaszlesz, kichasz albo ziewasz.
+wyłaniać	emerge	Za mgłą **wyłania** się dom.
+tematyka	subject matter	Ta **tematyka** jest trudna dla mnie.
+zjechać	go down (perfective)	**Zjechał** ze stoku w trzy minuty.
+imperium	empire	Słońce nigdy nie zachodzi nad moim **imperium**.
+zemsta	revenge	Tom nie chce sprawiedliwości. On chce **zemsty**.
+technologiczny	technological	Nowy telefon jest bardzo **technologiczny**.
+zamontować	install	Mechanik **zamontował** silnik.
+roboczy	working	To jest nasza wspólna stacja **robocza**.
+wzorzec	pattern	Nie widzisz **wzorca**?
+zachęcić	to encourage	Matka próbowała **zachęcić** mnie do zdrowszej diety.
+wątpienie	doubt	Czułam **wątpienie** przed testem.
+niepewny	uncertain	Plany wciąż są **niepewne**.
+wieczorny	evening	Wolisz poranne czy **wieczorne** zmiany?
+osłabić	to weaken	Choroba może **osłabić** dziecko.
+naprzeciw	opposite	Ta studentka, która siadła **naprzeciw** nauczyciela, jest z Niemiec.
+potrawa	dish	Kapuśniak i barszcz to tradycyjne **potrawy** zarówno w Rosji, jak i Europie Wschodniej.
+podsumowywać	to summarize	Ten akapit **podsumowuje** treść.
+doprowadzać	to drive crazy	Ten hałas **doprowadza** mnie do szału.
+nakaz	warrant	Ma pan **nakaz** rewizji?
+położenie	position	Mieszkanie ma dobre **położenie**.
+napastnik	attacker	Z ułożenia ran na ciele, policja wywnioskowała, że **napastnik** był leworęczny.
+zabrzmieć	to sound (perfective)	Moje wyjaśnienie może **zabrzmieć** dziwnie.
+ziemski	earthly	Jest jednym z izotopów, jakie występują w skorupie **ziemskiej**.
+kilkakrotnie	several times	Ostrzegłem go **kilkakrotnie**.
+rejestr	register	Podpisz się w tym **rejestrze**.
+maksymalnie	maximally	Zaczekaj na mnie. Będę tu za minutę, **maksymalnie** dziesięć.
+wdzięczność	gratitude	Słowa nie mogą wyrazić naszej **wdzięczności**.
+kompozycja	composition	Mary otrzymała nagrodę za swoją **kompozycję** nazwaną "Sekretna miłość".
+automatyczny	automatic	To jest prawdopodobnie tłumaczenie **automatyczne**.
+przystać	to befit	Według powieści „Agnes Gray” napisanej przez Anne Brontë uważano, że damie nie **przystoi** nazywać konia klaczą.
+wkład	contribution	Chciałbym ci podziękować za twój hojny **wkład**.
+emisja	emission	Doprowadziłoby to do zwiększenia **emisji** dwutlenku węgla, gazu w głównej mierze odpowiedzialnego za globalne ocieplenie.
+skrzynia	crate	Otwórz **skrzynię**, ale nie stłucz szkła.
+luksusowy	luxurious	Nigdy w życiu nie marzyłem, że będzie mnie stać na mieszkanie w tak **luksusowym** domu.
+nagrywać	record	**Nagrywasz** swoje połączenia?
+maleńki	tiny	Jaja karalucha są **maleńkie**.
+spoczywać	rest	**Spoczywaj** w pokoju.
+pogarda	contempt	Patrzył na niego z **pogardą**.
+honor	honor	Walczyli o **honor** swojego kraju.
+odtworzyć	replay	Wciśnij zielony przycisk, by **odtworzyć** nagranie, a czerwony, by je zatrzymać.
+ściskać	squeeze	Nie **ściskaj** gąbki.
+zbiórka	collection	Dziś mamy **zbiórkę** w szkole.
+kapłan	priest	**Kapłan** pobłogosławił wiernych.
+zabezpieczenie	protection	To daje dobre **zabezpieczenie** pieniędzy.
+telefoniczny	telephone	Jak mogę wykonać połączenie **telefoniczne** do Japonii?
+interpretować	interpret	Źle **interpretujesz** to, co mówię.
+odwrót	turning back	Nie ma **odwrotu**.
+wytworzyć	produce (perfective)	Program **wytworzył** nowy plik.
+danie	dish	To **danie** smakuje wyśmienicie.
+ład	order	W domu musi być **ład**.
+nieustanny	constant	Dziś jest **nieustanny** wiatr.
+narażać	expose	Nie **narażaj** się na słońce.
+przybierać	to gain weight	Po świętach łatwo **przybiera** na wadze.
+wynajmować	to rent out	Kiedy mieszkaliśmy w Nowym Jorku, **wynajmowaliśmy** mieszkanie.
+konfrontacja	confrontation	Potrzebujemy **konfrontacji** z rzeczywistością.
+zrywać	to pick	Dwie małe dziewczynki **zrywają** złocienie.
+klasztor	monastery	Stary **klasztor** stoi na wzgórzu.
+komunikacyjny	transport	Autobus jedzie **komunikacyjnym** pasem.
+przypisać	to attribute (perfective)	Spóźnioną dostawę **przypisałem** korkom na drodze.
+podwyższyć	to raise (perfective)	Oni mogą **podwyższyć** twój czynsz.
+zapłata	payment	Musisz otworzyć konto bankowe, żeby otrzymać **zapłatę**.
+jesienny	autumnal	Dziś mamy **jesienny** wiatr.
+koncentrować	to focus	Muszę się **koncentrować** na lekcji.
+rytuał	ritual	To jest stara organizacja, która używa tajemniczych **rytuałów**.
+oddalać	to distance	Nie chcę się od niego **oddalać**.
+garść	grip	Miał silny **garść** na linie.
+patriotyczny	patriotic	To był **patriotyczny** marsz.
+zlecić	to commission	Szef chce **zlecić** nowe zadanie.
+absolwent	graduate	Nauczyciel chętnie rozmawiał z niektórymi **absolwentami**.
+biologiczny	biological	To **biologiczny** proces w ciele.
+personel	staff	Jestem bardzo wdzięczny **personelowi** szpitala.
+skłonić	to persuade (perfective)	Co **skłoniło** cię do wyprowadzki?
+obyczaj	custom	Musimy szanować lokalne **obyczaje**.
+rozbudować	to expand (perfective)	Miasto chce **rozbudować** szkołę.
+tok	course	Indywidualny **tok** nauczania jest dobry dla wybitnych uczniów.
+językowy	linguistic	Myślę o Tatoeba jak o szkole **językowej**.
+pochłonąć	to swallow	Dżungla **pochłonęła** to opuszczone miasto.
+szafka	cupboard	Wyjmij czystą szklankę z **szafki**.
+zasłużyć	to deserve	Myślę, że nie **zasłużyłem** na swoją karę.
+szefowa	female boss	Nowa **szefowa** rządzi żelazną ręką.
+przemieszczać	to move	Pociągi **przemieszczają** się nocą.
+hamować	to brake	Często **hamuję** przed zmianą biegu na niższy.
+przenikać	to permeate	Altanę **przenikał** zapach lewkonii.
+rolnictwo	agriculture	Żyzna ziemia jest konieczna dla **rolnictwa**.
+ciemno	dark	Jest już **ciemno** na dworze.
+wrzucać	to throw in	Nie **wrzucaj** kamieni do rzeki.
+ratunkowy	life	Tom nie nosił kamizelki **ratunkowej**.
+pokręcić	twisted	Ma **pokręcony** charakter.
+lekceważyć	to underestimate	Nie **lekceważ** mojej mocy.
+akceptacja	acceptance	Potrzebuję twojej **akceptacji**.
+przodek	ancestor	To plemię czci swoich **przodków**.
+fundamentalny	fundamental	To jest **fundamentalny** problem.
+względem	regarding	Pytam **względem** ceny.
+zakupić	to purchase	Co zrobisz z tym całym **zakupionym** cementem?
+powaga	seriousness	Nie potrafili zrozumieć **powagi** sytuacji.
+logiczny	logical	To nie jest **logiczne**.
+hierarchia	hierarchy	W firmie jest jasna **hierarchia**.
+odsłaniać	to reveal	Film **odsłania** prawdę.
+plakat	poster	Na ścianie wisi **plakat**.
+wyróżnić	to distinguish (perfective)	Ta cecha go **wyróżnia**.
+ratunek	salvation	**Ratunek** przed tym nieszczęściem jest niewyobrażalny.
+utrzymanie	maintenance	Potrzebne jest stałe **utrzymanie** domu.
+odczuć	feel	Wszyscy w budynku **odczuli** trzęsienie ziemi.
+oddzielić	separate (perfective)	Zostałam **oddzielona** od reszty mojej rodziny.
+powojenny	postwar	To **powojenny** budynek.
+anonimowy	anonymous	On chce być **anonimowy**.
+nakręcić	make a film	**Nakręciliśmy** film o szachach.
+awansować	promote	Sami **awansował** Laylę zamiast Farida.
+niechętnie	reluctantly	Poszedł tam **niechętnie**.
+komfort	comfort	**Komfort** rozleniwia. Czasami dobrze jest pojechać po bandzie.
+odetchnąć	breathe	Ja tylko chciałam **odetchnąć** świeżym powietrzem.
+kongres	congress	Na **kongres** przyjadą lekarze.
+odczytywać	read aloud	Uczniowie **odczytują** tekst na głos.
+wydawca	publisher	Redaktor i **wydawca** są obaj moimi kuzynami.
+przeważnie	usually	**Przeważnie** piję herbatę.
+gotowość	readiness	Tom czeka w **gotowości**.
+ukształtować	shape (perfective)	Dziecko **ukształtowało** piłkę z gliny.
+strzec	guard	Łabędzie zaciekle **strzegą** swoich piskląt.
+konsument	consumer	Większość **konsumentów** jest przeciwnych plastikowym torebkom.
+taśma	tape	Policja odgrodziła teren żółtą **taśmą**.
+urodzenie	birth	Jej **urodzenie** było w maju.
+runda	round	To była ostatnia **runda** meczu.
+zadowolenie	satisfaction	Czuję duże **zadowolenie** po pracy.
+spektakularny	spectacular	Chcę ci pokazać **spektakularny** widok.
+wyeliminować	eliminate	Musimy **wyeliminować** ten błąd.
+obejść	to go around	Musimy **obejść** jezioro.
+wskutek	because of	Mecz odwołano **wskutek** burzy.
+wywieźć	to export	Firma chce **wywieźć** meble.
+absurdalny	absurd	To najbardziej **absurdalny** pomysł jaki kiedykolwiek słyszałem.
+wyprodukować	to produce (perfective)	**Wyprodukowano** 380 milionów ton plastiku.
+szarpać	to jerk	Nie **szarp** mnie za rękaw.
+tabela	table	Wpisz wynik do **tabeli**.
+dołożyć	to add (perfective)	Proszę, **dołóż** sobie.
+przełożony	superior	Mój **przełożony** jest dziś w pracy.
+żywić	to feed on	Pająk **żywi się** muchami.
+przykro	sorry	Przepraszam, **przykro** mi.
+rozpatrywać	to consider	Tom **rozpatruje** ten problem.
+rezerwa	reserve	Mamy małą **rezerwę** pieniędzy.
+definiować	to define	Słownik **definiuje** słowa.
+kontrowersyjny	controversial	Ten film jest wysoce **kontrowersyjny**.
+obronić	to defend	**Obronię** Toma.
+skomentować	to comment (perfective)	Proszę **skomentować** ten tekst.
+monitorować	to monitor	Musimy **monitorować** temperaturę komputera.
+swobodny	casual	Mam dziś **swobodny** strój.
+zapobiegać	to prevent	Możemy **zapobiegać** chorobom?
+zabiegać	to seek	Więcej studentów **zabiega** o przyjęcie na ten uniwersytet niż może zostać przyjętych.
+chemiczny	chemical	Ta substancja **chemiczna** jest wyjątkowo niebezpieczna.
+błękitny	light blue	Niebo było **błękitne**.
+ołtarz	altar	Kwiaty stoją przy **ołtarzu**.
+wybrzeże	coast	Zwiedził **wybrzeże** południowej Ameryki w 1499 roku.
+prawicowy	right-wing	Obecnie w większości krajów europejskich władzę sprawują socjaldemokraci, ale zauważalny jest wzrost **prawicowego** ekstremizmu.
+chłód	cold	Jestem przyzwyczajony do **chłodu**.
+sanitarny	sanitary	Potrzebny jest **sanitarny** środek czystości.
+potwierdzenie	confirmation	Dostałem **potwierdzenie** maila.
+skojarzenie	association	To słowo budzi złe **skojarzenie**.
+zanurzyć	to submerge	Uczestnicy **zanurzyli** ręce w lodowatej wodzie.
+sobotni	saturday	Zawsze gramy w tenisa w **sobotnie** poranki.
+konsekwentnie	consistently	Jeśli masz być konsekwentny, bądź konsekwentny **konsekwentnie**.
+otwór	hole	W ścianie jest mały **otwór**.
+zaistnieć	to emerge (perfective)	W mieście **zaistniała** nowa potrzeba.
+uczestnictwo	participation	Moje **uczestnictwo** było obowiązkowe.
+przemówienie	speech	Prezydent wygłosił krótkie **przemówienie**.
+podziemie	underground	W **podziemiu** ukryto książki.
+siedzenie	seat	W autobusie nie było wolnego **siedzenia**.
+generacja	generation	Oni wymyślili komputer nowej **generacji**.
+machać	to wave	Przysięgam, widziałem, jak niesporczak do mnie **macha**!
+przechodzień	passer-by	**Przechodzień** pomógł starszej pani.
+dama	lady	**Dama** pochodziła z dobrej rodziny.
+podlaski	podlaskie	To jest **podlaski** park narodowy.
+zestawienie	summary	Zrobiłem krótkie **zestawienie** wydatków.
+rolny	rural	Ta organizacja promuje umiejętność czytania i pisania na obszarach **rolnych**.
+napędzać	to power	Ten statek jest **napędzany** parą.
+sztab	staff	Cały **sztab** pracował w nocy.
+stalowy	steel	Wykuł **stalowy** miecz.
+pożegnanie	farewell	Na dworcu było smutne **pożegnanie**.
+kuchenny	kitchen	Tom był uzbrojony w nóż **kuchenny**.
+zalecać	recommend	**Zalecam** ostrożność.
+wyrywać	pull out	To ja pomogłem Tomowi **wyrywać** chwasty w ogrodzie.
+kreować	create	Chcemy **kreować** nowe produkty.
+wciągać	involve	Czy naprawdę musimy w to **wciągać** policję?
+starosta	county head	Nowy **starosta** przyjechał dziś rano.
+poprzednik	predecessor	Mój **poprzednik** miał lepszy pomysł.
+standardowy	standard	Poprzez uśrednienie sumy kwadratów różnic pomiędzy każdą wartością i średnią oraz wzięcie otrzymanego wyniku do pierwiastku drugiego stopnia, otrzymujemy odchylenie **standardowe**.
+obręb	area	W tym **obrębie** nie ma sklepów.
+sąsiedztwo	neighborhood	Mary nie mieszka w moim **sąsiedztwie**.
+totalny	total	Tom był w **totalnym** szoku.
+odmowa	rejection	**Odmowa** boli.
+rzeźba	sculpture	Ja po prostu nie rozumiem współczesnej **rzeźby**.
+serdecznie	sincerely	**Serdecznie** przepraszam za kłopot.
+małżeński	married	Przez jaki okres czasu Tom i Mary byli w związku **małżeńskim**?
+okupacja	occupation	Ta **okupacja** trwała wiele lat.
+biografia	biography	Książka zawiera piętnaście **biografii**.
+bezrobocie	unemployment	Po raz pierwszy od ponad 6 lat stopa **bezrobocia** spadła poniżej 6%.
+transformacja	transformation	Firma przeszła dużą **transformację**.
+pojmować	grasp	Nie **pojmuje** całkiem, co mówi młodzież.
+ugrupowanie	group	Do jakiego **ugrupowania** należysz?
+odbicie	reflection	W wodzie widać **odbicie** drzewa.
+początkowy	initial	**Początkowy** plan był dobry.
+blat	countertop	Postaw kubek na **blacie**.
+zanotować	to note down	**Zanotuj** to proszę.
+czuwać	watch over	Anioł stróż Toma **czuwa** nad nim.
+chrześcijaństwo	christianity	Judaizm nie jest przeciwieństwem **chrześcijaństwa**.
+podpowiadać	suggest	Co ci **podpowiada** instynkt?
+kontynuacja	continuation	Czy wczesnośredniowieczne hutnictwo szkła stanowiło **kontynuację** szklarskiej technologii Rzymian?
+wypłacać	to pay out	Wynagrodzenie będzie **wypłacane** proporcjonalnie do wykonanej pracy.
+spuścić	let down	Czy zapomniałaś, żeby **spuścić** wodę?
+zgon	death	Lekarz przekazał policji, że dla ustalenia przyczyny **zgonu** tej kobiety konieczna będzie autopsja.
+wystartować	take off (perfective)	Wskutek burzy samolot nie mógł **wystartować**.
+zderzenie	collision	Po **zderzeniu** oba auta stanęły.
+skórzany	leather	Tom kupił **skórzaną** kurtkę.
+baba	woman	Ta **baba** mieszka obok nas.
+porcja	portion	Czy chciałbyś kolejną **porcję**?
+zaszkodzić	to harm (perfective)	Przesadnie palenie **zaszkodzi** twojemu zdrowiu.
+oburzenie	outrage	Jego słowa wzbudziły **oburzenie**.
+kryminalny	crime novel	Pochłaniam jedną powieść **kryminalną** za drugą.
+założyciel	founder	Bill Gates jest **założycielem** Microsoftu.
+uliczny	street	Na **ulicznym** rynku jest tłum.
+rozdawać	hand out	**Rozdawali** darmowe zatyczki do uszu na robocie.
+rowerowy	cycling	Czy masz ochotę na przejażdżkę **rowerową**?
+kabina	cabin	W **kabinie** było bardzo ciepło.
+poszerzyć	to expand (perfective)	Imperializm to ideologia i praktyka potężnych grup próbujących zabezpieczyć i **poszerzyć** swoje przywileje poprzez dominację innych grup.
+regulamin	regulations	**Regulamin** szkoły nakazuje uczniom noszenie fartuszków.
+filozoficzny	philosophical	On lubi **filozoficzne** książki.
+rodak	compatriot	Spotkałem dziś polskiego **rodaka**.
+stabilny	stable	W dzisiejszych czasach ceny są **stabilne**.
+surowiec	raw material	Skóra to **surowiec** na buty.
+wyrób	product	Ten **wyrób** jest bardzo dobry.
+zarządzanie	management	To trudne **zarządzanie** firmą.
+pojedynek	duel	Wygrał **pojedynku** nieoczekiwanie.
+rozległy	vast	Leży przed nami **rozległa** pustynia.
+znakomicie	excellently	Zagrała **znakomicie** na pianinie.
+synek	little son	Chciałbym umówić mojego trzyletniego **synka**.
+ominąć	to bypass	Nigdy nie będziemy w stanie **ominąć** strażników.
+szept	whisper	Usłyszałem cichy **szept** w lesie.
+ustrój	system	Nasz **ustrój** jest demokratyczny.
+celny	customs	Proszę wypełnić deklarację **celną**.
+niezrozumiały	incomprehensible	To zdanie jest niestety całkowicie **niezrozumiałe**.
+analityk	analyst	**Analitycy** widzą to inaczej.
+socjalistyczny	socialist	To był **socjalistyczny** rząd.
+imponujący	impressive	Miał **imponujący** dom.
+obdarzyć	to bestow	**Obdarzyła** mnie wspaniałym uśmiechem.
+okręg	district	Mieszkam w tym **okręgu**.
+strajk	strike	**Strajk** trwał czterdzieści dwa dni.
+namówić	to persuade (perfective)	Lekarz **namówił** go, żeby rzucił palenie.
+zabezpieczać	to secure	Muszę **zabezpieczać** okna przed deszczem.
+formalnie	formally	Powiedział to **formalnie**.
+zawieszenie	suspension	Samochód ma dziś **zawieszenie**.
+mechaniczny	mechanical	Mój samochód ma mało koni **mechanicznych**.
+starość	old age	Tom umarł ze **starości**.
+stołeczny	capital	Warszawa jest **stołecznym** miastem.
+poetycki	poetic	To bardzo **poetycki** film.
+rama	frame	Obraz ma złotą **ramę**.
+kochanek	lover	On jest jej **kochankiem**.
+emerytalny	retirement	Mam **emerytalny** wiek.
+rozliczać	settle accounts	Musimy **rozliczać** faktury.
+nieudany	unsuccessful	To był **nieudany** dzień.
+prestiżowy	prestigious	To bardzo **prestiżowy** urząd.
+ogłoszenie	advertisement	Wisi tu nowe **ogłoszenie**.
+legendarny	legendary	To **legendarna** piosenka.
+zmieścić	fit	Nie **zmieści** się tutaj.
+urządzać	organize	Dziś **urządzamy** salon.
+zainwestować	invest (perfective)	Tom **zainwestował** swoje pieniądze w akcje.
+druk	print	Zauważyłem, że promocyjne ceny były napisane czerwonym **drukiem**.
+rozstać	break up	Oni się **rozstali** wczoraj.
+górski	mountain	Kupiliśmy **górski** rower.
+uliczka	alley	To ślepa **uliczka**.
+miesięczny	monthly	Matka obliczyła jej **miesięczne** wydatki.
+pozyskiwać	acquire	Ilość pieniędzy **pozyskiwanych** przez państwo z podatków określa możliwości wydatkowania ich na cele społeczne.
+skrywać	hide	On **skrywał** łzy przed wszystkimi.
+dotyk	touch	Jedwab jest miękki w **dotyku**.
+świecki	secular	To jest **świecki** urząd państwowy.
+super	cool	Myślisz że jestem **super**?
+obrażenie	insult	To było dla mnie **obrażenie**.
+impuls	impulse	Nagle poczuł **impuls** do ucieczki.
+rewolucyjny	revolutionary	Rząd został obalony po **rewolucyjnym** puczu.
+wydłużyć	lengthen	Rzucenie palenia to jedna z najlepszych rzeczy, które możesz zrobić, aby polepszyć ogólny stan zdrowia i **wydłużyć** oczekiwany czas życia.
+argumentować	argue	Mogę **argumentować** to prosto.
+estetyczny	aesthetic	Ta okładka jest bardzo **estetyczna**.
+ujmować	to champion	Chcę **ujmować** się za Anią.
+ideologiczny	ideological	To ma cel **ideologiczny**.
+obrady	proceedings	Do uchwały specjalnej wnoszonej pod **obrady** walnego zgromadzenia można wnosić poprawki w drodze uchwały zwykłej.
+uregulować	settle (perfective)	Kto powinien **uregulować** rachunek?
+różnie	in various ways	Dzieci uczą się **różnie**.
+nauczanie	teaching	**Nauczanie** w szkole jest trudne.
+wiosenny	spring	Będę pracować w czasie przerwy **wiosennej**.
+wymyślać	invent	Ona potrafi **wymyślać** ciekawe historyjki.
+niniejszy	herein	Każdy człowiek posiada wszystkie prawa i wolności zawarte w **niniejszej** Deklaracji bez względu na jakiekolwiek różnice rasy, koloru, płci, języka, wyznania, poglądów politycznych i innych, narodowości, pochodzenia społecznego, majątku, urodzenia lub jakiegokolwiek innego stanu.
+robotniczy	working-class	To jest **robotniczy** blok mieszkalny.
+doniesienie	report	Policja dostała **doniesienie** o kradzieży.
+prócz	besides	**Prócz** mleka kupiłem chleb.
+skraj	edge	Tom zepchnął Mary ze **skraju** urwiska.
+zakazić	infect (perfective)	Brudna woda może **zakazić** ranę.
+wyprostować	straighten	Muszę **wyprostować** plecy.
+kopia	copy	Poprosiłem go o zrobienie czterech **kopii** listu.
+pożarny	fire	Dzwoń na straż **pożarną**!
+zebranie	meeting	Jutro mamy **zebranie** w pracy.
+motor	motorcycle	Jadę na **motorze**.
+jednolity	uniform	Mamy **jednolity** kolor ścian.
+stereotyp	stereotype	Nie ma takiego czegoś jak dobry **stereotyp**.
+zapobiec	prevent	Maseczka pomoże **zapobiec** chorobie.
+podłoże	substrate	To **podłoże** jest bardzo mokre.
+egzotyczny	exotic	Tom hoduje **egzotyczne** pająki.
+rzymski	roman	Zapis arabski został zastąpiony alfabetem **rzymskim**.
+zmarnować	waste (perfective)	Nie chciałem **zmarnować** tyle czasu.
+widocznie	apparently	**Najwidoczniej** Tom bardzo lubi Mary.
+limit	limit	Nie przekraczaj tego **limitu**.
+sztywny	stiff	Buty są **sztywne**, gdy są nowe.
+zapał	enthusiasm	Stracił **zapał**.
+rejestrować	register	Muszę **rejestrować** nowych uczniów.
+ogarniać	manage	Moja żona świetnie wszystko **ogarnia**.
+obronny	defensive	Zagrali bardzo **obronny** mecz.
+zapotrzebowanie	demand	Rośnie **zapotrzebowanie** na lekarzy.
+kursować	run	Jak często **kursuje** autobus?
+rocznik	vintage	To wino to stary **rocznik**.
+spożywać	consume	Osobom **spożywającym** napoje alkoholowe wstęp wzbroniony.
+wcielić	incorporate	Firma chce **wcielić** nowy plan.
+zaburzenie	disorder	Lekarz wykrył **zaburzenie** snu.
+korespondencja	correspondence	Nie wolno ingerować samowolnie w czyjekolwiek życie prywatne, rodzinne, domowe, ani w jego **korespondencję**, ani też uwłaczać jego honorowi lub dobremu imieniu. Każdy człowiek ma prawo do ochrony prawnej przeciwko takiej ingerencji lub uwłaczaniu.
+wysunąć	stick out	Króliki **wysunęły** pyszczki.
+zdominować	dominate (perfective)	Niektórzy mówią, że Japonia jest społeczeństwem **zdominowanym** przez mężczyzn.
+wypłacić	to withdraw (perfective)	**Wypłaciłem** pieniądze z banku.
+zależny	dependent	Wciąż jest **zależny** od swoich rodziców.
+poprzedzać	to precede	Błyskawica **poprzedza** grom.
+paradoksalnie	ironically	**Paradoksalnie** pomogło mi to bardziej.
+obniżać	to lower	Ta promocja **obniża** cenę.
+zapytanie	request	Wysłałem **zapytanie** do sklepu.
+zadeklarować	to declare (perfective)	Rząd **zadeklarował** pomoc dziś.
+płatny	paid	Tom ma trzy tygodnie **płatnego** urlopu.
+stado	herd	Mój tata miał kiedyś **stado** kóz.
+zniszczenie	destruction	Pożar spowodował duże **zniszczenie**.
+wykupić	to buy out	Firma chce **wykupić** konkurencję.
+domyślić	to figure out	Nie mogłem **domyślić** się odpowiedzi.
+oświata	education	**Oświata** w mieście jest dobra.
+naraz	at once	Zażądałem, żeby spłacił mi **naraz** cały dług.
+użytkować	to use	Ta maszyna do pisania była intensywnie **użytkowana**.
+serio	seriously	Mówisz **serio**?
+spożywczy	grocery	Stoję w kolejce przed sklepem **spożywczym**.
+małżonek	spouse	Mój **małżonek** wrócił dziś wcześniej.
+skłaniać	to prompt	Co **skłania** ludzi do tego?
+szpitalny	hospital	Tom jest w **szpitalnej** poczekalni.
+kręgosłup	spine	Jeden z pocisków uszkodził mu **kręgosłup**.
+ciśnienie	blood pressure	Kontakt z naturą może obniżyć **ciśnienie** krwi.
+biegły	expert	Ten lekarz jest bardzo **biegły**.
+odważyć	to dare	Nie **odważyłem** się wejść.
+równość	equality	W przyrodzie nie ma **równości**.
+mieszkanka	resident	Ta **mieszkanka** zna wszystkich sąsiadów.
+giełda	stock market	Stracił majątek na **giełdzie**.
+tytułowy	title	**Tytułowy** bohater zginął na końcu.
+zagłada	destruction	Wojna przyniosła wielką **zagładę**.
+wyczuwać	sense	Rekiny **wyczuwają** krew.
+niezależność	independence	Ważne jest, aby nasi mieszkańcy mieli poczucie **niezależności**.
+przełamać	break (perfective)	Tom spróbował **przełamać** lody.
+młodzieżowy	youth	Czy w pobliżu jest jakieś schronisko **młodzieżowe**?
+napęd	drive	Mój laptop ma dobry **napęd**.
+produkcyjny	production	Hala **produkcyjna** jest bardzo duża.
+obserwator	observer	Międzynarodowi **obserwatorzy** liczyli na głosowanie.
+fascynacja	fascination	Mam **fascynację** starymi pociągami.
+nieopodal	nearby	Sklep jest **nieopodal** stacji.
+dobiec	end (perfective)	Drugi semestr **dobiegł** końca.
+budżetowy	budget	Deficyt **budżetowy** musi zostać jakoś sfinansowany.
+kronika	chronicle	Czytałem szkolną **kronikę**.
+dopasować	match (perfective)	Muszę **dopasować** buty do sukienki.
+podważać	undermine	To może **podważać** ich decyzję.
+taras	terrace	Usiedliśmy na **tarasie**.
+zaciskać	clench	Zaczęła **zaciskać** pięści.
+biznesmen	businessman	Nie jest **biznesmenem**, a dyplomatą.
+niespodziewany	unexpected	Dostałem **niespodziewany** telefon.
+stworzenie	creature	To **stworzenie** żyje w lesie.
+zasiąść	take a seat	Po spotkaniu chcę **zasiąść** przy stole.
+gazowy	gaseous	Ta substancja jest w stanie **gazowym**.
+wrogi	hostile	Był **wrogo** nastawiony do każdej próby pojednania.
+odczucie	feeling	To było miłe **odczucie**.
+cofać	to move back	Samochód zaczął **cofać**.
+fizycznie	physically	Przez cały dzień ciężko pracował **fizycznie**.
+skłonny	willing	Jestem **skłonny** dużo ci za to zapłacić.
+znad	from above	Mgła szła **znad** rzeki.
+demonstracja	demonstration	Blisko tysiąc osób uczestniczyło w **demonstracji**.
+dynamika	dynamics	W naszej klasie czuć **dynamikę**.
+maluch	toddler	**Maluch** śpi w łóżeczku.
+wiceminister	deputy minister	**Wiceminister** odwiedził szkołę.
+precyzyjny	precise	Jesteś **precyzyjny**.
+staż	internship	Mój **staż** zaczyna się jutro.
+pękać	to burst	Miejsce **pękało** wczoraj w szwach.
+niewidzialny	invisible	Powietrze jest **niewidzialne**.
+pogorszyć	worsen (perfective)	Tom **pogorszył** sytuację.
+wyprowadzać	to move out	Muszę **wyprowadzać** się z domu.
+wkraczać	to intervene	Policja nie może **wkraczać** bez powodu.
+uruchamiać	to start	Kliknij, by **uruchamiać** program.
+gmach	building	Nowy **gmach** teatru wygląda bardzo okazale.
+przejeżdżać	to pass by	Codziennie **przejeżdżać** tędy autobus.
+dojrzewać	to mature	Dziewczęta **dojrzewają** szybciej niż chłopcy.
+odnowić	to renew	Muszę **odnowić** mój paszport.
+malutki	tiny	Tom nienawidzi swojej **malutkiej** sypialni.
+rys	feature	Ma delikatny **rys** twarzy.
+obrażać	to insult	Nie **obrażaj** Toma.
+niewłaściwy	wrong	To był **niewłaściwy** żart.
+zalewać	to flood	Tanie zboże **zalewa** nasz rynek.
+powstrzymywać	to stop	Nie **powstrzymuj** go.
+trumna	coffin	**Trumna** była pusta.
+uśmiechnięty	smiling	Mój tata jest dziś **uśmiechnięty**.
+klinika	clinic	Idę do **kliniki**.
+debiut	debut	Mój **debiut** był udany.
+wiceprezes	vice president	**Wiceprezes** wykonawczy Nigel Hollis rozmawiał ze mną o tym, w jaki sposób Millward Brown mierzy wartość marek i dlaczego marki mają tak duże znaczenie teraz, w czasach słabości gospodarczej krajów rozwiniętych.
+benzynowy	gas station	Tom wjechał na stację **benzynową**.
+wzbogacić	to get rich	Nowy biznes pomoże mu **wzbogacić** się.
+właścicielka	owner	Porozmawiałaś z **właścicielką**?
+laboratorium	laboratory	W **laboratorium** robimy doświadczenie.
+powolny	slow	Ty jesteś szybki, my jesteśmy **powolni**.
+winien	to owe	Jestem ci **winien** pieniądze.
+wypisać	to prescribe	**Wypiszę** panu receptę.
+uwięzić	to imprison	Policja chce **uwięzić** złodzieja.
+zdobić	to decorate	Nie szata **zdobi** człowieka.
+traktat	treaty	**Traktat** to jakby kontrakt między państwami.
+dziennikarka	journalist	Chcę być **dziennikarką**.
+wiarygodny	reliable	On wie to z wysoce **wiarygodnych** źródeł.
+zerknąć	to glance (perfective)	Chcesz **zerknąć**?
+praktykować	to practice	Mormoni zdelegalizowali poligamię, lecz niektórzy wyznawcy wciąż ją **praktykują**.
+majątkowy	estate	To sprawa **majątkowa**.
+sojusznik	ally	Przychodzisz jako **sojusznik** czy jako wróg?
+magia	magic	Alchemia jest uznawana za formę **magii**.
+wyróżnienie	distinction	Dostałam **wyróżnienie** w szkole.
+zakażenie	infection	Mam **zakażenie** ucha.
+ranking	ranking	Ten zespół jest wysoko w **rankingu**.
+ewolucja	evolution	Nazwisko Darwina łączymy z teorią **ewolucji**.
+prawdopodobieństwo	probability	To małe **prawdopodobieństwo**.
+delegacja	delegation	Nasza **delegacja** spotkała się z ministrem.
+przynależność	membership	Cenię sobie moją **przynależność** do partii.
+spoza	from outside	Dostał list **spoza** kraju.
+prześladować	persecute	**Prześladował** ludzi za ich wierzenia.
+pogłębiać	deepen	**Pogłębianie** znajomości nauk Mistrza, ostatecznie zajęło mi lata.
+zrodzić	give rise to	Technologia **zrodziła** rozmaite kultury.
+bieżąco	currently	Jestem **bieżąco** z lekcjami.
+naciskać	press	To bezowocne **naciskać** go dalej.
+przestrzenny	spatial	Ten program ma **przestrzenny** obraz.
+poszkodowany	injured person	**Poszkodowany** czekał na karetkę.
+kontrowersja	controversy	Kiedy książka została napisana, spowodowała mnóstwo **kontrowersji**.
+podzielać	share	Tom nie **podziela** twojego entuzjazmu.
+niewygodny	uncomfortable	To krzesło jest **niewygodne**. Usiądę na innym.
+czwórka	four	**Czwórka** jest nieszczęśliwą liczbą w Japonii.
+plastyczny	plastic	Moja ciocia jest chirurgiem **plastycznym**.
+betonowy	concrete	Rozwalił **betonowy** blok młotkiem.
+nowelizacja	amendment	Nowa **nowelizacja** zmieniła prawo.
+zastosowanie	application	To ma dobre **zastosowanie** w pracy.
+stos	stack	**Stos** gazet stał w rogu pokoju.
+operować	operate	Musimy natychmiast **operować**.
+orientacja	orientation	Moja **orientacja** w mieście jest słaba.
+zdefiniować	define (perfective)	**Zdefiniuj** sprawiedliwość.
+odbudowa	reconstruction	**Odbudowa** mostu trwa długo.
+węzeł	knot	Tom pokazał Mary, jak wiązać **węzły**.
+oznaczyć	mark (perfective)	Nauczyciel kazał **oznaczyć** zadanie.
+departament	department	Mój **departament** ma nowe biuro.
+zalecenie	recommendation	Lekarz dał mi takie **zalecenie**.
+ambasador	ambassador	Jak ma na imię **ambasador**?
+zasłużony	meritorious	To był **zasłużony** pracownik.
+odpowiednik	equivalent	To japońskie słowo nie ma **odpowiednika** w angielskim.
+prawdziwie	truly	W istocie, miłość jest jedyną **prawdziwie** cenną rzeczą rzeczą w życiu, jedyną wartą zachodu.
+zamożny	wealthy	Ponieważ jest **zamożny**, może sobie na wszystko pozwolić.
+dech	breath	Kiedy to zobaczyłem, zaparło mi **dech**.
+mawiać	used to say	Tom **mawiał**, że za dużo gadam.
+rura	pipe	Gaz uciekał przez pęknięcie w **rurze**.
+generalnie	generally	Koreańskie jedzenie jest **generalnie** bardzo pikantne.
+ekonomia	economy	**Ekonomia** Polski rośnie.
+uchwycić	grip (perfective)	Mocno **uchwycił** rakietę tenisową.
+dofinansowanie	subsidy	Firma dostała **dofinansowanie** z miasta.
+dusić	choke	**Dusił** ją dym.
+niekorzystny	unfavourable	Ta decyzja była **niekorzystna** dla nas.
+miłosny	love	Wczoraj wieczorem napisałem list **miłosny**.
+cegła	brick	Dom jest zbudowany z czerwonych **cegieł**.
+latarnia	streetlight	**Latarnie** sodowe wymieniane są na LED-y.
+odsłona	episode	Ta **odsłona** gry jest lepsza.
+dobra	fine	**Dobra**, idziemy do domu.
+pogłębić	worsen (perfective)	Stres może **pogłębić** ból.
+pokusa	temptation	Słodycze to moja **pokusa**.
+emigracja	emigration	Susza, ubóstwo i bezrobocie napędzały **emigrację** z Mauretanii od lat siedemdziesiątych.
+równo	evenly	Narysuj linię **równo**.
+wbijać	drive in	**Wbija** swoje zęby w soczyste czerwone jabłko.
+publicysta	columnist	On jest **publicystą** w dziale plotki od 9 lat do teraz.
+rywalizować	compete	Dwa kluby **rywalizują** o tytuł.
+zarazić	infect (perfective)	Ile osób jest **zarażonych**?
+obiecować	promise	**Obiecuję** ci pomoc.
+ładunek	charge	Cząstki alfa przenoszą **ładunek** dodatni.
+odprowadzać	see off	Nie trzeba ich **odprowadzać**.
+kwalifikacje	qualifications	Nie masz **kwalifikacji**, by przewodzić grupie.
+rozliczyć	settle (perfective)	Muszę **rozliczyć** podatki.
+detal	detail	Zapamiętałem każdy **detal** tego planu.
+komisarz	commissioner	To nie byłem ja, **komisarzu**!
+wagon	carriage	W którym **wagonie** zarezerwowałeś miejsce?
+ciekawie	interestingly	Opowiadał to bardzo **ciekawie**.
+intymny	intimate	To była **intymna** rozmowa.
+jednorazowy	disposable	Sądzę, że ludzie powinni przestać używać **jednorazowych** reklamówek.
+senator	senator	**Senator** nada zajmował swoje stanowisko, gdy te wydarzenia ujrzały światło dzienne.
+groza	horror	Ten film budził prawdziwą **grozę**.
+zamieszkanie	residence	Potrzebuję potwierdzenia **zamieszkania**.
+krata	bars	Policja wsadzi cię za **kraty**.
+legalny	legal	Czy to jest w ogóle **legalne**?
+zasłonić	block (perfective)	Nagle ciemne chmury **zasłoniły** słońce.
+egzystencja	existence	Jego **egzystencja** była trudna.
+walor	value	Ten produkt ma duży **walor**.
+grzebać	dig	Dzieci lubią **grzebać** w piasku.
+zlokalizować	locate	Nie mogę **zlokalizować** źródła problemu.
+odruch	reflex	Dla mnie pomaganie to zwykła rzecz, taki **odruch**, jak oddychanie.
+współczucie	compassion	Czułem **współczucie** dla chorego.
+zerkać	glance	**Zerkam** na kogoś.
+obciążenie	burden	Nowy kredyt to duże **obciążenie**.
+uczony	learned	To **uczony** profesor.
+politycznie	politically	Ten żart jest niepoprawny **politycznie**.
+realia	reality	Takie są codzienne **realia** pracy.
+rozdzielić	separate (perfective)	Matka **rozdzieliła** walczące dzieci.
+wysoce	highly	On wie to z **wysoce** wiarygodnych źródeł.
+obciążyć	charge (perfective)	Tom został **obciążony** opłatą za zwłokę.
+propagować	promote	Chcemy **propagować** zdrowy styl życia.
+huk	bang	Nagle, drzwi trzasnęły z **hukiem**.
+namysł	thought	Potrzebuję chwili **namysłu**.
+przyjemnie	pleasantly	Zostańmy na zewnątrz, jest ciepło i **przyjemnie**.
+potoczyć	turn out (perfective)	Wszystko **potoczyło** się dobrze.
+segment	segment	Ten **segment** programu jest krótki.
+odbudować	rebuild	Musimy **odbudować** most.
+zagwarantować	guarantee (perfective)	Myślę, że nie możemy **zagwarantować** ci bezpieczeństwa.
+nagrodzić	reward	Wysiłki Toma zostały **nagrodzone**.
+zamilknąć	fall silent	Nagle wszyscy **zamilkli**.
+barwny	colorful	Kupiłam **barwny** sweter.
+wychowawczy	educational	To ma **wychowawczy** cel.
+różnorodny	diverse	Gusta są **różnorodne**
+uzgodnić	agree (perfective)	Ona przyszła godzinę później niż **uzgodniono**.
+mieszanka	mixture	Ta **mieszanka** pachnie dobrze.
+przesłuchać	interrogate	Tom został zatrzymany na **przesłuchanie**.
+pełnomocnik	representative	Mój **pełnomocnik** podpisał umowę.
+przyczyniać	contribute	Takie decyzje **przyczyniają** się do sukcesu.
+sportowiec	athlete	On był podobno niezłym **sportowcem**.
+rozebrać	undress	Muszę się **rozebrać** przed kąpielą.
+rolniczy	agricultural	To był teren **rolniczy**.
+czyścić	clean	Nie pamiętam, kiedy to ostatnio **czyściłam**.
+powiązanie	connection	To **powiązanie** jest ważne dla firmy.
+oświetlić	illuminate	Pokój był **oświetlony** czerwonymi światłami.
+okrzyk	cry	Tłum powitał **okrzykami** wychodzącego śpiewaka.
+intuicja	intuition	Mam dobrą **intuicję** do ludzi.
+instynkt	instinct	Co ci podpowiada **instynkt**?
+lokator	tenant	Mój **lokator** płaci czynsz na czas.
+sąsiadka	female neighbour	Moja **sąsiadka** ma dziewięćdziesiąt pięć lat i nadal jest zdrowa.
+zdejmować	take off	Nie **zdejmuj** swojej maski.
+niezgodny	incompatible	To, co on robi, jest **niezgodne** z prawem.
+parkiet	dance floor	Tańczymy dziś na **parkiecie**.
+korekta	correction	Nauczyciel zrobił **korektę** mojego zdania.
+budowla	building	Ta **budowla** ma sto lat.
+pokojowy	peaceful	Potrzebujemy **pokojowego** rozwiązania.
+jawić	appear	Nagle **jawił** się przed nami.
+rówieśnik	peer	Porozmawiaj ze swoimi **rówieśnikami**.
+mruknąć	mutter	On tylko **mruknął** pod nosem.
+przebierać	change clothes	Muszę **przebierać** dziecko po spacerze.
+rozbudowa	expansion	Firma planuje dużą **rozbudowę**.
+interweniować	intervene	Tom **interweniował**.
+pochłaniać	absorb	Drzewa wydzielają tlen i **pochłaniają** dwutlenek węgla.
+spójny	coherent	Naszemu systemowi podatkowemu wciąż brakuje **spójnej** filozofii.
+pielęgnować	nurture	Ta tradycja jest **pielęgnowana** w większości domostw.
+sprawność	fitness	Regularny trening poprawia **sprawność**.
+zabytkowy	historic	Wiele osób uważa, że **zabytkowe** samochody są za drogie.
+pojemnik	container	Zielony **pojemnik** ma kształt igloo.
+kiwać	nod	Dziadek **kiwa** głową na tak.
+opiekuńczy	caring	Mój tata jest bardzo **opiekuńczy**.
+spółdzielnia	cooperative	Nasza **spółdzielnia** naprawia dach.
+tkanka	tissue	Dlatego pięćdziesiąt procent masy mięśniowej może ustąpić **tkance** tłuszczowej.
+wycofywać	withdraw	Muszę **wycofywać** swoje słowa.
+panowanie	rule	To był czas **panowania** króla.
+chwilowy	temporary	To jest **chwilowe**.
+upłynąć	elapse	**Upłynęła** mniej więcej jedna godzina.
+tolerować	tolerate	Nie mogę już tego **tolerować**.
+etyczny	ethical	Ten fundusz inwestycyjny inwestuje tylko w te firmy, które prowadzą działalność w sposób **etyczny**.
+wirtualny	virtual	Mam **wirtualny** adres w sieci.
+krzew	shrub	W ogrodzie rośnie mały **krzew**.
+potomek	descendant	Większość Amerykanów to **potomkowie** imigrantów.
+atut	asset	Doświadczenie jest twoim największym **atutem**.
+sfinansować	finance (perfective)	Aby **sfinansować** wojnę, emitowane są obligacje.
+czułość	sensitivity	Ma dużą **czułość** na ból.
+obiektywny	objective	Trudno pozostać **obiektywnym**.
+ochronny	protective	Tom stracił panowanie nad pojazdem i uderzył w barierkę **ochronną**.
+dominacja	dominance	**Dominacja** Anglii zabija europejski dialog.
+mieszkalny	residential	To nowe osiedle jest **mieszkalne**.
+naczelnik	head	**Naczelnik** policji przyjechał rano.
+oszustwo	fraud	Piramidy finansowe są **oszustwami**.
+nastawienie	attitude	Twoje **nastawienie** bardzo pomaga.
+popaść	fall into	Kiedy **popadł** w niełaskę, wszyscy przyjaciele go porzucili.
+żywioł	element	Woda to **żywioł**.
+pseudonim	nickname	Mój **pseudonim** to "Itch".
+specjalizować	specialize	Studiuję, żeby **specjalizować** się w medycynie.
+partnerka	partner	Moja **partnerka** mieszka blisko.
+niedostępny	unavailable	Przepraszamy. Wybrany numer jest **niedostępny**.
+przedłużać	to extend	Proszę **przedłużać** bilet.
+celowo	intentionally	On **celowo** spóźnił się.
+nawoływać	to call out	Dzieci **nawoływały** mamę z ogrodu.
+zbliżony	similar	Mój plan jest **zbliżony** do twojego.
+podarować	to give (perfective)	To Tom **podarował** mi obraz, który wisi nad kominkiem.
+zatwierdzić	to approve	Traktat został **zatwierdzony**.
+systematycznie	systematically	Muszę **systematycznie** ćwiczyć angielski.
+wypływać	to leave port	Parostatek **wypływa** właśnie z portu.
+decydujący	decisive	Twoja pomoc była **decydująca**.
+drażnić	to annoy	Tom wie, co **drażni** Mary.
+oby	if only	**Oby** to nie była prawda.
+karabin	rifle	Policjant trzymał **karabin**.
+szepnąć	to whisper (perfective)	"Nie przeszkadzaj jej. Jest w tej chwili w pracy", **szepnął**.
+zidentyfikować	to identify	Jej zwłoki **zidentyfikowano** dzięki zegarkowi z symbolem pająka.
+utożsamiać	to identify with	Szczęście jest niekiedy **utożsamiane** z pieniędzmi.
+pieniężny	monetary	To była **pieniężna** kara.
+emeryt	retiree	Jestem **emerytem**.
+pośrodku	in the middle	Biblioteka jest **pośrodku** miasta.
+czuły	sensitive	Ona jest bardzo **czuła** na krytykę.
+wyrazisty	expressive	Ma **wyraziste** oczy.
+wieźć	to carry	Tata **wiezie** dzieci do szkoły.
+przebijać	to penetrate	Korzenie **przebijają** ziemię.
+przeciwdziałać	to counteract	Lek pomaga **przeciwdziałać** chorobie.
+guzik	button	W twojej kurtce brakuje **guzika**.
+szczęśliwie	happily	Żyli **szczęśliwie** przez lata.
+trzeźwy	sober	Byłeś wtedy **trzeźwy**?
+zasadniczo	basically	**Zasadniczo** zgadzam się z tobą.
+napotkać	encounter	On **napotkał** trudności w swojej pracy.
+kumpel	buddy	Rozmawiali ze sobą jak starzy **kumple**.
+zupełny	complete	To był **zupełny** chaos.
+fachowiec	professional	Na miejscu był dobry **fachowiec**.
+sypać	sprinkle	Tom i Mary **sypią** za dużo cukru do herbaty.
+terytorialny	territorial	To był **terytorialny** spór.
+artystka	artist	O ile można powiedzieć, jest **artystką**.
+wzruszenie	emotion	Poczułem **wzruszenie** na ślubie.
+skonstruować	construct	Programista **skonstruował** nową aplikację.
+żyła	vein	Krew bohaterów płynie w moich **żyłach**.
+opatrzyć	treat (perfective)	Lekarz **opatrzył** ranę.
+ogrodzenie	fence	Nasze **ogrodzenie** jest wykonane z żelaza.
+córeczka	little daughter	Moja żona urodziła wcześniaka - półtorakilogramową **córeczkę**.
+przejawiać	show	**Przejawiała** talent do obelg.
+sankcja	sanction	**Sankcja** ta ma znacznie szerszy zakres.
+meta	finish line	Tom pierwszy dotarł do linii **mety**.
+pojemność	capacity	**Pojemność** tej windy to dziesięć osób.
+drukować	print	Wynalezienie czcionki ruchomej w piętnastowiecznej Europie zrewolucjonizowało przekazywanie idei. Wynalazek ten umożliwił **drukowanie** i rozpowszechnianie informacji dla mas.
+pęd	momentum	Samochód nabrał **pędu**.
+precyzyjnie	precisely	Powiedz to **precyzyjnie**.
+minus	minus	Ile to dziewięć **minus** sześć?
+komercyjny	commercial	Port w Algierze jest największym **komercyjnym** portem Algierii.
+wywalczyć	to win (perfective)	Muszę **wywalczyć** wolny weekend.
+oszacować	to estimate (perfective)	Muszę **oszacować** koszty remontu.
+odstawić	to put away	Pomóż podopiecznemu **odstawić** naczynia po skończonej pracy.
+wstrząsnąć	to shock (perfective)	Nowina wszystkimi **wstrząsnęła**.
+handlować	to trade	**Handlować** towarem z najwyższej półki.
+bojowy	warlike	Mój brat jest bardzo **bojowy**.
+aborcja	abortion	Miała **aborcję**.
+zakochany	in love	Ona jest **zakochana** w Tomku.
+demon	demon	W filmie pojawił się **demon**.
+posesja	property	Ta **posesja** ma duży ogród.
+zawiadomić	to notify	Powinieneś natychmiast **zawiadomić** policję.
+potworny	terrible	To było **potworne** przeżycie.
+oświetlenie	lighting	W pokoju jest złe **oświetlenie**.
+optymizm	optimism	Nie jestem pewien, czy podzielam twój **optymizm**.
+machnąć	to wave (perfective)	Adam **machnął** do mnie ręką.
+wymuszać	to force	Nikt nie powinien **wymuszać** na innych swojego punktu widzenia.
+skrajnie	extremely	Jest mi **skrajnie** zimno.
+bezradny	helpless	Tom jest **bezradny**.
+wyłączać	to turn off	Proszę **wyłączać** światło przy opuszczaniu pokoju.
+dręczyć	to bother	Nie **dręczy** mnie sumienie.
+kapitalizm	capitalism	**Kapitalizm** państwowy może być demokratyczny lub autorytarny.
+pył	dust	Na stole leży **pył**.
+proza	prose	On czyta tylko **prozę**.
+udostępniać	to share	Proszę **udostępniać** ten post dalej.
+odtwarzać	to play back	On **odtwarza** muzykę.
+zwycięski	victorious	To był **zwycięski** mecz.
+wyliczyć	to count up	Muszę **wyliczyć** wszystkie wydatki.
+dofinansować	to subsidize	Nasz projekt odpadnie w przedbiegach bez **dofinansowania**.
+epizod	episode	Jaki jest twój ulubiony **epizod** z sezonu drugiego?
+kochanka	mistress	Nie znam jego **kochanki**.
+zawrócić	to turn back	Może powinniśmy **zawrócić**.
+knajpa	pub	To niezupełnie popularna **knajpa**, to raczej speluna.
+monitoring	monitoring	Szef robi **monitoring** pracy.
+zaobserwować	to observe (perfective)	W lesie **zaobserwowałem** sarnę.
+rozbijać	to smash	Dziecko lubi **rozbijać** kubek o podłogę.
+wznowić	to resume	Tom **wznowił** czytanie.
+patron	patron saint	Większość małych miasteczek w Meksyku ma swojego świętego **patrona**, którego święto obchodzone jest z wielką pompą.
+ozdoba	decoration	Ta **ozdoba** jest z papieru.
+politechnika	polytechnic	Studiuję na **politechnice** w Krakowie.
+oznaka	sign	Nie było żadnych **oznak** życia.
+posada	job	Znajdziesz **posadę**.
+kawał	joke	Tom opowiedział Mary **kawał**.
+sejmowy	parliamentary	Posłowie głosowali nad **sejmową** ustawą.
+należny	due	Zapłaciłem **należny** podatek.
+izolacja	isolation	Lekarz zalecił mi **izolację**.
+sondaż	poll	**Sondaż** był oparty na próbie osób dorosłych.
+reportaż	reportage	Czytałem dziś ciekawy **reportaż**.
+wspólnik	partner	Mój **wspólnik** otworzył sklep.
+uchronić	to protect (perfective)	Koc **uchronił** mnie przed zimnem.
+niewola	slavery	Chłopca sprzedano w **niewolę**.
+wykładać	to lecture	Profesor **wykłada** matematykę.
+wyprzedzać	to precede	On znacznie **wyprzedzał** swoje czasy.
+jakkolwiek	however	Chcę ci pomóc, **jakkolwiek** mogę.
+opozycyjny	oppositional	Partia **opozycyjna** krytykuje rząd.
+fenomen	phenomenon	To zjawisko jest prawdziwym **fenomenem**.
+drobiazg	trifle	To tylko **drobiazg**.
+przystosować	to adapt (perfective)	Muszę **przystosować** plan do zajęć.
+smoleński	from smolensk	Widziałem dziś **smoleński** pociąg.
+górniczy	mining	To stare **górnicze** miasto.
+obieg	circulation	Lekarz sprawdza **obieg** krwi.
+bagażnik	trunk	Mogłabyś włożyć te torby do **bagażnika**?
+eksport	exports	Import był większy od **eksportu** w poprzednim roku.

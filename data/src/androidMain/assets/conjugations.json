@@ -384,6 +384,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "angażować",
+    "ja": "angażuję",
+    "ty": "angażujesz",
+    "on/ona/ono": "angażuje",
+    "my": "angażujemy",
+    "wy": "angażujecie",
+    "oni/one": "angażują",
+    "translation": "get involved",
+    "example": "Nie chcę **angażować** się w spór.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "antydatować",
     "ja": "antydatuję",
     "ty": "antydatujesz",
@@ -516,6 +528,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "argumentować",
+    "ja": "argumentuję",
+    "ty": "argumentujesz",
+    "on/ona/ono": "argumentuje",
+    "my": "argumentujemy",
+    "wy": "argumentujecie",
+    "oni/one": "argumentują",
+    "translation": "argue",
+    "example": "Mogę **argumentować** to prosto.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "artykułować",
     "ja": "artykułuję",
     "ty": "artykułujesz",
@@ -633,6 +657,18 @@
     "oni/one": "autoryzują",
     "translation": "to authorize",
     "example": "Szef **autoryzował** wyjazd.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "awansować",
+    "ja": "awansuję",
+    "ty": "awansujesz",
+    "on/ona/ono": "awansuje",
+    "my": "awansujemy",
+    "wy": "awansujecie",
+    "oni/one": "awansują",
+    "translation": "promote",
+    "example": "Sami **awansował** Laylę zamiast Farida.",
     "aspect": "imperfective"
   },
   {
@@ -3656,7 +3692,7 @@
     "wy": "ciążycie",
     "oni/one": "ciążą",
     "translation": "to weigh down",
-    "example": "Anna **ciąży** od maja.",
+    "example": "Słyszałem, że jest w **ciąży**.",
     "aspect": "imperfective"
   },
   {
@@ -5321,6 +5357,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "dobrać",
+    "ja": "dobiorę",
+    "ty": "dobierzesz",
+    "on/ona/ono": "dobierze",
+    "my": "dobierzemy",
+    "wy": "dobierzecie",
+    "oni/one": "dobiorą",
+    "translation": "to match",
+    "example": "Muszę **dobrać** buty do sukienki.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "dobudować",
     "ja": "dobuduję",
     "ty": "dobudujesz",
@@ -5677,6 +5725,18 @@
     "oni/one": "dodzwonią",
     "translation": "to get through",
     "example": "Nie mogę się do niego **dodzwonić**.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "dofinansować",
+    "ja": "dofinansuję",
+    "ty": "dofinansujesz",
+    "on/ona/ono": "dofinansuje",
+    "my": "dofinansujemy",
+    "wy": "dofinansujecie",
+    "oni/one": "dofinansują",
+    "translation": "to subsidize",
+    "example": "Nasz projekt odpadnie w przedbiegach bez **dofinansowania**.",
     "aspect": "perfective"
   },
   {
@@ -6232,6 +6292,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "domagać",
+    "ja": "domagam",
+    "ty": "domagasz",
+    "on/ona/ono": "domaga",
+    "my": "domagamy",
+    "wy": "domagacie",
+    "oni/one": "domagają",
+    "translation": "to demand",
+    "example": "Oni **domagają** się przeprosin.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "domagać się",
     "ja": "domagam się",
     "ty": "domagasz się",
@@ -6280,6 +6352,30 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "dominować",
+    "ja": "dominuję",
+    "ty": "dominujesz",
+    "on/ona/ono": "dominuje",
+    "my": "dominujemy",
+    "wy": "dominujecie",
+    "oni/one": "dominują",
+    "translation": "dominate",
+    "example": "",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "domyślać",
+    "ja": "domyślam",
+    "ty": "domyślasz",
+    "on/ona/ono": "domyśla",
+    "my": "domyślamy",
+    "wy": "domyślacie",
+    "oni/one": "domyślają",
+    "translation": "guess",
+    "example": "",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "domyślać się",
     "ja": "domyślam się",
     "ty": "domyślasz się",
@@ -6290,6 +6386,18 @@
     "translation": "to suspect",
     "example": "**Domyślam** się dlaczego nie lubisz mnie tak bardzo.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "domyślić",
+    "ja": "domyślę",
+    "ty": "domyślisz",
+    "on/ona/ono": "domyśli",
+    "my": "domyślimy",
+    "wy": "domyślicie",
+    "oni/one": "domyślą",
+    "translation": "to figure out",
+    "example": "Nie mogłem **domyślić** się odpowiedzi.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "domyślić się",
@@ -6793,6 +6901,18 @@
     "translation": "to commit",
     "example": "Okrucieństwo, jakiego **dopuszczono** się na tym komisariacie, jest niewyobrażalne.",
     "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "dopytywać",
+    "ja": "dopytuję",
+    "ty": "dopytujesz",
+    "on/ona/ono": "dopytuje",
+    "my": "dopytujemy",
+    "wy": "dopytujecie",
+    "oni/one": "dopytują",
+    "translation": "ask about",
+    "example": "Nie **dopytuj** mnie o to.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "dopędzać",
@@ -7571,6 +7691,18 @@
     "oni/one": "dowcipkują",
     "translation": "to joke",
     "example": "On lubi **dowcipkować** na lekcjach.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "dowiadywać",
+    "ja": "dowiaduję",
+    "ty": "dowiadujesz",
+    "on/ona/ono": "dowiaduje",
+    "my": "dowiadujemy",
+    "wy": "dowiadujecie",
+    "oni/one": "dowiadują",
+    "translation": "find out",
+    "example": "Muszę **dowiadywać** się o wyniki.",
     "aspect": "imperfective"
   },
   {
@@ -9792,6 +9924,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "generować",
+    "ja": "generuję",
+    "ty": "generujesz",
+    "on/ona/ono": "generuje",
+    "my": "generujemy",
+    "wy": "generujecie",
+    "oni/one": "generują",
+    "translation": "generate",
+    "example": "Nie lubię sztuki **generowanej** komputerowo.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "gestykulować",
     "ja": "gestykuluję",
     "ty": "gestykulujesz",
@@ -11159,6 +11303,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "inspirować",
+    "ja": "inspiruję",
+    "ty": "inspirujesz",
+    "on/ona/ono": "inspiruje",
+    "my": "inspirujemy",
+    "wy": "inspirujecie",
+    "oni/one": "inspirują",
+    "translation": "inspire",
+    "example": "Ta książka może **inspirować**.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "instalować",
     "ja": "instaluję",
     "ty": "instalujesz",
@@ -11407,6 +11563,18 @@
     "oni/one": "jarają",
     "translation": "to fuel",
     "example": "On lubi **jarać** papierosy.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "jawić",
+    "ja": "jawię",
+    "ty": "jawisz",
+    "on/ona/ono": "jawi",
+    "my": "jawimy",
+    "wy": "jawicie",
+    "oni/one": "jawią",
+    "translation": "appear",
+    "example": "Nagle **jawił** się przed nami.",
     "aspect": "imperfective"
   },
   {
@@ -12969,6 +13137,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "kreować",
+    "ja": "kreuję",
+    "ty": "kreujesz",
+    "on/ona/ono": "kreuje",
+    "my": "kreujemy",
+    "wy": "kreujecie",
+    "oni/one": "kreują",
+    "translation": "create",
+    "example": "Chcemy **kreować** nowe produkty.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "kroić",
     "ja": "kroję",
     "ty": "kroisz",
@@ -13014,6 +13194,18 @@
     "oni/one": "krytykują",
     "translation": "to criticize",
     "example": "Nie jest osobą która zawsze **krytykuje** innych.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "kryć",
+    "ja": "kryję",
+    "ty": "kryjesz",
+    "on/ona/ono": "kryje",
+    "my": "kryjemy",
+    "wy": "kryjecie",
+    "oni/one": "kryją",
+    "translation": "to hide",
+    "example": "Nie **kryje**, że jest gejem.",
     "aspect": "imperfective"
   },
   {
@@ -13194,6 +13386,18 @@
     "oni/one": "kupują",
     "translation": "to buy",
     "example": "On nigdy nie **kupuje** nowych ubrań.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "kursować",
+    "ja": "kursuję",
+    "ty": "kursujesz",
+    "on/ona/ono": "kursuje",
+    "my": "kursujemy",
+    "wy": "kursujecie",
+    "oni/one": "kursują",
+    "translation": "run",
+    "example": "Jak często **kursuje** autobus?",
     "aspect": "imperfective"
   },
   {
@@ -13857,6 +14061,30 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "machać",
+    "ja": "macham",
+    "ty": "machasz",
+    "on/ona/ono": "macha",
+    "my": "machamy",
+    "wy": "machacie",
+    "oni/one": "machają",
+    "translation": "to wave",
+    "example": "Przysięgam, widziałem, jak niesporczak do mnie **macha**!",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "machnąć",
+    "ja": "machnę",
+    "ty": "machniesz",
+    "on/ona/ono": "machnie",
+    "my": "machniemy",
+    "wy": "machniecie",
+    "oni/one": "machną",
+    "translation": "to wave (perfective)",
+    "example": "Adam **machnął** do mnie ręką.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "malować",
     "ja": "maluję",
     "ty": "malujesz",
@@ -13914,6 +14142,18 @@
     "oni/one": "marzą",
     "translation": "to dream of",
     "example": "Ja **marzę** o wakacjach.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "mawiać",
+    "ja": "mawiam",
+    "ty": "mawiasz",
+    "on/ona/ono": "mawia",
+    "my": "mawiamy",
+    "wy": "mawiacie",
+    "oni/one": "mawiają",
+    "translation": "used to say",
+    "example": "Tom **mawiał**, że za dużo gadam.",
     "aspect": "imperfective"
   },
   {
@@ -14037,6 +14277,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "monitorować",
+    "ja": "monitoruję",
+    "ty": "monitorujesz",
+    "on/ona/ono": "monitoruje",
+    "my": "monitorujemy",
+    "wy": "monitorujecie",
+    "oni/one": "monitorują",
+    "translation": "to monitor",
+    "example": "Musimy **monitorować** temperaturę komputera.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "można",
     "ja": "",
     "ty": "",
@@ -14057,6 +14309,18 @@
     "oni/one": "mrugną",
     "translation": "to wink",
     "example": "Tom **mrugnął** do mnie.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "mruknąć",
+    "ja": "mruknę",
+    "ty": "mrukniesz",
+    "on/ona/ono": "mruknie",
+    "my": "mrukniemy",
+    "wy": "mrukniecie",
+    "oni/one": "mrukną",
+    "translation": "mutter",
+    "example": "On tylko **mruknął** pod nosem.",
     "aspect": "perfective"
   },
   {
@@ -14792,6 +15056,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "nakazywać",
+    "ja": "nakazuję",
+    "ty": "nakazujesz",
+    "on/ona/ono": "nakazuje",
+    "my": "nakazujemy",
+    "wy": "nakazujecie",
+    "oni/one": "nakazują",
+    "translation": "require",
+    "example": "Regulamin szkoły **nakazuje** uczniom noszenie fartuszków.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "nakierować",
     "ja": "nakieruję",
     "ty": "nakierujesz",
@@ -15476,6 +15752,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "narastać",
+    "ja": "narastam",
+    "ty": "narastasz",
+    "on/ona/ono": "narasta",
+    "my": "narastamy",
+    "wy": "narastacie",
+    "oni/one": "narastają",
+    "translation": "grow",
+    "example": "Cisza **narasta** jak nowotwór.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "narazić",
     "ja": "narażę",
     "ty": "narazisz",
@@ -15485,6 +15773,30 @@
     "oni/one": "narażą",
     "translation": "to put at risk",
     "example": "To **narazi** ciebie na niebezpieczeństwo.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "narażać",
+    "ja": "narażam",
+    "ty": "narażasz",
+    "on/ona/ono": "naraża",
+    "my": "narażamy",
+    "wy": "narażacie",
+    "oni/one": "narażają",
+    "translation": "expose",
+    "example": "Nie **narażaj** się na słońce.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "narodzić",
+    "ja": "narodzę",
+    "ty": "narodzisz",
+    "on/ona/ono": "narodzi",
+    "my": "narodzimy",
+    "wy": "narodzicie",
+    "oni/one": "narodzą",
+    "translation": "originate (perfective)",
+    "example": "Z tej komórki może **narodzić** się nowe życie.",
     "aspect": "perfective"
   },
   {
@@ -15617,6 +15929,18 @@
     "oni/one": "nastawią",
     "translation": "to set",
     "example": "Jestem bardzo sceptycznie **nastawiona** do ich zapewnień.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "nastać",
+    "ja": "nastanę",
+    "ty": "nastaniesz",
+    "on/ona/ono": "nastanie",
+    "my": "nastaniemy",
+    "wy": "nastaniecie",
+    "oni/one": "nastaną",
+    "translation": "to come (perfective)",
+    "example": "",
     "aspect": "perfective"
   },
   {
@@ -15882,6 +16206,42 @@
     "translation": "to wind",
     "example": "Szalik **nawinął** się na rękę.",
     "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "nawiązać",
+    "ja": "nawiążę",
+    "ty": "nawiążesz",
+    "on/ona/ono": "nawiąże",
+    "my": "nawiążemy",
+    "wy": "nawiążecie",
+    "oni/one": "nawiążą",
+    "translation": "to establish (perfective)",
+    "example": "**Nawiązaliśmy** przyjazne stosunki z rządem tego kraju.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "nawiązywać",
+    "ja": "nawiązuję",
+    "ty": "nawiązujesz",
+    "on/ona/ono": "nawiązuje",
+    "my": "nawiązujemy",
+    "wy": "nawiązujecie",
+    "oni/one": "nawiązują",
+    "translation": "relate to",
+    "example": "To **nawiązuje** do naszej rozmowy.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "nawoływać",
+    "ja": "nawołuję",
+    "ty": "nawołujesz",
+    "on/ona/ono": "nawołuje",
+    "my": "nawołujemy",
+    "wy": "nawołujecie",
+    "oni/one": "nawołują",
+    "translation": "to call out",
+    "example": "Dzieci **nawoływały** mamę z ogrodu.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "nawtykać",
@@ -16709,6 +17069,18 @@
     "translation": "to promise",
     "example": "**Obiecałeś** mi, że zaopiekujesz się Tomem.",
     "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "obiecować",
+    "ja": "obiecuję",
+    "ty": "obiecujesz",
+    "on/ona/ono": "obiecuje",
+    "my": "obiecujemy",
+    "wy": "obiecujecie",
+    "oni/one": "obiecują",
+    "translation": "promise",
+    "example": "**Obiecuję** ci pomoc.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "obiecywać",
@@ -18004,6 +18376,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "odbudować",
+    "ja": "odbuduję",
+    "ty": "odbudujesz",
+    "on/ona/ono": "odbuduje",
+    "my": "odbudujemy",
+    "wy": "odbudujecie",
+    "oni/one": "odbudują",
+    "translation": "rebuild",
+    "example": "Musimy **odbudować** most.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "odbywać",
     "ja": "odbywam",
     "ty": "odbywasz",
@@ -18100,6 +18484,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "odciąć",
+    "ja": "odetnę",
+    "ty": "odetniesz",
+    "on/ona/ono": "odetnie",
+    "my": "odetniemy",
+    "wy": "odetniecie",
+    "oni/one": "odetną",
+    "translation": "to cut off",
+    "example": "**Odciął** dwa metry liny.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "odciążyć",
     "ja": "odciążę",
     "ty": "odciążysz",
@@ -18184,6 +18580,30 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "oddalać",
+    "ja": "oddalam",
+    "ty": "oddalasz",
+    "on/ona/ono": "oddala",
+    "my": "oddalamy",
+    "wy": "oddalacie",
+    "oni/one": "oddalają",
+    "translation": "to distance",
+    "example": "Nie chcę się od niego **oddalać**.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "oddalić",
+    "ja": "oddalę",
+    "ty": "oddalisz",
+    "on/ona/ono": "oddali",
+    "my": "oddalimy",
+    "wy": "oddalicie",
+    "oni/one": "oddalą",
+    "translation": "to dismiss",
+    "example": "Skarga została **oddalona**.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "oddawać",
     "ja": "oddaję",
     "ty": "oddajesz",
@@ -18266,6 +18686,18 @@
     "translation": "to separate",
     "example": "Ściana **oddziela** pokoje.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "oddzielić",
+    "ja": "oddzielę",
+    "ty": "oddzielisz",
+    "on/ona/ono": "oddzieli",
+    "my": "oddzielimy",
+    "wy": "oddzielicie",
+    "oni/one": "oddzielą",
+    "translation": "separate (perfective)",
+    "example": "Zostałam **oddzielona** od reszty mojej rodziny.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "oddzwaniać",
@@ -19492,6 +19924,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "odstawić",
+    "ja": "odstawię",
+    "ty": "odstawisz",
+    "on/ona/ono": "odstawi",
+    "my": "odstawimy",
+    "wy": "odstawicie",
+    "oni/one": "odstawią",
+    "translation": "to put away",
+    "example": "Pomóż podopiecznemu **odstawić** naczynia po skończonej pracy.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "odsunąć",
     "ja": "odsunę",
     "ty": "odsuniesz",
@@ -19684,6 +20128,30 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "odtworzyć",
+    "ja": "odtworzę",
+    "ty": "odtworzysz",
+    "on/ona/ono": "odtworzy",
+    "my": "odtworzymy",
+    "wy": "odtworzycie",
+    "oni/one": "odtworzą",
+    "translation": "replay",
+    "example": "Wciśnij zielony przycisk, by **odtworzyć** nagranie, a czerwony, by je zatrzymać.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "odważyć",
+    "ja": "odważę",
+    "ty": "odważysz",
+    "on/ona/ono": "odważy",
+    "my": "odważymy",
+    "wy": "odważycie",
+    "oni/one": "odważą",
+    "translation": "to dare",
+    "example": "Nie **odważyłem** się wejść.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "odwiedzać",
     "ja": "odwiedzam",
     "ty": "odwiedzasz",
@@ -19828,6 +20296,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "odwracać",
+    "ja": "odwracam",
+    "ty": "odwracasz",
+    "on/ona/ono": "odwraca",
+    "my": "odwracamy",
+    "wy": "odwracacie",
+    "oni/one": "odwracają",
+    "translation": "turn away",
+    "example": "Nie **odwracaj** się do mnie plecami.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "odwrócić",
     "ja": "odwrócę",
     "ty": "odwrócisz",
@@ -19958,6 +20438,30 @@
     "translation": "to refresh oneself",
     "example": "Czuję się **odświeżony**.",
     "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "oferować",
+    "ja": "oferuję",
+    "ty": "oferujesz",
+    "on/ona/ono": "oferuje",
+    "my": "oferujemy",
+    "wy": "oferujecie",
+    "oni/one": "oferują",
+    "translation": "to offer",
+    "example": "Ten zajazd **oferuje** dobrą obsługę.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "ogarniać",
+    "ja": "ogarniam",
+    "ty": "ogarniasz",
+    "on/ona/ono": "ogarnia",
+    "my": "ogarniamy",
+    "wy": "ogarniacie",
+    "oni/one": "ogarniają",
+    "translation": "manage",
+    "example": "Moja żona świetnie wszystko **ogarnia**.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "ogarnąć",
@@ -20668,6 +21172,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "opaść",
+    "ja": "opadnę",
+    "ty": "opadniesz",
+    "on/ona/ono": "opadnie",
+    "my": "opadniemy",
+    "wy": "opadniecie",
+    "oni/one": "opadną",
+    "translation": "to fall (perfective)",
+    "example": "Liście **opadły**.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "operować",
     "ja": "operuję",
     "ty": "operujesz",
@@ -20869,6 +21385,18 @@
     "oni/one": "opowiedzą",
     "translation": "to tell",
     "example": "**Opowiedz** mi o swoim pierwszym pocałunku.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "opracować",
+    "ja": "opracuję",
+    "ty": "opracujesz",
+    "on/ona/ono": "opracuje",
+    "my": "opracujemy",
+    "wy": "opracujecie",
+    "oni/one": "opracują",
+    "translation": "to develop (perfective)",
+    "example": "Studenci z Nowej Zelandii **opracowali** trwałe materiały z liści kapusty i lnu, które wkrótce mogą zostać wykorzystane do produkcji nart, kajaków i deskorolek o wysokich osiągach.",
     "aspect": "perfective"
   },
   {
@@ -21124,6 +21652,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "osadzić",
+    "ja": "osadzę",
+    "ty": "osadzisz",
+    "on/ona/ono": "osadzi",
+    "my": "osadzimy",
+    "wy": "osadzicie",
+    "oni/one": "osadzą",
+    "translation": "embed",
+    "example": "Program potrafi **osadzić** film na stronie.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "osiągać",
     "ja": "osiągam",
     "ty": "osiągasz",
@@ -21340,6 +21880,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "osłabić",
+    "ja": "osłabię",
+    "ty": "osłabisz",
+    "on/ona/ono": "osłabi",
+    "my": "osłabimy",
+    "wy": "osłabicie",
+    "oni/one": "osłabią",
+    "translation": "to weaken",
+    "example": "Choroba może **osłabić** dziecko.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "osłaniać",
     "ja": "osłaniam",
     "ty": "osłaniasz",
@@ -21434,6 +21986,18 @@
     "translation": "to receive",
     "example": "Sami **otrzymał** długą wiadomość od Layli.",
     "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "otrzymywać",
+    "ja": "otrzymuję",
+    "ty": "otrzymujesz",
+    "on/ona/ono": "otrzymuje",
+    "my": "otrzymujemy",
+    "wy": "otrzymujecie",
+    "oni/one": "otrzymują",
+    "translation": "to receive",
+    "example": "Tutejsi studenci **otrzymują** podręczniki za darmo.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "otrząsać",
@@ -21532,6 +22096,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "oznaczyć",
+    "ja": "oznaczę",
+    "ty": "oznaczysz",
+    "on/ona/ono": "oznaczy",
+    "my": "oznaczymy",
+    "wy": "oznaczycie",
+    "oni/one": "oznaczą",
+    "translation": "mark (perfective)",
+    "example": "Nauczyciel kazał **oznaczyć** zadanie.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "oznajmić",
     "ja": "oznajmię",
     "ty": "oznajmisz",
@@ -21614,6 +22190,18 @@
     "translation": "to illuminate",
     "example": "Świece **oświetlały** pokój.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "oświetlić",
+    "ja": "oświetlę",
+    "ty": "oświetlisz",
+    "on/ona/ono": "oświetli",
+    "my": "oświetlimy",
+    "wy": "oświetlicie",
+    "oni/one": "oświetlą",
+    "translation": "illuminate",
+    "example": "Pokój był **oświetlony** czerwonymi światłami.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "ożenić",
@@ -22756,6 +23344,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "pochować",
+    "ja": "pochowam",
+    "ty": "pochowasz",
+    "on/ona/ono": "pochowa",
+    "my": "pochowamy",
+    "wy": "pochowacie",
+    "oni/one": "pochowają",
+    "translation": "bury",
+    "example": "Tom został **pochowany** w poniedziałek.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "pochwalić",
     "ja": "pochwalę",
     "ty": "pochwalisz",
@@ -22862,6 +23462,18 @@
     "translation": "to console",
     "example": "Wiem, co cię **pocieszy**.",
     "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "pociągać",
+    "ja": "pociągam",
+    "ty": "pociągasz",
+    "on/ona/ono": "pociąga",
+    "my": "pociągamy",
+    "wy": "pociągacie",
+    "oni/one": "pociągają",
+    "translation": "to pull",
+    "example": "Teraz Tom **pociąga** za sznurki.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "pociągnąć",
@@ -23017,6 +23629,18 @@
     "oni/one": "poczną",
     "translation": "to begin",
     "example": "Cóż ja mam **począć**?",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "podarować",
+    "ja": "podaruję",
+    "ty": "podarujesz",
+    "on/ona/ono": "podaruje",
+    "my": "podarujemy",
+    "wy": "podarujecie",
+    "oni/one": "podarują",
+    "translation": "to give (perfective)",
+    "example": "To Tom **podarował** mi obraz, który wisi nad kominkiem.",
     "aspect": "perfective"
   },
   {
@@ -23428,6 +24052,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "podporządkować",
+    "ja": "podporządkuję",
+    "ty": "podporządkujesz",
+    "on/ona/ono": "podporządkuje",
+    "my": "podporządkujemy",
+    "wy": "podporządkujecie",
+    "oni/one": "podporządkują",
+    "translation": "submit",
+    "example": "Pracownik musi **podporządkować** się regulaminowi.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "podpowiadać",
     "ja": "podpowiadam",
     "ty": "podpowiadasz",
@@ -23559,6 +24195,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "podsumowywać",
+    "ja": "podsumowuję",
+    "ty": "podsumowujesz",
+    "on/ona/ono": "podsumowuje",
+    "my": "podsumowujemy",
+    "wy": "podsumowujecie",
+    "oni/one": "podsumowują",
+    "translation": "to summarize",
+    "example": "Ten akapit **podsumowuje** treść.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "podtapiać",
     "ja": "podtapiam",
     "ty": "podtapiasz",
@@ -23592,6 +24240,18 @@
     "oni/one": "podtrzymują",
     "translation": "to support",
     "example": "Te kolumny **podtrzymują** scenę.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "podważać",
+    "ja": "podważam",
+    "ty": "podważasz",
+    "on/ona/ono": "podważa",
+    "my": "podważamy",
+    "wy": "podważacie",
+    "oni/one": "podważają",
+    "translation": "undermine",
+    "example": "To może **podważać** ich decyzję.",
     "aspect": "imperfective"
   },
   {
@@ -23691,6 +24351,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "podwyższyć",
+    "ja": "podwyższę",
+    "ty": "podwyższysz",
+    "on/ona/ono": "podwyższy",
+    "my": "podwyższymy",
+    "wy": "podwyższycie",
+    "oni/one": "podwyższą",
+    "translation": "to raise (perfective)",
+    "example": "Oni mogą **podwyższyć** twój czynsz.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "podyktować",
     "ja": "podyktuję",
     "ty": "podyktujesz",
@@ -23701,6 +24373,18 @@
     "translation": "to dictate",
     "example": "Nauczycielka **podyktowała** zdania.",
     "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "podzielać",
+    "ja": "podzielam",
+    "ty": "podzielasz",
+    "on/ona/ono": "podziela",
+    "my": "podzielamy",
+    "wy": "podzielacie",
+    "oni/one": "podzielają",
+    "translation": "share",
+    "example": "Tom nie **podziela** twojego entuzjazmu.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "podzielić",
@@ -23847,6 +24531,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "pogorszyć",
+    "ja": "pogorszę",
+    "ty": "pogorszysz",
+    "on/ona/ono": "pogorszy",
+    "my": "pogorszymy",
+    "wy": "pogorszycie",
+    "oni/one": "pogorszą",
+    "translation": "worsen (perfective)",
+    "example": "Tom **pogorszył** sytuację.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "pogratulować",
     "ja": "pogratuluję",
     "ty": "pogratulujesz",
@@ -23880,6 +24576,30 @@
     "oni/one": "pogrążą",
     "translation": "to drown",
     "example": "Woda może **pogrążyć** łódź.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "pogłębiać",
+    "ja": "pogłębiam",
+    "ty": "pogłębiasz",
+    "on/ona/ono": "pogłębia",
+    "my": "pogłębiamy",
+    "wy": "pogłębiacie",
+    "oni/one": "pogłębiają",
+    "translation": "deepen",
+    "example": "**Pogłębianie** znajomości nauk Mistrza, ostatecznie zajęło mi lata.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "pogłębić",
+    "ja": "pogłębię",
+    "ty": "pogłębisz",
+    "on/ona/ono": "pogłębi",
+    "my": "pogłębimy",
+    "wy": "pogłębicie",
+    "oni/one": "pogłębią",
+    "translation": "worsen (perfective)",
+    "example": "Stres może **pogłębić** ból.",
     "aspect": "perfective"
   },
   {
@@ -23927,6 +24647,18 @@
     "oni/one": "poją",
     "translation": "to water",
     "example": "Babcia **poi** dziecko wodą.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "pojawiać",
+    "ja": "pojawiam",
+    "ty": "pojawiasz",
+    "on/ona/ono": "pojawia",
+    "my": "pojawiamy",
+    "wy": "pojawiacie",
+    "oni/one": "pojawiają",
+    "translation": "appear",
+    "example": "Na niebie zaczynają **pojawiać** się gwiazdy.",
     "aspect": "imperfective"
   },
   {
@@ -24626,6 +25358,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "popatrzeć",
+    "ja": "popatrzę",
+    "ty": "popatrzysz",
+    "on/ona/ono": "popatrzy",
+    "my": "popatrzymy",
+    "wy": "popatrzycie",
+    "oni/one": "popatrzą",
+    "translation": "look (perfective)",
+    "example": "Nie mogła nawet na niego **popatrzeć**.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "popatrzyć",
     "ja": "popatrzę",
     "ty": "popatrzysz",
@@ -24635,6 +25379,18 @@
     "oni/one": "popatrzą",
     "translation": "look",
     "example": "**Popatrzmy** jeszcze raz na algierską mapę.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "popaść",
+    "ja": "popadnę",
+    "ty": "popadniesz",
+    "on/ona/ono": "popadnie",
+    "my": "popadniemy",
+    "wy": "popadniecie",
+    "oni/one": "popadną",
+    "translation": "fall into",
+    "example": "Kiedy **popadł** w niełaskę, wszyscy przyjaciele go porzucili.",
     "aspect": "perfective"
   },
   {
@@ -25358,6 +26114,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "poszerzyć",
+    "ja": "poszerzę",
+    "ty": "poszerzysz",
+    "on/ona/ono": "poszerzy",
+    "my": "poszerzymy",
+    "wy": "poszerzycie",
+    "oni/one": "poszerzą",
+    "translation": "to expand (perfective)",
+    "example": "Imperializm to ideologia i praktyka potężnych grup próbujących zabezpieczyć i **poszerzyć** swoje przywileje poprzez dominację innych grup.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "poszukać",
     "ja": "poszukam",
     "ty": "poszukasz",
@@ -25418,6 +26186,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "posłużyć",
+    "ja": "posłużę",
+    "ty": "posłużysz",
+    "on/ona/ono": "posłuży",
+    "my": "posłużymy",
+    "wy": "posłużycie",
+    "oni/one": "posłużą",
+    "translation": "serve (perfective)",
+    "example": "To pudełko **posłuży** za stół.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "potknąć",
     "ja": "potknę",
     "ty": "potkniesz",
@@ -25439,6 +26219,18 @@
     "oni/one": "potkną się",
     "translation": "to trip",
     "example": "**Potknąłem** się o kamień, skręcając kostkę.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "potoczyć",
+    "ja": "potoczę",
+    "ty": "potoczysz",
+    "on/ona/ono": "potoczy",
+    "my": "potoczymy",
+    "wy": "potoczycie",
+    "oni/one": "potoczą",
+    "translation": "turn out (perfective)",
+    "example": "Wszystko **potoczyło** się dobrze.",
     "aspect": "perfective"
   },
   {
@@ -25646,6 +26438,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "powierzyć",
+    "ja": "powierzę",
+    "ty": "powierzysz",
+    "on/ona/ono": "powierzy",
+    "my": "powierzymy",
+    "wy": "powierzycie",
+    "oni/one": "powierzą",
+    "translation": "entrust",
+    "example": "**Powierzyłem** swojej żonie finanse rodzinne.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "powiesić",
     "ja": "powieszę",
     "ty": "powiesisz",
@@ -25702,6 +26506,18 @@
     "oni/one": "powitają",
     "translation": "to welcome (perfective)",
     "example": "Pomachali flagami, żeby **powitać** księżniczkę.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "powiązać",
+    "ja": "powiążę",
+    "ty": "powiążesz",
+    "on/ona/ono": "powiąże",
+    "my": "powiążemy",
+    "wy": "powiążecie",
+    "oni/one": "powiążą",
+    "translation": "to bind (perfective)",
+    "example": "Pomóż mi **powiązać** gazety w paczki.",
     "aspect": "perfective"
   },
   {
@@ -25777,6 +26593,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "powoływać",
+    "ja": "powołuję",
+    "ty": "powołujesz",
+    "on/ona/ono": "powołuje",
+    "my": "powołujemy",
+    "wy": "powołujecie",
+    "oni/one": "powołują",
+    "translation": "to invoke",
+    "example": "Prawnik **powoływał** się na ustawę.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "powracać",
     "ja": "powracam",
     "ty": "powracasz",
@@ -25786,6 +26614,30 @@
     "oni/one": "powracają",
     "translation": "to return",
     "example": "Ptaki **powracają** na wiosnę.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "powrócić",
+    "ja": "powrócę",
+    "ty": "powrócisz",
+    "on/ona/ono": "powróci",
+    "my": "powrócimy",
+    "wy": "powrócicie",
+    "oni/one": "powrócą",
+    "translation": "return (perfective)",
+    "example": "Tom **powrócił** do swojego rodzinnego miasta.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "powstawać",
+    "ja": "powstaję",
+    "ty": "powstajesz",
+    "on/ona/ono": "powstaje",
+    "my": "powstajemy",
+    "wy": "powstajecie",
+    "oni/one": "powstają",
+    "translation": "to arise",
+    "example": "Jak **powstaje** grad?",
     "aspect": "imperfective"
   },
   {
@@ -26075,6 +26927,30 @@
     "translation": "to permit",
     "example": "Proszę, **pozwól** mi iść z tobą.",
     "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "pozyskać",
+    "ja": "pozyskam",
+    "ty": "pozyskasz",
+    "on/ona/ono": "pozyska",
+    "my": "pozyskamy",
+    "wy": "pozyskacie",
+    "oni/one": "pozyskają",
+    "translation": "to get (perfective)",
+    "example": "Chcemy **pozyskać** nowych klientów.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "pozyskiwać",
+    "ja": "pozyskuję",
+    "ty": "pozyskujesz",
+    "on/ona/ono": "pozyskuje",
+    "my": "pozyskujemy",
+    "wy": "pozyskujecie",
+    "oni/one": "pozyskują",
+    "translation": "acquire",
+    "example": "Ilość pieniędzy **pozyskiwanych** przez państwo z podatków określa możliwości wydatkowania ich na cele społeczne.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "pozywać",
@@ -26509,6 +27385,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "projektować",
+    "ja": "projektuję",
+    "ty": "projektujesz",
+    "on/ona/ono": "projektuje",
+    "my": "projektujemy",
+    "wy": "projektujecie",
+    "oni/one": "projektują",
+    "translation": "design",
+    "example": "**Projektujemy** technologie dla zwykłych ludzi.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "proklamować",
     "ja": "proklamuję",
     "ty": "proklamujesz",
@@ -26554,6 +27442,18 @@
     "oni/one": "promują",
     "translation": "to promote",
     "example": "Ta organizacja **promuje** umiejętność czytania i pisania na obszarach rolnych.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "propagować",
+    "ja": "propaguję",
+    "ty": "propagujesz",
+    "on/ona/ono": "propaguje",
+    "my": "propagujemy",
+    "wy": "propagujecie",
+    "oni/one": "propagują",
+    "translation": "promote",
+    "example": "Chcemy **propagować** zdrowy styl życia.",
     "aspect": "imperfective"
   },
   {
@@ -26746,6 +27646,18 @@
     "oni/one": "przebierają",
     "translation": "to dress oneself",
     "example": "Tom się **przebiera**.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "przebijać",
+    "ja": "przebijam",
+    "ty": "przebijasz",
+    "on/ona/ono": "przebija",
+    "my": "przebijamy",
+    "wy": "przebijacie",
+    "oni/one": "przebijają",
+    "translation": "to penetrate",
+    "example": "Korzenie **przebijają** ziemię.",
     "aspect": "imperfective"
   },
   {
@@ -27097,6 +28009,30 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "przedłużać",
+    "ja": "przedłużam",
+    "ty": "przedłużasz",
+    "on/ona/ono": "przedłuża",
+    "my": "przedłużamy",
+    "wy": "przedłużacie",
+    "oni/one": "przedłużają",
+    "translation": "to extend",
+    "example": "Proszę **przedłużać** bilet.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "przedłużyć",
+    "ja": "przedłużę",
+    "ty": "przedłużysz",
+    "on/ona/ono": "przedłuży",
+    "my": "przedłużymy",
+    "wy": "przedłużycie",
+    "oni/one": "przedłużą",
+    "translation": "extend",
+    "example": "Proszę **przedłużyć** tę wizę.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "przeegzaminować",
     "ja": "przeegzaminuję",
     "ty": "przeegzaminujesz",
@@ -27178,6 +28114,18 @@
     "oni/one": "przegryzają",
     "translation": "to bite through",
     "example": "Lubię **przegryzać** jabłko w pracy.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "przejawiać",
+    "ja": "przejawiam",
+    "ty": "przejawiasz",
+    "on/ona/ono": "przejawia",
+    "my": "przejawiamy",
+    "wy": "przejawiacie",
+    "oni/one": "przejawiają",
+    "translation": "show",
+    "example": "**Przejawiała** talent do obelg.",
     "aspect": "imperfective"
   },
   {
@@ -27359,6 +28307,18 @@
     "translation": "to transform",
     "example": "Nowa ustawa **przekształca** szkoły.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "przekształcić",
+    "ja": "przekształcę",
+    "ty": "przekształcisz",
+    "on/ona/ono": "przekształci",
+    "my": "przekształcimy",
+    "wy": "przekształcicie",
+    "oni/one": "przekształcą",
+    "translation": "transform",
+    "example": "Oboje **przekształcili** chemię w nowoczesną naukę.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "przekładać",
@@ -27551,6 +28511,18 @@
     "translation": "to move (perfective)",
     "example": "Mac pomógł mi **przenieść** odkurzacz.",
     "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "przenikać",
+    "ja": "przenikam",
+    "ty": "przenikasz",
+    "on/ona/ono": "przenika",
+    "my": "przenikamy",
+    "wy": "przenikacie",
+    "oni/one": "przenikają",
+    "translation": "to permeate",
+    "example": "Altanę **przenikał** zapach lewkonii.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "przenosić",
@@ -28081,6 +29053,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "przesłuchać",
+    "ja": "przesłucham",
+    "ty": "przesłuchasz",
+    "on/ona/ono": "przesłucha",
+    "my": "przesłuchamy",
+    "wy": "przesłuchacie",
+    "oni/one": "przesłuchają",
+    "translation": "interrogate",
+    "example": "Tom został zatrzymany na **przesłuchanie**.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "przetaczać",
     "ja": "przetaczam",
     "ty": "przetaczasz",
@@ -28198,6 +29182,18 @@
     "oni/one": "przewieszą",
     "translation": "to hang across",
     "example": "Babcia **przewiesiła** płaszcz na krześle.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "przewieźć",
+    "ja": "przewiozę",
+    "ty": "przewieziesz",
+    "on/ona/ono": "przewiezie",
+    "my": "przewieziemy",
+    "wy": "przewieziecie",
+    "oni/one": "przewiozą",
+    "translation": "transport (perfective)",
+    "example": "**Przewieziono** go do miejscowego szpitala.",
     "aspect": "perfective"
   },
   {
@@ -28344,6 +29340,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "przełamać",
+    "ja": "przełamię",
+    "ty": "przełamiesz",
+    "on/ona/ono": "przełamie",
+    "my": "przełamiemy",
+    "wy": "przełamiecie",
+    "oni/one": "przełamią",
+    "translation": "break (perfective)",
+    "example": "Tom spróbował **przełamać** lody.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "przełożyć",
     "ja": "przełożę",
     "ty": "przełożysz",
@@ -28354,6 +29362,18 @@
     "translation": "postpone",
     "example": "Gra została **przełożona** z powodu deszczu.",
     "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "prześladować",
+    "ja": "prześladuję",
+    "ty": "prześladujesz",
+    "on/ona/ono": "prześladuje",
+    "my": "prześladujemy",
+    "wy": "prześladujecie",
+    "oni/one": "prześladują",
+    "translation": "persecute",
+    "example": "**Prześladował** ludzi za ich wierzenia.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "przeświecać",
@@ -28426,6 +29446,18 @@
     "translation": "to hammer in",
     "example": "Tata **przybija** gwóźdź młotkiem.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "przybrać",
+    "ja": "przybiorę",
+    "ty": "przybierzesz",
+    "on/ona/ono": "przybierze",
+    "my": "przybierzemy",
+    "wy": "przybierzecie",
+    "oni/one": "przybiorą",
+    "translation": "to gain (perfective)",
+    "example": "Tom **przybrał** na wadze przez zimę.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "przybywać",
@@ -28510,6 +29542,42 @@
     "translation": "to attract",
     "example": "Nawet niewielka nagroda **przyciąga** nowych uczestników do konkursu.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "przyciągnąć",
+    "ja": "przyciągnę",
+    "ty": "przyciągniesz",
+    "on/ona/ono": "przyciągnie",
+    "my": "przyciągniemy",
+    "wy": "przyciągniecie",
+    "oni/one": "przyciągną",
+    "translation": "to attract",
+    "example": "Jej sukienka **przyciągnęła** uwagę wszystkich na imprezie.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "przyczyniać",
+    "ja": "przyczyniam",
+    "ty": "przyczyniasz",
+    "on/ona/ono": "przyczynia",
+    "my": "przyczyniamy",
+    "wy": "przyczyniacie",
+    "oni/one": "przyczyniają",
+    "translation": "contribute",
+    "example": "Takie decyzje **przyczyniają** się do sukcesu.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "przyczynić",
+    "ja": "przyczynię",
+    "ty": "przyczynisz",
+    "on/ona/ono": "przyczyni",
+    "my": "przyczynimy",
+    "wy": "przyczynicie",
+    "oni/one": "przyczynią",
+    "translation": "to contribute",
+    "example": "Twoja pomoc **przyczyni** się do sukcesu.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "przydarzyć",
@@ -28716,6 +29784,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "przykryć",
+    "ja": "przykryję",
+    "ty": "przykryjesz",
+    "on/ona/ono": "przykryje",
+    "my": "przykryjemy",
+    "wy": "przykryjecie",
+    "oni/one": "przykryją",
+    "translation": "to cover (perfective)",
+    "example": "Łóżko Toma jest **przykryte** kocem z Pikachu.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "przykręcać",
     "ja": "przykręcam",
     "ty": "przykręcasz",
@@ -28884,6 +29964,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "przypaść",
+    "ja": "przypasę",
+    "ty": "przypasiesz",
+    "on/ona/ono": "przypasie",
+    "my": "przypasiemy",
+    "wy": "przypasiecie",
+    "oni/one": "przypasą",
+    "translation": "appeal (perfective)",
+    "example": "Pomysł Mary niezbyt **przypadł** Tomowi do gustu.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "przypieczętować",
     "ja": "przypieczętuję",
     "ty": "przypieczętujesz",
@@ -28906,6 +29998,18 @@
     "translation": "to pin on",
     "example": "Mama **przypina** guzik.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "przypisać",
+    "ja": "przypiszę",
+    "ty": "przypiszesz",
+    "on/ona/ono": "przypisze",
+    "my": "przypiszemy",
+    "wy": "przypiszecie",
+    "oni/one": "przypiszą",
+    "translation": "to attribute (perfective)",
+    "example": "Spóźnioną dostawę **przypisałem** korkom na drodze.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "przypisywać",
@@ -29100,6 +30204,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "przystać",
+    "ja": "przystanę",
+    "ty": "przystaniesz",
+    "on/ona/ono": "przystanie",
+    "my": "przystaniemy",
+    "wy": "przystaniecie",
+    "oni/one": "przystaną",
+    "translation": "to befit",
+    "example": "Według powieści „Agnes Gray” napisanej przez Anne Brontë uważano, że damie nie **przystoi** nazywać konia klaczą.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "przystosować",
     "ja": "przystosuję",
     "ty": "przystosujesz",
@@ -29109,6 +30225,18 @@
     "oni/one": "przystosują",
     "translation": "to adapt",
     "example": "**Przystosował** się do swojego środowiska.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "przystąpić",
+    "ja": "przystąpię",
+    "ty": "przystąpisz",
+    "on/ona/ono": "przystąpi",
+    "my": "przystąpimy",
+    "wy": "przystąpicie",
+    "oni/one": "przystąpią",
+    "translation": "to take (perfective)",
+    "example": "Muszę **przystąpić** do egzaminu.",
     "aspect": "perfective"
   },
   {
@@ -29170,6 +30298,18 @@
     "translation": "to send (perfective)",
     "example": "**Przysłał** mi kartkę urodzinową.",
     "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "przysługiwać",
+    "ja": "przysługuję",
+    "ty": "przysługujesz",
+    "on/ona/ono": "przysługuje",
+    "my": "przysługujemy",
+    "wy": "przysługujecie",
+    "oni/one": "przysługują",
+    "translation": "be entitled",
+    "example": "Od wyroku **przysługuje** apelacja w ciągu dziesięciu dni.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "przytoczyć",
@@ -29254,6 +30394,18 @@
     "translation": "to tie up",
     "example": "On **przywiązywał** swojego konia do płotu.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "przywołać",
+    "ja": "przywołam",
+    "ty": "przywołasz",
+    "on/ona/ono": "przywoła",
+    "my": "przywołamy",
+    "wy": "przywołacie",
+    "oni/one": "przywołają",
+    "translation": "summon",
+    "example": "Dlaczego byliśmy tutaj **przywołani**?",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "przywoływać",
@@ -29445,6 +30597,18 @@
     "oni/one": "psioczą",
     "translation": "to complain",
     "example": "Sąsiad ciągle **psioczy** na pogodę.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "psować",
+    "ja": "psowam; psuję",
+    "ty": "psowasz; psujesz",
+    "on/ona/ono": "psowa; psuje",
+    "my": "psowamy; psujemy",
+    "wy": "psowacie; psujecie",
+    "oni/one": "psowają; psują",
+    "translation": "to spoil",
+    "example": "To mleko **psuje** się szybko.",
     "aspect": "imperfective"
   },
   {
@@ -29696,7 +30860,7 @@
     "wy": "pękacie",
     "oni/one": "pękają",
     "translation": "to burst",
-    "example": "Balon zaraz **pęknie**.",
+    "example": "Miejsce **pękało** wczoraj w szwach.",
     "aspect": "imperfective"
   },
   {
@@ -30107,6 +31271,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "rejestrować",
+    "ja": "rejestruję",
+    "ty": "rejestrujesz",
+    "on/ona/ono": "rejestruje",
+    "my": "rejestrujemy",
+    "wy": "rejestrujecie",
+    "oni/one": "rejestrują",
+    "translation": "register",
+    "example": "Muszę **rejestrować** nowych uczniów.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "reklamować",
     "ja": "reklamuję",
     "ty": "reklamujesz",
@@ -30164,6 +31340,18 @@
     "oni/one": "rekrutują",
     "translation": "to recruit",
     "example": "Firma chce **rekrutować** nowych pracowników.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "relacjonować",
+    "ja": "relacjonuję",
+    "ty": "relacjonujesz",
+    "on/ona/ono": "relacjonuje",
+    "my": "relacjonujemy",
+    "wy": "relacjonujecie",
+    "oni/one": "relacjonują",
+    "translation": "report",
+    "example": "Dziennikarz **relacjonował** mecz na żywo.",
     "aspect": "imperfective"
   },
   {
@@ -30260,6 +31448,18 @@
     "oni/one": "rezerwują",
     "translation": "to reserve",
     "example": "Chcę **rezerwować** stolik.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "rezygnować",
+    "ja": "rezygnuję",
+    "ty": "rezygnujesz",
+    "on/ona/ono": "rezygnuje",
+    "my": "rezygnujemy",
+    "wy": "rezygnujecie",
+    "oni/one": "rezygnują",
+    "translation": "give up",
+    "example": "Tom nie chciał **rezygnować** z planu.",
     "aspect": "imperfective"
   },
   {
@@ -30488,6 +31688,18 @@
     "oni/one": "rozbrzmią",
     "translation": "to resound",
     "example": "W sali **rozbrzmiał** śmiech.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "rozbudować",
+    "ja": "rozbuduję",
+    "ty": "rozbudujesz",
+    "on/ona/ono": "rozbuduje",
+    "my": "rozbudujemy",
+    "wy": "rozbudujecie",
+    "oni/one": "rozbudują",
+    "translation": "to expand (perfective)",
+    "example": "Miasto chce **rozbudować** szkołę.",
     "aspect": "perfective"
   },
   {
@@ -30825,6 +32037,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "rozegrać",
+    "ja": "rozegram",
+    "ty": "rozegrasz",
+    "on/ona/ono": "rozegra",
+    "my": "rozegramy",
+    "wy": "rozegracie",
+    "oni/one": "rozegrają",
+    "translation": "to play (perfective)",
+    "example": "Drużyna **rozegrała** mecz wczoraj.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "rozejrzeć",
     "ja": "rozejrzę",
     "ty": "rozejrzysz",
@@ -30957,6 +32181,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "rozglądać",
+    "ja": "rozglądam",
+    "ty": "rozglądasz",
+    "on/ona/ono": "rozgląda",
+    "my": "rozglądamy",
+    "wy": "rozglądacie",
+    "oni/one": "rozglądają",
+    "translation": "look around",
+    "example": "Muszę **rozglądać** się po sklepie.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "rozglądać się",
     "ja": "rozglądam się",
     "ty": "rozglądasz się",
@@ -31002,6 +32238,18 @@
     "oni/one": "rozgoryczają",
     "translation": "to embitter",
     "example": "Ta wiadomość **rozgorycza** wielu ludzi.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "rozgrywać",
+    "ja": "rozgrywam",
+    "ty": "rozgrywasz",
+    "on/ona/ono": "rozgrywa",
+    "my": "rozgrywamy",
+    "wy": "rozgrywacie",
+    "oni/one": "rozgrywają",
+    "translation": "take place",
+    "example": "Akcja **rozgrywa się** w Paryżu.",
     "aspect": "imperfective"
   },
   {
@@ -31841,6 +33089,18 @@
     "translation": "to spread",
     "example": "Mama **rozsmarowuje** masło na chlebie.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "rozstać",
+    "ja": "rozstanę",
+    "ty": "rozstaniesz",
+    "on/ona/ono": "rozstanie",
+    "my": "rozstaniemy",
+    "wy": "rozstaniecie",
+    "oni/one": "rozstaną",
+    "translation": "break up",
+    "example": "Oni się **rozstali** wczoraj.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "rozstrzelić",
@@ -33506,7 +34766,7 @@
     "wy": "skamieniejecie",
     "oni/one": "skamienieją",
     "translation": "to turn to stone",
-    "example": "Ze strachu **skamieniał**.",
+    "example": "To, co trzymam w dłoniach, to **skamieniała** skorupa.",
     "aspect": "perfective"
   },
   {
@@ -33519,6 +34779,18 @@
     "oni/one": "skanują",
     "translation": "to scan",
     "example": "Muszę **skanować** ten dokument.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "skarżyć",
+    "ja": "skarżę",
+    "ty": "skarżysz",
+    "on/ona/ono": "skarży",
+    "my": "skarżymy",
+    "wy": "skarżycie",
+    "oni/one": "skarżą",
+    "translation": "complain",
+    "example": "Dziecko zaczęło **skarżyć** ból brzucha.",
     "aspect": "imperfective"
   },
   {
@@ -33735,6 +35007,18 @@
     "oni/one": "skolonizują",
     "translation": "to colonize",
     "example": "Europejczycy **skolonizowali** nowe ziemie.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "skomentować",
+    "ja": "skomentuję",
+    "ty": "skomentujesz",
+    "on/ona/ono": "skomentuje",
+    "my": "skomentujemy",
+    "wy": "skomentujecie",
+    "oni/one": "skomentują",
+    "translation": "to comment (perfective)",
+    "example": "Proszę **skomentować** ten tekst.",
     "aspect": "perfective"
   },
   {
@@ -34002,6 +35286,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "skrywać",
+    "ja": "skrywam",
+    "ty": "skrywasz",
+    "on/ona/ono": "skrywa",
+    "my": "skrywamy",
+    "wy": "skrywacie",
+    "oni/one": "skrywają",
+    "translation": "hide",
+    "example": "On **skrywał** łzy przed wszystkimi.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "skrzywdzić",
     "ja": "skrzywdzę",
     "ty": "skrzywdzisz",
@@ -34206,6 +35502,30 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "skłaniać",
+    "ja": "skłaniam",
+    "ty": "skłaniasz",
+    "on/ona/ono": "skłania",
+    "my": "skłaniamy",
+    "wy": "skłaniacie",
+    "oni/one": "skłaniają",
+    "translation": "to prompt",
+    "example": "Co **skłania** ludzi do tego?",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "skłonić",
+    "ja": "skłonię",
+    "ty": "skłonisz",
+    "on/ona/ono": "skłoni",
+    "my": "skłonimy",
+    "wy": "skłonicie",
+    "oni/one": "skłonią",
+    "translation": "to persuade (perfective)",
+    "example": "Co **skłoniło** cię do wyprowadzki?",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "smakować",
     "ja": "smakuję",
     "ty": "smakujesz",
@@ -34275,6 +35595,18 @@
     "oni/one": "smrodzą",
     "translation": "to stink",
     "example": "Stary kosz **smrodzi** w kuchni.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "snuć",
+    "ja": "snuję",
+    "ty": "snujesz",
+    "on/ona/ono": "snuje",
+    "my": "snujemy",
+    "wy": "snujecie",
+    "oni/one": "snują",
+    "translation": "spin",
+    "example": "Babcia lubi **snuć** opowieści.",
     "aspect": "imperfective"
   },
   {
@@ -34458,6 +35790,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "specjalizować",
+    "ja": "specjalizuję",
+    "ty": "specjalizujesz",
+    "on/ona/ono": "specjalizuje",
+    "my": "specjalizujemy",
+    "wy": "specjalizujecie",
+    "oni/one": "specjalizują",
+    "translation": "specialize",
+    "example": "Studiuję, żeby **specjalizować** się w medycynie.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "spełniać",
     "ja": "spełniam",
     "ty": "spełniasz",
@@ -34530,6 +35874,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "spisać",
+    "ja": "spiszę",
+    "ty": "spiszesz",
+    "on/ona/ono": "spisze",
+    "my": "spiszemy",
+    "wy": "spiszecie",
+    "oni/one": "spiszą",
+    "translation": "do well",
+    "example": "W pracy **spisała** się świetnie.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "spiskować",
     "ja": "spiskuję",
     "ty": "spiskujesz",
@@ -34599,6 +35955,18 @@
     "oni/one": "splatają",
     "translation": "to braid",
     "example": "Babcia lubi **splatać** kosze.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "spoczywać",
+    "ja": "spoczywam",
+    "ty": "spoczywasz",
+    "on/ona/ono": "spoczywa",
+    "my": "spoczywamy",
+    "wy": "spoczywacie",
+    "oni/one": "spoczywają",
+    "translation": "rest",
+    "example": "**Spoczywaj** w pokoju.",
     "aspect": "imperfective"
   },
   {
@@ -34838,7 +36206,7 @@
     "wy": "spożyjecie",
     "oni/one": "spożyją",
     "translation": "to consume",
-    "example": "Lekarz kazał **spożyć** lek po jedzeniu.",
+    "example": "Organizacje zdrowotne od dawna zachęcają do ograniczenia **spożycia** mięsa.",
     "aspect": "perfective"
   },
   {
@@ -34960,6 +36328,30 @@
     "translation": "to pulverize",
     "example": "Maszyna zaczyna **sproszkowywać** cukier.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "sprowadzać",
+    "ja": "sprowadzam",
+    "ty": "sprowadzasz",
+    "on/ona/ono": "sprowadza",
+    "my": "sprowadzamy",
+    "wy": "sprowadzacie",
+    "oni/one": "sprowadzają",
+    "translation": "import",
+    "example": "**Sprowadzamy** z Australii dużo rzeczy.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "sprowadzić",
+    "ja": "sprowadzę",
+    "ty": "sprowadzisz",
+    "on/ona/ono": "sprowadzi",
+    "my": "sprowadzimy",
+    "wy": "sprowadzicie",
+    "oni/one": "sprowadzą",
+    "translation": "to fetch",
+    "example": "Idź i **sprowadź** Toma.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "sprowokować",
@@ -35356,6 +36748,18 @@
     "translation": "to flow",
     "example": "Łódka **spłynęła** rzeką.",
     "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "spływać",
+    "ja": "spływam",
+    "ty": "spływasz",
+    "on/ona/ono": "spływa",
+    "my": "spływamy",
+    "wy": "spływacie",
+    "oni/one": "spływają",
+    "translation": "flow",
+    "example": "Łzy **spływały** jej po policzkach.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "stalować się",
@@ -35969,6 +37373,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "swędzieć",
+    "ja": "swędzę",
+    "ty": "swędzisz",
+    "on/ona/ono": "swędzi",
+    "my": "swędzimy",
+    "wy": "swędzicie",
+    "oni/one": "swędzą",
+    "translation": "to itch",
+    "example": "**Swędzi** mnie noga. Chyba coś mnie ugryzło.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "swędzić",
     "ja": "swędzę",
     "ty": "swędzisz",
@@ -36363,6 +37779,18 @@
     "translation": "to head",
     "example": "Tata **szefuje** w sklepie.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "szepnąć",
+    "ja": "szepnę",
+    "ty": "szepniesz",
+    "on/ona/ono": "szepnie",
+    "my": "szepniemy",
+    "wy": "szepniecie",
+    "oni/one": "szepną",
+    "translation": "to whisper (perfective)",
+    "example": "\"Nie przeszkadzaj jej. Jest w tej chwili w pracy\", **szepnął**.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "szeptać",
@@ -37910,6 +39338,42 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "uchronić",
+    "ja": "uchronię",
+    "ty": "uchronisz",
+    "on/ona/ono": "uchroni",
+    "my": "uchronimy",
+    "wy": "uchronicie",
+    "oni/one": "uchronią",
+    "translation": "to protect (perfective)",
+    "example": "Koc **uchronił** mnie przed zimnem.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "uchwalić",
+    "ja": "uchwalę",
+    "ty": "uchwalisz",
+    "on/ona/ono": "uchwali",
+    "my": "uchwalimy",
+    "wy": "uchwalicie",
+    "oni/one": "uchwalą",
+    "translation": "pass (perfective)",
+    "example": "Sejm **uchwalić** ustawę jutro.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "uchwycić",
+    "ja": "uchwycę",
+    "ty": "uchwycisz",
+    "on/ona/ono": "uchwyci",
+    "my": "uchwycimy",
+    "wy": "uchwycicie",
+    "oni/one": "uchwycą",
+    "translation": "grip (perfective)",
+    "example": "Mocno **uchwycił** rakietę tenisową.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "uchylić",
     "ja": "uchylę",
     "ty": "uchylisz",
@@ -38146,7 +39610,7 @@
     "oni/one": "uczują",
     "translation": "to feel",
     "aspect": "perfective",
-    "example": "Jej **uczucia** mogą być łatwo zranione."
+    "example": "Słowa nie mogą wyrazić moich **uczuć**."
   },
   {
     "bezokolicznik": "uczynić",
@@ -38794,6 +40258,18 @@
     "oni/one": "ujeżdżają",
     "translation": "to ride",
     "example": "Dziecko uczy się **ujeżdżać** konia.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "ujmować",
+    "ja": "ujmuję",
+    "ty": "ujmujesz",
+    "on/ona/ono": "ujmuje",
+    "my": "ujmujemy",
+    "wy": "ujmujecie",
+    "oni/one": "ujmują",
+    "translation": "to champion",
+    "example": "Chcę **ujmować** się za Anią.",
     "aspect": "imperfective"
   },
   {
@@ -39608,6 +41084,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "unieść",
+    "ja": "uniosę",
+    "ty": "uniesiesz",
+    "on/ona/ono": "uniesie",
+    "my": "uniesiemy",
+    "wy": "uniesiecie",
+    "oni/one": "uniosą",
+    "translation": "to raise (perfective)",
+    "example": "Nie mogłem **unieść** tej walizki.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "unikać",
     "ja": "unikam",
     "ty": "unikasz",
@@ -39908,6 +41396,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "uporządkować",
+    "ja": "uporządkuję",
+    "ty": "uporządkujesz",
+    "on/ona/ono": "uporządkuje",
+    "my": "uporządkujemy",
+    "wy": "uporządkujecie",
+    "oni/one": "uporządkują",
+    "translation": "organize (perfective)",
+    "example": "**Uporządkuj** książki.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "upoważniać",
     "ja": "upoważniam",
     "ty": "upoważniasz",
@@ -40052,6 +41552,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "upłynąć",
+    "ja": "upłynę",
+    "ty": "upłyniesz",
+    "on/ona/ono": "upłynie",
+    "my": "upłyniemy",
+    "wy": "upłyniecie",
+    "oni/one": "upłyną",
+    "translation": "elapse",
+    "example": "**Upłynęła** mniej więcej jedna godzina.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "uraczyć",
     "ja": "uraczę",
     "ty": "uraczysz",
@@ -40085,6 +41597,18 @@
     "oni/one": "uratują się",
     "translation": "to save oneself",
     "example": "Musiałem **uratować się** z wody.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "uregulować",
+    "ja": "ureguluję",
+    "ty": "uregulujesz",
+    "on/ona/ono": "ureguluje",
+    "my": "uregulujemy",
+    "wy": "uregulujecie",
+    "oni/one": "uregulują",
+    "translation": "settle (perfective)",
+    "example": "Kto powinien **uregulować** rachunek?",
     "aspect": "perfective"
   },
   {
@@ -40400,6 +41924,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "ustanowić",
+    "ja": "ustanowię",
+    "ty": "ustanowisz",
+    "on/ona/ono": "ustanowi",
+    "my": "ustanowimy",
+    "wy": "ustanowicie",
+    "oni/one": "ustanowią",
+    "translation": "establish",
+    "example": "Tom Jackson **ustanowił** nowy rekord świata.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "ustawiać",
     "ja": "ustawiam",
     "ty": "ustawiasz",
@@ -40683,7 +42219,7 @@
     "wy": "utrudnicie",
     "oni/one": "utrudnią",
     "translation": "to make more difficult",
-    "example": "Deszcz może **utrudnić** jazdę.",
+    "example": "Słaby wzrok jest **utrudnieniem** dla sportowca.",
     "aspect": "perfective"
   },
   {
@@ -40745,6 +42281,18 @@
     "translation": "to remain",
     "example": "Jak długo ta zimna pogoda będzie się jeszcze **utrzymywać**?",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "utworzyć",
+    "ja": "utworzę",
+    "ty": "utworzysz",
+    "on/ona/ono": "utworzy",
+    "my": "utworzymy",
+    "wy": "utworzycie",
+    "oni/one": "utworzą",
+    "translation": "form (perfective)",
+    "example": "**Utworzyły** nowy rząd.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "utyskiwać",
@@ -40877,6 +42425,18 @@
     "translation": "to tie oneself up",
     "example": "Dziecko nie umie **uwiązywać się** szalikiem.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "uwięzić",
+    "ja": "uwiężę",
+    "ty": "uwięzisz",
+    "on/ona/ono": "uwięzi",
+    "my": "uwięzimy",
+    "wy": "uwięzicie",
+    "oni/one": "uwiężą",
+    "translation": "to imprison",
+    "example": "Policja chce **uwięzić** złodzieja.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "uwodzić",
@@ -41165,6 +42725,18 @@
     "translation": "to facilitate",
     "example": "Mapa **ułatwia** drogę.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "ułatwić",
+    "ja": "ułatwię",
+    "ty": "ułatwisz",
+    "on/ona/ono": "ułatwi",
+    "my": "ułatwimy",
+    "wy": "ułatwicie",
+    "oni/one": "ułatwią",
+    "translation": "to facilitate",
+    "example": "Ta instrukcja **ułatwi** pracę.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "ułożyć",
@@ -41467,6 +43039,17 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "warto",
+    "ja": "",
+    "ty": "",
+    "on/ona/ono": "warto",
+    "my": "",
+    "wy": "",
+    "oni/one": "",
+    "translation": "worth",
+    "example": ""
+  },
+  {
     "bezokolicznik": "warunkować",
     "ja": "warunkuję",
     "ty": "warunkujesz",
@@ -41644,6 +43227,18 @@
     "oni/one": "wchłoną się",
     "translation": "to absorb into oneself",
     "example": "Krem **wchłonął się** szybko.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "wcielić",
+    "ja": "wcielę",
+    "ty": "wcielisz",
+    "on/ona/ono": "wcieli",
+    "my": "wcielimy",
+    "wy": "wcielicie",
+    "oni/one": "wcielą",
+    "translation": "incorporate",
+    "example": "Firma chce **wcielić** nowy plan.",
     "aspect": "perfective"
   },
   {
@@ -41911,6 +43506,17 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "wiadomo",
+    "ja": "",
+    "ty": "",
+    "on/ona/ono": "wiadomo",
+    "my": "",
+    "wy": "",
+    "oni/one": "",
+    "translation": "known",
+    "example": "Już **wiadomo**, kto dzwonił."
+  },
+  {
     "bezokolicznik": "wiać",
     "ja": "wieję",
     "ty": "wiejesz",
@@ -42127,6 +43733,17 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "winien",
+    "ja": "winien",
+    "ty": "winien",
+    "on/ona/ono": "winien",
+    "my": "winni",
+    "wy": "winni",
+    "oni/one": "winni",
+    "translation": "to owe",
+    "example": "Jestem ci **winien** pieniądze."
+  },
+  {
     "bezokolicznik": "winić",
     "ja": "winię",
     "ty": "winisz",
@@ -42319,6 +43936,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "wkraczać",
+    "ja": "wkraczam",
+    "ty": "wkraczasz",
+    "on/ona/ono": "wkracza",
+    "my": "wkraczamy",
+    "wy": "wkraczacie",
+    "oni/one": "wkraczają",
+    "translation": "to intervene",
+    "example": "Policja nie może **wkraczać** bez powodu.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "wkraplać",
     "ja": "wkraplam",
     "ty": "wkraplasz",
@@ -42329,6 +43958,18 @@
     "translation": "to drip in",
     "example": "Lekarz **wkrapla** krople do oka.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "wkroczyć",
+    "ja": "wkroczę",
+    "ty": "wkroczysz",
+    "on/ona/ono": "wkroczy",
+    "my": "wkroczymy",
+    "wy": "wkroczycie",
+    "oni/one": "wkroczą",
+    "translation": "enter upon",
+    "example": "Negocjacje **wkroczyły** w nową fazę.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "wkroplić",
@@ -42531,6 +44172,18 @@
     "oni/one": "wpadają",
     "translation": "to fall in",
     "example": "Ta rzeka **wpada** do Oceanu Spokojnego.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "wpatrywać",
+    "ja": "wpatruję",
+    "ty": "wpatrujesz",
+    "on/ona/ono": "wpatruje",
+    "my": "wpatrujemy",
+    "wy": "wpatrujecie",
+    "oni/one": "wpatrują",
+    "translation": "to stare at",
+    "example": "Patrzysz i **wpatrujesz** się w okno.",
     "aspect": "imperfective"
   },
   {
@@ -43038,6 +44691,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "wstrząsnąć",
+    "ja": "wstrząsnę",
+    "ty": "wstrząśniesz",
+    "on/ona/ono": "wstrząśnie",
+    "my": "wstrząśniemy",
+    "wy": "wstrząśniecie",
+    "oni/one": "wstrząsną",
+    "translation": "to shock (perfective)",
+    "example": "Nowina wszystkimi **wstrząsnęła**.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "wstukać",
     "ja": "wstukam",
     "ty": "wstukasz",
@@ -43144,6 +44809,18 @@
     "translation": "to initiate",
     "example": "Policja **wszczyna** śledztwo.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "wszcząć",
+    "ja": "weszcznę; wszcznę",
+    "ty": "weszczniesz; wszczniesz",
+    "on/ona/ono": "weszcznie; wszcznie",
+    "my": "weszczniemy; wszczniemy",
+    "wy": "weszczniecie; wszczniecie",
+    "oni/one": "weszczną; wszczną",
+    "translation": "initiate",
+    "example": "Policja **wszczęła** dochodzenie w sprawie morderstwa.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "wtajemniczać",
@@ -43530,6 +45207,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "wyciąć",
+    "ja": "wytnę",
+    "ty": "wytniesz",
+    "on/ona/ono": "wytnie",
+    "my": "wytniemy",
+    "wy": "wytniecie",
+    "oni/one": "wytną",
+    "translation": "cut down",
+    "example": "Wszystkie jabłonie zostały **wycięte**.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "wycofać",
     "ja": "wycofam",
     "ty": "wycofasz",
@@ -43552,6 +45241,18 @@
     "translation": "to withdraw",
     "example": "Tom awansował do rangi brygadiera, zanim **wycofał** się z wojska.",
     "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "wycofywać",
+    "ja": "wycofuję",
+    "ty": "wycofujesz",
+    "on/ona/ono": "wycofuje",
+    "my": "wycofujemy",
+    "wy": "wycofujecie",
+    "oni/one": "wycofują",
+    "translation": "withdraw",
+    "example": "Muszę **wycofywać** swoje słowa.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "wycyklinować",
@@ -43612,6 +45313,30 @@
     "translation": "to comb out",
     "example": "Mama **wyczesuje** kotu sierść.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "wyczuwać",
+    "ja": "wyczuwam",
+    "ty": "wyczuwasz",
+    "on/ona/ono": "wyczuwa",
+    "my": "wyczuwamy",
+    "wy": "wyczuwacie",
+    "oni/one": "wyczuwają",
+    "translation": "sense",
+    "example": "Rekiny **wyczuwają** krew.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "wyczuć",
+    "ja": "wyczuję",
+    "ty": "wyczujesz",
+    "on/ona/ono": "wyczuje",
+    "my": "wyczujemy",
+    "wy": "wyczujecie",
+    "oni/one": "wyczują",
+    "translation": "sense (perfective)",
+    "example": "Niezłe **wyczucie** czasu.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "wydarzyć",
@@ -43911,6 +45636,18 @@
     "oni/one": "wyegzorcyzmują",
     "translation": "to exorcise",
     "example": "Ksiądz **wyegzorcyzmował** dom.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "wyeliminować",
+    "ja": "wyeliminuję",
+    "ty": "wyeliminujesz",
+    "on/ona/ono": "wyeliminuje",
+    "my": "wyeliminujemy",
+    "wy": "wyeliminujecie",
+    "oni/one": "wyeliminują",
+    "translation": "eliminate",
+    "example": "Musimy **wyeliminować** ten błąd.",
     "aspect": "perfective"
   },
   {
@@ -44442,6 +46179,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "wykryć",
+    "ja": "wykryję",
+    "ty": "wykryjesz",
+    "on/ona/ono": "wykryje",
+    "my": "wykryjemy",
+    "wy": "wykryjecie",
+    "oni/one": "wykryją",
+    "translation": "to detect",
+    "example": "**Wykryłem** duży błąd.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "wykrzaczyć",
     "ja": "wykrzaczę",
     "ty": "wykrzaczysz",
@@ -44488,6 +46237,18 @@
     "translation": "to peek",
     "example": "Fałszerz **wykukiwał** podpis.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "wykupić",
+    "ja": "wykupię",
+    "ty": "wykupisz",
+    "on/ona/ono": "wykupi",
+    "my": "wykupimy",
+    "wy": "wykupicie",
+    "oni/one": "wykupią",
+    "translation": "to buy out",
+    "example": "Firma chce **wykupić** konkurencję.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "wykąpać",
@@ -44596,6 +46357,30 @@
     "translation": "to pour out",
     "example": "Każdej wiosny rzeka tu **wylewa**.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "wyliczać",
+    "ja": "wyliczam",
+    "ty": "wyliczasz",
+    "on/ona/ono": "wylicza",
+    "my": "wyliczamy",
+    "wy": "wyliczacie",
+    "oni/one": "wyliczają",
+    "translation": "itemize",
+    "example": "Musisz **wyliczać** koszty.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "wyliczyć",
+    "ja": "wyliczę",
+    "ty": "wyliczysz",
+    "on/ona/ono": "wyliczy",
+    "my": "wyliczymy",
+    "wy": "wyliczycie",
+    "oni/one": "wyliczą",
+    "translation": "to count up",
+    "example": "Muszę **wyliczyć** wszystkie wydatki.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "wylogować",
@@ -44752,6 +46537,18 @@
     "translation": "to vomit",
     "example": "Niektórzy z nas **wymiotowali**.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "wymusić",
+    "ja": "wymuszę",
+    "ty": "wymusisz",
+    "on/ona/ono": "wymusi",
+    "my": "wymusimy",
+    "wy": "wymusicie",
+    "oni/one": "wymuszą",
+    "translation": "to force (perfective)",
+    "example": "Miłości nie można **wymusić**.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "wymuszać",
@@ -45198,6 +46995,42 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "wyprodukować",
+    "ja": "wyprodukuję",
+    "ty": "wyprodukujesz",
+    "on/ona/ono": "wyprodukuje",
+    "my": "wyprodukujemy",
+    "wy": "wyprodukujecie",
+    "oni/one": "wyprodukują",
+    "translation": "to produce (perfective)",
+    "example": "**Wyprodukowano** 380 milionów ton plastiku.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "wyprostować",
+    "ja": "wyprostuję",
+    "ty": "wyprostujesz",
+    "on/ona/ono": "wyprostuje",
+    "my": "wyprostujemy",
+    "wy": "wyprostujecie",
+    "oni/one": "wyprostują",
+    "translation": "straighten",
+    "example": "Muszę **wyprostować** plecy.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "wyprowadzać",
+    "ja": "wyprowadzam",
+    "ty": "wyprowadzasz",
+    "on/ona/ono": "wyprowadza",
+    "my": "wyprowadzamy",
+    "wy": "wyprowadzacie",
+    "oni/one": "wyprowadzają",
+    "translation": "to move out",
+    "example": "Muszę **wyprowadzać** się z domu.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "wyprowadzić",
     "ja": "wyprowadzę",
     "ty": "wyprowadzisz",
@@ -45258,6 +47091,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "wypłacić",
+    "ja": "wypłacę",
+    "ty": "wypłacisz",
+    "on/ona/ono": "wypłaci",
+    "my": "wypłacimy",
+    "wy": "wypłacicie",
+    "oni/one": "wypłacą",
+    "translation": "to withdraw (perfective)",
+    "example": "**Wypłaciłem** pieniądze z banku.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "wypłukiwać",
     "ja": "wypłukuję",
     "ty": "wypłukujesz",
@@ -45270,6 +47115,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "wypływać",
+    "ja": "wypływam",
+    "ty": "wypływasz",
+    "on/ona/ono": "wypływa",
+    "my": "wypływamy",
+    "wy": "wypływacie",
+    "oni/one": "wypływają",
+    "translation": "to leave port",
+    "example": "Parostatek **wypływa** właśnie z portu.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "wyrabiać",
     "ja": "wyrabiam",
     "ty": "wyrabiasz",
@@ -45279,6 +47136,18 @@
     "oni/one": "wyrabiają",
     "translation": "to manufacture",
     "example": "W tej przetwórni **wyrabia** się mydło z używanego oleju jadalnego.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "wyrastać",
+    "ja": "wyrastam",
+    "ty": "wyrastasz",
+    "on/ona/ono": "wyrasta",
+    "my": "wyrastamy",
+    "wy": "wyrastacie",
+    "oni/one": "wyrastają",
+    "translation": "to grow out",
+    "example": "Nie wiedziałem, że jabłonie **wyrastają** z nasion.",
     "aspect": "imperfective"
   },
   {
@@ -45376,6 +47245,18 @@
     "translation": "to prepare",
     "example": "Tata **wyrychtował** stół.",
     "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "wyrywać",
+    "ja": "wyrywam",
+    "ty": "wyrywasz",
+    "on/ona/ono": "wyrywa",
+    "my": "wyrywamy",
+    "wy": "wyrywacie",
+    "oni/one": "wyrywają",
+    "translation": "pull out",
+    "example": "To ja pomogłem Tomowi **wyrywać** chwasty w ogrodzie.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "wyrzeźbić",
@@ -45510,6 +47391,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "wyróżnić",
+    "ja": "wyróżnię",
+    "ty": "wyróżnisz",
+    "on/ona/ono": "wyróżni",
+    "my": "wyróżnimy",
+    "wy": "wyróżnicie",
+    "oni/one": "wyróżnią",
+    "translation": "to distinguish (perfective)",
+    "example": "Ta cecha go **wyróżnia**.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "wyrżnąć",
     "ja": "wyrżnę",
     "ty": "wyrżniesz",
@@ -45640,6 +47533,30 @@
     "translation": "to suffice",
     "example": "Obawiam się, że to nie **wystarczy**.",
     "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "wystartować",
+    "ja": "wystartuję",
+    "ty": "wystartujesz",
+    "on/ona/ono": "wystartuje",
+    "my": "wystartujemy",
+    "wy": "wystartujecie",
+    "oni/one": "wystartują",
+    "translation": "take off (perfective)",
+    "example": "Wskutek burzy samolot nie mógł **wystartować**.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "wystawać",
+    "ja": "wystaję",
+    "ty": "wystajesz",
+    "on/ona/ono": "wystaje",
+    "my": "wystajemy",
+    "wy": "wystajecie",
+    "oni/one": "wystają",
+    "translation": "to stick out",
+    "example": "Koszula **wystaje** z kurtki.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "wystawiać",
@@ -45966,6 +47883,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "wytworzyć",
+    "ja": "wytworzę",
+    "ty": "wytworzysz",
+    "on/ona/ono": "wytworzy",
+    "my": "wytworzymy",
+    "wy": "wytworzycie",
+    "oni/one": "wytworzą",
+    "translation": "produce (perfective)",
+    "example": "Program **wytworzył** nowy plik.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "wytyczać",
     "ja": "wytyczam",
     "ty": "wytyczasz",
@@ -45987,6 +47916,18 @@
     "oni/one": "wytłumaczą",
     "translation": "to explain",
     "example": "Czy ktoś mógłby mi to **wytłumaczyć**?",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "wywalczyć",
+    "ja": "wywalczę",
+    "ty": "wywalczysz",
+    "on/ona/ono": "wywalczy",
+    "my": "wywalczymy",
+    "wy": "wywalczycie",
+    "oni/one": "wywalczą",
+    "translation": "to win (perfective)",
+    "example": "Muszę **wywalczyć** wolny weekend.",
     "aspect": "perfective"
   },
   {
@@ -46047,6 +47988,18 @@
     "oni/one": "wywietrzą się",
     "translation": "to freshen oneself up",
     "example": "Idź na spacer, **wywietrzyć się**.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "wywieźć",
+    "ja": "wywiozę",
+    "ty": "wywieziesz",
+    "on/ona/ono": "wywiezie",
+    "my": "wywieziemy",
+    "wy": "wywieziecie",
+    "oni/one": "wywiozą",
+    "translation": "to export",
+    "example": "Firma chce **wywieźć** meble.",
     "aspect": "perfective"
   },
   {
@@ -46170,6 +48123,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "wyzwolić",
+    "ja": "wyzwolę",
+    "ty": "wyzwolisz",
+    "on/ona/ono": "wyzwoli",
+    "my": "wyzwolimy",
+    "wy": "wyzwolicie",
+    "oni/one": "wyzwolą",
+    "translation": "liberate",
+    "example": "Wojsko **wyzwoliło** miasto.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "wyć",
     "ja": "wyję",
     "ty": "wyjesz",
@@ -46204,6 +48169,30 @@
     "translation": "to emerge",
     "example": "Z mgły **wyłaniać** się dom.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "wyłonić",
+    "ja": "wyłonię",
+    "ty": "wyłonisz",
+    "on/ona/ono": "wyłoni",
+    "my": "wyłonimy",
+    "wy": "wyłonicie",
+    "oni/one": "wyłonią",
+    "translation": "emerge (perfective)",
+    "example": "",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "wyłożyć",
+    "ja": "wyłożę",
+    "ty": "wyłożysz",
+    "on/ona/ono": "wyłoży",
+    "my": "wyłożymy",
+    "wy": "wyłożycie",
+    "oni/one": "wyłożą",
+    "translation": "line (perfective)",
+    "example": "Ścieżka wiodąca od tego domku do lasku bambusowego **wyłożona** była kamieniami.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "wyłudzić",
@@ -46458,6 +48447,30 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "wzmocnić",
+    "ja": "wzmocnię",
+    "ty": "wzmocnisz",
+    "on/ona/ono": "wzmocni",
+    "my": "wzmocnimy",
+    "wy": "wzmocnicie",
+    "oni/one": "wzmocnią",
+    "translation": "to strengthen",
+    "example": "**Wzmocnili** wały, żeby zabezpieczyć wioskę przed powodzią.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "wznieść",
+    "ja": "wzniosę",
+    "ty": "wzniesiesz",
+    "on/ona/ono": "wzniesie",
+    "my": "wzniesiemy",
+    "wy": "wzniesiecie",
+    "oni/one": "wzniosą",
+    "translation": "to rise",
+    "example": "Góry **wznieść** się nie mogą.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "wznosić",
     "ja": "wznoszę",
     "ty": "wznosisz",
@@ -46468,6 +48481,18 @@
     "translation": "to raise",
     "example": "Robotnicy **wznoszą** nowy most.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "wznowić",
+    "ja": "wznowię",
+    "ty": "wznowisz",
+    "on/ona/ono": "wznowi",
+    "my": "wznowimy",
+    "wy": "wznowicie",
+    "oni/one": "wznowią",
+    "translation": "to resume",
+    "example": "Tom **wznowił** czytanie.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "wzrastać",
@@ -46854,6 +48879,30 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "zabezpieczyć",
+    "ja": "zabezpieczę",
+    "ty": "zabezpieczysz",
+    "on/ona/ono": "zabezpieczy",
+    "my": "zabezpieczymy",
+    "wy": "zabezpieczycie",
+    "oni/one": "zabezpieczą",
+    "translation": "secure",
+    "example": "Wzmocnili wały, żeby **zabezpieczyć** wioskę przed powodzią.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "zabiegać",
+    "ja": "zabiegam",
+    "ty": "zabiegasz",
+    "on/ona/ono": "zabiega",
+    "my": "zabiegamy",
+    "wy": "zabiegacie",
+    "oni/one": "zabiegają",
+    "translation": "to seek",
+    "example": "Więcej studentów **zabiega** o przyjęcie na ten uniwersytet niż może zostać przyjętych.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "zabierać",
     "ja": "zabieram",
     "ty": "zabierasz",
@@ -47055,6 +49104,18 @@
     "oni/one": "zabrudzą się",
     "translation": "to dirty oneself",
     "example": "Po zabawie **zbrudziłem się** błotem.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "zabrzmieć",
+    "ja": "zabrzmię",
+    "ty": "zabrzmisz",
+    "on/ona/ono": "zabrzmi",
+    "my": "zabrzmimy",
+    "wy": "zabrzmicie",
+    "oni/one": "zabrzmią",
+    "translation": "to sound (perfective)",
+    "example": "Moje wyjaśnienie może **zabrzmieć** dziwnie.",
     "aspect": "perfective"
   },
   {
@@ -47308,6 +49369,18 @@
     "translation": "to encourage",
     "example": "**Zachęcamy** naszych mieszkańców do interakcji z innymi.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "zachęcić",
+    "ja": "zachęcę",
+    "ty": "zachęcisz",
+    "on/ona/ono": "zachęci",
+    "my": "zachęcimy",
+    "wy": "zachęcicie",
+    "oni/one": "zachęcą",
+    "translation": "to encourage",
+    "example": "Matka próbowała **zachęcić** mnie do zdrowszej diety.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "zaciemniać",
@@ -48186,6 +50259,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "zagwarantować",
+    "ja": "zagwarantuję",
+    "ty": "zagwarantujesz",
+    "on/ona/ono": "zagwarantuje",
+    "my": "zagwarantujemy",
+    "wy": "zagwarantujecie",
+    "oni/one": "zagwarantują",
+    "translation": "guarantee (perfective)",
+    "example": "Myślę, że nie możemy **zagwarantować** ci bezpieczeństwa.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "zagłosować",
     "ja": "zagłosuję",
     "ty": "zagłosujesz",
@@ -48291,6 +50376,30 @@
     "oni/one": "zaintonują",
     "translation": "to intone",
     "example": "Chór zaczął **zaintonować** hymn.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "zainwestować",
+    "ja": "zainwestuję",
+    "ty": "zainwestujesz",
+    "on/ona/ono": "zainwestuje",
+    "my": "zainwestujemy",
+    "wy": "zainwestujecie",
+    "oni/one": "zainwestują",
+    "translation": "invest (perfective)",
+    "example": "Tom **zainwestował** swoje pieniądze w akcje.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "zaistnieć",
+    "ja": "zaistnieję",
+    "ty": "zaistniejesz",
+    "on/ona/ono": "zaistnieje",
+    "my": "zaistniejemy",
+    "wy": "zaistniejecie",
+    "oni/one": "zaistnieją",
+    "translation": "to emerge (perfective)",
+    "example": "W mieście **zaistniała** nowa potrzeba.",
     "aspect": "perfective"
   },
   {
@@ -48435,6 +50544,18 @@
     "oni/one": "zakażą",
     "translation": "to forbid",
     "example": "Palenie jest **zakazane** w każdej części restauracji.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "zakazić",
+    "ja": "zakażę",
+    "ty": "zakazisz",
+    "on/ona/ono": "zakazi",
+    "my": "zakazimy",
+    "wy": "zakazicie",
+    "oni/one": "zakażą",
+    "translation": "infect (perfective)",
+    "example": "Brudna woda może **zakazić** ranę.",
     "aspect": "perfective"
   },
   {
@@ -48738,6 +50859,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "zakupić",
+    "ja": "zakupię",
+    "ty": "zakupisz",
+    "on/ona/ono": "zakupi",
+    "my": "zakupimy",
+    "wy": "zakupicie",
+    "oni/one": "zakupią",
+    "translation": "to purchase",
+    "example": "Co zrobisz z tym całym **zakupionym** cementem?",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "zakurzyć",
     "ja": "zakurzę",
     "ty": "zakurzysz",
@@ -48940,6 +51073,18 @@
     "translation": "to count",
     "example": "Zawsze **zaliczałem** cię do moich przyjaciół.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "zaliczyć",
+    "ja": "zaliczę",
+    "ty": "zaliczysz",
+    "on/ona/ono": "zaliczy",
+    "my": "zaliczymy",
+    "wy": "zaliczycie",
+    "oni/one": "zaliczą",
+    "translation": "to pass (perfective)",
+    "example": "**Zaliczyłeś** egzamin z matematyki?",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "zalogować",
@@ -49254,6 +51399,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "zamilknąć",
+    "ja": "zamilknę",
+    "ty": "zamilkniesz",
+    "on/ona/ono": "zamilknie",
+    "my": "zamilkniemy",
+    "wy": "zamilkniecie",
+    "oni/one": "zamilkną",
+    "translation": "fall silent",
+    "example": "Nagle wszyscy **zamilkli**.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "zamknąć",
     "ja": "zamknę",
     "ty": "zamkniesz",
@@ -49275,6 +51432,18 @@
     "oni/one": "zamkną się",
     "translation": "to close oneself",
     "example": "Tom **zamknął** się w swoim pokoju.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "zamontować",
+    "ja": "zamontuję",
+    "ty": "zamontujesz",
+    "on/ona/ono": "zamontuje",
+    "my": "zamontujemy",
+    "wy": "zamontujecie",
+    "oni/one": "zamontują",
+    "translation": "install",
+    "example": "Mechanik **zamontował** silnik.",
     "aspect": "perfective"
   },
   {
@@ -49418,7 +51587,7 @@
     "wy": "zanikniecie",
     "oni/one": "zanikną",
     "translation": "to cease",
-    "example": "Ślad po deszczu **zniknął** szybko.",
+    "example": "Podróżowanie niemal **zanikło** podczas pandemii.",
     "aspect": "perfective"
   },
   {
@@ -49432,6 +51601,18 @@
     "translation": "to drive",
     "example": "**Zanosi** się na deszcz.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "zanotować",
+    "ja": "zanotuję",
+    "ty": "zanotujesz",
+    "on/ona/ono": "zanotuje",
+    "my": "zanotujemy",
+    "wy": "zanotujecie",
+    "oni/one": "zanotują",
+    "translation": "to note down",
+    "example": "**Zanotuj** to proszę.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "zanudzać",
@@ -49503,6 +51684,18 @@
     "oni/one": "zanurzą",
     "translation": "to immerse",
     "example": "Uczestnicy **zanurzyli** ręce w lodowatej wodzie.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "zaobserwować",
+    "ja": "zaobserwuję",
+    "ty": "zaobserwujesz",
+    "on/ona/ono": "zaobserwuje",
+    "my": "zaobserwujemy",
+    "wy": "zaobserwujecie",
+    "oni/one": "zaobserwują",
+    "translation": "to observe (perfective)",
+    "example": "W lesie **zaobserwowałem** sarnę.",
     "aspect": "perfective"
   },
   {
@@ -49708,6 +51901,18 @@
     "translation": "to lose memory",
     "example": "Dzieci łatwo **zapamiętują** nowe słowa.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "zapanować",
+    "ja": "zapanuję",
+    "ty": "zapanujesz",
+    "on/ona/ono": "zapanuje",
+    "my": "zapanujemy",
+    "wy": "zapanujecie",
+    "oni/one": "zapanują",
+    "translation": "prevail",
+    "example": "W pokoju **zapanowała** cisza.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "zaparkować",
@@ -49950,6 +52155,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "zapobiec",
+    "ja": "zapobiegnę",
+    "ty": "zapobiegniesz",
+    "on/ona/ono": "zapobiegnie",
+    "my": "zapobiegniemy",
+    "wy": "zapobiegniecie",
+    "oni/one": "zapobiegną",
+    "translation": "prevent",
+    "example": "Maseczka pomoże **zapobiec** chorobie.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "zapobiegać",
     "ja": "zapobiegam",
     "ty": "zapobiegasz",
@@ -50070,6 +52287,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "zapoznać",
+    "ja": "zapoznam",
+    "ty": "zapoznasz",
+    "on/ona/ono": "zapozna",
+    "my": "zapoznamy",
+    "wy": "zapoznacie",
+    "oni/one": "zapoznają",
+    "translation": "familiarize",
+    "example": "",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "zapraszać",
     "ja": "zapraszam",
     "ty": "zapraszasz",
@@ -50139,6 +52368,18 @@
     "oni/one": "zaprawią się",
     "translation": "to season oneself",
     "example": "Chcę **zaprawić się** przed biegiem.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "zaprezentować",
+    "ja": "zaprezentuję",
+    "ty": "zaprezentujesz",
+    "on/ona/ono": "zaprezentuje",
+    "my": "zaprezentujemy",
+    "wy": "zaprezentujecie",
+    "oni/one": "zaprezentują",
+    "translation": "present (perfective)",
+    "example": "Jutro **zaprezentuję** projekt.",
     "aspect": "perfective"
   },
   {
@@ -50730,6 +52971,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "zasiadać",
+    "ja": "zasiadam",
+    "ty": "zasiadasz",
+    "on/ona/ono": "zasiada",
+    "my": "zasiadamy",
+    "wy": "zasiadacie",
+    "oni/one": "zasiadają",
+    "translation": "to sit",
+    "example": "Ministrowie będą **zasiadać** dziś na sali.",
+    "aspect": "imperfective"
+  },
+  {
     "bezokolicznik": "zasiać",
     "ja": "zasieję",
     "ty": "zasiejesz",
@@ -50752,6 +53005,18 @@
     "translation": "to supply",
     "example": "Bateria **zasila** latarkę.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "zasiąść",
+    "ja": "zasiądę",
+    "ty": "zasiądziesz",
+    "on/ona/ono": "zasiądzie",
+    "my": "zasiądziemy",
+    "wy": "zasiądziecie",
+    "oni/one": "zasiądą",
+    "translation": "take a seat",
+    "example": "Po spotkaniu chcę **zasiąść** przy stole.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "zasięgać",
@@ -50919,6 +53184,18 @@
     "oni/one": "zastanowią się",
     "translation": "to think about oneself",
     "example": "**Zastanów się** nad odpowiedzią.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "zastać",
+    "ja": "zastanę",
+    "ty": "zastaniesz",
+    "on/ona/ono": "zastanie",
+    "my": "zastaniemy",
+    "wy": "zastaniecie",
+    "oni/one": "zastaną",
+    "translation": "find",
+    "example": "Tom **zastał** zamknięte drzwi do biura.",
     "aspect": "perfective"
   },
   {
@@ -51090,6 +53367,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "zaszkodzić",
+    "ja": "zaszkodzę",
+    "ty": "zaszkodzisz",
+    "on/ona/ono": "zaszkodzi",
+    "my": "zaszkodzimy",
+    "wy": "zaszkodzicie",
+    "oni/one": "zaszkodzą",
+    "translation": "to harm (perfective)",
+    "example": "Przesadnie palenie **zaszkodzi** twojemu zdrowiu.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "zasądzać",
     "ja": "zasądzam",
     "ty": "zasądzasz",
@@ -51124,6 +53413,18 @@
     "translation": "to cover",
     "aspect": "imperfective",
     "example": "**Zasłaniaj** usta kiedy kaszlesz, kichasz albo ziewasz."
+  },
+  {
+    "bezokolicznik": "zasłonić",
+    "ja": "zasłonię",
+    "ty": "zasłonisz",
+    "on/ona/ono": "zasłoni",
+    "my": "zasłonimy",
+    "wy": "zasłonicie",
+    "oni/one": "zasłonią",
+    "translation": "block (perfective)",
+    "example": "Nagle ciemne chmury **zasłoniły** słońce.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "zasługiwać",
@@ -51569,6 +53870,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "zawiadomić",
+    "ja": "zawiadomię",
+    "ty": "zawiadomisz",
+    "on/ona/ono": "zawiadomi",
+    "my": "zawiadomimy",
+    "wy": "zawiadomicie",
+    "oni/one": "zawiadomią",
+    "translation": "to notify",
+    "example": "Powinieneś natychmiast **zawiadomić** policję.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "zawierać",
     "ja": "zawieram",
     "ty": "zawierasz",
@@ -51817,6 +54130,18 @@
     "oni/one": "zawrą się",
     "translation": "to enclose oneself",
     "example": "Pamiętaj, by **zawrzeć się** z firmą.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "zawrócić",
+    "ja": "zawrócę",
+    "ty": "zawrócisz",
+    "on/ona/ono": "zawróci",
+    "my": "zawrócimy",
+    "wy": "zawrócicie",
+    "oni/one": "zawrócą",
+    "translation": "to turn back",
+    "example": "Może powinniśmy **zawrócić**.",
     "aspect": "perfective"
   },
   {
@@ -53327,6 +55652,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "zdominować",
+    "ja": "zdominuję",
+    "ty": "zdominujesz",
+    "on/ona/ono": "zdominuje",
+    "my": "zdominujemy",
+    "wy": "zdominujecie",
+    "oni/one": "zdominują",
+    "translation": "dominate (perfective)",
+    "example": "Niektórzy mówią, że Japonia jest społeczeństwem **zdominowanym** przez mężczyzn.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "zdopingować",
     "ja": "zdopinguję",
     "ty": "zdopingujesz",
@@ -53672,6 +56009,30 @@
     "oni/one": "zepsują się",
     "translation": "to spoil myself",
     "example": "Nasz autobus **zepsuł** się po drodze.",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "zerkać",
+    "ja": "zerkam",
+    "ty": "zerkasz",
+    "on/ona/ono": "zerka",
+    "my": "zerkamy",
+    "wy": "zerkacie",
+    "oni/one": "zerkają",
+    "translation": "glance",
+    "example": "**Zerkam** na kogoś.",
+    "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "zerknąć",
+    "ja": "zerknę",
+    "ty": "zerkniesz",
+    "on/ona/ono": "zerknie",
+    "my": "zerkniemy",
+    "wy": "zerkniecie",
+    "oni/one": "zerkną",
+    "translation": "to glance (perfective)",
+    "example": "Chcesz **zerknąć**?",
     "aspect": "perfective"
   },
   {
@@ -54094,6 +56455,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "zidentyfikować",
+    "ja": "zidentyfikuję",
+    "ty": "zidentyfikujesz",
+    "on/ona/ono": "zidentyfikuje",
+    "my": "zidentyfikujemy",
+    "wy": "zidentyfikujecie",
+    "oni/one": "zidentyfikują",
+    "translation": "to identify",
+    "example": "Jej zwłoki **zidentyfikowano** dzięki zegarkowi z symbolem pająka.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "ziewać",
     "ja": "ziewam",
     "ty": "ziewasz",
@@ -54262,6 +56635,18 @@
     "aspect": "perfective"
   },
   {
+    "bezokolicznik": "zjechać",
+    "ja": "zjadę",
+    "ty": "zjedziesz",
+    "on/ona/ono": "zjedzie",
+    "my": "zjedziemy",
+    "wy": "zjedziecie",
+    "oni/one": "zjadą",
+    "translation": "go down (perfective)",
+    "example": "**Zjechał** ze stoku w trzy minuty.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "zjednoczyć",
     "ja": "zjednoczę",
     "ty": "zjednoczysz",
@@ -54310,6 +56695,18 @@
     "aspect": "imperfective"
   },
   {
+    "bezokolicznik": "zlecić",
+    "ja": "zlecę",
+    "ty": "zlecisz",
+    "on/ona/ono": "zleci",
+    "my": "zlecimy",
+    "wy": "zlecicie",
+    "oni/one": "zlecą",
+    "translation": "to commission",
+    "example": "Szef chce **zlecić** nowe zadanie.",
+    "aspect": "perfective"
+  },
+  {
     "bezokolicznik": "zlekceważyć",
     "ja": "zlekceważę",
     "ty": "zlekceważysz",
@@ -54332,6 +56729,18 @@
     "translation": "to pour",
     "example": "Mama **zlewa** wodę do miski.",
     "aspect": "imperfective"
+  },
+  {
+    "bezokolicznik": "zlikwidować",
+    "ja": "zlikwiduję",
+    "ty": "zlikwidujesz",
+    "on/ona/ono": "zlikwiduje",
+    "my": "zlikwidujemy",
+    "wy": "zlikwidujecie",
+    "oni/one": "zlikwidują",
+    "translation": "delete",
+    "example": "Nie wiem jak **zlikwidować** swój ostatni wpis.",
+    "aspect": "perfective"
   },
   {
     "bezokolicznik": "zlinczować",
@@ -54391,6 +56800,18 @@
     "translation": "to get scared",
     "example": "Małe dziecko **zlękło się** psa.",
     "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "zmagać",
+    "ja": "zmagam",
+    "ty": "zmagasz",
+    "on/ona/ono": "zmaga",
+    "my": "zmagamy",
+    "wy": "zmagacie",
+    "oni/one": "zmagają",
+    "translation": "to struggle",
+    "example": "Muszę **zmagać** się z bólem.",
+    "aspect": "imperfective"
   },
   {
     "bezokolicznik": "zmagać się",
@@ -55253,6 +57674,18 @@
     "wy": "zrobicie się",
     "oni/one": "zrobią się",
     "translation": "to come to be",
+    "aspect": "perfective"
+  },
+  {
+    "bezokolicznik": "zrodzić",
+    "ja": "zrodzę",
+    "ty": "zrodzisz",
+    "on/ona/ono": "zrodzi",
+    "my": "zrodzimy",
+    "wy": "zrodzicie",
+    "oni/one": "zrodzą",
+    "translation": "give rise to",
+    "example": "Technologia **zrodziła** rozmaite kultury.",
     "aspect": "perfective"
   },
   {

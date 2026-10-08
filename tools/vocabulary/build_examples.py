@@ -7,7 +7,7 @@ Reads
     local.properties                        openai.apiKey
     tools/vocabulary/corpus/**/*.tsv        the words that need a sentence
     data/src/androidMain/assets/conjugations.json
-    tools/vocabulary/tatoeba_examples.tsv   real sentences chosen by build_tatoeba.py, used as they are
+    tools/vocabulary/tatoeba_examples.tsv   real sentences chosen by build_new_entries.py, used as they are
 
 Writes
     tools/vocabulary/examples.tsv           word, gloss, sentence

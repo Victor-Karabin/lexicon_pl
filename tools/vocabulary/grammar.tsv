@@ -1700,6 +1700,7 @@ torba	bag	feminine	torba|torby;torby|torb;torbie|torbom;torbę|torby;torbą|torb
 kapelusz	hat	masculine inanimate	kapelusz|kapelusze;kapelusza|kapeluszy;kapeluszowi|kapeluszom;kapelusz|kapelusze;kapeluszem|kapeluszami;kapeluszu|kapeluszach;kapeluszu|kapelusze					
 informacja	information	feminine	informacja|informacje;informacji|informacji;informacji|informacjom;informację|informacje;informacją|informacjami;informacji|informacjach;informacjo|informacje					
 planeta	planet	feminine	planeta|planety;planety|planet;planecie|planetom;planetę|planety;planetą|planetami;planecie|planetach;planeto|planety					
+wrażenie	impression	neuter	wrażenie|wrażenia;wrażenia|wrażeń;wrażeniu|wrażeniom;wrażenie|wrażenia;wrażeniem|wrażeniami;wrażeniu|wrażeniach;wrażenie|wrażenia					
 auto	car	neuter	auto|auta;auta|aut;autu|autom;auto|auta;autem|autami;aucie|autach;auto|auta					
 potwór	monster	masculine animate	potwór|potwory;potwora|potworów;potworowi|potworom;potwora|potwory;potworem|potworami;potworze|potworach;potworze|potwory					
 kłopot	trouble	masculine inanimate	kłopot|kłopoty;kłopotu|kłopotów;kłopotowi|kłopotom;kłopot|kłopoty;kłopotem|kłopotami;kłopocie|kłopotach;kłopocie|kłopoty					
@@ -1751,7 +1752,6 @@ dziewczynka	little girl	feminine	dziewczynka|dziewczynki;dziewczynki|dziewczynek
 interes	business	masculine inanimate	interes|interesa;interesu|interesów;interesowi|interesom;interes|interesa;interesem|interesami;interesie|interesach;interesie|interesa					
 płyta	record	feminine	płyta|płyty;płyty|płyt;płycie|płytom;płytę|płyty;płytą|płytami;płycie|płytach;płyto|płyty					
 niewolnik	slave	masculine personal	niewolnik|niewolnicy;niewolnika|niewolników;niewolnikowi|niewolnikom;niewolnika|niewolników;niewolnikiem|niewolnikami;niewolniku|niewolnikach;niewolniku|niewolnicy					
-wrażenie	impression	neuter	wrażenie|wrażenia;wrażenia|wrażeń;wrażeniu|wrażeniom;wrażenie|wrażenia;wrażeniem|wrażeniami;wrażeniu|wrażeniach;wrażenie|wrażenia					
 kawałek	piece	masculine inanimate	kawałek|kawałki;kawałka|kawałków;kawałkowi|kawałkom;kawałek|kawałki;kawałkiem|kawałkami;kawałku|kawałkach;kawałku|kawałki					
 idiota	idiot	masculine personal	idiota|idioci;idioty|idiotów;idiocie|idiotom;idiotę|idiotów;idiotą|idiotami;idiocie|idiotach;idioto|idioci					
 maszyna	machine	feminine	maszyna|maszyny;maszyny|maszyn;maszynie|maszynom;maszynę|maszyny;maszyną|maszynami;maszynie|maszynach;maszyno|maszyny					
@@ -1796,7 +1796,6 @@ niebezpieczeństwo	danger	neuter	niebezpieczeństwo|niebezpieczeństwa;niebezpie
 humor	mood	masculine inanimate	humor|humory;humoru|humorów;humorowi|humorom;humor|humory;humorem|humorami;humorze|humorach;humorze|humory					
 kanapa	sofa	feminine	kanapa|kanapy;kanapy|kanap;kanapie|kanapom;kanapę|kanapy;kanapą|kanapami;kanapie|kanapach;kanapo|kanapy					
 odrobina	a little	feminine	odrobina|odrobiny;odrobiny|odrobin;odrobinie|odrobinom;odrobinę|odrobiny;odrobiną|odrobinami;odrobinie|odrobinach;odrobino|odrobiny					
-wrazić	impression	feminine	wraża|wraże;wraży|wraż;wraży|wrażom;wrażę|wraże;wrażą|wrażami;wraży|wrażach;wrażo|wraże					
 kolej	railway	feminine	kolej|koleje;kolei|kolei;kolei|kolejom;kolej|koleje;koleją|kolejami;kolei|kolejach;kolei|koleje					
 tekst	text	masculine inanimate	tekst|teksty;tekstu|tekstów;tekstowi|tekstom;tekst|teksty;tekstem|tekstami;tekście|tekstach;tekście|teksty					
 przeszłość	past	feminine	przeszłość|przeszłości;przeszłości|przeszłości;przeszłości|przeszłościom;przeszłość|przeszłości;przeszłością|przeszłościami;przeszłości|przeszłościach;przeszłości|przeszłości					
@@ -1804,7 +1803,6 @@ samobójstwo	suicide	neuter	samobójstwo|samobójstwa;samobójstwa|samobójstw;s
 toaleta	toilet	feminine	toaleta|toalety;toalety|toalet;toalecie|toaletom;toaletę|toalety;toaletą|toaletami;toalecie|toaletach;toaleto|toalety					
 mowa	speech	feminine	mowa|mowy;mowy|mów;mowie|mowom;mowę|mowy;mową|mowami;mowie|mowach;mowo|mowy					
 kontrola	control	feminine	kontrola|kontrole;kontroli|kontroli;kontroli|kontrolom;kontrolę|kontrole;kontrolą|kontrolami;kontroli|kontrolach;kontrolo|kontrole					
-ciąża	pregnancy	feminine	ciąża|ciąże;ciąży|ciąż;ciąży|ciążom;ciążę|ciąże;ciążą|ciążami;ciąży|ciążach;ciążo|ciąże					
 świeczka	candle	feminine	świeczka|świeczki;świeczki|świeczek;świeczce|świeczkom;świeczkę|świeczki;świeczką|świeczkami;świeczce|świeczkach;świeczko|świeczki					
 stosunek	terms	masculine inanimate	stosunek|stosunki;stosunku|stosunków;stosunkowi|stosunkom;stosunek|stosunki;stosunkiem|stosunkami;stosunku|stosunkach;stosunku|stosunki					
 ton	ton	masculine inanimate	ton|tony;tonu|tonów;tonowi|tonom;ton|tony;tonem|tonami;tonie|tonach;tonie|tony					
@@ -1848,7 +1846,6 @@ flaga	flag	feminine	flaga|flagi;flagi|flag;fladze|flagom;flagę|flagi;flagą|fla
 trudność	difficulty	feminine	trudność|trudności;trudności|trudności;trudności|trudnościom;trudność|trudności;trudnością|trudnościami;trudności|trudnościach;trudności|trudności					
 znaczek	stamp	masculine inanimate	znaczek|znaczki;znaczka|znaczków;znaczkowi|znaczkom;znaczek|znaczki;znaczkiem|znaczkami;znaczku|znaczkach;znaczku|znaczki					
 wzgórze	hill	neuter	wzgórze|wzgórza;wzgórza|wzgórz;wzgórzu|wzgórzom;wzgórze|wzgórza;wzgórzem|wzgórzami;wzgórzu|wzgórzach;wzgórze|wzgórza					
-przewodniczący	chairman	masculine personal	przewodniczący|przewodniczący;przewodniczącego|przewodniczących;przewodniczącemu|przewodniczącym;przewodniczącego|przewodniczących;przewodniczącym|przewodniczącymi;przewodniczącym|przewodniczących;przewodniczący|przewodniczący					
 ekspert	expert	masculine personal	ekspert|eksperci;eksperta|ekspertów;ekspertowi|ekspertom;eksperta|ekspertów;ekspertem|ekspertami;ekspercie|ekspertach;ekspercie|eksperci					
 formularz	form	masculine inanimate	formularz|formularze;formularza|formularzy;formularzowi|formularzom;formularz|formularze;formularzem|formularzami;formularzu|formularzach;formularzu|formularze					
 opona	tire	feminine	opona|opony;opony|opon;oponie|oponom;oponę|opony;oponą|oponami;oponie|oponach;opono|opony					
@@ -1966,7 +1963,6 @@ krzyk	cry	masculine inanimate	krzyk|krzyki;krzyku|krzyków;krzykowi|krzykom;krzy
 pułapka	trap	feminine	pułapka|pułapki;pułapki|pułapek;pułapce|pułapkom;pułapkę|pułapki;pułapką|pułapkami;pułapce|pułapkach;pułapko|pułapki					
 mur	wall	masculine inanimate	mur|mury;muru|murów;murowi|murom;mur|mury;murem|murami;murze|murach;murze|mury					
 wyraz	word	masculine inanimate	wyraz|wyrazy;wyrazu|wyrazów;wyrazowi|wyrazom;wyraz|wyrazy;wyrazem|wyrazami;wyrazie|wyrazach;wyrazie|wyrazy					
-zamieszki	riots	plural only	|zamieszki;|zamieszek;|zamieszkom;|zamieszki;|zamieszkami;|zamieszkach;|zamieszki					
 komiks	comic	masculine inanimate	komiks|komiksy;komiksu|komiksów;komiksowi|komiksom;komiks|komiksy;komiksem|komiksami;komiksie|komiksach;komiksie|komiksy					
 islam	islam	masculine inanimate	islam|islamy;islamu|islamów;islamowi|islamom;islam|islamy;islamem|islamami;islamie|islamach;islamie|islamy					
 skrót	abbreviation	masculine inanimate	skrót|skróty;skrótu|skrótów;skrótowi|skrótom;skrót|skróty;skrótem|skrótami;skrócie|skrótach;skrócie|skróty					
@@ -2072,6 +2068,7 @@ tajfun	typhoon	masculine inanimate	tajfun|tajfuny;tajfunu|tajfunów;tajfunowi|ta
 księżniczka	princess	feminine	księżniczka|księżniczki;księżniczki|księżniczek;księżniczce|księżniczkom;księżniczkę|księżniczki;księżniczką|księżniczkami;księżniczce|księżniczkach;księżniczko|księżniczki					
 głupota	stupidity	feminine	głupota|głupoty;głupoty|głupot;głupocie|głupotom;głupotę|głupoty;głupotą|głupotami;głupocie|głupotach;głupoto|głupoty					
 głębia	depth	feminine	głębia|głębie;głębi|głębi;głębi|głębiom;głębię|głębie;głębią|głębiami;głębi|głębiach;głębio|głębie					
+zamieszki	riots	plural only	|zamieszki;|zamieszek;|zamieszkom;|zamieszki;|zamieszkami;|zamieszkach;|zamieszki					
 armia	army	feminine	armia|armie;armii|armii;armii|armiom;armię|armie;armią|armiami;armii|armiach;armio|armie					
 depresja	depression	feminine	depresja|depresje;depresji|depresji;depresji|depresjom;depresję|depresje;depresją|depresjami;depresji|depresjach;depresjo|depresje					
 atom	atom	masculine inanimate	atom|atomy;atomu|atomów;atomowi|atomom;atom|atomy;atomem|atomami;atomie|atomach;atomie|atomy					
@@ -2095,7 +2092,6 @@ burmistrz	mayor	masculine personal	burmistrz|burmistrze;burmistrza|burmistrzów;
 ścieżka	path	feminine	ścieżka|ścieżki;ścieżki|ścieżek;ścieżce|ścieżkom;ścieżkę|ścieżki;ścieżką|ścieżkami;ścieżce|ścieżkach;ścieżko|ścieżki					
 kontrakt	contract	masculine inanimate	kontrakt|kontrakty;kontraktu|kontraktów;kontraktowi|kontraktom;kontrakt|kontrakty;kontraktem|kontraktami;kontrakcie|kontraktach;kontrakcie|kontrakty					
 płyn	liquid	masculine inanimate	płyn|płyny;płynu|płynów;płynowi|płynom;płyn|płyny;płynem|płynami;płynie|płynach;płynie|płyny					
-sprawozdanie	report	neuter	sprawozdanie|sprawozdania;sprawozdania|sprawozdań;sprawozdaniu|sprawozdaniom;sprawozdanie|sprawozdania;sprawozdaniem|sprawozdaniami;sprawozdaniu|sprawozdaniach;sprawozdanie|sprawozdania					
 świadomość	awareness	feminine	świadomość|świadomości;świadomości|świadomości;świadomości|świadomościom;świadomość|świadomości;świadomością|świadomościami;świadomości|świadomościach;świadomości|świadomości					
 pływak	swimmer	masculine personal	pływak|pływacy;pływaka|pływaków;pływakowi|pływakom;pływaka|pływaków;pływakiem|pływakami;pływaku|pływakach;pływaku|pływacy					
 tempo	pace	neuter	tempo|tempa;tempa|temp;tempu|tempom;tempo|tempa;tempem|tempami;tempie|tempach;tempo|tempa					
@@ -2151,6 +2147,7 @@ nieznajomy	stranger	masculine personal	nieznajomy|nieznajomi;nieznajomego|niezna
 medium	medium	neuter	medium|media;medium|mediów;medium|mediom;medium|media;medium|mediami;medium|mediach;medium|media					
 wuj	uncle	masculine personal	wuj|wujowie;wuja|wujów;wujowi|wujom;wuja|wujów;wujem|wujami;wuju|wujach;wuju|wujowie					
 gabinet	office	masculine inanimate	gabinet|gabinety;gabinetu|gabinetów;gabinetowi|gabinetom;gabinet|gabinety;gabinetem|gabinetami;gabinecie|gabinetach;gabinecie|gabinety					
+sprawozdanie	report	neuter	sprawozdanie|sprawozdania;sprawozdania|sprawozdań;sprawozdaniu|sprawozdaniom;sprawozdanie|sprawozdania;sprawozdaniem|sprawozdaniami;sprawozdaniu|sprawozdaniach;sprawozdanie|sprawozdania					
 pałeczka	chopsticks	feminine	pałeczka|pałeczki;pałeczki|pałeczek;pałeczce|pałeczkom;pałeczkę|pałeczki;pałeczką|pałeczkami;pałeczce|pałeczkach;pałeczko|pałeczki					
 start	launch	masculine inanimate	start|starty;startu|startów;startowi|startom;start|starty;startem|startami;starcie|startach;starcie|starty					
 popularność	popularity	feminine	popularność|popularności;popularności|popularności;popularności|popularnościom;popularność|popularności;popularnością|popularnościami;popularności|popularnościach;popularności|popularności					
@@ -2189,7 +2186,6 @@ tożsamość	identity	feminine	tożsamość|tożsamości;tożsamości|tożsamoś
 sofa	sofa	feminine	sofa|sofy;sofy|sof;sofie|sofom;sofę|sofy;sofą|sofami;sofie|sofach;sofo|sofy					
 równowaga	balance	feminine	równowaga|równowagi;równowagi|równowag;równowadze|równowagom;równowagę|równowagi;równowagą|równowagami;równowadze|równowagach;równowago|równowagi					
 pech	bad luck	masculine animate	pech|pechy;pecha|pechów;pechowi|pechom;pecha|pechy;pechem|pechami;pechu|pechach;pechu|pechy					
-frytki	fries	plural only	|frytki;|frytek;|frytkom;|frytki;|frytkami;|frytkach;|frytki					
 guma	chewing gum	feminine	guma|gumy;gumy|gum;gumie|gumom;gumę|gumy;gumą|gumami;gumie|gumach;gumo|gumy					
 plama	stain	feminine	plama|plamy;plamy|plam;plamie|plamom;plamę|plamy;plamą|plamami;plamie|plamach;plamo|plamy					
 motocykl	motorcycle	masculine inanimate	motocykl|motocykle;motocykla|motocykli;motocyklowi|motocyklom;motocykl|motocykle;motocyklem|motocyklami;motocyklu|motocyklach;motocyklu|motocykle					
@@ -2199,6 +2195,7 @@ organizm	body	masculine inanimate	organizm|organizmy;organizmu|organizmów;organ
 wiatrak	fan	masculine inanimate	wiatrak|wiatraki;wiatraka|wiatraków;wiatrakowi|wiatrakom;wiatrak|wiatraki;wiatrakiem|wiatrakami;wiatraku|wiatrakach;wiatraku|wiatraki					
 wskazówka	tip	feminine	wskazówka|wskazówki;wskazówki|wskazówek;wskazówce|wskazówkom;wskazówkę|wskazówki;wskazówką|wskazówkami;wskazówce|wskazówkach;wskazówko|wskazówki					
 omlet	omelet	masculine animate	omlet|omlety;omletu|omletów;omletowi|omletom;omlet|omlety;omletem|omletami;omlecie|omletach;omlecie|omlety					
+tarapaty	trouble	plural only	|tarapaty;|tarapatów;|tarapatom;|tarapaty;|tarapatami;|tarapatach;|tarapaty					
 ślimak	snail	masculine animate	ślimak|ślimaki;ślimaka|ślimaków;ślimakowi|ślimakom;ślimaka|ślimaki;ślimakiem|ślimakami;ślimaku|ślimakach;ślimaku|ślimaki					
 nastawić	attitude	feminine	nastawa|nastawy;nastawy|nastaw;nastawie|nastawom;nastawę|nastawy;nastawą|nastawami;nastawie|nastawach;nastawo|nastawy					
 worek	bag	masculine inanimate	worek|worki;worka|worków;workowi|workom;worek|worki;workiem|workami;worku|workach;worku|worki					
@@ -2281,6 +2278,853 @@ filmik	video	masculine inanimate	filmik|filmiki;filmiku|filmików;filmikowi|film
 koronawirus	coronavirus	masculine inanimate	koronawirus|koronawirusy;koronawirusa|koronawirusów;koronawirusowi|koronawirusom;koronawirus|koronawirusy;koronawirusem|koronawirusami;koronawirusie|koronawirusach;koronawirusie|koronawirusy					
 fartuch	apron	masculine inanimate	fartuch|fartuchy;fartucha|fartuchów;fartuchowi|fartuchom;fartuch|fartuchy;fartuchem|fartuchami;fartuchu|fartuchach;fartuchu|fartuchy					
 sód	sodium	masculine inanimate	sód|sody;sodu|sodów;sodowi|sodom;sód|sody;sodem|sodami;sodzie|sodach;sodzie|sody					
+działanie	action	neuter	działanie|działania;działania|działań;działaniu|działaniom;działanie|działania;działaniem|działaniami;działaniu|działaniach;działanie|działania					
+znaczenie	meaning	neuter	znaczenie|znaczenia;znaczenia|znaczeń;znaczeniu|znaczeniom;znaczenie|znaczenia;znaczeniem|znaczeniami;znaczeniu|znaczeniach;znaczenie|znaczenia					
+efekt	effect	masculine inanimate	efekt|efekty;efektu|efektów;efektowi|efektom;efekt|efekty;efektem|efektami;efekcie|efektach;efekcie|efekty					
+wydarzenie	event	neuter	wydarzenie|wydarzenia;wydarzenia|wydarzeń;wydarzeniu|wydarzeniom;wydarzenie|wydarzenia;wydarzeniem|wydarzeniami;wydarzeniu|wydarzeniach;wydarzenie|wydarzenia					
+element	element	masculine inanimate	element|elementy;elementu|elementów;elementowi|elementom;element|elementy;elementem|elementami;elemencie|elementach;elemencie|elementy					
+działalność	activity	feminine	działalność|działalności;działalności|działalności;działalności|działalnościom;działalność|działalności;działalnością|działalnościami;działalności|działalnościach;działalności|działalności					
+ramy	framework	plural only	|ramy;|ram;|ramom;|ramy;|ramami;|ramach;|ramy					
+urząd	office	masculine inanimate	urząd|urzędy;urzędu|urzędów;urzędowi|urzędom;urząd|urzędy;urzędem|urzędami;urzędzie|urzędach;urzędzie|urzędy					
+rozwiązanie	solution	neuter	rozwiązanie|rozwiązania;rozwiązania|rozwiązań;rozwiązaniu|rozwiązaniom;rozwiązanie|rozwiązania;rozwiązaniem|rozwiązaniami;rozwiązaniu|rozwiązaniach;rozwiązanie|rozwiązania					
+warunki	conditions	plural only	|warunki;|warunków;|warunkom;|warunki;|warunkami;|warunkach;|warunki					
+poczucie	feeling	neuter	poczucie|poczucia;poczucia|poczuć;poczuciu|poczuciom;poczucie|poczucia;poczuciem|poczuciami;poczuciu|poczuciach;poczucie|poczucia					
+prezes	president	masculine personal	prezes|prezesi;prezesa|prezesów;prezesowi|prezesom;prezesa|prezesów;prezesem|prezesami;prezesie|prezesach;prezesie|prezesi					
+pojęcie	concept	neuter	pojęcie|pojęcia;pojęcia|pojęć;pojęciu|pojęciom;pojęcie|pojęcia;pojęciem|pojęciami;pojęciu|pojęciach;pojęcie|pojęcia					
+dodatek	addition	masculine inanimate	dodatek|dodatki;dodatku|dodatków;dodatkowi|dodatkom;dodatek|dodatki;dodatkiem|dodatkami;dodatku|dodatkach;dodatku|dodatki					
+przedstawiciel	representative	masculine personal	przedstawiciel|przedstawiciele;przedstawiciela|przedstawicieli;przedstawicielowi|przedstawicielom;przedstawiciela|przedstawicieli;przedstawicielem|przedstawicielami;przedstawicielu|przedstawicielach;przedstawicielu|przedstawiciele					
+gmina	municipality	feminine	gmina|gminy;gminy|gmin;gminie|gminom;gminę|gminy;gminą|gminami;gminie|gminach;gmino|gminy					
+współpraca	cooperation	feminine	współpraca|współprace;współpracy|współprac;współpracy|współpracom;współpracę|współprace;współpracą|współpracami;współpracy|współpracach;współpraco|współprace					
+perspektywa	perspective	feminine	perspektywa|perspektywy;perspektywy|perspektyw;perspektywie|perspektywom;perspektywę|perspektywy;perspektywą|perspektywami;perspektywie|perspektywach;perspektywo|perspektywy					
+instytucja	institution	feminine	instytucja|instytucje;instytucji|instytucji;instytucji|instytucjom;instytucję|instytucje;instytucją|instytucjami;instytucji|instytucjach;instytucjo|instytucje					
+jednostka	unit	feminine	jednostka|jednostki;jednostki|jednostek;jednostce|jednostkom;jednostkę|jednostki;jednostką|jednostkami;jednostce|jednostkach;jednostko|jednostki					
+całość	the whole	feminine	całość|całości;całości|całości;całości|całościom;całość|całości;całością|całościami;całości|całościach;całości|całości					
+spółka	company	feminine	spółka|spółki;spółki|spółek;spółce|spółkom;spółkę|spółki;spółką|spółkami;spółce|spółkach;spółko|spółki					
+przekonanie	belief	neuter	przekonanie|przekonania;przekonania|przekonań;przekonaniu|przekonaniom;przekonanie|przekonania;przekonaniem|przekonaniami;przekonaniu|przekonaniach;przekonanie|przekonania					
+komisja	committee	feminine	komisja|komisje;komisji|komisji;komisji|komisjom;komisję|komisje;komisją|komisjami;komisji|komisjach;komisjo|komisje					
+zakład	factory	masculine inanimate	zakład|zakłady;zakładu|zakładów;zakładowi|zakładom;zakład|zakłady;zakładem|zakładami;zakładzie|zakładach;zakładzie|zakłady					
+zdarzenie	event	neuter	zdarzenie|zdarzenia;zdarzenia|zdarzeń;zdarzeniu|zdarzeniom;zdarzenie|zdarzenia;zdarzeniem|zdarzeniami;zdarzeniu|zdarzeniach;zdarzenie|zdarzenia					
+zainteresowanie	interest	neuter	zainteresowanie|zainteresowania;zainteresowania|zainteresowań;zainteresowaniu|zainteresowaniom;zainteresowanie|zainteresowania;zainteresowaniem|zainteresowaniami;zainteresowaniu|zainteresowaniach;zainteresowanie|zainteresowania					
+wsparcie	support	neuter	wsparcie|wsparcia;wsparcia|wsparć;wsparciu|wsparciom;wsparcie|wsparcia;wsparciem|wsparciami;wsparciu|wsparciach;wsparcie|wsparcia					
+spojrzenie	glance	neuter	spojrzenie|spojrzenia;spojrzenia|spojrzeń;spojrzeniu|spojrzeniom;spojrzenie|spojrzenia;spojrzeniem|spojrzeniami;spojrzeniu|spojrzeniach;spojrzenie|spojrzenia					
+wspomnienie	memory	neuter	wspomnienie|wspomnienia;wspomnienia|wspomnień;wspomnieniu|wspomnieniom;wspomnienie|wspomnienia;wspomnieniem|wspomnieniami;wspomnieniu|wspomnieniach;wspomnienie|wspomnienia					
+fragment	part	masculine inanimate	fragment|fragmenty;fragmentu|fragmentów;fragmentowi|fragmentom;fragment|fragmenty;fragmentem|fragmentami;fragmencie|fragmentach;fragmencie|fragmenty					
+realizacja	realization	feminine	realizacja|realizacje;realizacji|realizacji;realizacji|realizacjom;realizację|realizacje;realizacją|realizacjami;realizacji|realizacjach;realizacjo|realizacje					
+ośrodek	medium	masculine inanimate	ośrodek|ośrodki;ośrodka|ośrodków;ośrodkowi|ośrodkom;ośrodek|ośrodki;ośrodkiem|ośrodkami;ośrodku|ośrodkach;ośrodku|ośrodki					
+etap	stage	masculine inanimate	etap|etapy;etapu|etapów;etapowi|etapom;etap|etapy;etapem|etapami;etapie|etapach;etapie|etapy					
+dobro	good	neuter	dobro|dobra;dobra|dóbr;dobru|dobrom;dobro|dobra;dobrem|dobrami;dobru|dobrach;dobro|dobra					
+wola	will	feminine	wola|wole;woli|woli;woli|wolom;wolę|wole;wolą|wolami;woli|wolach;wolo|wole					
+widzenie	vision	neuter	widzenie|widzenia;widzenia|widzeń;widzeniu|widzeniom;widzenie|widzenia;widzeniem|widzeniami;widzeniu|widzeniach;widzenie|widzenia					
+kwota	amount	feminine	kwota|kwoty;kwoty|kwot;kwocie|kwotom;kwotę|kwoty;kwotą|kwotami;kwocie|kwotach;kwoto|kwoty					
+wizja	vision	feminine	wizja|wizje;wizji|wizji;wizji|wizjom;wizję|wizje;wizją|wizjami;wizji|wizjach;wizjo|wizje					
+skala	scale	feminine	skala|skale;skali|skal;skali|skalom;skalę|skale;skalą|skalami;skali|skalach;skalo|skale					
+tło	background	neuter	tło|tła;tła|teł;tłu|tłom;tło|tła;tłem|tłami;tle|tłach;tło|tła					
+wnętrze	interior	neuter	wnętrze|wnętrza;wnętrza|wnętrz;wnętrzu|wnętrzom;wnętrze|wnętrza;wnętrzem|wnętrzami;wnętrzu|wnętrzach;wnętrze|wnętrza					
+postępowanie	procedure	neuter	postępowanie|postępowania;postępowania|postępowań;postępowaniu|postępowaniom;postępowanie|postępowania;postępowaniem|postępowaniami;postępowaniu|postępowaniach;postępowanie|postępowania					
+skład	composition	masculine inanimate	skład|składy;składu|składów;składowi|składom;skład|składy;składem|składami;składzie|składach;składzie|składy					
+wyjście	exit	neuter	wyjście|wyjścia;wyjścia|wyjść;wyjściu|wyjściom;wyjście|wyjścia;wyjściem|wyjściami;wyjściu|wyjściach;wyjście|wyjścia					
+konieczność	necessity	feminine	konieczność|konieczności;konieczności|konieczności;konieczności|koniecznościom;konieczność|konieczności;koniecznością|koniecznościami;konieczności|koniecznościach;konieczności|konieczności					
+więzienie	prison	neuter	więzienie|więzienia;więzienia|więzień;więzieniu|więzieniom;więzienie|więzienia;więzieniem|więzieniami;więzieniu|więzieniach;więzienie|więzienia					
+ministerstwo	ministry	neuter	ministerstwo|ministerstwa;ministerstwa|ministerstw;ministerstwu|ministerstwom;ministerstwo|ministerstwa;ministerstwem|ministerstwami;ministerstwie|ministerstwach;ministerstwo|ministerstwa					
+pełnia	full moon	feminine	pełnia|pełnie;pełni|pełni;pełni|pełniom;pełnię|pełnie;pełnią|pełniami;pełni|pełniach;pełnio|pełnie					
+młodzież	young people	feminine	młodzież|młodzieże;młodzieży|młodzieży;młodzieży|młodzieżom;młodzież|młodzieże;młodzieżą|młodzieżami;młodzieży|młodzieżach;młodzieży|młodzieże					
+wymiar	dimension	masculine inanimate	wymiar|wymiary;wymiaru|wymiarów;wymiarowi|wymiarom;wymiar|wymiary;wymiarem|wymiarami;wymiarze|wymiarach;wymiarze|wymiary					
+unia	union	feminine	unia|unie;unii|unii;unii|uniom;unię|unie;unią|uniami;unii|uniach;unio|unie					
+zarzut	complaint	masculine inanimate	zarzut|zarzuty;zarzutu|zarzutów;zarzutowi|zarzutom;zarzut|zarzuty;zarzutem|zarzutami;zarzucie|zarzutach;zarzucie|zarzuty					
+grunt	ground	masculine inanimate	grunt|grunta;gruntu|gruntów;gruntowi|gruntom;grunt|grunta;gruntem|gruntami;gruncie|gruntach;gruncie|grunta					
+postawa	posture	feminine	postawa|postawy;postawy|postaw;postawie|postawom;postawę|postawy;postawą|postawami;postawie|postawach;postawo|postawy					
+sprzęt	equipment	masculine inanimate	sprzęt|sprzęty;sprzętu|sprzętów;sprzętowi|sprzętom;sprzęt|sprzęty;sprzętem|sprzętami;sprzęcie|sprzętach;sprzęcie|sprzęty					
+twórca	creator	masculine personal	twórca|twórcy;twórcy|twórców;twórcy|twórcom;twórcę|twórców;twórcą|twórcami;twórcy|twórcach;twórco|twórcy					
+urzędnik	official	masculine personal	urzędnik|urzędnicy;urzędnika|urzędników;urzędnikowi|urzędnikom;urzędnika|urzędników;urzędnikiem|urzędnikami;urzędniku|urzędnikach;urzędniku|urzędnicy					
+struktura	structure	feminine	struktura|struktury;struktury|struktur;strukturze|strukturom;strukturę|struktury;strukturą|strukturami;strukturze|strukturach;strukturo|struktury					
+gest	gesture	masculine inanimate	gest|gesty;gestu|gestów;gestowi|gestom;gest|gesty;gestem|gestami;geście|gestach;geście|gesty					
+powiat	county	masculine inanimate	powiat|powiaty;powiatu|powiatów;powiatowi|powiatom;powiat|powiaty;powiatem|powiatami;powiecie|powiatach;powiecie|powiaty					
+wspólnota	community	feminine	wspólnota|wspólnoty;wspólnoty|wspólnot;wspólnocie|wspólnotom;wspólnotę|wspólnoty;wspólnotą|wspólnotami;wspólnocie|wspólnotach;wspólnoto|wspólnoty					
+pomieszczenie	room	neuter	pomieszczenie|pomieszczenia;pomieszczenia|pomieszczeń;pomieszczeniu|pomieszczeniom;pomieszczenie|pomieszczenia;pomieszczeniem|pomieszczeniami;pomieszczeniu|pomieszczeniach;pomieszczenie|pomieszczenia					
+porównanie	comparison	neuter	porównanie|porównania;porównania|porównań;porównaniu|porównaniom;porównanie|porównania;porównaniem|porównaniami;porównaniu|porównaniach;porównanie|porównania					
+bieg	gear	masculine inanimate	bieg|biegi;biegu|biegów;biegowi|biegom;bieg|biegi;biegiem|biegami;biegu|biegach;biegu|biegi					
+funkcjonariusz	officer	masculine personal	funkcjonariusz|funkcjonariusze;funkcjonariusza|funkcjonariuszy;funkcjonariuszowi|funkcjonariuszom;funkcjonariusza|funkcjonariuszy;funkcjonariuszem|funkcjonariuszami;funkcjonariuszu|funkcjonariuszach;funkcjonariuszu|funkcjonariusze					
+wyzwanie	challenge	neuter	wyzwanie|wyzwania;wyzwania|wyzwań;wyzwaniu|wyzwaniom;wyzwanie|wyzwania;wyzwaniem|wyzwaniami;wyzwaniu|wyzwaniach;wyzwanie|wyzwania					
+inicjatywa	initiative	feminine	inicjatywa|inicjatywy;inicjatywy|inicjatyw;inicjatywie|inicjatywom;inicjatywę|inicjatywy;inicjatywą|inicjatywami;inicjatywie|inicjatywach;inicjatywo|inicjatywy					
+rzecznik	spokesperson	masculine personal	rzecznik|rzecznicy;rzecznika|rzeczników;rzecznikowi|rzecznikom;rzecznika|rzeczników;rzecznikiem|rzecznikami;rzeczniku|rzecznikach;rzeczniku|rzecznicy					
+placówka	facility	feminine	placówka|placówki;placówki|placówek;placówce|placówkom;placówkę|placówki;placówką|placówkami;placówce|placówkach;placówko|placówki					
+wypowiedź	statement	feminine	wypowiedź|wypowiedzi;wypowiedzi|wypowiedzi;wypowiedzi|wypowiedziom;wypowiedź|wypowiedzi;wypowiedzią|wypowiedziami;wypowiedzi|wypowiedziach;wypowiedzi|wypowiedzi					
+czynność	activity	feminine	czynność|czynności;czynności|czynności;czynności|czynnościom;czynność|czynności;czynnością|czynnościami;czynności|czynnościach;czynności|czynności					
+fotel	armchair	masculine inanimate	fotel|fotele;fotela|foteli;fotelowi|fotelom;fotel|fotele;fotelem|fotelami;fotelu|fotelach;fotelu|fotele					
+województwo	voivodeship	neuter	województwo|województwa;województwa|województw;województwu|województwom;województwo|województwa;województwem|województwami;województwie|województwach;województwo|województwa					
+stowarzyszenie	association	neuter	stowarzyszenie|stowarzyszenia;stowarzyszenia|stowarzyszeń;stowarzyszeniu|stowarzyszeniom;stowarzyszenie|stowarzyszenia;stowarzyszeniem|stowarzyszeniami;stowarzyszeniu|stowarzyszeniach;stowarzyszenie|stowarzyszenia					
+podział	division	masculine inanimate	podział|podziały;podziału|podziałów;podziałowi|podziałom;podział|podziały;podziałem|podziałami;podziale|podziałach;podziale|podziały					
+lider	leader	masculine personal	lider|liderzy;lidera|liderów;liderowi|liderom;lidera|liderów;liderem|liderami;liderze|liderach;liderze|liderzy					
+spór	dispute	masculine inanimate	spór|spory;sporu|sporów;sporowi|sporom;spór|spory;sporem|sporami;sporze|sporach;sporze|spory					
+prokuratura	prosecutor's office	feminine	prokuratura|prokuratury;prokuratury|prokuratur;prokuraturze|prokuraturom;prokuraturę|prokuratury;prokuraturą|prokuraturami;prokuraturze|prokuraturach;prokuraturo|prokuratury					
+transport	transport	masculine inanimate	transport|transporty;transportu|transportów;transportowi|transportom;transport|transporty;transportem|transportami;transporcie|transportach;transporcie|transporty					
+urządzenie	device	neuter	urządzenie|urządzenia;urządzenia|urządzeń;urządzeniu|urządzeniom;urządzenie|urządzenia;urządzeniem|urządzeniami;urządzeniu|urządzeniach;urządzenie|urządzenia					
+szereg	series	masculine inanimate	szereg|szeregi;szeregu|szeregów;szeregowi|szeregom;szereg|szeregi;szeregiem|szeregami;szeregu|szeregach;szeregu|szeregi					
+miejscowość	town	feminine	miejscowość|miejscowości;miejscowości|miejscowości;miejscowości|miejscowościom;miejscowość|miejscowości;miejscowością|miejscowościami;miejscowości|miejscowościach;miejscowości|miejscowości					
+otoczenie	surroundings	neuter	otoczenie|otoczenia;otoczenia|otoczeń;otoczeniu|otoczeniom;otoczenie|otoczenia;otoczeniem|otoczeniami;otoczeniu|otoczeniach;otoczenie|otoczenia					
+seria	series	feminine	seria|serie;serii|serii;serii|seriom;serię|serie;serią|seriami;serii|seriach;serio|serie					
+sygnał	signal	masculine inanimate	sygnał|sygnały;sygnału|sygnałów;sygnałowi|sygnałom;sygnał|sygnały;sygnałem|sygnałami;sygnale|sygnałach;sygnale|sygnały					
+oczekiwanie	expectation	neuter	oczekiwanie|oczekiwania;oczekiwania|oczekiwań;oczekiwaniu|oczekiwaniom;oczekiwanie|oczekiwania;oczekiwaniem|oczekiwaniami;oczekiwaniu|oczekiwaniach;oczekiwanie|oczekiwania					
+blok	block of flats	masculine inanimate	blok|bloki;bloku|bloków;blokowi|blokom;blok|bloki;blokiem|blokami;bloku|blokach;bloku|bloki					
+instytut	institute	masculine inanimate	instytut|instytuty;instytutu|instytutów;instytutowi|instytutom;instytut|instytuty;instytutem|instytutami;instytucie|instytutach;instytucie|instytuty					
+podmiot	subject	masculine inanimate	podmiot|podmioty;podmiotu|podmiotów;podmiotowi|podmiotom;podmiot|podmioty;podmiotem|podmiotami;podmiocie|podmiotach;podmiocie|podmioty					
+założenie	assumption	neuter	założenie|założenia;założenia|założeń;założeniu|założeniom;założenie|założenia;założeniem|założeniami;założeniu|założeniach;założenie|założenia					
+opis	description	masculine inanimate	opis|opisy;opisu|opisów;opisowi|opisom;opis|opisy;opisem|opisami;opisie|opisach;opisie|opisy					
+zapaść	collapse	feminine	zapaść|zapaści;zapaści|zapaści;zapaści|zapaściom;zapaść|zapaści;zapaścią|zapaściami;zapaści|zapaściach;zapaści|zapaści					
+myślenie	thinking	neuter	myślenie|myślenia;myślenia|myśleń;myśleniu|myśleniom;myślenie|myślenia;myśleniem|myśleniami;myśleniu|myśleniach;myślenie|myślenia					
+organ	organ	masculine inanimate	organ|organa;organu|organów;organowi|organom;organ|organa;organem|organami;organie|organach;organie|organa					
+napięcie	tension	neuter	napięcie|napięcia;napięcia|napięć;napięciu|napięciom;napięcie|napięcia;napięciem|napięciami;napięciu|napięciach;napięcie|napięcia					
+próg	threshold	masculine inanimate	próg|progi;proga|progów;progowi|progom;próg|progi;progiem|progami;progu|progach;progu|progi					
+utwór	piece	masculine inanimate	utwór|utwory;utworu|utworów;utworowi|utworom;utwór|utwory;utworem|utworami;utworze|utworach;utworze|utwory					
+producent	producer	masculine personal	producent|producenci;producenta|producentów;producentowi|producentom;producenta|producentów;producentem|producentami;producencie|producentach;producencie|producenci					
+podejście	approach	neuter	podejście|podejścia;podejścia|podejść;podejściu|podejściom;podejście|podejścia;podejściem|podejściami;podejściu|podejściach;podejście|podejścia					
+siedziba	headquarters	feminine	siedziba|siedziby;siedziby|siedzib;siedzibie|siedzibom;siedzibę|siedziby;siedzibą|siedzibami;siedzibie|siedzibach;siedzibo|siedziby					
+wejście	entrance	neuter	wejście|wejścia;wejścia|wejść;wejściu|wejściom;wejście|wejścia;wejściem|wejściami;wejściu|wejściach;wejście|wejścia					
+przedsiębiorca	entrepreneur	masculine personal	przedsiębiorca|przedsiębiorcy;przedsiębiorcy|przedsiębiorców;przedsiębiorcy|przedsiębiorcom;przedsiębiorcę|przedsiębiorców;przedsiębiorcą|przedsiębiorcami;przedsiębiorcy|przedsiębiorcach;przedsiębiorco|przedsiębiorcy					
+mechanizm	mechanism	masculine inanimate	mechanizm|mechanizmy;mechanizmu|mechanizmów;mechanizmowi|mechanizmom;mechanizm|mechanizmy;mechanizmem|mechanizmami;mechanizmie|mechanizmach;mechanizmie|mechanizmy					
+scenariusz	screenplay	masculine inanimate	scenariusz|scenariusze;scenariusza|scenariuszy;scenariuszowi|scenariuszom;scenariusz|scenariusze;scenariuszem|scenariuszami;scenariuszu|scenariuszach;scenariuszu|scenariusze					
+koncepcja	concept	feminine	koncepcja|koncepcje;koncepcji|koncepcji;koncepcji|koncepcjom;koncepcję|koncepcje;koncepcją|koncepcjami;koncepcji|koncepcjach;koncepcjo|koncepcje					
+protest	protest	masculine inanimate	protest|protesty;protestu|protestów;protestowi|protestom;protest|protesty;protestem|protestami;proteście|protestach;proteście|protesty					
+baza	base	feminine	baza|bazy;bazy|baz;bazie|bazom;bazę|bazy;bazą|bazami;bazie|bazach;bazo|bazy					
+portal	portal	masculine inanimate	portal|portale;portalu|portali;portalowi|portalom;portal|portale;portalem|portalami;portalu|portalach;portalu|portale					
+procedura	procedure	feminine	procedura|procedury;procedury|procedur;procedurze|procedurom;procedurę|procedury;procedurą|procedurami;procedurze|procedurach;proceduro|procedury					
+żal	regret	masculine inanimate	żal|żale;żalu|żalów;żalowi|żalom;żal|żale;żalem|żalami;żalu|żalach;żalu|żale					
+zajęcia	classes	plural only	|zajęcia;|zajęć;|zajęciom;|zajęcia;|zajęciami;|zajęciach;|zajęcia					
+dziennik	diary	masculine inanimate	dziennik|dzienniki;dziennika|dzienników;dziennikowi|dziennikom;dziennik|dzienniki;dziennikiem|dziennikami;dzienniku|dziennikach;dzienniku|dzienniki					
+zapis	record	masculine inanimate	zapis|zapisy;zapisu|zapisów;zapisowi|zapisom;zapis|zapisy;zapisem|zapisami;zapisie|zapisach;zapisie|zapisy					
+fundacja	foundation	feminine	fundacja|fundacje;fundacji|fundacji;fundacji|fundacjom;fundację|fundacje;fundacją|fundacjami;fundacji|fundacjach;fundacjo|fundacje					
+aktywność	activity	feminine	aktywność|aktywności;aktywności|aktywności;aktywności|aktywnościom;aktywność|aktywności;aktywnością|aktywnościami;aktywności|aktywnościach;aktywności|aktywności					
+komenda	command	feminine	komenda|komendy;komendy|komend;komendzie|komendom;komendę|komendy;komendą|komendami;komendzie|komendach;komendo|komendy					
+oblicze	face	neuter	oblicze|oblicza;oblicza|oblicz;obliczu|obliczom;oblicze|oblicza;obliczem|obliczami;obliczu|obliczach;oblicze|oblicza					
+sfera	realm	feminine	sfera|sfery;sfery|sfer;sferze|sferom;sferę|sfery;sferą|sferami;sferze|sferach;sfero|sfery					
+przewodniczący	chairman	masculine personal	przewodniczący|przewodniczący;przewodniczącego|przewodniczących;przewodniczącemu|przewodniczącym;przewodniczącego|przewodniczących;przewodniczącym|przewodniczącymi;przewodniczącym|przewodniczących;przewodniczący|przewodniczący					
+rezultat	result	masculine inanimate	rezultat|rezultaty;rezultatu|rezultatów;rezultatowi|rezultatom;rezultat|rezultaty;rezultatem|rezultatami;rezultacie|rezultatach;rezultacie|rezultaty					
+solidarność	solidarity	feminine	solidarność|solidarności;solidarności|solidarności;solidarności|solidarnościom;solidarność|solidarności;solidarnością|solidarnościami;solidarności|solidarnościach;solidarności|solidarności					
+dystans	distance	masculine inanimate	dystans|dystanse;dystansu|dystansów;dystansowi|dystansom;dystans|dystanse;dystansem|dystansami;dystansie|dystansach;dystansie|dystanse					
+milczenie	silence	neuter	milczenie|milczenia;milczenia|milczeń;milczeniu|milczeniom;milczenie|milczenia;milczeniem|milczeniami;milczeniu|milczeniach;milczenie|milczenia					
+dekada	decade	feminine	dekada|dekady;dekady|dekad;dekadzie|dekadom;dekadę|dekady;dekadą|dekadami;dekadzie|dekadach;dekado|dekady					
+ucieczka	escape	feminine	ucieczka|ucieczki;ucieczki|ucieczek;ucieczce|ucieczkom;ucieczkę|ucieczki;ucieczką|ucieczkami;ucieczce|ucieczkach;ucieczko|ucieczki					
+grono	group	neuter	grono|grona;grona|gron;gronu|gronom;grono|grona;gronem|gronami;gronie|gronach;grono|grona					
+tragedia	tragedy	feminine	tragedia|tragedie;tragedii|tragedii;tragedii|tragediom;tragedię|tragedie;tragedią|tragediami;tragedii|tragediach;tragedio|tragedie					
+utrata	loss	feminine	utrata|utraty;utraty|utrat;utracie|utratom;utratę|utraty;utratą|utratami;utracie|utratach;utrato|utraty					
+opór	resistance	masculine inanimate	opór|opory;oporu|oporów;oporowi|oporom;opór|opory;oporem|oporami;oporze|oporach;oporze|opory					
+zło	evil	neuter	zło|zła;zła|zeł;złu|złom;zło|zła;złem|złami;złu|złach;zło|zła					
+organizator	organizer	masculine personal	organizator|organizatorowie;organizatora|organizatorów;organizatorowi|organizatorom;organizatora|organizatorów;organizatorem|organizatorami;organizatorze|organizatorach;organizatorze|organizatorowie					
+remont	renovation	masculine inanimate	remont|remonty;remontu|remontów;remontowi|remontom;remont|remonty;remontem|remontami;remoncie|remontach;remoncie|remonty					
+wizerunek	image	masculine inanimate	wizerunek|wizerunki;wizerunku|wizerunków;wizerunkowi|wizerunkom;wizerunek|wizerunki;wizerunkiem|wizerunkami;wizerunku|wizerunkach;wizerunku|wizerunki					
+straż	fire brigade	feminine	straż|straże;straży|straży;straży|strażom;straż|straże;strażą|strażami;straży|strażach;straży|straże					
+przełom	breakthrough	masculine inanimate	przełom|przełomy;przełomu|przełomów;przełomowi|przełomom;przełom|przełomy;przełomem|przełomami;przełomie|przełomach;przełomie|przełomy					
+ekipa	crew	feminine	ekipa|ekipy;ekipy|ekip;ekipie|ekipom;ekipę|ekipy;ekipą|ekipami;ekipie|ekipach;ekipo|ekipy					
+zbiór	set	masculine inanimate	zbiór|zbiory;zbioru|zbiorów;zbiorowi|zbiorom;zbiór|zbiory;zbiorem|zbiorami;zbiorze|zbiorach;zbiorze|zbiory					
+status	status	masculine inanimate	status|statusy;statusu|statusów;statusowi|statusom;status|statusy;statusem|statusami;statusie|statusach;statusie|statusy					
+platforma	platform	feminine	platforma|platformy;platformy|platform;platformie|platformom;platformę|platformy;platformą|platformami;platformie|platformach;platformo|platformy					
+powstanie	uprising	neuter	powstanie|powstania;powstania|powstań;powstaniu|powstaniom;powstanie|powstania;powstaniem|powstaniami;powstaniu|powstaniach;powstanie|powstania					
+przedsiębiorstwo	company	neuter	przedsiębiorstwo|przedsiębiorstwa;przedsiębiorstwa|przedsiębiorstw;przedsiębiorstwu|przedsiębiorstwom;przedsiębiorstwo|przedsiębiorstwa;przedsiębiorstwem|przedsiębiorstwami;przedsiębiorstwie|przedsiębiorstwach;przedsiębiorstwo|przedsiębiorstwa					
+czynnik	factor	masculine inanimate	czynnik|czynniki;czynnika|czynników;czynnikowi|czynnikom;czynnik|czynniki;czynnikiem|czynnikami;czynniku|czynnikach;czynniku|czynniki					
+branża	industry	feminine	branża|branże;branży|branż;branży|branżom;branżę|branże;branżą|branżami;branży|branżach;branżo|branże					
+sumienie	conscience	neuter	sumienie|sumienia;sumienia|sumień;sumieniu|sumieniom;sumienie|sumienia;sumieniem|sumieniami;sumieniu|sumieniach;sumienie|sumienia					
+publikacja	publication	feminine	publikacja|publikacje;publikacji|publikacji;publikacji|publikacjom;publikację|publikacje;publikacją|publikacjami;publikacji|publikacjach;publikacjo|publikacje					
+epoka	era	feminine	epoka|epoki;epoki|epok;epoce|epokom;epokę|epoki;epoką|epokami;epoce|epokach;epoko|epoki					
+tryb	mode	masculine inanimate	tryb|tryby;trybu|trybów;trybowi|trybom;tryb|tryby;trybem|trybami;trybie|trybach;trybie|tryby					
+agencja	agency	feminine	agencja|agencje;agencji|agencji;agencji|agencjom;agencję|agencje;agencją|agencjami;agencji|agencjach;agencjo|agencje					
+modlitwa	prayer	feminine	modlitwa|modlitwy;modlitwy|modlitw;modlitwie|modlitwom;modlitwę|modlitwy;modlitwą|modlitwami;modlitwie|modlitwach;modlitwo|modlitwy					
+standard	standard	masculine inanimate	standard|standardy;standardu|standardów;standardowi|standardom;standard|standardy;standardem|standardami;standardzie|standardach;standardzie|standardy					
+cmentarz	cemetery	masculine inanimate	cmentarz|cmentarze;cmentarza|cmentarzy;cmentarzowi|cmentarzom;cmentarz|cmentarze;cmentarzem|cmentarzami;cmentarzu|cmentarzach;cmentarzu|cmentarze					
+ograniczenie	restriction	neuter	ograniczenie|ograniczenia;ograniczenia|ograniczeń;ograniczeniu|ograniczeniom;ograniczenie|ograniczenia;ograniczeniem|ograniczeniami;ograniczeniu|ograniczeniach;ograniczenie|ograniczenia					
+spadek	drop	masculine inanimate	spadek|spadki;spadku|spadków;spadkowi|spadkom;spadek|spadki;spadkiem|spadkami;spadku|spadkach;spadku|spadki					
+konstrukcja	construction	feminine	konstrukcja|konstrukcje;konstrukcji|konstrukcji;konstrukcji|konstrukcjom;konstrukcję|konstrukcje;konstrukcją|konstrukcjami;konstrukcji|konstrukcjach;konstrukcjo|konstrukcje					
+osiedle	settlement	neuter	osiedle|osiedla;osiedla|osiedli;osiedlu|osiedlom;osiedle|osiedla;osiedlem|osiedlami;osiedlu|osiedlach;osiedle|osiedla					
+cierpienie	suffering	neuter	cierpienie|cierpienia;cierpienia|cierpień;cierpieniu|cierpieniom;cierpienie|cierpienia;cierpieniem|cierpieniami;cierpieniu|cierpieniach;cierpienie|cierpienia					
+opłata	fee	feminine	opłata|opłaty;opłaty|opłat;opłacie|opłatom;opłatę|opłaty;opłatą|opłatami;opłacie|opłatach;opłato|opłaty					
+wątek	thread	masculine inanimate	wątek|wątki;wątku|wątków;wątkowi|wątkom;wątek|wątki;wątkiem|wątkami;wątku|wątkach;wątku|wątki					
+tor	track	masculine inanimate	tor|tory;toru|torów;torowi|torom;tor|tory;torem|torami;torze|torach;torze|tory					
+administracja	administration	feminine	administracja|administracje;administracji|administracji;administracji|administracjom;administrację|administracje;administracją|administracjami;administracji|administracjach;administracjo|administracje					
+izba	ward	feminine	izba|izby;izby|izb;izbie|izbom;izbę|izby;izbą|izbami;izbie|izbach;izbo|izby					
+troska	concern	feminine	troska|troski;troski|trosk;trosce|troskom;troskę|troski;troską|troskami;trosce|troskach;trosko|troski					
+prasa	press	feminine	prasa|prasy;prasy|pras;prasie|prasom;prasę|prasy;prasą|prasami;prasie|prasach;praso|prasy					
+liga	league	feminine	liga|ligi;ligi|lig;lidze|ligom;ligę|ligi;ligą|ligami;lidze|ligach;ligo|ligi					
+wydanie	edition	neuter	wydanie|wydania;wydania|wydań;wydaniu|wydaniom;wydanie|wydania;wydaniem|wydaniami;wydaniu|wydaniach;wydanie|wydania					
+sprawca	perpetrator	masculine personal	sprawca|sprawcy;sprawcy|sprawców;sprawcy|sprawcom;sprawcę|sprawców;sprawcą|sprawcami;sprawcy|sprawcach;sprawco|sprawcy					
+oficer	officer	masculine personal	oficer|oficerowie;oficera|oficerów;oficerowi|oficerom;oficera|oficerów;oficerem|oficerami;oficerze|oficerach;oficerze|oficerowie					
+krytyka	criticism	feminine	krytyka|krytyki;krytyki|krytyk;krytyce|krytykom;krytykę|krytyki;krytyką|krytykami;krytyce|krytykach;krytyko|krytyki					
+pałac	palace	masculine inanimate	pałac|pałace;pałacu|pałaców;pałacowi|pałacom;pałac|pałace;pałacem|pałacami;pałacu|pałacach;pałacu|pałace					
+technika	technique	feminine	technika|techniki;techniki|technik;technice|technikom;technikę|techniki;techniką|technikami;technice|technikach;techniko|techniki					
+cykl	cycle	masculine inanimate	cykl|cykle;cyklu|cykli;cyklowi|cyklom;cykl|cykle;cyklem|cyklami;cyklu|cyklach;cyklu|cykle					
+działacz	activist	masculine personal	działacz|działacze;działacza|działaczy;działaczowi|działaczom;działacza|działaczy;działaczem|działaczami;działaczu|działaczach;działaczu|działacze					
+barwa	colour	feminine	barwa|barwy;barwy|barw;barwie|barwom;barwę|barwy;barwą|barwami;barwie|barwach;barwo|barwy					
+uroczystość	ceremony	feminine	uroczystość|uroczystości;uroczystości|uroczystości;uroczystości|uroczystościom;uroczystość|uroczystości;uroczystością|uroczystościami;uroczystości|uroczystościach;uroczystości|uroczystości					
+interpretacja	interpretation	feminine	interpretacja|interpretacje;interpretacji|interpretacji;interpretacji|interpretacjom;interpretację|interpretacje;interpretacją|interpretacjami;interpretacji|interpretacjach;interpretacjo|interpretacje					
+uczelnia	university	feminine	uczelnia|uczelnie;uczelni|uczelni;uczelni|uczelniom;uczelnię|uczelnie;uczelnią|uczelniami;uczelni|uczelniach;uczelnio|uczelnie					
+przeszkoda	obstacle	feminine	przeszkoda|przeszkody;przeszkody|przeszkód;przeszkodzie|przeszkodom;przeszkodę|przeszkody;przeszkodą|przeszkodami;przeszkodzie|przeszkodach;przeszkodo|przeszkody					
+pragnienie	thirst	neuter	pragnienie|pragnienia;pragnienia|pragnień;pragnieniu|pragnieniom;pragnienie|pragnienia;pragnieniem|pragnieniami;pragnieniu|pragnieniach;pragnienie|pragnienia					
+pochodzenie	origin	neuter	pochodzenie|pochodzenia;pochodzenia|pochodzeń;pochodzeniu|pochodzeniom;pochodzenie|pochodzenia;pochodzeniem|pochodzeniami;pochodzeniu|pochodzeniach;pochodzenie|pochodzenia					
+komitet	committee	masculine inanimate	komitet|komitety;komitetu|komitetów;komitetowi|komitetom;komitet|komitety;komitetem|komitetami;komitecie|komitetach;komitecie|komitety					
+msza	mass	feminine	msza|msze;mszy|mszy;mszy|mszom;mszę|msze;mszą|mszami;mszy|mszach;mszo|msze					
+krąg	ring	masculine inanimate	krąg|kręgi;kręgu|kręgów;kręgowi|kręgom;krąg|kręgi;kręgiem|kręgami;kręgu|kręgach;kręgu|kręgi					
+nieruchomość	property	feminine	nieruchomość|nieruchomości;nieruchomości|nieruchomości;nieruchomości|nieruchomościom;nieruchomość|nieruchomości;nieruchomością|nieruchomościami;nieruchomości|nieruchomościach;nieruchomości|nieruchomości					
+redakcja	editorial office	feminine	redakcja|redakcje;redakcji|redakcji;redakcji|redakcjom;redakcję|redakcje;redakcją|redakcjami;redakcji|redakcjach;redakcjo|redakcje					
+zwolennik	supporter	masculine personal	zwolennik|zwolennicy;zwolennika|zwolenników;zwolennikowi|zwolennikom;zwolennika|zwolenników;zwolennikiem|zwolennikami;zwolenniku|zwolennikach;zwolenniku|zwolennicy					
+mina	face	feminine	mina|miny;miny|min;minie|minom;minę|miny;miną|minami;minie|minach;mino|miny					
+finał	final	masculine inanimate	finał|finały;finału|finałów;finałowi|finałom;finał|finały;finałem|finałami;finale|finałach;finale|finały					
+reforma	reform	feminine	reforma|reformy;reformy|reform;reformie|reformom;reformę|reformy;reformą|reformami;reformie|reformach;reformo|reformy					
+dno	bottom	neuter	dno|dna;dna|den;dnu|dnom;dno|dna;dnem|dnami;dnie|dnach;dno|dna					
+odmiana	change	feminine	odmiana|odmiany;odmiany|odmian;odmianie|odmianom;odmianę|odmiany;odmianą|odmianami;odmianie|odmianach;odmiano|odmiany					
+wyprawa	expedition	feminine	wyprawa|wyprawy;wyprawy|wypraw;wyprawie|wyprawom;wyprawę|wyprawy;wyprawą|wyprawami;wyprawie|wyprawach;wyprawo|wyprawy					
+zrozumienie	understanding	neuter	zrozumienie|zrozumienia;zrozumienia|zrozumień;zrozumieniu|zrozumieniom;zrozumienie|zrozumienia;zrozumieniem|zrozumieniami;zrozumieniu|zrozumieniach;zrozumienie|zrozumienia					
+stawka	hourly pay	feminine	stawka|stawki;stawki|stawek;stawce|stawkom;stawkę|stawki;stawką|stawkami;stawce|stawkach;stawko|stawki					
+rejon	area	masculine inanimate	rejon|rejony;rejonu|rejonów;rejonowi|rejonom;rejon|rejony;rejonem|rejonami;rejonie|rejonach;rejonie|rejony					
+twórczość	creativity	feminine	twórczość|twórczości;twórczości|twórczości;twórczości|twórczościom;twórczość|twórczości;twórczością|twórczościami;twórczości|twórczościach;twórczości|twórczości					
+występ	performance	masculine inanimate	występ|występy;występu|występów;występowi|występom;występ|występy;występem|występami;występie|występach;występie|występy					
+plus	plus	masculine inanimate	plus|plusy;plusa|plusów;plusowi|plusom;plus|plusy;plusem|plusami;plusie|plusach;plusie|plusy					
+ciąża	pregnancy	feminine	ciąża|ciąże;ciąży|ciąż;ciąży|ciążom;ciążę|ciąże;ciążą|ciążami;ciąży|ciążach;ciążo|ciąże					
+galeria	mall	feminine	galeria|galerie;galerii|galerii;galerii|galeriom;galerię|galerie;galerią|galeriami;galerii|galeriach;galerio|galerie					
+deklaracja	declaration	feminine	deklaracja|deklaracje;deklaracji|deklaracji;deklaracji|deklaracjom;deklarację|deklaracje;deklaracją|deklaracjami;deklaracji|deklaracjach;deklaracjo|deklaracje					
+motyw	theme	masculine inanimate	motyw|motywy;motywu|motywów;motywowi|motywom;motyw|motywy;motywem|motywami;motywie|motywach;motywie|motywy					
+wynagrodzenie	salary	neuter	wynagrodzenie|wynagrodzenia;wynagrodzenia|wynagrodzeń;wynagrodzeniu|wynagrodzeniom;wynagrodzenie|wynagrodzenia;wynagrodzeniem|wynagrodzeniami;wynagrodzeniu|wynagrodzeniach;wynagrodzenie|wynagrodzenia					
+przygotowanie	preparation	neuter	przygotowanie|przygotowania;przygotowania|przygotowań;przygotowaniu|przygotowaniom;przygotowanie|przygotowania;przygotowaniem|przygotowaniami;przygotowaniu|przygotowaniach;przygotowanie|przygotowania					
+określenie	term	neuter	określenie|określenia;określenia|określeń;określeniu|określeniom;określenie|określenia;określeniem|określeniami;określeniu|określeniach;określenie|określenia					
+przejście	passage	neuter	przejście|przejścia;przejścia|przejść;przejściu|przejściom;przejście|przejścia;przejściem|przejściami;przejściu|przejściach;przejście|przejścia					
+księga	book	feminine	księga|księgi;księgi|ksiąg;księdze|księgom;księgę|księgi;księgą|księgami;księdze|księgach;księgo|księgi					
+interwencja	intervention	feminine	interwencja|interwencje;interwencji|interwencji;interwencji|interwencjom;interwencję|interwencje;interwencją|interwencjami;interwencji|interwencjach;interwencjo|interwencje					
+poparcie	support	neuter	poparcie|poparcia;poparcia|poparć;poparciu|poparciom;poparcie|poparcia;poparciem|poparciami;poparciu|poparciach;poparcie|poparcia					
+akademia	academy	feminine	akademia|akademie;akademii|akademii;akademii|akademiom;akademię|akademie;akademią|akademiami;akademii|akademiach;akademio|akademie					
+pracodawca	employer	masculine personal	pracodawca|pracodawcy;pracodawcy|pracodawców;pracodawcy|pracodawcom;pracodawcę|pracodawców;pracodawcą|pracodawcami;pracodawcy|pracodawcach;pracodawco|pracodawcy					
+debata	debate	feminine	debata|debaty;debaty|debat;debacie|debatom;debatę|debaty;debatą|debatami;debacie|debatach;debato|debaty					
+dialog	dialogue	masculine inanimate	dialog|dialogi;dialogu|dialogów;dialogowi|dialogom;dialog|dialogi;dialogiem|dialogami;dialogu|dialogach;dialogu|dialogi					
+papież	pope	masculine personal	papież|papieże;papieża|papieży;papieżowi|papieżom;papieża|papieży;papieżem|papieżami;papieżu|papieżach;papieżu|papieże					
+potencjał	potential	masculine inanimate	potencjał|potencjały;potencjału|potencjałów;potencjałowi|potencjałom;potencjał|potencjały;potencjałem|potencjałami;potencjale|potencjałach;potencjale|potencjały					
+poprawa	improvement	feminine	poprawa|poprawy;poprawy|popraw;poprawie|poprawom;poprawę|poprawy;poprawą|poprawami;poprawie|poprawach;poprawo|poprawy					
+infrastruktura	infrastructure	feminine	infrastruktura|infrastruktury;infrastruktury|infrastruktur;infrastrukturze|infrastrukturom;infrastrukturę|infrastruktury;infrastrukturą|infrastrukturami;infrastrukturze|infrastrukturach;infrastrukturo|infrastruktury					
+zaangażowanie	commitment	neuter	zaangażowanie|zaangażowania;zaangażowania|zaangażowań;zaangażowaniu|zaangażowaniom;zaangażowanie|zaangażowania;zaangażowaniem|zaangażowaniami;zaangażowaniu|zaangażowaniach;zaangażowanie|zaangażowania					
+przebieg	course	masculine inanimate	przebieg|przebiegi;przebiegu|przebiegów;przebiegowi|przebiegom;przebieg|przebiegi;przebiegiem|przebiegami;przebiegu|przebiegach;przebiegu|przebiegi					
+dzieje	history	plural only	|dzieje;|dziejów;|dziejom;|dzieje;|dziejami;|dziejach;|dzieje					
+parlament	parliament	masculine inanimate	parlament|parlamenty;parlamentu|parlamentów;parlamentowi|parlamentom;parlament|parlamenty;parlamentem|parlamentami;parlamencie|parlamentach;parlamencie|parlamenty					
+legenda	legend	feminine	legenda|legendy;legendy|legend;legendzie|legendom;legendę|legendy;legendą|legendami;legendzie|legendach;legendo|legendy					
+elita	elite	feminine	elita|elity;elity|elit;elicie|elitom;elitę|elity;elitą|elitami;elicie|elitach;elito|elity					
+oparcie	support	neuter	oparcie|oparcia;oparcia|oparć;oparciu|oparciom;oparcie|oparcia;oparciem|oparciami;oparciu|oparciach;oparcie|oparcia					
+odniesienie	reference	neuter	odniesienie|odniesienia;odniesienia|odniesień;odniesieniu|odniesieniom;odniesienie|odniesienia;odniesieniem|odniesieniami;odniesieniu|odniesieniach;odniesienie|odniesienia					
+zasługa	merit	feminine	zasługa|zasługi;zasługi|zasług;zasłudze|zasługom;zasługę|zasługi;zasługą|zasługami;zasłudze|zasługach;zasługo|zasługi					
+gospodarstwo	farm	neuter	gospodarstwo|gospodarstwa;gospodarstwa|gospodarstw;gospodarstwu|gospodarstwom;gospodarstwo|gospodarstwa;gospodarstwem|gospodarstwami;gospodarstwie|gospodarstwach;gospodarstwo|gospodarstwa					
+sektor	sector	masculine inanimate	sektor|sektory;sektora|sektorów;sektorowi|sektorom;sektor|sektory;sektorem|sektorami;sektorze|sektorach;sektorze|sektory					
+nacisk	emphasis	masculine inanimate	nacisk|naciski;nacisku|nacisków;naciskowi|naciskom;nacisk|naciski;naciskiem|naciskami;nacisku|naciskach;nacisku|naciski					
+komunikat	announcement	masculine inanimate	komunikat|komunikaty;komunikatu|komunikatów;komunikatowi|komunikatom;komunikat|komunikaty;komunikatem|komunikatami;komunikacie|komunikatach;komunikacie|komunikaty					
+deska	board	feminine	deska|deski;deski|desek;desce|deskom;deskę|deski;deską|deskami;desce|deskach;desko|deski					
+istnienie	existence	neuter	istnienie|istnienia;istnienia|istnień;istnieniu|istnieniom;istnienie|istnienia;istnieniem|istnieniami;istnieniu|istnieniach;istnienie|istnienia					
+zestaw	set	masculine inanimate	zestaw|zestawy;zestawu|zestawów;zestawowi|zestawom;zestaw|zestawy;zestawem|zestawami;zestawie|zestawach;zestawie|zestawy					
+spektakl	show	masculine inanimate	spektakl|spektakle;spektaklu|spektakli;spektaklowi|spektaklom;spektakl|spektakle;spektaklem|spektaklami;spektaklu|spektaklach;spektaklu|spektakle					
+inwestor	investor	masculine personal	inwestor|inwestorzy;inwestora|inwestorów;inwestorowi|inwestorom;inwestora|inwestorów;inwestorem|inwestorami;inwestorze|inwestorach;inwestorze|inwestorzy					
+niechęć	reluctance	feminine	niechęć|niechęci;niechęci|niechęci;niechęci|niechęciom;niechęć|niechęci;niechęcią|niechęciami;niechęci|niechęciach;niechęci|niechęci					
+robotnik	worker	masculine personal	robotnik|robotnicy;robotnika|robotników;robotnikowi|robotnikom;robotnika|robotników;robotnikiem|robotnikami;robotniku|robotnikach;robotniku|robotnicy					
+intencja	intention	feminine	intencja|intencje;intencji|intencji;intencji|intencjom;intencję|intencje;intencją|intencjami;intencji|intencjach;intencjo|intencje					
+refleksja	reflection	feminine	refleksja|refleksje;refleksji|refleksji;refleksji|refleksjom;refleksję|refleksje;refleksją|refleksjami;refleksji|refleksjach;refleksjo|refleksje					
+wyjaśnienie	explanation	neuter	wyjaśnienie|wyjaśnienia;wyjaśnienia|wyjaśnień;wyjaśnieniu|wyjaśnieniom;wyjaśnienie|wyjaśnienia;wyjaśnieniem|wyjaśnieniami;wyjaśnieniu|wyjaśnieniach;wyjaśnienie|wyjaśnienia					
+przewaga	advantage	feminine	przewaga|przewagi;przewagi|przewag;przewadze|przewagom;przewagę|przewagi;przewagą|przewagami;przewadze|przewagach;przewago|przewagi					
+resztka	leftovers	feminine	resztka|resztki;resztki|resztek;resztce|resztkom;resztkę|resztki;resztką|resztkami;resztce|resztkach;resztko|resztki					
+zajęcie	occupation	neuter	zajęcie|zajęcia;zajęcia|zajęć;zajęciu|zajęciom;zajęcie|zajęcia;zajęciem|zajęciami;zajęciu|zajęciach;zajęcie|zajęcia					
+przemiana	transformation	feminine	przemiana|przemiany;przemiany|przemian;przemianie|przemianom;przemianę|przemiany;przemianą|przemianami;przemianie|przemianach;przemiano|przemiany					
+podejrzenie	suspicion	neuter	podejrzenie|podejrzenia;podejrzenia|podejrzeń;podejrzeniu|podejrzeniom;podejrzenie|podejrzenia;podejrzeniem|podejrzeniami;podejrzeniu|podejrzeniach;podejrzenie|podejrzenia					
+obserwacja	observation	feminine	obserwacja|obserwacje;obserwacji|obserwacji;obserwacji|obserwacjom;obserwację|obserwacje;obserwacją|obserwacjami;obserwacji|obserwacjach;obserwacjo|obserwacje					
+niepodległość	independence	feminine	niepodległość|niepodległości;niepodległości|niepodległości;niepodległości|niepodległościom;niepodległość|niepodległości;niepodległością|niepodległościami;niepodległości|niepodległościach;niepodległości|niepodległości					
+stosunki	relations	plural only	|stosunki;|stosunków;|stosunkom;|stosunki;|stosunkami;|stosunkach;|stosunki					
+faza	phase	feminine	faza|fazy;fazy|faz;fazie|fazom;fazę|fazy;fazą|fazami;fazie|fazach;fazo|fazy					
+front	front	masculine inanimate	front|fronty;frontu|frontów;frontowi|frontom;front|fronty;frontem|frontami;froncie|frontach;froncie|fronty					
+oświadczenie	statement	neuter	oświadczenie|oświadczenia;oświadczenia|oświadczeń;oświadczeniu|oświadczeniom;oświadczenie|oświadczenia;oświadczeniem|oświadczeniami;oświadczeniu|oświadczeniach;oświadczenie|oświadczenia					
+biskup	bishop	masculine personal	biskup|biskupi;biskupa|biskupów;biskupowi|biskupom;biskupa|biskupów;biskupem|biskupami;biskupie|biskupach;biskupie|biskupi					
+dar	gift	masculine inanimate	dar|dary;daru|darów;darowi|darom;dar|dary;darem|darami;darze|darach;darze|dary					
+kapitał	capital	masculine inanimate	kapitał|kapitały;kapitału|kapitałów;kapitałowi|kapitałom;kapitał|kapitały;kapitałem|kapitałami;kapitale|kapitałach;kapitale|kapitały					
+przekaz	message	masculine inanimate	przekaz|przekazy;przekazu|przekazów;przekazowi|przekazom;przekaz|przekazy;przekazem|przekazami;przekazie|przekazach;przekazie|przekazy					
+hala	hall	feminine	hala|hale;hali|hal;hali|halom;halę|hale;halą|halami;hali|halach;halo|hale					
+edycja	edition	feminine	edycja|edycje;edycji|edycji;edycji|edycjom;edycję|edycje;edycją|edycjami;edycji|edycjach;edycjo|edycje					
+uznanie	recognition	neuter	uznanie|uznania;uznania|uznań;uznaniu|uznaniom;uznanie|uznania;uznaniem|uznaniami;uznaniu|uznaniach;uznanie|uznania					
+satysfakcja	satisfaction	feminine	satysfakcja|satysfakcje;satysfakcji|satysfakcji;satysfakcji|satysfakcjom;satysfakcję|satysfakcje;satysfakcją|satysfakcjami;satysfakcji|satysfakcjach;satysfakcjo|satysfakcje					
+nadzór	supervision	masculine inanimate	nadzór|nadzory;nadzoru|nadzorów;nadzorowi|nadzorom;nadzór|nadzory;nadzorem|nadzorami;nadzorze|nadzorach;nadzorze|nadzory					
+działka	plot	feminine	działka|działki;działki|działek;działce|działkom;działkę|działki;działką|działkami;działce|działkach;działko|działki					
+życzenie	wish	neuter	życzenie|życzenia;życzenia|życzeń;życzeniu|życzeniom;życzenie|życzenia;życzeniem|życzeniami;życzeniu|życzeniach;życzenie|życzenia					
+pokaz	show	masculine inanimate	pokaz|pokazy;pokazu|pokazów;pokazowi|pokazom;pokaz|pokazy;pokazem|pokazami;pokazie|pokazach;pokazie|pokazy					
+historyk	historian	masculine personal	historyk|historycy;historyka|historyków;historykowi|historykom;historyka|historyków;historykiem|historykami;historyku|historykach;historyku|historycy					
+profil	profile	masculine inanimate	profil|profile;profilu|profili;profilowi|profilom;profil|profile;profilem|profilami;profilu|profilach;profilu|profile					
+współpracownik	coworker	masculine personal	współpracownik|współpracownicy;współpracownika|współpracowników;współpracownikowi|współpracownikom;współpracownika|współpracowników;współpracownikiem|współpracownikami;współpracowniku|współpracownikach;współpracowniku|współpracownicy					
+płeć	gender	feminine	płeć|płcie;płci|płci;płci|płciom;płeć|płcie;płcią|płciami;płci|płciach;płci|płcie					
+kodeks	code	masculine inanimate	kodeks|kodeksy;kodeksu|kodeksów;kodeksowi|kodeksom;kodeks|kodeksy;kodeksem|kodeksami;kodeksie|kodeksach;kodeksie|kodeksy					
+wykonawca	performer	masculine personal	wykonawca|wykonawcy;wykonawcy|wykonawców;wykonawcy|wykonawcom;wykonawcę|wykonawców;wykonawcą|wykonawcami;wykonawcy|wykonawcach;wykonawco|wykonawcy					
+poszukiwanie	search	neuter	poszukiwanie|poszukiwania;poszukiwania|poszukiwań;poszukiwaniu|poszukiwaniom;poszukiwanie|poszukiwania;poszukiwaniem|poszukiwaniami;poszukiwaniu|poszukiwaniach;poszukiwanie|poszukiwania					
+kolejność	order	feminine	kolejność|kolejności;kolejności|kolejności;kolejności|kolejnościom;kolejność|kolejności;kolejnością|kolejnościami;kolejności|kolejnościach;kolejności|kolejności					
+zasób	resource	masculine inanimate	zasób|zasoby;zasobu|zasobów;zasobowi|zasobom;zasób|zasoby;zasobem|zasobami;zasobie|zasobach;zasobie|zasoby					
+złoto	gold	neuter	złoto|złota;złota|złot;złotu|złotom;złoto|złota;złotem|złotami;złocie|złotach;złoto|złota					
+regulacja	regulation	feminine	regulacja|regulacje;regulacji|regulacji;regulacji|regulacjom;regulację|regulacje;regulacją|regulacjami;regulacji|regulacjach;regulacjo|regulacje					
+dziesiątek	dozens	masculine inanimate	dziesiątek|dziesiątki;dziesiątka|dziesiątków;dziesiątkowi|dziesiątkom;dziesiątek|dziesiątki;dziesiątkiem|dziesiątkami;dziesiątku|dziesiątkach;dziesiątku|dziesiątki					
+strzał	shot	masculine inanimate	strzał|strzały;strzału|strzałów;strzałowi|strzałom;strzał|strzały;strzałem|strzałami;strzale|strzałach;strzale|strzały					
+zastępca	deputy	masculine personal	zastępca|zastępcy;zastępcy|zastępców;zastępcy|zastępcom;zastępcę|zastępców;zastępcą|zastępcami;zastępcy|zastępcach;zastępco|zastępcy					
+uzasadnienie	justification	neuter	uzasadnienie|uzasadnienia;uzasadnienia|uzasadnień;uzasadnieniu|uzasadnieniom;uzasadnienie|uzasadnienia;uzasadnieniem|uzasadnieniami;uzasadnieniu|uzasadnieniach;uzasadnienie|uzasadnienia					
+marsz	march	masculine inanimate	marsz|marsze;marsza|marszy;marszowi|marszom;marsz|marsze;marszem|marszami;marszu|marszach;marszu|marsze					
+kadra	staff	feminine	kadra|kadry;kadry|kadr;kadrze|kadrom;kadrę|kadry;kadrą|kadrami;kadrze|kadrach;kadro|kadry					
+zamach	attack	masculine inanimate	zamach|zamachy;zamachu|zamachów;zamachowi|zamachom;zamach|zamachy;zamachem|zamachami;zamachu|zamachach;zamachu|zamachy					
+zakończenie	ending	neuter	zakończenie|zakończenia;zakończenia|zakończeń;zakończeniu|zakończeniom;zakończenie|zakończenia;zakończeniem|zakończeniami;zakończeniu|zakończeniach;zakończenie|zakończenia					
+szkolenie	training	neuter	szkolenie|szkolenia;szkolenia|szkoleń;szkoleniu|szkoleniom;szkolenie|szkolenia;szkoleniem|szkoleniami;szkoleniu|szkoleniach;szkolenie|szkolenia					
+polecenie	instruction	neuter	polecenie|polecenia;polecenia|poleceń;poleceniu|poleceniom;polecenie|polecenia;poleceniem|poleceniami;poleceniu|poleceniach;polecenie|polecenia					
+serial	tv series	masculine inanimate	serial|seriale;serialu|seriali;serialowi|serialom;serial|seriale;serialem|serialami;serialu|serialach;serialu|seriale					
+sekretarz	secretary	feminine	sekretarz|sekretarz;sekretarz|sekretarz;sekretarz|sekretarz;sekretarz|sekretarz;sekretarz|sekretarz;sekretarz|sekretarz;sekretarz|sekretarz					
+odbiorca	recipient	masculine personal	odbiorca|odbiorcy;odbiorcy|odbiorców;odbiorcy|odbiorcom;odbiorcę|odbiorców;odbiorcą|odbiorcami;odbiorcy|odbiorcach;odbiorco|odbiorcy					
+pośrednictwo	mediation	neuter	pośrednictwo|pośrednictwa;pośrednictwa|pośrednictw;pośrednictwu|pośrednictwom;pośrednictwo|pośrednictwa;pośrednictwem|pośrednictwami;pośrednictwie|pośrednictwach;pośrednictwo|pośrednictwa					
+likwidacja	liquidation	feminine	likwidacja|likwidacje;likwidacji|likwidacji;likwidacji|likwidacjom;likwidację|likwidacje;likwidacją|likwidacjami;likwidacji|likwidacjach;likwidacjo|likwidacje					
+marszałek	marshal	masculine personal	marszałek|marszałkowie;marszałka|marszałków;marszałkowi|marszałkom;marszałka|marszałków;marszałkiem|marszałkami;marszałku|marszałkach;marszałku|marszałkowie					
+redaktor	editor	masculine personal	redaktor|redaktorzy;redaktora|redaktorów;redaktorowi|redaktorom;redaktora|redaktorów;redaktorem|redaktorami;redaktorze|redaktorach;redaktorze|redaktorzy					
+sylwetka	figure	feminine	sylwetka|sylwetki;sylwetki|sylwetek;sylwetce|sylwetkom;sylwetkę|sylwetki;sylwetką|sylwetkami;sylwetce|sylwetkach;sylwetko|sylwetki					
+generał	general	masculine personal	generał|generałowie;generała|generałów;generałowi|generałom;generała|generałów;generałem|generałami;generale|generałach;generale|generałowie					
+tygodnik	weekly	masculine inanimate	tygodnik|tygodniki;tygodnika|tygodników;tygodnikowi|tygodnikom;tygodnik|tygodniki;tygodnikiem|tygodnikami;tygodniku|tygodnikach;tygodniku|tygodniki					
+zawartość	contents	feminine	zawartość|zawartości;zawartości|zawartości;zawartości|zawartościom;zawartość|zawartości;zawartością|zawartościami;zawartości|zawartościach;zawartości|zawartości					
+terytorium	territory	neuter	terytorium|terytoria;terytorium|terytoriów;terytorium|terytoriom;terytorium|terytoria;terytorium|terytoriami;terytorium|terytoriach;terytorium|terytoria					
+towarzysz	companion	masculine personal	towarzysz|towarzysze;towarzysza|towarzyszy;towarzyszowi|towarzyszom;towarzysza|towarzyszy;towarzyszem|towarzyszami;towarzyszu|towarzyszach;towarzyszu|towarzysze					
+terapia	therapy	feminine	terapia|terapie;terapii|terapii;terapii|terapiom;terapię|terapie;terapią|terapiami;terapii|terapiach;terapio|terapie					
+autorytet	authority	masculine inanimate	autorytet|autorytety;autorytetu|autorytetów;autorytetowi|autorytetom;autorytet|autorytety;autorytetem|autorytetami;autorytecie|autorytetach;autorytecie|autorytety					
+cywilizacja	civilization	feminine	cywilizacja|cywilizacje;cywilizacji|cywilizacji;cywilizacji|cywilizacjom;cywilizację|cywilizacje;cywilizacją|cywilizacjami;cywilizacji|cywilizacjach;cywilizacjo|cywilizacje					
+mit	myth	masculine inanimate	mit|mity;mitu|mitów;mitowi|mitom;mit|mity;mitem|mitami;micie|mitach;micie|mity					
+rozgrywka	match	feminine	rozgrywka|rozgrywki;rozgrywki|rozgrywek;rozgrywce|rozgrywkom;rozgrywkę|rozgrywki;rozgrywką|rozgrywkami;rozgrywce|rozgrywkach;rozgrywko|rozgrywki					
+zatrudnienie	employment	neuter	zatrudnienie|zatrudnienia;zatrudnienia|zatrudnień;zatrudnieniu|zatrudnieniom;zatrudnienie|zatrudnienia;zatrudnieniem|zatrudnieniami;zatrudnieniu|zatrudnieniach;zatrudnienie|zatrudnienia					
+swoboda	freedom	feminine	swoboda|swobody;swobody|swobód;swobodzie|swobodom;swobodę|swobody;swobodą|swobodami;swobodzie|swobodach;swobodo|swobody					
+godność	dignity	feminine	godność|godności;godności|godności;godności|godnościom;godność|godności;godnością|godnościami;godności|godnościach;godności|godności					
+cios	blow	masculine inanimate	cios|ciosy;ciosu|ciosów;ciosowi|ciosom;cios|ciosy;ciosem|ciosami;ciosie|ciosach;ciosie|ciosy					
+wykształcenie	education	neuter	wykształcenie|wykształcenia;wykształcenia|wykształceń;wykształceniu|wykształceniom;wykształcenie|wykształcenia;wykształceniem|wykształceniami;wykształceniu|wykształceniach;wykształcenie|wykształcenia					
+nurt	current	masculine inanimate	nurt|nurty;nurtu|nurtów;nurtowi|nurtom;nurt|nurty;nurtem|nurtami;nurcie|nurtach;nurcie|nurty					
+areszt	custody	masculine inanimate	areszt|areszty;aresztu|aresztów;aresztowi|aresztom;areszt|areszty;aresztem|aresztami;areszcie|aresztach;areszcie|areszty					
+zlecenie	order	neuter	zlecenie|zlecenia;zlecenia|zleceń;zleceniu|zleceniom;zlecenie|zlecenia;zleceniem|zleceniami;zleceniu|zleceniach;zlecenie|zlecenia					
+pustka	emptiness	feminine	pustka|pustki;pustki|pustek;pustce|pustkom;pustkę|pustki;pustką|pustkami;pustce|pustkach;pustko|pustki					
+dyspozycja	disposal	feminine	dyspozycja|dyspozycje;dyspozycji|dyspozycji;dyspozycji|dyspozycjom;dyspozycję|dyspozycje;dyspozycją|dyspozycjami;dyspozycji|dyspozycjach;dyspozycjo|dyspozycje					
+pieśń	song	feminine	pieśń|pieśni;pieśni|pieśni;pieśni|pieśniom;pieśń|pieśni;pieśnią|pieśniami;pieśni|pieśniach;pieśni|pieśni					
+rezygnacja	resignation	feminine	rezygnacja|rezygnacje;rezygnacji|rezygnacji;rezygnacji|rezygnacjom;rezygnację|rezygnacje;rezygnacją|rezygnacjami;rezygnacji|rezygnacjach;rezygnacjo|rezygnacje					
+narracja	narration	feminine	narracja|narracje;narracji|narracji;narracji|narracjom;narrację|narracje;narracją|narracjami;narracji|narracjach;narracjo|narracje					
+posiedzenie	session	neuter	posiedzenie|posiedzenia;posiedzenia|posiedzeń;posiedzeniu|posiedzeniom;posiedzenie|posiedzenia;posiedzeniem|posiedzeniami;posiedzeniu|posiedzeniach;posiedzenie|posiedzenia					
+świadczenie	benefit	neuter	świadczenie|świadczenia;świadczenia|świadczeń;świadczeniu|świadczeniom;świadczenie|świadczenia;świadczeniem|świadczeniami;świadczeniu|świadczeniach;świadczenie|świadczenia					
+figura	figure	feminine	figura|figury;figury|figur;figurze|figurom;figurę|figury;figurą|figurami;figurze|figurach;figuro|figury					
+dwójka	two	feminine	dwójka|dwójki;dwójki|dwójek;dwójce|dwójkom;dwójkę|dwójki;dwójką|dwójkami;dwójce|dwójkach;dwójko|dwójki					
+kancelaria	office	feminine	kancelaria|kancelarie;kancelarii|kancelarii;kancelarii|kancelariom;kancelarię|kancelarie;kancelarią|kancelariami;kancelarii|kancelariach;kancelario|kancelarie					
+postanowienie	resolution	neuter	postanowienie|postanowienia;postanowienia|postanowień;postanowieniu|postanowieniom;postanowienie|postanowienia;postanowieniem|postanowieniami;postanowieniu|postanowieniach;postanowienie|postanowienia					
+kółko	circle	neuter	kółko|kółka;kółka|kółek;kółku|kółkom;kółko|kółka;kółkiem|kółkami;kółku|kółkach;kółko|kółka					
+oskarżenie	accusation	neuter	oskarżenie|oskarżenia;oskarżenia|oskarżeń;oskarżeniu|oskarżeniom;oskarżenie|oskarżenia;oskarżeniem|oskarżeniami;oskarżeniu|oskarżeniach;oskarżenie|oskarżenia					
+więź	bond	feminine	więź|więzi;więzi|więzi;więzi|więziom;więź|więzi;więzią|więziami;więzi|więziach;więzi|więzi					
+klęska	disaster	feminine	klęska|klęski;klęski|klęsk;klęsce|klęskom;klęskę|klęski;klęską|klęskami;klęsce|klęskach;klęsko|klęski					
+szczególność	particularity	feminine	szczególność|szczególności;szczególności|szczególności;szczególności|szczególnościom;szczególność|szczególności;szczególnością|szczególnościami;szczególności|szczególnościach;szczególności|szczególności					
+zwłoki	corpse	plural only	|zwłoki;|zwłok;|zwłokom;|zwłoki;|zwłokami;|zwłokach;|zwłoki					
+zapowiedź	forecast	feminine	zapowiedź|zapowiedzi;zapowiedzi|zapowiedzi;zapowiedzi|zapowiedziom;zapowiedź|zapowiedzi;zapowiedzią|zapowiedziami;zapowiedzi|zapowiedziach;zapowiedzi|zapowiedzi					
+dane	data	plural only	|dane;|danych;|danym;|dane;|danymi;|danych;|dane					
+piekło	hell	neuter	piekło|piekła;piekła|piekieł;piekłu|piekłom;piekło|piekła;piekłem|piekłami;piekle|piekłach;piekło|piekła					
+reprezentacja	representation	feminine	reprezentacja|reprezentacje;reprezentacji|reprezentacji;reprezentacji|reprezentacjom;reprezentację|reprezentacje;reprezentacją|reprezentacjami;reprezentacji|reprezentacjach;reprezentacjo|reprezentacje					
+strażnik	guard	masculine personal	strażnik|strażnicy;strażnika|strażników;strażnikowi|strażnikom;strażnika|strażników;strażnikiem|strażnikami;strażniku|strażnikach;strażniku|strażnicy					
+badacz	researcher	masculine personal	badacz|badacze;badacza|badaczy;badaczowi|badaczom;badacza|badaczy;badaczem|badaczami;badaczu|badaczach;badaczu|badacze					
+leczenie	treatment	neuter	leczenie|leczenia;leczenia|leczeń;leczeniu|leczeniom;leczenie|leczenia;leczeniem|leczeniami;leczeniu|leczeniach;leczenie|leczenia					
+czynienie	making	neuter	czynienie|czynienia;czynienia|czynień;czynieniu|czynieniom;czynienie|czynienia;czynieniem|czynieniami;czynieniu|czynieniach;czynienie|czynienia					
+uderzenie	impact	neuter	uderzenie|uderzenia;uderzenia|uderzeń;uderzeniu|uderzeniom;uderzenie|uderzenia;uderzeniem|uderzeniami;uderzeniu|uderzeniach;uderzenie|uderzenia					
+kadencja	cadence	feminine	kadencja|kadencje;kadencji|kadencji;kadencji|kadencjom;kadencję|kadencje;kadencją|kadencjami;kadencji|kadencjach;kadencjo|kadencje					
+osiągnięcie	achievement	neuter	osiągnięcie|osiągnięcia;osiągnięcia|osiągnięć;osiągnięciu|osiągnięciom;osiągnięcie|osiągnięcia;osiągnięciem|osiągnięciami;osiągnięciu|osiągnięciach;osiągnięcie|osiągnięcia					
+złudzenie	illusion	neuter	złudzenie|złudzenia;złudzenia|złudzeń;złudzeniu|złudzeniom;złudzenie|złudzenia;złudzeniem|złudzeniami;złudzeniu|złudzeniach;złudzenie|złudzenia					
+wóz	cart	masculine inanimate	wóz|wozy;wozu|wozów;wozowi|wozom;wóz|wozy;wozem|wozami;wozie|wozach;wozie|wozy					
+rzeczpospolita	commonwealth	feminine	rzeczpospolita|rzeczpospolite;rzeczpospolitej|rzeczpospolitych;rzeczpospolitej|rzeczompospolitym;rzeczpospolitą|rzeczpospolite;rzeczpospolitą|rzeczamipospolitymi;rzeczpospolitej|rzeczachpospolitych;rzeczpospolita|rzeczpospolite					
+portret	portrait	masculine inanimate	portret|portrety;portretu|portretów;portretowi|portretom;portret|portrety;portretem|portretami;portrecie|portretach;portrecie|portrety					
+zdziwienie	surprise	neuter	zdziwienie|zdziwienia;zdziwienia|zdziwień;zdziwieniu|zdziwieniom;zdziwienie|zdziwienia;zdziwieniem|zdziwieniami;zdziwieniu|zdziwieniach;zdziwienie|zdziwienia					
+staranie	effort	neuter	staranie|starania;starania|starań;staraniu|staraniom;staranie|starania;staraniem|staraniami;staraniu|staraniach;staranie|starania					
+krytyk	critic	masculine personal	krytyk|krytycy;krytyka|krytyków;krytykowi|krytykom;krytyka|krytyków;krytykiem|krytykami;krytyku|krytykach;krytyku|krytycy					
+parafia	parish	feminine	parafia|parafie;parafii|parafii;parafii|parafiom;parafię|parafie;parafią|parafiami;parafii|parafiach;parafio|parafie					
+upływ	passage	masculine inanimate	upływ|upływy;upływu|upływów;upływowi|upływom;upływ|upływy;upływem|upływami;upływie|upływach;upływie|upływy					
+odbiór	receipt	masculine inanimate	odbiór|odbiory;odbioru|odbiorów;odbiorowi|odbiorom;odbiór|odbiory;odbiorem|odbiorami;odbiorze|odbiorach;odbiorze|odbiory					
+chaos	chaos	masculine inanimate	chaos|chaosy;chaosu|chaosów;chaosowi|chaosom;chaos|chaosy;chaosem|chaosami;chaosie|chaosach;chaosie|chaosy					
+wyposażenie	equipment	neuter	wyposażenie|wyposażenia;wyposażenia|wyposażeń;wyposażeniu|wyposażeniom;wyposażenie|wyposażenia;wyposażeniem|wyposażeniami;wyposażeniu|wyposażeniach;wyposażenie|wyposażenia					
+kompleks	complex	masculine inanimate	kompleks|kompleksy;kompleksu|kompleksów;kompleksowi|kompleksom;kompleks|kompleksy;kompleksem|kompleksami;kompleksie|kompleksach;kompleksie|kompleksy					
+przeżycie	experience	neuter	przeżycie|przeżycia;przeżycia|przeżyć;przeżyciu|przeżyciom;przeżycie|przeżycia;przeżyciem|przeżyciami;przeżyciu|przeżyciach;przeżycie|przeżycia					
+modernizacja	modernization	feminine	modernizacja|modernizacje;modernizacji|modernizacji;modernizacji|modernizacjom;modernizację|modernizacje;modernizacją|modernizacjami;modernizacji|modernizacjach;modernizacjo|modernizacje					
+użytek	use	masculine inanimate	użytek|użytki;użytku|użytków;użytkowi|użytkom;użytek|użytki;użytkiem|użytkami;użytku|użytkach;użytku|użytki					
+rozmówca	interlocutor	masculine personal	rozmówca|rozmówcy;rozmówcy|rozmówców;rozmówcy|rozmówcom;rozmówcę|rozmówców;rozmówcą|rozmówcami;rozmówcy|rozmówcach;rozmówco|rozmówcy					
+korona	crown	feminine	korona|korony;korony|koron;koronie|koronom;koronę|korony;koroną|koronami;koronie|koronach;korono|korony					
+fundament	foundation	masculine inanimate	fundament|fundamenty;fundamentu|fundamentów;fundamentowi|fundamentom;fundament|fundamenty;fundamentem|fundamentami;fundamencie|fundamentach;fundamencie|fundamenty					
+wystąpienie	speech	neuter	wystąpienie|wystąpienia;wystąpienia|wystąpień;wystąpieniu|wystąpieniom;wystąpienie|wystąpienia;wystąpieniem|wystąpieniami;wystąpieniu|wystąpieniach;wystąpienie|wystąpienia					
+rywal	rival	masculine personal	rywal|rywale;rywala|rywali;rywalowi|rywalom;rywala|rywali;rywalem|rywalami;rywalu|rywalach;rywalu|rywale					
+stulecie	century	neuter	stulecie|stulecia;stulecia|stuleci;stuleciu|stuleciom;stulecie|stulecia;stuleciem|stuleciami;stuleciu|stuleciach;stulecie|stulecia					
+serwis	service	masculine inanimate	serwis|serwisy;serwisu|serwisów;serwisowi|serwisom;serwis|serwisy;serwisem|serwisami;serwisie|serwisach;serwisie|serwisy					
+panna	miss	feminine	panna|panny;panny|panien;pannie|pannom;pannę|panny;panną|pannami;pannie|pannach;panno|panny					
+echo	echo	neuter	echo|echa;echa|ech;echu|echom;echo|echa;echem|echami;echu|echach;echo|echa					
+samotność	loneliness	feminine	samotność|samotności;samotności|samotności;samotności|samotnościom;samotność|samotności;samotnością|samotnościami;samotności|samotnościach;samotności|samotności					
+dziedzictwo	heritage	neuter	dziedzictwo|dziedzictwa;dziedzictwa|dziedzictw;dziedzictwu|dziedzictwom;dziedzictwo|dziedzictwa;dziedzictwem|dziedzictwami;dziedzictwie|dziedzictwach;dziedzictwo|dziedzictwa					
+osobowość	personality	feminine	osobowość|osobowości;osobowości|osobowości;osobowości|osobowościom;osobowość|osobowości;osobowością|osobowościami;osobowości|osobowościach;osobowości|osobowości					
+doradca	adviser	masculine personal	doradca|doradcy;doradcy|doradców;doradcy|doradcom;doradcę|doradców;doradcą|doradcami;doradcy|doradcach;doradco|doradcy					
+opiekun	caregiver	masculine personal	opiekun|opiekuni;opiekuna|opiekunów;opiekunowi|opiekunom;opiekuna|opiekunów;opiekunem|opiekunami;opiekunie|opiekunach;opiekunie|opiekuni					
+rozrywka	pastime	feminine	rozrywka|rozrywki;rozrywki|rozrywek;rozrywce|rozrywkom;rozrywkę|rozrywki;rozrywką|rozrywkami;rozrywce|rozrywkach;rozrywko|rozrywki					
+rywalizacja	competition	feminine	rywalizacja|rywalizacje;rywalizacji|rywalizacji;rywalizacji|rywalizacjom;rywalizację|rywalizacje;rywalizacją|rywalizacjami;rywalizacji|rywalizacjach;rywalizacjo|rywalizacje					
+byt	entity	masculine inanimate	byt|byty;bytu|bytów;bytowi|bytom;byt|byty;bytem|bytami;bycie|bytach;bycie|byty					
+warsztat	workshop	masculine inanimate	warsztat|warsztaty;warsztatu|warsztatów;warsztatowi|warsztatom;warsztat|warsztaty;warsztatem|warsztatami;warsztacie|warsztatach;warsztacie|warsztaty					
+przejazd	fare	masculine inanimate	przejazd|przejazdy;przejazdu|przejazdów;przejazdowi|przejazdom;przejazd|przejazdy;przejazdem|przejazdami;przejeździe|przejazdach;przejeździe|przejazdy					
+miano	title	neuter	miano|miana;miana|mian;mianu|mianom;miano|miana;mianem|mianami;mianie|mianach;miano|miana					
+pretensja	grievance	feminine	pretensja|pretensje;pretensji|pretensji;pretensji|pretensjom;pretensję|pretensje;pretensją|pretensjami;pretensji|pretensjach;pretensjo|pretensje					
+dokumentacja	documentary	feminine	dokumentacja|dokumentacje;dokumentacji|dokumentacji;dokumentacji|dokumentacjom;dokumentację|dokumentacje;dokumentacją|dokumentacjami;dokumentacji|dokumentacjach;dokumentacjo|dokumentacje					
+siatka	net	feminine	siatka|siatki;siatki|siatek;siatce|siatkom;siatkę|siatki;siatką|siatkami;siatce|siatkach;siatko|siatki					
+potęga	power	feminine	potęga|potęgi;potęgi|potęg;potędze|potęgom;potęgę|potęgi;potęgą|potęgami;potędze|potęgach;potęgo|potęgi					
+wymóg	requirement	masculine inanimate	wymóg|wymogi;wymogu|wymogów;wymogowi|wymogom;wymóg|wymogi;wymogiem|wymogami;wymogu|wymogach;wymogu|wymogi					
+wyobrażenie	image	neuter	wyobrażenie|wyobrażenia;wyobrażenia|wyobrażeń;wyobrażeniu|wyobrażeniom;wyobrażenie|wyobrażenia;wyobrażeniem|wyobrażeniami;wyobrażeniu|wyobrażeniach;wyobrażenie|wyobrażenia					
+agresja	aggression	feminine	agresja|agresje;agresji|agresji;agresji|agresjom;agresję|agresje;agresją|agresjami;agresji|agresjach;agresjo|agresje					
+agent	agent	masculine personal	agent|agenci;agenta|agentów;agentowi|agentom;agenta|agentów;agentem|agentami;agencie|agentach;agencie|agenci					
+trybunał	tribunal	masculine inanimate	trybunał|trybunały;trybunału|trybunałów;trybunałowi|trybunałom;trybunał|trybunały;trybunałem|trybunałami;trybunale|trybunałach;trybunale|trybunały					
+lewica	left	feminine	lewica|lewice;lewicy|lewic;lewicy|lewicom;lewicę|lewice;lewicą|lewicami;lewicy|lewicach;lewico|lewice					
+objaw	symptom	masculine inanimate	objaw|objawy;objawu|objawów;objawowi|objawom;objaw|objawy;objawem|objawami;objawie|objawach;objawie|objawy					
+inspiracja	inspiration	feminine	inspiracja|inspiracje;inspiracji|inspiracji;inspiracji|inspiracjom;inspirację|inspiracje;inspiracją|inspiracjami;inspiracji|inspiracjach;inspiracjo|inspiracje					
+afera	scandal	feminine	afera|afery;afery|afer;aferze|aferom;aferę|afery;aferą|aferami;aferze|aferach;afero|afery					
+przedstawienie	performance	neuter	przedstawienie|przedstawienia;przedstawienia|przedstawień;przedstawieniu|przedstawieniom;przedstawienie|przedstawienia;przedstawieniem|przedstawieniami;przedstawieniu|przedstawieniach;przedstawienie|przedstawienia					
+rozpacz	despair	feminine	rozpacz|rozpacze;rozpaczy|rozpaczy;rozpaczy|rozpaczom;rozpacz|rozpacze;rozpaczą|rozpaczami;rozpaczy|rozpaczach;rozpaczy|rozpacze					
+blask	glow	masculine inanimate	blask|blaski;blasku|blasków;blaskowi|blaskom;blask|blaski;blaskiem|blaskami;blasku|blaskach;blasku|blaski					
+wygrana	victory	feminine	wygrana|wygrane;wygranej|wygranych;wygranej|wygranym;wygraną|wygrane;wygraną|wygranymi;wygranej|wygranych;wygrano|wygrane					
+bieda	poverty	feminine	bieda|biedy;biedy|bied;biedzie|biedom;biedę|biedy;biedą|biedami;biedzie|biedach;biedo|biedy					
+postulat	proposal	masculine inanimate	postulat|postulaty;postulatu|postulatów;postulatowi|postulatom;postulat|postulaty;postulatem|postulatami;postulacie|postulatach;postulacie|postulaty					
+trend	trend	masculine inanimate	trend|trendy;trendu|trendów;trendowi|trendom;trend|trendy;trendem|trendami;trendzie|trendach;trendzie|trendy					
+statystyka	statistics	feminine	statystyka|statystyki;statystyki|statystyk;statystyce|statystykom;statystykę|statystyki;statystyką|statystykami;statystyce|statystykach;statystyko|statystyki					
+wezwanie	summons	neuter	wezwanie|wezwania;wezwania|wezwań;wezwaniu|wezwaniom;wezwanie|wezwania;wezwaniem|wezwaniami;wezwaniu|wezwaniach;wezwanie|wezwania					
+wariant	variant	masculine inanimate	wariant|warianty;wariantu|wariantów;wariantowi|wariantom;wariant|warianty;wariantem|wariantami;wariancie|wariantach;wariancie|warianty					
+formuła	formula	feminine	formuła|formuły;formuły|formuł;formule|formułom;formułę|formuły;formułą|formułami;formule|formułach;formuło|formuły					
+skandal	scandal	masculine inanimate	skandal|skandale;skandalu|skandali;skandalowi|skandalom;skandal|skandale;skandalem|skandalami;skandalu|skandalach;skandalu|skandale					
+zachwyt	delight	masculine inanimate	zachwyt|zachwyty;zachwytu|zachwytów;zachwytowi|zachwytom;zachwyt|zachwyty;zachwytem|zachwytami;zachwycie|zachwytach;zachwycie|zachwyty					
+lada	counter	feminine	lada|lady;lady|lad;ladzie|ladom;ladę|lady;ladą|ladami;ladzie|ladach;lado|lady					
+forum	forum	neuter	forum|fora;forum|forów;forum|forom;forum|fora;forum|forami;forum|forach;forum|fora					
+komunista	communist	masculine personal	komunista|komuniści;komunisty|komunistów;komuniście|komunistom;komunistę|komunistów;komunistą|komunistami;komuniście|komunistach;komunisto|komuniści					
+przetarg	tender	masculine inanimate	przetarg|przetargi;przetargu|przetargów;przetargowi|przetargom;przetarg|przetargi;przetargiem|przetargami;przetargu|przetargach;przetargu|przetargi					
+epidemia	epidemic	feminine	epidemia|epidemie;epidemii|epidemii;epidemii|epidemiom;epidemię|epidemie;epidemią|epidemiami;epidemii|epidemiach;epidemio|epidemie					
+zieleń	green	feminine	zieleń|zielenie;zieleni|zieleni;zieleni|zieleniom;zieleń|zielenie;zielenią|zieleniami;zieleni|zieleniach;zieleni|zielenie					
+ideologia	ideology	feminine	ideologia|ideologie;ideologii|ideologii;ideologii|ideologiom;ideologię|ideologie;ideologią|ideologiami;ideologii|ideologiach;ideologio|ideologie					
+instalacja	installation	feminine	instalacja|instalacje;instalacji|instalacji;instalacji|instalacjom;instalację|instalacje;instalacją|instalacjami;instalacji|instalacjach;instalacjo|instalacje					
+logika	logic	feminine	logika|logiki;logiki|logik;logice|logikom;logikę|logiki;logiką|logikami;logice|logikach;logiko|logiki					
+stwierdzenie	statement	neuter	stwierdzenie|stwierdzenia;stwierdzenia|stwierdzeń;stwierdzeniu|stwierdzeniom;stwierdzenie|stwierdzenia;stwierdzeniem|stwierdzeniami;stwierdzeniu|stwierdzeniach;stwierdzenie|stwierdzenia					
+królestwo	kingdom	neuter	królestwo|królestwa;królestwa|królestw;królestwu|królestwom;królestwo|królestwa;królestwem|królestwami;królestwie|królestwach;królestwo|królestwa					
+wychowanie	upbringing	neuter	wychowanie|wychowania;wychowania|wychowań;wychowaniu|wychowaniom;wychowanie|wychowania;wychowaniem|wychowaniami;wychowaniu|wychowaniach;wychowanie|wychowania					
+wyznanie	confession	neuter	wyznanie|wyznania;wyznania|wyznań;wyznaniu|wyznaniom;wyznanie|wyznania;wyznaniem|wyznaniami;wyznaniu|wyznaniach;wyznanie|wyznania					
+wyborca	voter	masculine personal	wyborca|wyborcy;wyborcy|wyborców;wyborcy|wyborcom;wyborcę|wyborców;wyborcą|wyborcami;wyborcy|wyborcach;wyborco|wyborcy					
+trop	confuse	masculine inanimate	trop|tropy;tropu|tropów;tropowi|tropom;trop|tropy;tropem|tropami;tropie|tropach;tropie|tropy					
+pozwolenie	permit	neuter	pozwolenie|pozwolenia;pozwolenia|pozwoleń;pozwoleniu|pozwoleniom;pozwolenie|pozwolenia;pozwoleniem|pozwoleniami;pozwoleniu|pozwoleniach;pozwolenie|pozwolenia					
+dowódca	commander	masculine personal	dowódca|dowódcy;dowódcy|dowódców;dowódcy|dowódcom;dowódcę|dowódców;dowódcą|dowódcami;dowódcy|dowódcach;dowódco|dowódcy					
+tona	ton	feminine	tona|tony;tony|ton;tonie|tonom;tonę|tony;toną|tonami;tonie|tonach;tono|tony					
+nowość	novelty	feminine	nowość|nowości;nowości|nowości;nowości|nowościom;nowość|nowości;nowością|nowościami;nowości|nowościach;nowości|nowości					
+skok	jump	masculine inanimate	skok|skoki;skoku|skoków;skokowi|skokom;skok|skoki;skokiem|skokami;skoku|skokach;skoku|skoki					
+bunt	mutiny	masculine inanimate	bunt|bunty;buntu|buntów;buntowi|buntom;bunt|bunty;buntem|buntami;buncie|buntach;buncie|bunty					
+formacja	formation	feminine	formacja|formacje;formacji|formacji;formacji|formacjom;formację|formacje;formacją|formacjami;formacji|formacjach;formacjo|formacje					
+prawica	right side	feminine	prawica|prawice;prawicy|prawic;prawicy|prawicom;prawicę|prawice;prawicą|prawicami;prawicy|prawicach;prawico|prawice					
+ród	lineage	masculine inanimate	ród|rody;rodu|rodów;rodowi|rodom;ród|rody;rodem|rodami;rodzie|rodach;rodzie|rody					
+przejaw	manifestation	masculine inanimate	przejaw|przejawy;przejawu|przejawów;przejawowi|przejawom;przejaw|przejawy;przejawem|przejawami;przejawie|przejawach;przejawie|przejawy					
+miłośnik	lover	masculine personal	miłośnik|miłośnicy;miłośnika|miłośników;miłośnikowi|miłośnikom;miłośnika|miłośników;miłośnikiem|miłośnikami;miłośniku|miłośnikach;miłośniku|miłośnicy					
+litr	liter	masculine inanimate	litr|litry;litra|litrów;litrowi|litrom;litr|litry;litrem|litrami;litrze|litrach;litrze|litry					
+wymaganie	requirement	neuter	wymaganie|wymagania;wymagania|wymagań;wymaganiu|wymaganiom;wymaganie|wymagania;wymaganiem|wymaganiami;wymaganiu|wymaganiach;wymaganie|wymagania					
+zgłoszenie	application	neuter	zgłoszenie|zgłoszenia;zgłoszenia|zgłoszeń;zgłoszeniu|zgłoszeniom;zgłoszenie|zgłoszenia;zgłoszeniem|zgłoszeniami;zgłoszeniu|zgłoszeniach;zgłoszenie|zgłoszenia					
+pakiet	parcel	masculine inanimate	pakiet|pakiety;pakietu|pakietów;pakietowi|pakietom;pakiet|pakiety;pakietem|pakietami;pakiecie|pakietach;pakiecie|pakiety					
+awantura	row	feminine	awantura|awantury;awantury|awantur;awanturze|awanturom;awanturę|awantury;awanturą|awanturami;awanturze|awanturach;awanturo|awantury					
+wieczor	evening	masculine inanimate	wieczor|wieczory;wieczora|wieczorów;wieczorowi|wieczorom;wieczor|wieczory;wieczorem|wieczorami;wieczorze|wieczorach;wieczorze|wieczory					
+definicja	definition	feminine	definicja|definicje;definicji|definicji;definicji|definicjom;definicję|definicje;definicją|definicjami;definicji|definicjach;definicjo|definicje					
+bohaterka	heroine	feminine	bohaterka|bohaterki;bohaterki|bohaterek;bohaterce|bohaterkom;bohaterkę|bohaterki;bohaterką|bohaterkami;bohaterce|bohaterkach;bohaterko|bohaterki					
+psycholog	psychologist	masculine personal	psycholog|psycholodzy;psychologa|psychologów;psychologowi|psychologom;psychologa|psychologów;psychologiem|psychologami;psychologu|psychologach;psychologu|psycholodzy					
+powieka	eyelid	feminine	powieka|powieki;powieki|powiek;powiece|powiekom;powiekę|powieki;powieką|powiekami;powiece|powiekach;powieko|powieki					
+gimnazjum	junior high school	neuter	gimnazjum|gimnazja;gimnazjum|gimnazjów;gimnazjum|gimnazjom;gimnazjum|gimnazja;gimnazjum|gimnazjami;gimnazjum|gimnazjach;gimnazjum|gimnazja					
+starcie	clash	neuter	starcie|starcia;starcia|starć;starciu|starciom;starcie|starcia;starciem|starciami;starciu|starciach;starcie|starcia					
+pięść	fist	feminine	pięść|pięści;pięści|pięści;pięści|pięściom;pięść|pięści;pięścią|pięściami;pięści|pięściach;pięści|pięści					
+groźba	threat	feminine	groźba|groźby;groźby|gróźb;groźbie|groźbom;groźbę|groźby;groźbą|groźbami;groźbie|groźbach;groźbo|groźby					
+gniew	anger	masculine inanimate	gniew|gniewy;gniewu|gniewów;gniewowi|gniewom;gniew|gniewy;gniewem|gniewami;gniewie|gniewach;gniewie|gniewy					
+łańcuch	chain	masculine inanimate	łańcuch|łańcuchy;łańcucha|łańcuchów;łańcuchowi|łańcuchom;łańcuch|łańcuchy;łańcuchem|łańcuchami;łańcuchu|łańcuchach;łańcuchu|łańcuchy					
+ujęcie	shot	neuter	ujęcie|ujęcia;ujęcia|ujęć;ujęciu|ujęciom;ujęcie|ujęcia;ujęciem|ujęciami;ujęciu|ujęciach;ujęcie|ujęcia					
+architektura	architecture	feminine	architektura|architektury;architektury|architektur;architekturze|architekturom;architekturę|architektury;architekturą|architekturami;architekturze|architekturach;architekturo|architektury					
+transakcja	transaction	feminine	transakcja|transakcje;transakcji|transakcji;transakcji|transakcjom;transakcję|transakcje;transakcją|transakcjami;transakcji|transakcjach;transakcjo|transakcje					
+komendant	chief	masculine personal	komendant|komendanci;komendanta|komendantów;komendantowi|komendantom;komendanta|komendantów;komendantem|komendantami;komendancie|komendantach;komendancie|komendanci					
+zapas	supplies	masculine inanimate	zapas|zapasy;zapasu|zapasów;zapasowi|zapasom;zapas|zapasy;zapasem|zapasami;zapasie|zapasach;zapasie|zapasy					
+zabójstwo	murder	neuter	zabójstwo|zabójstwa;zabójstwa|zabójstw;zabójstwu|zabójstwom;zabójstwo|zabójstwa;zabójstwem|zabójstwami;zabójstwie|zabójstwach;zabójstwo|zabójstwa					
+orkiestra	orchestra	feminine	orkiestra|orkiestry;orkiestry|orkiestr;orkiestrze|orkiestrom;orkiestrę|orkiestry;orkiestrą|orkiestrami;orkiestrze|orkiestrach;orkiestro|orkiestry					
+bariera	barrier	feminine	bariera|bariery;bariery|barier;barierze|barierom;barierę|bariery;barierą|barierami;barierze|barierach;bariero|bariery					
+dotacja	grant	feminine	dotacja|dotacje;dotacji|dotacji;dotacji|dotacjom;dotację|dotacje;dotacją|dotacjami;dotacji|dotacjach;dotacjo|dotacje					
+katedra	cathedral	feminine	katedra|katedry;katedry|katedr;katedrze|katedrom;katedrę|katedry;katedrą|katedrami;katedrze|katedrach;katedro|katedry					
+ideał	ideal	masculine inanimate	ideał|ideały;ideału|ideałów;ideałowi|ideałom;ideał|ideały;ideałem|ideałami;ideale|ideałach;ideale|ideały					
+proboszcz	parish priest	masculine personal	proboszcz|proboszczowie;proboszcza|proboszczów;proboszczowi|proboszczom;proboszcza|proboszczów;proboszczem|proboszczami;proboszczu|proboszczach;proboszczu|proboszczowie					
+koncern	corporation	masculine inanimate	koncern|koncerny;koncernu|koncernów;koncernowi|koncernom;koncern|koncerny;koncernem|koncernami;koncernie|koncernach;koncernie|koncerny					
+przegląd	inspection	masculine inanimate	przegląd|przeglądy;przeglądu|przeglądów;przeglądowi|przeglądom;przegląd|przeglądy;przeglądem|przeglądami;przeglądzie|przeglądach;przeglądzie|przeglądy					
+konsultacja	consultation	feminine	konsultacja|konsultacje;konsultacji|konsultacji;konsultacji|konsultacjom;konsultację|konsultacje;konsultacją|konsultacjami;konsultacji|konsultacjach;konsultacjo|konsultacje					
+obchód	celebration	masculine inanimate	obchód|obchody;obchodu|obchodów;obchodowi|obchodom;obchód|obchody;obchodem|obchodami;obchodzie|obchodach;obchodzie|obchody					
+królowa	queen	feminine	królowa|królowe;królowej|królowych;królowej|królowym;królową|królowe;królową|królowymi;królowej|królowych;królowo|królowe					
+mundur	uniform	masculine inanimate	mundur|mundury;munduru|mundurów;mundurowi|mundurom;mundur|mundury;mundurem|mundurami;mundurze|mundurach;mundurze|mundury					
+nakład	costs	masculine inanimate	nakład|nakłady;nakładu|nakładów;nakładowi|nakładom;nakład|nakłady;nakładem|nakładami;nakładzie|nakładach;nakładzie|nakłady					
+dyscyplina	sport	feminine	dyscyplina|dyscypliny;dyscypliny|dyscyplin;dyscyplinie|dyscyplinom;dyscyplinę|dyscypliny;dyscypliną|dyscyplinami;dyscyplinie|dyscyplinach;dyscyplino|dyscypliny					
+rozkład	schedule	masculine inanimate	rozkład|rozkłady;rozkładu|rozkładów;rozkładowi|rozkładom;rozkład|rozkłady;rozkładem|rozkładami;rozkładzie|rozkładach;rozkładzie|rozkłady					
+archiwum	archive	neuter	archiwum|archiwa;archiwum|archiwów;archiwum|archiwom;archiwum|archiwa;archiwum|archiwami;archiwum|archiwach;archiwum|archiwa					
+mistrzostwa	championship	plural only	|mistrzostwa;|mistrzostw;|mistrzostwom;|mistrzostwa;|mistrzostwami;|mistrzostwach;|mistrzostwa					
+turniej	tournament	masculine inanimate	turniej|turnieje;turnieju|turniejów;turniejowi|turniejom;turniej|turnieje;turniejem|turniejami;turnieju|turniejach;turnieju|turnieje					
+wójt	village head	masculine personal	wójt|wójtowie;wójta|wójtów;wójtowi|wójtom;wójta|wójtów;wójtem|wójtami;wójcie|wójtach;wójcie|wójtowie					
+zaplecze	back room	neuter	zaplecze|zaplecza;zaplecza|zapleczy;zapleczu|zapleczom;zaplecze|zaplecza;zapleczem|zapleczami;zapleczu|zapleczach;zaplecze|zaplecza					
+żądanie	demand	neuter	żądanie|żądania;żądania|żądań;żądaniu|żądaniom;żądanie|żądania;żądaniem|żądaniami;żądaniu|żądaniach;żądanie|żądania					
+lokalizacja	location	feminine	lokalizacja|lokalizacje;lokalizacji|lokalizacji;lokalizacji|lokalizacjom;lokalizację|lokalizacje;lokalizacją|lokalizacjami;lokalizacji|lokalizacjach;lokalizacjo|lokalizacje					
+przesłuchanie	interrogation	neuter	przesłuchanie|przesłuchania;przesłuchania|przesłuchań;przesłuchaniu|przesłuchaniom;przesłuchanie|przesłuchania;przesłuchaniem|przesłuchaniami;przesłuchaniu|przesłuchaniach;przesłuchanie|przesłuchania					
+wypłata	salary	feminine	wypłata|wypłaty;wypłaty|wypłat;wypłacie|wypłatom;wypłatę|wypłaty;wypłatą|wypłatami;wypłacie|wypłatach;wypłato|wypłaty					
+republika	republic	feminine	republika|republiki;republiki|republik;republice|republikom;republikę|republiki;republiką|republikami;republice|republikach;republiko|republiki					
+trup	corpse	masculine animate	trup|trupy;trupa|trupów;trupowi|trupom;trupa|trupy;trupem|trupami;trupie|trupach;trupie|trupy					
+odkrycie	discovery	neuter	odkrycie|odkrycia;odkrycia|odkryć;odkryciu|odkryciom;odkrycie|odkrycia;odkryciem|odkryciami;odkryciu|odkryciach;odkrycie|odkrycia					
+podobieństwo	similarity	neuter	podobieństwo|podobieństwa;podobieństwa|podobieństw;podobieństwu|podobieństwom;podobieństwo|podobieństwa;podobieństwem|podobieństwami;podobieństwie|podobieństwach;podobieństwo|podobieństwa					
+schemat	scheme	masculine inanimate	schemat|schematy;schematu|schematów;schematowi|schematom;schemat|schematy;schematem|schematami;schemacie|schematach;schemacie|schematy					
+ranga	rank	feminine	ranga|rangi;rangi|rang;randze|rangom;rangę|rangi;rangą|rangami;randze|rangach;rango|rangi					
+podziw	admiration	masculine inanimate	podziw|podziwy;podziwu|podziwów;podziwowi|podziwom;podziw|podziwy;podziwem|podziwami;podziwie|podziwach;podziwie|podziwy					
+materia	matter	feminine	materia|materie;materii|materii;materii|materiom;materię|materie;materią|materiami;materii|materiach;materio|materie					
+przeznaczenie	purpose	neuter	przeznaczenie|przeznaczenia;przeznaczenia|przeznaczeń;przeznaczeniu|przeznaczeniom;przeznaczenie|przeznaczenia;przeznaczeniem|przeznaczeniami;przeznaczeniu|przeznaczeniach;przeznaczenie|przeznaczenia					
+skuteczność	effectiveness	feminine	skuteczność|skuteczności;skuteczności|skuteczności;skuteczności|skutecznościom;skuteczność|skuteczności;skutecznością|skutecznościami;skuteczności|skutecznościach;skuteczności|skuteczności					
+dorobek	achievements	masculine inanimate	dorobek|dorobki;dorobku|dorobków;dorobkowi|dorobkom;dorobek|dorobki;dorobkiem|dorobkami;dorobku|dorobkach;dorobku|dorobki					
+pracownia	laboratory	feminine	pracownia|pracownie;pracowni|pracowni;pracowni|pracowniom;pracownię|pracownie;pracownią|pracowniami;pracowni|pracowniach;pracownio|pracownie					
+narodzenie	birth	neuter	narodzenie|narodzenia;narodzenia|narodzeń;narodzeniu|narodzeniom;narodzenie|narodzenia;narodzeniem|narodzeniami;narodzeniu|narodzeniach;narodzenie|narodzenia					
+kopalnia	made of money	feminine	kopalnia|kopalnie;kopalni|kopalni;kopalni|kopalniom;kopalnię|kopalnie;kopalnią|kopalniami;kopalni|kopalniach;kopalnio|kopalnie					
+mniejszość	minority	feminine	mniejszość|mniejszości;mniejszości|mniejszości;mniejszości|mniejszościom;mniejszość|mniejszości;mniejszością|mniejszościami;mniejszości|mniejszościach;mniejszości|mniejszości					
+filozof	philosopher	masculine personal	filozof|filozofowie;filozofa|filozofów;filozofowi|filozofom;filozofa|filozofów;filozofem|filozofami;filozofie|filozofach;filozofie|filozofowie					
+wyrzut	remorse	masculine inanimate	wyrzut|wyrzuty;wyrzutu|wyrzutów;wyrzutowi|wyrzutom;wyrzut|wyrzuty;wyrzutem|wyrzutami;wyrzucie|wyrzutach;wyrzucie|wyrzuty					
+rozczarowanie	disappointment	neuter	rozczarowanie|rozczarowania;rozczarowania|rozczarowań;rozczarowaniu|rozczarowaniom;rozczarowanie|rozczarowania;rozczarowaniem|rozczarowaniami;rozczarowaniu|rozczarowaniach;rozczarowanie|rozczarowania					
+apel	appeal	masculine inanimate	apel|apele;apelu|apeli;apelowi|apelom;apel|apele;apelem|apelami;apelu|apelach;apelu|apele					
+szczebel	level	masculine inanimate	szczebel|szczeble;szczebla|szczebli;szczeblowi|szczeblom;szczebel|szczeble;szczeblem|szczeblami;szczeblu|szczeblach;szczeblu|szczeble					
+wykonanie	execution	neuter	wykonanie|wykonania;wykonania|wykonań;wykonaniu|wykonaniom;wykonanie|wykonania;wykonaniem|wykonaniami;wykonaniu|wykonaniach;wykonanie|wykonania					
+załoga	crew	feminine	załoga|załogi;załogi|załóg;załodze|załogom;załogę|załogi;załogą|załogami;załodze|załogach;załogo|załogi					
+odgłos	sound	masculine inanimate	odgłos|odgłosy;odgłosu|odgłosów;odgłosowi|odgłosom;odgłos|odgłosy;odgłosem|odgłosami;odgłosie|odgłosach;odgłosie|odgłosy					
+zgromadzenie	assembly	neuter	zgromadzenie|zgromadzenia;zgromadzenia|zgromadzeń;zgromadzeniu|zgromadzeniom;zgromadzenie|zgromadzenia;zgromadzeniem|zgromadzeniami;zgromadzeniu|zgromadzeniach;zgromadzenie|zgromadzenia					
+tęsknota	longing	feminine	tęsknota|tęsknoty;tęsknoty|tęsknot;tęsknocie|tęsknotom;tęsknotę|tęsknoty;tęsknotą|tęsknotami;tęsknocie|tęsknotach;tęsknoto|tęsknoty					
+zjazd	reunion	masculine inanimate	zjazd|zjazdy;zjazdu|zjazdów;zjazdowi|zjazdom;zjazd|zjazdy;zjazdem|zjazdami;zjeździe|zjazdach;zjeździe|zjazdy					
+jezdnia	roadway	feminine	jezdnia|jezdnie;jezdni|jezdni;jezdni|jezdniom;jezdnię|jezdnie;jezdnią|jezdniami;jezdni|jezdniach;jezdnio|jezdnie					
+niepewność	uncertainty	feminine	niepewność|niepewności;niepewności|niepewności;niepewności|niepewnościom;niepewność|niepewności;niepewnością|niepewnościami;niepewności|niepewnościach;niepewności|niepewności					
+rozważanie	reflection	neuter	rozważanie|rozważania;rozważania|rozważań;rozważaniu|rozważaniom;rozważanie|rozważania;rozważaniem|rozważaniami;rozważaniu|rozważaniach;rozważanie|rozważania					
+przyjęcie	party	neuter	przyjęcie|przyjęcia;przyjęcia|przyjęć;przyjęciu|przyjęciom;przyjęcie|przyjęcia;przyjęciem|przyjęciami;przyjęciu|przyjęciach;przyjęcie|przyjęcia					
+panika	panic	feminine	panika|paniki;paniki|panik;panice|panikom;panikę|paniki;paniką|panikami;panice|panikach;paniko|paniki					
+fantazja	fantasy	feminine	fantazja|fantazje;fantazji|fantazji;fantazji|fantazjom;fantazję|fantazje;fantazją|fantazjami;fantazji|fantazjach;fantazjo|fantazje					
+warsztaty	workshop	plural only	|warsztaty;|warsztatów;|warsztatom;|warsztaty;|warsztatami;|warsztatach;|warsztaty					
+prowincja	province	feminine	prowincja|prowincje;prowincji|prowincji;prowincji|prowincjom;prowincję|prowincje;prowincją|prowincjami;prowincji|prowincjach;prowincjo|prowincje					
+zamieszanie	confusion	neuter	zamieszanie|zamieszania;zamieszania|zamieszań;zamieszaniu|zamieszaniom;zamieszanie|zamieszania;zamieszaniem|zamieszaniami;zamieszaniu|zamieszaniach;zamieszanie|zamieszania					
+słuchacz	listener	masculine personal	słuchacz|słuchacze;słuchacza|słuchaczy;słuchaczowi|słuchaczom;słuchacza|słuchaczy;słuchaczem|słuchaczami;słuchaczu|słuchaczach;słuchaczu|słuchacze					
+kwartał	quarter	masculine inanimate	kwartał|kwartały;kwartału|kwartałów;kwartałowi|kwartałom;kwartał|kwartały;kwartałem|kwartałami;kwartale|kwartałach;kwartale|kwartały					
+konwencja	convention	feminine	konwencja|konwencje;konwencji|konwencji;konwencji|konwencjom;konwencję|konwencje;konwencją|konwencjami;konwencji|konwencjach;konwencjo|konwencje					
+diagnoza	diagnosis	feminine	diagnoza|diagnozy;diagnozy|diagnoz;diagnozie|diagnozom;diagnozę|diagnozy;diagnozą|diagnozami;diagnozie|diagnozach;diagnozo|diagnozy					
+promień	ray	masculine inanimate	promień|promienie;promienia|promieni;promieniowi|promieniom;promień|promienie;promieniem|promieniami;promieniu|promieniach;promieniu|promienie					
+sekcja	section	feminine	sekcja|sekcje;sekcji|sekcji;sekcji|sekcjom;sekcję|sekcje;sekcją|sekcjami;sekcji|sekcjach;sekcjo|sekcje					
+aleja	avenue	feminine	aleja|aleje;alei|alei;alei|alejom;aleję|aleje;aleją|alejami;alei|alejach;alejo|aleje					
+inspektor	inspector	masculine personal	inspektor|inspektorowie;inspektora|inspektorów;inspektorowi|inspektorom;inspektora|inspektorów;inspektorem|inspektorami;inspektorze|inspektorach;inspektorze|inspektorowie					
+margines	margin	masculine inanimate	margines|marginesy;marginesu|marginesów;marginesowi|marginesom;margines|marginesy;marginesem|marginesami;marginesie|marginesach;marginesie|marginesy					
+przebudowa	rebuilding	feminine	przebudowa|przebudowy;przebudowy|przebudów;przebudowie|przebudowom;przebudowę|przebudowy;przebudową|przebudowami;przebudowie|przebudowach;przebudowo|przebudowy					
+katolik	catholic	masculine personal	katolik|katolicy;katolika|katolików;katolikowi|katolikom;katolika|katolików;katolikiem|katolikami;katoliku|katolikach;katoliku|katolicy					
+bliskość	closeness	feminine	bliskość|bliskości;bliskości|bliskości;bliskości|bliskościom;bliskość|bliskości;bliskością|bliskościami;bliskości|bliskościach;bliskości|bliskości					
+odpad	waste	masculine inanimate	odpad|odpady;odpadu|odpadów;odpadowi|odpadom;odpad|odpady;odpadem|odpadami;odpadzie|odpadach;odpadzie|odpady					
+zdrada	treason	feminine	zdrada|zdrady;zdrady|zdrad;zdradzie|zdradom;zdradę|zdrady;zdradą|zdradami;zdradzie|zdradach;zdrado|zdrady					
+wahanie	hesitation	neuter	wahanie|wahania;wahania|wahań;wahaniu|wahaniom;wahanie|wahania;wahaniem|wahaniami;wahaniu|wahaniach;wahanie|wahania					
+narodziny	birth	plural only	|narodziny;|narodzin;|narodzinom;|narodziny;|narodzinami;|narodzinach;|narodziny					
+wrażliwość	sensitivity	feminine	wrażliwość|wrażliwości;wrażliwości|wrażliwości;wrażliwości|wrażliwościom;wrażliwość|wrażliwości;wrażliwością|wrażliwościami;wrażliwości|wrażliwościach;wrażliwości|wrażliwości					
+władca	ruler	masculine personal	władca|władcy;władcy|władców;władcy|władcom;władcę|władców;władcą|władcami;władcy|władcach;władco|władcy					
+sojusz	alliance	masculine inanimate	sojusz|sojusze;sojuszu|sojuszy;sojuszowi|sojuszom;sojusz|sojusze;sojuszem|sojuszami;sojuszu|sojuszach;sojuszu|sojusze					
+kraina	land	feminine	kraina|krainy;krainy|krain;krainie|krainom;krainę|krainy;krainą|krainami;krainie|krainach;kraino|krainy					
+kierownictwo	management	neuter	kierownictwo|kierownictwa;kierownictwa|kierownictw;kierownictwu|kierownictwom;kierownictwo|kierownictwa;kierownictwem|kierownictwami;kierownictwie|kierownictwach;kierownictwo|kierownictwa					
+wędrówka	walk	feminine	wędrówka|wędrówki;wędrówki|wędrówek;wędrówce|wędrówkom;wędrówkę|wędrówki;wędrówką|wędrówkami;wędrówce|wędrówkach;wędrówko|wędrówki					
+reżim	regime	masculine inanimate	reżim|reżimy;reżimu|reżimów;reżimowi|reżimom;reżim|reżimy;reżimem|reżimami;reżimie|reżimach;reżimie|reżimy					
+jedność	unity	feminine	jedność|jedności;jedności|jedności;jedności|jednościom;jedność|jedności;jednością|jednościami;jedności|jednościach;jedności|jedności					
+wpis	post	masculine inanimate	wpis|wpisy;wpisu|wpisów;wpisowi|wpisom;wpis|wpisy;wpisem|wpisami;wpisie|wpisach;wpisie|wpisy					
+alternatywa	alternative	feminine	alternatywa|alternatywy;alternatywy|alternatyw;alternatywie|alternatywom;alternatywę|alternatywy;alternatywą|alternatywami;alternatywie|alternatywach;alternatywo|alternatywy					
+składka	dues	feminine	składka|składki;składki|składek;składce|składkom;składkę|składki;składką|składkami;składce|składkach;składko|składki					
+ruina	ruins	feminine	ruina|ruiny;ruiny|ruin;ruinie|ruinom;ruinę|ruiny;ruiną|ruinami;ruinie|ruinach;ruino|ruiny					
+następca	successor	masculine personal	następca|następcy;następcy|następców;następcy|następcom;następcę|następców;następcą|następcami;następcy|następcach;następco|następcy					
+zarobek	wages	masculine inanimate	zarobek|zarobki;zarobku|zarobków;zarobkowi|zarobkom;zarobek|zarobki;zarobkiem|zarobkami;zarobku|zarobkach;zarobku|zarobki					
+pretekst	pretext	masculine inanimate	pretekst|preteksty;pretekstu|pretekstów;pretekstowi|pretekstom;pretekst|preteksty;pretekstem|pretekstami;pretekście|pretekstach;pretekście|preteksty					
+kurier	courier	masculine personal	kurier|kurierzy;kuriera|kurierów;kurierowi|kurierom;kuriera|kurierów;kurierem|kurierami;kurierze|kurierach;kurierze|kurierzy					
+końcówka	end	feminine	końcówka|końcówki;końcówki|końcówek;końcówce|końcówkom;końcówkę|końcówki;końcówką|końcówkami;końcówce|końcówkach;końcówko|końcówki					
+codzienność	everyday life	feminine	codzienność|codzienności;codzienności|codzienności;codzienności|codziennościom;codzienność|codzienności;codziennością|codziennościami;codzienności|codziennościach;codzienności|codzienności					
+wojewoda	voivode	masculine personal	wojewoda|wojewodowie;wojewody|wojewodów;wojewodzie|wojewodom;wojewodę|wojewodów;wojewodą|wojewodami;wojewodzie|wojewodach;wojewodo|wojewodowie					
+akta	files	plural only	|akta;|akt;|aktom;|akta;|aktami;|aktach;|akta					
+operator	operator	masculine personal	operator|operatorzy;operatora|operatorów;operatorowi|operatorom;operatora|operatorów;operatorem|operatorami;operatorze|operatorach;operatorze|operatorzy					
+śpiew	singing	masculine inanimate	śpiew|śpiewy;śpiewu|śpiewów;śpiewowi|śpiewom;śpiew|śpiewy;śpiewem|śpiewami;śpiewie|śpiewach;śpiewie|śpiewy					
+nadmiar	surplus	masculine inanimate	nadmiar|nadmiary;nadmiaru|nadmiarów;nadmiarowi|nadmiarom;nadmiar|nadmiary;nadmiarem|nadmiarami;nadmiarze|nadmiarach;nadmiarze|nadmiary					
+rekord	record	masculine inanimate	rekord|rekordy;rekordu|rekordów;rekordowi|rekordom;rekord|rekordy;rekordem|rekordami;rekordzie|rekordach;rekordzie|rekordy					
+priorytet	priority	masculine inanimate	priorytet|priorytety;priorytetu|priorytetów;priorytetowi|priorytetom;priorytet|priorytety;priorytetem|priorytetami;priorytecie|priorytetach;priorytecie|priorytety					
+szum	fuss	masculine inanimate	szum|szumy;szumu|szumów;szumowi|szumom;szum|szumy;szumem|szumami;szumie|szumach;szumie|szumy					
+odszkodowanie	compensation	neuter	odszkodowanie|odszkodowania;odszkodowania|odszkodowań;odszkodowaniu|odszkodowaniom;odszkodowanie|odszkodowania;odszkodowaniem|odszkodowaniami;odszkodowaniu|odszkodowaniach;odszkodowanie|odszkodowania					
+tunel	tunnel	masculine inanimate	tunel|tunele;tunelu|tuneli;tunelowi|tunelom;tunel|tunele;tunelem|tunelami;tunelu|tunelach;tunelu|tunele					
+czystość	cleanliness	feminine	czystość|czystości;czystości|czystości;czystości|czystościom;czystość|czystości;czystością|czystościami;czystości|czystościach;czystości|czystości					
+rozumienie	understanding	neuter	rozumienie|rozumienia;rozumienia|rozumień;rozumieniu|rozumieniom;rozumienie|rozumienia;rozumieniem|rozumieniami;rozumieniu|rozumieniach;rozumienie|rozumienia					
+mrok	darkness	masculine inanimate	mrok|mroki;mroku|mroków;mrokowi|mrokom;mrok|mroki;mrokiem|mrokami;mroku|mrokach;mroku|mroki					
+reprezentant	representative	masculine personal	reprezentant|reprezentanci;reprezentanta|reprezentantów;reprezentantowi|reprezentantom;reprezentanta|reprezentantów;reprezentantem|reprezentantami;reprezentancie|reprezentantach;reprezentancie|reprezentanci					
+brzmienie	sound	neuter	brzmienie|brzmienia;brzmienia|brzmień;brzmieniu|brzmieniom;brzmienie|brzmienia;brzmieniem|brzmieniami;brzmieniu|brzmieniach;brzmienie|brzmienia					
+kult	cult	masculine inanimate	kult|kulty;kultu|kultów;kultowi|kultom;kult|kulty;kultem|kultami;kulcie|kultach;kulcie|kulty					
+pandemia	pandemic	feminine	pandemia|pandemie;pandemii|pandemii;pandemii|pandemiom;pandemię|pandemie;pandemią|pandemiami;pandemii|pandemiach;pandemio|pandemie					
+podatnik	taxpayer	masculine personal	podatnik|podatnicy;podatnika|podatników;podatnikowi|podatnikom;podatnika|podatników;podatnikiem|podatnikami;podatniku|podatnikach;podatniku|podatnicy					
+komplet	full set	masculine inanimate	komplet|komplety;kompletu|kompletów;kompletowi|kompletom;komplet|komplety;kompletem|kompletami;komplecie|kompletach;komplecie|komplety					
+autorstwo	authorship	neuter	autorstwo|autorstwa;autorstwa|autorstw;autorstwu|autorstwom;autorstwo|autorstwa;autorstwem|autorstwami;autorstwie|autorstwach;autorstwo|autorstwa					
+tematyka	subject matter	feminine	tematyka|tematyki;tematyki|tematyk;tematyce|tematykom;tematykę|tematyki;tematyką|tematykami;tematyce|tematykach;tematyko|tematyki					
+imperium	empire	neuter	imperium|imperia;imperium|imperiów;imperium|imperiom;imperium|imperia;imperium|imperiami;imperium|imperiach;imperium|imperia					
+zemsta	revenge	feminine	zemsta|zemsty;zemsty|zemst;zemście|zemstom;zemstę|zemsty;zemstą|zemstami;zemście|zemstach;zemsto|zemsty					
+wzorzec	pattern	masculine inanimate	wzorzec|wzorce;wzorca|wzorców;wzorcowi|wzorcom;wzorzec|wzorce;wzorcem|wzorcami;wzorcu|wzorcach;wzorcu|wzorce					
+wątpienie	doubt	neuter	wątpienie|wątpienia;wątpienia|wątpień;wątpieniu|wątpieniom;wątpienie|wątpienia;wątpieniem|wątpieniami;wątpieniu|wątpieniach;wątpienie|wątpienia					
+potrawa	dish	feminine	potrawa|potrawy;potrawy|potraw;potrawie|potrawom;potrawę|potrawy;potrawą|potrawami;potrawie|potrawach;potrawo|potrawy					
+nakaz	warrant	masculine inanimate	nakaz|nakazy;nakazu|nakazów;nakazowi|nakazom;nakaz|nakazy;nakazem|nakazami;nakazie|nakazach;nakazie|nakazy					
+położenie	position	neuter	położenie|położenia;położenia|położeń;położeniu|położeniom;położenie|położenia;położeniem|położeniami;położeniu|położeniach;położenie|położenia					
+napastnik	attacker	masculine personal	napastnik|napastnicy;napastnika|napastników;napastnikowi|napastnikom;napastnika|napastników;napastnikiem|napastnikami;napastniku|napastnikach;napastniku|napastnicy					
+rejestr	register	masculine inanimate	rejestr|rejestry;rejestru|rejestrów;rejestrowi|rejestrom;rejestr|rejestry;rejestrem|rejestrami;rejestrze|rejestrach;rejestrze|rejestry					
+wdzięczność	gratitude	feminine	wdzięczność|wdzięczności;wdzięczności|wdzięczności;wdzięczności|wdzięcznościom;wdzięczność|wdzięczności;wdzięcznością|wdzięcznościami;wdzięczności|wdzięcznościach;wdzięczności|wdzięczności					
+kompozycja	composition	feminine	kompozycja|kompozycje;kompozycji|kompozycji;kompozycji|kompozycjom;kompozycję|kompozycje;kompozycją|kompozycjami;kompozycji|kompozycjach;kompozycjo|kompozycje					
+wkład	contribution	masculine inanimate	wkład|wkłady;wkładu|wkładów;wkładowi|wkładom;wkład|wkłady;wkładem|wkładami;wkładzie|wkładach;wkładzie|wkłady					
+emisja	emission	feminine	emisja|emisje;emisji|emisji;emisji|emisjom;emisję|emisje;emisją|emisjami;emisji|emisjach;emisjo|emisje					
+skrzynia	crate	feminine	skrzynia|skrzynie;skrzyni|skrzyń;skrzyni|skrzyniom;skrzynię|skrzynie;skrzynią|skrzyniami;skrzyni|skrzyniach;skrzynio|skrzynie					
+pogarda	contempt	feminine	pogarda|pogardy;pogardy|pogard;pogardzie|pogardom;pogardę|pogardy;pogardą|pogardami;pogardzie|pogardach;pogardo|pogardy					
+honor	honor	masculine inanimate	honor|honory;honoru|honorów;honorowi|honorom;honor|honory;honorem|honorami;honorze|honorach;honorze|honory					
+zbiórka	collection	feminine	zbiórka|zbiórki;zbiórki|zbiórek;zbiórce|zbiórkom;zbiórkę|zbiórki;zbiórką|zbiórkami;zbiórce|zbiórkach;zbiórko|zbiórki					
+kapłan	priest	masculine personal	kapłan|kapłani;kapłana|kapłanów;kapłanowi|kapłanom;kapłana|kapłanów;kapłanem|kapłanami;kapłanie|kapłanach;kapłanie|kapłani					
+zabezpieczenie	protection	neuter	zabezpieczenie|zabezpieczenia;zabezpieczenia|zabezpieczeń;zabezpieczeniu|zabezpieczeniom;zabezpieczenie|zabezpieczenia;zabezpieczeniem|zabezpieczeniami;zabezpieczeniu|zabezpieczeniach;zabezpieczenie|zabezpieczenia					
+odwrót	turning back	masculine inanimate	odwrót|odwroty;odwrotu|odwrotów;odwrotowi|odwrotom;odwrót|odwroty;odwrotem|odwrotami;odwrocie|odwrotach;odwrocie|odwroty					
+danie	dish	neuter	danie|dania;dania|dań;daniu|daniom;danie|dania;daniem|daniami;daniu|daniach;danie|dania					
+ład	order	masculine inanimate	ład|łady;ładu|ładów;ładowi|ładom;ład|łady;ładem|ładami;ładzie|ładach;ładzie|łady					
+konfrontacja	confrontation	feminine	konfrontacja|konfrontacje;konfrontacji|konfrontacji;konfrontacji|konfrontacjom;konfrontację|konfrontacje;konfrontacją|konfrontacjami;konfrontacji|konfrontacjach;konfrontacjo|konfrontacje					
+klasztor	monastery	masculine inanimate	klasztor|klasztory;klasztoru|klasztorów;klasztorowi|klasztorom;klasztor|klasztory;klasztorem|klasztorami;klasztorze|klasztorach;klasztorze|klasztory					
+zapłata	payment	feminine	zapłata|zapłaty;zapłaty|zapłat;zapłacie|zapłatom;zapłatę|zapłaty;zapłatą|zapłatami;zapłacie|zapłatach;zapłato|zapłaty					
+rytuał	ritual	masculine inanimate	rytuał|rytuały;rytuału|rytuałów;rytuałowi|rytuałom;rytuał|rytuały;rytuałem|rytuałami;rytuale|rytuałach;rytuale|rytuały					
+garść	grip	feminine	garść|garści;garści|garści;garści|garściom;garść|garści;garścią|garściami;garści|garściach;garści|garści					
+absolwent	graduate	masculine personal	absolwent|absolwenci;absolwenta|absolwentów;absolwentowi|absolwentom;absolwenta|absolwentów;absolwentem|absolwentami;absolwencie|absolwentach;absolwencie|absolwenci					
+personel	staff	masculine inanimate	personel|personele;personelu|personeli;personelowi|personelom;personel|personele;personelem|personelami;personelu|personelach;personelu|personele					
+obyczaj	custom	masculine inanimate	obyczaj|obyczaje;obyczaju|obyczajów;obyczajowi|obyczajom;obyczaj|obyczaje;obyczajem|obyczajami;obyczaju|obyczajach;obyczaju|obyczaje					
+tok	course	masculine inanimate	tok|toki;toku|toków;tokowi|tokom;tok|toki;tokiem|tokami;toku|tokach;toku|toki					
+szafka	cupboard	feminine	szafka|szafki;szafki|szafek;szafce|szafkom;szafkę|szafki;szafką|szafkami;szafce|szafkach;szafko|szafki					
+szefowa	female boss	feminine	szefowa|szefowe;szefowej|szefowych;szefowej|szefowym;szefową|szefowe;szefową|szefowymi;szefowej|szefowych;szefowo|szefowe					
+rolnictwo	agriculture	neuter	rolnictwo|rolnictwa;rolnictwa|rolnictw;rolnictwu|rolnictwom;rolnictwo|rolnictwa;rolnictwem|rolnictwami;rolnictwie|rolnictwach;rolnictwo|rolnictwa					
+akceptacja	acceptance	feminine	akceptacja|akceptacje;akceptacji|akceptacji;akceptacji|akceptacjom;akceptację|akceptacje;akceptacją|akceptacjami;akceptacji|akceptacjach;akceptacjo|akceptacje					
+przodek	ancestor	masculine personal	przodek|przodkowie;przodka|przodków;przodkowi|przodkom;przodka|przodków;przodkiem|przodkami;przodku|przodkach;przodku|przodkowie					
+powaga	seriousness	feminine	powaga|powagi;powagi|powag;powadze|powagom;powagę|powagi;powagą|powagami;powadze|powagach;powago|powagi					
+hierarchia	hierarchy	feminine	hierarchia|hierarchie;hierarchii|hierarchii;hierarchii|hierarchiom;hierarchię|hierarchie;hierarchią|hierarchiami;hierarchii|hierarchiach;hierarchio|hierarchie					
+plakat	poster	masculine inanimate	plakat|plakaty;plakatu|plakatów;plakatowi|plakatom;plakat|plakaty;plakatem|plakatami;plakacie|plakatach;plakacie|plakaty					
+ratunek	salvation	masculine inanimate	ratunek|ratunki;ratunku|ratunków;ratunkowi|ratunkom;ratunek|ratunki;ratunkiem|ratunkami;ratunku|ratunkach;ratunku|ratunki					
+utrzymanie	maintenance	neuter	utrzymanie|utrzymania;utrzymania|utrzymań;utrzymaniu|utrzymaniom;utrzymanie|utrzymania;utrzymaniem|utrzymaniami;utrzymaniu|utrzymaniach;utrzymanie|utrzymania					
+komfort	comfort	masculine inanimate	komfort|komforty;komfortu|komfortów;komfortowi|komfortom;komfort|komforty;komfortem|komfortami;komforcie|komfortach;komforcie|komforty					
+kongres	congress	masculine inanimate	kongres|kongresy;kongresu|kongresów;kongresowi|kongresom;kongres|kongresy;kongresem|kongresami;kongresie|kongresach;kongresie|kongresy					
+wydawca	publisher	masculine personal	wydawca|wydawcy;wydawcy|wydawców;wydawcy|wydawcom;wydawcę|wydawców;wydawcą|wydawcami;wydawcy|wydawcach;wydawco|wydawcy					
+gotowość	readiness	feminine	gotowość|gotowości;gotowości|gotowości;gotowości|gotowościom;gotowość|gotowości;gotowością|gotowościami;gotowości|gotowościach;gotowości|gotowości					
+konsument	consumer	masculine personal	konsument|konsumenci;konsumenta|konsumentów;konsumentowi|konsumentom;konsumenta|konsumentów;konsumentem|konsumentami;konsumencie|konsumentach;konsumencie|konsumenci					
+taśma	tape	feminine	taśma|taśmy;taśmy|taśm;taśmie|taśmom;taśmę|taśmy;taśmą|taśmami;taśmie|taśmach;taśmo|taśmy					
+urodzenie	birth	neuter	urodzenie|urodzenia;urodzenia|urodzeń;urodzeniu|urodzeniom;urodzenie|urodzenia;urodzeniem|urodzeniami;urodzeniu|urodzeniach;urodzenie|urodzenia					
+runda	round	feminine	runda|rundy;rundy|rund;rundzie|rundom;rundę|rundy;rundą|rundami;rundzie|rundach;rundo|rundy					
+zadowolenie	satisfaction	neuter	zadowolenie|zadowolenia;zadowolenia|zadowoleń;zadowoleniu|zadowoleniom;zadowolenie|zadowolenia;zadowoleniem|zadowoleniami;zadowoleniu|zadowoleniach;zadowolenie|zadowolenia					
+tabela	table	feminine	tabela|tabele;tabeli|tabel;tabeli|tabelom;tabelę|tabele;tabelą|tabelami;tabeli|tabelach;tabelo|tabele					
+rezerwa	reserve	feminine	rezerwa|rezerwy;rezerwy|rezerw;rezerwie|rezerwom;rezerwę|rezerwy;rezerwą|rezerwami;rezerwie|rezerwach;rezerwo|rezerwy					
+ołtarz	altar	masculine inanimate	ołtarz|ołtarze;ołtarza|ołtarzy;ołtarzowi|ołtarzom;ołtarz|ołtarze;ołtarzem|ołtarzami;ołtarzu|ołtarzach;ołtarzu|ołtarze					
+wybrzeże	coast	neuter	wybrzeże|wybrzeża;wybrzeża|wybrzeży;wybrzeżu|wybrzeżom;wybrzeże|wybrzeża;wybrzeżem|wybrzeżami;wybrzeżu|wybrzeżach;wybrzeże|wybrzeża					
+chłód	cold	masculine inanimate	chłód|chłody;chłodu|chłodów;chłodowi|chłodom;chłód|chłody;chłodem|chłodami;chłodzie|chłodach;chłodzie|chłody					
+potwierdzenie	confirmation	neuter	potwierdzenie|potwierdzenia;potwierdzenia|potwierdzeń;potwierdzeniu|potwierdzeniom;potwierdzenie|potwierdzenia;potwierdzeniem|potwierdzeniami;potwierdzeniu|potwierdzeniach;potwierdzenie|potwierdzenia					
+skojarzenie	association	neuter	skojarzenie|skojarzenia;skojarzenia|skojarzeń;skojarzeniu|skojarzeniom;skojarzenie|skojarzenia;skojarzeniem|skojarzeniami;skojarzeniu|skojarzeniach;skojarzenie|skojarzenia					
+integracja	integration	feminine	integracja|integracje;integracji|integracji;integracji|integracjom;integrację|integracje;integracją|integracjami;integracji|integracjach;integracjo|integracje					
+otwór	hole	masculine inanimate	otwór|otwory;otworu|otworów;otworowi|otworom;otwór|otwory;otworem|otworami;otworze|otworach;otworze|otwory					
+uczestnictwo	participation	neuter	uczestnictwo|uczestnictwa;uczestnictwa|uczestnictw;uczestnictwu|uczestnictwom;uczestnictwo|uczestnictwa;uczestnictwem|uczestnictwami;uczestnictwie|uczestnictwach;uczestnictwo|uczestnictwa					
+przemówienie	speech	neuter	przemówienie|przemówienia;przemówienia|przemówień;przemówieniu|przemówieniom;przemówienie|przemówienia;przemówieniem|przemówieniami;przemówieniu|przemówieniach;przemówienie|przemówienia					
+podziemie	underground	neuter	podziemie|podziemia;podziemia|podziemi;podziemiu|podziemiom;podziemie|podziemia;podziemiem|podziemiami;podziemiu|podziemiach;podziemie|podziemia					
+siedzenie	seat	neuter	siedzenie|siedzenia;siedzenia|siedzeń;siedzeniu|siedzeniom;siedzenie|siedzenia;siedzeniem|siedzeniami;siedzeniu|siedzeniach;siedzenie|siedzenia					
+generacja	generation	feminine	generacja|generacje;generacji|generacji;generacji|generacjom;generację|generacje;generacją|generacjami;generacji|generacjach;generacjo|generacje					
+przechodzień	passer-by	masculine personal	przechodzień|przechodnie;przechodnia|przechodni;przechodniowi|przechodniom;przechodnia|przechodni;przechodniem|przechodniami;przechodniu|przechodniach;przechodniu|przechodnie					
+dama	lady	feminine	dama|damy;damy|dam;damie|damom;damę|damy;damą|damami;damie|damach;damo|damy					
+zestawienie	summary	neuter	zestawienie|zestawienia;zestawienia|zestawień;zestawieniu|zestawieniom;zestawienie|zestawienia;zestawieniem|zestawieniami;zestawieniu|zestawieniach;zestawienie|zestawienia					
+sztab	staff	masculine inanimate	sztab|sztaby;sztabu|sztabów;sztabowi|sztabom;sztab|sztaby;sztabem|sztabami;sztabie|sztabach;sztabie|sztaby					
+pożegnanie	farewell	neuter	pożegnanie|pożegnania;pożegnania|pożegnań;pożegnaniu|pożegnaniom;pożegnanie|pożegnania;pożegnaniem|pożegnaniami;pożegnaniu|pożegnaniach;pożegnanie|pożegnania					
+starosta	county head	masculine personal	starosta|starostowie;starosty|starostów;staroście|starostom;starostę|starostów;starostą|starostami;staroście|starostach;starosto|starostowie					
+poprzednik	predecessor	masculine personal	poprzednik|poprzednicy;poprzednika|poprzedników;poprzednikowi|poprzednikom;poprzednika|poprzedników;poprzednikiem|poprzednikami;poprzedniku|poprzednikach;poprzedniku|poprzednicy					
+obręb	area	masculine inanimate	obręb|obręby;obrębu|obrębów;obrębowi|obrębom;obręb|obręby;obrębem|obrębami;obrębie|obrębach;obrębie|obręby					
+sąsiedztwo	neighborhood	neuter	sąsiedztwo|sąsiedztwa;sąsiedztwa|sąsiedztw;sąsiedztwu|sąsiedztwom;sąsiedztwo|sąsiedztwa;sąsiedztwem|sąsiedztwami;sąsiedztwie|sąsiedztwach;sąsiedztwo|sąsiedztwa					
+odmowa	rejection	feminine	odmowa|odmowy;odmowy|odmów;odmowie|odmowom;odmowę|odmowy;odmową|odmowami;odmowie|odmowach;odmowo|odmowy					
+rzeźba	sculpture	feminine	rzeźba|rzeźby;rzeźby|rzeźb;rzeźbie|rzeźbom;rzeźbę|rzeźby;rzeźbą|rzeźbami;rzeźbie|rzeźbach;rzeźbo|rzeźby					
+okupacja	occupation	feminine	okupacja|okupacje;okupacji|okupacji;okupacji|okupacjom;okupację|okupacje;okupacją|okupacjami;okupacji|okupacjach;okupacjo|okupacje					
+biografia	biography	feminine	biografia|biografie;biografii|biografii;biografii|biografiom;biografię|biografie;biografią|biografiami;biografii|biografiach;biografio|biografie					
+bezrobocie	unemployment	neuter	bezrobocie|bezrobocia;bezrobocia|bezroboci;bezrobociu|bezrobociom;bezrobocie|bezrobocia;bezrobociem|bezrobociami;bezrobociu|bezrobociach;bezrobocie|bezrobocia					
+transformacja	transformation	feminine	transformacja|transformacje;transformacji|transformacji;transformacji|transformacjom;transformację|transformacje;transformacją|transformacjami;transformacji|transformacjach;transformacjo|transformacje					
+ugrupowanie	group	neuter	ugrupowanie|ugrupowania;ugrupowania|ugrupowań;ugrupowaniu|ugrupowaniom;ugrupowanie|ugrupowania;ugrupowaniem|ugrupowaniami;ugrupowaniu|ugrupowaniach;ugrupowanie|ugrupowania					
+odbicie	reflection	neuter	odbicie|odbicia;odbicia|odbić;odbiciu|odbiciom;odbicie|odbicia;odbiciem|odbiciami;odbiciu|odbiciach;odbicie|odbicia					
+blat	countertop	masculine inanimate	blat|blaty;blatu|blatów;blatowi|blatom;blat|blaty;blatem|blatami;blacie|blatach;blacie|blaty					
+chrześcijaństwo	christianity	neuter	chrześcijaństwo|chrześcijaństwa;chrześcijaństwa|chrześcijaństw;chrześcijaństwu|chrześcijaństwom;chrześcijaństwo|chrześcijaństwa;chrześcijaństwem|chrześcijaństwami;chrześcijaństwie|chrześcijaństwach;chrześcijaństwo|chrześcijaństwa					
+kontynuacja	continuation	feminine	kontynuacja|kontynuacje;kontynuacji|kontynuacji;kontynuacji|kontynuacjom;kontynuację|kontynuacje;kontynuacją|kontynuacjami;kontynuacji|kontynuacjach;kontynuacjo|kontynuacje					
+zgon	death	masculine inanimate	zgon|zgony;zgonu|zgonów;zgonowi|zgonom;zgon|zgony;zgonem|zgonami;zgonie|zgonach;zgonie|zgony					
+zderzenie	collision	neuter	zderzenie|zderzenia;zderzenia|zderzeń;zderzeniu|zderzeniom;zderzenie|zderzenia;zderzeniem|zderzeniami;zderzeniu|zderzeniach;zderzenie|zderzenia					
+baba	woman	feminine	baba|baby;baby|bab;babie|babom;babę|baby;babą|babami;babie|babach;babo|baby					
+porcja	portion	feminine	porcja|porcje;porcji|porcji;porcji|porcjom;porcję|porcje;porcją|porcjami;porcji|porcjach;porcjo|porcje					
+oburzenie	outrage	neuter	oburzenie|oburzenia;oburzenia|oburzeń;oburzeniu|oburzeniom;oburzenie|oburzenia;oburzeniem|oburzeniami;oburzeniu|oburzeniach;oburzenie|oburzenia					
+założyciel	founder	masculine personal	założyciel|założyciele;założyciela|założycieli;założycielowi|założycielom;założyciela|założycieli;założycielem|założycielami;założycielu|założycielach;założycielu|założyciele					
+kabina	cabin	feminine	kabina|kabiny;kabiny|kabin;kabinie|kabinom;kabinę|kabiny;kabiną|kabinami;kabinie|kabinach;kabino|kabiny					
+regulamin	regulations	masculine inanimate	regulamin|regulaminy;regulaminu|regulaminów;regulaminowi|regulaminom;regulamin|regulaminy;regulaminem|regulaminami;regulaminie|regulaminach;regulaminie|regulaminy					
+rodak	compatriot	masculine personal	rodak|rodacy;rodaka|rodaków;rodakowi|rodakom;rodaka|rodaków;rodakiem|rodakami;rodaku|rodakach;rodaku|rodacy					
+surowiec	raw material	masculine inanimate	surowiec|surowce;surowca|surowców;surowcowi|surowcom;surowiec|surowce;surowcem|surowcami;surowcu|surowcach;surowcu|surowce					
+wyrób	product	masculine inanimate	wyrób|wyroby;wyrobu|wyrobów;wyrobowi|wyrobom;wyrób|wyroby;wyrobem|wyrobami;wyrobie|wyrobach;wyrobie|wyroby					
+zarządzanie	management	neuter	zarządzanie|zarządzania;zarządzania|zarządzań;zarządzaniu|zarządzaniom;zarządzanie|zarządzania;zarządzaniem|zarządzaniami;zarządzaniu|zarządzaniach;zarządzanie|zarządzania					
+pojedynek	duel	masculine inanimate	pojedynek|pojedynki;pojedynku|pojedynków;pojedynkowi|pojedynkom;pojedynek|pojedynki;pojedynkiem|pojedynkami;pojedynku|pojedynkach;pojedynku|pojedynki					
+synek	little son	masculine personal	synek|synkowie;synka|synków;synkowi|synkom;synka|synków;synkiem|synkami;synku|synkach;synku|synkowie					
+szept	whisper	masculine inanimate	szept|szepty;szeptu|szeptów;szeptowi|szeptom;szept|szepty;szeptem|szeptami;szepcie|szeptach;szepcie|szepty					
+ustrój	system	masculine inanimate	ustrój|ustroje;ustroju|ustrojów;ustrojowi|ustrojom;ustrój|ustroje;ustrojem|ustrojami;ustroju|ustrojach;ustroju|ustroje					
+analityk	analyst	masculine personal	analityk|analitycy;analityka|analityków;analitykowi|analitykom;analityka|analityków;analitykiem|analitykami;analityku|analitykach;analityku|analitycy					
+okręg	district	masculine inanimate	okręg|okręgi;okręgu|okręgów;okręgowi|okręgom;okręg|okręgi;okręgiem|okręgami;okręgu|okręgach;okręgu|okręgi					
+strajk	strike	masculine inanimate	strajk|strajki;strajku|strajków;strajkowi|strajkom;strajk|strajki;strajkiem|strajkami;strajku|strajkach;strajku|strajki					
+zawieszenie	suspension	neuter	zawieszenie|zawieszenia;zawieszenia|zawieszeń;zawieszeniu|zawieszeniom;zawieszenie|zawieszenia;zawieszeniem|zawieszeniami;zawieszeniu|zawieszeniach;zawieszenie|zawieszenia					
+starość	old age	feminine	starość|starości;starości|starości;starości|starościom;starość|starości;starością|starościami;starości|starościach;starości|starości					
+rama	frame	feminine	rama|ramy;ramy|ram;ramie|ramom;ramę|ramy;ramą|ramami;ramie|ramach;ramo|ramy					
+kochanek	lover	masculine personal	kochanek|kochankowie;kochanka|kochanków;kochankowi|kochankom;kochanka|kochanków;kochankiem|kochankami;kochanku|kochankach;kochanku|kochankowie					
+ogłoszenie	advertisement	neuter	ogłoszenie|ogłoszenia;ogłoszenia|ogłoszeń;ogłoszeniu|ogłoszeniom;ogłoszenie|ogłoszenia;ogłoszeniem|ogłoszeniami;ogłoszeniu|ogłoszeniach;ogłoszenie|ogłoszenia					
+druk	print	masculine inanimate	druk|druki;druku|druków;drukowi|drukom;druk|druki;drukiem|drukami;druku|drukach;druku|druki					
+uliczka	alley	feminine	uliczka|uliczki;uliczki|uliczek;uliczce|uliczkom;uliczkę|uliczki;uliczką|uliczkami;uliczce|uliczkach;uliczko|uliczki					
+dotyk	touch	masculine inanimate	dotyk|dotyki;dotyku|dotyków;dotykowi|dotykom;dotyk|dotyki;dotykiem|dotykami;dotyku|dotykach;dotyku|dotyki					
+obrażenie	insult	neuter	obrażenie|obrażenia;obrażenia|obrażeń;obrażeniu|obrażeniom;obrażenie|obrażenia;obrażeniem|obrażeniami;obrażeniu|obrażeniach;obrażenie|obrażenia					
+impuls	impulse	masculine inanimate	impuls|impulsy;impulsu|impulsów;impulsowi|impulsom;impuls|impulsy;impulsem|impulsami;impulsie|impulsach;impulsie|impulsy					
+obrady	proceedings	plural only	|obrady;|obrad;|obradom;|obrady;|obradami;|obradach;|obrady					
+nauczanie	teaching	neuter	nauczanie|nauczania;nauczania|nauczań;nauczaniu|nauczaniom;nauczanie|nauczania;nauczaniem|nauczaniami;nauczaniu|nauczaniach;nauczanie|nauczania					
+doniesienie	report	neuter	doniesienie|doniesienia;doniesienia|doniesień;doniesieniu|doniesieniom;doniesienie|doniesienia;doniesieniem|doniesieniami;doniesieniu|doniesieniach;doniesienie|doniesienia					
+skraj	edge	masculine inanimate	skraj|skraje;skraju|skrajów;skrajowi|skrajom;skraj|skraje;skrajem|skrajami;skraju|skrajach;skraju|skraje					
+kopia	copy	feminine	kopia|kopie;kopii|kopii;kopii|kopiom;kopię|kopie;kopią|kopiami;kopii|kopiach;kopio|kopie					
+zebranie	meeting	neuter	zebranie|zebrania;zebrania|zebrań;zebraniu|zebraniom;zebranie|zebrania;zebraniem|zebraniami;zebraniu|zebraniach;zebranie|zebrania					
+motor	motorcycle	masculine inanimate	motor|motory;motoru|motorów;motorowi|motorom;motor|motory;motorem|motorami;motorze|motorach;motorze|motory					
+stereotyp	stereotype	masculine inanimate	stereotyp|stereotypy;stereotypu|stereotypów;stereotypowi|stereotypom;stereotyp|stereotypy;stereotypem|stereotypami;stereotypie|stereotypach;stereotypie|stereotypy					
+podłoże	substrate	neuter	podłoże|podłoża;podłoża|podłoży;podłożu|podłożom;podłoże|podłoża;podłożem|podłożami;podłożu|podłożach;podłoże|podłoża					
+limit	limit	masculine inanimate	limit|limity;limitu|limitów;limitowi|limitom;limit|limity;limitem|limitami;limicie|limitach;limicie|limity					
+zapał	enthusiasm	masculine inanimate	zapał|zapały;zapału|zapałów;zapałowi|zapałom;zapał|zapały;zapałem|zapałami;zapale|zapałach;zapale|zapały					
+zapotrzebowanie	demand	neuter	zapotrzebowanie|zapotrzebowania;zapotrzebowania|zapotrzebowań;zapotrzebowaniu|zapotrzebowaniom;zapotrzebowanie|zapotrzebowania;zapotrzebowaniem|zapotrzebowaniami;zapotrzebowaniu|zapotrzebowaniach;zapotrzebowanie|zapotrzebowania					
+rocznik	vintage	masculine inanimate	rocznik|roczniki;rocznika|roczników;rocznikowi|rocznikom;rocznik|roczniki;rocznikiem|rocznikami;roczniku|rocznikach;roczniku|roczniki					
+zaburzenie	disorder	neuter	zaburzenie|zaburzenia;zaburzenia|zaburzeń;zaburzeniu|zaburzeniom;zaburzenie|zaburzenia;zaburzeniem|zaburzeniami;zaburzeniu|zaburzeniach;zaburzenie|zaburzenia					
+korespondencja	correspondence	feminine	korespondencja|korespondencje;korespondencji|korespondencji;korespondencji|korespondencjom;korespondencję|korespondencje;korespondencją|korespondencjami;korespondencji|korespondencjach;korespondencjo|korespondencje					
+zapytanie	request	neuter	zapytanie|zapytania;zapytania|zapytań;zapytaniu|zapytaniom;zapytanie|zapytania;zapytaniem|zapytaniami;zapytaniu|zapytaniach;zapytanie|zapytania					
+stado	herd	neuter	stado|stada;stada|stad;stadu|stadom;stado|stada;stadem|stadami;stadzie|stadach;stado|stada					
+zniszczenie	destruction	neuter	zniszczenie|zniszczenia;zniszczenia|zniszczeń;zniszczeniu|zniszczeniom;zniszczenie|zniszczenia;zniszczeniem|zniszczeniami;zniszczeniu|zniszczeniach;zniszczenie|zniszczenia					
+oświata	education	feminine	oświata|oświaty;oświaty|oświat;oświacie|oświatom;oświatę|oświaty;oświatą|oświatami;oświacie|oświatach;oświato|oświaty					
+małżonek	spouse	masculine personal	małżonek|małżonkowie;małżonka|małżonków;małżonkowi|małżonkom;małżonka|małżonków;małżonkiem|małżonkami;małżonku|małżonkach;małżonku|małżonkowie					
+kręgosłup	spine	masculine inanimate	kręgosłup|kręgosłupy;kręgosłupa|kręgosłupów;kręgosłupowi|kręgosłupom;kręgosłup|kręgosłupy;kręgosłupem|kręgosłupami;kręgosłupie|kręgosłupach;kręgosłupie|kręgosłupy					
+ciśnienie	blood pressure	neuter	ciśnienie|ciśnienia;ciśnienia|ciśnień;ciśnieniu|ciśnieniom;ciśnienie|ciśnienia;ciśnieniem|ciśnieniami;ciśnieniu|ciśnieniach;ciśnienie|ciśnienia					
+równość	equality	feminine	równość|równości;równości|równości;równości|równościom;równość|równości;równością|równościami;równości|równościach;równości|równości					
+mieszkanka	resident	feminine	mieszkanka|mieszkanki;mieszkanki|mieszkanek;mieszkance|mieszkankom;mieszkankę|mieszkanki;mieszkanką|mieszkankami;mieszkance|mieszkankach;mieszkanko|mieszkanki					
+giełda	stock market	feminine	giełda|giełdy;giełdy|giełd;giełdzie|giełdom;giełdę|giełdy;giełdą|giełdami;giełdzie|giełdach;giełdo|giełdy					
+zagłada	destruction	feminine	zagłada|zagłady;zagłady|zagład;zagładzie|zagładom;zagładę|zagłady;zagładą|zagładami;zagładzie|zagładach;zagłado|zagłady					
+niezależność	independence	feminine	niezależność|niezależności;niezależności|niezależności;niezależności|niezależnościom;niezależność|niezależności;niezależnością|niezależnościami;niezależności|niezależnościach;niezależności|niezależności					
+napęd	drive	masculine inanimate	napęd|napędy;napędu|napędów;napędowi|napędom;napęd|napędy;napędem|napędami;napędzie|napędach;napędzie|napędy					
+obserwator	observer	masculine personal	obserwator|obserwatorowie;obserwatora|obserwatorów;obserwatorowi|obserwatorom;obserwatora|obserwatorów;obserwatorem|obserwatorami;obserwatorze|obserwatorach;obserwatorze|obserwatorowie					
+fascynacja	fascination	feminine	fascynacja|fascynacje;fascynacji|fascynacji;fascynacji|fascynacjom;fascynację|fascynacje;fascynacją|fascynacjami;fascynacji|fascynacjach;fascynacjo|fascynacje					
+kronika	chronicle	feminine	kronika|kroniki;kroniki|kronik;kronice|kronikom;kronikę|kroniki;kroniką|kronikami;kronice|kronikach;kroniko|kroniki					
+taras	terrace	masculine inanimate	taras|tarasy;tarasu|tarasów;tarasowi|tarasom;taras|tarasy;tarasem|tarasami;tarasie|tarasach;tarasie|tarasy					
+biznesmen	businessman	masculine personal	biznesmen|biznesmeni;biznesmena|biznesmenów;biznesmenowi|biznesmenom;biznesmena|biznesmenów;biznesmenem|biznesmenami;biznesmenie|biznesmenach;biznesmenie|biznesmeni					
+stworzenie	creature	neuter	stworzenie|stworzenia;stworzenia|stworzeń;stworzeniu|stworzeniom;stworzenie|stworzenia;stworzeniem|stworzeniami;stworzeniu|stworzeniach;stworzenie|stworzenia					
+odczucie	feeling	neuter	odczucie|odczucia;odczucia|odczuć;odczuciu|odczuciom;odczucie|odczucia;odczuciem|odczuciami;odczuciu|odczuciach;odczucie|odczucia					
+demonstracja	demonstration	feminine	demonstracja|demonstracje;demonstracji|demonstracji;demonstracji|demonstracjom;demonstrację|demonstracje;demonstracją|demonstracjami;demonstracji|demonstracjach;demonstracjo|demonstracje					
+dynamika	dynamics	feminine	dynamika|dynamiki;dynamiki|dynamik;dynamice|dynamikom;dynamikę|dynamiki;dynamiką|dynamikami;dynamice|dynamikach;dynamiko|dynamiki					
+maluch	toddler	masculine animate	maluch|maluchy;malucha|maluchów;maluchowi|maluchom;malucha|maluchy;maluchem|maluchami;maluchu|maluchach;maluchu|maluchy					
+wiceminister	deputy minister	masculine personal	wiceminister|wiceministrowie;wiceministra|wiceministrów;wiceministrowi|wiceministrom;wiceministra|wiceministrów;wiceministrem|wiceministrami;wiceministrze|wiceministrach;wiceministrze|wiceministrowie					
+staż	internship	masculine inanimate	staż|staże;stażu|staży;stażowi|stażom;staż|staże;stażem|stażami;stażu|stażach;stażu|staże					
+gmach	building	masculine inanimate	gmach|gmachy;gmachu|gmachów;gmachowi|gmachom;gmach|gmachy;gmachem|gmachami;gmachu|gmachach;gmachu|gmachy					
+rys	feature	masculine inanimate	rys|rysy;rysu|rysów;rysowi|rysom;rys|rysy;rysem|rysami;rysie|rysach;rysie|rysy					
+trumna	coffin	feminine	trumna|trumny;trumny|trumien;trumnie|trumnom;trumnę|trumny;trumną|trumnami;trumnie|trumnach;trumno|trumny					
+klinika	clinic	feminine	klinika|kliniki;kliniki|klinik;klinice|klinikom;klinikę|kliniki;kliniką|klinikami;klinice|klinikach;kliniko|kliniki					
+debiut	debut	masculine inanimate	debiut|debiuty;debiutu|debiutów;debiutowi|debiutom;debiut|debiuty;debiutem|debiutami;debiucie|debiutach;debiucie|debiuty					
+wiceprezes	vice president	masculine personal	wiceprezes|wiceprezesi;wiceprezesa|wiceprezesów;wiceprezesowi|wiceprezesom;wiceprezesa|wiceprezesów;wiceprezesem|wiceprezesami;wiceprezesie|wiceprezesach;wiceprezesie|wiceprezesi					
+właścicielka	owner	feminine	właścicielka|właścicielki;właścicielki|właścicielek;właścicielce|właścicielkom;właścicielkę|właścicielki;właścicielką|właścicielkami;właścicielce|właścicielkach;właścicielko|właścicielki					
+laboratorium	laboratory	neuter	laboratorium|laboratoria;laboratorium|laboratoriów;laboratorium|laboratoriom;laboratorium|laboratoria;laboratorium|laboratoriami;laboratorium|laboratoriach;laboratorium|laboratoria					
+traktat	treaty	masculine inanimate	traktat|traktaty;traktatu|traktatów;traktatowi|traktatom;traktat|traktaty;traktatem|traktatami;traktacie|traktatach;traktacie|traktaty					
+dziennikarka	journalist	feminine	dziennikarka|dziennikarki;dziennikarki|dziennikarek;dziennikarce|dziennikarkom;dziennikarkę|dziennikarki;dziennikarką|dziennikarkami;dziennikarce|dziennikarkach;dziennikarko|dziennikarki					
+sojusznik	ally	masculine personal	sojusznik|sojusznicy;sojusznika|sojuszników;sojusznikowi|sojusznikom;sojusznika|sojuszników;sojusznikiem|sojusznikami;sojuszniku|sojusznikach;sojuszniku|sojusznicy					
+magia	magic	feminine	magia|magie;magii|magii;magii|magiom;magię|magie;magią|magiami;magii|magiach;magio|magie					
+wyróżnienie	distinction	neuter	wyróżnienie|wyróżnienia;wyróżnienia|wyróżnień;wyróżnieniu|wyróżnieniom;wyróżnienie|wyróżnienia;wyróżnieniem|wyróżnieniami;wyróżnieniu|wyróżnieniach;wyróżnienie|wyróżnienia					
+zakażenie	infection	neuter	zakażenie|zakażenia;zakażenia|zakażeń;zakażeniu|zakażeniom;zakażenie|zakażenia;zakażeniem|zakażeniami;zakażeniu|zakażeniach;zakażenie|zakażenia					
+ranking	ranking	masculine inanimate	ranking|rankingi;rankingu|rankingów;rankingowi|rankingom;ranking|rankingi;rankingiem|rankingami;rankingu|rankingach;rankingu|rankingi					
+ewolucja	evolution	feminine	ewolucja|ewolucje;ewolucji|ewolucji;ewolucji|ewolucjom;ewolucję|ewolucje;ewolucją|ewolucjami;ewolucji|ewolucjach;ewolucjo|ewolucje					
+prawdopodobieństwo	probability	neuter	prawdopodobieństwo|prawdopodobieństwa;prawdopodobieństwa|prawdopodobieństw;prawdopodobieństwu|prawdopodobieństwom;prawdopodobieństwo|prawdopodobieństwa;prawdopodobieństwem|prawdopodobieństwami;prawdopodobieństwie|prawdopodobieństwach;prawdopodobieństwo|prawdopodobieństwa					
+delegacja	delegation	feminine	delegacja|delegacje;delegacji|delegacji;delegacji|delegacjom;delegację|delegacje;delegacją|delegacjami;delegacji|delegacjach;delegacjo|delegacje					
+przynależność	membership	feminine	przynależność|przynależności;przynależności|przynależności;przynależności|przynależnościom;przynależność|przynależności;przynależnością|przynależnościami;przynależności|przynależnościach;przynależności|przynależności					
+kontrowersja	controversy	feminine	kontrowersja|kontrowersje;kontrowersji|kontrowersji;kontrowersji|kontrowersjom;kontrowersję|kontrowersje;kontrowersją|kontrowersjami;kontrowersji|kontrowersjach;kontrowersjo|kontrowersje					
+nowelizacja	amendment	feminine	nowelizacja|nowelizacje;nowelizacji|nowelizacji;nowelizacji|nowelizacjom;nowelizację|nowelizacje;nowelizacją|nowelizacjami;nowelizacji|nowelizacjach;nowelizacjo|nowelizacje					
+zastosowanie	application	neuter	zastosowanie|zastosowania;zastosowania|zastosowań;zastosowaniu|zastosowaniom;zastosowanie|zastosowania;zastosowaniem|zastosowaniami;zastosowaniu|zastosowaniach;zastosowanie|zastosowania					
+stos	stack	masculine inanimate	stos|stosy;stosu|stosów;stosowi|stosom;stos|stosy;stosem|stosami;stosie|stosach;stosie|stosy					
+orientacja	orientation	feminine	orientacja|orientacje;orientacji|orientacji;orientacji|orientacjom;orientację|orientacje;orientacją|orientacjami;orientacji|orientacjach;orientacjo|orientacje					
+odbudowa	reconstruction	feminine	odbudowa|odbudowy;odbudowy|odbudów;odbudowie|odbudowom;odbudowę|odbudowy;odbudową|odbudowami;odbudowie|odbudowach;odbudowo|odbudowy					
+węzeł	knot	masculine inanimate	węzeł|węzły;węzła|węzłów;węzłowi|węzłom;węzeł|węzły;węzłem|węzłami;węźle|węzłach;węźle|węzły					
+departament	department	masculine inanimate	departament|departamenty;departamentu|departamentów;departamentowi|departamentom;departament|departamenty;departamentem|departamentami;departamencie|departamentach;departamencie|departamenty					
+zalecenie	recommendation	neuter	zalecenie|zalecenia;zalecenia|zaleceń;zaleceniu|zaleceniom;zalecenie|zalecenia;zaleceniem|zaleceniami;zaleceniu|zaleceniach;zalecenie|zalecenia					
+ambasador	ambassador	masculine personal	ambasador|ambasadorowie;ambasadora|ambasadorów;ambasadorowi|ambasadorom;ambasadora|ambasadorów;ambasadorem|ambasadorami;ambasadorze|ambasadorach;ambasadorze|ambasadorowie					
+odpowiednik	equivalent	masculine personal	odpowiednik|odpowiednicy;odpowiednika|odpowiedników;odpowiednikowi|odpowiednikom;odpowiednika|odpowiedników;odpowiednikiem|odpowiednikami;odpowiedniku|odpowiednikach;odpowiedniku|odpowiednicy					
+dech	breath	masculine inanimate	dech|tchy;tchu|tchów;tchowi|tchom;dech|tchy;tchem|tchami;tchu|tchach;tchu|tchy					
+rura	pipe	feminine	rura|rury;rury|rur;rurze|rurom;rurę|rury;rurą|rurami;rurze|rurach;ruro|rury					
+ekonomia	economy	feminine	ekonomia|ekonomie;ekonomii|ekonomii;ekonomii|ekonomiom;ekonomię|ekonomie;ekonomią|ekonomiami;ekonomii|ekonomiach;ekonomio|ekonomie					
+dofinansowanie	subsidy	neuter	dofinansowanie|dofinansowania;dofinansowania|dofinansowań;dofinansowaniu|dofinansowaniom;dofinansowanie|dofinansowania;dofinansowaniem|dofinansowaniami;dofinansowaniu|dofinansowaniach;dofinansowanie|dofinansowania					
+cegła	brick	feminine	cegła|cegły;cegły|cegieł;cegle|cegłom;cegłę|cegły;cegłą|cegłami;cegle|cegłach;cegło|cegły					
+latarnia	streetlight	feminine	latarnia|latarnie;latarni|latarni;latarni|latarniom;latarnię|latarnie;latarnią|latarniami;latarni|latarniach;latarnio|latarnie					
+odsłona	episode	feminine	odsłona|odsłony;odsłony|odsłon;odsłonie|odsłonom;odsłonę|odsłony;odsłoną|odsłonami;odsłonie|odsłonach;odsłono|odsłony					
+pokusa	temptation	feminine	pokusa|pokusy;pokusy|pokus;pokusie|pokusom;pokusę|pokusy;pokusą|pokusami;pokusie|pokusach;pokuso|pokusy					
+emigracja	emigration	feminine	emigracja|emigracje;emigracji|emigracji;emigracji|emigracjom;emigrację|emigracje;emigracją|emigracjami;emigracji|emigracjach;emigracjo|emigracje					
+publicysta	columnist	masculine personal	publicysta|publicyści;publicysty|publicystów;publicyście|publicystom;publicystę|publicystów;publicystą|publicystami;publicyście|publicystach;publicysto|publicyści					
+ładunek	charge	masculine inanimate	ładunek|ładunki;ładunku|ładunków;ładunkowi|ładunkom;ładunek|ładunki;ładunkiem|ładunkami;ładunku|ładunkach;ładunku|ładunki					
+kwalifikacje	qualifications	plural only	|kwalifikacje;|kwalifikacji;|kwalifikacjom;|kwalifikacje;|kwalifikacjami;|kwalifikacjach;|kwalifikacje					
+detal	detail	masculine inanimate	detal|detale;detalu|detali;detalowi|detalom;detal|detale;detalem|detalami;detalu|detalach;detalu|detale					
+komisarz	commissioner	feminine	komisarz|komisarz;komisarz|komisarz;komisarz|komisarz;komisarz|komisarz;komisarz|komisarz;komisarz|komisarz;komisarz|komisarz					
+wagon	carriage	masculine inanimate	wagon|wagony;wagonu|wagonów;wagonowi|wagonom;wagon|wagony;wagonem|wagonami;wagonie|wagonach;wagonie|wagony					
+senator	senator	masculine personal	senator|senatorowie;senatora|senatorów;senatorowi|senatorom;senatora|senatorów;senatorem|senatorami;senatorze|senatorach;senatorze|senatorowie					
+groza	horror	feminine	groza|grozy;grozy|gróz;grozie|grozom;grozę|grozy;grozą|grozami;grozie|grozach;grozo|grozy					
+zamieszkanie	residence	neuter	zamieszkanie|zamieszkania;zamieszkania|zamieszkań;zamieszkaniu|zamieszkaniom;zamieszkanie|zamieszkania;zamieszkaniem|zamieszkaniami;zamieszkaniu|zamieszkaniach;zamieszkanie|zamieszkania					
+krata	bars	feminine	krata|kraty;kraty|krat;kracie|kratom;kratę|kraty;kratą|kratami;kracie|kratach;krato|kraty					
+egzystencja	existence	feminine	egzystencja|egzystencje;egzystencji|egzystencji;egzystencji|egzystencjom;egzystencję|egzystencje;egzystencją|egzystencjami;egzystencji|egzystencjach;egzystencjo|egzystencje					
+walor	value	masculine inanimate	walor|walory;waloru|walorów;walorowi|walorom;walor|walory;walorem|walorami;walorze|walorach;walorze|walory					
+odruch	reflex	masculine inanimate	odruch|odruchy;odruchu|odruchów;odruchowi|odruchom;odruch|odruchy;odruchem|odruchami;odruchu|odruchach;odruchu|odruchy					
+współczucie	compassion	neuter	współczucie|współczucia;współczucia|współczuć;współczuciu|współczuciom;współczucie|współczucia;współczuciem|współczuciami;współczuciu|współczuciach;współczucie|współczucia					
+obciążenie	burden	neuter	obciążenie|obciążenia;obciążenia|obciążeń;obciążeniu|obciążeniom;obciążenie|obciążenia;obciążeniem|obciążeniami;obciążeniu|obciążeniach;obciążenie|obciążenia					
+realia	reality	plural only	|realia;|realiów;|realiom;|realia;|realiami;|realiach;|realia					
+targi	fair	plural only	|targi;|targów;|targom;|targi;|targami;|targach;|targi					
+huk	bang	masculine inanimate	huk|huki;huku|huków;hukowi|hukom;huk|huki;hukiem|hukami;huku|hukach;huku|huki					
+namysł	thought	masculine inanimate	namysł|namysły;namysłu|namysłów;namysłowi|namysłom;namysł|namysły;namysłem|namysłami;namyśle|namysłach;namyśle|namysły					
+segment	segment	masculine inanimate	segment|segmenty;segmentu|segmentów;segmentowi|segmentom;segment|segmenty;segmentem|segmentami;segmencie|segmentach;segmencie|segmenty					
+mieszanka	mixture	feminine	mieszanka|mieszanki;mieszanki|mieszanek;mieszance|mieszankom;mieszankę|mieszanki;mieszanką|mieszankami;mieszance|mieszankach;mieszanko|mieszanki					
+pełnomocnik	representative	masculine personal	pełnomocnik|pełnomocnicy;pełnomocnika|pełnomocników;pełnomocnikowi|pełnomocnikom;pełnomocnika|pełnomocników;pełnomocnikiem|pełnomocnikami;pełnomocniku|pełnomocnikach;pełnomocniku|pełnomocnicy					
+sportowiec	athlete	masculine personal	sportowiec|sportowcy;sportowca|sportowców;sportowcowi|sportowcom;sportowca|sportowców;sportowcem|sportowcami;sportowcu|sportowcach;sportowcu|sportowcy					
+powiązanie	connection	neuter	powiązanie|powiązania;powiązania|powiązań;powiązaniu|powiązaniom;powiązanie|powiązania;powiązaniem|powiązaniami;powiązaniu|powiązaniach;powiązanie|powiązania					
+okrzyk	cry	masculine inanimate	okrzyk|okrzyki;okrzyku|okrzyków;okrzykowi|okrzykom;okrzyk|okrzyki;okrzykiem|okrzykami;okrzyku|okrzykach;okrzyku|okrzyki					
+intuicja	intuition	feminine	intuicja|intuicje;intuicji|intuicji;intuicji|intuicjom;intuicję|intuicje;intuicją|intuicjami;intuicji|intuicjach;intuicjo|intuicje					
+instynkt	instinct	masculine inanimate	instynkt|instynkty;instynktu|instynktów;instynktowi|instynktom;instynkt|instynkty;instynktem|instynktami;instynkcie|instynktach;instynkcie|instynkty					
+lokator	tenant	masculine personal	lokator|lokatorowie;lokatora|lokatorów;lokatorowi|lokatorom;lokatora|lokatorów;lokatorem|lokatorami;lokatorze|lokatorach;lokatorze|lokatorowie					
+sąsiadka	female neighbour	feminine	sąsiadka|sąsiadki;sąsiadki|sąsiadek;sąsiadce|sąsiadkom;sąsiadkę|sąsiadki;sąsiadką|sąsiadkami;sąsiadce|sąsiadkach;sąsiadko|sąsiadki					
+parkiet	dance floor	masculine inanimate	parkiet|parkiety;parkietu|parkietów;parkietowi|parkietom;parkiet|parkiety;parkietem|parkietami;parkiecie|parkietach;parkiecie|parkiety					
+korekta	correction	feminine	korekta|korekty;korekty|korekt;korekcie|korektom;korektę|korekty;korektą|korektami;korekcie|korektach;korekto|korekty					
+budowla	building	feminine	budowla|budowle;budowli|budowli;budowli|budowlom;budowlę|budowle;budowlą|budowlami;budowli|budowlach;budowlo|budowle					
+rówieśnik	peer	masculine personal	rówieśnik|rówieśnicy;rówieśnika|rówieśników;rówieśnikowi|rówieśnikom;rówieśnika|rówieśników;rówieśnikiem|rówieśnikami;rówieśniku|rówieśnikach;rówieśniku|rówieśnicy					
+rozbudowa	expansion	feminine	rozbudowa|rozbudowy;rozbudowy|rozbudów;rozbudowie|rozbudowom;rozbudowę|rozbudowy;rozbudową|rozbudowami;rozbudowie|rozbudowach;rozbudowo|rozbudowy					
+sprawność	fitness	feminine	sprawność|sprawności;sprawności|sprawności;sprawności|sprawnościom;sprawność|sprawności;sprawnością|sprawnościami;sprawności|sprawnościach;sprawności|sprawności					
+pojemnik	container	masculine inanimate	pojemnik|pojemniki;pojemnika|pojemników;pojemnikowi|pojemnikom;pojemnik|pojemniki;pojemnikiem|pojemnikami;pojemniku|pojemnikach;pojemniku|pojemniki					
+spółdzielnia	cooperative	feminine	spółdzielnia|spółdzielnie;spółdzielni|spółdzielni;spółdzielni|spółdzielniom;spółdzielnię|spółdzielnie;spółdzielnią|spółdzielniami;spółdzielni|spółdzielniach;spółdzielnio|spółdzielnie					
+tkanka	tissue	feminine	tkanka|tkanki;tkanki|tkanek;tkance|tkankom;tkankę|tkanki;tkanką|tkankami;tkance|tkankach;tkanko|tkanki					
+panowanie	rule	neuter	panowanie|panowania;panowania|panowań;panowaniu|panowaniom;panowanie|panowania;panowaniem|panowaniami;panowaniu|panowaniach;panowanie|panowania					
+krzew	shrub	masculine inanimate	krzew|krzewy;krzewu|krzewów;krzewowi|krzewom;krzew|krzewy;krzewem|krzewami;krzewie|krzewach;krzewie|krzewy					
+potomek	descendant	masculine personal	potomek|potomkowie;potomka|potomków;potomkowi|potomkom;potomka|potomków;potomkiem|potomkami;potomku|potomkach;potomku|potomkowie					
+atut	asset	masculine inanimate	atut|atuty;atutu|atutów;atutowi|atutom;atut|atuty;atutem|atutami;atucie|atutach;atucie|atuty					
+czułość	sensitivity	feminine	czułość|czułości;czułości|czułości;czułości|czułościom;czułość|czułości;czułością|czułościami;czułości|czułościach;czułości|czułości					
+dominacja	dominance	feminine	dominacja|dominacje;dominacji|dominacji;dominacji|dominacjom;dominację|dominacje;dominacją|dominacjami;dominacji|dominacjach;dominacjo|dominacje					
+naczelnik	head	masculine personal	naczelnik|naczelnicy;naczelnika|naczelników;naczelnikowi|naczelnikom;naczelnika|naczelników;naczelnikiem|naczelnikami;naczelniku|naczelnikach;naczelniku|naczelnicy					
+oszustwo	fraud	neuter	oszustwo|oszustwa;oszustwa|oszustw;oszustwu|oszustwom;oszustwo|oszustwa;oszustwem|oszustwami;oszustwie|oszustwach;oszustwo|oszustwa					
+nastawienie	attitude	neuter	nastawienie|nastawienia;nastawienia|nastawień;nastawieniu|nastawieniom;nastawienie|nastawienia;nastawieniem|nastawieniami;nastawieniu|nastawieniach;nastawienie|nastawienia					
+żywioł	element	masculine inanimate	żywioł|żywioły;żywiołu|żywiołów;żywiołowi|żywiołom;żywioł|żywioły;żywiołem|żywiołami;żywiole|żywiołach;żywiole|żywioły					
+pseudonim	nickname	masculine inanimate	pseudonim|pseudonimy;pseudonimu|pseudonimów;pseudonimowi|pseudonimom;pseudonim|pseudonimy;pseudonimem|pseudonimami;pseudonimie|pseudonimach;pseudonimie|pseudonimy					
+partnerka	partner	feminine	partnerka|partnerki;partnerki|partnerek;partnerce|partnerkom;partnerkę|partnerki;partnerką|partnerkami;partnerce|partnerkach;partnerko|partnerki					
+karabin	rifle	masculine inanimate	karabin|karabiny;karabina|karabinów;karabinowi|karabinom;karabin|karabiny;karabinem|karabinami;karabinie|karabinach;karabinie|karabiny					
+emeryt	retiree	masculine personal	emeryt|emeryci;emeryta|emerytów;emerytowi|emerytom;emeryta|emerytów;emerytem|emerytami;emerycie|emerytach;emerycie|emeryci					
+guzik	button	masculine inanimate	guzik|guziki;guzika|guzików;guzikowi|guzikom;guzik|guziki;guzikiem|guzikami;guziku|guzikach;guziku|guziki					
+kumpel	buddy	masculine personal	kumpel|kumple;kumpla|kumpli;kumplowi|kumplom;kumpla|kumpli;kumplem|kumplami;kumplu|kumplach;kumplu|kumple					
+fachowiec	professional	masculine personal	fachowiec|fachowcy;fachowca|fachowców;fachowcowi|fachowcom;fachowca|fachowców;fachowcem|fachowcami;fachowcu|fachowcach;fachowcu|fachowcy					
+artystka	artist	feminine	artystka|artystki;artystki|artystek;artystce|artystkom;artystkę|artystki;artystką|artystkami;artystce|artystkach;artystko|artystki					
+wzruszenie	emotion	neuter	wzruszenie|wzruszenia;wzruszenia|wzruszeń;wzruszeniu|wzruszeniom;wzruszenie|wzruszenia;wzruszeniem|wzruszeniami;wzruszeniu|wzruszeniach;wzruszenie|wzruszenia					
+żyła	vein	feminine	żyła|żyły;żyły|żył;żyle|żyłom;żyłę|żyły;żyłą|żyłami;żyle|żyłach;żyło|żyły					
+ogrodzenie	fence	neuter	ogrodzenie|ogrodzenia;ogrodzenia|ogrodzeń;ogrodzeniu|ogrodzeniom;ogrodzenie|ogrodzenia;ogrodzeniem|ogrodzeniami;ogrodzeniu|ogrodzeniach;ogrodzenie|ogrodzenia					
+córeczka	little daughter	feminine	córeczka|córeczki;córeczki|córeczek;córeczce|córeczkom;córeczkę|córeczki;córeczką|córeczkami;córeczce|córeczkach;córeczko|córeczki					
+sankcja	sanction	feminine	sankcja|sankcje;sankcji|sankcji;sankcji|sankcjom;sankcję|sankcje;sankcją|sankcjami;sankcji|sankcjach;sankcjo|sankcje					
+meta	finish line	feminine	meta|mety;mety|met;mecie|metom;metę|mety;metą|metami;mecie|metach;meto|mety					
+pojemność	capacity	feminine	pojemność|pojemności;pojemności|pojemności;pojemności|pojemnościom;pojemność|pojemności;pojemnością|pojemnościami;pojemności|pojemnościach;pojemności|pojemności					
+pęd	momentum	masculine inanimate	pęd|pędy;pędu|pędów;pędowi|pędom;pęd|pędy;pędem|pędami;pędzie|pędach;pędzie|pędy					
+aborcja	abortion	feminine	aborcja|aborcje;aborcji|aborcji;aborcji|aborcjom;aborcję|aborcje;aborcją|aborcjami;aborcji|aborcjach;aborcjo|aborcje					
+demon	demon	masculine animate	demon|demony;demona|demonów;demonowi|demonom;demona|demony;demonem|demonami;demonie|demonach;demonie|demony					
+posesja	property	feminine	posesja|posesje;posesji|posesji;posesji|posesjom;posesję|posesje;posesją|posesjami;posesji|posesjach;posesjo|posesje					
+oświetlenie	lighting	neuter	oświetlenie|oświetlenia;oświetlenia|oświetleń;oświetleniu|oświetleniom;oświetlenie|oświetlenia;oświetleniem|oświetleniami;oświetleniu|oświetleniach;oświetlenie|oświetlenia					
+optymizm	optimism	masculine inanimate	optymizm|optymizmy;optymizmu|optymizmów;optymizmowi|optymizmom;optymizm|optymizmy;optymizmem|optymizmami;optymizmie|optymizmach;optymizmie|optymizmy					
+kapitalizm	capitalism	masculine inanimate	kapitalizm|kapitalizmy;kapitalizmu|kapitalizmów;kapitalizmowi|kapitalizmom;kapitalizm|kapitalizmy;kapitalizmem|kapitalizmami;kapitalizmie|kapitalizmach;kapitalizmie|kapitalizmy					
+pył	dust	masculine inanimate	pył|pyły;pyłu|pyłów;pyłowi|pyłom;pył|pyły;pyłem|pyłami;pyle|pyłach;pyle|pyły					
+proza	prose	feminine	proza|prozy;prozy|próz;prozie|prozom;prozę|prozy;prozą|prozami;prozie|prozach;prozo|prozy					
+epizod	episode	masculine inanimate	epizod|epizody;epizodu|epizodów;epizodowi|epizodom;epizod|epizody;epizodem|epizodami;epizodzie|epizodach;epizodzie|epizody					
+kochanka	mistress	feminine	kochanka|kochanki;kochanki|kochanek;kochance|kochankom;kochankę|kochanki;kochanką|kochankami;kochance|kochankach;kochanko|kochanki					
+knajpa	pub	feminine	knajpa|knajpy;knajpy|knajp;knajpie|knajpom;knajpę|knajpy;knajpą|knajpami;knajpie|knajpach;knajpo|knajpy					
+monitoring	monitoring	masculine inanimate	monitoring|monitoringi;monitoringu|monitoringów;monitoringowi|monitoringom;monitoring|monitoringi;monitoringiem|monitoringami;monitoringu|monitoringach;monitoringu|monitoringi					
+patron	patron saint	masculine personal	patron|patroni;patrona|patronów;patronowi|patronom;patrona|patronów;patronem|patronami;patronie|patronach;patronie|patroni					
+ozdoba	decoration	feminine	ozdoba|ozdoby;ozdoby|ozdób;ozdobie|ozdobom;ozdobę|ozdoby;ozdobą|ozdobami;ozdobie|ozdobach;ozdobo|ozdoby					
+politechnika	polytechnic	feminine	politechnika|politechniki;politechniki|politechnik;politechnice|politechnikom;politechnikę|politechniki;politechniką|politechnikami;politechnice|politechnikach;politechniko|politechniki					
+oznaka	sign	feminine	oznaka|oznaki;oznaki|oznak;oznace|oznakom;oznakę|oznaki;oznaką|oznakami;oznace|oznakach;oznako|oznaki					
+posada	job	feminine	posada|posady;posady|posad;posadzie|posadom;posadę|posady;posadą|posadami;posadzie|posadach;posado|posady					
+kawał	joke	masculine inanimate	kawał|kawały;kawała|kawałów;kawałowi|kawałom;kawał|kawały;kawałem|kawałami;kawale|kawałach;kawale|kawały					
+izolacja	isolation	feminine	izolacja|izolacje;izolacji|izolacji;izolacji|izolacjom;izolację|izolacje;izolacją|izolacjami;izolacji|izolacjach;izolacjo|izolacje					
+sondaż	poll	masculine inanimate	sondaż|sondaże;sondażu|sondaży;sondażowi|sondażom;sondaż|sondaże;sondażem|sondażami;sondażu|sondażach;sondażu|sondaże					
+reportaż	reportage	masculine inanimate	reportaż|reportaże;reportażu|reportaży;reportażowi|reportażom;reportaż|reportaże;reportażem|reportażami;reportażu|reportażach;reportażu|reportaże					
+wspólnik	partner	masculine personal	wspólnik|wspólnicy;wspólnika|wspólników;wspólnikowi|wspólnikom;wspólnika|wspólników;wspólnikiem|wspólnikami;wspólniku|wspólnikach;wspólniku|wspólnicy					
+niewola	slavery	feminine	niewola|niewole;niewoli|niewoli;niewoli|niewolom;niewolę|niewole;niewolą|niewolami;niewoli|niewolach;niewolo|niewole					
+fenomen	phenomenon	masculine inanimate	fenomen|fenomeny;fenomenu|fenomenów;fenomenowi|fenomenom;fenomen|fenomeny;fenomenem|fenomenami;fenomenie|fenomenach;fenomenie|fenomeny					
+drobiazg	trifle	masculine inanimate	drobiazg|drobiazgi;drobiazgu|drobiazgów;drobiazgowi|drobiazgom;drobiazg|drobiazgi;drobiazgiem|drobiazgami;drobiazgu|drobiazgach;drobiazgu|drobiazgi					
+obieg	circulation	masculine inanimate	obieg|obiegi;obiegu|obiegów;obiegowi|obiegom;obieg|obiegi;obiegiem|obiegami;obiegu|obiegach;obiegu|obiegi					
+bagażnik	trunk	masculine inanimate	bagażnik|bagażniki;bagażnika|bagażników;bagażnikowi|bagażnikom;bagażnik|bagażniki;bagażnikiem|bagażnikami;bagażniku|bagażnikach;bagażniku|bagażniki					
+wjazd	entrance	masculine inanimate	wjazd|wjazdy;wjazdu|wjazdów;wjazdowi|wjazdom;wjazd|wjazdy;wjazdem|wjazdami;wjeździe|wjazdach;wjeździe|wjazdy					
+eksport	exports	masculine inanimate	eksport|eksporty;eksportu|eksportów;eksportowi|eksportom;eksport|eksporty;eksportem|eksportami;eksporcie|eksportach;eksporcie|eksporty					
 dobry	good			dobry	dobra	dobre	dobrzy	dobre
 nowy	new			nowy	nowa	nowe	nowi	nowe
 duży	big			duży	duża	duże	duzi	duże
@@ -2562,7 +3406,6 @@ twój	your			twój	twa	twe	twoi	twe
 nasz	our			nasz	nasza	nasze	nasi	nasze
 francuski	french			francuski	francuska	francuskie	francuscy	francuskie
 jakiś	some			jakiś	jakaś	jakieś	jacyś	jakieś
-ulubiony	favourite			ulubiony	ulubiona	ulubione	ulubieni	ulubione
 tamten	that			tamten	tamta	tamto	tamci	tamte
 wielki	big			wielki	wielka	wielkie	wielcy	wielkie
 zeszły	last			zeszły	zeszła	zeszłe	zeszli	zeszłe
@@ -2577,6 +3420,7 @@ przyszły	next			przyszły	przyszła	przyszłe	przyszli	przyszłe
 kolejny	next			kolejny	kolejna	kolejne	kolejni	kolejne
 niemiecki	german			niemiecki	niemiecka	niemieckie	niemieccy	niemieckie
 winny	guilty			winny	winna	winne	winni	winne
+ulubiony	favourite			ulubiony	ulubiona	ulubione	ulubieni	ulubione
 spory	a lot			spory	spora	spore	sporzy	spore
 świetny	great			świetny	świetna	świetne	świetni	świetne
 wasz	your			wasz	wasza	wasze	wasi	wasze
@@ -2806,7 +3650,6 @@ liczny	numerous			liczny	liczna	liczne	liczni	liczne
 narciarski	ski			narciarski	narciarska	narciarskie	narciarscy	narciarskie
 niegrzeczny	rude			niegrzeczny	niegrzeczna	niegrzeczne	niegrzeczni	niegrzeczne
 bezrobotny	unemployed			bezrobotny	bezrobotna	bezrobotne	bezrobotni	bezrobotne
-trujący	poisonous			trujący	trująca	trujące	trujący	trujące
 zalać	drunk			zalany	zalana	zalane	zalani	zalane
 drewniany	wooden			drewniany	drewniana	drewniane	drewniani	drewniane
 zdesperowany	desperate			zdesperowany	zdesperowana	zdesperowane	zdesperowani	zdesperowane
@@ -2850,3 +3693,428 @@ słony	salty			słony	słona	słone	słoni	słone
 czasowy	temporary			czasowy	czasowa	czasowe	czasowi	czasowe
 fantastyczny	fantastic			fantastyczny	fantastyczna	fantastyczne	fantastyczni	fantastyczne
 życzliwy	kind			życzliwy	życzliwa	życzliwe	życzliwi	życzliwe
+związany	related			związany	związana	związane	związani	związane
+znany	famous			znany	znana	znane	znani	znane
+europejski	european			europejski	europejska	europejskie	europejscy	europejskie
+pozostały	remaining			pozostały	pozostała	pozostałe	pozostali	pozostałe
+warszawski	warsaw			warszawski	warszawska	warszawskie	warszawscy	warszawskie
+gospodarczy	economic			gospodarczy	gospodarcza	gospodarcze	gospodarczy	gospodarcze
+państwowy	state			państwowy	państwowa	państwowe	państwowi	państwowe
+zachodni	western			zachodni	zachodnia	zachodnie	zachodni	zachodnie
+zawodowy	professional			zawodowy	zawodowa	zawodowe	zawodowi	zawodowe
+prawny	legal			prawny	prawna	prawne	prawni	prawne
+nowoczesny	modern			nowoczesny	nowoczesna	nowoczesne	nowocześni	nowoczesne
+krajowy	domestic			krajowy	krajowa	krajowe	krajowi	krajowe
+historyczny	historical			historyczny	historyczna	historyczne	historyczni	historyczne
+dany	given			dany	dana	dane	dani	dane
+wyborczy	electoral			wyborczy	wyborcza	wyborcze	wyborczy	wyborcze
+poszczególny	individual			poszczególny	poszczególna	poszczególne	poszczególni	poszczególne
+wschodni	eastern			wschodni	wschodnia	wschodnie	wschodni	wschodnie
+oficjalny	official			oficjalny	oficjalna	oficjalne	oficjalni	oficjalne
+boży	divine			boży	boża	boże	boży	boże
+powszechny	common			powszechny	powszechna	powszechne	powszechni	powszechne
+tradycyjny	traditional			tradycyjny	tradycyjna	tradycyjne	tradycyjni	tradycyjne
+ubiegły	last			ubiegły	ubiegła	ubiegłe	ubiegli	ubiegłe
+pozytywny	positive			pozytywny	pozytywna	pozytywne	pozytywni	pozytywne
+widoczny	visible			widoczny	widoczna	widoczne	widoczni	widoczne
+centralny	central			centralny	centralna	centralne	centralni	centralne
+dotychczasowy	current			dotychczasowy	dotychczasowa	dotychczasowe	dotychczasowi	dotychczasowe
+realny	real			realny	realna	realne	realni	realne
+ekonomiczny	economic			ekonomiczny	ekonomiczna	ekonomiczne	ekonomiczni	ekonomiczne
+prasowy	press			prasowy	prasowa	prasowe	prasowi	prasowe
+przekonany	convinced			przekonany	przekonana	przekonane	przekonani	przekonane
+ostateczny	final			ostateczny	ostateczna	ostateczne	ostateczni	ostateczne
+kluczowy	vital			kluczowy	kluczowa	kluczowe	kluczowi	kluczowe
+artystyczny	artistic			artystyczny	artystyczna	artystyczne	artystyczni	artystyczne
+nieznany	unknown			nieznany	nieznana	nieznane	nieznani	nieznane
+wyraźny	clear			wyraźny	wyraźna	wyraźne	wyraźni	wyraźne
+charakterystyczny	distinctive			charakterystyczny	charakterystyczna	charakterystyczne	charakterystyczni	charakterystyczne
+techniczny	technical			techniczny	techniczna	techniczne	techniczni	techniczne
+zewnętrzny	external			zewnętrzny	zewnętrzna	zewnętrzne	zewnętrzni	zewnętrzne
+zadowolony	satisfied			zadowolony	zadowolona	zadowolone	zadowoleni	zadowolone
+męski	manly			męski	męska	męskie	męscy	męskie
+obywatelski	civil			obywatelski	obywatelska	obywatelskie	obywatelscy	obywatelskie
+radny	councilor			radny	radna	radne	radni	radne
+południowy	southern			południowy	południowa	południowe	południowi	południowe
+ówczesny	former			ówczesny	ówczesna	ówczesne	ówcześni	ówczesne
+indywidualny	individual			indywidualny	indywidualna	indywidualne	indywidualni	indywidualne
+znaczny	significant			znaczny	znaczna	znaczne	znaczni	znaczne
+ludowy	folk			ludowy	ludowa	ludowe	ludowi	ludowe
+określony	specific			określony	określona	określone	określeni	określone
+wybitny	outstanding			wybitny	wybitna	wybitne	wybitni	wybitne
+północny	northern			północny	północna	północne	północni	północne
+wojewódzki	provincial			wojewódzki	wojewódzka	wojewódzkie	wojewódzcy	wojewódzkie
+krakowski	krakow			krakowski	krakowska	krakowskie	krakowscy	krakowskie
+muzyczny	musical			muzyczny	muzyczna	muzyczne	muzyczni	muzyczne
+życiowy	life			życiowy	życiowa	życiowe	życiowi	życiowe
+literacki	literary			literacki	literacka	literackie	literaccy	literackie
+skomplikowany	complicated			skomplikowany	skomplikowana	skomplikowane	skomplikowani	skomplikowane
+karny	criminal			karny	karna	karne	karni	karne
+zmarły	late			zmarły	zmarła	zmarłe	zmarli	zmarłe
+moralny	moral			moralny	moralna	moralne	moralni	moralne
+żydowski	jewish			żydowski	żydowska	żydowskie	żydowscy	żydowskie
+niedawny	recent			niedawny	niedawna	niedawne	niedawni	niedawne
+filmowy	film			filmowy	filmowa	filmowe	filmowi	filmowe
+negatywny	negative			negatywny	negatywna	negatywne	negatywni	negatywne
+seksualny	sexual			seksualny	seksualna	seksualne	seksualni	seksualne
+ewentualny	possible			ewentualny	ewentualna	ewentualne	ewentualni	ewentualne
+duchowy	spiritual			duchowy	duchowa	duchowe	duchowi	duchowe
+podejrzany	suspicious			podejrzany	podejrzana	podejrzane	podejrzani	podejrzane
+kulturowy	cultural			kulturowy	kulturowa	kulturowe	kulturowi	kulturowe
+zdecydowany	determined			zdecydowany	zdecydowana	zdecydowane	zdecydowani	zdecydowane
+powiatowy	district			powiatowy	powiatowa	powiatowe	powiatowi	powiatowe
+potencjalny	potential			potencjalny	potencjalna	potencjalne	potencjalni	potencjalne
+groźny	dangerous			groźny	groźna	groźne	groźni	groźne
+generalny	general			generalny	generalna	generalne	generalni	generalne
+regionalny	regional			regionalny	regionalna	regionalne	regionalni	regionalne
+śląski	silesian			śląski	śląska	śląskie	śląscy	śląskie
+rządowy	governmental			rządowy	rządowa	rządowe	rządowi	rządowe
+znaczący	significant			znaczący	znacząca	znaczące	znaczący	znaczące
+pojedynczy	single			pojedynczy	pojedyncza	pojedyncze	pojedynczy	pojedyncze
+unijny	european union			unijny	unijna	unijne	unijni	unijne
+cywilny	civil			cywilny	cywilna	cywilne	cywilni	cywilne
+masowy	mass			masowy	masowa	masowe	masowi	masowe
+sądowy	judicial			sądowy	sądowa	sądowe	sądowi	sądowe
+budowlany	construction			budowlany	budowlana	budowlane	budowlani	budowlane
+demokratyczny	democratic			demokratyczny	demokratyczna	demokratyczne	demokratyczni	demokratyczne
+środkowy	middle			środkowy	środkowa	środkowe	środkowi	środkowe
+oryginalny	original			oryginalny	oryginalna	oryginalne	oryginalni	oryginalne
+intensywny	intense			intensywny	intensywna	intensywne	intensywni	intensywne
+ciągły	constant			ciągły	ciągła	ciągłe	ciągli	ciągłe
+kulturalny	polite			kulturalny	kulturalna	kulturalne	kulturalni	kulturalne
+elektroniczny	electronic			elektroniczny	elektroniczna	elektroniczne	elektroniczni	elektroniczne
+dolny	lower			dolny	dolna	dolne	dolni	dolne
+wiejski	rural			wiejski	wiejska	wiejskie	wiejscy	wiejskie
+chrześcijański	christian			chrześcijański	chrześcijańska	chrześcijańskie	chrześcijańscy	chrześcijańskie
+zgodny	consistent			zgodny	zgodna	zgodne	zgodni	zgodne
+komunistyczny	communist			komunistyczny	komunistyczna	komunistyczne	komunistyczni	komunistyczne
+miniony	past			miniony	miniona	minione	minieni	minione
+tragiczny	tragic			tragiczny	tragiczna	tragiczne	tragiczni	tragiczne
+kobiecy	female			kobiecy	kobieca	kobiece	kobiecy	kobiece
+dramatyczny	dramatic			dramatyczny	dramatyczna	dramatyczne	dramatyczni	dramatyczne
+śledczy	investigative			śledczy	śledcza	śledcze	śledczy	śledcze
+dziecięcy	children's			dziecięcy	dziecięca	dziecięce	dziecięcy	dziecięce
+olbrzymi	huge			olbrzymi	olbrzymia	olbrzymie	olbrzymi	olbrzymie
+symboliczny	symbolic			symboliczny	symboliczna	symboliczne	symboliczni	symboliczne
+naczelny	chief			naczelny	naczelna	naczelne	naczelni	naczelne
+administracyjny	administrative			administracyjny	administracyjna	administracyjne	administracyjni	administracyjne
+odległy	distant			odległy	odległa	odległe	odlegli	odległe
+nieliczny	few			nieliczny	nieliczna	nieliczne	nieliczni	nieliczne
+odmienny	different			odmienny	odmienna	odmienne	odmienni	odmienne
+zbiorowy	collective			zbiorowy	zbiorowa	zbiorowe	zbiorowi	zbiorowe
+podwójny	double			podwójny	podwójna	podwójne	podwójni	podwójne
+osobowy	personal			osobowy	osobowa	osobowe	osobowi	osobowe
+radykalny	radical			radykalny	radykalna	radykalne	radykalni	radykalne
+policyjny	police			policyjny	policyjna	policyjne	policyjni	policyjne
+interesujący	interesting			interesujący	interesująca	interesujące	interesujący	interesujące
+rozmaity	various			rozmaity	rozmaita	rozmaite	rozmaici	rozmaite
+bieżący	current			bieżący	bieżąca	bieżące	bieżący	bieżące
+pierwotny	original			pierwotny	pierwotna	pierwotne	pierwotni	pierwotne
+krytyczny	critical			krytyczny	krytyczna	krytyczne	krytyczni	krytyczne
+materialny	material			materialny	materialna	materialne	materialni	materialne
+podatkowy	tax			podatkowy	podatkowa	podatkowe	podatkowi	podatkowe
+rzeczywisty	real			rzeczywisty	rzeczywista	rzeczywiste	rzeczywiści	rzeczywiste
+udany	successful			udany	udana	udane	udani	udane
+ukochany	beloved			ukochany	ukochana	ukochane	ukochani	ukochane
+górny	upper			górny	górna	górne	górni	górne
+korzystny	beneficial			korzystny	korzystna	korzystne	korzystni	korzystne
+intelektualny	intellectual			intelektualny	intelektualna	intelektualne	intelektualni	intelektualne
+szczeciński	from szczecin			szczeciński	szczecińska	szczecińskie	szczecińscy	szczecińskie
+psychiczny	mental			psychiczny	psychiczna	psychiczne	psychiczni	psychiczne
+tylny	rear			tylny	tylna	tylne	tylni	tylne
+swoisty	specific			swoisty	swoista	swoiste	swoiści	swoiste
+informacyjny	informational			informacyjny	informacyjna	informacyjne	informacyjni	informacyjne
+tegoroczny	this year's			tegoroczny	tegoroczna	tegoroczne	tegoroczni	tegoroczne
+pijany	drunk			pijany	pijana	pijane	pijani	pijane
+przemysłowy	industrial			przemysłowy	przemysłowa	przemysłowe	przemysłowi	przemysłowe
+wstępny	initial			wstępny	wstępna	wstępne	wstępni	wstępne
+wieloletni	long-term			wieloletni	wieloletnia	wieloletnie	wieloletni	wieloletnie
+tamtejszy	local			tamtejszy	tamtejsza	tamtejsze	tamtejsi	tamtejsze
+kościelny	church			kościelny	kościelna	kościelne	kościelni	kościelne
+pobliski	nearby			pobliski	pobliska	pobliskie	pobliscy	pobliskie
+teatralny	theatrical			teatralny	teatralna	teatralne	teatralni	teatralne
+niepotrzebny	unnecessary			niepotrzebny	niepotrzebna	niepotrzebne	niepotrzebni	niepotrzebne
+dzienny	daily			dzienny	dzienna	dzienne	dzienni	dzienne
+ukraiński	ukrainian			ukraiński	ukraińska	ukraińskie	ukraińscy	ukraińskie
+metalowy	metal			metalowy	metalowa	metalowe	metalowi	metalowe
+słuszny	right			słuszny	słuszna	słuszne	słuszni	słuszne
+sowiecki	soviet			sowiecki	sowiecka	sowieckie	sowieccy	sowieckie
+radziecki	soviet			radziecki	radziecka	radzieckie	radzieccy	radzieckie
+ograniczony	limited			ograniczony	ograniczona	ograniczone	ograniczeni	ograniczone
+sąsiedni	adjacent			sąsiedni	sąsiednia	sąsiednie	sąsiedni	sąsiednie
+samodzielny	independent			samodzielny	samodzielna	samodzielne	samodzielni	samodzielne
+okręgowy	district			okręgowy	okręgowa	okręgowe	okręgowi	okręgowe
+królewski	royal			królewski	królewska	królewskie	królewscy	królewskie
+tajny	secret			tajny	tajna	tajne	tajni	tajne
+prezydencki	presidential			prezydencki	prezydencka	prezydenckie	prezydenccy	prezydenckie
+globalny	global			globalny	globalna	globalne	globalni	globalne
+emocjonalny	emotional			emocjonalny	emocjonalna	emocjonalne	emocjonalni	emocjonalne
+specyficzny	specific			specyficzny	specyficzna	specyficzne	specyficzni	specyficzne
+podziemny	underground			podziemny	podziemna	podziemne	podziemni	podziemne
+samorządowy	municipal			samorządowy	samorządowa	samorządowe	samorządowi	samorządowe
+solidny	sturdy			solidny	solidna	solidne	solidni	solidne
+ponowny	again			ponowny	ponowna	ponowne	ponowni	ponowne
+sprawny	efficient			sprawny	sprawna	sprawne	sprawni	sprawne
+medialny	media			medialny	medialna	medialne	medialni	medialne
+czyjś	someone's			czyjś	czyjaś	czyjeś	czyiś	czyjeś
+operacyjny	operating			operacyjny	operacyjna	operacyjne	operacyjni	operacyjne
+ścisły	strict			ścisły	ścisła	ścisłe	ściśli	ścisłe
+partyjny	party			partyjny	partyjna	partyjne	partyjni	partyjne
+gigantyczny	gigantic			gigantyczny	gigantyczna	gigantyczne	gigantyczni	gigantyczne
+świąteczny	festive			świąteczny	świąteczna	świąteczne	świąteczni	świąteczne
+przerażony	frightened			przerażony	przerażona	przerażone	przerażeni	przerażone
+liberalny	liberal			liberalny	liberalna	liberalne	liberalni	liberalne
+mazowiecki	masovian			mazowiecki	mazowiecka	mazowieckie	mazowieccy	mazowieckie
+absolutny	absolute			absolutny	absolutna	absolutne	absolutni	absolutne
+ubogi	poor			ubogi	uboga	ubogie	ubodzy	ubogie
+leśny	forest			leśny	leśna	leśne	leśni	leśne
+zbrojny	armed			zbrojny	zbrojna	zbrojne	zbrojni	zbrojne
+lekarski	medical			lekarski	lekarska	lekarskie	lekarscy	lekarskie
+roczny	annual			roczny	roczna	roczne	roczni	roczne
+formalny	formal			formalny	formalna	formalne	formalni	formalne
+następujący	following			następujący	następująca	następujące	następujący	następujące
+energetyczny	energy			energetyczny	energetyczna	energetyczne	energetyczni	energetyczne
+kamienny	stone			kamienny	kamienna	kamienne	kamienni	kamienne
+gdański	gdańsk			gdański	gdańska	gdańskie	gdańscy	gdańskie
+twórczy	creative			twórczy	twórcza	twórcze	twórczy	twórcze
+niejeden	many a			niejeden	niejedna	niejedno	niejedni	niejedne
+edukacyjny	educational			edukacyjny	edukacyjna	edukacyjne	edukacyjni	edukacyjne
+złożony	complex			złożony	złożona	złożone	złożeni	złożone
+gminny	municipal			gminny	gminna	gminne	gminni	gminne
+agresywny	aggressive			agresywny	agresywna	agresywne	agresywni	agresywne
+skrajny	extreme			skrajny	skrajna	skrajne	skrajni	skrajne
+powstały	created			powstały	powstała	powstałe	powstali	powstałe
+obowiązujący	binding			obowiązujący	obowiązująca	obowiązujące	obowiązujący	obowiązujące
+boczny	side			boczny	boczna	boczne	boczni	boczne
+czynny	open			czynny	czynna	czynne	czynni	czynne
+turystyczny	tourist			turystyczny	turystyczna	turystyczne	turystyczni	turystyczne
+służbowy	business			służbowy	służbowa	służbowe	służbowi	służbowe
+duchowny	clergy			duchowny	duchowna	duchowne	duchowni	duchowne
+obojętny	indifferent			obojętny	obojętna	obojętne	obojętni	obojętne
+okrutny	cruel			okrutny	okrutna	okrutne	okrutni	okrutne
+wystarczający	sufficient			wystarczający	wystarczająca	wystarczające	wystarczający	wystarczające
+brutalny	violent			brutalny	brutalna	brutalne	brutalni	brutalne
+cudzy	someone else's			cudzy	cudza	cudze	cudzy	cudze
+psychologiczny	psychological			psychologiczny	psychologiczna	psychologiczne	psychologiczni	psychologiczne
+powyższy	above-mentioned			powyższy	powyższa	powyższe	powyżsi	powyższe
+okoliczny	local			okoliczny	okoliczna	okoliczne	okoliczni	okoliczne
+maksymalny	maximum			maksymalny	maksymalna	maksymalne	maksymalni	maksymalne
+radosny	cheerful			radosny	radosna	radosne	radośni	radosne
+obowiązkowy	mandatory			obowiązkowy	obowiązkowa	obowiązkowe	obowiązkowi	obowiązkowe
+zainteresowany	interested			zainteresowany	zainteresowana	zainteresowane	zainteresowani	zainteresowane
+plastikowy	plastic			plastikowy	plastikowa	plastikowe	plastikowi	plastikowe
+doświadczony	experienced			doświadczony	doświadczona	doświadczone	doświadczeni	doświadczone
+sprzeczny	conflicting			sprzeczny	sprzeczna	sprzeczne	sprzeczni	sprzeczne
+regularny	regular			regularny	regularna	regularne	regularni	regularne
+niepełnosprawny	disabled			niepełnosprawny	niepełnosprawna	niepełnosprawne	niepełnosprawni	niepełnosprawne
+magiczny	magical			magiczny	magiczna	magiczne	magiczni	magiczne
+lubelski	from lublin			lubelski	lubelska	lubelskie	lubelscy	lubelskie
+akademicki	academic			akademicki	akademicka	akademickie	akademiccy	akademickie
+organizacyjny	organizational			organizacyjny	organizacyjna	organizacyjne	organizacyjni	organizacyjne
+tymczasowy	temporary			tymczasowy	tymczasowa	tymczasowe	tymczasowi	tymczasowe
+niedzielny	sunday			niedzielny	niedzielna	niedzielne	niedzielni	niedzielne
+końcowy	final			końcowy	końcowa	końcowe	końcowi	końcowe
+szklany	glass			szklany	szklana	szklane	szklani	szklane
+badawczy	research			badawczy	badawcza	badawcze	badawczy	badawcze
+szlachetny	noble			szlachetny	szlachetna	szlachetne	szlachetni	szlachetne
+nadzwyczajny	extraordinary			nadzwyczajny	nadzwyczajna	nadzwyczajne	nadzwyczajni	nadzwyczajne
+mundurowy	uniformed			mundurowy	mundurowa	mundurowe	mundurowi	mundurowe
+strategiczny	strategic			strategiczny	strategiczna	strategiczne	strategiczni	strategiczne
+żelazny	iron			żelazny	żelazna	żelazne	żelaźni	żelazne
+niepokojący	concerning			niepokojący	niepokojąca	niepokojące	niepokojący	niepokojące
+dowolny	any			dowolny	dowolna	dowolne	dowolni	dowolne
+przedwojenny	prewar			przedwojenny	przedwojenna	przedwojenne	przedwojenni	przedwojenne
+kochany	dear			kochany	kochana	kochane	kochani	kochane
+socjalny	social			socjalny	socjalna	socjalne	socjalni	socjalne
+bankowy	banking			bankowy	bankowa	bankowe	bankowi	bankowe
+krwawy	bloody			krwawy	krwawa	krwawe	krwawi	krwawe
+uroczysty	ceremonial			uroczysty	uroczysta	uroczyste	uroczyści	uroczyste
+autentyczny	genuine			autentyczny	autentyczna	autentyczne	autentyczni	autentyczne
+niecały	under			niecały	niecała	niecałe	niecali	niecałe
+rejonowy	district			rejonowy	rejonowa	rejonowe	rejonowi	rejonowe
+konserwatywny	conservative			konserwatywny	konserwatywna	konserwatywne	konserwatywni	konserwatywne
+profesjonalny	professional			profesjonalny	profesjonalna	profesjonalne	profesjonalni	profesjonalne
+bezpłatny	free			bezpłatny	bezpłatna	bezpłatne	bezpłatni	bezpłatne
+konstytucyjny	constitutional			konstytucyjny	konstytucyjna	konstytucyjne	konstytucyjni	konstytucyjne
+biznesowy	business			biznesowy	biznesowa	biznesowe	biznesowi	biznesowe
+porządny	decent			porządny	porządna	porządne	porządni	porządne
+położony	located			położony	położona	położone	położeni	położone
+społecznościowy	social			społecznościowy	społecznościowa	społecznościowe	społecznościowi	społecznościowe
+ogólnopolski	nationwide			ogólnopolski	ogólnopolska	ogólnopolskie	ogólnopolscy	ogólnopolskie
+lewicowy	left-wing			lewicowy	lewicowa	lewicowe	lewicowi	lewicowe
+ambitny	ambitious			ambitny	ambitna	ambitne	ambitni	ambitne
+wartościowy	valuable			wartościowy	wartościowa	wartościowe	wartościowi	wartościowe
+łódzki	lodz			łódzki	łódzka	łódzkie	łódzcy	łódzkie
+ekologiczny	organic			ekologiczny	ekologiczna	ekologiczne	ekologiczni	ekologiczne
+mieszkaniowy	housing			mieszkaniowy	mieszkaniowa	mieszkaniowe	mieszkaniowi	mieszkaniowe
+czołowy	leading			czołowy	czołowa	czołowe	czołowi	czołowe
+autorski	copyright			autorski	autorska	autorskie	autorscy	autorskie
+identyczny	identical			identyczny	identyczna	identyczne	identyczni	identyczne
+łączny	total			łączny	łączna	łączne	łączni	łączne
+rynkowy	market			rynkowy	rynkowa	rynkowe	rynkowi	rynkowe
+nadmierny	excessive			nadmierny	nadmierna	nadmierne	nadmierni	nadmierne
+inwestycyjny	investment			inwestycyjny	inwestycyjna	inwestycyjne	inwestycyjni	inwestycyjne
+cyfrowy	digital			cyfrowy	cyfrowa	cyfrowe	cyfrowi	cyfrowe
+racjonalny	rational			racjonalny	racjonalna	racjonalne	racjonalni	racjonalne
+komunalny	municipal			komunalny	komunalna	komunalne	komunalni	komunalne
+zdziwiony	surprised			zdziwiony	zdziwiona	zdziwione	zdziwieni	zdziwione
+specjalistyczny	specialized			specjalistyczny	specjalistyczna	specjalistyczne	specjalistyczni	specjalistyczne
+obszerny	extensive			obszerny	obszerna	obszerne	obszerni	obszerne
+wrocławski	wrocławian			wrocławski	wrocławska	wrocławskie	wrocławscy	wrocławskie
+graniczny	border			graniczny	graniczna	graniczne	graniczni	graniczne
+skarbowy	tax			skarbowy	skarbowa	skarbowe	skarbowi	skarbowe
+bezwzględny	ruthless			bezwzględny	bezwzględna	bezwzględne	bezwzględni	bezwzględne
+przerażający	terrifying			przerażający	przerażająca	przerażające	przerażający	przerażające
+pomorski	maritime			pomorski	pomorska	pomorskie	pomorscy	pomorskie
+natychmiastowy	instant			natychmiastowy	natychmiastowa	natychmiastowe	natychmiastowi	natychmiastowe
+parlamentarny	parliamentary			parlamentarny	parlamentarna	parlamentarne	parlamentarni	parlamentarne
+poznański	from poznan			poznański	poznańska	poznańskie	poznańscy	poznańskie
+dynamiczny	dynamic			dynamiczny	dynamiczna	dynamiczne	dynamiczni	dynamiczne
+uniwersalny	universal			uniwersalny	uniwersalna	uniwersalne	uniwersalni	uniwersalne
+mroczny	dark			mroczny	mroczna	mroczne	mroczni	mroczne
+honorowy	honorable			honorowy	honorowa	honorowe	honorowi	honorowe
+alternatywny	alternative			alternatywny	alternatywna	alternatywne	alternatywni	alternatywne
+radiowy	radio			radiowy	radiowa	radiowe	radiowi	radiowe
+technologiczny	technological			technologiczny	technologiczna	technologiczne	technologiczni	technologiczne
+roboczy	working			roboczy	robocza	robocze	roboczy	robocze
+niepewny	uncertain			niepewien	niepewna	niepewne	niepewni	niepewne
+wieczorny	evening			wieczorny	wieczorna	wieczorne	wieczorni	wieczorne
+ziemski	earthly			ziemski	ziemska	ziemskie	ziemscy	ziemskie
+automatyczny	automatic			automatyczny	automatyczna	automatyczne	automatyczni	automatyczne
+luksusowy	luxurious			luksusowy	luksusowa	luksusowe	luksusowi	luksusowe
+maleńki	tiny			maleńki	maleńka	maleńkie	maleńcy	maleńkie
+telefoniczny	telephone			telefoniczny	telefoniczna	telefoniczne	telefoniczni	telefoniczne
+nieustanny	constant			nieustanny	nieustanna	nieustanne	nieustanni	nieustanne
+komunikacyjny	transport			komunikacyjny	komunikacyjna	komunikacyjne	komunikacyjni	komunikacyjne
+jesienny	autumnal			jesienny	jesienna	jesienne	jesienni	jesienne
+patriotyczny	patriotic			patriotyczny	patriotyczna	patriotyczne	patriotyczni	patriotyczne
+biologiczny	biological			biologiczny	biologiczna	biologiczne	biologiczni	biologiczne
+językowy	linguistic			językowy	językowa	językowe	językowi	językowe
+ratunkowy	life			ratunkowy	ratunkowa	ratunkowe	ratunkowi	ratunkowe
+fundamentalny	fundamental			fundamentalny	fundamentalna	fundamentalne	fundamentalni	fundamentalne
+logiczny	logical			logiczny	logiczna	logiczne	logiczni	logiczne
+powojenny	postwar			powojenny	powojenna	powojenne	powojenni	powojenne
+anonimowy	anonymous			anonimowy	anonimowa	anonimowe	anonimowi	anonimowe
+spektakularny	spectacular			spektakularny	spektakularna	spektakularne	spektakularni	spektakularne
+absurdalny	absurd			absurdalny	absurdalna	absurdalne	absurdalni	absurdalne
+przełożony	superior			przełożony	przełożona	przełożone	przełożeni	przełożone
+kontrowersyjny	controversial			kontrowersyjny	kontrowersyjna	kontrowersyjne	kontrowersyjni	kontrowersyjne
+swobodny	casual			swobodny	swobodna	swobodne	swobodni	swobodne
+chemiczny	chemical			chemiczny	chemiczna	chemiczne	chemiczni	chemiczne
+błękitny	light blue			błękitny	błękitna	błękitne	błękitni	błękitne
+wielkopolski	of greater poland			wielkopolski	wielkopolska	wielkopolskie	wielkopolscy	wielkopolskie
+prawicowy	right-wing			prawicowy	prawicowa	prawicowe	prawicowi	prawicowe
+sanitarny	sanitary			sanitarny	sanitarna	sanitarne	sanitarni	sanitarne
+sobotni	saturday			sobotni	sobotnia	sobotnie	sobotni	sobotnie
+podlaski	podlaskie			podlaski	podlaska	podlaskie	podlascy	podlaskie
+rolny	rural			rolny	rolna	rolne	rolni	rolne
+stalowy	steel			stalowy	stalowa	stalowe	stalowi	stalowe
+kuchenny	kitchen			kuchenny	kuchenna	kuchenne	kuchenni	kuchenne
+standardowy	standard			standardowy	standardowa	standardowe	standardowi	standardowe
+totalny	total			totalny	totalna	totalne	totalni	totalne
+małżeński	married			małżeński	małżeńska	małżeńskie	małżeńscy	małżeńskie
+początkowy	initial			początkowy	początkowa	początkowe	początkowi	początkowe
+skórzany	leather			skórzany	skórzana	skórzane	skórzani	skórzane
+kryminalny	crime novel			kryminalny	kryminalna	kryminalne	kryminalni	kryminalne
+uliczny	street			uliczny	uliczna	uliczne	uliczni	uliczne
+rowerowy	cycling			rowerowy	rowerowa	rowerowe	rowerowi	rowerowe
+filozoficzny	philosophical			filozoficzny	filozoficzna	filozoficzne	filozoficzni	filozoficzne
+stabilny	stable			stabilny	stabilna	stabilne	stabilni	stabilne
+rozległy	vast			rozległy	rozległa	rozległe	rozlegli	rozległe
+celny	customs			celny	celna	celne	celni	celne
+niezrozumiały	incomprehensible			niezrozumiały	niezrozumiała	niezrozumiałe	niezrozumiali	niezrozumiałe
+socjalistyczny	socialist			socjalistyczny	socjalistyczna	socjalistyczne	socjalistyczni	socjalistyczne
+imponujący	impressive			imponujący	imponująca	imponujące	imponujący	imponujące
+mechaniczny	mechanical			mechaniczny	mechaniczna	mechaniczne	mechaniczni	mechaniczne
+stołeczny	capital			stołeczny	stołeczna	stołeczne	stołeczni	stołeczne
+poetycki	poetic			poetycki	poetycka	poetyckie	poetyccy	poetyckie
+emerytalny	retirement			emerytalny	emerytalna	emerytalne	emerytalni	emerytalne
+nieudany	unsuccessful			nieudany	nieudana	nieudane	nieudani	nieudane
+prestiżowy	prestigious			prestiżowy	prestiżowa	prestiżowe	prestiżowi	prestiżowe
+legendarny	legendary			legendarny	legendarna	legendarne	legendarni	legendarne
+górski	mountain			górski	górska	górskie	górscy	górskie
+miesięczny	monthly			miesięczny	miesięczna	miesięczne	miesięczni	miesięczne
+świecki	secular			świecki	świecka	świeckie	świeccy	świeckie
+super	cool			super	super	super	super	super
+rewolucyjny	revolutionary			rewolucyjny	rewolucyjna	rewolucyjne	rewolucyjni	rewolucyjne
+estetyczny	aesthetic			estetyczny	estetyczna	estetyczne	estetyczni	estetyczne
+ideologiczny	ideological			ideologiczny	ideologiczna	ideologiczne	ideologiczni	ideologiczne
+wiosenny	spring			wiosenny	wiosenna	wiosenne	wiosenni	wiosenne
+niniejszy	herein			niniejszy	niniejsza	niniejsze	niniejsi	niniejsze
+robotniczy	working-class			robotniczy	robotnicza	robotnicze	robotniczy	robotnicze
+pożarny	fire			pożarny	pożarna	pożarne	pożarni	pożarne
+jednolity	uniform			jednolity	jednolita	jednolite	jednolici	jednolite
+egzotyczny	exotic			egzotyczny	egzotyczna	egzotyczne	egzotyczni	egzotyczne
+rzymski	roman			rzymski	rzymska	rzymskie	rzymscy	rzymskie
+sztywny	stiff			sztywny	sztywna	sztywne	sztywni	sztywne
+obronny	defensive			obronny	obronna	obronne	obronni	obronne
+zależny	dependent			zależny	zależna	zależne	zależni	zależne
+płatny	paid			płatny	płatna	płatne	płatni	płatne
+spożywczy	grocery			spożywczy	spożywcza	spożywcze	spożywczy	spożywcze
+szpitalny	hospital			szpitalny	szpitalna	szpitalne	szpitalni	szpitalne
+biegły	expert			biegły	biegła	biegłe	biegli	biegłe
+tytułowy	title			tytułowy	tytułowa	tytułowe	tytułowi	tytułowe
+młodzieżowy	youth			młodzieżowy	młodzieżowa	młodzieżowe	młodzieżowi	młodzieżowe
+produkcyjny	production			produkcyjny	produkcyjna	produkcyjne	produkcyjni	produkcyjne
+budżetowy	budget			budżetowy	budżetowa	budżetowe	budżetowi	budżetowe
+niespodziewany	unexpected			niespodziewany	niespodziewana	niespodziewane	niespodziewani	niespodziewane
+gazowy	gaseous			gazowy	gazowa	gazowe	gazowi	gazowe
+wrogi	hostile			wrogi	wroga	wrogie	wrodzy	wrogie
+skłonny	willing			skłonny	skłonna	skłonne	skłonni	skłonne
+precyzyjny	precise			precyzyjny	precyzyjna	precyzyjne	precyzyjni	precyzyjne
+niewidzialny	invisible			niewidzialny	niewidzialna	niewidzialne	niewidzialni	niewidzialne
+malutki	tiny			malutki	malutka	malutkie	malutcy	malutkie
+niewłaściwy	wrong			niewłaściwy	niewłaściwa	niewłaściwe	niewłaściwi	niewłaściwe
+uśmiechnięty	smiling			uśmiechnięty	uśmiechnięta	uśmiechnięte	uśmiechnięci	uśmiechnięte
+benzynowy	gas station			benzynowy	benzynowa	benzynowe	benzynowi	benzynowe
+powolny	slow			powolny	powolna	powolne	powolni	powolne
+wiarygodny	reliable			wiarygodny	wiarygodna	wiarygodne	wiarygodni	wiarygodne
+majątkowy	estate			majątkowy	majątkowa	majątkowe	majątkowi	majątkowe
+przestrzenny	spatial			przestrzenny	przestrzenna	przestrzenne	przestrzenni	przestrzenne
+poszkodowany	injured person			poszkodowany	poszkodowana	poszkodowane	poszkodowani	poszkodowane
+niewygodny	uncomfortable			niewygodny	niewygodna	niewygodne	niewygodni	niewygodne
+plastyczny	plastic			plastyczny	plastyczna	plastyczne	plastyczni	plastyczne
+betonowy	concrete			betonowy	betonowa	betonowe	betonowi	betonowe
+zasłużony	meritorious			zasłużony	zasłużona	zasłużone	zasłużeni	zasłużone
+zamożny	wealthy			zamożny	zamożna	zamożne	zamożni	zamożne
+niekorzystny	unfavourable			niekorzystny	niekorzystna	niekorzystne	niekorzystni	niekorzystne
+miłosny	love			miłosny	miłosna	miłosne	miłośni	miłosne
+intymny	intimate			intymny	intymna	intymne	intymni	intymne
+jednorazowy	disposable			jednorazowy	jednorazowa	jednorazowe	jednorazowi	jednorazowe
+legalny	legal			legalny	legalna	legalne	legalni	legalne
+uczony	learned			uczony	uczona	uczone	uczeni	uczone
+barwny	colorful			barwny	barwna	barwne	barwni	barwne
+wychowawczy	educational			wychowawczy	wychowawcza	wychowawcze	wychowawczy	wychowawcze
+różnorodny	diverse			różnorodny	różnorodna	różnorodne	różnorodni	różnorodne
+rolniczy	agricultural			rolniczy	rolnicza	rolnicze	rolniczy	rolnicze
+niezgodny	incompatible			niezgodny	niezgodna	niezgodne	niezgodni	niezgodne
+pokojowy	peaceful			pokojowy	pokojowa	pokojowe	pokojowi	pokojowe
+spójny	coherent			spójny	spójna	spójne	spójni	spójne
+zabytkowy	historic			zabytkowy	zabytkowa	zabytkowe	zabytkowi	zabytkowe
+opiekuńczy	caring			opiekuńczy	opiekuńcza	opiekuńcze	opiekuńczy	opiekuńcze
+chwilowy	temporary			chwilowy	chwilowa	chwilowe	chwilowi	chwilowe
+etyczny	ethical			etyczny	etyczna	etyczne	etyczni	etyczne
+wirtualny	virtual			wirtualny	wirtualna	wirtualne	wirtualni	wirtualne
+obiektywny	objective			obiektywny	obiektywna	obiektywne	obiektywni	obiektywne
+ochronny	protective			ochronny	ochronna	ochronne	ochronni	ochronne
+mieszkalny	residential			mieszkalny	mieszkalna	mieszkalne	mieszkalni	mieszkalne
+niedostępny	unavailable			niedostępny	niedostępna	niedostępne	niedostępni	niedostępne
+zbliżony	similar			zbliżony	zbliżona	zbliżone	zbliżeni	zbliżone
+decydujący	decisive			decydujący	decydująca	decydujące	decydujący	decydujące
+pieniężny	monetary			pieniężny	pieniężna	pieniężne	pieniężni	pieniężne
+czuły	sensitive			czuły	czuła	czułe	czuli	czułe
+wyrazisty	expressive			wyrazisty	wyrazista	wyraziste	wyraziści	wyraziste
+trzeźwy	sober			trzeźwy	trzeźwa	trzeźwe	trzeźwi	trzeźwe
+zupełny	complete			zupełny	zupełna	zupełne	zupełni	zupełne
+terytorialny	territorial			terytorialny	terytorialna	terytorialne	terytorialni	terytorialne
+komercyjny	commercial			komercyjny	komercyjna	komercyjne	komercyjni	komercyjne
+bojowy	warlike			bojowy	bojowa	bojowe	bojowi	bojowe
+zakochany	in love			zakochany	zakochana	zakochane	zakochani	zakochane
+potworny	terrible			potworny	potworna	potworne	potworni	potworne
+bezradny	helpless			bezradny	bezradna	bezradne	bezradni	bezradne
+zwycięski	victorious			zwycięski	zwycięska	zwycięskie	zwycięscy	zwycięskie
+sejmowy	parliamentary			sejmowy	sejmowa	sejmowe	sejmowi	sejmowe
+należny	due			należny	należna	należne	należni	należne
+opozycyjny	oppositional			opozycyjny	opozycyjna	opozycyjne	opozycyjni	opozycyjne
+smoleński	from smolensk			smoleński	smoleńska	smoleńskie	smoleńscy	smoleńskie
+górniczy	mining			górniczy	górnicza	górnicze	górniczy	górnicze
