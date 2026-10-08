@@ -64,7 +64,7 @@ rodzice	parents	n	A1	family
 rodzeństwo	siblings	n	A2	family
 bliźniak	twin	n	B1	family
 krewny	relative	n	B1	family
-chrzestny	cartilaginous	n	B2	family
+chrzestny	godfather	n	B2	family
 miłość	love	n	A1	relationships,emotions
 przyjaźń	friendship	n	A2	relationships
 związek	relationship	n	A2	relationships

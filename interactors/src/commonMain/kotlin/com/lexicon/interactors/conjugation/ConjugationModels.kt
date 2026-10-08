@@ -1,5 +1,6 @@
 package com.lexicon.interactors.conjugation
 
+import com.lexicon.model.vocabulary.Aspect
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -25,6 +26,7 @@ data class VerbConjugation(
     val forms: Map<GrammaticalPerson, ImmutableList<String>>,
     val translation: String? = null,
     val example: String = "",
+    val aspect: Aspect? = null,
 ) {
     val persons: List<GrammaticalPerson> get() = GrammaticalPerson.entries.filter { forms[it]?.isNotEmpty() == true }
 
@@ -59,6 +61,7 @@ data class ConjugationTable(
     val bank: ImmutableList<String> = persistentListOf(),
     val imageUrl: String? = null,
     val transcription: String? = null,
+    val aspect: Aspect? = null,
 )
 
 data class ConjugationVariantProgress(

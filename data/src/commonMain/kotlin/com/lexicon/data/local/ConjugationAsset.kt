@@ -1,6 +1,7 @@
 package com.lexicon.data.local
 
 import com.lexicon.boundary.VerbConjugationBoundary
+import com.lexicon.model.vocabulary.Aspect
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -22,6 +23,7 @@ data class ConjugationEntryAsset(
     @SerialName("my") val firstPlural: String = "",
     @SerialName("wy") val secondPlural: String = "",
     @SerialName("oni/one") val thirdPlural: String = "",
+    @SerialName("aspect") val aspect: String = "",
 )
 
 class ConjugationAssetLoader(
@@ -59,6 +61,7 @@ private fun ConjugationEntryAsset.toBoundary(): VerbConjugationBoundary? {
         translation = translation.trim().takeIf { it.isNotEmpty() },
         forms = forms,
         example = example.trim(),
+        aspect = Aspect.ofTag(aspect),
     )
 }
 

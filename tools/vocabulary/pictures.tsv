@@ -750,7 +750,7 @@ korzeń	root	plant root
 nasiono	kernel	seed in soil
 trawa	grass	grass in meadow
 krzak	bush	bush in yard
-mech	down	moss on stone
+mech	moss	green moss on stone
 grzyb	mushroom	forest mushroom
 paproć	fern	fern in forest
 dąb	oak	old oak tree
@@ -1182,7 +1182,7 @@ obalić	to overthrow	soldiers overthrowing government
 zbagatelizować	to downplay	person downplaying problem
 wyolbrzymić	to exaggerate	person exaggerating problem
 przecenić	to overestimate	businessperson overestimating abilities
-niedocenić	to underestimate	businessperson underestimating problem
+nie docenić	to underestimate	businessman overlooking problem
 docenić	to appreciate	person appreciating help
 uwzględnić	to include	meeting including costs
 pominąć	to skip	student skipping important point
@@ -2020,7 +2020,7 @@ rodzice	parents	parents at home
 rodzeństwo	siblings	siblings together
 bliźniak	twin	twin brothers
 krewny	relative	distant relative
-chrzestny	cartilaginous	doctor examining cartilage
+chrzestny	godfather	godfather giving watch
 miłość	love	couple in love
 przyjaźń	friendship	friends hugging
 związek	relationship	happy couple relationship
@@ -2663,3 +2663,2219 @@ karawan	hearse	funeral hearse
 dudy	bagpipes	bagpipes
 chart	greyhound	greyhound dog
 sztuka	art	modern art
+nie mogę	i can't	person unable to go
+czy mogę	can i	person asking to enter
+w końcu	finally	person arriving finally
+jeszcze nie	not yet	person not eating lunch
+może być	that'll do	person nodding approval
+dlaczego nie	why not	person shrugging questioningly
+co to	what is this	person holding object
+co się stało	what happened	damaged house interior
+jeszcze raz	once again	person repeating sentence
+to wszystko	that's all	person finishing conversation
+wcale nie	not at all	person feeling no pain
+ja też	me too	two people agreeing
+nie zapomnij	don't forget	person holding keys
+powiedz mi	tell me	person speaking urgently
+kto to	who's this	two people meeting
+nigdy więcej	never again	person shouting angrily
+nie wierzę	i don't believe it	surprised person doubting
+nie pamiętam	i don't remember	person trying to remember
+boję się	i'm scared	frightened person in darkness
+coś takiego	well i never	surprised person reacting
+za późno	too late	empty movie theater
+z pewnością	certainly	confident person arriving
+nie chciałem	i didn't mean it	person apologizing
+jak myślisz	what do you think	person thinking
+co robisz	what are you doing	person doing something
+co robić	what to do	person deciding problem
+muszę iść	i've got to go now	person leaving room
+wiesz co	you know what	person starting conversation
+od kiedy	since when	person asking about time
+kocham cię	i love you	couple hugging
+jesteś pewien	are you sure	person asking confirmation
+to ja	it's me	person on phone
+co to jest	what's this	person pointing at object
+pokaż mi	show me	person showing notebook
+to moje	that's mine	person holding books
+chcesz iść	do you want to go	two people going out
+może nie	perhaps not	person hesitating
+zrobię to	i'll do it	person doing task
+udało mi się	i made it	student celebrating exam
+dobry pomysł	good idea	person with bright idea
+co się dzieje	what's going on	confused kitchen scene
+udało się	we did it	sports team celebrating
+czy to prawda	is that true	person reacting in surprise
+nie może być	it can't be	person shivering outdoors
+nie mam nic	i don't have anything	empty plate and hungry person
+nie wiemy	we don't know	people looking confused
+to jest to	that's it	person finding what they want
+chcę iść	i want to go	person going home
+chcesz to	do you want this	person holding object
+jestem pewny	i'm sure	confident person
+zrób to	do it	person doing task
+ja jestem	i am	person standing self
+uczysz się	are you studying	student studying at desk
+pospiesz się	hurry	person running late
+mam to	i've got it	person holding bag
+nie jadłem	i haven't eaten	hungry person at breakfast
+musisz iść	you must go	person leaving now
+bardzo zmęczony	so tired	exhausted person sitting
+kim jestem	who am i	confused person pointing at self
+nie zrozumiałem	i didn't understand	person looking confused
+mówiłem ci	i told you	person speaking to friend
+nikt nie wie	no one knows	empty room with no people
+zaczęło się	it's started	party starting inside
+co powiesz	what will you say	person speaking to boss
+co jeszcze	what else	person shopping for more items
+ile masz	how many do you have	person counting apples
+w prawo	right	car turning right
+mam nadzieję, że nie	i hope not	person hoping for no
+jestem zajęty	i'm busy	busy office worker
+pomóż mi	help me	person helping another
+na ziemię	get down	person lying on floor
+co powiedziałeś	what did you say	person asking question
+a potem	and afterward	person walking after dinner
+takie jak	such as	assorted fruit bowl
+ani słowa	don't say anything	person making hush gesture
+nie bój się	don't be afraid	person in dark room
+zamknij się	shut up	angry person shouting
+ucz się	learn	student studying at desk
+moja wina	my bad	person admitting mistake
+nie rozumiesz	don't you understand	confused person listening
+boisz się	are you scared	scared person in darkness
+jestem za	i'm all for it	person approving idea
+proszę powiedz	please say	person asking for truth
+mam dosyć	i've had enough	annoyed person covering ears
+będzie dobrze	it'll be fine	sunrise after storm
+coś jeszcze	anything else	person asking for more
+mam dość	i'm done	tired person giving up
+ja też nie	me neither	second person refusing milk
+co masz na myśli	what do you mean	person asking a question
+czego chcesz	what do you want	person choosing dinner
+możesz to zrobić	you can do it	child solving puzzle
+nie ma powodu	there's no reason	empty road with no danger
+powiedz to	say it	person speaking loudly
+już jest 7	it's already seven	digital clock showing seven
+już czas	it's time	person going to bed
+to jest moje	is that mine	person holding their belongings
+mogę pomóc	i can help	person helping with homework
+sam, nie	sam, no	person alone
+to twoje	is it yours	person holding keys
+może przyjść	he can come	man arriving home
+to niemożliwe	that's impossible	broken bridge
+to dziwne	that's strange	surprised person
+no i	so what	shrugging person
+to dla ciebie	this is for you	gift for person
+nie pójdziesz	won't you go	person staying behind
+jesteś zmęczony	you're tired	tired person on couch
+pomogę ci	i'll help you	person helping friend
+bardzo dziękuję	thank you very much	person thanking sincerely
+kto mówi	who's speaking	person speaking
+pomożesz mi	can you give me a hand	person giving help
+ile osób	how many people	crowd of people
+nie musimy	we don't have to	person skipping task
+pada deszcz	is it raining	rain falling outdoors
+jest ciepło	it's warm	sunny warm day
+a teraz	and now	hands changing calendar
+nie wiedziałeś	didn't you know	confused person shrugging
+zachowuj się	mind your manners	child behaving politely
+gdzie byłeś	where were you	person returning home
+to dobry pomysł	that's a good idea	person with lightbulb idea
+na sprzedaż	for sale	house for sale
+jestem gotowy	i'm ready	person ready to leave
+jak się czujesz	how do you feel	person feeling sick
+możesz zostać	can you stay	person staying
+nie mam pieniędzy	i have no money	empty wallet
+no dalej	go ahead	person gesturing forward
+nic się nie stało	it’s all right	person getting up unharmed
+zróbmy to	let’s do it	group making a plan
+bądź cicho	keep quiet	quiet classroom
+miejmy nadzieję	hopefully	person hoping
+tym lepiej	that’s even better	empty road
+zgadzam się z tobą	i agree with you	people agreeing
+w istocie	indeed	person nodding
+twoje imię	your name	name tag
+nie kłam	don’t lie	person lying
+co mam zrobić	what should i do	person thinking
+proszę, powiedz mi	please tell me	person asking for directions
+bądź ostrożny	be careful	person crossing street carefully
+nie ma mowy	no way	person refusing
+jesteśmy gotowi	we’re ready	ready group
+uspokój się	calm down	person calming down
+kto wygrał	who won	sports winner
+jestem tutaj	i’m here	person standing nearby
+napij się	have some	person drinking water
+nic nowego	nothing new	empty inbox
+kto to jest	who is this	person in photo
+coś się stało	something happened	person reacting to accident
+zamknij oczy	close your eyes	person covering eyes
+nie rozumiem tego	i don’t understand	confused student solving problem
+jakieś pytania	any questions	student raising hand
+pośpiesz się	hurry up	person running fast
+chodź tu	come here	person beckoning
+jestem dobry	i’m good	soccer player
+skończyłeś już	have you finished already	person finishing meal
+coś nie tak	something wrong	broken appliance
+nie pij	don’t drink	person refusing drink
+nie rób tego	don’t do that	person stopping action
+proszę iść	please go	person leaving house
+to dużo	that’s a lot	large pile of coins
+oto jest	here it is	person handing over key
+ruszaj się	get moving	person hurrying along
+zrób coś	do something	person taking action
+sprawdź to	check this out	person examining photo
+muszę jechać	gotta go	person leaving work
+wybacz mi	forgive me	person apologizing sincerely
+moja kolej	is it my turn	person taking game turn
+musimy iść	we’ve got to go	family heading out
+zostaw to	leave it	person leaving object on table
+chcę się uczyć	i want to learn	student studying language
+nie poddawaj się	don’t give up	runner pushing through fatigue
+jestem w domu	i’m at home	person relaxing at home
+coś jest nie tak	something is wrong	school hallway with worried students
+możemy iść	can we go	people ready to leave
+zostaw mnie	leave me alone	person being left alone
+nie podchodź	stay back	person standing back from fire
+weź to	take it	hand taking object
+nie mów tak	don’t say that	person speaking loudly
+nie przychodź	don’t come	person staying away
+nie zrobię tego	i won’t do it	person refusing task
+tęsknię za tobą	i miss you	sad person missing friend
+wszystko będzie dobrze	everything will be fine	person relaxing happily
+nic nie wiem	i don’t know anything	person shrugging cluelessly
+rozumiem cię	i understand you	person listening and understanding
+jest tanie	it’s cheap	cheap t shirt
+uczysz się angielskiego	do you study english	person studying English
+wszystko jest w porządku	everything is fine	person feeling okay
+nie mamy czasu	we don’t have time	people with no time
+bułka z masłem	easy peasy	easy cooking task
+wiem co robić	i know what to do	person solving problem
+jest tu ktoś	is anyone here	person looking around room
+bardzo mi przykro	i’m very sorry	person apologizing
+nie, dziękuję	no thanks	person declining drink
+gdzie jesteś	where are you	person looking for someone
+nic specjalnego	nothing special	ordinary simple scene
+nie ruszaj się	don't move	person standing still
+dokąd idziesz	where are you going	person walking with bag
+udało ci się	you've done it	person celebrating success
+jesteś głodny	are you hungry	hungry child after school
+nie masz nic przeciwko	do you mind	person shrugging
+dziękuję za pomoc	thanks for helping me out	person helping another
+czy on przyjdzie	will he come	person arriving at door
+czy to twoje	are these yours	pair of shoes
+nie wiesz jak	don't you know how	person repairing bicycle
+lubię podróżować	i like to travel	person with backpack
+skąd mam wiedzieć	how should i know	person looking confused
+kto wygra	who will win	players winning game
+umiem pływać	i can swim	person swimming in lake
+i wtedy	and then	rainy street scene
+potrzebujesz pomocy	need some help	person carrying heavy bag
+teraz rozumiem	i understand now	person realizing something
+chcesz coś	do you want something	person choosing drink
+kto tam	who is there	person knocking on door
+nie wiem, co powiedzieć	i don't know what to say	person speechless
+nie masz pojęcia	you have no idea	person confused in pain
+to kłamstwo	that's a lie	person lying to someone
+nie czekaj	don't wait	person waiting on bench
+nie śmiej się	don't laugh	person holding back laughter
+co zamierzasz	what are you going to do	person making plan
+przyjrzyj się	watch closely	person examining photo
+nie słuchasz	aren't you listening	person ignoring speaker
+jak masz na imię	what is your name	person introducing themselves
+tak się cieszę	i'm so glad	happy person celebrating
+tak myślę	i believe so	person nodding thoughtfully
+dziękuję za zaproszenie	thanks for the invite	person receiving invitation
+spóźniłeś się	youre late	late worker arriving
+był wypadek	there's been an accident	car crash on road
+nie mogę tego zrobić	i can't do it	person unable to do task
+to boli	that hurts	person holding sore tooth
+to nie takie proste	it's not that simple	person facing difficult problem
+ile pieniędzy	how much money	hand counting money
+chcę więcej	i want more	person wanting more food
+gdzie jestem	where am i	confused traveler looking around
+nie płacz	dont cry	crying child being comforted
+dobrze mi	i'm good	relaxed person feeling fine
+tak myślisz	you think so	person nodding agreement
+swój	one's own	person facing own past
+twój	your	helping hand
+kto	who	person asking about someone
+dać	to give (perfective)	person giving bicycle
+pójść	to go (perfective)	person walking to cemetery
+kupić	to buy (perfective)	person buying bicycle
+potrzebować	to need	person needing help
+pomóc	to help (perfective)	person helping another person
+przyjść	to come (perfective)	person arriving at house
+nasz	our	students in first language lesson
+niż	than	two stacks of books
+zobaczyć	to see (perfective)	person seeing needle
+francuski	french	person speaking French
+wyjść	to go out (perfective)	person leaving house
+zacząć	to begin (perfective)	person starting work
+ile	how much	price per kilogram
+tutaj	here	person standing here
+wrócić	to return (perfective)	person returning home
+zbyt	too	slow downloading game
+skończyć	to finish (perfective)	person finishing task
+dziś	today	person staying home
+zjeść	to eat (perfective)	person eating breakfast
+przed	before	old castle ruins
+uważać	to think	person thinking carefully
+czuć	to feel	person feeling upset
+wziąć	to take (perfective)	person taking something
+jaki	what	news headlines
+przestać	to stop (perfective)	person stopping suddenly
+jakiś	some	some danger
+pozwolić	to let	person allowing child
+dostać	to get (perfective)	person getting a job
+poprosić	to ask (perfective)	person asking for help
+nauczyć	to learn (perfective)	person learning xylophone
+porozmawiać	to talk (perfective)	two people talking
+padać	to rain	rain falling
+napisać	to write (perfective)	written play script
+zadzwonić	to call (perfective)	person making phone call
+zostawić	to leave (perfective)	person leaving bag on subway
+podobać	to like	person liking something
+bać	to fear	scared person
+pojechać	to go (perfective)	airplane taking off
+ulubiony	favourite	favorite sports trophy
+sądzić	to think	person thinking
+zmienić	to change (perfective)	situation changing
+zabić	to kill	explosion killing people
+pokazać	to show (perfective)	person showing photo album
+tamten	that	person under tree
+oglądać	to watch	people watching television
+wciąż	still	still beautiful world
+palić	to smoke	person smoking cigarette
+przeczytać	to read (perfective)	person reading book
+spóźnić	to be late (perfective)	person arriving late
+oba	both	two hunters together
+zapytać	to ask (perfective)	person asking question
+wejść	to enter (perfective)	person entering room
+spróbować	to try (perfective)	person trying task
+używać	to use	person using telescope
+zamierzać	to plan	person planning trip
+stracić	to lose (perfective)	person losing money
+wielki	big	large city skyline
+siedzieć	to sit	person sitting on chair
+kiedykolwiek	ever	tall building
+nadal	still	still beautiful world
+umrzeć	to die (perfective)	dead grandfather
+martwić	to worry	worried woman
+zeszły	last	last year calendar
+jedyny	only	single problem
+zapłacić	to pay (perfective)	person paying bill
+zastanawiać	to wonder	person thinking confused
+bawić	to play	child playing blocks
+zdecydować	to decide (perfective)	person making decision
+znaczyć	to mean	dictionary word meaning
+zatrzymać	to stay (perfective)	hotel room stay
+zgubić	to lose (perfective)	person missing watch
+udać	to succeed	person succeeding
+przyjechać	to arrive (perfective)	person arriving by car
+patrzyć	to look	person looking at ducks
+usłyszeć	to hear (perfective)	person hearing animal sound
+japoński	japanese	Japanese food
+własny	own	own language
+podczas	during	damaged packages
+śmiać	to laugh	people laughing
+wysłać	to send (perfective)	person sending letter
+jeździć	to ride	person riding horse
+złapać	to catch	person catching fish
+nazywać	to call	comic character
+niektóry	some	some people eating fish
+odpowiedzieć	to answer (perfective)	student answering question
+dziwny	strange	strange forest sounds
+śmierć	death	funeral with coffin
+spojrzeć	to glance	woman glancing sideways
+rada	advice	person giving advice
+spędzić	to spend (perfective)	couple celebrating New Year
+założyć	to found	person starting website
+wybrać	to choose (perfective)	hand choosing object
+przynieść	to bring (perfective)	person bringing towel
+spodziewać	to expect	person expecting return
+odwiedzić	to visit (perfective)	tourist visiting friends
+przyjąć	to accept (perfective)	person accepting gift
+postanowić	to decide (perfective)	people deciding indoors
+rozwiązać	to solve (perfective)	student solving problem
+dotrzeć	to arrive (perfective)	person arriving by train
+wyjaśnić	to explain (perfective)	teacher explaining lesson
+urodzić	to be born	baby being born
+pożyczyć	to lend	person lending dictionary
+dokładnie	exactly	exactly same woman
+wojna	war	war battlefield scene
+cieszyć	to be glad	happy reunion hug
+gdyby	if	person reading if sign
+racja	right	person agreeing right away
+usiąść	to sit down (perfective)	person sitting down
+zadowolić	to please	smiling pleased man
+przejść	to retire	retired man at home
+uwierzyć	to believe (perfective)	person believing rumor
+planować	to plan	people planning trip
+interesować	to interest	person showing interest
+pojąć	to understand (perfective)	person understanding idea
+codziennie	every day	woman jogging daily
+zabrać	to take away (perfective)	woman taking phone away
+oddać	to return (perfective)	student handing in homework
+ani	and not	person reading and writing
+stąd	from here	road from here
+prawdopodobnie	probably	person thinking probably
+dolar	dollar	stack of dollar bills
+dość	enough	nearly empty wallet
+większość	majority	majority of people
+przyszłość	future	road leading into future
+uciec	to escape	prisoner escaping prison
+temat	subject	student staying on topic
+położyć	to put (perfective)	hand placing cards
+trzydzieści	thirty	thirty year old man
+rzucić	to give up (perfective)	person quitting smoking
+przygotować	to prepare (perfective)	person getting ready
+wystarczać	to be enough	enough food for group
+zemrzeć	to die (perfective)	elderly man funeral
+wtedy	then	empty house then
+dowiedzieć	to find out	person finding out news
+poczekać	to wait (perfective)	person waiting for phone call
+kłamać	to lie	person telling lie
+istnieć	to exist	person existing
+studiować	to study	student in classroom
+podać	to hand (perfective)	handing over pen
+pocałować	to kiss (perfective)	couple kissing
+ogół	generally	empty space generally
+ponad	over	over thirty years
+zgadzać	agree	two people agreeing
+ciągle	constantly	child coughing repeatedly
+kazać	make	woman ordering carry bag
+więzić	imprison	police prisoner cell
+wypić	drink (perfective)	people drinking wine
+wstać	stand up	person standing up
+opuścić	leave (perfective)	people leaving courtroom
+pomyśleć	think	person thinking
+silny	strong	strong man
+nożny	soccer	soccer game in rain
+między	between	building between school bank
+przekonać	convince	person persuading friend
+sens	meaning	person asking about meaning
+robota	work	person doing manual work
+zdawać	seem	person seeming uncertain
+odejść	leave (perfective)	person leaving office
+restauracja	restaurant	restaurant dining room
+podobny	similar	two similar bicycles
+przyszły	next	next year calendar
+kolejny	next	next exam paper
+poradzić	to manage (perfective)	person solving problem
+użyć	to use (perfective)	police using pepper spray
+pudełko	box	closed cardboard box
+spytać	to ask (perfective)	person asking a question
+sprawdzić	to check (perfective)	person checking computer
+zgodzić	to agree (perfective)	two people agreeing
+obudzić	to wake up	sleepy person waking up
+brzmieć	to sound	person speaking on phone
+wydarzyć	to happen (perfective)	something happening
+przybyć	to arrive (perfective)	person arriving airport
+leżeć	to lie	person lying on grass
+około	about	about one week
+poczuć	to feel (perfective)	person feeling chest pain
+umyć	to wash (perfective)	person washing strawberries
+niemiecki	german	German language textbook
+ochota	desire	person wanting to go out
+przyznać	to admit (perfective)	person admitting mistake
+również	also	another person too
+zakochać	to fall in love	couple falling in love
+powstrzymać	to stop (perfective)	person stopping obstacle
+sytuacja	situation	business situation meeting
+ukraść	to steal (perfective)	person stealing gold
+obiecać	to promise (perfective)	person making promise
+winny	guilty	guilty suspect
+porządek	in order	things in order
+mylić	to confuse	person mixing sugar and salt
+długo	longer	person staying longer
+spory	a lot	stack of money
+stacja	station	subway station entrance
+pora	time	clock time
+butelka	bottle	glass bottle of oil
+otrzymać	to receive	person receiving message
+znajdować	to be located	person at location
+obchodzić	to care	person shrugging
+sprzedawać	to sell	clothing store rack
+udawać	to pretend	person pretending surprise
+polityk	politician	politician speaking
+budynek	building	tall office building
+zaczekać	to wait (perfective)	person waiting by phone
+świetny	great	smiling friend
+minąć	to pass	time passing calendar
+opowiedzieć	to tell (perfective)	person telling story
+jakby	as if	person looking ill
+wasz	your	mother and family
+zainteresować	to be interested	person reading art book
+brakować	to lack	empty wallet
+wcale	hardly	person not honest
+powrót	return	person returning home
+zewnątrz	outside	person outside house
+posłuchać	to listen (perfective)	person listening music
+cokolwiek	anything	person doing anything
+rozsądny	reasonable	reasonable man
+zasnąć	to fall asleep	person falling asleep
+podnieść	to lift	person lifting heavy piano
+torba	bag	shopping bag with oranges
+wpaść	to drop in	friend dropping by house
+trzeci	third	third day calendar
+przetłumaczyć	to translate (perfective)	person translating book
+popełnić	to commit	person committing suicide
+narzekać	to complain	people complaining prices
+dumny	proud	proud teacher with students
+obawiać	to be afraid	worried person
+ktokolwiek	anyone	person with no one else
+zepsuć	to break down (perfective)	broken down bus
+podjąć	to make (perfective)	person taking risk
+dojść	to happen (perfective)	car accident scene
+chiński	chinese	chinese food
+ponownie	again	person saying again
+kapelusz	hat	man lifting hat
+dzisiejszy	today's	today meeting calendar
+albo	or	phone or tablet charging
+informacja	information	person searching online
+przeciwko	against	police investigating suspect
+włożyć	put in (perfective)	put groceries in trunk
+działać	act	detective working alone
+spaść	fall (perfective)	person falling down stairs
+wykonać	perform	gymnast doing exercise
+przeszkadzać	bother	person being annoyed
+ranny	wounded	wounded man
+wspaniały	wonderful	wonderful party food
+wyjechać	leave (perfective)	person leaving city
+wymagać	require	project requiring money
+posprzątać	clean up	person cleaning house
+planeta	planet	planet in space
+wrażenie	impression	person making impression
+zależeć	depend	thing depending on him
+różny	different	different kinds of literature
+przyzwyczaić	get used to	workers getting used to late nights
+auto	car	car interior
+potwór	monster	monster in dark room
+zawierać	contain	book with stories
+umierać	die	wilted flowers
+znieść	bear (perfective)	person unable to bear crying
+zagrać	play	people playing cards
+okazać	turn out	surprised person
+popatrzyć	look	people studying map
+lecieć	fly	birds flying south
+dopiero	just	person just arrived home
+kłopot	trouble	person in trouble
+biec	run	person running
+dokąd	where to	road direction sign
+poprawić	improve	person improving pronunciation
+niedługo	soon	person waiting soon
+spędzać	spend	person spending time at home
+rodzaj	kind	different kinds of people
+zazwyczaj	usually	birds waking early
+zachowywać	behave	person behaving properly
+świeca	candle	lit candle
+zakup	purchase	person buying record
+starać	try	person trying not laugh
+hałas	noise	loud noise
+mnóstwo	a lot	large amount of time
+cierpieć	to suffer	person suffering headache
+bóg	god	god creating man
+jeżeli	if	two people agreeing
+zdarzyć	to happen (perfective)	traffic accident scene
+niemożliwy	impossible	impossible situation
+potrzebny	necessary	key for lock
+uderzyć	to hit (perfective)	person hit with hammer
+sprzedać	to sell (perfective)	person selling car
+żałować	to regret	person feeling regret
+wróg	enemy	enemy soldier
+fakt	fact	important fact
+pojawić	to appear (perfective)	skin rash
+życzyć	to wish	person wishing harm
+odkryć	to discover	person discovering computer
+okazja	occasion	special occasion
+chronić	to protect	person protecting woman
+trząść	to shake	earthquake shaking ground
+król	king	king and queen
+znów	again	two friends greeting
+dodać	to add (perfective)	person adding item
+popołudnie	afternoon	afternoon rain clouds
+zapalić	to smoke (perfective)	person smoking cigarette
+zbudować	to build (perfective)	dam under construction
+słodki	sweet	sugar crystals
+zamiar	intention	person making plans
+zebrać	to gather	people gathered around table
+obcy	foreign	person in foreign room
+zginąć	to die (perfective)	person electrocuted
+pozostać	to remain	person staying indoors
+obserwować	to observe	birdwatching binoculars
+przedstawić	to introduce	person introducing man
+osiągnąć	to achieve (perfective)	successful architect
+zawieść	to disappoint	disappointed person
+pasować	to fit	clothes that fit
+martwy	dead	dead tree
+walczyć	to fight	people fighting for rights
+użytkownik	user	computer user profile
+amerykański	american	American football player
+głęboki	deep	deep water
+całkowicie	completely	melted snowman
+spowodować	to cause (perfective)	lightning storm outage
+różnica	difference	two different objects
+pobrać	to download (perfective)	downloaded app icon
+zajmować	to do	person at work
+oto	here is	food list on table
+przeprosić	to apologize (perfective)	apologizing woman
+zranić	to hurt (perfective)	injured person face
+lunch	lunch	lunch meal
+zdobyć	to get (perfective)	person buying ticket
+ukryć	to hide (perfective)	sad person hiding face
+spacer	walk	person on a walk
+sławny	famous	famous composer portrait
+myć	to wash	person brushing teeth
+popularny	popular	popular sport crowd
+przypominać	to remind	cat eyes closeup
+jazda	driving licence	driver license card
+okropny	terrible	terrible cafeteria food
+ostrożny	careful	careful person handling glass
+szósty	sixth	sixth floor apartment
+siódmy	seventh	seventh protest march
+spodobać	to like (perfective)	woman liking gift
+hiszpański	spanish	Spanish flag
+przeprowadzić	to move (perfective)	person moving house
+twierdzić	to claim	person making claim
+ożenić	to marry	wedding couple
+składać	to consist	team huddle
+przykry	sorry	sad apologetic person
+propozycja	offer	business offer
+przeżyć	to survive (perfective)	earthquake survivors
+napić	to drink (perfective)	person drinking water
+główny	main	corn ingredient
+wyrzucić	to throw away (perfective)	person throwing away
+poddać	to give up (perfective)	person giving up
+zniknąć	to disappear	rainbow disappearing
+poza	except	person excepted from group
+dołączyć	to join (perfective)	people joining meeting
+metr	subway	subway train
+test	test	school test paper
+czyj	whose	person's dog
+poważny	serious	serious relationship
+niewiele	few	person ignoring comments
+wybaczyć	to forgive (perfective)	forgiving hug
+posiłek	meal	served meal
+stawać	to become	something becoming popular
+rodzimy	native	native speaker
+przypomnieć	to remind (perfective)	person reminding friend
+wydać	to spend (perfective)	spending money
+coraz	more and more	more and more
+samotny	lonely	lonely woman
+nauczycielka	teacher	female teacher
+pizza	pizza	pizza slice
+esperanto	esperanto	Esperanto language
+włączyć	turn on	turning on device
+znosić	hate	hating school
+jedynie	only	making one phone call
+posiadać	have	person owning puzzle piece
+przyjaciółka	friend	best female friend
+dziennie	a day	drinking milk daily
+dwadzieścia	twenty	twenty years old
+wściekły	furious	furious man
+telewizor	television	living room television
+pobliże	nearby	nearby place
+wystarczyć	be enough	not enough
+podejść	approach (perfective)	walking to window
+warta	worthwhile	worth studying
+postawić	put	putting cups on shelf
+skorzystać	use (perfective)	using cellphone
+odmówić	refuse	refusing request
+krok	step	one step off cliff
+zabawny	funny	funny man
+ugotować	cook (perfective)	boiled egg
+wojsko	army	army soldiers formation
+straszny	terrible	severe storm clouds
+zatrudnić	employ	employ worker interview
+mila	mile	mile distance road sign
+znacznie	much	tall person standing
+stworzyć	create (perfective)	night sky stars
+jadać	eat regularly	person eating breakfast
+wyjąć	take out	person taking out pencil
+oznaczać	mean	person asking meaning
+inaczej	otherwise	person running from police
+odłożyć	put away	sports event canceled rain
+wyłączyć	switch off	person turning off radio
+średni	medium	medium soda cup
+pospieszyć	hurry (perfective)	person hurrying forward
+rozpocząć	start	construction site beginning
+uratować	save	rescuer saving man
+zapamiętać	remember	person memorizing note
+zakończyć	finish	finished battle scene
+pachnieć	smell	coffee shop cinnamon smell
+zasługiwać	deserve	person receiving reward
+żołnierz	soldier	soldier in uniform
+duch	ghost	transparent ghost figure
+ranek	morning	early morning sunrise
+pomalować	paint (perfective)	person painting room wall
+nieść	carry	person carrying book
+dół	downstairs	basement stairs
+ukończyć	complete (perfective)	finished dam
+zmusić	to force	person being forced
+zaśpiewać	to sing (perfective)	person singing song
+klub	club	sports club building
+jen	yen	Japanese yen coins
+upewnić	to make sure	person double checking
+odrzucić	to reject (perfective)	teacher rejecting paper
+owad	insect	bee insect
+udział	participation	people joining game
+reszta	rest	family members together
+moment	moment	right time
+sprawić	to cause (perfective)	something causing reaction
+kłócić	to argue	couple arguing
+skłamać	to lie (perfective)	person telling lie
+także	also	two people also
+złożyć	to fold	folded towel
+traktować	to treat	person treating others badly
+małżeństwo	marriage	newlyweds holding hands
+papier	paper	blank paper sheet
+poważnie	seriously	doctor speaking seriously
+wieś	village	rural village street
+rozsądek	reason	person thinking clearly
+żywy	alive	live fish
+schować	to hide (perfective)	hidden documents
+punkt	point	target on board
+pot	then	later after event
+sprawiać	to cause	person causing trouble
+fajny	nice	smiling young woman
+naczynie	dishes	stack of dishes
+pozwalać	to allow	teacher allowing students
+karmić	to feed	person feeding eagle
+zniszczyć	to destroy (perfective)	exploding bridge
+dziewczynka	little girl	little girl smiling
+piąty	fifth	five-year-old dancer
+interes	business	small family business
+wyjeżdżać	to leave	person leaving city
+czyż	isn't it	woman asking question
+płyta	record	record store shelves
+powtórzyć	to repeat (perfective)	person repeating lesson
+uśmiechać	to smile	smiling man face
+smakować	to taste	bread with butter
+żartować	to joke	two people laughing
+podpisać	to sign	person signing contract
+płynąć	to flow	small stream flowing
+cóż	well	person shrugging
+wytłumaczyć	to explain (perfective)	teacher explaining lesson
+przegrać	to lose (perfective)	soccer team losing
+wzgląd	regardless of	person ignoring consequences
+zdradzić	to tell on	person telling secret
+dziewiąty	ninth	ninth birthday candle
+odjeżdżać	to leave	train leaving station
+odebrać	to answer (perfective)	person answering phone
+kontynuować	to continue	student continuing work
+wymyślić	to invent (perfective)	person inventing computer solution
+niewolnik	slave	enslaved person
+szalony	crazy	crazy laughing man
+niedaleko	near	house near river
+kawałek	piece	orange slice
+zwrócić	to return (perfective)	person returning valuables
+idiota	idiot	angry idiot man
+wynająć	to rent (perfective)	room for rent
+maszyna	machine	factory machine
+dotykać	to touch	child touching painting
+naturalny	natural	natural landscape
+spieszyć	to hurry	person hurrying to taxi
+ciąg	within	hour hand moving
+pewność	certainly	woman confidently agreeing
+obecny	present	classroom full of students
+nazwać	to name	person naming a ship
+produkt	product	boxed consumer product
+wypełnić	to fill out	person filling out form
+wszelki	every	many reasons
+niewinny	innocent	innocent arrested man
+ruszyć	move (perfective)	person unable to move
+uznać	consider	person deciding a movie
+odpocząć	to rest (perfective)	tired person resting
+spadać	fall	tree leaves falling
+wieść	news	travel news headlines
+nieprawdaż	right	person agreeing conversationally
+zazdrosny	jealous	jealous woman
+zapominać	forget	student forgetting homework
+filiżanka	cup	white coffee cup
+pański	your	person's hometown
+okłamać	lie to (perfective)	person telling a lie
+ograniczyć	limit	smoker limiting cigarettes
+obejrzeć	watch (perfective)	person watching a movie
+wybuchnąć	explode	exploding bomb
+odbyć	take place (perfective)	wedding ceremony
+bić	beat	beating heart
+osobiście	personally	person speaking frankly
+sekret	secret	hidden secret
+doceniać	appreciate	person thanking guest
+wiara	faith	person with faith
+alkohol	alcohol	alcohol bottle
+walka	fight	boxing fight
+podziękować	to thank	person saying thank you
+parasolka	umbrella	travel umbrella
+ogromny	huge	huge ocean wave
+okolica	neighborhood	quiet residential neighborhood
+ciężarówka	truck	delivery truck
+śmiech	laughter	people laughing
+podzielić	to divide	hands dividing cake
+winić	to blame	person blaming another
+prysznic	shower	person taking shower
+internetowy	online	laptop screen website
+podejrzeć	to suspect (perfective)	detective suspecting
+przewidzieć	to predict (perfective)	weather forecast sky
+zdarzać	to happen	things happening repeatedly
+opisać	to describe	person describing scene
+inteligentny	intelligent	smart person thinking
+rozbić	to break (perfective)	hand cracking egg
+unikać	to avoid	person avoiding food
+dokonać	to carry out	armed raid village
+ludzki	human	human skull
+wytrzymać	to endure	person enduring pain
+kompletnie	completely	person forgetting something
+wioska	village	small village street
+ruszać	to move	person not moving
+usunąć	to remove	person deleting files
+skontaktować	to contact (perfective)	person making phone call
+zadawać	to ask	student asking question
+wyrazić	to express (perfective)	person expressing feelings
+czwarty	fourth	fourth floor building
+ojczysty	native	native language speaker
+dosyć	fed up	fed up person
+drink	drink	cocktail drink
+pokonać	to beat (perfective)	athlete winning race
+ósmy	eighth	eighth place medal
+zoo	zoo	zoo animals
+śmierdzieć	to smell	smelly room
+milion	million	stack of dollar bills
+zaatakować	to attack (perfective)	soldiers attacking
+prawnik	lawyer	lawyer in office
+uciekać	to run away	person running away
+cudowny	wonderful	beautiful mountain view
+surowy	raw	raw fish dish
+przekazać	to pass on	passing message
+obecnie	currently	person working at school
+dusza	soul	human soul
+członek	member	committee members
+szanować	to respect	respected man
+sięgnąć	to reach (perfective)	reaching for glass
+cierpliwość	patience	patient manager
+idealny	perfect	perfect circle
+szkolny	school	school newspaper
+bywać	sometimes	sometimes happening
+zadziałać	to work (perfective)	computer working
+odnieść	to gain (perfective)	business success
+forma	form	magic form
+baseball	baseball	baseball game
+zaproponować	to suggest (perfective)	woman suggesting idea
+wzrok	sight	eye exam
+artykuł	article	newspaper article
+pistolet	gun	handgun
+śmieszny	funny	funny face
+nieco	a little	slightly crazy person
+wolność	freedom	breaking chains
+wezwać	to call (perfective)	person calling doctor
+włoski	italian	Italian language
+słodycze	sweets	pile of sweets
+dotrzymać	to keep (perfective)	person keeping promise
+szczerza	frankly	speaking honestly
+przyjemność	pleasure	person enjoying something
+zrezygnować	to give up (perfective)	student giving up
+pasażer	passenger	airplane passengers
+wiecznie	forever	forever clock
+hej	hey	person greeting friend
+drewno	wood	wooden table
+poeta	poet	poet writing poem
+cisza	silence	quiet forest
+polecieć	to fly (perfective)	person flying on plane
+prąd	electricity	power lines
+spóźniać	to be late	late for school
+litera	letter	alphabet letters
+półka	shelf	empty shelf
+wyobrazić	to imagine (perfective)	person imagining
+ugryźć	to bite (perfective)	dog biting hand
+ledwo	barely	barely fifteen years
+dziura	hole	hole in sock
+uważnie	carefully	person reading carefully
+spalić	to burn (perfective)	burning books
+odpowiedni	suitable	suitable book
+nawzajem	each other	two people helping
+upaść	to fall	elderly woman falling
+niezły	pretty good	pretty good idea
+moneta	coin	coins in pocket
+kąpiel	bath	taking a bath
+ładnie	nicely	well dressed man
+dyskusja	discussion	group discussion
+utrzymać	support	supporting family
+urządzić	organize	party planning
+społeczny	social	social skills
+uprawiać	do sports	playing sports
+niebezpieczeństwo	danger	person in danger
+trafić	arrive (perfective)	arriving somewhere
+humor	mood	bad mood
+zbliżać	approach	person approaching
+równy	equal	equal chances
+przechodzić	cross	crossing street
+wyciągnąć	pull out	person pulling bike from mud
+kanapa	sofa	living room sofa
+denerwować	annoy	person waiting impatiently
+świecić	shine	sun shining in sky
+przebrać	change (perfective)	person changing clothes
+okropnie	terribly	person grieving deeply
+poprzedni	previous	previous meeting notes
+odrobina	a little	small price reduction
+przypuszczać	suppose	person making a guess
+zemdleć	to faint	person fainting suddenly
+wychować	to raise (perfective)	child raised by grandfather
+pozbyć	to get rid	person getting rid of gun
+wynosić	to amount to	percentage amount
+kolej	railway	railway train tracks
+tekst	text	book text page
+oszukać	to deceive	person tricking someone
+przeszłość	past	old family history
+światowy	global	worldwide fame
+samobójstwo	suicide	person taking their own life
+podziwiać	to admire	person admiring artist
+wynaleźć	to invent (perfective)	invention of telephone
+osobisty	personal	private question
+dotknąć	to affect (perfective)	poor families affected
+grecki	greek	Greek flag
+uroczy	cute	cute penguin
+toaleta	toilet	bathroom toilet
+mowa	speech	person giving speech
+nudzić	to be bored	bored person sitting
+odwiedzać	to visit	people visiting grandparents
+przerażać	to scare	frightened person
+przetrwać	to survive (perfective)	earthquake survivors
+odrobić	to do (perfective)	student doing homework
+bezpiecznie	safely	person arriving safely
+kontrola	control	business control panel
+doskonały	excellent	excellent meal
+niesamowity	amazing	amazing landscape
+ciąża	pregnancy	pregnant woman
+świeczka	candle	lit candle
+piętnaście	fifteen	fifteen year old
+lokalny	local	local artist
+stosunek	terms	neighbors relationship
+zaakceptować	accept	accepting offer
+ton	ton	weight limit sign
+zarówno	both	nature and math
+doczekać	look forward to	person waiting eagerly
+stanąć	stop (perfective)	stopped clock
+modlić	pray	person praying
+dziesiąty	tenth	tenth of April
+stwierdzić	state	person making statement
+lalka	doll	girl playing with doll
+uniknąć	avoid	person avoiding danger
+chwycić	grab	hand grabbing fire extinguisher
+zwracać	pay attention	students listening carefully
+wyczerpać	run out (perfective)	money running out
+ślepy	blind	one eyed man
+oszukiwać	to cheat	person cheating customer
+nieobecny	absent	empty classroom desk
+dziwnie	strangely	person speaking confused
+pomimo	despite	kids playing soccer in rain
+poranek	morning	person grinding coffee beans
+tchórz	coward	scared cowardly man
+właściwy	right	person in right place
+przemówić	to persuade	person persuading friend
+uczynić	to make (perfective)	woman making man happy
+miejscowy	local	local prison building
+polubić	to like (perfective)	people liking paintings
+pingwin	penguin	cute penguin
+wesprzeć	to support (perfective)	person supporting country
+nieważny	no matter	person ignoring warnings
+cud	miracle	medical miracle rescue
+rodzinny	family	family business shop
+prędko	sooner	clock moving sooner
+zdziwić	to surprise	surprised man
+pyszny	delicious	delicious cake slice
+fortepian	piano	woman playing piano
+ocean	ocean	ocean waves
+zabawka	toy	children toy
+suma	amount	pile of money
+zwykły	ordinary	office worker
+pieszy	pedestrian	pedestrian crossing
+papieros	cigarette	lit cigarette
+łapać	understand	person confused
+komputerowy	computer	computer game
+dookoła	around	flies circling
+los	fate	crossroads road
+uspokoić	calm down	person calming down
+pogadać	chat	two people chatting
+wprowadzić	introduce (perfective)	teacher correcting mistake
+pojazd	vehicle	cars and buses
+nieszczęśliwy	unhappy	sad person
+zgadnąć	guess	person guessing
+przemyśleć	think over	person thinking
+kilogram	kilogram	sugar bag
+postarać	try (perfective)	person making effort
+poinformować	inform	manager informing employee
+odwrócić	turn over	paper turned over
+zignorować	ignore	person ignoring advice
+rosyjski	russian	Russian flag
+normalny	normal	healthy person
+wyjazd	departure	airport departure
+wkurzyć	annoy (perfective)	angry woman shouting
+wspomnieć	mention (perfective)	person mentioning someone
+dwanaście	twelve	twelve hour sleep
+puścić	let go	person letting go
+darmo	for free	free concert tickets
+dzieciak	kid	teenage kid
+przygotowywać	prepare	person preparing breakfast
+pozdrowić	say hello	person saying hello
+namiot	tent	camping tent
+samochodowy	automotive	automotive factory
+źródło	source	water source
+darmowy	free	free software
+wykorzystać	use (perfective)	person using opportunity
+odwaga	courage	brave person
+poślubić	marry (perfective)	wedding couple
+letni	summer	summer vacation
+zerwać	break off	couple breaking up
+wyraźnie	clearly	clearly unhappy man
+popełniać	commit	person committing crime
+oprzeć	lean	old man leaning on cane
+natura	nature	natural landscape
+szczery	honest	honest man
+uczulić	to make allergic	person having allergic reaction
+popływać	to go swimming	family swimming
+diabeł	devil	devil statue
+słynny	famous	famous man portrait
+nagi	naked	naked man standing
+dostępny	available	available person waiting
+dbać	to care for	person caring for plant
+poprawny	correct	correct answer on paper
+wykonywać	to do	person exercising
+próba	rehearsal	choir rehearsal stage
+rozpoznać	to recognize (perfective)	person recognizing voice
+odzyskać	to regain	person regaining consciousness
+szacunek	respect	people showing respect
+wylądować	to land	airplane landing field
+marnować	to waste	person wasting time
+sztuczny	artificial	artificial intelligence robot
+słoneczny	sunny	sunlight on plants
+pokryć	to cover (perfective)	snow covered landscape
+pragnąć	to desire	person longing for love
+żywność	food	grocery food items
+dziki	wild	wild animals in forest
+piknik	picnic	outdoor picnic blanket
+międzynarodowy	international	international airport travelers
+ciemność	darkness	deep sea darkness
+opowieść	story	storybook narration
+poświęcić	to spare	person giving time
+dotyczyć	to concern	global climate issue
+podwieźć	to give a ride	person giving a ride
+wśród	among	group of students
+dzieciństwo	childhood	happy childhood memories
+kamera	camera	person holding camera
+rozejrzeć	to look around	couple looking around room
+wyjątek	except	vegetables except cabbage
+pięćdziesiąt	fifty	pile of fifty books
+jajo	egg	egg in nest
+niedawno	recently	person recently retired
+supermarket	supermarket	supermarket shopping aisle
+wpuścić	to let in	person letting cat inside
+pobiec	to run (perfective)	people running to shelter
+atrakcyjny	attractive	attractive man portrait
+bar	bar	bar counter drinks
+podejrzewać	to suspect	police suspecting man
+skazać	to sentence	judge sentencing man
+przesadzać	to exaggerate	person speaking dramatically
+spokojnie	calmly	person staying calm
+cień	shadow	shadow under tree
+zgasić	to turn off	person turning off light
+płynnie	fluently	person speaking fluently
+ochrona	protection	protective shield
+gdziekolwiek	anywhere	person anywhere outdoors
+porównać	compare	two answers side by side
+pismo	writing system	Latin alphabet
+zabronić	forbid	no smoking sign
+dwór	outside	outdoor yard
+flaga	flag	national flag
+ukrywać	hide	child hiding behind tree
+trudność	difficulty	student struggling to focus
+znaczek	stamp	postage stamp collection
+wzgórze	hill	grassy hill
+jakoś	somehow	person solving problem
+opiekować	take care of	woman caring for patient
+właściwie	actually	person correcting themselves
+spacerować	walk	person taking a walk
+elektryczny	electric	electric locomotive
+wstrzymać	hold back	person abstaining vote
+rządzić	rule	military ruler
+przewodniczący	chairman	meeting chairman
+wczesny	early	early morning wakeup
+wspiąć	climb	person climbing wall
+ekspert	expert	finance expert
+formularz	form	paper application form
+opona	tire	bicycle tire
+wspominać	mention	person mentioning someone
+piękno	beautiful	beautiful landscape
+oraz	and	food and clothing donation
+komórka	mobile phone	mobile phone call
+nadejść	arrive (perfective)	emergency help arriving
+pudło	box	cardboard box of oranges
+przycisk	button	computer push button
+poruszyć	move (perfective)	person turning head
+skoczyć	go	friends going to bar
+wahać	hesitate	person hesitating speak
+zabijać	kill time	friends playing cards
+euro	euro	euro coins
+wymienić	replace	watch battery replacement
+nieźle	quite well	person speaking French
+niemal	almost	nearly empty street
+wołać	call	person calling out
+odróżnić	distinguish	people comparing faces
+rzeczywistość	reality	person seeing fantasy scene
+zdolny	able	gifted schoolboy
+atak	attack	person having panic attack
+spełnić	fulfill	person achieving dream
+przełożyć	postpone	rain postponed game
+współczuć	sympathize	person comforting patient
+obowiązek	duty	person at work duty
+wpływ	influence	expanding business influence
+przytulić	hug	child hugging teddy bear
+zaparkować	park (perfective)	car parked behind house
+napełnić	to fill	people filling glasses
+czasopismo	magazine	stack of magazines
+uszkodzić	to damage	car damaged front wheel
+widać	can be seen	angry face expression
+poprzez	through	path through fields
+czynsz	rent	apartment rent
+pożegnać	to say goodbye (perfective)	two people saying goodbye
+przenieść	to move (perfective)	person moving vacuum cleaner
+geniusz	genius	brilliant person portrait
+wsiąść	to get on	person boarding airplane
+kredytowy	credit	credit cards
+religia	religion	religious person praying
+pokład	deck	ship deck
+metal	metal	metal ingots
+budzić	to wake	person waking up in bed
+pośpieszyć	to hurry (perfective)	person hurrying to school
+społeczeństwo	society	crowd in city
+skromny	modest	humble person smiling
+gaz	gas	gas stove burner
+nacisnąć	to press (perfective)	finger pressing button
+łowić	to fish	people fishing by river
+poddawać	to give up	person giving up
+ssak	mammal	mammal with eggs
+niezwykły	remarkable	surprised doctor celebration
+zwiedzić	visit (perfective)	ancient temple ruins
+wiać	blow	wind blowing trees
+choć	although	tired person smiling
+skraść	steal	stolen money
+akcent	accent	person with foreign accent
+okłamywać	lie to	person lying to friend
+bajka	fairy tale	child reading fairy tale
+przedyskutować	discuss (perfective)	people discussing problem
+finansowy	financial	business financial problems
+zawołać	call (perfective)	person calling someone
+pierś	chest	injured chest wound
+żenić	marry	couple getting married
+gapić	stare	person staring rudely
+szkło	glass	broken glass pieces
+łacina	latin	latin church service
+głód	hunger	hungry person eating apple
+żelazo	iron	iron fence
+właściciel	owner	house owner
+umysł	mind	person thinking
+chodnik	sidewalk	city sidewalk
+opuszczać	leave	person leaving city
+powierzchnia	surface	earth surface water
+towarzyszyć	accompany	person walking with friend
+piechota	on foot	person walking on foot
+igła	needle	medical needle
+wczorajszy	yesterday's	yesterday weather
+węgiel	coal	coal pile
+strzała	arrow	arrow in target
+skomplikować	complicated	confused problem
+przegapić	to miss	person missing bus
+czynić	to do	person doing good deed
+szczekać	to bark	barking dog
+wszechświat	universe	starry universe
+wrzucić	to throw in	person tossing letter into fire
+miewać	to be	person feeling well
+niezbyt	not very	person doing task poorly
+oblać	to fail	student failing exam
+nadawać	to be suitable	clean drinking water
+uczestniczyć	to participate	crowd at protest
+tuż	right	predator right behind person
+czterdzieści	forty	group of forty people
+marynarz	sailor	sailor on ship
+przejrzeć	to review	people reviewing plan
+doprowadzić	to lead (perfective)	road leading to station
+stolik	small table	small table by window
+przeciwny	opposite	two opposite emotions
+przymierzyć	to try on	person trying on sweater
+narysować	to draw (perfective)	person drawing picture
+indziej	elsewhere	bike for sale elsewhere
+przeprowadzać	to move	family moving house
+obwiniać	to blame	person blaming another
+wstydzić	to be ashamed	ashamed person looking down
+smok	dragon	dragon tattoo on back
+zamordować	to murder	murder victim body
+obrazek	picture	small pictures in book
+krokodyl	crocodile	crocodile animal
+narzędzie	tool	hand tool
+rzeczywiście	really	person being greedy
+nalać	to pour	pouring coffee
+pozbawić	to deprive	crown taken away
+ślad	trace	bloodstain in car
+miecz	sword	warrior with sword
+umówić	to arrange (perfective)	making doctor appointment
+ponieść	to incur	carrying heavy suitcase
+pilny	urgent	urgent work call
+nerw	nerve	person getting on nerves
+póki	while	person singing
+wart	worth	worth it decision
+wysiąść	get off	getting off bus
+tworzyć	create	programmer creating app
+drogowy	traffic	traffic accident
+ogłosić	announce	man announcing engagement
+przyjeżdżać	come	person arriving by car
+wygląd	appearance	person appearance
+kapitan	captain	sports team captain
+fotograficzny	photographic	camera equipment
+ryzykować	risk	person taking dangerous risk
+ściąć	cut	haircut with scissors
+uwolnić	free (perfective)	hostages being freed
+poruszać	move	animal moving quietly
+staw	pond	pond with ducks
+bzdura	nonsense	person talking nonsense
+nieobecność	absence	empty classroom desk
+kartka	sheet	blank sheet of paper
+sałatka	salad	corn salad bowl
+pomylić	mistake (perfective)	woman mistaken for sister
+wisieć	hang	portrait hanging on wall
+włamać	break into	burglar entering house
+odjechać	leave (perfective)	train leaving station
+narkotyk	drug	pills and drug packets
+liceum	high school	high school building
+krytykować	to criticize	person criticizing others
+dodatkowy	additional	extra food toppings
+płacz	crying	crying woman face
+polegać	to depend on	person relying on report
+nadchodzić	to come	spring flowers emerging
+upiec	to bake (perfective)	person baking cake
+zorganizować	to organize	people organizing party
+odezwać	to speak (perfective)	silent man speaking
+gniewać	to be angry	angry person's face
+zaopiekować	to take care of	woman caring for children
+ignorować	to ignore	person ignoring warning
+przepadać	to like	person disliking butter
+bezdomny	homeless	homeless people in park
+godny	worthy	deserving leader person
+dojrzały	ripe	ripe apple
+portugalski	portuguese	Portuguese flag
+prośba	request	person making a request
+skrzywdzić	to hurt (perfective)	person getting hurt
+ostatecznie	eventually	person eventually learning
+wystąpić	to appear (perfective)	speaker at conference
+ludzkość	humanity	diverse group of people
+wykończyć	exhausted	exhausted person
+nauczać	to teach	teacher with children
+zamieszać	to stir	person stirring tea
+panować	to prevail	deep sea darkness
+codzienny	daily	person doing daily chores
+drobny	change	small coins
+potrwać	to last	long lasting project
+utrzymywać	to keep	tidy bedroom
+dokładny	exact	room measurements
+zamienić	to exchange	cow and two horses
+piosenkarz	singer	male singer performing
+utalentowany	talented	talented young person
+bawełna	cotton	white cotton shirt
+pogląd	views	people with opinions
+wstąpić	to join (perfective)	person joining club
+ogon	tail	cat tail
+poszukiwać	to search for	wanted person search
+przesunąć	to move (perfective)	person moving clock
+trud	effort	person making effort
+zajść	to happen (perfective)	something happening
+wysłuchać	to listen to	person listening closely
+wada	faults	person with flaws
+potężny	powerful	powerful nation
+zarezerwować	to reserve	train seat reservation
+płonąć	burning	burning house
+błagać	to beg	woman begging
+wiadomy	known	known fact
+udowodnić	to prove	person proving point
+szaleństwo	madness	crazed person
+pośpiech	hurry	person in a hurry
+skręcić	to turn (perfective)	car turning right
+bitwa	battle	battlefield fight
+piosenkarka	singer	female singer
+arabski	arabic	Arabic alphabet
+podwyżka	raise	salary increase
+pobawić	to play (perfective)	children playing
+wypożyczyć	to rent (perfective)	rented bicycle
+dodawać	to add	person adding salt
+krzywda	harm	dog harming person
+zastrzelić	to shoot (perfective)	man shooting gun
+bałagan	mess	messy room
+zastąpić	to replace	robot replacing person
+prawidłowy	correct	correct answer
+pobić	to beat (perfective)	person being beaten
+znudzić	bored	bored woman sitting
+popierać	to support	woman supporting protest
+wskazać	to show (perfective)	tour guide pointing
+moc	power	court gavel
+parkować	to park	car parked curbside
+zdradzać	to betray	cheating spouse
+naiwny	naive	naive young woman
+rozum	mind	person holding head
+nakarmić	to feed (perfective)	person feeding dog
+dokończyć	to finish (perfective)	student finishing essay
+zapewniać	to provide	teacher in classroom
+zamieszkać	to move (perfective)	family moving house
+manga	manga	person reading manga
+dwudziesty	twentieth	calendar date twenty
+utknąć	to get stuck (perfective)	truck stuck in mud
+trójka	three	group of three people
+skorpion	scorpion	scorpion on ground
+klif	cliff	person standing cliff edge
+suknia	dress	woman in elegant dress
+zagadka	puzzle	person solving puzzle
+gryźć	to bite	dog biting hand
+czek	check	bank check
+anioł	angel	guardian angel statue
+odnaleźć	to find (perfective)	missing children found
+prywatny	private	private detective
+młodość	youth	young people
+klimat	climate	weather climate
+związać	to bind	bound hands
+morderstwo	murder	police murder investigation
+zawiązać	to tie	tying necktie
+chłodny	cool	cool lake weather
+bezpośredni	direct	direct route
+upuścić	to drop	broken glass
+ciotka	aunt	aunt waiting
+naród	nation	powerful nation
+chęć	willingness	willing helper
+podwórko	yard	backyard kitten
+zaoszczędzić	to save (perfective)	saving money
+edukacja	education	school education
+powiesić	to hang	hanging picture
+kandydat	candidate	two business candidates
+potwierdzić	to confirm (perfective)	signing receipt
+dogonić	to catch up	runner catching up
+rozważyć	to consider (perfective)	thinking carefully
+stawiać	to put	placing glass
+druty	knitting needles	knitting needles
+klasyczny	classical	classical literature
+szczególnie	particularly	fresh grass
+zatrzymywać	to stop	train stopping
+przyprowadzić	to bring (perfective)	person bringing wife
+dochodzić	to investigate (perfective)	detective investigating case
+szuflada	drawer	empty drawer
+przemysł	industry	food factory industry
+specjalny	special	special occasion gift
+komórkowy	cellphone	cellphone on table
+jutrzejszy	tomorrow's	tomorrow meeting room
+zamarznąć	to freeze	frozen water
+dostęp	access	water access
+autobusowy	bus	bus stop
+zaśmiać	to laugh (perfective)	person laughing
+pozmywać	to wash dishes	person washing dishes
+zrzucić	to lose weight (perfective)	person losing weight
+zablokować	to block	blocked social media account
+irytować	to annoy	person irritating another
+kompletny	complete	complete disaster
+głupiec	fool	foolish man
+przyjrzeć	to look into	detective examining case
+chować	to hide	person hiding in barn
+otoczyć	to surround	country surrounded by land
+bezużyteczny	useless	useless money
+krążyć	to circulate	money circulating bank system
+strzelić	to score	soccer goal celebration
+kraść	to steal	thieving seagull
+krzyknąć	to shout	person shouting
+zadbać	to take care	person caring for patient
+przyglądać	to watch	child watching animals
+porzucić	to abandon	man leaving family
+zastanowić	to think about	people thinking together
+przydatny	useful	useful computer program
+nienawiść	hatred	person feeling hatred
+jakikolwiek	any	person allergic reaction
+przydać	come in handy	tool that comes in handy
+podążać	follow	car following another car
+śpieszyć	hurry	person rushing
+tajemniczy	mysterious	mysterious hooded figure
+śrubokręt	screwdriver	small screwdriver
+pomocny	helpful	helpful person
+dym	smoke	room filled with smoke
+uzyskać	get	woman getting what she wants
+przekroczyć	exceed	budget overrun
+polować	hunt	men hunting lions
+objąć	embrace	couple hugging
+przeciw	against	person disagreeing
+wygodny	comfortable	comfortable bed
+opcja	option	two choice options
+kąpać	bathe	person taking a bath
+tyle	so many	crowd of many people
+zbadać	examine	doctor examining patient
+pomyłka	mistake	person entering wrong room
+gorzki	bitter	bitter coffee
+klatka	chest	human chest
+chwalić	to praise	person praising
+słuch	rumors	people gossiping
+odpuścić	to skip (perfective)	person skipping lunch
+nagły	sudden	surprised person appearing suddenly
+szaleć	to be crazy about	girl crazy about tennis
+wzrosnąć	to increase (perfective)	factory production increasing
+korporacja	corporation	corporate office building
+bok	side	person standing aside
+podstawowy	basic	basic school rules
+zaangażować	to get involved	person getting involved
+kotka	kitten	kitten on ground
+funt	pound	currency exchange pounds
+czasownik	verb	grammar verb
+zachodzić	to set	sun setting
+wyzwać	to challenge (perfective)	person challenging duel
+zmierzyć	to take (perfective)	nurse taking temperature
+strzelać	to shoot	person shooting slingshot
+męczyć	tiring	tired worker resting
+kilometr	kilometer	distance in kilometers
+szyba	windshield	cracked windshield
+produkcja	production	factory production
+zalecić	to recommend (perfective)	doctor recommending quitting smoking
+stłuc	to break (perfective)	breaking glass
+alfabet	alphabet	alphabet letters
+sportowy	sports	sports stadium
+zarobić	to earn	person earning money
+nareszcie	finally	person smiling in relief
+kurz	dust	dust on desk
+opierać	to lean	person leaning on desk
+gonić	to chase	turtle chasing cat
+uzależnić	to be addicted	person addicted to internet
+przywitać	to welcome (perfective)	teacher greeting students
+maska	mask	person wearing face mask
+przysługa	favor	person doing a favor
+katastrofa	disaster	flood disaster
+powstać	to arise	storm cloud forming
+romans	affair	secret love affair
+krzyk	cry	person screaming in fear
+kopnąć	to kick	person kicking under table
+absolutnie	absolutely	person saying yes
+występować	to occur	word missing from dictionary
+nocny	night	nightclub entrance
+pułapka	trap	animal trap
+podejmować	to make	people making decisions
+postąpić	to act	person acting foolishly
+zaprojektować	to design	architect designing museum
+trzysta	three hundred	stack of three hundred dollars
+mur	wall	brick wall
+klaskać	to clap	audience clapping hands
+wpół	half past	half past clock
+wyraz	word	dictionary word page
+komiks	comic	comic book superhero
+wspinać	to climb	person climbing cliff
+przepiękny	beautiful	beautiful sunset sky
+islam	islam	mosque interior
+skrót	abbreviation	abbreviation on screen
+opieka	care	child care
+niemiły	unkind	unkind person
+wygłosić	to give (perfective)	man giving speech
+poker	poker	poker cards table
+zmierzać	to head	person heading north
+wybredny	picky	picky woman choosing clothes
+zagłosować	to vote (perfective)	people voting ballot
+buziak	kiss	couple kissing
+tarcza	shield	warrior shield
+istota	being	living creature
+dyskutować	to discuss	people discussing report
+hodować	to breed	farmer raising cattle
+lać	to rain	heavy rain outside
+przepłynąć	to swim across	woman swimming across river
+przeznaczyć	to set aside	travel time on clock
+cenny	valuable	valuable items
+ogródek	garden	small vegetable garden
+polityczny	political	politician voting booth
+ustawić	to set (perfective)	person setting alarm clock
+owijać	to beat around	person speaking vaguely
+ogolić	to shave (perfective)	woman shaving legs
+polityka	politics	parliament building
+służyć	to serve	waiter serving customer
+wręczyć	to hand (perfective)	person handing over bag
+kran	tap	broken kitchen faucet
+technologia	technology	computer circuit board
+tenisowy	tennis	tennis racket
+kawiarnia	cafe	cozy coffee shop
+wiśnia	cherry	cherry tree blossoms
+aktywny	active	person jogging
+studentka	female student	female college student
+zrelaksować	to relax	person lying relaxed
+eksperyment	experiment	science experiment
+glina	clay	wet clay pottery
+wyścig	race	runner finishing race
+materiał	material	dress fabric closeup
+papuga	parrot	parrot on branch
+kwaśny	sour	sour lemon slices
+poniżej	below	thermometer below zero
+adoptować	to adopt	couple adopting child
+zwyciężyć	to win (perfective)	winning sports team
+więzień	prisoner	prisoner behind bars
+zdolność	ability	student learning ability
+populacja	population	crowded city population
+blady	pale	pale face
+zaczerwienić	to blush (perfective)	person blushing
+gospodarka	economy	city skyline economy
+przyłożyć	to hold	finger on lips
+piłkarz	football player	football player
+biznes	business	business office
+obrać	to peel	person peeling orange
+rozwój	development	business growth chart
+deser	dessert	dessert bowl
+zaoferować	to offer	person offering money
+wymówka	excuse	person making excuses
+stosować	to apply	person applying rules
+słychać	how are you	two people greeting
+ogólnie	generally	person speaking casually
+wątpliwość	doubt	person unsure
+wanna	bathtub	clean bathtub
+ubierać	to dress	person dressing
+skarpeta	sock	pair of socks
+skierować	to head (perfective)	person walking to kitchen
+delikatny	delicate	delicate hand
+pogodzić	to make up	friends hugging
+wzruszyć	to move (perfective)	woman crying at movie
+wyleczyć	to cure	doctor curing patient
+zasugerować	to suggest (perfective)	person making suggestion
+wyrzucać	to throw away	person throwing away food
+zechcieć	to want (perfective)	person wanting car
+wspaniale	great	person celebrating happily
+medyczny	medical	medical supplies on table
+lina	rope	rope around waist
+wykopać	to dig	person digging hole
+dotąd	so far	person waiting for result
+dżungla	jungle	dense jungle trees
+byk	bull	bull with horns
+świętować	to celebrate	people celebrating Christmas
+sugestia	suggestion	people discussing ideas
+potknąć	to trip	person tripping on stone
+uruchomić	to start (perfective)	person starting engine
+odnosić	to have impression	person looking suspicious
+zaprzeczyć	to deny (perfective)	prisoner denying accusation
+miasteczko	town	small town street
+morski	sea	sea shells on beach
+współpracować	to cooperate	coworkers shaking hands
+malarz	painter	artist painting portrait
+przedni	front	front wheels damaged
+niezdrowy	unhealthy	unhealthy fast food
+karaluch	cockroach	cockroach on floor
+pobyt	stay	person staying in hotel
+dorastać	to grow up	child growing up
+odsunąć	to move away	person stepping aside
+zawrzeć	to conclude (perfective)	business contract signing
+trzydziestka	thirties	person in thirties
+trasa	route	winding road route
+wystraszyć	to scare (perfective)	frightened flock of birds
+wynieść	to take out (perfective)	taking out trash
+przeciwsłoneczny	sunglasses	sunglasses on face
+obrzydliwy	disgusting	disgusted face
+plemię	tribe	indigenous tribe members
+kredens	cupboard	wooden kitchen cupboard
+napiąć	tense	tense political meeting
+skrzynka	box	locked metal box
+skarb	treasure	buried treasure chest
+zakopać	to bury	buried object in ground
+publiczny	public	crowded public place
+hamburger	hamburger	hamburger on plate
+grzech	sin	guilty person praying
+bomba	bomb	exploding bomb
+rodowity	native	native American man
+niezwykle	extremely	very well behaved children
+chorować	be ill	sick person in bed
+czyn	deed	person doing good deed
+przespać	sleep through	sleeping through class
+przyjemny	pleasant	pleasant swim in pool
+pozostawać	remain	unsolved mystery remaining
+religijny	religious	religious person
+choćby	even if	person standing firm
+publiczność	audience	applauding audience
+zbieg	coincidence	random coincidence
+określić	define	teacher defining student
+praktyka	practice	classroom practice
+inteligencja	intelligence	artificial intelligence
+emocja	emotion	person expressing emotion
+mijać	pass	years passing
+pilnować	watch over	mother watching girls
+znakomity	excellent	excellent exam results
+porwać	kidnap	kidnapped prince
+tenisista	tennis player	tennis player
+wyskoczyć	jump out	wild boar jumping
+strażak	firefighter	firefighters in flames
+nalegać	to insist	person insisting
+powitać	to welcome (perfective)	princess welcome ceremony
+zaprowadzić	to take (perfective)	woman leading elderly woman
+pukać	to knock	person knocking door
+pomieścić	to accommodate	large hotel guests
+zdołać	to manage (perfective)	student failing exam
+zwiększyć	to increase (perfective)	medicine increasing survival
+romantyczny	romantic	romantic movie scene
+drabina	ladder	wooden ladder
+któryś	some day	someday visit
+koniecznie	without fail	person making sure
+pożyczać	to borrow	person borrowing book
+wyobrażać	to imagine	person daydreaming alone
+ukarać	to punish (perfective)	student being punished
+domek	cabin	small wooden cabin
+skórka	peel	banana peel on floor
+wspierać	to support	person supporting another
+użyteczny	useful	person using useful website
+koreański	korean	Korean food dishes
+głupek	idiot	embarrassed foolish person
+kłamca	liar	person telling a lie
+odpowiedzialność	responsibility	person taking responsibility
+zapiąć	to fasten	person fastening seatbelt
+ujrzeć	to see (perfective)	person seeing blood
+nazwa	name	city name sign
+rozzłościć	to anger	angry person arguing
+pogratulować	to congratulate	people congratulating winner
+reguła	rule	school rule book
+całkowity	complete	complete darkness
+odbić	to bounce	bullets bouncing off car
+tkwić	to lie	secret hidden inside
+zgodnie	according to	person following instructions
+śmiertelny	deadly	deadly poison bottle
+ulec	to change (perfective)	price changing sign
+urodzinowy	birthday	birthday party balloons
+wypuścić	to release	person released from prison
+programować	to program	person coding on computer
+opanować	to master	person learning foreign language
+schudnąć	to lose weight (perfective)	woman losing weight
+wskazywać	to indicate	man pointing at computer screen
+masa	lot	pile of paperwork
+okres	period	long time period
+ekscytować	to excite	excited smiling person
+użądlić	to sting (perfective)	bee sting on arm
+nieuprzejmy	rude	rude angry person
+grozić	to threaten	woman threatening breakup
+pasja	passion	person loving language learning
+marny	poor	tiny chance of winning
+współlokator	roommate	friendly roommate in apartment
+pogrzeb	funeral	funeral coffin and flowers
+bolesny	painful	painful cut finger
+bejsbol	baseball	people playing baseball
+dinozaur	dinosaur	dinosaur in forest
+troszkę	a little	person understanding a little
+gramatyka	grammar	grammar textbook and teacher
+pokochać	fall in love	people falling in love
+uzbroić	arm (perfective)	armed suspect holding gun
+przerwać	interrupt	person interrupting conversation
+sprawiedliwy	fair	fair judge in courtroom
+okej	okay	surprised person saying okay
+nietoperz	bat	bat hanging upside down
+winylowy	vinyl	vinyl record player
+spanikować	panic	frightened person panicking
+odzywać	speak	two people speaking
+zgoda	consent	person giving consent
+zagraniczny	foreign	foreign airport terminal
+atmosfera	atmosphere	mysterious foggy forest
+atomowy	atomic	nuclear power plant
+znajomość	acquaintance	two people meeting
+siedemnaście	seventeen	seventeen year old
+postać	figure	mysterious person silhouette
+chrześcijanin	christian	christian man praying
+schodzić	go down	person walking downstairs
+ach	ah	surprised person exclaiming
+ciasny	tight	too tight swimsuit
+tonąć	drown	sinking ship at sea
+wciągnąć	get involved	person dragged into situation
+popsuć	break down	broken down car
+pakować	pack	person packing boxes
+drżeć	tremble	shivering person in cold
+łatwość	ease	easy task being done
+skinąć	nod	person nodding yes
+wybiec	run out (perfective)	person running outside
+pozycja	position	sleeping position in bed
+nadwaga	overweight	overweight man standing
+zgromadzić	gather	crowd gathering around speaker
+telewizyjny	television	television remote control
+głównie	mainly	dry plains landscape
+przebiec	run (perfective)	runner sprinting track
+różnić	differ	two different neckties
+zajrzeć	peek	boy peeking into room
+podawać	administer	doctor giving medicine
+trawnik	lawn	green backyard lawn
+reakcja	reaction	person reacting quickly
+wzajemnie	mutually	two qualities excluding each other
+ustąpić	to subside	pain fading away
+dojechać	to get to	car arriving airport
+uczciwość	honesty	person showing honesty
+skakać	to jump	jumping dog
+mądrość	wisdom	wise old king
+mail	email	email inbox screen
+wideo	video	video camera recording
+ledwie	hardly	person barely knowing
+intensywnie	intensively	student studying hard
+zatańczyć	to dance (perfective)	two people dancing
+zmysł	sense	human five senses
+ściszyć	to turn down	person turning down music
+grosz	penny	single penny coin
+brytyjski	british	British actor
+oddech	breath	person taking deep breath
+pojutrze	the day after tomorrow	calendar date tomorrow
+zachorować	to get sick	person with fever
+skaleczyć	to cut (perfective)	person cutting finger
+kariera	career	business career office
+wielbłąd	camel	camel in desert
+nadać	to send (perfective)	mailing a letter
+ptaszek	birdie	small bird in hand
+przemowa	speech	person giving speech
+seks	sex	couple in bed
+kolekcjonować	to collect	person collecting coins
+namalować	to paint (perfective)	artist painting picture
+bystry	smart	smart boy thinking
+zwariować	to go crazy	person going crazy
+wytrzeć	to wipe	person wiping knife
+nielegalny	illegal	illegal parking sign
+przewrócić	to overturn	capsized kayak
+pożałować	to regret (perfective)	person regretting mistake
+przejąć	to take over	person taking over business
+tancerz	dancer	male dancer on stage
+specjalista	specialist	medical specialist doctor
+tajfun	typhoon	typhoon over ocean
+szkodzić	to harm	person smoking cigarette
+kosmiczny	space	astronaut in space
+kolejowy	railway	railway tracks and train
+chudy	thin	thin person standing
+księżniczka	princess	princess greeting crowd
+przydarzyć	to happen (perfective)	something unexpected happens
+głupota	stupidity	person causing trouble
+zakazać	to forbid	no smoking sign
+głębia	depth	deep forest
+zamieszki	riots	street riot crowd
+armia	army	army soldiers marching
+ściągać	to cheat	student cheating on test
+kierować	to direct	person pointing direction
+turecki	turkish	Turkish name
+depresja	depression	depressed person alone
+atom	atom	tiny atom model
+zmartwić	to worry (perfective)	worried woman
+dostarczać	to provide	aid workers delivering supplies
+następować	to occur	bacteria in intestines
+ciasteczko	cookie	cookies on plate
+wycofać	to withdraw	school uniforms removed
+trakt	during	during a lesson
+czeski	czech	Czech text document
+przygoda	adventure	childhood adventure story
+umieścić	to place	suitcases in car
+błogosławić	to bless	religious blessing hands
+minimalny	minimal	minimum wage chart
+nieprawda	nonsense	person saying nonsense
+kosmita	alien	alien spacecraft visitor
+odchodzić	to leave	person walking away
+oddzwonić	to call back	person making phone call
+zrujnować	to ruin	building in ruins
+załatwić	to sort out	person fixing problem
+zjadać	to eat	person eating food
+płaca	wage	paycheck money
+pomodlić	to pray	person praying at bedside
+skoncentrować	to concentrate	student concentrating
+fotograf	photographer	photographer with camera
+wyrwać	to rip out	hand tearing paper
+zbiornik	tank	car fuel tank
+obrócić	to rotate (perfective)	person rotating screen
+zachwycić	to delight	person delighted by news
+urwać	to break off	door handle breaking off
+krwawić	to bleed	wound bleeding
+przekłuć	to pierce	person getting ears pierced
+zjawić	to show up	person arriving somewhere
+przysięgnąć	to swear (perfective)	person swearing oath
+widywać	to see often	people seeing each other often
+arogancki	arrogant	arrogant man
+przedszkole	kindergarten	kindergarten classroom
+koliber	hummingbird	hummingbird hovering
+finanse	finances	financial problems
+podopieczny	ward	hospital patient in bed
+świt	dawn	sunrise dawn
+zwyczajnie	simply	person shrugging
+staruszek	old man	old man fishing
+przywyknąć	to get used to	person getting used to
+ludność	population	large city crowd
+och	oh	person remembering grocery item
+narazić	to endanger	person in danger
+przyjazd	arrival	airport arrival
+budowa	construction	road construction
+gęsty	thick	thick fog
+oszaleć	go crazy	person panicking
+burmistrz	mayor	mayor in office
+czerwienić	to blush	blushing woman
+przelecieć	to fly over	airplane overhead
+wykazać	to show (perfective)	science study result
+ścieżka	path	forest path
+produkować	to produce	factory producing cars
+kontrakt	contract	business contract signing
+zaciąć	to get stuck (perfective)	stuck jacket zipper
+współczesny	modern	modern art gallery
+pokrywać	to cover	water covering earth
+wieczny	eternal	eternal life concept
+płyn	liquid	medicine liquid in cup
+wpisać	to enter (perfective)	typing username password
+setka	hundred	pile of one hundred books
+szkodliwy	harmful	person smoking health warning
+świadomość	awareness	person aware of problem
+łagodny	mild	mild weather
+pływak	swimmer	swimmer in pool
+odkładać	to save	person saving money
+nakryć	to set the table	setting dinner table
+wyrażać	to express	people expressing protest
+tempo	pace	slow moving line
+zaprzyjaźnić	to make friends	two people becoming friends
+tlen	oxygen	oxygen tank
+wywołać	cause (perfective)	person having hallucinations
+farma	farm	farm animals
+rozkaz	order	police commander order
+odbywać	take place	election taking place
+wprowadzać	introduce	bank introducing system
+stopniowo	gradually	sound gradually getting louder
+misja	mission	mission accomplished
+spod	under	under control
+majątek	fortune	expensive jacket
+niezależnie	regardless	person voting regardless
+rozdać	distribute	playing cards being dealt
+poszukać	look for	girl searching forest mushrooms
+fascynować	fascinate	old city architecture
+sprytny	clever	clever solution
+opublikować	publish	newspaper publishing article
+centymetr	centimeter	shorter by centimeter
+trenować	train	person training karate
+niewielki	small	small stream
+pochwalić	praise (perfective)	person receiving praise
+idea	idea	idea lightbulb
+upadek	fall	person falling off cliff
+zmieszać	to be embarrassed	embarrassed woman
+muzułmanin	muslim	muslim man praying
+dodzwonić	to get through	person calling again
+przebywać	to stay	person staying in hotel
+spłacić	to pay off (perfective)	person paying off mortgage
+doskonale	perfectly	person speaking French
+policzyć	to count (perfective)	person counting to ten
+przemawiać	to speak	president giving speech
+podstawa	basis	person judging by appearance
+wyprać	to wash (perfective)	person washing shirt
+własność	property	pile of belongings
+chwilka	moment	person asking for a moment
+były	former	former administrators
+posadzić	to plant (perfective)	person planting tree
+rozwinąć	to develop	business growth graph
+zapukać	to knock (perfective)	person knocking on door
+punktualny	punctual	punctual person waiting
+szczęściarz	lucky person	lucky smiling man
+sushi	sushi	sushi platter
+którykolwiek	any	ingredient selection bowl
+przeciąg	draft	draft through window
+idealnie	perfectly	perfectly fitting shirt
+wróżka	fairy	fairy with wings
+fryzura	hairstyle	woman with hairstyle
+głuchy	deaf	deaf man using hearing aid
+obracać	to rotate	spinning globe
+swędzić	to itch	itchy leg scratching
+morderca	murderer	murderer in handcuffs
+zszokować	to shock	shocked group of people
+proces	process	business process flowchart
+normalnie	normally	person breathing calmly
+postępować	to behave	person behaving properly
+potrącić	to hit (perfective)	dog hit by car
+podłączyć	to connect (perfective)	plugged in radio
+paliwo	fuel	gasoline fuel pump
+organizacja	organization	office organization team
+kupno	purchase	buying a new camera
+ocalić	to save (perfective)	person donating blood
+zaleta	advantage	business advantage arrow
+kanał	channel	TV channel logo
+przepracować	overwork	overworked woman at desk
+poprawnie	correctly	speaking correctly
+rodzić	to give birth	woman giving birth
+koszmar	nightmare	bad nightmare in bed
+warstwa	layer	ocean layer cross section
+senny	sleepy	sleepy person
+gad	reptile	reptile animal
+okazywać	to show	person showing emotion
+choinka	christmas tree	decorated Christmas tree
+udzielić	to give (perfective)	person giving answer
+rozpoznawać	to recognize	person recognizing face
+goły	bare	bare skin
+zawstydzić	to embarrass	person feeling embarrassed
+zwłoka	delay	response delay
+naturalnie	naturally	person with curly hair
+przeciwieństwo	opposite	opposite behavior
+zawieźć	to drive	person driving car
+ananas	pineapple	pineapple fruit
+uchodźca	refugee	refugees walking
+miejski	city	city library
+zmrużyć	to sleep (perfective)	person sleeping at night
+stromy	steep	steep mountain slope
+odrabiać	to do homework	student doing homework
+gwóźdź	nail	nail in wall
+przeczucie	hunch	person having hunch
+wcisnąć	to press (perfective)	pressing button
+substancja	substance	liquid substance
+podrapać	to scratch	person scratching head
+chips	chips	potato chips
+chciwość	greed	greedy person
+zawdzięczać	to owe	person repaying debt
+obawa	fear	worried woman
+ciąć	to cut	person cutting food
+zgasnąć	go out	dark room light
+naukowy	scientific	scientist in lab
+wielkość	size	different sized boxes
+treść	content	open book pages
+pokłócić	argue	angry couple arguing
+wygodnie	comfortably	person relaxing on sofa
+pokroić	cut up	person chopping salmon
+starzec	old man	elderly man with cane
+ropa	oil	oil droplets on water
+blond	blond	blond-haired woman
+wywiad	interview	person being interviewed
+model	model	new car model
+kryzys	crisis	business crisis meeting
+przyłączyć	join	group meeting table
+kolumna	column	spreadsheet column numbers
+dowcip	joke	person telling joke
+wybuch	explosion	fire explosion blast
+niewiarygodny	unbelievable	surprised woman
+dwieście	two hundred	two hundred dollar bills
+rozejść	spread	news spreading online
+ojczyzna	homeland	person returning home
+handlowy	shopping	shopping mall entrance
+ugasić	to extinguish	firefighters extinguishing fire
+nieznajomy	stranger	unknown man
+medium	medium	television broadcast medium
+wuj	uncle	older uncle portrait
+gabinet	office	office room door
+wypowiedzieć	to utter	person speaking silently
+sprawozdanie	report	student report paper
+łeb	neck and neck	two runners tied
+zagranica	abroad	books from abroad
+pałeczka	chopsticks	chopsticks with rice
+start	launch	rocket launch pad
+dotrzymywać	to keep	person keeping promise
+popularność	popularity	famous actor crowd
+zbrodnia	crime	crime scene police
+zwymiotować	to vomit	person vomiting
+zawodnik	player	soccer player team
+filozofia	philosophy	philosophy classroom
+wynalazek	invention	telephone invention
+utopić	to drown (perfective)	person drowning in river
+praktycznie	practically	nearly worthless book
+odprowadzić	to see off	train station farewell
+zapewnić	to ensure	businessman giving assurance
+dogadać	to get along	two friends arguing
+wykształcić	to educate	student building habit
+pociągnąć	to pull (perfective)	person pulling emergency brake
+wysoko	at most	upper limit
+pilnie	hard	student studying hard
+fan	fan	music fan cheering
+wystawić	to put out	person taking out trash
+absurd	absurdity	nonsense speech
+przywódca	leader	political leader
+wykorzystywać	to use	person using time
+poczerwienieć	to blush (perfective)	blushing face
+podchodzić	to approach	person approaching fire
+wołowina	beef	raw beef steak
+wypracowanie	essay	school essay paper
+przylecieć	to arrive (perfective)	airplane arrival
+starczyć	to suffice	empty seats available
+ryzykowny	risky	person taking risk
+pszenica	wheat	wheat field
+poranny	morning	morning sunlight
+konieczny	necessary	necessary item
+sztuczka	trick	magic trick performance
+kuzynka	cousin	female cousin
+książę	prince	prince in crown
+srebro	silver	silver metal
+załamać	to break down (perfective)	person collapsing
+ginąć	to die	car accident death
+nieszczęście	misery	miserable person
+utonąć	to drown (perfective)	sailor drowning
+fundusz	funds	pile of money
+zaledwie	only	only a little
+ciężar	burden	heavy burden
+narodowy	national	national flag
+służba	duty	police officer duty
+starożytny	ancient	ancient greek ruins
+aspiryna	aspirin	aspirin tablets
+przyciągać	attract	honey attracting flies
+zimowy	winter	winter coat
+przyjazny	friendly	friendly goats
+okraść	to rob	person stealing money
+apetyt	appetite	hungry person eating
+medycyna	medicine	medical university classroom
+miara	measure	measuring tape
+niezależny	independent	independent adult
+bogactwo	wealth	pile of gold
+cofnąć	to take back	person taking back words
+maja	may	may calendar page
+strój	outfit	fashion outfit
+przysłać	to send (perfective)	person mailing postcard
+pęknąć	to crack	broken bridge cable
+sprzeciwiać	to object	person disagreeing
+wojskowy	military	military dictator
+przerywać	to interrupt	person interrupting conversation
+przeskoczyć	to jump over	runner jumping over hole
+postrzelić	to shoot (perfective)	person with gunshot wound
+wychowywać	to raise	parent teaching child
+kanadyjski	canadian	canadian flag on plane
+zdrowotny	health	health insurance card
+dostarczyć	to deliver	delivery courier handing package
+uszczęśliwiać	to make happy	person smiling happily
+szczególny	particular	person idly resting
+posłuszny	obedient	obedient child
+zaręczyć	engaged	engaged couple
+wyjrzeć	to look out	person looking out window
+pokolenie	generation	family across generations
+wyprowadzić	to take out (perfective)	person walking dog
+podlać	to water (perfective)	person watering roses
+świątynia	temple	ancient temple building
+obszar	area	city area map
+szpieg	spy	secret agent
+publicznie	publicly	person speaking in public
+liczny	numerous	stack of books
+hol	lobby	hotel lobby
+porządnie	properly	person doing task properly
+wielokrotnie	repeatedly	people talking again
+kierownik	manager	office manager
+narciarski	ski	ski boots
+kluczyk	car key	car key
+szok	shock	shocked person
+niegrzeczny	rude	rude boy
+tożsamość	identity	missing child identification
+sofa	sofa	living room sofa
+równowaga	balance	person balancing
+pech	bad luck	unlucky person
+bezrobotny	unemployed	unemployed woman
+frytki	fries	french fries
+trujący	poisonous	poisonous mushroom
+przeszukać	search	police searching forest
+guma	chewing gum	chewing gum
+westchnąć	to sigh	man sighing
+plama	stain	paint stain shirt
+motocykl	motorcycle	motorcycle rider
+opłacić	to pay off (perfective)	successful business payoff
+zalać	drunk	drunk man party
+drewniany	wooden	wooden chair
+albowiem	for	religious blessing
+karać	to punish	police punishment
+osobność	in private	two people talking privately
+zdesperowany	desperate	desperate people
+kciuk	thumb	thumb and forefinger
+organizm	body	human body
+wiatrak	fan	computer cooling fan
+wskazówka	tip	helpful tip
+omlet	omelet	omelet in pan
+uparty	stubborn	stubborn man
+cenić	to value	business quality
+wspólnie	together	two people together
+poparzyć	to burn (perfective)	burned tongue
+złośliwy	mean	mean person
+tarapaty	trouble	person in trouble
+zakłopotać	embarrassed	embarrassed man
+spłukać	broke	broke person
+ślimak	snail	garden snail
+sześćdziesiąt	sixty	sixty seconds
+zareagować	to react	person reacting
+ukąsić	to sting (perfective)	bee sting hand
+zaplanować	to plan (perfective)	person planning trip
+wydostać	to get out	prisoner escaping
+nastawić	attitude	positive attitude
+przysięgać	to swear	person swearing oath
+szykować	to prepare	person getting ready for bed
+wtrącać	to interrupt	person interrupting conversation
+worek	bag	trash bag
+pocałunek	kiss	first kiss couple
+pokrywka	lid	pot lid
+łoś	moose	moose in forest
+podkraść	to sneak up	person sneaking up
+bryza	breeze	warm breeze
+czołg	tank	military tank
+autostrada	motorway	motorway aerial view
+chrapać	to snore	person snoring in bed
+atakować	to attack	wolf attacking person
+gładki	smooth	smooth skin closeup
+oświadczyć	to declare	press conference statement
+szesnaście	sixteen	sixteen year old
+niewinność	innocence	courtroom innocent woman
+satelita	satellite	satellite in space
+tutejszy	local	local person outdoors
+śliski	slippery	slippery wet floor
+obsługiwać	to operate	person using computer
+mistrz	master	sports master trophy
+rewolucja	revolution	political revolution crowd
+towarzystwo	company	friends spending time together
+stawić	to face	person facing past
+łódka	boat	small boat on river
+ambicja	ambition	ambitious young ballerina
+uklęknąć	to kneel	person kneeling by bed
+ceremonia	ceremony	formal ceremony crowd
+lotniczy	aviation	aviation engineer aircraft
+zabraknąć	to run out	person short on money
+zapewne	probably	person likely late
+stanowić	to constitute	irregular verbs textbook
+częściowo	partly	wall partly covered
+zastosować	to apply (perfective)	person applying strategy
+wrażliwy	sensitive	person shivering in cold
+chwała	glory	trophy ceremony crowd
+pocztowy	postal	postal code letterbox
+zaginiony	missing	missing child search
+następnie	next	person draining cooked peas
+zorientować	to realize	person finding lost wallet
+obejmować	to include	hotel breakfast buffet
+zaciągnąć	to join (perfective)	soldier joining army
+podlegać	to be subject to	product subject to rules
+poprowadzić	to lead (perfective)	coach leading team
+wieża	tower	white tower building
+horyzont	horizon	ship on horizon
+fałszywy	false	false rumor gossip
+ognisko	campfire	campfire at night
+piłkarski	football	soccer team players
+ucieszyć	to be glad (perfective)	person smiling happily
+ubiegać	to apply for	person applying for asylum
+polecić	to recommend (perfective)	person recommending book
+era	era	new era dawn
+natomiast	whereas	two people contrasting
+przenosić	to carry	person carrying parcel
+psować	to spoil	milk spoiling in carton
+towar	goods	store goods shelves
+myśliwy	hunter	hunter aiming rifle
+rozwiązywać	to solve	person solving puzzle
+studnia	well	stone well
+kula	ball	blue ball globe
+wewnętrzny	internal	internal organs
+kontrolować	to control	person controlling thermostat
+zatłoczyć	crowded	crowded train interior
+cudzoziemiec	foreigner	foreign tourist man
+wzrastać	to increase	prices rising upward
+nieprzyjemny	unpleasant	person with stomach pain
+przyprawiać	to give goosebumps	goose bumps skin
+niebezpiecznie	dangerously	toxic liquid mixing
+wskoczyć	to jump into	person jumping into pool
+wyśmiewać	to make fun of	people making fun
+odlecieć	to fly away	bird flying away
+przyjacielski	friendly	friendly smiling man
+odczytać	to read (perfective)	computer file reading
+wodny	water	water bird
+wykluczyć	to rule out	person ruling out options
+krawędź	edge	table edge
+rybka	fish	small fish in aquarium
+zgolić	to shave (perfective)	man shaving beard
+wpadać	to flow into	river flowing into sea
+przewodzić	to conduct	copper wire conduct electricity
+łyżwa	skate	ice skates
+obsługa	service	customer service desk
+zwać	to call	person called love
+szczeniak	puppy	puppy
+piekarnia	bakery	bakery storefront
+papierowy	paper	paper cup
+hebrajski	hebrew	Hebrew language text
+zarejestrować	to register	person filling registration form
+lampka	lamp	table lamp
+drzemka	nap	person taking nap
+płomień	flame	blue flame
+przejechać	to drive past	car driving past trees
+przeciąć	to cut (perfective)	apple cut in half
+wzbronić	forbidden	no smoking sign
+sięgać	to reach	person reaching high shelf
+układ	system	digestive system diagram
+rozbierać	to undress	mother undressing baby
+kosmos	space	rocket into space
+łamać	to break	breaking promise
+chętny	willing	woman willing to help
+pocić	to sweat	people sweating
+ksiądz	priest	priest standing
+stek	steak	grilled steak
+nawiedzić	to haunt	haunted house
+osiemdziesiąt	eighty	elderly woman
+wojenny	martial	military state
+mrugnąć	to wink	person winking
+przebaczyć	to forgive (perfective)	person forgiving
+zmniejszyć	to reduce (perfective)	cut spending
+buda	kennel	dog kennel
+wyruszyć	to set off	group setting off
+kontaktować	to contact	person making a call
+śliczny	cute	cute woman
+niepoprawny	incorrect	incorrect test answer
+presja	pressure	person under pressure
+kozi	goat	goat cheese pizza
+zdrajca	traitor	traitor man
+dwunasty	twelve	clock showing twelve
+meksykański	mexican	Mexican restaurant
+niecierpliwy	impatient	impatient person
+podkreślić	to emphasize	highlighted fact
+susza	drought	dry cracked ground
+śnieżny	snowy	snowy winter landscape
+wbrew	against	against parents
+obóz	camp	camp dining hall
+ciekawość	curiosity	curious person
+napad	robbery	armed robbery
+kucyk	pony	riding pony
+mieścić	to fit	person fitting in seat
+odpisać	to reply (perfective)	replying to message
+niewiarygodnie	incredibly	very foolish man
+pocieszyć	to comfort	comforting friend
+mars	mars	planet Mars
+zwyczajny	ordinary	ordinary gorilla
+czujny	vigilant	alert police officer
+szwedzki	swedish	Swedish embassy building
+gdyż	because	person explaining reason
+próżny	in vain	failed bribery attempt
+ponadto	moreover	doctor and poet
+nietrudno	not hard	easy to find office
+osioł	donkey	donkey with long ears
+błędny	wrong	wrong theory
+przyzwoity	decent	decent man
+przemoc	violence	street violence
+weterynarz	veterinarian	veterinarian with dog
+karma	dog food	dog food bowl
+importować	to import	shipping wheat cargo
+strefa	zone	time zone map
+doznać	to suffer (perfective)	burnout exhausted teacher
+czarownica	witch	witch in costume
+sława	fame	famous poet
+napaść	to attack (perfective)	military attack
+wymówić	to pronounce	person pronouncing name
+konflikt	conflict	political conflict
+oskarżać	to accuse	police accusation
+milioner	millionaire	wealthy millionaire
+fizyczny	physical	physical fitness
+węgierski	hungarian	Hungarian flag
+miska	bowl	ceramic bowl
+pozostawić	to leave (perfective)	person leaving choice
+etat	full-time job	office worker
+schronić	to shelter	people sheltering tree
+partner	partner	business partners
+farba	paint	red paint can
+zdechnąć	to die (perfective)	dead fish
+społeczność	community	flooded neighborhood
+akt	act	theater stage acts
+księgowy	accountant	accountant at desk
+zażądać	demand	woman demanding apology
+słony	salty	salted meat
+pirat	pirate	pirates ship
+ochotnik	volunteer	volunteer applicant
+wiązać	tie	hands tying knots
+incydent	incident	police incident scene
+kusić	tempt	tempting chance
+ranić	hurt	person hurting feelings
+esej	essay	school essay paper
+klacz	mare	mare horse
+ostrożność	caution	pedestrian crossing street
+przywrócić	restore	restoring hope
+ogarnąć	cope	person overwhelmed
+obrońca	defender	soccer defender
+relacja	relationship	father daughter relationship
+czasowy	temporary	temporary setting
+entuzjazm	enthusiasm	excited person
+realista	realist	realist person
+czajnik	kettle	kitchen kettle
+fantastyczny	fantastic	amazing vacation
+omówić	discuss (perfective)	people discussing plan
+wstawić	put in (perfective)	putting away dishes
+ochronić	protect	protecting child
+roześmiać	laugh	person laughing
+uczęszczać	to attend	student at school
+ułożyć	to arrange (perfective)	arranging books
+otruć	to poison	poisoned cats
+życzliwy	kind	kind person
+borsuk	badger	badger in forest
+filmik	video	online video
+wylot	inside out	city street map
+koronawirus	coronavirus	coronavirus virus
+fartuch	apron	red apron
+sód	sodium	salt shaker

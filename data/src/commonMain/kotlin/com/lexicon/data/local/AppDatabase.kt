@@ -30,7 +30,7 @@ import androidx.room.RoomDatabaseConstructor
         ConjugationCourseVerbEntity::class,
         ConjugationProgressEntity::class,
     ],
-    version = 32,
+    version = 33,
     exportSchema = false,
 )
 @ConstructedBy(AppDatabaseConstructor::class)

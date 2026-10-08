@@ -34,8 +34,9 @@ struct WordGrammarRows: View {
 
     private func heading(of grammar: WordGrammar) -> String {
         let name = partOfSpeechName(grammar.partOfSpeech)
-        guard let noun = grammar as? WordGrammarNoun else { return name }
-        return "\(name) · \(genderName(noun.gender))"
+        if let noun = grammar as? WordGrammarNoun { return "\(name) · \(genderName(noun.gender))" }
+        if let aspect = (grammar as? WordGrammarVerb)?.conjugation?.aspect { return "\(name) · \(aspect.label)" }
+        return name
     }
 
     private func rows(of grammar: WordGrammar) -> [(label: String, value: String)] {
@@ -98,5 +99,11 @@ struct WordGrammarRows: View {
         case .neuter: return Strings.grammarGenderNeuter
         default: return Strings.grammarGenderPluralOnly
         }
+    }
+}
+
+extension Aspect {
+    var label: String {
+        self == .perfective ? Strings.grammarAspectPerfective : Strings.grammarAspectImperfective
     }
 }

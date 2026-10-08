@@ -103,3 +103,5 @@ tools/translate/.cache.json
 tools/vocabulary/.examples-cache.json
 tools/vocabulary/.pictures-cache.json
 tools/vocabulary/.grammar-cache.json
+tools/vocabulary/.cache/
+tools/vocabulary/.tatoeba-cache.json

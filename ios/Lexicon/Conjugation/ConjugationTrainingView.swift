@@ -61,6 +61,9 @@ struct ConjugationTrainingView: View {
             if let translation = table.translation, !translation.isEmpty {
                 Text(translation).font(.title3).foregroundStyle(.secondary)
             }
+            if let aspect = table.aspect {
+                Text(aspect.label).font(.callout).foregroundStyle(.secondary)
+            }
             if let ipa = table.transcription, !ipa.isEmpty {
                 Text("/\(ipa)/").font(.callout).foregroundStyle(.secondary)
             }

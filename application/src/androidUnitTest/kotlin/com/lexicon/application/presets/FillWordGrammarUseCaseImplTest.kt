@@ -5,6 +5,7 @@ import com.lexicon.boundary.GeneratedGrammarBoundary
 import com.lexicon.boundary.VerbConjugationBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.boundary.WordGrammarGenerator
+import com.lexicon.model.vocabulary.Aspect
 import com.lexicon.model.vocabulary.CaseForms
 import com.lexicon.model.vocabulary.Gender
 import com.lexicon.model.vocabulary.GrammaticalCase
@@ -50,7 +51,11 @@ class FillWordGrammarUseCaseImplTest {
         runTest {
             coEvery { vocabulary.getWord(-1) } returns kotek.copy(text = "kotkować", translation = "to kitten")
             coEvery { generator.generate(any(), any()) } returns
-                GeneratedGrammarBoundary(PartOfSpeech.VERB, conjugation = mapOf("ja" to listOf("kotkuję")))
+                GeneratedGrammarBoundary(
+                    PartOfSpeech.VERB,
+                    conjugation = mapOf("ja" to listOf("kotkuję")),
+                    aspect = Aspect.IMPERFECTIVE,
+                )
 
             fillWordGrammar(VocabularyId(-1))
 
@@ -61,6 +66,7 @@ class FillWordGrammarUseCaseImplTest {
                         forms = mapOf("ja" to listOf("kotkuję")),
                         translation = "to kitten",
                         example = "",
+                        aspect = Aspect.IMPERFECTIVE,
                     ),
                 )
             }

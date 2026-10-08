@@ -1,10 +1,13 @@
 package com.lexicon.boundary
 
+import com.lexicon.model.vocabulary.Aspect
+
 data class VerbConjugationBoundary(
     val infinitive: String,
     val forms: Map<String, List<String>>,
     val translation: String? = null,
     val example: String = "",
+    val aspect: Aspect? = null,
 )
 
 data class ConjugationCourseBoundary(

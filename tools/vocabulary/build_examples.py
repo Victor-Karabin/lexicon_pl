@@ -7,6 +7,7 @@ Reads
     local.properties                        openai.apiKey
     tools/vocabulary/corpus/**/*.tsv        the words that need a sentence
     data/src/androidMain/assets/conjugations.json
+    tools/vocabulary/tatoeba_examples.tsv   real sentences chosen by build_tatoeba.py, used as they are
 
 Writes
     tools/vocabulary/examples.tsv           word, gloss, sentence
@@ -33,6 +34,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import socket
 import sys
 import time
 import urllib.error
@@ -43,6 +45,7 @@ ROOT = Path(__file__).resolve().parents[2]
 TOOLS = Path(__file__).parent
 CORPUS = TOOLS / "corpus"
 EXAMPLES = TOOLS / "examples.tsv"
+TATOEBA_EXAMPLES = TOOLS / "tatoeba_examples.tsv"
 CONJUGATIONS = ROOT / "data" / "src" / "androidMain" / "assets" / "conjugations.json"
 CACHE = TOOLS / ".examples-cache.json"
 
@@ -50,6 +53,7 @@ ENDPOINT = "https://api.openai.com/v1/responses"
 MODEL = "gpt-5.4-mini"
 BATCH = 25
 RETRIES = 4
+REQUEST_TIMEOUT_SECONDS = 180
 
 OTHER_HEADWORDS: set[str] = set()
 
@@ -126,14 +130,14 @@ def request(key: str, prompt: str) -> dict[str, str]:
             headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
         )
         try:
-            with urllib.request.urlopen(request) as reply:
+            with urllib.request.urlopen(request, timeout=REQUEST_TIMEOUT_SECONDS) as reply:
                 answer = json.load(reply)
             return parse(answer)
         except urllib.error.HTTPError as error:
             if error.code not in (429, 500, 502, 503) or attempt == RETRIES - 1:
                 raise BuildError(f"{error.code}: {error.read().decode()[:300]}") from error
             time.sleep(2**attempt)
-        except (urllib.error.URLError, TimeoutError) as error:
+        except (urllib.error.URLError, TimeoutError, socket.timeout, ConnectionError) as error:
             if attempt == RETRIES - 1:
                 raise BuildError(str(error)) from error
             time.sleep(2**attempt)
@@ -231,6 +235,14 @@ class Writer:
                 if entry["word"] not in homographs and entry_key(entry) in shipped:
                     self.cache[entry_key(entry)] = shipped[entry_key(entry)]
 
+    def adopt_tatoeba(self) -> int:
+        if not TATOEBA_EXAMPLES.exists():
+            return 0
+        rows = [cols for cols in read_tsv(TATOEBA_EXAMPLES) if len(cols) >= 3]
+        for cols in rows:
+            self.cache[f"{cols[0]}\t{cols[1]}"] = cols[2]
+        return len(rows)
+
     def warm(self, key: str, entries: list[dict], label: str) -> None:
         pending = [e for e in entries if entry_key(e) not in self.cache]
         if not pending:
@@ -276,6 +288,7 @@ def main() -> int:
     OTHER_HEADWORDS.update(v["bezokolicznik"].casefold() for v in verbs if v.get("bezokolicznik"))
 
     writer.adopt_spelling_keys(words, verb_entries(verbs))
+    print(f"{writer.adopt_tatoeba()} sentences taken from Tatoeba")
     print(f"{len(words)} corpus words, {len(verbs)} verbs")
     try:
         if not arguments.verbs_only:

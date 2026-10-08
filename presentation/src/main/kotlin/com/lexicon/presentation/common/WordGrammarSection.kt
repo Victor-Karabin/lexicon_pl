@@ -23,6 +23,7 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.presets.GetWordGrammarUseCase
 import com.lexicon.interactors.presets.WordGrammar
+import com.lexicon.model.vocabulary.Aspect
 import com.lexicon.model.vocabulary.CaseForms
 import com.lexicon.model.vocabulary.Gender
 import com.lexicon.model.vocabulary.GrammaticalCase
@@ -90,8 +91,23 @@ fun WordGrammarSection(
 @Composable
 private fun partOfSpeechLabel(grammar: WordGrammar): String {
     val name = stringResource(grammar.partOfSpeech.labelId())
-    return if (grammar is WordGrammar.Noun) "$name · ${stringResource(grammar.gender.labelId())}" else name
+    val detail =
+        when (grammar) {
+            is WordGrammar.Noun -> stringResource(grammar.gender.labelId())
+            is WordGrammar.Verb -> grammar.conjugation?.aspect?.let { aspectLabel(it) }
+            else -> null
+        }
+    return if (detail != null) "$name · $detail" else name
 }
+
+@Composable
+fun aspectLabel(aspect: Aspect): String =
+    stringResource(
+        when (aspect) {
+            Aspect.IMPERFECTIVE -> R.string.grammar_aspect_imperfective
+            Aspect.PERFECTIVE -> R.string.grammar_aspect_perfective
+        },
+    )
 
 @Composable
 private fun grammarRows(grammar: WordGrammar): List<Pair<String, String>> =

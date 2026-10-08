@@ -48,6 +48,16 @@ enum class GrammaticalCase(val tag: String) {
     }
 }
 
+enum class Aspect(val tag: String) {
+    IMPERFECTIVE("imperfective"),
+    PERFECTIVE("perfective"),
+    ;
+
+    companion object {
+        fun ofTag(tag: String?): Aspect? = entries.firstOrNull { it.tag == tag?.trim() }
+    }
+}
+
 data class CaseForms(
     val singular: String?,
     val plural: String?,

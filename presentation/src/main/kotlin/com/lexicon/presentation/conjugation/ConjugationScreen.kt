@@ -45,6 +45,7 @@ import com.lexicon.presentation.common.ExampleSentenceRow
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.aspectLabel
 import com.lexicon.presentation.presets.ImagePickerDialog
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
@@ -215,6 +216,13 @@ private fun ConjugationContent(
                                     style = MaterialTheme.typography.bodyLarge,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     modifier = Modifier.testTag(ConjugationTestTags.TRANSLATION),
+                                )
+                            }
+                            table.aspect?.let { aspect ->
+                                Text(
+                                    text = aspectLabel(aspect),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                             }
                             table.transcription?.let { ipa ->
