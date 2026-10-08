@@ -195,6 +195,11 @@ private fun SettingsScreenContent(
                 style = MaterialTheme.typography.bodyMedium,
                 color = skin.onTile,
             )
+            Text(
+                text = stringResource(R.string.settings_sources_kwjp),
+                style = MaterialTheme.typography.bodyMedium,
+                color = skin.onTile,
+            )
         }
     }
 }

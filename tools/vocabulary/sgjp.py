@@ -212,6 +212,17 @@ def present_tense(lexeme: Lexeme) -> dict[str, list[str]]:
     return {person: lexeme.texts(number, who, head="fin") for person, (number, who) in PERSONS.items()}
 
 
+def known_forms(forms: set[str], names: tuple[str, ...] = ("sgjp", "polimorf")) -> set[str]:
+    found = set()
+    for name in names:
+        with gzip.open(dictionary_file(name), "rt", encoding="utf-8") as lines:
+            for line in lines:
+                form = line.split("\t", 1)[0]
+                if form in forms or form.lower() in forms:
+                    found.add(form.lower())
+    return found
+
+
 def split_cases(declension: str) -> dict[str, tuple[str, str]]:
     cases = {}
     for name, cell in zip(CASES, declension.split(";")):

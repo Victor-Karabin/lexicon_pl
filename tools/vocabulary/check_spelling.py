@@ -20,7 +20,6 @@ and are not checked.
 
 from __future__ import annotations
 
-import gzip
 import json
 import re
 import sys
@@ -66,17 +65,6 @@ def words(text: str) -> list[str]:
     ]
 
 
-def known(forms: set[str]) -> set[str]:
-    found = set()
-    for name in ("sgjp", "polimorf"):
-        with gzip.open(sgjp.dictionary_file(name), "rt", encoding="utf-8") as lines:
-            for line in lines:
-                form = line.split("\t", 1)[0]
-                if form in forms or form.lower() in forms:
-                    found.add(form.lower())
-    return found
-
-
 def main() -> int:
     drop = "--drop" in sys.argv[1:]
     where: dict[str, list[str]] = defaultdict(list)
@@ -87,7 +75,7 @@ def main() -> int:
             if key:
                 cache_keys[word.lower()].add(key)
     try:
-        dictionary = known(set(where))
+        dictionary = sgjp.known_forms(set(where))
     except FileNotFoundError as error:
         print(f"error: {error}", file=sys.stderr)
         return 1
