@@ -66,6 +66,12 @@ interface CourseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertProgress(progress: LessonProgressEntity)
 
+    @Query("SELECT * FROM lesson_script_progress WHERE lessonId = :lessonId")
+    suspend fun getScriptProgress(lessonId: String): LessonScriptProgressEntity?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertScriptProgress(progress: LessonScriptProgressEntity)
+
     @Transaction
     suspend fun replaceCatalog(
         courses: List<CourseEntity>,

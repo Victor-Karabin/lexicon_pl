@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.course.Lesson
 import com.lexicon.interactors.course.LessonExercise
@@ -60,10 +61,16 @@ fun LessonScreen(
     onEditWord: (VocabularyId) -> Unit,
     onTrainLesson: (List<Long>) -> Unit,
     onExerciseSelected: (LessonExercise) -> Unit,
+    onStartLesson: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LessonViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LifecycleResumeEffect(Unit) {
+        viewModel.onResumed()
+        onPauseOrDispose {}
+    }
 
     LessonContent(
         uiState = uiState,
@@ -74,6 +81,7 @@ fun LessonScreen(
         onPronounceWord = viewModel::onPronounceWord,
         onEditWord = onEditWord,
         onExerciseSelected = onExerciseSelected,
+        onStartLesson = onStartLesson,
         modifier = modifier,
     )
 }
@@ -89,6 +97,7 @@ private fun LessonContent(
     onPronounceWord: (Word) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
     onExerciseSelected: (LessonExercise) -> Unit,
+    onStartLesson: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val title = when (uiState) {
@@ -125,8 +134,8 @@ private fun LessonContent(
                     modifier = Modifier.fillMaxSize().padding(padding),
                     contentPadding = PaddingValues(bottom = Dimens.spacingXl),
                 ) {
-                    lessonHeader(uiState.lesson, onTrainLesson, onCompletedToggled)
-                    exercisesBlock(uiState.lesson.exercises, onExerciseSelected)
+                    lessonHeader(uiState, onTrainLesson, onCompletedToggled, onStartLesson)
+                    if (!uiState.hasScript) exercisesBlock(uiState.lesson.exercises, onExerciseSelected)
                     wordsBlock(uiState, onWordStatusCycled, onPronounceWord, onEditWord)
                 }
         }
@@ -134,16 +143,27 @@ private fun LessonContent(
 }
 
 private fun LazyListScope.lessonHeader(
-    lesson: Lesson,
+    uiState: LessonUiState.Loaded,
     onTrainLesson: (List<Long>) -> Unit,
     onCompletedToggled: (Boolean) -> Unit,
+    onStartLesson: () -> Unit,
 ) = item {
+    val lesson = uiState.lesson
     Column(modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium)) {
         Text(
             text = lesson.title,
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.SemiBold,
         )
+        if (uiState.hasScript) {
+            Button(onClick = onStartLesson, modifier = Modifier.padding(top = Dimens.spacingMedium)) {
+                Icon(Icons.Default.PlayArrow, contentDescription = null)
+                Text(
+                    text = stringResource(if (uiState.isScriptStarted) R.string.lesson_flow_continue else R.string.lesson_flow_start),
+                    modifier = Modifier.padding(start = Dimens.spacingSmall),
+                )
+            }
+        }
         Row(
             modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium),
             horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
@@ -299,6 +319,7 @@ private fun LessonPreview() {
             onPronounceWord = {},
             onEditWord = {},
             onExerciseSelected = {},
+            onStartLesson = {},
         )
     }
 }
@@ -316,6 +337,7 @@ private fun LessonNotFoundPreview() {
             onPronounceWord = {},
             onEditWord = {},
             onExerciseSelected = {},
+            onStartLesson = {},
         )
     }
 }

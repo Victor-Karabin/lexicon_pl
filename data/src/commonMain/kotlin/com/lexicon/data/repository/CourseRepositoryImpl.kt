@@ -7,11 +7,20 @@ import com.lexicon.boundary.LessonExerciseBoundary
 import com.lexicon.boundary.LessonSummaryBoundary
 import com.lexicon.boundary.SeedOutcomeBoundary
 import com.lexicon.common.Clock
+import com.lexicon.data.local.AssetReader
 import com.lexicon.data.local.CourseDao
 import com.lexicon.data.local.CourseSeeder
+import com.lexicon.data.local.LessonProgressAsset
 import com.lexicon.data.local.LessonProgressEntity
+import com.lexicon.data.local.LessonScriptAsset
+import com.lexicon.data.local.LessonScriptProgressEntity
 import com.lexicon.data.local.decodeLocalized
+import com.lexicon.data.local.lessonJson
+import com.lexicon.data.local.toAsset
 import com.lexicon.data.local.toBoundary
+import com.lexicon.data.local.toModel
+import com.lexicon.model.course.LessonProgress
+import com.lexicon.model.course.LessonScript
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onStart
@@ -19,6 +28,7 @@ import kotlinx.coroutines.flow.onStart
 class CourseRepositoryImpl(
     private val courseDao: CourseDao,
     private val seeder: CourseSeeder,
+    private val assets: AssetReader,
     private val clock: Clock,
 ) : CourseRepository {
     override suspend fun seedFromAsset(): SeedOutcomeBoundary = seeder.sync()
@@ -91,5 +101,24 @@ class CourseRepositoryImpl(
     override suspend fun countLessons(): Int {
         seeder.ensureSeeded()
         return courseDao.countLessons()
+    }
+
+    override suspend fun getLessonScript(lessonId: String): LessonScript? {
+        val text = runCatching { assets.readText("lesson_$lessonId.json") }.getOrNull() ?: return null
+        seeder.ensureSeeded()
+        val remoteIds = courseDao.getAudio(lessonId).associate { it.file to it.remoteId }
+        return lessonJson.decodeFromString<LessonScriptAsset>(text).toModel(remoteIds)
+    }
+
+    override suspend fun getLessonScriptProgress(lessonId: String): LessonProgress? =
+        courseDao.getScriptProgress(lessonId)?.let { lessonJson.decodeFromString<LessonProgressAsset>(it.progressJson).toModel() }
+
+    override suspend fun saveLessonScriptProgress(
+        lessonId: String,
+        progress: LessonProgress,
+    ) {
+        courseDao.upsertScriptProgress(
+            LessonScriptProgressEntity(lessonId, lessonJson.encodeToString(LessonProgressAsset.serializer(), progress.toAsset())),
+        )
     }
 }

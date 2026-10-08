@@ -20,6 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.Abc
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
@@ -39,6 +40,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.course.GAP_MARKER
@@ -187,7 +189,11 @@ fun TranscribeRow(
     isCorrect: Boolean?,
     answerState: AnswerState,
     onValueChanged: (String) -> Unit,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    isAlmost: Boolean = false,
 ) {
+    val text = rememberEditableText(value)
+    val letters = rememberLetterReceiver(text, onValueChanged)
     Row(
         modifier = Modifier.fillMaxWidth().padding(vertical = Dimens.spacingTiny),
         verticalAlignment = Alignment.CenterVertically,
@@ -199,18 +205,35 @@ fun TranscribeRow(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         OutlinedTextField(
-            value = value,
-            onValueChange = onValueChanged,
+            value = text.value,
+            onValueChange = {
+                text.value = it
+                if (it.text != value) onValueChanged(it.text)
+            },
             singleLine = true,
             enabled = answerState is AnswerState.Unanswered,
             isError = isCorrect == false,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(1f).then(letters),
             shape = LexiconShapes.small,
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                capitalization = KeyboardCapitalization.None,
+                autoCorrectEnabled = false,
+                imeAction = ImeAction.Next,
+            ),
+            trailingIcon = if (isCorrect == true) {
+                { Icon(Icons.Default.Check, contentDescription = null, tint = LexiconSuccess) }
+            } else {
+                null
+            },
             supportingText = {
                 if (isCorrect == false) {
                     Text(
-                        text = stringResource(R.string.expected_format, item.answer),
+                        text = if (isAlmost) {
+                            stringResource(R.string.lesson_flow_almost_expected, item.answer)
+                        } else {
+                            stringResource(R.string.expected_format, item.answer)
+                        },
                         color = answerStateColor(answerState),
                     )
                 }
@@ -411,6 +434,8 @@ private fun InlineGap(
     answerState: AnswerState,
     onValueChanged: (String) -> Unit,
 ) {
+    val text = rememberEditableText(value)
+    val letters = rememberLetterReceiver(text, onValueChanged)
     val underline = when (isCorrect) {
         true -> LexiconSuccess
         false -> LexiconError
@@ -419,15 +444,23 @@ private fun InlineGap(
     val width = (GapCharacterWidth * expected.length).coerceIn(GapMinWidth, GapMaxWidth)
 
     BasicTextField(
-        value = value,
-        onValueChange = onValueChanged,
+        value = text.value,
+        onValueChange = {
+            text.value = it
+            if (it.text != value) onValueChanged(it.text)
+        },
         enabled = answerState is AnswerState.Unanswered,
         singleLine = true,
+        modifier = letters,
         textStyle = MaterialTheme.typography.bodyLarge.copy(
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
         ),
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        keyboardOptions = KeyboardOptions(
+            capitalization = KeyboardCapitalization.None,
+            autoCorrectEnabled = false,
+            imeAction = ImeAction.Next,
+        ),
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
         decorationBox = { field ->
             Column(modifier = Modifier.width(width)) {

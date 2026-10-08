@@ -9,9 +9,12 @@ import com.lexicon.interactors.conjugation.NextConjugationTableUseCase
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
 import com.lexicon.interactors.conjugation.ToggleVerbInStudySetUseCase
 import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
+import com.lexicon.interactors.course.GetLessonProgressUseCase
+import com.lexicon.interactors.course.GetLessonScriptUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
 import com.lexicon.interactors.course.ObserveCoursesUseCase
+import com.lexicon.interactors.course.SaveLessonProgressUseCase
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
 import com.lexicon.interactors.crossword.StartCrosswordSessionRequest
 import com.lexicon.interactors.crossword.StartCrosswordSessionUseCase
@@ -141,6 +144,9 @@ object IosDependencies : KoinComponent {
     val getLesson: GetLessonUseCase by inject()
     val getLessonVocabulary: GetLessonVocabularyUseCase by inject()
     val setLessonCompleted: SetLessonCompletedUseCase by inject()
+    val getLessonScript: GetLessonScriptUseCase by inject()
+    val getLessonProgress: GetLessonProgressUseCase by inject()
+    val saveLessonProgress: SaveLessonProgressUseCase by inject()
     val checkExerciseAnswer: CheckExerciseAnswerUseCase by inject()
 
     val observeVocabularyCourse: ObserveVocabularyCourseUseCase by inject()

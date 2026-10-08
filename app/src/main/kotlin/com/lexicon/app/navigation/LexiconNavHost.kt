@@ -26,6 +26,7 @@ import com.lexicon.presentation.course.CourseDetailScreen
 import com.lexicon.presentation.course.EXERCISE_ID_ARG
 import com.lexicon.presentation.course.ExerciseScreen
 import com.lexicon.presentation.course.LESSON_ID_ARG
+import com.lexicon.presentation.course.LessonFlowScreen
 import com.lexicon.presentation.course.LessonScreen
 import com.lexicon.presentation.crossword.CrosswordScreen
 import com.lexicon.presentation.dictation.DictationScreen
@@ -193,10 +194,18 @@ fun LexiconNavHost(
                 onExerciseSelected = { exercise ->
                     navController.navigate(LexiconDestinations.exercise(lessonId, exercise.id))
                 },
+                onStartLesson = { navController.navigate(LexiconDestinations.lessonFlow(lessonId)) },
                 onTrainLesson = { wordIds ->
                     navController.navigate(LexiconDestinations.scopedTraining(LexiconDestinations.MIX, wordIds))
                 },
             )
+        }
+
+        composable(
+            route = LexiconDestinations.LESSON_FLOW,
+            arguments = listOf(navArgument(LESSON_ID_ARG) { type = NavType.StringType }),
+        ) {
+            LessonFlowScreen(onClose = { navController.popBackStack() })
         }
 
         composable(
