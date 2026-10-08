@@ -48,8 +48,6 @@ GRAMMAR = TOOLS / "grammar.tsv"
 CACHE = TOOLS / ".grammar-cache.json"
 UNLISTED = TOOLS / "unlisted_verbs.tsv"
 
-VULGAR = re.compile(r"jeb|pierd|kurw|cwel|pedal|chuj|pizd")
-
 GENDERS = {"masculine personal", "masculine animate", "masculine inanimate", "feminine", "neuter", "plural only"}
 
 CASES = list(sgjp.CASES)
@@ -257,7 +255,7 @@ def verbs_in(lexicon: dict, infinitive: str) -> list[sgjp.Lexeme]:
 
 
 def vulgar(infinitive: str, candidates: list[sgjp.Lexeme]) -> bool:
-    if VULGAR.search(infinitive):
+    if sgjp.VULGAR_ROOT.search(infinitive):
         return True
     return bool(candidates) and all("wulg" in lexeme.qualifiers for lexeme in candidates)
 

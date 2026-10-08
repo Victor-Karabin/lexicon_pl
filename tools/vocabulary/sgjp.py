@@ -69,6 +69,8 @@ PART_OF_SPEECH = {
     "pred": "v",
 }
 
+VULGAR_ROOT = re.compile(r"jeb|pierd|kurw|cwel|pedal|chuj|pizd")
+
 VERB_TAGS = {"fin", "inf", "praet", "impt", "imps", "ger", "pact", "ppas", "pcon", "pant", "bedzie", "winien"}
 
 

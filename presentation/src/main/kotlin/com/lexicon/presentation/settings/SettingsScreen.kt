@@ -190,6 +190,11 @@ private fun SettingsScreenContent(
                 style = MaterialTheme.typography.bodySmall,
                 color = skin.muted(),
             )
+            Text(
+                text = stringResource(R.string.settings_sources_tatoeba),
+                style = MaterialTheme.typography.bodyMedium,
+                color = skin.onTile,
+            )
         }
     }
 }

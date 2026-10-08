@@ -57,6 +57,9 @@ struct SettingsView: View {
                         Text(Strings.settingsSourcesLicence)
                             .font(.caption)
                             .foregroundStyle(skin.onTile.muted)
+                        Text(Strings.settingsSourcesTatoeba)
+                            .font(.callout)
+                            .foregroundStyle(skin.onTile)
                     }
                 }
                 .padding(Spacing.medium)
