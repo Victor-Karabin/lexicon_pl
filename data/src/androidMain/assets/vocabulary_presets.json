@@ -7252,8 +7252,8 @@
    "icon": "record_voice_over",
    "color": "#EF6C00",
    "popularity": 5,
-   "estimatedSeconds": 42300,
-   "wordCount": 705,
+   "estimatedSeconds": 42720,
+   "wordCount": 712,
    "vocabularyIds": [
     244,
     372,
@@ -7959,7 +7959,14 @@
     5138,
     5139,
     5140,
-    5141
+    5141,
+    7141,
+    7142,
+    7143,
+    7144,
+    7145,
+    7146,
+    7147
    ]
   },
   {
@@ -8101,8 +8108,8 @@
    "icon": "chat",
    "color": "#EF6C00",
    "popularity": 12,
-   "estimatedSeconds": 76560,
-   "wordCount": 1276,
+   "estimatedSeconds": 76980,
+   "wordCount": 1283,
    "vocabularyIds": [
     1,
     2,
@@ -9379,7 +9386,14 @@
     7100,
     7108,
     7118,
-    7133
+    7133,
+    7141,
+    7142,
+    7143,
+    7144,
+    7145,
+    7146,
+    7147
    ]
   },
   {

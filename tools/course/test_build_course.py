@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from build_course import BuildError, fold, resolve_word, validate  # noqa: E402
+from build_course import BuildError, WordIndex, fold, resolve_word, validate  # noqa: E402
 
 FAILURES = []
 
@@ -79,7 +79,8 @@ def test_fold_matches_the_apps_search_key():
 
 
 def test_word_resolution():
-    index = {"kot": 1, "pies": 2, "spac": 3, "zaczynac sie": 4, "konczyc sie": 5}
+    texts = ["kot", "pies", "spać", "zaczynać się", "kończyć się", "część", "cześć", "piec", "pięć"]
+    index = WordIndex.of([{"id": number, "text": text} for number, text in enumerate(texts, start=1)])
     forms = {"spac (spie, spisz)": ["spać"], "zaczynac sie ≠ konczyc sie": ["zaczynać się", "kończyć się"]}
 
     check("a plain word resolves", resolve_word("kot", index, forms) == [1])
@@ -92,6 +93,9 @@ def test_word_resolution():
         "a printed pair maps to both headwords",
         resolve_word("zaczynać się ≠ kończyć się", index, forms) == [4, 5],
     )
+    check("an exact spelling beats a word it only folds to", resolve_word("cześć", index, forms) == [7])
+    check("an exact spelling beats a folded one", resolve_word("pięć", index, forms) == [9])
+    check("a word OCR read without diacritics still resolves", resolve_word("spac", index, forms) == [3])
 
 
 def main():

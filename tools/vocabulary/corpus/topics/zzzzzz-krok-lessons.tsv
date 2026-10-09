@@ -1,0 +1,17 @@
+# Phrases a guided Krok po kroku lesson teaches in its vocabulary list
+# (data/src/androidMain/assets/lesson_<id>.json) that the corpus did not carry yet.
+# Columns as in core.tsv.
+#
+# The file name keeps this list after every other topic file. Ids are handed out in
+# load order, so appending here never renumbers a word a lesson, preset or stored
+# favourite already points at; a new word for a later lesson goes at the end.
+#
+# Glosses follow the lesson's own vocabulary table. Where the corpus already has the
+# same English for a different phrase, the gloss says what sets this one apart.
+nazywam się	my name is (full name)	expr	A1	daily-conversation
+bardzo mi miło	very nice to meet you	expr	A1	daily-conversation
+mnie również	me too / likewise	expr	A1	daily-conversation
+a ty?	and you? (informal)	expr	A1	daily-conversation
+jak się pan nazywa?	what is your name? (formal, to a man)	expr	A1	daily-conversation
+jak się pani nazywa?	what is your name? (formal, to a woman)	expr	A1	daily-conversation
+jak masz na imię?	what's your name? (informal)	expr	A1	daily-conversation

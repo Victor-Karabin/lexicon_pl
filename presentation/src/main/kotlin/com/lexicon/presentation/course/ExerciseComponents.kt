@@ -20,15 +20,18 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.Abc
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.QuestionMark
 import androidx.compose.material.icons.filled.RecordVoiceOver
 import androidx.compose.material.icons.filled.Repeat
+import androidx.compose.material.icons.filled.Replay
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,6 +42,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.course.GAP_MARKER
@@ -55,6 +59,7 @@ import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconSuccess
+import com.lexicon.presentation.theme.LexiconWarning
 import com.lexicon.presentation.theme.component.AnswerChip
 import com.lexicon.presentation.theme.component.AnswerChipState
 import com.lexicon.presentation.theme.component.AnswerChipVariant
@@ -81,17 +86,29 @@ fun ExerciseAudioButton(
     isPlaying: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    onReplay: (() -> Unit)? = null,
 ) {
-    Button(onClick = onClick, modifier = modifier) {
-        Icon(
-            imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
-            contentDescription = null,
-            modifier = Modifier.size(PlayIconSize),
-        )
-        Text(
-            text = stringResource(if (isPlaying) R.string.exercise_pause else R.string.exercise_play),
-            modifier = Modifier.padding(start = Dimens.spacingSmall),
-        )
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Button(onClick = onClick) {
+            Icon(
+                imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
+                contentDescription = null,
+                modifier = Modifier.size(PlayIconSize),
+            )
+            Text(
+                text = stringResource(if (isPlaying) R.string.exercise_pause else R.string.exercise_play),
+                modifier = Modifier.padding(start = Dimens.spacingSmall),
+            )
+        }
+        if (onReplay != null) {
+            OutlinedIconButton(onClick = onReplay) {
+                Icon(imageVector = Icons.Default.Replay, contentDescription = stringResource(R.string.exercise_replay))
+            }
+        }
     }
 }
 
@@ -130,6 +147,7 @@ fun GapFillRow(
     correctness: List<Boolean>,
     answerState: AnswerState,
     onValueChanged: (Int, String) -> Unit,
+    almost: List<Boolean> = emptyList(),
 ) {
     Column(modifier = Modifier.fillMaxWidth().padding(vertical = Dimens.spacingSmall)) {
         item.speaker?.let { speaker ->
@@ -153,6 +171,7 @@ fun GapFillRow(
                         value = values.getOrElse(at) { "" },
                         expected = item.answers.getOrElse(at) { "" },
                         isCorrect = correctness.getOrNull(at),
+                        isAlmost = almost.getOrElse(at) { false },
                         answerState = answerState,
                         onValueChanged = { onValueChanged(at, it) },
                     )
@@ -187,7 +206,11 @@ fun TranscribeRow(
     isCorrect: Boolean?,
     answerState: AnswerState,
     onValueChanged: (String) -> Unit,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    isAlmost: Boolean = false,
 ) {
+    val text = rememberEditableText(value)
+    val letters = rememberLetterReceiver(text, onValueChanged)
     Row(
         modifier = Modifier.fillMaxWidth().padding(vertical = Dimens.spacingTiny),
         verticalAlignment = Alignment.CenterVertically,
@@ -199,19 +222,36 @@ fun TranscribeRow(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         OutlinedTextField(
-            value = value,
-            onValueChange = onValueChanged,
+            value = text.value,
+            onValueChange = {
+                text.value = it
+                if (it.text != value) onValueChanged(it.text)
+            },
             singleLine = true,
             enabled = answerState is AnswerState.Unanswered,
             isError = isCorrect == false,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(1f).then(letters),
             shape = LexiconShapes.small,
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                capitalization = KeyboardCapitalization.None,
+                autoCorrectEnabled = false,
+                imeAction = ImeAction.Next,
+            ),
+            trailingIcon = if (isCorrect == true) {
+                { Icon(Icons.Default.Check, contentDescription = null, tint = LexiconSuccess) }
+            } else {
+                null
+            },
             supportingText = {
                 if (isCorrect == false) {
                     Text(
-                        text = stringResource(R.string.expected_format, item.answer),
-                        color = answerStateColor(answerState),
+                        text = if (isAlmost) {
+                            stringResource(R.string.lesson_flow_almost_expected, item.answer)
+                        } else {
+                            stringResource(R.string.expected_format, item.answer)
+                        },
+                        color = if (isAlmost) LexiconWarning else answerStateColor(answerState),
                     )
                 }
             },
@@ -408,26 +448,38 @@ private fun InlineGap(
     value: String,
     expected: String,
     isCorrect: Boolean?,
+    isAlmost: Boolean,
     answerState: AnswerState,
     onValueChanged: (String) -> Unit,
 ) {
-    val underline = when (isCorrect) {
-        true -> LexiconSuccess
-        false -> LexiconError
-        null -> MaterialTheme.colorScheme.outline
+    val text = rememberEditableText(value)
+    val letters = rememberLetterReceiver(text, onValueChanged)
+    val underline = when {
+        isCorrect == true -> LexiconSuccess
+        isAlmost -> LexiconWarning
+        isCorrect == false -> LexiconError
+        else -> MaterialTheme.colorScheme.outline
     }
     val width = (GapCharacterWidth * expected.length).coerceIn(GapMinWidth, GapMaxWidth)
 
     BasicTextField(
-        value = value,
-        onValueChange = onValueChanged,
+        value = text.value,
+        onValueChange = {
+            text.value = it
+            if (it.text != value) onValueChanged(it.text)
+        },
         enabled = answerState is AnswerState.Unanswered,
         singleLine = true,
+        modifier = letters,
         textStyle = MaterialTheme.typography.bodyLarge.copy(
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
         ),
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        keyboardOptions = KeyboardOptions(
+            capitalization = KeyboardCapitalization.None,
+            autoCorrectEnabled = false,
+            imeAction = ImeAction.Next,
+        ),
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
         decorationBox = { field ->
             Column(modifier = Modifier.width(width)) {

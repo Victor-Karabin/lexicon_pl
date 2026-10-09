@@ -45,6 +45,7 @@ fun ExerciseScreen(
         uiState = uiState,
         onClose = onClose,
         onPlayAudio = viewModel::onPlayAudio,
+        onReplayAudio = viewModel::onReplayAudio,
         onOptionSelected = viewModel::onOptionSelected,
         onGapChanged = viewModel::onGapChanged,
         onMatchPromptSelected = viewModel::onMatchPromptSelected,
@@ -61,6 +62,7 @@ private fun ExerciseContent(
     uiState: ExerciseUiState,
     onClose: () -> Unit,
     onPlayAudio: () -> Unit,
+    onReplayAudio: () -> Unit,
     onOptionSelected: (Int, String) -> Unit,
     onGapChanged: (Int, Int, String) -> Unit,
     onMatchPromptSelected: (Int) -> Unit,
@@ -103,6 +105,7 @@ private fun ExerciseContent(
                                 ExerciseAudioButton(
                                     isPlaying = uiState.isPlaying,
                                     onClick = onPlayAudio,
+                                    onReplay = onReplayAudio.takeIf { uiState.canReplay },
                                     modifier = Modifier.padding(top = Dimens.spacingMedium),
                                 )
                             }

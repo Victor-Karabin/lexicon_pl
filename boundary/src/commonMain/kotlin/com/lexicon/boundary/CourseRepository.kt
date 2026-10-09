@@ -1,5 +1,7 @@
 package com.lexicon.boundary
 
+import com.lexicon.model.course.LessonProgress
+import com.lexicon.model.course.LessonScript
 import kotlinx.coroutines.flow.Flow
 
 interface CourseRepository {
@@ -17,4 +19,13 @@ interface CourseRepository {
     )
 
     suspend fun countLessons(): Int
+
+    suspend fun getLessonScript(lessonId: String): LessonScript?
+
+    suspend fun getLessonScriptProgress(lessonId: String): LessonProgress?
+
+    suspend fun saveLessonScriptProgress(
+        lessonId: String,
+        progress: LessonProgress,
+    )
 }

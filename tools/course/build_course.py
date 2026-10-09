@@ -7,6 +7,7 @@ Reads
     krok/.cache/lessons.json          extract_krok.py output
     krok/.cache/audio_manifest.json   extract_audio.py output
     data/src/androidMain/assets/vocabulary_pl.json
+    data/src/androidMain/assets/lesson_<id>.json   guided lesson scripts, where one exists
 
 Writes
     data/src/androidMain/assets/course_krok.json
@@ -19,6 +20,15 @@ tools/vocabulary/corpus/topics/zz-krok.tsv first — `--report-missing` lists th
 Forms the books print with a conjugation or an aspect partner are mapped back to
 their headword by word_forms.tsv.
 
+A lesson with a guided script also links the phrases its vocabulary table teaches,
+after the book's own new words, so "Train this lesson" practises what the lesson
+taught. Those phrases are authored, so one the corpus cannot resolve fails the build.
+
+Each lesson records the headword behind every id in vocabularyWords. Ids are handed
+out in corpus order, so a corpus change that renumbers words without a rebuild here
+would silently point lessons at the wrong words; data's CourseAssetTest compares the
+two lists and fails instead.
+
 Validation runs before anything is written, so a lesson that would ship empty
 fails here rather than on a phone.
 """
@@ -28,9 +38,10 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from dataclasses import dataclass
 from pathlib import Path
 
-from krok_paths import CACHE_DIR, COURSE_ASSET, REPO_ROOT
+from krok_paths import ASSET_DIR, CACHE_DIR, COURSE_ASSET, REPO_ROOT
 
 VOCABULARY_ASSET = REPO_ROOT / "data" / "src" / "androidMain" / "assets" / "vocabulary_pl.json"
 WORD_FORMS = Path(__file__).parent / "word_forms.tsv"
@@ -84,11 +95,44 @@ def load_json(path: Path) -> dict | list:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def vocabulary_index() -> dict[str, int]:
-    index: dict[str, int] = {}
-    for word in load_json(VOCABULARY_ASSET):
-        index.setdefault(fold(word["text"]), word["id"])
-    return index
+@dataclass(frozen=True)
+class WordIndex:
+    """Corpus ids by spelling, then by folded spelling for OCR that lost a diacritic.
+
+    The folded key alone conflates real words: cześć and część, pięć and piec.
+    """
+
+    exact: dict[str, int]
+    folded: dict[str, int]
+
+    @classmethod
+    def of(cls, words: list[dict]) -> "WordIndex":
+        exact: dict[str, int] = {}
+        folded: dict[str, int] = {}
+        for word in words:
+            exact.setdefault(word["text"].lower().strip(), word["id"])
+            folded.setdefault(fold(word["text"]), word["id"])
+        return cls(exact, folded)
+
+    def get(self, word: str) -> int | None:
+        found = self.exact.get(word.lower().strip())
+        return found if found is not None else self.folded.get(fold(word))
+
+
+def vocabulary_index() -> WordIndex:
+    return WordIndex.of(load_json(VOCABULARY_ASSET))
+
+
+def vocabulary_texts() -> dict[int, str]:
+    return {word["id"]: word["text"] for word in load_json(VOCABULARY_ASSET)}
+
+
+def script_words(lesson_id: str) -> list[str]:
+    """The Polish column of a guided lesson's vocabulary table, or nothing without a script."""
+    path = ASSET_DIR / f"lesson_{lesson_id}.json"
+    if not path.exists():
+        return []
+    return [phrase["polish"].rstrip("…").strip() for phrase in load_json(path)["vocabulary"]]
 
 
 def word_forms() -> dict[str, list[str]]:
@@ -102,12 +146,12 @@ def word_forms() -> dict[str, list[str]]:
     return forms
 
 
-def resolve_word(word: str, index: dict[str, int], forms: dict[str, list[str]]) -> list[int] | None:
+def resolve_word(word: str, index: WordIndex, forms: dict[str, list[str]]) -> list[int] | None:
     """Vocabulary ids for a printed lesson word, or None when nothing matches."""
     key = fold(word)
     if key in forms:
-        return [index[fold(h)] for h in forms[key] if fold(h) in index]
-    word_id = index.get(key)
+        return [word_id for h in forms[key] if (word_id := index.get(h)) is not None]
+    word_id = index.get(word)
     return [word_id] if word_id is not None else None
 
 
@@ -178,29 +222,45 @@ def lesson_audio(
 def build_lesson(
     course: dict,
     lesson: dict,
-    index: dict[str, int],
+    index: WordIndex,
     forms: dict[str, list[str]],
     coursebook_tracks: list[dict],
     remote: dict[str, str],
     exercises: dict[int, list[dict]],
+    texts: dict[int, str],
     missing: list[tuple[str, int, str]],
 ) -> dict:
+    lesson_id = f"{course['id']}-{lesson['number']:02d}"
     vocabulary_ids: list[int] = []
+
+    def link(resolved: list[int]) -> None:
+        for word_id in resolved:
+            if word_id not in vocabulary_ids:
+                vocabulary_ids.append(word_id)
+
     for word in lesson["newWords"]:
         resolved = resolve_word(word, index, forms)
         if resolved is None:
             missing.append((course["id"], lesson["number"], word))
             continue
-        for word_id in resolved:
-            if word_id not in vocabulary_ids:
-                vocabulary_ids.append(word_id)
+        link(resolved)
+
+    for word in script_words(lesson_id):
+        resolved = resolve_word(word, index, forms)
+        if not resolved:
+            raise BuildError(
+                f"{lesson_id}: script word {word!r} is not in the corpus; add it to "
+                "tools/vocabulary/corpus/topics/zzzzzz-krok-lessons.tsv or word_forms.tsv"
+            )
+        link(resolved)
 
     return {
-        "id": f"{course['id']}-{lesson['number']:02d}",
+        "id": lesson_id,
         "courseId": course["id"],
         "number": lesson["number"],
         "title": lesson["title"],
         "vocabularyIds": vocabulary_ids,
+        "vocabularyWords": [texts[word_id] for word_id in vocabulary_ids],
         "audio": lesson_audio(coursebook_tracks, lesson["number"], remote),
         "exercises": [
             {
@@ -247,6 +307,7 @@ def build(report_missing: bool) -> int:
     remote = load_remote_manifest()
     exercises = load_exercises()
     index = vocabulary_index()
+    texts = vocabulary_texts()
     forms = word_forms()
 
     missing: list[tuple[str, int, str]] = []
@@ -270,7 +331,7 @@ def build(report_missing: bool) -> int:
                 "title": course["title"],
                 "lessons": [
                     build_lesson(
-                        course, lesson, index, forms, coursebook_tracks, remote, exercises, missing
+                        course, lesson, index, forms, coursebook_tracks, remote, exercises, texts, missing
                     )
                     for lesson in lessons
                 ],

@@ -2,13 +2,18 @@ package com.lexicon.application.course
 
 import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.VocabularyRepository
+import com.lexicon.interactors.course.GetLessonProgressUseCase
+import com.lexicon.interactors.course.GetLessonScriptUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
 import com.lexicon.interactors.course.Lesson
 import com.lexicon.interactors.course.ObserveCoursesUseCase
+import com.lexicon.interactors.course.SaveLessonProgressUseCase
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
 import com.lexicon.model.course.Course
 import com.lexicon.model.course.LessonId
+import com.lexicon.model.course.LessonProgress
+import com.lexicon.model.course.LessonScript
 import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -41,6 +46,27 @@ class GetLessonVocabularyUseCaseImpl(
         val byId = vocabularyRepository.getItemsByIds(wordIds).associateBy { it.id.value }
         return wordIds.mapNotNull { byId[it] }.toImmutableList()
     }
+}
+
+class GetLessonScriptUseCaseImpl(
+    private val repository: CourseRepository,
+) : GetLessonScriptUseCase {
+    override suspend fun invoke(id: LessonId): LessonScript? = repository.getLessonScript(id.value)
+}
+
+class GetLessonProgressUseCaseImpl(
+    private val repository: CourseRepository,
+) : GetLessonProgressUseCase {
+    override suspend fun invoke(id: LessonId): LessonProgress? = repository.getLessonScriptProgress(id.value)
+}
+
+class SaveLessonProgressUseCaseImpl(
+    private val repository: CourseRepository,
+) : SaveLessonProgressUseCase {
+    override suspend fun invoke(
+        id: LessonId,
+        progress: LessonProgress,
+    ) = repository.saveLessonScriptProgress(id.value, progress)
 }
 
 class SetLessonCompletedUseCaseImpl(

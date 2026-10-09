@@ -56,11 +56,22 @@ struct LessonView: View {
 
     @State private var lesson: Lesson?
     @State private var words: [Word] = []
+    @State private var hasScript = false
+    @State private var isScriptStarted = false
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.medium) {
                 Text(title).font(.title2.weight(.semibold))
+
+                if hasScript {
+                    NavigationLink {
+                        LessonFlowView(lessonId: lessonId)
+                    } label: {
+                        Label(isScriptStarted ? Strings.lessonFlowContinue : Strings.lessonFlowStart, systemImage: "play.fill")
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
 
                 if let lesson {
                     HStack(spacing: Spacing.small) {
@@ -120,6 +131,9 @@ struct LessonView: View {
     }
 
     private func load() async {
+        hasScript = (try? await deps.getLessonScript.invoke(id: lessonId)) != nil
+        let progress = hasScript ? try? await deps.getLessonProgress.invoke(id: lessonId) : nil
+        isScriptStarted = progress != nil
         lesson = try? await deps.getLesson.invoke(id: lessonId)
         words = (try? await deps.getLessonVocabulary.invoke(id: lessonId)) ?? []
     }

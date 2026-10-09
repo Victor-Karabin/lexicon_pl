@@ -53,6 +53,12 @@ data class LessonProgressEntity(
     val completedAt: Long?,
 )
 
+@Entity(tableName = "lesson_script_progress")
+data class LessonScriptProgressEntity(
+    @PrimaryKey val lessonId: String,
+    val progressJson: String,
+)
+
 @Entity(tableName = "lesson_exercises", indices = [Index("lessonId")])
 data class LessonExerciseEntity(
     @PrimaryKey val id: String,

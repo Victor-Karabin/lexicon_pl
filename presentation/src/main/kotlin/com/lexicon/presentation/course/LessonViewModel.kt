@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
+import com.lexicon.interactors.course.GetLessonProgressUseCase
+import com.lexicon.interactors.course.GetLessonScriptUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
 import com.lexicon.interactors.course.Lesson
@@ -38,6 +40,8 @@ sealed interface LessonUiState {
         val words: ImmutableList<Word> = persistentListOf(),
         val wordStatuses: Map<VocabularyId, WordStatus> = emptyMap(),
         val isLoadingWords: Boolean = true,
+        val hasScript: Boolean = false,
+        val isScriptStarted: Boolean = false,
     ) : LessonUiState
 }
 
@@ -48,6 +52,8 @@ class LessonViewModel(
     private val getLesson: GetLessonUseCase,
     private val getLessonVocabulary: GetLessonVocabularyUseCase,
     private val setLessonCompleted: SetLessonCompletedUseCase,
+    private val getLessonScript: GetLessonScriptUseCase,
+    private val getLessonProgress: GetLessonProgressUseCase,
     private val setWordStatus: SetWordStatusUseCase,
     observeWordStatuses: ObserveWordStatusesUseCase,
     private val dispatchers: DispatcherProvider,
@@ -59,6 +65,8 @@ class LessonViewModel(
         val lesson: Lesson?,
         val words: List<Word> = emptyList(),
         val wordsLoaded: Boolean = false,
+        val hasScript: Boolean = false,
+        val isScriptStarted: Boolean = false,
     )
 
     private val content = MutableStateFlow<Content?>(null)
@@ -74,6 +82,8 @@ class LessonViewModel(
                         words = loaded.words.toImmutableList(),
                         wordStatuses = statuses,
                         isLoadingWords = !loaded.wordsLoaded,
+                        hasScript = loaded.hasScript,
+                        isScriptStarted = loaded.isScriptStarted,
                     )
             }
         }.stateIn(
@@ -83,6 +93,11 @@ class LessonViewModel(
         )
 
     init {
+        viewModelScope.launch(dispatchers.io) { load() }
+    }
+
+    fun onResumed() {
+        if (content.value?.lesson == null) return
         viewModelScope.launch(dispatchers.io) { load() }
     }
 
@@ -112,11 +127,15 @@ class LessonViewModel(
             content.value = Content(lesson = null)
             return
         }
-        content.value = Content(lesson = lesson)
+        val hasScript = getLessonScript(lessonId) != null
+        val isScriptStarted = hasScript && getLessonProgress(lessonId) != null
+        content.value = Content(lesson = lesson, hasScript = hasScript, isScriptStarted = isScriptStarted)
         content.value = Content(
             lesson = lesson,
             words = getLessonVocabulary(lessonId),
             wordsLoaded = true,
+            hasScript = hasScript,
+            isScriptStarted = isScriptStarted,
         )
     }
 
