@@ -116,15 +116,26 @@ struct LessonFlowView: View {
                 ForEach(tracks, id: \.id) { track in
                     VStack(alignment: .leading, spacing: Spacing.tiny) {
                         if let label = track.label { Text(label).font(.caption.weight(.semibold)) }
-                        AsyncButton {
-                            await audio.toggle(file: track.file, remoteId: track.remoteId)
-                        } label: {
-                            Label(
-                                audio.playing == track.file ? Strings.exercisePause : Strings.exercisePlay,
-                                systemImage: audio.playing == track.file ? "pause.fill" : "play.fill"
-                            )
+                        HStack(spacing: Spacing.small) {
+                            AsyncButton {
+                                await audio.toggle(file: track.file, remoteId: track.remoteId)
+                            } label: {
+                                Label(
+                                    audio.playing == track.file ? Strings.exercisePause : Strings.exercisePlay,
+                                    systemImage: audio.playing == track.file ? "pause.fill" : "play.fill"
+                                )
+                            }
+                            .buttonStyle(.borderedProminent)
+                            if audio.playing == track.file || audio.paused == track.file {
+                                AsyncButton {
+                                    await audio.play(file: track.file, remoteId: track.remoteId)
+                                } label: {
+                                    Image(systemName: "gobackward")
+                                }
+                                .buttonStyle(.bordered)
+                                .accessibilityLabel(Strings.exerciseReplay)
+                            }
                         }
-                        .buttonStyle(.borderedProminent)
                     }
                 }
             }

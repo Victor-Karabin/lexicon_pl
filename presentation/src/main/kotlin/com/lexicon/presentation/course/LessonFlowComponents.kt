@@ -39,6 +39,7 @@ import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconSuccess
+import com.lexicon.presentation.theme.LexiconWarning
 
 private val TableCellWidth = 120.dp
 
@@ -185,7 +186,7 @@ fun ItemFeedback(
                     stringResource(R.string.lesson_flow_expected, expected)
                 },
                 style = MaterialTheme.typography.bodyMedium,
-                color = if (verdict == AnswerVerdict.ALMOST) MaterialTheme.colorScheme.tertiary else LexiconError,
+                color = if (verdict == AnswerVerdict.ALMOST) LexiconWarning else LexiconError,
             )
         }
         feedback?.let {

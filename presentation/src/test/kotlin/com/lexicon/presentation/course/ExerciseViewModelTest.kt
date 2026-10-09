@@ -56,6 +56,7 @@ class ExerciseViewModelTest {
         }
     private val audioLibrary: LessonAudioLibrary = mockk()
     private val playingFile = MutableStateFlow<String?>(null)
+    private val pausedFile = MutableStateFlow<String?>(null)
     private val audioPlayer: LessonAudioPlayer = mockk(relaxed = true)
 
     private val minimalPair =
@@ -85,7 +86,11 @@ class ExerciseViewModelTest {
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
         every { audioPlayer.playingFile } returns playingFile
-        every { audioPlayer.pause() } answers { playingFile.value = null }
+        every { audioPlayer.pausedFile } returns pausedFile
+        every { audioPlayer.pause() } answers {
+            pausedFile.value = playingFile.value
+            playingFile.value = null
+        }
     }
 
     @After
@@ -274,5 +279,25 @@ class ExerciseViewModelTest {
             viewModel.onPlayAudio()
 
             assertNull(playingFile.value)
+        }
+
+    @Test
+    fun `a paused track can be replayed from the start`() =
+        runTest {
+            coEvery { getLesson(LessonId("lesson-1")) } returns lesson(minimalPair)
+            coEvery { audioLibrary.pathOrNull("101a1.mp3", "drive-101a1.mp3") } returns "/cache/101a1.mp3"
+            playingFile.value = "101a1.mp3"
+
+            val viewModel = viewModel(exerciseId = minimalPair.id)
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            viewModel.onPlayAudio()
+            testDispatcher.scheduler.advanceUntilIdle()
+            assertTrue((viewModel.uiState.value as ExerciseUiState.Loaded).canReplay)
+
+            viewModel.onReplayAudio()
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            coVerify { audioPlayer.replay("101a1.mp3", "/cache/101a1.mp3") }
         }
 }

@@ -6,6 +6,7 @@ final class LessonAudio: NSObject, ObservableObject, AVAudioPlayerDelegate {
     static let shared = LessonAudio()
 
     @Published private(set) var playing: String?
+    @Published private(set) var paused: String?
     @Published private(set) var unavailable: Set<String> = []
 
     private var player: AVAudioPlayer?
@@ -31,28 +32,40 @@ final class LessonAudio: NSObject, ObservableObject, AVAudioPlayerDelegate {
             player = try AVAudioPlayer(contentsOf: url)
             player?.delegate = self
             player?.play()
+            paused = nil
             playing = file
         } catch {
             playing = nil
+            paused = nil
             unavailable.insert(file)
         }
     }
 
     func toggle(file: String, remoteId: String?) async {
         if playing == file {
-            stop()
+            player?.pause()
+            paused = file
+            playing = nil
+        } else if paused == file, let player {
+            player.play()
+            paused = nil
+            playing = file
         } else {
             await play(file: file, remoteId: remoteId)
         }
     }
 
     nonisolated func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        Task { @MainActor in self.playing = nil }
+        Task { @MainActor in
+            self.playing = nil
+            self.paused = nil
+        }
     }
 
     func stop() {
         player?.stop()
         playing = nil
+        paused = nil
     }
 
     private func path(file: String, remoteId: String?) async -> URL? {

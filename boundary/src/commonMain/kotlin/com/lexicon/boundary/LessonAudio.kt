@@ -5,7 +5,14 @@ import kotlinx.coroutines.flow.StateFlow
 interface LessonAudioPlayer {
     val playingFile: StateFlow<String?>
 
+    val pausedFile: StateFlow<String?>
+
     suspend fun play(
+        file: String,
+        path: String,
+    )
+
+    suspend fun replay(
         file: String,
         path: String,
     )

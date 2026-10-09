@@ -54,6 +54,7 @@ import org.koin.compose.viewmodel.koinViewModel
 class LessonFlowActions(
     val onClose: () -> Unit,
     val onPlay: (LessonTrack) -> Unit,
+    val onReplay: (LessonTrack) -> Unit,
     val onAnswerChanged: (String, String) -> Unit,
     val onCheck: () -> Unit,
     val onDone: () -> Unit,
@@ -77,6 +78,7 @@ fun LessonFlowScreen(
         actions = LessonFlowActions(
             onClose = onClose,
             onPlay = viewModel::onPlay,
+            onReplay = viewModel::onReplay,
             onAnswerChanged = viewModel::onAnswerChanged,
             onCheck = viewModel::onCheck,
             onDone = viewModel::onDone,
@@ -159,7 +161,7 @@ private fun ScreenBody(
 
     Text(screen.title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
     Text(richText(screen.instruction), style = MaterialTheme.typography.bodyMedium)
-    Tracks(screen.tracks, uiState.playingFile, uiState.missingAudio, actions.onPlay)
+    Tracks(screen.tracks, uiState, actions)
 
     when (screen) {
         is LessonScreen.Reference -> ReferenceBody(screen)
@@ -199,20 +201,23 @@ private fun ScreenBody(
 @Composable
 private fun Tracks(
     tracks: List<LessonTrack>,
-    playingFile: String?,
-    missingAudio: Set<String>,
-    onPlay: (LessonTrack) -> Unit,
+    uiState: LessonFlowUiState.Loaded,
+    actions: LessonFlowActions,
 ) {
     if (tracks.isEmpty()) return
     FlowRow(horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
         tracks.forEach { track ->
             Column {
                 track.label?.let { Text(it, style = MaterialTheme.typography.labelMedium) }
-                ExerciseAudioButton(isPlaying = playingFile == track.file, onClick = { onPlay(track) })
+                ExerciseAudioButton(
+                    isPlaying = uiState.playingFile == track.file,
+                    onClick = { actions.onPlay(track) },
+                    onReplay = { actions.onReplay(track) }.takeIf { track.file == uiState.playingFile || track.file == uiState.pausedFile },
+                )
             }
         }
     }
-    if (tracks.any { it.file in missingAudio }) {
+    if (tracks.any { it.file in uiState.missingAudio }) {
         Text(
             stringResource(R.string.exercise_audio_unavailable),
             style = MaterialTheme.typography.bodySmall,
@@ -289,6 +294,7 @@ private fun GapFillBody(
                 ),
                 values = keys.map { session.answer(screen.id, it) },
                 correctness = if (session.isChecked) verdicts.map { it == AnswerVerdict.CORRECT } else emptyList(),
+                almost = verdicts.map { it == AnswerVerdict.ALMOST },
                 answerState = when {
                     !session.isChecked -> AnswerState.Unanswered
                     verdicts.all { it == AnswerVerdict.CORRECT } -> AnswerState.Correct

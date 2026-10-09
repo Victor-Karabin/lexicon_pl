@@ -17,12 +17,72 @@
           "vocabularyIds": [
             8,
             2,
-            1880,
-            1881,
-            1882,
-            1732,
-            1379,
-            2372
+            1965,
+            1966,
+            1967,
+            1814,
+            1461,
+            2457,
+            1959,
+            1958,
+            7141,
+            1804,
+            1,
+            7142,
+            1969,
+            7143,
+            7144,
+            7145,
+            7146,
+            7147,
+            185,
+            3266,
+            1434,
+            23,
+            55,
+            1424,
+            1425,
+            1426,
+            1427,
+            1428,
+            1429,
+            1430,
+            1431
+          ],
+          "vocabularyWords": [
+            "tak",
+            "nie",
+            "proszę",
+            "dziękuję",
+            "przepraszam",
+            "nie rozumiem",
+            "nie wiem",
+            "proszę powtórzyć",
+            "dzień dobry",
+            "cześć",
+            "nazywam się",
+            "mam na imię",
+            "być",
+            "bardzo mi miło",
+            "miło mi",
+            "mnie również",
+            "a ty?",
+            "jak się pan nazywa?",
+            "jak się pani nazywa?",
+            "jak masz na imię?",
+            "szkoła",
+            "nauczycielka",
+            "zero",
+            "jeden",
+            "dwa",
+            "trzy",
+            "cztery",
+            "pięć",
+            "sześć",
+            "siedem",
+            "osiem",
+            "dziewięć",
+            "dziesięć"
           ],
           "audio": [
             {
@@ -642,17 +702,30 @@
           "number": 2,
           "title": "CZEŚĆ, SKĄD JESTEŚ?",
           "vocabularyIds": [
-            1886,
-            1774,
-            2373,
-            2374,
-            2375,
+            1971,
+            1856,
+            2458,
+            2459,
+            2460,
             209,
-            2376,
-            2377,
-            2378,
+            2461,
+            2462,
+            2463,
             36,
-            2379
+            2464
+          ],
+          "vocabularyWords": [
+            "co słychać",
+            "wszystko w porządku",
+            "wszystko dobrze",
+            "dlaczego",
+            "uczyć się polskiego",
+            "pracować",
+            "mój chłopak",
+            "moja dziewczyna",
+            "moje hobby",
+            "chcieć",
+            "bezokolicznik"
           ],
           "audio": [
             {
@@ -783,6 +856,14 @@
             44,
             45
           ],
+          "vocabularyWords": [
+            "nowy",
+            "stary",
+            "dobry",
+            "zły",
+            "duży",
+            "mały"
+          ],
           "audio": [
             {
               "file": "a1_coursebook_103a1.mp3",
@@ -853,11 +934,22 @@
             101,
             71,
             236,
-            2380,
+            2465,
             920,
             199,
             356,
             979
+          ],
+          "vocabularyWords": [
+            "tylko",
+            "trochę",
+            "myśleć",
+            "cieszyć się",
+            "mieć rację",
+            "żart",
+            "słowo",
+            "ciekawy",
+            "chyba"
           ],
           "audio": [
             {
@@ -905,13 +997,23 @@
           "title": "JESTEŚ INSTRUKTOREM TANGA?",
           "vocabularyIds": [
             129,
-            1920,
-            1921,
+            2005,
+            2006,
             125,
-            2381,
+            2466,
             98,
-            2382,
+            2467,
             554
+          ],
+          "vocabularyWords": [
+            "rodzina",
+            "żona",
+            "mąż",
+            "syn",
+            "oscypek",
+            "prawie",
+            "pół",
+            "pisarz"
           ],
           "audio": [
             {
@@ -965,15 +1067,26 @@
           "number": 6,
           "title": "CO ROBISZ? NUDZĘ SIĘ!",
           "vocabularyIds": [
-            2383,
-            2384,
+            2468,
+            2469,
             131,
             132,
             126,
             127,
             128,
             225,
-            2385
+            2470
+          ],
+          "vocabularyWords": [
+            "gospodarz",
+            "gospodyni",
+            "mama",
+            "tata",
+            "córka",
+            "brat",
+            "siostra",
+            "szukać",
+            "nudzić się"
           ],
           "audio": [
             {
@@ -1047,14 +1160,30 @@
             365,
             174,
             175,
-            2386,
-            2387,
+            2471,
+            2472,
             177,
             176,
-            2388,
+            2473,
             172,
-            2389,
-            1601
+            2474,
+            1683
+          ],
+          "vocabularyWords": [
+            "krótki",
+            "długi",
+            "wolny",
+            "zajęty",
+            "drogi",
+            "tani",
+            "bogaty",
+            "biedny",
+            "kosztować",
+            "płacić",
+            "polecać",
+            "pieniądze",
+            "kantor",
+            "bankomat"
           ],
           "audio": [
             {
@@ -1130,13 +1259,23 @@
           "title": "MAMI, JESTEŚ GŁODNA?",
           "vocabularyIds": [
             351,
-            2390,
-            1889,
+            2475,
+            1974,
             211,
             29,
             16,
-            2391,
-            2392
+            2476,
+            2477
+          ],
+          "vocabularyWords": [
+            "głodny",
+            "zaspany",
+            "smacznego",
+            "spać",
+            "jeszcze",
+            "już",
+            "chętnie",
+            "mieć ochotę na"
           ],
           "audio": [
             {
@@ -1225,15 +1364,26 @@
           "number": 9,
           "title": "LUBISZ MARCHEWKĘ?",
           "vocabularyIds": [
-            2393,
-            2394,
-            2395,
-            2396,
-            2397,
+            2478,
+            2479,
+            2480,
+            2481,
+            2482,
             715,
             714,
-            2398,
+            2483,
             718
+          ],
+          "vocabularyWords": [
+            "suszony",
+            "świeży",
+            "miękki",
+            "twardy",
+            "doniczka",
+            "śledź",
+            "łosoś",
+            "węgorz",
+            "dorsz"
           ],
           "audio": [
             {
@@ -1372,11 +1522,18 @@
           "number": 10,
           "title": "UWIELBIAM POLSKIE JEDZENIE!",
           "vocabularyIds": [
-            2399,
-            2400,
-            2401,
-            1228,
-            2402
+            2484,
+            2485,
+            2486,
+            1310,
+            2487
+          ],
+          "vocabularyWords": [
+            "uwielbiać",
+            "zamawiać",
+            "zapiekanka",
+            "kompot",
+            "coś dobrze brzmi"
           ],
           "audio": [
             {
@@ -1423,13 +1580,22 @@
           "number": 11,
           "title": "RODZINA",
           "vocabularyIds": [
-            2403,
-            2404,
-            1934,
-            2405,
-            2406,
+            2488,
+            2489,
+            2019,
+            2490,
+            2491,
             77,
-            2407
+            2492
+          ],
+          "vocabularyWords": [
+            "rozwiedziona",
+            "nie żyje",
+            "rodzeństwo",
+            "drzewo genealogiczne",
+            "rozmawiać",
+            "powiedzieć",
+            "stuprocentowy"
           ],
           "audio": [
             {
@@ -1546,10 +1712,16 @@
           "number": 12,
           "title": "CO ROBISZ W PONIEDZIAŁEK O ÓSMEJ?",
           "vocabularyIds": [
-            1587,
-            2408,
+            1669,
+            2493,
             138,
-            1306
+            1388
+          ],
+          "vocabularyWords": [
+            "zaproszenie",
+            "umówić się",
+            "godzina",
+            "kwadrans"
           ],
           "audio": [
             {
@@ -1603,17 +1775,30 @@
           "number": 13,
           "title": "GDZIE BYŁAŚ MAMI? BYŁAM W KINIE",
           "vocabularyIds": [
-            1982,
-            2409,
-            2410,
-            2411,
-            2412,
-            2413,
+            2067,
+            2494,
+            2495,
+            2496,
+            2497,
+            2498,
             349,
             208,
-            1946,
+            2031,
             978,
-            2414
+            2499
+          ],
+          "vocabularyWords": [
+            "wstyd",
+            "odbierać telefon",
+            "mieć zasięg",
+            "marzenie",
+            "odpisywać",
+            "szczęście",
+            "szczęśliwy",
+            "pomagać",
+            "randka",
+            "właśnie",
+            "jednocześnie"
           ],
           "audio": [
             {
@@ -1675,18 +1860,32 @@
           "number": 14,
           "title": "Z PRZEWODNIKIEM PO KRAKOWIE",
           "vocabularyIds": [
-            2321,
-            2415,
-            2416,
-            1279,
-            2417,
-            2363,
-            2418,
+            2406,
+            2500,
+            2501,
+            1361,
+            2502,
+            2448,
+            2503,
             476,
-            2419,
+            2504,
             915,
             482,
             481
+          ],
+          "vocabularyWords": [
+            "przewodnik",
+            "światło",
+            "światła",
+            "schody",
+            "krzyż",
+            "skrzyżowanie",
+            "krzyżówka",
+            "zwiedzać",
+            "wygrać",
+            "nagroda",
+            "daleko",
+            "blisko"
           ],
           "audio": [
             {
@@ -1733,18 +1932,32 @@
           "number": 15,
           "title": "KARTON CZY PUDEŁKO?",
           "vocabularyIds": [
-            2420,
-            2421,
-            2422,
-            2423,
-            2239,
-            2424,
-            2425,
-            2426,
-            2427,
-            1853,
+            2505,
+            2506,
+            2507,
+            2508,
+            2324,
+            2509,
+            2510,
+            2511,
+            2512,
+            1935,
             233,
             225
+          ],
+          "vocabularyWords": [
+            "plasterek",
+            "zapałki",
+            "zgrzewka",
+            "bochenek",
+            "kolejka",
+            "wybierać się",
+            "nie cierpieć",
+            "zmyślać",
+            "zależeć od",
+            "poza tym",
+            "bać się",
+            "szukać"
           ],
           "audio": [
             {
@@ -1883,14 +2096,25 @@
           "title": "CO MA BYĆ, TO BĘDZIE",
           "vocabularyIds": [
             255,
-            2428,
+            2513,
             137,
             311,
             811,
-            2429,
-            2430,
-            2431,
-            2432
+            2514,
+            2515,
+            2516,
+            2517
+          ],
+          "vocabularyWords": [
+            "część",
+            "pora roku",
+            "miesiąc",
+            "pogoda",
+            "prognoza",
+            "przysłowie",
+            "zaczynać się",
+            "kończyć się",
+            "mieć nadzieję"
           ],
           "audio": [
             {
@@ -1937,15 +2161,26 @@
           "number": 17,
           "title": "PLOTKI, PLOTKI. KTO Z KIM I O CZYM?",
           "vocabularyIds": [
-            2433,
-            2434,
+            2518,
+            2519,
             827,
-            2435,
-            2436,
-            2437,
-            1269,
-            1261,
+            2520,
+            2521,
+            2522,
+            1351,
+            1343,
             397
+          ],
+          "vocabularyWords": [
+            "modny",
+            "marudny",
+            "wyglądać",
+            "plotki",
+            "plotkować",
+            "strasznie",
+            "biżuteria",
+            "bluzka",
+            "spodnie"
           ],
           "audio": [
             {
@@ -2026,15 +2261,26 @@
           "number": 18,
           "title": "POKAŻ MI SWOJE MIESZKANIE, A POWIEM CI KIM JESTEŚ",
           "vocabularyIds": [
-            2438,
-            2439,
-            2440,
-            2441,
-            2442,
-            2443,
-            1278,
-            1277,
+            2523,
+            2524,
+            2525,
+            2526,
+            2527,
+            2528,
+            1360,
+            1359,
             406
+          ],
+          "vocabularyWords": [
+            "piętro",
+            "mebel",
+            "parter",
+            "kamienica",
+            "kominek",
+            "spiżarnia",
+            "strych",
+            "piwnica",
+            "rękawiczki"
           ],
           "audio": [
             {
@@ -2067,10 +2313,16 @@
           "number": 19,
           "title": "WSZĘDZIE DOBRZE, ALE W DOMU NAJLEPIEJ",
           "vocabularyIds": [
-            2444,
-            2445,
-            2446,
-            2447
+            2529,
+            2530,
+            2531,
+            2532
+          ],
+          "vocabularyWords": [
+            "przeprowadzać się",
+            "zaspać",
+            "zdarzać się",
+            "jeśli chodzi o"
           ],
           "audio": [
             {
@@ -2152,12 +2404,20 @@
           "number": 20,
           "title": "PODRÓŻE KSZTAŁCĄ",
           "vocabularyIds": [
-            2448,
+            2533,
             509,
             871,
-            2449,
+            2534,
             475,
-            2450
+            2535
+          ],
+          "vocabularyWords": [
+            "graniczyć",
+            "granica",
+            "łączyć",
+            "połączenie",
+            "wycieczka",
+            "średniowiecze"
           ],
           "audio": [
             {
@@ -2190,8 +2450,12 @@
           "number": 21,
           "title": "KIEDY TO BYŁO?",
           "vocabularyIds": [
-            2451,
-            2452
+            2536,
+            2537
+          ],
+          "vocabularyWords": [
+            "obchodzić urodziny",
+            "komunizm"
           ],
           "audio": [
             {
@@ -2273,14 +2537,24 @@
           "number": 22,
           "title": "DOKĄD POJEDZIEMY NA WEEKEND?",
           "vocabularyIds": [
-            2453,
-            2454,
+            2538,
+            2539,
             680,
-            2455,
-            2456,
-            2457,
-            2458,
-            2459
+            2540,
+            2541,
+            2542,
+            2543,
+            2544
+          ],
+          "vocabularyWords": [
+            "kieliszek",
+            "zostawać",
+            "zając",
+            "zejść",
+            "należeć",
+            "zabór",
+            "pod względem",
+            "międzywojenny"
           ],
           "audio": [
             {
@@ -2384,12 +2658,20 @@
           "number": 23,
           "title": "ZA MAŁE? ZA DUŻE? W SAM RAZ!",
           "vocabularyIds": [
-            2460,
+            2545,
             395,
-            2461,
-            2462,
-            2463,
-            2464
+            2546,
+            2547,
+            2548,
+            2549
+          ],
+          "vocabularyWords": [
+            "ciuch",
+            "ubranie",
+            "nosić",
+            "mieć na sobie",
+            "olśniewający",
+            "kiepski"
           ],
           "audio": [
             {
@@ -2478,10 +2760,16 @@
           "number": 24,
           "title": "JAK CIĘ WIDZĄ, TAK CIĘ PISZĄ",
           "vocabularyIds": [
-            2465,
-            2466,
-            2467,
-            2468
+            2550,
+            2551,
+            2552,
+            2553
+          ],
+          "vocabularyWords": [
+            "strzyżenie",
+            "pozwolić na",
+            "wygląd zewnętrzny",
+            "części ciała"
           ],
           "audio": [
             {
@@ -2549,10 +2837,16 @@
           "number": 25,
           "title": "ANI RĘKĄ, ANI NOGĄ…",
           "vocabularyIds": [
-            2218,
-            2469,
+            2303,
+            2554,
             819,
-            2470
+            2555
+          ],
+          "vocabularyWords": [
+            "boleć",
+            "zażywać",
+            "powinien",
+            "przypadek"
           ],
           "audio": [
             {
@@ -2620,15 +2914,26 @@
           "number": 26,
           "title": "SAME PROBLEMY!",
           "vocabularyIds": [
-            2471,
-            2472,
-            2249,
+            2556,
+            2557,
+            2334,
             491,
-            2473,
-            2474,
-            2475,
-            2476,
-            2477
+            2558,
+            2559,
+            2560,
+            2561,
+            2562
+          ],
+          "vocabularyWords": [
+            "sprawa do załatwienia",
+            "usługi",
+            "pożar",
+            "wypadek",
+            "doładować kartę",
+            "korzystać",
+            "zepsuć się",
+            "naprawić",
+            "nieodpowiedzialny"
           ],
           "audio": [
             {

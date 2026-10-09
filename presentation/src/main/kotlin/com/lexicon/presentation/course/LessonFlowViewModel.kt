@@ -36,6 +36,7 @@ sealed interface LessonFlowUiState {
     data class Loaded(
         val session: LessonSession,
         val playingFile: String? = null,
+        val pausedFile: String? = null,
         val missingAudio: Set<String> = emptySet(),
         val transcriptOpen: Boolean = false,
         val isCompleted: Boolean = false,
@@ -66,7 +67,7 @@ class LessonFlowViewModel(
     private val pendingSaves = Channel<LessonProgress>(Channel.CONFLATED)
 
     val uiState: StateFlow<LessonFlowUiState> =
-        combine(content, audioPlayer.playingFile) { loaded, playing ->
+        combine(content, audioPlayer.playingFile, audioPlayer.pausedFile) { loaded, playing, paused ->
             when {
                 loaded == null -> LessonFlowUiState.Loading
                 loaded.session == null -> LessonFlowUiState.NotFound
@@ -74,6 +75,7 @@ class LessonFlowViewModel(
                     LessonFlowUiState.Loaded(
                         session = loaded.session,
                         playingFile = playing,
+                        pausedFile = paused,
                         missingAudio = loaded.missingAudio,
                         transcriptOpen = loaded.transcriptOpen,
                         isCompleted = loaded.isCompleted,
@@ -132,13 +134,22 @@ class LessonFlowViewModel(
             audioPlayer.pause()
             return
         }
+        startAudio(track) { path -> audioPlayer.play(track.file, path) }
+    }
+
+    fun onReplay(track: LessonTrack) = startAudio(track) { path -> audioPlayer.replay(track.file, path) }
+
+    private fun startAudio(
+        track: LessonTrack,
+        start: suspend (String) -> Unit,
+    ) {
         viewModelScope.launch(dispatchers.io) {
             val path = audioLibrary.pathOrNull(track.file, track.remoteId)
             if (path == null) {
                 content.update { it?.copy(missingAudio = it.missingAudio + track.file) }
                 return@launch
             }
-            runSuspendCatching { audioPlayer.play(track.file, path) }
+            runSuspendCatching { start(path) }
                 .onFailure { Log.w(TAG, "A lesson recording could not be played", it) }
         }
     }

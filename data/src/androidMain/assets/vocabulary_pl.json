@@ -108286,5 +108286,96 @@
   "picture": "shipping cargo boxes",
   "gender": "masculine inanimate",
   "declension": "eksport|eksporty;eksportu|eksportów;eksportowi|eksportom;eksport|eksporty;eksportem|eksportami;eksporcie|eksportach;eksporcie|eksporty"
+ },
+ {
+  "id": 7141,
+  "text": "nazywam się",
+  "translation": "my name is (full name)",
+  "transcription": "naˈzɨvam ɕɛ̃",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": "**Nazywam się** Anna Nowak.",
+  "picture": "person introducing themselves"
+ },
+ {
+  "id": 7142,
+  "text": "bardzo mi miło",
+  "translation": "very nice to meet you",
+  "transcription": "ˈbard͡zɔ mi ˈmiwɔ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": "**Bardzo mi miło** cię poznać.",
+  "picture": "two people shaking hands"
+ },
+ {
+  "id": 7143,
+  "text": "mnie również",
+  "translation": "me too / likewise",
+  "transcription": "mɲɛ ˈruvɲɛʂ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": "— Miło mi. — **Mnie również**.",
+  "picture": "two people agreeing"
+ },
+ {
+  "id": 7144,
+  "text": "a ty?",
+  "translation": "and you? (informal)",
+  "transcription": "a tɨ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": "Ja lubię kawę, **a ty**?",
+  "picture": "two friends talking"
+ },
+ {
+  "id": 7145,
+  "text": "jak się pan nazywa?",
+  "translation": "what is your name? (formal, to a man)",
+  "transcription": "jak ɕɛ̃ pan naˈzɨva",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": "Przepraszam, **jak się pan nazywa**?",
+  "picture": "man introducing himself"
+ },
+ {
+  "id": 7146,
+  "text": "jak się pani nazywa?",
+  "translation": "what is your name? (formal, to a woman)",
+  "transcription": "jak ɕɛ̃ ˈpaɲi naˈzɨva",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": "Przepraszam, **jak się pani nazywa**?",
+  "picture": "woman introducing herself"
+ },
+ {
+  "id": 7147,
+  "text": "jak masz na imię?",
+  "translation": "what's your name? (informal)",
+  "transcription": "jak maʂ na ˈimjɛ̃",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": "Cześć, **jak masz na imię**?",
+  "picture": "child saying name"
  }
 ]

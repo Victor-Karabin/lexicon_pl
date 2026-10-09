@@ -27,9 +27,11 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.QuestionMark
 import androidx.compose.material.icons.filled.RecordVoiceOver
 import androidx.compose.material.icons.filled.Repeat
+import androidx.compose.material.icons.filled.Replay
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -57,6 +59,7 @@ import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconShapes
 import com.lexicon.presentation.theme.LexiconSuccess
+import com.lexicon.presentation.theme.LexiconWarning
 import com.lexicon.presentation.theme.component.AnswerChip
 import com.lexicon.presentation.theme.component.AnswerChipState
 import com.lexicon.presentation.theme.component.AnswerChipVariant
@@ -83,17 +86,29 @@ fun ExerciseAudioButton(
     isPlaying: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    onReplay: (() -> Unit)? = null,
 ) {
-    Button(onClick = onClick, modifier = modifier) {
-        Icon(
-            imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
-            contentDescription = null,
-            modifier = Modifier.size(PlayIconSize),
-        )
-        Text(
-            text = stringResource(if (isPlaying) R.string.exercise_pause else R.string.exercise_play),
-            modifier = Modifier.padding(start = Dimens.spacingSmall),
-        )
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Button(onClick = onClick) {
+            Icon(
+                imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
+                contentDescription = null,
+                modifier = Modifier.size(PlayIconSize),
+            )
+            Text(
+                text = stringResource(if (isPlaying) R.string.exercise_pause else R.string.exercise_play),
+                modifier = Modifier.padding(start = Dimens.spacingSmall),
+            )
+        }
+        if (onReplay != null) {
+            OutlinedIconButton(onClick = onReplay) {
+                Icon(imageVector = Icons.Default.Replay, contentDescription = stringResource(R.string.exercise_replay))
+            }
+        }
     }
 }
 
@@ -132,6 +147,7 @@ fun GapFillRow(
     correctness: List<Boolean>,
     answerState: AnswerState,
     onValueChanged: (Int, String) -> Unit,
+    almost: List<Boolean> = emptyList(),
 ) {
     Column(modifier = Modifier.fillMaxWidth().padding(vertical = Dimens.spacingSmall)) {
         item.speaker?.let { speaker ->
@@ -155,6 +171,7 @@ fun GapFillRow(
                         value = values.getOrElse(at) { "" },
                         expected = item.answers.getOrElse(at) { "" },
                         isCorrect = correctness.getOrNull(at),
+                        isAlmost = almost.getOrElse(at) { false },
                         answerState = answerState,
                         onValueChanged = { onValueChanged(at, it) },
                     )
@@ -234,7 +251,7 @@ fun TranscribeRow(
                         } else {
                             stringResource(R.string.expected_format, item.answer)
                         },
-                        color = answerStateColor(answerState),
+                        color = if (isAlmost) LexiconWarning else answerStateColor(answerState),
                     )
                 }
             },
@@ -431,15 +448,17 @@ private fun InlineGap(
     value: String,
     expected: String,
     isCorrect: Boolean?,
+    isAlmost: Boolean,
     answerState: AnswerState,
     onValueChanged: (String) -> Unit,
 ) {
     val text = rememberEditableText(value)
     val letters = rememberLetterReceiver(text, onValueChanged)
-    val underline = when (isCorrect) {
-        true -> LexiconSuccess
-        false -> LexiconError
-        null -> MaterialTheme.colorScheme.outline
+    val underline = when {
+        isCorrect == true -> LexiconSuccess
+        isAlmost -> LexiconWarning
+        isCorrect == false -> LexiconError
+        else -> MaterialTheme.colorScheme.outline
     }
     val width = (GapCharacterWidth * expected.length).coerceIn(GapMinWidth, GapMaxWidth)
 

@@ -274,6 +274,7 @@
     <string name="lesson_mark_incomplete">Mark as not done</string>
     <string name="exercise_play">Play</string>
     <string name="exercise_pause">Pause</string>
+    <string name="exercise_replay">Replay from the start</string>
     <string name="exercise_check">Check</string>
     <string name="exercise_try_again">Try again</string>
     <string name="exercise_score">%1$d of %2$d correct</string>
