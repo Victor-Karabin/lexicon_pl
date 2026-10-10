@@ -55,7 +55,7 @@ fun VocabularySearchField(
     )
 }
 
-private fun Word.detailLine(): String? {
+internal fun Word.detailLine(): String? {
     val phonetic = transcription.takeIf { it.isNotBlank() }?.let { "[$it]" }
     val band = cefr?.name
     return when {
@@ -96,17 +96,18 @@ fun WordRow(
     word: Word?,
     text: String,
     translation: String,
-    status: WordStatus,
+    status: WordStatus?,
     onStatusCycled: () -> Unit,
     onPronounce: () -> Unit,
     modifier: Modifier = Modifier,
+    detail: String? = word?.detailLine(),
 ) {
     WordRow(
         text = text,
         translation = translation,
-        detail = word?.detailLine(),
+        detail = detail,
         onPronounce = onPronounce,
-        status = status.takeIf { word != null },
+        status = status,
         onStatusCycled = onStatusCycled,
         modifier = modifier,
     )

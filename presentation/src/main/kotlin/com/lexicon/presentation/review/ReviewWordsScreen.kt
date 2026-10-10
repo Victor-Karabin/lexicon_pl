@@ -162,8 +162,8 @@ private fun ReviewChoices(
         modifier = Modifier
             .fillMaxWidth()
             .navigationBarsPadding()
-            .padding(Dimens.spacingMedium),
-        verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+            .padding(horizontal = Dimens.spacingMedium, vertical = Dimens.spacingSmall),
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),

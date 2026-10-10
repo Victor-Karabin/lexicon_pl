@@ -81,7 +81,7 @@ private fun WordCardContent(
         bottomBar = {
             if (uiState.current != null) {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.spacingMedium, vertical = Dimens.spacingSmall),
                     horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {

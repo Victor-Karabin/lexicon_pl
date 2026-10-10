@@ -52,6 +52,7 @@ import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
 
 private val PersonColumnWidth = 96.dp
+private val ConjugationImageHeight = 120.dp
 
 object ConjugationTestTags {
     const val INFINITIVE = "conjugation_infinitive"
@@ -162,7 +163,7 @@ private fun ConjugationContent(
                                 .fillMaxWidth()
                                 .verticalScroll(rememberScrollState())
                                 .padding(Dimens.spacingMedium),
-                            verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+                            verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
                         ) {
                             ProgressDots(
                                 step = uiState.stepIndex,
@@ -174,6 +175,7 @@ private fun ConjugationContent(
                                 ClueImage(
                                     imageUrl = table.imageUrl,
                                     fallbackText = table.infinitive,
+                                    height = ConjugationImageHeight,
                                     modifier = Modifier.testTag(ConjugationTestTags.IMAGE),
                                 )
                                 IconButton(
@@ -193,7 +195,7 @@ private fun ConjugationContent(
                             Column {
                                 Text(
                                     text = table.infinitive,
-                                    style = MaterialTheme.typography.headlineSmall,
+                                    style = MaterialTheme.typography.titleLarge,
                                     fontWeight = FontWeight.SemiBold,
                                     modifier = Modifier.testTag(ConjugationTestTags.INFINITIVE),
                                 )

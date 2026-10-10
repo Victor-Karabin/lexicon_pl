@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.isImeVisible
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -76,6 +77,7 @@ import com.lexicon.model.course.allTracks
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.BottomActionPanel
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.component.StatChip
@@ -199,7 +201,7 @@ private fun LessonFlowContent(
                     if (uiState is LessonFlowUiState.Loaded) {
                         Column {
                             PinnedPlayer(uiState, actions, shownPlayers)
-                            if (uiState.results == null || uiState.nextLessonId != null) Footer(uiState, actions, isTyping)
+                            if (uiState.results == null || uiState.nextLessonId != null) Footer(uiState, actions)
                         }
                     }
                 },
@@ -700,36 +702,28 @@ private fun FreeWritingBody(
 private fun Footer(
     uiState: LessonFlowUiState.Loaded,
     actions: LessonFlowActions,
-    isTyping: Boolean,
 ) {
     val session = uiState.session
-    Surface(tonalElevation = Dimens.spacingTiny) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Dimens.spacingMedium, vertical = if (isTyping) Dimens.spacingTiny else Dimens.spacingMedium),
-            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-        ) {
-            if (uiState.results != null) {
-                uiState.nextLessonId?.let { next ->
-                    Button(onClick = { actions.onNextLesson(next) }) { Text(stringResource(R.string.lesson_flow_next_lesson)) }
+    BottomActionPanel(insets = WindowInsets.navigationBars) {
+        if (uiState.results != null) {
+            uiState.nextLessonId?.let { next ->
+                Button(onClick = { actions.onNextLesson(next) }) { Text(stringResource(R.string.lesson_flow_next_lesson)) }
+            }
+            return@BottomActionPanel
+        }
+        if (session.canGoBack) OutlinedButton(onClick = actions.onBack) { Text(stringResource(R.string.lesson_flow_back)) }
+        when {
+            session.needsCheck ->
+                Button(onClick = actions.onCheck, enabled = session.canCheck && !uiState.isReviewing) {
+                    Text(stringResource(R.string.exercise_check))
                 }
-                return@Row
-            }
-            if (session.canGoBack) OutlinedButton(onClick = actions.onBack) { Text(stringResource(R.string.lesson_flow_back)) }
-            when {
-                session.needsCheck ->
-                    Button(onClick = actions.onCheck, enabled = session.canCheck && !uiState.isReviewing) {
-                        Text(stringResource(R.string.exercise_check))
-                    }
 
-                session.isLastScreen -> Button(onClick = actions.onNext) { Text(stringResource(R.string.lesson_flow_finish)) }
+            session.isLastScreen -> Button(onClick = actions.onNext) { Text(stringResource(R.string.lesson_flow_finish)) }
 
-                session.screen.isGraded || session.screen is LessonScreen.FreeWriting ->
-                    Button(onClick = actions.onNext) { Text(stringResource(R.string.lesson_flow_next)) }
+            session.screen.isGraded || session.screen is LessonScreen.FreeWriting ->
+                Button(onClick = actions.onNext) { Text(stringResource(R.string.lesson_flow_next)) }
 
-                else -> Button(onClick = actions.onNext) { Text(stringResource(R.string.lesson_flow_done)) }
-            }
+            else -> Button(onClick = actions.onNext) { Text(stringResource(R.string.lesson_flow_done)) }
         }
     }
 }
