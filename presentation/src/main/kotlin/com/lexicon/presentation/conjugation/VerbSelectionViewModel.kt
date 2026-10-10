@@ -3,7 +3,6 @@ package com.lexicon.presentation.conjugation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
-import com.lexicon.interactors.conjugation.CreateConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.DeleteConjugationVerbUseCase
 import com.lexicon.interactors.conjugation.HasDeletedVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
@@ -18,6 +17,7 @@ import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,22 +31,15 @@ data class VerbSelectionUiState(
     val isLoading: Boolean = true,
     val query: String = "",
     val verbs: ImmutableList<VerbConjugation> = persistentListOf(),
-    val selected: ImmutableSet<String> = persistentSetOf(),
-    val isSaved: Boolean = false,
     val canRestore: Boolean = false,
     val studySet: ImmutableSet<String> = persistentSetOf(),
     val isLoadingMore: Boolean = false,
     val hasMore: Boolean = true,
     val nextOffset: Int = 0,
-) {
-    val count: Int get() = selected.size
-
-    val canContinue: Boolean get() = selected.isNotEmpty()
-}
+)
 
 class VerbSelectionViewModel(
     private val loadVerbs: LoadConjugationVerbsUseCase,
-    private val createCourse: CreateConjugationCourseUseCase,
     private val deleteVerb: DeleteConjugationVerbUseCase,
     private val restoreVerbs: RestoreConjugationVerbsUseCase,
     private val hasDeletedVerbs: HasDeletedVerbsUseCase,
@@ -118,28 +111,14 @@ class VerbSelectionViewModel(
         }
     }
 
-    fun onVerbToggled(infinitive: String) =
-        _uiState.update { state ->
-            val next = if (infinitive in state.selected) state.selected - infinitive else state.selected + infinitive
-            state.copy(selected = next.toImmutableSet(), isSaved = false)
-        }
-
     fun onStudySetToggled(verb: VerbConjugation) {
         val next = verb.infinitive !in _uiState.value.studySet
         _uiState.update { state ->
             val studySet = if (next) state.studySet + verb.infinitive else state.studySet - verb.infinitive
             state.copy(studySet = studySet.toImmutableSet())
         }
-        viewModelScope.launch(dispatchers.io) {
+        viewModelScope.launch(dispatchers.io + NonCancellable) {
             studySetVerb(verb.infinitive, verb.translation, next)
-        }
-    }
-
-    fun onCreateCourse() {
-        val chosen = _uiState.value.selected.toList()
-        viewModelScope.launch(dispatchers.io) {
-            createCourse(chosen)
-            _uiState.update { it.copy(isSaved = true) }
         }
     }
 
@@ -163,6 +142,4 @@ class VerbSelectionViewModel(
         _uiState.update { it.copy(canRestore = canRestore) }
         loadFirstPage()
     }
-
-    fun onSaveHandled() = _uiState.update { it.copy(isSaved = false) }
 }

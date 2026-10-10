@@ -1,17 +1,24 @@
 package com.lexicon.presentation.course
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lexicon.common.DispatcherProvider
+import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.course.ObserveCoursesUseCase
+import com.lexicon.interactors.course.SetCourseOnDashboardUseCase
 import com.lexicon.model.course.Course
 import com.lexicon.model.course.CourseId
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 const val COURSE_ID_ARG = "courseId"
+
+private const val TAG = "CourseDetail"
 
 sealed interface CourseDetailUiState {
     data object Loading : CourseDetailUiState
@@ -27,6 +34,8 @@ sealed interface CourseDetailUiState {
 class CourseDetailViewModel(
     savedStateHandle: SavedStateHandle,
     observeCourses: ObserveCoursesUseCase,
+    private val setCourseOnDashboard: SetCourseOnDashboardUseCase,
+    private val dispatchers: DispatcherProvider,
 ) : ViewModel() {
     private val courseId = CourseId(savedStateHandle.get<String>(COURSE_ID_ARG).orEmpty())
 
@@ -42,6 +51,14 @@ class CourseDetailViewModel(
                 started = SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS),
                 initialValue = CourseDetailUiState.Loading,
             )
+
+    fun onDashboardToggled() {
+        val course = (uiState.value as? CourseDetailUiState.Loaded)?.course ?: return
+        viewModelScope.launch(dispatchers.io) {
+            runSuspendCatching { setCourseOnDashboard(course.id, !course.isOnDashboard) }
+                .onFailure { Log.w(TAG, "The course could not be shown on or removed from the dashboard", it) }
+        }
+    }
 
     private companion object {
         const val STOP_TIMEOUT_MS = 5_000L

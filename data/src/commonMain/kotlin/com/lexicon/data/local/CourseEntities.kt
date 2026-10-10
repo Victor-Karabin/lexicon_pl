@@ -12,6 +12,11 @@ data class CourseEntity(
     val titleJson: String,
 )
 
+@Entity(tableName = "dashboard_courses")
+data class DashboardCourseEntity(
+    @PrimaryKey val courseId: String,
+)
+
 @Entity(tableName = "lessons", indices = [Index("courseId")])
 data class LessonEntity(
     @PrimaryKey val id: String,

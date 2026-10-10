@@ -4,6 +4,8 @@ import com.lexicon.model.vocabulary.Aspect
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+const val VERB_COURSE_ID = "study-set"
+
 enum class GrammaticalPerson(
     val sourceKey: String,
     val label: String,

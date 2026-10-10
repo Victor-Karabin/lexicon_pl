@@ -488,10 +488,7 @@ fun LexiconNavHost(
         }
 
         composable(route = LexiconDestinations.CONJUGATION_VERBS) {
-            VerbSelectionScreen(
-                onContinue = { navController.popBackStack() },
-                onClose = closeToMain,
-            )
+            VerbSelectionScreen(onClose = closeToMain)
         }
 
         composable(

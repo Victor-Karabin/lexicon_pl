@@ -14,9 +14,11 @@ import com.lexicon.interactors.course.Lesson
 import com.lexicon.interactors.course.ObserveCoursesUseCase
 import com.lexicon.interactors.course.ReviewWritingUseCase
 import com.lexicon.interactors.course.SaveLessonProgressUseCase
+import com.lexicon.interactors.course.SetCourseOnDashboardUseCase
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
 import com.lexicon.interactors.course.WritingReviewOutcome
 import com.lexicon.model.course.Course
+import com.lexicon.model.course.CourseId
 import com.lexicon.model.course.LessonId
 import com.lexicon.model.course.LessonProgress
 import com.lexicon.model.course.LessonScreen
@@ -83,6 +85,15 @@ class SetLessonCompletedUseCaseImpl(
         id: LessonId,
         isCompleted: Boolean,
     ) = repository.setLessonCompleted(id.value, isCompleted)
+}
+
+class SetCourseOnDashboardUseCaseImpl(
+    private val repository: CourseRepository,
+) : SetCourseOnDashboardUseCase {
+    override suspend fun invoke(
+        id: CourseId,
+        isShown: Boolean,
+    ) = repository.setCourseOnDashboard(id.value, isShown)
 }
 
 class ReviewWritingUseCaseImpl(

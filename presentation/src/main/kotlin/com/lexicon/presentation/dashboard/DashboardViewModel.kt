@@ -3,9 +3,10 @@ package com.lexicon.presentation.dashboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.interactors.conjugation.ConjugationCourse
-import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
+import com.lexicon.interactors.course.ObserveCoursesUseCase
 import com.lexicon.interactors.presets.CountWordsToReviewUseCase
+import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
 import com.lexicon.interactors.vocabularycourse.GetCourseProgressUseCase
 import com.lexicon.interactors.vocabularycourse.GetDailyStudyTimeUseCase
 import com.lexicon.interactors.vocabularycourse.GetStudyStreakUseCase
@@ -13,15 +14,18 @@ import com.lexicon.interactors.vocabularycourse.NextCourseTrainingUseCase
 import com.lexicon.interactors.vocabularycourse.ObserveVocabularyCourseUseCase
 import com.lexicon.interactors.vocabularycourse.StudyTimeHistory
 import com.lexicon.interactors.vocabularycourse.VocabularyCourse
+import com.lexicon.model.course.Course
 import com.lexicon.model.training.TrainingType
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabularycourse.CourseProgress
 import com.lexicon.model.vocabularycourse.ProgressMetricType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -41,6 +45,8 @@ data class DashboardUiState(
     val nothingToPractise: Boolean = false,
     val studyTime: StudyTimeHistory? = null,
     val conjugationCourses: ImmutableList<ConjugationCourse> = persistentListOf(),
+    val courses: ImmutableList<Course> = persistentListOf(),
+    val languageTag: String = "en",
 ) {
     val knownWords: Int get() = progress?.metric(ProgressMetricType.VOCABULARY)?.current ?: 0
 
@@ -52,11 +58,12 @@ class DashboardViewModel(
     private val getProgress: GetCourseProgressUseCase,
     private val queue: NextCourseTrainingUseCase,
     private val loadConjugationCourses: LoadConjugationCoursesUseCase,
-    private val deleteConjugationCourse: DeleteConjugationCourseUseCase,
     private val getStreak: GetStudyStreakUseCase,
     private val countWordsToReview: CountWordsToReviewUseCase,
     private val getDailyStudyTime: GetDailyStudyTimeUseCase,
     observeCourse: ObserveVocabularyCourseUseCase,
+    observeCourses: ObserveCoursesUseCase,
+    observeWordStatuses: ObserveWordStatusesUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(DashboardUiState())
     val uiState: StateFlow<DashboardUiState> = _uiState.asStateFlow()
@@ -75,6 +82,14 @@ class DashboardViewModel(
                         nothingToPractise = false,
                     )
                 }
+            }
+        }
+        viewModelScope.launch {
+            observeWordStatuses().drop(1).collect { refreshConjugation() }
+        }
+        viewModelScope.launch {
+            observeCourses().collect { courses ->
+                _uiState.update { it.copy(courses = courses.filter { course -> course.isOnDashboard }.toImmutableList()) }
             }
         }
     }
@@ -119,13 +134,6 @@ class DashboardViewModel(
 
     fun refreshConjugation() {
         viewModelScope.launch {
-            _uiState.update { it.copy(conjugationCourses = loadConjugationCourses()) }
-        }
-    }
-
-    fun onConjugationCourseRemoved(courseId: String) {
-        viewModelScope.launch {
-            deleteConjugationCourse(courseId)
             _uiState.update { it.copy(conjugationCourses = loadConjugationCourses()) }
         }
     }

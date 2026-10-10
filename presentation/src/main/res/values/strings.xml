@@ -81,6 +81,7 @@
     <string name="conjugation_search_hint">Search verb</string>
     <string name="conjugation_selected_count">%1$d selected</string>
     <string name="conjugation_create">Create the course</string>
+    <string name="conjugation_study_set_hint">Verbs marked ♥ go into the verb course on the dashboard.</string>
     <string name="conjugation_restore_all">Restore all</string>
     <string name="conjugation_partial">only %1$d of 6 persons in the source</string>
     <string name="conjugation_none">Choose some verbs first — the course is built from the ones you pick.</string>
@@ -265,6 +266,8 @@
     <string name="course_title">Course</string>
     <string name="course_empty">The course could not be loaded.</string>
     <string name="course_progress">%1$d of %2$d lessons done</string>
+    <string name="course_show_on_dashboard">Show on dashboard</string>
+    <string name="course_remove_from_dashboard">Remove from dashboard</string>
     <string name="course_lesson_number">Lesson %1$d</string>
     <string name="lesson_words">New words</string>
     <string name="exercise_play">Play</string>

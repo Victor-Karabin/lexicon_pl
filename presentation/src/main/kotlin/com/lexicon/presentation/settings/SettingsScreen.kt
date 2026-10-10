@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -182,39 +183,31 @@ private fun SettingsScreenContent(
 
 @Composable
 private fun SourcesSetting(skin: TileSkin) {
-    var isOpen by rememberSaveable { mutableStateOf(false) }
-
-    GradientTile(skin = skin) {
-        CollapsibleHeading(
-            icon = Icons.Default.Info,
-            text = stringResource(R.string.settings_sources),
-            skin = skin,
-            isOpen = isOpen,
-            onToggle = { isOpen = !isOpen },
+    CollapsibleTile(
+        icon = Icons.Default.Info,
+        text = stringResource(R.string.settings_sources),
+        skin = skin,
+    ) {
+        Text(
+            text = stringResource(R.string.settings_sources_grammar),
+            style = MaterialTheme.typography.bodyMedium,
+            color = skin.onTile,
         )
-
-        if (isOpen) {
-            Text(
-                text = stringResource(R.string.settings_sources_grammar),
-                style = MaterialTheme.typography.bodyMedium,
-                color = skin.onTile,
-            )
-            Text(
-                text = stringResource(R.string.settings_sources_licence),
-                style = MaterialTheme.typography.bodySmall,
-                color = skin.muted(),
-            )
-            Text(
-                text = stringResource(R.string.settings_sources_tatoeba),
-                style = MaterialTheme.typography.bodyMedium,
-                color = skin.onTile,
-            )
-            Text(
-                text = stringResource(R.string.settings_sources_kwjp),
-                style = MaterialTheme.typography.bodyMedium,
-                color = skin.onTile,
-            )
-        }
+        Text(
+            text = stringResource(R.string.settings_sources_licence),
+            style = MaterialTheme.typography.bodySmall,
+            color = skin.muted(),
+        )
+        Text(
+            text = stringResource(R.string.settings_sources_tatoeba),
+            style = MaterialTheme.typography.bodyMedium,
+            color = skin.onTile,
+        )
+        Text(
+            text = stringResource(R.string.settings_sources_kwjp),
+            style = MaterialTheme.typography.bodyMedium,
+            color = skin.onTile,
+        )
     }
 }
 
@@ -225,58 +218,80 @@ private fun VoiceSetting(
     skin: TileSkin,
     onVoiceSelected: (SpeechVoice) -> Unit,
 ) {
-    var isOpen by rememberSaveable { mutableStateOf(false) }
     val chosen = voices.chosen(selectedId)
 
-    GradientTile(skin = skin) {
+    CollapsibleTile(
+        icon = Icons.AutoMirrored.Filled.VolumeUp,
+        text = stringResource(R.string.settings_voice),
+        skin = skin,
+        summary = chosen?.displayName,
+    ) {
+        Column(
+            modifier = Modifier.selectableGroup(),
+            verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
+        ) {
+            voices.forEach { voice ->
+                val isSelected = voice.id == chosen?.id
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(LexiconShapes.medium)
+                        .background(
+                            if (isSelected) skin.onTile.copy(alpha = SELECTED_TINT) else Color.Transparent,
+                        ).selectable(
+                            selected = isSelected,
+                            role = Role.RadioButton,
+                            onClick = { onVoiceSelected(voice) },
+                        ).padding(
+                            horizontal = Dimens.spacingSmall,
+                            vertical = Dimens.spacingTiny,
+                        ),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    RadioButton(selected = isSelected, onClick = null)
+                    Text(
+                        text = voice.displayName,
+                        modifier = Modifier.padding(start = Dimens.spacingMedium),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = skin.onTile,
+                    )
+                }
+            }
+        }
+
+        Text(
+            text = stringResource(R.string.settings_voice_note),
+            style = MaterialTheme.typography.bodySmall,
+            color = skin.muted(),
+        )
+    }
+}
+
+@Composable
+private fun CollapsibleTile(
+    icon: ImageVector,
+    text: String,
+    skin: TileSkin,
+    summary: String? = null,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    var isOpen by rememberSaveable { mutableStateOf(false) }
+
+    GradientTile(skin = skin, padding = 0.dp) {
         CollapsibleHeading(
-            icon = Icons.AutoMirrored.Filled.VolumeUp,
-            text = stringResource(R.string.settings_voice),
+            icon = icon,
+            text = text,
             skin = skin,
             isOpen = isOpen,
             onToggle = { isOpen = !isOpen },
-            summary = chosen?.displayName,
+            summary = summary,
         )
-
         if (isOpen) {
             Column(
-                modifier = Modifier.selectableGroup(),
-                verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
-            ) {
-                voices.forEach { voice ->
-                    val isSelected = voice.id == chosen?.id
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(LexiconShapes.medium)
-                            .background(
-                                if (isSelected) skin.onTile.copy(alpha = SELECTED_TINT) else Color.Transparent,
-                            ).selectable(
-                                selected = isSelected,
-                                role = Role.RadioButton,
-                                onClick = { onVoiceSelected(voice) },
-                            ).padding(
-                                horizontal = Dimens.spacingSmall,
-                                vertical = Dimens.spacingTiny,
-                            ),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        RadioButton(selected = isSelected, onClick = null)
-                        Text(
-                            text = voice.displayName,
-                            modifier = Modifier.padding(start = Dimens.spacingMedium),
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = skin.onTile,
-                        )
-                    }
-                }
-            }
-
-            Text(
-                text = stringResource(R.string.settings_voice_note),
-                style = MaterialTheme.typography.bodySmall,
-                color = skin.muted(),
+                modifier = Modifier.padding(start = Dimens.spacingMedium, end = Dimens.spacingMedium, bottom = Dimens.spacingMedium),
+                verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+                content = content,
             )
         }
     }
@@ -296,7 +311,8 @@ private fun CollapsibleHeading(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(role = Role.Button, onClick = onToggle)
-            .semantics { stateDescription = state },
+            .semantics { stateDescription = state }
+            .padding(Dimens.spacingMedium),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         SettingHeading(icon = icon, text = text, skin = skin, modifier = Modifier.weight(1f))

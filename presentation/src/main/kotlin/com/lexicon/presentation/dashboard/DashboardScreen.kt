@@ -1,7 +1,6 @@
 package com.lexicon.presentation.dashboard
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,15 +43,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.conjugation.ConjugationCourse
 import com.lexicon.interactors.vocabularycourse.VocabularyCourse
+import com.lexicon.model.course.CourseId
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabularycourse.CourseProgress
 import com.lexicon.model.vocabularycourse.ProgressMetric
 import com.lexicon.model.vocabularycourse.ProgressMetricType
 import com.lexicon.presentation.R
-import com.lexicon.presentation.common.DeleteAction
-import com.lexicon.presentation.common.DeleteActionWidth
 import com.lexicon.presentation.common.LightDarkPreview
-import com.lexicon.presentation.common.SwipeToRevealContainer
+import com.lexicon.presentation.course.CourseTile
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.GradientTile
@@ -88,6 +86,7 @@ fun DashboardScreen(
     onOpenCards: () -> Unit,
     onOpenConjugation: (String) -> Unit,
     onReviewWords: () -> Unit,
+    onCourseSelected: (CourseId) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DashboardViewModel = koinViewModel(),
 ) {
@@ -116,7 +115,7 @@ fun DashboardScreen(
         onContinue = viewModel::onContinue,
         onOpenConjugation = onOpenConjugation,
         onReviewWords = onReviewWords,
-        onRemoveConjugation = viewModel::onConjugationCourseRemoved,
+        onCourseSelected = onCourseSelected,
         modifier = modifier,
     )
 }
@@ -127,7 +126,7 @@ private fun DashboardContent(
     onContinue: () -> Unit,
     onOpenConjugation: (String) -> Unit,
     onReviewWords: () -> Unit,
-    onRemoveConjugation: (String) -> Unit,
+    onCourseSelected: (CourseId) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when {
@@ -145,14 +144,14 @@ private fun DashboardContent(
                 verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             ) {
                 uiState.conjugationCourses.forEach { course ->
-                    ConjugationCourseCard(
-                        course = course,
-                        onOpen = { onOpenConjugation(course.id) },
-                        onRemove = { onRemoveConjugation(course.id) },
-                    )
+                    ConjugationCourseCard(course = course, onOpen = { onOpenConjugation(course.id) })
                 }
 
                 CourseCard(uiState = uiState, onContinue = onContinue)
+
+                uiState.courses.forEach { course ->
+                    CourseTile(course = course, languageTag = uiState.languageTag, onClick = { onCourseSelected(course.id) })
+                }
 
                 if (uiState.wordsToReview > 0) {
                     ReviewWordsCard(waiting = uiState.wordsToReview, onClick = onReviewWords)
@@ -168,61 +167,54 @@ private fun DashboardContent(
 private fun ConjugationCourseCard(
     course: ConjugationCourse,
     onOpen: () -> Unit,
-    onRemove: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val progress = course.progress
     val skin = tileSkin(highlighted = true)
 
-    SwipeToRevealContainer(
-        revealWidth = DeleteActionWidth,
-        modifier = modifier.fillMaxWidth(),
-        backgroundContent = { DeleteAction(onClick = onRemove) },
-    ) {
-        GradientTile(skin = skin, modifier = Modifier.fillMaxWidth().clickable(onClick = onOpen)) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
-                verticalAlignment = Alignment.CenterVertically,
+    GradientTile(skin = skin, modifier = modifier.fillMaxWidth(), onClick = onOpen) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            ProgressRing(
+                fraction = progress.fraction,
+                skin = skin,
+                description = stringResource(R.string.conjugation_progress, progress.mastered, progress.total),
             ) {
-                ProgressRing(
-                    fraction = progress.fraction,
-                    skin = skin,
-                    description = stringResource(R.string.conjugation_progress, progress.mastered, progress.total),
-                ) {
-                    Medallion(skin = skin) { MedallionIcon(Icons.Default.Translate, skin) }
-                }
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = stringResource(R.string.dashboard_continuing),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = skin.muted(),
-                    )
-                    Text(
-                        text = stringResource(R.string.conjugation_title),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        color = skin.onTile,
-                    )
-                    Text(
-                        text = stringResource(R.string.conjugation_progress, progress.mastered, progress.total),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = skin.muted(),
-                    )
-                }
+                Medallion(skin = skin) { MedallionIcon(Icons.Default.Translate, skin) }
             }
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = stringResource(R.string.dashboard_continuing),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = skin.muted(),
+                )
+                Text(
+                    text = stringResource(R.string.conjugation_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold,
+                    color = skin.onTile,
+                )
+                Text(
+                    text = stringResource(R.string.conjugation_progress, progress.mastered, progress.total),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = skin.muted(),
+                )
+            }
+        }
 
-            TileChips {
-                StatChip(
-                    icon = Icons.Default.Translate,
-                    text = stringResource(R.string.conjugation_verbs_chip, progress.verbs),
-                    skin = skin,
-                )
-                StatChip(
-                    icon = Icons.Default.CheckCircle,
-                    text = stringResource(R.string.conjugation_attempted_chip, progress.attempted, progress.total),
-                    skin = skin,
-                )
-            }
+        TileChips {
+            StatChip(
+                icon = Icons.Default.Translate,
+                text = stringResource(R.string.conjugation_verbs_chip, progress.verbs),
+                skin = skin,
+            )
+            StatChip(
+                icon = Icons.Default.CheckCircle,
+                text = stringResource(R.string.conjugation_attempted_chip, progress.attempted, progress.total),
+                skin = skin,
+            )
         }
     }
 }
@@ -472,8 +464,8 @@ private fun DashboardPreview() {
             ),
             onContinue = {},
             onOpenConjugation = {},
+            onCourseSelected = {},
             onReviewWords = {},
-            onRemoveConjugation = {},
         )
     }
 }

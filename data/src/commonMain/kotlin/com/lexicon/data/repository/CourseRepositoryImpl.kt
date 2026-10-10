@@ -10,6 +10,7 @@ import com.lexicon.common.Clock
 import com.lexicon.data.local.AssetReader
 import com.lexicon.data.local.CourseDao
 import com.lexicon.data.local.CourseSeeder
+import com.lexicon.data.local.DashboardCourseEntity
 import com.lexicon.data.local.LessonProgressAsset
 import com.lexicon.data.local.LessonProgressEntity
 import com.lexicon.data.local.LessonScriptAsset
@@ -39,13 +40,15 @@ class CourseRepositoryImpl(
             courseDao.observeLessons(),
             courseDao.observeLessonWords(),
             courseDao.observeProgress(),
-        ) { courses, lessons, words, progress ->
+            courseDao.observeDashboardCourses(),
+        ) { courses, lessons, words, progress, dashboard ->
             val wordsByLesson = words.groupBy { it.lessonId }
             val completed = progress.filter { it.isCompleted }.map { it.lessonId }.toSet()
             val lessonsByCourse = lessons.groupBy { it.courseId }
 
             courses.map { course ->
                 CourseBoundary(
+                    isOnDashboard = course.id in dashboard,
                     id = course.id,
                     order = course.sortOrder,
                     level = course.level,
@@ -63,6 +66,13 @@ class CourseRepositoryImpl(
                 )
             }
         }.onStart { seeder.ensureSeeded() }
+
+    override suspend fun setCourseOnDashboard(
+        courseId: String,
+        isShown: Boolean,
+    ) {
+        if (isShown) courseDao.addDashboardCourse(DashboardCourseEntity(courseId)) else courseDao.removeDashboardCourse(courseId)
+    }
 
     override suspend fun getLesson(lessonId: String): LessonBoundary? {
         seeder.ensureSeeded()

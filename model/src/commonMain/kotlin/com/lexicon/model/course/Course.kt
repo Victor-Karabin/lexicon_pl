@@ -22,6 +22,7 @@ data class Course(
     val level: CefrLevel?,
     val title: LocalizedText,
     val lessons: ImmutableList<LessonSummary>,
+    val isOnDashboard: Boolean = false,
 ) {
     val completedCount: Int get() = lessons.count { it.isCompleted }
 

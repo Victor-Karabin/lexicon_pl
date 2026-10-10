@@ -18,6 +18,7 @@ import com.lexicon.application.course.GetLessonVocabularyUseCaseImpl
 import com.lexicon.application.course.ObserveCoursesUseCaseImpl
 import com.lexicon.application.course.ReviewWritingUseCaseImpl
 import com.lexicon.application.course.SaveLessonProgressUseCaseImpl
+import com.lexicon.application.course.SetCourseOnDashboardUseCaseImpl
 import com.lexicon.application.course.SetLessonCompletedUseCaseImpl
 import com.lexicon.application.crossword.StartCrosswordSessionUseCaseImpl
 import com.lexicon.application.crossword.SubmitCrosswordUseCaseImpl
@@ -115,6 +116,7 @@ import com.lexicon.interactors.course.GetLessonVocabularyUseCase
 import com.lexicon.interactors.course.ObserveCoursesUseCase
 import com.lexicon.interactors.course.ReviewWritingUseCase
 import com.lexicon.interactors.course.SaveLessonProgressUseCase
+import com.lexicon.interactors.course.SetCourseOnDashboardUseCase
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
 import com.lexicon.interactors.crossword.StartCrosswordSessionUseCase
 import com.lexicon.interactors.crossword.SubmitCrosswordUseCase
@@ -318,6 +320,7 @@ val domainModule = module {
     factoryOf(::GetLessonUseCaseImpl) { bind<GetLessonUseCase>() }
     factoryOf(::GetLessonVocabularyUseCaseImpl) { bind<GetLessonVocabularyUseCase>() }
     factoryOf(::SetLessonCompletedUseCaseImpl) { bind<SetLessonCompletedUseCase>() }
+    factoryOf(::SetCourseOnDashboardUseCaseImpl) { bind<SetCourseOnDashboardUseCase>() }
     factoryOf(::GetLessonScriptUseCaseImpl) { bind<GetLessonScriptUseCase>() }
     factoryOf(::GetLessonProgressUseCaseImpl) { bind<GetLessonProgressUseCase>() }
     factoryOf(::SaveLessonProgressUseCaseImpl) { bind<SaveLessonProgressUseCase>() }

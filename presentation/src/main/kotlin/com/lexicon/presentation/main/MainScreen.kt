@@ -87,6 +87,7 @@ fun MainScreen(
                     onOpenCards = onOpenCards,
                     onOpenConjugation = onTrainConjugation,
                     onReviewWords = onReviewWords,
+                    onCourseSelected = { onCourseSelected(it.value) },
                     modifier = content,
                 )
             MainTab.VOCABULARY ->
