@@ -1,6 +1,7 @@
 package com.lexicon.data.local
 
 import com.lexicon.model.course.AnswerKeyboard
+import com.lexicon.model.course.LessonPhrase
 import com.lexicon.model.course.LessonProgress
 import com.lexicon.model.course.LessonScreen
 import com.lexicon.model.course.TranscriptUnlock
@@ -20,8 +21,9 @@ class LessonScriptAssetTest {
     private fun screen(id: String) = script.screens.first { it.id == id }
 
     @Test
-    fun `lesson 1 has 27 screens in seven steps that cover every screen once`() {
-        assertEquals(27, script.screens.size)
+    fun `lesson 1 has 28 screens in seven steps that cover every screen once`() {
+        assertEquals(28, script.screens.size)
+        assertEquals(listOf("2A", "2B", "2C", "2D"), script.steps[1].screenIds)
         assertEquals(7, script.steps.size)
         assertEquals(script.screens.map { it.id }, script.steps.flatMap { it.screenIds })
         assertEquals(listOf("4A", "4B", "4C", "4D"), script.steps[3].screenIds)
@@ -31,7 +33,7 @@ class LessonScriptAssetTest {
     fun `graded screens hold the number of items the coursebook asks for`() {
         val counts = script.screens.filter { it.isGraded }.associate { it.id to it.questions.size }
         val expected = mapOf(
-            "1B" to 8, "1C" to 22, "2B" to 8, "3B" to 5, "3D" to 8, "3E" to 6,
+            "1B" to 8, "1C" to 22, "2B" to 4, "2C" to 4, "3B" to 5, "3D" to 8, "3E" to 6,
             "4B" to 4, "4C" to 4, "4D" to 5,
             "5B" to 6, "5C" to 10, "5D" to 5,
             "6B" to 6, "6C" to 5, "6D" to 4,
@@ -45,7 +47,8 @@ class LessonScriptAssetTest {
         assertTrue(screen("1A") is LessonScreen.Reference)
         assertTrue(screen("1C") is LessonScreen.Choice)
         assertTrue(screen("2B") is LessonScreen.GapFill)
-        assertTrue(screen("2C") is LessonScreen.FreeWriting)
+        assertTrue(screen("2C") is LessonScreen.GapFill)
+        assertTrue(screen("2D") is LessonScreen.FreeWriting)
         assertEquals(AnswerKeyboard.DIGITS, (screen("3D") as LessonScreen.Write).keyboard)
     }
 
@@ -93,15 +96,38 @@ class LessonScriptAssetTest {
         )
         assertTrue(listen.groups.all { it.phrases.isNotEmpty() })
 
-        val fill = screen("2B") as LessonScreen.GapFill
-        assertTrue(fill.tracks.isEmpty())
-        assertEquals(listOf("a1_coursebook_101a1.mp3", "a1_coursebook_101a2.mp3"), fill.sections.map { it.track?.file })
+        assertEquals(listOf("a1_coursebook_101a1.mp3"), screen("2B").tracks.map { it.file })
+        assertEquals(listOf("a1_coursebook_101a2.mp3"), screen("2C").tracks.map { it.file })
     }
 
     @Test
     fun `the dialogue transcript stays hidden until the gap fill is checked`() {
-        assertEquals(TranscriptUnlock.AfterScreen("2B"), screen("2A").transcript?.unlock)
+        assertEquals(TranscriptUnlock.AfterScreen("2C"), screen("2A").transcript?.unlock)
         assertEquals(TranscriptUnlock.AfterCheck, screen("1B").transcript?.unlock)
+    }
+
+    @Test
+    fun `the policeman's directions keep one option order and are not answered in that order`() {
+        val directions = screen("4B") as LessonScreen.Choice
+        assertTrue(directions.items.all { it.options == listOf("na lewo", "tu", "tam", "na prawo") })
+        assertEquals(listOf("tam", "na prawo", "tu", "na lewo"), directions.items.map { it.question.answers.single() })
+        assertEquals(listOf("1", "2", "3", "4"), directions.items.map { it.question.label })
+    }
+
+    @Test
+    fun `a German name heard by ear may be spelled the Polish way`() {
+        val form = screen("6B").questions
+        assertEquals(listOf("Thomas") to listOf("Tomas"), form[0].answers to form[0].variants)
+        assertEquals(listOf("Fischer") to listOf("Fiszer"), form[1].answers to form[1].variants)
+    }
+
+    @Test
+    fun `new words open after the check where they are the answers, and right away elsewhere`() {
+        assertEquals(TranscriptUnlock.AfterCheck, script.newWords.getValue("1B").unlock)
+        assertEquals(TranscriptUnlock.AfterCheck, script.newWords.getValue("4D").unlock)
+        assertEquals(TranscriptUnlock.Always, script.newWords.getValue("1A").unlock)
+        assertEquals(LessonPhrase("łatwo", "easily"), script.newWords.getValue("1A").words.first())
+        assertEquals(17, script.newWords.size)
     }
 
     @Test

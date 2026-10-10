@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.boundary.LessonAudioLibrary
 import com.lexicon.boundary.LessonAudioPlayer
-import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.course.GetLessonProgressUseCase
@@ -18,13 +17,13 @@ import com.lexicon.interactors.course.ObserveCoursesUseCase
 import com.lexicon.interactors.course.ReviewWritingUseCase
 import com.lexicon.interactors.course.SaveLessonProgressUseCase
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
+import com.lexicon.interactors.course.StepScore
 import com.lexicon.interactors.course.WritingReviewOutcome
 import com.lexicon.model.course.LessonId
 import com.lexicon.model.course.LessonProgress
 import com.lexicon.model.course.LessonScreen
 import com.lexicon.model.course.LessonTrack
 import com.lexicon.model.course.allTracks
-import com.lexicon.presentation.common.speakQuietly
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -55,6 +54,7 @@ sealed interface LessonFlowUiState {
         val reviewProblem: ReviewProblem? = null,
         val results: LessonResults? = null,
         val nextLessonId: LessonId? = null,
+        val retry: StepScore? = null,
     ) : LessonFlowUiState
 }
 
@@ -67,7 +67,6 @@ class LessonFlowViewModel(
     private val getLesson: GetLessonUseCase,
     private val observeCourses: ObserveCoursesUseCase,
     private val reviewWriting: ReviewWritingUseCase,
-    private val speechSynthesizer: SpeechSynthesizer,
     audioLibrary: LessonAudioLibrary,
     audioPlayer: LessonAudioPlayer,
     private val dispatchers: DispatcherProvider,
@@ -83,6 +82,7 @@ class LessonFlowViewModel(
         val reviewProblem: ReviewProblem? = null,
         val results: LessonResults? = null,
         val nextLessonId: LessonId? = null,
+        val retry: StepScore? = null,
     )
 
     private val content = MutableStateFlow<Content?>(null)
@@ -107,6 +107,7 @@ class LessonFlowViewModel(
                         reviewProblem = loaded.reviewProblem,
                         results = loaded.results,
                         nextLessonId = loaded.nextLessonId,
+                        retry = loaded.retry,
                     )
             }
         }.stateIn(
@@ -160,10 +161,16 @@ class LessonFlowViewModel(
     fun onNext() {
         val session = content.value?.session ?: return
         if (session.needsCheck) return
+        val failed = session.failedStep
         val next = session.next()
         change { next }
-        if (session.isLastScreen && next.isAtEnd) complete(next)
+        when {
+            failed != null -> content.update { it?.copy(retry = failed) }
+            session.isLastScreen && next.isAtEnd -> complete(next)
+        }
     }
+
+    fun onRetryAcknowledged() = content.update { it?.copy(retry = null) }
 
     fun onBack() = change { it.previous() }
 
@@ -173,10 +180,6 @@ class LessonFlowViewModel(
                 openTranscripts = if (file in it.openTranscripts) it.openTranscripts - file else it.openTranscripts + file,
             )
         }
-
-    fun onSpeak(text: String) {
-        viewModelScope.launch(dispatchers.io) { speechSynthesizer.speakQuietly(text) }
-    }
 
     fun onPlay(track: LessonTrack) = tracks.toggle(viewModelScope, track.file, track.remoteId)
 

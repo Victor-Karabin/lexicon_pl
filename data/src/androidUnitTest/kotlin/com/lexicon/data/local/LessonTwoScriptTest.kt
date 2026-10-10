@@ -17,8 +17,10 @@ class LessonTwoScriptTest {
     private fun screen(id: String) = script.screens.first { it.id == id }
 
     @Test
-    fun `lesson 2 has 37 screens in eight steps`() {
-        assertEquals(37, script.screens.size)
+    fun `lesson 2 has 40 screens in eight steps, the last one a review`() {
+        assertEquals(40, script.screens.size)
+        assertEquals(listOf("7A", "7B", "7C", "7D", "7E", "7F", "7G"), script.steps[6].screenIds)
+        assertEquals(listOf("8"), script.steps.filter { it.isReview }.map { it.id })
         assertEquals(listOf("1", "2", "3", "4", "5", "6", "7", "8"), script.steps.map { it.id })
         assertEquals(listOf("2A", "2B", "2C", "2D", "2E", "2F"), script.steps[1].screenIds)
     }
@@ -33,7 +35,7 @@ class LessonTwoScriptTest {
             "4B" to 6, "4C" to 15,
             "5B" to 6, "5C" to 6, "5D" to 9, "5E" to 10,
             "6A" to 12, "6B" to 10, "6C" to 10, "6E" to 9,
-            "7B" to 6, "7C" to 18, "7D" to 5,
+            "7B" to 6, "7C" to 6, "7D" to 6, "7E" to 6, "7F" to 6, "7G" to 5,
             "8A" to 8, "8B" to 12, "8C" to 10, "8D" to 7, "8E" to 12,
         )
         assertEquals(expected, counts)
@@ -44,17 +46,40 @@ class LessonTwoScriptTest {
         listOf("1A", "2A", "4A", "5A", "6D", "7A").forEach { assertTrue(it, screen(it) is LessonScreen.Reference) }
         listOf("2E", "8B").forEach { assertTrue(it, screen(it) is LessonScreen.Ordering) }
         assertTrue(screen("2B") is LessonScreen.FreeWriting)
-        assertTrue(screen("7C") is LessonScreen.Form)
+        listOf("7C", "7D", "7E", "7F").forEach { assertTrue(it, screen(it) is LessonScreen.Form) }
         assertEquals(AnswerKeyboard.DIGITS, (screen("6B") as LessonScreen.Write).keyboard)
     }
 
     @Test
-    fun `the questionnaire has a card per person and accepts short answers`() {
-        val form = screen("7C") as LessonScreen.Form
-        assertEquals(listOf("Uwe", "Maria", "Tom"), form.groups.map { it.title })
-        assertTrue(form.groups.all { it.fields.size == 6 })
-        assertTrue(form.questions.all { it.match == AnswerMatch.KEY_WORDS })
-        assertEquals(listOf("a1_coursebook_102f1.mp3", "a1_coursebook_102f1-2.mp3"), form.tracks.map { it.file })
+    fun `each questionnaire is one person with one recording and accepts short answers`() {
+        val people = mapOf("7C" to "Uwe", "7D" to "Manuela", "7E" to "Maria", "7F" to "Tom")
+        val recordings = mapOf("7C" to "102f1", "7D" to "102f1", "7E" to "102f1-2", "7F" to "102f1-2")
+        people.forEach { (id, person) ->
+            val form = screen(id) as LessonScreen.Form
+            assertEquals(id, listOf(person), form.groups.map { it.title })
+            assertEquals(id, 6, form.questions.size)
+            assertTrue(id, form.questions.all { it.match == AnswerMatch.KEY_WORDS })
+            assertEquals(id, listOf("a1_coursebook_${recordings.getValue(id)}.mp3"), form.tracks.map { it.file })
+            assertTrue(id, form.questions.first().variants.isNotEmpty())
+            assertEquals(id, TranscriptUnlock.AfterCheck, form.transcript?.unlock)
+        }
+    }
+
+    @Test
+    fun `the scale screen lists the words shuffled against a fixed mark scale`() {
+        val scale = screen("8D") as LessonScreen.Choice
+        val marks = listOf("+++", "++", "+", "+/−", "−", "−−", "−−−")
+        assertTrue(scale.items.all { it.options == marks })
+        assertTrue(!scale.shuffle)
+        assertEquals("tak sobie", scale.items.first().question.prompt)
+    }
+
+    @Test
+    fun `the formal questions accept pan as well, and the less usual orders show the usual one`() {
+        val questions = screen("8E").questions
+        assertTrue("Jak się pan nazywa?" in questions[2].answers)
+        assertTrue("Jak pani się nazywa?" in questions[2].variants)
+        assertTrue("Jakie ma pani imię?" in questions[0].variants)
     }
 
     @Test
@@ -71,9 +96,8 @@ class LessonTwoScriptTest {
     }
 
     @Test
-    fun `the 7A dialogues open only once the questionnaire is checked`() {
-        assertEquals(TranscriptUnlock.AfterScreen("7C"), screen("7A").transcript?.unlock)
-        assertEquals(TranscriptUnlock.AfterCheck, screen("7C").transcript?.unlock)
+    fun `the 7A dialogues open only once the last questionnaire is checked`() {
+        assertEquals(TranscriptUnlock.AfterScreen("7F"), screen("7A").transcript?.unlock)
         assertEquals(TranscriptUnlock.AfterCheck, screen("2E").transcript?.unlock)
     }
 
@@ -82,8 +106,8 @@ class LessonTwoScriptTest {
         assertEquals("a1_coursebook_0102e3.mp3", screen("6B").tracks.single().file)
         assertEquals("a1_workbook_09_L02_cwiczenie2.mp3", screen("2E").tracks.single().file)
         assertEquals("a1_coursebook_102e4.mp3", screen("6D").tracks.single().file)
-        val recorded = (screen("3B") as LessonScreen.GapFill).sections.map { it.track?.file }
-        assertEquals(listOf("a1_coursebook_102c1.mp3", null), recorded)
+        assertEquals(listOf("a1_coursebook_102c1.mp3"), screen("3B").tracks.map { it.file })
+        assertEquals(1, (screen("3B") as LessonScreen.GapFill).sections.size)
     }
 
     @Test
@@ -94,7 +118,7 @@ class LessonTwoScriptTest {
 
     @Test
     fun `numbering starts at 1 and no item is an example`() {
-        listOf("2C", "2D", "3C", "3D", "3E", "3F", "5E", "6C", "6E", "7B", "7D", "8C", "8D", "8E").forEach { id ->
+        listOf("2C", "2D", "3C", "3D", "3E", "3F", "5E", "6C", "6E", "7B", "7G", "8C", "8D", "8E").forEach { id ->
             val labels = screen(id).questions.map { it.label }
             assertEquals(id, (1..labels.size).map(Int::toString), labels)
         }

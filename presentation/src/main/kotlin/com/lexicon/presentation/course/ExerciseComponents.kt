@@ -68,6 +68,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.course.GAP_MARKER
 import com.lexicon.interactors.course.GapFillItem
+import com.lexicon.interactors.course.InlineChoiceGroup
 import com.lexicon.interactors.course.LETTER_GAP
 import com.lexicon.interactors.course.LetterFillItem
 import com.lexicon.interactors.course.MatchItem
@@ -94,8 +95,11 @@ private const val SEEK_TRACK_ALPHA = 0.3f
 private const val MILLIS_PER_SECOND = 1000
 private const val SHORT_OPTION_LENGTH = 2
 private const val MAX_OPTIONS_IN_ROW = 3
+private const val MARK_OPTION_LENGTH = 3
+private const val MARK_OPTIONS_PER_ROW = 4
 private const val MEDIUM_OPTION_LENGTH = 10
 private const val MEDIUM_OPTIONS_PER_ROW = 3
+private const val PAIRED_OPTIONS = 4
 private const val SECONDS_PER_MINUTE = 60
 private val AnswerLabelWidth = 28.dp
 private val InfoButtonSize = 32.dp
@@ -249,21 +253,12 @@ fun MinimalPairRow(
     answerState: AnswerState,
     onSelect: (String) -> Unit,
     info: String? = null,
-    onSpeak: (() -> Unit)? = null,
     prompt: String? = null,
+    leading: (@Composable () -> Unit)? = null,
 ) {
     var showInfo by rememberSaveable { mutableStateOf(false) }
     val checked = answerState !is AnswerState.Unanswered
     val tools: @Composable () -> Unit = {
-        if (checked && onSpeak != null) {
-            IconButton(onClick = onSpeak, modifier = Modifier.size(InfoButtonSize)) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.VolumeUp,
-                    contentDescription = stringResource(R.string.word_pronounce, item.answer),
-                    tint = MaterialTheme.colorScheme.primary,
-                )
-            }
-        }
         if (checked) {
             Box(modifier = Modifier.size(InfoButtonSize)) {
                 if (info != null) InfoButton(onClick = { showInfo = !showInfo })
@@ -273,11 +268,13 @@ fun MinimalPairRow(
     val columns = when {
         item.options.all { it.length <= SHORT_OPTION_LENGTH } -> item.options.size
         item.options.size <= MAX_OPTIONS_IN_ROW -> item.options.size
-        item.options.all { it.length <= MEDIUM_OPTION_LENGTH } -> MEDIUM_OPTIONS_PER_ROW
+        item.options.all { it.length <= MARK_OPTION_LENGTH } -> MARK_OPTIONS_PER_ROW
+        item.options.all { it.length <= MEDIUM_OPTION_LENGTH } -> if (item.options.size == PAIRED_OPTIONS) 2 else MEDIUM_OPTIONS_PER_ROW
         else -> 2
     }.coerceAtLeast(1)
     Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
         ItemLabel(item.label)
+        leading?.invoke()
         if (prompt != null) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(text = richText(prompt), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
@@ -300,6 +297,7 @@ fun MinimalPairRow(
                             answerState = answerState,
                         ),
                         onClick = { onSelect(option) }.takeIf { !checked },
+                        singleLine = true,
                     )
                 }
                 repeat(columns - row.size) { Spacer(modifier = Modifier.weight(1f)) }
@@ -320,6 +318,7 @@ fun GapFillRow(
     onValueChanged: (Int, String) -> Unit,
     almost: List<Boolean> = emptyList(),
     infos: List<String?> = emptyList(),
+    usualForms: List<String?> = emptyList(),
 ) {
     var openInfo by rememberSaveable { mutableStateOf<Int?>(null) }
     val checked = answerState !is AnswerState.Unanswered
@@ -348,6 +347,7 @@ fun GapFillRow(
                         isAlmost = almost.getOrElse(at) { false },
                         answerState = answerState,
                         onValueChanged = { onValueChanged(at, it) },
+                        usualForm = usualForms.getOrNull(at),
                     )
                     if (checked && infos.getOrNull(at) != null) {
                         InfoButton(onClick = { openInfo = if (openInfo == at) null else at })
@@ -379,6 +379,8 @@ fun TranscribeRow(
     prompt: String? = null,
     labelWidth: Dp? = null,
     onSpeak: (() -> Unit)? = null,
+    usualForm: String? = null,
+    leading: (@Composable () -> Unit)? = null,
 ) {
     var showInfo by rememberSaveable { mutableStateOf(false) }
     val checked = answerState !is AnswerState.Unanswered
@@ -391,6 +393,7 @@ fun TranscribeRow(
         else -> MaterialTheme.colorScheme.outline
     }
     Column(modifier = Modifier.fillMaxWidth()) {
+        if (!inline) leading?.invoke()
         if (!inline) {
             Text(
                 text = richText(
@@ -416,6 +419,7 @@ fun TranscribeRow(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.width(labelWidth ?: AnswerLabelWidth),
                 )
+                leading?.invoke()
             }
             BasicTextField(
                 value = value,
@@ -463,6 +467,14 @@ fun TranscribeRow(
             ExpectedAnswer(
                 expected = item.answer,
                 isAlmost = isAlmost,
+                modifier = Modifier.padding(start = indent, top = Dimens.spacingTiny),
+            )
+        }
+        if (isCorrect == true && usualForm != null) {
+            Text(
+                text = stringResource(R.string.lesson_flow_usual_form, usualForm),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(start = indent, top = Dimens.spacingTiny),
             )
         }
@@ -522,6 +534,59 @@ fun OrderLineRow(
             )
             if (isCorrect == false) ExpectedAnswer(expected = expected, isAlmost = false)
         }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun InlineChoiceRow(
+    label: String,
+    fragments: List<String>,
+    groups: List<InlineChoiceGroup>,
+    checked: Boolean,
+    onSelect: (Int, String) -> Unit,
+) {
+    var openInfo by rememberSaveable { mutableStateOf<Int?>(null) }
+    Column(modifier = Modifier.fillMaxWidth()) {
+        FlowRow(
+            verticalArrangement = Arrangement.Center,
+            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
+        ) {
+            Text(
+                text = "$label)",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(vertical = Dimens.spacingSmall).align(Alignment.CenterVertically),
+            )
+            fragments.forEachIndexed { index, fragment ->
+                fragment.split(' ').filter { it.isNotBlank() }.forEach { word ->
+                    Text(
+                        text = word,
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.padding(vertical = Dimens.spacingSmall).align(Alignment.CenterVertically),
+                    )
+                }
+                val group = groups.getOrNull(index) ?: return@forEachIndexed
+                Row(horizontalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
+                    group.options.forEach { option ->
+                        AnswerChip(
+                            label = option,
+                            state = choiceState(
+                                option = option,
+                                selected = group.selected,
+                                answer = group.answer,
+                                answerState = if (checked) AnswerState.Incorrect() else AnswerState.Unanswered,
+                            ),
+                            onClick = { onSelect(index, option) }.takeIf { !checked },
+                            singleLine = true,
+                            compact = true,
+                        )
+                    }
+                }
+                if (checked && group.info != null) InfoButton(onClick = { openInfo = if (openInfo == index) null else index })
+            }
+        }
+        openInfo?.let { at -> groups.getOrNull(at)?.info?.let { Explanation(it) } }
     }
 }
 
@@ -755,6 +820,7 @@ private fun InlineGap(
     isAlmost: Boolean,
     answerState: AnswerState,
     onValueChanged: (String) -> Unit,
+    usualForm: String? = null,
 ) {
     val underline = when {
         isCorrect == true -> LexiconSuccess
@@ -801,6 +867,14 @@ private fun InlineGap(
                 text = expected,
                 style = MaterialTheme.typography.labelMedium,
                 color = if (isAlmost) LexiconWarning else LexiconError,
+                textAlign = TextAlign.Center,
+            )
+        }
+        if (isCorrect == true && usualForm != null) {
+            Text(
+                text = usualForm,
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
         }

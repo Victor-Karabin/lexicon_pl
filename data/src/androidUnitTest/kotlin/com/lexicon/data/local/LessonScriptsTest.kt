@@ -20,8 +20,8 @@ class LessonScriptsTest {
         scripts.forEach { (name, script) -> script.screens.forEach { check("$name ${it.id}", it) } }
 
     @Test
-    fun `there is a script for lessons 1 and 2`() {
-        assertEquals(listOf("lesson_krok-a1-01.json", "lesson_krok-a1-02.json"), assets.keys.toList())
+    fun `there is a script for lessons 1 to 3`() {
+        assertEquals(listOf("lesson_krok-a1-01.json", "lesson_krok-a1-02.json", "lesson_krok-a1-03.json"), assets.keys.toList())
     }
 
     @Test
@@ -51,6 +51,48 @@ class LessonScriptsTest {
         eachScreen { where, screen ->
             if (screen !is LessonScreen.Choice) return@eachScreen
             screen.items.forEach { item -> assertTrue("$where ${item.question.label}", item.question.answers.single() in item.options) }
+        }
+
+    @Test
+    fun `no choice screen is answered diagonally, item N by option N`() =
+        eachScreen { where, screen ->
+            if (screen !is LessonScreen.Choice || screen.items.size < 3) return@eachScreen
+            val shared = screen.items.all { it.options == screen.items.first().options }
+            if (!shared) return@eachScreen
+            assertTrue(
+                where,
+                screen.items.withIndex().any {
+                        (index, item) ->
+                    item.question.answers.single() != item.options.getOrNull(index)
+                },
+            )
+        }
+
+    @Test
+    fun `new words belong to screens of the lesson and are never empty`() =
+        scripts.forEach { (name, script) ->
+            val ids = script.screens.map { it.id }
+            script.newWords.forEach { (id, newWords) ->
+                assertTrue("$name $id", id in ids && newWords.words.isNotEmpty())
+                assertTrue("$name $id", newWords.words.all { it.polish.isNotBlank() && it.english.isNotBlank() })
+            }
+        }
+
+    @Test
+    fun `every typed gap stands inside its sentence, never after a prompt with an ellipsis`() =
+        eachScreen { where, screen ->
+            if (screen !is LessonScreen.Write && screen !is LessonScreen.Form) return@eachScreen
+            screen.questions.forEach { assertTrue("$where ${it.label}", it.prompt?.contains('…') != true) }
+        }
+
+    @Test
+    fun `every inline choice line has one option group per marker and each answer among its options`() =
+        eachScreen { where, screen ->
+            if (screen !is LessonScreen.InlineChoice) return@eachScreen
+            screen.lines.forEach { line ->
+                assertEquals("$where ${line.label}", line.groups.size, GAP_PATTERN.findAll(line.text).count())
+                line.groups.forEach { assertTrue("$where ${line.label}", it.question.answers.single() in it.options) }
+            }
         }
 
     @Test
