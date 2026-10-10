@@ -8,6 +8,7 @@ import com.lexicon.boundary.TranslationSuggester
 import com.lexicon.boundary.Translator
 import com.lexicon.boundary.WordGrammarGenerator
 import com.lexicon.boundary.WordLevelGuesser
+import com.lexicon.boundary.WritingReviewer
 import com.lexicon.data.di.levelGuesserChainQualifier
 import com.lexicon.data.di.suggesterChainQualifier
 import com.lexicon.data.di.translatorChainQualifier
@@ -25,6 +26,7 @@ import com.lexicon.data.remote.sentence.OpenAiExampleGenerator
 import com.lexicon.data.remote.sentence.OpenAiSentenceGenerator
 import com.lexicon.data.remote.sentence.OpenAiTranslationSuggester
 import com.lexicon.data.remote.sentence.OpenAiWordLevelGuesser
+import com.lexicon.data.remote.sentence.OpenAiWritingReviewer
 import com.lexicon.data.remote.translate.GoogleTranslateApi
 import com.lexicon.data.remote.translate.GoogleTranslator
 import com.lexicon.data.repository.CorpusTranslationSuggester
@@ -121,6 +123,7 @@ val networkModule = module {
     single<SentenceGenerator> { OpenAiSentenceGenerator(get()) }
     single<ExampleSentenceGenerator> { OpenAiExampleGenerator(get()) }
     single<WordGrammarGenerator> { OpenAiGrammarGenerator(get()) }
+    single<WritingReviewer> { OpenAiWritingReviewer(get()) }
 
     single {
         val client =

@@ -39,7 +39,7 @@ struct PlanView: View {
                 }
                 .padding(Spacing.medium)
             }
-            .navigationTitle(Strings.tabPlan)
+            .toolbar(.hidden, for: .navigationBar)
         }
     }
 

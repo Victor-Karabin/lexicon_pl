@@ -14,7 +14,6 @@ data class LessonSummary(
     val title: String,
     val wordCount: Int,
     val isCompleted: Boolean,
-    val isUnlocked: Boolean,
 )
 
 data class Course(

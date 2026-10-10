@@ -1,29 +1,35 @@
 import Shared
 import SwiftUI
 
-private let polishLetters = ["ą", "ć", "ę", "ł", "ń", "ó", "ś", "ź", "ż"]
-
 private func rich(_ text: String) -> AttributedString {
-    (try? AttributedString(markdown: text)) ?? AttributedString(text)
+    (try? AttributedString(markdown: text, options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace))) ?? AttributedString(text)
 }
+
+private let labelWidth: CGFloat = 28
 
 struct LessonFlowView: View {
     let lessonId: LessonId
+    let lessonNumber: Int
+    let hasNextLesson: Bool
+    let onNextLesson: () -> Void
 
     @Environment(\.dismiss) private var dismiss
     @ObservedObject private var audio = LessonAudio.shared
     @State private var session: LessonSession?
     @State private var loaded = false
     @State private var transcriptOpen = false
-    @State private var completed = false
+    @State private var results: LessonResults?
+    @State private var reviewing = false
+    @State private var reviewProblem: String?
+    @State private var openInfo: String?
     @State private var saving: Task<Void, Never>?
     @FocusState private var focused: String?
 
     var body: some View {
         Group {
             if let session {
-                if completed {
-                    completedView(session)
+                if let results {
+                    resultsView(results)
                 } else {
                     screenView(session)
                 }
@@ -35,36 +41,14 @@ struct LessonFlowView: View {
         }
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .keyboard) {
-                if acceptsLetters {
-                    HStack(spacing: 0) {
-                        ForEach(polishLetters, id: \.self) { letter in
-                            Button { insert(letter) } label: {
-                                Text(letter).frame(maxWidth: .infinity, minHeight: 36)
-                            }
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                }
-            }
-        }
         .task { await load() }
         .onDisappear { audio.stop() }
     }
 
     private var title: String {
         guard let session else { return "" }
-        if completed { return session.script.title }
+        if results != nil { return Strings.courseLessonNumber(lessonNumber) }
         return Strings.lessonFlowPosition(session.screen.id, Int(session.position), Int(session.total))
-    }
-
-    private var acceptsLetters: Bool {
-        guard let session, focused != nil, !session.isChecked else { return false }
-        let screen = session.screen
-        if screen is LessonScreenFreeWriting { return !session.isFinished }
-        if let write = screen as? LessonScreenWrite { return write.keyboard == .text }
-        return screen is LessonScreenGapFill
     }
 
     // MARK: Screens
@@ -75,7 +59,7 @@ struct LessonFlowView: View {
             VStack(alignment: .leading, spacing: Spacing.medium) {
                 Text(screen.title).font(.title2.weight(.semibold))
                 Text(rich(screen.instruction)).font(.callout)
-                tracks(screen.tracks)
+                ForEach(screen.tracks, id: \.id) { trackPlayer($0) }
 
                 if let reference = screen as? LessonScreenReference {
                     referenceBody(reference)
@@ -93,56 +77,56 @@ struct LessonFlowView: View {
                     let score = session.screenScore(screen: screen)
                     Text(Strings.exerciseScore(Int(score.correct), Int(score.total))).font(.headline)
                 }
-                if let transcript = screen.transcript {
-                    transcriptView(transcript, unlocked: session.isTranscriptUnlocked(screen: screen))
-                }
-                if session.endsStep, session.isFinished, let step = session.step {
-                    stepScoreView(session.stepScore(step: step))
-                }
-                if let failed = session.stepToRetry, failed != session.step {
-                    Text(Strings.lessonFlowRetryEarlier(failed.title, Int(session.script.passMark * 100)))
+                if let transcript = screen.transcript, session.isTranscriptUnlocked(screen: screen) {
+                    transcriptView(transcript)
                 }
             }
             .padding(Spacing.medium)
         }
         .scrollDismissesKeyboard(.interactively)
-        .safeAreaInset(edge: .bottom) { footer(session) }
+        .safeAreaInset(edge: .bottom) {
+            if focused == nil { footer(session) }
+        }
         .id(session.index)
     }
 
-    private func tracks(_ tracks: [LessonTrack]) -> some View {
-        VStack(alignment: .leading, spacing: Spacing.small) {
+    private func trackPlayer(_ track: LessonTrack, showLabel: Bool = true) -> some View {
+        VStack(alignment: .leading, spacing: Spacing.tiny) {
+            if showLabel, let label = track.label { Text(label).font(.subheadline.weight(.semibold)) }
             HStack(spacing: Spacing.small) {
-                ForEach(tracks, id: \.id) { track in
-                    VStack(alignment: .leading, spacing: Spacing.tiny) {
-                        if let label = track.label { Text(label).font(.caption.weight(.semibold)) }
-                        HStack(spacing: Spacing.small) {
-                            AsyncButton {
-                                await audio.toggle(file: track.file, remoteId: track.remoteId)
-                            } label: {
-                                Label(
-                                    audio.playing == track.file ? Strings.exercisePause : Strings.exercisePlay,
-                                    systemImage: audio.playing == track.file ? "pause.fill" : "play.fill"
-                                )
-                            }
-                            .buttonStyle(.borderedProminent)
-                            if audio.playing == track.file || audio.paused == track.file {
-                                AsyncButton {
-                                    await audio.play(file: track.file, remoteId: track.remoteId)
-                                } label: {
-                                    Image(systemName: "gobackward")
-                                }
-                                .buttonStyle(.bordered)
-                                .accessibilityLabel(Strings.exerciseReplay)
-                            }
-                        }
+                AsyncButton {
+                    await audio.toggle(file: track.file, remoteId: track.remoteId)
+                } label: {
+                    Label(
+                        audio.playing == track.file ? Strings.exercisePause : Strings.exercisePlay,
+                        systemImage: audio.playing == track.file ? "pause.fill" : "play.fill"
+                    )
+                }
+                .buttonStyle(.borderedProminent)
+                if audio.playing == track.file || audio.paused == track.file {
+                    AsyncButton {
+                        await audio.play(file: track.file, remoteId: track.remoteId)
+                    } label: {
+                        Label(Strings.exerciseReplay, systemImage: "gobackward")
                     }
+                    .buttonStyle(.bordered)
                 }
             }
-            if tracks.contains(where: { audio.unavailable.contains($0.file) }) {
+            if audio.unavailable.contains(track.file) {
                 Text(Strings.exerciseAudioUnavailable).font(.caption).foregroundStyle(.secondary)
             }
         }
+    }
+
+    private func card<Content: View>(_ title: String?, @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: Spacing.small) {
+            if let title { Text(title).font(.subheadline.weight(.semibold)) }
+            content()
+        }
+        .padding(Spacing.medium)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.secondary.opacity(0.1))
+        .clipShape(RoundedRectangle(cornerRadius: Radius.medium))
     }
 
     private func referenceBody(_ screen: LessonScreenReference) -> some View {
@@ -150,8 +134,27 @@ struct LessonFlowView: View {
             ForEach(Array(screen.tables.enumerated()), id: \.offset) { _, table in
                 tableView(table)
             }
+            ForEach(Array(screen.groups.enumerated()), id: \.offset) { _, group in
+                card(group.title) {
+                    if let track = group.track { trackPlayer(track, showLabel: false) }
+                    phraseList(group.phrases)
+                }
+            }
             ForEach(screen.notes, id: \.self) { note in
                 Text(rich(note)).font(.callout)
+            }
+        }
+    }
+
+    private func phraseList(_ phrases: [LessonPhrase]) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            ForEach(Array(phrases.enumerated()), id: \.offset) { index, phrase in
+                if index > 0 { Divider() }
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(phrase.polish).font(.body.weight(.medium))
+                    Text(phrase.english).font(.callout).foregroundStyle(.secondary)
+                }
+                .padding(.vertical, Spacing.small)
             }
         }
     }
@@ -188,31 +191,42 @@ struct LessonFlowView: View {
         VStack(alignment: .leading, spacing: Spacing.small) {
             ForEach(screen.questions, id: \.key) { question in
                 let verdict = session.verdict(screenId: screen.id, key: question.key)
-                HStack {
-                    Text("\(question.label))").foregroundStyle(.secondary).frame(width: 28, alignment: .leading)
-                    TextField("", text: binding(question.key))
-                        .textFieldStyle(.roundedBorder)
-                        .keyboardType(screen.keyboard == .digits ? .numberPad : .default)
-                        .autocorrectionDisabled()
-                        .textInputAutocapitalization(.never)
-                        .focused($focused, equals: question.key)
-                        .disabled(session.isChecked)
-                    if verdict == .correct {
-                        Image(systemName: "checkmark").foregroundStyle(Palette.success)
+                let infoKey = "\(screen.id)/\(question.key)"
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(spacing: Spacing.small) {
+                        Text("\(question.label))").foregroundStyle(.secondary).frame(width: labelWidth, alignment: .leading)
+                        TextField("", text: binding(question.key))
+                            .keyboardType(screen.keyboard == .digits ? .numberPad : .default)
+                            .autocorrectionDisabled()
+                            .textInputAutocapitalization(.never)
+                            .focused($focused, equals: question.key)
+                            .disabled(session.isChecked)
+                            .padding(.horizontal, Spacing.small)
+                            .padding(.vertical, 6)
+                            .overlay(RoundedRectangle(cornerRadius: Radius.small).stroke(verdictColor(verdict, idle: Color.secondary.opacity(0.4))))
+                        if verdict == .correct {
+                            Image(systemName: "checkmark").foregroundStyle(Palette.success)
+                        }
+                        if session.isChecked, question.feedback != nil { infoButton(infoKey) }
+                    }
+                    if let verdict, verdict != .correct {
+                        expected(question.answers.first ?? "", verdict: verdict).padding(.leading, labelWidth + Spacing.small)
+                    }
+                    if openInfo == infoKey, let explanation = question.feedback {
+                        explanationText(explanation).padding(.leading, labelWidth + Spacing.small)
                     }
                 }
-                feedback(label: nil, verdict: verdict, expected: question.answers.first ?? "", explanation: question.feedback)
             }
         }
     }
 
     private func choiceBody(_ screen: LessonScreenChoice, _ session: LessonSession) -> some View {
-        VStack(alignment: .leading, spacing: Spacing.medium) {
+        VStack(alignment: .leading, spacing: Spacing.small) {
             ForEach(screen.items, id: \.question.key) { item in
                 let question = item.question
                 let chosen = session.answer(screenId: screen.id, key: question.key)
+                let infoKey = "\(screen.id)/\(question.key)"
                 VStack(alignment: .leading, spacing: Spacing.tiny) {
-                    Text("\(question.label))").foregroundStyle(.secondary)
                     HStack(spacing: Spacing.small) {
                         ForEach(item.options, id: \.self) { option in
                             Button {
@@ -227,9 +241,10 @@ struct LessonFlowView: View {
                             .buttonStyle(.plain)
                             .allowsHitTesting(!session.isChecked)
                         }
+                        if session.isChecked, question.feedback != nil { infoButton(infoKey) }
                     }
-                    if session.isChecked, let explanation = question.feedback {
-                        Text(rich(explanation)).font(.caption).foregroundStyle(.secondary)
+                    if openInfo == infoKey, let explanation = question.feedback {
+                        explanationText(explanation)
                     }
                 }
             }
@@ -249,169 +264,175 @@ struct LessonFlowView: View {
         let questions = Dictionary(uniqueKeysWithValues: screen.questions.map { ($0.key, $0) })
         return VStack(alignment: .leading, spacing: Spacing.medium) {
             ForEach(Array(screen.sections.enumerated()), id: \.offset) { _, section in
-                if let title = section.title { Text(title).font(.subheadline.weight(.semibold)) }
-                ForEach(Array(section.lines.enumerated()), id: \.offset) { _, line in
-                    VStack(alignment: .leading, spacing: Spacing.tiny) {
-                        if let speaker = line.speaker {
-                            Text(speaker).font(.caption.weight(.semibold)).foregroundStyle(Palette.accentDeep)
-                        }
-                        FlowLayout(spacing: Spacing.tiny) {
-                            ForEach(Array(segments(line.text).enumerated()), id: \.offset) { _, segment in
-                                switch segment {
-                                case .text(let text):
-                                    Text(text)
-                                case .gap(let key):
-                                    gapField(key, expected: questions[key]?.answers.first ?? "", session: session, screenId: screen.id)
+                card(section.title) {
+                    if let track = section.track { trackPlayer(track, showLabel: false) }
+                    ForEach(Array(section.lines.enumerated()), id: \.offset) { _, line in
+                        let parts = segments(line.text)
+                        VStack(alignment: .leading, spacing: 2) {
+                            FlowLayout(spacing: Spacing.tiny) {
+                                if let speaker = line.speaker {
+                                    Text("\(speaker):").fontWeight(.semibold).foregroundStyle(Palette.accentDeep)
+                                }
+                                ForEach(Array(parts.enumerated()), id: \.offset) { _, part in
+                                    switch part {
+                                    case .text(let text):
+                                        Text(text)
+                                    case .gap(let key):
+                                        gapField(key, question: questions[key], session: session, screenId: screen.id)
+                                        if session.isChecked, questions[key]?.feedback != nil { infoButton("\(screen.id)/\(key)") }
+                                    }
+                                }
+                            }
+                            ForEach(gapKeys(parts), id: \.self) { key in
+                                if openInfo == "\(screen.id)/\(key)", let explanation = questions[key]?.feedback {
+                                    explanationText(explanation)
                                 }
                             }
                         }
                     }
                 }
-                ForEach(gapKeys(section), id: \.self) { key in
-                    if let question = questions[key] {
-                        feedback(
-                            label: question.label,
-                            verdict: session.verdict(screenId: screen.id, key: key),
-                            expected: question.answers.first ?? "",
-                            explanation: firstExplanation(question, in: section, questions: questions)
-                        )
-                    }
-                }
             }
         }
     }
 
-    private func firstExplanation(_ question: LessonQuestion, in section: GapSection, questions: [String: LessonQuestion]) -> String? {
-        guard let explanation = question.feedback else { return nil }
-        let earlier = gapKeys(section).prefix { $0 != question.key }
-        return earlier.contains { questions[$0]?.feedback == explanation } ? nil : explanation
-    }
-
-    private func gapField(_ key: String, expected: String, session: LessonSession, screenId: String) -> some View {
+    private func gapField(_ key: String, question: LessonQuestion?, session: LessonSession, screenId: String) -> some View {
         let verdict = session.verdict(screenId: screenId, key: key)
-        let underline: Color = switch verdict {
-        case nil: .secondary
-        case .correct: Palette.success
-        case .almost: Palette.warning
-        default: Palette.failure
+        let answer = question?.answers.first ?? ""
+        return VStack(spacing: 0) {
+            TextField("", text: binding(key))
+                .multilineTextAlignment(.center)
+                .autocorrectionDisabled()
+                .textInputAutocapitalization(.never)
+                .focused($focused, equals: key)
+                .disabled(session.isChecked)
+                .overlay(alignment: .bottom) { Rectangle().fill(verdictColor(verdict, idle: .secondary)).frame(height: 2) }
+            if let verdict, verdict != .correct {
+                Text(answer).font(.caption).foregroundStyle(verdictColor(verdict, idle: .secondary))
+            }
         }
-        return TextField("", text: binding(key))
-            .multilineTextAlignment(.center)
-            .autocorrectionDisabled()
-            .textInputAutocapitalization(.never)
-            .focused($focused, equals: key)
-            .disabled(session.isChecked)
-            .frame(width: CGFloat(max(expected.count, 4)) * 11)
-            .overlay(alignment: .bottom) { Rectangle().fill(underline).frame(height: 2) }
+        .frame(width: CGFloat(max(answer.count, 4)) * 11)
     }
 
     private func freeWritingBody(_ screen: LessonScreenFreeWriting, _ session: LessonSession) -> some View {
         VStack(alignment: .leading, spacing: Spacing.medium) {
             ForEach(Array(screen.fields.enumerated()), id: \.offset) { index, label in
-                VStack(alignment: .leading, spacing: Spacing.tiny) {
-                    Text(label).font(.subheadline.weight(.semibold))
-                    TextEditor(text: binding(String(index)))
-                        .autocorrectionDisabled()
-                        .frame(minHeight: 110)
-                        .focused($focused, equals: String(index))
-                        .overlay(RoundedRectangle(cornerRadius: Radius.small).stroke(Color.secondary.opacity(0.3)))
+                TextField(label, text: binding(String(index)), axis: .vertical)
+                    .lineLimit(4, reservesSpace: true)
+                    .autocorrectionDisabled()
+                    .focused($focused, equals: String(index))
+                    .disabled(session.isFinished || reviewing)
+                    .padding(Spacing.small)
+                    .overlay(RoundedRectangle(cornerRadius: Radius.small).stroke(Color.secondary.opacity(0.4)))
+            }
+            if reviewing {
+                HStack(spacing: Spacing.small) {
+                    ProgressView()
+                    Text(Strings.lessonFlowReviewing).font(.callout)
+                }
+            }
+            if let reviewProblem {
+                Text(reviewProblem).font(.callout).foregroundStyle(.secondary)
+            }
+            if let review = session.review(screenId: screen.id) {
+                card(nil) {
+                    if !review.strengths.isEmpty {
+                        Text(Strings.lessonFlowReviewStrengths).font(.headline)
+                        ForEach(review.strengths, id: \.self) { Text(rich("• " + $0)).font(.callout) }
+                    }
+                    if !review.improvements.isEmpty {
+                        Text(Strings.lessonFlowReviewImprovements).font(.headline).padding(.top, Spacing.small)
+                        ForEach(review.improvements, id: \.self) { Text(rich("• " + $0)).font(.callout) }
+                    }
                 }
             }
             if session.isFinished {
-                VStack(alignment: .leading, spacing: Spacing.small) {
-                    Text(Strings.lessonFlowModelAnswer).font(.headline)
+                card(Strings.lessonFlowModelAnswer) {
                     ForEach(screen.model, id: \.self) { Text(rich($0)).font(.callout) }
-                    Text(Strings.lessonFlowChecklist).font(.headline).padding(.top, Spacing.small)
-                    ForEach(screen.checklist, id: \.self) { Text(rich("• " + $0)).font(.callout) }
                 }
-                .padding(Spacing.medium)
-                .background(Color.secondary.opacity(0.1))
-                .clipShape(RoundedRectangle(cornerRadius: Radius.medium))
             }
         }
     }
 
-    @ViewBuilder
-    private func feedback(label: String?, verdict: AnswerVerdict?, expected: String, explanation: String?) -> some View {
-        if let verdict {
-            VStack(alignment: .leading, spacing: 2) {
-                if verdict != .correct {
-                    let prefix = label.map { "\($0)) " } ?? ""
-                    Text(prefix + (verdict == .almost ? Strings.lessonFlowAlmostExpected(expected) : Strings.lessonFlowExpected(expected)))
-                        .font(.callout)
-                        .foregroundStyle(verdict == .almost ? Palette.warning : Palette.failure)
-                }
-                if let explanation {
-                    Text(rich(explanation)).font(.caption).foregroundStyle(.secondary)
-                }
-            }
-            .padding(.leading, 28)
+    private func infoButton(_ key: String) -> some View {
+        Button {
+            openInfo = openInfo == key ? nil : key
+        } label: {
+            Image(systemName: "info.circle").imageScale(.large)
+        }
+        .buttonStyle(.borderless)
+        .accessibilityLabel(Strings.lessonFlowExplain)
+    }
+
+    private func explanationText(_ text: String) -> some View {
+        Text(rich(text)).font(.caption).foregroundStyle(.secondary)
+    }
+
+    private func expected(_ answer: String, verdict: AnswerVerdict) -> some View {
+        Text(verdict == .almost ? Strings.lessonFlowAlmostExpected(answer) : Strings.lessonFlowExpected(answer))
+            .font(.caption)
+            .foregroundStyle(verdictColor(verdict, idle: .secondary))
+    }
+
+    private func verdictColor(_ verdict: AnswerVerdict?, idle: Color) -> Color {
+        switch verdict {
+        case nil: idle
+        case .correct: Palette.success
+        case .almost: Palette.warning
+        default: Palette.failure
         }
     }
 
-    @ViewBuilder
-    private func transcriptView(_ transcript: Transcript, unlocked: Bool) -> some View {
-        if !unlocked {
-            Text(Strings.lessonFlowTranscriptLocked).font(.caption).foregroundStyle(.secondary)
-        } else {
-            VStack(alignment: .leading, spacing: Spacing.small) {
-                Button(transcriptOpen ? Strings.lessonFlowHideTranscript : Strings.lessonFlowShowTranscript) {
-                    transcriptOpen.toggle()
-                }
-                if transcriptOpen {
-                    VStack(alignment: .leading, spacing: Spacing.small) {
-                        ForEach(Array(transcript.sections.enumerated()), id: \.offset) { _, section in
-                            if let title = section.title { Text(title).font(.subheadline.weight(.semibold)) }
-                            ForEach(Array(section.lines.enumerated()), id: \.offset) { _, line in
-                                Text(rich((line.speaker.map { "**\($0):** " } ?? "") + line.text)).font(.callout)
-                            }
+    private func transcriptView(_ transcript: Transcript) -> some View {
+        VStack(alignment: .leading, spacing: Spacing.small) {
+            Button(transcriptOpen ? Strings.lessonFlowHideTranscript : Strings.lessonFlowShowTranscript) {
+                transcriptOpen.toggle()
+            }
+            if transcriptOpen {
+                card(nil) {
+                    ForEach(Array(transcript.sections.enumerated()), id: \.offset) { _, section in
+                        if let title = section.title { Text(title).font(.subheadline.weight(.semibold)) }
+                        ForEach(Array(section.lines.enumerated()), id: \.offset) { _, line in
+                            Text(rich((line.speaker.map { "**\($0):** " } ?? "") + line.text)).font(.callout)
                         }
                     }
-                    .padding(Spacing.medium)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color.secondary.opacity(0.1))
-                    .clipShape(RoundedRectangle(cornerRadius: Radius.medium))
                 }
             }
         }
     }
 
-    private func stepScoreView(_ score: StepScore) -> some View {
-        VStack(alignment: .leading, spacing: Spacing.small) {
-            Text(Strings.lessonFlowStepScore(score.step.title, Int(score.percent), Int(score.correct), Int(score.total)))
-                .font(.headline)
-                .foregroundStyle(score.passed ? Palette.success : Palette.failure)
-            Text(score.passed ? Strings.lessonFlowStepPassed : Strings.lessonFlowStepFailed(Int(score.passMark * 100)))
-                .font(.callout)
-        }
-        .padding(Spacing.medium)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.secondary.opacity(0.1))
-        .clipShape(RoundedRectangle(cornerRadius: Radius.medium))
-    }
-
-    private func completedView(_ session: LessonSession) -> some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: Spacing.small) {
+    private func resultsView(_ results: LessonResults) -> some View {
+        let overall = results.overall
+        return ScrollView {
+            VStack(alignment: .leading, spacing: Spacing.medium) {
                 Text(Strings.lessonFlowCompleted).font(.title2.weight(.semibold))
-                Text(Strings.lessonFlowCompletedBody(session.script.title)).font(.callout)
-                ForEach(session.script.vocabulary, id: \.polish) { phrase in
-                    HStack {
-                        Text(phrase.polish).font(.body.weight(.medium))
-                        Spacer()
-                        Text(phrase.english).font(.callout).foregroundStyle(.secondary)
+                Text(Strings.lessonFlowResults(Int(overall.correct), Int(overall.total), Int(overall.percent))).font(.headline)
+                card(nil) {
+                    ForEach(Array(results.steps.enumerated()), id: \.offset) { index, step in
+                        if index > 0 { Divider() }
+                        HStack {
+                            Text(step.step.title)
+                            Spacer()
+                            Text(Strings.lessonFlowStepResult(Int(step.score.correct), Int(step.score.total))).foregroundStyle(.secondary)
+                        }
+                        .padding(.vertical, Spacing.tiny)
                     }
-                    Divider()
                 }
             }
             .padding(Spacing.medium)
         }
         .safeAreaInset(edge: .bottom) {
-            Button(Strings.lessonFlowDone) { dismiss() }
-                .buttonStyle(.borderedProminent)
-                .padding(Spacing.medium)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(.bar)
+            HStack(spacing: Spacing.small) {
+                if hasNextLesson {
+                    Button(Strings.lessonFlowNextLesson) {
+                        onNextLesson()
+                        dismiss()
+                    }.buttonStyle(.borderedProminent)
+                }
+                Button(Strings.lessonFlowClose) { dismiss() }.buttonStyle(.bordered)
+                Spacer()
+            }
+            .padding(Spacing.medium)
+            .background(.bar)
         }
     }
 
@@ -422,42 +443,29 @@ struct LessonFlowView: View {
             if session.canGoBack {
                 Button(Strings.lessonFlowBack) { change { $0.previous() } }.buttonStyle(.bordered)
             }
-            footerAction(session)
+            if session.needsCheck {
+                Button(Strings.exerciseCheck) { check(session) }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(!session.canCheck || reviewing)
+            } else if session.isLastScreen {
+                AsyncButton {
+                    await next(session)
+                } label: {
+                    Text(Strings.lessonFlowFinish)
+                }
+                .buttonStyle(.borderedProminent)
+            } else {
+                AsyncButton {
+                    await next(session)
+                } label: {
+                    Text(Strings.lessonFlowNext)
+                }
+                .buttonStyle(.borderedProminent)
+            }
             Spacer()
         }
         .padding(Spacing.medium)
         .background(.bar)
-    }
-
-    @ViewBuilder
-    private func footerAction(_ session: LessonSession) -> some View {
-        let screen = session.screen
-        if screen.isGraded && !session.isChecked {
-            Button(Strings.exerciseCheck) { change { $0.check() } }
-                .buttonStyle(.borderedProminent)
-                .disabled(!session.canCheck)
-        } else if let writing = screen as? LessonScreenFreeWriting, !session.isFinished {
-            Button(Strings.lessonFlowShowModel) { change { $0.finish() } }
-                .buttonStyle(.borderedProminent)
-                .disabled(!writing.fields.indices.contains { !session.answer(screenId: screen.id, key: String($0)).isEmpty })
-        } else if !session.isFinished {
-            Button(Strings.lessonFlowDone) { change { $0.finish().next() } }.buttonStyle(.borderedProminent)
-        } else if let step = session.stepToRetry {
-            Button(Strings.lessonFlowRetry) { change { $0.retryStep(step: step) } }.buttonStyle(.borderedProminent)
-            Button(Strings.lessonFlowContinueAnyway) {
-                if session.isLastScreen { dismiss() } else { change { $0.next() } }
-            }
-        } else if session.isLastScreen {
-            AsyncButton {
-                await finishLesson(session)
-            } label: {
-                Text(Strings.lessonFlowFinish)
-            }
-            .buttonStyle(.borderedProminent)
-            .disabled(!session.isLessonComplete)
-        } else {
-            Button(Strings.lessonFlowNext) { change { $0.next() } }.buttonStyle(.borderedProminent)
-        }
     }
 
     // MARK: State
@@ -469,10 +477,36 @@ struct LessonFlowView: View {
         )
     }
 
-    private func insert(_ letter: String) {
-        guard let key = focused, let session else { return }
-        let current = session.answer(screenId: session.screen.id, key: key)
-        change { $0.withAnswer(key: key, value: current + letter) }
+    private func check(_ session: LessonSession) {
+        guard let writing = session.screen as? LessonScreenFreeWriting else {
+            change { $0.check() }
+            return
+        }
+        guard session.canCheck, !reviewing else { return }
+        focused = nil
+        reviewing = true
+        reviewProblem = nil
+        let answers = writing.fields.indices.map { session.answer(screenId: writing.id, key: String($0)) }
+        Task {
+            let outcome = try? await deps.reviewWriting.invoke(screen: writing, answers: answers)
+            reviewing = false
+            if let reviewed = outcome as? WritingReviewOutcomeReviewed {
+                change { $0.withReview(review: reviewed.review) }
+            } else {
+                reviewProblem = outcome is WritingReviewOutcomeOffline ? Strings.lessonFlowReviewOffline : Strings.lessonFlowReviewUnavailable
+                change { $0.check() }
+            }
+        }
+    }
+
+    private func next(_ session: LessonSession) async {
+        guard !session.needsCheck else { return }
+        let next = session.next()
+        change { _ in next }
+        guard session.isLastScreen, next.isAtEnd else { return }
+        audio.stop()
+        try? await deps.setLessonCompleted.invoke(id: lessonId, isCompleted: true)
+        results = next.results
     }
 
     private func change(_ transform: (LessonSession) -> LessonSession) {
@@ -480,6 +514,8 @@ struct LessonFlowView: View {
         let next = transform(current)
         if next.index != current.index {
             transcriptOpen = false
+            openInfo = nil
+            reviewProblem = nil
             focused = nil
             audio.stop()
         }
@@ -496,16 +532,9 @@ struct LessonFlowView: View {
         guard !loaded else { return }
         if let script = try? await deps.getLessonScript.invoke(id: lessonId) {
             let progress = try? await deps.getLessonProgress.invoke(id: lessonId)
-            session = LessonSession.companion.start(script: script, progress: progress)
+            session = LessonSession.companion.resume(script: script, progress: progress)
         }
         loaded = true
-    }
-
-    private func finishLesson(_ session: LessonSession) async {
-        guard session.isLessonComplete else { return }
-        audio.stop()
-        try? await deps.setLessonCompleted.invoke(id: lessonId, isCompleted: true)
-        completed = true
     }
 
     // MARK: Gaps
@@ -519,22 +548,21 @@ struct LessonFlowView: View {
         var result: [Segment] = []
         var rest = Substring(text)
         while let open = rest.firstIndex(of: "["), let close = rest[open...].firstIndex(of: "]") {
-            let before = rest[..<open].trimmingCharacters(in: .whitespaces)
-            if !before.isEmpty { result.append(.text(before)) }
+            result += words(rest[..<open])
             result.append(.gap(String(rest[rest.index(after: open)..<close])))
             rest = rest[rest.index(after: close)...]
         }
-        let tail = rest.trimmingCharacters(in: .whitespaces)
-        if !tail.isEmpty { result.append(.text(tail)) }
-        return result
+        return result + words(rest)
     }
 
-    private func gapKeys(_ section: GapSection) -> [String] {
-        section.lines.flatMap { line in
-            segments(line.text).compactMap { segment -> String? in
-                if case .gap(let key) = segment { return key }
-                return nil
-            }
+    private func words(_ text: Substring) -> [Segment] {
+        text.split(separator: " ").map { .text(String($0)) }
+    }
+
+    private func gapKeys(_ parts: [Segment]) -> [String] {
+        parts.compactMap { part -> String? in
+            if case .gap(let key) = part { return key }
+            return nil
         }
     }
 }

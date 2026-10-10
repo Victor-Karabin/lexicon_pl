@@ -18,7 +18,6 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.AutoStories
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.FitnessCenter
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.filled.Tune
@@ -30,7 +29,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -65,7 +63,6 @@ import kotlinx.collections.immutable.toImmutableList
 import org.koin.androidx.compose.koinViewModel
 
 private val StatusIconSize = 24.dp
-private const val LOCKED_ALPHA = 0.45f
 private const val DESCRIPTION_LINES = 2
 
 private const val TRACK_ALPHA = 0.25f
@@ -322,8 +319,7 @@ internal fun LessonRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(enabled = lesson.isUnlocked, onClick = onClick)
-            .alpha(if (lesson.isUnlocked) 1f else LOCKED_ALPHA)
+            .clickable(onClick = onClick)
             .padding(Dimens.spacingMedium),
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
         verticalAlignment = Alignment.CenterVertically,
@@ -353,12 +349,11 @@ internal fun LessonRow(
 private fun LessonStatusIcon(lesson: LessonSummary) {
     val (icon, tint) = when {
         lesson.isCompleted -> Icons.Default.CheckCircle to LexiconSuccess
-        !lesson.isUnlocked -> Icons.Default.Lock to MaterialTheme.colorScheme.onSurfaceVariant
         else -> Icons.Default.RadioButtonUnchecked to MaterialTheme.colorScheme.primary
     }
     Icon(
         imageVector = icon,
-        contentDescription = if (lesson.isUnlocked) null else stringResource(R.string.course_lesson_locked),
+        contentDescription = null,
         tint = tint,
         modifier = Modifier.size(StatusIconSize),
     )
@@ -373,10 +368,10 @@ internal fun previewCourse(): Course =
         level = CefrLevel.A1,
         title = LocalizedText(mapOf("en" to "Polski krok po kroku 1")),
         lessons = listOf(
-            LessonSummary(LessonId("1"), 1, "PIERWSZY DZIEŃ W SZKOLE", 8, isCompleted = true, isUnlocked = true),
-            LessonSummary(LessonId("2"), 2, "CZEŚĆ, SKĄD JESTEŚ?", 10, isCompleted = true, isUnlocked = true),
-            LessonSummary(LessonId("3"), 3, "MAMI, KTO TO JEST?", 6, isCompleted = false, isUnlocked = true),
-            LessonSummary(LessonId("4"), 4, "JAKI JESTEŚ?", 9, isCompleted = false, isUnlocked = false),
+            LessonSummary(LessonId("1"), 1, "PIERWSZY DZIEŃ W SZKOLE", 8, isCompleted = true),
+            LessonSummary(LessonId("2"), 2, "CZEŚĆ, SKĄD JESTEŚ?", 10, isCompleted = true),
+            LessonSummary(LessonId("3"), 3, "MAMI, KTO TO JEST?", 6, isCompleted = false),
+            LessonSummary(LessonId("4"), 4, "JAKI JESTEŚ?", 9, isCompleted = false),
         ).toImmutableList(),
     )
 

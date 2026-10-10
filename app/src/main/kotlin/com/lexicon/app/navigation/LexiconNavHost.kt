@@ -195,9 +195,6 @@ fun LexiconNavHost(
                     navController.navigate(LexiconDestinations.exercise(lessonId, exercise.id))
                 },
                 onStartLesson = { navController.navigate(LexiconDestinations.lessonFlow(lessonId)) },
-                onTrainLesson = { wordIds ->
-                    navController.navigate(LexiconDestinations.scopedTraining(LexiconDestinations.MIX, wordIds))
-                },
             )
         }
 
@@ -205,7 +202,15 @@ fun LexiconNavHost(
             route = LexiconDestinations.LESSON_FLOW,
             arguments = listOf(navArgument(LESSON_ID_ARG) { type = NavType.StringType }),
         ) {
-            LessonFlowScreen(onClose = { navController.popBackStack() })
+            LessonFlowScreen(
+                onClose = { navController.popBackStack() },
+                onFinished = { navController.popBackStack(LexiconDestinations.LESSON, inclusive = true) },
+                onNextLesson = { next ->
+                    navController.navigate(LexiconDestinations.lesson(next.value)) {
+                        popUpTo(LexiconDestinations.LESSON) { inclusive = true }
+                    }
+                },
+            )
         }
 
         composable(

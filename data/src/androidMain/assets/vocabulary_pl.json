@@ -108377,5 +108377,285 @@
   ],
   "example": "Cześć, **jak masz na imię**?",
   "picture": "child saying name"
+ },
+ {
+  "id": 7148,
+  "text": "na lewo",
+  "translation": "on the left / to the left",
+  "transcription": "na ˈlɛvɔ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": "Sklep jest **na lewo**.",
+  "picture": "person pointing left"
+ },
+ {
+  "id": 7149,
+  "text": "na prawo",
+  "translation": "on the right / to the right",
+  "transcription": "na ˈpravɔ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": "Bank jest **na prawo**.",
+  "picture": "person pointing right"
+ },
+ {
+  "id": 7150,
+  "text": "jak się mówi po polsku?",
+  "translation": "how do you say it in Polish?",
+  "transcription": "jak ɕɛ̃ ˈmuvi pɔ ˈpɔlsku",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation",
+   "classroom"
+  ],
+  "example": "**Jak się mówi po polsku** „thank you”?",
+  "picture": "person asking question in classroom"
+ },
+ {
+  "id": 7151,
+  "text": "przeliterować",
+  "translation": "to spell (perfective)",
+  "transcription": "bʐɛlitɛˈrɔvat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "A1",
+  "topics": [
+   "classroom"
+  ],
+  "example": "**Przeliteruj** swoje imię.",
+  "picture": "person spelling name aloud"
+ },
+ {
+  "id": 7152,
+  "text": "numer telefonu",
+  "translation": "phone number",
+  "transcription": "ˈnumɛr tɛlɛˈfɔnu",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": "Mój **numer telefonu** to 555123.",
+  "picture": "mobile phone screen"
+ },
+ {
+  "id": 7153,
+  "text": "do jutra",
+  "translation": "see you tomorrow",
+  "transcription": "dɔ ˈjutra",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": "Cześć, **do jutra**!",
+  "picture": "calendar page tomorrow"
+ },
+ {
+  "id": 7154,
+  "text": "one",
+  "translation": "they (women, children, things)",
+  "transcription": "ˈɔnɛ",
+  "partOfSpeech": "prn",
+  "cefr": "A1",
+  "topics": [
+   "introductions"
+  ],
+  "example": "Gdzie są Angela i Mami? **One** są tam.",
+  "picture": "group of women talking"
+ },
+ {
+  "id": 7155,
+  "text": "jedenaście",
+  "translation": "eleven",
+  "transcription": "jɛdɛˈnaɕt͡ɕɛ",
+  "partOfSpeech": "num",
+  "cefr": "A1",
+  "topics": [
+   "numbers"
+  ],
+  "example": "Mój syn ma **jedenaście** lat.",
+  "picture": "number eleven"
+ },
+ {
+  "id": 7156,
+  "text": "trzynaście",
+  "translation": "thirteen",
+  "transcription": "dʐɨˈnaɕt͡ɕɛ",
+  "partOfSpeech": "num",
+  "cefr": "A1",
+  "topics": [
+   "numbers"
+  ],
+  "example": "W grupie jest **trzynaście** osób.",
+  "picture": "number thirteen"
+ },
+ {
+  "id": 7157,
+  "text": "czternaście",
+  "translation": "fourteen",
+  "transcription": "t͡ʂtɛˈrnaɕt͡ɕɛ",
+  "partOfSpeech": "num",
+  "cefr": "A1",
+  "topics": [
+   "numbers"
+  ],
+  "example": "Mieszkam pod numerem **czternaście**.",
+  "picture": "number fourteen"
+ },
+ {
+  "id": 7158,
+  "text": "osiemnaście",
+  "translation": "eighteen",
+  "transcription": "ɔɕɛˈmnaɕt͡ɕɛ",
+  "partOfSpeech": "num",
+  "cefr": "A1",
+  "topics": [
+   "numbers"
+  ],
+  "example": "Moja córka ma **osiemnaście** lat.",
+  "picture": "number eighteen"
+ },
+ {
+  "id": 7159,
+  "text": "dziewiętnaście",
+  "translation": "nineteen",
+  "transcription": "d͡ʑɛvjɛ̃ˈtnaɕt͡ɕɛ",
+  "partOfSpeech": "num",
+  "cefr": "A1",
+  "topics": [
+   "numbers"
+  ],
+  "example": "Autobus numer **dziewiętnaście** jedzie do centrum.",
+  "picture": "number nineteen"
+ },
+ {
+  "id": 7160,
+  "text": "fatalnie",
+  "translation": "terribly",
+  "transcription": "faˈtalɲɛ",
+  "partOfSpeech": "adv",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": "Dziś czuję się **fatalnie**.",
+  "picture": "person feeling sick in bed"
+ },
+ {
+  "id": 7161,
+  "text": "tak sobie",
+  "translation": "so-so",
+  "transcription": "tak ˈsɔbjɛ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": "— Jak się masz? — **Tak sobie**.",
+  "picture": "so-so hand gesture"
+ },
+ {
+  "id": 7162,
+  "text": "po staremu",
+  "translation": "same as always",
+  "transcription": "pɔ staˈrɛmu",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": "— Co słychać? — Wszystko **po staremu**.",
+  "picture": "same old morning routine"
+ },
+ {
+  "id": 7163,
+  "text": "co nowego",
+  "translation": "what's new?",
+  "transcription": "t͡sɔ nɔˈvɛgɔ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "greetings",
+   "daily-conversation"
+  ],
+  "example": "Cześć, **co nowego**?",
+  "picture": "friends chatting in a cafe"
+ },
+ {
+  "id": 7164,
+  "text": "skąd pan jest",
+  "translation": "where are you from? (formal, to a man)",
+  "transcription": "skɔ̃t pan jɛst",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "introductions",
+   "countries"
+  ],
+  "example": "Przepraszam, **skąd pan jest**?",
+  "picture": "world map with pins"
+ },
+ {
+  "id": 7165,
+  "text": "skąd pani jest",
+  "translation": "where are you from? (formal, to a woman)",
+  "transcription": "skɔ̃t ˈpaɲi jɛst",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "introductions",
+   "countries"
+  ],
+  "example": "**Skąd pani jest**? — Jestem z Anglii.",
+  "picture": "globe on a desk"
+ },
+ {
+  "id": 7166,
+  "text": "gdzie pan mieszka",
+  "translation": "where do you live? (formal, to a man)",
+  "transcription": "gd͡ʑɛ pan ˈmjɛʂka",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "introductions",
+   "home"
+  ],
+  "example": "**Gdzie pan mieszka**? — W Krakowie.",
+  "picture": "apartment building entrance"
+ },
+ {
+  "id": 7167,
+  "text": "gdzie pani mieszka",
+  "translation": "where do you live? (formal, to a woman)",
+  "transcription": "gd͡ʑɛ ˈpaɲi ˈmjɛʂka",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "introductions",
+   "home"
+  ],
+  "example": "**Gdzie pani mieszka**? — Mieszkam w Warszawie.",
+  "picture": "house front door"
+ },
+ {
+  "id": 7168,
+  "text": "mieszkam w Krakowie",
+  "translation": "I live in Kraków",
+  "transcription": "ˈmjɛʂkam f kraˈkɔvjɛ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "introductions",
+   "home"
+  ],
+  "example": "**Mieszkam w Krakowie** z polską rodziną.",
+  "picture": "Kraków old town square"
  }
 ]

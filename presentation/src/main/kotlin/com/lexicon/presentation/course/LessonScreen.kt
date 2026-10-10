@@ -14,16 +14,13 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -49,7 +46,6 @@ import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.presets.VocabularyWordRow
 import com.lexicon.presentation.theme.Dimens
-import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -59,7 +55,6 @@ import org.koin.androidx.compose.koinViewModel
 fun LessonScreen(
     onClose: () -> Unit,
     onEditWord: (VocabularyId) -> Unit,
-    onTrainLesson: (List<Long>) -> Unit,
     onExerciseSelected: (LessonExercise) -> Unit,
     onStartLesson: () -> Unit,
     modifier: Modifier = Modifier,
@@ -75,8 +70,6 @@ fun LessonScreen(
     LessonContent(
         uiState = uiState,
         onClose = onClose,
-        onTrainLesson = onTrainLesson,
-        onCompletedToggled = viewModel::onCompletedToggled,
         onWordStatusCycled = viewModel::onWordStatusCycled,
         onPronounceWord = viewModel::onPronounceWord,
         onEditWord = onEditWord,
@@ -91,8 +84,6 @@ fun LessonScreen(
 private fun LessonContent(
     uiState: LessonUiState,
     onClose: () -> Unit,
-    onTrainLesson: (List<Long>) -> Unit,
-    onCompletedToggled: (Boolean) -> Unit,
     onWordStatusCycled: (VocabularyId) -> Unit,
     onPronounceWord: (Word) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
@@ -134,7 +125,7 @@ private fun LessonContent(
                     modifier = Modifier.fillMaxSize().padding(padding),
                     contentPadding = PaddingValues(bottom = Dimens.spacingXl),
                 ) {
-                    lessonHeader(uiState, onTrainLesson, onCompletedToggled, onStartLesson)
+                    lessonHeader(uiState, onStartLesson)
                     if (!uiState.hasScript) exercisesBlock(uiState.lesson.exercises, onExerciseSelected)
                     wordsBlock(uiState, onWordStatusCycled, onPronounceWord, onEditWord)
                 }
@@ -144,14 +135,11 @@ private fun LessonContent(
 
 private fun LazyListScope.lessonHeader(
     uiState: LessonUiState.Loaded,
-    onTrainLesson: (List<Long>) -> Unit,
-    onCompletedToggled: (Boolean) -> Unit,
     onStartLesson: () -> Unit,
 ) = item {
-    val lesson = uiState.lesson
     Column(modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium)) {
         Text(
-            text = lesson.title,
+            text = uiState.lesson.title,
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.SemiBold,
         )
@@ -160,38 +148,6 @@ private fun LazyListScope.lessonHeader(
                 Icon(Icons.Default.PlayArrow, contentDescription = null)
                 Text(
                     text = stringResource(if (uiState.isScriptStarted) R.string.lesson_flow_continue else R.string.lesson_flow_start),
-                    modifier = Modifier.padding(start = Dimens.spacingSmall),
-                )
-            }
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(top = Dimens.spacingMedium),
-            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-        ) {
-            Button(
-                onClick = { onTrainLesson(lesson.vocabularyIds.map { it.value }) },
-                enabled = lesson.vocabularyIds.isNotEmpty(),
-            ) {
-                Icon(Icons.Default.PlayArrow, contentDescription = null)
-                Text(
-                    text = stringResource(R.string.lesson_train),
-                    modifier = Modifier.padding(start = Dimens.spacingSmall),
-                )
-            }
-            OutlinedButton(onClick = { onCompletedToggled(!lesson.isCompleted) }) {
-                Icon(
-                    imageVector = if (lesson.isCompleted) {
-                        Icons.Default.CheckCircle
-                    } else {
-                        Icons.Default.RadioButtonUnchecked
-                    },
-                    contentDescription = null,
-                    tint = if (lesson.isCompleted) LexiconSuccess else MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                Text(
-                    text = stringResource(
-                        if (lesson.isCompleted) R.string.lesson_mark_incomplete else R.string.lesson_mark_complete,
-                    ),
                     modifier = Modifier.padding(start = Dimens.spacingSmall),
                 )
             }
@@ -313,8 +269,6 @@ private fun LessonPreview() {
                 isLoadingWords = false,
             ),
             onClose = {},
-            onTrainLesson = {},
-            onCompletedToggled = {},
             onWordStatusCycled = {},
             onPronounceWord = {},
             onEditWord = {},
@@ -331,8 +285,6 @@ private fun LessonNotFoundPreview() {
         LessonContent(
             uiState = LessonUiState.NotFound,
             onClose = {},
-            onTrainLesson = {},
-            onCompletedToggled = {},
             onWordStatusCycled = {},
             onPronounceWord = {},
             onEditWord = {},

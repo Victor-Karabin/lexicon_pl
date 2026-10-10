@@ -41,19 +41,21 @@ fun ExerciseScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    ExerciseContent(
-        uiState = uiState,
-        onClose = onClose,
-        onPlayAudio = viewModel::onPlayAudio,
-        onReplayAudio = viewModel::onReplayAudio,
-        onOptionSelected = viewModel::onOptionSelected,
-        onGapChanged = viewModel::onGapChanged,
-        onMatchPromptSelected = viewModel::onMatchPromptSelected,
-        onMatchChoiceSelected = viewModel::onMatchChoiceSelected,
-        onCheck = viewModel::onCheck,
-        onRetry = viewModel::onRetry,
-        modifier = modifier,
-    )
+    AnswerInputs {
+        ExerciseContent(
+            uiState = uiState,
+            onClose = onClose,
+            onPlayAudio = viewModel::onPlayAudio,
+            onSeekAudio = viewModel::onSeekAudio,
+            onOptionSelected = viewModel::onOptionSelected,
+            onGapChanged = viewModel::onGapChanged,
+            onMatchPromptSelected = viewModel::onMatchPromptSelected,
+            onMatchChoiceSelected = viewModel::onMatchChoiceSelected,
+            onCheck = viewModel::onCheck,
+            onRetry = viewModel::onRetry,
+            modifier = modifier,
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,7 +64,7 @@ private fun ExerciseContent(
     uiState: ExerciseUiState,
     onClose: () -> Unit,
     onPlayAudio: () -> Unit,
-    onReplayAudio: () -> Unit,
+    onSeekAudio: (Long) -> Unit,
     onOptionSelected: (Int, String) -> Unit,
     onGapChanged: (Int, Int, String) -> Unit,
     onMatchPromptSelected: (Int) -> Unit,
@@ -102,14 +104,14 @@ private fun ExerciseContent(
                                 fontWeight = FontWeight.SemiBold,
                             )
                             if (uiState.exercise.audioFile != null) {
-                                ExerciseAudioButton(
-                                    isPlaying = uiState.isPlaying,
-                                    onClick = onPlayAudio,
-                                    onReplay = onReplayAudio.takeIf { uiState.canReplay },
+                                AudioPlayerRow(
+                                    state = uiState.track,
+                                    onPlayPause = onPlayAudio,
+                                    onSeek = onSeekAudio,
                                     modifier = Modifier.padding(top = Dimens.spacingMedium),
                                 )
                             }
-                            if (uiState.isAudioMissing) {
+                            if (uiState.track.isMissing) {
                                 Text(
                                     text = stringResource(R.string.exercise_audio_unavailable),
                                     style = MaterialTheme.typography.bodySmall,

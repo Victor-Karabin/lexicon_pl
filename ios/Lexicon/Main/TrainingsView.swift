@@ -18,7 +18,7 @@ struct TrainingsView: View {
                 }
                 .padding(Spacing.medium)
             }
-            .navigationTitle(Strings.tabTrainings)
+            .toolbar(.hidden, for: .navigationBar)
         }
     }
 

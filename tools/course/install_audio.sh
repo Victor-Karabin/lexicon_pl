@@ -7,7 +7,8 @@
 #
 #   ./tools/course/install_audio.sh [applicationId]
 #
-# Lessons work without this; the audio controls simply stay disabled.
+# Lessons work without this: the app downloads each recording from Google Drive the
+# first time it is played (see fetch_drive_manifest.py).
 set -euo pipefail
 
 APPLICATION_ID="${1:-com.lexicon}"
@@ -25,8 +26,7 @@ python3 "$HERE/extract_audio.py" --unpack
 
 echo "Pushing to $TARGET"
 adb shell mkdir -p "$TARGET"
-# Coursebooks only: the app no longer references the workbook recordings.
-for book in "$CACHE"/*_coursebook/; do
+for book in "$CACHE"/*_coursebook/ "$CACHE"/*_workbook/; do
   echo "  $(basename "$book")"
   adb push "$book". "$TARGET/" >/dev/null
 done

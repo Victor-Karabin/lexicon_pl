@@ -23,23 +23,21 @@ struct CourseView: View {
 
                 ForEach(course.lessons, id: \.id.value) { lesson in
                     NavigationLink {
-                        LessonView(lessonId: lesson.id, title: lesson.title)
+                        LessonView(lesson: lesson, lessons: course.lessons)
                     } label: {
                         HStack(spacing: Spacing.medium) {
-                            Image(systemName: lesson.isCompleted ? "checkmark.circle.fill" : lesson.isUnlocked ? "circle" : "lock.fill")
+                            Image(systemName: lesson.isCompleted ? "checkmark.circle.fill" : "circle")
                                 .foregroundStyle(lesson.isCompleted ? Palette.success : .secondary)
                             VStack(alignment: .leading, spacing: 2) {
-                                Text(Strings.courseLessonNumber(Int(lesson.number))).font(.caption).foregroundStyle(.secondary)
-                                Text(lesson.title).font(.body.weight(.medium))
+                                Text(Strings.courseLessonNumber(Int(lesson.number))).font(.body.weight(.medium))
                                 Text("\(lesson.wordCount) \(Strings.presetsWordCountLabel(Int(lesson.wordCount)))").font(.caption).foregroundStyle(.secondary)
                             }
                             Spacer()
                         }
-                        .opacity(lesson.isUnlocked ? 1 : 0.45)
                         .padding(.vertical, Spacing.small)
+                        .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
-                    .disabled(!lesson.isUnlocked)
                     Divider()
                 }
             }
@@ -51,48 +49,39 @@ struct CourseView: View {
 }
 
 struct LessonView: View {
-    let lessonId: LessonId
-    let title: String
+    let lessons: [LessonSummary]
 
+    @State private var current: LessonSummary
     @State private var lesson: Lesson?
     @State private var words: [Word] = []
     @State private var hasScript = false
     @State private var isScriptStarted = false
 
+    init(lesson: LessonSummary, lessons: [LessonSummary]) {
+        self.lessons = lessons
+        _current = State(initialValue: lesson)
+    }
+
+    private var nextLesson: LessonSummary? {
+        lessons.sorted { $0.number < $1.number }.first { $0.number > current.number }
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.medium) {
-                Text(title).font(.title2.weight(.semibold))
-
                 if hasScript {
                     NavigationLink {
-                        LessonFlowView(lessonId: lessonId)
+                        LessonFlowView(
+                            lessonId: current.id,
+                            lessonNumber: Int(current.number),
+                            hasNextLesson: nextLesson != nil,
+                            onNextLesson: openNextLesson
+                        )
+                        .onDisappear { Task { await load() } }
                     } label: {
                         Label(isScriptStarted ? Strings.lessonFlowContinue : Strings.lessonFlowStart, systemImage: "play.fill")
                     }
                     .buttonStyle(.borderedProminent)
-                }
-
-                if let lesson {
-                    HStack(spacing: Spacing.small) {
-                        NavigationLink {
-                            TrainingHost(
-                                entry: TrainingCatalog.entry(id: "mix")!,
-                                vocabularyIds: lesson.vocabularyIds.map { $0.value }
-                            )
-                        } label: {
-                            Label(Strings.lessonTrain, systemImage: "play.fill")
-                        }
-                        .buttonStyle(.borderedProminent)
-
-                        AsyncButton {
-                            try? await deps.setLessonCompleted.invoke(id: lessonId, isCompleted: !lesson.isCompleted)
-                            await load()
-                        } label: {
-                            Label(lesson.isCompleted ? Strings.actionDone : Strings.lessonMarkComplete, systemImage: "checkmark.circle")
-                        }
-                        .buttonStyle(.bordered)
-                    }
                 }
 
                 if let lesson, !lesson.audio.isEmpty {
@@ -126,15 +115,27 @@ struct LessonView: View {
             }
             .padding(Spacing.medium)
         }
+        .navigationTitle(Strings.courseLessonNumber(Int(current.number)))
         .navigationBarTitleDisplayMode(.inline)
-        .task { await load() }
+        .task(id: current.id.value) { await load() }
+    }
+
+    private func openNextLesson() {
+        guard let next = nextLesson else { return }
+        current = next
     }
 
     private func load() async {
-        hasScript = (try? await deps.getLessonScript.invoke(id: lessonId)) != nil
-        let progress = hasScript ? try? await deps.getLessonProgress.invoke(id: lessonId) : nil
-        isScriptStarted = progress != nil
-        lesson = try? await deps.getLesson.invoke(id: lessonId)
-        words = (try? await deps.getLessonVocabulary.invoke(id: lessonId)) ?? []
+        let id = current.id
+        let script = try? await deps.getLessonScript.invoke(id: id)
+        hasScript = script != nil
+        if let script {
+            let progress = try? await deps.getLessonProgress.invoke(id: id)
+            isScriptStarted = LessonSession.companion.isInProgress(script: script, progress: progress)
+        } else {
+            isScriptStarted = false
+        }
+        lesson = try? await deps.getLesson.invoke(id: id)
+        words = (try? await deps.getLessonVocabulary.invoke(id: id)) ?? []
     }
 }

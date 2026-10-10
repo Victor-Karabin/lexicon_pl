@@ -12,6 +12,7 @@ import com.lexicon.interactors.conjugation.LoadVerbImageChoicesUseCase
 import com.lexicon.interactors.conjugation.NextConjugationTableUseCase
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerRequest
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
+import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
@@ -39,7 +40,7 @@ data class ConjugationUiState(
     val stepIndex: Int = 0,
     val totalSteps: Int = 0,
     val answers: ImmutableMap<GrammaticalPerson, String> = persistentMapOf(),
-    val correctness: ImmutableMap<GrammaticalPerson, Boolean> = persistentMapOf(),
+    val verdicts: ImmutableMap<GrammaticalPerson, AnswerVerdict> = persistentMapOf(),
     val answerState: AnswerState = AnswerState.Unanswered,
     val hasNoVerbs: Boolean = false,
     val isPickingImage: Boolean = false,
@@ -50,9 +51,7 @@ data class ConjugationUiState(
     val isAnswered: Boolean get() = answerState !is AnswerState.Unanswered
 
     val canCheck: Boolean
-        get() = !isAnswered && table?.steps?.all { answers.containsKey(it.variant.person) } == true
-
-    val usedOptions: Set<String> get() = answers.values.toSet()
+        get() = !isAnswered && table?.steps?.all { !answers[it.variant.person].isNullOrBlank() } == true
 }
 
 const val CONJUGATION_COURSE_ARG = "courseId"
@@ -93,19 +92,12 @@ class ConjugationViewModel(
         }
     }
 
-    fun onOptionPicked(option: String) =
-        _uiState.update { state ->
-            if (state.isAnswered) return@update state
-            val next = state.table?.steps?.firstOrNull { !state.answers.containsKey(it.variant.person) }
-                ?: return@update state
-
-            state.copy(answers = (state.answers + (next.variant.person to option)).toImmutableMap())
-        }
-
-    fun onRowCleared(person: GrammaticalPerson) =
-        _uiState.update { state ->
-            if (state.isAnswered) state else state.copy(answers = (state.answers - person).toImmutableMap())
-        }
+    fun onAnswerChanged(
+        person: GrammaticalPerson,
+        value: String,
+    ) = _uiState.update { state ->
+        if (state.isAnswered) state else state.copy(answers = (state.answers + (person to value)).toImmutableMap())
+    }
 
     fun onCheck() {
         val state = _uiState.value
@@ -122,13 +114,13 @@ class ConjugationViewModel(
                 results += WordResultEntry(
                     word = step.spokenForm,
                     translation = "${table.infinitive} · ${step.variant.person.label}",
-                    outcome = if (right) AnswerState.Correct else AnswerState.Incorrect(step.correctOptions.first()),
+                    outcome = if (right) AnswerState.Correct else AnswerState.Incorrect(step.spokenForm),
                 )
             }
 
             _uiState.update {
                 it.copy(
-                    correctness = response.correctness.toImmutableMap(),
+                    verdicts = response.verdicts.toImmutableMap(),
                     answerState = if (allRight) AnswerState.Correct else AnswerState.Incorrect(""),
                 )
             }
@@ -158,7 +150,7 @@ class ConjugationViewModel(
                     table = table,
                     stepIndex = nextIndex,
                     answers = persistentMapOf(),
-                    correctness = persistentMapOf(),
+                    verdicts = persistentMapOf(),
                     answerState = AnswerState.Unanswered,
                 )
             }

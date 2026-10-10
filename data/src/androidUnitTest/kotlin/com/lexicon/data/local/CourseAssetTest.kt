@@ -2,6 +2,7 @@ package com.lexicon.data.local
 
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -38,6 +39,31 @@ class CourseAssetTest {
                 }
             }
         assertTrue("Rerun tools/course/build_course.py after changing the corpus:\n" + drifted.joinToString("\n"), drifted.isEmpty())
+    }
+
+    @Test
+    fun `every recording a lesson script plays from the books can be downloaded`() {
+        val remoteIds =
+            lessons.associate { lesson ->
+                lesson.getValue("id").jsonPrimitive.content to
+                    lesson.getValue("audio").jsonArray.associate {
+                        it.jsonObject.getValue("file").jsonPrimitive.content to it.jsonObject["remoteId"]?.jsonPrimitive?.contentOrNull
+                    }
+            }
+        val unreachable =
+            File("src/androidMain/assets").listFiles { file -> file.name.startsWith("lesson_") }.orEmpty().flatMap { script ->
+                val lessonId = script.name.removePrefix("lesson_").removeSuffix(".json")
+                asset(script.name).jsonObject.getValue("tracks").jsonArray
+                    .map { it.jsonObject.getValue("file").jsonPrimitive.content }
+                    .filter { it.startsWith("a1_workbook_") }
+                    .filter { remoteIds[lessonId]?.get(it) == null }
+                    .map { "$lessonId: $it" }
+            }
+        assertTrue(
+            "Rerun tools/course/fetch_drive_manifest.py and build_course.py:\n" + unreachable.joinToString("\n"),
+            unreachable.isEmpty(),
+        )
+        assertEquals(emptyList<String>(), remoteIds.values.flatMap { tracks -> tracks.filterValues { it == null }.keys })
     }
 
     @Test

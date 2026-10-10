@@ -1,7 +1,5 @@
 {
   "lessonId": "krok-a1-01",
-  "title": "First day at school",
-  "passMark": 0.8,
   "tracks": [
     {"id": "101a1", "file": "a1_coursebook_101a1.mp3"},
     {"id": "101a2", "file": "a1_coursebook_101a2.mp3"},
@@ -10,12 +8,32 @@
     {"id": "101b4", "file": "a1_coursebook_101b4.mp3"},
     {"id": "101C2", "file": "a1_coursebook_101C2.mp3"},
     {"id": "101f1", "file": "a1_coursebook_101f1.mp3"},
-    {"id": "101f3", "file": "a1_coursebook_101f3.mp3"}
+    {"id": "101f3", "file": "a1_coursebook_101f3.mp3"},
+    {"id": "101g1", "file": "a1_coursebook_101g1.mp3"},
+    {"id": "101g1-2", "file": "a1_coursebook_101g1-2.mp3"},
+    {"id": "wb01", "file": "a1_workbook_01_L01_cwiczenie2.mp3"},
+    {"id": "wb02", "file": "a1_workbook_02_L01_cwiczenie4.mp3"},
+    {"id": "wb03", "file": "a1_workbook_03_L01_cwiczenie6.mp3"},
+    {"id": "wb04", "file": "a1_workbook_04_L01_cwiczenie9.mp3"},
+    {"id": "wb05", "file": "a1_workbook_05_L01_cwiczenie11.mp3"},
+    {"id": "wb06", "file": "a1_workbook_06_L01_cwiczenie14.mp3"},
+    {"id": "wb07", "file": "a1_workbook_07_L01_cwiczenie15.mp3"},
+    {"id": "wb08", "file": "a1_workbook_08_L01_cwiczenie16.mp3"},
+    {"id": "101b1", "file": "a1_coursebook_101b1.mp3"},
+    {"id": "101A5", "file": "a1_coursebook_101A5.mp3"},
+    {"id": "101c1", "file": "a1_coursebook_101c1.mp3"},
+    {"id": "101D1", "file": "a1_coursebook_101D1.mp3"},
+    {"id": "101E1", "file": "a1_coursebook_101E1.mp3"},
+    {"id": "101E2", "file": "a1_coursebook_101E2.mp3"}
   ],
   "steps": [
     {"id": "1", "title": "Sounds and spelling", "screens": ["1A", "1B", "1C"]},
     {"id": "2", "title": "Meeting people", "screens": ["2A", "2B", "2C"]},
-    {"id": "3", "title": "Names and numbers", "screens": ["3A", "3B", "3C", "3D", "3E"]}
+    {"id": "3", "title": "Names and numbers", "screens": ["3A", "3B", "3C", "3D", "3E"]},
+    {"id": "4", "title": "Where is…?", "screens": ["4A", "4B", "4C", "4D"]},
+    {"id": "5", "title": "In the classroom", "screens": ["5A", "5B", "5C", "5D"]},
+    {"id": "6", "title": "Personal details and goodbyes", "screens": ["6A", "6B", "6C", "6D"]},
+    {"id": "7", "title": "Listening and spelling", "screens": ["7A", "7B", "7C", "7D"]}
   ],
   "screens": [
     {
@@ -23,7 +41,7 @@
       "type": "reference",
       "title": "How Polish letters sound",
       "instruction": "Listen and repeat each word twice. Pay attention to rz, ł and y.",
-      "tracks": [{"id": "101b2"}],
+      "tracks": [{"id": "101b2", "label": "Words"}, {"id": "101b1", "label": "The alphabet"}],
       "tables": [
         {
           "header": ["Spelling", "Sound", "Example"],
@@ -96,7 +114,7 @@
       "id": "1C",
       "type": "choice",
       "title": "Which word did you hear?",
-      "instruction": "Tap the word you hear. The book skips the letters q, v and x.",
+      "instruction": "Tap the word you hear.",
       "tracks": [{"id": "101b4"}],
       "items": [
         {"label": "a", "options": ["krzywy", "grzyby"], "answer": "krzywy"},
@@ -127,20 +145,41 @@
       "id": "2A",
       "type": "reference",
       "title": "Meeting people: two dialogues",
-      "instruction": "Listen to each dialogue 2–3 times and repeat the lines. Don't read the text yet — you'll need your ears for the next task.",
-      "tracks": [
-        {"id": "101a1", "label": "Dialogue 1 · formal"},
-        {"id": "101a2", "label": "Dialogue 2 · informal"}
-      ],
-      "tables": [
+      "instruction": "Listen to each dialogue 2–3 times and repeat the lines.",
+      "groups": [
         {
-          "header": ["Formal", "Informal"],
-          "rows": [
-            ["Dzień dobry. — Good morning / Hello.", "Cześć! — Hi!"],
-            ["Nazywam się… — My name is…", "Jestem… — I'm…"],
-            ["Bardzo mi miło. — Very nice to meet you.", "Miło mi. — Nice to meet you."],
-            ["", "Mnie również. — Me too / Likewise."]
+          "title": "Dialogue 1 · formal",
+          "track": {"id": "101a1"},
+          "phrases": [
+            {"polish": "Dzień dobry.", "english": "Good morning / Hello."},
+            {"polish": "Nazywam się…", "english": "My name is…"},
+            {"polish": "Bardzo mi miło.", "english": "Very nice to meet you."},
+            {"polish": "Miło mi.", "english": "Nice to meet you."}
           ]
+        },
+        {
+          "title": "Dialogue 2 · informal",
+          "track": {"id": "101a2"},
+          "phrases": [
+            {"polish": "Cześć!", "english": "Hi!"},
+            {"polish": "Jestem…, a ty?", "english": "I'm…, and you?"},
+            {"polish": "Miło mi.", "english": "Nice to meet you."},
+            {"polish": "Mnie również.", "english": "Me too / Likewise."}
+          ]
+        },
+        {
+          "title": "Greetings and goodbyes",
+          "phrases": [
+            {"polish": "Dzień dobry!", "english": "Good morning / Hello."},
+            {"polish": "Dobry wieczór.", "english": "Good evening."},
+            {"polish": "Dobranoc.", "english": "Good night."},
+            {"polish": "Do widzenia.", "english": "Goodbye."},
+            {"polish": "Do zobaczenia!", "english": "See you!"},
+            {"polish": "Do jutra!", "english": "See you tomorrow!"},
+            {"polish": "Na razie! / Pa!", "english": "Bye! (informal)"},
+            {"polish": "Miło mi panią poznać! — Mnie również!", "english": "Nice to meet you (to a woman, formal). — Me too!"}
+          ],
+          "track": {"id": "101A5"}
         }
       ],
       "transcript": {
@@ -163,6 +202,15 @@
               {"speaker": "Student", "text": "Miło mi."},
               {"speaker": "Studentka", "text": "Mnie również."}
             ]
+          },
+          {
+            "title": "Greetings and goodbyes",
+            "lines": [
+              {"text": "Dzień dobry! · Dobranoc · Dobry wieczór · Do widzenia · Cześć! · Do zobaczenia! · Do jutra! · Na razie! · Pa!"},
+              {"text": "— Miło mi panią poznać! — Mnie również!"},
+              {"text": "— Cześć, jestem Steve! — A ja Tom!"},
+              {"text": "— Dzień dobry, jestem Roman Kowalski. — Miło mi!"}
+            ]
           }
         ]
       }
@@ -172,13 +220,10 @@
       "type": "gap_fill",
       "title": "Fill in the dialogues",
       "instruction": "Fill in the missing words from what you hear.",
-      "tracks": [
-        {"id": "101a1", "label": "Dialogue 1 · formal"},
-        {"id": "101a2", "label": "Dialogue 2 · informal"}
-      ],
       "sections": [
         {
-          "title": "A. Secretary and student",
+          "title": "Dialogue 1 · formal",
+          "track": {"id": "101a1"},
           "lines": [
             {"speaker": "Sekretarka", "text": "Dzień dobry. Jestem Agnieszka Polańska."},
             {"speaker": "Studentka", "text": "Dzień [1]. [2] się Mami Takada."},
@@ -187,7 +232,8 @@
           ]
         },
         {
-          "title": "B. Two students",
+          "title": "Dialogue 2 · informal",
+          "track": {"id": "101a2"},
           "lines": [
             {"speaker": "Student", "text": "Cześć, [5] Tom, a ty?"},
             {"speaker": "Studentka", "text": "[6], jestem Mami."},
@@ -211,14 +257,14 @@
       "id": "2C",
       "type": "free_writing",
       "title": "Write your own dialogues",
-      "instruction": "Write two short dialogues about yourself, 3–4 lines each, using your own name: 1) you and the school secretary — formal; 2) you and a fellow student — informal.",
+      "instruction": "Write two short dialogues about yourself, 3–4 lines each, using your own name.",
       "fields": [
-        {"label": "1. You and the school secretary (formal)"},
-        {"label": "2. You and a fellow student (informal)"}
+        {"label": "You and the school secretary (formal)"},
+        {"label": "You and a fellow student (informal)"}
       ],
       "model": [
-        "1. — Dzień dobry. Nazywam się [first name, surname]. — Dzień dobry. Nazywam się Agnieszka Polańska. W czym mogę pomóc? — Szukam gabinetu numer jeden. — Proszę iść prosto, a potem w lewo.",
-        "2. — Cześć! Mam na imię [first name], a ty? — Cześć! Jestem Agnieszka. — Bardzo mi miło. — Mnie również."
+        "— Dzień dobry. Nazywam się [first name, surname].\n— Dzień dobry. Nazywam się Agnieszka Polańska. W czym mogę pomóc?\n— Szukam gabinetu numer jeden.\n— Proszę iść prosto, a potem w lewo.",
+        "— Cześć! Mam na imię [first name], a ty?\n— Cześć! Jestem Agnieszka.\n— Bardzo mi miło.\n— Mnie również."
       ],
       "checklist": [
         "**Informal = ty.** After *Cześć!* ask *a ty?* — not *pani/pan* (formal \"you\"). Mixing them sounds like \"Hi! And what is your name, madam?\"",
@@ -233,21 +279,65 @@
       "id": "3A",
       "type": "reference",
       "title": "\"What's your name?\" — informal vs formal",
-      "instruction": "Read how to ask someone's name, and how to answer.",
-      "tables": [
+      "instruction": "Read how to ask someone's name and how to answer, then listen to three introductions.",
+      "tracks": [{"id": "101c1"}],
+      "groups": [
         {
-          "header": ["", "Informal (ty)", "Formal (pan / pani)"],
-          "rows": [
-            ["First name", "Jak masz na imię?", "Jak pan / pani ma na imię?"],
-            ["Full name / surname", "Jak się nazywasz?", "Jak się pan / pani nazywa?"],
-            ["Answer", "Mam na imię Anna. · Nazywam się Anna Nowak. · Jestem Anna.", ""]
+          "title": "Informal (ty)",
+          "phrases": [
+            {"polish": "Jak masz na imię?", "english": "What's your first name?"},
+            {"polish": "Jak się nazywasz?", "english": "What's your full name?"}
+          ]
+        },
+        {
+          "title": "Formal (pan / pani)",
+          "phrases": [
+            {"polish": "Jak pan / pani ma na imię?", "english": "What's your first name?"},
+            {"polish": "Jak się pan / pani nazywa?", "english": "What's your full name?"}
+          ]
+        },
+        {
+          "title": "Answering",
+          "phrases": [
+            {"polish": "Mam na imię Anna.", "english": "My first name is Anna."},
+            {"polish": "Nazywam się Anna Nowak.", "english": "My name is Anna Nowak."},
+            {"polish": "Jestem Anna.", "english": "I'm Anna."}
           ]
         }
       ],
       "notes": [
         "*pan* = Sir (to a man), *pani* = Madam (to a woman); with them the verb is 3rd person, as with \"he/she\": *pan ma*, *pani nazywa się*.",
         "*Mieć na imię* is about the first name; *nazywać się* usually the surname or full name."
-      ]
+      ],
+      "transcript": {
+        "unlock": "always",
+        "sections": [
+          {
+            "title": "Dialogue 1",
+            "lines": [
+              {"speaker": "Angela", "text": "Cześć, jestem Angela, a ty?"},
+              {"speaker": "Tom", "text": "Mam na imię Tom. Bardzo mi miło."},
+              {"speaker": "Angela", "text": "Miło mi."}
+            ]
+          },
+          {
+            "title": "Dialogue 2",
+            "lines": [
+              {"speaker": "Mami", "text": "Cześć, jestem Mami Takada. Jak się nazywasz?"},
+              {"speaker": "Angela", "text": "Miło mi. Nazywam się Angela Brown."},
+              {"speaker": "Mami", "text": "Bardzo mi miło."}
+            ]
+          },
+          {
+            "title": "Dialogue 3",
+            "lines": [
+              {"speaker": "Uwe", "text": "Cześć, mam na imię Uwe."},
+              {"speaker": "Tom", "text": "Miło mi cię poznać, jestem Tom."},
+              {"speaker": "Uwe", "text": "Miło mi."}
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "3B",
@@ -332,6 +422,464 @@
         {"label": "6", "answers": ["sześć"], "feedback": "sześć — sz at the start, ść at the end. It rhymes with cześć."},
         {"label": "1", "answers": ["jeden"]}
       ]
+    },
+    {
+      "id": "4A",
+      "type": "reference",
+      "title": "Where is…?",
+      "instruction": "Listen 2–3 times and repeat. Use the phrases to understand the dialogues.",
+      "tracks": [{"id": "101D1"}],
+      "groups": [
+        {
+          "phrases": [
+            {"polish": "tu / tutaj", "english": "here"},
+            {"polish": "tam", "english": "there"},
+            {"polish": "na lewo", "english": "on the left / to the left"},
+            {"polish": "na prawo", "english": "on the right / to the right"},
+            {"polish": "Gdzie jest…?", "english": "Where is…?"},
+            {"polish": "… jest tam. / … są tam.", "english": "… is there. / … are there."},
+            {"polish": "Przepraszam", "english": "Excuse me"},
+            {"polish": "Mam pytanie.", "english": "I have a question."},
+            {"polish": "Czy tu można palić?", "english": "Can I smoke here?"},
+            {"polish": "Co to jest?", "english": "What is it?"}
+          ]
+        }
+      ],
+      "notes": ["*jest* = is (one thing), *są* = are (several): Kawa i cukier **są** tam."],
+      "transcript": {
+        "unlock": "always",
+        "open": true,
+        "sections": [
+          {
+            "title": "Dialogue 1",
+            "lines": [
+              {"speaker": "Angela", "text": "Przepraszam, gdzie jest toaleta?"},
+              {"speaker": "Nauczycielka", "text": "Toaleta jest tam, na prawo."},
+              {"speaker": "Angela", "text": "Dziękuję bardzo."}
+            ]
+          },
+          {
+            "title": "Dialogue 2",
+            "lines": [
+              {"speaker": "Mami", "text": "Przepraszam, gdzie jest Internet?"},
+              {"speaker": "Sekretarka", "text": "Komputery są tutaj. Internet jest gratis."},
+              {"speaker": "Mami", "text": "Dziękuję pani bardzo."}
+            ]
+          },
+          {
+            "title": "Dialogue 3",
+            "lines": [
+              {"speaker": "Tom", "text": "Przepraszam, gdzie jest woda?"},
+              {"speaker": "Angela", "text": "Tu jest woda. Kawa, herbata i cukier są tam."},
+              {"speaker": "Tom", "text": "Dziękuję."}
+            ]
+          },
+          {
+            "title": "Dialogue 4",
+            "lines": [
+              {"speaker": "Mami", "text": "A co to jest?"},
+              {"speaker": "Sekretarka", "text": "To jest program kulturalny."},
+              {"speaker": "Mami", "text": "Program kulturalny? Co to jest?"},
+              {"speaker": "Sekretarka", "text": "To coś specjalnego: film, spotkanie, specjalna lekcja."},
+              {"speaker": "Mami", "text": "Aha, rozumiem."}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "4B",
+      "type": "choice",
+      "title": "Where is the office?",
+      "instruction": "A policeman shows the way. Choose the matching word.",
+      "items": [
+        {"label": "a", "prompt": "← He points to the left.", "options": ["na lewo", "tu", "tam", "na prawo"], "answer": "na lewo"},
+        {"label": "b", "prompt": "● He points to himself: right here.", "options": ["na lewo", "tu", "tam", "na prawo"], "answer": "tu", "feedback": "tu / tutaj = here (near the speaker), tam = there (far away)."},
+        {"label": "c", "prompt": "▲ He points at the road far ahead.", "options": ["na lewo", "tu", "tam", "na prawo"], "answer": "tam", "feedback": "tu / tutaj = here (near the speaker), tam = there (far away)."},
+        {"label": "d", "prompt": "→ He points to the right.", "options": ["na lewo", "tu", "tam", "na prawo"], "answer": "na prawo"}
+      ]
+    },
+    {
+      "id": "4C",
+      "type": "write",
+      "title": "Put the words in order",
+      "instruction": "Make a sentence from the words.",
+      "items": [
+        {"label": "1", "prompt": "gdzie / toaleta / jest / przepraszam", "answers": ["Przepraszam, gdzie jest toaleta?"], "feedback": "Start with Przepraszam (\"Excuse me\") to get someone's attention, then the question. Say it by syllables: prze-pra-szam."},
+        {"label": "2", "prompt": "tam / i / kawa / cukier / są", "answers": ["Kawa i cukier są tam.", "Cukier i kawa są tam.", "Tam są kawa i cukier."], "feedback": "Natural too: *Tam jest kawa i cukier* — a verb before a list often agrees with the nearest noun."},
+        {"label": "3", "prompt": "na / toaleta / jest / lewo / tam", "answers": ["Toaleta jest tam na lewo."]},
+        {"label": "4", "prompt": "pani / dziękuję / bardzo", "answers": ["Dziękuję pani bardzo.", "Bardzo pani dziękuję."], "feedback": "*pani* = you (polite, to a woman). *Dziękuję pani* = Thank you, madam."}
+      ]
+    },
+    {
+      "id": "4D",
+      "type": "gap_fill",
+      "title": "Classroom moments",
+      "instruction": "Three short scenes in class. Listen and fill in the 5 missing words.",
+      "tracks": [{"id": "wb03"}],
+      "notes": [
+        "*miejsce* — seat / place · *wolne* — free · *Na zdrowie!* — Bless you! · *otworzyć / zamknąć* — to open / to close · *okno* — window · *drzwi* — door"
+      ],
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Tom", "text": "Czy to miejsce jest [1]?"},
+            {"speaker": "Mami", "text": "Tak, [2] wolne."},
+            {"speaker": "Angela", "text": "Aaapsik!"},
+            {"speaker": "Uwe", "text": "[3] zdrowie!"},
+            {"speaker": "Angela", "text": "Dziękuję."},
+            {"speaker": "A", "text": "Proszę otworzyć [4]!"},
+            {"speaker": "B", "text": "[5] zamknąć drzwi!"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["wolne"]},
+        {"number": 2, "answers": ["jest"]},
+        {"number": 3, "answers": ["Na"], "feedback": "*Na zdrowie!* = Bless you! (after a sneeze) — and also \"Cheers!\"."},
+        {"number": 4, "answers": ["okno"]},
+        {"number": 5, "answers": ["Proszę"], "feedback": "*Proszę* ends in a nasal ę — without it the word is wrong. *Proszę* + infinitive = a polite request (Proszę zamknąć drzwi)."}
+      ]
+    },
+    {
+      "id": "5A",
+      "type": "reference",
+      "title": "I don't understand. Please repeat!",
+      "instruction": "Listen and repeat. Use the phrases to understand the dialogues.",
+      "tracks": [{"id": "101E1", "label": "Dialogues"}, {"id": "101E2", "label": "Phrases"}],
+      "groups": [
+        {
+          "phrases": [
+            {"polish": "Nie rozumiem.", "english": "I don't understand."},
+            {"polish": "Nie wiem.", "english": "I don't know."},
+            {"polish": "Proszę powtórzyć.", "english": "Please repeat."},
+            {"polish": "Proszę przeliterować.", "english": "Please spell it."},
+            {"polish": "Proszę przeczytać.", "english": "Please read."},
+            {"polish": "Proszę napisać.", "english": "Please write."},
+            {"polish": "Co to znaczy…?", "english": "What does … mean?"},
+            {"polish": "Jak się mówi po polsku…?", "english": "How do you say … in Polish?"},
+            {"polish": "Mam pytanie.", "english": "I have a question."},
+            {"polish": "Proszę.", "english": "You're welcome (reply to \"thank you\")."}
+          ]
+        }
+      ],
+      "transcript": {
+        "unlock": "always",
+        "sections": [
+          {
+            "title": "Dialogue 1",
+            "lines": [
+              {"speaker": "Nauczycielka", "text": "Proszę przeliterować swoje imię i nazwisko."},
+              {"speaker": "Uwe", "text": "Nie rozumiem. Proszę powtórzyć."},
+              {"speaker": "Nauczycielka", "text": "Proszę przeliterować imię i nazwisko."},
+              {"speaker": "Uwe", "text": "Aha, rozumiem. U-w-e S-t-e-i-n."},
+              {"speaker": "Nauczycielka", "text": "Dziękuję."}
+            ]
+          },
+          {
+            "title": "Dialogue 2",
+            "lines": [
+              {"speaker": "Nauczycielka", "text": "Proszę powtórzyć „szkoła”."},
+              {"speaker": "Angela", "text": "Szkoła."},
+              {"speaker": "Nauczycielka", "text": "Dziękuję, a teraz proszę przeliterować „szkoła”."},
+              {"speaker": "Angela", "text": "S-z-k-o-ł-a."}
+            ]
+          },
+          {
+            "title": "Dialogue 3",
+            "lines": [
+              {"speaker": "Nauczycielka", "text": "Proszę przeczytać dialog i proszę napisać ćwiczenie."},
+              {"speaker": "Tom", "text": "Mam pytanie, co to znaczy „szkoła”?"},
+              {"speaker": "Nauczycielka", "text": "„School”."},
+              {"speaker": "Tom", "text": "Dziękuję bardzo."},
+              {"speaker": "Nauczycielka", "text": "Proszę."}
+            ]
+          },
+          {
+            "title": "Dialogue 4",
+            "lines": [
+              {"speaker": "Uwe", "text": "Mam pytanie, jak się mówi po polsku „tired”?"},
+              {"speaker": "Nauczycielka", "text": "„Zmęczony”."},
+              {"speaker": "Uwe", "text": "Jestem bardzo zmęczony."}
+            ]
+          },
+          {
+            "title": "Phrases",
+            "lines": [{"text": "Nie wiem. Nie rozumiem. Co to znaczy? Mam pytanie."}]
+          }
+        ]
+      }
+    },
+    {
+      "id": "5B",
+      "type": "choice",
+      "title": "Match the request and the reply",
+      "instruction": "Choose the reply for each request. Each reply is used once.",
+      "legend": ["A. Dziękuję.", "B. Szkoła.", "C. Nie wiem.", "D. „d-o-m”", "E. Dom.", "F. Thank you."],
+      "items": [
+        {"label": "1", "prompt": "Proszę przeliterować „dom”.", "options": ["A", "B", "C", "D", "E", "F"], "answer": "D", "feedback": "*przeliterować* = spell (d-o-m); *przeczytać* = read aloud (Dom)."},
+        {"label": "2", "prompt": "Proszę powtórzyć „dziękuję”.", "options": ["A", "B", "C", "D", "E", "F"], "answer": "A"},
+        {"label": "3", "prompt": "Proszę powtórzyć „szkoła”.", "options": ["A", "B", "C", "D", "E", "F"], "answer": "B"},
+        {"label": "4", "prompt": "Co to znaczy „dziękuję”?", "options": ["A", "B", "C", "D", "E", "F"], "answer": "F"},
+        {"label": "5", "prompt": "Co to znaczy „dom”?", "options": ["A", "B", "C", "D", "E", "F"], "answer": "C", "feedback": "*Dom* means \"house\", but the translation isn't among the replies. Each reply is used once, so the only one left is C — *Nie wiem* (\"I don't know\"): someone is asked the meaning and doesn't know it. In real life you would answer \"House\"."},
+        {"label": "6", "prompt": "Proszę przeczytać „dom”.", "options": ["A", "B", "C", "D", "E", "F"], "answer": "E", "feedback": "*przeliterować* = spell (d-o-m); *przeczytać* = read aloud (Dom)."}
+      ]
+    },
+    {
+      "id": "5C",
+      "type": "gap_fill",
+      "title": "Fill in the classroom dialogues",
+      "instruction": "Fill in the missing words, then check yourself with the recording.",
+      "hint": "proszę · przeczytać · napisać · powtórzyć · to · przeliterować · rozumiem · mówi · znaczy · otworzyć — each word is used once.",
+      "tracks": [{"id": "wb04"}],
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "A", "text": "Proszę [1] dialog."},
+            {"speaker": "B", "text": "Dobrze."},
+            {"speaker": "A", "text": "Proszę [2] „dziękuję”."},
+            {"speaker": "B", "text": "D-z-i-ę-k-u-j-ę."},
+            {"speaker": "A", "text": "Proszę [3] tekst."},
+            {"speaker": "B", "text": "Tekst numer 1?"},
+            {"speaker": "A", "text": "Tak."},
+            {"speaker": "A", "text": "[4] powtórzyć „dziękuję”."},
+            {"speaker": "B", "text": "„Dziękuję”."},
+            {"speaker": "A", "text": "Co to [5] „imię”?"},
+            {"speaker": "B", "text": "„name”."},
+            {"speaker": "A", "text": "Jak się [6] po niemiecku „dziękuję”?"},
+            {"speaker": "B", "text": "„Danke”."},
+            {"speaker": "A", "text": "Proszę [7] „dziesięć”."},
+            {"speaker": "B", "text": "„Dziesięć”."},
+            {"speaker": "A", "text": "Proszę otworzyć okno."},
+            {"speaker": "B", "text": "Nie [8]. Proszę powtórzyć."},
+            {"speaker": "A", "text": "Proszę [9] okno."},
+            {"speaker": "B", "text": "Co [10] znaczy „otworzyć”?"},
+            {"speaker": "A", "text": "„open”."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["napisać"]},
+        {"number": 2, "answers": ["przeliterować"], "feedback": "The reply is spelled letter by letter → *przeliterować*."},
+        {"number": 3, "answers": ["przeczytać"]},
+        {"number": 4, "answers": ["Proszę"]},
+        {"number": 5, "answers": ["znaczy"], "feedback": "After *Proszę* use the infinitive (-ć): Proszę napisać. In the fixed questions use the he/she form without -ć: Co to znaczy? Jak się mówi…? (*mówię* = I speak, *mówi* = he/she speaks / one says)."},
+        {"number": 6, "answers": ["mówi"], "feedback": "*Jak się mówi po …* = How do you say in … (language). After *Proszę* use the infinitive (-ć): Proszę napisać. In the fixed questions use the he/she form without -ć: Co to znaczy? Jak się mówi…? (*mówię* = I speak, *mówi* = he/she speaks / one says)."},
+        {"number": 7, "answers": ["powtórzyć"]},
+        {"number": 8, "answers": ["rozumiem"]},
+        {"number": 9, "answers": ["otworzyć"]},
+        {"number": 10, "answers": ["to"]}
+      ]
+    },
+    {
+      "id": "5D",
+      "type": "choice",
+      "title": "Match the halves",
+      "instruction": "Choose the ending for each beginning.",
+      "legend": ["a. znaczy?", "b. pytanie.", "c. rozumiem.", "d. mówi po polsku…?", "e. powtórzyć!"],
+      "items": [
+        {"label": "1", "prompt": "Jak się …", "options": ["a", "b", "c", "d", "e"], "answer": "d"},
+        {"label": "2", "prompt": "Co to …", "options": ["a", "b", "c", "d", "e"], "answer": "a"},
+        {"label": "3", "prompt": "Proszę …", "options": ["a", "b", "c", "d", "e"], "answer": "e"},
+        {"label": "4", "prompt": "Nie …", "options": ["a", "b", "c", "d", "e"], "answer": "c"},
+        {"label": "5", "prompt": "Mam …", "options": ["a", "b", "c", "d", "e"], "answer": "b"}
+      ]
+    },
+    {
+      "id": "6A",
+      "type": "reference",
+      "title": "Personal details and goodbyes",
+      "instruction": "The secretary fills in Mami's form. Listen twice and repeat the secretary's questions.",
+      "tracks": [{"id": "101g1", "label": "At the office"}, {"id": "101g1-2", "label": "Goodbyes"}],
+      "groups": [
+        {
+          "phrases": [
+            {"polish": "Imię?", "english": "First name?"},
+            {"polish": "Nazwisko?", "english": "Surname?"},
+            {"polish": "Narodowość?", "english": "Nationality?"},
+            {"polish": "Adres? / ulica", "english": "Address? / street"},
+            {"polish": "Numer telefonu?", "english": "Phone number?"},
+            {"polish": "Do widzenia.", "english": "Goodbye."},
+            {"polish": "Do jutra!", "english": "See you tomorrow!"},
+            {"polish": "Do zobaczenia!", "english": "See you!"},
+            {"polish": "Na razie! / Pa!", "english": "Bye! (informal)"},
+            {"polish": "Dobry wieczór. / Dobranoc.", "english": "Good evening. / Good night."}
+          ]
+        }
+      ],
+      "notes": ["Phone numbers are read in groups of one or two digits. Numbers above 10 come in Lesson 2."],
+      "transcript": {
+        "unlock": "always",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Sekretarka", "text": "Imię?"},
+              {"speaker": "Studentka", "text": "Mami."},
+              {"speaker": "Sekretarka", "text": "Nazwisko?"},
+              {"speaker": "Studentka", "text": "Takada."},
+              {"speaker": "Sekretarka", "text": "Narodowość?"},
+              {"speaker": "Studentka", "text": "Jestem Japonką."},
+              {"speaker": "Sekretarka", "text": "Adres?"},
+              {"speaker": "Studentka", "text": "Kraków, ulica Spacerowa 9."},
+              {"speaker": "Sekretarka", "text": "Numer telefonu?"},
+              {"speaker": "Studentka", "text": "12 639 84 57."},
+              {"speaker": "Sekretarka", "text": "Dziękuję."},
+              {"speaker": "Studentka", "text": "Proszę."}
+            ]
+          },
+          {
+            "lines": [
+              {"speaker": "Nauczycielka", "text": "Dziękuję i do jutra."},
+              {"speaker": "Mami", "text": "Dziękuję, do widzenia."},
+              {"speaker": "Tom", "text": "Do jutra!"}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "6B",
+      "type": "gap_fill",
+      "title": "Registration form",
+      "instruction": "A new student at the office. Listen and write the student's answers.",
+      "hint": "Niemcem · proszę · 607 44 32 89 · Fischer · ulica Studencka 3 · Thomas · jestem · do",
+      "tracks": [{"id": "wb02"}],
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Sekretarka", "text": "Imię?"},
+            {"speaker": "Student", "text": "[1]"},
+            {"speaker": "Sekretarka", "text": "Nazwisko?"},
+            {"speaker": "Student", "text": "[2]"},
+            {"speaker": "Sekretarka", "text": "Narodowość?"},
+            {"speaker": "Student", "text": "[3]"},
+            {"speaker": "Sekretarka", "text": "Adres?"},
+            {"speaker": "Student", "text": "Kraków, [4]"},
+            {"speaker": "Sekretarka", "text": "Numer telefonu?"},
+            {"speaker": "Student", "text": "[5]"},
+            {"speaker": "Sekretarka", "text": "Dziękuję."},
+            {"speaker": "Student", "text": "[6] widzenia."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Thomas", "Tomas"], "feedback": "Thomas Fischer is a German name, so it keeps German spelling. Tomas / Fiszer are accepted as heard."},
+        {"number": 2, "answers": ["Fischer", "Fiszer"], "feedback": "Thomas Fischer is a German name, so it keeps German spelling. Tomas / Fiszer are accepted as heard."},
+        {"number": 3, "answers": ["Jestem Niemcem"], "feedback": "*Jestem Niemcem* = I am German (man). Nationality after *jestem* takes the ending -em (instrumental, Lesson 5)."},
+        {"number": 4, "answers": ["ulica Studencka 3"], "feedback": "Polish c = ts: *Studencka*, not studentska. Don't forget the house number (3)."},
+        {"number": 5, "answers": ["607 44 32 89"]},
+        {"number": 6, "answers": ["Proszę. Do"], "feedback": "Reply to *Dziękuję* with *Proszę*, then say goodbye: *Do widzenia*."}
+      ]
+    },
+    {
+      "id": "6C",
+      "type": "choice",
+      "title": "Greetings and goodbyes",
+      "instruction": "Choose the word that makes a greeting or a goodbye.",
+      "items": [
+        {"label": "1", "prompt": "dobry …", "options": ["dzień", "wieczór", "noc"], "answer": "wieczór", "feedback": "*Dzień dobry* (word order!) but *Dobry wieczór*. \"Good night\" is one word: *Dobranoc*. (*Dobry dzień* is not a greeting — it means \"a good day\".)"},
+        {"label": "2", "prompt": "do …", "options": ["dzień", "razie", "widzenia"], "answer": "widzenia"},
+        {"label": "3", "prompt": "na …", "options": ["widzenia", "noc", "razie"], "answer": "razie"},
+        {"label": "4", "prompt": "dziękuję …", "options": ["miło", "bardzo", "mi"], "answer": "bardzo"},
+        {"label": "5", "prompt": "miło …", "options": ["mi", "bardzo", "również"], "answer": "mi"}
+      ]
+    },
+    {
+      "id": "6D",
+      "type": "write",
+      "title": "Phone numbers",
+      "instruction": "Listen and write the phone numbers as digits. Spaces don't matter.",
+      "hint": "Joanna's number starts with 06.",
+      "tracks": [{"id": "wb05"}],
+      "keyboard": "digits",
+      "items": [
+        {"label": "Joanna", "answers": ["0607234599"]},
+        {"label": "Ewa", "answers": ["0504987710"]},
+        {"label": "Janek", "answers": ["0601381426"]},
+        {"label": "Michał", "answers": ["126363718"]}
+      ]
+    },
+    {
+      "id": "7A",
+      "type": "write",
+      "title": "Build the dialogue",
+      "instruction": "Make the lines of the dialogue from the words, then check yourself with the recording.",
+      "tracks": [{"id": "wb01"}],
+      "items": [
+        {"label": "A", "prompt": "dobry / jestem / Maria / dzień / Benini", "answers": ["Dzień dobry. Jestem Maria Benini."], "feedback": "*dzień* — plain e, soft ń at the end. Words starting dzie- have no nasal: dzień, dziewięć, dziesięć, dziecko. Only *dziękuję* has dzię-."},
+        {"label": "B", "prompt": "się / nazywam / dzień / Uwe / dobry / Stein", "answers": ["Dzień dobry. Nazywam się Uwe Stein."], "feedback": "*dzień* — plain e, soft ń at the end. Words starting dzie- have no nasal: dzień, dziewięć, dziesięć, dziecko. Only *dziękuję* has dzię-."},
+        {"label": "A", "prompt": "mi / miło / bardzo", "answers": ["Bardzo mi miło."]},
+        {"label": "B", "prompt": "również / mnie", "answers": ["Mnie również."]}
+      ]
+    },
+    {
+      "id": "7B",
+      "type": "write",
+      "title": "Word dictation",
+      "instruction": "The speaker reads 7 words. Write them.",
+      "tracks": [{"id": "wb06"}],
+      "items": [
+        {"label": "1", "answers": ["bank"]},
+        {"label": "2", "answers": ["fotograf"]},
+        {"label": "3", "answers": ["plan"]},
+        {"label": "4", "answers": ["teatr"]},
+        {"label": "5", "answers": ["interesujący"], "feedback": "*interesujący* — ą (nasal) and cy. No n after ą: ą already contains the nasal sound (interesujący, not interesująncy)."},
+        {"label": "6", "answers": ["aktor"]},
+        {"label": "7", "answers": ["restauracja"], "feedback": "*restauracja* — Polish -cja = English -tion: restauracja, informacja, lekcja."}
+      ]
+    },
+    {
+      "id": "7C",
+      "type": "choice",
+      "title": "Which word did you hear?",
+      "instruction": "Tap the word you hear.",
+      "tracks": [{"id": "wb07"}],
+      "items": [
+        {"label": "1", "options": ["szyny", "siny"], "answer": "szyny", "feedback": "sz (hard) vs ś/si (soft); c (ts) vs cz (ch); i vs y."},
+        {"label": "2", "options": ["cenny", "senny"], "answer": "cenny", "feedback": "sz (hard) vs ś/si (soft); c (ts) vs cz (ch); i vs y."},
+        {"label": "3", "options": ["syna", "cyna"], "answer": "cyna", "feedback": "sz (hard) vs ś/si (soft); c (ts) vs cz (ch); i vs y."},
+        {"label": "4", "options": ["szyba", "siwa"], "answer": "szyba", "feedback": "sz (hard) vs ś/si (soft); c (ts) vs cz (ch); i vs y."},
+        {"label": "5", "options": ["szklankach", "sankach"], "answer": "szklankach", "feedback": "sz (hard) vs ś/si (soft); c (ts) vs cz (ch); i vs y."},
+        {"label": "6", "options": ["czary", "szary"], "answer": "szary", "feedback": "sz (hard) vs ś/si (soft); c (ts) vs cz (ch); i vs y."},
+        {"label": "7", "options": ["maczek", "maciek"], "answer": "maczek", "feedback": "sz (hard) vs ś/si (soft); c (ts) vs cz (ch); i vs y."},
+        {"label": "8", "options": ["córka", "kurka"], "answer": "kurka", "feedback": "sz (hard) vs ś/si (soft); c (ts) vs cz (ch); i vs y."},
+        {"label": "9", "options": ["cała", "ciała"], "answer": "cała", "feedback": "sz (hard) vs ś/si (soft); c (ts) vs cz (ch); i vs y."},
+        {"label": "10", "options": ["czyta", "cytat"], "answer": "czyta", "feedback": "sz (hard) vs ś/si (soft); c (ts) vs cz (ch); i vs y."},
+        {"label": "11", "options": ["czynnik", "cynik"], "answer": "czynnik", "feedback": "sz (hard) vs ś/si (soft); c (ts) vs cz (ch); i vs y."},
+        {"label": "12", "options": ["czarki", "ciarki"], "answer": "ciarki", "feedback": "sz (hard) vs ś/si (soft); c (ts) vs cz (ch); i vs y."},
+        {"label": "13", "options": ["pić", "być"], "answer": "być", "feedback": "sz (hard) vs ś/si (soft); c (ts) vs cz (ch); i vs y."},
+        {"label": "14", "options": ["wić", "wyć"], "answer": "wyć", "feedback": "sz (hard) vs ś/si (soft); c (ts) vs cz (ch); i vs y."},
+        {"label": "15", "options": ["bić", "być"], "answer": "bić", "feedback": "sz (hard) vs ś/si (soft); c (ts) vs cz (ch); i vs y."},
+        {"label": "16", "options": ["szelka", "żelka"], "answer": "żelka", "feedback": "sz (hard) vs ś/si (soft); c (ts) vs cz (ch); i vs y."}
+      ]
+    },
+    {
+      "id": "7D",
+      "type": "write",
+      "title": "Polish cities",
+      "instruction": "The speaker names Polish cities. Write each name in full; the letters you see are already there.",
+      "tracks": [{"id": "wb08"}],
+      "items": [
+        {"label": "1", "prompt": "War__awa", "answers": ["Warszawa"]},
+        {"label": "2", "prompt": "_ódź", "answers": ["Łódź"], "feedback": "*Łódź* — Ł sounds like w, ó like u, dź is soft: \"Wooch\"."},
+        {"label": "3", "prompt": "G_a_sk", "answers": ["Gdańsk"]},
+        {"label": "4", "prompt": "K_ak_w", "answers": ["Kraków"], "feedback": "rz and ż sound the same; ó and u sound the same — remember the spelling: Rzeszów, Kraków, Gorzów."},
+        {"label": "5", "prompt": "_ro_ław", "answers": ["Wrocław"]},
+        {"label": "6", "prompt": "Kato_i_e", "answers": ["Katowice"]},
+        {"label": "7", "prompt": "_pol_", "answers": ["Opole"], "feedback": "Polish l is already soft before e — no i: Opole, Kielce (don't drop the l)."},
+        {"label": "8", "prompt": "Po_na_", "answers": ["Poznań"]},
+        {"label": "9", "prompt": "To_u_", "answers": ["Toruń"]},
+        {"label": "10", "prompt": "Ol__t_n", "answers": ["Olsztyn"], "feedback": "*Olsztyn* — sz, no t before it."},
+        {"label": "11", "prompt": "C_ęstoc_owa", "answers": ["Częstochowa"]},
+        {"label": "12", "prompt": "L_bl_n", "answers": ["Lublin"]},
+        {"label": "13", "prompt": "K_el_e", "answers": ["Kielce"], "feedback": "Polish l is already soft before e — no i: Opole, Kielce (don't drop the l)."},
+        {"label": "14", "prompt": "_zesz_w", "answers": ["Rzeszów"], "feedback": "rz and ż sound the same; ó and u sound the same — remember the spelling: Rzeszów, Kraków, Gorzów."},
+        {"label": "15", "prompt": "Bia_ysto_", "answers": ["Białystok"]},
+        {"label": "16", "prompt": "Sz_ze_in", "answers": ["Szczecin"], "feedback": "szcz = one sound, like \"shch\" in \"fresh cheese\": Szczecin, Bydgoszcz."},
+        {"label": "17", "prompt": "B_dgos_c_", "answers": ["Bydgoszcz"], "feedback": "szcz = one sound, like \"shch\" in \"fresh cheese\": Szczecin, Bydgoszcz."},
+        {"label": "18", "prompt": "Gor_ów Wielko_ol_ki", "answers": ["Gorzów Wielkopolski"], "feedback": "rz and ż sound the same; ó and u sound the same — remember the spelling: Rzeszów, Kraków, Gorzów."},
+        {"label": "19", "prompt": "Z_elona _óra", "answers": ["Zielona Góra"]}
+      ]
     }
   ],
   "vocabulary": [
@@ -352,6 +900,18 @@
     {"polish": "dziękuję", "english": "thank you"},
     {"polish": "szkoła", "english": "school"},
     {"polish": "nauczycielka", "english": "teacher (female)"},
-    {"polish": "zero … dziesięć", "english": "numbers 0–10"}
+    {"polish": "zero … dziesięć", "english": "numbers 0–10"},
+    {"polish": "gdzie jest…?", "english": "where is…?"},
+    {"polish": "tu / tutaj · tam", "english": "here · there"},
+    {"polish": "na lewo · na prawo", "english": "on the left · on the right"},
+    {"polish": "nie wiem", "english": "I don't know"},
+    {"polish": "co to znaczy?", "english": "what does it mean?"},
+    {"polish": "jak się mówi po polsku…?", "english": "how do you say … in Polish?"},
+    {"polish": "mam pytanie", "english": "I have a question"},
+    {"polish": "proszę przeliterować / przeczytać / napisać", "english": "please spell / read / write"},
+    {"polish": "imię · nazwisko · adres · numer telefonu", "english": "first name · surname · address · phone number"},
+    {"polish": "do widzenia · do jutra · na razie · pa", "english": "goodbye · see you tomorrow · bye · bye"},
+    {"polish": "dobry wieczór · dobranoc", "english": "good evening · good night"},
+    {"polish": "na zdrowie!", "english": "bless you! / cheers!"}
   ]
 }

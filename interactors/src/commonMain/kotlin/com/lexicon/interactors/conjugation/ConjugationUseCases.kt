@@ -1,5 +1,6 @@
 package com.lexicon.interactors.conjugation
 
+import com.lexicon.interactors.course.AnswerVerdict
 import kotlinx.collections.immutable.ImmutableList
 
 interface LoadConjugationVerbsUseCase {
@@ -46,8 +47,10 @@ data class SubmitConjugationAnswerRequest(
 )
 
 data class SubmitConjugationAnswerResponse(
-    val correctness: Map<GrammaticalPerson, Boolean>,
+    val verdicts: Map<GrammaticalPerson, AnswerVerdict>,
 ) {
+    val correctness: Map<GrammaticalPerson, Boolean> get() = verdicts.mapValues { it.value == AnswerVerdict.CORRECT }
+
     val allCorrect: Boolean get() = correctness.values.all { it }
 }
 

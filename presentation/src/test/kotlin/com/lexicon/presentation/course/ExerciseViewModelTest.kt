@@ -1,6 +1,7 @@
 package com.lexicon.presentation.course
 
 import androidx.lifecycle.SavedStateHandle
+import com.lexicon.boundary.AudioPlayback
 import com.lexicon.boundary.LessonAudioLibrary
 import com.lexicon.boundary.LessonAudioPlayer
 import com.lexicon.common.DispatcherProvider
@@ -18,6 +19,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +32,6 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -55,8 +56,7 @@ class ExerciseViewModelTest {
             ): Boolean = expected.trim().lowercase() == submitted.trim().lowercase()
         }
     private val audioLibrary: LessonAudioLibrary = mockk()
-    private val playingFile = MutableStateFlow<String?>(null)
-    private val pausedFile = MutableStateFlow<String?>(null)
+    private val playback = MutableStateFlow<AudioPlayback?>(null)
     private val audioPlayer: LessonAudioPlayer = mockk(relaxed = true)
 
     private val minimalPair =
@@ -85,12 +85,9 @@ class ExerciseViewModelTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
-        every { audioPlayer.playingFile } returns playingFile
-        every { audioPlayer.pausedFile } returns pausedFile
-        every { audioPlayer.pause() } answers {
-            pausedFile.value = playingFile.value
-            playingFile.value = null
-        }
+        every { audioPlayer.playback } returns playback
+        coEvery { audioLibrary.pathOrNull(any(), any()) } returns null
+        every { audioPlayer.pause() } answers { playback.value = playback.value?.copy(isPlaying = false) }
     }
 
     @After
@@ -240,7 +237,7 @@ class ExerciseViewModelTest {
         runTest {
             coEvery { getLesson(LessonId("lesson-1")) } returns lesson(minimalPair)
             coEvery { audioLibrary.pathOrNull("101a1.mp3", "drive-101a1.mp3") } returns "/cache/101a1.mp3"
-            coEvery { audioPlayer.play("101a1.mp3", "/cache/101a1.mp3") } returns Unit
+            coEvery { audioPlayer.play("101a1.mp3", "/cache/101a1.mp3", any()) } returns Unit
 
             val viewModel = viewModel(exerciseId = minimalPair.id)
             testDispatcher.scheduler.advanceUntilIdle()
@@ -248,7 +245,7 @@ class ExerciseViewModelTest {
             viewModel.onPlayAudio()
             testDispatcher.scheduler.advanceUntilIdle()
 
-            coVerify { audioPlayer.play("101a1.mp3", "/cache/101a1.mp3") }
+            coVerify { audioPlayer.play("101a1.mp3", "/cache/101a1.mp3", null) }
         }
 
     @Test
@@ -264,40 +261,56 @@ class ExerciseViewModelTest {
             testDispatcher.scheduler.advanceUntilIdle()
 
             val state = viewModel.uiState.value as ExerciseUiState.Loaded
-            assertTrue(state.isAudioMissing)
+            assertTrue(state.track.isMissing)
         }
 
     @Test
     fun `tapping play while the track is already playing pauses it instead of restarting`() =
         runTest {
             coEvery { getLesson(LessonId("lesson-1")) } returns lesson(minimalPair)
-            playingFile.value = "101a1.mp3"
+            playback.value = AudioPlayback("101a1.mp3", isPlaying = true, positionMs = 4_000, durationMs = 30_000)
 
             val viewModel = viewModel(exerciseId = minimalPair.id)
             testDispatcher.scheduler.advanceUntilIdle()
 
             viewModel.onPlayAudio()
 
-            assertNull(playingFile.value)
+            assertEquals(false, playback.value?.isPlaying)
+            assertEquals(4_000L, playback.value?.positionMs)
         }
 
     @Test
-    fun `a paused track can be replayed from the start`() =
+    fun `seeking moves the exercise's own track and ignores another one`() =
+        runTest {
+            coEvery { getLesson(LessonId("lesson-1")) } returns lesson(minimalPair)
+            playback.value = AudioPlayback("101a1.mp3", isPlaying = false, positionMs = 0, durationMs = 30_000)
+
+            val viewModel = viewModel(exerciseId = minimalPair.id)
+            testDispatcher.scheduler.advanceUntilIdle()
+            viewModel.onSeekAudio(12_000)
+            verify { audioPlayer.seekTo(12_000) }
+
+            playback.value = AudioPlayback("other.mp3", isPlaying = true, positionMs = 0, durationMs = 30_000)
+            viewModel.onSeekAudio(5_000)
+            verify(exactly = 0) { audioPlayer.seekTo(5_000) }
+            testDispatcher.scheduler.advanceUntilIdle()
+            assertEquals(
+                "a position chosen before playing is kept for the start",
+                5_000L,
+                (viewModel.uiState.value as ExerciseUiState.Loaded).track.positionMs,
+            )
+        }
+
+    @Test
+    fun `the track's length is known before it is played`() =
         runTest {
             coEvery { getLesson(LessonId("lesson-1")) } returns lesson(minimalPair)
             coEvery { audioLibrary.pathOrNull("101a1.mp3", "drive-101a1.mp3") } returns "/cache/101a1.mp3"
-            playingFile.value = "101a1.mp3"
+            coEvery { audioPlayer.durationOf("/cache/101a1.mp3") } returns 81_000
 
             val viewModel = viewModel(exerciseId = minimalPair.id)
             testDispatcher.scheduler.advanceUntilIdle()
 
-            viewModel.onPlayAudio()
-            testDispatcher.scheduler.advanceUntilIdle()
-            assertTrue((viewModel.uiState.value as ExerciseUiState.Loaded).canReplay)
-
-            viewModel.onReplayAudio()
-            testDispatcher.scheduler.advanceUntilIdle()
-
-            coVerify { audioPlayer.replay("101a1.mp3", "/cache/101a1.mp3") }
+            assertEquals(81_000L, (viewModel.uiState.value as ExerciseUiState.Loaded).track.durationMs)
         }
 }
