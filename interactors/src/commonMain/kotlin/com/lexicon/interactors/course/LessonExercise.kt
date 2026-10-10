@@ -50,6 +50,13 @@ sealed interface LessonExercise {
     ) : LessonExercise
 }
 
+data class InlineChoiceGroup(
+    val options: List<String>,
+    val selected: String?,
+    val answer: String,
+    val info: String?,
+)
+
 data class MinimalPairItem(
     val label: String,
     val options: ImmutableList<String>,

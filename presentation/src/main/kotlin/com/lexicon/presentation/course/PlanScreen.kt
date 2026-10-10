@@ -228,7 +228,7 @@ private fun VocabularyCourseTile(
 }
 
 @Composable
-private fun CourseTile(
+internal fun CourseTile(
     course: Course,
     languageTag: String,
     onClick: () -> Unit,

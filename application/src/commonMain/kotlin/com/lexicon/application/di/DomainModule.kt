@@ -18,6 +18,7 @@ import com.lexicon.application.course.GetLessonVocabularyUseCaseImpl
 import com.lexicon.application.course.ObserveCoursesUseCaseImpl
 import com.lexicon.application.course.ReviewWritingUseCaseImpl
 import com.lexicon.application.course.SaveLessonProgressUseCaseImpl
+import com.lexicon.application.course.SetCourseOnDashboardUseCaseImpl
 import com.lexicon.application.course.SetLessonCompletedUseCaseImpl
 import com.lexicon.application.crossword.StartCrosswordSessionUseCaseImpl
 import com.lexicon.application.crossword.SubmitCrosswordUseCaseImpl
@@ -39,6 +40,7 @@ import com.lexicon.application.presets.CreatePresetUseCaseImpl
 import com.lexicon.application.presets.CreateWordUseCaseImpl
 import com.lexicon.application.presets.DeleteWordUseCaseImpl
 import com.lexicon.application.presets.FillWordGrammarUseCaseImpl
+import com.lexicon.application.presets.FindWordsUseCaseImpl
 import com.lexicon.application.presets.GenerateWordExampleUseCaseImpl
 import com.lexicon.application.presets.GetPinnedImageUseCaseImpl
 import com.lexicon.application.presets.GetPresetCategoriesUseCaseImpl
@@ -114,6 +116,7 @@ import com.lexicon.interactors.course.GetLessonVocabularyUseCase
 import com.lexicon.interactors.course.ObserveCoursesUseCase
 import com.lexicon.interactors.course.ReviewWritingUseCase
 import com.lexicon.interactors.course.SaveLessonProgressUseCase
+import com.lexicon.interactors.course.SetCourseOnDashboardUseCase
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
 import com.lexicon.interactors.crossword.StartCrosswordSessionUseCase
 import com.lexicon.interactors.crossword.SubmitCrosswordUseCase
@@ -135,6 +138,7 @@ import com.lexicon.interactors.presets.CreateWordUseCase
 import com.lexicon.interactors.presets.DeletePresetUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.FillWordGrammarUseCase
+import com.lexicon.interactors.presets.FindWordsUseCase
 import com.lexicon.interactors.presets.GenerateWordExampleUseCase
 import com.lexicon.interactors.presets.GetPinnedImageUseCase
 import com.lexicon.interactors.presets.GetPresetCategoriesUseCase
@@ -299,6 +303,7 @@ val domainModule = module {
     factoryOf(::CountWordsToReviewUseCaseImpl) { bind<CountWordsToReviewUseCase>() }
     factoryOf(::CheckTrainingReadinessUseCaseImpl) { bind<CheckTrainingReadinessUseCase>() }
     factoryOf(::SearchVocabularyUseCaseImpl) { bind<SearchVocabularyUseCase>() }
+    factoryOf(::FindWordsUseCaseImpl) { bind<FindWordsUseCase>() }
     factoryOf(::SeedCatalogsUseCaseImpl) { bind<SeedCatalogsUseCase>() }
     factoryOf(::DeleteWordUseCaseImpl) { bind<DeleteWordUseCase>() }
     factoryOf(::RestoreWordUseCaseImpl) { bind<RestoreWordUseCase>() }
@@ -315,6 +320,7 @@ val domainModule = module {
     factoryOf(::GetLessonUseCaseImpl) { bind<GetLessonUseCase>() }
     factoryOf(::GetLessonVocabularyUseCaseImpl) { bind<GetLessonVocabularyUseCase>() }
     factoryOf(::SetLessonCompletedUseCaseImpl) { bind<SetLessonCompletedUseCase>() }
+    factoryOf(::SetCourseOnDashboardUseCaseImpl) { bind<SetCourseOnDashboardUseCase>() }
     factoryOf(::GetLessonScriptUseCaseImpl) { bind<GetLessonScriptUseCase>() }
     factoryOf(::GetLessonProgressUseCaseImpl) { bind<GetLessonProgressUseCase>() }
     factoryOf(::SaveLessonProgressUseCaseImpl) { bind<SaveLessonProgressUseCase>() }

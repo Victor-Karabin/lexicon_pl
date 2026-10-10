@@ -30,6 +30,7 @@ fun CourseBoundary.toCourse(): Course =
         level = CefrLevel.ofName(level),
         title = LocalizedText(title),
         lessons = lessons.map(LessonSummaryBoundary::toSummary).toImmutableList(),
+        isOnDashboard = isOnDashboard,
     )
 
 fun LessonSummaryBoundary.toSummary(): LessonSummary =

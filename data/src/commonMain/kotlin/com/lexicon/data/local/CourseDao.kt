@@ -12,6 +12,15 @@ interface CourseDao {
     @Query("SELECT * FROM courses ORDER BY sortOrder")
     fun observeCourses(): Flow<List<CourseEntity>>
 
+    @Query("SELECT courseId FROM dashboard_courses")
+    fun observeDashboardCourses(): Flow<List<String>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addDashboardCourse(row: DashboardCourseEntity)
+
+    @Query("DELETE FROM dashboard_courses WHERE courseId = :courseId")
+    suspend fun removeDashboardCourse(courseId: String)
+
     @Query("SELECT * FROM lessons ORDER BY courseId, number")
     fun observeLessons(): Flow<List<LessonEntity>>
 

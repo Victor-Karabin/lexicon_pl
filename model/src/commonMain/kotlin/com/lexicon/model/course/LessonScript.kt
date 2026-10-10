@@ -11,14 +11,35 @@ data class LessonScript(
     val lessonId: LessonId,
     val steps: ImmutableList<LessonStep>,
     val screens: ImmutableList<LessonScreen>,
+    val newWords: ImmutableMap<String, NewWords> = persistentMapOf(),
+    val rules: ImmutableList<GrammarRule> = persistentListOf(),
+    val ruleLinks: ImmutableMap<String, ImmutableList<Int>> = persistentMapOf(),
 ) {
     fun stepOf(screenId: String): LessonStep? = steps.firstOrNull { screenId in it.screenIds }
+
+    fun rule(number: Int): GrammarRule? = rules.firstOrNull { it.number == number }
+
+    fun rulesOf(screenId: String): List<GrammarRule> = ruleLinks[screenId].orEmpty().mapNotNull(::rule)
 }
+
+data class GrammarRule(
+    val number: Int,
+    val title: String,
+    val tables: ImmutableList<LessonTable>,
+    val notes: ImmutableList<String>,
+)
 
 data class LessonStep(
     val id: String,
     val title: String,
     val screenIds: ImmutableList<String>,
+    val isReview: Boolean = false,
+    val isGrammar: Boolean = false,
+)
+
+data class NewWords(
+    val words: ImmutableList<LessonPhrase>,
+    val unlock: TranscriptUnlock,
 )
 
 data class LessonTrack(
@@ -61,6 +82,16 @@ enum class AnswerKeyboard { TEXT, DIGITS }
 
 enum class AnswerMatch { WHOLE, KEY_WORDS }
 
+sealed interface ItemPicture {
+    data class Symbol(
+        val emoji: String?,
+        val icon: String?,
+        val label: String,
+    ) : ItemPicture
+
+    data class Swatch(val color: Long) : ItemPicture
+}
+
 data class LessonQuestion(
     val key: String,
     val label: String,
@@ -68,11 +99,19 @@ data class LessonQuestion(
     val feedback: String?,
     val prompt: String? = null,
     val match: AnswerMatch = AnswerMatch.WHOLE,
+    val variants: ImmutableList<String> = persistentListOf(),
+    val picture: ItemPicture? = null,
 )
 
 data class ChoiceQuestion(
     val question: LessonQuestion,
     val options: ImmutableList<String>,
+)
+
+data class InlineChoiceLine(
+    val label: String,
+    val text: String,
+    val groups: ImmutableList<ChoiceQuestion>,
 )
 
 data class GapLine(
@@ -140,6 +179,7 @@ sealed interface LessonScreen {
         override val questions: ImmutableList<LessonQuestion>,
         override val hint: String? = null,
         val notes: ImmutableList<String> = persistentListOf(),
+        val wordBox: ImmutableList<String> = persistentListOf(),
     ) : LessonScreen
 
     data class Choice(
@@ -152,8 +192,30 @@ sealed interface LessonScreen {
         val legend: ImmutableList<String> = persistentListOf(),
         override val hint: String? = null,
         override val interchangeable: ImmutableList<ImmutableList<String>> = persistentListOf(),
+        val shuffle: Boolean = true,
     ) : LessonScreen {
         override val questions: List<LessonQuestion> get() = items.map { it.question }
+    }
+
+    data class Grammar(
+        override val id: String,
+        override val title: String,
+        override val instruction: String,
+    ) : LessonScreen {
+        override val tracks: ImmutableList<LessonTrack> get() = persistentListOf()
+        override val transcript: Transcript? get() = null
+        override val questions: List<LessonQuestion> get() = emptyList()
+    }
+
+    data class InlineChoice(
+        override val id: String,
+        override val title: String,
+        override val instruction: String,
+        override val tracks: ImmutableList<LessonTrack>,
+        override val transcript: Transcript?,
+        val lines: ImmutableList<InlineChoiceLine>,
+    ) : LessonScreen {
+        override val questions: List<LessonQuestion> get() = lines.flatMap { line -> line.groups.map { it.question } }
     }
 
     data class Ordering(
@@ -189,6 +251,8 @@ sealed interface LessonScreen {
         override val questions: ImmutableList<LessonQuestion>,
         val notes: ImmutableList<String> = persistentListOf(),
         override val hint: String? = null,
+        val wordBox: ImmutableList<String> = persistentListOf(),
+        override val interchangeable: ImmutableList<ImmutableList<String>> = persistentListOf(),
     ) : LessonScreen
 
     data class FreeWriting(
@@ -202,6 +266,8 @@ sealed interface LessonScreen {
         val checklist: ImmutableList<String>,
     ) : LessonScreen {
         override val questions: List<LessonQuestion> get() = emptyList()
+
+        fun isMultiline(field: Int): Boolean = model.getOrNull(field)?.contains('\n') == true
     }
 }
 
@@ -223,12 +289,19 @@ data class WritingReview(
     val improvements: ImmutableList<String>,
 )
 
+data class FirstTry(
+    val correct: Int,
+    val total: Int,
+    val almost: Int,
+)
+
 data class LessonProgress(
     val screenIndex: Int = 0,
     val answers: ImmutableMap<String, ImmutableMap<String, String>> = persistentMapOf(),
     val checked: ImmutableSet<String> = persistentSetOf(),
     val finished: ImmutableSet<String> = persistentSetOf(),
     val reviews: ImmutableMap<String, WritingReview> = persistentMapOf(),
+    val firstTries: ImmutableMap<String, FirstTry> = persistentMapOf(),
 )
 
 val GAP_PATTERN = Regex("""\[(\d+)]""")

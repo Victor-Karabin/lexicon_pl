@@ -21,6 +21,7 @@ import com.lexicon.interactors.conjugation.SubmitConjugationAnswerRequest
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerResponse
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
 import com.lexicon.interactors.conjugation.ToggleVerbInStudySetUseCase
+import com.lexicon.interactors.conjugation.VERB_COURSE_ID
 import com.lexicon.interactors.conjugation.VerbConjugation
 import com.lexicon.interactors.conjugation.VerbPage
 import com.lexicon.interactors.course.AnswerVerdict
@@ -28,6 +29,7 @@ import com.lexicon.interactors.course.LessonAnswerChecker
 import com.lexicon.interactors.presets.CreateWordUseCase
 import com.lexicon.model.vocabulary.WordStatus
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 
 private const val VERB_PAGE = 40
@@ -103,23 +105,27 @@ class CreateConjugationCourseUseCaseImpl(
 
 class LoadConjugationCoursesUseCaseImpl(
     private val conjugations: ConjugationRepository,
+    private val vocabulary: VocabularyRepository,
 ) : LoadConjugationCoursesUseCase {
-    override suspend fun invoke(): ImmutableList<ConjugationCourse> =
-        conjugations
-            .courses()
-            .map {
-                ConjugationCourse(
-                    id = it.id,
-                    infinitives = it.infinitives.toImmutableList(),
-                    progress = conjugations.courseProgress(it.id),
-                )
-            }.toImmutableList()
+    override suspend fun invoke(): ImmutableList<ConjugationCourse> {
+        val verbs = conjugations.studySetVerbs(vocabulary)
+        if (verbs.isEmpty()) return persistentListOf()
+        return persistentListOf(
+            ConjugationCourse(
+                id = VERB_COURSE_ID,
+                infinitives = verbs.map { it.infinitive }.toImmutableList(),
+                progress = conjugations.courseProgress(VERB_COURSE_ID, verbs),
+            ),
+        )
+    }
 }
 
 class LoadConjugationProgressUseCaseImpl(
     private val conjugations: ConjugationRepository,
+    private val vocabulary: VocabularyRepository,
 ) : LoadConjugationProgressUseCase {
-    override suspend fun invoke(courseId: String): ConjugationCourseProgress = conjugations.courseProgress(courseId)
+    override suspend fun invoke(courseId: String): ConjugationCourseProgress =
+        conjugations.courseProgress(courseId, conjugations.studySetVerbs(vocabulary))
 }
 
 class NextConjugationTableUseCaseImpl(
@@ -128,10 +134,10 @@ class NextConjugationTableUseCaseImpl(
     private val imageProvider: ImageProvider,
 ) : NextConjugationTableUseCase {
     override suspend fun invoke(courseId: String): ConjugationTable? {
-        val selected = conjugations.courseVerbs(courseId)
+        val selected = conjugations.studySetVerbs(vocabulary)
         if (selected.isEmpty()) return null
 
-        val progress = conjugations.courseProgress(courseId).variants.associateBy { it.variant }
+        val progress = conjugations.courseProgress(courseId, selected).variants.associateBy { it.variant }
         val verb = selected.leastPractised(progress) ?: return null
 
         return verb.question()?.withLearningAids()

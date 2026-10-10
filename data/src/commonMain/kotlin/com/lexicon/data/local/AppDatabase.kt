@@ -16,6 +16,7 @@ import androidx.room.RoomDatabaseConstructor
         DeletedPresetEntity::class,
         PresetWordOverrideEntity::class,
         CourseEntity::class,
+        DashboardCourseEntity::class,
         LessonEntity::class,
         LessonWordEntity::class,
         LessonAudioEntity::class,
@@ -31,7 +32,7 @@ import androidx.room.RoomDatabaseConstructor
         ConjugationCourseVerbEntity::class,
         ConjugationProgressEntity::class,
     ],
-    version = 36,
+    version = 37,
     exportSchema = false,
 )
 @ConstructedBy(AppDatabaseConstructor::class)

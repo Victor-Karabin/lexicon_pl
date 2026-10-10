@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -231,9 +232,10 @@ private fun ConjugationContent(
                             }
 
                             Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
-                                table.steps.forEach { step ->
+                                table.steps.forEachIndexed { index, step ->
                                     PersonRow(
                                         step = step,
+                                        imeAction = if (index == table.steps.lastIndex) ImeAction.Done else ImeAction.Next,
                                         uiState = uiState,
                                         onAnswerChanged = { onAnswerChanged(step.variant.person, it) },
                                         onSpeak = onSpeak,
@@ -260,6 +262,7 @@ private fun PersonRow(
     uiState: ConjugationUiState,
     onAnswerChanged: (String) -> Unit,
     onSpeak: (String) -> Unit,
+    imeAction: ImeAction,
     modifier: Modifier = Modifier,
 ) {
     val person = step.variant.person
@@ -279,6 +282,7 @@ private fun PersonRow(
             isAlmost = verdict == AnswerVerdict.ALMOST,
             labelWidth = PersonColumnWidth,
             onSpeak = { onSpeak(step.spokenForm) },
+            imeAction = imeAction,
         )
     }
 }

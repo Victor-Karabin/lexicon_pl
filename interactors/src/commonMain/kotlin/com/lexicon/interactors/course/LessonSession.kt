@@ -1,5 +1,8 @@
 package com.lexicon.interactors.course
 
+import com.lexicon.model.course.ChoiceQuestion
+import com.lexicon.model.course.FirstTry
+import com.lexicon.model.course.GrammarRule
 import com.lexicon.model.course.LessonProgress
 import com.lexicon.model.course.LessonQuestion
 import com.lexicon.model.course.LessonScreen
@@ -10,12 +13,19 @@ import com.lexicon.model.course.WritingReview
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.collections.immutable.toImmutableSet
+import kotlin.random.Random
 
 data class Score(
     val correct: Int,
     val total: Int,
 ) {
     val percent: Int get() = if (total == 0) 100 else correct * 100 / total
+
+    val isPassed: Boolean get() = correct * 100 >= total * PASS_MARK
+
+    companion object {
+        const val PASS_MARK = 80
+    }
 }
 
 data class StepScore(
@@ -23,10 +33,20 @@ data class StepScore(
     val score: Score,
 )
 
+data class ExerciseToImprove(
+    val screen: LessonScreen,
+    val firstTry: FirstTry,
+    val rules: List<GrammarRule>,
+)
+
 data class LessonResults(
     val steps: List<StepScore>,
+    val toImprove: List<ExerciseToImprove> = emptyList(),
+    val missedPolishLetters: Int = 0,
 ) {
     val overall: Score get() = Score(steps.sumOf { it.score.correct }, steps.sumOf { it.score.total })
+
+    val rulesToRevisit: List<GrammarRule> get() = toImprove.flatMap { it.rules }.distinctBy { it.number }.sortedBy { it.number }
 }
 
 data class LessonSession(
@@ -58,10 +78,20 @@ data class LessonSession(
 
     val isLastScreen: Boolean get() = index == script.screens.lastIndex
 
-    val isAtEnd: Boolean get() = isLastScreen && isFinished
+    val isAtEnd: Boolean get() = isLastScreen && isFinished && failedScore == null
 
     val results: LessonResults
-        get() = LessonResults(script.steps.map { StepScore(it, stepScore(it)) }.filter { it.score.total > 0 })
+        get() = LessonResults(
+            steps = script.steps.map { StepScore(it, stepScore(it)) }.filter { it.score.total > 0 },
+            toImprove = script.screens
+                .mapNotNull { screen -> progress.firstTries[screen.id]?.let { ExerciseToImprove(screen, it, script.rulesOf(screen.id)) } }
+                .filter { it.firstTry.correct < it.firstTry.total }
+                .sortedBy { it.firstTry.correct.toFloat() / it.firstTry.total },
+            missedPolishLetters = progress.firstTries.values.sumOf { it.almost },
+        )
+
+    val failedScore: Score?
+        get() = screenScore(screen).takeIf { screen.isGraded && isChecked && !it.isPassed }
 
     fun isChecked(screenId: String): Boolean = screenId in progress.checked
 
@@ -92,7 +122,15 @@ data class LessonSession(
     fun check(): LessonSession {
         if (!canCheck) return this
         if (screen is LessonScreen.FreeWriting) return finish()
-        return copy(progress = progress.copy(checked = (progress.checked + screen.id).toImmutableSet()))
+        val checked = copy(progress = progress.copy(checked = (progress.checked + screen.id).toImmutableSet()))
+        if (screen.id in progress.firstTries) return checked
+        val verdicts = screen.questions.map { checked.verdict(screen.id, it.key) }
+        val first = FirstTry(
+            correct = verdicts.count { it == AnswerVerdict.CORRECT },
+            total = verdicts.size,
+            almost = verdicts.count { it == AnswerVerdict.ALMOST },
+        )
+        return checked.copy(progress = checked.progress.copy(firstTries = (progress.firstTries + (screen.id to first)).toImmutableMap()))
     }
 
     fun withReview(review: WritingReview): LessonSession {
@@ -102,6 +140,7 @@ data class LessonSession(
 
     fun next(): LessonSession {
         if (needsCheck) return this
+        if (failedScore != null) return retry()
         val done = finish()
         return if (done.isLastScreen) done else done.copy(progress = done.progress.copy(screenIndex = index + 1))
     }
@@ -115,7 +154,7 @@ data class LessonSession(
         if (!isChecked(screenId)) return null
         val screen = script.screens.firstOrNull { it.id == screenId } ?: return null
         val question = screen.questions.firstOrNull { it.key == key } ?: return null
-        return LessonAnswerChecker.verdict(accepted(screen, question), answer(screenId, key), question.match)
+        return verdictOf(assigned(screen, question), answer(screenId, key))
     }
 
     fun expectedAnswer(
@@ -124,26 +163,53 @@ data class LessonSession(
     ): String {
         val screen = script.screens.firstOrNull { it.id == screenId } ?: return ""
         val question = screen.questions.firstOrNull { it.key == key } ?: return ""
-        return LessonAnswerChecker.closest(accepted(screen, question), answer(screenId, key))
+        return LessonAnswerChecker.closest(assigned(screen, question).answers, answer(screenId, key))
     }
 
-    private fun accepted(
+    fun usualForm(
+        screenId: String,
+        key: String,
+    ): String? {
+        if (verdict(screenId, key) != AnswerVerdict.CORRECT) return null
+        val screen = script.screens.firstOrNull { it.id == screenId } ?: return null
+        val question = assigned(screen, screen.questions.firstOrNull { it.key == key } ?: return null)
+        val asWritten = LessonAnswerChecker.verdict(question.answers, answer(screenId, key), question.match)
+        return question.answers.first().takeIf { asWritten != AnswerVerdict.CORRECT }
+    }
+
+    private fun verdictOf(
+        question: LessonQuestion,
+        given: String,
+    ): AnswerVerdict = LessonAnswerChecker.verdict(question.answers + question.variants, given, question.match)
+
+    private fun assigned(
         screen: LessonScreen,
         question: LessonQuestion,
-    ): List<String> {
-        val group = screen.interchangeable.firstOrNull { question.key in it } ?: return question.answers
+    ): LessonQuestion {
+        val group = screen.interchangeable.firstOrNull { question.key in it } ?: return question
         val members = group.mapNotNull { key -> screen.questions.firstOrNull { it.key == key } }
         val free = members.toMutableList()
         val assigned = mutableMapOf<String, LessonQuestion>()
         members.forEach { member ->
             val given = answer(screen.id, member.key)
-            free.firstOrNull { LessonAnswerChecker.verdict(it.answers, given, it.match) == AnswerVerdict.CORRECT }?.let {
+            free.firstOrNull { verdictOf(it, given) == AnswerVerdict.CORRECT }?.let {
                 assigned[member.key] = it
                 free.remove(it)
             }
         }
         members.filter { it.key !in assigned }.zip(free).forEach { (member, left) -> assigned[member.key] = left }
-        return (assigned[question.key] ?: question).answers
+        return assigned[question.key] ?: question
+    }
+
+    fun optionsOf(
+        screen: LessonScreen.Choice,
+        item: ChoiceQuestion,
+        visit: Int,
+    ): List<String> {
+        if (!screen.shuffle || screen.legend.isNotEmpty()) return item.options
+        val shared = screen.items.all { it.options == item.options }
+        val seed = listOfNotNull(visit, script.lessonId.value, screen.id, item.question.key.takeUnless { shared }).joinToString("/")
+        return item.options.shuffled(Random(seed.hashCode()))
     }
 
     fun screenScore(screen: LessonScreen): Score =
@@ -152,8 +218,15 @@ data class LessonSession(
             total = screen.questions.size,
         )
 
-    fun isTranscriptUnlocked(screen: LessonScreen): Boolean =
-        when (val unlock = screen.transcript?.unlock) {
+    fun isTranscriptUnlocked(screen: LessonScreen): Boolean = isUnlocked(screen.transcript?.unlock, screen)
+
+    fun isNewWordsUnlocked(screen: LessonScreen): Boolean = isUnlocked(script.newWords[screen.id]?.unlock, screen)
+
+    private fun isUnlocked(
+        unlock: TranscriptUnlock?,
+        screen: LessonScreen,
+    ): Boolean =
+        when (unlock) {
             null -> false
             TranscriptUnlock.Always -> true
             TranscriptUnlock.AfterCheck -> isChecked(screen.id) || screen.id in progress.finished
@@ -163,6 +236,18 @@ data class LessonSession(
     private fun finish(): LessonSession {
         if (screen.id in progress.finished) return this
         return copy(progress = progress.copy(finished = (progress.finished + screen.id).toImmutableSet()))
+    }
+
+    private fun retry(): LessonSession {
+        val wrong = screen.questions.filter { verdict(screen.id, it.key) != AnswerVerdict.CORRECT }.map { it.key }.toSet()
+        val kept = progress.answers[screen.id]?.let { (it - wrong).toImmutableMap() }
+        return copy(
+            progress = progress.copy(
+                answers = (if (kept == null) progress.answers else progress.answers + (screen.id to kept)).toImmutableMap(),
+                checked = (progress.checked - screen.id).toImmutableSet(),
+                finished = (progress.finished - screen.id).toImmutableSet(),
+            ),
+        )
     }
 
     private fun stepScore(step: LessonStep): Score {

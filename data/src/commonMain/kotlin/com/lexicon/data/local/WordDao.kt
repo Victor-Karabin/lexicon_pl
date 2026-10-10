@@ -21,6 +21,9 @@ interface WordDao {
     @Query("SELECT * FROM words WHERE id IN (:ids) AND isDeleted = 0")
     suspend fun getByIds(ids: List<Long>): List<WordEntity>
 
+    @Query("SELECT * FROM words WHERE text IN (:texts) AND isDeleted = 0")
+    suspend fun withTexts(texts: List<String>): List<WordEntity>
+
     @Query("UPDATE words SET status = :status WHERE id IN (:ids)")
     suspend fun setStatus(
         ids: List<Long>,

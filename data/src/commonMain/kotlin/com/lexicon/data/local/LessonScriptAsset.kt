@@ -3,9 +3,13 @@ package com.lexicon.data.local
 import com.lexicon.model.course.AnswerKeyboard
 import com.lexicon.model.course.AnswerMatch
 import com.lexicon.model.course.ChoiceQuestion
+import com.lexicon.model.course.FirstTry
 import com.lexicon.model.course.FormGroup
 import com.lexicon.model.course.GapLine
 import com.lexicon.model.course.GapSection
+import com.lexicon.model.course.GrammarRule
+import com.lexicon.model.course.InlineChoiceLine
+import com.lexicon.model.course.ItemPicture
 import com.lexicon.model.course.LessonId
 import com.lexicon.model.course.LessonPhrase
 import com.lexicon.model.course.LessonProgress
@@ -15,6 +19,7 @@ import com.lexicon.model.course.LessonScript
 import com.lexicon.model.course.LessonStep
 import com.lexicon.model.course.LessonTable
 import com.lexicon.model.course.LessonTrack
+import com.lexicon.model.course.NewWords
 import com.lexicon.model.course.OrderLine
 import com.lexicon.model.course.PhraseGroup
 import com.lexicon.model.course.Transcript
@@ -33,9 +38,17 @@ private const val AFTER_SCREEN = "after_screen:"
 @Serializable
 data class LessonScriptAsset(
     val lessonId: String,
+    val rules: List<RuleAsset> = emptyList(),
     val tracks: List<TrackAsset> = emptyList(),
     val steps: List<StepAsset> = emptyList(),
     val screens: List<ScreenAsset> = emptyList(),
+)
+
+@Serializable
+data class RuleAsset(
+    val title: String,
+    val tables: List<TableAsset> = emptyList(),
+    val notes: List<String> = emptyList(),
 )
 
 @Serializable
@@ -50,6 +63,8 @@ data class StepAsset(
     val id: String,
     val title: String,
     val screens: List<String>,
+    val review: Boolean = false,
+    val grammar: Boolean = false,
 )
 
 @Serializable
@@ -93,20 +108,39 @@ data class TranscriptAsset(
 )
 
 @Serializable
+data class PictureAsset(
+    val emoji: String? = null,
+    val icon: String? = null,
+    val label: String = "",
+    val swatch: String? = null,
+)
+
+@Serializable
+data class ChoiceGroupAsset(
+    val options: List<String>,
+    val answer: String,
+    val feedback: String? = null,
+)
+
+@Serializable
 data class ItemAsset(
     val label: String = "",
     val speaker: String? = null,
     val prompt: String? = null,
     val answers: List<String> = emptyList(),
+    val variants: List<String> = emptyList(),
     val options: List<String> = emptyList(),
     val answer: String? = null,
     val feedback: String? = null,
+    val picture: PictureAsset? = null,
+    val choices: List<ChoiceGroupAsset> = emptyList(),
 )
 
 @Serializable
 data class GapAsset(
     val number: Int,
     val answers: List<String>,
+    val variants: List<String> = emptyList(),
     val feedback: String? = null,
 )
 
@@ -124,6 +158,7 @@ data class ScreenAsset(
     val hint: String? = null,
     val legend: List<String> = emptyList(),
     val interchangeable: List<List<String>> = emptyList(),
+    val shuffle: Boolean = true,
     val tracks: List<TrackRefAsset> = emptyList(),
     val transcript: TranscriptAsset? = null,
     val tables: List<TableAsset> = emptyList(),
@@ -136,6 +171,10 @@ data class ScreenAsset(
     val fields: List<FieldAsset> = emptyList(),
     val model: List<String> = emptyList(),
     val checklist: List<String> = emptyList(),
+    val newWords: List<PhraseAsset> = emptyList(),
+    val newWordsUnlock: String = "always",
+    val wordBox: List<String> = emptyList(),
+    val rules: List<Int> = emptyList(),
 )
 
 @Serializable
@@ -151,12 +190,20 @@ data class ReviewAsset(
 )
 
 @Serializable
+data class FirstTryAsset(
+    val correct: Int,
+    val total: Int,
+    val almost: Int = 0,
+)
+
+@Serializable
 data class LessonProgressAsset(
     val screenIndex: Int = 0,
     val answers: Map<String, Map<String, String>> = emptyMap(),
     val checked: Set<String> = emptySet(),
     val finished: Set<String> = emptySet(),
     val reviews: Map<String, ReviewAsset> = emptyMap(),
+    val firstTries: Map<String, FirstTryAsset> = emptyMap(),
 )
 
 val lessonJson = Json { ignoreUnknownKeys = true }
@@ -171,10 +218,27 @@ fun LessonScriptAsset.toModel(remoteIds: Map<String, String?>): LessonScript {
 
     return LessonScript(
         lessonId = LessonId(lessonId),
-        steps = steps.map { LessonStep(it.id, it.title, it.screens.toImmutableList()) }.toImmutableList(),
+        steps = steps.map { LessonStep(it.id, it.title, it.screens.toImmutableList(), it.review, it.grammar) }.toImmutableList(),
         screens = screens.map { it.toModel(::track) }.toImmutableList(),
+        newWords = screens.filter { it.newWords.isNotEmpty() }.associate { screen ->
+            screen.id to NewWords(
+                words = screen.newWords.map { LessonPhrase(it.polish, it.english) }.toImmutableList(),
+                unlock = if (screen.newWordsUnlock == "after_check") TranscriptUnlock.AfterCheck else TranscriptUnlock.Always,
+            )
+        }.toImmutableMap(),
+        rules = rules.mapIndexed { index, rule ->
+            GrammarRule(
+                number = index + 1,
+                title = rule.title,
+                tables = rule.tables.map { it.toModel() }.toImmutableList(),
+                notes = rule.notes.toImmutableList(),
+            )
+        }.toImmutableList(),
+        ruleLinks = screens.filter { it.rules.isNotEmpty() }.associate { it.id to it.rules.toImmutableList() }.toImmutableMap(),
     )
 }
+
+private fun TableAsset.toModel(): LessonTable = LessonTable(header.toImmutableList(), rows.map { it.toImmutableList() }.toImmutableList())
 
 private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonScreen {
     val trackList = tracks.mapNotNull(track).toImmutableList()
@@ -191,6 +255,7 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
                 questions = items.mapIndexed { index, item -> item.toQuestion(index.toString()) }.toImmutableList(),
                 hint = hint,
                 notes = notes.toImmutableList(),
+                wordBox = wordBox.toImmutableList(),
             )
 
         "choice" ->
@@ -208,6 +273,7 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
                             answers = listOfNotNull(item.answer).toImmutableList(),
                             feedback = item.feedback,
                             prompt = item.prompt,
+                            picture = item.picture?.toModel(),
                         ),
                         options = item.options.toImmutableList(),
                     )
@@ -216,6 +282,35 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
                 hint = hint,
                 interchangeable = interchangeable.map { labels ->
                     labels.map { label -> items.indexOfFirst { it.label == label }.toString() }.toImmutableList()
+                }.toImmutableList(),
+                shuffle = shuffle,
+            )
+
+        "grammar" -> LessonScreen.Grammar(id = id, title = title, instruction = instruction)
+
+        "inline_choice" ->
+            LessonScreen.InlineChoice(
+                id = id,
+                title = title,
+                instruction = instruction,
+                tracks = trackList,
+                transcript = transcriptModel,
+                lines = items.map { item ->
+                    InlineChoiceLine(
+                        label = item.label,
+                        text = item.prompt.orEmpty(),
+                        groups = item.choices.mapIndexed { index, group ->
+                            ChoiceQuestion(
+                                question = LessonQuestion(
+                                    key = "${item.label}-${index + 1}",
+                                    label = item.label,
+                                    answers = listOf(group.answer).toImmutableList(),
+                                    feedback = group.feedback,
+                                ),
+                                options = group.options.toImmutableList(),
+                            )
+                        }.toImmutableList(),
+                    )
                 }.toImmutableList(),
             )
 
@@ -276,10 +371,13 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
                         label = gap.number.toString(),
                         answers = gap.answers.toImmutableList(),
                         feedback = gap.feedback,
+                        variants = gap.variants.toImmutableList(),
                     )
                 }.toImmutableList(),
                 notes = notes.toImmutableList(),
                 hint = hint,
+                wordBox = wordBox.toImmutableList(),
+                interchangeable = interchangeable.map { it.toImmutableList() }.toImmutableList(),
             )
 
         "free_writing" ->
@@ -301,9 +399,7 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
                 instruction = instruction,
                 tracks = trackList,
                 transcript = transcriptModel,
-                tables = tables.map { table ->
-                    LessonTable(table.header.toImmutableList(), table.rows.map { it.toImmutableList() }.toImmutableList())
-                }.toImmutableList(),
+                tables = tables.map { it.toModel() }.toImmutableList(),
                 groups = groups.map { group ->
                     PhraseGroup(
                         title = group.title,
@@ -323,7 +419,16 @@ private fun ItemAsset.toQuestion(key: String): LessonQuestion =
         answers = answers.toImmutableList(),
         feedback = feedback,
         prompt = prompt,
+        variants = variants.toImmutableList(),
+        picture = picture?.toModel(),
     )
+
+private const val OPAQUE = 0xFF000000L
+private const val HEX = 16
+
+private fun PictureAsset.toModel(): ItemPicture =
+    swatch?.let { ItemPicture.Swatch(OPAQUE or it.removePrefix("#").toLong(HEX)) }
+        ?: ItemPicture.Symbol(emoji = emoji, icon = icon, label = label)
 
 private fun TranscriptAsset.toModel(): Transcript =
     Transcript(
@@ -345,6 +450,7 @@ fun LessonProgress.toAsset(): LessonProgressAsset =
         checked = checked.toSet(),
         finished = finished.toSet(),
         reviews = reviews.mapValues { (_, review) -> ReviewAsset(review.strengths, review.improvements) },
+        firstTries = firstTries.mapValues { (_, first) -> FirstTryAsset(first.correct, first.total, first.almost) },
     )
 
 fun LessonProgressAsset.toModel(): LessonProgress =
@@ -356,4 +462,5 @@ fun LessonProgressAsset.toModel(): LessonProgress =
         reviews = reviews.mapValues { (_, review) ->
             WritingReview(review.strengths.toImmutableList(), review.improvements.toImmutableList())
         }.toImmutableMap(),
+        firstTries = firstTries.mapValues { (_, first) -> FirstTry(first.correct, first.total, first.almost) }.toImmutableMap(),
     )

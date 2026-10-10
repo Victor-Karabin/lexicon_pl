@@ -167,6 +167,19 @@ class LessonAnswerCheckerTest {
     }
 
     @Test
+    fun `sentence answers of lesson 3 ignore case and punctuation and take the optional second sentence`() {
+        val chair = listOf("Nie, to nie jest klucz.", "Nie, to nie jest klucz. To jest krzesło.")
+        assertEquals(AnswerVerdict.CORRECT, LessonAnswerChecker.verdict(chair, "nie to nie jest klucz"))
+        assertEquals(AnswerVerdict.CORRECT, LessonAnswerChecker.verdict(chair, "Nie, to nie jest klucz, to jest krzesło!"))
+        assertEquals(AnswerVerdict.WRONG, LessonAnswerChecker.verdict(chair, "Nie, to jest nie klucz."))
+        assertEquals(AnswerVerdict.ALMOST, LessonAnswerChecker.verdict(listOf("Ten ołówek jest żółty."), "Ten olowek jest zolty"))
+        assertEquals(AnswerVerdict.CORRECT, LessonAnswerChecker.verdict(listOf("Mam pytanie: co to jest?"), "Mam pytanie - co to jest"))
+        listOf("książka", "długopis", "krzesło", "stół", "ołówek", "płyta CD", "pomarańczowy", "brązowy", "żółty").forEach {
+            assertEquals(it, AnswerVerdict.CORRECT, verdict(it, it))
+        }
+    }
+
+    @Test
     fun `the answer shown back is the alternative closest to what was typed`() {
         val coffee = listOf("Kawa i cukier są tam.", "Cukier i kawa są tam.", "Tam są kawa i cukier.")
         assertEquals("Tam są kawa i cukier.", LessonAnswerChecker.closest(coffee, "Tam sa kawa i cukier"))

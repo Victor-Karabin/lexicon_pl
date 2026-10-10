@@ -66,6 +66,8 @@
     <string name="settings_voice">Voice</string>
     <string name="settings_voice_note">Tap a name to hear it.</string>
     <string name="settings_sources">Sources</string>
+    <string name="settings_expanded">Expanded</string>
+    <string name="settings_collapsed">Collapsed</string>
     <string name="settings_sources_grammar">Word grammar comes from the Grammatical Dictionary of Polish (SGJP, sgjp.pl), Copyright © 2007–2026 Marcin Woliński, Zbigniew Bronk, Włodzimierz Gruszczyński, Witold Kieraś, Zygmunt Saloni, Danuta Skowrońska, Robert Wołosz, and from PoliMorf, Copyright © 2011 Marek Futrega, Piotr Gackiewicz, Mirosław Prywata, Włodzimierz Macewicz, Marcin Miłkowski, Copyright © 2011–2026 Institute of Computer Science, Polish Academy of Sciences. All rights reserved.</string>
     <string name="settings_sources_licence">Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. THIS SOFTWARE IS PROVIDED BY COPYRIGHT HOLDERS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="settings_sources_tatoeba">Many example sentences and phrases come from Tatoeba (tatoeba.org), written and translated by its contributors and shared under the Creative Commons Attribution 2.0 France licence (CC BY 2.0 FR). Each sentence and its author can be found on tatoeba.org.</string>
@@ -79,6 +81,7 @@
     <string name="conjugation_search_hint">Search verb</string>
     <string name="conjugation_selected_count">%1$d selected</string>
     <string name="conjugation_create">Create the course</string>
+    <string name="conjugation_study_set_hint">Verbs marked ♥ go into the verb course on the dashboard.</string>
     <string name="conjugation_restore_all">Restore all</string>
     <string name="conjugation_partial">only %1$d of 6 persons in the source</string>
     <string name="conjugation_none">Choose some verbs first — the course is built from the ones you pick.</string>
@@ -263,10 +266,14 @@
     <string name="course_title">Course</string>
     <string name="course_empty">The course could not be loaded.</string>
     <string name="course_progress">%1$d of %2$d lessons done</string>
+    <string name="course_show_on_dashboard">Show on dashboard</string>
+    <string name="course_remove_from_dashboard">Remove from dashboard</string>
     <string name="course_lesson_number">Lesson %1$d</string>
     <string name="lesson_words">New words</string>
     <string name="exercise_play">Play</string>
     <string name="exercise_pause">Pause</string>
+    <string name="exercise_speed">%1$s×</string>
+    <string name="exercise_speed_description">Playback speed %1$s×, tap to change</string>
     <string name="exercise_check">Check</string>
     <string name="exercise_try_again">Try again</string>
     <string name="exercise_score">%1$d of %2$d correct</string>
@@ -291,7 +298,27 @@
     <string name="lesson_flow_results">%1$d of %2$d correct · %3$d%%</string>
     <string name="lesson_flow_step_result">%1$d of %2$d</string>
     <string name="lesson_flow_next_lesson">Next lesson</string>
-    <string name="lesson_flow_close">Close</string>
+    <string name="lesson_flow_to_improve">What to work on</string>
+    <string name="lesson_flow_no_mistakes">No mistakes on the first try. Well done!</string>
+    <string name="lesson_flow_exercise">%1$s · %2$s</string>
+    <string name="lesson_flow_first_try">%1$d of %2$d on the first try</string>
+    <string name="lesson_flow_rules_to_revisit">Rules to revisit</string>
+    <string name="lesson_flow_by_step">By step</string>
+    <string name="lesson_flow_retry_title">Let\'s do this exercise again</string>
+    <string name="lesson_flow_retry_body">%1$d of %2$d correct (%3$d%%). You need %4$d%% to move on, so this exercise starts again. Your right answers are kept; redo the wrong ones.</string>
+    <string name="lesson_flow_done">Done</string>
+    <string name="lesson_flow_new_words">New words (%1$d)</string>
+    <string name="lesson_flow_hide_new_words">Hide new words</string>
+    <string name="lesson_flow_review_badge">Review</string>
+    <string name="lesson_flow_grammar_badge">G</string>
+    <string name="lesson_flow_grammar">Grammar</string>
+    <string name="lesson_flow_rule">Rule %1$d: %2$s</string>
+    <string name="lesson_flow_rule_heading">%1$d. %2$s</string>
+    <string name="lesson_flow_see_rule">See rule %1$d</string>
+    <string name="lesson_flow_rule_back">Back to the rules</string>
+    <string name="lesson_flow_review_intro">No new rules — this checks the whole lesson.</string>
+    <string name="lesson_flow_usual_form">Usually written: %1$s</string>
+    <string name="lesson_flow_retry_start">Start again</string>
     <string name="lesson_flow_explain">Why</string>
     <string name="lesson_flow_reviewing">Checking your dialogues…</string>
     <string name="lesson_flow_review_strengths">What went well</string>
@@ -369,6 +396,10 @@
     <plurals name="word_change_presets_count">
         <item quantity="one">In %1$d preset. A word can be in several.</item>
         <item quantity="other">In %1$d presets. A word can be in several.</item>
+    </plurals>
+    <plurals name="lesson_flow_polish_letters">
+        <item quantity="one">%1$d answer missed only the Polish letters (ą, ć, ę, ł, ń, ó, ś, ź, ż).</item>
+        <item quantity="other">%1$d answers missed only the Polish letters (ą, ć, ę, ł, ń, ó, ś, ź, ż).</item>
     </plurals>
     <plurals name="exercise_question_count">
         <item quantity="one">%1$d question</item>

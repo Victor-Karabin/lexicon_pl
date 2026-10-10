@@ -6,6 +6,7 @@ data class CourseBoundary(
     val level: String,
     val title: Map<String, String>,
     val lessons: List<LessonSummaryBoundary>,
+    val isOnDashboard: Boolean = false,
 )
 
 data class LessonSummaryBoundary(

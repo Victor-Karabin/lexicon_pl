@@ -12,6 +12,8 @@ data class AudioPlayback(
 interface LessonAudioPlayer {
     val playback: StateFlow<AudioPlayback?>
 
+    val speed: StateFlow<Float>
+
     suspend fun play(
         file: String,
         path: String,
@@ -21,6 +23,8 @@ interface LessonAudioPlayer {
     fun pause()
 
     fun seekTo(positionMs: Long)
+
+    fun setSpeed(speed: Float)
 
     suspend fun durationOf(path: String): Long?
 

@@ -2,6 +2,7 @@ package com.lexicon.application.conjugation
 
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.VerbConjugationBoundary
+import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.conjugation.ConjugationCourseProgress
 import com.lexicon.interactors.conjugation.ConjugationStep
 import com.lexicon.interactors.conjugation.ConjugationTable
@@ -26,15 +27,19 @@ internal fun VerbConjugationBoundary.toVerb(): VerbConjugation =
 internal suspend fun ConjugationRepository.conjugationOf(infinitive: String): VerbConjugation? =
     verb(infinitive)?.toVerb()?.takeIf { it.isTeachable }
 
-internal suspend fun ConjugationRepository.courseVerbs(courseId: String): List<VerbConjugation> {
-    val chosen = courses().firstOrNull { it.id == courseId }?.infinitives.orEmpty().toSet()
-    return verbs().filter { it.infinitive in chosen }.map { it.toVerb() }.filter { it.isTeachable }
+internal suspend fun ConjugationRepository.studySetVerbs(vocabulary: VocabularyRepository): List<VerbConjugation> {
+    val teachable = verbs().map { it.toVerb() }.filter { it.isTeachable }
+    val starred = vocabulary.studySetTextsAmong(teachable.map { it.infinitive })
+    return teachable.filter { it.infinitive in starred }
 }
 
-internal suspend fun ConjugationRepository.courseProgress(courseId: String): ConjugationCourseProgress {
+internal suspend fun ConjugationRepository.courseProgress(
+    courseId: String,
+    verbs: List<VerbConjugation>,
+): ConjugationCourseProgress {
     val stored = progress(courseId).associateBy { it.infinitive to it.person }
 
-    val variants = courseVerbs(courseId).flatMap { verb ->
+    val variants = verbs.flatMap { verb ->
         verb.persons.map { person ->
             val row = stored[verb.infinitive to person.sourceKey]
             ConjugationVariantProgress(

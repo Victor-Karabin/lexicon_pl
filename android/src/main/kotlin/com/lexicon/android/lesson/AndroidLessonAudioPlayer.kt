@@ -33,6 +33,9 @@ class AndroidLessonAudioPlayer(
     private val _playback = MutableStateFlow<AudioPlayback?>(null)
     override val playback: StateFlow<AudioPlayback?> = _playback.asStateFlow()
 
+    private val _speed = MutableStateFlow(1f)
+    override val speed: StateFlow<Float> = _speed.asStateFlow()
+
     override suspend fun play(
         file: String,
         path: String,
@@ -44,6 +47,7 @@ class AndroidLessonAudioPlayer(
                 player?.run {
                     fromMs?.let { seekTo(it.toInt()) }
                     start()
+                    applySpeed(this)
                 }
             }
             publish()
@@ -60,6 +64,16 @@ class AndroidLessonAudioPlayer(
     override fun seekTo(positionMs: Long) {
         synchronized(lock) { runCatching { player?.seekTo(positionMs.toInt()) } }
         _playback.value = _playback.value?.copy(positionMs = positionMs)
+    }
+
+    override fun setSpeed(speed: Float) {
+        _speed.value = speed
+        synchronized(lock) { player?.takeIf { it.isPlaying }?.let(::applySpeed) }
+    }
+
+    private fun applySpeed(player: MediaPlayer) {
+        runCatching { player.playbackParams = player.playbackParams.setSpeed(_speed.value) }
+            .onFailure { Log.w(TAG, "The playback speed could not be set", it) }
     }
 
     override suspend fun durationOf(path: String): Long? =

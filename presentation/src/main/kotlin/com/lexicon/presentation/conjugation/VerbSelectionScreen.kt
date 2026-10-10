@@ -14,18 +14,16 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,39 +46,26 @@ import org.koin.androidx.compose.koinViewModel
 object VerbSelectionTestTags {
     const val SEARCH = "verb_selection_search"
     const val LIST = "verb_selection_list"
-    const val COUNT = "verb_selection_count"
-    const val CONTINUE = "verb_selection_continue"
+    const val HINT = "verb_selection_hint"
     const val RESTORE = "verb_selection_restore"
 
     fun verb(infinitive: String) = "verb_selection_item_$infinitive"
-
-    fun checkbox(infinitive: String) = "verb_selection_checkbox_$infinitive"
 
     fun studySet(infinitive: String) = "verb_selection_study_set_$infinitive"
 }
 
 @Composable
 fun VerbSelectionScreen(
-    onContinue: () -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: VerbSelectionViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(uiState.isSaved) {
-        if (uiState.isSaved) {
-            viewModel.onSaveHandled()
-            onContinue()
-        }
-    }
-
     VerbSelectionContent(
         uiState = uiState,
         onQueryChanged = viewModel::onQueryChanged,
-        onVerbToggled = viewModel::onVerbToggled,
         onStudySetToggled = viewModel::onStudySetToggled,
-        onCreateCourse = viewModel::onCreateCourse,
         onVerbDeleted = viewModel::onVerbDeleted,
         onMoreVerbs = viewModel::onMoreVerbs,
         onRestoreAll = viewModel::onRestoreAll,
@@ -93,9 +78,7 @@ fun VerbSelectionScreen(
 private fun VerbSelectionContent(
     uiState: VerbSelectionUiState,
     onQueryChanged: (String) -> Unit,
-    onVerbToggled: (String) -> Unit,
     onStudySetToggled: (VerbConjugation) -> Unit,
-    onCreateCourse: () -> Unit,
     onVerbDeleted: (String) -> Unit,
     onMoreVerbs: () -> Unit,
     onRestoreAll: () -> Unit,
@@ -134,12 +117,12 @@ private fun VerbSelectionContent(
             )
 
             Text(
-                text = stringResource(R.string.conjugation_selected_count, uiState.count),
-                style = MaterialTheme.typography.labelLarge,
+                text = stringResource(R.string.conjugation_study_set_hint),
+                style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier
                     .padding(horizontal = Dimens.spacingMedium, vertical = Dimens.spacingSmall)
-                    .testTag(VerbSelectionTestTags.COUNT),
+                    .testTag(VerbSelectionTestTags.HINT),
             )
 
             if (uiState.isLoading) {
@@ -165,9 +148,7 @@ private fun VerbSelectionContent(
                     ) {
                         VerbRow(
                             verb = verb,
-                            isSelected = verb.infinitive in uiState.selected,
                             isInStudySet = verb.infinitive in uiState.studySet,
-                            onToggled = { onVerbToggled(verb.infinitive) },
                             onStudySetToggled = { onStudySetToggled(verb) },
                         )
                     }
@@ -184,17 +165,6 @@ private fun VerbSelectionContent(
                     }
                 }
             }
-
-            Button(
-                onClick = onCreateCourse,
-                enabled = uiState.canContinue,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(Dimens.spacingMedium)
-                    .testTag(VerbSelectionTestTags.CONTINUE),
-            ) {
-                Text(stringResource(R.string.conjugation_create))
-            }
         }
     }
 }
@@ -202,26 +172,19 @@ private fun VerbSelectionContent(
 @Composable
 private fun VerbRow(
     verb: VerbConjugation,
-    isSelected: Boolean,
     isInStudySet: Boolean,
-    onToggled: () -> Unit,
     onStudySetToggled: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .toggleable(value = isSelected, role = Role.Checkbox, onValueChange = { onToggled() })
+            .toggleable(value = isInStudySet, role = Role.Checkbox, onValueChange = { onStudySetToggled() })
             .padding(horizontal = Dimens.spacingMedium, vertical = Dimens.spacingSmall)
             .testTag(VerbSelectionTestTags.verb(verb.infinitive)),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
     ) {
-        Checkbox(
-            checked = isSelected,
-            onCheckedChange = null,
-            modifier = Modifier.testTag(VerbSelectionTestTags.checkbox(verb.infinitive)),
-        )
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = verb.infinitive,
@@ -244,17 +207,13 @@ private fun VerbRow(
             }
         }
 
-        IconButton(
-            onClick = onStudySetToggled,
-            modifier = Modifier.testTag(VerbSelectionTestTags.studySet(verb.infinitive)),
-        ) {
-            Icon(
-                imageVector = if (isInStudySet) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                contentDescription = stringResource(
-                    if (isInStudySet) R.string.study_set_remove else R.string.study_set_add,
-                ),
-                tint = if (isInStudySet) LexiconError else MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
+        Icon(
+            imageVector = if (isInStudySet) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+            contentDescription = stringResource(
+                if (isInStudySet) R.string.study_set_remove else R.string.study_set_add,
+            ),
+            tint = if (isInStudySet) LexiconError else MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.minimumInteractiveComponentSize().testTag(VerbSelectionTestTags.studySet(verb.infinitive)),
+        )
     }
 }
