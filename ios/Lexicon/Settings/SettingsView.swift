@@ -67,7 +67,7 @@ struct SettingsView: View {
                 }
                 .padding(Spacing.medium)
             }
-            .navigationTitle(Strings.tabSettings)
+            .toolbar(.hidden, for: .navigationBar)
         }
     }
 

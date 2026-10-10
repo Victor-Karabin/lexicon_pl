@@ -3,36 +3,31 @@ package com.lexicon.presentation.course
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.course.GAP_MARKER
@@ -42,33 +37,44 @@ import com.lexicon.interactors.course.MinimalPairItem
 import com.lexicon.interactors.course.TranscribeItem
 import com.lexicon.model.course.AnswerKeyboard
 import com.lexicon.model.course.GAP_PATTERN
+import com.lexicon.model.course.LessonId
+import com.lexicon.model.course.LessonQuestion
 import com.lexicon.model.course.LessonScreen
 import com.lexicon.model.course.LessonTrack
+import com.lexicon.model.course.Transcript
+import com.lexicon.model.course.allTracks
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import org.koin.compose.viewmodel.koinViewModel
 
+private val ProgressSize = 18.dp
+private val TableLabelWidth = 120.dp
+private val TableLabelLength = 3..16
+
 class LessonFlowActions(
     val onClose: () -> Unit,
+    val onFinished: () -> Unit,
+    val onNextLesson: (LessonId) -> Unit,
     val onPlay: (LessonTrack) -> Unit,
-    val onReplay: (LessonTrack) -> Unit,
+    val onSeek: (LessonTrack, Long) -> Unit,
     val onAnswerChanged: (String, String) -> Unit,
+    val onLineTapped: (String) -> Unit,
     val onCheck: () -> Unit,
-    val onDone: () -> Unit,
-    val onShowModel: () -> Unit,
     val onNext: () -> Unit,
     val onBack: () -> Unit,
-    val onRetryStep: () -> Unit,
-    val onTranscriptToggled: () -> Unit,
-    val onFinishLesson: () -> Unit,
+    val onTranscriptToggled: (String) -> Unit,
+    val onSpeak: (String) -> Unit,
 )
 
 @Composable
 fun LessonFlowScreen(
     onClose: () -> Unit,
+    onFinished: () -> Unit,
+    onNextLesson: (LessonId) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LessonFlowViewModel = koinViewModel(),
 ) {
@@ -77,17 +83,17 @@ fun LessonFlowScreen(
         uiState = uiState,
         actions = LessonFlowActions(
             onClose = onClose,
+            onFinished = onFinished,
+            onNextLesson = onNextLesson,
             onPlay = viewModel::onPlay,
-            onReplay = viewModel::onReplay,
+            onSeek = viewModel::onSeek,
             onAnswerChanged = viewModel::onAnswerChanged,
+            onLineTapped = viewModel::onLineTapped,
             onCheck = viewModel::onCheck,
-            onDone = viewModel::onDone,
-            onShowModel = viewModel::onShowModel,
             onNext = viewModel::onNext,
             onBack = viewModel::onBack,
-            onRetryStep = viewModel::onRetryStep,
             onTranscriptToggled = viewModel::onTranscriptToggled,
-            onFinishLesson = viewModel::onFinishLesson,
+            onSpeak = viewModel::onSpeak,
         ),
         modifier = modifier,
     )
@@ -102,29 +108,23 @@ private fun LessonFlowContent(
     val title = when (uiState) {
         is LessonFlowUiState.Loaded -> {
             val session = uiState.session
-            if (uiState.isCompleted) {
-                session.script.title
-            } else {
-                stringResource(
-                    R.string.lesson_flow_position,
-                    session.screen.id,
-                    session.position,
-                    session.total,
+            when {
+                uiState.results != null && uiState.lessonNumber != null -> stringResource(
+                    R.string.course_lesson_number,
+                    uiState.lessonNumber,
                 )
+                uiState.results != null -> stringResource(R.string.course_title)
+                else -> stringResource(R.string.lesson_flow_position, session.screen.id, session.position, session.total)
             }
         }
         else -> stringResource(R.string.course_title)
     }
 
-    val letters = remember { LetterTarget() }
-    val index = (uiState as? LessonFlowUiState.Loaded)?.session?.index
-    LaunchedEffect(index) { letters.insert = null }
-
-    CompositionLocalProvider(LocalLetterTarget provides letters) {
+    AnswerInputs {
         Scaffold(
             modifier = modifier,
             topBar = { TrainingTopBar(title = title, onClose = actions.onClose) },
-            bottomBar = { if (uiState is LessonFlowUiState.Loaded) Footer(uiState, actions, letters) },
+            bottomBar = { if (uiState is LessonFlowUiState.Loaded) Footer(uiState, actions) },
         ) { padding ->
             when (uiState) {
                 LessonFlowUiState.Loading ->
@@ -136,15 +136,19 @@ private fun LessonFlowContent(
                     }
 
                 is LessonFlowUiState.Loaded ->
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(padding)
-                            .verticalScroll(rememberScrollState())
-                            .padding(Dimens.spacingMedium),
-                        verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
-                    ) {
-                        if (uiState.isCompleted) Completed(uiState.session) else ScreenBody(uiState, actions)
+                    key(uiState.session.index, uiState.results != null) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(padding)
+                                .imePadding()
+                                .verticalScroll(rememberScrollState())
+                                .padding(Dimens.spacingMedium),
+                            verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+                        ) {
+                            val results = uiState.results
+                            if (results != null) LessonResultsView(results, uiState.lessonTitle) else ScreenBody(uiState, actions)
+                        }
                     }
             }
         }
@@ -161,74 +165,94 @@ private fun ScreenBody(
 
     Text(screen.title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
     Text(richText(screen.instruction), style = MaterialTheme.typography.bodyMedium)
-    Tracks(screen.tracks, uiState, actions)
+    screen.tracks.forEach { TrackPlayer(it, uiState, actions) }
+    screen.hint?.let { HintCard(it) }
 
     when (screen) {
-        is LessonScreen.Reference -> ReferenceBody(screen)
+        is LessonScreen.Reference -> ReferenceBody(screen, uiState, actions)
         is LessonScreen.Write -> WriteBody(screen, session, actions)
         is LessonScreen.Choice -> ChoiceBody(screen, session, actions)
-        is LessonScreen.GapFill -> GapFillBody(screen, session, actions)
-        is LessonScreen.FreeWriting -> FreeWritingBody(screen, session, actions)
+        is LessonScreen.GapFill -> GapFillBody(screen, uiState, actions)
+        is LessonScreen.FreeWriting -> FreeWritingBody(screen, uiState, actions)
+        is LessonScreen.Ordering -> OrderingBody(screen, session, actions)
+        is LessonScreen.Form -> FormBody(screen, session, actions)
+    }
+
+    val transcript = screen.transcript
+    if (transcript != null && screen.allTracks().isEmpty() && session.isTranscriptUnlocked(screen)) {
+        TranscriptCard(
+            transcript = transcript,
+            isOpen = transcript.isOpen || screen.id in uiState.openTranscripts,
+            onToggle = { actions.onTranscriptToggled(screen.id) }.takeUnless { transcript.isOpen },
+        )
     }
 
     if (session.isChecked) {
         val score = session.screenScore(screen)
-        Text(
-            stringResource(R.string.exercise_score, score.correct, score.total),
-            style = MaterialTheme.typography.titleMedium,
-        )
-    }
-    screen.transcript?.let { transcript ->
-        TranscriptCard(
-            transcript = transcript,
-            isUnlocked = session.isTranscriptUnlocked(screen),
-            isOpen = uiState.transcriptOpen,
-            onToggle = actions.onTranscriptToggled,
-        )
-    }
-    if (session.endsStep && session.isFinished) {
-        session.step?.let { StepScoreCard(session.stepScore(it)) }
-    }
-    session.stepToRetry?.takeIf { it != session.step }?.let { failed ->
-        Text(
-            text = stringResource(R.string.lesson_flow_retry_earlier, failed.title, (session.script.passMark * 100).toInt()),
-            style = MaterialTheme.typography.bodyMedium,
-        )
+        Text(stringResource(R.string.exercise_score, score.correct, score.total), style = MaterialTheme.typography.titleMedium)
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
+private fun LessonScreen.transcriptFor(track: LessonTrack): Transcript? {
+    val transcript = transcript ?: return null
+    val tracks = allTracks()
+    val index = tracks.indexOf(track)
+    return when {
+        index < 0 -> null
+        transcript.sections.size == tracks.size ->
+            transcript.copy(sections = persistentListOf(transcript.sections[index].copy(title = null)))
+        index == 0 -> transcript
+        else -> null
+    }
+}
+
 @Composable
-private fun Tracks(
-    tracks: List<LessonTrack>,
+private fun TrackPlayer(
+    track: LessonTrack,
+    uiState: LessonFlowUiState.Loaded,
+    actions: LessonFlowActions,
+    showLabel: Boolean = true,
+) {
+    val session = uiState.session
+    Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
+        if (showLabel) track.label?.let { Text(it, style = MaterialTheme.typography.labelLarge) }
+        val state = uiState.tracks.of(track.file)
+        AudioPlayerRow(
+            state = state,
+            onPlayPause = { actions.onPlay(track) },
+            onSeek = { actions.onSeek(track, it) },
+        )
+        if (state.isMissing) {
+            Text(
+                stringResource(R.string.exercise_audio_unavailable),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        val transcript = session.screen.transcriptFor(track)
+        if (transcript != null && session.isTranscriptUnlocked(session.screen)) {
+            TranscriptCard(
+                transcript = transcript,
+                isOpen = track.file in uiState.openTranscripts,
+                onToggle = { actions.onTranscriptToggled(track.file) },
+            )
+        }
+    }
+}
+
+@Composable
+private fun ReferenceBody(
+    screen: LessonScreen.Reference,
     uiState: LessonFlowUiState.Loaded,
     actions: LessonFlowActions,
 ) {
-    if (tracks.isEmpty()) return
-    FlowRow(horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
-        tracks.forEach { track ->
-            Column {
-                track.label?.let { Text(it, style = MaterialTheme.typography.labelMedium) }
-                ExerciseAudioButton(
-                    isPlaying = uiState.playingFile == track.file,
-                    onClick = { actions.onPlay(track) },
-                    onReplay = { actions.onReplay(track) }.takeIf { track.file == uiState.playingFile || track.file == uiState.pausedFile },
-                )
-            }
+    screen.tables.forEach { LessonTableView(it) }
+    screen.groups.forEach { group ->
+        SectionCard(title = group.title) {
+            group.track?.let { TrackPlayer(it, uiState, actions, showLabel = false) }
+            PhraseList(group.phrases)
         }
     }
-    if (tracks.any { it.file in uiState.missingAudio }) {
-        Text(
-            stringResource(R.string.exercise_audio_unavailable),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-    }
-}
-
-@Composable
-private fun ReferenceBody(screen: LessonScreen.Reference) {
-    screen.tables.forEach { LessonTableView(it) }
     screen.notes.forEach { Text(richText(it), style = MaterialTheme.typography.bodyMedium) }
 }
 
@@ -238,19 +262,73 @@ private fun WriteBody(
     session: LessonSession,
     actions: LessonFlowActions,
 ) {
-    screen.questions.forEach { question ->
-        val verdict = session.verdict(screen.id, question.key)
-        TranscribeRow(
-            item = TranscribeItem(question.label, question.answers.first()),
-            value = session.answer(screen.id, question.key),
-            isCorrect = verdict?.let { it == AnswerVerdict.CORRECT },
-            answerState = answerState(verdict, session.isChecked),
-            onValueChanged = { actions.onAnswerChanged(question.key, it) },
-            keyboardType = if (screen.keyboard == AnswerKeyboard.DIGITS) KeyboardType.Number else KeyboardType.Text,
-            isAlmost = verdict == AnswerVerdict.ALMOST,
-        )
-        if (verdict != null) question.feedback?.let { Feedback(it) }
+    val labelWidth = TableLabelWidth.takeIf { screen.questions.all { it.prompt == null && it.label.length in TableLabelLength } }
+    Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
+        screen.questions.forEach { question ->
+            QuestionField(screen.id, question, session, actions, screen.keyboard, labelWidth)
+        }
     }
+    screen.notes.forEach { Text(richText(it), style = MaterialTheme.typography.bodyMedium) }
+}
+
+@Composable
+private fun FormBody(
+    screen: LessonScreen.Form,
+    session: LessonSession,
+    actions: LessonFlowActions,
+) {
+    screen.groups.forEach { group ->
+        SectionCard(title = group.title) {
+            Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
+                group.fields.forEach { question -> QuestionField(screen.id, question, session, actions) }
+            }
+        }
+    }
+}
+
+@Composable
+private fun QuestionField(
+    screenId: String,
+    question: LessonQuestion,
+    session: LessonSession,
+    actions: LessonFlowActions,
+    keyboard: AnswerKeyboard = AnswerKeyboard.TEXT,
+    labelWidth: Dp? = null,
+) {
+    val verdict = session.verdict(screenId, question.key)
+    TranscribeRow(
+        item = TranscribeItem(question.label, session.expectedAnswer(screenId, question.key)),
+        value = session.answer(screenId, question.key),
+        isCorrect = verdict?.let { it == AnswerVerdict.CORRECT },
+        answerState = answerState(verdict, session.isChecked(screenId)),
+        onValueChanged = { actions.onAnswerChanged(question.key, it) },
+        keyboardType = if (keyboard == AnswerKeyboard.DIGITS) KeyboardType.Number else KeyboardType.Text,
+        isAlmost = verdict == AnswerVerdict.ALMOST,
+        info = question.feedback,
+        prompt = question.prompt,
+        labelWidth = labelWidth,
+    )
+}
+
+@Composable
+private fun OrderingBody(
+    screen: LessonScreen.Ordering,
+    session: LessonSession,
+    actions: LessonFlowActions,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
+        screen.lines.forEach { line ->
+            OrderLineRow(
+                speaker = line.speaker,
+                text = line.text,
+                position = session.answer(screen.id, line.key),
+                expected = session.expectedAnswer(screen.id, line.key),
+                isCorrect = session.verdict(screen.id, line.key)?.let { it == AnswerVerdict.CORRECT },
+                onClick = { actions.onLineTapped(line.key) }.takeUnless { session.isChecked },
+            )
+        }
+    }
+    screen.notes.forEach { Text(richText(it), style = MaterialTheme.typography.bodyMedium) }
 }
 
 @Composable
@@ -259,166 +337,126 @@ private fun ChoiceBody(
     session: LessonSession,
     actions: LessonFlowActions,
 ) {
-    screen.items.forEach { item ->
-        val question = item.question
-        val verdict = session.verdict(screen.id, question.key)
-        MinimalPairRow(
-            item = MinimalPairItem(question.label, item.options, question.answers.first()),
-            selected = session.answer(screen.id, question.key).ifEmpty { null },
-            answerState = answerState(verdict, session.isChecked),
-            onSelect = { actions.onAnswerChanged(question.key, it) },
-        )
-        if (verdict != null) question.feedback?.let { Feedback(it) }
+    if (screen.legend.isNotEmpty()) {
+        SectionCard(title = null) {
+            screen.legend.forEach { Text(richText(it), style = MaterialTheme.typography.bodyLarge) }
+        }
+    }
+    Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium)) {
+        screen.items.forEach { item ->
+            val question = item.question
+            MinimalPairRow(
+                item = MinimalPairItem("", item.options, session.expectedAnswer(screen.id, question.key)),
+                selected = session.answer(screen.id, question.key).ifEmpty { null },
+                answerState = answerState(session.verdict(screen.id, question.key), session.isChecked),
+                onSelect = { actions.onAnswerChanged(question.key, it) },
+                info = question.feedback,
+                onSpeak = { actions.onSpeak(question.answers.first()) }.takeIf { screen.legend.isEmpty() },
+                prompt = question.prompt,
+            )
+        }
     }
 }
 
 @Composable
 private fun GapFillBody(
     screen: LessonScreen.GapFill,
-    session: LessonSession,
+    uiState: LessonFlowUiState.Loaded,
     actions: LessonFlowActions,
 ) {
+    val session = uiState.session
     val questions = screen.questions.associateBy { it.key }
     screen.sections.forEach { section ->
-        section.title?.let { Text(it, style = MaterialTheme.typography.titleSmall) }
-        val keysInSection = mutableListOf<String>()
-        section.lines.forEach { line ->
-            val keys = GAP_PATTERN.findAll(line.text).map { it.groupValues[1] }.toList()
-            keysInSection += keys
-            val verdicts = keys.map { session.verdict(screen.id, it) }
-            GapFillRow(
-                item = GapFillItem(
-                    prompt = line.text.replace(GAP_PATTERN, GAP_MARKER),
-                    answers = keys.map { questions[it]?.answers?.first().orEmpty() }.toImmutableList(),
-                    speaker = line.speaker,
-                ),
-                values = keys.map { session.answer(screen.id, it) },
-                correctness = if (session.isChecked) verdicts.map { it == AnswerVerdict.CORRECT } else emptyList(),
-                almost = verdicts.map { it == AnswerVerdict.ALMOST },
-                answerState = when {
-                    !session.isChecked -> AnswerState.Unanswered
-                    verdicts.all { it == AnswerVerdict.CORRECT } -> AnswerState.Correct
-                    else -> AnswerState.Incorrect()
-                },
-                onValueChanged = { at, value -> actions.onAnswerChanged(keys[at], value) },
-            )
-        }
-        val explained = mutableSetOf<String>()
-        keysInSection.mapNotNull { questions[it] }.forEach { question ->
-            ItemFeedback(
-                label = question.label,
-                verdict = session.verdict(screen.id, question.key),
-                expected = question.answers.first(),
-                feedback = question.feedback?.takeIf { explained.add(it) },
-            )
+        SectionCard(title = section.title) {
+            section.track?.let { TrackPlayer(it, uiState, actions, showLabel = false) }
+            section.lines.forEach { line ->
+                val keys = GAP_PATTERN.findAll(line.text).map { it.groupValues[1] }.toList()
+                val verdicts = keys.map { session.verdict(screen.id, it) }
+                GapFillRow(
+                    item = GapFillItem(
+                        prompt = line.text.replace(GAP_PATTERN, GAP_MARKER),
+                        answers = keys.map { session.expectedAnswer(screen.id, it) }.toImmutableList(),
+                        speaker = line.speaker,
+                    ),
+                    values = keys.map { session.answer(screen.id, it) },
+                    correctness = if (session.isChecked) verdicts.map { it == AnswerVerdict.CORRECT } else emptyList(),
+                    almost = verdicts.map { it == AnswerVerdict.ALMOST },
+                    infos = keys.map { questions[it]?.feedback },
+                    answerState = when {
+                        !session.isChecked -> AnswerState.Unanswered
+                        verdicts.all { it == AnswerVerdict.CORRECT } -> AnswerState.Correct
+                        else -> AnswerState.Incorrect()
+                    },
+                    onValueChanged = { at, value -> actions.onAnswerChanged(keys[at], value) },
+                )
+            }
         }
     }
+    screen.notes.forEach { Text(richText(it), style = MaterialTheme.typography.bodyMedium) }
 }
 
 @Composable
 private fun FreeWritingBody(
     screen: LessonScreen.FreeWriting,
-    session: LessonSession,
+    uiState: LessonFlowUiState.Loaded,
     actions: LessonFlowActions,
 ) {
+    val session = uiState.session
     FreeWritingFields(
         fields = screen.fields,
         values = screen.fields.indices.map { session.answer(screen.id, it.toString()) },
+        enabled = !session.isFinished && !uiState.isReviewing,
         onValueChanged = { index, value -> actions.onAnswerChanged(index.toString(), value) },
     )
-    if (session.isFinished) SelfCheckCard(screen.model, screen.checklist)
-}
-
-@Composable
-private fun Feedback(text: String) {
-    Text(
-        text = richText(text),
-        style = MaterialTheme.typography.bodySmall,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        modifier = Modifier.padding(start = Dimens.spacingLarge),
-    )
-}
-
-@Composable
-private fun Completed(session: LessonSession) {
-    Text(stringResource(R.string.lesson_flow_completed), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
-    Text(stringResource(R.string.lesson_flow_completed_body, session.script.title), style = MaterialTheme.typography.bodyMedium)
-    session.script.vocabulary.forEach { phrase ->
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(phrase.polish, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium)
-            Text(phrase.english, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    if (uiState.isReviewing) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
+            CircularProgressIndicator(modifier = Modifier.size(ProgressSize), strokeWidth = 2.dp)
+            Text(stringResource(R.string.lesson_flow_reviewing), style = MaterialTheme.typography.bodyMedium)
         }
-        HorizontalDivider()
     }
+    uiState.reviewProblem?.let { problem ->
+        Text(
+            stringResource(
+                if (problem == ReviewProblem.OFFLINE) R.string.lesson_flow_review_offline else R.string.lesson_flow_review_unavailable,
+            ),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+    session.review(screen.id)?.let { ReviewCard(it) }
+    if (session.isFinished) ModelAnswerCard(screen.model)
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun Footer(
     uiState: LessonFlowUiState.Loaded,
     actions: LessonFlowActions,
-    letters: LetterTarget,
 ) {
     val session = uiState.session
-    val screen = session.screen
-    val takesWords =
-        screen is LessonScreen.GapFill ||
-            screen is LessonScreen.FreeWriting ||
-            (screen as? LessonScreen.Write)?.keyboard == AnswerKeyboard.TEXT
-    val acceptsText = takesWords && !session.isChecked && !(screen is LessonScreen.FreeWriting && session.isFinished)
-    val insert = letters.insert
-    val takesLetters = acceptsText && insert != null && WindowInsets.isImeVisible
-
-    Surface(tonalElevation = Dimens.spacingTiny, modifier = Modifier.imePadding()) {
-        Column(
+    Surface(tonalElevation = Dimens.spacingTiny) {
+        Row(
             modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
-            verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         ) {
-            if (takesLetters && insert != null) PolishLettersBar(onLetter = insert)
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
-                if (uiState.isCompleted) {
-                    Button(onClick = actions.onClose) { Text(stringResource(R.string.lesson_flow_done)) }
-                    return@Row
+            if (uiState.results != null) {
+                uiState.nextLessonId?.let { next ->
+                    Button(onClick = { actions.onNextLesson(next) }) { Text(stringResource(R.string.lesson_flow_next_lesson)) }
                 }
-                if (session.canGoBack) OutlinedButton(onClick = actions.onBack) { Text(stringResource(R.string.lesson_flow_back)) }
-                FooterAction(session, actions)
+                OutlinedButton(onClick = actions.onFinished) { Text(stringResource(R.string.lesson_flow_close)) }
+                return@Row
+            }
+            if (session.canGoBack) OutlinedButton(onClick = actions.onBack) { Text(stringResource(R.string.lesson_flow_back)) }
+            when {
+                session.needsCheck ->
+                    Button(onClick = actions.onCheck, enabled = session.canCheck && !uiState.isReviewing) {
+                        Text(stringResource(R.string.exercise_check))
+                    }
+
+                session.isLastScreen -> Button(onClick = actions.onNext) { Text(stringResource(R.string.lesson_flow_finish)) }
+
+                else -> Button(onClick = actions.onNext) { Text(stringResource(R.string.lesson_flow_next)) }
             }
         }
-    }
-}
-
-@Composable
-private fun FooterAction(
-    session: LessonSession,
-    actions: LessonFlowActions,
-) {
-    val screen = session.screen
-    when {
-        screen.isGraded && !session.isChecked ->
-            Button(onClick = actions.onCheck, enabled = session.canCheck) { Text(stringResource(R.string.exercise_check)) }
-
-        screen is LessonScreen.FreeWriting && !session.isFinished ->
-            Button(
-                onClick = actions.onShowModel,
-                enabled = screen.fields.indices.any { session.answer(screen.id, it.toString()).isNotBlank() },
-            ) { Text(stringResource(R.string.lesson_flow_show_model)) }
-
-        !session.isFinished -> Button(onClick = actions.onDone) { Text(stringResource(R.string.lesson_flow_done)) }
-
-        session.stepToRetry != null -> {
-            Button(onClick = actions.onRetryStep) { Text(stringResource(R.string.lesson_flow_retry)) }
-            TextButton(onClick = if (session.isLastScreen) actions.onClose else actions.onNext) {
-                Text(stringResource(R.string.lesson_flow_continue_anyway))
-            }
-        }
-
-        session.isLastScreen ->
-            Button(
-                onClick = actions.onFinishLesson,
-                enabled = session.isLessonComplete,
-            ) { Text(stringResource(R.string.lesson_flow_finish)) }
-
-        else -> Button(onClick = actions.onNext) { Text(stringResource(R.string.lesson_flow_next)) }
     }
 }
 

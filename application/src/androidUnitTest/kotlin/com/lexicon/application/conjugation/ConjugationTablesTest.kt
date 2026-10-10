@@ -1,10 +1,8 @@
 package com.lexicon.application.conjugation
 
 import com.lexicon.boundary.VerbConjugationBoundary
-import com.lexicon.interactors.conjugation.ConjugationAnswerMode
 import com.lexicon.interactors.conjugation.GrammaticalPerson
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -97,6 +95,7 @@ class ConjugationTablesTest {
     fun `a verb with no forms is not teachable`() {
         assertTrue(!verb(EMPTY).isTeachable)
         assertTrue(verb(EMPTY).persons.isEmpty())
+        assertNull(verb(EMPTY).question())
     }
 
     @Test
@@ -105,130 +104,43 @@ class ConjugationTablesTest {
 
         assertTrue(bolec.isTeachable)
         assertTrue(!bolec.isComplete)
-        assertEquals(listOf(GrammaticalPerson.ON_ONA_ONO, GrammaticalPerson.ONI_ONE), bolec.persons)
+        assertEquals(listOf(GrammaticalPerson.ON_ONA_ONO, GrammaticalPerson.ONI_ONE), bolec.question()!!.steps.map { it.variant.person })
     }
 
     @Test
-    fun `an irregular verb falls back to whole forms rather than invented endings`() {
-        val question = verb(BYC).step(GrammaticalPerson.JA, pool)
-
-        assertNotNull(question)
-        assertEquals(ConjugationAnswerMode.FULL_FORM, question!!.mode)
-        assertEquals(listOf("jestem"), question.correctOptions)
-    }
-
-    @Test
-    fun `a regular verb is asked by its ending`() {
-        val question = verb(CHODZIC).step(GrammaticalPerson.JA, pool)!!
-
-        assertEquals(ConjugationAnswerMode.ENDING, question.mode)
-        assertEquals("chodz", question.stem)
-        assertEquals(listOf("ę"), question.correctOptions)
-        assertEquals("chodzę", question.spokenForm)
-    }
-
-    @Test
-    fun `the stem comes from the data, not from the infinitive`() {
-        val question = verb(BRAC).step(GrammaticalPerson.TY, pool)!!
-
-        assertEquals(ConjugationAnswerMode.ENDING, question.mode)
-        assertEquals("bi", question.stem)
-        assertEquals(listOf("erzesz"), question.correctOptions)
-        assertEquals("bi" + question.correctOptions.first(), "bierzesz")
+    fun `every person is asked as the whole form, regular or not`() {
+        assertEquals(listOf("jestem"), verb(BYC).step(GrammaticalPerson.JA)!!.forms)
+        assertEquals(listOf("chodzę"), verb(CHODZIC).step(GrammaticalPerson.JA)!!.forms)
+        assertEquals(listOf("bierzesz"), verb(BRAC).step(GrammaticalPerson.TY)!!.forms)
     }
 
     @Test
     fun `a reflexive verb keeps sie in the answer`() {
-        val question = verb(BAC_SIE).step(GrammaticalPerson.JA, pool)!!
+        val step = verb(BAC_SIE).step(GrammaticalPerson.JA)!!
 
-        assertEquals("bo", question.stem)
-        assertEquals(listOf("ję się"), question.correctOptions)
-        assertEquals("boję się", question.spokenForm)
-    }
-
-    @Test
-    fun `a reflexive verb whose ending would be only sie is asked whole`() {
-        val question = verb(BAWIC_SIE).step(GrammaticalPerson.ON_ONA_ONO, pool)!!
-
-        assertEquals(ConjugationAnswerMode.FULL_FORM, question.mode)
-        assertEquals(listOf("bawi się"), question.correctOptions)
+        assertEquals(listOf("boję się"), step.forms)
+        assertEquals("boję się", step.spokenForm)
     }
 
     @Test
     fun `both source variants are accepted where the data gives two`() {
-        val question = verb(BAJAC).step(GrammaticalPerson.JA, pool)!!
+        val step = verb(BAJAC).step(GrammaticalPerson.JA)!!
 
-        assertEquals(2, question.correctOptions.size)
-        assertTrue(question.correctOptions.all { it.isNotBlank() })
-    }
-
-    @Test
-    fun `the correct answer is always among the options`() {
-        pool.forEach { verb ->
-            verb.persons.forEach { person ->
-                val question = verb.step(person, pool)!!
-                assertTrue(
-                    "${verb.infinitive} ${person.label}",
-                    question.correctOptions.any { it in question.options },
-                )
-            }
-        }
-    }
-
-    @Test
-    fun `options never repeat`() {
-        pool.forEach { verb ->
-            verb.persons.forEach { person ->
-                val options = verb.step(person, pool)!!.options
-                assertEquals(verb.infinitive, options.size, options.distinct().size)
-            }
-        }
-    }
-
-    @Test
-    fun `no option is ever blank`() {
-        pool.forEach { verb ->
-            verb.persons.forEach { person ->
-                assertTrue(verb.step(person, pool)!!.options.none { it.isBlank() })
-            }
-        }
-    }
-
-    @Test
-    fun `a distractor is never also a correct answer`() {
-        pool.forEach { verb ->
-            verb.persons.forEach { person ->
-                val question = verb.step(person, pool)!!
-                val wrong = question.options.filterNot { it in question.correctOptions }
-                assertTrue(wrong.none { candidate -> question.correctOptions.any { it.equals(candidate, true) } })
-            }
-        }
-    }
-
-    @Test
-    fun `a verb short of forms borrows distractors from the others`() {
-        val question = verb(BOLEC).step(GrammaticalPerson.ON_ONA_ONO, pool)!!
-
-        assertTrue("only ${question.options.size} options", question.options.size > 2)
+        assertEquals(listOf("baję", "bajam"), step.forms)
+        assertEquals("baję", step.spokenForm)
     }
 
     @Test
     fun `a person the verb does not have yields no question`() {
-        assertNull(verb(BOLEC).step(GrammaticalPerson.JA, pool))
+        assertNull(verb(BOLEC).step(GrammaticalPerson.JA))
     }
 
     @Test
-    fun `an ending always rebuilds its form when joined to the stem`() {
+    fun `a table asks each person once and never with a blank form`() {
         pool.forEach { verb ->
-            verb.persons.forEach { person ->
-                val question = verb.step(person, pool)!!
-                if (question.mode == ConjugationAnswerMode.ENDING) {
-                    assertTrue(
-                        "${verb.infinitive} ${person.label}",
-                        question.correctOptions.any { question.stem + it == question.spokenForm },
-                    )
-                }
-            }
+            val table = verb.question()!!
+            assertEquals(verb.infinitive, verb.persons, table.steps.map { it.variant.person })
+            assertTrue(verb.infinitive, table.steps.all { step -> step.forms.isNotEmpty() && step.forms.none { it.isBlank() } })
         }
     }
 }

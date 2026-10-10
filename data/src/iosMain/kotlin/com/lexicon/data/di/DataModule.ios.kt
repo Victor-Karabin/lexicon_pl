@@ -6,6 +6,7 @@ import com.lexicon.boundary.TranslationSuggester
 import com.lexicon.boundary.Translator
 import com.lexicon.boundary.WordGrammarGenerator
 import com.lexicon.boundary.WordLevelGuesser
+import com.lexicon.boundary.WritingReviewer
 import com.lexicon.data.local.AppDatabaseBuilderFactory
 import com.lexicon.data.local.AssetReader
 import com.lexicon.data.local.DataStorePathResolver
@@ -16,6 +17,7 @@ import com.lexicon.data.remote.image.PexelsIosImageSource
 import com.lexicon.data.remote.image.PixabayIosImageSource
 import com.lexicon.data.remote.image.RemoteImageSource
 import com.lexicon.data.remote.sentence.IosExampleSentenceGenerator
+import com.lexicon.data.remote.sentence.IosWritingReviewer
 import com.lexicon.data.remote.translate.IosGoogleTranslator
 import com.lexicon.data.repository.CorpusTranslationSuggester
 import com.lexicon.data.repository.CorpusTranslatorImpl
@@ -26,6 +28,7 @@ fun dataIosModule(
     pexelsApiKey: String = "",
     pixabayApiKey: String = "",
     googleTranslateApiKey: String = "",
+    openAiApiKey: String = "",
 ) = module {
     single { AppDatabaseBuilderFactory() }
     single { DataStorePathResolver() }
@@ -33,6 +36,7 @@ fun dataIosModule(
     single<AppVersionProvider> { iosAppVersionProvider() }
     single<ExampleSentenceGenerator> { IosExampleSentenceGenerator() }
     single<WordGrammarGenerator> { IosWordGrammarGenerator() }
+    single<WritingReviewer> { IosWritingReviewer(openAiApiKey) }
 
     factory<List<RemoteImageSource>> {
         listOf(

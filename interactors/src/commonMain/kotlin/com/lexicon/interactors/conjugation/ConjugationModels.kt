@@ -42,23 +42,18 @@ data class ConjugationVariant(
     val person: GrammaticalPerson,
 )
 
-enum class ConjugationAnswerMode { FULL_FORM, ENDING }
-
 data class ConjugationStep(
     val variant: ConjugationVariant,
-    val mode: ConjugationAnswerMode,
-    val options: ImmutableList<String>,
-    val correctOptions: ImmutableList<String>,
-    val stem: String = "",
-    val spokenForm: String = "",
-)
+    val forms: ImmutableList<String>,
+) {
+    val spokenForm: String get() = forms.first()
+}
 
 data class ConjugationTable(
     val infinitive: String,
     val translation: String? = null,
     val example: String = "",
     val steps: ImmutableList<ConjugationStep>,
-    val bank: ImmutableList<String> = persistentListOf(),
     val imageUrl: String? = null,
     val transcription: String? = null,
     val aspect: Aspect? = null,

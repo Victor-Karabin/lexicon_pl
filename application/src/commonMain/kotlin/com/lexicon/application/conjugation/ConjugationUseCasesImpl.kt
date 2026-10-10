@@ -23,6 +23,8 @@ import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
 import com.lexicon.interactors.conjugation.ToggleVerbInStudySetUseCase
 import com.lexicon.interactors.conjugation.VerbConjugation
 import com.lexicon.interactors.conjugation.VerbPage
+import com.lexicon.interactors.course.AnswerVerdict
+import com.lexicon.interactors.course.LessonAnswerChecker
 import com.lexicon.interactors.presets.CreateWordUseCase
 import com.lexicon.model.vocabulary.WordStatus
 import kotlinx.collections.immutable.ImmutableList
@@ -132,7 +134,7 @@ class NextConjugationTableUseCaseImpl(
         val progress = conjugations.courseProgress(courseId).variants.associateBy { it.variant }
         val verb = selected.leastPractised(progress) ?: return null
 
-        return verb.question(selected)?.withLearningAids()
+        return verb.question()?.withLearningAids()
     }
 
     private fun List<VerbConjugation>.leastPractised(progress: Map<ConjugationVariant, ConjugationVariantProgress>): VerbConjugation? {
@@ -240,22 +242,19 @@ class SubmitConjugationAnswerUseCaseImpl(
     private val conjugations: ConjugationRepository,
 ) : SubmitConjugationAnswerUseCase {
     override suspend fun invoke(request: SubmitConjugationAnswerRequest): SubmitConjugationAnswerResponse {
-        val correctness = request.table.steps.associate { step ->
-            val given = request.answers[step.variant.person]?.trim()
-            val isCorrect = given != null && step.correctOptions.any { it.equalsAnswer(given) }
+        val verdicts = request.table.steps.associate { step ->
+            val verdict = LessonAnswerChecker.verdict(step.forms, request.answers[step.variant.person].orEmpty())
 
             conjugations.recordAttempt(
                 courseId = request.courseId,
                 infinitive = step.variant.infinitive,
                 person = step.variant.person.sourceKey,
-                isCorrect = isCorrect,
+                isCorrect = verdict == AnswerVerdict.CORRECT,
             )
 
-            step.variant.person to isCorrect
+            step.variant.person to verdict
         }
 
-        return SubmitConjugationAnswerResponse(correctness = correctness)
+        return SubmitConjugationAnswerResponse(verdicts = verdicts)
     }
 }
-
-private fun String.equalsAnswer(other: String): Boolean = trim().equals(other.trim(), ignoreCase = true)

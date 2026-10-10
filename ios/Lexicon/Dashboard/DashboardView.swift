@@ -31,7 +31,7 @@ struct DashboardView: View {
                 }
                 .padding(Spacing.medium)
             }
-            .navigationTitle(Strings.dashboardTitle)
+            .toolbar(.hidden, for: .navigationBar)
             .navigationDestination(item: $launching) { turn in
                 TrainingHost(entry: turn.entry, vocabularyIds: turn.wordIds)
                     .id(turn.id)

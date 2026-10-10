@@ -57,7 +57,7 @@ struct VocabularyView: View {
             }
             .searchable(text: $model.query, prompt: Strings.vocabularySearchHint)
             .onChange(of: model.query) { Task { await model.search() } }
-            .navigationTitle(Strings.vocabularyTitle)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     if model.isSelecting {

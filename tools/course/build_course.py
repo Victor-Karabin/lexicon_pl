@@ -204,7 +204,7 @@ def lesson_audio(
 ) -> list[dict]:
     """Tracks for one lesson, each carrying its Drive id when the folder has it.
 
-    A track with no id is side-load-only: the workbook recordings are not shared.
+    A track with no id is side-load-only until fetch_drive_manifest.py finds it.
     """
     return [
         {
@@ -225,6 +225,7 @@ def build_lesson(
     index: WordIndex,
     forms: dict[str, list[str]],
     coursebook_tracks: list[dict],
+    workbook_tracks: list[dict],
     remote: dict[str, str],
     exercises: dict[int, list[dict]],
     texts: dict[int, str],
@@ -261,7 +262,7 @@ def build_lesson(
         "title": lesson["title"],
         "vocabularyIds": vocabulary_ids,
         "vocabularyWords": [texts[word_id] for word_id in vocabulary_ids],
-        "audio": lesson_audio(coursebook_tracks, lesson["number"], remote),
+        "audio": lesson_audio(coursebook_tracks + workbook_tracks, lesson["number"], remote),
         "exercises": [
             {
                 "id": f"{course['id']}-{lesson['number']:02d}-{e['tag']}",
@@ -323,6 +324,7 @@ def build(report_missing: bool) -> int:
             continue
 
         coursebook_tracks = audio_by_book.get(course["book"], [])
+        workbook_tracks = audio_by_book.get(course["workbook"], []) if course["workbook"] else []
         courses.append(
             {
                 "id": course["id"],
@@ -331,7 +333,7 @@ def build(report_missing: bool) -> int:
                 "title": course["title"],
                 "lessons": [
                     build_lesson(
-                        course, lesson, index, forms, coursebook_tracks, remote, exercises, texts, missing
+                        course, lesson, index, forms, coursebook_tracks, workbook_tracks, remote, exercises, texts, missing
                     )
                     for lesson in lessons
                 ],

@@ -9,6 +9,7 @@ fun initKoinIos(
     pexelsApiKey: String = "",
     pixabayApiKey: String = "",
     googleTranslateApiKey: String = "",
+    openAiApiKey: String = "",
 ) {
     startKoin {
         modules(
@@ -17,6 +18,7 @@ fun initKoinIos(
                 pexelsApiKey = pexelsApiKey,
                 pixabayApiKey = pixabayApiKey,
                 googleTranslateApiKey = googleTranslateApiKey,
+                openAiApiKey = openAiApiKey,
             ),
             domainModule,
         )

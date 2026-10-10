@@ -8,7 +8,8 @@ struct LexiconApp: App {
         IosKoinKt.doInitKoinIos(
             pexelsApiKey: Keys.pexels,
             pixabayApiKey: Keys.pixabay,
-            googleTranslateApiKey: Keys.googleTranslate
+            googleTranslateApiKey: Keys.googleTranslate,
+            openAiApiKey: Keys.openAi
         )
     }
 

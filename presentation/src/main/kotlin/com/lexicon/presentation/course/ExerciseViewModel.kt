@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.lexicon.boundary.LessonAudioLibrary
 import com.lexicon.boundary.LessonAudioPlayer
 import com.lexicon.common.DispatcherProvider
-import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.LessonExercise
@@ -35,9 +34,7 @@ sealed interface ExerciseUiState {
         val correctness: ImmutableList<ImmutableList<Boolean>> = persistentListOf(),
         val answerState: AnswerState = AnswerState.Unanswered,
         val correctCount: Int = 0,
-        val isPlaying: Boolean = false,
-        val canReplay: Boolean = false,
-        val isAudioMissing: Boolean = false,
+        val track: TrackState = TrackState(),
         val selectedPrompt: Int? = null,
     ) : ExerciseUiState {
         val choices: ImmutableList<String>
@@ -56,8 +53,8 @@ class ExerciseViewModel(
     savedStateHandle: SavedStateHandle,
     private val getLesson: GetLessonUseCase,
     private val checkAnswer: CheckExerciseAnswerUseCase,
-    private val audioLibrary: LessonAudioLibrary,
-    private val audioPlayer: LessonAudioPlayer,
+    audioLibrary: LessonAudioLibrary,
+    audioPlayer: LessonAudioPlayer,
     private val dispatchers: DispatcherProvider,
 ) : ViewModel() {
     private val lessonId = LessonId(savedStateHandle.get<String>(LESSON_ID_ARG).orEmpty())
@@ -70,14 +67,15 @@ class ExerciseViewModel(
         val correctness: List<List<Boolean>> = emptyList(),
         val answerState: AnswerState = AnswerState.Unanswered,
         val correctCount: Int = 0,
-        val isAudioMissing: Boolean = false,
         val selectedPrompt: Int? = null,
     )
 
     private val content = MutableStateFlow<Content?>(null)
 
+    private val tracks = LessonTracks(audioLibrary, audioPlayer, dispatchers)
+
     val uiState: StateFlow<ExerciseUiState> =
-        combine(content, audioPlayer.playingFile, audioPlayer.pausedFile) { loaded, playing, paused ->
+        combine(content, tracks.states) { loaded, tracks ->
             when {
                 loaded == null -> ExerciseUiState.Loading
                 loaded.exercise == null -> ExerciseUiState.NotFound
@@ -88,9 +86,7 @@ class ExerciseViewModel(
                         correctness = loaded.correctness.map { it.toImmutableList() }.toImmutableList(),
                         answerState = loaded.answerState,
                         correctCount = loaded.correctCount,
-                        isPlaying = playing != null && playing == loaded.exercise.audioFile,
-                        canReplay = loaded.exercise.audioFile.let { it != null && (it == playing || it == paused) },
-                        isAudioMissing = loaded.isAudioMissing,
+                        track = loaded.exercise.audioFile?.let(tracks::of) ?: TrackState(),
                         selectedPrompt = loaded.selectedPrompt,
                     )
             }
@@ -109,35 +105,19 @@ class ExerciseViewModel(
                 remoteId = lesson?.audio?.firstOrNull { it.file == exercise?.audioFile }?.remoteId,
                 responses = blankResponses(exercise),
             )
+            content.value?.let { loaded -> loaded.exercise?.audioFile?.let { tracks.preload(this, it, loaded.remoteId) } }
         }
     }
 
     fun onPlayAudio() {
-        val file = content.value?.exercise?.audioFile ?: return
-        if (audioPlayer.playingFile.value == file) {
-            audioPlayer.pause()
-            return
-        }
-        startAudio(file) { path -> audioPlayer.play(file, path) }
+        val loaded = content.value ?: return
+        val file = loaded.exercise?.audioFile ?: return
+        tracks.toggle(viewModelScope, file, loaded.remoteId)
     }
 
-    fun onReplayAudio() {
+    fun onSeekAudio(positionMs: Long) {
         val file = content.value?.exercise?.audioFile ?: return
-        startAudio(file) { path -> audioPlayer.replay(file, path) }
-    }
-
-    private fun startAudio(
-        file: String,
-        start: suspend (String) -> Unit,
-    ) {
-        viewModelScope.launch(dispatchers.io) {
-            val path = audioLibrary.pathOrNull(file, content.value?.remoteId)
-            if (path == null) {
-                content.update { it?.copy(isAudioMissing = true) }
-                return@launch
-            }
-            runSuspendCatching { start(path) }
-        }
+        tracks.seek(file, positionMs)
     }
 
     fun onOptionSelected(
@@ -201,7 +181,7 @@ class ExerciseViewModel(
         }
     }
 
-    override fun onCleared() = audioPlayer.stop()
+    override fun onCleared() = tracks.stop()
 
     private fun updateResponse(
         index: Int,

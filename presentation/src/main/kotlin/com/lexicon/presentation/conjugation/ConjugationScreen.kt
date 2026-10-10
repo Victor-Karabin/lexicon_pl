@@ -1,22 +1,15 @@
 package com.lexicon.presentation.conjugation
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -35,30 +28,29 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.lexicon.interactors.conjugation.ConjugationAnswerMode
 import com.lexicon.interactors.conjugation.ConjugationStep
 import com.lexicon.interactors.conjugation.GrammaticalPerson
+import com.lexicon.interactors.course.AnswerVerdict
+import com.lexicon.interactors.course.LessonAnswerChecker
+import com.lexicon.interactors.course.TranscribeItem
 import com.lexicon.model.vocabulary.ExampleSentence
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.ClueImage
 import com.lexicon.presentation.common.ExampleSentenceRow
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.aspectLabel
+import com.lexicon.presentation.course.AnswerInputs
+import com.lexicon.presentation.course.TranscribeRow
 import com.lexicon.presentation.presets.ImagePickerDialog
 import com.lexicon.presentation.theme.Dimens
-import com.lexicon.presentation.theme.LexiconError
-import com.lexicon.presentation.theme.LexiconSuccess
-import com.lexicon.presentation.theme.component.AnswerChip
-import com.lexicon.presentation.theme.component.AnswerChipState
 import com.lexicon.presentation.theme.component.ProgressDots
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
 
 private val PersonColumnWidth = 96.dp
-private val PersonRowHeight = 44.dp
-private val SpeakerSlotSize = 40.dp
 
 object ConjugationTestTags {
     const val INFINITIVE = "conjugation_infinitive"
@@ -67,15 +59,10 @@ object ConjugationTestTags {
     const val TRANSCRIPTION = "conjugation_transcription"
     const val EDIT = "conjugation_edit"
     const val IMAGE_PICKER = "conjugation_image_picker"
-    const val BANK = "conjugation_bank"
     const val PROGRESS = "conjugation_progress"
     const val EMPTY = "conjugation_empty"
 
     fun person(label: String) = "conjugation_person_$label"
-
-    fun option(value: String) = "conjugation_option_$value"
-
-    fun play(label: String) = "conjugation_play_$label"
 }
 
 @Composable
@@ -98,8 +85,7 @@ fun ConjugationScreen(
 
     ConjugationContent(
         uiState = uiState,
-        onOptionPicked = viewModel::onOptionPicked,
-        onRowCleared = viewModel::onRowCleared,
+        onAnswerChanged = viewModel::onAnswerChanged,
         onCheck = viewModel::onCheck,
         onNext = viewModel::onNext,
         onSpeak = viewModel::onSpeak,
@@ -115,8 +101,7 @@ fun ConjugationScreen(
 @Composable
 private fun ConjugationContent(
     uiState: ConjugationUiState,
-    onOptionPicked: (String) -> Unit,
-    onRowCleared: (GrammaticalPerson) -> Unit,
+    onAnswerChanged: (GrammaticalPerson, String) -> Unit,
     onCheck: () -> Unit,
     onNext: () -> Unit,
     onSpeak: (String) -> Unit,
@@ -141,130 +126,130 @@ private fun ConjugationContent(
         )
     }
 
-    Scaffold(
-        modifier = modifier,
-        topBar = { TrainingTopBar(title = stringResource(R.string.conjugation_title), onClose = onClose) },
-    ) { padding ->
-        val table = uiState.table
+    AnswerInputs {
+        Scaffold(
+            modifier = modifier,
+            topBar = { TrainingTopBar(title = stringResource(R.string.conjugation_title), onClose = onClose) },
+        ) { padding ->
+            val table = uiState.table
 
-        when {
-            uiState.isLoading ->
-                Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
-                }
-
-            table == null ->
-                Box(
-                    modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingXl),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(
-                        text = stringResource(R.string.conjugation_none),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.testTag(ConjugationTestTags.EMPTY),
-                    )
-                }
-
-            else ->
-                Column(modifier = Modifier.fillMaxSize().padding(padding)) {
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                            .verticalScroll(rememberScrollState())
-                            .padding(Dimens.spacingMedium),
-                        verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
-                    ) {
-                        ProgressDots(
-                            step = uiState.stepIndex,
-                            total = uiState.totalSteps,
-                            modifier = Modifier.fillMaxWidth().testTag(ConjugationTestTags.PROGRESS),
-                        )
-
-                        Box(modifier = Modifier.fillMaxWidth()) {
-                            ClueImage(
-                                imageUrl = table.imageUrl,
-                                fallbackText = table.infinitive,
-                                modifier = Modifier.testTag(ConjugationTestTags.IMAGE),
-                            )
-                            IconButton(
-                                onClick = onEdit,
-                                modifier = Modifier
-                                    .align(Alignment.TopEnd)
-                                    .testTag(ConjugationTestTags.EDIT),
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Edit,
-                                    contentDescription = stringResource(R.string.cards_edit),
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                            }
-                        }
-
-                        Column {
-                            Text(
-                                text = table.infinitive,
-                                style = MaterialTheme.typography.headlineSmall,
-                                fontWeight = FontWeight.SemiBold,
-                                modifier = Modifier.testTag(ConjugationTestTags.INFINITIVE),
-                            )
-                            table.translation?.let { translation ->
-                                Text(
-                                    text = translation,
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    modifier = Modifier.testTag(ConjugationTestTags.TRANSLATION),
-                                )
-                            }
-                            table.aspect?.let { aspect ->
-                                Text(
-                                    text = aspectLabel(aspect),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                            }
-                            table.transcription?.let { ipa ->
-                                Text(
-                                    text = stringResource(R.string.pronunciation_ipa_format, ipa),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    modifier = Modifier.testTag(ConjugationTestTags.TRANSCRIPTION),
-                                )
-                            }
-
-                            val example = ExampleSentence.of(table.example, word = table.infinitive)
-                            ExampleSentenceRow(
-                                example = example,
-                                onPlay = { onSpeak(example.text) },
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-
-                        Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
-                            table.steps.forEach { step ->
-                                PersonRow(
-                                    step = step,
-                                    uiState = uiState,
-                                    onCleared = { onRowCleared(step.variant.person) },
-                                    onSpeak = onSpeak,
-                                )
-                            }
-                        }
-
-                        if (!uiState.isAnswered) {
-                            OptionBank(uiState = uiState, onOptionPicked = onOptionPicked)
-                        }
+            when {
+                uiState.isLoading ->
+                    Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator()
                     }
 
-                    TrainingActionRow(
-                        onCheck = onCheck,
-                        onNext = onNext,
-                        awaitingNext = uiState.isAnswered,
-                        checkEnabled = uiState.canCheck,
-                    )
-                }
+                table == null ->
+                    Box(
+                        modifier = Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingXl),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            text = stringResource(R.string.conjugation_none),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.testTag(ConjugationTestTags.EMPTY),
+                        )
+                    }
+
+                else ->
+                    Column(modifier = Modifier.fillMaxSize().padding(padding).imePadding()) {
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth()
+                                .verticalScroll(rememberScrollState())
+                                .padding(Dimens.spacingMedium),
+                            verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+                        ) {
+                            ProgressDots(
+                                step = uiState.stepIndex,
+                                total = uiState.totalSteps,
+                                modifier = Modifier.fillMaxWidth().testTag(ConjugationTestTags.PROGRESS),
+                            )
+
+                            Box(modifier = Modifier.fillMaxWidth()) {
+                                ClueImage(
+                                    imageUrl = table.imageUrl,
+                                    fallbackText = table.infinitive,
+                                    modifier = Modifier.testTag(ConjugationTestTags.IMAGE),
+                                )
+                                IconButton(
+                                    onClick = onEdit,
+                                    modifier = Modifier
+                                        .align(Alignment.TopEnd)
+                                        .testTag(ConjugationTestTags.EDIT),
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Edit,
+                                        contentDescription = stringResource(R.string.cards_edit),
+                                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                            }
+
+                            Column {
+                                Text(
+                                    text = table.infinitive,
+                                    style = MaterialTheme.typography.headlineSmall,
+                                    fontWeight = FontWeight.SemiBold,
+                                    modifier = Modifier.testTag(ConjugationTestTags.INFINITIVE),
+                                )
+                                table.translation?.let { translation ->
+                                    Text(
+                                        text = translation,
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        modifier = Modifier.testTag(ConjugationTestTags.TRANSLATION),
+                                    )
+                                }
+                                table.aspect?.let { aspect ->
+                                    Text(
+                                        text = aspectLabel(aspect),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                                table.transcription?.let { ipa ->
+                                    Text(
+                                        text = stringResource(R.string.pronunciation_ipa_format, ipa),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        modifier = Modifier.testTag(ConjugationTestTags.TRANSCRIPTION),
+                                    )
+                                }
+
+                                if (uiState.isAnswered) {
+                                    val example = ExampleSentence.of(table.example, word = table.infinitive)
+                                    ExampleSentenceRow(
+                                        example = example,
+                                        onPlay = { onSpeak(example.text) },
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                            }
+
+                            Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
+                                table.steps.forEach { step ->
+                                    PersonRow(
+                                        step = step,
+                                        uiState = uiState,
+                                        onAnswerChanged = { onAnswerChanged(step.variant.person, it) },
+                                        onSpeak = onSpeak,
+                                    )
+                                }
+                            }
+                        }
+
+                        TrainingActionRow(
+                            onCheck = onCheck,
+                            onNext = onNext,
+                            awaitingNext = uiState.isAnswered,
+                            checkEnabled = uiState.canCheck,
+                        )
+                    }
+            }
         }
     }
 }
@@ -273,86 +258,27 @@ private fun ConjugationContent(
 private fun PersonRow(
     step: ConjugationStep,
     uiState: ConjugationUiState,
-    onCleared: () -> Unit,
+    onAnswerChanged: (String) -> Unit,
     onSpeak: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val person = step.variant.person
-    val chosen = uiState.answers[person]
-    val isRight = uiState.correctness[person]
-
-    val filled = when {
-        chosen == null -> stringResource(R.string.conjugation_blank)
-        step.mode == ConjugationAnswerMode.ENDING -> chosen
-        else -> chosen
-    }
-
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .heightIn(min = PersonRowHeight)
-            .clickable(enabled = !uiState.isAnswered && chosen != null, onClick = onCleared)
-            .testTag(ConjugationTestTags.person(person.label)),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-    ) {
-        Text(
-            text = person.label,
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.width(PersonColumnWidth),
-        )
-
-        Text(
-            text = if (step.mode == ConjugationAnswerMode.ENDING) step.stem + filled else filled,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Medium,
-            color = when (isRight) {
-                true -> LexiconSuccess
-                false -> LexiconError
-                null -> MaterialTheme.colorScheme.onSurface
+    val typed = uiState.answers[person].orEmpty()
+    val verdict = uiState.verdicts[person]
+    Box(modifier = modifier.testTag(ConjugationTestTags.person(person.label))) {
+        TranscribeRow(
+            item = TranscribeItem(person.label, LessonAnswerChecker.closest(step.forms, typed)),
+            value = typed,
+            isCorrect = verdict?.let { it == AnswerVerdict.CORRECT },
+            answerState = when {
+                verdict == null -> AnswerState.Unanswered
+                verdict == AnswerVerdict.CORRECT -> AnswerState.Correct
+                else -> AnswerState.Incorrect()
             },
-            modifier = Modifier.weight(1f),
+            onValueChanged = onAnswerChanged,
+            isAlmost = verdict == AnswerVerdict.ALMOST,
+            labelWidth = PersonColumnWidth,
+            onSpeak = { onSpeak(step.spokenForm) },
         )
-
-        Box(modifier = Modifier.size(SpeakerSlotSize), contentAlignment = Alignment.Center) {
-            if (uiState.isAnswered) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.VolumeUp,
-                    contentDescription = stringResource(R.string.word_pronounce, step.spokenForm),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier
-                        .clickable { onSpeak(step.spokenForm) }
-                        .padding(Dimens.spacingSmall)
-                        .testTag(ConjugationTestTags.play(person.label)),
-                )
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun OptionBank(
-    uiState: ConjugationUiState,
-    onOptionPicked: (String) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val table = uiState.table ?: return
-    val used = uiState.usedOptions
-
-    FlowRow(
-        modifier = modifier.fillMaxWidth().testTag(ConjugationTestTags.BANK),
-        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-    ) {
-        table.bank.forEach { option ->
-            AnswerChip(
-                label = option,
-                state = if (option in used) AnswerChipState.SELECTED else AnswerChipState.UNSELECTED,
-                onClick = { onOptionPicked(option) }.takeIf { !uiState.isAnswered && option !in used },
-                modifier = Modifier.testTag(ConjugationTestTags.option(option)),
-            )
-        }
     }
 }

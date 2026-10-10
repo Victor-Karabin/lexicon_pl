@@ -29,19 +29,16 @@ fun CourseBoundary.toCourse(): Course =
         order = order,
         level = CefrLevel.ofName(level),
         title = LocalizedText(title),
-        lessons = lessons
-            .mapIndexed { index, lesson -> lesson.toSummary(LessonUnlockRule.isUnlocked(lessons, index)) }
-            .toImmutableList(),
+        lessons = lessons.map(LessonSummaryBoundary::toSummary).toImmutableList(),
     )
 
-fun LessonSummaryBoundary.toSummary(isUnlocked: Boolean): LessonSummary =
+fun LessonSummaryBoundary.toSummary(): LessonSummary =
     LessonSummary(
         id = LessonId(id),
         number = number,
         title = title,
         wordCount = wordCount,
         isCompleted = isCompleted,
-        isUnlocked = isUnlocked,
     )
 
 fun LessonBoundary.toLesson(): Lesson =

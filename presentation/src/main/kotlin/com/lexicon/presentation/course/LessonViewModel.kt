@@ -10,7 +10,7 @@ import com.lexicon.interactors.course.GetLessonScriptUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
 import com.lexicon.interactors.course.Lesson
-import com.lexicon.interactors.course.SetLessonCompletedUseCase
+import com.lexicon.interactors.course.LessonSession
 import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
 import com.lexicon.interactors.presets.SetWordStatusUseCase
 import com.lexicon.model.course.LessonId
@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 sealed interface LessonUiState {
@@ -51,7 +50,6 @@ class LessonViewModel(
     savedStateHandle: SavedStateHandle,
     private val getLesson: GetLessonUseCase,
     private val getLessonVocabulary: GetLessonVocabularyUseCase,
-    private val setLessonCompleted: SetLessonCompletedUseCase,
     private val getLessonScript: GetLessonScriptUseCase,
     private val getLessonProgress: GetLessonProgressUseCase,
     private val setWordStatus: SetWordStatusUseCase,
@@ -101,13 +99,6 @@ class LessonViewModel(
         viewModelScope.launch(dispatchers.io) { load() }
     }
 
-    fun onCompletedToggled(isCompleted: Boolean) {
-        viewModelScope.launch(dispatchers.io) {
-            setLessonCompleted(lessonId, isCompleted)
-            content.update { it?.copy(lesson = it.lesson?.copy(isCompleted = isCompleted)) }
-        }
-    }
-
     fun onPronounceWord(word: Word) {
         viewModelScope.launch(dispatchers.io) {
             speechSynthesizer.speakQuietly(word.text)
@@ -127,8 +118,9 @@ class LessonViewModel(
             content.value = Content(lesson = null)
             return
         }
-        val hasScript = getLessonScript(lessonId) != null
-        val isScriptStarted = hasScript && getLessonProgress(lessonId) != null
+        val script = getLessonScript(lessonId)
+        val hasScript = script != null
+        val isScriptStarted = script != null && LessonSession.isInProgress(script, getLessonProgress(lessonId))
         content.value = Content(lesson = lesson, hasScript = hasScript, isScriptStarted = isScriptStarted)
         content.value = Content(
             lesson = lesson,

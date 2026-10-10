@@ -14,6 +14,7 @@ import com.lexicon.interactors.course.GetLessonScriptUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
 import com.lexicon.interactors.course.ObserveCoursesUseCase
+import com.lexicon.interactors.course.ReviewWritingUseCase
 import com.lexicon.interactors.course.SaveLessonProgressUseCase
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
 import com.lexicon.interactors.crossword.StartCrosswordSessionRequest
@@ -147,6 +148,7 @@ object IosDependencies : KoinComponent {
     val getLessonScript: GetLessonScriptUseCase by inject()
     val getLessonProgress: GetLessonProgressUseCase by inject()
     val saveLessonProgress: SaveLessonProgressUseCase by inject()
+    val reviewWriting: ReviewWritingUseCase by inject()
     val checkExerciseAnswer: CheckExerciseAnswerUseCase by inject()
 
     val observeVocabularyCourse: ObserveVocabularyCourseUseCase by inject()
