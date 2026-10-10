@@ -11,6 +11,7 @@ data class LessonScript(
     val lessonId: LessonId,
     val steps: ImmutableList<LessonStep>,
     val screens: ImmutableList<LessonScreen>,
+    val newWords: ImmutableMap<String, NewWords> = persistentMapOf(),
 ) {
     fun stepOf(screenId: String): LessonStep? = steps.firstOrNull { screenId in it.screenIds }
 }
@@ -19,6 +20,12 @@ data class LessonStep(
     val id: String,
     val title: String,
     val screenIds: ImmutableList<String>,
+    val isReview: Boolean = false,
+)
+
+data class NewWords(
+    val words: ImmutableList<LessonPhrase>,
+    val unlock: TranscriptUnlock,
 )
 
 data class LessonTrack(
@@ -61,6 +68,16 @@ enum class AnswerKeyboard { TEXT, DIGITS }
 
 enum class AnswerMatch { WHOLE, KEY_WORDS }
 
+sealed interface ItemPicture {
+    data class Symbol(
+        val emoji: String?,
+        val icon: String?,
+        val label: String,
+    ) : ItemPicture
+
+    data class Swatch(val color: Long) : ItemPicture
+}
+
 data class LessonQuestion(
     val key: String,
     val label: String,
@@ -68,11 +85,19 @@ data class LessonQuestion(
     val feedback: String?,
     val prompt: String? = null,
     val match: AnswerMatch = AnswerMatch.WHOLE,
+    val variants: ImmutableList<String> = persistentListOf(),
+    val picture: ItemPicture? = null,
 )
 
 data class ChoiceQuestion(
     val question: LessonQuestion,
     val options: ImmutableList<String>,
+)
+
+data class InlineChoiceLine(
+    val label: String,
+    val text: String,
+    val groups: ImmutableList<ChoiceQuestion>,
 )
 
 data class GapLine(
@@ -140,6 +165,7 @@ sealed interface LessonScreen {
         override val questions: ImmutableList<LessonQuestion>,
         override val hint: String? = null,
         val notes: ImmutableList<String> = persistentListOf(),
+        val wordBox: ImmutableList<String> = persistentListOf(),
     ) : LessonScreen
 
     data class Choice(
@@ -152,8 +178,20 @@ sealed interface LessonScreen {
         val legend: ImmutableList<String> = persistentListOf(),
         override val hint: String? = null,
         override val interchangeable: ImmutableList<ImmutableList<String>> = persistentListOf(),
+        val shuffle: Boolean = true,
     ) : LessonScreen {
         override val questions: List<LessonQuestion> get() = items.map { it.question }
+    }
+
+    data class InlineChoice(
+        override val id: String,
+        override val title: String,
+        override val instruction: String,
+        override val tracks: ImmutableList<LessonTrack>,
+        override val transcript: Transcript?,
+        val lines: ImmutableList<InlineChoiceLine>,
+    ) : LessonScreen {
+        override val questions: List<LessonQuestion> get() = lines.flatMap { line -> line.groups.map { it.question } }
     }
 
     data class Ordering(
@@ -189,6 +227,8 @@ sealed interface LessonScreen {
         override val questions: ImmutableList<LessonQuestion>,
         val notes: ImmutableList<String> = persistentListOf(),
         override val hint: String? = null,
+        val wordBox: ImmutableList<String> = persistentListOf(),
+        override val interchangeable: ImmutableList<ImmutableList<String>> = persistentListOf(),
     ) : LessonScreen
 
     data class FreeWriting(

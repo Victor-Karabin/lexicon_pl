@@ -35,6 +35,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -174,12 +176,24 @@ private fun SettingsScreenContent(
             )
         }
 
-        GradientTile(skin = skin) {
-            SettingHeading(
-                icon = Icons.Default.Info,
-                text = stringResource(R.string.settings_sources),
-                skin = skin,
-            )
+        SourcesSetting(skin = skin)
+    }
+}
+
+@Composable
+private fun SourcesSetting(skin: TileSkin) {
+    var isOpen by rememberSaveable { mutableStateOf(false) }
+
+    GradientTile(skin = skin) {
+        CollapsibleHeading(
+            icon = Icons.Default.Info,
+            text = stringResource(R.string.settings_sources),
+            skin = skin,
+            isOpen = isOpen,
+            onToggle = { isOpen = !isOpen },
+        )
+
+        if (isOpen) {
             Text(
                 text = stringResource(R.string.settings_sources_grammar),
                 style = MaterialTheme.typography.bodyMedium,
@@ -215,27 +229,14 @@ private fun VoiceSetting(
     val chosen = voices.chosen(selectedId)
 
     GradientTile(skin = skin) {
-        Row(
-            modifier = Modifier.fillMaxWidth().clickable { isOpen = !isOpen },
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            SettingHeading(
-                icon = Icons.AutoMirrored.Filled.VolumeUp,
-                text = stringResource(R.string.settings_voice),
-                skin = skin,
-                modifier = Modifier.weight(1f),
-            )
-            Text(
-                text = chosen?.displayName.orEmpty(),
-                style = MaterialTheme.typography.bodyMedium,
-                color = skin.muted(),
-            )
-            Icon(
-                imageVector = if (isOpen) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                contentDescription = null,
-                tint = skin.muted(),
-            )
-        }
+        CollapsibleHeading(
+            icon = Icons.AutoMirrored.Filled.VolumeUp,
+            text = stringResource(R.string.settings_voice),
+            skin = skin,
+            isOpen = isOpen,
+            onToggle = { isOpen = !isOpen },
+            summary = chosen?.displayName,
+        )
 
         if (isOpen) {
             Column(
@@ -278,6 +279,39 @@ private fun VoiceSetting(
                 color = skin.muted(),
             )
         }
+    }
+}
+
+@Composable
+private fun CollapsibleHeading(
+    icon: ImageVector,
+    text: String,
+    skin: TileSkin,
+    isOpen: Boolean,
+    onToggle: () -> Unit,
+    summary: String? = null,
+) {
+    val state = stringResource(if (isOpen) R.string.settings_expanded else R.string.settings_collapsed)
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(role = Role.Button, onClick = onToggle)
+            .semantics { stateDescription = state },
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        SettingHeading(icon = icon, text = text, skin = skin, modifier = Modifier.weight(1f))
+        summary?.let {
+            Text(
+                text = it,
+                style = MaterialTheme.typography.bodyMedium,
+                color = skin.muted(),
+            )
+        }
+        Icon(
+            imageVector = if (isOpen) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+            contentDescription = null,
+            tint = skin.muted(),
+        )
     }
 }
 

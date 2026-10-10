@@ -108657,5 +108657,18 @@
   ],
   "example": "**Mieszkam w Krakowie** z polską rodziną.",
   "picture": "Kraków old town square"
+ },
+ {
+  "id": 7169,
+  "text": "czy to jest",
+  "translation": "is it…? (yes/no question)",
+  "transcription": "t͡ʂɨ tɔ jɛst",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": "**Czy to jest** twoja torba?",
+  "picture": "question mark over a bag"
  }
 ]

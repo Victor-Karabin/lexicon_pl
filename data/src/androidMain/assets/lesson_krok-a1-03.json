@@ -1,0 +1,1381 @@
+{
+  "lessonId": "krok-a1-03",
+  "tracks": [
+    {"id": "103A1", "file": "a1_coursebook_103a1.mp3"},
+    {"id": "103A1-2", "file": "a1_coursebook_103a1-2.mp3"},
+    {"id": "103A2", "file": "a1_coursebook_103a2.mp3"},
+    {"id": "103A4", "file": "a1_coursebook_103a4.mp3"},
+    {"id": "103A4-2", "file": "a1_coursebook_103a4-2.mp3"},
+    {"id": "103B1", "file": "a1_coursebook_103b1.mp3"},
+    {"id": "103C1", "file": "a1_coursebook_103c1.mp3"},
+    {"id": "103C3", "file": "a1_coursebook_103c3.mp3"},
+    {"id": "103C3-2", "file": "a1_coursebook_103c3-2.mp3"},
+    {"id": "103C3-3", "file": "a1_coursebook_103c3-3.mp3"},
+    {"id": "103D1", "file": "a1_coursebook_103d1.mp3"},
+    {"id": "wb14", "file": "a1_workbook_14_L03_cwiczenie1.mp3"},
+    {"id": "wb15", "file": "a1_workbook_15_L03_cwiczenie2.mp3"},
+    {"id": "wb16", "file": "a1_workbook_16_L03_cwiczenie13.mp3"}
+  ],
+  "steps": [
+    {"id": "1", "title": "Who is it? What is it?", "screens": ["1A", "1B", "1C", "1D", "1E", "1F"]},
+    {"id": "2", "title": "Classroom words", "screens": ["2A", "2B", "2C", "2D"]},
+    {"id": "3", "title": "Czy to jest…?", "screens": ["3A", "3B", "3C", "3D", "3E"]},
+    {"id": "4", "title": "Gender of nouns", "screens": ["4A", "4B", "4C"]},
+    {"id": "5", "title": "Jaki? Jaka? Jakie?", "screens": ["5A", "5B", "5C", "5D", "5E"]},
+    {"id": "6", "title": "Adjectives with nouns", "screens": ["6A", "6B", "6C"]},
+    {"id": "7", "title": "Colours", "screens": ["7A", "7B", "7C", "7D", "7E", "7F"]},
+    {"id": "8", "title": "Revision", "screens": ["8A", "8B"], "review": true}
+  ],
+  "screens": [
+    {
+      "id": "1A",
+      "type": "reference",
+      "title": "Who is it? What is it?",
+      "instruction": "Listen to both dialogues and repeat.",
+      "tracks": [{"id": "103A1", "label": "Dialogue 1"}, {"id": "103A1-2", "label": "Dialogue 2"}],
+      "transcript": {
+        "unlock": "always",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Angela", "text": "Mami, kto to jest?"},
+              {"speaker": "Mami", "text": "Nie wiem!"},
+              {"speaker": "Nauczycielka", "text": "To jest nowy student."},
+              {"speaker": "Angela", "text": "Jak masz na imię?"},
+              {"speaker": "Student", "text": "Mam na imię Javier. Nazywam się Pérez."},
+              {"speaker": "Angela", "text": "Jestem Angela Brown. Bardzo mi miło! Skąd jesteś?"},
+              {"speaker": "Student", "text": "Jestem z Argentyny. A wy, skąd jesteście?"},
+              {"speaker": "Angela", "text": "Ja jestem z Anglii. A to jest Mami. Ona jest z Japonii, mieszka w Tokio. Normalnie jest jeszcze Uwe, z Niemiec, ale nie wiem, gdzie jest teraz. Niestety, nie w szkole!"}
+            ]
+          },
+          {
+            "lines": [
+              {"speaker": "Javier", "text": "Cześć Mami, co słychać?"},
+              {"speaker": "Mami", "text": "Dziękuję, dobrze. Bardzo dobrze! Przepraszam, nie pamiętam, jak masz na imię…"},
+              {"speaker": "Javier", "text": "Javier. J-a-v-i-e-r. Po hiszpańsku „jot” czytamy „ha”."},
+              {"speaker": "Mami", "text": "Aha, rozumiem. A co to jest?"},
+              {"speaker": "Javier", "text": "To jest słownik polsko-hiszpański. Stary i duży, ale bardzo dobry."},
+              {"speaker": "Mami", "text": "Ja też mam! Mam słownik polsko-japoński. Nowy, ale nie bardzo dobry…"},
+              {"speaker": "Javier", "text": "Dlaczego jest zły?"},
+              {"speaker": "Mami", "text": "Bo jest mały. Za mały!!!"}
+            ]
+          }
+        ]
+      },
+      "groups": [
+        {
+          "phrases": [
+            {"polish": "Kto to jest?", "english": "Who is it? — about people: *To jest student.*"},
+            {"polish": "Co to jest?", "english": "What is it? — about things: *To jest słownik.*"},
+            {"polish": "nowy ↔ stary", "english": "new ↔ old"},
+            {"polish": "duży ↔ mały", "english": "big ↔ small"},
+            {"polish": "dobry ↔ zły", "english": "good ↔ bad"},
+            {"polish": "Nie wiem. · Nie pamiętam.", "english": "I don't know. · I don't remember."}
+          ]
+        }
+      ],
+      "newWords": [
+        {"polish": "kto? / co?", "english": "who? / what?"},
+        {"polish": "słownik", "english": "dictionary"},
+        {"polish": "Nie pamiętam.", "english": "I don't remember."},
+        {"polish": "po hiszpańsku", "english": "in Spanish"},
+        {"polish": "czytamy", "english": "we read"},
+        {"polish": "normalnie", "english": "normally"},
+        {"polish": "jeszcze", "english": "also, still"},
+        {"polish": "niestety", "english": "unfortunately"},
+        {"polish": "polsko-hiszpański / polsko-japoński", "english": "Polish-Spanish / Polish-Japanese"},
+        {"polish": "Argentyna", "english": "Argentina"},
+        {"polish": "Japonia", "english": "Japan"},
+        {"polish": "za mały", "english": "too small"}
+      ]
+    },
+    {
+      "id": "1B",
+      "type": "write",
+      "title": "Classroom words",
+      "instruction": "The speaker reads 16 words. Write them in order.",
+      "tracks": [{"id": "103A2"}],
+      "hint": "długopis · gumka · klucz · komórka · krzesło · książka · kubek · mapa · okno · ołówek · płyta CD · segregator · stół · tablica · torba · zeszyt",
+      "items": [
+        {"label": "1", "answers": ["książka"], "feedback": "*książka* — *ą* (nasal \"on\") and *ż*."},
+        {"label": "2", "answers": ["zeszyt"], "feedback": "*zeszyt* — *sz* (hard \"sh\")."},
+        {"label": "3", "answers": ["długopis"], "feedback": "*ł* sounds like English *w*: długopis, ołówek. *ó* = *u*: ołówek."},
+        {"label": "4", "answers": ["tablica"], "feedback": "*tablica* — *c* sounds like \"ts\"."},
+        {"label": "5", "answers": ["krzesło"], "feedback": "*krzesło* — *rz* sounds like *ż*."},
+        {"label": "6", "answers": ["stół"], "feedback": "*stół* — *ó* and *ł*."},
+        {"label": "7", "answers": ["ołówek"], "feedback": "*ł* sounds like English *w*: długopis, ołówek. *ó* = *u*: ołówek."},
+        {"label": "8", "answers": ["gumka"]},
+        {"label": "9", "answers": ["okno"]},
+        {"label": "10", "answers": ["klucz"], "feedback": "*klucz* — *cz* at the end."},
+        {"label": "11", "answers": ["kubek"]},
+        {"label": "12", "answers": ["komórka"]},
+        {"label": "13", "answers": ["płyta CD", "płyta"]},
+        {"label": "14", "answers": ["torba"]},
+        {"label": "15", "answers": ["mapa"]},
+        {"label": "16", "answers": ["segregator"]}
+      ],
+      "newWords": [
+        {"polish": "książka", "english": "book"},
+        {"polish": "zeszyt", "english": "exercise book"},
+        {"polish": "długopis", "english": "pen"},
+        {"polish": "tablica", "english": "board"},
+        {"polish": "krzesło", "english": "chair"},
+        {"polish": "stół", "english": "table"},
+        {"polish": "ołówek", "english": "pencil"},
+        {"polish": "gumka", "english": "eraser"},
+        {"polish": "klucz", "english": "key"},
+        {"polish": "kubek", "english": "mug"},
+        {"polish": "komórka", "english": "mobile phone"},
+        {"polish": "płyta CD", "english": "CD"},
+        {"polish": "torba", "english": "bag"}
+      ],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "1C",
+      "type": "gap_fill",
+      "title": "Dialogue A — the phone",
+      "instruction": "Listen and fill in the missing words.",
+      "tracks": [{"id": "103A4"}],
+      "hint": "co · co · kto · kto · to · jest · jest · jest",
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Mami", "text": "[1] to jest?"},
+            {"speaker": "Javier", "text": "To [2] komórka. W Argentynie model numer jeden."},
+            {"speaker": "Mami", "text": "Super! A [3] to jest?"},
+            {"speaker": "Javier", "text": "[4] jestem ja. Fajna fotografia, prawda?"},
+            {"speaker": "Mami", "text": "A to, [5] to jest?"},
+            {"speaker": "Javier", "text": "A to jest, hm, koleżanka. Ma na imię Maria Elena."},
+            {"speaker": "Mami", "text": "A, koleżanka. A [6] tam jest?"},
+            {"speaker": "Javier", "text": "Tam [7] palma. To [8] fotografia z wakacji, z Brazylii."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Co"]},
+        {"number": 2, "answers": ["jest"]},
+        {"number": 3, "answers": ["kto"], "feedback": "*kto* = who (people: the person in the photo, a friend); *co* = what (things)."},
+        {"number": 4, "answers": ["To"]},
+        {"number": 5, "answers": ["kto"], "feedback": "*kto* = who (people: the person in the photo, a friend); *co* = what (things)."},
+        {"number": 6, "answers": ["co"]},
+        {"number": 7, "answers": ["jest"]},
+        {"number": 8, "answers": ["jest"]}
+      ],
+      "newWords": [
+        {"polish": "model numer jeden", "english": "the number-one model"},
+        {"polish": "Super!", "english": "Great!"},
+        {"polish": "fajna fotografia", "english": "a cool photo"},
+        {"polish": "prawda?", "english": "right?"},
+        {"polish": "palma", "english": "palm tree"},
+        {"polish": "z wakacji", "english": "from the holidays"},
+        {"polish": "z Brazylii", "english": "from Brazil"}
+      ],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "1D",
+      "type": "gap_fill",
+      "title": "Dialogue B — the bag",
+      "instruction": "Listen and fill in the missing words.",
+      "tracks": [{"id": "103A4-2"}],
+      "hint": "mapa · torba · długopis · przepraszam · dziękuję · co · jeden · ołówek · masz",
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Javier", "text": "Angela, [1] to jest? Torba???"},
+            {"speaker": "Angela", "text": "Tak, [2], bardzo modna!"},
+            {"speaker": "Javier", "text": "I co tam [3]?"},
+            {"speaker": "Angela", "text": "Nic specjalnego: mam paszport, klucz, [4] z gumką, zeszyt. A, jest i [5] Krakowa."},
+            {"speaker": "Javier", "text": "Angela, masz [6]? Ja nie mam."},
+            {"speaker": "Angela", "text": "[7], mam tylko [8]."},
+            {"speaker": "Mami", "text": "Ja mam długopis! Proszę."},
+            {"speaker": "Javier", "text": "[9] bardzo."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["co"]},
+        {"number": 2, "answers": ["torba"]},
+        {"number": 3, "answers": ["masz"]},
+        {"number": 4, "answers": ["ołówek"]},
+        {"number": 5, "answers": ["mapa"]},
+        {"number": 6, "answers": ["długopis"]},
+        {"number": 7, "answers": ["Przepraszam"], "feedback": "*przepraszam* — say it by syllables: prze-pra-szam."},
+        {"number": 8, "answers": ["jeden"]},
+        {"number": 9, "answers": ["Dziękuję"], "feedback": "*dziękuję* has two *ę* (and *proszę* ends in *ę* too)."}
+      ],
+      "newWords": [
+        {"polish": "modna", "english": "fashionable"},
+        {"polish": "Nic specjalnego.", "english": "Nothing special."},
+        {"polish": "paszport", "english": "passport"},
+        {"polish": "ołówek z gumką", "english": "pencil with an eraser"},
+        {"polish": "mapa Krakowa", "english": "map of Kraków"},
+        {"polish": "tylko jeden", "english": "only one"}
+      ],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "1E",
+      "type": "gap_fill",
+      "title": "Who remembers?",
+      "instruction": "Listen and fill in the missing words.",
+      "tracks": [{"id": "wb14"}],
+      "hint": "wiem · jest · co · ja · książka · jest · pamiętam · to",
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Mami", "text": "[1] to [2]?"},
+            {"speaker": "Angela", "text": "Nie [3]."},
+            {"speaker": "Javier", "text": "Ja wiem, [4] jest [5]."},
+            {"speaker": "Mami", "text": "A co to [6]?"},
+            {"speaker": "Javier", "text": "To? Nie [7]."},
+            {"speaker": "Angela", "text": "[8] pamiętam, to jest kubek."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Co"]},
+        {"number": 2, "answers": ["jest"]},
+        {"number": 3, "answers": ["wiem"]},
+        {"number": 4, "answers": ["to"]},
+        {"number": 5, "answers": ["książka"], "feedback": "Softness before a nasal is written with *i*: *książka* (ią), *pamiętam* (ię)."},
+        {"number": 6, "answers": ["jest"]},
+        {"number": 7, "answers": ["pamiętam"], "feedback": "Softness before a nasal is written with *i*: *książka* (ią), *pamiętam* (ię)."},
+        {"number": 8, "answers": ["Ja"]}
+      ]
+    },
+    {
+      "id": "1F",
+      "type": "gap_fill",
+      "title": "Do you remember?",
+      "instruction": "Listen and fill in the missing words.",
+      "tracks": [{"id": "wb15"}],
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Nauczycielka", "text": "[1] pamiętacie, co to jest?"},
+            {"speaker": "Javier", "text": "Niestety, nie."},
+            {"speaker": "Mami", "text": "Ja pamiętam! To jest [2]."},
+            {"speaker": "Nauczycielka", "text": "Bardzo dobrze. A co to jest?"},
+            {"speaker": "Javier", "text": "To jest [3]."},
+            {"speaker": "Nauczycielka", "text": "Świetnie, a to?"},
+            {"speaker": "Mami", "text": "To jest [4] CD."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Czy"]},
+        {"number": 2, "answers": ["krzesło"]},
+        {"number": 3, "answers": ["klucz"]},
+        {"number": 4, "answers": ["płyta"]}
+      ],
+      "newWords": [{"polish": "Pamiętacie?", "english": "Do you (pl.) remember?"}],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "2A",
+      "type": "choice",
+      "title": "What is it?",
+      "instruction": "Choose the word for each picture.",
+      "items": [
+        {
+          "label": "1",
+          "picture": {"label": "bag", "emoji": "👜"},
+          "options": ["tablica", "torba"],
+          "answer": "torba"
+        },
+        {
+          "label": "2",
+          "picture": {"label": "key", "emoji": "🔑"},
+          "options": ["komórka", "klucz"],
+          "answer": "klucz"
+        },
+        {
+          "label": "3",
+          "picture": {"label": "table", "icon": "table"},
+          "options": ["stół", "zeszyt"],
+          "answer": "stół"
+        },
+        {
+          "label": "4",
+          "picture": {"label": "chair", "emoji": "🪑"},
+          "options": ["książka", "krzesło"],
+          "answer": "krzesło"
+        },
+        {
+          "label": "5",
+          "picture": {"label": "pen", "emoji": "🖊️"},
+          "options": ["długopis", "kubek"],
+          "answer": "długopis"
+        },
+        {
+          "label": "6",
+          "picture": {"label": "window", "emoji": "🪟"},
+          "options": ["okno", "ołówek"],
+          "answer": "okno"
+        },
+        {
+          "label": "7",
+          "picture": {"label": "mobile phone", "emoji": "📱"},
+          "options": ["kubek", "komórka"],
+          "answer": "komórka"
+        },
+        {
+          "label": "8",
+          "picture": {"label": "exercise book", "emoji": "📘"},
+          "options": ["zeszyt", "płyta"],
+          "answer": "zeszyt"
+        },
+        {
+          "label": "9",
+          "picture": {"label": "book", "emoji": "📕"},
+          "options": ["książka", "kubek"],
+          "answer": "książka"
+        },
+        {
+          "label": "10",
+          "picture": {"label": "pencil", "emoji": "✏️"},
+          "options": ["okno", "ołówek"],
+          "answer": "ołówek"
+        },
+        {
+          "label": "11",
+          "picture": {"label": "board", "icon": "board"},
+          "options": ["tablica", "nauczycielka"],
+          "answer": "tablica"
+        },
+        {
+          "label": "12",
+          "picture": {"label": "mug", "emoji": "☕"},
+          "options": ["torba", "kubek"],
+          "answer": "kubek"
+        },
+        {
+          "label": "13",
+          "picture": {"label": "CD", "emoji": "💿"},
+          "options": ["pytanie", "płyta"],
+          "answer": "płyta"
+        }
+      ]
+    },
+    {
+      "id": "2B",
+      "type": "choice",
+      "title": "Syllable puzzle",
+      "instruction": "Choose the ending for each beginning.",
+      "items": [
+        {"label": "1", "prompt": "długo-", "options": ["-no", "-pis", "-ta", "-ka", "-pa", "-lica", "-ba", "-ło", "-bek"], "answer": "-pis"},
+        {"label": "2", "prompt": "ok-", "options": ["-no", "-pis", "-ta", "-ka", "-pa", "-lica", "-ba", "-ło", "-bek"], "answer": "-no"},
+        {"label": "3", "prompt": "ma-", "options": ["-no", "-pis", "-ta", "-ka", "-pa", "-lica", "-ba", "-ło", "-bek"], "answer": "-pa"},
+        {"label": "4", "prompt": "pły-", "options": ["-no", "-pis", "-ta", "-ka", "-pa", "-lica", "-ba", "-ło", "-bek"], "answer": "-ta"},
+        {"label": "5", "prompt": "tab-", "options": ["-no", "-pis", "-ta", "-ka", "-pa", "-lica", "-ba", "-ło", "-bek"], "answer": "-lica"},
+        {"label": "6", "prompt": "książ-", "options": ["-no", "-pis", "-ta", "-ka", "-pa", "-lica", "-ba", "-ło", "-bek"], "answer": "-ka"},
+        {"label": "7", "prompt": "krzes-", "options": ["-no", "-pis", "-ta", "-ka", "-pa", "-lica", "-ba", "-ło", "-bek"], "answer": "-ło"},
+        {"label": "8", "prompt": "gum-", "options": ["-no", "-pis", "-ta", "-ka", "-pa", "-lica", "-ba", "-ło", "-bek"], "answer": "-ka"},
+        {"label": "9", "prompt": "tor-", "options": ["-no", "-pis", "-ta", "-ka", "-pa", "-lica", "-ba", "-ło", "-bek"], "answer": "-ba"},
+        {"label": "10", "prompt": "ku-", "options": ["-no", "-pis", "-ta", "-ka", "-pa", "-lica", "-ba", "-ło", "-bek"], "answer": "-bek"}
+      ]
+    },
+    {
+      "id": "2C",
+      "type": "choice",
+      "title": "Syllable puzzle (workbook)",
+      "instruction": "Choose the ending for each beginning.",
+      "items": [
+        {"label": "1", "prompt": "ze-", "options": ["-ół", "-ka", "-cz", "-szyt", "-tor", "-wek"], "answer": "-szyt"},
+        {"label": "2", "prompt": "st-", "options": ["-ół", "-ka", "-cz", "-szyt", "-tor", "-wek"], "answer": "-ół"},
+        {"label": "3", "prompt": "segrega-", "options": ["-ół", "-ka", "-cz", "-szyt", "-tor", "-wek"], "answer": "-tor"},
+        {"label": "4", "prompt": "ołó-", "options": ["-ół", "-ka", "-cz", "-szyt", "-tor", "-wek"], "answer": "-wek"},
+        {"label": "5", "prompt": "klu-", "options": ["-ół", "-ka", "-cz", "-szyt", "-tor", "-wek"], "answer": "-cz"},
+        {"label": "6", "prompt": "komór-", "options": ["-ół", "-ka", "-cz", "-szyt", "-tor", "-wek"], "answer": "-ka"}
+      ]
+    },
+    {
+      "id": "2D",
+      "type": "choice",
+      "title": "Kto or co?",
+      "instruction": "Choose *Kto* (people) or *Co* (things).",
+      "items": [
+        {"label": "1", "prompt": "… to jest? — To jest mapa.", "options": ["Kto", "Co"], "answer": "Co"},
+        {"label": "2", "prompt": "… to jest? — To jest torba.", "options": ["Kto", "Co"], "answer": "Co"},
+        {"label": "3", "prompt": "… to jest? — To jest Mami.", "options": ["Kto", "Co"], "answer": "Kto"},
+        {"label": "4", "prompt": "… to jest? — To jest zeszyt.", "options": ["Kto", "Co"], "answer": "Co"},
+        {"label": "5", "prompt": "… to jest? — To jest nauczycielka.", "options": ["Kto", "Co"], "answer": "Kto"},
+        {"label": "6", "prompt": "… to jest? — To jest komórka.", "options": ["Kto", "Co"], "answer": "Co"},
+        {"label": "7", "prompt": "… to jest? — To jest Javier.", "options": ["Kto", "Co"], "answer": "Kto"},
+        {"label": "8", "prompt": "… to jest? — To jest gumka.", "options": ["Kto", "Co"], "answer": "Co"},
+        {"label": "9", "prompt": "… to jest? — To jest ołówek.", "options": ["Kto", "Co"], "answer": "Co"},
+        {"label": "10", "prompt": "… to jest? — To jest student.", "options": ["Kto", "Co"], "answer": "Kto"},
+        {"label": "11", "prompt": "… to jest? — To jest okno.", "options": ["Kto", "Co"], "answer": "Co"}
+      ]
+    },
+    {
+      "id": "3A",
+      "type": "reference",
+      "title": "Czy to jest…?",
+      "instruction": "Listen and repeat.",
+      "tracks": [{"id": "103B1"}],
+      "transcript": {
+        "unlock": "always",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Nauczycielka", "text": "Mami, czy to jest książka?"},
+              {"speaker": "Mami", "text": "Tak, to jest książka."},
+              {"speaker": "Nauczycielka", "text": "Angela, czy to jest ołówek?"},
+              {"speaker": "Angela", "text": "Nie, to nie jest ołówek. To jest długopis. Ołówek jest tam."},
+              {"speaker": "Nauczycielka", "text": "Javier, czy to jest zeszyt?"},
+              {"speaker": "Javier", "text": "Przepraszam, nie pamiętam, co to jest „zeszyt”."},
+              {"speaker": "Nauczycielka", "text": "O, tu Mami ma zeszyt."},
+              {"speaker": "Javier", "text": "Tak, tak, pamiętam. Nie, to jest paszport."}
+            ]
+          }
+        ]
+      },
+      "groups": [
+        {
+          "phrases": [
+            {"polish": "Czy to jest książka?", "english": "Is it a book? — *czy* opens a yes/no question"},
+            {"polish": "(+) Tak, to jest książka.", "english": "Yes, it's a book."},
+            {"polish": "(–) Nie, to nie jest ołówek.", "english": "No, it isn't a pencil. (*nie* goes before *jest*)"},
+            {"polish": "To jest długopis.", "english": "It's a pen."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3B",
+      "type": "write",
+      "title": "Yes or no?",
+      "instruction": "Answer each question with a full sentence.",
+      "items": [
+        {
+          "label": "1",
+          "prompt": "Czy to jest klucz?",
+          "picture": {"label": "key", "emoji": "🔑"},
+          "answers": ["Tak, to jest klucz."]
+        },
+        {
+          "label": "2",
+          "prompt": "Czy to jest tablica?",
+          "picture": {"label": "board", "icon": "board"},
+          "answers": ["Tak, to jest tablica."]
+        },
+        {
+          "label": "3",
+          "prompt": "Czy to jest klucz?",
+          "picture": {"label": "chair", "emoji": "🪑"},
+          "answers": ["Nie, to nie jest klucz.", "Nie, to nie jest klucz. To jest krzesło."],
+          "feedback": "The negation goes before the verb: to **nie jest**."
+        },
+        {
+          "label": "4",
+          "prompt": "Czy to jest długopis?",
+          "picture": {"label": "table", "icon": "table"},
+          "answers": ["Nie, to nie jest długopis.", "Nie, to nie jest długopis. To jest stół."],
+          "feedback": "The negation goes before the verb: to **nie jest**."
+        },
+        {
+          "label": "5",
+          "prompt": "Czy to jest okno?",
+          "picture": {"label": "window", "emoji": "🪟"},
+          "answers": ["Tak, to jest okno."]
+        },
+        {
+          "label": "6",
+          "prompt": "Czy to jest książka?",
+          "picture": {"label": "mug", "emoji": "☕"},
+          "answers": ["Nie, to nie jest książka.", "Nie, to nie jest książka. To jest kubek."],
+          "feedback": "The negation goes before the verb: to **nie jest**."
+        },
+        {
+          "label": "7",
+          "prompt": "Czy to jest płyta?",
+          "picture": {"label": "CD", "emoji": "💿"},
+          "answers": ["Tak, to jest płyta CD.", "Tak, to jest płyta."],
+          "variants": ["Tak, to jest CD płyta."]
+        },
+        {
+          "label": "8",
+          "prompt": "Czy to jest krzesło?",
+          "picture": {"label": "book", "emoji": "📕"},
+          "answers": ["Nie, to nie jest krzesło.", "Nie, to nie jest krzesło. To jest książka."],
+          "feedback": "The negation goes before the verb: to **nie jest**."
+        },
+        {
+          "label": "9",
+          "prompt": "Czy to jest torba?",
+          "picture": {"label": "bag", "emoji": "👜"},
+          "answers": ["Tak, to jest torba."]
+        },
+        {
+          "label": "10",
+          "prompt": "Czy to jest komórka?",
+          "picture": {"label": "mobile phone", "emoji": "📱"},
+          "answers": ["Tak, to jest komórka."]
+        },
+        {
+          "label": "11",
+          "prompt": "Czy to jest zeszyt?",
+          "picture": {"label": "exercise book", "emoji": "📘"},
+          "answers": ["Tak, to jest zeszyt."]
+        },
+        {
+          "label": "12",
+          "prompt": "Czy to jest tablica?",
+          "picture": {"label": "pencil", "emoji": "✏️"},
+          "answers": ["Nie, to nie jest tablica.", "Nie, to nie jest tablica. To jest ołówek."],
+          "feedback": "The negation goes before the verb: to **nie jest**."
+        },
+        {
+          "label": "13",
+          "prompt": "Czy to jest paszport?",
+          "picture": {"label": "pen", "emoji": "🖊️"},
+          "answers": ["Nie, to nie jest paszport.", "Nie, to nie jest paszport. To jest długopis."],
+          "feedback": "The negation goes before the verb: to **nie jest**."
+        },
+        {
+          "label": "14",
+          "prompt": "Czy to jest studentka?",
+          "picture": {"label": "teacher", "emoji": "👩‍🏫"},
+          "answers": ["Nie, to nie jest studentka.", "Nie, to nie jest studentka. To jest nauczycielka."],
+          "feedback": "The negation goes before the verb: to **nie jest**."
+        }
+      ],
+      "notes": [
+        "Word order: an abbreviation that specifies a noun comes after it — *płyta CD* (CD), *kod PIN* (PIN code), *karta SIM* (SIM card), *kod QR* (QR code)."
+      ]
+    },
+    {
+      "id": "3C",
+      "type": "write",
+      "title": "No, it isn't… It's…",
+      "instruction": "Answer each question. When the answer is *Nie*, say what it is.",
+      "items": [
+        {
+          "label": "1",
+          "prompt": "Czy to jest okno?",
+          "picture": {"label": "key", "emoji": "🔑"},
+          "answers": ["Nie, to nie jest okno. To jest klucz."],
+          "feedback": "The negation goes before the verb: to **nie jest**."
+        },
+        {
+          "label": "2",
+          "prompt": "Czy to jest sekretarka?",
+          "picture": {"label": "teacher", "emoji": "👩‍🏫"},
+          "answers": ["Nie, to nie jest sekretarka. To jest nauczycielka."],
+          "feedback": "The negation goes before the verb: to **nie jest**."
+        },
+        {
+          "label": "3",
+          "prompt": "Czy to jest ołówek?",
+          "picture": {"label": "eraser"},
+          "answers": ["Nie, to nie jest ołówek. To jest gumka."],
+          "feedback": "The negation goes before the verb: to **nie jest**."
+        },
+        {
+          "label": "4",
+          "prompt": "Czy to jest długopis?",
+          "picture": {"label": "pen", "emoji": "🖊️"},
+          "answers": ["Tak, to jest długopis."]
+        },
+        {
+          "label": "5",
+          "prompt": "Czy to jest zeszyt?",
+          "picture": {"label": "mug", "emoji": "☕"},
+          "answers": ["Nie, to nie jest zeszyt. To jest kubek."],
+          "feedback": "The negation goes before the verb: to **nie jest**."
+        },
+        {
+          "label": "6",
+          "prompt": "Czy to jest studentka?",
+          "picture": {"label": "student (man)", "emoji": "👨‍🎓"},
+          "answers": ["Nie, to nie jest studentka. To jest student."],
+          "feedback": "The negation goes before the verb: to **nie jest**."
+        },
+        {
+          "label": "7",
+          "prompt": "Czy to jest dziecko?",
+          "picture": {"label": "child", "emoji": "👶"},
+          "answers": ["Tak, to jest dziecko."]
+        }
+      ]
+    },
+    {
+      "id": "3D",
+      "type": "write",
+      "title": "Build the sentence (coursebook)",
+      "instruction": "Make a sentence from the words.",
+      "items": [
+        {"label": "a", "prompt": "jest / co / to", "answers": ["Co to jest?"]},
+        {"label": "b", "prompt": "to / długopis / jest / czy", "answers": ["Czy to jest długopis?"]},
+        {"label": "c", "prompt": "jest / nie / nie / długopis / to", "answers": ["Nie, to nie jest długopis."], "feedback": "The negation goes before the verb: to **nie jest**."},
+        {"label": "d", "prompt": "to / jest / kto", "answers": ["Kto to jest?"]},
+        {"label": "e", "prompt": "komórka / jest / to", "answers": ["To jest komórka."]},
+        {"label": "f", "prompt": "studentka / czy / to / jest", "answers": ["Czy to jest studentka?"]},
+        {"label": "g", "prompt": "pytanie / to / co / jest / mam", "answers": ["Mam pytanie: co to jest?"]},
+        {"label": "h", "prompt": "wiem / co / nie / jest / to", "answers": ["Nie wiem, co to jest."]}
+      ]
+    },
+    {
+      "id": "3E",
+      "type": "write",
+      "title": "Build the sentence (workbook)",
+      "instruction": "Make a sentence from the words.",
+      "items": [
+        {"label": "a", "prompt": "jest / co / to", "answers": ["Co to jest?"]},
+        {"label": "b", "prompt": "jest / to / tak / Krakowa / mapa", "answers": ["Tak, to jest mapa Krakowa."]},
+        {"label": "c", "prompt": "pamiętam / nie / co / jest / to", "answers": ["Nie pamiętam, co to jest."], "feedback": "*ę* already contains the nasal sound — no extra *m*: pa-mię-tam."},
+        {"label": "d", "prompt": "wiem / nie / to / jest / kto", "answers": ["Nie wiem, kto to jest."]},
+        {"label": "e", "prompt": "nie / co / wiem / to / znaczy", "answers": ["Nie wiem, co to znaczy."]},
+        {"label": "f", "prompt": "to / czy / jest / torba", "answers": ["Czy to jest torba?"]},
+        {"label": "g", "prompt": "tak / książka / jest / to", "answers": ["Tak, to jest książka."]},
+        {"label": "h", "prompt": "jest / student / to / nowy", "answers": ["To jest nowy student."]},
+        {"label": "i", "prompt": "nie / nie / klucz / jest / to", "answers": ["Nie, to nie jest klucz."], "feedback": "The negation goes before the verb: to **nie jest**."}
+      ]
+    },
+    {
+      "id": "4A",
+      "type": "reference",
+      "title": "Gender of nouns",
+      "instruction": "Listen to the dialogue, then read how to tell the gender of a noun.",
+      "tracks": [{"id": "103C1"}],
+      "transcript": {
+        "unlock": "always",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Nauczycielka", "text": "Mam pytanie: wiecie, co to jest „rzeczownik”?"},
+              {"speaker": "Grupa", "text": "Nie wiemy!!!"},
+              {"speaker": "Nauczycielka", "text": "Na przykład: „mapa”, „klucz”, „okno”, „paszport”."},
+              {"speaker": "Angela", "text": "A „napisać” i „przeczytać” to nie jest rzeczownik, prawda?"},
+              {"speaker": "Nauczycielka", "text": "Tak, prawda. Rzeczowniki mają trzy rodzaje: męski, żeński i nijaki."},
+              {"speaker": "Mami", "text": "Nie rozumiem! Trzy rodzaje? Co to jest???"},
+              {"speaker": "Angela", "text": "Trzy rodzaje to trzy grupy!"}
+            ]
+          }
+        ]
+      },
+      "tables": [
+        {
+          "header": ["Gender", "Ending", "Special cases"],
+          "rows": [
+            ["masculine (on)", "consonant: student, stół, klucz", "-a: tata, kolega"],
+            ["feminine (ona)", "-a: studentka, książka", "-ø: noc · -i: pani"],
+            ["neuter (ono)", "-o, -e, -ę: dziecko, mieszkanie, imię", "-um: muzeum, centrum"]
+          ]
+        }
+      ],
+      "newWords": [
+        {"polish": "rzeczownik", "english": "noun"},
+        {"polish": "Wiecie?", "english": "Do you (pl.) know?"},
+        {"polish": "Nie wiemy.", "english": "We don't know."},
+        {"polish": "rodzaj męski / żeński / nijaki", "english": "masculine / feminine / neuter gender"},
+        {"polish": "tata", "english": "dad"},
+        {"polish": "muzeum", "english": "museum"}
+      ]
+    },
+    {
+      "id": "4B",
+      "type": "choice",
+      "title": "On, ona, ono?",
+      "instruction": "Choose *on*, *ona* or *ono* for each noun.",
+      "items": [
+        {"label": "1", "prompt": "książka", "options": ["on", "ona", "ono"], "answer": "ona"},
+        {"label": "2", "prompt": "zeszyt", "options": ["on", "ona", "ono"], "answer": "on"},
+        {"label": "3", "prompt": "długopis", "options": ["on", "ona", "ono"], "answer": "on"},
+        {"label": "4", "prompt": "tablica", "options": ["on", "ona", "ono"], "answer": "ona"},
+        {"label": "5", "prompt": "krzesło", "options": ["on", "ona", "ono"], "answer": "ono"},
+        {"label": "6", "prompt": "stół", "options": ["on", "ona", "ono"], "answer": "on"},
+        {"label": "7", "prompt": "ołówek", "options": ["on", "ona", "ono"], "answer": "on"},
+        {"label": "8", "prompt": "gumka", "options": ["on", "ona", "ono"], "answer": "ona"},
+        {"label": "9", "prompt": "okno", "options": ["on", "ona", "ono"], "answer": "ono"},
+        {"label": "10", "prompt": "klucz", "options": ["on", "ona", "ono"], "answer": "on"},
+        {"label": "11", "prompt": "kubek", "options": ["on", "ona", "ono"], "answer": "on"},
+        {"label": "12", "prompt": "komórka", "options": ["on", "ona", "ono"], "answer": "ona"},
+        {"label": "13", "prompt": "płyta CD", "options": ["on", "ona", "ono"], "answer": "ona"},
+        {"label": "14", "prompt": "torba", "options": ["on", "ona", "ono"], "answer": "ona"},
+        {"label": "15", "prompt": "mapa", "options": ["on", "ona", "ono"], "answer": "ona"},
+        {"label": "16", "prompt": "segregator", "options": ["on", "ona", "ono"], "answer": "on"},
+        {"label": "17", "prompt": "ćwiczenie", "options": ["on", "ona", "ono"], "answer": "ono"}
+      ]
+    },
+    {
+      "id": "4C",
+      "type": "choice",
+      "title": "On, ona, ono? — more words",
+      "instruction": "Choose *on*, *ona* or *ono* for each noun.",
+      "items": [
+        {"label": "1", "prompt": "nauczycielka", "options": ["on", "ona", "ono"], "answer": "ona"},
+        {"label": "2", "prompt": "herbata", "options": ["on", "ona", "ono"], "answer": "ona"},
+        {"label": "3", "prompt": "student", "options": ["on", "ona", "ono"], "answer": "on"},
+        {"label": "4", "prompt": "miasto", "options": ["on", "ona", "ono"], "answer": "ono"},
+        {"label": "5", "prompt": "program", "options": ["on", "ona", "ono"], "answer": "on"},
+        {"label": "6", "prompt": "woda", "options": ["on", "ona", "ono"], "answer": "ona"},
+        {"label": "7", "prompt": "komputer", "options": ["on", "ona", "ono"], "answer": "on"},
+        {"label": "8", "prompt": "kino", "options": ["on", "ona", "ono"], "answer": "ono"},
+        {"label": "9", "prompt": "film", "options": ["on", "ona", "ono"], "answer": "on"},
+        {"label": "10", "prompt": "studentka", "options": ["on", "ona", "ono"], "answer": "ona"},
+        {"label": "11", "prompt": "centrum", "options": ["on", "ona", "ono"], "answer": "ono", "feedback": "*-um* nouns are neuter: centrum, muzeum."},
+        {"label": "12", "prompt": "kawa", "options": ["on", "ona", "ono"], "answer": "ona"},
+        {"label": "13", "prompt": "cukier", "options": ["on", "ona", "ono"], "answer": "on"},
+        {"label": "14", "prompt": "fotografia", "options": ["on", "ona", "ono"], "answer": "ona"},
+        {"label": "15", "prompt": "okno", "options": ["on", "ona", "ono"], "answer": "ono"},
+        {"label": "16", "prompt": "ankieta", "options": ["on", "ona", "ono"], "answer": "ona"},
+        {"label": "17", "prompt": "nauczyciel", "options": ["on", "ona", "ono"], "answer": "on"},
+        {"label": "18", "prompt": "mama", "options": ["on", "ona", "ono"], "answer": "ona"},
+        {"label": "19", "prompt": "teatr", "options": ["on", "ona", "ono"], "answer": "on"},
+        {"label": "20", "prompt": "imię", "options": ["on", "ona", "ono"], "answer": "ono", "feedback": "*imię* ends in *-ę* → neuter."},
+        {"label": "21", "prompt": "projekt", "options": ["on", "ona", "ono"], "answer": "on"},
+        {"label": "22", "prompt": "uniwersytet", "options": ["on", "ona", "ono"], "answer": "on"},
+        {"label": "23", "prompt": "nazwisko", "options": ["on", "ona", "ono"], "answer": "ono", "feedback": "*nazwisko* ends in *-o* → neuter."},
+        {"label": "24", "prompt": "filharmonia", "options": ["on", "ona", "ono"], "answer": "ona"},
+        {"label": "25", "prompt": "muzyka", "options": ["on", "ona", "ono"], "answer": "ona"},
+        {"label": "26", "prompt": "auto", "options": ["on", "ona", "ono"], "answer": "ono"}
+      ],
+      "newWords": [
+        {"polish": "miasto", "english": "city"},
+        {"polish": "film", "english": "film"},
+        {"polish": "ankieta", "english": "questionnaire"},
+        {"polish": "nauczyciel", "english": "(male) teacher"},
+        {"polish": "projekt", "english": "project"},
+        {"polish": "uniwersytet", "english": "university"},
+        {"polish": "filharmonia", "english": "philharmonic"},
+        {"polish": "muzyka", "english": "music"},
+        {"polish": "auto", "english": "car"}
+      ]
+    },
+    {
+      "id": "5A",
+      "type": "reference",
+      "title": "Jaki jest ten słownik?",
+      "instruction": "Listen to the three dialogues, then read how *ten*, *jaki* and the adjective agree with the noun.",
+      "tracks": [
+        {"id": "103C3", "label": "Dialogue 2"},
+        {"id": "103C3-2", "label": "Dialogue 3"},
+        {"id": "103C3-3", "label": "Dialogue 4"}
+      ],
+      "transcript": {
+        "unlock": "always",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Nauczycielka", "text": "Javier, jaki jest ten słownik?"},
+              {"speaker": "Javier", "text": "Ten słownik jest dobry. Stary, ale dobry. To jest słownik polsko-hiszpański."}
+            ]
+          },
+          {
+            "lines": [
+              {"speaker": "Nauczycielka", "text": "Jaka jest ta torba?"},
+              {"speaker": "Angela", "text": "Ta torba jest bardzo dobra, bo jest duża."}
+            ]
+          },
+          {
+            "lines": [
+              {"speaker": "Nauczycielka", "text": "Mami, czy ta komórka ma radio?"},
+              {"speaker": "Mami", "text": "Tak, ma."},
+              {"speaker": "Nauczycielka", "text": "Jakie jest to radio?"},
+              {"speaker": "Mami", "text": "To radio nie jest bardzo dobre. Nie jest japońskie…"}
+            ]
+          }
+        ]
+      },
+      "tables": [
+        {
+          "header": ["Gender", "this", "Question", "Adjective"],
+          "rows": [
+            ["on", "ten słownik", "jaki?", "dobry, hiszpański"],
+            ["ona", "ta komórka", "jaka?", "dobra, hiszpańska"],
+            ["ono", "to radio", "jakie?", "dobre, hiszpańskie"]
+          ]
+        }
+      ],
+      "notes": ["After *k* and *g* the masculine ending is *-i* and the neuter is *-ie*: polski, polskie; męski, męskie."],
+      "newWords": [
+        {"polish": "ten / ta / to", "english": "this (m / f / n)"},
+        {"polish": "jaki? / jaka? / jakie?", "english": "what kind of? (m / f / n)"},
+        {"polish": "Komórka ma radio.", "english": "The phone has a radio."},
+        {"polish": "japoński", "english": "Japanese"},
+        {"polish": "hiszpański", "english": "Spanish"}
+      ]
+    },
+    {
+      "id": "5B",
+      "type": "choice",
+      "title": "Jaki, jaka, jakie?",
+      "instruction": "Choose the question word that agrees with the adjective.",
+      "items": [
+        {"label": "1", "prompt": "stary", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaki?"},
+        {"label": "2", "prompt": "hiszpański", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaki?"},
+        {"label": "3", "prompt": "dobra", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaka?"},
+        {"label": "4", "prompt": "mały", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaki?"},
+        {"label": "5", "prompt": "fajna", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaka?"},
+        {"label": "6", "prompt": "duże", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jakie?"},
+        {"label": "7", "prompt": "męski", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaki?"},
+        {"label": "8", "prompt": "nowy", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaki?"},
+        {"label": "9", "prompt": "japońskie", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jakie?"},
+        {"label": "10", "prompt": "modna", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaka?"}
+      ],
+      "newWords": [{"polish": "fajna", "english": "cool"}, {"polish": "męski", "english": "male, men's"}]
+    },
+    {
+      "id": "5C",
+      "type": "choice",
+      "title": "Jaki, jaka, jakie? — more",
+      "instruction": "Choose the question word that agrees with the adjective.",
+      "items": [
+        {"label": "1", "prompt": "atrakcyjny", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaki?"},
+        {"label": "2", "prompt": "spontaniczne", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jakie?"},
+        {"label": "3", "prompt": "aktywna", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaka?"},
+        {"label": "4", "prompt": "kreatywne", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jakie?"},
+        {"label": "5", "prompt": "sympatyczny", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaki?"},
+        {"label": "6", "prompt": "ambitne", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jakie?"},
+        {"label": "7", "prompt": "skomplikowana", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaka?"},
+        {"label": "8", "prompt": "inteligentny", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaki?"},
+        {"label": "9", "prompt": "energiczna", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaka?"},
+        {"label": "10", "prompt": "fajne", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jakie?"},
+        {"label": "11", "prompt": "romantyczna", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaka?"},
+        {"label": "12", "prompt": "zestresowany", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaki?"}
+      ],
+      "newWords": [
+        {"polish": "atrakcyjny", "english": "attractive"},
+        {"polish": "sympatyczny", "english": "nice, likeable"},
+        {"polish": "inteligentny", "english": "intelligent"},
+        {"polish": "zestresowany", "english": "stressed"},
+        {"polish": "aktywna", "english": "active"},
+        {"polish": "energiczna", "english": "energetic"},
+        {"polish": "romantyczna", "english": "romantic"},
+        {"polish": "spontaniczne", "english": "spontaneous"},
+        {"polish": "kreatywne", "english": "creative"},
+        {"polish": "ambitne", "english": "ambitious"}
+      ]
+    },
+    {
+      "id": "5D",
+      "type": "inline_choice",
+      "title": "Ten, ta or to?",
+      "instruction": "Choose *ten*, *ta* or *to* and the right form of the adjective.",
+      "items": [
+        {
+          "label": "a",
+          "prompt": "[1] klucz jest [2]",
+          "choices": [
+            {"options": ["Ten", "Ta", "To"], "answer": "Ten"},
+            {"options": ["nowy", "nowa", "nowe"], "answer": "nowy"}
+          ]
+        },
+        {
+          "label": "b",
+          "prompt": "[1] szkoła jest [2]",
+          "choices": [
+            {"options": ["Ten", "Ta", "To"], "answer": "Ta"},
+            {"options": ["dobry", "dobra", "dobre"], "answer": "dobra"}
+          ]
+        },
+        {
+          "label": "c",
+          "prompt": "[1] okno jest [2]",
+          "choices": [
+            {"options": ["Ten", "Ta", "To"], "answer": "To"},
+            {"options": ["duży", "duża", "duże"], "answer": "duże"}
+          ]
+        },
+        {
+          "label": "d",
+          "prompt": "[1] książka jest [2]",
+          "choices": [
+            {"options": ["Ten", "Ta", "To"], "answer": "Ta"},
+            {"options": ["stary", "stara", "stare"], "answer": "stara"}
+          ]
+        },
+        {
+          "label": "e",
+          "prompt": "[1] ołówek jest [2]",
+          "choices": [
+            {"options": ["Ten", "Ta", "To"], "answer": "Ten"},
+            {"options": ["nowy", "nowa", "nowe"], "answer": "nowy"}
+          ]
+        },
+        {
+          "label": "f",
+          "prompt": "[1] kolega jest [2]",
+          "choices": [
+            {"options": ["Ten", "Ta", "To"], "answer": "Ten", "feedback": "*kolega* ends in *-a* but is a man → *ten kolega*, *miły*."},
+            {"options": ["miły", "miła", "miłe"], "answer": "miły", "feedback": "*kolega* ends in *-a* but is a man → *ten kolega*, *miły*."}
+          ]
+        },
+        {
+          "label": "g",
+          "prompt": "[1] płyta jest [2]",
+          "choices": [
+            {"options": ["Ten", "Ta", "To"], "answer": "Ta"},
+            {"options": ["zły", "zła", "złe"], "answer": "zła"}
+          ]
+        },
+        {
+          "label": "h",
+          "prompt": "[1] pani jest [2]",
+          "choices": [
+            {"options": ["Ten", "Ta", "To"], "answer": "Ta", "feedback": "*pani* ends in *-i* but is feminine → *ta pani*."},
+            {"options": ["sympatyczny", "sympatyczna", "sympatyczne"], "answer": "sympatyczna", "feedback": "*pani* ends in *-i* but is feminine → *ta pani*."}
+          ]
+        },
+        {
+          "label": "i",
+          "prompt": "[1] stół jest [2]",
+          "choices": [
+            {"options": ["Ten", "Ta", "To"], "answer": "Ten"},
+            {"options": ["mały", "mała", "małe"], "answer": "mały"}
+          ]
+        },
+        {
+          "label": "j",
+          "prompt": "[1] słownik jest [2]",
+          "choices": [
+            {"options": ["Ten", "Ta", "To"], "answer": "Ten"},
+            {"options": ["duży", "duża", "duże"], "answer": "duży"}
+          ]
+        }
+      ],
+      "newWords": [{"polish": "miły", "english": "nice, kind"}]
+    },
+    {
+      "id": "5E",
+      "type": "gap_fill",
+      "title": "Opposites",
+      "instruction": "Write the opposite.",
+      "sections": [
+        {
+          "lines": [{"text": "1. nowy ≠ [1]"}, {"text": "2. mały ≠ [2]"}, {"text": "3. dobry ≠ [3]"}]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["stary"]},
+        {"number": 2, "answers": ["duży"]},
+        {"number": 3, "answers": ["zły"]}
+      ]
+    },
+    {
+      "id": "6A",
+      "type": "write",
+      "title": "Correct the sentence",
+      "instruction": "Each sentence has a mistake. Write it correctly.",
+      "items": [
+        {"label": "1", "prompt": "~~To mapa jest nowa.~~", "answers": ["Ta mapa jest nowa."]},
+        {"label": "2", "prompt": "~~To dziecko jest mały.~~", "answers": ["To dziecko jest małe."], "feedback": "*mało*, *dużo* are adverbs (\"little\", \"a lot\"); the neuter adjective ends in *-e*: *małe*, *duże*."},
+        {"label": "3", "prompt": "~~Czy to film jest interesujący?~~", "answers": ["Czy ten film jest interesujący?"], "feedback": "*interesujący* — with *ą*."},
+        {"label": "4", "prompt": "~~Ten autobus jest nowe.~~", "answers": ["Ten autobus jest nowy."]},
+        {"label": "5", "prompt": "~~Ta kawa są dobra.~~", "answers": ["Ta kawa jest dobra."]},
+        {"label": "6", "prompt": "~~Czy ta kolega jest sympatyczny?~~", "answers": ["Czy ten kolega jest sympatyczny?"], "feedback": "*kolega* is a man: *ten kolega*, *sympatyczny* (a female colleague is *koleżanka*)."},
+        {"label": "7", "prompt": "~~Ta aktor jest atrakcyjny.~~", "answers": ["Ten aktor jest atrakcyjny."]},
+        {"label": "8", "prompt": "~~Ten studentka jest inteligentna.~~", "answers": ["Ta studentka jest inteligentna."]},
+        {"label": "9", "prompt": "~~To centrum jest duży.~~", "answers": ["To centrum jest duże."], "feedback": "*mało*, *dużo* are adverbs (\"little\", \"a lot\"); the neuter adjective ends in *-e*: *małe*, *duże*."}
+      ],
+      "newWords": [{"polish": "autobus", "english": "bus"}],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "6B",
+      "type": "gap_fill",
+      "title": "Adjective + noun",
+      "instruction": "Put each adjective from the box with a noun. Each adjective is used once.",
+      "wordBox": ["stare", "inteligentny", "modna", "sympatyczny", "skomplikowane", "małe", "atrakcyjna", "duży"],
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. [1] student"},
+            {"text": "2. [2] aktorka"},
+            {"text": "3. [3] dziecko"},
+            {"text": "4. [4] kolega"},
+            {"text": "5. [5] auto"},
+            {"text": "6. [6] torba"},
+            {"text": "7. [7] stół"},
+            {"text": "8. [8] słowo"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["inteligentny"]},
+        {"number": 2, "answers": ["atrakcyjna"]},
+        {"number": 3, "answers": ["małe"]},
+        {"number": 4, "answers": ["sympatyczny"]},
+        {"number": 5, "answers": ["stare"]},
+        {"number": 6, "answers": ["modna"]},
+        {"number": 7, "answers": ["duży"]},
+        {"number": 8, "answers": ["skomplikowane"]}
+      ],
+      "interchangeable": [["1", "4", "7"], ["2", "6"], ["3", "5", "8"]],
+      "newWords": [{"polish": "aktorka", "english": "actress"}, {"polish": "słowo", "english": "word"}],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "6C",
+      "type": "gap_fill",
+      "title": "Kraków and New York",
+      "instruction": "Complete the place names with the words from the box.",
+      "wordBox": ["Stara", "Nowy", "Mały", "Duża", "Nowa", "Stare", "Nowy"],
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. [1] Rynek"},
+            {"text": "2. [2] Synagoga"},
+            {"text": "3. [3] Huta"},
+            {"text": "4. Plac [4]"},
+            {"text": "5. [5] Jork"},
+            {"text": "6. ulica [6]"},
+            {"text": "7. [7] Miasto"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Mały"], "feedback": "Place names agree too: *Rynek* (m) → *Mały*, *Synagoga* (f) → *Stara*, *Miasto* (n) → *Stare*."},
+        {"number": 2, "answers": ["Stara"]},
+        {"number": 3, "answers": ["Nowa"]},
+        {"number": 4, "answers": ["Nowy"]},
+        {"number": 5, "answers": ["Nowy"]},
+        {"number": 6, "answers": ["Duża"]},
+        {"number": 7, "answers": ["Stare"]}
+      ],
+      "newWords": [
+        {"polish": "Rynek", "english": "market square"},
+        {"polish": "Synagoga", "english": "synagogue"},
+        {"polish": "Huta", "english": "steelworks"},
+        {"polish": "Stare Miasto", "english": "Old Town"}
+      ],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "7A",
+      "type": "write",
+      "title": "What colour is it?",
+      "instruction": "Write the colour of each square.",
+      "tracks": [{"id": "103D1"}],
+      "wordBox": ["biały", "czarny", "fioletowy", "zielony", "różowy", "niebieski", "brązowy", "żółty", "szary", "czerwony", "pomarańczowy"],
+      "items": [
+        {"label": "1", "picture": {"swatch": "#d62828"}, "answers": ["czerwony"]},
+        {
+          "label": "2",
+          "picture": {"swatch": "#f4d000"},
+          "answers": ["żółty"],
+          "feedback": "*żółty*: *ż*, *ó*, *ł*."
+        },
+        {"label": "3", "picture": {"swatch": "#111111"}, "answers": ["czarny"]},
+        {
+          "label": "4",
+          "picture": {"swatch": "#1e5bd8"},
+          "answers": ["niebieski"],
+          "feedback": "*niebieski*: *-ie-* twice."
+        },
+        {
+          "label": "5",
+          "picture": {"swatch": "#f39ac7"},
+          "answers": ["różowy"],
+          "feedback": "*różowy*: *ó*."
+        },
+        {
+          "label": "6",
+          "picture": {"swatch": "#7a4a1e"},
+          "answers": ["brązowy"],
+          "feedback": "*brązowy*: *ą*."
+        },
+        {"label": "7", "picture": {"swatch": "#ffffff"}, "answers": ["biały"]},
+        {"label": "8", "picture": {"swatch": "#2e9e3e"}, "answers": ["zielony"]},
+        {
+          "label": "9",
+          "picture": {"swatch": "#f27b13"},
+          "answers": ["pomarańczowy"],
+          "feedback": "*pomarańczowy*: *ń* + *cz*."
+        },
+        {"label": "10", "picture": {"swatch": "#8a8a8a"}, "answers": ["szary"]},
+        {"label": "11", "picture": {"swatch": "#7b3fb5"}, "answers": ["fioletowy"]}
+      ],
+      "newWords": [
+        {"polish": "czerwony", "english": "red"},
+        {"polish": "niebieski", "english": "blue"},
+        {"polish": "zielony", "english": "green"},
+        {"polish": "żółty", "english": "yellow"},
+        {"polish": "czarny", "english": "black"},
+        {"polish": "biały", "english": "white"},
+        {"polish": "szary", "english": "grey"},
+        {"polish": "brązowy", "english": "brown"},
+        {"polish": "różowy", "english": "pink"},
+        {"polish": "fioletowy", "english": "purple"},
+        {"polish": "pomarańczowy", "english": "orange"},
+        {"polish": "kolor", "english": "colour"},
+        {"polish": "Jaki to kolor?", "english": "What colour is it?"}
+      ],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "7B",
+      "type": "write",
+      "title": "Fix the letters",
+      "instruction": "Listen and write each colour correctly.",
+      "tracks": [{"id": "wb16"}],
+      "items": [
+        {"label": "1", "prompt": "cerwony", "answers": ["czerwony"]},
+        {"label": "2", "prompt": "nebeski", "answers": ["niebieski"]},
+        {"label": "3", "prompt": "zelony", "answers": ["zielony"], "feedback": "*zielony* — only *zie-* is soft (not *zieliony*)."},
+        {"label": "4", "prompt": "foletowi", "answers": ["fioletowy"]},
+        {"label": "5", "prompt": "carny", "answers": ["czarny"]},
+        {"label": "6", "prompt": "brazowy", "answers": ["brązowy"]},
+        {"label": "7", "prompt": "zolty", "answers": ["żółty"]},
+        {"label": "8", "prompt": "rozowy", "answers": ["różowy"], "feedback": "*różowy* — with *ż*."},
+        {"label": "9", "prompt": "sary", "answers": ["szary"]},
+        {"label": "10", "prompt": "bialy", "answers": ["biały"]}
+      ]
+    },
+    {
+      "id": "7C",
+      "type": "write",
+      "title": "This book is red",
+      "instruction": "Say what colour each thing is: *ten / ta / to* + noun + *jest* + colour.",
+      "items": [
+        {
+          "label": "1",
+          "prompt": "książka",
+          "picture": {"swatch": "#d62828"},
+          "answers": ["Ta książka jest czerwona."]
+        },
+        {
+          "label": "2",
+          "prompt": "kubek",
+          "picture": {"swatch": "#f27b13"},
+          "answers": ["Ten kubek jest pomarańczowy."]
+        },
+        {
+          "label": "3",
+          "prompt": "stół",
+          "picture": {"swatch": "#7a4a1e"},
+          "answers": ["Ten stół jest brązowy."],
+          "feedback": "*brązowy* — *ą* is one letter, never *ań* or *on*."
+        },
+        {
+          "label": "4",
+          "prompt": "tablica",
+          "picture": {"swatch": "#ffffff"},
+          "answers": ["Ta tablica jest biała."]
+        },
+        {
+          "label": "5",
+          "prompt": "krzesło",
+          "picture": {"swatch": "#2e9e3e"},
+          "answers": ["To krzesło jest zielone."]
+        },
+        {
+          "label": "6",
+          "prompt": "ołówek",
+          "picture": {"swatch": "#f4d000"},
+          "answers": ["Ten ołówek jest żółty."],
+          "variants": ["Ten ołówek jest złoty."]
+        },
+        {
+          "label": "7",
+          "prompt": "gumka",
+          "picture": {"swatch": "#f39ac7"},
+          "answers": ["Ta gumka jest różowa."]
+        },
+        {
+          "label": "8",
+          "prompt": "komórka",
+          "picture": {"swatch": "#111111"},
+          "answers": ["Ta komórka jest czarna."]
+        },
+        {
+          "label": "9",
+          "prompt": "torba",
+          "picture": {"swatch": "#7b3fb5"},
+          "answers": ["Ta torba jest fioletowa."]
+        },
+        {
+          "label": "10",
+          "prompt": "klucz",
+          "picture": {"swatch": "#8a8a8a"},
+          "answers": ["Ten klucz jest szary."]
+        }
+      ]
+    },
+    {
+      "id": "7D",
+      "type": "write",
+      "title": "Letter pattern → sentence",
+      "instruction": "Write each sentence in full.",
+      "items": [
+        {"label": "1", "prompt": "T_ ta_lic_ jest c_ar_a.", "answers": ["Ta tablica jest czarna."]},
+        {"label": "2", "prompt": "T_ kr_es_o jest z_el_n_.", "answers": ["To krzesło jest zielone."]},
+        {"label": "3", "prompt": "T__ k_be_ jest po_a_a_c_owy.", "answers": ["Ten kubek jest pomarańczowy."]},
+        {"label": "4", "prompt": "___n ze__yt jest n_eb_es__.", "answers": ["Ten zeszyt jest niebieski."]},
+        {"label": "5", "prompt": "T_ ksi__ka jest c_er_on_.", "answers": ["Ta książka jest czerwona."]},
+        {"label": "6", "prompt": "T_ k_m_rk_ jest _za_a.", "answers": ["Ta komórka jest szara."], "feedback": "Count the gaps: *_za_a* has 5 letters → *szara* (not *czarna*)."},
+        {"label": "7", "prompt": "T_ t_rb_ jest f_o_e_o_a.", "answers": ["Ta torba jest fioletowa."]},
+        {"label": "8", "prompt": "T__ d__go__s jest _ó_ty.", "answers": ["Ten długopis jest żółty."]}
+      ]
+    },
+    {
+      "id": "7E",
+      "type": "choice",
+      "title": "Match the colour",
+      "instruction": "Choose the colour for each word.",
+      "legend": ["a. biały", "b. białe", "c. żółta", "d. zielona", "e. czarna", "f. czerwone"],
+      "items": [
+        {"label": "1", "prompt": "kawa", "options": ["a", "b", "c", "d", "e", "f"], "answer": "e"},
+        {"label": "2", "prompt": "herbata", "options": ["a", "b", "c", "d", "e", "f"], "answer": "d"},
+        {"label": "3", "prompt": "mleko", "options": ["a", "b", "c", "d", "e", "f"], "answer": "b", "feedback": "The colour agrees with the noun: *mleko* (n) → *białe*, *cukier* (m) → *biały*."},
+        {"label": "4", "prompt": "cukier", "options": ["a", "b", "c", "d", "e", "f"], "answer": "a", "feedback": "The colour agrees with the noun: *mleko* (n) → *białe*, *cukier* (m) → *biały*."},
+        {"label": "5", "prompt": "wino", "options": ["a", "b", "c", "d", "e", "f"], "answer": "f"},
+        {"label": "6", "prompt": "papryka", "options": ["a", "b", "c", "d", "e", "f"], "answer": "c"}
+      ],
+      "newWords": [
+        {"polish": "mleko", "english": "milk"},
+        {"polish": "wino", "english": "wine"},
+        {"polish": "papryka", "english": "bell pepper"}
+      ]
+    },
+    {
+      "id": "7F",
+      "type": "gap_fill",
+      "title": "Colours in set phrases",
+      "instruction": "Complete the phrases with the words from the box.",
+      "wordBox": [
+        "czarny",
+        "brązowy",
+        "żółty",
+        "pomarańczowy",
+        "szara",
+        "niebieskie",
+        "czerwone",
+        "brązowy",
+        "zielona",
+        "Biały",
+        "Pomarańczowa",
+        "biała",
+        "Różowa",
+        "zielona",
+        "Czerwona",
+        "biała"
+      ],
+      "sections": [
+        {
+          "lines": [
+            {"text": "a. [1] ser"},
+            {"text": "b. [2] Dom"},
+            {"text": "c. [3] medal"},
+            {"text": "d. [4] wino"},
+            {"text": "e. [5] Pantera"},
+            {"text": "f. [6] humor"},
+            {"text": "g. [7] herbata"},
+            {"text": "h. [8] kawa"},
+            {"text": "i. Armia [9]"},
+            {"text": "j. [10] sałata"},
+            {"text": "k. [11] myszka"},
+            {"text": "l. [12] noc"},
+            {"text": "m. sok [13]"},
+            {"text": "n. [14] niebo"},
+            {"text": "o. [15] cukier"},
+            {"text": "p. [16] Rewolucja"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["żółty"]},
+        {"number": 2, "answers": ["Biały"]},
+        {"number": 3, "answers": ["brązowy"]},
+        {"number": 4, "answers": ["czerwone"]},
+        {"number": 5, "answers": ["Różowa"]},
+        {"number": 6, "answers": ["czarny"]},
+        {"number": 7, "answers": ["zielona"]},
+        {"number": 8, "answers": ["biała"], "feedback": "*biała kawa* = coffee with milk."},
+        {"number": 9, "answers": ["Czerwona"]},
+        {"number": 10, "answers": ["zielona"]},
+        {"number": 11, "answers": ["szara"], "feedback": "*szara myszka* = a \"grey mouse\", an unremarkable person."},
+        {"number": 12, "answers": ["biała"], "feedback": "*biała noc* = a sleepless night."},
+        {"number": 13, "answers": ["pomarańczowy"]},
+        {"number": 14, "answers": ["niebieskie"]},
+        {"number": 15, "answers": ["brązowy"]},
+        {"number": 16, "answers": ["Pomarańczowa"]}
+      ],
+      "newWords": [
+        {"polish": "ser", "english": "cheese"},
+        {"polish": "sok", "english": "juice"},
+        {"polish": "sałata", "english": "lettuce"},
+        {"polish": "myszka", "english": "little mouse"},
+        {"polish": "niebo", "english": "sky"},
+        {"polish": "noc", "english": "night"},
+        {"polish": "medal", "english": "medal"},
+        {"polish": "humor", "english": "humour"},
+        {"polish": "armia", "english": "army"},
+        {"polish": "rewolucja", "english": "revolution"},
+        {"polish": "pantera", "english": "panther"}
+      ],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "8A",
+      "type": "choice",
+      "title": "Question and answer",
+      "instruction": "Choose the answer for each question.",
+      "legend": [
+        "A. To znaczy, że nie jest duży.",
+        "B. Ten długopis jest czarny.",
+        "C. To znaczy, że nie jest stary.",
+        "D. To jest książka.",
+        "E. Ta książka jest bardzo dobra.",
+        "F. To jest studentka.",
+        "G. To okno jest duże.",
+        "H. Nie, to jest ołówek."
+      ],
+      "items": [
+        {"label": "1", "prompt": "Co to jest?", "options": ["A", "B", "C", "D", "E", "F", "G", "H"], "answer": "D"},
+        {"label": "2", "prompt": "Kto to jest?", "options": ["A", "B", "C", "D", "E", "F", "G", "H"], "answer": "F"},
+        {"label": "3", "prompt": "Czy to jest długopis?", "options": ["A", "B", "C", "D", "E", "F", "G", "H"], "answer": "H"},
+        {"label": "4", "prompt": "Jaki jest ten długopis?", "options": ["A", "B", "C", "D", "E", "F", "G", "H"], "answer": "B"},
+        {"label": "5", "prompt": "Jaka jest ta książka?", "options": ["A", "B", "C", "D", "E", "F", "G", "H"], "answer": "E"},
+        {"label": "6", "prompt": "Jakie jest to okno?", "options": ["A", "B", "C", "D", "E", "F", "G", "H"], "answer": "G"},
+        {"label": "7", "prompt": "Co to znaczy „mały”?", "options": ["A", "B", "C", "D", "E", "F", "G", "H"], "answer": "A"},
+        {"label": "8", "prompt": "Co to znaczy „nowy”?", "options": ["A", "B", "C", "D", "E", "F", "G", "H"], "answer": "C"}
+      ]
+    },
+    {
+      "id": "8B",
+      "type": "choice",
+      "title": "Match the sentences",
+      "instruction": "Choose the answer for each question.",
+      "legend": [
+        "a. Nie, to jest sekretarka.",
+        "b. To jest kubek.",
+        "c. To dziecko jest małe.",
+        "d. Tak, to jest nauczyciel.",
+        "e. To jest dziecko.",
+        "f. Tak, to jest kawa.",
+        "g. Ten nauczyciel jest miły.",
+        "h. Ta kawa jest czarna."
+      ],
+      "items": [
+        {"label": "1", "prompt": "Kto to jest?", "options": ["a", "b", "c", "d", "e", "f", "g", "h"], "answer": "e"},
+        {"label": "2", "prompt": "Czy to jest nauczycielka?", "options": ["a", "b", "c", "d", "e", "f", "g", "h"], "answer": "a"},
+        {"label": "3", "prompt": "Jaka jest ta kawa?", "options": ["a", "b", "c", "d", "e", "f", "g", "h"], "answer": "h"},
+        {"label": "4", "prompt": "Jakie jest to dziecko?", "options": ["a", "b", "c", "d", "e", "f", "g", "h"], "answer": "c"},
+        {"label": "5", "prompt": "Czy to jest kawa?", "options": ["a", "b", "c", "d", "e", "f", "g", "h"], "answer": "f"},
+        {"label": "6", "prompt": "Jaki jest ten nauczyciel?", "options": ["a", "b", "c", "d", "e", "f", "g", "h"], "answer": "g"},
+        {"label": "7", "prompt": "Czy to jest nauczyciel?", "options": ["a", "b", "c", "d", "e", "f", "g", "h"], "answer": "d"},
+        {"label": "8", "prompt": "Co to jest?", "options": ["a", "b", "c", "d", "e", "f", "g", "h"], "answer": "b"}
+      ]
+    }
+  ],
+  "vocabulary": [
+    {"polish": "Kto to jest? · Co to jest?", "english": "Who is it? · What is it?"},
+    {"polish": "Czy to jest…? · Tak, to jest… · Nie, to nie jest…", "english": "Is it…? · Yes, it's… · No, it isn't…"},
+    {"polish": "Nie pamiętam.", "english": "I don't remember."},
+    {"polish": "książka, zeszyt, długopis, ołówek, gumka", "english": "book, exercise book, pen, pencil, eraser"},
+    {"polish": "tablica, krzesło, stół, okno, klucz", "english": "board, chair, table, window, key"},
+    {"polish": "kubek, komórka, płyta CD, torba, mapa, słownik", "english": "mug, mobile phone, CD, bag, map, dictionary"},
+    {"polish": "ten / ta / to", "english": "this (m / f / n)"},
+    {"polish": "jaki? / jaka? / jakie?", "english": "what kind of?"},
+    {"polish": "nowy ↔ stary · duży ↔ mały · dobry ↔ zły", "english": "new ↔ old · big ↔ small · good ↔ bad"},
+    {"polish": "miły, sympatyczny, fajny, modny", "english": "kind, likeable, cool, fashionable"},
+    {"polish": "czerwony, niebieski, zielony, żółty, czarny, biały", "english": "red, blue, green, yellow, black, white"},
+    {"polish": "szary, brązowy, różowy, fioletowy, pomarańczowy", "english": "grey, brown, pink, purple, orange"},
+    {"polish": "rodzaj męski / żeński / nijaki", "english": "masculine / feminine / neuter"}
+  ]
+}

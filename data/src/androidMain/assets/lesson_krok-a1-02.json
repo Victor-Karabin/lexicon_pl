@@ -31,8 +31,8 @@
     {"id": "4", "title": "Where are you from?", "screens": ["4A", "4B", "4C"]},
     {"id": "5", "title": "Verb endings -m, -sz", "screens": ["5A", "5B", "5C", "5D", "5E"]},
     {"id": "6", "title": "Numbers 11–29 and addresses", "screens": ["6A", "6B", "6C", "6D", "6E"]},
-    {"id": "7", "title": "Why are you learning Polish?", "screens": ["7A", "7B", "7C", "7D"]},
-    {"id": "8", "title": "Revision", "screens": ["8A", "8B", "8C", "8D", "8E"]}
+    {"id": "7", "title": "Why are you learning Polish?", "screens": ["7A", "7B", "7C", "7D", "7E", "7F", "7G"]},
+    {"id": "8", "title": "Revision", "screens": ["8A", "8B", "8C", "8D", "8E"], "review": true}
   ],
   "screens": [
     {
@@ -101,7 +101,14 @@
         {"number": 16, "answers": ["mapa"]},
         {"number": 17, "answers": ["bardzo"]},
         {"number": 18, "answers": ["Proszę"]}
-      ]
+      ],
+      "newWords": [
+        {"polish": "Francja, Niemcy", "english": "France, Germany (z Francji, z Niemiec)"},
+        {"polish": "w porządku", "english": "all right, fine"},
+        {"polish": "sekretariat", "english": "school office"},
+        {"polish": "intensywny kurs języka polskiego", "english": "intensive Polish course"}
+      ],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "1C",
@@ -196,7 +203,8 @@
           ]
         }
       ],
-      "notes": ["The reply to *Co słychać?* is *…a u ciebie?*, not *…a ty?*"]
+      "notes": ["The reply to *Co słychać?* is *…a u ciebie?*, not *…a ty?*"],
+      "newWords": [{"polish": "dialog oficjalny", "english": "formal dialogue"}]
     },
     {
       "id": "2B",
@@ -209,7 +217,8 @@
         "Uwe: Cześć. Dziękuję, wszystko dobrze, a u ciebie?",
         "Mami: Dziękuję, w porządku."
       ],
-      "checklist": ["*Dzień dobry* → *Cześć*.", "*u pana* / *u pani* → *u ciebie*."]
+      "checklist": ["*Dzień dobry* → *Cześć*.", "*u pana* / *u pani* → *u ciebie*."],
+      "newWords": [{"polish": "oficjalnie / nieoficjalnie", "english": "formally (pan/pani) / informally (ty)"}]
     },
     {
       "id": "2C",
@@ -218,7 +227,7 @@
       "instruction": "Listen and write each phrase in full.",
       "tracks": [{"id": "102B3"}],
       "items": [
-        {"label": "1", "prompt": "c_eść", "answers": ["cześć"]},
+        {"label": "1", "prompt": "c_eść", "answers": ["cześć"], "feedback": "*cześć* — cz-e-ść; it rhymes with *sześć* (6)."},
         {"label": "2", "prompt": "c_ s_yc_ać", "answers": ["co słychać"]},
         {"label": "3", "prompt": "ws_ys_ _o _ po_ _ąd_u", "answers": ["wszystko w porządku"], "feedback": "*porządku* — *rz* (sounds like *ż*) and *ą*."},
         {"label": "4", "prompt": "_o u ci_b_e", "answers": ["co u ciebie"]},
@@ -271,7 +280,8 @@
         {"label": "d", "speaker": "Angela", "prompt": "Dziękuję, wszystko dobrze.", "answer": "2"},
         {"label": "e", "speaker": "Mami", "prompt": "Teraz rozumiem. Tak, wszystko dobrze.", "answer": "6"},
         {"label": "f", "speaker": "Nauczycielka", "prompt": "„Co u ciebie?” – to znaczy „Co słychać u ciebie?”. Czy wszystko dobrze?", "answer": "5"}
-      ]
+      ],
+      "newWords": [{"polish": "czy", "english": "question particle (yes/no questions)"}]
     },
     {
       "id": "2F",
@@ -293,13 +303,18 @@
         }
       ],
       "gaps": [
-        {"number": 1, "answers": ["proszę"]},
+        {"number": 1, "answers": ["proszę"], "feedback": "*proszę* ends in a nasal *ę*."},
         {"number": 2, "answers": ["jesteś"], "feedback": "On the recording Mami makes a mistake on purpose: *Skąd pan jesteś?* mixes formal *pan* with the informal form. Tom warns her and she corrects it: *Skąd pan jest?*"},
-        {"number": 3, "answers": ["przepraszam"]},
+        {"number": 3, "answers": ["przepraszam"], "feedback": "*przepraszam* — say it by syllables: prze-pra-szam."},
         {"number": 4, "answers": ["z"]},
         {"number": 5, "answers": ["Gdzie"]},
         {"number": 6, "answers": ["w"]}
-      ]
+      ],
+      "newWords": [
+        {"polish": "Uwaga!", "english": "Careful! / Attention!"},
+        {"polish": "Nowy Jork", "english": "New York (w Nowym Jorku)"}
+      ],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "3A",
@@ -311,8 +326,8 @@
         {"label": "(ja)", "answers": ["jestem"]},
         {"label": "(ty)", "answers": ["jesteś"]},
         {"label": "on / ona / ono", "answers": ["jest"]},
-        {"label": "(my)", "answers": ["jesteśmy"]},
-        {"label": "(wy)", "answers": ["jesteście"]},
+        {"label": "(my)", "answers": ["jesteśmy"], "feedback": "*jesteśmy* and *jesteście* keep *ś*; the soft \"ch\" before a vowel is spelled *ci*, never *czi*: jeste-ście."},
+        {"label": "(wy)", "answers": ["jesteście"], "feedback": "*jesteśmy* and *jesteście* keep *ś*; the soft \"ch\" before a vowel is spelled *ci*, never *czi*: jeste-ście."},
         {"label": "oni / one", "answers": ["są"]}
       ],
       "notes": [
@@ -325,11 +340,10 @@
       "id": "3B",
       "type": "gap_fill",
       "title": "Where is she?",
-      "instruction": "Fill in the forms of *być*. Gaps 1–8 are on the recording; 9–19 you write without it.",
+      "instruction": "Listen and fill in the forms of *być*.",
+      "tracks": [{"id": "102C1"}],
       "sections": [
         {
-          "title": "On the recording",
-          "track": {"id": "102C1"},
           "lines": [
             {"speaker": "Uwe", "text": "Mami, gdzie ty [1]?"},
             {"speaker": "Mami", "text": "[2] tutaj."},
@@ -338,12 +352,7 @@
             {"speaker": "Tom", "text": "Gdzie wy [5]?"},
             {"speaker": "Mami", "text": "(my) [6] tutaj, a oni [7] tam."},
             {"speaker": "Angela", "text": "Gdzie [8] pani Sylwia?"},
-            {"speaker": "Sekretarka", "text": "Nie wiem."}
-          ]
-        },
-        {
-          "title": "Written only",
-          "lines": [
+            {"speaker": "Sekretarka", "text": "Nie wiem."},
             {"speaker": "Uwe", "text": "Gdzie [9] Angela i Mami?"},
             {"speaker": "Tom", "text": "One [10] tam."},
             {"speaker": "Student", "text": "Gdzie [11] toaleta?"},
@@ -375,7 +384,11 @@
         {"number": 18, "answers": ["panie"]},
         {"number": 19, "answers": ["państwo"]}
       ],
-      "notes": ["*w domu* — at home; *w pracy* — at work."]
+      "newWords": [
+        {"polish": "w domu / w pracy", "english": "at home / at work"},
+        {"polish": "też", "english": "too, also"}
+      ],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "3C",
@@ -389,7 +402,9 @@
         {"label": "4", "prompt": "Gdzie jest Tom?", "options": ["on", "ona", "ono", "oni", "one"], "answer": "on"},
         {"label": "5", "prompt": "Gdzie są Angela i Tom?", "options": ["on", "ona", "ono", "oni", "one"], "answer": "oni", "feedback": "One man in the group is enough for *oni*."},
         {"label": "6", "prompt": "Gdzie jest dziecko?", "options": ["on", "ona", "ono", "oni", "one"], "answer": "ono"}
-      ]
+      ],
+      "newWords": [{"polish": "dziecko", "english": "child (ono)"}],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "3D",
@@ -415,21 +430,39 @@
     },
     {
       "id": "3E",
-      "type": "write",
+      "type": "gap_fill",
       "title": "jestem? jesteś? …?",
       "instruction": "Write the form of *być*.",
-      "items": [
-        {"label": "1", "prompt": "Kawa i herbata … tutaj.", "answers": ["są"]},
-        {"label": "2", "prompt": "Woda … tam.", "answers": ["jest"]},
-        {"label": "3", "prompt": "Gdzie oni …?", "answers": ["są"]},
-        {"label": "4", "prompt": "Czy wy … w hotelu?", "answers": ["jesteście"]},
-        {"label": "5", "prompt": "(my) … tutaj!", "answers": ["Jesteśmy"]},
-        {"label": "6", "prompt": "(ja) … z USA.", "answers": ["Jestem"]},
-        {"label": "7", "prompt": "Czy ty … Jonatan?", "answers": ["jesteś"]},
-        {"label": "8", "prompt": "Czy pani … z Anglii?", "answers": ["jest"]},
-        {"label": "9", "prompt": "Czy panowie … z Niemiec?", "answers": ["są"]},
-        {"label": "10", "prompt": "Czy to dziecko … tam?", "answers": ["jest"]}
-      ]
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Kawa i herbata [1] tutaj."},
+            {"text": "2. Woda [2] tam."},
+            {"text": "3. Gdzie oni [3]?"},
+            {"text": "4. Czy wy [4] w hotelu?"},
+            {"text": "5. (my) [5] tutaj!"},
+            {"text": "6. (ja) [6] z USA."},
+            {"text": "7. Czy ty [7] Jonatan?"},
+            {"text": "8. Czy pani [8] z Anglii?"},
+            {"text": "9. Czy panowie [9] z Niemiec?"},
+            {"text": "10. Czy to dziecko [10] tam?"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["są"]},
+        {"number": 2, "answers": ["jest"]},
+        {"number": 3, "answers": ["są"]},
+        {"number": 4, "answers": ["jesteście"]},
+        {"number": 5, "answers": ["Jesteśmy"]},
+        {"number": 6, "answers": ["Jestem"]},
+        {"number": 7, "answers": ["jesteś"]},
+        {"number": 8, "answers": ["jest"]},
+        {"number": 9, "answers": ["są"]},
+        {"number": 10, "answers": ["jest"]}
+      ],
+      "newWords": [{"polish": "w hotelu", "english": "in a hotel"}],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "3F",
@@ -444,7 +477,9 @@
         {"label": "5", "prompt": "Ono jest tu.", "answers": ["One są tu."], "feedback": "*ono* (a child) in the plural is *one*."},
         {"label": "6", "prompt": "Ona jest tam.", "answers": ["One są tam."]},
         {"label": "7", "prompt": "On jest w sekretariacie.", "answers": ["Oni są w sekretariacie."]}
-      ]
+      ],
+      "newWords": [{"polish": "w szkole", "english": "at school"}],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "4A",
@@ -547,7 +582,14 @@
         {"number": 13, "answers": ["Mieszkam"]},
         {"number": 14, "answers": ["mieszkają"]},
         {"number": 15, "answers": ["mieszkają"]}
-      ]
+      ],
+      "newWords": [
+        {"polish": "w Europie", "english": "in Europe"},
+        {"polish": "z polską rodziną", "english": "with a Polish family"},
+        {"polish": "państwo Kowalscy", "english": "Mr and Mrs Kowalski"},
+        {"polish": "w Warszawie", "english": "in Warsaw"}
+      ],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "5A",
@@ -617,7 +659,7 @@
         {"number": 2, "answers": ["nazywają się", "się nazywają"]},
         {"number": 3, "answers": ["się nazywasz", "nazywasz się"], "feedback": "In questions *się* usually comes right after *jak*: *Jak się nazywasz?*"},
         {"number": 4, "answers": ["Nazywam się", "się nazywam"]},
-        {"number": 5, "answers": ["się nazywacie", "nazywacie się"], "feedback": "In questions *się* usually comes right after *jak*: *Jak się nazywasz?*"},
+        {"number": 5, "answers": ["się nazywacie", "nazywacie się"], "feedback": "In questions *się* usually comes right after *jak*: *Jak się nazywasz?* The *wy* ending is always *-cie* (c + ie), never *-czie*: nazywacie, mieszkacie, macie."},
         {"number": 6, "answers": ["Nazywamy się", "się nazywamy"]}
       ]
     },
@@ -648,25 +690,52 @@
         {"number": 7, "answers": ["grają"]},
         {"number": 8, "answers": ["gracie"]},
         {"number": 9, "answers": ["gramy"]}
-      ]
+      ],
+      "newWords": [
+        {"polish": "na przykład", "english": "for example"},
+        {"polish": "grać w tenisa / na gitarze", "english": "to play tennis / the guitar"},
+        {"polish": "ale", "english": "but"}
+      ],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "5E",
-      "type": "write",
+      "type": "gap_fill",
       "title": "Verb forms",
       "instruction": "Write the verb in the right form.",
-      "items": [
-        {"label": "1", "prompt": "Oni … w golfa. (grać)", "answers": ["grają"]},
-        {"label": "2", "prompt": "… telefon? (wy · mieć)", "answers": ["Macie"]},
-        {"label": "3", "prompt": "Przepraszamy, ale nie … (my · rozumieć)", "answers": ["rozumiemy"]},
-        {"label": "4", "prompt": "Gdzie państwo …? (mieszkać)", "answers": ["mieszkają"], "feedback": "*państwo* takes the 3rd person plural: *państwo mieszkają*."},
-        {"label": "5", "prompt": "Czy wy … w tenisa? (grać)", "answers": ["gracie"]},
-        {"label": "6", "prompt": "Nie …, proszę powtórzyć. (ja · rozumieć)", "answers": ["rozumiem"]},
-        {"label": "7", "prompt": "One … Nowak. (nazywać się)", "answers": ["nazywają się"]},
-        {"label": "8", "prompt": "Jak wy …? (nazywać się)", "answers": ["się nazywacie", "nazywacie się"], "feedback": "In questions *się* usually comes right after *jak*: *Jak się nazywasz?*"},
-        {"label": "9", "prompt": "Czy ty … na gitarze? (grać)", "answers": ["grasz"]},
-        {"label": "10", "prompt": "Oni … intensywny kurs polskiego. (mieć)", "answers": ["mają"]}
-      ]
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Oni [1] w golfa. (grać)"},
+            {"text": "2. [2] telefon? (wy · mieć)"},
+            {"text": "3. Przepraszamy, ale nie [3] (my · rozumieć)"},
+            {"text": "4. Gdzie państwo [4]? (mieszkać)"},
+            {"text": "5. Czy wy [5] w tenisa? (grać)"},
+            {"text": "6. Nie [6], proszę powtórzyć. (ja · rozumieć)"},
+            {"text": "7. One [7] Nowak. (nazywać się)"},
+            {"text": "8. Jak wy [8]? (nazywać się)"},
+            {"text": "9. Czy ty [9] na gitarze? (grać)"},
+            {"text": "10. Oni [10] intensywny kurs polskiego. (mieć)"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["grają"]},
+        {"number": 2, "answers": ["Macie"]},
+        {"number": 3, "answers": ["rozumiemy"], "feedback": "Stem *rozumie-* + endings: rozumiem, rozumiesz, rozumiemy…"},
+        {"number": 4, "answers": ["mieszkają"], "feedback": "*państwo* takes the 3rd person plural: *państwo mieszkają*."},
+        {"number": 5, "answers": ["gracie"]},
+        {"number": 6, "answers": ["rozumiem"]},
+        {"number": 7, "answers": ["nazywają się"]},
+        {"number": 8, "answers": ["się nazywacie", "nazywacie się"], "feedback": "In questions *się* usually comes right after *jak*: *Jak się nazywasz?*"},
+        {"number": 9, "answers": ["grasz"]},
+        {"number": 10, "answers": ["mają"]}
+      ],
+      "newWords": [
+        {"polish": "grać w golfa", "english": "to play golf"},
+        {"polish": "Przepraszamy.", "english": "We're sorry."}
+      ],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "6A",
@@ -681,13 +750,13 @@
         {"label": "13", "answers": ["trzynaście"]},
         {"label": "14", "answers": ["czternaście"]},
         {"label": "15", "answers": ["piętnaście"]},
-        {"label": "16", "answers": ["szesnaście"]},
+        {"label": "16", "answers": ["szesnaście"], "feedback": "16 drops the *ść*: *szesnaście* (but *sześć* = 6)."},
         {"label": "17", "answers": ["siedemnaście"]},
         {"label": "18", "answers": ["osiemnaście"]},
-        {"label": "19", "answers": ["dziewiętnaście"]},
-        {"label": "20", "answers": ["dwadzieścia"]},
-        {"label": "21", "answers": ["dwadzieścia jeden"]},
-        {"label": "29", "answers": ["dwadzieścia dziewięć"]}
+        {"label": "19", "answers": ["dziewiętnaście"], "feedback": "The soft \"dź\" sound is spelled *dzi*, never *di*: dziewięć, dziewiętnaście, dwadzieścia."},
+        {"label": "20", "answers": ["dwadzieścia"], "feedback": "20 = *dwadzieścia* — plain *e*, ends in *-a*. Only 11–19 end in *-naście*. The soft \"dź\" sound is spelled *dzi*, never *di*: dziewięć, dziewiętnaście, dwadzieścia."},
+        {"label": "21", "answers": ["dwadzieścia jeden"], "feedback": "20 = *dwadzieścia* — plain *e*, ends in *-a*. Only 11–19 end in *-naście*."},
+        {"label": "29", "answers": ["dwadzieścia dziewięć"], "feedback": "20 = *dwadzieścia* — plain *e*, ends in *-a*. Only 11–19 end in *-naście*. Write the nasal as *ę*, not *en*: *dziewięć*."}
       ],
       "notes": [
         "*-naście* = -teen; *dwadzieścia* = twenty; 21 = *dwadzieścia jeden*. Watch the stems: *czter-naście* (14), *pięt-naście* (15), *dziewięt-naście* (19)."
@@ -745,30 +814,47 @@
     },
     {
       "id": "6E",
-      "type": "write",
+      "type": "gap_fill",
       "title": "House numbers",
       "instruction": "Listen and write the house numbers in digits; in 3 write the missing word.",
       "tracks": [{"id": "wb12"}],
-      "items": [
-        {"label": "1", "prompt": "ul. Szpitalna …", "answers": ["15"]},
-        {"label": "2", "prompt": "ul. Sienna …", "answers": ["17"]},
-        {"label": "3", "prompt": "… Główny", "answers": ["Dworzec"], "feedback": "*Dworzec Główny* = the main railway station."},
-        {"label": "4", "prompt": "ul. Cicha …", "answers": ["14"]},
-        {"label": "5", "prompt": "ul. Wrzesińska …", "answers": ["9"]},
-        {"label": "6", "prompt": "ul. Duża …", "answers": ["19"]},
-        {"label": "7", "prompt": "ul. Mała …", "answers": ["10"]},
-        {"label": "8", "prompt": "ul. Żółkiewskiego …", "answers": ["13"]},
-        {"label": "9", "prompt": "ul. Czarnieckiego …", "answers": ["6"]}
-      ]
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. ul. Szpitalna [1]"},
+            {"text": "2. ul. Sienna [2]"},
+            {"text": "3. [3] Główny"},
+            {"text": "4. ul. Cicha [4]"},
+            {"text": "5. ul. Wrzesińska [5]"},
+            {"text": "6. ul. Duża [6]"},
+            {"text": "7. ul. Mała [7]"},
+            {"text": "8. ul. Żółkiewskiego [8]"},
+            {"text": "9. ul. Czarnieckiego [9]"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["15"]},
+        {"number": 2, "answers": ["17"]},
+        {"number": 3, "answers": ["Dworzec"], "feedback": "*Dworzec Główny* = the main railway station."},
+        {"number": 4, "answers": ["14"]},
+        {"number": 5, "answers": ["9"]},
+        {"number": 6, "answers": ["19"]},
+        {"number": 7, "answers": ["10"]},
+        {"number": 8, "answers": ["13"]},
+        {"number": 9, "answers": ["6"]}
+      ],
+      "newWords": [{"polish": "Dworzec Główny", "english": "Main Railway Station"}],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "7A",
       "type": "reference",
       "title": "Why are you learning Polish?",
-      "instruction": "Listen to both dialogues. You'll fill in a form about them in 7C; the transcript opens after that.",
+      "instruction": "Listen to both dialogues. You'll fill in a form for each person in 7C–7F; the transcript opens after that.",
       "tracks": [{"id": "102F1", "label": "Dialogue 1"}, {"id": "102F1-2", "label": "Dialogue 2"}],
       "transcript": {
-        "unlock": "after_screen:7C",
+        "unlock": "after_screen:7F",
         "sections": [
           {
             "lines": [
@@ -840,14 +926,15 @@
         {"label": "4", "prompt": "Uczę się, żeby", "options": ["A", "B", "C", "D", "E", "F"], "answer": "A", "feedback": "*żeby* + infinitive (*studiować*); *bo* + a full clause (*to moje hobby*)."},
         {"label": "5", "prompt": "Uczę się, bo", "options": ["A", "B", "C", "D", "E", "F"], "answer": "C", "feedback": "*żeby* + infinitive (*studiować*); *bo* + a full clause (*to moje hobby*)."},
         {"label": "6", "prompt": "Mieszkam", "options": ["A", "B", "C", "D", "E", "F"], "answer": "E"}
-      ]
+      ],
+      "newWords": [{"polish": "To moje hobby.", "english": "It's my hobby."}]
     },
     {
       "id": "7C",
       "type": "form",
-      "title": "Questionnaire",
-      "instruction": "Listen to the dialogues from 7A again and fill in the form. Short answers are fine: *z Niemiec*, *w Berlinie*, *żeby pracować…*",
-      "tracks": [{"id": "102F1", "label": "Dialogue 1"}, {"id": "102F1-2", "label": "Dialogue 2"}],
+      "title": "Questionnaire — Uwe",
+      "instruction": "Listen to the dialogue and fill in Uwe's form. Short answers are fine: *Niemcy* or *z Niemiec*, *Berlin* or *w Berlinie*.",
+      "tracks": [{"id": "102F1", "label": "Dialogue 1"}],
       "transcript": {
         "unlock": "after_check",
         "sections": [
@@ -873,7 +960,86 @@
               {"speaker": "Manuela", "text": "Ja uczę się polskiego, żeby studiować w Polsce, a ty dlaczego?"},
               {"speaker": "Uwe", "text": "Aha. Uczę się polskiego, żeby pracować w Warszawie."}
             ]
-          },
+          }
+        ]
+      },
+      "groups": [
+        {
+          "title": "Uwe",
+          "items": [
+            {"label": "Nazwisko", "answers": ["Stein"], "variants": ["Sztajn", "Sztejn", "Stajn", "Sztain", "Stain"], "feedback": "Foreign surnames are not graded strictly: a spelling that sounds right counts, and the original is shown."},
+            {"label": "Skąd jest?", "answers": ["z Niemiec", "Niemcy", "Niemiec"], "feedback": "*Niemiec* / *Niemcy* — don't drop the *i* (not *Niemec*)."},
+            {"label": "Gdzie mieszka?", "answers": ["w Berlinie", "Berlin"]},
+            {"label": "Adres w Krakowie", "answers": ["ul. Floriańska", "Floriańska"], "feedback": "*Floriańska* — with *ń*."},
+            {"label": "Telefon", "answers": ["0 601 15 26 10"]},
+            {"label": "Dlaczego uczy się polskiego?", "answers": ["żeby pracować w Warszawie", "pracować w Warszawie", "praca w Warszawie"]}
+          ]
+        }
+      ],
+      "newWords": [
+        {"polish": "w centrum", "english": "in the city centre"},
+        {"polish": "ulica świętego Jana", "english": "St John's Street"},
+        {"polish": "mój / twój numer", "english": "my / your number"}
+      ],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "7D",
+      "type": "form",
+      "title": "Questionnaire — Manuela (extra)",
+      "instruction": "Listen to the dialogue and fill in Manuela's form. Short answers are fine: *Niemcy* or *z Niemiec*, *Berlin* or *w Berlinie*.",
+      "tracks": [{"id": "102F1", "label": "Dialogue 1"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Uwe", "text": "Cześć, jak się nazywasz?"},
+              {"speaker": "Manuela", "text": "Cześć, jestem Manuela Sanches, a ty?"},
+              {"speaker": "Uwe", "text": "Jestem Uwe Stein."},
+              {"speaker": "Manuela", "text": "Skąd jesteś?"},
+              {"speaker": "Uwe", "text": "Jestem z Niemiec, a ty?"},
+              {"speaker": "Manuela", "text": "Jestem z Hiszpanii."},
+              {"speaker": "Uwe", "text": "Mieszkasz w Madrycie?"},
+              {"speaker": "Manuela", "text": "Nie, mieszkam w Barcelonie."},
+              {"speaker": "Uwe", "text": "Ja mieszkam w Berlinie."},
+              {"speaker": "Manuela", "text": "Gdzie mieszkasz w Krakowie?"},
+              {"speaker": "Uwe", "text": "Ulica Floriańska, a ty?"},
+              {"speaker": "Manuela", "text": "Ja też mieszkam w centrum, ulica świętego Jana."},
+              {"speaker": "Uwe", "text": "Masz telefon?"},
+              {"speaker": "Manuela", "text": "Tak, mój numer to 12 23 13 19 5. A twój numer?"},
+              {"speaker": "Uwe", "text": "0 601 15 26 10."},
+              {"speaker": "Manuela", "text": "Dlaczego uczysz się polskiego?"},
+              {"speaker": "Uwe", "text": "Przepraszam, nie rozumiem."},
+              {"speaker": "Manuela", "text": "Ja uczę się polskiego, żeby studiować w Polsce, a ty dlaczego?"},
+              {"speaker": "Uwe", "text": "Aha. Uczę się polskiego, żeby pracować w Warszawie."}
+            ]
+          }
+        ]
+      },
+      "groups": [
+        {
+          "title": "Manuela",
+          "items": [
+            {"label": "Nazwisko", "answers": ["Sanches"], "variants": ["Sanchez", "Sanczes", "Sanczez", "Sances"], "feedback": "Foreign surnames are not graded strictly: a spelling that sounds right counts, and the original is shown."},
+            {"label": "Skąd jest?", "answers": ["z Hiszpanii", "Hiszpania", "Hiszpanka"], "feedback": "*Hiszpania* has a hard *sz*, not a soft *ś*."},
+            {"label": "Gdzie mieszka?", "answers": ["w Barcelonie", "Barcelona"]},
+            {"label": "Adres w Krakowie", "answers": ["ul. Świętego Jana", "Świętego Jana", "św. Jana"]},
+            {"label": "Telefon", "answers": ["12 23 13 19 5"]},
+            {"label": "Dlaczego uczy się polskiego?", "answers": ["żeby studiować w Polsce", "studiować w Polsce", "studia w Polsce"], "feedback": "*studiować* — an -ować verb, with *di* as in *radio*; Polska → *w Polsce*."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "7E",
+      "type": "form",
+      "title": "Questionnaire — Maria",
+      "instruction": "Listen to the dialogue and fill in Maria's form. Short answers are fine: *Niemcy* or *z Niemiec*, *Berlin* or *w Berlinie*.",
+      "tracks": [{"id": "102F1-2", "label": "Dialogue 2"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
           {
             "lines": [
               {"speaker": "Tom", "text": "Nazywam się Tom Peterson, a ty?"},
@@ -896,42 +1062,63 @@
       },
       "groups": [
         {
-          "title": "Uwe",
-          "items": [
-            {"label": "Nazwisko", "answers": ["Stein"]},
-            {"label": "Skąd jest?", "answers": ["z Niemiec", "Niemiec", "Niemcy"]},
-            {"label": "Gdzie mieszka?", "answers": ["w Berlinie", "Berlinie", "Berlin"]},
-            {"label": "Adres w Krakowie", "answers": ["ul. Floriańska", "Floriańska"]},
-            {"label": "Telefon", "answers": ["0 601 15 26 10"]},
-            {"label": "Dlaczego uczy się polskiego?", "answers": ["żeby pracować w Warszawie", "pracować w Warszawie"]}
-          ]
-        },
-        {
           "title": "Maria",
           "items": [
-            {"label": "Nazwisko", "answers": ["Benini"]},
-            {"label": "Skąd jest?", "answers": ["z Włoch", "Włoch", "Włochy"]},
-            {"label": "Gdzie mieszka?", "answers": ["w Rzymie", "Rzymie", "Rzym"]},
+            {"label": "Nazwisko", "answers": ["Benini"], "variants": ["Bennini", "Benin"], "feedback": "Foreign surnames are not graded strictly: a spelling that sounds right counts, and the original is shown."},
+            {"label": "Skąd jest?", "answers": ["z Włoch", "Włochy", "Włoszka"]},
+            {"label": "Gdzie mieszka?", "answers": ["w Rzymie", "Rzym"]},
             {"label": "Adres w Krakowie", "answers": ["ul. Przemyska 7", "Przemyska 7"]},
             {"label": "Telefon", "answers": ["12 422 20 12"]},
-            {"label": "Dlaczego uczy się polskiego?", "answers": ["bo jej chłopak jest z Polski", "chłopak jest z Polski"]}
-          ]
-        },
-        {
-          "title": "Tom",
-          "items": [
-            {"label": "Nazwisko", "answers": ["Peterson"]},
-            {"label": "Skąd jest?", "answers": ["z USA", "USA"]},
-            {"label": "Gdzie mieszka?", "answers": ["w Nowym Jorku", "Nowym Jorku", "Nowy Jork"]},
-            {"label": "Adres w Krakowie", "answers": ["ul. Urzędnicza 10", "Urzędnicza 10"]},
-            {"label": "Telefon", "answers": ["12 623 17 13"]},
-            {"label": "Dlaczego uczy się polskiego?", "answers": ["bo jego dziewczyna jest z Polski", "dziewczyna jest z Polski"]}
+            {"label": "Dlaczego uczy się polskiego?", "answers": ["bo jej chłopak jest z Polski", "chłopak jest z Polski", "chłopak z Polski"]}
           ]
         }
       ]
     },
     {
-      "id": "7D",
+      "id": "7F",
+      "type": "form",
+      "title": "Questionnaire — Tom",
+      "instruction": "Listen to the dialogue and fill in Tom's form. Short answers are fine: *Niemcy* or *z Niemiec*, *Berlin* or *w Berlinie*.",
+      "tracks": [{"id": "102F1-2", "label": "Dialogue 2"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Tom", "text": "Nazywam się Tom Peterson, a ty?"},
+              {"speaker": "Maria", "text": "Jestem Maria Benini."},
+              {"speaker": "Tom", "text": "Bardzo mi miło."},
+              {"speaker": "Maria", "text": "Miło mi."},
+              {"speaker": "Tom", "text": "Skąd jesteś?"},
+              {"speaker": "Maria", "text": "Jestem z Włoch, mieszkam w Rzymie. A ty, gdzie mieszkasz?"},
+              {"speaker": "Tom", "text": "Jestem z USA, mieszkam w Nowym Jorku."},
+              {"speaker": "Maria", "text": "Dlaczego uczysz się polskiego?"},
+              {"speaker": "Tom", "text": "Uczę się polskiego, bo moja dziewczyna jest z Polski."},
+              {"speaker": "Maria", "text": "Naprawdę? Ja uczę się polskiego, bo mój chłopak jest z Polski!"},
+              {"speaker": "Tom", "text": "Gdzie mieszkasz w Krakowie?"},
+              {"speaker": "Maria", "text": "Ulica Przemyska 7, a gdzie ty mieszkasz?"},
+              {"speaker": "Tom", "text": "Ulica Urzędnicza 10, mój telefon to 12 623 17 13."},
+              {"speaker": "Maria", "text": "Mój numer to 12 422 20 12."}
+            ]
+          }
+        ]
+      },
+      "groups": [
+        {
+          "title": "Tom",
+          "items": [
+            {"label": "Nazwisko", "answers": ["Peterson"], "variants": ["Piterson", "Petersen", "Pieterson"], "feedback": "Foreign surnames are not graded strictly: a spelling that sounds right counts, and the original is shown."},
+            {"label": "Skąd jest?", "answers": ["z USA", "USA", "Amerykanin"]},
+            {"label": "Gdzie mieszka?", "answers": ["w Nowym Jorku", "Nowy Jork"]},
+            {"label": "Adres w Krakowie", "answers": ["ul. Urzędnicza 10", "Urzędnicza 10"], "feedback": "*Urzędnicza* — *ę*, as in *urzędnik*."},
+            {"label": "Telefon", "answers": ["12 623 17 13"]},
+            {"label": "Dlaczego uczy się polskiego?", "answers": ["bo jego dziewczyna jest z Polski", "dziewczyna jest z Polski", "dziewczyna z Polski"]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "7G",
       "type": "choice",
       "title": "żeby or bo?",
       "instruction": "Choose *żeby* or *bo*.",
@@ -941,6 +1128,10 @@
         {"label": "3", "prompt": "Mami uczy się polskiego, … studiować w Krakowie.", "options": ["żeby", "bo"], "answer": "żeby", "feedback": "*żeby* + infinitive (*-ć*); *bo* + a full clause."},
         {"label": "4", "prompt": "Tom uczy się polskiego, … jego dziewczyna jest z Polski.", "options": ["żeby", "bo"], "answer": "bo", "feedback": "*żeby* + infinitive (*-ć*); *bo* + a full clause."},
         {"label": "5", "prompt": "Julia uczy się hiszpańskiego, … to jej hobby.", "options": ["żeby", "bo"], "answer": "bo", "feedback": "*żeby* + infinitive (*-ć*); *bo* + a full clause."}
+      ],
+      "newWords": [
+        {"polish": "jej / jego", "english": "her / his"},
+        {"polish": "uczyć się hiszpańskiego", "english": "to learn Spanish"}
       ]
     },
     {
@@ -966,16 +1157,23 @@
         }
       ],
       "gaps": [
-        {"number": 1, "answers": ["Nazywam"]},
-        {"number": 2, "answers": ["imię"]},
+        {"number": 1, "answers": ["Nazywam"], "feedback": "*nazywać się*: nazywa-m — don't mix it with *jestem*."},
+        {"number": 2, "answers": ["imię"], "feedback": "*imię* ends in *ę*."},
         {"number": 3, "answers": ["nazwisko"]},
         {"number": 4, "answers": ["adres"]},
         {"number": 5, "answers": ["telefon"]},
         {"number": 6, "answers": ["kurs"]},
         {"number": 7, "answers": ["się"]},
-        {"number": 8, "answers": ["do widzenia"]}
+        {"number": 8, "answers": ["do widzenia"], "feedback": "*do widzenia* is two words; before *i* the *n* is already soft — no *ń*."}
       ],
-      "notes": ["*dane osobowe* — personal details; *oczywiście* — of course; *Miłej lekcji!* — enjoy the lesson!"]
+      "newWords": [
+        {"polish": "dane osobowe", "english": "personal details"},
+        {"polish": "Argentyńczyk", "english": "Argentinian (man)"},
+        {"polish": "oczywiście", "english": "of course"},
+        {"polish": "grupa / klasa", "english": "group / classroom"},
+        {"polish": "Miłej lekcji!", "english": "Enjoy the lesson!"}
+      ],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "8B",
@@ -1018,7 +1216,13 @@
         {"label": "k", "speaker": "Angela", "prompt": "Uczę się polskiego, żeby mówić w domu po polsku.", "answer": "9"},
         {"label": "l", "speaker": "Angela", "prompt": "Moja mama jest z Polski.", "answer": "11"}
       ],
-      "notes": ["*mąż* — husband; *córka* — daughter; *syn* — son; *koleżanka* — (female) friend; *państwa* — \"you\" to a couple."]
+      "newWords": [
+        {"polish": "Witam.", "english": "Hello / Welcome (formal)."},
+        {"polish": "mąż", "english": "husband"},
+        {"polish": "koleżanka / kolega", "english": "friend, colleague (f / m)"},
+        {"polish": "Bardzo mi miło państwa poznać.", "english": "Very nice to meet you (to a couple)."},
+        {"polish": "mówić po polsku", "english": "to speak Polish"}
+      ]
     },
     {
       "id": "8C",
@@ -1041,11 +1245,12 @@
     {
       "id": "8D",
       "type": "choice",
-      "title": "How?",
-      "instruction": "Listen, then put the words on the scale from great (+++) to terrible (−−−).",
+      "title": "How? Scale",
+      "instruction": "Pick the mark for each word, from great (+++) to terrible (−−−). The recording has *dobrze*, *świetnie* and *źle* — listen for the pronunciation.",
       "tracks": [{"id": "wb13"}],
+      "shuffle": false,
       "transcript": {
-        "unlock": "always",
+        "unlock": "after_check",
         "sections": [
           {
             "lines": [
@@ -1061,14 +1266,16 @@
         ]
       },
       "items": [
-        {"label": "1", "prompt": "+++", "options": ["źle", "dobrze", "fatalnie", "świetnie", "bardzo źle", "bardzo dobrze", "tak sobie"], "answer": "świetnie"},
-        {"label": "2", "prompt": "++", "options": ["źle", "dobrze", "fatalnie", "świetnie", "bardzo źle", "bardzo dobrze", "tak sobie"], "answer": "bardzo dobrze"},
-        {"label": "3", "prompt": "+", "options": ["źle", "dobrze", "fatalnie", "świetnie", "bardzo źle", "bardzo dobrze", "tak sobie"], "answer": "dobrze"},
-        {"label": "4", "prompt": "+/−", "options": ["źle", "dobrze", "fatalnie", "świetnie", "bardzo źle", "bardzo dobrze", "tak sobie"], "answer": "tak sobie"},
-        {"label": "5", "prompt": "−", "options": ["źle", "dobrze", "fatalnie", "świetnie", "bardzo źle", "bardzo dobrze", "tak sobie"], "answer": "źle"},
-        {"label": "6", "prompt": "−−", "options": ["źle", "dobrze", "fatalnie", "świetnie", "bardzo źle", "bardzo dobrze", "tak sobie"], "answer": "bardzo źle"},
-        {"label": "7", "prompt": "−−−", "options": ["źle", "dobrze", "fatalnie", "świetnie", "bardzo źle", "bardzo dobrze", "tak sobie"], "answer": "fatalnie"}
-      ]
+        {"label": "1", "prompt": "tak sobie", "options": ["+++", "++", "+", "+/−", "−", "−−", "−−−"], "answer": "+/−"},
+        {"label": "2", "prompt": "świetnie", "options": ["+++", "++", "+", "+/−", "−", "−−", "−−−"], "answer": "+++"},
+        {"label": "3", "prompt": "źle", "options": ["+++", "++", "+", "+/−", "−", "−−", "−−−"], "answer": "−"},
+        {"label": "4", "prompt": "bardzo dobrze", "options": ["+++", "++", "+", "+/−", "−", "−−", "−−−"], "answer": "++"},
+        {"label": "5", "prompt": "fatalnie", "options": ["+++", "++", "+", "+/−", "−", "−−", "−−−"], "answer": "−−−"},
+        {"label": "6", "prompt": "dobrze", "options": ["+++", "++", "+", "+/−", "−", "−−", "−−−"], "answer": "+"},
+        {"label": "7", "prompt": "bardzo źle", "options": ["+++", "++", "+", "+/−", "−", "−−", "−−−"], "answer": "−−"}
+      ],
+      "newWords": [{"polish": "tak sobie", "english": "so-so"}, {"polish": "fatalnie", "english": "terribly"}],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "8E",
@@ -1076,20 +1283,24 @@
       "title": "Ask the questions",
       "instruction": "Write the question for each answer: formal (*pani*) and informal (*ty*).",
       "items": [
-        {"label": "1", "prompt": "*Mam na imię Anna.* — formal (*pani*)", "answers": ["Jak pani ma na imię?", "Jak ma pani na imię?"]},
-        {"label": "2", "prompt": "*Mam na imię Anna.* — informal (*ty*)", "answers": ["Jak masz na imię?", "Jak ty masz na imię?"]},
-        {"label": "3", "prompt": "*Nazywam się Rojek.* — formal (*pani*)", "answers": ["Jak się pani nazywa?", "Jak pani się nazywa?"]},
-        {"label": "4", "prompt": "*Nazywam się Rojek.* — informal (*ty*)", "answers": ["Jak się nazywasz?", "Jak ty się nazywasz?"]},
-        {"label": "5", "prompt": "*Jestem z Polski.* — formal (*pani*)", "answers": ["Skąd pani jest?", "Skąd jest pani?"]},
-        {"label": "6", "prompt": "*Jestem z Polski.* — informal (*ty*)", "answers": ["Skąd jesteś?", "Skąd ty jesteś?"]},
-        {"label": "7", "prompt": "*Mieszkam w Krakowie.* — formal (*pani*)", "answers": ["Gdzie pani mieszka?", "Gdzie mieszka pani?"]},
+        {"label": "1", "prompt": "*Mam na imię Anna.* — formal (*pani*)", "answers": ["Jak pani ma na imię?", "Jak ma pani na imię?", "Jak pan ma na imię?", "Jak ma pan na imię?"], "variants": ["Jakie ma pani imię?", "Jakie ma pan imię?"]},
+        {"label": "2", "prompt": "*Mam na imię Anna.* — informal (*ty*)", "answers": ["Jak masz na imię?", "Jak ty masz na imię?"], "variants": ["Jakie masz imię?"]},
+        {"label": "3", "prompt": "*Nazywam się Rojek.* — formal (*pani*)", "answers": ["Jak się pani nazywa?", "Jak się pan nazywa?"], "variants": ["Jak pani się nazywa?", "Jak pani nazywa się?", "Jak pan się nazywa?", "Jak pan nazywa się?"]},
+        {"label": "4", "prompt": "*Nazywam się Rojek.* — informal (*ty*)", "answers": ["Jak się nazywasz?", "Jak ty się nazywasz?"], "variants": ["Jak nazywasz się?"]},
+        {"label": "5", "prompt": "*Jestem z Polski.* — formal (*pani*)", "answers": ["Skąd pani jest?", "Skąd jest pani?", "Skąd pan jest?", "Skąd jest pan?"]},
+        {"label": "6", "prompt": "*Jestem z Polski.* — informal (*ty*)", "answers": ["Skąd jesteś?", "Skąd ty jesteś?"], "feedback": "*być* is irregular: *jesteś*, not *jestesz*."},
+        {"label": "7", "prompt": "*Mieszkam w Krakowie.* — formal (*pani*)", "answers": ["Gdzie pani mieszka?", "Gdzie mieszka pani?", "Gdzie pan mieszka?", "Gdzie mieszka pan?"]},
         {"label": "8", "prompt": "*Mieszkam w Krakowie.* — informal (*ty*)", "answers": ["Gdzie mieszkasz?", "Gdzie ty mieszkasz?"]},
-        {"label": "9", "prompt": "*Tak, mam telefon.* — formal (*pani*)", "answers": ["Czy ma pani telefon?", "Ma pani telefon?", "Czy pani ma telefon?", "Pani ma telefon?"]},
+        {"label": "9", "prompt": "*Tak, mam telefon.* — formal (*pani*)", "answers": ["Czy ma pani telefon?", "Ma pani telefon?", "Czy pani ma telefon?", "Pani ma telefon?", "Czy ma pan telefon?", "Ma pan telefon?", "Czy pan ma telefon?", "Pani ma telefon?"]},
         {"label": "10", "prompt": "*Tak, mam telefon.* — informal (*ty*)", "answers": ["Czy masz telefon?", "Masz telefon?"]},
-        {"label": "11", "prompt": "*Uczę się angielskiego, bo to moje hobby.* — formal (*pani*)", "answers": ["Dlaczego uczy się pani angielskiego?", "Dlaczego pani uczy się angielskiego?", "Dlaczego pani się uczy angielskiego?"]},
-        {"label": "12", "prompt": "*Uczę się angielskiego, bo to moje hobby.* — informal (*ty*)", "answers": ["Dlaczego uczysz się angielskiego?", "Dlaczego się uczysz angielskiego?", "Dlaczego ty uczysz się angielskiego?"]}
+        {"label": "11", "prompt": "*Uczę się angielskiego, bo to moje hobby.* — formal (*pani*)", "answers": ["Dlaczego uczy się pani angielskiego?", "Dlaczego pani uczy się angielskiego?", "Dlaczego uczy się pan angielskiego?", "Dlaczego pan uczy się angielskiego?"], "variants": ["Dlaczego pani się uczy angielskiego?", "Dlaczego pan się uczy angielskiego?"], "feedback": "With *pani* the verb is 3rd person: *uczy się pani*, not *pani uczę się*. *dlaczego* is one word."},
+        {"label": "12", "prompt": "*Uczę się angielskiego, bo to moje hobby.* — informal (*ty*)", "answers": ["Dlaczego uczysz się angielskiego?", "Dlaczego ty uczysz się angielskiego?"], "variants": ["Dlaczego się uczysz angielskiego?"], "feedback": "*uczysz* (not *uczesz*); *dlaczego* is one word."}
       ],
-      "notes": ["*pani* takes the 3rd-person verb (*pani jest, pani mieszka*); *ty* takes the *-sz* form (*jesteś, mieszkasz*)."]
+      "notes": [
+        "*pani* takes the 3rd-person verb (*pani jest, pani mieszka*); *ty* takes the *-sz* form (*jesteś, mieszkasz*). *panie* means ladies — one woman is *pani*."
+      ],
+      "newWords": [{"polish": "uczyć się angielskiego", "english": "to learn English"}],
+      "newWordsUnlock": "after_check"
     }
   ],
   "vocabulary": [

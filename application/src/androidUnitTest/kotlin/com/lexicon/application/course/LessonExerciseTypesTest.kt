@@ -2,19 +2,26 @@ package com.lexicon.application.course
 
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.course.LessonSession
+import com.lexicon.model.course.AnswerKeyboard
 import com.lexicon.model.course.AnswerMatch
 import com.lexicon.model.course.ChoiceQuestion
 import com.lexicon.model.course.FormGroup
+import com.lexicon.model.course.InlineChoiceLine
 import com.lexicon.model.course.LessonId
+import com.lexicon.model.course.LessonPhrase
 import com.lexicon.model.course.LessonQuestion
 import com.lexicon.model.course.LessonScreen
 import com.lexicon.model.course.LessonScript
 import com.lexicon.model.course.LessonStep
+import com.lexicon.model.course.NewWords
 import com.lexicon.model.course.OrderLine
+import com.lexicon.model.course.TranscriptUnlock
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableList
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -79,6 +86,92 @@ class LessonExerciseTypesTest {
         values.fold(
             this,
         ) { session, (key, value) -> session.withAnswer(key, value) }
+
+    @Test
+    fun `a variant heard by ear counts as right and shows the usual spelling`() {
+        val name = LessonQuestion("1", "1", persistentListOf("Thomas"), null, variants = persistentListOf("Tomas"))
+        val form = LessonScreen.Write("6B", "", "", persistentListOf(), null, AnswerKeyboard.TEXT, persistentListOf(name))
+        val heard = session(form).withAnswer("1", "tomas").check()
+        assertEquals(AnswerVerdict.CORRECT, heard.verdict("6B", "1"))
+        assertEquals("Thomas", heard.usualForm("6B", "1"))
+        assertNull(session(form).withAnswer("1", "Thomas").check().usualForm("6B", "1"))
+        assertNull(session(form).withAnswer("1", "Tom").check().usualForm("6B", "1"))
+    }
+
+    @Test
+    fun `new words that give the answers away open only after the check`() {
+        val words = NewWords(persistentListOf(LessonPhrase("okno", "window")), TranscriptUnlock.AfterCheck)
+        val script = LessonScript(
+            LessonId("krok-a1-01"),
+            persistentListOf(LessonStep("1", "Step", persistentListOf("2E"))),
+            persistentListOf(order),
+            persistentMapOf("2E" to words),
+        )
+        val start = LessonSession(script)
+        assertFalse(start.isNewWordsUnlocked(order))
+        val checked = start.withPositionToggled("b").withPositionToggled("c").withPositionToggled("a").check()
+        assertTrue(checked.isNewWordsUnlocked(order))
+    }
+
+    @Test
+    fun `options are shuffled the same way every time, once per screen when the items share them`() {
+        val pronouns = persistentListOf("on", "ona", "ono", "oni", "one")
+        val choice = LessonScreen.Choice(
+            id = "3C",
+            title = "",
+            instruction = "",
+            tracks = persistentListOf(),
+            transcript = null,
+            items = (0..5).map { ChoiceQuestion(question(it.toString(), "ona"), pronouns) }.toImmutableList(),
+        )
+        val shown = choice.items.map { session(choice).optionsOf(choice, it) }
+        assertTrue(shown.all { it == shown.first() })
+        assertEquals(pronouns.toSet(), shown.first().toSet())
+        assertEquals(shown, choice.items.map { session(choice).optionsOf(choice, it) })
+
+        assertEquals(pronouns, session(choice).optionsOf(choice.copy(shuffle = false), choice.items.first()))
+        assertEquals(
+            listOf("a", "b", "c", "d", "e", "f"),
+            session(halves).optionsOf(halves.copy(legend = persistentListOf("a. pani")), halves.items.first()),
+        )
+    }
+
+    @Test
+    fun `both choices of an inline sentence are graded on their own`() {
+        val line = InlineChoiceLine(
+            label = "a",
+            text = "[1] klucz jest [2]",
+            groups = persistentListOf(
+                ChoiceQuestion(question("a-1", "Ten"), persistentListOf("Ten", "Ta", "To")),
+                ChoiceQuestion(question("a-2", "nowy"), persistentListOf("nowy", "nowa", "nowe")),
+            ),
+        )
+        val inline = LessonScreen.InlineChoice("5D", "", "", persistentListOf(), null, persistentListOf(line))
+        assertFalse(session(inline).withAnswer("a-1", "Ten").canCheck)
+        val checked = session(inline).answering("a-1" to "Ten", "a-2" to "nowa").check()
+        assertEquals(AnswerVerdict.CORRECT, checked.verdict("5D", "a-1"))
+        assertEquals(AnswerVerdict.WRONG, checked.verdict("5D", "a-2"))
+        assertEquals(1, checked.screenScore(inline).correct)
+    }
+
+    @Test
+    fun `gap-fill adjectives of one gender may swap nouns, but one used twice counts once`() {
+        val pairs = LessonScreen.GapFill(
+            id = "6B",
+            title = "",
+            instruction = "",
+            tracks = persistentListOf(),
+            transcript = null,
+            sections = persistentListOf(),
+            questions = persistentListOf(question("1", "inteligentny"), question("4", "sympatyczny"), question("7", "duży")),
+            interchangeable = persistentListOf(persistentListOf("1", "4", "7")),
+        )
+        val swapped = session(pairs).answering("1" to "duży", "4" to "inteligentny", "7" to "sympatyczny").check()
+        assertEquals(3, swapped.screenScore(pairs).correct)
+        val twice = session(pairs).answering("1" to "duży", "4" to "duży", "7" to "sympatyczny").check()
+        assertEquals(2, twice.screenScore(pairs).correct)
+        assertEquals("inteligentny", twice.expectedAnswer("6B", "4"))
+    }
 
     @Test
     fun `two items that start alike accept their endings in either order`() {

@@ -11,6 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Replay
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -18,9 +21,11 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -32,8 +37,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.course.GAP_MARKER
 import com.lexicon.interactors.course.GapFillItem
+import com.lexicon.interactors.course.InlineChoiceGroup
 import com.lexicon.interactors.course.LessonSession
 import com.lexicon.interactors.course.MinimalPairItem
+import com.lexicon.interactors.course.Score
+import com.lexicon.interactors.course.StepScore
 import com.lexicon.interactors.course.TranscribeItem
 import com.lexicon.model.course.AnswerKeyboard
 import com.lexicon.model.course.GAP_PATTERN
@@ -47,6 +55,8 @@ import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
+import com.lexicon.presentation.theme.component.StatChip
+import com.lexicon.presentation.theme.component.tileSkin
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import org.koin.compose.viewmodel.koinViewModel
@@ -67,7 +77,7 @@ class LessonFlowActions(
     val onNext: () -> Unit,
     val onBack: () -> Unit,
     val onTranscriptToggled: (String) -> Unit,
-    val onSpeak: (String) -> Unit,
+    val onRetryAcknowledged: () -> Unit,
 )
 
 @Composable
@@ -93,7 +103,7 @@ fun LessonFlowScreen(
             onNext = viewModel::onNext,
             onBack = viewModel::onBack,
             onTranscriptToggled = viewModel::onTranscriptToggled,
-            onSpeak = viewModel::onSpeak,
+            onRetryAcknowledged = viewModel::onRetryAcknowledged,
         ),
         modifier = modifier,
     )
@@ -119,6 +129,8 @@ private fun LessonFlowContent(
         }
         else -> stringResource(R.string.course_title)
     }
+
+    (uiState as? LessonFlowUiState.Loaded)?.retry?.let { RetryDialog(it, actions.onRetryAcknowledged) }
 
     AnswerInputs {
         Scaffold(
@@ -156,6 +168,30 @@ private fun LessonFlowContent(
 }
 
 @Composable
+private fun RetryDialog(
+    retry: StepScore,
+    onAcknowledged: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onAcknowledged,
+        title = { Text(stringResource(R.string.lesson_flow_retry_title)) },
+        text = {
+            Text(
+                stringResource(
+                    R.string.lesson_flow_retry_body,
+                    retry.step.title,
+                    retry.score.correct,
+                    retry.score.total,
+                    retry.score.percent,
+                    Score.PASS_MARK,
+                ),
+            )
+        },
+        confirmButton = { TextButton(onClick = onAcknowledged) { Text(stringResource(R.string.lesson_flow_retry_start)) } },
+    )
+}
+
+@Composable
 private fun ScreenBody(
     uiState: LessonFlowUiState.Loaded,
     actions: LessonFlowActions,
@@ -163,7 +199,17 @@ private fun ScreenBody(
     val session = uiState.session
     val screen = session.screen
 
+    val step = session.script.stepOf(screen.id)
+    if (step?.isReview == true) {
+        StatChip(icon = Icons.Default.Replay, text = stringResource(R.string.lesson_flow_review_badge), skin = tileSkin(highlighted = true))
+        if (step.screenIds.first() == screen.id) {
+            Text(stringResource(R.string.lesson_flow_review_intro), style = MaterialTheme.typography.bodyMedium)
+        }
+    }
     Text(screen.title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
+    session.script.newWords[screen.id]?.let { newWords ->
+        if (session.isNewWordsUnlocked(screen)) NewWordsCard(newWords.words)
+    }
     Text(richText(screen.instruction), style = MaterialTheme.typography.bodyMedium)
     screen.tracks.forEach { TrackPlayer(it, uiState, actions) }
     screen.hint?.let { HintCard(it) }
@@ -176,6 +222,7 @@ private fun ScreenBody(
         is LessonScreen.FreeWriting -> FreeWritingBody(screen, uiState, actions)
         is LessonScreen.Ordering -> OrderingBody(screen, session, actions)
         is LessonScreen.Form -> FormBody(screen, session, actions)
+        is LessonScreen.InlineChoice -> InlineChoiceBody(screen, session, actions)
     }
 
     val transcript = screen.transcript
@@ -263,6 +310,7 @@ private fun WriteBody(
     actions: LessonFlowActions,
 ) {
     val labelWidth = TableLabelWidth.takeIf { screen.questions.all { it.prompt == null && it.label.length in TableLabelLength } }
+    if (screen.wordBox.isNotEmpty()) WordBoxCard(screen.wordBox)
     Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
         screen.questions.forEach { question ->
             QuestionField(screen.id, question, session, actions, screen.keyboard, labelWidth)
@@ -307,7 +355,36 @@ private fun QuestionField(
         info = question.feedback,
         prompt = question.prompt,
         labelWidth = labelWidth,
+        usualForm = session.usualForm(screenId, question.key),
+        leading = question.picture?.let { picture -> { ItemPictureView(picture) } },
     )
+}
+
+@Composable
+private fun InlineChoiceBody(
+    screen: LessonScreen.InlineChoice,
+    session: LessonSession,
+    actions: LessonFlowActions,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
+        screen.lines.forEach { line ->
+            val order = GAP_PATTERN.findAll(line.text).map { line.groups[it.groupValues[1].toInt() - 1] }.toList()
+            InlineChoiceRow(
+                label = line.label,
+                fragments = line.text.split(GAP_PATTERN),
+                groups = order.map { group ->
+                    InlineChoiceGroup(
+                        options = group.options,
+                        selected = session.answer(screen.id, group.question.key).ifEmpty { null },
+                        answer = session.expectedAnswer(screen.id, group.question.key),
+                        info = group.question.feedback,
+                    )
+                },
+                checked = session.isChecked,
+                onSelect = { index, option -> actions.onAnswerChanged(order[index].question.key, option) },
+            )
+        }
+    }
 }
 
 @Composable
@@ -342,17 +419,24 @@ private fun ChoiceBody(
             screen.legend.forEach { Text(richText(it), style = MaterialTheme.typography.bodyLarge) }
         }
     }
+    val shown = remember(session.script.lessonId, screen) {
+        screen.items.associate { it.question.key to session.optionsOf(screen, it).toImmutableList() }
+    }
     Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium)) {
         screen.items.forEach { item ->
             val question = item.question
             MinimalPairRow(
-                item = MinimalPairItem("", item.options, session.expectedAnswer(screen.id, question.key)),
+                item = MinimalPairItem(
+                    "",
+                    shown.getValue(question.key),
+                    session.expectedAnswer(screen.id, question.key),
+                ),
                 selected = session.answer(screen.id, question.key).ifEmpty { null },
                 answerState = answerState(session.verdict(screen.id, question.key), session.isChecked),
                 onSelect = { actions.onAnswerChanged(question.key, it) },
                 info = question.feedback,
-                onSpeak = { actions.onSpeak(question.answers.first()) }.takeIf { screen.legend.isEmpty() },
                 prompt = question.prompt,
+                leading = question.picture?.let { picture -> { ItemPictureView(picture) } },
             )
         }
     }
@@ -366,6 +450,7 @@ private fun GapFillBody(
 ) {
     val session = uiState.session
     val questions = screen.questions.associateBy { it.key }
+    if (screen.wordBox.isNotEmpty()) WordBoxCard(screen.wordBox)
     screen.sections.forEach { section ->
         SectionCard(title = section.title) {
             section.track?.let { TrackPlayer(it, uiState, actions, showLabel = false) }
@@ -382,6 +467,7 @@ private fun GapFillBody(
                     correctness = if (session.isChecked) verdicts.map { it == AnswerVerdict.CORRECT } else emptyList(),
                     almost = verdicts.map { it == AnswerVerdict.ALMOST },
                     infos = keys.map { questions[it]?.feedback },
+                    usualForms = keys.map { session.usualForm(screen.id, it) },
                     answerState = when {
                         !session.isChecked -> AnswerState.Unanswered
                         verdicts.all { it == AnswerVerdict.CORRECT } -> AnswerState.Correct
@@ -454,7 +540,10 @@ private fun Footer(
 
                 session.isLastScreen -> Button(onClick = actions.onNext) { Text(stringResource(R.string.lesson_flow_finish)) }
 
-                else -> Button(onClick = actions.onNext) { Text(stringResource(R.string.lesson_flow_next)) }
+                session.screen.isGraded || session.screen is LessonScreen.FreeWriting ->
+                    Button(onClick = actions.onNext) { Text(stringResource(R.string.lesson_flow_next)) }
+
+                else -> Button(onClick = actions.onNext) { Text(stringResource(R.string.lesson_flow_done)) }
             }
         }
     }

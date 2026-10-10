@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.theme.Dimens
@@ -37,6 +38,8 @@ fun AnswerChip(
     state: AnswerChipState = AnswerChipState.UNSELECTED,
     variant: AnswerChipVariant = AnswerChipVariant.CHIP,
     onClick: (() -> Unit)? = null,
+    singleLine: Boolean = false,
+    compact: Boolean = false,
 ) {
     val background = when (state) {
         AnswerChipState.UNSELECTED -> MaterialTheme.colorScheme.surfaceContainerHigh
@@ -62,13 +65,13 @@ fun AnswerChip(
     Row(
         modifier = modifier
             .then(widthModifier)
-            .defaultMinSize(minHeight = 48.dp)
+            .defaultMinSize(minHeight = if (compact) 36.dp else 48.dp)
             .clip(shape)
             .background(background)
             .then(clickModifier)
             .padding(
-                horizontal = if (variant == AnswerChipVariant.CHIP) Dimens.spacingLarge else Dimens.spacingMedium,
-                vertical = 12.dp,
+                horizontal = if (variant == AnswerChipVariant.CHIP && !compact) Dimens.spacingLarge else Dimens.spacingMedium,
+                vertical = if (compact) 6.dp else 12.dp,
             ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = if (variant == AnswerChipVariant.ROW) Arrangement.Start else Arrangement.Center,
@@ -78,6 +81,9 @@ fun AnswerChip(
             style = MaterialTheme.typography.labelLarge,
             fontWeight = FontWeight.Medium,
             color = foreground,
+            maxLines = if (singleLine) 1 else Int.MAX_VALUE,
+            softWrap = !singleLine,
+            overflow = if (singleLine) TextOverflow.Ellipsis else TextOverflow.Clip,
         )
     }
 }
