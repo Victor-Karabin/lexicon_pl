@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import com.lexicon.presentation.R
@@ -75,8 +76,9 @@ fun ClueImage(
     imageUrl: String?,
     fallbackText: String,
     modifier: Modifier = Modifier,
+    height: Dp = ClueImageHeight,
 ) {
-    Box(modifier = modifier.fillMaxWidth().height(ClueImageHeight)) {
+    Box(modifier = modifier.fillMaxWidth().height(height)) {
         if (imageUrl == null) {
             Text(fallbackText, style = MaterialTheme.typography.headlineSmall)
         } else {

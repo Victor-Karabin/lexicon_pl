@@ -333,7 +333,7 @@ fun NewWordsCard(
                 word = word,
                 text = phrase.polish,
                 translation = phrase.english,
-                status = word?.let { statuses.statusOf(it.id) } ?: WordStatus.UNDEFINED,
+                status = word?.let { statuses.statusOf(it.id) },
                 onStatusCycled = { word?.let { onStatusCycled(it.id) } },
                 onPronounce = { onPronounce(phrase.polish.trimEnd('…')) },
             )

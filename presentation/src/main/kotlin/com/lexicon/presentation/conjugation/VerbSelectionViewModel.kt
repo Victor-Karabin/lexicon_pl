@@ -1,21 +1,31 @@
 package com.lexicon.presentation.conjugation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
+import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.conjugation.DeleteConjugationVerbUseCase
+import com.lexicon.interactors.conjugation.EnsureVerbWordUseCase
 import com.lexicon.interactors.conjugation.HasDeletedVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
-import com.lexicon.interactors.conjugation.LoadStudySetVerbsUseCase
 import com.lexicon.interactors.conjugation.RestoreConjugationVerbsUseCase
-import com.lexicon.interactors.conjugation.ToggleVerbInStudySetUseCase
 import com.lexicon.interactors.conjugation.VerbConjugation
+import com.lexicon.interactors.presets.FindWordsUseCase
+import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
+import com.lexicon.interactors.presets.SetWordStatusUseCase
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.WordStatus
+import com.lexicon.model.vocabulary.statusOf
+import com.lexicon.presentation.common.speakQuietly
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.ImmutableSet
+import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.collections.immutable.toImmutableSet
+import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.delay
@@ -26,25 +36,34 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 private const val SEARCH_SETTLE_MS = 300L
+private const val TAG = "VerbSelection"
 
 data class VerbSelectionUiState(
     val isLoading: Boolean = true,
     val query: String = "",
     val verbs: ImmutableList<VerbConjugation> = persistentListOf(),
     val canRestore: Boolean = false,
-    val studySet: ImmutableSet<String> = persistentSetOf(),
+    val words: ImmutableMap<String, Word> = persistentMapOf(),
+    val statuses: ImmutableMap<VocabularyId, WordStatus> = persistentMapOf(),
+    val pending: ImmutableMap<String, WordStatus> = persistentMapOf(),
     val isLoadingMore: Boolean = false,
     val hasMore: Boolean = true,
     val nextOffset: Int = 0,
-)
+) {
+    fun statusOf(verb: VerbConjugation): WordStatus =
+        pending[verb.infinitive] ?: words[verb.infinitive]?.let { statuses.statusOf(it.id) } ?: WordStatus.UNDEFINED
+}
 
 class VerbSelectionViewModel(
     private val loadVerbs: LoadConjugationVerbsUseCase,
     private val deleteVerb: DeleteConjugationVerbUseCase,
     private val restoreVerbs: RestoreConjugationVerbsUseCase,
     private val hasDeletedVerbs: HasDeletedVerbsUseCase,
-    private val studySetVerb: ToggleVerbInStudySetUseCase,
-    private val loadStudySet: LoadStudySetVerbsUseCase,
+    private val findWords: FindWordsUseCase,
+    private val ensureWord: EnsureVerbWordUseCase,
+    private val setWordStatus: SetWordStatusUseCase,
+    observeWordStatuses: ObserveWordStatusesUseCase,
+    private val speechSynthesizer: SpeechSynthesizer,
     private val dispatchers: DispatcherProvider,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(VerbSelectionUiState())
@@ -57,6 +76,9 @@ class VerbSelectionViewModel(
         viewModelScope.launch(dispatchers.io) {
             val canRestore = hasDeletedVerbs()
             _uiState.update { it.copy(canRestore = canRestore) }
+        }
+        viewModelScope.launch {
+            observeWordStatuses().collect { statuses -> _uiState.update { it.copy(statuses = statuses.toImmutableMap()) } }
         }
         loadFirstPage()
     }
@@ -78,11 +100,11 @@ class VerbSelectionViewModel(
         _uiState.update { it.copy(isLoadingMore = true) }
         pageJob = viewModelScope.launch(dispatchers.io) {
             val more = loadVerbs.page(query = state.query, offset = state.nextOffset)
-            val starred = loadStudySet(more.verbs.map { it.infinitive })
+            val found = findWords(more.verbs.map { it.infinitive })
             _uiState.update {
                 it.copy(
                     verbs = (it.verbs + more.verbs).distinctBy { verb -> verb.infinitive }.toImmutableList(),
-                    studySet = (it.studySet + starred).toImmutableSet(),
+                    words = (it.words + found).toImmutableMap(),
                     isLoadingMore = false,
                     nextOffset = more.nextOffset,
                     hasMore = !more.isLast,
@@ -97,13 +119,13 @@ class VerbSelectionViewModel(
         pageJob = viewModelScope.launch(dispatchers.io) {
             val query = _uiState.value.query
             val first = loadVerbs.page(query = query)
-            val starred = loadStudySet(first.verbs.map { it.infinitive })
+            val found = findWords(first.verbs.map { it.infinitive })
             _uiState.update {
                 it.copy(
                     isLoading = false,
                     isLoadingMore = false,
                     verbs = first.verbs,
-                    studySet = starred.toImmutableSet(),
+                    words = (it.words + found).toImmutableMap(),
                     nextOffset = first.nextOffset,
                     hasMore = !first.isLast,
                 )
@@ -111,15 +133,44 @@ class VerbSelectionViewModel(
         }
     }
 
-    fun onStudySetToggled(verb: VerbConjugation) {
-        val next = verb.infinitive !in _uiState.value.studySet
-        _uiState.update { state ->
-            val studySet = if (next) state.studySet + verb.infinitive else state.studySet - verb.infinitive
-            state.copy(studySet = studySet.toImmutableSet())
+    fun onStatusCycled(verb: VerbConjugation) {
+        val state = _uiState.value
+        val next = state.statusOf(verb).next()
+        val word = state.words[verb.infinitive]
+        if (word != null) {
+            viewModelScope.launch(dispatchers.io + NonCancellable) { saveStatus(word.id, next) }
+            return
         }
-        viewModelScope.launch(dispatchers.io + NonCancellable) {
-            studySetVerb(verb.infinitive, verb.translation, next)
+        val isCreating = verb.infinitive in state.pending
+        _uiState.update { it.copy(pending = (it.pending + (verb.infinitive to next)).toImmutableMap()) }
+        if (!isCreating) viewModelScope.launch(dispatchers.io + NonCancellable) { createWordWithStatus(verb) }
+    }
+
+    fun onPronounce(verb: VerbConjugation) {
+        viewModelScope.launch(dispatchers.io) { speechSynthesizer.speakQuietly(verb.infinitive) }
+    }
+
+    private suspend fun createWordWithStatus(verb: VerbConjugation) {
+        val id = runSuspendCatching { ensureWord(verb.infinitive, verb.translation) }
+            .onFailure { Log.w(TAG, "A verb could not be added to the vocabulary", it) }
+            .getOrNull()
+        if (id == null) {
+            _uiState.update { it.copy(pending = (it.pending - verb.infinitive).toImmutableMap()) }
+            return
         }
+        val wanted = _uiState.value.pending[verb.infinitive] ?: return
+        saveStatus(VocabularyId(id), wanted)
+        val found = runSuspendCatching { findWords(listOf(verb.infinitive)) }.getOrDefault(emptyMap())
+        _uiState.update {
+            it.copy(words = (it.words + found).toImmutableMap(), pending = (it.pending - verb.infinitive).toImmutableMap())
+        }
+    }
+
+    private suspend fun saveStatus(
+        id: VocabularyId,
+        status: WordStatus,
+    ) {
+        runSuspendCatching { setWordStatus(id, status) }.onFailure { Log.w(TAG, "A verb's status could not be saved", it) }
     }
 
     fun onVerbDeleted(infinitive: String) {
