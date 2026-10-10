@@ -269,6 +269,8 @@
     <string name="lesson_words">New words</string>
     <string name="exercise_play">Play</string>
     <string name="exercise_pause">Pause</string>
+    <string name="exercise_speed">%1$s×</string>
+    <string name="exercise_speed_description">Playback speed %1$s×, tap to change</string>
     <string name="exercise_check">Check</string>
     <string name="exercise_try_again">Try again</string>
     <string name="exercise_score">%1$d of %2$d correct</string>
@@ -293,13 +295,24 @@
     <string name="lesson_flow_results">%1$d of %2$d correct · %3$d%%</string>
     <string name="lesson_flow_step_result">%1$d of %2$d</string>
     <string name="lesson_flow_next_lesson">Next lesson</string>
-    <string name="lesson_flow_close">Close</string>
-    <string name="lesson_flow_retry_title">Let\'s do this step again</string>
-    <string name="lesson_flow_retry_body">%1$s: %2$d of %3$d correct (%4$d%%). You need %5$d%% to move on, so the step starts again from its first screen. Your right answers are kept; redo the wrong ones.</string>
+    <string name="lesson_flow_to_improve">What to work on</string>
+    <string name="lesson_flow_no_mistakes">No mistakes on the first try. Well done!</string>
+    <string name="lesson_flow_exercise">%1$s · %2$s</string>
+    <string name="lesson_flow_first_try">%1$d of %2$d on the first try</string>
+    <string name="lesson_flow_rules_to_revisit">Rules to revisit</string>
+    <string name="lesson_flow_by_step">By step</string>
+    <string name="lesson_flow_retry_title">Let\'s do this exercise again</string>
+    <string name="lesson_flow_retry_body">%1$d of %2$d correct (%3$d%%). You need %4$d%% to move on, so this exercise starts again. Your right answers are kept; redo the wrong ones.</string>
     <string name="lesson_flow_done">Done</string>
     <string name="lesson_flow_new_words">New words (%1$d)</string>
     <string name="lesson_flow_hide_new_words">Hide new words</string>
     <string name="lesson_flow_review_badge">Review</string>
+    <string name="lesson_flow_grammar_badge">G</string>
+    <string name="lesson_flow_grammar">Grammar</string>
+    <string name="lesson_flow_rule">Rule %1$d: %2$s</string>
+    <string name="lesson_flow_rule_heading">%1$d. %2$s</string>
+    <string name="lesson_flow_see_rule">See rule %1$d</string>
+    <string name="lesson_flow_rule_back">Back to the rules</string>
     <string name="lesson_flow_review_intro">No new rules — this checks the whole lesson.</string>
     <string name="lesson_flow_usual_form">Usually written: %1$s</string>
     <string name="lesson_flow_retry_start">Start again</string>
@@ -380,6 +393,10 @@
     <plurals name="word_change_presets_count">
         <item quantity="one">In %1$d preset. A word can be in several.</item>
         <item quantity="other">In %1$d presets. A word can be in several.</item>
+    </plurals>
+    <plurals name="lesson_flow_polish_letters">
+        <item quantity="one">%1$d answer missed only the Polish letters (ą, ć, ę, ł, ń, ó, ś, ź, ż).</item>
+        <item quantity="other">%1$d answers missed only the Polish letters (ą, ć, ę, ł, ń, ó, ś, ź, ż).</item>
     </plurals>
     <plurals name="exercise_question_count">
         <item quantity="one">%1$d question</item>

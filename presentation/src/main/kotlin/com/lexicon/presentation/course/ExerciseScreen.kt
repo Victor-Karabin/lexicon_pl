@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.course.LessonExercise
 import com.lexicon.interactors.course.questionCount
@@ -47,6 +48,7 @@ fun ExerciseScreen(
             onClose = onClose,
             onPlayAudio = viewModel::onPlayAudio,
             onSeekAudio = viewModel::onSeekAudio,
+            onSpeedChanged = viewModel::onSpeedChanged,
             onOptionSelected = viewModel::onOptionSelected,
             onGapChanged = viewModel::onGapChanged,
             onMatchPromptSelected = viewModel::onMatchPromptSelected,
@@ -65,6 +67,7 @@ private fun ExerciseContent(
     onClose: () -> Unit,
     onPlayAudio: () -> Unit,
     onSeekAudio: (Long) -> Unit,
+    onSpeedChanged: () -> Unit,
     onOptionSelected: (Int, String) -> Unit,
     onGapChanged: (Int, Int, String) -> Unit,
     onMatchPromptSelected: (Int) -> Unit,
@@ -109,6 +112,7 @@ private fun ExerciseContent(
                                     onPlayPause = onPlayAudio,
                                     onSeek = onSeekAudio,
                                     modifier = Modifier.padding(top = Dimens.spacingMedium),
+                                    onSpeedChanged = onSpeedChanged,
                                 )
                             }
                             if (uiState.track.isMissing) {
@@ -176,6 +180,7 @@ private fun androidx.compose.foundation.lazy.LazyListScope.questions(
                     correctness = uiState.correctness.getOrNull(index).orEmpty(),
                     answerState = uiState.answerState,
                     onValueChanged = { gap, value -> onGapChanged(index, gap, value) },
+                    imeAction = if (index == exercise.items.lastIndex) ImeAction.Done else ImeAction.Next,
                 )
             }
 
@@ -187,6 +192,7 @@ private fun androidx.compose.foundation.lazy.LazyListScope.questions(
                     isCorrect = uiState.correctness.getOrNull(index)?.firstOrNull(),
                     answerState = uiState.answerState,
                     onValueChanged = { onGapChanged(index, 0, it) },
+                    imeAction = if (index == exercise.items.lastIndex) ImeAction.Done else ImeAction.Next,
                 )
             }
 

@@ -3,6 +3,7 @@ package com.lexicon.application.course
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.course.LessonSession
 import com.lexicon.model.course.AnswerKeyboard
+import com.lexicon.model.course.FirstTry
 import com.lexicon.model.course.LessonId
 import com.lexicon.model.course.LessonQuestion
 import com.lexicon.model.course.LessonScreen
@@ -125,12 +126,12 @@ class LessonSessionTest {
     @Test
     fun `results count graded answers per step and overall`() {
         val first = answered(atDictation, "jeden", "dwa", "trzy", "cztery", "piec").check().next()
-        val second = answered(first, "siedem").check().next().withAnswer("0", "Cześć!").check()
+        val second = answered(first, "sześć").check().next().withAnswer("0", "Cześć!").check()
         val results = second.results
-        assertEquals(listOf(4 to 5, 0 to 1), results.steps.map { it.score.correct to it.score.total })
-        assertEquals(4, results.overall.correct)
+        assertEquals(listOf(4 to 5, 1 to 1), results.steps.map { it.score.correct to it.score.total })
+        assertEquals(5, results.overall.correct)
         assertEquals(6, results.overall.total)
-        assertEquals(66, results.overall.percent)
+        assertEquals(83, results.overall.percent)
     }
 
     @Test
@@ -147,81 +148,60 @@ class LessonSessionTest {
     }
 
     @Test
-    fun `a step with exactly 80 percent right is passed and the lesson moves on`() {
+    fun `an exercise with exactly 80 percent right is passed and the lesson moves on`() {
         val checked = answered(atDictation, "jeden", "dwa", "trzy", "cztery", "x").check()
-        assertNull(checked.failedStep)
+        assertNull(checked.failedScore)
         assertEquals("2A", checked.next().screen.id)
     }
 
     @Test
-    fun `a step below 80 percent starts again from its first screen, keeping the right answers`() {
+    fun `an exercise below 80 percent starts again in place, keeping the right answers`() {
         val checked = answered(atDictation, "jeden", "dwa", "trzy", "x", "y").check()
-        val failed = checked.failedStep
-        assertEquals("1", failed?.step?.id)
-        assertEquals(3 to 5, failed?.score?.let { it.correct to it.total })
+        assertEquals(3 to 5, checked.failedScore?.let { it.correct to it.total })
 
-        val restarted = checked.next()
-        assertEquals("1A", restarted.screen.id)
-        assertEquals("jeden", restarted.answer("1B", "0"))
-        assertEquals("", restarted.answer("1B", "3"))
-        assertEquals("", restarted.answer("1B", "4"))
-        assertFalse(restarted.isChecked("1B"))
-        assertTrue("1A" in restarted.progress.finished)
-        assertNull(restarted.failedStep)
-        assertTrue(restarted.next().needsCheck)
+        val again = checked.next()
+        assertEquals("1B", again.screen.id)
+        assertFalse(again.isChecked("1B"))
+        assertTrue(again.needsCheck)
+        assertEquals("jeden", again.answer("1B", "0"))
+        assertEquals("", again.answer("1B", "3"))
+        assertEquals("", again.answer("1B", "4"))
+        assertTrue("1A" in again.progress.finished)
+        assertNull(again.failedScore)
     }
 
     @Test
-    fun `the failed last step starts again instead of finishing the lesson, even after a restart of the app`() {
-        val passedFirst = answered(atDictation, "jeden", "dwa", "trzy", "cztery", "pięć").check().next()
-        val written = answered(passedFirst, "siedem").check().next().withAnswer("0", "Cześć!").check()
-        assertFalse(written.isAtEnd)
-        assertEquals("2", written.failedStep?.step?.id)
-        assertEquals("2B", LessonSession.resume(script, written.progress).screen.id)
-
-        val restarted = written.next()
-        assertEquals("2A", restarted.screen.id)
-        assertEquals("", restarted.answer("2A", "0"))
-        assertEquals("the free writing is not graded, so it is kept", "Cześć!", restarted.answer("2B", "0"))
-    }
-
-    @Test
-    fun `a step that ends on a screen without answers is still held to the pass mark`() {
-        val endsOnReading = LessonScript(
+    fun `a failed last exercise starts again instead of finishing the lesson, even after a restart of the app`() {
+        val single = LessonScript(
             lessonId = LessonId("lesson"),
-            steps = persistentListOf(
-                LessonStep("1", "One", persistentListOf("1A", "1B")),
-                LessonStep("2", "Two", persistentListOf("2A")),
-            ),
-            screens = persistentListOf(write("1A", "jeden", "dwa"), reference("1B"), write("2A", "trzy")),
+            steps = persistentListOf(LessonStep("1", "One", persistentListOf("1A"))),
+            screens = persistentListOf(write("1A", "jeden", "dwa")),
         )
-        val failed = answered(LessonSession(endsOnReading), "x", "y").check().next()
-        assertEquals("1B", failed.screen.id)
-        assertEquals("1", failed.failedStep?.step?.id)
-        assertEquals("1A", failed.next().screen.id)
+        val failed = answered(LessonSession(single), "x", "dwa").check()
+        assertFalse(failed.isAtEnd)
+        assertEquals("1A", LessonSession.resume(single, failed.progress).screen.id)
+        assertTrue(LessonSession.resume(single, failed.progress).isChecked("1A"))
 
-        val passed = answered(LessonSession(endsOnReading), "jeden", "dwa").check().next()
-        assertNull(passed.failedStep)
-        assertEquals("2A", passed.next().screen.id)
+        val again = failed.next()
+        assertFalse(again.isChecked("1A"))
+        assertEquals("dwa", again.answer("1A", "1"))
+        assertTrue(answered(again, "jeden", "dwa").check().next().isAtEnd)
     }
 
     @Test
-    fun `a screen that was all right stays done when its step starts again`() {
-        val twoScreens = LessonScript(
-            lessonId = LessonId("lesson"),
-            steps = persistentListOf(LessonStep("1", "One", persistentListOf("1A", "1B"))),
-            screens = persistentListOf(write("1A", "jeden", "dwa"), write("1B", "trzy", "cztery", "pięć")),
-        )
-        val first = answered(LessonSession(twoScreens), "jeden", "dwa").check().next()
-        val failed = answered(first, "x", "y", "pięć").check()
-        assertEquals(3 to 5, failed.failedStep?.score?.let { it.correct to it.total })
+    fun `the results name what to work on from the first try, even after a retry put it right`() {
+        val firstTry = answered(atDictation, "jeden", "dwa", "trzy", "cztery", "piec").check()
+        assertEquals(FirstTry(correct = 4, total = 5, almost = 1), firstTry.progress.firstTries["1B"])
 
-        val restarted = failed.next()
-        assertEquals("1A", restarted.screen.id)
-        assertTrue(restarted.isChecked("1A"))
-        assertFalse(restarted.needsCheck)
-        assertFalse(restarted.isChecked("1B"))
-        assertEquals("pięć", restarted.answer("1B", "2"))
+        val retried = answered(atDictation, "jeden", "x", "y", "z", "piec").check().next()
+        val fixed = answered(retried, "jeden", "dwa", "trzy", "cztery", "pięć").check()
+        assertEquals("the first try is kept", FirstTry(correct = 1, total = 5, almost = 1), fixed.progress.firstTries["1B"])
+
+        val done = answered(fixed.next(), "sześć").check().next().withAnswer("0", "Cześć!").check()
+        val results = done.results
+        assertEquals(listOf("1B"), results.toImprove.map { it.screen.id })
+        assertEquals(1, results.missedPolishLetters)
+        assertEquals(5 to 5, results.steps.first().score.let { it.correct to it.total })
     }
 
     @Test

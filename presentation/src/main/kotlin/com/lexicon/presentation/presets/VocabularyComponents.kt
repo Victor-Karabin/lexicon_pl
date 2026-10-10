@@ -64,7 +64,6 @@ private fun Word.detailLine(): String? {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun VocabularyWordRow(
     word: Word,
@@ -77,10 +76,61 @@ fun VocabularyWordRow(
     isSelected: Boolean = false,
     onLongClick: (() -> Unit)? = null,
 ) {
+    WordRow(
+        text = word.text,
+        translation = word.translation,
+        detail = word.detailLine(),
+        onPronounce = onPronounce,
+        status = status,
+        onStatusCycled = onStatusCycled,
+        modifier = modifier,
+        onClick = onClick,
+        isSelecting = isSelecting,
+        isSelected = isSelected,
+        onLongClick = onLongClick,
+    )
+}
+
+@Composable
+fun WordRow(
+    word: Word?,
+    text: String,
+    translation: String,
+    status: WordStatus,
+    onStatusCycled: () -> Unit,
+    onPronounce: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    WordRow(
+        text = text,
+        translation = translation,
+        detail = word?.detailLine(),
+        onPronounce = onPronounce,
+        status = status.takeIf { word != null },
+        onStatusCycled = onStatusCycled,
+        modifier = modifier,
+    )
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun WordRow(
+    text: String,
+    translation: String,
+    detail: String?,
+    onPronounce: () -> Unit,
+    status: WordStatus?,
+    onStatusCycled: () -> Unit,
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
+    isSelecting: Boolean = false,
+    isSelected: Boolean = false,
+    onLongClick: (() -> Unit)? = null,
+) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
+            .then(if (onClick != null) Modifier.combinedClickable(onClick = onClick, onLongClick = onLongClick) else Modifier)
             .padding(
                 start = if (isSelecting) Dimens.spacingSmall else Dimens.spacingMedium,
                 end = Dimens.spacingSmall,
@@ -98,18 +148,18 @@ fun VocabularyWordRow(
         }
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = word.text,
+                text = text,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Medium,
             )
             Text(
-                text = word.translation,
+                text = translation,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            word.detailLine()?.let { detail ->
+            detail?.let {
                 Text(
-                    text = detail,
+                    text = it,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -118,10 +168,10 @@ fun VocabularyWordRow(
         IconButton(onClick = onPronounce) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.VolumeUp,
-                contentDescription = stringResource(R.string.word_pronounce, word.text),
+                contentDescription = stringResource(R.string.word_pronounce, text),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        WordStatusButton(status = status, onClick = onStatusCycled)
+        status?.let { WordStatusButton(status = it, onClick = onStatusCycled) }
     }
 }

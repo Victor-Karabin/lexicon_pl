@@ -1,5 +1,79 @@
 {
   "lessonId": "krok-a1-02",
+  "rules": [
+    {
+      "title": "Personal pronouns",
+      "tables": [
+        {
+          "rows": [
+            ["ja", "I"],
+            ["ty", "you (one person, informal)"],
+            ["on / ona / ono", "he / she / it"],
+            ["my", "we"],
+            ["wy", "you (several people)"],
+            ["oni", "they (at least one man)"],
+            ["one", "they (women, children, things)"]
+          ]
+        }
+      ],
+      "notes": [
+        "Formal: *pan* (to a man), *pani* (to a woman); plural *panowie, panie, państwo* (a mixed group, a married couple). The verb is 3rd person: *pan jest*, *państwo są*."
+      ]
+    },
+    {
+      "title": "*być* (to be) — irregular",
+      "tables": [
+        {
+          "rows": [
+            ["ja jestem", "my jesteśmy"],
+            ["ty jesteś", "wy jesteście"],
+            ["on / ona / ono jest", "oni / one są"]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Conjugation -m, -sz (verbs in -ać, -eć, and *mieć*)",
+      "tables": [
+        {
+          "header": ["", "mieszkać", "rozumieć", "mieć"],
+          "rows": [
+            ["ja", "mieszka**m**", "rozumie**m**", "ma**m**"],
+            ["ty", "mieszka**sz**", "rozumie**sz**", "ma**sz**"],
+            ["on / ona / ono", "mieszka", "rozumie", "ma"],
+            ["my", "mieszka**my**", "rozumie**my**", "ma**my**"],
+            ["wy", "mieszka**cie**", "rozumie**cie**", "ma**cie**"],
+            ["oni / one", "mieszka**ją**", "rozumie**ją**", "ma**ją**"]
+          ]
+        }
+      ],
+      "notes": ["The same: *nazywać się, grać, czytać*. The *wy* ending is always **-cie** (never -czie)."]
+    },
+    {
+      "title": "Where from? Where? (fixed forms)",
+      "tables": [
+        {
+          "rows": [
+            ["Skąd jesteś?", "**z** + country: z Polski, z Niemiec, z Anglii"],
+            ["Gdzie mieszkasz?", "**w** + city: w Krakowie, w Berlinie, w Londynie"]
+          ]
+        }
+      ],
+      "notes": ["After *z* and *w* the word changes its ending (cases come later) — learn the pairs whole."]
+    },
+    {
+      "title": "Why? What for?",
+      "tables": [
+        {
+          "rows": [
+            ["**żeby** + infinitive", "Uczę się polskiego, żeby pracować w Polsce."],
+            ["**bo** + clause", "Uczę się polskiego, bo moja dziewczyna jest z Polski."]
+          ]
+        }
+      ]
+    },
+    {"title": "Numbers 11–29", "notes": ["*-naście* = -teen: jedenaście, dwanaście, trzynaście, czternaście, piętnaście, szesnaście, siedemnaście, osiemnaście, dziewiętnaście; 20 *dwadzieścia*, 21 *dwadzieścia jeden*."]}
+  ],
   "tracks": [
     {"id": "102A1", "file": "a1_coursebook_102a1.mp3"},
     {"id": "102A1-2", "file": "a1_coursebook_102a1-2.mp3"},
@@ -25,6 +99,7 @@
     {"id": "wb13", "file": "a1_workbook_13_L02_cwiczenie17.mp3"}
   ],
   "steps": [
+    {"id": "G", "title": "Lesson grammar", "screens": ["0"], "grammar": true},
     {"id": "1", "title": "At the office", "screens": ["1A", "1B", "1C"]},
     {"id": "2", "title": "How are you?", "screens": ["2A", "2B", "2C", "2D", "2E", "2F"]},
     {"id": "3", "title": "być — to be", "screens": ["3A", "3B", "3C", "3D", "3E", "3F"]},
@@ -35,6 +110,12 @@
     {"id": "8", "title": "Revision", "screens": ["8A", "8B", "8C", "8D", "8E"], "review": true}
   ],
   "screens": [
+    {
+      "id": "0",
+      "type": "grammar",
+      "title": "Lesson grammar",
+      "instruction": "All the grammar of this lesson before the exercises. The steps repeat the part they need."
+    },
     {
       "id": "1A",
       "type": "reference",
@@ -105,10 +186,10 @@
       "newWords": [
         {"polish": "Francja, Niemcy", "english": "France, Germany (z Francji, z Niemiec)"},
         {"polish": "w porządku", "english": "all right, fine"},
-        {"polish": "sekretariat", "english": "school office"},
         {"polish": "intensywny kurs języka polskiego", "english": "intensive Polish course"}
       ],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [4]
     },
     {
       "id": "1C",
@@ -151,7 +232,8 @@
         {"number": 10, "answers": ["10"]},
         {"number": 11, "answers": ["3"]},
         {"number": 12, "answers": ["przez"], "feedback": "*przez* = \"through / over\"; in addresses *10 przez 3* = 10/3: house 10, flat 3."}
-      ]
+      ],
+      "rules": [4]
     },
     {
       "id": "2A",
@@ -204,7 +286,8 @@
         }
       ],
       "notes": ["The reply to *Co słychać?* is *…a u ciebie?*, not *…a ty?*"],
-      "newWords": [{"polish": "dialog oficjalny", "english": "formal dialogue"}]
+      "newWords": [{"polish": "dialog oficjalny", "english": "formal dialogue"}],
+      "rules": [1]
     },
     {
       "id": "2B",
@@ -218,7 +301,7 @@
         "Mami: Dziękuję, w porządku."
       ],
       "checklist": ["*Dzień dobry* → *Cześć*.", "*u pana* / *u pani* → *u ciebie*."],
-      "newWords": [{"polish": "oficjalnie / nieoficjalnie", "english": "formally (pan/pani) / informally (ty)"}]
+      "rules": [1]
     },
     {
       "id": "2C",
@@ -234,7 +317,8 @@
         {"label": "5", "prompt": "n_c n_w_g_", "answers": ["nic nowego"]},
         {"label": "6", "prompt": "dz_ęk_j_ _szy_t_o św_et_i_", "answers": ["dziękuję, wszystko świetnie"]},
         {"label": "7", "prompt": "_o st_re_ _", "answers": ["po staremu"]}
-      ]
+      ],
+      "rules": [1]
     },
     {
       "id": "2D",
@@ -250,7 +334,8 @@
         {"label": "4", "prompt": "nic …", "options": ["a", "b", "c", "d", "e", "f"], "answer": "f"},
         {"label": "5", "prompt": "co u …", "options": ["a", "b", "c", "d", "e", "f"], "answer": "a"},
         {"label": "6", "prompt": "wszystko …", "options": ["a", "b", "c", "d", "e", "f"], "answer": "c"}
-      ]
+      ],
+      "rules": [1]
     },
     {
       "id": "2E",
@@ -281,7 +366,8 @@
         {"label": "e", "speaker": "Mami", "prompt": "Teraz rozumiem. Tak, wszystko dobrze.", "answer": "6"},
         {"label": "f", "speaker": "Nauczycielka", "prompt": "„Co u ciebie?” – to znaczy „Co słychać u ciebie?”. Czy wszystko dobrze?", "answer": "5"}
       ],
-      "newWords": [{"polish": "czy", "english": "question particle (yes/no questions)"}]
+      "newWords": [{"polish": "czy", "english": "question particle (yes/no questions)"}],
+      "rules": [1]
     },
     {
       "id": "2F",
@@ -314,7 +400,8 @@
         {"polish": "Uwaga!", "english": "Careful! / Attention!"},
         {"polish": "Nowy Jork", "english": "New York (w Nowym Jorku)"}
       ],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [1]
     },
     {
       "id": "3A",
@@ -334,7 +421,8 @@
         "on + on / on + ona / on + ono → **oni** (at least one man); ona + ona / ona + ono / ono + ono → **one** (no men).",
         "pan + pan → **panowie** (gentlemen); pani + pani → **panie** (ladies); pan + pani, panowie + panie → **państwo** (ladies and gentlemen / a married couple).",
         "*pan*, *pani* take the 3rd-person verb: *pan jest*, *pani jest*; *panowie / panie / państwo są*."
-      ]
+      ],
+      "rules": [2, 1]
     },
     {
       "id": "3B",
@@ -388,23 +476,25 @@
         {"polish": "w domu / w pracy", "english": "at home / at work"},
         {"polish": "też", "english": "too, also"}
       ],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [2, 1]
     },
     {
       "id": "3C",
       "type": "choice",
       "title": "on / ona / ono / oni / one",
-      "instruction": "Choose the pronoun for the answer.",
+      "instruction": "Choose the pronoun for each person or group. E.g. *Ewa* → *ona*.",
       "items": [
-        {"label": "1", "prompt": "Gdzie jest Angela?", "options": ["on", "ona", "ono", "oni", "one"], "answer": "ona"},
-        {"label": "2", "prompt": "Gdzie są Tom i Uwe?", "options": ["on", "ona", "ono", "oni", "one"], "answer": "oni"},
-        {"label": "3", "prompt": "Gdzie są Angela i Mami?", "options": ["on", "ona", "ono", "oni", "one"], "answer": "one"},
-        {"label": "4", "prompt": "Gdzie jest Tom?", "options": ["on", "ona", "ono", "oni", "one"], "answer": "on"},
-        {"label": "5", "prompt": "Gdzie są Angela i Tom?", "options": ["on", "ona", "ono", "oni", "one"], "answer": "oni", "feedback": "One man in the group is enough for *oni*."},
-        {"label": "6", "prompt": "Gdzie jest dziecko?", "options": ["on", "ona", "ono", "oni", "one"], "answer": "ono"}
+        {"label": "1", "prompt": "Angela", "options": ["on", "ona", "ono", "oni", "one"], "answer": "ona"},
+        {"label": "2", "prompt": "Tom i Uwe", "options": ["on", "ona", "ono", "oni", "one"], "answer": "oni"},
+        {"label": "3", "prompt": "Angela i Mami", "options": ["on", "ona", "ono", "oni", "one"], "answer": "one"},
+        {"label": "4", "prompt": "Tom", "options": ["on", "ona", "ono", "oni", "one"], "answer": "on"},
+        {"label": "5", "prompt": "Angela i Tom", "options": ["on", "ona", "ono", "oni", "one"], "answer": "oni", "feedback": "One man in the group is enough for *oni*."},
+        {"label": "6", "prompt": "dziecko", "options": ["on", "ona", "ono", "oni", "one"], "answer": "ono"}
       ],
       "newWords": [{"polish": "dziecko", "english": "child (ono)"}],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [1]
     },
     {
       "id": "3D",
@@ -426,7 +516,8 @@
         {"label": "12", "prompt": "my", "options": ["jestem", "jesteś", "jest", "jesteśmy", "jesteście", "są"], "answer": "jesteśmy"},
         {"label": "13", "prompt": "panie", "options": ["jestem", "jesteś", "jest", "jesteśmy", "jesteście", "są"], "answer": "są"},
         {"label": "14", "prompt": "on", "options": ["jestem", "jesteś", "jest", "jesteśmy", "jesteście", "są"], "answer": "jest"}
-      ]
+      ],
+      "rules": [2, 1]
     },
     {
       "id": "3E",
@@ -462,7 +553,8 @@
         {"number": 10, "answers": ["jest"]}
       ],
       "newWords": [{"polish": "w hotelu", "english": "in a hotel"}],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [2]
     },
     {
       "id": "3F",
@@ -479,7 +571,8 @@
         {"label": "7", "prompt": "On jest w sekretariacie.", "answers": ["Oni są w sekretariacie."]}
       ],
       "newWords": [{"polish": "w szkole", "english": "at school"}],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [2, 1]
     },
     {
       "id": "4A",
@@ -525,7 +618,8 @@
           ]
         }
       ],
-      "notes": ["After *z* (from) and *w* (in) the noun changes its ending (cases come later). Learn the pairs: *z Polski — w Krakowie*."]
+      "notes": ["After *z* (from) and *w* (in) the noun changes its ending (cases come later). Learn the pairs: *z Polski — w Krakowie*."],
+      "rules": [4]
     },
     {
       "id": "4B",
@@ -540,7 +634,8 @@
         {"label": "(my)", "answers": ["mieszkamy"]},
         {"label": "(wy)", "answers": ["mieszkacie"]},
         {"label": "oni / one", "answers": ["mieszkają"]}
-      ]
+      ],
+      "rules": [3]
     },
     {
       "id": "4C",
@@ -589,7 +684,8 @@
         {"polish": "państwo Kowalscy", "english": "Mr and Mrs Kowalski"},
         {"polish": "w Warszawie", "english": "in Warsaw"}
       ],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [3, 4]
     },
     {
       "id": "5A",
@@ -613,7 +709,8 @@
         "Drop *-ć* and add *-m, -sz, —, -my, -cie, -ją* (also *mieszkać*, *czytać*).",
         "*mieć* is irregular in the stem (*mam, masz…*).",
         "*grać w tenisa / na gitarze* = play tennis / the guitar."
-      ]
+      ],
+      "rules": [3]
     },
     {
       "id": "5B",
@@ -636,7 +733,8 @@
         {"number": 4, "answers": ["ma"]},
         {"number": 5, "answers": ["ma"]},
         {"number": 6, "answers": ["mają"]}
-      ]
+      ],
+      "rules": [3]
     },
     {
       "id": "5C",
@@ -661,7 +759,8 @@
         {"number": 4, "answers": ["Nazywam się", "się nazywam"]},
         {"number": 5, "answers": ["się nazywacie", "nazywacie się"], "feedback": "In questions *się* usually comes right after *jak*: *Jak się nazywasz?* The *wy* ending is always *-cie* (c + ie), never *-czie*: nazywacie, mieszkacie, macie."},
         {"number": 6, "answers": ["Nazywamy się", "się nazywamy"]}
-      ]
+      ],
+      "rules": [3]
     },
     {
       "id": "5D",
@@ -696,7 +795,8 @@
         {"polish": "grać w tenisa / na gitarze", "english": "to play tennis / the guitar"},
         {"polish": "ale", "english": "but"}
       ],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [3]
     },
     {
       "id": "5E",
@@ -735,7 +835,8 @@
         {"polish": "grać w golfa", "english": "to play golf"},
         {"polish": "Przepraszamy.", "english": "We're sorry."}
       ],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [3]
     },
     {
       "id": "6A",
@@ -760,7 +861,8 @@
       ],
       "notes": [
         "*-naście* = -teen; *dwadzieścia* = twenty; 21 = *dwadzieścia jeden*. Watch the stems: *czter-naście* (14), *pięt-naście* (15), *dziewięt-naście* (19)."
-      ]
+      ],
+      "rules": [6]
     },
     {
       "id": "6B",
@@ -780,7 +882,8 @@
         {"label": "h", "answers": ["11"]},
         {"label": "i", "answers": ["6"]},
         {"label": "j", "answers": ["16"]}
-      ]
+      ],
+      "rules": [6]
     },
     {
       "id": "6C",
@@ -799,7 +902,8 @@
         {"label": "8", "answers": ["osiemnaście"]},
         {"label": "9", "answers": ["trzy"]},
         {"label": "10", "answers": ["dwadzieścia dziewięć"]}
-      ]
+      ],
+      "rules": [6]
     },
     {
       "id": "6D",
@@ -845,7 +949,8 @@
         {"number": 9, "answers": ["6"]}
       ],
       "newWords": [{"polish": "Dworzec Główny", "english": "Main Railway Station"}],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [6]
     },
     {
       "id": "7A",
@@ -911,7 +1016,8 @@
             {"polish": "Naprawdę?", "english": "Really?"}
           ]
         }
-      ]
+      ],
+      "rules": [5]
     },
     {
       "id": "7B",
@@ -927,7 +1033,8 @@
         {"label": "5", "prompt": "Uczę się, bo", "options": ["A", "B", "C", "D", "E", "F"], "answer": "C", "feedback": "*żeby* + infinitive (*studiować*); *bo* + a full clause (*to moje hobby*)."},
         {"label": "6", "prompt": "Mieszkam", "options": ["A", "B", "C", "D", "E", "F"], "answer": "E"}
       ],
-      "newWords": [{"polish": "To moje hobby.", "english": "It's my hobby."}]
+      "newWords": [{"polish": "To moje hobby.", "english": "It's my hobby."}],
+      "rules": [5]
     },
     {
       "id": "7C",
@@ -981,7 +1088,8 @@
         {"polish": "ulica świętego Jana", "english": "St John's Street"},
         {"polish": "mój / twój numer", "english": "my / your number"}
       ],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [4, 5]
     },
     {
       "id": "7D",
@@ -1029,7 +1137,8 @@
             {"label": "Dlaczego uczy się polskiego?", "answers": ["żeby studiować w Polsce", "studiować w Polsce", "studia w Polsce"], "feedback": "*studiować* — an -ować verb, with *di* as in *radio*; Polska → *w Polsce*."}
           ]
         }
-      ]
+      ],
+      "rules": [4, 5]
     },
     {
       "id": "7E",
@@ -1072,7 +1181,8 @@
             {"label": "Dlaczego uczy się polskiego?", "answers": ["bo jej chłopak jest z Polski", "chłopak jest z Polski", "chłopak z Polski"]}
           ]
         }
-      ]
+      ],
+      "rules": [4, 5]
     },
     {
       "id": "7F",
@@ -1115,7 +1225,8 @@
             {"label": "Dlaczego uczy się polskiego?", "answers": ["bo jego dziewczyna jest z Polski", "dziewczyna jest z Polski", "dziewczyna z Polski"]}
           ]
         }
-      ]
+      ],
+      "rules": [4, 5]
     },
     {
       "id": "7G",
@@ -1132,7 +1243,8 @@
       "newWords": [
         {"polish": "jej / jego", "english": "her / his"},
         {"polish": "uczyć się hiszpańskiego", "english": "to learn Spanish"}
-      ]
+      ],
+      "rules": [5]
     },
     {
       "id": "8A",
@@ -1173,7 +1285,8 @@
         {"polish": "grupa / klasa", "english": "group / classroom"},
         {"polish": "Miłej lekcji!", "english": "Enjoy the lesson!"}
       ],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [3]
     },
     {
       "id": "8B",
@@ -1222,7 +1335,8 @@
         {"polish": "koleżanka / kolega", "english": "friend, colleague (f / m)"},
         {"polish": "Bardzo mi miło państwa poznać.", "english": "Very nice to meet you (to a couple)."},
         {"polish": "mówić po polsku", "english": "to speak Polish"}
-      ]
+      ],
+      "rules": [2]
     },
     {
       "id": "8C",
@@ -1240,7 +1354,8 @@
         {"label": "8", "prompt": "dziewczyna", "options": ["ON", "ONA"], "answer": "ONA"},
         {"label": "9", "prompt": "syn", "options": ["ON", "ONA"], "answer": "ON"},
         {"label": "10", "prompt": "mąż", "options": ["ON", "ONA"], "answer": "ON"}
-      ]
+      ],
+      "rules": [1]
     },
     {
       "id": "8D",
@@ -1300,7 +1415,8 @@
         "*pani* takes the 3rd-person verb (*pani jest, pani mieszka*); *ty* takes the *-sz* form (*jesteś, mieszkasz*). *panie* means ladies — one woman is *pani*."
       ],
       "newWords": [{"polish": "uczyć się angielskiego", "english": "to learn English"}],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [1, 2, 3]
     }
   ],
   "vocabulary": [

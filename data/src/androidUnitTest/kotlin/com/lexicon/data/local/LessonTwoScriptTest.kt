@@ -17,12 +17,12 @@ class LessonTwoScriptTest {
     private fun screen(id: String) = script.screens.first { it.id == id }
 
     @Test
-    fun `lesson 2 has 40 screens in eight steps, the last one a review`() {
-        assertEquals(40, script.screens.size)
-        assertEquals(listOf("7A", "7B", "7C", "7D", "7E", "7F", "7G"), script.steps[6].screenIds)
+    fun `lesson 2 has 41 screens, the grammar screen and eight steps, the last one a review`() {
+        assertEquals(41, script.screens.size)
+        assertEquals(listOf("7A", "7B", "7C", "7D", "7E", "7F", "7G"), script.steps[7].screenIds)
         assertEquals(listOf("8"), script.steps.filter { it.isReview }.map { it.id })
-        assertEquals(listOf("1", "2", "3", "4", "5", "6", "7", "8"), script.steps.map { it.id })
-        assertEquals(listOf("2A", "2B", "2C", "2D", "2E", "2F"), script.steps[1].screenIds)
+        assertEquals(listOf("G", "1", "2", "3", "4", "5", "6", "7", "8"), script.steps.map { it.id })
+        assertEquals(listOf("2A", "2B", "2C", "2D", "2E", "2F"), script.steps[2].screenIds)
     }
 
     @Test
@@ -63,6 +63,15 @@ class LessonTwoScriptTest {
             assertTrue(id, form.questions.first().variants.isNotEmpty())
             assertEquals(id, TranscriptUnlock.AfterCheck, form.transcript?.unlock)
         }
+    }
+
+    @Test
+    fun `screens link the rules the description names, in its order`() {
+        assertEquals(6, script.rules.size)
+        assertEquals(listOf(2, 1), script.rulesOf("3A").map { it.number })
+        assertEquals(listOf(1, 2, 3), script.rulesOf("8E").map { it.number })
+        assertEquals(emptyList<Int>(), script.rulesOf("1A").map { it.number })
+        assertEquals("Personal pronouns", script.rule(1)?.title)
     }
 
     @Test

@@ -1,5 +1,50 @@
 {
   "lessonId": "krok-a1-03",
+  "rules": [
+    {
+      "title": "Questions",
+      "tables": [
+        {
+          "rows": [
+            ["Kto to jest?", "about people"],
+            ["Co to jest?", "about things"],
+            ["Czy to jest…?", "a yes / no question"],
+            ["Tak, to jest… / Nie, to nie jest…", "*nie* goes before the verb"]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Noun gender by ending",
+      "tables": [
+        {
+          "header": ["Gender", "Usually", "Special cases"],
+          "rows": [
+            ["masculine (on)", "consonant: stół, klucz, student", "-a: kolega, tata"],
+            ["feminine (ona)", "-a: torba, książka", "noc, pani"],
+            ["neuter (ono)", "-o, -e, -ę: okno, mieszkanie, imię", "-um: muzeum, centrum"]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "*ten / ta / to* and the adjective",
+      "tables": [
+        {
+          "header": ["Gender", "this", "Question", "Adjective"],
+          "rows": [
+            ["on", "ten słownik", "jaki?", "nowy, polski"],
+            ["ona", "ta torba", "jaka?", "nowa, polska"],
+            ["ono", "to okno", "jakie?", "nowe, polskie"]
+          ]
+        }
+      ],
+      "notes": [
+        "After *k, g*: -i (masculine), -ie (neuter): polski, polskie, męski. The neuter ends in -e: małe, duże (*mało, dużo* are adverbs, \"little, a lot\").",
+        "An abbreviation that specifies a noun comes after it: *płyta CD, kod PIN, karta SIM*."
+      ]
+    }
+  ],
   "tracks": [
     {"id": "103A1", "file": "a1_coursebook_103a1.mp3"},
     {"id": "103A1-2", "file": "a1_coursebook_103a1-2.mp3"},
@@ -17,6 +62,7 @@
     {"id": "wb16", "file": "a1_workbook_16_L03_cwiczenie13.mp3"}
   ],
   "steps": [
+    {"id": "G", "title": "Lesson grammar", "screens": ["0"], "grammar": true},
     {"id": "1", "title": "Who is it? What is it?", "screens": ["1A", "1B", "1C", "1D", "1E", "1F"]},
     {"id": "2", "title": "Classroom words", "screens": ["2A", "2B", "2C", "2D"]},
     {"id": "3", "title": "Czy to jest…?", "screens": ["3A", "3B", "3C", "3D", "3E"]},
@@ -27,6 +73,12 @@
     {"id": "8", "title": "Revision", "screens": ["8A", "8B"], "review": true}
   ],
   "screens": [
+    {
+      "id": "0",
+      "type": "grammar",
+      "title": "Lesson grammar",
+      "instruction": "All the grammar of this lesson before the exercises. The steps repeat the part they need."
+    },
     {
       "id": "1A",
       "type": "reference",
@@ -87,7 +139,8 @@
         {"polish": "Argentyna", "english": "Argentina"},
         {"polish": "Japonia", "english": "Japan"},
         {"polish": "za mały", "english": "too small"}
-      ]
+      ],
+      "rules": [1]
     },
     {
       "id": "1B",
@@ -171,7 +224,8 @@
         {"polish": "z wakacji", "english": "from the holidays"},
         {"polish": "z Brazylii", "english": "from Brazil"}
       ],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [1]
     },
     {
       "id": "1D",
@@ -213,7 +267,8 @@
         {"polish": "mapa Krakowa", "english": "map of Kraków"},
         {"polish": "tylko jeden", "english": "only one"}
       ],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [1]
     },
     {
       "id": "1E",
@@ -243,7 +298,8 @@
         {"number": 6, "answers": ["jest"]},
         {"number": 7, "answers": ["pamiętam"], "feedback": "Softness before a nasal is written with *i*: *książka* (ią), *pamiętam* (ię)."},
         {"number": 8, "answers": ["Ja"]}
-      ]
+      ],
+      "rules": [1]
     },
     {
       "id": "1F",
@@ -271,7 +327,8 @@
         {"number": 4, "answers": ["płyta"]}
       ],
       "newWords": [{"polish": "Pamiętacie?", "english": "Do you (pl.) remember?"}],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [1]
     },
     {
       "id": "2A",
@@ -408,7 +465,8 @@
         {"label": "9", "prompt": "… to jest? — To jest ołówek.", "options": ["Kto", "Co"], "answer": "Co"},
         {"label": "10", "prompt": "… to jest? — To jest student.", "options": ["Kto", "Co"], "answer": "Kto"},
         {"label": "11", "prompt": "… to jest? — To jest okno.", "options": ["Kto", "Co"], "answer": "Co"}
-      ]
+      ],
+      "rules": [1]
     },
     {
       "id": "3A",
@@ -442,7 +500,8 @@
             {"polish": "To jest długopis.", "english": "It's a pen."}
           ]
         }
-      ]
+      ],
+      "rules": [1]
     },
     {
       "id": "3B",
@@ -545,7 +604,8 @@
       ],
       "notes": [
         "Word order: an abbreviation that specifies a noun comes after it — *płyta CD* (CD), *kod PIN* (PIN code), *karta SIM* (SIM card), *kod QR* (QR code)."
-      ]
+      ],
+      "rules": [1]
     },
     {
       "id": "3C",
@@ -600,7 +660,8 @@
           "picture": {"label": "child", "emoji": "👶"},
           "answers": ["Tak, to jest dziecko."]
         }
-      ]
+      ],
+      "rules": [1]
     },
     {
       "id": "3D",
@@ -616,7 +677,8 @@
         {"label": "f", "prompt": "studentka / czy / to / jest", "answers": ["Czy to jest studentka?"]},
         {"label": "g", "prompt": "pytanie / to / co / jest / mam", "answers": ["Mam pytanie: co to jest?"]},
         {"label": "h", "prompt": "wiem / co / nie / jest / to", "answers": ["Nie wiem, co to jest."]}
-      ]
+      ],
+      "rules": [1]
     },
     {
       "id": "3E",
@@ -633,7 +695,8 @@
         {"label": "g", "prompt": "tak / książka / jest / to", "answers": ["Tak, to jest książka."]},
         {"label": "h", "prompt": "jest / student / to / nowy", "answers": ["To jest nowy student."]},
         {"label": "i", "prompt": "nie / nie / klucz / jest / to", "answers": ["Nie, to nie jest klucz."], "feedback": "The negation goes before the verb: to **nie jest**."}
-      ]
+      ],
+      "rules": [1]
     },
     {
       "id": "4A",
@@ -674,7 +737,8 @@
         {"polish": "rodzaj męski / żeński / nijaki", "english": "masculine / feminine / neuter gender"},
         {"polish": "tata", "english": "dad"},
         {"polish": "muzeum", "english": "museum"}
-      ]
+      ],
+      "rules": [2]
     },
     {
       "id": "4B",
@@ -699,7 +763,8 @@
         {"label": "15", "prompt": "mapa", "options": ["on", "ona", "ono"], "answer": "ona"},
         {"label": "16", "prompt": "segregator", "options": ["on", "ona", "ono"], "answer": "on"},
         {"label": "17", "prompt": "ćwiczenie", "options": ["on", "ona", "ono"], "answer": "ono"}
-      ]
+      ],
+      "rules": [2]
     },
     {
       "id": "4C",
@@ -744,7 +809,8 @@
         {"polish": "filharmonia", "english": "philharmonic"},
         {"polish": "muzyka", "english": "music"},
         {"polish": "auto", "english": "car"}
-      ]
+      ],
+      "rules": [2]
     },
     {
       "id": "5A",
@@ -798,7 +864,8 @@
         {"polish": "Komórka ma radio.", "english": "The phone has a radio."},
         {"polish": "japoński", "english": "Japanese"},
         {"polish": "hiszpański", "english": "Spanish"}
-      ]
+      ],
+      "rules": [3]
     },
     {
       "id": "5B",
@@ -817,7 +884,8 @@
         {"label": "9", "prompt": "japońskie", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jakie?"},
         {"label": "10", "prompt": "modna", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaka?"}
       ],
-      "newWords": [{"polish": "fajna", "english": "cool"}, {"polish": "męski", "english": "male, men's"}]
+      "newWords": [{"polish": "fajna", "english": "cool"}, {"polish": "męski", "english": "male, men's"}],
+      "rules": [3]
     },
     {
       "id": "5C",
@@ -849,7 +917,8 @@
         {"polish": "spontaniczne", "english": "spontaneous"},
         {"polish": "kreatywne", "english": "creative"},
         {"polish": "ambitne", "english": "ambitious"}
-      ]
+      ],
+      "rules": [3]
     },
     {
       "id": "5D",
@@ -938,7 +1007,8 @@
           ]
         }
       ],
-      "newWords": [{"polish": "miły", "english": "nice, kind"}]
+      "newWords": [{"polish": "miły", "english": "nice, kind"}],
+      "rules": [3, 2]
     },
     {
       "id": "5E",
@@ -954,7 +1024,8 @@
         {"number": 1, "answers": ["stary"]},
         {"number": 2, "answers": ["duży"]},
         {"number": 3, "answers": ["zły"]}
-      ]
+      ],
+      "rules": [3]
     },
     {
       "id": "6A",
@@ -973,7 +1044,8 @@
         {"label": "9", "prompt": "~~To centrum jest duży.~~", "answers": ["To centrum jest duże."], "feedback": "*mało*, *dużo* are adverbs (\"little\", \"a lot\"); the neuter adjective ends in *-e*: *małe*, *duże*."}
       ],
       "newWords": [{"polish": "autobus", "english": "bus"}],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [3, 2]
     },
     {
       "id": "6B",
@@ -1007,7 +1079,8 @@
       ],
       "interchangeable": [["1", "4", "7"], ["2", "6"], ["3", "5", "8"]],
       "newWords": [{"polish": "aktorka", "english": "actress"}, {"polish": "słowo", "english": "word"}],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [3, 2]
     },
     {
       "id": "6C",
@@ -1043,7 +1116,8 @@
         {"polish": "Huta", "english": "steelworks"},
         {"polish": "Stare Miasto", "english": "Old Town"}
       ],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [3, 2]
     },
     {
       "id": "7A",
@@ -1101,9 +1175,7 @@
         {"polish": "brązowy", "english": "brown"},
         {"polish": "różowy", "english": "pink"},
         {"polish": "fioletowy", "english": "purple"},
-        {"polish": "pomarańczowy", "english": "orange"},
-        {"polish": "kolor", "english": "colour"},
-        {"polish": "Jaki to kolor?", "english": "What colour is it?"}
+        {"polish": "pomarańczowy", "english": "orange"}
       ],
       "newWordsUnlock": "after_check"
     },
@@ -1194,7 +1266,8 @@
           "picture": {"swatch": "#8a8a8a"},
           "answers": ["Ten klucz jest szary."]
         }
-      ]
+      ],
+      "rules": [3]
     },
     {
       "id": "7D",
@@ -1210,7 +1283,8 @@
         {"label": "6", "prompt": "T_ k_m_rk_ jest _za_a.", "answers": ["Ta komórka jest szara."], "feedback": "Count the gaps: *_za_a* has 5 letters → *szara* (not *czarna*)."},
         {"label": "7", "prompt": "T_ t_rb_ jest f_o_e_o_a.", "answers": ["Ta torba jest fioletowa."]},
         {"label": "8", "prompt": "T__ d__go__s jest _ó_ty.", "answers": ["Ten długopis jest żółty."]}
-      ]
+      ],
+      "rules": [3]
     },
     {
       "id": "7E",
@@ -1230,7 +1304,8 @@
         {"polish": "mleko", "english": "milk"},
         {"polish": "wino", "english": "wine"},
         {"polish": "papryka", "english": "bell pepper"}
-      ]
+      ],
+      "rules": [3]
     },
     {
       "id": "7F",
@@ -1308,7 +1383,8 @@
         {"polish": "rewolucja", "english": "revolution"},
         {"polish": "pantera", "english": "panther"}
       ],
-      "newWordsUnlock": "after_check"
+      "newWordsUnlock": "after_check",
+      "rules": [3]
     },
     {
       "id": "8A",
@@ -1334,7 +1410,8 @@
         {"label": "6", "prompt": "Jakie jest to okno?", "options": ["A", "B", "C", "D", "E", "F", "G", "H"], "answer": "G"},
         {"label": "7", "prompt": "Co to znaczy „mały”?", "options": ["A", "B", "C", "D", "E", "F", "G", "H"], "answer": "A"},
         {"label": "8", "prompt": "Co to znaczy „nowy”?", "options": ["A", "B", "C", "D", "E", "F", "G", "H"], "answer": "C"}
-      ]
+      ],
+      "rules": [1, 3]
     },
     {
       "id": "8B",
@@ -1360,7 +1437,8 @@
         {"label": "6", "prompt": "Jaki jest ten nauczyciel?", "options": ["a", "b", "c", "d", "e", "f", "g", "h"], "answer": "g"},
         {"label": "7", "prompt": "Czy to jest nauczyciel?", "options": ["a", "b", "c", "d", "e", "f", "g", "h"], "answer": "d"},
         {"label": "8", "prompt": "Co to jest?", "options": ["a", "b", "c", "d", "e", "f", "g", "h"], "answer": "b"}
-      ]
+      ],
+      "rules": [1, 3]
     }
   ],
   "vocabulary": [

@@ -86,6 +86,7 @@ class ExerciseViewModelTest {
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
         every { audioPlayer.playback } returns playback
+        every { audioPlayer.speed } returns MutableStateFlow(1f)
         coEvery { audioLibrary.pathOrNull(any(), any()) } returns null
         every { audioPlayer.pause() } answers { playback.value = playback.value?.copy(isPlaying = false) }
     }

@@ -39,6 +39,7 @@ import com.lexicon.application.presets.CreatePresetUseCaseImpl
 import com.lexicon.application.presets.CreateWordUseCaseImpl
 import com.lexicon.application.presets.DeleteWordUseCaseImpl
 import com.lexicon.application.presets.FillWordGrammarUseCaseImpl
+import com.lexicon.application.presets.FindWordsUseCaseImpl
 import com.lexicon.application.presets.GenerateWordExampleUseCaseImpl
 import com.lexicon.application.presets.GetPinnedImageUseCaseImpl
 import com.lexicon.application.presets.GetPresetCategoriesUseCaseImpl
@@ -135,6 +136,7 @@ import com.lexicon.interactors.presets.CreateWordUseCase
 import com.lexicon.interactors.presets.DeletePresetUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
 import com.lexicon.interactors.presets.FillWordGrammarUseCase
+import com.lexicon.interactors.presets.FindWordsUseCase
 import com.lexicon.interactors.presets.GenerateWordExampleUseCase
 import com.lexicon.interactors.presets.GetPinnedImageUseCase
 import com.lexicon.interactors.presets.GetPresetCategoriesUseCase
@@ -299,6 +301,7 @@ val domainModule = module {
     factoryOf(::CountWordsToReviewUseCaseImpl) { bind<CountWordsToReviewUseCase>() }
     factoryOf(::CheckTrainingReadinessUseCaseImpl) { bind<CheckTrainingReadinessUseCase>() }
     factoryOf(::SearchVocabularyUseCaseImpl) { bind<SearchVocabularyUseCase>() }
+    factoryOf(::FindWordsUseCaseImpl) { bind<FindWordsUseCase>() }
     factoryOf(::SeedCatalogsUseCaseImpl) { bind<SeedCatalogsUseCase>() }
     factoryOf(::DeleteWordUseCaseImpl) { bind<DeleteWordUseCase>() }
     factoryOf(::RestoreWordUseCaseImpl) { bind<RestoreWordUseCase>() }

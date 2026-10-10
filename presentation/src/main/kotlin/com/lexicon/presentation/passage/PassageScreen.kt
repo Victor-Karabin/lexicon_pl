@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.passage.PassageSegment
@@ -199,6 +200,7 @@ private fun PassageBody(
                                 readOnly = withWordBank,
                                 onValueChanged = { onAnswerChanged(index, it) },
                                 onCleared = { onGapCleared(index) },
+                                imeAction = if (index == passage.gaps.lastIndex) ImeAction.Done else ImeAction.Next,
                             )
                         }
                     }

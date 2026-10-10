@@ -1,35 +1,58 @@
 package com.lexicon.presentation.course
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Replay
+import androidx.compose.material.icons.filled.School
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -41,7 +64,6 @@ import com.lexicon.interactors.course.InlineChoiceGroup
 import com.lexicon.interactors.course.LessonSession
 import com.lexicon.interactors.course.MinimalPairItem
 import com.lexicon.interactors.course.Score
-import com.lexicon.interactors.course.StepScore
 import com.lexicon.interactors.course.TranscribeItem
 import com.lexicon.model.course.AnswerKeyboard
 import com.lexicon.model.course.GAP_PATTERN
@@ -51,6 +73,7 @@ import com.lexicon.model.course.LessonScreen
 import com.lexicon.model.course.LessonTrack
 import com.lexicon.model.course.Transcript
 import com.lexicon.model.course.allTracks
+import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.TrainingTopBar
@@ -60,8 +83,11 @@ import com.lexicon.presentation.theme.component.tileSkin
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import org.koin.compose.viewmodel.koinViewModel
+import kotlin.random.Random
 
 private val ProgressSize = 18.dp
+private val GrammarButtonClearance = 56.dp
+private const val BLANK = "…"
 private val TableLabelWidth = 120.dp
 private val TableLabelLength = 3..16
 
@@ -71,6 +97,7 @@ class LessonFlowActions(
     val onNextLesson: (LessonId) -> Unit,
     val onPlay: (LessonTrack) -> Unit,
     val onSeek: (LessonTrack, Long) -> Unit,
+    val onSpeedChanged: () -> Unit,
     val onAnswerChanged: (String, String) -> Unit,
     val onLineTapped: (String) -> Unit,
     val onCheck: () -> Unit,
@@ -78,6 +105,10 @@ class LessonFlowActions(
     val onBack: () -> Unit,
     val onTranscriptToggled: (String) -> Unit,
     val onRetryAcknowledged: () -> Unit,
+    val onGrammarShown: (Int?) -> Unit,
+    val onGrammarDismissed: () -> Unit,
+    val onPronounce: (String) -> Unit,
+    val onWordStatusCycled: (VocabularyId) -> Unit,
 )
 
 @Composable
@@ -97,6 +128,7 @@ fun LessonFlowScreen(
             onNextLesson = onNextLesson,
             onPlay = viewModel::onPlay,
             onSeek = viewModel::onSeek,
+            onSpeedChanged = viewModel::onSpeedChanged,
             onAnswerChanged = viewModel::onAnswerChanged,
             onLineTapped = viewModel::onLineTapped,
             onCheck = viewModel::onCheck,
@@ -104,11 +136,16 @@ fun LessonFlowScreen(
             onBack = viewModel::onBack,
             onTranscriptToggled = viewModel::onTranscriptToggled,
             onRetryAcknowledged = viewModel::onRetryAcknowledged,
+            onGrammarShown = viewModel::onGrammarShown,
+            onGrammarDismissed = viewModel::onGrammarDismissed,
+            onPronounce = viewModel::onPronounce,
+            onWordStatusCycled = viewModel::onWordStatusCycled,
         ),
         modifier = modifier,
     )
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun LessonFlowContent(
     uiState: LessonFlowUiState,
@@ -124,44 +161,86 @@ private fun LessonFlowContent(
                     uiState.lessonNumber,
                 )
                 uiState.results != null -> stringResource(R.string.course_title)
-                else -> stringResource(R.string.lesson_flow_position, session.screen.id, session.position, session.total)
+                else -> {
+                    val grammar = session.script.stepOf(session.screen.id)?.isGrammar == true
+                    val shown = if (grammar) stringResource(R.string.lesson_flow_grammar_badge) else session.screen.id
+                    stringResource(R.string.lesson_flow_position, shown, session.position, session.total)
+                }
             }
         }
         else -> stringResource(R.string.course_title)
     }
 
     (uiState as? LessonFlowUiState.Loaded)?.retry?.let { RetryDialog(it, actions.onRetryAcknowledged) }
+    (uiState as? LessonFlowUiState.Loaded)?.let { loaded ->
+        loaded.grammar?.let { sheet ->
+            GrammarSheet(
+                rules = loaded.session.script.rules,
+                openRule = sheet.rule,
+                onRuleShown = actions.onGrammarShown,
+                onDismiss = actions.onGrammarDismissed,
+            )
+        }
+    }
+
+    val shownPlayers = remember((uiState as? LessonFlowUiState.Loaded)?.session?.index) { mutableStateMapOf<String, Boolean>() }
+
+    val isTyping = WindowInsets.isImeVisible
 
     AnswerInputs {
-        Scaffold(
-            modifier = modifier,
-            topBar = { TrainingTopBar(title = title, onClose = actions.onClose) },
-            bottomBar = { if (uiState is LessonFlowUiState.Loaded) Footer(uiState, actions) },
-        ) { padding ->
-            when (uiState) {
-                LessonFlowUiState.Loading ->
-                    Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
-
-                LessonFlowUiState.NotFound ->
-                    Box(Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingXl), contentAlignment = Alignment.Center) {
-                        Text(stringResource(R.string.lesson_not_found), style = MaterialTheme.typography.bodyMedium)
-                    }
-
-                is LessonFlowUiState.Loaded ->
-                    key(uiState.session.index, uiState.results != null) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(padding)
-                                .imePadding()
-                                .verticalScroll(rememberScrollState())
-                                .padding(Dimens.spacingMedium),
-                            verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
-                        ) {
-                            val results = uiState.results
-                            if (results != null) LessonResultsView(results, uiState.lessonTitle) else ScreenBody(uiState, actions)
+        CompositionLocalProvider(LocalShownPlayers provides shownPlayers) {
+            Scaffold(
+                modifier = modifier,
+                topBar = {
+                    val finished = (uiState as? LessonFlowUiState.Loaded)?.results != null
+                    TrainingTopBar(title = title, onClose = if (finished) actions.onFinished else actions.onClose)
+                },
+                bottomBar = {
+                    if (uiState is LessonFlowUiState.Loaded) {
+                        Column {
+                            PinnedPlayer(uiState, actions, shownPlayers)
+                            if (uiState.results == null || uiState.nextLessonId != null) Footer(uiState, actions, isTyping)
                         }
                     }
+                },
+                floatingActionButton = {
+                    if (uiState is LessonFlowUiState.Loaded && uiState.showsGrammarButton && !isTyping) {
+                        SmallFloatingActionButton(onClick = { actions.onGrammarShown(null) }) {
+                            Icon(Icons.AutoMirrored.Filled.MenuBook, contentDescription = stringResource(R.string.lesson_flow_grammar))
+                        }
+                    }
+                },
+            ) { padding ->
+                when (uiState) {
+                    LessonFlowUiState.Loading ->
+                        Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
+
+                    LessonFlowUiState.NotFound ->
+                        Box(Modifier.fillMaxSize().padding(padding).padding(Dimens.spacingXl), contentAlignment = Alignment.Center) {
+                            Text(stringResource(R.string.lesson_not_found), style = MaterialTheme.typography.bodyMedium)
+                        }
+
+                    is LessonFlowUiState.Loaded ->
+                        key(uiState.session.index, uiState.results != null) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(padding)
+                                    .imePadding()
+                                    .verticalScroll(rememberScrollState())
+                                    .padding(Dimens.spacingMedium)
+                                    .padding(bottom = if (isTyping) 0.dp else GrammarButtonClearance),
+                                verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                            ) {
+                                val results = uiState.results
+                                if (results != null) {
+                                    LessonResultsView(results, uiState.lessonTitle, onRuleOpened = actions.onGrammarShown)
+                                } else {
+                                    ScreenBody(uiState, actions)
+                                }
+                            }
+                        }
+                }
             }
         }
     }
@@ -169,7 +248,7 @@ private fun LessonFlowContent(
 
 @Composable
 private fun RetryDialog(
-    retry: StepScore,
+    retry: Score,
     onAcknowledged: () -> Unit,
 ) {
     AlertDialog(
@@ -179,10 +258,9 @@ private fun RetryDialog(
             Text(
                 stringResource(
                     R.string.lesson_flow_retry_body,
-                    retry.step.title,
-                    retry.score.correct,
-                    retry.score.total,
-                    retry.score.percent,
+                    retry.correct,
+                    retry.total,
+                    retry.percent,
                     Score.PASS_MARK,
                 ),
             )
@@ -191,6 +269,7 @@ private fun RetryDialog(
     )
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ScreenBody(
     uiState: LessonFlowUiState.Loaded,
@@ -200,6 +279,13 @@ private fun ScreenBody(
     val screen = session.screen
 
     val step = session.script.stepOf(screen.id)
+    if (step?.isGrammar == true) {
+        StatChip(
+            icon = Icons.Default.School,
+            text = stringResource(R.string.lesson_flow_grammar_badge),
+            skin = tileSkin(highlighted = true),
+        )
+    }
     if (step?.isReview == true) {
         StatChip(icon = Icons.Default.Replay, text = stringResource(R.string.lesson_flow_review_badge), skin = tileSkin(highlighted = true))
         if (step.screenIds.first() == screen.id) {
@@ -207,8 +293,27 @@ private fun ScreenBody(
         }
     }
     Text(screen.title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
+    val rules = session.script.rulesOf(screen.id)
+    if (rules.isNotEmpty()) {
+        CompositionLocalProvider(LocalMinimumInteractiveComponentSize provides Dp.Unspecified) {
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
+            ) {
+                rules.forEach { rule -> RuleChip(rule, onClick = { actions.onGrammarShown(rule.number) }) }
+            }
+        }
+    }
     session.script.newWords[screen.id]?.let { newWords ->
-        if (session.isNewWordsUnlocked(screen)) NewWordsCard(newWords.words)
+        if (session.isNewWordsUnlocked(screen)) {
+            NewWordsCard(
+                words = newWords.words,
+                entries = uiState.newWordEntries,
+                statuses = uiState.wordStatuses,
+                onPronounce = actions.onPronounce,
+                onStatusCycled = actions.onWordStatusCycled,
+            )
+        }
     }
     Text(richText(screen.instruction), style = MaterialTheme.typography.bodyMedium)
     screen.tracks.forEach { TrackPlayer(it, uiState, actions) }
@@ -223,6 +328,7 @@ private fun ScreenBody(
         is LessonScreen.Ordering -> OrderingBody(screen, session, actions)
         is LessonScreen.Form -> FormBody(screen, session, actions)
         is LessonScreen.InlineChoice -> InlineChoiceBody(screen, session, actions)
+        is LessonScreen.Grammar -> session.script.rules.forEach { RuleView(it) }
     }
 
     val transcript = screen.transcript
@@ -237,6 +343,13 @@ private fun ScreenBody(
     if (session.isChecked) {
         val score = session.screenScore(screen)
         Text(stringResource(R.string.exercise_score, score.correct, score.total), style = MaterialTheme.typography.titleMedium)
+        if (score.correct < score.total) {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium)) {
+                rules.forEach { rule ->
+                    TextLink(stringResource(R.string.lesson_flow_see_rule, rule.number)) { actions.onGrammarShown(rule.number) }
+                }
+            }
+        }
     }
 }
 
@@ -253,6 +366,51 @@ private fun LessonScreen.transcriptFor(track: LessonTrack): Transcript? {
     }
 }
 
+private val LocalShownPlayers = compositionLocalOf<MutableMap<String, Boolean>> { mutableMapOf() }
+
+@Composable
+private fun PinnedPlayer(
+    uiState: LessonFlowUiState.Loaded,
+    actions: LessonFlowActions,
+    shownPlayers: Map<String, Boolean>,
+) {
+    val file = uiState.tracks.activeFile
+    val track = file?.let { active -> uiState.session.screen.allTracks().firstOrNull { it.file == active } }
+    val state = track?.let { uiState.tracks.of(it.file) }
+    val pinned = uiState.results == null &&
+        track != null &&
+        state != null &&
+        (state.isPlaying || state.positionMs > 0) &&
+        shownPlayers[track.file] == false
+    var last by remember { mutableStateOf<LessonTrack?>(null) }
+    if (pinned) last = track
+    AnimatedVisibility(
+        visible = pinned,
+        enter = slideInVertically { it } + fadeIn(),
+        exit = slideOutVertically { it } + fadeOut(),
+    ) {
+        val shown = last ?: return@AnimatedVisibility
+        Surface(tonalElevation = Dimens.spacingTiny) {
+            Column(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.spacingMedium, vertical = Dimens.spacingSmall),
+                verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
+            ) {
+                Text(
+                    shown.label ?: uiState.session.screen.title,
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                AudioPlayerRow(
+                    state = uiState.tracks.of(shown.file),
+                    onPlayPause = { actions.onPlay(shown) },
+                    onSeek = { actions.onSeek(shown, it) },
+                    onSpeedChanged = actions.onSpeedChanged,
+                )
+            }
+        }
+    }
+}
+
 @Composable
 private fun TrackPlayer(
     track: LessonTrack,
@@ -261,6 +419,7 @@ private fun TrackPlayer(
     showLabel: Boolean = true,
 ) {
     val session = uiState.session
+    val shownPlayers = LocalShownPlayers.current
     Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
         if (showLabel) track.label?.let { Text(it, style = MaterialTheme.typography.labelLarge) }
         val state = uiState.tracks.of(track.file)
@@ -268,6 +427,8 @@ private fun TrackPlayer(
             state = state,
             onPlayPause = { actions.onPlay(track) },
             onSeek = { actions.onSeek(track, it) },
+            onSpeedChanged = actions.onSpeedChanged,
+            modifier = Modifier.onGloballyPositioned { shownPlayers[track.file] = it.boundsInWindow().height > 0f },
         )
         if (state.isMissing) {
             Text(
@@ -357,6 +518,7 @@ private fun QuestionField(
         labelWidth = labelWidth,
         usualForm = session.usualForm(screenId, question.key),
         leading = question.picture?.let { picture -> { ItemPictureView(picture) } },
+        imeAction = imeActionOf(session, question.key),
     )
 }
 
@@ -419,12 +581,31 @@ private fun ChoiceBody(
             screen.legend.forEach { Text(richText(it), style = MaterialTheme.typography.bodyLarge) }
         }
     }
-    val shown = remember(session.script.lessonId, screen) {
-        screen.items.associate { it.question.key to session.optionsOf(screen, it).toImmutableList() }
+    val visit = rememberSaveable(screen.id) { Random.nextInt() }
+    val shown = remember(session.script.lessonId, screen, visit) {
+        screen.items.associate { it.question.key to session.optionsOf(screen, it, visit).toImmutableList() }
     }
-    Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium)) {
+    Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
         screen.items.forEach { item ->
             val question = item.question
+            val prompt = question.prompt
+            if (prompt != null && question.picture == null) {
+                InlineChoiceRow(
+                    label = null,
+                    fragments = if (BLANK in prompt) prompt.split(BLANK, limit = 2) else listOf(prompt, ""),
+                    groups = listOf(
+                        InlineChoiceGroup(
+                            options = shown.getValue(question.key),
+                            selected = session.answer(screen.id, question.key).ifEmpty { null },
+                            answer = session.expectedAnswer(screen.id, question.key),
+                            info = question.feedback,
+                        ),
+                    ),
+                    checked = session.isChecked,
+                    onSelect = { _, option -> actions.onAnswerChanged(question.key, option) },
+                )
+                return@forEach
+            }
             MinimalPairRow(
                 item = MinimalPairItem(
                     "",
@@ -474,6 +655,7 @@ private fun GapFillBody(
                         else -> AnswerState.Incorrect()
                     },
                     onValueChanged = { at, value -> actions.onAnswerChanged(keys[at], value) },
+                    imeAction = keys.lastOrNull()?.let { imeActionOf(session, it) } ?: ImeAction.Next,
                 )
             }
         }
@@ -493,6 +675,7 @@ private fun FreeWritingBody(
         values = screen.fields.indices.map { session.answer(screen.id, it.toString()) },
         enabled = !session.isFinished && !uiState.isReviewing,
         onValueChanged = { index, value -> actions.onAnswerChanged(index.toString(), value) },
+        multiline = screen.fields.indices.map(screen::isMultiline),
     )
     if (uiState.isReviewing) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
@@ -517,18 +700,20 @@ private fun FreeWritingBody(
 private fun Footer(
     uiState: LessonFlowUiState.Loaded,
     actions: LessonFlowActions,
+    isTyping: Boolean,
 ) {
     val session = uiState.session
     Surface(tonalElevation = Dimens.spacingTiny) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = Dimens.spacingMedium, vertical = if (isTyping) Dimens.spacingTiny else Dimens.spacingMedium),
             horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         ) {
             if (uiState.results != null) {
                 uiState.nextLessonId?.let { next ->
                     Button(onClick = { actions.onNextLesson(next) }) { Text(stringResource(R.string.lesson_flow_next_lesson)) }
                 }
-                OutlinedButton(onClick = actions.onFinished) { Text(stringResource(R.string.lesson_flow_close)) }
                 return@Row
             }
             if (session.canGoBack) OutlinedButton(onClick = actions.onBack) { Text(stringResource(R.string.lesson_flow_back)) }
@@ -548,6 +733,11 @@ private fun Footer(
         }
     }
 }
+
+private fun imeActionOf(
+    session: LessonSession,
+    key: String,
+): ImeAction = if (session.screen.questions.lastOrNull()?.key == key) ImeAction.Done else ImeAction.Next
 
 private fun answerState(
     verdict: AnswerVerdict?,

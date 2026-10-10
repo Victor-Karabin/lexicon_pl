@@ -1,6 +1,8 @@
 package com.lexicon.interactors.course
 
 import com.lexicon.model.course.ChoiceQuestion
+import com.lexicon.model.course.FirstTry
+import com.lexicon.model.course.GrammarRule
 import com.lexicon.model.course.LessonProgress
 import com.lexicon.model.course.LessonQuestion
 import com.lexicon.model.course.LessonScreen
@@ -31,10 +33,20 @@ data class StepScore(
     val score: Score,
 )
 
+data class ExerciseToImprove(
+    val screen: LessonScreen,
+    val firstTry: FirstTry,
+    val rules: List<GrammarRule>,
+)
+
 data class LessonResults(
     val steps: List<StepScore>,
+    val toImprove: List<ExerciseToImprove> = emptyList(),
+    val missedPolishLetters: Int = 0,
 ) {
     val overall: Score get() = Score(steps.sumOf { it.score.correct }, steps.sumOf { it.score.total })
+
+    val rulesToRevisit: List<GrammarRule> get() = toImprove.flatMap { it.rules }.distinctBy { it.number }.sortedBy { it.number }
 }
 
 data class LessonSession(
@@ -66,17 +78,20 @@ data class LessonSession(
 
     val isLastScreen: Boolean get() = index == script.screens.lastIndex
 
-    val isAtEnd: Boolean get() = isLastScreen && isFinished && failedStep == null
+    val isAtEnd: Boolean get() = isLastScreen && isFinished && failedScore == null
 
     val results: LessonResults
-        get() = LessonResults(script.steps.map { StepScore(it, stepScore(it)) }.filter { it.score.total > 0 })
+        get() = LessonResults(
+            steps = script.steps.map { StepScore(it, stepScore(it)) }.filter { it.score.total > 0 },
+            toImprove = script.screens
+                .mapNotNull { screen -> progress.firstTries[screen.id]?.let { ExerciseToImprove(screen, it, script.rulesOf(screen.id)) } }
+                .filter { it.firstTry.correct < it.firstTry.total }
+                .sortedBy { it.firstTry.correct.toFloat() / it.firstTry.total },
+            missedPolishLetters = progress.firstTries.values.sumOf { it.almost },
+        )
 
-    val failedStep: StepScore?
-        get() {
-            val step = script.stepOf(screen.id) ?: return null
-            if (screen.id != step.screenIds.last() || needsCheck) return null
-            return StepScore(step, stepScore(step)).takeUnless { it.score.isPassed }
-        }
+    val failedScore: Score?
+        get() = screenScore(screen).takeIf { screen.isGraded && isChecked && !it.isPassed }
 
     fun isChecked(screenId: String): Boolean = screenId in progress.checked
 
@@ -107,7 +122,15 @@ data class LessonSession(
     fun check(): LessonSession {
         if (!canCheck) return this
         if (screen is LessonScreen.FreeWriting) return finish()
-        return copy(progress = progress.copy(checked = (progress.checked + screen.id).toImmutableSet()))
+        val checked = copy(progress = progress.copy(checked = (progress.checked + screen.id).toImmutableSet()))
+        if (screen.id in progress.firstTries) return checked
+        val verdicts = screen.questions.map { checked.verdict(screen.id, it.key) }
+        val first = FirstTry(
+            correct = verdicts.count { it == AnswerVerdict.CORRECT },
+            total = verdicts.size,
+            almost = verdicts.count { it == AnswerVerdict.ALMOST },
+        )
+        return checked.copy(progress = checked.progress.copy(firstTries = (progress.firstTries + (screen.id to first)).toImmutableMap()))
     }
 
     fun withReview(review: WritingReview): LessonSession {
@@ -117,7 +140,7 @@ data class LessonSession(
 
     fun next(): LessonSession {
         if (needsCheck) return this
-        failedStep?.let { return restart(it.step) }
+        if (failedScore != null) return retry()
         val done = finish()
         return if (done.isLastScreen) done else done.copy(progress = done.progress.copy(screenIndex = index + 1))
     }
@@ -181,10 +204,11 @@ data class LessonSession(
     fun optionsOf(
         screen: LessonScreen.Choice,
         item: ChoiceQuestion,
+        visit: Int,
     ): List<String> {
         if (!screen.shuffle || screen.legend.isNotEmpty()) return item.options
         val shared = screen.items.all { it.options == item.options }
-        val seed = listOfNotNull(script.lessonId.value, screen.id, item.question.key.takeUnless { shared }).joinToString("/")
+        val seed = listOfNotNull(visit, script.lessonId.value, screen.id, item.question.key.takeUnless { shared }).joinToString("/")
         return item.options.shuffled(Random(seed.hashCode()))
     }
 
@@ -214,23 +238,14 @@ data class LessonSession(
         return copy(progress = progress.copy(finished = (progress.finished + screen.id).toImmutableSet()))
     }
 
-    private fun restart(step: LessonStep): LessonSession {
-        val wrong = script.screens
-            .filter { it.id in step.screenIds && it.isGraded }
-            .associate {
-                    screen ->
-                screen.id to screen.questions.filter { verdict(screen.id, it.key) != AnswerVerdict.CORRECT }.map { it.key }
-            }
-            .filterValues { it.isNotEmpty() }
-        val answers = progress.answers.mapValues { (screenId, values) ->
-            wrong[screenId]?.let { keys -> (values - keys.toSet()).toImmutableMap() } ?: values
-        }
+    private fun retry(): LessonSession {
+        val wrong = screen.questions.filter { verdict(screen.id, it.key) != AnswerVerdict.CORRECT }.map { it.key }.toSet()
+        val kept = progress.answers[screen.id]?.let { (it - wrong).toImmutableMap() }
         return copy(
             progress = progress.copy(
-                screenIndex = script.screens.indexOfFirst { it.id == step.screenIds.first() },
-                answers = answers.toImmutableMap(),
-                checked = (progress.checked - wrong.keys).toImmutableSet(),
-                finished = (progress.finished - wrong.keys).toImmutableSet(),
+                answers = (if (kept == null) progress.answers else progress.answers + (screen.id to kept)).toImmutableMap(),
+                checked = (progress.checked - screen.id).toImmutableSet(),
+                finished = (progress.finished - screen.id).toImmutableSet(),
             ),
         )
     }

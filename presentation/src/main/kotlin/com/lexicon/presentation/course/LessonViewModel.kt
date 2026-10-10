@@ -19,6 +19,7 @@ import com.lexicon.model.vocabulary.Word
 import com.lexicon.model.vocabulary.WordStatus
 import com.lexicon.model.vocabulary.statusOf
 import com.lexicon.presentation.common.speakQuietly
+import com.lexicon.presentation.presets.sortedForDisplay
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -124,7 +125,7 @@ class LessonViewModel(
         content.value = Content(lesson = lesson, hasScript = hasScript, isScriptStarted = isScriptStarted)
         content.value = Content(
             lesson = lesson,
-            words = getLessonVocabulary(lessonId),
+            words = getLessonVocabulary(lessonId).sortedForDisplay(),
             wordsLoaded = true,
             hasScript = hasScript,
             isScriptStarted = isScriptStarted,

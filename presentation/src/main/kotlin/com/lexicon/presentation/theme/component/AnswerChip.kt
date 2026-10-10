@@ -70,7 +70,11 @@ fun AnswerChip(
             .background(background)
             .then(clickModifier)
             .padding(
-                horizontal = if (variant == AnswerChipVariant.CHIP && !compact) Dimens.spacingLarge else Dimens.spacingMedium,
+                horizontal = when {
+                    compact -> Dimens.spacingSmall
+                    variant == AnswerChipVariant.CHIP -> Dimens.spacingLarge
+                    else -> Dimens.spacingMedium
+                },
                 vertical = if (compact) 6.dp else 12.dp,
             ),
         verticalAlignment = Alignment.CenterVertically,

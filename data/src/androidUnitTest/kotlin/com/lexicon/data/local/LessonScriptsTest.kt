@@ -3,10 +3,18 @@ package com.lexicon.data.local
 import com.lexicon.model.course.GAP_PATTERN
 import com.lexicon.model.course.LessonScreen
 import com.lexicon.model.course.LessonScript
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.File
+
+private const val STEM = 4
+private const val SHORTEST_WORD = 3
+private val afterSubmit = setOf("newWords", "model", "checklist")
 
 class LessonScriptsTest {
     private val assets: Map<String, LessonScriptAsset> =
@@ -23,6 +31,27 @@ class LessonScriptsTest {
     fun `there is a script for lessons 1 to 3`() {
         assertEquals(listOf("lesson_krok-a1-01.json", "lesson_krok-a1-02.json", "lesson_krok-a1-03.json"), assets.keys.toList())
     }
+
+    @Test
+    fun `every lesson opens with its ungraded grammar screen in a step of its own`() =
+        scripts.forEach { (name, script) ->
+            val grammar = script.steps.first()
+            assertTrue(name, grammar.isGrammar && grammar.screenIds == listOf("0"))
+            assertTrue(name, script.steps.drop(1).none { it.isGrammar })
+            assertTrue(name, script.screens.first() is LessonScreen.Grammar)
+            assertTrue(name, script.rules.isNotEmpty() && script.rules.map { it.number } == (1..script.rules.size).toList())
+            assertTrue(name, script.rules.all { it.title.isNotBlank() && (it.tables.isNotEmpty() || it.notes.isNotEmpty()) })
+        }
+
+    @Test
+    fun `rule links point at rules and screens that exist`() =
+        scripts.forEach { (name, script) ->
+            val ids = script.screens.map { it.id }
+            script.ruleLinks.forEach { (screenId, numbers) ->
+                assertTrue("$name $screenId", screenId in ids && screenId != "0")
+                assertEquals("$name $screenId", numbers.size, script.rulesOf(screenId).size)
+            }
+        }
 
     @Test
     fun `steps cover every screen once, in order`() {
@@ -96,6 +125,31 @@ class LessonScriptsTest {
         }
 
     @Test
+    fun `new words appear in the text their screen shows before the answers`() =
+        assets.forEach { (name, asset) ->
+            asset.screens.filter { it.newWords.isNotEmpty() }.forEach { screen ->
+                val shown = visibleText(lessonJson.encodeToJsonElement(ScreenAsset.serializer(), screen)).lowercase()
+                screen.newWords.forEach { word ->
+                    val words = word.polish.lowercase().split(
+                        ' ',
+                        '/',
+                        ',',
+                        '·',
+                    ).map { it.trim('.', '?', '!', '…') }.filter { it.isNotEmpty() }
+                    val stems = words.filter { it.length >= SHORTEST_WORD }.ifEmpty { words }
+                    assertTrue("$name ${screen.id} ${word.polish}", stems.any { shown.contains(it.take(STEM)) })
+                }
+            }
+        }
+
+    private fun visibleText(element: JsonElement): String =
+        when (element) {
+            is JsonObject -> element.filterKeys { it !in afterSubmit }.values.joinToString(" ") { visibleText(it) }
+            is JsonArray -> element.joinToString(" ") { visibleText(it) }
+            is JsonPrimitive -> if (element.isString) element.content else ""
+        }
+
+    @Test
     fun `interchangeable items name real items of their screen`() =
         eachScreen { where, screen ->
             val keys = screen.questions.map { it.key }
@@ -126,6 +180,16 @@ class LessonScriptsTest {
             assertEquals(name, emptyList<String>(), referenced.filterNot { it in ids })
             assertEquals(name, emptyList<String>(), ids.filterNot { it in referenced })
         }
+
+    @Test
+    fun `free writing asks for several lines only where its model answer spans lines`() {
+        val multiline = scripts.flatMap { (name, script) ->
+            script.screens.filterIsInstance<LessonScreen.FreeWriting>().flatMap { screen ->
+                screen.fields.indices.filter(screen::isMultiline).map { "$name ${screen.id} $it" }
+            }
+        }
+        assertEquals(listOf("lesson_krok-a1-01.json 2D 0", "lesson_krok-a1-01.json 2D 1"), multiline)
+    }
 
     @Test
     fun `every transcript has something to show`() =

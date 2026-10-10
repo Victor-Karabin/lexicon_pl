@@ -1,6 +1,7 @@
 package com.lexicon.data.local
 
 import com.lexicon.model.course.AnswerKeyboard
+import com.lexicon.model.course.FirstTry
 import com.lexicon.model.course.LessonPhrase
 import com.lexicon.model.course.LessonProgress
 import com.lexicon.model.course.LessonScreen
@@ -21,12 +22,12 @@ class LessonScriptAssetTest {
     private fun screen(id: String) = script.screens.first { it.id == id }
 
     @Test
-    fun `lesson 1 has 28 screens in seven steps that cover every screen once`() {
-        assertEquals(28, script.screens.size)
-        assertEquals(listOf("2A", "2B", "2C", "2D"), script.steps[1].screenIds)
-        assertEquals(7, script.steps.size)
+    fun `lesson 1 has 29 screens, the grammar screen and seven steps, covering every screen once`() {
+        assertEquals(29, script.screens.size)
+        assertEquals(listOf("2A", "2B", "2C", "2D"), script.steps[2].screenIds)
+        assertEquals(8, script.steps.size)
         assertEquals(script.screens.map { it.id }, script.steps.flatMap { it.screenIds })
-        assertEquals(listOf("4A", "4B", "4C", "4D"), script.steps[3].screenIds)
+        assertEquals(listOf("4A", "4B", "4C", "4D"), script.steps[4].screenIds)
     }
 
     @Test
@@ -127,7 +128,7 @@ class LessonScriptAssetTest {
         assertEquals(TranscriptUnlock.AfterCheck, script.newWords.getValue("4D").unlock)
         assertEquals(TranscriptUnlock.Always, script.newWords.getValue("1A").unlock)
         assertEquals(LessonPhrase("łatwo", "easily"), script.newWords.getValue("1A").words.first())
-        assertEquals(17, script.newWords.size)
+        assertEquals(16, script.newWords.size)
     }
 
     @Test
@@ -138,6 +139,7 @@ class LessonScriptAssetTest {
             checked = persistentSetOf("1B"),
             finished = persistentSetOf("1A", "2C"),
             reviews = persistentMapOf("2C" to WritingReview(persistentListOf("Good greeting."), persistentListOf("Use *pani*."))),
+            firstTries = persistentMapOf("1B" to FirstTry(correct = 6, total = 8, almost = 1)),
         )
         val stored = lessonJson.encodeToString(LessonProgressAsset.serializer(), progress.toAsset())
         assertEquals(progress, lessonJson.decodeFromString<LessonProgressAsset>(stored).toModel())

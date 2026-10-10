@@ -44,6 +44,12 @@ class VocabularyRepositoryImpl(
         return ids.inBatches { wordDao.getByIds(it) }.map { it.toWord() }
     }
 
+    override suspend fun wordsWithTexts(texts: List<String>): List<Word> {
+        if (texts.isEmpty()) return emptyList()
+        vocabularySeeder.ensureSeeded()
+        return texts.inBatches { wordDao.withTexts(it) }.map { it.toWord() }
+    }
+
     override suspend fun search(
         foldedQuery: String,
         levels: Set<String>,

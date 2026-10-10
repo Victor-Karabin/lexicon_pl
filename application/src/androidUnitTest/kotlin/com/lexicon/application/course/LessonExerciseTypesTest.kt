@@ -114,7 +114,7 @@ class LessonExerciseTypesTest {
     }
 
     @Test
-    fun `options are shuffled the same way every time, once per screen when the items share them`() {
+    fun `options keep one order during a visit, shuffled once per screen when the items share them`() {
         val pronouns = persistentListOf("on", "ona", "ono", "oni", "one")
         val choice = LessonScreen.Choice(
             id = "3C",
@@ -124,16 +124,25 @@ class LessonExerciseTypesTest {
             transcript = null,
             items = (0..5).map { ChoiceQuestion(question(it.toString(), "ona"), pronouns) }.toImmutableList(),
         )
-        val shown = choice.items.map { session(choice).optionsOf(choice, it) }
+        val shown = choice.items.map { session(choice).optionsOf(choice, it, visit = 7) }
         assertTrue(shown.all { it == shown.first() })
         assertEquals(pronouns.toSet(), shown.first().toSet())
-        assertEquals(shown, choice.items.map { session(choice).optionsOf(choice, it) })
+        assertEquals(shown, choice.items.map { session(choice).optionsOf(choice, it, visit = 7) })
 
-        assertEquals(pronouns, session(choice).optionsOf(choice.copy(shuffle = false), choice.items.first()))
+        assertEquals(pronouns, session(choice).optionsOf(choice.copy(shuffle = false), choice.items.first(), visit = 7))
         assertEquals(
             listOf("a", "b", "c", "d", "e", "f"),
-            session(halves).optionsOf(halves.copy(legend = persistentListOf("a. pani")), halves.items.first()),
+            session(halves).optionsOf(halves.copy(legend = persistentListOf("a. pani")), halves.items.first(), visit = 7),
         )
+    }
+
+    @Test
+    fun `the two words of a pair swap places between visits`() {
+        val pair = ChoiceQuestion(question("0", "krzywy"), persistentListOf("krzywy", "grzyby"))
+        val other = ChoiceQuestion(question("1", "cześć"), persistentListOf("sześć", "cześć"))
+        val pairs = LessonScreen.Choice("1C", "", "", persistentListOf(), null, persistentListOf(pair, other))
+        val orders = (1..20).map { visit -> session(pairs).optionsOf(pairs, pair, visit) }.toSet()
+        assertEquals(setOf(listOf("krzywy", "grzyby"), listOf("grzyby", "krzywy")), orders)
     }
 
     @Test

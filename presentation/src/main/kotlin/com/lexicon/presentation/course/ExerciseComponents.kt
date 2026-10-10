@@ -38,6 +38,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -55,6 +56,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.setProgress
@@ -145,6 +148,7 @@ fun AudioPlayerRow(
     onPlayPause: () -> Unit,
     onSeek: (Long) -> Unit,
     modifier: Modifier = Modifier,
+    onSpeedChanged: (() -> Unit)? = null,
 ) {
     val duration = state.durationMs
     var dragging by remember { mutableStateOf<Float?>(null) }
@@ -179,7 +183,29 @@ fun AudioPlayerRow(
             },
             modifier = Modifier.weight(1f),
         )
+        onSpeedChanged?.let { SpeedButton(state.speed, it) }
     }
+}
+
+@Composable
+private fun SpeedButton(
+    speed: Float,
+    onClick: () -> Unit,
+) {
+    val shown = if (speed % 1f == 0f) speed.toInt().toString() else speed.toString()
+    val description = stringResource(R.string.exercise_speed_description, shown)
+    Text(
+        text = stringResource(R.string.exercise_speed, shown),
+        style = MaterialTheme.typography.labelLarge,
+        fontWeight = FontWeight.SemiBold,
+        color = MaterialTheme.colorScheme.primary,
+        modifier = Modifier
+            .minimumInteractiveComponentSize()
+            .clip(LexiconShapes.small)
+            .clickable(role = Role.Button, onClick = onClick)
+            .semantics { contentDescription = description }
+            .padding(horizontal = Dimens.spacingSmall, vertical = Dimens.spacingTiny),
+    )
 }
 
 @Composable
@@ -298,6 +324,7 @@ fun MinimalPairRow(
                         ),
                         onClick = { onSelect(option) }.takeIf { !checked },
                         singleLine = true,
+                        compact = columns >= MARK_OPTIONS_PER_ROW,
                     )
                 }
                 repeat(columns - row.size) { Spacer(modifier = Modifier.weight(1f)) }
@@ -319,7 +346,9 @@ fun GapFillRow(
     almost: List<Boolean> = emptyList(),
     infos: List<String?> = emptyList(),
     usualForms: List<String?> = emptyList(),
+    imeAction: ImeAction = ImeAction.Next,
 ) {
+    val gaps = item.prompt.split(GAP_MARKER).size - 1
     var openInfo by rememberSaveable { mutableStateOf<Int?>(null) }
     val checked = answerState !is AnswerState.Unanswered
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -348,6 +377,7 @@ fun GapFillRow(
                         answerState = answerState,
                         onValueChanged = { onValueChanged(at, it) },
                         usualForm = usualForms.getOrNull(at),
+                        imeAction = if (at == gaps - 1) imeAction else ImeAction.Next,
                     )
                     if (checked && infos.getOrNull(at) != null) {
                         InfoButton(onClick = { openInfo = if (openInfo == at) null else at })
@@ -381,6 +411,7 @@ fun TranscribeRow(
     onSpeak: (() -> Unit)? = null,
     usualForm: String? = null,
     leading: (@Composable () -> Unit)? = null,
+    imeAction: ImeAction = ImeAction.Next,
 ) {
     var showInfo by rememberSaveable { mutableStateOf(false) }
     val checked = answerState !is AnswerState.Unanswered
@@ -432,7 +463,7 @@ fun TranscribeRow(
                     keyboardType = keyboardType,
                     capitalization = KeyboardCapitalization.None,
                     autoCorrectEnabled = false,
-                    imeAction = ImeAction.Next,
+                    imeAction = imeAction,
                 ),
                 modifier = Modifier.weight(1f),
                 decorationBox = { field ->
@@ -540,7 +571,7 @@ fun OrderLineRow(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun InlineChoiceRow(
-    label: String,
+    label: String?,
     fragments: List<String>,
     groups: List<InlineChoiceGroup>,
     checked: Boolean,
@@ -552,22 +583,28 @@ fun InlineChoiceRow(
             verticalArrangement = Arrangement.Center,
             horizontalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
         ) {
-            Text(
-                text = "$label)",
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(vertical = Dimens.spacingSmall).align(Alignment.CenterVertically),
-            )
+            label?.let {
+                Text(
+                    text = "$it)",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(vertical = Dimens.spacingSmall).align(Alignment.CenterVertically),
+                )
+            }
             fragments.forEachIndexed { index, fragment ->
                 fragment.split(' ').filter { it.isNotBlank() }.forEach { word ->
                     Text(
                         text = word,
                         style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.padding(vertical = Dimens.spacingSmall).align(Alignment.CenterVertically),
+                        modifier = Modifier.padding(vertical = Dimens.spacingTiny).align(Alignment.CenterVertically),
                     )
                 }
                 val group = groups.getOrNull(index) ?: return@forEachIndexed
-                Row(horizontalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
+                    verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                ) {
                     group.options.forEach { option ->
                         AnswerChip(
                             label = option,
@@ -821,6 +858,7 @@ private fun InlineGap(
     answerState: AnswerState,
     onValueChanged: (String) -> Unit,
     usualForm: String? = null,
+    imeAction: ImeAction = ImeAction.Next,
 ) {
     val underline = when {
         isCorrect == true -> LexiconSuccess
@@ -848,7 +886,7 @@ private fun InlineGap(
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.None,
                 autoCorrectEnabled = false,
-                imeAction = ImeAction.Next,
+                imeAction = imeAction,
             ),
             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
             decorationBox = { field ->

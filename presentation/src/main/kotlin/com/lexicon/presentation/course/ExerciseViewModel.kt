@@ -115,6 +115,8 @@ class ExerciseViewModel(
         tracks.toggle(viewModelScope, file, loaded.remoteId)
     }
 
+    fun onSpeedChanged() = tracks.nextSpeed()
+
     fun onSeekAudio(positionMs: Long) {
         val file = content.value?.exercise?.audioFile ?: return
         tracks.seek(file, positionMs)

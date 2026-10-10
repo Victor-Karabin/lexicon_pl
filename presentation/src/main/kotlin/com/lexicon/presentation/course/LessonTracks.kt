@@ -15,11 +15,14 @@ import kotlinx.coroutines.launch
 
 private const val TAG = "LessonTracks"
 
+val playbackSpeeds = listOf(0.5f, 1f, 1.5f, 2f)
+
 data class TrackState(
     val isPlaying: Boolean = false,
     val positionMs: Long = 0,
     val durationMs: Long = 0,
     val isMissing: Boolean = false,
+    val speed: Float = 1f,
 )
 
 data class TrackStates(
@@ -27,7 +30,10 @@ data class TrackStates(
     private val positions: Map<String, Long> = emptyMap(),
     private val missing: Set<String> = emptySet(),
     private val playback: AudioPlayback? = null,
+    private val speed: Float = 1f,
 ) {
+    val activeFile: String? get() = playback?.file
+
     fun of(file: String): TrackState {
         val live = playback?.takeIf { it.file == file }
         return TrackState(
@@ -35,6 +41,7 @@ data class TrackStates(
             positionMs = live?.positionMs ?: positions[file] ?: 0,
             durationMs = live?.durationMs?.takeIf { it > 0 } ?: durations[file] ?: 0,
             isMissing = file in missing,
+            speed = speed,
         )
     }
 }
@@ -53,9 +60,14 @@ class LessonTracks(
     private val known = MutableStateFlow(Known())
 
     val states: Flow<TrackStates> =
-        combine(known, player.playback) { known, playback ->
-            TrackStates(known.durations, known.positions, known.missing, playback)
+        combine(known, player.playback, player.speed) { known, playback, speed ->
+            TrackStates(known.durations, known.positions, known.missing, playback, speed)
         }
+
+    fun nextSpeed() {
+        val at = playbackSpeeds.indexOf(player.speed.value)
+        player.setSpeed(playbackSpeeds[(at + 1) % playbackSpeeds.size])
+    }
 
     fun preload(
         scope: CoroutineScope,

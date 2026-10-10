@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.boundary.LessonAudioLibrary
 import com.lexicon.boundary.LessonAudioPlayer
+import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.course.GetLessonProgressUseCase
@@ -16,14 +17,25 @@ import com.lexicon.interactors.course.LessonSession
 import com.lexicon.interactors.course.ObserveCoursesUseCase
 import com.lexicon.interactors.course.ReviewWritingUseCase
 import com.lexicon.interactors.course.SaveLessonProgressUseCase
+import com.lexicon.interactors.course.Score
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
-import com.lexicon.interactors.course.StepScore
 import com.lexicon.interactors.course.WritingReviewOutcome
+import com.lexicon.interactors.presets.FindWordsUseCase
+import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
+import com.lexicon.interactors.presets.SetWordStatusUseCase
 import com.lexicon.model.course.LessonId
 import com.lexicon.model.course.LessonProgress
 import com.lexicon.model.course.LessonScreen
 import com.lexicon.model.course.LessonTrack
 import com.lexicon.model.course.allTracks
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
+import com.lexicon.model.vocabulary.WordStatus
+import com.lexicon.model.vocabulary.statusOf
+import com.lexicon.presentation.common.speakQuietly
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.persistentMapOf
+import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -38,6 +50,8 @@ import kotlinx.coroutines.launch
 private const val TAG = "LessonFlow"
 
 enum class ReviewProblem { OFFLINE, UNAVAILABLE }
+
+data class GrammarSheet(val rule: Int?)
 
 sealed interface LessonFlowUiState {
     data object Loading : LessonFlowUiState
@@ -54,8 +68,14 @@ sealed interface LessonFlowUiState {
         val reviewProblem: ReviewProblem? = null,
         val results: LessonResults? = null,
         val nextLessonId: LessonId? = null,
-        val retry: StepScore? = null,
-    ) : LessonFlowUiState
+        val retry: Score? = null,
+        val grammar: GrammarSheet? = null,
+        val newWordEntries: ImmutableMap<String, Word> = persistentMapOf(),
+        val wordStatuses: ImmutableMap<VocabularyId, WordStatus> = persistentMapOf(),
+    ) : LessonFlowUiState {
+        val showsGrammarButton: Boolean
+            get() = results == null && session.script.rules.isNotEmpty() && session.screen !is LessonScreen.Grammar
+    }
 }
 
 class LessonFlowViewModel(
@@ -67,6 +87,10 @@ class LessonFlowViewModel(
     private val getLesson: GetLessonUseCase,
     private val observeCourses: ObserveCoursesUseCase,
     private val reviewWriting: ReviewWritingUseCase,
+    private val findWords: FindWordsUseCase,
+    private val setWordStatus: SetWordStatusUseCase,
+    observeWordStatuses: ObserveWordStatusesUseCase,
+    private val speechSynthesizer: SpeechSynthesizer,
     audioLibrary: LessonAudioLibrary,
     audioPlayer: LessonAudioPlayer,
     private val dispatchers: DispatcherProvider,
@@ -82,7 +106,9 @@ class LessonFlowViewModel(
         val reviewProblem: ReviewProblem? = null,
         val results: LessonResults? = null,
         val nextLessonId: LessonId? = null,
-        val retry: StepScore? = null,
+        val retry: Score? = null,
+        val grammar: GrammarSheet? = null,
+        val newWordEntries: ImmutableMap<String, Word> = persistentMapOf(),
     )
 
     private val content = MutableStateFlow<Content?>(null)
@@ -92,7 +118,7 @@ class LessonFlowViewModel(
     private val pendingSaves = Channel<LessonProgress>(Channel.CONFLATED)
 
     val uiState: StateFlow<LessonFlowUiState> =
-        combine(content, tracks.states) { loaded, tracks ->
+        combine(content, tracks.states, observeWordStatuses()) { loaded, tracks, statuses ->
             when {
                 loaded == null -> LessonFlowUiState.Loading
                 loaded.session == null -> LessonFlowUiState.NotFound
@@ -108,6 +134,9 @@ class LessonFlowViewModel(
                         results = loaded.results,
                         nextLessonId = loaded.nextLessonId,
                         retry = loaded.retry,
+                        grammar = loaded.grammar,
+                        newWordEntries = loaded.newWordEntries,
+                        wordStatuses = statuses.toImmutableMap(),
                     )
             }
         }.stateIn(
@@ -123,6 +152,12 @@ class LessonFlowViewModel(
             val lesson = getLesson(lessonId)
             content.value = Content(session = session, lessonNumber = lesson?.number, lessonTitle = lesson?.title)
             session?.let(::preload)
+            val newWords = script?.newWords?.values?.flatMap { it.words }?.map { it.polish }.orEmpty()
+            if (newWords.isNotEmpty()) {
+                runSuspendCatching { findWords(newWords) }
+                    .onSuccess { found -> content.update { it?.copy(newWordEntries = found.toImmutableMap()) } }
+                    .onFailure { Log.w(TAG, "New words could not be matched to the vocabulary", it) }
+            }
         }
         viewModelScope.launch(dispatchers.io) {
             pendingSaves.consumeAsFlow().collect { progress ->
@@ -161,7 +196,7 @@ class LessonFlowViewModel(
     fun onNext() {
         val session = content.value?.session ?: return
         if (session.needsCheck) return
-        val failed = session.failedStep
+        val failed = session.failedScore
         val next = session.next()
         change { next }
         when {
@@ -171,6 +206,23 @@ class LessonFlowViewModel(
     }
 
     fun onRetryAcknowledged() = content.update { it?.copy(retry = null) }
+
+    fun onGrammarShown(rule: Int?) = content.update { it?.copy(grammar = GrammarSheet(rule)) }
+
+    fun onGrammarDismissed() = content.update { it?.copy(grammar = null) }
+
+    fun onPronounce(text: String) {
+        viewModelScope.launch(dispatchers.io) { speechSynthesizer.speakQuietly(text) }
+    }
+
+    fun onWordStatusCycled(id: VocabularyId) {
+        val loaded = uiState.value as? LessonFlowUiState.Loaded ?: return
+        val current = loaded.wordStatuses.statusOf(id)
+        viewModelScope.launch(dispatchers.io) {
+            runSuspendCatching { setWordStatus(id, current.next()) }
+                .onFailure { Log.w(TAG, "Word status could not be saved", it) }
+        }
+    }
 
     fun onBack() = change { it.previous() }
 
@@ -182,6 +234,8 @@ class LessonFlowViewModel(
         }
 
     fun onPlay(track: LessonTrack) = tracks.toggle(viewModelScope, track.file, track.remoteId)
+
+    fun onSpeedChanged() = tracks.nextSpeed()
 
     fun onSeek(
         track: LessonTrack,

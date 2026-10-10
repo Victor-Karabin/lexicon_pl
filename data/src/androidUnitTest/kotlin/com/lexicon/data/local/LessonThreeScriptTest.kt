@@ -16,9 +16,9 @@ class LessonThreeScriptTest {
     private fun screen(id: String) = script.screens.first { it.id == id }
 
     @Test
-    fun `lesson 3 has 34 screens in eight steps, the last one a review`() {
-        assertEquals(34, script.screens.size)
-        assertEquals(8, script.steps.size)
+    fun `lesson 3 has 35 screens, the grammar screen and eight steps, the last one a review`() {
+        assertEquals(35, script.screens.size)
+        assertEquals(9, script.steps.size)
         assertEquals(listOf("8A", "8B"), script.steps.single { it.isReview }.screenIds)
     }
 

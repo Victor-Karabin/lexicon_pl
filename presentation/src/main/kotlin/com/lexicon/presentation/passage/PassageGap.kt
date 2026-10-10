@@ -36,6 +36,7 @@ fun PassageGap(
     readOnly: Boolean,
     onValueChanged: (String) -> Unit,
     onCleared: () -> Unit,
+    imeAction: ImeAction = ImeAction.Next,
 ) {
     val underline = when (isCorrect) {
         true -> LexiconSuccess
@@ -70,7 +71,7 @@ fun PassageGap(
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
         ),
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        keyboardOptions = KeyboardOptions(imeAction = imeAction),
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
         decorationBox = { field ->
             Column(modifier = Modifier.width(width)) {

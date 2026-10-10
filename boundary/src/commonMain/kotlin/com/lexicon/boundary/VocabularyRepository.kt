@@ -17,6 +17,8 @@ interface VocabularyRepository {
 
     suspend fun getItemsByIds(ids: List<Long>): List<Word>
 
+    suspend fun wordsWithTexts(texts: List<String>): List<Word>
+
     suspend fun search(
         foldedQuery: String,
         levels: Set<String>,
