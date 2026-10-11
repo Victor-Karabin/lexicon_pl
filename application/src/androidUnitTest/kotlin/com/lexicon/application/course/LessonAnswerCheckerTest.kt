@@ -84,6 +84,15 @@ class LessonAnswerCheckerTest {
     }
 
     @Test
+    fun `an answer made only of symbols is compared as written`() {
+        assertEquals(AnswerVerdict.CORRECT, verdict("+/−", "+/−"))
+        assertEquals(AnswerVerdict.CORRECT, verdict("−−−", "−−−"))
+        assertEquals(AnswerVerdict.WRONG, verdict("+/−", "+"))
+        assertEquals(AnswerVerdict.WRONG, verdict("++", "+++"))
+        assertEquals(AnswerVerdict.EMPTY, verdict("+++", "  "))
+    }
+
+    @Test
     fun `nothing typed is empty rather than wrong`() {
         assertEquals(AnswerVerdict.EMPTY, verdict("trzy", "   "))
     }

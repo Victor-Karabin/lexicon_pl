@@ -82,4 +82,5 @@ object LessonAnswerChecker {
             .replace(spaces, " ")
             .trim()
             .let { if (it.all { char -> char.isDigit() || char == ' ' }) it.replace(" ", "") else it }
+            .ifEmpty { text.replace(spaces, "") }
 }
