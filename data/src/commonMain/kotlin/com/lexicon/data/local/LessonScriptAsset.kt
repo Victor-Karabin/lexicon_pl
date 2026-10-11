@@ -270,7 +270,7 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
                         question = LessonQuestion(
                             key = index.toString(),
                             label = item.label,
-                            answers = listOfNotNull(item.answer).toImmutableList(),
+                            answers = (listOfNotNull(item.answer) + item.answers).toImmutableList(),
                             feedback = item.feedback,
                             prompt = item.prompt,
                             picture = item.picture?.toModel(),

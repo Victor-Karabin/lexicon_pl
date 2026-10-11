@@ -195,6 +195,23 @@ class LessonAnswerCheckerTest {
     }
 
     @Test
+    fun `the keys of lesson 5 are accepted as written, numbers in words take no digits, phone numbers ignore spaces`() {
+        listOf(
+            "pięćdziesiąt cztery", "dziewięćdziesiąt", "sto jeden", "dobrym synem", "szczupłą dziewczyną", "Niemcem",
+            "Portugalczykiem", "dziennikarka", "Kto to jest", "sportem, historią i współczesnym teatrem",
+        ).forEach {
+            assertEquals(it, AnswerVerdict.CORRECT, verdict(it, it))
+            assertEquals(it, AnswerVerdict.CORRECT, verdict(it, it.lowercase()))
+        }
+        assertEquals(AnswerVerdict.WRONG, verdict("pięćdziesiąt cztery", "54"))
+        assertEquals(AnswerVerdict.WRONG, verdict("pięćdziesiąt cztery", "pięćdziesiąt i cztery"))
+        assertEquals(AnswerVerdict.ALMOST, verdict("pięćdziesiąt cztery", "piecdziesiat cztery"))
+        assertEquals(AnswerVerdict.WRONG, verdict("Niemcem", "Niemiecem"))
+        assertEquals(AnswerVerdict.CORRECT, verdict("0 50 14 89 66", "050148966"))
+        assertEquals(AnswerVerdict.CORRECT, LessonAnswerChecker.verdict(listOf("Gdzie on mieszka", "Gdzie mieszka"), "Gdzie mieszka?"))
+    }
+
+    @Test
     fun `a pair of opposites accepts the not-equal sign, a comma or a space between the words`() {
         val pair = listOf("stary ≠ młody")
         listOf("stary ≠ młody", "stary, młody", "stary młody", "Stary≠młody").forEach {

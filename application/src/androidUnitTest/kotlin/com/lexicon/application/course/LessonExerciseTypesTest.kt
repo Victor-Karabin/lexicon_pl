@@ -183,6 +183,72 @@ class LessonExerciseTypesTest {
     }
 
     @Test
+    fun `a choice item with two right options accepts either`() {
+        val endings = LessonScreen.Choice(
+            id = "2C",
+            title = "",
+            instruction = "",
+            tracks = persistentListOf(),
+            transcript = null,
+            items = persistentListOf(
+                ChoiceQuestion(question("0", "-naście", "-dzieści"), persistentListOf("-naście", "-dzieści", "-dziesiąt")),
+            ),
+        )
+        assertEquals(AnswerVerdict.CORRECT, session(endings).answering("0" to "-dzieści").check().verdict("2C", "0"))
+        assertEquals(AnswerVerdict.CORRECT, session(endings).answering("0" to "-naście").check().verdict("2C", "0"))
+        assertEquals(AnswerVerdict.WRONG, session(endings).answering("0" to "-dziesiąt").check().verdict("2C", "0"))
+    }
+
+    @Test
+    fun `any masculine adjective fits any man once, while the professions and the feminine adjective are fixed`() {
+        val people = LessonScreen.GapFill(
+            id = "4E",
+            title = "",
+            instruction = "",
+            tracks = persistentListOf(),
+            transcript = null,
+            sections = persistentListOf(),
+            questions = persistentListOf(
+                question("1", "zdolna"),
+                question("2", "aktorka"),
+                question("3", "atrakcyjny"),
+                question("4", "aktor"),
+                question("5", "dobry"),
+                question("6", "malarz"),
+                question("7", "utalentowany"),
+                question("8", "polityk"),
+            ),
+            interchangeable = persistentListOf(persistentListOf("3", "5", "7")),
+        )
+        val swapped = session(people).answering(
+            "1" to "zdolna",
+            "2" to "aktorka",
+            "3" to "dobry",
+            "4" to "aktor",
+            "5" to "utalentowany",
+            "6" to "malarz",
+            "7" to "atrakcyjny",
+            "8" to "polityk",
+        ).check()
+        assertEquals(8, swapped.screenScore(people).correct)
+        val twice = session(people).answering(
+            "1" to "zdolna",
+            "2" to "aktor",
+            "3" to "dobry",
+            "4" to "aktorka",
+            "5" to "dobry",
+            "6" to "malarz",
+            "7" to "zdolna",
+            "8" to "polityk",
+        ).check()
+        assertEquals(AnswerVerdict.CORRECT, twice.verdict("4E", "3"))
+        assertEquals(AnswerVerdict.WRONG, twice.verdict("4E", "5"))
+        assertEquals(AnswerVerdict.WRONG, twice.verdict("4E", "7"))
+        assertEquals(AnswerVerdict.WRONG, twice.verdict("4E", "2"))
+        assertEquals(4, twice.screenScore(people).correct)
+    }
+
+    @Test
     fun `two items that start alike accept their endings in either order`() {
         val swapped = session(halves).answering("0" to "b", "1" to "e", "2" to "d", "3" to "f", "4" to "a", "5" to "c").check()
         assertEquals(6, swapped.screenScore(halves).correct)
