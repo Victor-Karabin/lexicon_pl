@@ -14,10 +14,12 @@ import com.lexicon.interactors.conjugation.SubmitConjugationAnswerRequest
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.settings.AppSettings
+import com.lexicon.interactors.training.RecordStudyActivityUseCase
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.WordResultEntry
+import com.lexicon.presentation.common.markIn
 import com.lexicon.presentation.common.speakQuietly
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
@@ -64,6 +66,7 @@ class ConjugationViewModel(
     private val chooseImage: ChooseVerbImageUseCase,
     private val speechSynthesizer: SpeechSynthesizer,
     private val lastSessionResultsHolder: LastSessionResultsHolder,
+    private val recordStudy: RecordStudyActivityUseCase,
     private val dispatchers: DispatcherProvider,
 ) : ViewModel() {
     private val courseId: String = savedStateHandle.get<String>(CONJUGATION_COURSE_ARG).orEmpty()
@@ -95,14 +98,18 @@ class ConjugationViewModel(
     fun onAnswerChanged(
         person: GrammaticalPerson,
         value: String,
-    ) = _uiState.update { state ->
-        if (state.isAnswered) state else state.copy(answers = (state.answers + (person to value)).toImmutableMap())
+    ) {
+        studied()
+        _uiState.update { state ->
+            if (state.isAnswered) state else state.copy(answers = (state.answers + (person to value)).toImmutableMap())
+        }
     }
 
     fun onCheck() {
         val state = _uiState.value
         val table = state.table ?: return
         if (!state.canCheck) return
+        studied()
 
         viewModelScope.launch(dispatchers.io) {
             val response = submitAnswer(SubmitConjugationAnswerRequest(courseId, table, state.answers))
@@ -128,6 +135,7 @@ class ConjugationViewModel(
     }
 
     fun onNext() {
+        studied()
         viewModelScope.launch(dispatchers.io) {
             val state = _uiState.value
             val nextIndex = state.stepIndex + 1
@@ -156,6 +164,8 @@ class ConjugationViewModel(
             }
         }
     }
+
+    private fun studied() = recordStudy.markIn(viewModelScope, dispatchers)
 
     fun onSpeak(form: String) {
         if (form.isBlank()) return

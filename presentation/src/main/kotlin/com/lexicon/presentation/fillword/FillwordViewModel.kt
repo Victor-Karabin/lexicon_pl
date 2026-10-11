@@ -8,9 +8,11 @@ import com.lexicon.interactors.fillword.FillwordPuzzle
 import com.lexicon.interactors.fillword.FillwordSessionResult
 import com.lexicon.interactors.fillword.FillwordWord
 import com.lexicon.interactors.fillword.StartFillwordSessionUseCase
+import com.lexicon.interactors.training.RecordStudyActivityUseCase
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.WordResultEntry
+import com.lexicon.presentation.common.markIn
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toImmutableSet
@@ -43,6 +45,7 @@ data class FillwordUiState(
 class FillwordViewModel(
     private val startSession: StartFillwordSessionUseCase,
     private val lastSessionResultsHolder: LastSessionResultsHolder,
+    private val recordStudy: RecordStudyActivityUseCase,
     private val dispatchers: DispatcherProvider,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(FillwordUiState())
@@ -59,7 +62,10 @@ class FillwordViewModel(
         }
     }
 
-    fun onCheck() = _uiState.update { it.copy(isRevealed = true, anchor = null) }
+    fun onCheck() {
+        studied()
+        _uiState.update { it.copy(isRevealed = true, anchor = null) }
+    }
 
     fun onFinished() {
         val puzzle = _uiState.value.puzzle ?: return
@@ -74,7 +80,8 @@ class FillwordViewModel(
         }
     }
 
-    fun onCellTapped(cell: FillwordCell) =
+    fun onCellTapped(cell: FillwordCell) {
+        studied()
         _uiState.update { state ->
             if (state.isRevealed) return@update state
             val anchor = state.anchor
@@ -84,11 +91,17 @@ class FillwordViewModel(
                 else -> state.claim(anchor, cell)
             }
         }
+    }
 
     fun onCellsTraced(
         from: FillwordCell,
         to: FillwordCell,
-    ) = _uiState.update { it.claim(from, to) }
+    ) {
+        studied()
+        _uiState.update { it.claim(from, to) }
+    }
+
+    private fun studied() = recordStudy.markIn(viewModelScope, dispatchers)
 
     private fun FillwordUiState.claim(
         from: FillwordCell,

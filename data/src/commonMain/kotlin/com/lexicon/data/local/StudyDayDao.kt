@@ -17,6 +17,9 @@ interface StudyDayDao {
         to: Long,
     ): List<StudyDayEntity>
 
+    @Query("SELECT MAX(lastActivityAtEpochMillis) FROM study_day")
+    suspend fun lastActivityAtEpochMillis(): Long?
+
     @Query("SELECT epochDay FROM study_day ORDER BY epochDay DESC")
     suspend fun studiedDaysDescending(): List<Long>
 
@@ -29,15 +32,9 @@ interface StudyDayDao {
         addedSeconds: Long,
         wasNew: Boolean,
         wasCorrect: Boolean,
+        atEpochMillis: Long,
     ) {
-        val current = find(epochDay) ?: StudyDayEntity(
-            epochDay = epochDay,
-            studiedSeconds = 0,
-            newWords = 0,
-            reviews = 0,
-            answers = 0,
-            correctAnswers = 0,
-        )
+        val current = dayOrEmpty(epochDay)
         upsert(
             current.copy(
                 studiedSeconds = current.studiedSeconds + addedSeconds,
@@ -45,7 +42,28 @@ interface StudyDayDao {
                 reviews = current.reviews + if (wasNew) 0 else 1,
                 answers = current.answers + 1,
                 correctAnswers = current.correctAnswers + if (wasCorrect) 1 else 0,
+                lastActivityAtEpochMillis = atEpochMillis,
             ),
         )
     }
+
+    @Transaction
+    suspend fun recordTime(
+        epochDay: Long,
+        addedSeconds: Long,
+        atEpochMillis: Long,
+    ) {
+        val current = dayOrEmpty(epochDay)
+        upsert(current.copy(studiedSeconds = current.studiedSeconds + addedSeconds, lastActivityAtEpochMillis = atEpochMillis))
+    }
+
+    private suspend fun dayOrEmpty(epochDay: Long): StudyDayEntity =
+        find(epochDay) ?: StudyDayEntity(
+            epochDay = epochDay,
+            studiedSeconds = 0,
+            newWords = 0,
+            reviews = 0,
+            answers = 0,
+            correctAnswers = 0,
+        )
 }

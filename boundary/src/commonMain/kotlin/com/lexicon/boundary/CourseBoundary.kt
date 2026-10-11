@@ -16,6 +16,7 @@ data class LessonSummaryBoundary(
     val title: String,
     val wordCount: Int,
     val isCompleted: Boolean,
+    val isStarted: Boolean = false,
 )
 
 data class LessonBoundary(

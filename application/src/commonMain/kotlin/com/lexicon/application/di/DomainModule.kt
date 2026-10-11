@@ -16,6 +16,7 @@ import com.lexicon.application.course.GetLessonScriptUseCaseImpl
 import com.lexicon.application.course.GetLessonUseCaseImpl
 import com.lexicon.application.course.GetLessonVocabularyUseCaseImpl
 import com.lexicon.application.course.ObserveCoursesUseCaseImpl
+import com.lexicon.application.course.ResetLessonProgressUseCaseImpl
 import com.lexicon.application.course.ReviewWritingUseCaseImpl
 import com.lexicon.application.course.SaveLessonProgressUseCaseImpl
 import com.lexicon.application.course.SetCourseOnDashboardUseCaseImpl
@@ -73,6 +74,7 @@ import com.lexicon.application.settings.UpdateThemeModeUseCaseImpl
 import com.lexicon.application.sync.SeedCatalogsUseCaseImpl
 import com.lexicon.application.training.CheckTrainingReadinessUseCaseImpl
 import com.lexicon.application.training.RecordAnswerUseCaseImpl
+import com.lexicon.application.training.RecordStudyActivityUseCaseImpl
 import com.lexicon.application.trueorfalse.StartTrueOrFalseSessionUseCaseImpl
 import com.lexicon.application.trueorfalse.SubmitTrueOrFalseAnswerUseCaseImpl
 import com.lexicon.application.vocabularycourse.GetCourseProgressUseCaseImpl
@@ -114,6 +116,7 @@ import com.lexicon.interactors.course.GetLessonScriptUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
 import com.lexicon.interactors.course.ObserveCoursesUseCase
+import com.lexicon.interactors.course.ResetLessonProgressUseCase
 import com.lexicon.interactors.course.ReviewWritingUseCase
 import com.lexicon.interactors.course.SaveLessonProgressUseCase
 import com.lexicon.interactors.course.SetCourseOnDashboardUseCase
@@ -173,6 +176,7 @@ import com.lexicon.interactors.settings.UpdateVoiceUseCase
 import com.lexicon.interactors.sync.SeedCatalogsUseCase
 import com.lexicon.interactors.training.CheckTrainingReadinessUseCase
 import com.lexicon.interactors.training.RecordAnswerUseCase
+import com.lexicon.interactors.training.RecordStudyActivityUseCase
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
 import com.lexicon.interactors.vocabularycourse.GetCourseProgressUseCase
@@ -321,6 +325,8 @@ val domainModule = module {
     factoryOf(::GetLessonVocabularyUseCaseImpl) { bind<GetLessonVocabularyUseCase>() }
     factoryOf(::SetLessonCompletedUseCaseImpl) { bind<SetLessonCompletedUseCase>() }
     factoryOf(::SetCourseOnDashboardUseCaseImpl) { bind<SetCourseOnDashboardUseCase>() }
+    factoryOf(::ResetLessonProgressUseCaseImpl) { bind<ResetLessonProgressUseCase>() }
+    factoryOf(::RecordStudyActivityUseCaseImpl) { bind<RecordStudyActivityUseCase>() }
     factoryOf(::GetLessonScriptUseCaseImpl) { bind<GetLessonScriptUseCase>() }
     factoryOf(::GetLessonProgressUseCaseImpl) { bind<GetLessonProgressUseCase>() }
     factoryOf(::SaveLessonProgressUseCaseImpl) { bind<SaveLessonProgressUseCase>() }

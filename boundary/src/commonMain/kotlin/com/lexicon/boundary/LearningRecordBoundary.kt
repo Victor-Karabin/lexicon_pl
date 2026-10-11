@@ -32,7 +32,16 @@ interface StudyRecordRepository {
         addedSeconds: Long,
         wasNew: Boolean,
         wasCorrect: Boolean,
+        atEpochMillis: Long,
     )
+
+    suspend fun recordTime(
+        epochDay: Long,
+        addedSeconds: Long,
+        atEpochMillis: Long,
+    )
+
+    suspend fun lastActivityAtEpochMillis(): Long?
 
     suspend fun day(epochDay: Long): StudyDayBoundary?
 

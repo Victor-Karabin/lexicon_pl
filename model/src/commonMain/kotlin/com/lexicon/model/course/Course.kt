@@ -14,7 +14,10 @@ data class LessonSummary(
     val title: String,
     val wordCount: Int,
     val isCompleted: Boolean,
-)
+    val isStarted: Boolean = false,
+) {
+    val hasProgress: Boolean get() = isCompleted || isStarted
+}
 
 data class Course(
     val id: CourseId,

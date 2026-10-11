@@ -18,11 +18,16 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.AutoStories
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.FitnessCenter
+import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
+import androidx.compose.material.icons.filled.RestartAlt
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -79,6 +84,7 @@ fun PlanScreen(
     PlanContent(
         uiState = uiState,
         onCourseSelected = onCourseSelected,
+        onPinToggled = viewModel::onPinToggled,
         onOpenCourseSettings = onOpenCourseSettings,
         onConjugationSelected = onConjugationSelected,
         modifier = modifier,
@@ -89,6 +95,7 @@ fun PlanScreen(
 private fun PlanContent(
     uiState: PlanUiState,
     onCourseSelected: (CourseId) -> Unit,
+    onPinToggled: (Course) -> Unit,
     onOpenCourseSettings: () -> Unit,
     onConjugationSelected: () -> Unit,
     modifier: Modifier = Modifier,
@@ -117,6 +124,7 @@ private fun PlanContent(
                         course = course,
                         languageTag = uiState.languageTag,
                         onClick = { onCourseSelected(course.id) },
+                        onPinToggled = { onPinToggled(course) },
                     )
                 }
 
@@ -232,6 +240,7 @@ internal fun CourseTile(
     course: Course,
     languageTag: String,
     onClick: () -> Unit,
+    onPinToggled: (() -> Unit)? = null,
 ) {
     val skin = tileSkin()
 
@@ -256,11 +265,23 @@ internal fun CourseTile(
                 )
             }
 
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                contentDescription = null,
-                tint = skin.muted(),
-            )
+            if (onPinToggled == null) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = null,
+                    tint = skin.muted(),
+                )
+            } else {
+                IconToggleButton(checked = course.isOnDashboard, onCheckedChange = { onPinToggled() }) {
+                    Icon(
+                        imageVector = if (course.isOnDashboard) Icons.Filled.PushPin else Icons.Outlined.PushPin,
+                        contentDescription = stringResource(
+                            if (course.isOnDashboard) R.string.course_unpin_from_dashboard else R.string.course_pin_to_dashboard,
+                        ),
+                        tint = if (course.isOnDashboard) skin.onTile else skin.muted(),
+                    )
+                }
+            }
         }
 
         LexiconProgressBar(
@@ -315,6 +336,7 @@ internal fun CourseHeader(
 internal fun LessonRow(
     lesson: LessonSummary,
     onClick: () -> Unit,
+    onReset: (() -> Unit)? = null,
 ) {
     Row(
         modifier = Modifier
@@ -341,6 +363,15 @@ internal fun LessonRow(
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+        }
+        if (onReset != null && lesson.hasProgress) {
+            IconButton(onClick = onReset) {
+                Icon(
+                    imageVector = Icons.Default.RestartAlt,
+                    contentDescription = stringResource(R.string.course_reset_lesson, lesson.number),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
     }
 }
@@ -382,6 +413,7 @@ private fun PlanPreview() {
         PlanContent(
             uiState = PlanUiState.Loaded(courses = persistentListOf(previewCourse())),
             onCourseSelected = {},
+            onPinToggled = {},
             onOpenCourseSettings = {},
             onConjugationSelected = {},
         )
@@ -395,6 +427,7 @@ private fun PlanEmptyPreview() {
         PlanContent(
             uiState = PlanUiState.Loaded(courses = persistentListOf()),
             onCourseSelected = {},
+            onPinToggled = {},
             onOpenCourseSettings = {},
             onConjugationSelected = {},
         )

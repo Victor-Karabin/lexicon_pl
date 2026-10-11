@@ -27,6 +27,21 @@ interface CourseDao {
     @Query("SELECT * FROM lesson_progress")
     fun observeProgress(): Flow<List<LessonProgressEntity>>
 
+    @Query("SELECT lessonId FROM lesson_script_progress")
+    fun observeStartedLessonIds(): Flow<List<String>>
+
+    @Query("DELETE FROM lesson_script_progress WHERE lessonId = :lessonId")
+    suspend fun deleteScriptProgress(lessonId: String)
+
+    @Query("DELETE FROM lesson_progress WHERE lessonId = :lessonId")
+    suspend fun deleteProgress(lessonId: String)
+
+    @Transaction
+    suspend fun resetLesson(lessonId: String) {
+        deleteScriptProgress(lessonId)
+        deleteProgress(lessonId)
+    }
+
     @Query("SELECT * FROM lessons WHERE id = :lessonId")
     suspend fun getLesson(lessonId: String): LessonEntity?
 
