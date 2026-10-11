@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -79,6 +78,7 @@ import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.BottomActionPanel
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.isTyping
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.component.StatChip
 import com.lexicon.presentation.theme.component.tileSkin
@@ -187,7 +187,7 @@ private fun LessonFlowContent(
 
     val shownPlayers = remember((uiState as? LessonFlowUiState.Loaded)?.session?.index) { mutableStateMapOf<String, Boolean>() }
 
-    val isTyping = WindowInsets.isImeVisible
+    val isTyping = isTyping()
 
     AnswerInputs {
         CompositionLocalProvider(LocalShownPlayers provides shownPlayers) {

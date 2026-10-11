@@ -452,7 +452,7 @@ fun TranscribeRow(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.width(labelWidth ?: AnswerLabelWidth),
                 )
-                leading?.invoke()
+                leading?.let { Box(modifier = Modifier.weight(1f, fill = false)) { it() } }
             }
             BasicTextField(
                 value = value,

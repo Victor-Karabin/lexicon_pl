@@ -65,15 +65,31 @@ class LessonAnswerCheckerTest {
     @Test
     fun `a different word is wrong, not almost`() {
         assertEquals(AnswerVerdict.WRONG, verdict("sześć", "cześć"))
-        assertEquals(AnswerVerdict.WRONG, verdict("dziewięć", "dzięwięć"))
         assertEquals(AnswerVerdict.WRONG, verdict("sześć", "seść"))
         assertEquals(AnswerVerdict.WRONG, verdict("9", "10"))
         assertEquals(AnswerVerdict.WRONG, verdict("Mnie", "mi"))
     }
 
     @Test
+    fun `a wrong diacritic is almost too`() {
+        assertEquals(AnswerVerdict.ALMOST, verdict("źle", "żle"))
+        assertEquals(AnswerVerdict.ALMOST, verdict("dziewięć", "dzięwięć"))
+        assertEquals(AnswerVerdict.ALMOST, verdict("szkoła", "śzkoła"))
+        assertEquals(AnswerVerdict.WRONG, verdict("źle", "śle"))
+    }
+
+    @Test
     fun `a wrong diacritic is not forgiven as almost when the plain letters differ`() {
         assertEquals(AnswerVerdict.WRONG, verdict("powtórzyć", "powturzyć"))
+    }
+
+    @Test
+    fun `an answer made only of symbols is compared as written`() {
+        assertEquals(AnswerVerdict.CORRECT, verdict("+/−", "+/−"))
+        assertEquals(AnswerVerdict.CORRECT, verdict("−−−", "−−−"))
+        assertEquals(AnswerVerdict.WRONG, verdict("+/−", "+"))
+        assertEquals(AnswerVerdict.WRONG, verdict("++", "+++"))
+        assertEquals(AnswerVerdict.EMPTY, verdict("+++", "  "))
     }
 
     @Test

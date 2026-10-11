@@ -36,6 +36,7 @@ import com.lexicon.presentation.common.speakQuietly
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableMap
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -46,6 +47,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 private const val TAG = "LessonFlow"
 
@@ -164,8 +166,10 @@ class LessonFlowViewModel(
         }
         viewModelScope.launch(dispatchers.io) {
             pendingSaves.consumeAsFlow().collect { progress ->
-                runSuspendCatching { saveLessonProgress(lessonId, progress) }
-                    .onFailure { Log.w(TAG, "Lesson progress could not be saved", it) }
+                withContext(NonCancellable) {
+                    runSuspendCatching { saveLessonProgress(lessonId, progress) }
+                        .onFailure { Log.w(TAG, "Lesson progress could not be saved", it) }
+                }
             }
         }
     }

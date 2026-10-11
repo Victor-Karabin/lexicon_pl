@@ -41,7 +41,7 @@ object LessonAnswerChecker {
         return when (match) {
             AnswerMatch.WHOLE -> when {
                 typed in accepted -> AnswerVerdict.CORRECT
-                accepted.any { lacksOnlyDiacritics(typed, it) } -> AnswerVerdict.ALMOST
+                accepted.any { differsOnlyInDiacritics(typed, it) } -> AnswerVerdict.ALMOST
                 else -> AnswerVerdict.WRONG
             }
             AnswerMatch.KEY_WORDS -> when {
@@ -57,7 +57,7 @@ object LessonAnswerChecker {
         given: String,
     ): String {
         val typed = normalise(given)
-        return expected.firstOrNull { lacksOnlyDiacritics(typed, normalise(it)) } ?: expected.first()
+        return expected.firstOrNull { differsOnlyInDiacritics(typed, normalise(it)) } ?: expected.first()
     }
 
     private fun contains(
@@ -69,12 +69,10 @@ object LessonAnswerChecker {
 
     private fun fold(text: String): String = text.map { diacritics[it] ?: it }.joinToString("")
 
-    private fun lacksOnlyDiacritics(
+    private fun differsOnlyInDiacritics(
         typed: String,
         expected: String,
-    ): Boolean =
-        typed.length == expected.length &&
-            typed.indices.all { typed[it] == expected[it] || typed[it] == diacritics[expected[it]] }
+    ): Boolean = fold(typed) == fold(expected)
 
     private fun normalise(text: String): String =
         composed.entries
@@ -84,4 +82,5 @@ object LessonAnswerChecker {
             .replace(spaces, " ")
             .trim()
             .let { if (it.all { char -> char.isDigit() || char == ' ' }) it.replace(" ", "") else it }
+            .ifEmpty { text.replace(spaces, "") }
 }
