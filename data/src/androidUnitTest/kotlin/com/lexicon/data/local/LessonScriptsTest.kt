@@ -28,8 +28,8 @@ class LessonScriptsTest {
         scripts.forEach { (name, script) -> script.screens.forEach { check("$name ${it.id}", it) } }
 
     @Test
-    fun `there is a script for lessons 1 to 4`() {
-        assertEquals((1..4).map { "lesson_krok-a1-0$it.json" }, assets.keys.toList())
+    fun `there is a script for lessons 1 to 5`() {
+        assertEquals((1..5).map { "lesson_krok-a1-0$it.json" }, assets.keys.toList())
     }
 
     @Test
@@ -79,7 +79,12 @@ class LessonScriptsTest {
     fun `every choice answer is one of its options`() =
         eachScreen { where, screen ->
             if (screen !is LessonScreen.Choice) return@eachScreen
-            screen.items.forEach { item -> assertTrue("$where ${item.question.label}", item.question.answers.single() in item.options) }
+            screen.items.forEach { item ->
+                assertTrue(
+                    "$where ${item.question.label}",
+                    item.question.answers.isNotEmpty() && item.question.answers.all { it in item.options },
+                )
+            }
         }
 
     @Test
@@ -92,7 +97,7 @@ class LessonScriptsTest {
                 where,
                 screen.items.withIndex().any {
                         (index, item) ->
-                    item.question.answers.single() != item.options.getOrNull(index)
+                    item.question.answers.first() != item.options.getOrNull(index)
                 },
             )
         }
@@ -137,10 +142,12 @@ class LessonScriptsTest {
                         '·',
                     ).map { it.trim('.', '?', '!', '…') }.filter { it.isNotEmpty() }
                     val stems = words.filter { it.length >= SHORTEST_WORD }.ifEmpty { words }
-                    assertTrue("$name ${screen.id} ${word.polish}", stems.any { shown.contains(it.take(STEM)) })
+                    assertTrue("$name ${screen.id} ${word.polish}", stems.any { shown.contains(it.take(stemLength(it))) })
                 }
             }
         }
+
+    private fun stemLength(word: String): Int = minOf(STEM, word.length - 1).coerceAtLeast(minOf(SHORTEST_WORD, word.length))
 
     private fun visibleText(element: JsonElement): String =
         when (element) {

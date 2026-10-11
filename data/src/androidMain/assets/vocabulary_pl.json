@@ -108709,5 +108709,165 @@
   ],
   "example": "Javier nie jest ani wysoki, ani niski, jest **średniego wzrostu**.",
   "picture": "three people of different heights, the middle one highlighted"
+ },
+ {
+  "id": 7173,
+  "text": "informatyk",
+  "translation": "IT specialist",
+  "transcription": "infɔˈrmatɨk",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "professions"
+  ],
+  "example": "Mój brat jest **informatykiem** w dużej firmie.",
+  "picture": "programmer at computer screens"
+ },
+ {
+  "id": 7174,
+  "text": "lekarka",
+  "translation": "doctor (woman)",
+  "transcription": "lɛˈkarka",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "health",
+   "professions"
+  ],
+  "example": "Moja mama jest **lekarką**.",
+  "picture": "female doctor with stethoscope"
+ },
+ {
+  "id": 7175,
+  "text": "kelnerka",
+  "translation": "waitress",
+  "transcription": "kɛˈlnɛrka",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "professions"
+  ],
+  "example": "**Kelnerka** przynosi kawę.",
+  "picture": "waitress serving coffee"
+ },
+ {
+  "id": 7176,
+  "text": "kucharka",
+  "translation": "cook (woman)",
+  "transcription": "kuˈxarka",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "professions"
+  ],
+  "example": "Ona jest świetną **kucharką**.",
+  "picture": "female chef in kitchen"
+ },
+ {
+  "id": 7177,
+  "text": "tancerka",
+  "translation": "dancer (woman)",
+  "transcription": "taˈnt͡sɛrka",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "professions"
+  ],
+  "example": "Ta **tancerka** tańczy tango.",
+  "picture": "female dancer"
+ },
+ {
+  "id": 7178,
+  "text": "modelka",
+  "translation": "model (fashion)",
+  "transcription": "mɔˈdɛlka",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "professions"
+  ],
+  "example": "Claudia Schiffer to atrakcyjna **modelka**.",
+  "picture": "fashion model on runway"
+ },
+ {
+  "id": 7179,
+  "text": "siedemdziesiąt",
+  "translation": "seventy",
+  "transcription": "ɕɛdɛˈmd͡ʑɛɕɔ̃t",
+  "partOfSpeech": "num",
+  "cefr": "A1",
+  "topics": [
+   "numbers"
+  ],
+  "example": "Mój dziadek ma **siedemdziesiąt** lat.",
+  "picture": "number 70"
+ },
+ {
+  "id": 7180,
+  "text": "dziewięćdziesiąt",
+  "translation": "ninety",
+  "transcription": "d͡ʑɛvjɛ̃ˈd͡ʑd͡ʑɛɕɔ̃t",
+  "partOfSpeech": "num",
+  "cefr": "A1",
+  "topics": [
+   "numbers"
+  ],
+  "example": "Babcia ma **dziewięćdziesiąt** lat.",
+  "picture": "number 90"
+ },
+ {
+  "id": 7181,
+  "text": "interesować się",
+  "translation": "to be interested in",
+  "transcription": "intɛrɛˈsɔvat͡ɕ ɕɛ̃",
+  "partOfSpeech": "v",
+  "cefr": "A1",
+  "topics": [
+   "hobbies",
+   "daily-conversation"
+  ],
+  "example": "**Interesuję się** muzyką i sportem.",
+  "picture": "person reading with curiosity"
+ },
+ {
+  "id": 7182,
+  "text": "malarstwo",
+  "translation": "painting (the art)",
+  "transcription": "maˈlarzdvɔ",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "hobbies"
+  ],
+  "example": "Mami interesuje się **malarstwem**.",
+  "picture": "paintbrush and canvas"
+ },
+ {
+  "id": 7183,
+  "text": "kim jesteś z zawodu",
+  "translation": "what do you do for a living?",
+  "transcription": "kim ˈjɛstɛɕ s zaˈvɔdu",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "introductions",
+   "professions"
+  ],
+  "example": "**Kim jesteś z zawodu?** Jestem lekarzem.",
+  "picture": "people in different work uniforms"
+ },
+ {
+  "id": 7184,
+  "text": "czym się interesujesz",
+  "translation": "what are you interested in?",
+  "transcription": "t͡ʂɨm ɕɛ̃ intɛrɛˈsujɛʂ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "introductions",
+   "hobbies"
+  ],
+  "example": "**Czym się interesujesz?** Fotografią.",
+  "picture": "hobby icons"
  }
 ]

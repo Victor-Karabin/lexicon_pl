@@ -695,7 +695,7 @@ private fun FreeWritingBody(
         )
     }
     session.review(screen.id)?.let { ReviewCard(it) }
-    if (session.isFinished) ModelAnswerCard(screen.model)
+    if (session.isFinished && screen.model.isNotEmpty()) ModelAnswerCard(screen.model)
 }
 
 @Composable

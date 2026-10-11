@@ -1,0 +1,1690 @@
+{
+  "lessonId": "krok-a1-05",
+  "rules": [
+    {
+      "title": "Instrumental singular — Kim? Czym?",
+      "tables": [
+        {
+          "header": ["", "masculine", "feminine", "neuter"],
+          "rows": [
+            ["adjective", "-ym (after k, g: -im)", "-ą", "-ym (-im)"],
+            ["noun", "-em (after k, g: -iem)", "-ą", "-em (-iem)"],
+            ["example", "dobr**ym** student**em**", "dobr**ą** studentk**ą**", "mał**ym** dzieck**iem**"]
+          ]
+        }
+      ],
+      "notes": [
+        "Masculine nouns in *-a* decline like feminine ones: *wysokim mężczyzną, dobrym tatą*.",
+        "The adjective agrees with the noun: *Magda jest zdolnym architektem*."
+      ]
+    },
+    {
+      "title": "\"X to…\" and \"X jest…\"",
+      "tables": [
+        {
+          "rows": [
+            ["**to** + nominative", "Eric to dobry syn. Uwe to biznesmen."],
+            ["**być** + instrumental", "Eric jest dobrym synem. Jestem biznesmenem."],
+            ["Kim jesteś z zawodu?", "Jestem muzykiem."]
+          ]
+        }
+      ],
+      "notes": ["*zostać* (to become) also takes the instrumental: *chcę zostać lekarzem*."]
+    },
+    {
+      "title": "interesować się + instrumental",
+      "tables": [
+        {
+          "rows": [
+            ["(ja)", "interesuję się"],
+            ["(ty)", "interesujesz się"],
+            ["on / ona", "interesuje się"],
+            ["oni / one", "interesują się"]
+          ]
+        }
+      ],
+      "notes": ["*Czym się interesujesz? — Interesuję się sportem, muzyką, fotografią, polskim kinem.*"]
+    },
+    {
+      "title": "Numbers 20–100",
+      "tables": [
+        {
+          "rows": [
+            ["20 dwadzieścia", "30 trzydzieści", "40 czterdzieści"],
+            ["50 pięćdziesiąt", "60 sześćdziesiąt", "70 siedemdziesiąt"],
+            ["80 osiemdziesiąt", "90 dziewięćdziesiąt", "100 sto"]
+          ]
+        }
+      ],
+      "notes": [
+        "Compounds have no *i*: *pięćdziesiąt cztery*.",
+        "Don't mix: *piętnaście* (15) / *pięćdziesiąt* (50) · *szesnaście* (16) / *sześćdziesiąt* (60) · *czternaście* (14) / *czterdzieści* (40)."
+      ]
+    },
+    {
+      "title": "Age: rok / lata / lat",
+      "tables": [
+        {
+          "header": ["Ile masz lat?", ""],
+          "rows": [
+            ["1", "rok"],
+            ["2, 3, 4 · 22–24 · 32–34…", "lata"],
+            ["5–21 · 25–31… · 12, 13, 14", "lat"]
+          ]
+        }
+      ],
+      "notes": ["44 *lata*, but 45 *lat* and 14 *lat*."]
+    },
+    {
+      "title": "Feminine job titles",
+      "tables": [
+        {
+          "rows": [
+            ["add **-ka**", "kelner → kelnerka, nauczyciel → nauczycielka"],
+            ["**-rz → -rka**", "lekarz → lekarka, tancerz → tancerka"],
+            ["**-a → -ka**", "artysta → artystka, poeta → poetka"]
+          ]
+        }
+      ],
+      "notes": ["Same form for both (with *pan / pani*): architekt, inżynier, muzyk, fotograf, kierowca, profesor, minister, prezydent, taksówkarz."]
+    }
+  ],
+  "tracks": [
+    {"id": "105A1", "file": "a1_coursebook_105a1.mp3"},
+    {"id": "105B1", "file": "a1_coursebook_105b1.mp3"},
+    {"id": "105B4-1", "file": "a1_coursebook_105b4-1.mp3"},
+    {"id": "105B4-2", "file": "a1_coursebook_105b4-2.mp3"},
+    {"id": "105C1", "file": "a1_coursebook_105c1.mp3"},
+    {"id": "105D1", "file": "a1_coursebook_105d1.mp3"},
+    {"id": "wb18", "file": "a1_workbook_18_L05_cwiczenie1.mp3"},
+    {"id": "wb19", "file": "a1_workbook_19_L05_cwiczenie4.mp3"},
+    {"id": "wb20", "file": "a1_workbook_20_L05_cwiczenie5.mp3"},
+    {"id": "wb21", "file": "a1_workbook_21_L05_cwiczenie8.mp3"},
+    {"id": "wb22", "file": "a1_workbook_22_L05_cwiczenie14.mp3"}
+  ],
+  "steps": [
+    {"id": "G", "title": "Lesson grammar", "screens": ["0"], "grammar": true},
+    {"id": "1", "title": "Who is it? Introducing people", "screens": ["1A", "1B", "1C", "1D", "1E", "1F"]},
+    {"id": "2", "title": "Numbers 20–100", "screens": ["2A", "2B", "2C", "2D", "2E", "2F"]},
+    {"id": "3", "title": "Ile masz lat? rok, lata, lat", "screens": ["3A", "3B", "3C", "3D", "3E"]},
+    {"id": "4", "title": "Professions", "screens": ["4A", "4B", "4C", "4D", "4E"]},
+    {"id": "5", "title": "Instrumental: Kim jesteś?", "screens": ["5A", "5B", "5C", "5D", "5E"]},
+    {"id": "6", "title": "Czym się interesujesz?", "screens": ["6A", "6B", "6C", "6D", "6E", "6F"]},
+    {"id": "7", "title": "Lesson review", "screens": ["7A", "7B", "7C", "7D", "7E"], "review": true}
+  ],
+  "screens": [
+    {
+      "id": "0",
+      "type": "grammar",
+      "title": "Lesson grammar",
+      "instruction": "All the grammar of this lesson before the exercises. The steps repeat the part they need."
+    },
+    {
+      "id": "1A",
+      "type": "gap_fill",
+      "title": "This is Uwe",
+      "instruction": "Read and listen. Then write the missing question or answer.",
+      "tracks": [{"id": "105A1"}],
+      "sections": [
+        {
+          "lines": [
+            {"text": "To jest Uwe. Uwe Stein. On jest z Niemiec. Mieszka w Berlinie. Jest wysoki, przystojny i wysportowany. Uwe to biznesmen. Ma 44 lata. Lubi pracować."}
+          ]
+        },
+        {
+          "lines": [
+            {"text": "a. [1]? To jest Uwe."},
+            {"text": "b. Skąd on jest? [2]."},
+            {"text": "c. [3]? On mieszka w Berlinie."},
+            {"text": "d. [4]? On jest wysoki, przystojny i wysportowany."},
+            {"text": "e. [5]? To jest biznesmen."},
+            {"text": "f. Ile ma lat? [6]."},
+            {"text": "g. Co lubi robić? [7]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Kto to jest"]},
+        {"number": 2, "answers": ["On jest z Niemiec", "Jest z Niemiec", "Z Niemiec"]},
+        {"number": 3, "answers": ["Gdzie on mieszka", "Gdzie mieszka"]},
+        {"number": 4, "answers": ["Jaki on jest", "Jaki jest"]},
+        {"number": 5, "answers": ["Kim on jest", "Kim jest", "Co on robi", "Co robi", "Kto to jest"]},
+        {"number": 6, "answers": ["On ma 44 lata", "Ma 44 lata", "On ma czterdzieści cztery lata", "Ma czterdzieści cztery lata"], "feedback": "44 ends in 4 → *lata*."},
+        {"number": 7, "answers": ["Lubi pracować", "On lubi pracować"]}
+      ],
+      "newWords": [
+        {"polish": "Kim on jest?", "english": "What does he do?"},
+        {"polish": "biznesmen", "english": "businessman"},
+        {"polish": "Ile ma lat?", "english": "How old is he?"},
+        {"polish": "On ma 44 lata.", "english": "He is 44."},
+        {"polish": "Co lubi robić?", "english": "What does he like doing?"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [5]
+    },
+    {
+      "id": "1B",
+      "type": "order",
+      "title": "This is Mami",
+      "instruction": "Put the parts of the text in order: tap them from first to last. Tap a part again to clear its number. Then listen to check.",
+      "tracks": [{"id": "wb18"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"text": "To jest Mami Takada. Ona jest z Japonii. Mieszka w Tokio, ale teraz jest w Krakowie. Mami uczy się języka polskiego, bo chce studiować w Polsce. Mami jest młoda, szczupła i ładna. Ma 20 lat. Mami bardzo lubi słuchać muzyki."}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {"label": "a", "prompt": "bo chce studiować w Polsce.", "answer": "7"},
+        {"label": "b", "prompt": "lubi słuchać muzyki.", "answer": "11"},
+        {"label": "c", "prompt": "z Japonii. Mieszka", "answer": "3"},
+        {"label": "d", "prompt": "Mami uczy się języka polskiego,", "answer": "6"},
+        {"label": "e", "prompt": "szczupła i ładna. Ma", "answer": "9"},
+        {"label": "f", "prompt": "jest w Krakowie.", "answer": "5"},
+        {"label": "g", "prompt": "Mami Takada. Ona jest", "answer": "2"},
+        {"label": "h", "prompt": "To jest", "answer": "1"},
+        {"label": "i", "prompt": "Mami jest młoda,", "answer": "8"},
+        {"label": "j", "prompt": "w Tokio, ale teraz", "answer": "4"},
+        {"label": "k", "prompt": "20 lat. Mami bardzo", "answer": "10"}
+      ],
+      "newWords": [
+        {"polish": "chce studiować", "english": "wants to study"},
+        {"polish": "słuchać muzyki", "english": "to listen to music"}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "1C",
+      "type": "gap_fill",
+      "title": "Questions about the text",
+      "instruction": "Write the question to each answer about Mami (the text in 1B).",
+      "wordBox": ["dlaczego", "kto", "gdzie", "skąd", "czy", "co", "jaka", "ile"],
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. [1]? — Mami Takada."},
+            {"text": "2. [2]? — Z Japonii."},
+            {"text": "3. [3]? — W Tokio, ale teraz w Krakowie."},
+            {"text": "4. [4]? — Młoda, szczupła i ładna."},
+            {"text": "5. [5]? — 20 lat."},
+            {"text": "6. [6]? — Tak, jest szczupła."},
+            {"text": "7. [7]? — Lubi słuchać muzyki."},
+            {"text": "8. [8]? — Bo chce studiować w Polsce."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Kto to jest"]},
+        {"number": 2, "answers": ["Skąd ona jest", "Skąd jest"]},
+        {"number": 3, "answers": ["Gdzie ona mieszka", "Gdzie mieszka"]},
+        {"number": 4, "answers": ["Jaka ona jest", "Jaka jest"]},
+        {"number": 5, "answers": ["Ile ona ma lat", "Ile ma lat"]},
+        {"number": 6, "answers": ["Czy ona jest szczupła", "Czy jest szczupła"]},
+        {"number": 7, "answers": ["Co ona lubi robić", "Co lubi robić"]},
+        {"number": 8, "answers": ["Dlaczego ona uczy się polskiego", "Dlaczego uczy się polskiego", "Dlaczego ona uczy się języka polskiego", "Dlaczego uczy się języka polskiego"]}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "1D",
+      "type": "gap_fill",
+      "title": "Manuela about herself",
+      "instruction": "Manuela talks about herself. Put the verbs in the first person singular (*ja*).",
+      "sections": [
+        {
+          "lines": [
+            {"text": "Nazywam się Manuela Sanches."},
+            {"text": "1. [1] (być) z Hiszpanii,"},
+            {"text": "2. [2] (mieszkać) w Barcelonie."},
+            {"text": "3. Teraz [3] (być) w Krakowie."},
+            {"text": "4. [4] (uczyć się) języka polskiego,"},
+            {"text": "5. żeby [5] (studiować) w Polsce."},
+            {"text": "6. [6] (mieć) 22 lata."},
+            {"text": "7. [7] (być) wesoła i energiczna."},
+            {"text": "8. Bardzo [8] (lubić) śpiewać."},
+            {"text": "9. Dobrze [9] (grać) w tenisa"},
+            {"text": "10. i szybko [10] (biegać)."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Jestem"]},
+        {"number": 2, "answers": ["mieszkam"]},
+        {"number": 3, "answers": ["jestem"]},
+        {"number": 4, "answers": ["Uczę się", "Się uczę"], "feedback": "*uczyć się* has *-ę* for \"I\": *uczę się*."},
+        {"number": 5, "answers": ["studiować"], "feedback": "After *żeby* comes the infinitive: *żeby studiować*."},
+        {"number": 6, "answers": ["Mam"]},
+        {"number": 7, "answers": ["Jestem"]},
+        {"number": 8, "answers": ["lubię"], "feedback": "*lubić* has *-ę* for \"I\": *lubię*."},
+        {"number": 9, "answers": ["gram"]},
+        {"number": 10, "answers": ["biegam"]}
+      ],
+      "newWords": [
+        {"polish": "śpiewać", "english": "to sing"},
+        {"polish": "grać w tenisa", "english": "to play tennis"},
+        {"polish": "biegać", "english": "to run"}
+      ],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "1E",
+      "type": "free_writing",
+      "title": "This is Angela",
+      "instruction": "Write a presentation (*prezentacja*) of Angela like the text about Uwe in 1A, then write questions to it.\nAngela Brown · Anglia, Londyn · 27 lat · lektorka języka angielskiego · wysoka, szczupła, ładna, młoda · czytać książki",
+      "fields": [{"label": "Text about Angela"}, {"label": "Questions"}],
+      "model": [
+        "To jest Angela. Angela Brown. Ona jest z Anglii. Mieszka w Londynie. Jest wysoka, szczupła, ładna i młoda. Angela to lektorka języka angielskiego. Ma 27 lat. Lubi czytać książki.",
+        "Kto to jest? · Skąd ona jest? · Gdzie ona mieszka? · Jaka ona jest? · Kim ona jest? · Ile ma lat? · Co lubi robić?"
+      ],
+      "checklist": ["*ona* → adjectives in *-a*.", "*27 lat* (not *lata*).", "*z Anglii*, *w Londynie*."],
+      "newWords": [
+        {"polish": "prezentacja", "english": "presentation"},
+        {"polish": "lektorka języka angielskiego", "english": "English teacher"},
+        {"polish": "czytać książki", "english": "to read books"},
+        {"polish": "Londyn", "english": "London"}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "1F",
+      "type": "free_writing",
+      "title": "About me",
+      "instruction": "Introduce yourself (*autoprezentacja*): Jak masz na imię? · Jak się nazywasz? · Skąd jesteś? · Gdzie mieszkasz? · Jaki / jaka jesteś? · Ile masz lat? · Co lubisz robić?",
+      "fields": [{"label": "About me"}],
+      "checklist": [
+        "*Mam na imię…, Nazywam się…, Jestem z…, Mieszkam w…*",
+        "The adjective agrees with your gender.",
+        "*Mam … lat / lata*.",
+        "*Lubię* + infinitive."
+      ],
+      "newWords": [{"polish": "autoprezentacja", "english": "introducing yourself"}]
+    },
+    {
+      "id": "2A",
+      "type": "gap_fill",
+      "title": "Twenty, thirty…",
+      "instruction": "Numbers (*liczebniki*): calculate and type the result in digits. Then listen to hear the words.",
+      "tracks": [{"id": "105B1"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"text": "dwadzieścia, trzydzieści, czterdzieści, pięćdziesiąt, sześćdziesiąt, siedemdziesiąt, osiemdziesiąt, dziewięćdziesiąt, sto"}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"text": "2 × 10 = 20 — dwa-dzieścia"},
+            {"text": "1. 3 × 10 = [1] — trzy-dzieści"},
+            {"text": "2. 4 × 10 = [2] — czter-dzieści"},
+            {"text": "3. 5 × 10 = [3] — pięć-dziesiąt"},
+            {"text": "4. 6 × 10 = [4] — sześć-dziesiąt"},
+            {"text": "5. 7 × 10 = [5] — siedem-dziesiąt"},
+            {"text": "6. 8 × 10 = [6] — osiem-dziesiąt"},
+            {"text": "7. 9 × 10 = [7] — dziewięć-dziesiąt"},
+            {"text": "8. 10 × 10 = [8] — sto"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["30"]},
+        {"number": 2, "answers": ["40"]},
+        {"number": 3, "answers": ["50"]},
+        {"number": 4, "answers": ["60"]},
+        {"number": 5, "answers": ["70"]},
+        {"number": 6, "answers": ["80"]},
+        {"number": 7, "answers": ["90"]},
+        {"number": 8, "answers": ["100"]}
+      ],
+      "newWords": [
+        {"polish": "liczebnik", "english": "numeral"},
+        {"polish": "dwadzieścia", "english": "20"},
+        {"polish": "trzydzieści", "english": "30"},
+        {"polish": "czterdzieści", "english": "40"},
+        {"polish": "pięćdziesiąt", "english": "50"},
+        {"polish": "sześćdziesiąt", "english": "60"},
+        {"polish": "siedemdziesiąt", "english": "70"},
+        {"polish": "osiemdziesiąt", "english": "80"},
+        {"polish": "dziewięćdziesiąt", "english": "90"},
+        {"polish": "sto", "english": "100"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [4]
+    },
+    {
+      "id": "2B",
+      "type": "write",
+      "title": "Write the numbers",
+      "instruction": "Write each number in words.",
+      "items": [
+        {"label": "1", "prompt": "12", "answers": ["dwanaście"]},
+        {"label": "2", "prompt": "16", "answers": ["szesnaście"]},
+        {"label": "3", "prompt": "20", "answers": ["dwadzieścia"]},
+        {"label": "4", "prompt": "60", "answers": ["sześćdziesiąt"]},
+        {"label": "5", "prompt": "13", "answers": ["trzynaście"]},
+        {"label": "6", "prompt": "17", "answers": ["siedemnaście"]},
+        {"label": "7", "prompt": "30", "answers": ["trzydzieści"]},
+        {"label": "8", "prompt": "70", "answers": ["siedemdziesiąt"]},
+        {"label": "9", "prompt": "14", "answers": ["czternaście"]},
+        {"label": "10", "prompt": "18", "answers": ["osiemnaście"]},
+        {"label": "11", "prompt": "40", "answers": ["czterdzieści"]},
+        {"label": "12", "prompt": "80", "answers": ["osiemdziesiąt"]},
+        {"label": "13", "prompt": "15", "answers": ["piętnaście"], "feedback": "15 = *piętnaście*, 19 = *dziewiętnaście*: no *ć* before *-naście* (*pięć* → *pięt-*)."},
+        {"label": "14", "prompt": "19", "answers": ["dziewiętnaście"], "feedback": "15 = *piętnaście*, 19 = *dziewiętnaście*: no *ć* before *-naście* (*pięć* → *pięt-*)."},
+        {"label": "15", "prompt": "50", "answers": ["pięćdziesiąt"]},
+        {"label": "16", "prompt": "90", "answers": ["dziewięćdziesiąt"]}
+      ],
+      "rules": [4]
+    },
+    {
+      "id": "2C",
+      "type": "choice",
+      "title": "What fits?",
+      "instruction": "Choose the ending for each beginning.",
+      "items": [
+        {"label": "1", "prompt": "pięć-", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-dziesiąt"},
+        {"label": "2", "prompt": "pięt-", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-naście"},
+        {"label": "3", "prompt": "sześć-", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-dziesiąt"},
+        {"label": "4", "prompt": "szes-", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-naście"},
+        {"label": "5", "prompt": "czter-", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-naście", "answers": ["-dzieści"], "feedback": "Both work: *czternaście* (14) and *czterdzieści* (40)."},
+        {"label": "6", "prompt": "dziewięt-", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-naście"},
+        {"label": "7", "prompt": "dziewięć-", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-dziesiąt"}
+      ],
+      "rules": [4]
+    },
+    {
+      "id": "2D",
+      "type": "write",
+      "title": "Maths. How much is it?",
+      "instruction": "*Ile to jest?* Write the result in words.",
+      "wordBox": ["plus (+)", "minus (−)", "jest (=)"],
+      "items": [
+        {"label": "a", "prompt": "31 + 23 =", "answers": ["pięćdziesiąt cztery"], "feedback": "Compound numbers have no *i*: *pięćdziesiąt cztery*."},
+        {"label": "b", "prompt": "14 + 33 =", "answers": ["czterdzieści siedem"]},
+        {"label": "c", "prompt": "16 + 13 =", "answers": ["dwadzieścia dziewięć"]},
+        {"label": "d", "prompt": "33 + 44 =", "answers": ["siedemdziesiąt siedem"]},
+        {"label": "e", "prompt": "72 + 18 =", "answers": ["dziewięćdziesiąt"]},
+        {"label": "f", "prompt": "79 − 11 =", "answers": ["sześćdziesiąt osiem"]},
+        {"label": "g", "prompt": "65 − 22 =", "answers": ["czterdzieści trzy"]},
+        {"label": "h", "prompt": "96 − 12 =", "answers": ["osiemdziesiąt cztery"]},
+        {"label": "i", "prompt": "77 − 55 =", "answers": ["dwadzieścia dwa"]},
+        {"label": "j", "prompt": "110 − 9 =", "answers": ["sto jeden"]}
+      ],
+      "newWords": [
+        {"polish": "Ile to jest?", "english": "How much is it?"},
+        {"polish": "plus", "english": "plus"},
+        {"polish": "minus", "english": "minus"},
+        {"polish": "jest (=)", "english": "equals"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [4]
+    },
+    {
+      "id": "2E",
+      "type": "write",
+      "title": "What does the speaker say?",
+      "instruction": "What does the speaker (*lektor*) say? Listen and write the numbers in words.",
+      "tracks": [{"id": "wb20"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"text": "siedemnaście, pięćdziesiąt, trzydzieści dwa, czterdzieści osiem, dwadzieścia trzy, sześćdziesiąt, szesnaście, siedemdziesiąt osiem, osiemdziesiąt dziewięć, dziewięćdziesiąt osiem"}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {"label": "1", "answers": ["siedemnaście"]},
+        {"label": "2", "answers": ["pięćdziesiąt"]},
+        {"label": "3", "answers": ["trzydzieści dwa"]},
+        {"label": "4", "answers": ["czterdzieści osiem"]},
+        {"label": "5", "answers": ["dwadzieścia trzy"]},
+        {"label": "6", "answers": ["sześćdziesiąt"]},
+        {"label": "7", "answers": ["szesnaście"], "feedback": "16 = *szesnaście*: no *ć* before *-naście* (*sześć* → *szes-*)."},
+        {"label": "8", "answers": ["siedemdziesiąt osiem"]},
+        {"label": "9", "answers": ["osiemdziesiąt dziewięć"]},
+        {"label": "10", "answers": ["dziewięćdziesiąt osiem"]}
+      ],
+      "newWords": [{"polish": "lektor", "english": "speaker (on the recording)"}],
+      "newWordsUnlock": "after_check",
+      "rules": [4]
+    },
+    {
+      "id": "2F",
+      "type": "write",
+      "title": "Phone numbers",
+      "instruction": "*Proszę zanotować numery telefonów*: listen and note down each phone number in digits.",
+      "tracks": [{"id": "wb19"}],
+      "keyboard": "digits",
+      "items": [
+        {"label": "Joanna", "answers": ["40 25 36 72"]},
+        {"label": "Ewa", "answers": ["0 50 14 89 66"]},
+        {"label": "Janek", "answers": ["72 40 30 96"]},
+        {"label": "Michał", "answers": ["22 12 58 49"]}
+      ],
+      "newWords": [
+        {"polish": "numer telefonu", "english": "phone number"},
+        {"polish": "zanotować", "english": "to note down"}
+      ],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "3A",
+      "type": "reference",
+      "title": "How old are you?",
+      "instruction": "Listen to both dialogues.",
+      "tracks": [{"id": "105B4-1", "label": "Dialogue 1"}, {"id": "105B4-2", "label": "Dialogue 2"}],
+      "transcript": {
+        "unlock": "always",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Mami", "text": "Karol, ile masz lat?"},
+              {"speaker": "Karol", "text": "Prawie 18."},
+              {"speaker": "Mami", "text": "Prawie?"},
+              {"speaker": "Karol", "text": "17 i pół. A ty?"},
+              {"speaker": "Mami", "text": "A ja mam 20 lat."}
+            ]
+          },
+          {
+            "lines": [
+              {"speaker": "Mami", "text": "Ile pani ma lat?"},
+              {"speaker": "Pani Maj", "text": "Dlaczego pytasz?"},
+              {"speaker": "Mami", "text": "Ćwiczę liczebniki."},
+              {"speaker": "Pani Maj", "text": "Wiesz, w Polsce nie pytamy kobiet, ile mają lat. To trochę nieelegancko, ale nie ma problemu, ja mam 43 lata, a mój mąż, Grzegorz, 45 lat."}
+            ]
+          }
+        ]
+      },
+      "tables": [
+        {
+          "header": ["Ile masz lat?", ""],
+          "rows": [
+            ["1", "rok"],
+            ["2, 3, 4 · 22–24 · 32–34…", "lata"],
+            ["5–21 · 25–31… · 12, 13, 14", "lat"]
+          ]
+        }
+      ],
+      "notes": ["In Poland people don't ask women their age."],
+      "newWords": [
+        {"polish": "Ile masz lat?", "english": "How old are you?"},
+        {"polish": "rok", "english": "year"},
+        {"polish": "lata", "english": "years"},
+        {"polish": "lat", "english": "years"},
+        {"polish": "prawie", "english": "almost"},
+        {"polish": "17 i pół", "english": "17 and a half"},
+        {"polish": "Dlaczego pytasz?", "english": "Why do you ask?"},
+        {"polish": "ćwiczyć", "english": "to practise"},
+        {"polish": "kobieta", "english": "woman"},
+        {"polish": "nieelegancko", "english": "impolite"},
+        {"polish": "nie ma problemu", "english": "no problem"},
+        {"polish": "mąż", "english": "husband"}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "3B",
+      "type": "choice",
+      "title": "rok, lata or lat?",
+      "instruction": "Sort the numbers: *rok*, *lata* or *lat*?",
+      "shuffle": false,
+      "items": [
+        {"label": "1", "prompt": "65", "options": ["rok", "lata", "lat"], "answer": "lat"},
+        {"label": "2", "prompt": "7", "options": ["rok", "lata", "lat"], "answer": "lat"},
+        {"label": "3", "prompt": "57", "options": ["rok", "lata", "lat"], "answer": "lat"},
+        {"label": "4", "prompt": "44", "options": ["rok", "lata", "lat"], "answer": "lata"},
+        {"label": "5", "prompt": "34", "options": ["rok", "lata", "lat"], "answer": "lata"},
+        {"label": "6", "prompt": "77", "options": ["rok", "lata", "lat"], "answer": "lat"},
+        {"label": "7", "prompt": "22", "options": ["rok", "lata", "lat"], "answer": "lata"},
+        {"label": "8", "prompt": "14", "options": ["rok", "lata", "lat"], "answer": "lat", "feedback": "12, 13, 14 take *lat* — only numbers ending in 2–4 outside the teens take *lata*."},
+        {"label": "9", "prompt": "12", "options": ["rok", "lata", "lat"], "answer": "lat", "feedback": "12, 13, 14 take *lat* — only numbers ending in 2–4 outside the teens take *lata*."},
+        {"label": "10", "prompt": "50", "options": ["rok", "lata", "lat"], "answer": "lat"},
+        {"label": "11", "prompt": "20", "options": ["rok", "lata", "lat"], "answer": "lat"},
+        {"label": "12", "prompt": "33", "options": ["rok", "lata", "lat"], "answer": "lata"},
+        {"label": "13", "prompt": "18", "options": ["rok", "lata", "lat"], "answer": "lat"},
+        {"label": "14", "prompt": "100", "options": ["rok", "lata", "lat"], "answer": "lat"},
+        {"label": "15", "prompt": "13", "options": ["rok", "lata", "lat"], "answer": "lat", "feedback": "12, 13, 14 take *lat* — only numbers ending in 2–4 outside the teens take *lata*."},
+        {"label": "16", "prompt": "1", "options": ["rok", "lata", "lat"], "answer": "rok"},
+        {"label": "17", "prompt": "84", "options": ["rok", "lata", "lat"], "answer": "lata"},
+        {"label": "18", "prompt": "91", "options": ["rok", "lata", "lat"], "answer": "lat"},
+        {"label": "19", "prompt": "63", "options": ["rok", "lata", "lat"], "answer": "lata"}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "3C",
+      "type": "choice",
+      "title": "rok, lata or lat? (workbook)",
+      "instruction": "Sort the numbers: *rok*, *lata* or *lat*?",
+      "shuffle": false,
+      "items": [
+        {"label": "1", "prompt": "7", "options": ["rok", "lata", "lat"], "answer": "lat"},
+        {"label": "2", "prompt": "8", "options": ["rok", "lata", "lat"], "answer": "lat"},
+        {"label": "3", "prompt": "13", "options": ["rok", "lata", "lat"], "answer": "lat", "feedback": "12, 13, 14 take *lat* — only numbers ending in 2–4 outside the teens take *lata*."},
+        {"label": "4", "prompt": "42", "options": ["rok", "lata", "lat"], "answer": "lata"},
+        {"label": "5", "prompt": "51", "options": ["rok", "lata", "lat"], "answer": "lat"},
+        {"label": "6", "prompt": "1", "options": ["rok", "lata", "lat"], "answer": "rok"},
+        {"label": "7", "prompt": "64", "options": ["rok", "lata", "lat"], "answer": "lata"},
+        {"label": "8", "prompt": "22", "options": ["rok", "lata", "lat"], "answer": "lata"},
+        {"label": "9", "prompt": "40", "options": ["rok", "lata", "lat"], "answer": "lat"},
+        {"label": "10", "prompt": "14", "options": ["rok", "lata", "lat"], "answer": "lat", "feedback": "12, 13, 14 take *lat* — only numbers ending in 2–4 outside the teens take *lata*."},
+        {"label": "11", "prompt": "104", "options": ["rok", "lata", "lat"], "answer": "lata"},
+        {"label": "12", "prompt": "101", "options": ["rok", "lata", "lat"], "answer": "lat", "feedback": "101 ends in 1 but is not 1 → *lat*."},
+        {"label": "13", "prompt": "17", "options": ["rok", "lata", "lat"], "answer": "lat"},
+        {"label": "14", "prompt": "12", "options": ["rok", "lata", "lat"], "answer": "lat", "feedback": "12, 13, 14 take *lat* — only numbers ending in 2–4 outside the teens take *lata*."}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "3D",
+      "type": "inline_choice",
+      "title": "lat or lata?",
+      "instruction": "Choose *lata* or *lat*.",
+      "items": [
+        {
+          "label": "1",
+          "prompt": "Uwe ma 44 [1].",
+          "choices": [
+            {"options": ["lata", "lat"], "answer": "lata", "feedback": "44 *lata*, but 45 *lat* and 14 *lat*: *lata* only after numbers ending in 2, 3, 4 (not 12–14)."}
+          ]
+        },
+        {
+          "label": "2",
+          "prompt": "Angela ma 27 [1].",
+          "choices": [
+            {"options": ["lata", "lat"], "answer": "lat", "feedback": "44 *lata*, but 45 *lat* and 14 *lat*: *lata* only after numbers ending in 2, 3, 4 (not 12–14)."}
+          ]
+        },
+        {
+          "label": "3",
+          "prompt": "Javier ma 30 [1].",
+          "choices": [
+            {"options": ["lata", "lat"], "answer": "lat", "feedback": "44 *lata*, but 45 *lat* and 14 *lat*: *lata* only after numbers ending in 2, 3, 4 (not 12–14)."}
+          ]
+        },
+        {
+          "label": "4",
+          "prompt": "Pani Joanna ma 43 [1].",
+          "choices": [
+            {"options": ["lata", "lat"], "answer": "lata", "feedback": "44 *lata*, but 45 *lat* and 14 *lat*: *lata* only after numbers ending in 2, 3, 4 (not 12–14)."}
+          ]
+        },
+        {
+          "label": "5",
+          "prompt": "Pan Grzegorz ma 45 [1].",
+          "choices": [
+            {"options": ["lata", "lat"], "answer": "lat", "feedback": "44 *lata*, but 45 *lat* and 14 *lat*: *lata* only after numbers ending in 2, 3, 4 (not 12–14)."}
+          ]
+        },
+        {
+          "label": "6",
+          "prompt": "Mami ma 20 [1].",
+          "choices": [
+            {"options": ["lata", "lat"], "answer": "lat", "feedback": "44 *lata*, but 45 *lat* and 14 *lat*: *lata* only after numbers ending in 2, 3, 4 (not 12–14)."}
+          ]
+        }
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "3E",
+      "type": "gap_fill",
+      "title": "How old is he / she?",
+      "instruction": "*Jak myślisz?* Guess each age and write it in digits. The word after the gap decides which numbers fit.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. 👶 a baby — Ono ma [1] rok."},
+            {"text": "2. 👴 a very old man — On ma [2] lata."},
+            {"text": "3. 🤠 a man with a hat and a cigar — On ma [3] lat."},
+            {"text": "4. 👧 a girl — Ona ma [4] lat."},
+            {"text": "5. 👩 a young woman — Ona ma [5] lata."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["1"], "feedback": "Before *rok* the only number is 1: *Ono ma rok* (one year)."},
+        {"number": 2, "answers": ["82", "2", "3", "4", "22", "23", "24", "32", "33", "34", "42", "43", "44", "52", "53", "54", "62", "63", "64", "72", "73", "74", "83", "84", "92", "93", "94", "102", "103", "104"], "feedback": "Before *lata* the number ends in 2, 3 or 4, but not 12–14: 22, 43, 84…"},
+        {"number": 3, "answers": ["45", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "25", "26", "27", "28", "29", "30", "31", "35", "36", "37", "38", "39", "40", "41", "46", "47", "48", "49", "50", "51", "55", "56", "57", "58", "59", "60", "61", "65", "66", "67", "68", "69", "70", "71", "75", "76", "77", "78", "79", "80", "81", "85", "86", "87", "88", "89", "90", "91", "95", "96", "97", "98", "99", "100", "101", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120"], "feedback": "Before *lat* the number doesn't end in 2, 3 or 4 (12–14 are fine): 10, 18, 45…"},
+        {"number": 4, "answers": ["10", "5", "6", "7", "8", "9", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "25", "26", "27", "28", "29", "30", "31", "35", "36", "37", "38", "39", "40", "41", "45", "46", "47", "48", "49", "50", "51", "55", "56", "57", "58", "59", "60", "61", "65", "66", "67", "68", "69", "70", "71", "75", "76", "77", "78", "79", "80", "81", "85", "86", "87", "88", "89", "90", "91", "95", "96", "97", "98", "99", "100", "101", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120"], "feedback": "Before *lat* the number doesn't end in 2, 3 or 4 (12–14 are fine): 10, 18, 45…"},
+        {"number": 5, "answers": ["23", "2", "3", "4", "22", "24", "32", "33", "34", "42", "43", "44", "52", "53", "54", "62", "63", "64", "72", "73", "74", "82", "83", "84", "92", "93", "94", "102", "103", "104"], "feedback": "Before *lata* the number ends in 2, 3 or 4, but not 12–14: 22, 43, 84…"}
+      ],
+      "newWords": [{"polish": "Jak myślisz?", "english": "What do you think?"}],
+      "newWordsUnlock": "after_check",
+      "rules": [5]
+    },
+    {
+      "id": "4A",
+      "type": "write",
+      "title": "Who is it?",
+      "instruction": "*Jaki to zawód?* Write the profession for each picture with a word from the box. Then listen to check.",
+      "tracks": [{"id": "105C1"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"text": "kelner, nauczyciel, fotograf, informatyk, rolnik, muzyk, inżynier, policjant, kucharz, dentysta, tancerz, urzędnik, lekarz, biznesmen, dziennikarz, emeryt, aktor"}
+            ]
+          }
+        ]
+      },
+      "wordBox": [
+        "aktor",
+        "fotograf",
+        "policjant",
+        "inżynier",
+        "nauczyciel",
+        "muzyk",
+        "emeryt",
+        "rolnik",
+        "kelner",
+        "biznesmen",
+        "urzędnik",
+        "lekarz",
+        "tancerz",
+        "dziennikarz",
+        "kucharz",
+        "informatyk",
+        "dentysta"
+      ],
+      "items": [
+        {
+          "label": "1",
+          "picture": {"label": "a man in a waistcoat serving a table", "emoji": "🍽️"},
+          "answers": ["kelner"]
+        },
+        {
+          "label": "2",
+          "picture": {"label": "a man at a blackboard", "emoji": "👨‍🏫"},
+          "answers": ["nauczyciel"]
+        },
+        {
+          "label": "3",
+          "picture": {"label": "a man with a big lens", "emoji": "📸"},
+          "answers": ["fotograf"]
+        },
+        {
+          "label": "4",
+          "picture": {"label": "a man at computers", "emoji": "💻"},
+          "answers": ["informatyk"]
+        },
+        {
+          "label": "5",
+          "picture": {"label": "a man in a field", "emoji": "🌾"},
+          "answers": ["rolnik"]
+        },
+        {
+          "label": "6",
+          "picture": {"label": "a man playing the violin", "emoji": "🎻"},
+          "answers": ["muzyk"]
+        },
+        {
+          "label": "7",
+          "picture": {"label": "two men in hard hats with plans", "emoji": "👷"},
+          "answers": ["inżynier"]
+        },
+        {
+          "label": "8",
+          "picture": {"label": "a man in uniform and cap", "emoji": "👮"},
+          "answers": ["policjant"]
+        },
+        {
+          "label": "9",
+          "picture": {"label": "a man in a chef's hat", "emoji": "👨‍🍳"},
+          "answers": ["kucharz"]
+        },
+        {
+          "label": "10",
+          "picture": {"label": "a man in a mask treating a tooth", "emoji": "🦷"},
+          "answers": ["dentysta"]
+        },
+        {
+          "label": "11",
+          "picture": {"label": "a dancing couple (he)", "emoji": "💃"},
+          "answers": ["tancerz"]
+        },
+        {
+          "label": "12",
+          "picture": {"label": "a man in a tie at an office desk", "emoji": "🗂️"},
+          "answers": ["urzędnik"]
+        },
+        {
+          "label": "13",
+          "picture": {"label": "a man in a white coat with a stethoscope", "emoji": "🩺"},
+          "answers": ["lekarz"]
+        },
+        {
+          "label": "14",
+          "picture": {"label": "a smiling man in a suit", "emoji": "💼"},
+          "answers": ["biznesmen"]
+        },
+        {
+          "label": "15",
+          "picture": {"label": "a man in a suit in front of a TV camera", "emoji": "🎤"},
+          "answers": ["dziennikarz"]
+        },
+        {
+          "label": "16",
+          "picture": {"label": "a laughing old man", "emoji": "👴"},
+          "answers": ["emeryt"]
+        },
+        {
+          "label": "17",
+          "picture": {"label": "a mime with a white face", "emoji": "🎭"},
+          "answers": ["aktor"]
+        }
+      ],
+      "newWords": [
+        {"polish": "zawód", "english": "profession"},
+        {"polish": "kelner", "english": "waiter"},
+        {"polish": "nauczyciel", "english": "teacher"},
+        {"polish": "fotograf", "english": "photographer"},
+        {"polish": "informatyk", "english": "IT specialist"},
+        {"polish": "rolnik", "english": "farmer"},
+        {"polish": "muzyk", "english": "musician"},
+        {"polish": "inżynier", "english": "engineer"},
+        {"polish": "policjant", "english": "police officer"},
+        {"polish": "kucharz", "english": "cook"},
+        {"polish": "dentysta", "english": "dentist"},
+        {"polish": "tancerz", "english": "dancer"},
+        {"polish": "urzędnik", "english": "clerk"},
+        {"polish": "lekarz", "english": "doctor"},
+        {"polish": "dziennikarz", "english": "journalist"},
+        {"polish": "emeryt", "english": "pensioner"},
+        {"polish": "aktor", "english": "actor"}
+      ],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "4B",
+      "type": "write",
+      "title": "Which profession?",
+      "instruction": "Listen, fill in the letters and write each profession in full.",
+      "tracks": [{"id": "wb21"}],
+      "items": [
+        {"label": "1", "prompt": "k_ln_r", "answers": ["kelner"]},
+        {"label": "2", "prompt": "_a_cz_ci_l", "answers": ["nauczyciel"]},
+        {"label": "3", "prompt": "_o_og_a_", "answers": ["fotograf"]},
+        {"label": "4", "prompt": "_nf_r_a_y_", "answers": ["informatyk"]},
+        {"label": "5", "prompt": "_ol_ik", "answers": ["rolnik"]},
+        {"label": "6", "prompt": "m_z__", "answers": ["muzyk"]},
+        {"label": "7", "prompt": "i_ż_n__r", "answers": ["inżynier"], "feedback": "*inżynier* — with *ż*."},
+        {"label": "8", "prompt": "p__ic_a_t", "answers": ["policjant"]},
+        {"label": "9", "prompt": "k_c_ar_", "answers": ["kucharz"]},
+        {"label": "10", "prompt": "_e_t_s_a", "answers": ["dentysta"]},
+        {"label": "11", "prompt": "ta_ce_z", "answers": ["tancerz"]},
+        {"label": "12", "prompt": "u___dn_k", "answers": ["urzędnik"], "feedback": "*urzędnik* — *rz* and *ę*."},
+        {"label": "13", "prompt": "_ek_r_", "answers": ["lekarz"]},
+        {"label": "14", "prompt": "_iz_e_me_", "answers": ["biznesmen"]},
+        {"label": "15", "prompt": "d_ie_nika__", "answers": ["dziennikarz"], "feedback": "*dziennikarz* — double *n*, *rz* at the end."},
+        {"label": "16", "prompt": "e_e_y_", "answers": ["emeryt"]},
+        {"label": "17", "prompt": "_k_or", "answers": ["aktor"]}
+      ]
+    },
+    {
+      "id": "4C",
+      "type": "write",
+      "title": "Feminine professions",
+      "instruction": "Write the feminine form (*forma żeńska*).",
+      "notes": [
+        "Same form for men and women: *pan / pani* architekt, taksówkarz, inżynier, minister, prezydent, muzyk, fotograf, kierowca, profesor."
+      ],
+      "items": [
+        {"label": "1", "prompt": "barman", "answers": ["barmanka"]},
+        {"label": "2", "prompt": "emeryt", "answers": ["emerytka"]},
+        {"label": "3", "prompt": "kelner", "answers": ["kelnerka"]},
+        {"label": "4", "prompt": "nauczyciel", "answers": ["nauczycielka"]},
+        {"label": "5", "prompt": "lekarz", "answers": ["lekarka"], "feedback": "*-rz* becomes *-r*: *lekarz* → *lekarka*, *tancerz* → *tancerka*."},
+        {"label": "6", "prompt": "dziennikarz", "answers": ["dziennikarka"], "feedback": "*-rz* becomes *-r*: *lekarz* → *lekarka*, *tancerz* → *tancerka*."},
+        {"label": "7", "prompt": "kucharz", "answers": ["kucharka"], "feedback": "*-rz* becomes *-r*: *lekarz* → *lekarka*, *tancerz* → *tancerka*."},
+        {"label": "8", "prompt": "tancerz", "answers": ["tancerka"], "feedback": "*-rz* becomes *-r*: *lekarz* → *lekarka*, *tancerz* → *tancerka*."},
+        {"label": "9", "prompt": "artysta", "answers": ["artystka"], "feedback": "*-a* → *-ka*: *artysta* → *artystka*."},
+        {"label": "10", "prompt": "poeta", "answers": ["poetka"]},
+        {"label": "11", "prompt": "dentysta", "answers": ["dentystka"]}
+      ],
+      "newWords": [
+        {"polish": "forma żeńska", "english": "feminine form"},
+        {"polish": "barman / barmanka", "english": "bartender"},
+        {"polish": "artysta / artystka", "english": "artist"},
+        {"polish": "poeta / poetka", "english": "poet (m / f)"},
+        {"polish": "architekt", "english": "architect"},
+        {"polish": "taksówkarz", "english": "taxi driver"},
+        {"polish": "minister", "english": "minister"},
+        {"polish": "prezydent", "english": "president"},
+        {"polish": "kierowca", "english": "driver"},
+        {"polish": "profesor", "english": "professor"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [6]
+    },
+    {
+      "id": "4D",
+      "type": "gap_fill",
+      "title": "Who is it?",
+      "instruction": "Fill in the gaps with the words from the box.",
+      "wordBox": ["modelka", "polityk", "nauczycielka", "fotograf", "malarz", "pisarz", "poeta", "aktorka", "muzyk", "dziennikarka"],
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Angela Merkel to znany niemiecki [1]."},
+            {"text": "2. Cézanne to świetny francuski [2]."},
+            {"text": "3. Oprah Winfrey to popularna [3], która prowadzi swój program w telewizji."},
+            {"text": "4. Thomas Mann to doskonały niemiecki [4]."},
+            {"text": "5. Sylwia to bardzo dobra [5], która uczy polskiego."},
+            {"text": "6. Claudia Schiffer to atrakcyjna [6]."},
+            {"text": "7. Nigel Kennedy to [7], który świetnie gra na skrzypcach."},
+            {"text": "8. Meryl Streep to doskonała [8] filmowa."},
+            {"text": "9. David Doubilet to znany [9], który publikuje fotografie w National Geographic."},
+            {"text": "10. Shelley to angielski [10] romantyczny."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["polityk"], "feedback": "*polityk* has no feminine form, so the adjective stays masculine (*znany niemiecki polityk*)."},
+        {"number": 2, "answers": ["malarz"]},
+        {"number": 3, "answers": ["dziennikarka"]},
+        {"number": 4, "answers": ["pisarz"]},
+        {"number": 5, "answers": ["nauczycielka"]},
+        {"number": 6, "answers": ["modelka"]},
+        {"number": 7, "answers": ["muzyk"]},
+        {"number": 8, "answers": ["aktorka"]},
+        {"number": 9, "answers": ["fotograf"]},
+        {"number": 10, "answers": ["poeta"], "feedback": "*poeta* ends in *-a* but is a man: *angielski poeta*."}
+      ],
+      "newWords": [
+        {"polish": "polityk", "english": "politician"},
+        {"polish": "malarz", "english": "painter"},
+        {"polish": "pisarz", "english": "writer"},
+        {"polish": "modelka", "english": "model"},
+        {"polish": "znany", "english": "well-known"},
+        {"polish": "doskonały", "english": "excellent"},
+        {"polish": "który / która", "english": "who (m / f)"},
+        {"polish": "prowadzić program w telewizji", "english": "to host a TV show"},
+        {"polish": "grać na skrzypcach", "english": "to play the violin"},
+        {"polish": "filmowy", "english": "film (adj.)"},
+        {"polish": "publikować", "english": "to publish"},
+        {"polish": "romantyczny", "english": "romantic"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [6]
+    },
+    {
+      "id": "4E",
+      "type": "gap_fill",
+      "title": "Who is it? What is he like?",
+      "instruction": "Use each word from the box once: an adjective and a profession for each person.",
+      "wordBox": ["aktor", "aktorka", "malarz", "polityk", "zdolna", "dobry", "utalentowany", "atrakcyjny"],
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. To jest [1] [2] Nicole Kidman."},
+            {"text": "2. To jest [3] [4] Johnny Depp."},
+            {"text": "3. To jest [5] [6] Van Gogh."},
+            {"text": "4. To jest [7] [8] Lech Wałęsa."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["zdolna"], "feedback": "*aktorka* is feminine, so only *zdolna* fits."},
+        {"number": 2, "answers": ["aktorka"]},
+        {"number": 3, "answers": ["atrakcyjny"]},
+        {"number": 4, "answers": ["aktor"]},
+        {"number": 5, "answers": ["dobry"]},
+        {"number": 6, "answers": ["malarz"]},
+        {"number": 7, "answers": ["utalentowany"]},
+        {"number": 8, "answers": ["polityk"]}
+      ],
+      "interchangeable": [["3", "5", "7"]],
+      "newWords": [
+        {"polish": "aktorka", "english": "actress"},
+        {"polish": "zdolny", "english": "gifted"},
+        {"polish": "atrakcyjny", "english": "attractive"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [6]
+    },
+    {
+      "id": "5A",
+      "type": "choice",
+      "title": "What do you do?",
+      "instruction": "*Javier i Uwe siedzą razem przy stoliku, jest przerwa.* Listen: true or false? P = true (*prawda*), N = false (*nieprawda*).",
+      "tracks": [{"id": "105D1"}],
+      "shuffle": false,
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Javier", "text": "O! Co masz? Co to jest?"},
+              {"speaker": "Uwe", "text": "To? To jest fotografia. Tu jest moja rodzina."},
+              {"speaker": "Javier", "text": "To jest twoja żona, a to twoje dziecko, tak?"},
+              {"speaker": "Uwe", "text": "Tak. Moja żona Anna i mój syn Eric."},
+              {"speaker": "Javier", "text": "Twoja żona jest bardzo ładna — jest piękna!"},
+              {"speaker": "Uwe", "text": "O tak! Jest piękna i utalentowana. Ona jest aktorką. Jest bardzo popularną aktorką. Pracuje w teatrze w Berlinie."},
+              {"speaker": "Javier", "text": "A ty, kim jesteś z zawodu?"},
+              {"speaker": "Uwe", "text": "Jestem biznesmenem. A ty?"},
+              {"speaker": "Javier", "text": "To skomplikowane…, ale z zawodu jestem muzykiem. Gram na gitarze, akordeonie, na pianinie… Jestem też instruktorem tanga."},
+              {"speaker": "Uwe", "text": "Hm, jesteś muzykiem i umiesz tańczyć tango…"}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {"label": "1", "prompt": "Uwe nie ma rodziny.", "options": ["P", "N"], "answer": "N"},
+        {"label": "2", "prompt": "Syn ma na imię Eric.", "options": ["P", "N"], "answer": "P"},
+        {"label": "3", "prompt": "Anna nie jest atrakcyjna.", "options": ["P", "N"], "answer": "N"},
+        {"label": "4", "prompt": "Uwe jest aktorem.", "options": ["P", "N"], "answer": "N", "feedback": "*Uwe jest biznesmenem*; his wife Anna *jest aktorką*."},
+        {"label": "5", "prompt": "Javier umie tańczyć tango.", "options": ["P", "N"], "answer": "P"},
+        {"label": "6", "prompt": "Javier jest muzykiem.", "options": ["P", "N"], "answer": "P"}
+      ],
+      "newWords": [
+        {"polish": "razem", "english": "together"},
+        {"polish": "przy stoliku", "english": "at a table"},
+        {"polish": "fotografia", "english": "photo"},
+        {"polish": "rodzina", "english": "family"},
+        {"polish": "żona", "english": "wife"},
+        {"polish": "syn", "english": "son"},
+        {"polish": "dziecko", "english": "child"},
+        {"polish": "piękny", "english": "beautiful"},
+        {"polish": "popularny", "english": "popular"},
+        {"polish": "teatr", "english": "theatre"},
+        {"polish": "Kim jesteś z zawodu?", "english": "What do you do (for a living)?"},
+        {"polish": "skomplikowane", "english": "complicated"},
+        {"polish": "grać na gitarze", "english": "to play the guitar"},
+        {"polish": "na akordeonie", "english": "the accordion"},
+        {"polish": "na pianinie", "english": "the piano"},
+        {"polish": "instruktor tanga", "english": "tango instructor"},
+        {"polish": "umieć", "english": "to be able to"},
+        {"polish": "prawda", "english": "true"},
+        {"polish": "nieprawda", "english": "false"}
+      ],
+      "rules": [1, 2]
+    },
+    {
+      "id": "5B",
+      "type": "reference",
+      "title": "Instrumental — Kim? Czym?",
+      "instruction": "The instrumental (*narzędnik*) answers *Kim?* and *Czym?*. After *to* use the nominative (*mianownik*).",
+      "tables": [
+        {
+          "header": ["", "masculine", "feminine", "neuter"],
+          "rows": [
+            ["adjective", "-ym (after k, g: -im)", "-ą", "-ym (-im)"],
+            ["noun", "-em (after k, g: -iem)", "-ą", "-em (-iem)"],
+            ["example", "dobrym studentem", "dobrą studentką", "małym dzieckiem"]
+          ]
+        }
+      ],
+      "groups": [
+        {
+          "phrases": [
+            {"polish": "Eric to dobry syn.", "english": "Eric is a good son. (*to* + nominative)"},
+            {"polish": "Eric jest dobrym synem.", "english": "Eric is a good son. (*jest* + instrumental)"}
+          ]
+        }
+      ],
+      "notes": ["Masculine nouns in *-a* decline like feminine ones: *wysokim mężczyzną*, *dobrym tatą*."],
+      "newWords": [
+        {"polish": "narzędnik", "english": "instrumental"},
+        {"polish": "mianownik", "english": "nominative"}
+      ]
+    },
+    {
+      "id": "5C",
+      "type": "gap_fill",
+      "title": "Nominative or instrumental?",
+      "instruction": "After *to* use the nominative; after *jest* use the instrumental.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "a. Eric to dobry syn. Eric jest [1]."},
+            {"text": "b. Kasia to ambitna studentka. Kasia jest [2]."},
+            {"text": "c. To jest świetny kucharz. On jest [3]."},
+            {"text": "d. Agnieszka jest miłą sekretarką. Agnieszka to [4]."},
+            {"text": "e. Jan jest wesołym mężczyzną. Jan to [5]."},
+            {"text": "f. Warszawa to stolica Polski. Warszawa jest [6]."},
+            {"text": "g. Picasso to popularny malarz. Picasso jest [7]."},
+            {"text": "h. Kraków jest starym miastem. Kraków to [8]."},
+            {"text": "i. Oscypek jest regionalnym serem. Oscypek to [9]."},
+            {"text": "j. Centrum Manggha jest nowoczesnym budynkiem. Centrum Manggha to [10]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["dobrym synem"], "feedback": "After *być* (to be someone) use the instrumental: *-ym/-im + -em/-iem* (masc., neut.), *-ą + -ą* (fem.)."},
+        {"number": 2, "answers": ["ambitną studentką"]},
+        {"number": 3, "answers": ["świetnym kucharzem"]},
+        {"number": 4, "answers": ["miła sekretarka"]},
+        {"number": 5, "answers": ["wesoły mężczyzna"], "feedback": "*mężczyzna* is masculine but ends in *-a* → *wesołym mężczyzną* / *wesoły mężczyzna*."},
+        {"number": 6, "answers": ["stolicą Polski"]},
+        {"number": 7, "answers": ["popularnym malarzem"]},
+        {"number": 8, "answers": ["stare miasto"]},
+        {"number": 9, "answers": ["regionalny ser"]},
+        {"number": 10, "answers": ["nowoczesny budynek"]}
+      ],
+      "newWords": [
+        {"polish": "świetny", "english": "excellent"},
+        {"polish": "sekretarka", "english": "secretary"},
+        {"polish": "stolica", "english": "capital"},
+        {"polish": "miasto", "english": "city"},
+        {"polish": "regionalny ser", "english": "regional cheese"},
+        {"polish": "oscypek", "english": "oscypek (smoked sheep's cheese)"},
+        {"polish": "nowoczesny budynek", "english": "modern building"},
+        {"polish": "centrum kultury i sztuki", "english": "centre of culture and art"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [2, 1]
+    },
+    {
+      "id": "5D",
+      "type": "inline_choice",
+      "title": "What fits?",
+      "instruction": "Choose the right form.",
+      "items": [
+        {
+          "label": "1",
+          "prompt": "Paweł jest [1] tatą.",
+          "choices": [
+            {"options": ["dobry", "dobrą", "dobrym"], "answer": "dobrym", "feedback": "Masculine nouns in *-a* take *-ą*, the adjective *-ym*: *dobrym tatą*, *świetnym kierowcą*."}
+          ]
+        },
+        {
+          "label": "2",
+          "prompt": "Magda jest [1] architektem.",
+          "choices": [
+            {"options": ["zdolny", "zdolnym", "zdolną"], "answer": "zdolnym", "feedback": "The adjective agrees with the noun: *architekt*, *fotograf* and *inżynier* are masculine → *zdolnym architektem*."}
+          ]
+        },
+        {
+          "label": "3",
+          "prompt": "Łucja jest [1] dzieckiem.",
+          "choices": [{"options": ["zdrową", "zdrowa", "zdrowym"], "answer": "zdrowym"}]
+        },
+        {
+          "label": "4",
+          "prompt": "Schumacher jest [1] kierowcą.",
+          "choices": [
+            {"options": ["świetny", "świetnym", "świetną"], "answer": "świetnym", "feedback": "Masculine nouns in *-a* take *-ą*, the adjective *-ym*: *dobrym tatą*, *świetnym kierowcą*."}
+          ]
+        },
+        {
+          "label": "5",
+          "prompt": "Miłosz jest [1] poetą.",
+          "choices": [{"options": ["polskim", "polską", "polski"], "answer": "polskim"}]
+        },
+        {
+          "label": "6",
+          "prompt": "Maria jest [1] fotografem.",
+          "choices": [
+            {"options": ["utalentowana", "utalentowaną", "utalentowanym"], "answer": "utalentowanym", "feedback": "The adjective agrees with the noun: *architekt*, *fotograf* and *inżynier* are masculine → *zdolnym architektem*."}
+          ]
+        },
+        {
+          "label": "7",
+          "prompt": "Javier jest [1] artystą.",
+          "choices": [
+            {"options": ["spontanicznym", "spontaniczną", "spontaniczny"], "answer": "spontanicznym"}
+          ]
+        },
+        {
+          "label": "8",
+          "prompt": "Ewa jest [1] inżynierem.",
+          "choices": [
+            {"options": ["dobrym", "dobry", "dobrą"], "answer": "dobrym", "feedback": "The adjective agrees with the noun: *architekt*, *fotograf* and *inżynier* are masculine → *zdolnym architektem*."}
+          ]
+        }
+      ],
+      "newWords": [{"polish": "tata", "english": "dad"}],
+      "rules": [1]
+    },
+    {
+      "id": "5E",
+      "type": "gap_fill",
+      "title": "Fill in",
+      "instruction": "Put the phrase in brackets in the instrumental.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Julia jest bardzo [1] (dobra córka)."},
+            {"text": "2. Angela jest [2] (wysoka kobieta)."},
+            {"text": "3. Uwe jest [3] (przystojny mężczyzna)."},
+            {"text": "4. Michał jest [4] (małe dziecko)."},
+            {"text": "5. Tomek jest [5] (dobry tata)."},
+            {"text": "6. Aneta jest [6] (kreatywna nauczycielka)."},
+            {"text": "7. Jonatan jest [7] (inteligentny student)."},
+            {"text": "8. Toyota Prius jest [8] (drogie auto)."},
+            {"text": "9. Tom jest [9] (wysoki chłopak)."},
+            {"text": "10. Mami jest [10] (szczupła dziewczyna)."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["dobrą córką"]},
+        {"number": 2, "answers": ["wysoką kobietą"]},
+        {"number": 3, "answers": ["przystojnym mężczyzną"], "feedback": "*mężczyzna* ends in *-a* → *-ą*: *przystojnym mężczyzną*."},
+        {"number": 4, "answers": ["małym dzieckiem"]},
+        {"number": 5, "answers": ["dobrym tatą"], "feedback": "*tata* ends in *-a* → *-ą*: *dobrym tatą*."},
+        {"number": 6, "answers": ["kreatywną nauczycielką"]},
+        {"number": 7, "answers": ["inteligentnym studentem"]},
+        {"number": 8, "answers": ["drogim autem"]},
+        {"number": 9, "answers": ["wysokim chłopakiem"], "feedback": "After *k*: *-im*, *-iem* → *wysokim chłopakiem*."},
+        {"number": 10, "answers": ["szczupłą dziewczyną"]}
+      ],
+      "newWords": [
+        {"polish": "córka", "english": "daughter"},
+        {"polish": "drogi", "english": "expensive"},
+        {"polish": "auto", "english": "car"},
+        {"polish": "chłopak", "english": "boy"},
+        {"polish": "dziewczyna", "english": "girl"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [1]
+    },
+    {
+      "id": "6A",
+      "type": "gap_fill",
+      "title": "Who is Witkacy?",
+      "instruction": "Fill in the dialogue with the words from the box.",
+      "wordBox": ["pisarz", "sztuką", "malarz", "fotograf", "artysta", "malarstwem"],
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Javier", "text": "Cześć Mami! Co czytasz?"},
+            {"speaker": "Mami", "text": "Cześć Javier! Czytam książkę biograficzną."},
+            {"speaker": "Javier", "text": "A kto to jest?"},
+            {"speaker": "Mami", "text": "To jest Witkacy."},
+            {"speaker": "Javier", "text": "Wi-tka-cy???"},
+            {"speaker": "Mami", "text": "Tak. To bardzo popularny polski pisarz, [1], dramaturg, [2] i filozof, hmmm [3]!"},
+            {"speaker": "Javier", "text": "Niestety, nie znam."},
+            {"speaker": "Mami", "text": "Och, Javier, nie martw się! Ja znam Witkacego, bo interesuję się [4] i [5]. Ale na przykład tango czy akordeon to dla mnie czarna magia!"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["malarz"]},
+        {"number": 2, "answers": ["fotograf"]},
+        {"number": 3, "answers": ["artysta"]},
+        {"number": 4, "answers": ["sztuką"], "feedback": "*interesować się* + instrumental: *sztuką*, *malarstwem*."},
+        {"number": 5, "answers": ["malarstwem"]}
+      ],
+      "interchangeable": [["1", "2"], ["4", "5"]],
+      "newWords": [
+        {"polish": "Co czytasz?", "english": "What are you reading?"},
+        {"polish": "książka biograficzna", "english": "biography"},
+        {"polish": "dramaturg", "english": "playwright"},
+        {"polish": "filozof", "english": "philosopher"},
+        {"polish": "niestety", "english": "unfortunately"},
+        {"polish": "nie martw się", "english": "don't worry"},
+        {"polish": "interesować się", "english": "to be interested in"},
+        {"polish": "sztuka", "english": "art"},
+        {"polish": "malarstwo", "english": "painting"},
+        {"polish": "na przykład", "english": "for example"},
+        {"polish": "czarna magia", "english": "a mystery (lit. \"black magic\")"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [3]
+    },
+    {
+      "id": "6B",
+      "type": "gap_fill",
+      "title": "What is he / she interested in?",
+      "instruction": "Interests (*zainteresowania*). *Czym się interesujesz? — Interesuję się sportem, boksem, historią, piłką nożną, muzyką rockową, fotografią, francuskimi filmami, sportami ekstremalnymi, książkami kryminalnymi…* Write one word in the instrumental.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. 🎨 Mami (a palette) — Ona interesuje się [1]."},
+            {"text": "2. 📚 Angela (books) — Ona interesuje się [2]."},
+            {"text": "3. 🎾 an older man (a tennis player) — On interesuje się [3]."},
+            {"text": "4. 🎸 Javier (a guitar) — On interesuje się [4]."},
+            {"text": "5. 📷 a woman in glasses (a camera) — Ona interesuje się [5]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["malarstwem"], "feedback": "*interesować się* + instrumental: *malarstwo* → *malarstwem*."},
+        {"number": 2, "answers": ["literaturą"], "feedback": "Feminine *-a* → *-ą*: *literatura* → *literaturą*."},
+        {"number": 3, "answers": ["sportem", "tenisem"]},
+        {"number": 4, "answers": ["muzyką"]},
+        {"number": 5, "answers": ["fotografią"]}
+      ],
+      "newWords": [
+        {"polish": "Czym się interesujesz?", "english": "What are you interested in?"},
+        {"polish": "zainteresowania", "english": "interests"},
+        {"polish": "literatura", "english": "literature"},
+        {"polish": "muzyka", "english": "music"},
+        {"polish": "historia", "english": "history"},
+        {"polish": "tenis", "english": "tennis"},
+        {"polish": "boks", "english": "boxing"},
+        {"polish": "piłka nożna", "english": "football"},
+        {"polish": "muzyka rockowa", "english": "rock music"},
+        {"polish": "francuskie filmy", "english": "French films"},
+        {"polish": "sporty ekstremalne", "english": "extreme sports"},
+        {"polish": "książki kryminalne", "english": "crime novels"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [3]
+    },
+    {
+      "id": "6C",
+      "type": "gap_fill",
+      "title": "Interesuję się…",
+      "instruction": "Write the rest of each sentence in the instrumental.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Interesuję się [1]. (sport, historia, współczesny teatr)"},
+            {"text": "2. Interesuję się [2]. (fotografia, moda, hiszpański film)"},
+            {"text": "3. Interesuję się [3]. (polityka, polskie kino)"},
+            {"text": "4. Interesuję się [4]. (ekonomia, polski folklor)"},
+            {"text": "5. Interesuję się [5]. (psychologia, muzyka klasyczna)"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["sportem, historią i współczesnym teatrem", "sportem, historią, współczesnym teatrem"]},
+        {"number": 2, "answers": ["fotografią, modą i hiszpańskim filmem", "fotografią, modą, hiszpańskim filmem"]},
+        {"number": 3, "answers": ["polityką i polskim kinem", "polityką, polskim kinem"], "feedback": "*kino* is neuter: *polskim kinem*."},
+        {"number": 4, "answers": ["ekonomią i polskim folklorem", "ekonomią, polskim folklorem"]},
+        {"number": 5, "answers": ["psychologią i muzyką klasyczną", "psychologią, muzyką klasyczną"]}
+      ],
+      "newWords": [
+        {"polish": "współczesny teatr", "english": "contemporary theatre"},
+        {"polish": "moda", "english": "fashion"},
+        {"polish": "polityka", "english": "politics"},
+        {"polish": "ekonomia", "english": "economics"},
+        {"polish": "folklor", "english": "folklore"},
+        {"polish": "psychologia", "english": "psychology"},
+        {"polish": "muzyka klasyczna", "english": "classical music"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [3]
+    },
+    {
+      "id": "6D",
+      "type": "gap_fill",
+      "title": "Paola and Michael",
+      "instruction": "Listen and fill in the gaps.",
+      "tracks": [{"id": "wb22"}],
+      "hint": "znaczy · rozumiem · robić · grać · medycyną · być · słuchać · spacerować · czym",
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Paola", "text": "Cześć, jestem Paola, jestem Włoszką."},
+              {"speaker": "Michael", "text": "Cześć, ja jestem Michael, jestem Francuzem."},
+              {"speaker": "Paola", "text": "Kim jesteś z zawodu?"},
+              {"speaker": "Michael", "text": "Jestem jeszcze studentem, studiuję medycynę, bo chcę zostać lekarzem."},
+              {"speaker": "Paola", "text": "„Zostać”? Nie rozumiem. Co to znaczy?"},
+              {"speaker": "Michael", "text": "To znaczy, że chcę być lekarzem. A ty, kim jesteś?"},
+              {"speaker": "Paola", "text": "Jestem nauczycielką."},
+              {"speaker": "Michael", "text": "Czym się interesujesz?"},
+              {"speaker": "Paola", "text": "Interesuję się muzyką, historią sztuki i literaturą, a ty?"},
+              {"speaker": "Michael", "text": "Interesuję się medycyną naturalną i sportem. Co lubisz robić w weekendy?"},
+              {"speaker": "Paola", "text": "Bardzo lubię spacerować i słuchać muzyki, a ty?"},
+              {"speaker": "Michael", "text": "Lubię grać w tenisa."}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Paola", "text": "Cześć, jestem Paola, jestem Włoszką."},
+            {"speaker": "Michael", "text": "Cześć, ja jestem Michael, jestem Francuzem."},
+            {"speaker": "Paola", "text": "Kim jesteś z zawodu?"},
+            {"speaker": "Michael", "text": "Jestem jeszcze studentem, studiuję medycynę, bo chcę zostać lekarzem."},
+            {"speaker": "Paola", "text": "„Zostać”? Nie [1]. Co to [2]?"},
+            {"speaker": "Michael", "text": "To znaczy, że chcę [3] lekarzem. A ty, kim jesteś?"},
+            {"speaker": "Paola", "text": "Jestem nauczycielką."},
+            {"speaker": "Michael", "text": "[4] się interesujesz?"},
+            {"speaker": "Paola", "text": "Interesuję się muzyką, historią sztuki i literaturą, a ty?"},
+            {"speaker": "Michael", "text": "Interesuję się [5] naturalną i sportem. Co lubisz [6] w weekendy?"},
+            {"speaker": "Paola", "text": "Bardzo lubię [7] i [8] muzyki, a ty?"},
+            {"speaker": "Michael", "text": "Lubię [9] w tenisa."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["rozumiem"]},
+        {"number": 2, "answers": ["znaczy"]},
+        {"number": 3, "answers": ["być"], "feedback": "*zostać* = *być* in the future: *chcę zostać lekarzem* (instrumental)."},
+        {"number": 4, "answers": ["Czym"]},
+        {"number": 5, "answers": ["medycyną"]},
+        {"number": 6, "answers": ["robić"]},
+        {"number": 7, "answers": ["spacerować"]},
+        {"number": 8, "answers": ["słuchać"]},
+        {"number": 9, "answers": ["grać"]}
+      ],
+      "newWords": [
+        {"polish": "Włoszka", "english": "Italian woman"},
+        {"polish": "jeszcze", "english": "still"},
+        {"polish": "zostać (lekarzem)", "english": "to become (a doctor)"},
+        {"polish": "medycyna naturalna", "english": "natural medicine"},
+        {"polish": "historia sztuki", "english": "art history"},
+        {"polish": "spacerować", "english": "to go for walks"},
+        {"polish": "w weekendy", "english": "at weekends"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [3, 2]
+    },
+    {
+      "id": "6E",
+      "type": "gap_fill",
+      "title": "Marta Nowak",
+      "instruction": "Turn each picture into a word.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "To jest Marta Nowak. Ona jest z 🇵🇱 [1]. Mieszka w Warszawie. Ma 23 lata. Jest 📏 152 cm [2], 😊 [3] i 🏋️ [4], ale teraz jest 💊 [5]. Studiuje grafikę komputerową na ASP. Ona świetnie mówi po 🇬🇧 [6] i trochę po hiszpańsku. Interesuje się 📷 [7], 🎾 [8] i 🎺 [9]. Ona bardzo lubi robić zdjęcia."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Polski"], "feedback": "*z* + genitive: *z Polski* (capital P — the country)."},
+        {"number": 2, "answers": ["niska"]},
+        {"number": 3, "answers": ["wesoła", "sympatyczna"]},
+        {"number": 4, "answers": ["wysportowana", "silna"]},
+        {"number": 5, "answers": ["chora"]},
+        {"number": 6, "answers": ["angielsku"]},
+        {"number": 7, "answers": ["fotografią"], "feedback": "*interesować się* + instrumental: *fotografią*, *muzyką*."},
+        {"number": 8, "answers": ["sportem", "tenisem"]},
+        {"number": 9, "answers": ["muzyką"]}
+      ],
+      "newWords": [
+        {"polish": "studiować grafikę komputerową", "english": "to study computer graphics"},
+        {"polish": "ASP", "english": "Academy of Fine Arts"},
+        {"polish": "silny", "english": "strong"},
+        {"polish": "robić zdjęcia", "english": "to take photos"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [3]
+    },
+    {
+      "id": "6F",
+      "type": "gap_fill",
+      "title": "This is Julia",
+      "instruction": "Fill in the text. Use the words in brackets and the pictures.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "To jest Julia. Ona ma 11 lat i chodzi do szkoły. Jest [1] (Polka), mieszka [2] Krakowie. Jest [3] (≠ gruba) i 🏋️ [4]. Julia jest 😊 [5] i [6] [7] (sympatyczna dziewczyna). Ona dobrze [8] po angielsku i trochę po 🇪🇸 [9]. Julia [10] (lubić) śpiewać, tańczyć i [11] książki. Julia interesuje się [12] i [13] (muzyka i sport)."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Polką"], "feedback": "After *jest* → instrumental: *Polką*."},
+        {"number": 2, "answers": ["w"]},
+        {"number": 3, "answers": ["szczupła"], "feedback": "With no noun after it (*Jest szczupła*), the adjective stays nominative. With a noun after *jest* (*wesołą i sympatyczną dziewczyną*), use the instrumental."},
+        {"number": 4, "answers": ["wysportowana"]},
+        {"number": 5, "answers": ["wesołą"], "feedback": "With no noun after it (*Jest szczupła*), the adjective stays nominative. With a noun after *jest* (*wesołą i sympatyczną dziewczyną*), use the instrumental."},
+        {"number": 6, "answers": ["sympatyczną"]},
+        {"number": 7, "answers": ["dziewczyną"]},
+        {"number": 8, "answers": ["mówi"]},
+        {"number": 9, "answers": ["hiszpańsku"]},
+        {"number": 10, "answers": ["lubi"]},
+        {"number": 11, "answers": ["czytać"]},
+        {"number": 12, "answers": ["muzyką"]},
+        {"number": 13, "answers": ["sportem"]}
+      ],
+      "newWords": [{"polish": "chodzić do szkoły", "english": "to go to school"}],
+      "newWordsUnlock": "after_check",
+      "rules": [1, 3]
+    },
+    {
+      "id": "7A",
+      "type": "write",
+      "title": "Questions about Mami",
+      "instruction": "Write a question to each highlighted part.\nTo jest **(1) Mami**. Ona nazywa się **(2) Mami Takada**. Jest **(3) z Japonii**. Normalnie mieszka w Tokio, ale teraz mieszka **(4) w Krakowie**. Ma **(5) 20 lat**. Jest **(6) niska, szczupła i sympatyczna**. Mówi po japońsku, dobrze po angielsku i zna trochę **(7) polski**. Ona jest dobrą **(8) studentką**. Teraz ona intensywnie uczy się języka polskiego, bo planuje studiować malarstwo **(9) w Polsce**, a konkretnie w Krakowie. Interesuje się **(10) muzyką rockową, malarstwem i architekturą**. Ona bardzo lubi **(11) malować**.",
+      "items": [
+        {"label": "1", "prompt": "Mami", "answers": ["Kto to jest?"]},
+        {"label": "2", "prompt": "Mami Takada", "answers": ["Jak ona się nazywa?", "Jak się nazywa?", "Jak nazywa się?"]},
+        {"label": "3", "prompt": "z Japonii", "answers": ["Skąd ona jest?", "Skąd jest?"]},
+        {"label": "4", "prompt": "w Krakowie", "answers": ["Gdzie ona teraz mieszka?", "Gdzie teraz mieszka?", "Gdzie ona mieszka teraz?", "Gdzie mieszka teraz?", "Gdzie ona mieszka?", "Gdzie mieszka?"]},
+        {"label": "5", "prompt": "20 lat", "answers": ["Ile ona ma lat?", "Ile ma lat?", "Ile lat ona ma?", "Ile lat ma?"]},
+        {"label": "6", "prompt": "niska, szczupła i sympatyczna", "answers": ["Jaka ona jest?", "Jaka jest?"]},
+        {"label": "7", "prompt": "polski", "answers": ["Jaki język ona zna trochę?", "Jaki język zna trochę?", "Jaki język ona trochę zna?", "Jaki język trochę zna?", "Co ona zna trochę?", "Co zna trochę?", "Co ona trochę zna?", "Co trochę zna?"]},
+        {"label": "8", "prompt": "studentką", "answers": ["Kim ona jest?", "Kim jest?"], "feedback": "*Kim?* asks about the instrumental (*studentką*)."},
+        {"label": "9", "prompt": "w Polsce", "answers": ["Gdzie ona planuje studiować malarstwo?", "Gdzie planuje studiować malarstwo?", "Gdzie ona planuje studiować?", "Gdzie planuje studiować?"]},
+        {"label": "10", "prompt": "muzyką rockową, malarstwem i architekturą", "answers": ["Czym ona się interesuje?", "Czym się interesuje?", "Czym się ona interesuje?"], "feedback": "*Czym?* asks about the instrumental."},
+        {"label": "11", "prompt": "malować", "answers": ["Co ona bardzo lubi robić?", "Co bardzo lubi robić?", "Co ona lubi robić?", "Co lubi robić?"]}
+      ],
+      "newWords": [
+        {"polish": "normalnie", "english": "usually"},
+        {"polish": "a konkretnie", "english": "to be precise"},
+        {"polish": "architektura", "english": "architecture"},
+        {"polish": "malować", "english": "to paint"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [1, 5]
+    },
+    {
+      "id": "7B",
+      "type": "gap_fill",
+      "title": "Questions about Peter",
+      "instruction": "Complete the questions with the words from the box.",
+      "wordBox": ["Kim?", "Jaki?", "Co lubi robić?", "Czym?", "Ile?", "Gdzie?", "Jak?", "Kto?", "Skąd?", "Dlaczego?", "Jakim?", "Co robi?"],
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. [1] to jest? — Peter."},
+            {"text": "2. [2] on jest? — Z Anglii."},
+            {"text": "3. [3] ma lat? — 20."},
+            {"text": "4. [4] się nazywa? — Smith."},
+            {"text": "5. [5] mieszka? — W Londynie."},
+            {"text": "6. [6] jest studentem? — Zdolnym i inteligentnym."},
+            {"text": "7. [7] on jest? — Wysoki."},
+            {"text": "8. [8] on jest? — Architektem."},
+            {"text": "9. [9] w Krakowie? — Uczy się polskiego."},
+            {"text": "10. [10]? — Bardzo lubi słuchać muzyki."},
+            {"text": "11. [11] się interesuje? — Architekturą."},
+            {"text": "12. [12] uczy się polskiego? — Bo chce pracować w Warszawie."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Kto"]},
+        {"number": 2, "answers": ["Skąd"]},
+        {"number": 3, "answers": ["Ile"]},
+        {"number": 4, "answers": ["Jak"]},
+        {"number": 5, "answers": ["Gdzie"]},
+        {"number": 6, "answers": ["Jakim"], "feedback": "*Jakim studentem?* — the answer is in the instrumental (*zdolnym*), so the question is too."},
+        {"number": 7, "answers": ["Jaki"]},
+        {"number": 8, "answers": ["Kim"], "feedback": "*Kim?* — the answer is in the instrumental (*architektem*)."},
+        {"number": 9, "answers": ["Co robi"]},
+        {"number": 10, "answers": ["Co lubi robić"]},
+        {"number": 11, "answers": ["Czym"]},
+        {"number": 12, "answers": ["Dlaczego"]}
+      ]
+    },
+    {
+      "id": "7C",
+      "type": "choice",
+      "title": "What fits?",
+      "instruction": "Choose the answer for each question.",
+      "legend": [
+        "a. Prawie 18.",
+        "b. Bo mam egzamin.",
+        "c. Bardzo sympatyczna.",
+        "d. Gram w tenisa.",
+        "e. Grać w tenisa.",
+        "f. W Gdańsku.",
+        "g. Policjantem.",
+        "h. Bardzo profesjonalną.",
+        "i. Z Gdańska.",
+        "j. Pracowitym."
+      ],
+      "items": [
+        {"label": "1", "prompt": "Co lubisz robić?", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "e", "feedback": "*Co lubisz robić?* → infinitive (*grać*). *Co robisz?* → conjugated verb (*gram*)."},
+        {"label": "2", "prompt": "Gdzie mieszkasz?", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "f"},
+        {"label": "3", "prompt": "Ile masz lat?", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "a"},
+        {"label": "4", "prompt": "Kim on jest?", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "g"},
+        {"label": "5", "prompt": "Dlaczego jesteś zdenerwowany?", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "b"},
+        {"label": "6", "prompt": "Jaką sekretarką jest Agnieszka?", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "h"},
+        {"label": "7", "prompt": "Skąd jest Ewa?", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "i"},
+        {"label": "8", "prompt": "Co robisz?", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "d", "feedback": "*Co lubisz robić?* → infinitive (*grać*). *Co robisz?* → conjugated verb (*gram*)."},
+        {"label": "9", "prompt": "Jakim studentem jest Jonatan?", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "j"},
+        {"label": "10", "prompt": "Jaka jest Dorota?", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "c"}
+      ],
+      "newWords": [
+        {"polish": "zdenerwowany", "english": "nervous, upset"},
+        {"polish": "egzamin", "english": "exam"},
+        {"polish": "profesjonalny", "english": "professional"}
+      ]
+    },
+    {
+      "id": "7D",
+      "type": "gap_fill",
+      "title": "Nationality: to jest / jest",
+      "instruction": "After *to* use the nominative, after *jest* the instrumental. Some forms are given.",
+      "sections": [
+        {
+          "title": "Angela / Jonatan (z Anglii)",
+          "lines": [
+            {"text": "Angela to [1] · Jonatan to [2]"},
+            {"text": "Angela jest [3] · Jonatan jest [4]"}
+          ]
+        },
+        {
+          "title": "Petra / Uwe (z Niemiec)",
+          "lines": [
+            {"text": "Petra to Niemka · Uwe to Niemiec"},
+            {"text": "Petra jest Niemką · Uwe jest [5]"}
+          ]
+        },
+        {
+          "title": "Adèle / Pierre (z Francji)",
+          "lines": [
+            {"text": "Adèle to [6] · Pierre to [7]"},
+            {"text": "Adèle jest [8] · Pierre jest Francuzem"}
+          ]
+        },
+        {
+          "title": "Manuela / Pedro (z Hiszpanii)",
+          "lines": [
+            {"text": "Manuela to [9] · Pedro to [10]"},
+            {"text": "Manuela jest [11] · Pedro jest [12]"}
+          ]
+        },
+        {
+          "title": "Maria / Paolo (z Włoch)",
+          "lines": [{"text": "Maria to [13] · Paolo to [14]"}, {"text": "Maria jest [15] · Paolo jest [16]"}]
+        },
+        {
+          "title": "Inês / Luis (z Portugalii)",
+          "lines": [{"text": "Inês to [17] · Luis to [18]"}, {"text": "Inês jest [19] · Luis jest [20]"}]
+        },
+        {
+          "title": "Wendy / Tom (z USA)",
+          "lines": [
+            {"text": "Wendy to Amerykanka · Tom to Amerykanin"},
+            {"text": "Wendy jest [21] · Tom jest [22]"}
+          ]
+        },
+        {
+          "title": "Ajako / Satoshi (z Japonii)",
+          "lines": [
+            {"text": "Ajako to [23] · Satoshi to [24]"},
+            {"text": "Ajako jest Japonką · Satoshi jest [25]"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Angielka"]},
+        {"number": 2, "answers": ["Anglik"]},
+        {"number": 3, "answers": ["Angielką"], "feedback": "After *być* (to be someone) use the instrumental: *-ym/-im + -em/-iem* (masc., neut.), *-ą + -ą* (fem.)."},
+        {"number": 4, "answers": ["Anglikiem"]},
+        {"number": 5, "answers": ["Niemcem"], "feedback": "*Niemiec* → *Niemcem* (the *e* drops)."},
+        {"number": 6, "answers": ["Francuzka"]},
+        {"number": 7, "answers": ["Francuz"]},
+        {"number": 8, "answers": ["Francuzką"]},
+        {"number": 9, "answers": ["Hiszpanka"]},
+        {"number": 10, "answers": ["Hiszpan"]},
+        {"number": 11, "answers": ["Hiszpanką"]},
+        {"number": 12, "answers": ["Hiszpanem"]},
+        {"number": 13, "answers": ["Włoszka"]},
+        {"number": 14, "answers": ["Włoch"]},
+        {"number": 15, "answers": ["Włoszką"]},
+        {"number": 16, "answers": ["Włochem"]},
+        {"number": 17, "answers": ["Portugalka"]},
+        {"number": 18, "answers": ["Portugalczyk"]},
+        {"number": 19, "answers": ["Portugalką"]},
+        {"number": 20, "answers": ["Portugalczykiem"]},
+        {"number": 21, "answers": ["Amerykanką"]},
+        {"number": 22, "answers": ["Amerykaninem"]},
+        {"number": 23, "answers": ["Japonka"]},
+        {"number": 24, "answers": ["Japończyk"]},
+        {"number": 25, "answers": ["Japończykiem"]}
+      ],
+      "newWords": [
+        {"polish": "Włoch", "english": "Italian man"},
+        {"polish": "Portugalka", "english": "Portuguese woman"},
+        {"polish": "Portugalczyk", "english": "Portuguese man"},
+        {"polish": "Amerykanka", "english": "American woman"},
+        {"polish": "Amerykanin", "english": "American man"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [1, 2]
+    },
+    {
+      "id": "7E",
+      "type": "gap_fill",
+      "title": "Nationality: mówią / znają",
+      "instruction": "*mówić po* + *-u*, *znać* + the language. Some forms are given.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Angela i Jonatan mówią po [1], znają [2]."},
+            {"text": "2. Petra i Uwe mówią po [3], znają [4]."},
+            {"text": "3. Adèle i Pierre mówią po [5], znają [6]."},
+            {"text": "4. Manuela i Pedro mówią po [7], znają hiszpański."},
+            {"text": "5. Maria i Paolo mówią po włosku, znają [8]."},
+            {"text": "6. Inês i Luis mówią po [9], znają portugalski."},
+            {"text": "7. Wendy i Tom mówią po [10], znają [11]."},
+            {"text": "8. Ajako i Satoshi mówią po [12], znają [13]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["angielsku", "po angielsku"], "feedback": "*mówić po* + *-u*: *po angielsku*; *znać* + *angielski*."},
+        {"number": 2, "answers": ["angielski"]},
+        {"number": 3, "answers": ["niemiecku", "po niemiecku"]},
+        {"number": 4, "answers": ["niemiecki"]},
+        {"number": 5, "answers": ["francusku", "po francusku"]},
+        {"number": 6, "answers": ["francuski"]},
+        {"number": 7, "answers": ["hiszpańsku", "po hiszpańsku"]},
+        {"number": 8, "answers": ["włoski"]},
+        {"number": 9, "answers": ["portugalsku", "po portugalsku"]},
+        {"number": 10, "answers": ["angielsku", "po angielsku"]},
+        {"number": 11, "answers": ["angielski"]},
+        {"number": 12, "answers": ["japońsku", "po japońsku"]},
+        {"number": 13, "answers": ["japoński"]}
+      ]
+    }
+  ],
+  "vocabulary": [
+    {"polish": "Kim jesteś (z zawodu)? · Jestem … -em / -ą", "english": "What do you do? · I am a …"},
+    {"polish": "zawód: lekarz, nauczyciel, kelner, kucharz, aktor, muzyk, fotograf, inżynier, informatyk, dziennikarz, urzędnik, policjant, rolnik, tancerz, dentysta, emeryt, biznesmen", "english": "professions: doctor, teacher, waiter, cook, actor, musician, photographer, engineer, IT specialist, journalist, clerk, police officer, farmer, dancer, dentist, pensioner, businessman"},
+    {"polish": "lekarka, nauczycielka, kelnerka, kucharka, aktorka, dziennikarka, tancerka", "english": "female forms"},
+    {"polish": "malarz, pisarz, polityk, poeta, artysta, modelka", "english": "painter, writer, politician, poet, artist, model"},
+    {"polish": "Ile masz lat? · rok · lata · lat · prawie · pół", "english": "How old are you? · year(s) · almost · half"},
+    {"polish": "dwadzieścia … dziewięćdziesiąt, sto", "english": "20 … 90, 100"},
+    {"polish": "Czym się interesujesz? · interesować się", "english": "What are you interested in? · to be interested in"},
+    {"polish": "sport, muzyka, malarstwo, sztuka, literatura, fotografia, historia", "english": "sport, music, painting, art, literature, photography, history"},
+    {"polish": "rodzina · żona · mąż · syn · córka · dziecko · tata", "english": "family · wife · husband · son · daughter · child · dad"},
+    {"polish": "zdolny, utalentowany, atrakcyjny, piękny, popularny, świetny, znany", "english": "gifted, talented, attractive, beautiful, popular, excellent, well-known"},
+    {"polish": "umieć · zostać · śpiewać · biegać · spacerować · malować", "english": "to be able · to become · to sing · to run · to walk · to paint"}
+  ]
+}
