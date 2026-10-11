@@ -1,0 +1,1334 @@
+{
+  "lessonId": "krok-a1-04",
+  "rules": [
+    {
+      "title": "Conjugation -ę, -isz / -ysz (-ić, -yć verbs; myśleć)",
+      "tables": [
+        {
+          "header": ["", "myśleć", "uczyć"],
+          "rows": [
+            ["(ja)", "myśl**ę**", "ucz**ę**"],
+            ["(ty)", "myśl**isz**", "ucz**ysz**"],
+            ["on / ona / ono", "myśl**i**", "ucz**y**"],
+            ["(my)", "myśl**imy**", "ucz**ymy**"],
+            ["(wy)", "myśl**icie**", "ucz**ycie**"],
+            ["oni / one", "myśl**ą**", "ucz**ą**"]
+          ]
+        }
+      ],
+      "notes": [
+        "After *sz, cz, rz, ż* write **y**, otherwise **i**. The same: *mówić, lubić, palić* (-isz); *kończyć, tańczyć* (-ysz).",
+        "Compare the -m, -sz group: *mam, masz* — but *mówię, mówisz*."
+      ]
+    },
+    {
+      "title": "Languages: three constructions",
+      "tables": [
+        {
+          "rows": [
+            ["**znać** + adjective", "Znam polski."],
+            ["**uczyć się** + -ego", "Uczę się polskiego."],
+            ["**mówić po** + -u", "Mówię po polsku."]
+          ]
+        }
+      ],
+      "notes": [
+        "*uczyć* = to teach (a teacher), *uczyć się* = to learn (a student).",
+        "After *po*: -ski → -sku, -cki → -cku: *niemiecki* → *po niemiecku*."
+      ]
+    },
+    {
+      "title": "Opinion",
+      "tables": [
+        {
+          "rows": [
+            ["Myślę, że…", "I think that…"],
+            ["Nie wiem, czy…", "I don't know if…"],
+            ["Jestem pewny / pewna, że…", "I'm sure that… (m / f)"],
+            ["chyba", "probably"]
+          ]
+        }
+      ],
+      "notes": ["A comma before *że* and *czy*."]
+    },
+    {
+      "title": "Conjunctions",
+      "tables": [
+        {
+          "rows": [
+            ["i", "and"],
+            ["ale", "but"],
+            ["bo", "because"],
+            ["nie jest ani…, ani…", "is neither… nor…"]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Adjectives: gender, as in Lesson 3",
+      "tables": [
+        {
+          "rows": [
+            ["on", "Adam jest wysok**i** i przystojn**y**."],
+            ["ona", "Mami jest smutn**a**, ale sympatyczn**a**."],
+            ["ono", "Dziecko jest wesoł**e**."]
+          ]
+        }
+      ],
+      "notes": ["After *k* and *g* the masculine ending is *-i*: *wysoki*, *niski*, *brzydki*."]
+    }
+  ],
+  "tracks": [
+    {"id": "104A1", "file": "a1_coursebook_104a1.mp3"},
+    {"id": "104A2", "file": "a1_coursebook_104a2.mp3"},
+    {"id": "104C1", "file": "a1_coursebook_104c1.mp3"},
+    {"id": "104C3", "file": "a1_coursebook_104c3.mp3"},
+    {"id": "104C6", "file": "a1_coursebook_104c6.mp3"},
+    {"id": "104C7", "file": "a1_coursebook_104c7.mp3"},
+    {"id": "wb17", "file": "a1_workbook_17_L04_cwiczenie8.mp3"}
+  ],
+  "steps": [
+    {"id": "G", "title": "Lesson grammar", "screens": ["0"], "grammar": true},
+    {"id": "1", "title": "Who is it? A new student", "screens": ["1A", "1B"]},
+    {"id": "2", "title": "Languages: mówić po…", "screens": ["2A", "2B", "2C", "2D", "2E", "2F", "2G"]},
+    {"id": "3", "title": "Conjugation -ę, -isz / -ysz", "screens": ["3A", "3B", "3C", "3D", "3E", "3F", "3G", "3H"]},
+    {"id": "4", "title": "What is he like? Describing people", "screens": ["4A", "4B", "4C", "4D", "4E"]},
+    {"id": "5", "title": "Myślę, że… · internationalisms", "screens": ["5A", "5B", "5C", "5D", "5E", "5F"]},
+    {"id": "6", "title": "Lesson review", "screens": ["6A", "6B", "6C"], "review": true}
+  ],
+  "screens": [
+    {
+      "id": "0",
+      "type": "grammar",
+      "title": "Lesson grammar",
+      "instruction": "All the grammar of this lesson before the exercises. The steps repeat the part they need."
+    },
+    {
+      "id": "1A",
+      "type": "order",
+      "title": "Who is it? A new student",
+      "instruction": "Javier and Mami meet in the corridor. Listen and tap the lines in the order you hear them. Tap a line again to clear its number.",
+      "tracks": [{"id": "104A1"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Javier", "text": "Cześć Mami."},
+              {"speaker": "Mami", "text": "Cześć Javier!"},
+              {"speaker": "Javier", "text": "Co słychać?"},
+              {"speaker": "Mami", "text": "Wszystko w porządku. A u ciebie?"},
+              {"speaker": "Javier", "text": "U mnie też dobrze. Dziękuję."},
+              {"speaker": "Mami", "text": "Czy wiesz, kto to jest?"},
+              {"speaker": "Javier", "text": "Nie, nie wiem, ale myślę, że to jest nowy student."},
+              {"speaker": "Mami", "text": "Hmmm… ciekawe, czy jest w naszej grupie…"}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {"label": "a", "speaker": "Javier", "prompt": "Cześć Mami.", "answer": "1"},
+        {"label": "b", "speaker": "Javier", "prompt": "U mnie też dobrze. Dziękuję.", "answer": "5"},
+        {"label": "c", "speaker": "Mami", "prompt": "Wszystko w porządku. A u ciebie?", "answer": "4"},
+        {"label": "d", "speaker": "Javier", "prompt": "Co słychać?", "answer": "3"},
+        {"label": "e", "speaker": "Mami", "prompt": "Hmmm… ciekawe, czy jest w naszej grupie…", "answer": "8"},
+        {"label": "f", "speaker": "Javier", "prompt": "Nie, nie wiem, ale myślę, że to jest nowy student.", "answer": "7"},
+        {"label": "g", "speaker": "Mami", "prompt": "Cześć Javier!", "answer": "2"},
+        {"label": "h", "speaker": "Mami", "prompt": "Czy wiesz, kto to jest?", "answer": "6"}
+      ],
+      "newWords": [
+        {"polish": "ciekawe", "english": "I wonder"},
+        {"polish": "w naszej grupie", "english": "in our group"},
+        {"polish": "myślę, że…", "english": "I think that…"},
+        {"polish": "Czy wiesz…?", "english": "Do you know…?"}
+      ]
+    },
+    {
+      "id": "1B",
+      "type": "inline_choice",
+      "title": "What fits?",
+      "instruction": "Choose the word that fits.",
+      "items": [
+        {
+          "label": "1",
+          "prompt": "Javier: [1] Mami!",
+          "choices": [{"options": ["Cześć", "pa", "na razie"], "answer": "Cześć"}]
+        },
+        {
+          "label": "2",
+          "prompt": "Javier: Co [1]?",
+          "choices": [{"options": ["dobrze", "słychać", "ciebie"], "answer": "słychać"}]
+        },
+        {
+          "label": "3",
+          "prompt": "Mami: Wszystko w [1].",
+          "choices": [{"options": ["dobrze", "porządku", "świetnie"], "answer": "porządku"}]
+        },
+        {
+          "label": "4",
+          "prompt": "Mami: A u [1]?",
+          "choices": [
+            {"options": ["ty", "pani", "ciebie"], "answer": "ciebie", "feedback": "*Co u ciebie?* — *u* + *ciebie* (informal *you*)."}
+          ]
+        },
+        {
+          "label": "5",
+          "prompt": "Javier: U [1] też dobrze. Dziękuję.",
+          "choices": [{"options": ["mnie", "pani", "ciebie"], "answer": "mnie"}]
+        },
+        {
+          "label": "6",
+          "prompt": "Mami: Czy [1], kto to jest?",
+          "choices": [{"options": ["wiem", "wiecie", "wiesz"], "answer": "wiesz"}]
+        },
+        {
+          "label": "7",
+          "prompt": "Javier: Nie, nie wiem, ale myślę, że to jest [1] student.",
+          "choices": [
+            {"options": ["nowy", "nowa", "nowe"], "answer": "nowy", "feedback": "*student* is masculine → *nowy*."}
+          ]
+        },
+        {
+          "label": "8",
+          "prompt": "Mami: Hmmm… ciekawe, czy [1] w naszej grupie?",
+          "choices": [{"options": ["jesteś", "jest", "są"], "answer": "jest"}]
+        }
+      ]
+    },
+    {
+      "id": "2A",
+      "type": "reference",
+      "title": "Languages: znać / mówić po",
+      "instruction": "Two constructions: *znać* + the language (*-ski*) and *mówić po* + the form in *-u*.",
+      "groups": [
+        {
+          "phrases": [
+            {"polish": "Jaki znasz język?", "english": "Which language do you know?"},
+            {"polish": "Znam polski. — Mówię po polsku.", "english": "I know Polish. — I speak Polish."},
+            {"polish": "znam · znasz", "english": "I know · you know"},
+            {"polish": "mówić po polsku", "english": "to speak Polish"}
+          ]
+        }
+      ],
+      "tables": [
+        {
+          "header": ["Znam (język)…", "Mówię…"],
+          "rows": [
+            ["francuski", "po francusku"],
+            ["hiszpański", "po hiszpańsku"],
+            ["angielski", "po angielsku"],
+            ["polski", "po polsku"],
+            ["włoski", "po włosku"],
+            ["niemiecki", "po niemiecku"],
+            ["szwedzki", "po szwedzku"]
+          ]
+        }
+      ],
+      "notes": ["After *po*: *-ski* → *-sku*, *-cki* → *-cku* (*niemiecki* → *po niemiecku*)."],
+      "newWords": [
+        {"polish": "język", "english": "language"},
+        {"polish": "Jaki znasz język?", "english": "Which language do you know?"},
+        {"polish": "znam", "english": "I know"},
+        {"polish": "znasz", "english": "you know"},
+        {"polish": "mówić po polsku", "english": "to speak Polish"},
+        {"polish": "francuski", "english": "French"},
+        {"polish": "angielski", "english": "English"},
+        {"polish": "włoski", "english": "Italian"},
+        {"polish": "szwedzki", "english": "Swedish"}
+      ],
+      "rules": [2]
+    },
+    {
+      "id": "2B",
+      "type": "gap_fill",
+      "title": "We speak Polish!",
+      "instruction": "Listen and fill in the gaps. Each gap is *po* + a language.",
+      "tracks": [{"id": "104A2"}],
+      "hint": "po polsku · po hiszpańsku · po japońsku · po hiszpańsku · po francusku · po polsku",
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Javier", "text": "Hola!"},
+            {"speaker": "Pierre", "text": "Przepraszam, nie rozumiem!"},
+            {"speaker": "Mami", "text": "Javier! Mówimy [1]!"},
+            {"speaker": "Javier", "text": "Ach! Nie pamiętam jak mówimy po polsku „hola”."},
+            {"speaker": "Mami", "text": "Cha, cha, cha!! To żart, wiem!"},
+            {"speaker": "Javier", "text": "No dobrze Mami, masz rację! „Hola” to słowo [2], znaczy „cześć”."},
+            {"speaker": "Pierre", "text": "Aha! Cześć! Jestem Pierre. Pierre Lavié. Przepraszam, nie mówię [3], tylko [4], i trochę [5]. Tylko trochę."},
+            {"speaker": "Javier", "text": "Cześć! Ja mam na imię Javier i jestem z Argentyny, a to jest Mami. Mami Takada. Ona jest z Japonii i mówi [6]."},
+            {"speaker": "Pierre", "text": "Miło mi!"},
+            {"speaker": "Mami", "text": "Mnie też!"},
+            {"speaker": "Javier", "text": "A ty, jesteś z Francji?"},
+            {"speaker": "Pierre", "text": "Tak, jestem z Francji i mieszkam w Paryżu. A wy, gdzie mieszkacie?"},
+            {"speaker": "Javier", "text": "Ja mieszkam w Buenos Aires, ale teraz w Krakowie."},
+            {"speaker": "Mami", "text": "A ja w Tokio! Ale teraz też w Krakowie. Czy jesteś w grupie A1?"},
+            {"speaker": "Pierre", "text": "Tak. To jest moja nowa grupa."},
+            {"speaker": "Mami", "text": "To świetnie! To jest też nasza grupa!"},
+            {"speaker": "Pierre", "text": "Cieszę się!"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["po polsku"]},
+        {"number": 2, "answers": ["po hiszpańsku"]},
+        {"number": 3, "answers": ["po hiszpańsku"]},
+        {"number": 4, "answers": ["po francusku"]},
+        {"number": 5, "answers": ["po polsku"]},
+        {"number": 6, "answers": ["po japońsku"]}
+      ],
+      "newWords": [
+        {"polish": "Mówimy po polsku!", "english": "We speak Polish!"},
+        {"polish": "To żart.", "english": "It's a joke."},
+        {"polish": "masz rację", "english": "you're right"},
+        {"polish": "słowo", "english": "word"},
+        {"polish": "tylko", "english": "only"},
+        {"polish": "trochę", "english": "a little"},
+        {"polish": "Mnie też.", "english": "Me too."},
+        {"polish": "nasza grupa", "english": "our group"},
+        {"polish": "Cieszę się!", "english": "I'm glad!"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [2]
+    },
+    {
+      "id": "2C",
+      "type": "gap_fill",
+      "title": "Who speaks what?",
+      "instruction": "Which language does each person speak?",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Mami jest z Japonii i mówi po [1]."},
+            {"text": "2. Uwe jest z Niemiec i mówi po [2]."},
+            {"text": "3. Javier jest z Argentyny i mówi po [3]."},
+            {"text": "4. Angela jest z Anglii. Ona mówi po [4]."},
+            {"text": "5. Vittorio jest z Włoch i mówi po [5]."},
+            {"text": "6. Pierre jest z Francji i mówi po [6]."},
+            {"text": "7. Natasza i Lena są z Rosji. One mówią po [7]."},
+            {"text": "8. Oni są z Ameryki i mówią po [8]."},
+            {"text": "9. Państwo Maj są z Polski. Oni mówią po [9]."},
+            {"text": "10. Jestem z Polski i mówię po [10]."},
+            {"text": "11. Julio jest z Hiszpanii i mówi po [11]."},
+            {"text": "12. Jurgen jest z Austrii i mówi po [12]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["japońsku"]},
+        {"number": 2, "answers": ["niemiecku"], "feedback": "*mówić po* + the form in *-u*: *po polsku*, *po niemiecku*."},
+        {"number": 3, "answers": ["hiszpańsku"], "feedback": "In Argentina people speak Spanish, in Austria German."},
+        {"number": 4, "answers": ["angielsku"]},
+        {"number": 5, "answers": ["włosku"]},
+        {"number": 6, "answers": ["francusku"]},
+        {"number": 7, "answers": ["rosyjsku"]},
+        {"number": 8, "answers": ["angielsku"]},
+        {"number": 9, "answers": ["polsku"]},
+        {"number": 10, "answers": ["polsku"]},
+        {"number": 11, "answers": ["hiszpańsku"]},
+        {"number": 12, "answers": ["niemiecku"], "feedback": "In Argentina people speak Spanish, in Austria German."}
+      ],
+      "newWords": [
+        {"polish": "Rosja", "english": "Russia"},
+        {"polish": "Ameryka", "english": "America"},
+        {"polish": "Austria", "english": "Austria"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [2]
+    },
+    {
+      "id": "2D",
+      "type": "gap_fill",
+      "title": "Who speaks what? (workbook)",
+      "instruction": "Write the language after *po*.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Jesus jest z Hiszpanii i mówi po [1]."},
+            {"text": "2. Joanna jest z Polski i mówi po [2]."},
+            {"text": "3. Florance jest z Francji i mówi po [3]."},
+            {"text": "4. Chiara jest z Włoch i mówi po [4]."},
+            {"text": "5. Shige jest z Japonii i mówi po [5]."},
+            {"text": "6. Emily jest z Anglii i mówi po [6]."},
+            {"text": "7. Jurgen jest z Niemiec i mówi po [7]."},
+            {"text": "8. Lisa jest ze Szwecji i mówi po [8]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["hiszpańsku"]},
+        {"number": 2, "answers": ["polsku"]},
+        {"number": 3, "answers": ["francusku"]},
+        {"number": 4, "answers": ["włosku"]},
+        {"number": 5, "answers": ["japońsku"]},
+        {"number": 6, "answers": ["angielsku"]},
+        {"number": 7, "answers": ["niemiecku"], "feedback": "*mówić po* + the form in *-u*: *po polsku*, *po niemiecku*."},
+        {"number": 8, "answers": ["szwedzku"]}
+      ],
+      "newWords": [{"polish": "ze Szwecji", "english": "from Sweden"}],
+      "newWordsUnlock": "after_check",
+      "rules": [2]
+    },
+    {
+      "id": "2E",
+      "type": "inline_choice",
+      "title": "Which form?",
+      "instruction": "Choose the right form.",
+      "items": [
+        {
+          "label": "1",
+          "prompt": "Robert zna [1].",
+          "choices": [
+            {"options": ["francuskiego", "francuski", "po francusku"], "answer": "francuski", "feedback": "*znać* + *polski* · *uczyć się* + *polskiego* · *mówić po* + *polsku*."}
+          ]
+        },
+        {
+          "label": "2",
+          "prompt": "Andrea świetnie mówi po [1].",
+          "choices": [
+            {"options": ["polski", "polskie", "polsku"], "answer": "polsku", "feedback": "*znać* + *polski* · *uczyć się* + *polskiego* · *mówić po* + *polsku*."}
+          ]
+        },
+        {
+          "label": "3",
+          "prompt": "Pedro mówi po [1].",
+          "choices": [
+            {"options": ["hiszpańsku", "hiszpański", "hiszpańskiego"], "answer": "hiszpańsku", "feedback": "*znać* + *polski* · *uczyć się* + *polskiego* · *mówić po* + *polsku*."}
+          ]
+        },
+        {
+          "label": "4",
+          "prompt": "Kasia uczy się [1].",
+          "choices": [
+            {"options": ["włoskiego", "włoski", "włosku"], "answer": "włoskiego", "feedback": "*znać* + *polski* · *uczyć się* + *polskiego* · *mówić po* + *polsku*."}
+          ]
+        },
+        {
+          "label": "5",
+          "prompt": "Uwe nie mówi po [1].",
+          "choices": [
+            {"options": ["rosyjski", "rosyjsku", "rosyjskiego"], "answer": "rosyjsku", "feedback": "*znać* + *polski* · *uczyć się* + *polskiego* · *mówić po* + *polsku*."}
+          ]
+        },
+        {
+          "label": "6",
+          "prompt": "Oni znają bardzo dobrze [1].",
+          "choices": [
+            {"options": ["niemiecki", "niemieckim", "niemiecku"], "answer": "niemiecki", "feedback": "*znać* + *polski* · *uczyć się* + *polskiego* · *mówić po* + *polsku*."}
+          ]
+        },
+        {
+          "label": "7",
+          "prompt": "Mami nie mówi [1].",
+          "choices": [
+            {"options": ["chiński", "chińskiego", "po chińsku"], "answer": "po chińsku", "feedback": "*znać* + *polski* · *uczyć się* + *polskiego* · *mówić po* + *polsku*."}
+          ]
+        }
+      ],
+      "rules": [2]
+    },
+    {
+      "id": "2F",
+      "type": "gap_fill",
+      "title": "Fill in the text",
+      "instruction": "Fill in the gaps with the words from the box.",
+      "wordBox": ["rosyjski", "holendersku", "Polski", "polsku", "węgiersku", "rosyjsku", "holenderski", "polski", "węgierski", "węgierskiego"],
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Joost jest z Holandii, mówi po [1] i świetnie zna [2], bo jego dziewczyna jest z [3]."},
+            {"text": "2. Hajnalka jest z Węgier i oczywiście mówi po [4], ale mówi też świetnie po [5], bo mieszka w Krakowie. Kasia uczy się [6], żeby studiować w Budapeszcie. Laura zna [7] bardzo dobrze, bo jest z Węgier."},
+            {"text": "3. Agnieszka mówi trochę po [8], a Dorota zna świetnie [9], bo chce studiować w Moskwie."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["holendersku"]},
+        {"number": 2, "answers": ["polski"], "feedback": "*znać* + the language: *zna polski*."},
+        {"number": 3, "answers": ["Polski"], "feedback": "*Polski* with a capital letter = Poland (*z Polski*); *polski* = the language."},
+        {"number": 4, "answers": ["węgiersku"]},
+        {"number": 5, "answers": ["polsku"]},
+        {"number": 6, "answers": ["węgierskiego"], "feedback": "*uczyć się* + *-ego*: *uczy się węgierskiego*."},
+        {"number": 7, "answers": ["węgierski"]},
+        {"number": 8, "answers": ["rosyjsku"]},
+        {"number": 9, "answers": ["rosyjski"]}
+      ],
+      "newWords": [
+        {"polish": "Holandia", "english": "the Netherlands"},
+        {"polish": "Węgry / z Węgier", "english": "Hungary / from Hungary"},
+        {"polish": "oczywiście", "english": "of course"},
+        {"polish": "świetnie", "english": "great"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [2]
+    },
+    {
+      "id": "2G",
+      "type": "gap_fill",
+      "title": "język · znać · uczyć się · mówić po",
+      "instruction": "Complete the table: *język* (which), *znam* (what), *uczę się* (*-ego*), *mówię po* (*-u*). One form is given in each row.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. język angielski · znam [1] · uczę się angielskiego · mówię po [2]"},
+            {"text": "2. język [3] · znam niemiecki · uczę się [4] · mówię po [5]"},
+            {"text": "3. język [6] · znam [7] · uczę się [8] · mówię po portugalsku"},
+            {"text": "4. język [9] · znam [10] · uczę się japońskiego · mówię po [11]"},
+            {"text": "5. język polski · znam [12] · uczę się [13] · mówię po [14]"},
+            {"text": "6. język [15] · znam [16] · uczę się [17] · mówię po hiszpańsku"},
+            {"text": "7. język [18] · znam włoski · uczę się [19] · mówię po [20]"},
+            {"text": "8. język [21] · znam [22] · uczę się francuskiego · mówię po [23]"},
+            {"text": "9. język [24] · znam [25] · uczę się [26] · mówię po rosyjsku"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["angielski"]},
+        {"number": 2, "answers": ["angielsku"]},
+        {"number": 3, "answers": ["niemiecki"]},
+        {"number": 4, "answers": ["niemieckiego"]},
+        {"number": 5, "answers": ["niemiecku"]},
+        {"number": 6, "answers": ["portugalski"]},
+        {"number": 7, "answers": ["portugalski"]},
+        {"number": 8, "answers": ["portugalskiego"]},
+        {"number": 9, "answers": ["japoński"]},
+        {"number": 10, "answers": ["japoński"]},
+        {"number": 11, "answers": ["japońsku"]},
+        {"number": 12, "answers": ["polski"]},
+        {"number": 13, "answers": ["polskiego"]},
+        {"number": 14, "answers": ["polsku"]},
+        {"number": 15, "answers": ["hiszpański"]},
+        {"number": 16, "answers": ["hiszpański"]},
+        {"number": 17, "answers": ["hiszpańskiego"]},
+        {"number": 18, "answers": ["włoski"]},
+        {"number": 19, "answers": ["włoskiego"]},
+        {"number": 20, "answers": ["włosku"]},
+        {"number": 21, "answers": ["francuski"]},
+        {"number": 22, "answers": ["francuski"]},
+        {"number": 23, "answers": ["francusku"]},
+        {"number": 24, "answers": ["rosyjski"]},
+        {"number": 25, "answers": ["rosyjski"]},
+        {"number": 26, "answers": ["rosyjskiego"]}
+      ],
+      "rules": [2]
+    },
+    {
+      "id": "3A",
+      "type": "reference",
+      "title": "Conjugation -ę, -isz / -ysz",
+      "instruction": "The second verb group: *-ę, -isz (-ysz), -i (-y), -imy (-ymy), -icie (-ycie), -ą*.",
+      "tables": [
+        {
+          "header": ["", "myśleć", "uczyć"],
+          "rows": [
+            ["(ja)", "myśl**ę**", "ucz**ę**"],
+            ["(ty)", "myśl**isz**", "ucz**ysz**"],
+            ["on / ona / ono", "myśl**i**", "ucz**y**"],
+            ["(my)", "myśl**imy**", "ucz**ymy**"],
+            ["(wy)", "myśl**icie**", "ucz**ycie**"],
+            ["oni / one", "myśl**ą**", "ucz**ą**"]
+          ]
+        }
+      ],
+      "notes": [
+        "After *sz*, *rz / ż*, *cz* write *y* instead of *i* (*uczysz*, *tańczysz*).",
+        "Don't mix with the *-m / -sz* group: *mam, masz* — but *myślę, myślisz*."
+      ],
+      "newWords": [{"polish": "myśleć", "english": "to think"}, {"polish": "uczyć", "english": "to teach"}],
+      "rules": [1]
+    },
+    {
+      "id": "3B",
+      "type": "gap_fill",
+      "title": "Conjugation tables",
+      "instruction": "Complete the forms of the four verbs.",
+      "sections": [
+        {
+          "title": "mówić (-ę / -isz)",
+          "lines": [
+            {"text": "(ja) [1]"},
+            {"text": "(ty) mówisz"},
+            {"text": "on / ona / ono [2]"},
+            {"text": "(my) [3]"},
+            {"text": "(wy) [4]"},
+            {"text": "oni / one [5]"}
+          ]
+        },
+        {
+          "title": "lubić (-ę / -isz)",
+          "lines": [
+            {"text": "(ja) [6]"},
+            {"text": "(ty) [7]"},
+            {"text": "on / ona / ono [8]"},
+            {"text": "(my) [9]"},
+            {"text": "(wy) lubicie"},
+            {"text": "oni / one [10]"}
+          ]
+        },
+        {
+          "title": "kończyć (-ę / -ysz)",
+          "lines": [
+            {"text": "(ja) kończę"},
+            {"text": "(ty) kończysz"},
+            {"text": "on / ona / ono kończy"},
+            {"text": "(my) kończymy"},
+            {"text": "(wy) [11]"},
+            {"text": "oni / one [12]"}
+          ]
+        },
+        {
+          "title": "tańczyć (-ę / -ysz)",
+          "lines": [
+            {"text": "(ja) [13]"},
+            {"text": "(ty) [14]"},
+            {"text": "on / ona / ono tańczy"},
+            {"text": "(my) [15]"},
+            {"text": "(wy) [16]"},
+            {"text": "oni / one tańczą"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["mówię"], "feedback": "This group has *-ę* for \"I\": *mówię*, *lubię* — not *-m*."},
+        {"number": 2, "answers": ["mówi"]},
+        {"number": 3, "answers": ["mówimy"]},
+        {"number": 4, "answers": ["mówicie"]},
+        {"number": 5, "answers": ["mówią"], "feedback": "This group has *-ę* for \"I\": *mówię*, *lubię* — not *-m*."},
+        {"number": 6, "answers": ["lubię"]},
+        {"number": 7, "answers": ["lubisz"]},
+        {"number": 8, "answers": ["lubi"]},
+        {"number": 9, "answers": ["lubimy"]},
+        {"number": 10, "answers": ["lubią"]},
+        {"number": 11, "answers": ["kończycie"], "feedback": "After *cz* write *y*: *kończycie*."},
+        {"number": 12, "answers": ["kończą"]},
+        {"number": 13, "answers": ["tańczę"]},
+        {"number": 14, "answers": ["tańczysz"]},
+        {"number": 15, "answers": ["tańczymy"]},
+        {"number": 16, "answers": ["tańczycie"]}
+      ],
+      "newWords": [
+        {"polish": "mówić", "english": "to speak"},
+        {"polish": "lubić", "english": "to like"},
+        {"polish": "kończyć", "english": "to finish"},
+        {"polish": "tańczyć", "english": "to dance"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [1]
+    },
+    {
+      "id": "3C",
+      "type": "gap_fill",
+      "title": "Put the verb in the right form",
+      "instruction": "Put the verb in brackets in the right form.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "a. (My) [1] języka polskiego. (uczyć się)"},
+            {"text": "b. (Ja) [2], że on jest sympatyczny. (myśleć)"},
+            {"text": "c. Ona [3] hiszpańskie kino. (lubić)"},
+            {"text": "d. On [4] pisać. (kończyć)"},
+            {"text": "e. Czy (ty) [5]? (palić)"},
+            {"text": "f. One [6] pizzę. (lubić)"},
+            {"text": "g. Pani Zosia dobrze [7] salsę. (tańczyć)"},
+            {"text": "i. Oni nie [8]. (palić)"},
+            {"text": "j. Czy wy dobrze [9] po polsku? (mówić)"},
+            {"text": "l. (Ja) [10], że jestem w Polsce. (cieszyć się)"},
+            {"text": "m. Czy (ty) [11] tango? (tańczyć)"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["uczymy się", "się uczymy"]},
+        {"number": 2, "answers": ["myślę"], "feedback": "This group has *-ę* for \"I\": *myślę* — not *myślem*."},
+        {"number": 3, "answers": ["lubi"]},
+        {"number": 4, "answers": ["kończy"]},
+        {"number": 5, "answers": ["palisz"]},
+        {"number": 6, "answers": ["lubią"]},
+        {"number": 7, "answers": ["tańczy"]},
+        {"number": 8, "answers": ["palą"]},
+        {"number": 9, "answers": ["mówicie"]},
+        {"number": 10, "answers": ["cieszę się"], "feedback": "This group has *-ę* for \"I\": *cieszę się* — not *cieszem*."},
+        {"number": 11, "answers": ["tańczysz"], "feedback": "After *cz* write *y*: *tańczysz*."}
+      ],
+      "newWords": [
+        {"polish": "palić", "english": "to smoke"},
+        {"polish": "pisać", "english": "to write"},
+        {"polish": "kino", "english": "cinema"},
+        {"polish": "salsa", "english": "salsa"},
+        {"polish": "tango", "english": "tango"},
+        {"polish": "cieszyć się", "english": "to be glad"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [1]
+    },
+    {
+      "id": "3D",
+      "type": "gap_fill",
+      "title": "Dialogue: put the verbs in",
+      "instruction": "The same dialogue as in 2B. Put the verbs in brackets in the right form.",
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Javier", "text": "Hola!"},
+            {"speaker": "Pierre", "text": "Przepraszam, nie [1] (rozumieć)!"},
+            {"speaker": "Mami", "text": "Javier! Mówimy po polsku!"},
+            {"speaker": "Javier", "text": "Ach! Nie [2] (pamiętać), jak mówimy po polsku „hola”."},
+            {"speaker": "Mami", "text": "Cha, cha, cha! To żart, wiem!"},
+            {"speaker": "Javier", "text": "No dobrze Mami, [3] (mieć) rację! „Hola” to słowo po hiszpańsku — znaczy „cześć”."},
+            {"speaker": "Pierre", "text": "Aha! Cześć! [4] (być) Pierre. Pierre Lavié. Przepraszam, nie [5] (mówić) po hiszpańsku, tylko po francusku i trochę po polsku."},
+            {"speaker": "Javier", "text": "Cześć! Ja [6] (mieć) na imię Javier i [7] (być) z Argentyny, a to [8] (być) Mami. Mami Takada. Ona jest z Japonii i [9] (mówić) po japońsku."},
+            {"speaker": "Pierre", "text": "Miło mi!"},
+            {"speaker": "Mami", "text": "Mnie też!"},
+            {"speaker": "Javier", "text": "A ty, [10] (być) z Francji?"},
+            {"speaker": "Pierre", "text": "Tak, jestem z Francji i [11] (mieszkać) w Paryżu. A wy, gdzie [12] (mieszkać)?"},
+            {"speaker": "Javier", "text": "Ja [13] (mieszkać) w Buenos Aires, ale teraz w Krakowie."},
+            {"speaker": "Mami", "text": "A ja w Tokio! Ale teraz też w Krakowie. Czy ty [14] (być) w grupie A1?"},
+            {"speaker": "Pierre", "text": "Tak. To [15] (być) moja nowa grupa."},
+            {"speaker": "Mami", "text": "To świetnie! To [16] (być) też nasza grupa!"},
+            {"speaker": "Pierre", "text": "Cieszę się!"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["rozumiem"]},
+        {"number": 2, "answers": ["pamiętam"], "feedback": "*pamiętać* is in the *-m, -sz* group: *pamiętam*, *pamiętasz*."},
+        {"number": 3, "answers": ["masz"]},
+        {"number": 4, "answers": ["Jestem"]},
+        {"number": 5, "answers": ["mówię"], "feedback": "*mówić* has *-ę* for \"I\": *mówię*."},
+        {"number": 6, "answers": ["mam"]},
+        {"number": 7, "answers": ["jestem"]},
+        {"number": 8, "answers": ["jest"]},
+        {"number": 9, "answers": ["mówi"]},
+        {"number": 10, "answers": ["jesteś"]},
+        {"number": 11, "answers": ["mieszkam"]},
+        {"number": 12, "answers": ["mieszkacie"], "feedback": "The *wy* ending is always *-cie*: *mieszkacie*."},
+        {"number": 13, "answers": ["mieszkam"]},
+        {"number": 14, "answers": ["jesteś"]},
+        {"number": 15, "answers": ["jest"]},
+        {"number": 16, "answers": ["jest"]}
+      ],
+      "rules": [1]
+    },
+    {
+      "id": "3E",
+      "type": "gap_fill",
+      "title": "Put the verb in the right form (workbook)",
+      "instruction": "Put the verb in brackets in the right form.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. (Ja) [1] (cieszyć się), że ty [2] (być) tutaj."},
+            {"text": "2. Joost świetnie [3] (jeździć) na nartach."},
+            {"text": "3. Aneta [4] (mówić) po niemiecku."},
+            {"text": "4. Oni [5] (siedzieć) w kawiarni."},
+            {"text": "5. Dziękuję, ale ja nie [6] (palić)."},
+            {"text": "6. Javier [7] (tańczyć) tango."},
+            {"text": "7. Czy wy [8] (chodzić) na kurs?"},
+            {"text": "8. Julia [9] (uczyć się) francuskiego."},
+            {"text": "9. Co ty [10] (robić)?"},
+            {"text": "10. Czy oni [11] (lubić) spaghetti?"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["cieszę się"]},
+        {"number": 2, "answers": ["jesteś"]},
+        {"number": 3, "answers": ["jeździ"], "feedback": "*jeździć*: *on jeździ* — the *ź* stays."},
+        {"number": 4, "answers": ["mówi"]},
+        {"number": 5, "answers": ["siedzą"], "feedback": "*siedzieć* goes like *myśleć*: *oni siedzą*."},
+        {"number": 6, "answers": ["palę"]},
+        {"number": 7, "answers": ["tańczy"]},
+        {"number": 8, "answers": ["chodzicie"]},
+        {"number": 9, "answers": ["uczy się", "się uczy"]},
+        {"number": 10, "answers": ["robisz"]},
+        {"number": 11, "answers": ["lubią"]}
+      ],
+      "newWords": [
+        {"polish": "jeździć na nartach", "english": "to ski"},
+        {"polish": "siedzieć w kawiarni", "english": "to sit in a café"},
+        {"polish": "chodzić na kurs", "english": "to attend a course"},
+        {"polish": "robić", "english": "to do"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [1]
+    },
+    {
+      "id": "3F",
+      "type": "gap_fill",
+      "title": "Teacher / student",
+      "instruction": "Listen and fill in the missing words. *nauczyciel* — *uczy* (teaches); *student* — *uczy się* (learns).",
+      "tracks": [{"id": "wb17"}],
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Piotr", "text": "[1] ty uczysz się [2] angielskiego?"},
+            {"speaker": "Ela", "text": "Nie, ja nie uczę się angielskiego. Jestem [3]."},
+            {"speaker": "Piotr", "text": "Rozumiem, to [4], że ty uczysz angielskiego, tak?"},
+            {"speaker": "Ela", "text": "Tak. A ty?"},
+            {"speaker": "Piotr", "text": "Ja też jestem nauczycielem, [5] języka niemieckiego. Ale teraz chodzę na [6] do Glossy i uczę się angielskiego."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Czy"]},
+        {"number": 2, "answers": ["języka"]},
+        {"number": 3, "answers": ["nauczycielką"]},
+        {"number": 4, "answers": ["znaczy"]},
+        {"number": 5, "answers": ["uczę"], "feedback": "A teacher *uczy* (teaches): *uczę języka niemieckiego*; a student *uczy się*."},
+        {"number": 6, "answers": ["kurs"]}
+      ],
+      "newWords": [
+        {"polish": "nauczyciel / nauczycielka", "english": "teacher (m / f)"},
+        {"polish": "to znaczy", "english": "that means"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [1, 2]
+    },
+    {
+      "id": "3G",
+      "type": "choice",
+      "title": "Domino",
+      "instruction": "Choose the answer for each question.",
+      "legend": [
+        "A. Mam na imię Marta.",
+        "B. Dziękuję, wszystko w porządku.",
+        "C. Nazywam się Marta Nowak.",
+        "D. Jestem z Polski.",
+        "E. Mieszkam w Krakowie.",
+        "F. marta.nowak@wp.pl"
+      ],
+      "items": [
+        {"label": "1", "prompt": "Co słychać?", "options": ["A", "B", "C", "D", "E", "F"], "answer": "B"},
+        {"label": "2", "prompt": "Jak masz na imię?", "options": ["A", "B", "C", "D", "E", "F"], "answer": "A"},
+        {"label": "3", "prompt": "Jak się nazywasz?", "options": ["A", "B", "C", "D", "E", "F"], "answer": "C"},
+        {"label": "4", "prompt": "Gdzie mieszkasz?", "options": ["A", "B", "C", "D", "E", "F"], "answer": "E"},
+        {"label": "5", "prompt": "Skąd jesteś?", "options": ["A", "B", "C", "D", "E", "F"], "answer": "D"},
+        {"label": "6", "prompt": "Jaki masz adres mailowy?", "options": ["A", "B", "C", "D", "E", "F"], "answer": "F", "feedback": "@ = *małpa*, . = *kropka*: marta kropka nowak małpa wp kropka pl."}
+      ],
+      "newWords": [
+        {"polish": "adres mailowy", "english": "e-mail address"},
+        {"polish": "małpa", "english": "@"},
+        {"polish": "kropka", "english": "dot"}
+      ]
+    },
+    {
+      "id": "3H",
+      "type": "choice",
+      "title": "What fits?",
+      "instruction": "Choose the answer for each question.",
+      "legend": [
+        "a. Tak, bardzo.",
+        "b. Tak, bardzo dobrze, jestem z Hiszpanii.",
+        "c. Bo chcę studiować w Krakowie.",
+        "d. Nic nowego.",
+        "e. Z Madrytu.",
+        "f. Nie wiem, ale myślę, że tak."
+      ],
+      "items": [
+        {"label": "1", "prompt": "Co u ciebie?", "options": ["a", "b", "c", "d", "e", "f"], "answer": "d"},
+        {"label": "2", "prompt": "Czy lubisz pizzę?", "options": ["a", "b", "c", "d", "e", "f"], "answer": "a"},
+        {"label": "3", "prompt": "Czy myślisz, że to jest nowy student?", "options": ["a", "b", "c", "d", "e", "f"], "answer": "f"},
+        {"label": "4", "prompt": "Czy mówisz po hiszpańsku?", "options": ["a", "b", "c", "d", "e", "f"], "answer": "b"},
+        {"label": "5", "prompt": "Skąd jesteś?", "options": ["a", "b", "c", "d", "e", "f"], "answer": "e"},
+        {"label": "6", "prompt": "Dlaczego uczysz się polskiego?", "options": ["a", "b", "c", "d", "e", "f"], "answer": "c"}
+      ]
+    },
+    {
+      "id": "4A",
+      "type": "reference",
+      "title": "Thinking about Adam",
+      "instruction": "Angela and Mami are having tea in the corridor. Listen to the dialogue two or three times.",
+      "tracks": [{"id": "104C1"}],
+      "transcript": {
+        "unlock": "always",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Angela", "text": "Mami, dlaczego jesteś dziś smutna?"},
+              {"speaker": "Mami", "text": "Smutna? Nie, nie jestem smutna, tylko myślę. Intensywnie myślę o Adamie."},
+              {"speaker": "Angela", "text": "Kto to jest Adam???"},
+              {"speaker": "Mami", "text": "Ach! Adam… to kolega Karola. Jest wysoki, przystojny, wysportowany, sympatyczny… Planuje studiować japonistykę. Już trochę mówi po japońsku. Jest tylko jeden problem, niestety, ma dziewczynę."}
+            ]
+          }
+        ]
+      },
+      "groups": [
+        {
+          "phrases": [
+            {"polish": "Jaki on jest?", "english": "What is he like?"},
+            {"polish": "Jaka ona jest?", "english": "What is she like?"},
+            {"polish": "Jest wysoki, przystojny, wysportowany…", "english": "He is tall, handsome, sporty…"},
+            {"polish": "myślę o…", "english": "I'm thinking about…"}
+          ]
+        }
+      ],
+      "newWords": [
+        {"polish": "dlaczego", "english": "why"},
+        {"polish": "dziś", "english": "today"},
+        {"polish": "smutna", "english": "sad"},
+        {"polish": "intensywnie", "english": "intensely"},
+        {"polish": "o Adamie", "english": "about Adam"},
+        {"polish": "wysoki", "english": "tall"},
+        {"polish": "przystojny", "english": "handsome"},
+        {"polish": "wysportowany", "english": "sporty"},
+        {"polish": "planuje", "english": "plans"},
+        {"polish": "japonistyka", "english": "Japanese studies"},
+        {"polish": "już", "english": "already"},
+        {"polish": "problem", "english": "problem"}
+      ]
+    },
+    {
+      "id": "4B",
+      "type": "gap_fill",
+      "title": "What is Mami like? What is Adam like?",
+      "instruction": "Write the adjective endings only.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "Mami jest smutn[1], ale sympatyczn[2] i ładn[3]."},
+            {"text": "Adam jest sympatyczn[4], przystojn[5] i wysok[6]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["a"]},
+        {"number": 2, "answers": ["a"]},
+        {"number": 3, "answers": ["a"]},
+        {"number": 4, "answers": ["y"]},
+        {"number": 5, "answers": ["y"]},
+        {"number": 6, "answers": ["i"], "feedback": "*wysoki* ends in *-i*: after *k* and *g* the masculine ending is *-i*."}
+      ],
+      "newWords": [{"polish": "ładna", "english": "pretty"}],
+      "newWordsUnlock": "after_check",
+      "rules": [5]
+    },
+    {
+      "id": "4C",
+      "type": "gap_fill",
+      "title": "Opposites by ear",
+      "instruction": "The speaker reads pairs of opposites. Listen and write the missing word of each pair.",
+      "tracks": [{"id": "104C3"}],
+      "hint": "wysoki · brudna · pracowity · gruby · smutna · młody · brzydka · chora",
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"text": "pracowity, leniwy, gruby, szczupły, chudy, wysoki, niski, średniego wzrostu, wesoła, smutna, przystojny, ładna, brzydka, zmęczony, wysportowany, stary, młody, zdrowa, chora, czysta, brudna"}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. [1] ≠ leniwy"},
+            {"text": "2. [2] ≠ szczupły"},
+            {"text": "3. [3] ≠ niski"},
+            {"text": "4. wesoła ≠ [4]"},
+            {"text": "5. ładna ≠ [5]"},
+            {"text": "6. stary ≠ [6]"},
+            {"text": "7. zdrowa ≠ [7]"},
+            {"text": "8. czysta ≠ [8]"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["pracowity"]},
+        {"number": 2, "answers": ["gruby"]},
+        {"number": 3, "answers": ["wysoki"]},
+        {"number": 4, "answers": ["smutna"]},
+        {"number": 5, "answers": ["brzydka"], "feedback": "*brzydka* — *rz* sounds like *ż*."},
+        {"number": 6, "answers": ["młody"]},
+        {"number": 7, "answers": ["chora"]},
+        {"number": 8, "answers": ["brudna"]}
+      ],
+      "newWords": [
+        {"polish": "pracowity ↔ leniwy", "english": "hard-working ↔ lazy"},
+        {"polish": "gruby ↔ szczupły", "english": "fat ↔ slim"},
+        {"polish": "chudy", "english": "thin"},
+        {"polish": "wysoki ↔ niski", "english": "tall ↔ short"},
+        {"polish": "średniego wzrostu", "english": "of medium height"},
+        {"polish": "wesoła ↔ smutna", "english": "cheerful ↔ sad"},
+        {"polish": "ładna ↔ brzydka", "english": "pretty ↔ ugly"},
+        {"polish": "zmęczony", "english": "tired"},
+        {"polish": "młody", "english": "young"},
+        {"polish": "zdrowa ↔ chora", "english": "healthy ↔ ill"},
+        {"polish": "czysta ↔ brudna", "english": "clean ↔ dirty"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [5]
+    },
+    {
+      "id": "4D",
+      "type": "gap_fill",
+      "title": "Jaki? Jaka? Jakie?",
+      "instruction": "Write the adjective in the right gender.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Ona ma wysoką temperaturę, jest bardzo [1]."},
+            {"text": "2. On bardzo lubi pracować, on jest [2]."},
+            {"text": "3. Nie jest ani niski, ani średniego wzrostu, on jest [3]."},
+            {"text": "4. To dziecko jest czyste, a to dziecko jest [4]."},
+            {"text": "5. Ten mężczyzna jest bardzo atrakcyjny — wysoki i [5]."},
+            {"text": "6. To dziecko jest smutne, a tamto [6]."},
+            {"text": "7. On jest gruby, a ona jest [7]."},
+            {"text": "8. Javier nie jest ani wysoki, ani niski, on jest [8]."},
+            {"text": "9. On lubi sport i jest bardzo [9]."},
+            {"text": "10. Ona nie lubi pracować, nie lubi robić nic, ona jest bardzo [10]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["chora"]},
+        {"number": 2, "answers": ["pracowity"]},
+        {"number": 3, "answers": ["wysoki"]},
+        {"number": 4, "answers": ["brudne"], "feedback": "Neuter adjectives end in *-e*: *brudne*, *wesołe* (*dziecko* is neuter)."},
+        {"number": 5, "answers": ["przystojny"]},
+        {"number": 6, "answers": ["wesołe"], "feedback": "Neuter adjectives end in *-e*: *brudne*, *wesołe* (*dziecko* is neuter)."},
+        {"number": 7, "answers": ["szczupła"], "feedback": "*ona* → *-a*: *szczupła*."},
+        {"number": 8, "answers": ["średniego wzrostu"]},
+        {"number": 9, "answers": ["wysportowany"]},
+        {"number": 10, "answers": ["leniwa"]}
+      ],
+      "newWords": [
+        {"polish": "temperatura", "english": "temperature"},
+        {"polish": "pracować", "english": "to work"},
+        {"polish": "ani… ani…", "english": "neither… nor…"},
+        {"polish": "mężczyzna", "english": "man"},
+        {"polish": "sport", "english": "sport"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [5]
+    },
+    {
+      "id": "4E",
+      "type": "write",
+      "title": "Letter patterns → words",
+      "instruction": "Fill in the letters and write the words in full. Write a pair with ≠, for example: *stary ≠ młody*.",
+      "items": [
+        {"label": "1", "prompt": "s_a_y ≠ m_od_", "answers": ["stary ≠ młody"]},
+        {"label": "2", "prompt": "s_c_up_y ≠ g_ub_", "answers": ["szczupły ≠ gruby"]},
+        {"label": "3", "prompt": "w_s_ki ≠ nis_i", "answers": ["wysoki ≠ niski"]},
+        {"label": "4", "prompt": "_re_n_eg_ w_r__t_", "answers": ["średniego wzrostu"]},
+        {"label": "5", "prompt": "zd_o_y ≠ _h__y", "answers": ["zdrowy ≠ chory"]},
+        {"label": "6", "prompt": "_ad_y ≠ br__yd_i", "answers": ["ładny ≠ brzydki"], "feedback": "*ładny* starts with *ł*; *brzydki* has *rz*."},
+        {"label": "7", "prompt": "p__ys_ojn_", "answers": ["przystojny"]},
+        {"label": "8", "prompt": "_r_co_ity ≠ l_n__y", "answers": ["pracowity ≠ leniwy"]},
+        {"label": "9", "prompt": "s_u_ny ≠ w_s__y", "answers": ["smutny ≠ wesoły"]},
+        {"label": "10", "prompt": "cz_s_y ≠ b__u_ny", "answers": ["czysty ≠ brudny"]},
+        {"label": "11", "prompt": "zm__c_o_y", "answers": ["zmęczony"], "feedback": "*zmęczony* — with *ę*."},
+        {"label": "12", "prompt": "w__p_rt_wa__y", "answers": ["wysportowany"]}
+      ]
+    },
+    {
+      "id": "5A",
+      "type": "reference",
+      "title": "Do you know who it is?",
+      "instruction": "*Przerwa* (break): Javier, Angela and Mami talk in the corridor. Listen.",
+      "tracks": [{"id": "104C6"}],
+      "transcript": {
+        "unlock": "always",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Angela", "text": "Wiecie, kto to jest?"},
+              {"speaker": "Javier", "text": "Ja wiem. To jest lektorka języka hiszpańskiego."},
+              {"speaker": "Angela", "text": "Myślę, że ona jest bardzo miła."},
+              {"speaker": "Mami", "text": "A ja nie wiem, czy ona jest miła, czy nie, ale na pewno jest atrakcyjna."},
+              {"speaker": "Angela", "text": "Javier, jak ona ma na imię?"},
+              {"speaker": "Javier", "text": "Nie pamiętam dobrze, ale chyba María."},
+              {"speaker": "Angela", "text": "To jest twoja koleżanka?"},
+              {"speaker": "Javier", "text": "Nie, to nie jest moja koleżanka, ale ona jest z Hiszpanii. Jestem pewny, że ona jest energiczna, spontaniczna i bardzo sympatyczna."}
+            ]
+          }
+        ]
+      },
+      "groups": [
+        {
+          "phrases": [
+            {"polish": "Myślę, że ona jest miła.", "english": "I think that she is nice."},
+            {"polish": "Nie wiem, czy ona jest miła.", "english": "I don't know if she is nice."},
+            {"polish": "Jestem pewny / pewna, że…", "english": "I'm sure that… (m / f)"},
+            {"polish": "chyba", "english": "probably"}
+          ]
+        }
+      ],
+      "newWords": [
+        {"polish": "przerwa", "english": "break"},
+        {"polish": "lektorka", "english": "(language) teacher"},
+        {"polish": "miła", "english": "nice"},
+        {"polish": "na pewno", "english": "surely"},
+        {"polish": "chyba", "english": "probably"},
+        {"polish": "twoja koleżanka", "english": "your friend"},
+        {"polish": "Jestem pewny / pewna, że…", "english": "I'm sure that…"},
+        {"polish": "Nie wiem, czy…", "english": "I don't know if…"}
+      ],
+      "rules": [3]
+    },
+    {
+      "id": "5B",
+      "type": "reference",
+      "title": "Internationalisms",
+      "instruction": "International words: listen and repeat. You know what they mean — remember how they are spelled in Polish.",
+      "tracks": [{"id": "104C7"}],
+      "groups": [
+        {
+          "phrases": [
+            {"polish": "agresywny", "english": "aggressive"},
+            {"polish": "aktywny", "english": "active"},
+            {"polish": "ambitny", "english": "ambitious"},
+            {"polish": "atrakcyjny", "english": "attractive"},
+            {"polish": "energiczny", "english": "energetic"},
+            {"polish": "inteligentny", "english": "intelligent"},
+            {"polish": "romantyczny", "english": "romantic"},
+            {"polish": "sfrustrowany", "english": "frustrated"},
+            {"polish": "spontaniczny", "english": "spontaneous"},
+            {"polish": "utalentowany", "english": "talented"},
+            {"polish": "zestresowany", "english": "stressed"},
+            {"polish": "kreatywny", "english": "creative"}
+          ]
+        }
+      ],
+      "newWords": [
+        {"polish": "agresywny", "english": "aggressive"},
+        {"polish": "sfrustrowany", "english": "frustrated"},
+        {"polish": "utalentowany", "english": "talented"}
+      ]
+    },
+    {
+      "id": "5C",
+      "type": "choice",
+      "title": "Puzzle",
+      "instruction": "Build the adjective: choose the ending for each beginning.",
+      "items": [
+        {"label": "1", "prompt": "ambi-", "options": ["-tny", "-any", "-ny", "-wny", "-yczny", "-iczny", "-jny"], "answer": "-tny"},
+        {"label": "2", "prompt": "agresyw-", "options": ["-tny", "-any", "-ny", "-wny", "-yczny", "-iczny", "-jny"], "answer": "-ny"},
+        {"label": "3", "prompt": "romant-", "options": ["-tny", "-any", "-ny", "-wny", "-yczny", "-iczny", "-jny"], "answer": "-yczny"},
+        {"label": "4", "prompt": "energ-", "options": ["-tny", "-any", "-ny", "-wny", "-yczny", "-iczny", "-jny"], "answer": "-iczny"},
+        {"label": "5", "prompt": "atrakcy-", "options": ["-tny", "-any", "-ny", "-wny", "-yczny", "-iczny", "-jny"], "answer": "-jny"},
+        {"label": "6", "prompt": "kreaty-", "options": ["-tny", "-any", "-ny", "-wny", "-yczny", "-iczny", "-jny"], "answer": "-wny"},
+        {"label": "7", "prompt": "zestresow-", "options": ["-tny", "-any", "-ny", "-wny", "-yczny", "-iczny", "-jny"], "answer": "-any"}
+      ]
+    },
+    {
+      "id": "5D",
+      "type": "gap_fill",
+      "title": "Jaki? Jaka? Jakie?",
+      "instruction": "Write the adjective from the box in the right gender.",
+      "wordBox": ["aktywny", "energiczny", "atrakcyjny", "utalentowany", "ambitny", "romantyczny", "inteligentny", "agresywny"],
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Ona ma bardzo dużo energii, ona jest [1]."},
+            {"text": "2. Ona ma duży talent, ona jest [2]."},
+            {"text": "3. On jest nerwowy i kiedy się zdenerwuje, jest bardzo [3]."},
+            {"text": "4. Ona ma duże ambicje, ona jest bardzo [4]."},
+            {"text": "5. Ona lubi romantyczne filmy, bo jest bardzo [5]."},
+            {"text": "6. To dziecko jest bardzo [6] — cały czas coś robi."},
+            {"text": "7. Ta modelka jest bardzo [7]."},
+            {"text": "8. Ten student jest bardzo [8] i szybko się uczy."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["energiczna"]},
+        {"number": 2, "answers": ["utalentowana"]},
+        {"number": 3, "answers": ["agresywny"]},
+        {"number": 4, "answers": ["ambitna"]},
+        {"number": 5, "answers": ["romantyczna"]},
+        {"number": 6, "answers": ["aktywne"], "feedback": "*dziecko* is neuter → *aktywne*."},
+        {"number": 7, "answers": ["atrakcyjna"]},
+        {"number": 8, "answers": ["inteligentny"]}
+      ],
+      "newWords": [
+        {"polish": "energia", "english": "energy"},
+        {"polish": "talent", "english": "talent"},
+        {"polish": "nerwowy", "english": "nervous"},
+        {"polish": "zdenerwować się", "english": "to get angry"},
+        {"polish": "ambicje", "english": "ambitions"},
+        {"polish": "cały czas", "english": "all the time"},
+        {"polish": "modelka", "english": "model"},
+        {"polish": "szybko się uczy", "english": "learns fast"}
+      ],
+      "newWordsUnlock": "after_check",
+      "rules": [5]
+    },
+    {
+      "id": "5E",
+      "type": "write",
+      "title": "Build the sentence",
+      "instruction": "Make a sentence from the words.",
+      "items": [
+        {"label": "1", "prompt": "że / ty / myślę / pracowity / jesteś", "answers": ["Myślę, że ty jesteś pracowity."], "feedback": "A comma before *że* and *czy*."},
+        {"label": "2", "prompt": "czy / wiem / on / nie / sympatyczny / jest", "answers": ["Nie wiem, czy on jest sympatyczny."], "feedback": "A comma before *że* and *czy*."},
+        {"label": "3", "prompt": "wiem / czy / miła / jest / ona / nie", "answers": ["Nie wiem, czy ona jest miła."], "feedback": "A comma before *że* and *czy*."},
+        {"label": "4", "prompt": "pewny / on / jest / że / energiczny / jestem", "answers": ["Jestem pewny, że on jest energiczny."], "feedback": "A comma before *że* and *czy*."},
+        {"label": "5", "prompt": "ona / jestem / że / pewna / ambitna / jest", "answers": ["Jestem pewna, że ona jest ambitna."], "feedback": "A comma before *że* and *czy*."}
+      ],
+      "rules": [3]
+    },
+    {
+      "id": "5F",
+      "type": "free_writing",
+      "title": "Describe people you know",
+      "instruction": "Describe two people you know (or yourself): what they look like and what you think they are like. Words you can use: wysoki, szczupły, ładny, brudny, wesoły, mały, przystojny, wysportowany, zmęczony, chory, leniwy, smutny, sympatyczny, …",
+      "fields": [{"label": "Person 1"}, {"label": "Person 2"}],
+      "model": [
+        "Ona jest wysoka i szczupła. Myślę, że ona jest wesoła i sympatyczna.",
+        "On jest wysoki i przystojny. Myślę, że on jest pracowity, ale zmęczony."
+      ],
+      "checklist": ["*ona* → the adjective ends in *-a*, *on* → *-y / -i*, *ono* → *-e*.", "A comma before *że*: *Myślę, że…*"],
+      "rules": [3, 5]
+    },
+    {
+      "id": "6A",
+      "type": "write",
+      "title": "Antonyms",
+      "instruction": "Write the opposite adjective in the same gender.",
+      "items": [
+        {"label": "a", "prompt": "wesołe", "answers": ["smutne"], "feedback": "*-e* stays: *wesołe* → *smutne*."},
+        {"label": "b", "prompt": "przystojny", "answers": ["brzydki"], "feedback": "*wysoki* ends in *-i*: after *k* and *g* the masculine ending is *-i*."},
+        {"label": "c", "prompt": "pracowita", "answers": ["leniwa"]},
+        {"label": "d", "prompt": "młoda", "answers": ["stara"]},
+        {"label": "e", "prompt": "nowy", "answers": ["stary"]},
+        {"label": "f", "prompt": "duże", "answers": ["małe"]},
+        {"label": "g", "prompt": "niski", "answers": ["wysoki"]},
+        {"label": "h", "prompt": "zdrowe", "answers": ["chore"]},
+        {"label": "i", "prompt": "brzydka", "answers": ["ładna", "piękna"]}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "6B",
+      "type": "inline_choice",
+      "title": "i, ale or bo?",
+      "instruction": "Choose *i*, *ale* or *bo*.",
+      "items": [
+        {
+          "label": "a",
+          "prompt": "Ania jest młoda [1] wysoka.",
+          "choices": [{"options": ["i", "ale", "bo"], "answer": "i"}]
+        },
+        {
+          "label": "b",
+          "prompt": "Pan Antoni jest stary, [1] energiczny.",
+          "choices": [{"options": ["i", "ale", "bo"], "answer": "ale"}]
+        },
+        {
+          "label": "c",
+          "prompt": "Ola jest sympatyczna [1] pracowita.",
+          "choices": [{"options": ["i", "ale", "bo"], "answer": "i"}]
+        },
+        {
+          "label": "d",
+          "prompt": "Torba jest brzydka, [1] jest stara i brudna.",
+          "choices": [{"options": ["i", "ale", "bo"], "answer": "bo"}]
+        },
+        {
+          "label": "e",
+          "prompt": "Jan jest młody [1] wysportowany.",
+          "choices": [{"options": ["i", "ale", "bo"], "answer": "i"}]
+        },
+        {
+          "label": "f",
+          "prompt": "Marta jest szczupła, [1] niewysportowana.",
+          "choices": [{"options": ["i", "ale", "bo"], "answer": "ale"}]
+        },
+        {
+          "label": "g",
+          "prompt": "Słownik jest zły, [1] jest mały.",
+          "choices": [{"options": ["i", "ale", "bo"], "answer": "bo"}]
+        }
+      ],
+      "newWords": [{"polish": "niewysportowana", "english": "unathletic"}],
+      "rules": [4]
+    },
+    {
+      "id": "6C",
+      "type": "inline_choice",
+      "title": "i, ani, bo or ale?",
+      "instruction": "Choose the conjunction.",
+      "items": [
+        {
+          "label": "1",
+          "prompt": "Ona nie jest [1] szczupła, [2] wysoka, [3] jest bardzo ładna.",
+          "choices": [
+            {"options": ["i", "ani", "ale", "bo"], "answer": "ani", "feedback": "*nie jest ani…, ani…* = is neither… nor…"},
+            {"options": ["i", "ani", "ale", "bo"], "answer": "ani", "feedback": "*nie jest ani…, ani…* = is neither… nor…"},
+            {"options": ["i", "ani", "ale", "bo"], "answer": "ale"}
+          ]
+        },
+        {
+          "label": "2",
+          "prompt": "To dziecko jest utalentowane [1] kreatywne.",
+          "choices": [{"options": ["i", "ani", "ale", "bo"], "answer": "i"}]
+        },
+        {
+          "label": "3",
+          "prompt": "Ola nie jest [1] energiczna, [2] wysportowana.",
+          "choices": [
+            {"options": ["i", "ani", "ale", "bo"], "answer": "ani", "feedback": "*nie jest ani…, ani…* = is neither… nor…"},
+            {"options": ["i", "ani", "ale", "bo"], "answer": "ani", "feedback": "*nie jest ani…, ani…* = is neither… nor…"}
+          ]
+        },
+        {
+          "label": "4",
+          "prompt": "Ta dziewczyna jest inteligentna [1] utalentowana, [2] leniwa.",
+          "choices": [
+            {"options": ["i", "ani", "ale", "bo"], "answer": "i"},
+            {"options": ["i", "ani", "ale", "bo"], "answer": "ale"}
+          ]
+        },
+        {
+          "label": "5",
+          "prompt": "To dziecko jest sympatyczne [1] wesołe.",
+          "choices": [{"options": ["i", "ani", "ale", "bo"], "answer": "i"}]
+        },
+        {
+          "label": "6",
+          "prompt": "Elena to jest bardzo dobra studentka, [1] jest pracowita [2] inteligentna.",
+          "choices": [
+            {"options": ["i", "ani", "ale", "bo"], "answer": "bo"},
+            {"options": ["i", "ani", "ale", "bo"], "answer": "i"}
+          ]
+        },
+        {
+          "label": "7",
+          "prompt": "Ten kubek jest ładny, [1] brudny.",
+          "choices": [{"options": ["i", "ani", "ale", "bo"], "answer": "ale"}]
+        },
+        {
+          "label": "8",
+          "prompt": "Ten chłopak nie jest [1] utalentowany, [2] pracowity.",
+          "choices": [
+            {"options": ["i", "ani", "ale", "bo"], "answer": "ani", "feedback": "*nie jest ani…, ani…* = is neither… nor…"},
+            {"options": ["i", "ani", "ale", "bo"], "answer": "ani", "feedback": "*nie jest ani…, ani…* = is neither… nor…"}
+          ]
+        },
+        {
+          "label": "9",
+          "prompt": "Ten długopis jest zły, [1] jest stary i nie pisze.",
+          "choices": [{"options": ["i", "ani", "ale", "bo"], "answer": "bo"}]
+        }
+      ],
+      "newWords": [
+        {"polish": "ani… ani…", "english": "neither… nor…"},
+        {"polish": "nie pisze", "english": "doesn't write"}
+      ],
+      "rules": [4]
+    }
+  ],
+  "vocabulary": [
+    {"polish": "język · znać · mówić po… · uczyć się …-ego", "english": "language · to know · to speak… · to learn…"},
+    {"polish": "polski, angielski, niemiecki, francuski, hiszpański, włoski, rosyjski", "english": "Polish, English, German, French, Spanish, Italian, Russian"},
+    {"polish": "myśleć, lubić, mówić, uczyć (się), tańczyć, kończyć, palić", "english": "to think, like, speak, teach (learn), dance, finish, smoke"},
+    {"polish": "Myślę, że… · Nie wiem, czy… · Jestem pewny/pewna, że… · chyba", "english": "I think… · I don't know if… · I'm sure… · probably"},
+    {"polish": "wysoki ↔ niski, gruby ↔ szczupły, młody ↔ stary", "english": "tall ↔ short, fat ↔ slim, young ↔ old"},
+    {"polish": "ładny ↔ brzydki, przystojny, wesoły ↔ smutny", "english": "pretty ↔ ugly, handsome, cheerful ↔ sad"},
+    {"polish": "pracowity ↔ leniwy, zdrowy ↔ chory, czysty ↔ brudny", "english": "hard-working ↔ lazy, healthy ↔ ill, clean ↔ dirty"},
+    {"polish": "zmęczony, wysportowany, średniego wzrostu", "english": "tired, sporty, of medium height"},
+    {"polish": "i · ale · bo · ani… ani…", "english": "and · but · because · neither… nor…"},
+    {"polish": "tylko · trochę · masz rację · żart · słowo · ciekawy", "english": "only · a little · you're right · joke · word · interesting"}
+  ]
+}

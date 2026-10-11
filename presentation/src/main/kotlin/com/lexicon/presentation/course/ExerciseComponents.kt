@@ -112,6 +112,8 @@ private val MatchIconSize = 32.dp
 
 private val GapTextPadding = 16.dp
 private val GapMinWidth = 96.dp
+private val EndingGapMinWidth = 40.dp
+private const val ENDING_LENGTH = 2
 private val GapMaxWidth = 280.dp
 
 private val exerciseIcons = mapOf(
@@ -873,7 +875,8 @@ private fun InlineGap(
     val measurer = rememberTextMeasurer()
     val density = LocalDensity.current
     val typedWidth = with(density) { measurer.measure(value, style).size.width.toDp() } + GapTextPadding
-    val width = typedWidth.coerceIn(GapMinWidth, GapMaxWidth)
+    val minWidth = if (expected.length <= ENDING_LENGTH) EndingGapMinWidth else GapMinWidth
+    val width = typedWidth.coerceIn(minWidth, GapMaxWidth)
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         BasicTextField(

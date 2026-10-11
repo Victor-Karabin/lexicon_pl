@@ -148,7 +148,10 @@ class LessonFlowViewModel(
     init {
         viewModelScope.launch(dispatchers.io) {
             val script = getLessonScript(lessonId)
-            val session = script?.let { LessonSession.resume(it, getLessonProgress(lessonId)) }
+            val progress = runSuspendCatching { getLessonProgress(lessonId) }
+                .onFailure { Log.w(TAG, "Saved lesson progress could not be read; starting the lesson afresh", it) }
+                .getOrNull()
+            val session = script?.let { LessonSession.resume(it, progress) }
             val lesson = getLesson(lessonId)
             content.value = Content(session = session, lessonNumber = lesson?.number, lessonTitle = lesson?.title)
             session?.let(::preload)

@@ -7252,8 +7252,8 @@
    "icon": "record_voice_over",
    "color": "#EF6C00",
    "popularity": 5,
-   "estimatedSeconds": 43560,
-   "wordCount": 726,
+   "estimatedSeconds": 43620,
+   "wordCount": 727,
    "vocabularyIds": [
     244,
     372,
@@ -7980,7 +7980,8 @@
     7166,
     7167,
     7168,
-    7169
+    7169,
+    7172
    ]
   },
   {
@@ -11712,8 +11713,8 @@
    "icon": "face",
    "color": "#6A1B9A",
    "popularity": 29,
-   "estimatedSeconds": 4800,
-   "wordCount": 80,
+   "estimatedSeconds": 4920,
+   "wordCount": 82,
    "vocabularyIds": [
     330,
     331,
@@ -11794,7 +11795,9 @@
     6822,
     6831,
     6832,
-    7047
+    7047,
+    7171,
+    7172
    ]
   },
   {
@@ -14172,8 +14175,8 @@
    "icon": "public",
    "color": "#0277BD",
    "popularity": 52,
-   "estimatedSeconds": 7920,
-   "wordCount": 132,
+   "estimatedSeconds": 7980,
+   "wordCount": 133,
    "vocabularyIds": [
     67,
     271,
@@ -14306,7 +14309,8 @@
     7113,
     7134,
     7164,
-    7165
+    7165,
+    7170
    ]
   },
   {
