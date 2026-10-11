@@ -28,8 +28,8 @@ class LessonScriptsTest {
         scripts.forEach { (name, script) -> script.screens.forEach { check("$name ${it.id}", it) } }
 
     @Test
-    fun `there is a script for lessons 1 to 3`() {
-        assertEquals(listOf("lesson_krok-a1-01.json", "lesson_krok-a1-02.json", "lesson_krok-a1-03.json"), assets.keys.toList())
+    fun `there is a script for lessons 1 to 4`() {
+        assertEquals((1..4).map { "lesson_krok-a1-0$it.json" }, assets.keys.toList())
     }
 
     @Test

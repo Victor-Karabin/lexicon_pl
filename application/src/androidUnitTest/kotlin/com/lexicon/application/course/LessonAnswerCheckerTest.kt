@@ -180,6 +180,31 @@ class LessonAnswerCheckerTest {
     }
 
     @Test
+    fun `the keys of lesson 4 are accepted as written and in lower case`() {
+        listOf(
+            "po polsku", "japońsku", "szwedzku", "francuski", "węgierskiego", "Polski", "uczę się polskiego",
+            "mówię", "kończycie", "tańczysz", "uczymy się", "cieszę się", "jeździ", "siedzą", "nauczycielką",
+            "średniego wzrostu", "wysportowany", "zmęczony", "Myślę, że ty jesteś pracowity.",
+        ).forEach {
+            assertEquals(it, AnswerVerdict.CORRECT, verdict(it, it))
+            assertEquals(it, AnswerVerdict.CORRECT, verdict(it, it.lowercase()))
+        }
+        assertEquals(AnswerVerdict.ALMOST, verdict("tańczysz", "tanczysz"))
+        assertEquals(AnswerVerdict.WRONG, verdict("mówię", "mówim"))
+        assertEquals(AnswerVerdict.WRONG, verdict("japońsku", "japoński"))
+    }
+
+    @Test
+    fun `a pair of opposites accepts the not-equal sign, a comma or a space between the words`() {
+        val pair = listOf("stary ≠ młody")
+        listOf("stary ≠ młody", "stary, młody", "stary młody", "Stary≠młody").forEach {
+            assertEquals(it, AnswerVerdict.CORRECT, LessonAnswerChecker.verdict(pair, it))
+        }
+        assertEquals(AnswerVerdict.ALMOST, LessonAnswerChecker.verdict(pair, "stary mlody"))
+        assertEquals(AnswerVerdict.WRONG, LessonAnswerChecker.verdict(pair, "młody stary"))
+    }
+
+    @Test
     fun `the answer shown back is the alternative closest to what was typed`() {
         val coffee = listOf("Kawa i cukier są tam.", "Cukier i kawa są tam.", "Tam są kawa i cukier.")
         assertEquals("Tam są kawa i cukier.", LessonAnswerChecker.closest(coffee, "Tam sa kawa i cukier"))

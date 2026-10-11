@@ -108670,5 +108670,44 @@
   ],
   "example": "**Czy to jest** twoja torba?",
   "picture": "question mark over a bag"
+ },
+ {
+  "id": 7170,
+  "text": "polski",
+  "translation": "Polish (the language; Polish as an adjective)",
+  "transcription": "ˈpɔlski",
+  "partOfSpeech": "adj",
+  "cefr": "A1",
+  "topics": [
+   "countries"
+  ],
+  "example": "Znam **polski** i trochę angielski.",
+  "picture": "Polish flag on an open book"
+ },
+ {
+  "id": 7171,
+  "text": "wysportowany",
+  "translation": "sporty, athletic",
+  "transcription": "vɨspɔrtɔˈvanɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A1",
+  "topics": [
+   "appearance"
+  ],
+  "example": "Adam jest wysoki i **wysportowany**.",
+  "picture": "young man running"
+ },
+ {
+  "id": 7172,
+  "text": "średniego wzrostu",
+  "translation": "of medium height",
+  "transcription": "ɕrɛˈdɲɛgɔ ˈvzrɔstu",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "appearance"
+  ],
+  "example": "Javier nie jest ani wysoki, ani niski, jest **średniego wzrostu**.",
+  "picture": "three people of different heights, the middle one highlighted"
  }
 ]
