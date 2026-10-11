@@ -119,6 +119,7 @@ data class PictureAsset(
 data class ChoiceGroupAsset(
     val options: List<String>,
     val answer: String,
+    val answers: List<String> = emptyList(),
     val feedback: String? = null,
 )
 
@@ -304,7 +305,7 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
                                 question = LessonQuestion(
                                     key = "${item.label}-${index + 1}",
                                     label = item.label,
-                                    answers = listOf(group.answer).toImmutableList(),
+                                    answers = (listOf(group.answer) + group.answers).toImmutableList(),
                                     feedback = group.feedback,
                                 ),
                                 options = group.options.toImmutableList(),

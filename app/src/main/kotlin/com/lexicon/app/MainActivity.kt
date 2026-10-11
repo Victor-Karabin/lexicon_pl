@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.lexicon.app.navigation.LexiconNavHost
+import com.lexicon.presentation.common.TrackTextInput
 import com.lexicon.presentation.theme.LexiconAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,10 +16,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             LexiconAppTheme {
-                LexiconNavHost(
-                    navController = rememberNavController(),
-                    modifier = Modifier.fillMaxSize().imePadding(),
-                )
+                TrackTextInput {
+                    LexiconNavHost(
+                        navController = rememberNavController(),
+                        modifier = Modifier.fillMaxSize().imePadding(),
+                    )
+                }
             }
         }
     }

@@ -15,6 +15,7 @@ import java.io.File
 private const val STEM = 4
 private const val SHORTEST_WORD = 3
 private val afterSubmit = setOf("newWords", "model", "checklist")
+private val knownTypes = setOf("grammar", "reference", "write", "choice", "inline_choice", "order", "form", "gap_fill", "free_writing")
 
 class LessonScriptsTest {
     private val assets: Map<String, LessonScriptAsset> =
@@ -50,6 +51,22 @@ class LessonScriptsTest {
             script.ruleLinks.forEach { (screenId, numbers) ->
                 assertTrue("$name $screenId", screenId in ids && screenId != "0")
                 assertEquals("$name $screenId", numbers.size, script.rulesOf(screenId).size)
+            }
+        }
+
+    @Test
+    fun `every screen has a type the app knows`() =
+        assets.forEach { (name, asset) ->
+            asset.screens.forEach { assertTrue("$name ${it.id} ${it.type}", it.type in knownTypes) }
+        }
+
+    @Test
+    fun `inline-choice and order items have distinct labels, since their answers are keyed by label`() =
+        assets.forEach { (name, asset) ->
+            asset.screens.filter { it.type == "inline_choice" || it.type == "order" }.forEach { screen ->
+                val labels = screen.items.map { it.label }
+                assertEquals("$name ${screen.id}", labels.size, labels.toSet().size)
+                assertTrue("$name ${screen.id}", labels.none(String::isBlank))
             }
         }
 
