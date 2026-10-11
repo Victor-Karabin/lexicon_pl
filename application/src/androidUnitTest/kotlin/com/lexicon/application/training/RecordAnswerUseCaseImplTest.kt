@@ -22,7 +22,9 @@ import org.junit.Test
 class RecordAnswerUseCaseImplTest {
     private val history: TrainingHistoryRepository = mockk(relaxed = true)
     private val reviews: ReviewScheduleRepository = mockk(relaxed = true)
-    private val studyRecord: StudyRecordRepository = mockk(relaxed = true)
+    private val studyRecord: StudyRecordRepository = mockk(relaxed = true) {
+        coEvery { lastActivityAtEpochMillis() } returns null
+    }
     private val clock = object : Clock {
         override fun nowEpochMillis(): Long = NOW
 
@@ -62,7 +64,7 @@ class RecordAnswerUseCaseImplTest {
             assertEquals(1, schedule.captured.repetitions)
             assertEquals(TODAY + 1, schedule.captured.dueAtEpochDay)
 
-            coVerify { studyRecord.record(TODAY, any(), wasNew = true, wasCorrect = true) }
+            coVerify { studyRecord.record(TODAY, any(), wasNew = true, wasCorrect = true, atEpochMillis = any()) }
         }
 
     @Test
@@ -80,7 +82,7 @@ class RecordAnswerUseCaseImplTest {
             val stored = slot<TrainingResultBoundary>()
             coVerify { history.recordResult(capture(stored)) }
             assertTrue("a word with a schedule is a review", stored.captured.wasReview)
-            coVerify { studyRecord.record(TODAY, any(), wasNew = false, wasCorrect = true) }
+            coVerify { studyRecord.record(TODAY, any(), wasNew = false, wasCorrect = true, atEpochMillis = any()) }
         }
 
     @Test
@@ -100,7 +102,7 @@ class RecordAnswerUseCaseImplTest {
             assertEquals(0, schedule.captured.repetitions)
             assertEquals(1, schedule.captured.lapses)
             assertEquals(TODAY + 1, schedule.captured.dueAtEpochDay)
-            coVerify { studyRecord.record(TODAY, any(), any(), wasCorrect = false) }
+            coVerify { studyRecord.record(TODAY, any(), any(), wasCorrect = false, atEpochMillis = any()) }
         }
 
     @Test
@@ -125,7 +127,7 @@ class RecordAnswerUseCaseImplTest {
 
             coVerify { history.recordResult(any()) }
             coVerify(exactly = 0) { reviews.save(any(), any(), any()) }
-            coVerify { studyRecord.record(TODAY, any(), wasNew = false, wasCorrect = false) }
+            coVerify { studyRecord.record(TODAY, any(), wasNew = false, wasCorrect = false, atEpochMillis = any()) }
         }
 
     @Test
@@ -136,7 +138,7 @@ class RecordAnswerUseCaseImplTest {
 
             useCase(answer())
 
-            coVerify { studyRecord.record(TODAY, addedSeconds = 0, any(), any()) }
+            coVerify { studyRecord.record(TODAY, addedSeconds = 0, any(), any(), atEpochMillis = any()) }
         }
 
     @Test
@@ -147,7 +149,19 @@ class RecordAnswerUseCaseImplTest {
 
             useCase(answer())
 
-            coVerify { studyRecord.record(TODAY, addedSeconds = 15, any(), any()) }
+            coVerify { studyRecord.record(TODAY, addedSeconds = 15, any(), any(), atEpochMillis = any()) }
+        }
+
+    @Test
+    fun `time is counted from the latest activity, whether an answer or a lesson`() =
+        runTest {
+            coEvery { reviews.find(any()) } returns null
+            coEvery { history.lastAnsweredAtEpochMillis() } returns NOW - 90_000
+            coEvery { studyRecord.lastActivityAtEpochMillis() } returns NOW - 20_000
+
+            useCase(answer())
+
+            coVerify { studyRecord.record(TODAY, addedSeconds = 20, any(), any(), atEpochMillis = NOW) }
         }
 
     @Test
@@ -159,7 +173,7 @@ class RecordAnswerUseCaseImplTest {
 
             useCase(answer())
 
-            coVerify { studyRecord.record(TODAY, addedSeconds = 120, any(), any()) }
+            coVerify { studyRecord.record(TODAY, addedSeconds = 120, any(), any(), atEpochMillis = any()) }
         }
 
     private companion object {

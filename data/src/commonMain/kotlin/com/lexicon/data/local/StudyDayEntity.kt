@@ -11,4 +11,5 @@ data class StudyDayEntity(
     val reviews: Int,
     val answers: Int,
     val correctAnswers: Int,
+    val lastActivityAtEpochMillis: Long = 0,
 )

@@ -26,7 +26,10 @@ class RecordAnswerUseCaseImpl(
         val wasReview = schedule != null
 
         val answeredAtEpochMillis = clock.nowEpochMillis()
-        val previousAnswerAtEpochMillis = history.lastAnsweredAtEpochMillis()
+        val previousAnswerAtEpochMillis = listOfNotNull(
+            history.lastAnsweredAtEpochMillis(),
+            studyRecord.lastActivityAtEpochMillis(),
+        ).maxOrNull()
 
         history.recordResult(
             TrainingResultBoundary(
@@ -56,6 +59,7 @@ class RecordAnswerUseCaseImpl(
             addedSeconds = studyTimePolicy.creditedSeconds(answeredAtEpochMillis, previousAnswerAtEpochMillis),
             wasNew = !wasReview && answer.outcome.countsAsAnswered,
             wasCorrect = answer.outcome.isCorrect,
+            atEpochMillis = answeredAtEpochMillis,
         )
     }
 }

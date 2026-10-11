@@ -116,6 +116,7 @@ class ExerciseViewModelTest {
                 checkAnswer,
                 audioLibrary,
                 audioPlayer,
+                {},
                 dispatchers,
             )
         backgroundScope.launch { viewModel.uiState.collect {} }

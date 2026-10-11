@@ -9,8 +9,10 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.LessonExercise
+import com.lexicon.interactors.training.RecordStudyActivityUseCase
 import com.lexicon.model.course.LessonId
 import com.lexicon.presentation.common.AnswerState
+import com.lexicon.presentation.common.markIn
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -55,6 +57,7 @@ class ExerciseViewModel(
     private val checkAnswer: CheckExerciseAnswerUseCase,
     audioLibrary: LessonAudioLibrary,
     audioPlayer: LessonAudioPlayer,
+    private val recordStudy: RecordStudyActivityUseCase,
     private val dispatchers: DispatcherProvider,
 ) : ViewModel() {
     private val lessonId = LessonId(savedStateHandle.get<String>(LESSON_ID_ARG).orEmpty())
@@ -110,6 +113,7 @@ class ExerciseViewModel(
     }
 
     fun onPlayAudio() {
+        studied()
         val loaded = content.value ?: return
         val file = loaded.exercise?.audioFile ?: return
         tracks.toggle(viewModelScope, file, loaded.remoteId)
@@ -125,15 +129,22 @@ class ExerciseViewModel(
     fun onOptionSelected(
         index: Int,
         option: String,
-    ) = updateResponse(index, 0, option)
+    ) {
+        studied()
+        updateResponse(index, 0, option)
+    }
 
     fun onGapChanged(
         index: Int,
         gap: Int,
         value: String,
-    ) = updateResponse(index, gap, value)
+    ) {
+        studied()
+        updateResponse(index, gap, value)
+    }
 
     fun onMatchChoiceSelected(choice: String) {
+        studied()
         val current = content.value ?: return
         val prompt = current.selectedPrompt ?: return
         val responses = current.responses.mapIndexed { index, row ->
@@ -151,6 +162,7 @@ class ExerciseViewModel(
     }
 
     fun onCheck() {
+        studied()
         val current = content.value ?: return
         val exercise = current.exercise ?: return
 
@@ -170,6 +182,8 @@ class ExerciseViewModel(
             )
         }
     }
+
+    private fun studied() = recordStudy.markIn(viewModelScope, dispatchers)
 
     fun onRetry() {
         content.update {

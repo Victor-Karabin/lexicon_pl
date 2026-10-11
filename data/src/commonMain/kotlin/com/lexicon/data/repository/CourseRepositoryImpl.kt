@@ -39,11 +39,12 @@ class CourseRepositoryImpl(
             courseDao.observeCourses(),
             courseDao.observeLessons(),
             courseDao.observeLessonWords(),
-            courseDao.observeProgress(),
+            combine(courseDao.observeProgress(), courseDao.observeStartedLessonIds(), ::Pair),
             courseDao.observeDashboardCourses(),
-        ) { courses, lessons, words, progress, dashboard ->
+        ) { courses, lessons, words, (progress, startedIds), dashboard ->
             val wordsByLesson = words.groupBy { it.lessonId }
             val completed = progress.filter { it.isCompleted }.map { it.lessonId }.toSet()
+            val started = startedIds.toSet()
             val lessonsByCourse = lessons.groupBy { it.courseId }
 
             courses.map { course ->
@@ -61,6 +62,7 @@ class CourseRepositoryImpl(
                             title = lesson.title,
                             wordCount = wordsByLesson[lesson.id].orEmpty().size,
                             isCompleted = lesson.id in completed,
+                            isStarted = lesson.id in started,
                         )
                     },
                 )
@@ -73,6 +75,8 @@ class CourseRepositoryImpl(
     ) {
         if (isShown) courseDao.addDashboardCourse(DashboardCourseEntity(courseId)) else courseDao.removeDashboardCourse(courseId)
     }
+
+    override suspend fun resetLessonProgress(lessonId: String) = courseDao.resetLesson(lessonId)
 
     override suspend fun getLesson(lessonId: String): LessonBoundary? {
         seeder.ensureSeeded()

@@ -40,6 +40,7 @@ fun LessonSummaryBoundary.toSummary(): LessonSummary =
         title = title,
         wordCount = wordCount,
         isCompleted = isCompleted,
+        isStarted = isStarted,
     )
 
 fun LessonBoundary.toLesson(): Lesson =

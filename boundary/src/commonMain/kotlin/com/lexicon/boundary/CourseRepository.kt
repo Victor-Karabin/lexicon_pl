@@ -24,6 +24,8 @@ interface CourseRepository {
 
     suspend fun getLessonScriptProgress(lessonId: String): LessonProgress?
 
+    suspend fun resetLessonProgress(lessonId: String)
+
     suspend fun setCourseOnDashboard(
         courseId: String,
         isShown: Boolean,

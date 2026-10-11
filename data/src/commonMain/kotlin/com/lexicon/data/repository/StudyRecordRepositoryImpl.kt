@@ -13,9 +13,20 @@ class StudyRecordRepositoryImpl(
         addedSeconds: Long,
         wasNew: Boolean,
         wasCorrect: Boolean,
+        atEpochMillis: Long,
     ) {
-        studyDayDao.record(epochDay, addedSeconds, wasNew, wasCorrect)
+        studyDayDao.record(epochDay, addedSeconds, wasNew, wasCorrect, atEpochMillis)
     }
+
+    override suspend fun recordTime(
+        epochDay: Long,
+        addedSeconds: Long,
+        atEpochMillis: Long,
+    ) {
+        studyDayDao.recordTime(epochDay, addedSeconds, atEpochMillis)
+    }
+
+    override suspend fun lastActivityAtEpochMillis(): Long? = studyDayDao.lastActivityAtEpochMillis()?.takeIf { it > 0 }
 
     override suspend fun day(epochDay: Long): StudyDayBoundary? = studyDayDao.find(epochDay)?.toBoundary()
 

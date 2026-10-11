@@ -23,6 +23,7 @@ import com.lexicon.interactors.course.WritingReviewOutcome
 import com.lexicon.interactors.presets.FindWordsUseCase
 import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
 import com.lexicon.interactors.presets.SetWordStatusUseCase
+import com.lexicon.interactors.training.RecordStudyActivityUseCase
 import com.lexicon.model.course.LessonId
 import com.lexicon.model.course.LessonProgress
 import com.lexicon.model.course.LessonScreen
@@ -32,6 +33,7 @@ import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
 import com.lexicon.model.vocabulary.WordStatus
 import com.lexicon.model.vocabulary.statusOf
+import com.lexicon.presentation.common.markIn
 import com.lexicon.presentation.common.speakQuietly
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
@@ -91,6 +93,7 @@ class LessonFlowViewModel(
     private val setWordStatus: SetWordStatusUseCase,
     observeWordStatuses: ObserveWordStatusesUseCase,
     private val speechSynthesizer: SpeechSynthesizer,
+    private val recordStudy: RecordStudyActivityUseCase,
     audioLibrary: LessonAudioLibrary,
     audioPlayer: LessonAudioPlayer,
     private val dispatchers: DispatcherProvider,
@@ -236,7 +239,10 @@ class LessonFlowViewModel(
             )
         }
 
-    fun onPlay(track: LessonTrack) = tracks.toggle(viewModelScope, track.file, track.remoteId)
+    fun onPlay(track: LessonTrack) {
+        recordStudy.markIn(viewModelScope, dispatchers)
+        tracks.toggle(viewModelScope, track.file, track.remoteId)
+    }
 
     fun onSpeedChanged() = tracks.nextSpeed()
 
@@ -269,6 +275,7 @@ class LessonFlowViewModel(
         session.screen.allTracks().forEach { tracks.preload(viewModelScope, it.file, it.remoteId) }
 
     private fun change(transform: (LessonSession) -> LessonSession) {
+        recordStudy.markIn(viewModelScope, dispatchers)
         var moved = false
         content.update { current ->
             val session = current?.session ?: return@update current

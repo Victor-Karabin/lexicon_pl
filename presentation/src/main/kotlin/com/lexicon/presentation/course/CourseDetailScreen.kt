@@ -5,25 +5,23 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Dashboard
-import androidx.compose.material.icons.filled.RemoveCircleOutline
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.model.course.LessonId
 import com.lexicon.model.vocabulary.resolve
@@ -33,8 +31,6 @@ import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
 import org.koin.androidx.compose.koinViewModel
-
-private val ButtonIconSize = 18.dp
 
 @Composable
 fun CourseDetailScreen(
@@ -48,7 +44,7 @@ fun CourseDetailScreen(
         uiState = uiState,
         onClose = onClose,
         onLessonSelected = onLessonSelected,
-        onDashboardToggled = viewModel::onDashboardToggled,
+        onLessonReset = viewModel::onLessonReset,
         modifier = modifier,
     )
 }
@@ -58,9 +54,25 @@ private fun CourseDetailContent(
     uiState: CourseDetailUiState,
     onClose: () -> Unit,
     onLessonSelected: (LessonId) -> Unit,
-    onDashboardToggled: () -> Unit,
+    onLessonReset: (LessonId) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var resetting by rememberSaveable { mutableStateOf<String?>(null) }
+    val loaded = uiState as? CourseDetailUiState.Loaded
+    loaded?.course?.lessons?.firstOrNull { it.id.value == resetting }?.let { lesson ->
+        AlertDialog(
+            onDismissRequest = { resetting = null },
+            title = { Text(stringResource(R.string.course_reset_lesson_title, lesson.number)) },
+            text = { Text(stringResource(R.string.course_reset_lesson_body)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    onLessonReset(lesson.id)
+                    resetting = null
+                }) { Text(stringResource(R.string.course_reset_lesson_confirm)) }
+            },
+            dismissButton = { TextButton(onClick = { resetting = null }) { Text(stringResource(R.string.course_reset_lesson_cancel)) } },
+        )
+    }
     val title = when (uiState) {
         is CourseDetailUiState.Loaded -> uiState.course.title.resolve(uiState.languageTag)
         else -> stringResource(R.string.course_title)
@@ -98,36 +110,18 @@ private fun CourseDetailContent(
                         languageTag = uiState.languageTag,
                         showTitle = false,
                     )
-                    DashboardToggle(isOnDashboard = uiState.course.isOnDashboard, onClick = onDashboardToggled)
                     LazyColumn(contentPadding = PaddingValues(bottom = Dimens.spacingLarge)) {
                         items(uiState.course.lessons, key = { it.id.value }) { lesson ->
-                            LessonRow(lesson = lesson, onClick = { onLessonSelected(lesson.id) })
+                            LessonRow(
+                                lesson = lesson,
+                                onClick = { onLessonSelected(lesson.id) },
+                                onReset = { resetting = lesson.id.value },
+                            )
                             HorizontalDivider(modifier = Modifier.padding(horizontal = Dimens.spacingMedium))
                         }
                     }
                 }
         }
-    }
-}
-
-@Composable
-private fun DashboardToggle(
-    isOnDashboard: Boolean,
-    onClick: () -> Unit,
-) {
-    OutlinedButton(
-        onClick = onClick,
-        modifier = Modifier.padding(horizontal = Dimens.spacingMedium).padding(bottom = Dimens.spacingSmall),
-    ) {
-        Icon(
-            imageVector = if (isOnDashboard) Icons.Default.RemoveCircleOutline else Icons.Default.Dashboard,
-            contentDescription = null,
-            modifier = Modifier.size(ButtonIconSize),
-        )
-        Text(
-            text = stringResource(if (isOnDashboard) R.string.course_remove_from_dashboard else R.string.course_show_on_dashboard),
-            modifier = Modifier.padding(start = Dimens.spacingSmall),
-        )
     }
 }
 
@@ -139,7 +133,7 @@ private fun CourseDetailPreview() {
             uiState = CourseDetailUiState.Loaded(course = previewCourse()),
             onClose = {},
             onLessonSelected = {},
-            onDashboardToggled = {},
+            onLessonReset = {},
         )
     }
 }
@@ -152,7 +146,7 @@ private fun CourseDetailNotFoundPreview() {
             uiState = CourseDetailUiState.NotFound,
             onClose = {},
             onLessonSelected = {},
-            onDashboardToggled = {},
+            onLessonReset = {},
         )
     }
 }
