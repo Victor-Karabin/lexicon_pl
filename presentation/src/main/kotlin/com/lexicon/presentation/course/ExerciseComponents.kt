@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -155,6 +156,7 @@ fun AudioPlayerRow(
     onSeek: (Long) -> Unit,
     modifier: Modifier = Modifier,
     onSpeedChanged: (() -> Unit)? = null,
+    enabled: Boolean = true,
 ) {
     val duration = state.durationMs
     var dragging by remember { mutableStateOf<Float?>(null) }
@@ -167,11 +169,11 @@ fun AudioPlayerRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
     ) {
-        IconButton(onClick = onPlayPause) {
+        IconButton(onClick = onPlayPause, enabled = enabled) {
             Icon(
                 imageVector = if (state.isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
                 contentDescription = stringResource(if (state.isPlaying) R.string.exercise_pause else R.string.exercise_play),
-                tint = MaterialTheme.colorScheme.onSurface,
+                tint = if (enabled) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
         Text(
@@ -181,7 +183,7 @@ fun AudioPlayerRow(
         )
         SeekBar(
             fraction = fraction.coerceIn(0f, 1f),
-            enabled = duration > 0,
+            enabled = enabled && duration > 0,
             onSeeking = { dragging = it },
             onSeekDone = {
                 dragging = null
@@ -972,3 +974,73 @@ private fun choiceState(
 
 private fun keyboardTypeFor(expected: String): KeyboardType =
     if (expected.isNotBlank() && expected.all { it.isDigit() || it == ' ' }) KeyboardType.Number else KeyboardType.Text
+
+private val GridCellHeight = 32.dp
+
+@Composable
+fun NumberGridRow(
+    label: String,
+    size: Int,
+    columns: Int,
+    selected: Set<Int>,
+    expected: Set<Int>?,
+    onToggle: (Int) -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
+        Text(label, style = MaterialTheme.typography.labelLarge)
+        (1..size).chunked(columns).forEach { row ->
+            Row(horizontalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
+                row.forEach { number -> NumberCell(number, number in selected, expected, onToggle) }
+                repeat(columns - row.size) { Box(modifier = Modifier.weight(1f)) }
+            }
+        }
+        if (expected != null && selected != expected) {
+            (expected - selected).takeIf { it.isNotEmpty() }?.let { missed ->
+                Text(
+                    stringResource(R.string.lesson_flow_missed_numbers, missed.sorted().joinToString(", ")),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = LexiconError,
+                )
+            }
+            (selected - expected).takeIf { it.isNotEmpty() }?.let { extra ->
+                Text(
+                    stringResource(R.string.lesson_flow_extra_numbers, extra.sorted().joinToString(", ")),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = LexiconError,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun RowScope.NumberCell(
+    number: Int,
+    isSelected: Boolean,
+    expected: Set<Int>?,
+    onToggle: (Int) -> Unit,
+) {
+    val drawn = expected?.contains(number)
+    val background = when {
+        drawn == null && isSelected -> MaterialTheme.colorScheme.primary
+        isSelected && drawn == true -> LexiconSuccess
+        isSelected -> LexiconError
+        else -> MaterialTheme.colorScheme.surfaceContainerHigh
+    }
+    val border = if (drawn == true && !isSelected) LexiconError else Color.Transparent
+    Box(
+        modifier = Modifier
+            .weight(1f)
+            .height(GridCellHeight)
+            .background(background, LexiconShapes.small)
+            .border(2.dp, border, LexiconShapes.small)
+            .clickable(enabled = expected == null) { onToggle(number) },
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = number.toString(),
+            style = MaterialTheme.typography.bodyMedium,
+            color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
+        )
+    }
+}

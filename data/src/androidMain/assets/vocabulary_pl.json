@@ -112192,5 +112192,628 @@
    "professions"
   ],
   "example": ""
+ },
+ {
+  "id": 7458,
+  "text": "wolny czas",
+  "translation": "free time",
+  "transcription": "ˈvɔlnɨ t͡ʂas",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "hobbies"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7459,
+  "text": "lista zakupów",
+  "translation": "shopping list",
+  "transcription": "ˈlista zaˈkupuf",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7460,
+  "text": "biernik",
+  "translation": "accusative (case)",
+  "transcription": "ˈbjɛrɲik",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "studying"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7461,
+  "text": "gimnastyka",
+  "translation": "gymnastics",
+  "transcription": "gimnaˈstɨka",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "sports"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7462,
+  "text": "risotto",
+  "translation": "risotto",
+  "transcription": "riˈsɔttɔ",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7463,
+  "text": "kompozytor",
+  "translation": "composer",
+  "transcription": "kɔmpɔˈzɨtɔr",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "music",
+   "professions"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7464,
+  "text": "kiosk",
+  "translation": "kiosk",
+  "transcription": "kjɔsk",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7465,
+  "text": "ulgowy",
+  "translation": "reduced (ticket)",
+  "transcription": "ulˈgɔvɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A1",
+  "topics": [
+   "transport"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7466,
+  "text": "miętowy",
+  "translation": "mint (adj.)",
+  "transcription": "mjɛnˈtɔvɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7467,
+  "text": "guma do żucia",
+  "translation": "chewing gum",
+  "transcription": "ˈguma dɔ ˈʐut͡ɕa",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "shopping",
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7468,
+  "text": "owocowy",
+  "translation": "fruit (adj.)",
+  "transcription": "ɔvɔˈt͡sɔvɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7469,
+  "text": "format",
+  "translation": "size, format",
+  "transcription": "ˈfɔrmat",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "office"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7470,
+  "text": "chipsy",
+  "translation": "crisps",
+  "transcription": "ˈxipsɨ",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7471,
+  "text": "cola",
+  "translation": "cola",
+  "transcription": "ˈt͡sɔla",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7472,
+  "text": "loteria",
+  "translation": "lottery",
+  "transcription": "lɔˈtɛrja",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "hobbies"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7473,
+  "text": "kupon",
+  "translation": "coupon",
+  "transcription": "ˈkupɔn",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7474,
+  "text": "typować",
+  "translation": "to pick (numbers, a winner)",
+  "transcription": "tɨˈpɔvat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "B1",
+  "topics": [
+   "hobbies"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7475,
+  "text": "wytypować",
+  "translation": "to guess right (numbers)",
+  "transcription": "vɨtɨˈpɔvat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "B1",
+  "topics": [
+   "hobbies"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7476,
+  "text": "czterysta",
+  "translation": "four hundred",
+  "transcription": "t͡ʂtɛˈrɨsta",
+  "partOfSpeech": "num",
+  "cefr": "A1",
+  "topics": [
+   "numbers"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7477,
+  "text": "pięćset",
+  "translation": "five hundred",
+  "transcription": "ˈpjɛɲt͡ɕsɛt",
+  "partOfSpeech": "num",
+  "cefr": "A1",
+  "topics": [
+   "numbers"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7478,
+  "text": "sześćset",
+  "translation": "six hundred",
+  "transcription": "ˈʂɛɕt͡ɕsɛt",
+  "partOfSpeech": "num",
+  "cefr": "A1",
+  "topics": [
+   "numbers"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7479,
+  "text": "siedemset",
+  "translation": "seven hundred",
+  "transcription": "ɕɛˈdɛmsɛt",
+  "partOfSpeech": "num",
+  "cefr": "A1",
+  "topics": [
+   "numbers"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7480,
+  "text": "osiemset",
+  "translation": "eight hundred",
+  "transcription": "ɔˈɕɛmsɛt",
+  "partOfSpeech": "num",
+  "cefr": "A1",
+  "topics": [
+   "numbers"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7481,
+  "text": "dziewięćset",
+  "translation": "nine hundred",
+  "transcription": "d͡ʑɛˈvjɛɲt͡ɕsɛt",
+  "partOfSpeech": "num",
+  "cefr": "A1",
+  "topics": [
+   "numbers"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7482,
+  "text": "cukiernia",
+  "translation": "cake shop",
+  "transcription": "t͡suˈkjɛrɲa",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "shopping",
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7483,
+  "text": "odzież",
+  "translation": "clothes",
+  "transcription": "ˈɔd͡ʑɛʂ",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7484,
+  "text": "obuwie",
+  "translation": "shoes, footwear",
+  "transcription": "ɔˈbuvjɛ",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7485,
+  "text": "herbaciarnia",
+  "translation": "tea shop",
+  "transcription": "xɛrbaˈt͡ɕarɲa",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "shopping",
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7486,
+  "text": "optyk",
+  "translation": "optician",
+  "transcription": "ˈɔptɨk",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "shopping",
+   "health"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7487,
+  "text": "biuro podróży",
+  "translation": "travel agency",
+  "transcription": "ˈbjurɔ pɔˈdruʐɨ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "travel",
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7488,
+  "text": "kwiaciarnia",
+  "translation": "florist",
+  "transcription": "kfjaˈt͡ɕarɲa",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7489,
+  "text": "drogeria",
+  "translation": "drugstore",
+  "transcription": "drɔˈgɛrja",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7490,
+  "text": "delikatesy",
+  "translation": "delicatessen",
+  "transcription": "dɛlikaˈtɛsɨ",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "shopping",
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7491,
+  "text": "pralnia",
+  "translation": "laundry",
+  "transcription": "ˈpralɲa",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "shopping",
+   "household"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7492,
+  "text": "pączek",
+  "translation": "doughnut",
+  "transcription": "ˈpɔnt͡ʂɛk",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7493,
+  "text": "szampon",
+  "translation": "shampoo",
+  "transcription": "ˈʂampɔn",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "household"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7494,
+  "text": "żel pod prysznic",
+  "translation": "shower gel",
+  "transcription": "ʐɛl pɔt ˈprɨʂɲit͡s",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "household"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7495,
+  "text": "bilet lotniczy",
+  "translation": "plane ticket",
+  "transcription": "ˈbilɛt lɔˈtɲit͡ʂɨ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "travel"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7496,
+  "text": "wczasy",
+  "translation": "holiday package",
+  "transcription": "ˈft͡ʂasɨ",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "travel"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7497,
+  "text": "bułka",
+  "translation": "roll (bread)",
+  "transcription": "ˈbuwka",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7498,
+  "text": "aparat fotograficzny",
+  "translation": "camera",
+  "transcription": "aˈparat fɔtɔgraˈfit͡ʂnɨ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "hobbies"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7499,
+  "text": "karta pamięci",
+  "translation": "memory card",
+  "transcription": "ˈkarta paˈmjɛɲt͡ɕi",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "technology"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7500,
+  "text": "statyw",
+  "translation": "tripod",
+  "transcription": "ˈstatɨf",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "hobbies"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7501,
+  "text": "kosmetyki",
+  "translation": "cosmetics",
+  "transcription": "kɔsmɛˈtɨki",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7502,
+  "text": "samoobsługowy",
+  "translation": "self-service",
+  "transcription": "samɔɔpswuˈgɔvɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7503,
+  "text": "słucham",
+  "translation": "how can I help? (in a shop); hello? (on the phone)",
+  "transcription": "ˈswuxam",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "shopping",
+   "daily-conversation"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7504,
+  "text": "niedrogi",
+  "translation": "inexpensive",
+  "transcription": "ɲɛˈdrɔgi",
+  "partOfSpeech": "adj",
+  "cefr": "A1",
+  "topics": [
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7505,
+  "text": "funkcjonalny",
+  "translation": "practical, functional",
+  "transcription": "funkt͡sjɔˈnalnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "B1",
+  "topics": [
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7506,
+  "text": "pub",
+  "translation": "pub",
+  "transcription": "pup",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food",
+   "hobbies"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7507,
+  "text": "domowy",
+  "translation": "home (adj.) (zadanie domowe — homework)",
+  "transcription": "dɔˈmɔvɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A1",
+  "topics": [
+   "home",
+   "studying"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7508,
+  "text": "nieciekawy",
+  "translation": "dull, uninteresting",
+  "transcription": "ɲɛt͡ɕɛˈkavɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "personality"
+  ],
+  "example": ""
  }
 ]
