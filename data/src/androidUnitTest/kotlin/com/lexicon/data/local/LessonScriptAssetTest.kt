@@ -1,6 +1,7 @@
 package com.lexicon.data.local
 
 import com.lexicon.model.course.AnswerKeyboard
+import com.lexicon.model.course.AnswerMatch
 import com.lexicon.model.course.FirstTry
 import com.lexicon.model.course.LessonPhrase
 import com.lexicon.model.course.LessonProgress
@@ -135,6 +136,7 @@ class LessonScriptAssetTest {
     fun `progress survives a round trip through its stored form`() {
         val progress = LessonProgress(
             screenIndex = 4,
+            screenId = "2C",
             answers = persistentMapOf("2B" to persistentMapOf("1" to "dobry")),
             checked = persistentSetOf("1B"),
             finished = persistentSetOf("1A", "2C"),
@@ -143,6 +145,24 @@ class LessonScriptAssetTest {
         )
         val stored = lessonJson.encodeToString(LessonProgressAsset.serializer(), progress.toAsset())
         assertEquals(progress, lessonJson.decodeFromString<LessonProgressAsset>(stored).toModel())
+    }
+
+    @Test
+    fun `a screen-level match setting applies to the gaps of a gap fill`() {
+        val screen = asset.screens.first { it.type == "gap_fill" }.copy(match = "key_words")
+        val gaps = (asset.copy(screens = listOf(screen)).toModel(emptyMap()).screens.single() as LessonScreen.GapFill).gaps
+        assertTrue(gaps.isNotEmpty() && gaps.all { it.match == AnswerMatch.KEY_WORDS })
+    }
+
+    @Test
+    fun `a skipped screen is left out of its step, the screens, the new words and the rule links`() {
+        val skipped = asset.screens.first { it.newWords.isNotEmpty() && it.rules.isNotEmpty() }
+        val script = asset.copy(
+            screens = asset.screens.map { if (it.id == skipped.id) it.copy(skipped = true) else it },
+        ).toModel(emptyMap())
+        assertTrue(script.screens.none { it.id == skipped.id })
+        assertTrue(script.steps.none { skipped.id in it.screenIds })
+        assertTrue(skipped.id !in script.newWords && skipped.id !in script.ruleLinks)
     }
 
     @Test

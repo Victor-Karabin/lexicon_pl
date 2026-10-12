@@ -53,7 +53,9 @@ data class LessonSession(
     val script: LessonScript,
     val progress: LessonProgress = LessonProgress(),
 ) {
-    val index: Int get() = progress.screenIndex.coerceIn(0, script.screens.lastIndex)
+    val index: Int
+        get() = progress.screenId?.let { id -> script.screens.indexOfFirst { it.id == id }.takeIf { it >= 0 } }
+            ?: progress.screenIndex.coerceIn(0, script.screens.lastIndex)
 
     val screen: LessonScreen get() = script.screens[index]
 
@@ -142,10 +144,13 @@ data class LessonSession(
         if (needsCheck) return this
         if (failedScore != null) return retry()
         val done = finish()
-        return if (done.isLastScreen) done else done.copy(progress = done.progress.copy(screenIndex = index + 1))
+        return if (done.isLastScreen) done else done.at(index + 1)
     }
 
-    fun previous(): LessonSession = if (canGoBack) copy(progress = progress.copy(screenIndex = index - 1)) else this
+    fun previous(): LessonSession = if (canGoBack) at(index - 1) else this
+
+    private fun at(screenIndex: Int): LessonSession =
+        copy(progress = progress.copy(screenIndex = screenIndex, screenId = script.screens[screenIndex].id))
 
     fun verdict(
         screenId: String,
@@ -154,11 +159,20 @@ data class LessonSession(
         if (!isChecked(screenId)) return null
         val screen = script.screens.firstOrNull { it.id == screenId } ?: return null
         val question = screen.questions.firstOrNull { it.key == key } ?: return null
-        val given = answer(screenId, key)
-        val verdict = verdictOf(assigned(screen, question), given)
-        val usedBefore = screen.eachAnswerOnce &&
-            screen.questions.takeWhile { it.key != key }.any { LessonAnswerChecker.same(answer(screenId, it.key), given) }
-        return if (usedBefore && verdict == AnswerVerdict.CORRECT) AnswerVerdict.WRONG else verdict
+        val verdict = verdictOf(assigned(screen, question), answer(screenId, key))
+        return if (verdict == AnswerVerdict.CORRECT && usedBefore(screen, key)) AnswerVerdict.WRONG else verdict
+    }
+
+    private fun usedBefore(
+        screen: LessonScreen,
+        key: String,
+    ): Boolean {
+        if (!screen.eachAnswerOnce) return false
+        val given = answer(screen.id, key)
+        return screen.questions.takeWhile { it.key != key }.any { earlier ->
+            LessonAnswerChecker.same(answer(screen.id, earlier.key), given) &&
+                verdictOf(assigned(screen, earlier), answer(screen.id, earlier.key)) == AnswerVerdict.CORRECT
+        }
     }
 
     fun expectedAnswer(
@@ -167,7 +181,12 @@ data class LessonSession(
     ): String {
         val screen = script.screens.firstOrNull { it.id == screenId } ?: return ""
         val question = screen.questions.firstOrNull { it.key == key } ?: return ""
-        return LessonAnswerChecker.closest(assigned(screen, question).answers, answer(screenId, key))
+        val answers = assigned(screen, question).answers
+        if (usedBefore(screen, key)) {
+            val taken = screen.questions.filter { it.key != key }.map { answer(screenId, it.key) }
+            return answers.firstOrNull { candidate -> taken.none { LessonAnswerChecker.same(it, candidate) } } ?: answers.first()
+        }
+        return LessonAnswerChecker.closest(answers, answer(screenId, key))
     }
 
     fun usualForm(

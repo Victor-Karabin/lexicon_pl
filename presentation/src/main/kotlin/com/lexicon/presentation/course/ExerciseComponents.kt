@@ -49,12 +49,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.semantics.Role
@@ -102,6 +104,8 @@ private val SeekThumbRadius = 6.dp
 private const val SEEK_TRACK_ALPHA = 0.3f
 private const val MILLIS_PER_SECOND = 1000
 private const val SHORT_OPTION_LENGTH = 2
+private const val WRAPPING_ANSWER_LENGTH = 40
+private const val WRAPPED_ANSWER_LINES = 4
 private const val MAX_OPTIONS_IN_ROW = 3
 private const val MARK_OPTION_LENGTH = 3
 private const val MARK_OPTIONS_PER_ROW = 4
@@ -422,7 +426,9 @@ fun TranscribeRow(
     highlightChanges: Boolean = false,
 ) {
     var showInfo by rememberSaveable { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
     val checked = answerState !is AnswerState.Unanswered
+    val wraps = item.answer.length > WRAPPING_ANSWER_LENGTH
     val inline = labelWidth != null || (prompt == null && item.label.length <= SHORT_OPTION_LENGTH)
     val indent = if (inline) (labelWidth ?: AnswerLabelWidth) + Dimens.spacingSmall else 0.dp
     val border = when {
@@ -462,9 +468,18 @@ fun TranscribeRow(
             }
             BasicTextField(
                 value = value,
-                onValueChange = onValueChanged,
+                onValueChange = { typed ->
+                    if ('\n' !in typed) {
+                        onValueChanged(typed)
+                    } else if (imeAction == ImeAction.Done) {
+                        focusManager.clearFocus()
+                    } else {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                },
                 enabled = !checked,
-                singleLine = true,
+                singleLine = !wraps,
+                maxLines = if (wraps) WRAPPED_ANSWER_LINES else 1,
                 textStyle = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onSurface),
                 cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
                 keyboardOptions = KeyboardOptions(
@@ -503,10 +518,13 @@ fun TranscribeRow(
             }
         }
         if (isCorrect == false) {
+            val changed = remember(item.answer, value, highlightChanges) {
+                if (highlightChanges) LessonAnswerChecker.changedLetters(item.answer, value) else emptySet()
+            }
             ExpectedAnswer(
                 expected = item.answer,
                 isAlmost = isAlmost,
-                changed = if (highlightChanges) LessonAnswerChecker.changedLetters(item.answer, value) else emptySet(),
+                changed = changed,
                 modifier = Modifier.padding(start = indent, top = Dimens.spacingTiny),
             )
         }

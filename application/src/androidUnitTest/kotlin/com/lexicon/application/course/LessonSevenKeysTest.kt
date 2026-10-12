@@ -85,4 +85,12 @@ class LessonSevenKeysTest {
         assertEquals(AnswerVerdict.CORRECT, LessonAnswerChecker.verdict(machine, "19"))
         assertEquals(AnswerVerdict.WRONG, LessonAnswerChecker.verdict(machine, "17"))
     }
+
+    @Test
+    fun `a kiosk request may repeat the Proszę the prompt shows`() {
+        val gum = items("2B")[4].list("answers")
+        assertEquals(AnswerVerdict.CORRECT, LessonAnswerChecker.verdict(gum, "miętową gumę do żucia"))
+        assertEquals(AnswerVerdict.CORRECT, LessonAnswerChecker.verdict(gum, "Proszę miętową gumę do żucia."))
+        assertEquals(AnswerVerdict.CORRECT, LessonAnswerChecker.verdict(items("2C")[0].list("answers"), "Proszę sok pomarańczowy"))
+    }
 }

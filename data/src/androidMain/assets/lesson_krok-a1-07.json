@@ -540,39 +540,46 @@
           "label": "1",
           "prompt": "Proszę",
           "picture": {"label": "a red pen", "emoji": "🖊️"},
-          "answers": ["czerwony długopis"]
+          "answers": ["czerwony długopis", "Proszę czerwony długopis"]
         },
         {
           "label": "2",
           "prompt": "Proszę",
           "picture": {"label": "the magazine \"Trend\"", "emoji": "📔"},
-          "answers": ["kolorowy magazyn", "magazyn Trend", "czasopismo Trend"]
+          "answers": [
+            "kolorowy magazyn",
+            "magazyn Trend",
+            "czasopismo Trend",
+            "Proszę kolorowy magazyn",
+            "Proszę magazyn Trend",
+            "Proszę czasopismo Trend"
+          ]
         },
         {
           "label": "3",
           "prompt": "Proszę",
           "picture": {"label": "a small map of Kraków", "emoji": "🗺️"},
-          "answers": ["małą mapę", "małą mapę Krakowa", "mapę Krakowa"],
+          "answers": ["małą mapę", "małą mapę Krakowa", "mapę Krakowa", "Proszę małą mapę", "Proszę małą mapę Krakowa", "Proszę mapę Krakowa"],
           "feedback": "Fem.: *-ą* + *-ę* (*małą mapę*)."
         },
         {
           "label": "4",
           "prompt": "Proszę",
           "picture": {"label": "a ticket \"2,50 zł N\"", "emoji": "🎫"},
-          "answers": ["bilet normalny"]
+          "answers": ["bilet normalny", "Proszę bilet normalny"]
         },
         {
           "label": "5",
           "prompt": "Proszę",
           "picture": {"label": "a pack of mint chewing gum", "emoji": "🍬"},
-          "answers": ["miętową gumę do żucia"],
+          "answers": ["miętową gumę do żucia", "Proszę miętową gumę do żucia"],
           "feedback": "Fem.: *-ą* + *-ę* (*miętową gumę*)."
         },
         {
           "label": "6",
           "prompt": "Proszę",
           "picture": {"label": "\"Polska Gazeta Krakowska\"", "emoji": "📰"},
-          "answers": ["Gazetę Krakowską"],
+          "answers": ["Gazetę Krakowską", "Proszę Gazetę Krakowską"],
           "feedback": "Fem.: *-ą* + *-ę* (*Gazetę Krakowską*)."
         }
       ],
@@ -592,12 +599,12 @@
       "title": "Proszę… (workbook)",
       "instruction": "Ask at the kiosk. Put the words in the accusative.",
       "items": [
-        {"label": "1", "prompt": "(sok pomarańczowy) Proszę", "answers": ["sok pomarańczowy"], "feedback": "Masc. inanimate = nominative (*sok pomarańczowy*)."},
-        {"label": "2", "prompt": "(duży zeszyt) Proszę", "answers": ["duży zeszyt"]},
-        {"label": "3", "prompt": "(„Gazeta Sportowa”) Proszę", "answers": ["Gazetę Sportową"], "feedback": "Fem.: *-ą* + *-ę* (*Gazetę Sportową*)."},
-        {"label": "4", "prompt": "(niebieski długopis) Proszę", "answers": ["niebieski długopis"]},
-        {"label": "5", "prompt": "(guma owocowa) Proszę", "answers": ["gumę owocową"], "feedback": "Fem.: *-ą* + *-ę* (*gumę owocową*)."},
-        {"label": "6", "prompt": "(mała karta telefoniczna) Proszę", "answers": ["małą kartę telefoniczną"], "feedback": "Fem.: *-ą* + *-ę* (*małą kartę telefoniczną*)."}
+        {"label": "1", "prompt": "(sok pomarańczowy) Proszę", "answers": ["sok pomarańczowy", "Proszę sok pomarańczowy"], "feedback": "Masc. inanimate = nominative (*sok pomarańczowy*)."},
+        {"label": "2", "prompt": "(duży zeszyt) Proszę", "answers": ["duży zeszyt", "Proszę duży zeszyt"]},
+        {"label": "3", "prompt": "(„Gazeta Sportowa”) Proszę", "answers": ["Gazetę Sportową", "Proszę Gazetę Sportową"], "feedback": "Fem.: *-ą* + *-ę* (*Gazetę Sportową*)."},
+        {"label": "4", "prompt": "(niebieski długopis) Proszę", "answers": ["niebieski długopis", "Proszę niebieski długopis"]},
+        {"label": "5", "prompt": "(guma owocowa) Proszę", "answers": ["gumę owocową", "Proszę gumę owocową"], "feedback": "Fem.: *-ą* + *-ę* (*gumę owocową*)."},
+        {"label": "6", "prompt": "(mała karta telefoniczna) Proszę", "answers": ["małą kartę telefoniczną", "Proszę małą kartę telefoniczną"], "feedback": "Fem.: *-ą* + *-ę* (*małą kartę telefoniczną*)."}
       ],
       "newWords": [
         {"polish": "pomarańczowy", "english": "orange (adj.)"},
@@ -871,6 +878,7 @@
       "id": "3B",
       "type": "number_grid",
       "title": "What does the speaker say? (Lotto)",
+      "skipped": true,
       "instruction": "The speaker reads 6 numbers for each coupon. Mark them.",
       "tracks": [{"id": "107B5"}],
       "transcript": {
@@ -1021,6 +1029,7 @@
       "id": "3E",
       "type": "write",
       "title": "What does the speaker say?",
+      "skipped": true,
       "instruction": "Listen and write the numbers in digits.",
       "tracks": [{"id": "107B7"}],
       "keyboard": "digits",

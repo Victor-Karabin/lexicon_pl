@@ -270,14 +270,16 @@ sealed interface LessonScreen {
         override val tracks: ImmutableList<LessonTrack>,
         override val transcript: Transcript?,
         val sections: ImmutableList<GapSection>,
-        override val questions: ImmutableList<LessonQuestion>,
+        val gaps: ImmutableList<LessonQuestion>,
         val notes: ImmutableList<String> = persistentListOf(),
         override val hint: String? = null,
         val wordBox: ImmutableList<String> = persistentListOf(),
         override val interchangeable: ImmutableList<ImmutableList<String>> = persistentListOf(),
         val choices: ImmutableList<ChoiceQuestion> = persistentListOf(),
         override val eachAnswerOnce: Boolean = false,
-    ) : LessonScreen
+    ) : LessonScreen {
+        override val questions: List<LessonQuestion> get() = choices.map { it.question } + gaps
+    }
 
     data class SelectionGrid(
         override val id: String,
@@ -334,6 +336,7 @@ data class FirstTry(
 
 data class LessonProgress(
     val screenIndex: Int = 0,
+    val screenId: String? = null,
     val answers: ImmutableMap<String, ImmutableMap<String, String>> = persistentMapOf(),
     val checked: ImmutableSet<String> = persistentSetOf(),
     val finished: ImmutableSet<String> = persistentSetOf(),
