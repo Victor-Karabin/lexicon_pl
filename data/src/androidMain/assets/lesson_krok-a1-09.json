@@ -1,0 +1,1472 @@
+{
+  "lessonId": "krok-a1-09",
+  "rules": [
+    {
+      "title": "Plural: nominative = accusative",
+      "tables": [
+        {
+          "header": ["", "ending", "examples"],
+          "rows": [
+            ["masc. and fem.", "**-y**", "pomidory, banany, cytryny, maliny"],
+            ["after k, g", "**-i**", "ziemniaki, śliwki, ogórki, pierogi"],
+            ["after sz, cz, ż, rz, dz, ś, ć, ń, c, l, j", "**-e**", "pomarańcze, cebule, owoce, wiśnie, śledzie"],
+            ["neuter", "**-a**", "jabłka, jajka, warzywa, piwa"],
+            ["adjective", "**-e**", "dojrzałe pomidory, zielone jabłka"]
+          ]
+        }
+      ],
+      "notes": [
+        "Not for groups of men (later). The accusative plural is the same form: *Kupuję dojrzałe pomidory.*",
+        "*pieróg → pierogi, lód → lody, łosoś → łososie*."
+      ]
+    },
+    {
+      "title": "2, 3, 4 + plural",
+      "tables": [
+        {
+          "rows": [
+            ["masc. and neut.", "**dwa** / trzy / cztery", "dwa pomidory, dwa piwa"],
+            ["fem.", "**dwie** / trzy / cztery", "dwie cebule, dwie papryki"]
+          ]
+        }
+      ]
+    },
+    {"title": "*z* + instrumental (revision)", "notes": ["*por z jabłkiem, z rodzynkami i ze śmietaną*.", "Before consonant clusters *z* becomes **ze**: *ze śmietaną, ze świeżą bazylią*."]},
+    {
+      "title": "Taste, shape, comparison",
+      "tables": [
+        {
+          "rows": [
+            ["słodki jak cukier", "kwaśny jak cytryna"],
+            ["słony jak sól", "ostry jak chili"],
+            ["gorzki jak kawa bez cukru", "okrągły · owalny · podłużny"]
+          ]
+        }
+      ],
+      "notes": ["*zdrowszy = bardziej zdrowy*: *Gotowany kurczak jest zdrowszy **niż** pieczony.*"]
+    },
+    {"title": "-owy / -owa (revision)", "notes": ["*zupa pomidorowa, grzybowa, cebulowa*; *sok jabłkowy, wiśniowy, winogronowy*.", "*jarzyny → zupa jarzynowa*."]}
+  ],
+  "tracks": [
+    {"id": "109A1", "file": "a1_coursebook_109a1.mp3"},
+    {"id": "109B1", "file": "a1_coursebook_109b1.mp3"},
+    {"id": "109B2", "file": "a1_coursebook_109b2.mp3"},
+    {"id": "109B3", "file": "a1_coursebook_109b3.mp3"},
+    {"id": "109D1", "file": "a1_coursebook_109d1.mp3"},
+    {"id": "109E1-1", "file": "a1_coursebook_109e1.mp3"},
+    {"id": "109E1-2", "file": "a1_coursebook_109e1-2.mp3"},
+    {"id": "109E1-3", "file": "a1_coursebook_109e1-3.mp3"},
+    {"id": "109E1-4", "file": "a1_coursebook_109e1-4.mp3"},
+    {"id": "wb40", "file": "a1_workbook_40_L09_cwiczenie5.mp3"},
+    {"id": "wb41", "file": "a1_workbook_41_L09_cwiczenie7.mp3"},
+    {"id": "wb42", "file": "a1_workbook_42_L09_cwiczenie12.mp3"}
+  ],
+  "steps": [
+    {"id": "G", "title": "Lesson grammar", "screens": ["0"], "grammar": true},
+    {"id": "1", "title": "Fruit and vegetables", "screens": ["1A", "1B", "1C", "1D", "1E", "1F", "1G", "1H", "1I"]},
+    {"id": "2", "title": "At the market", "screens": ["2A", "2B", "2C", "2D", "2E"]},
+    {"id": "3", "title": "Plural", "screens": ["3A", "3B", "3C", "3D", "3E", "3F", "3G"]},
+    {"id": "4", "title": "Cooking", "screens": ["4A", "4B"]},
+    {"id": "5", "title": "In the supermarket", "screens": ["5A", "5B", "5C", "5D", "5E"]},
+    {"id": "6", "title": "Lesson review", "screens": ["6A"], "review": true}
+  ],
+  "screens": [
+    {
+      "id": "0",
+      "type": "grammar",
+      "title": "Lesson grammar",
+      "instruction": "All the grammar of this lesson before the exercises. The steps repeat the part they need."
+    },
+    {
+      "id": "1A",
+      "type": "reference",
+      "title": "Fruit and vegetables",
+      "instruction": "Listen and repeat.",
+      "tracks": [{"id": "109A1"}],
+      "groups": [
+        {
+          "title": "OWOCE",
+          "phrases": [
+            {"polish": "🍌 banan", "english": "banana"},
+            {"polish": "🍎 jabłko", "english": "apple"},
+            {"polish": "🍐 gruszka", "english": "pear"},
+            {"polish": "śliwka", "english": "plum"},
+            {"polish": "🍊 pomarańcza", "english": "orange"},
+            {"polish": "🍑 brzoskwinia", "english": "peach"},
+            {"polish": "🥝 kiwi", "english": "kiwi"},
+            {"polish": "🍇 winogrona (pl.)", "english": "grapes"},
+            {"polish": "🍋 cytryna", "english": "lemon"},
+            {"polish": "🍓 truskawka", "english": "strawberry"},
+            {"polish": "malina", "english": "raspberry"},
+            {"polish": "🍒 wiśnia", "english": "cherry"},
+            {"polish": "🍍 ananas", "english": "pineapple"},
+            {"polish": "🍉 arbuz", "english": "watermelon"},
+            {"polish": "🫐 jagody (pl.)", "english": "blueberries"}
+          ]
+        },
+        {
+          "title": "WARZYWA",
+          "phrases": [
+            {"polish": "🥔 ziemniak", "english": "potato"},
+            {"polish": "🍅 pomidor", "english": "tomato"},
+            {"polish": "🥒 ogórek", "english": "cucumber"},
+            {"polish": "🥕 marchewka", "english": "carrot"},
+            {"polish": "por", "english": "leek"},
+            {"polish": "seler", "english": "celeriac"},
+            {"polish": "🧅 cebula", "english": "onion"},
+            {"polish": "pietruszka", "english": "parsley"},
+            {"polish": "🫑 papryka", "english": "pepper"},
+            {"polish": "🧄 czosnek", "english": "garlic"},
+            {"polish": "kalafior", "english": "cauliflower"},
+            {"polish": "🥦 brokuły (pl.)", "english": "broccoli"},
+            {"polish": "rzodkiewka", "english": "radish"},
+            {"polish": "🥬 kapusta", "english": "cabbage"},
+            {"polish": "🫘 fasola", "english": "beans"},
+            {"polish": "groszek", "english": "peas"},
+            {"polish": "🌽 kukurydza", "english": "sweetcorn"}
+          ]
+        }
+      ],
+      "newWords": [
+        {"polish": "owoc", "english": "fruit"},
+        {"polish": "warzywo", "english": "vegetable"},
+        {"polish": "gruszka", "english": "pear"},
+        {"polish": "śliwka", "english": "plum"},
+        {"polish": "brzoskwinia", "english": "peach"},
+        {"polish": "kiwi", "english": "kiwi"},
+        {"polish": "winogrona", "english": "grapes"},
+        {"polish": "truskawka", "english": "strawberry"},
+        {"polish": "malina", "english": "raspberry"},
+        {"polish": "wiśnia", "english": "cherry"},
+        {"polish": "ananas", "english": "pineapple"},
+        {"polish": "arbuz", "english": "watermelon"},
+        {"polish": "jagoda", "english": "blueberry (pl. jagody)"},
+        {"polish": "ziemniak", "english": "potato"},
+        {"polish": "marchewka", "english": "carrot"},
+        {"polish": "por", "english": "leek"},
+        {"polish": "seler", "english": "celeriac"},
+        {"polish": "cebula", "english": "onion"},
+        {"polish": "pietruszka", "english": "parsley"},
+        {"polish": "papryka", "english": "pepper"},
+        {"polish": "czosnek", "english": "garlic"},
+        {"polish": "kalafior", "english": "cauliflower"},
+        {"polish": "brokuł", "english": "broccoli (usually pl. brokuły)"},
+        {"polish": "rzodkiewka", "english": "radish"},
+        {"polish": "kapusta", "english": "cabbage"},
+        {"polish": "fasola", "english": "beans"},
+        {"polish": "groszek", "english": "peas"},
+        {"polish": "kukurydza", "english": "sweetcorn"}
+      ]
+    },
+    {
+      "id": "1B",
+      "type": "write",
+      "title": "What is it?",
+      "instruction": "Write the Polish word.",
+      "items": [
+        {"label": "1", "picture": {"label": "", "emoji": "🍎"}, "answers": ["jabłko"]},
+        {"label": "2", "picture": {"label": "", "emoji": "🍓"}, "answers": ["truskawka"]},
+        {"label": "3", "picture": {"label": "", "emoji": "🥒"}, "answers": ["ogórek"]},
+        {"label": "4", "picture": {"label": "", "emoji": "🍒"}, "answers": ["wiśnia"]},
+        {"label": "5", "picture": {"label": "", "emoji": "🧄"}, "answers": ["czosnek"]},
+        {"label": "6", "picture": {"label": "plum"}, "answers": ["śliwka"]},
+        {"label": "7", "picture": {"label": "radish"}, "answers": ["rzodkiewka"]},
+        {"label": "8", "picture": {"label": "", "emoji": "🍐"}, "answers": ["gruszka"]},
+        {
+          "label": "9",
+          "picture": {"label": "", "emoji": "🍇"},
+          "answers": ["winogrona"],
+          "feedback": "*winogrona* — grapes are plural in Polish."
+        },
+        {"label": "10", "picture": {"label": "", "emoji": "🧅"}, "answers": ["cebula"]},
+        {"label": "11", "picture": {"label": "", "emoji": "🍑"}, "answers": ["brzoskwinia"]},
+        {"label": "12", "picture": {"label": "", "emoji": "🥕"}, "answers": ["marchewka"]}
+      ]
+    },
+    {
+      "id": "1C",
+      "type": "write",
+      "title": "Unscramble the letters",
+      "instruction": "Put the letters in order to make a fruit or a vegetable.",
+      "items": [
+        {"label": "1", "prompt": "kubroły", "answers": ["brokuły"]},
+        {"label": "2", "prompt": "mniakzie", "answers": ["ziemniak"]},
+        {"label": "3", "prompt": "asanan", "answers": ["ananas"]},
+        {"label": "4", "prompt": "rapomańcza", "answers": ["pomarańcza"]},
+        {"label": "5", "prompt": "fiorlaka", "answers": ["kalafior"]},
+        {"label": "6", "prompt": "nanba", "answers": ["banan"]},
+        {"label": "7", "prompt": "trycyna", "answers": ["cytryna"]},
+        {"label": "8", "prompt": "limana", "answers": ["malina"]},
+        {"label": "9", "prompt": "dormipo", "answers": ["pomidor"]},
+        {"label": "10", "prompt": "łasata", "answers": ["sałata"]},
+        {"label": "11", "prompt": "prykapa", "answers": ["papryka"]},
+        {"label": "12", "prompt": "kastapu", "answers": ["kapusta"]},
+        {"label": "13", "prompt": "solafa", "answers": ["fasola"]}
+      ]
+    },
+    {
+      "id": "1D",
+      "type": "choice",
+      "title": "Fruit or vegetable?",
+      "instruction": "Is it a fruit (*owoce*) or a vegetable (*warzywa*)?",
+      "shuffle": false,
+      "items": [
+        {"label": "1", "prompt": "papryka", "options": ["owoce", "warzywa"], "answer": "warzywa"},
+        {"label": "2", "prompt": "malina", "options": ["owoce", "warzywa"], "answer": "owoce"},
+        {"label": "3", "prompt": "marchewka", "options": ["owoce", "warzywa"], "answer": "warzywa"},
+        {"label": "4", "prompt": "wiśnia", "options": ["owoce", "warzywa"], "answer": "owoce"},
+        {"label": "5", "prompt": "pietruszka", "options": ["owoce", "warzywa"], "answer": "warzywa"},
+        {"label": "6", "prompt": "gruszka", "options": ["owoce", "warzywa"], "answer": "owoce"},
+        {"label": "7", "prompt": "cebula", "options": ["owoce", "warzywa"], "answer": "warzywa"},
+        {"label": "8", "prompt": "winogrona", "options": ["owoce", "warzywa"], "answer": "owoce"},
+        {"label": "9", "prompt": "kapusta", "options": ["owoce", "warzywa"], "answer": "warzywa"},
+        {"label": "10", "prompt": "seler", "options": ["owoce", "warzywa"], "answer": "warzywa"},
+        {"label": "11", "prompt": "śliwka", "options": ["owoce", "warzywa"], "answer": "owoce"},
+        {"label": "12", "prompt": "kalafior", "options": ["owoce", "warzywa"], "answer": "warzywa"},
+        {"label": "13", "prompt": "jagody", "options": ["owoce", "warzywa"], "answer": "owoce"},
+        {"label": "14", "prompt": "czosnek", "options": ["owoce", "warzywa"], "answer": "warzywa"},
+        {"label": "15", "prompt": "brzoskwinia", "options": ["owoce", "warzywa"], "answer": "owoce"},
+        {"label": "16", "prompt": "truskawka", "options": ["owoce", "warzywa"], "answer": "owoce"}
+      ]
+    },
+    {
+      "id": "1E",
+      "type": "write",
+      "title": "Describe the salads",
+      "instruction": "Describe each salad: the base in the nominative, then *z* + instrumental. Model (salad 1): *por z jabłkiem, z rodzynkami i śmietaną*. The order after *z* is free.",
+      "match": "any_order",
+      "notes": ["🫒 *oliwa* — olive oil"],
+      "items": [
+        {"label": "2", "prompt": "🥕 carrot (base) · celeriac · 🍎 apple · 🍋 lemon", "answers": ["marchewka | selerem | jabłkiem | cytryną"], "feedback": "After *z* → instrumental (*z selerem, z jabłkiem i z cytryną*)."},
+        {"label": "3", "prompt": "🍅 tomatoes (base) · 🥒 cucumber · red pepper · 🧅 onion · 🧄 garlic · 🫒 olive oil", "answers": ["pomidory | ogórkiem | papryką | cebulą | czosnkiem | oliwą"]},
+        {"label": "4", "prompt": "🥬 lettuce (base) · 🌽 sweetcorn · 🍅 tomato · 🫘 beans · 🧄 garlic · 🫑 green pepper · 🫒 olive oil", "answers": ["sałata | kukurydzą | pomidorem | fasolą | papryką | czosnkiem | oliwą"]},
+        {"label": "5", "prompt": "🥬 lettuce (base) · 🥒 cucumber · radish · sour cream", "answers": ["sałata | ogórkiem | rzodkiewką | śmietaną"], "feedback": "Before *ś* + consonant: *ze śmietaną*."}
+      ],
+      "newWords": [
+        {"polish": "rodzynki", "english": "raisins"},
+        {"polish": "śmietana", "english": "sour cream"},
+        {"polish": "oliwa", "english": "olive oil"}
+      ],
+      "rules": [3]
+    },
+    {
+      "id": "1F",
+      "type": "gap_fill",
+      "title": "Gyros salad",
+      "instruction": "Put the words in brackets in the instrumental.",
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Dietmar", "text": "Cześć Gosia. Co robisz?"},
+            {"speaker": "Gosia", "text": "Robię sałatkę na kolację."},
+            {"speaker": "Dietmar", "text": "A jaką?"},
+            {"speaker": "Gosia", "text": "Gyros."},
+            {"speaker": "Dietmar", "text": "Czy to ta z [1] (ser) feta?"},
+            {"speaker": "Gosia", "text": "Nie, ta z serem feta to grecka. Ta jest z [2] (kapusta pekińska), [3] (kurczak), [4] (cebula), [5] (ogórek konserwowy – pl.) i z [6] (kukurydza)."},
+            {"speaker": "Dietmar", "text": "Czy to się je z [7] (sos) czy bez?"},
+            {"speaker": "Gosia", "text": "Z [8] (keczup) i z [9] (majonez)."},
+            {"speaker": "Dietmar", "text": "Mmm, to na pewno jest pyszna!"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["serem"]},
+        {"number": 2, "answers": ["kapustą pekińską"], "feedback": "After *z* → instrumental (*z kapustą pekińską*)."},
+        {"number": 3, "answers": ["kurczakiem"]},
+        {"number": 4, "answers": ["cebulą"]},
+        {"number": 5, "answers": ["ogórkami konserwowymi"], "feedback": "Plural instrumental: *-ymi / -imi* + *-ami* (*z ogórkami konserwowymi*)."},
+        {"number": 6, "answers": ["kukurydzą"]},
+        {"number": 7, "answers": ["sosem"]},
+        {"number": 8, "answers": ["keczupem"]},
+        {"number": 9, "answers": ["majonezem"]}
+      ],
+      "newWords": [
+        {"polish": "gyros", "english": "gyros"},
+        {"polish": "ser feta", "english": "feta cheese"},
+        {"polish": "grecki", "english": "Greek"},
+        {"polish": "kapusta pekińska", "english": "Chinese cabbage"},
+        {"polish": "ogórek konserwowy", "english": "pickled gherkin"},
+        {"polish": "Czy to się je z sosem?", "english": "Do you eat it with sauce?"}
+      ],
+      "rules": [3]
+    },
+    {
+      "id": "1G",
+      "type": "gap_fill",
+      "title": "Taste and shape",
+      "instruction": "*smak* (taste): finish the comparison. *kształt* (shape): name the shape; its first letter is in brackets.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. [1] jak cytryna"},
+            {"text": "2. [2] jak chili"},
+            {"text": "3. [3] jak cukier"},
+            {"text": "4. [4] jak sól"},
+            {"text": "5. [5] jak kawa bez cukru"},
+            {"text": "6. ⬭ (o) [6]"},
+            {"text": "7. ⚪ (o) [7]"},
+            {"text": "8. ▭ (p) [8]"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["kwaśny"]},
+        {"number": 2, "answers": ["ostry"]},
+        {"number": 3, "answers": ["słodki"]},
+        {"number": 4, "answers": ["słony"]},
+        {"number": 5, "answers": ["gorzki"]},
+        {"number": 6, "answers": ["owalny"], "feedback": "⬭ an oval → *owalny*."},
+        {"number": 7, "answers": ["okrągły"], "feedback": "⚪ a circle → *okrągły*."},
+        {"number": 8, "answers": ["podłużny"], "feedback": "▭ long → *podłużny*."}
+      ],
+      "newWords": [
+        {"polish": "smak", "english": "taste"},
+        {"polish": "kształt", "english": "shape"},
+        {"polish": "słodki", "english": "sweet"},
+        {"polish": "kwaśny", "english": "sour"},
+        {"polish": "słony", "english": "salty"},
+        {"polish": "gorzki", "english": "bitter"},
+        {"polish": "ostry", "english": "hot (spicy)"},
+        {"polish": "okrągły", "english": "round"},
+        {"polish": "owalny", "english": "oval"},
+        {"polish": "podłużny", "english": "long"},
+        {"polish": "jak", "english": "like (słodki jak cukier)"}
+      ],
+      "rules": [4],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "1H",
+      "type": "free_writing",
+      "title": "My favourite fruit",
+      "instruction": "Describe *mój ulubiony owoc* (my favourite fruit) and your favourite vegetable: taste, shape, colour, what it goes well with.\nSMAK: słodki · kwaśny · słony · gorzki · ostry · delikatny\nKSZTAŁT: okrągły · owalny · podłużny · miękki ≠ twardy",
+      "fields": [{"label": "Fruit"}, {"label": "Vegetable"}],
+      "model": [
+        "Truskawka. Jest mała, czerwona i słodka, trochę podłużna i miękka. Jest dobra z cukrem i ze śmietaną.",
+        "Pomidor. Jest czerwony, okrągły i miękki. Ma delikatny smak. Jest dobry z cebulą, z solą i z oliwą."
+      ],
+      "checklist": ["The adjective agrees with the fruit: *truskawka — słodka*, *pomidor — słodki*.", "*z* + instrumental."],
+      "newWords": [
+        {"polish": "ulubiony", "english": "favourite"},
+        {"polish": "delikatny", "english": "mild"},
+        {"polish": "miękki", "english": "soft"},
+        {"polish": "twardy", "english": "hard"}
+      ],
+      "rules": [4]
+    },
+    {
+      "id": "1I",
+      "type": "gap_fill",
+      "title": "Riddles",
+      "instruction": "Listen to the riddles and fill in the missing words, the answers (what it is) too.",
+      "tracks": [{"id": "wb40"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"text": "1. OWOC: truskawka. Jest mała, czerwona i słodka, trochę podłużna i miękka. Jest dobra z cukrem i ze śmietaną."},
+              {"text": "2. WARZYWO: pomidor. Jest czerwony i okrągły. Może być mały, duży albo średni. Jest miękki. Ma delikatny smak. Jest dobry z cebulą, czosnkiem, solą i oliwą."},
+              {"text": "3. OWOC: cytryna. Jest żółta i owalna. Nie jest ani twarda, ani miękka. Jest bardzo kwaśna. Pasuje do herbaty."},
+              {"text": "4. WARZYWO: ogórek. Jest zielony i podłużny. Może być mały, duży albo średni. Jest twardy. Ma delikatny smak. Jest dobry z pomidorem, czosnkiem, solą i oliwą."},
+              {"text": "5. WARZYWO: rzodkiewka. Jest mała i okrągła, czasem trochę podłużna. Jest czerwona, a w środku biała. Ma raczej ostry smak. Jest dobra z sałatą, ogórkiem albo białym serem."},
+              {"text": "6. OWOC: winogrona. Są małe i owalne. Mogą być zielone, różowe albo fioletowe. Zwykle są słodkie. Mają delikatny smak."}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. OWOC: truskawka. Jest mała, czerwona i [1], trochę podłużna i miękka. Jest dobra z [2] i ze śmietaną."},
+            {"text": "2. WARZYWO: [3]. Jest czerwony i [4]. Może być mały, duży albo [5]. Jest miękki. Ma delikatny smak. Jest dobry z [6], czosnkiem, solą i [7]."},
+            {"text": "3. OWOC: [8]. Jest [9] i owalna. Nie jest ani twarda, ani [10]. Jest bardzo [11]. Pasuje do herbaty."},
+            {"text": "4. WARZYWO: [12]. Jest zielony i [13]. Może być mały, duży albo średni. Jest [14]. Ma delikatny [15]. Jest dobry z pomidorem, [16], solą i oliwą."},
+            {"text": "5. WARZYWO: [17]. Jest mała i okrągła, czasem trochę podłużna. Jest czerwona, a w [18] biała. Ma raczej [19] smak. Jest dobra z sałatą, ogórkiem albo [20] serem."},
+            {"text": "6. OWOC: [21]. Są małe i [22]. Mogą być zielone, [23] albo fioletowe. Zwykle są słodkie. Mają [24] smak."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["słodka"], "feedback": "*truskawka* is feminine → *słodka*."},
+        {"number": 2, "answers": ["cukrem"]},
+        {"number": 3, "answers": ["pomidor"]},
+        {"number": 4, "answers": ["okrągły"]},
+        {"number": 5, "answers": ["średni"]},
+        {"number": 6, "answers": ["cebulą"]},
+        {"number": 7, "answers": ["oliwą"]},
+        {"number": 8, "answers": ["cytryna"]},
+        {"number": 9, "answers": ["żółta"], "feedback": "*cytryna* is feminine → *żółta*."},
+        {"number": 10, "answers": ["miękka"]},
+        {"number": 11, "answers": ["kwaśna"]},
+        {"number": 12, "answers": ["ogórek"]},
+        {"number": 13, "answers": ["podłużny"]},
+        {"number": 14, "answers": ["twardy"]},
+        {"number": 15, "answers": ["smak"]},
+        {"number": 16, "answers": ["czosnkiem"]},
+        {"number": 17, "answers": ["rzodkiewka"]},
+        {"number": 18, "answers": ["środku"]},
+        {"number": 19, "answers": ["ostry"]},
+        {"number": 20, "answers": ["białym"]},
+        {"number": 21, "answers": ["winogrona"]},
+        {"number": 22, "answers": ["owalne"], "feedback": "*winogrona* are plural → *owalne*."},
+        {"number": 23, "answers": ["różowe"]},
+        {"number": 24, "answers": ["delikatny"]}
+      ],
+      "newWords": [
+        {"polish": "pasować", "english": "to go with (pasuje do herbaty — it goes with tea)"},
+        {"polish": "w środku", "english": "inside"},
+        {"polish": "raczej", "english": "rather"}
+      ],
+      "rules": [4],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "2A",
+      "type": "gap_fill",
+      "title": "Dialogue 1: What are we buying?",
+      "instruction": "Mami and Angela are shopping *na targu* (at the market). Listen and answer the questions. Then listen again and fill in the missing words.",
+      "tracks": [{"id": "109B1"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Angela", "text": "Mami, co kupujemy?"},
+              {"speaker": "Mami", "text": "Coś na kolację, owoce i warzywa."},
+              {"speaker": "Angela", "text": "Mam ochotę na spaghetti i na sałatkę owocową."},
+              {"speaker": "Mami", "text": "A ja na zupę jarzynową i rybę."},
+              {"speaker": "Angela", "text": "To może dziś zupa i spaghetti, a jutro ryba?"},
+              {"speaker": "Mami", "text": "Dobrze, w takim razie kupujemy teraz owoce i warzywa, a rybę jutro."},
+              {"speaker": "Angela", "text": "Ja kupuję produkty na sos do spaghetti i na sałatkę, a ty na zupę."},
+              {"speaker": "Mami", "text": "W porządku. A co do picia? Może dwa piwa?"},
+              {"speaker": "Angela", "text": "Do spaghetti? Piwo? Jeśli chcesz, możesz kupić czerwone wino, ale jedno, nie dwa."}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {"label": "a", "prompt": "Czy Mami i Angela kupują coś na lunch?", "options": ["tak", "nie"], "answer": "nie"},
+        {"label": "b", "prompt": "Na co ma ochotę Angela?", "options": ["zupę i rybę", "spaghetti i sałatkę owocową", "sałatkę jarzynową"], "answer": "spaghetti i sałatkę owocową"},
+        {"label": "c", "prompt": "Na co ma ochotę Mami?", "options": ["zupę rybną i sałatkę", "spaghetti i zupę owocową", "zupę jarzynową i rybę"], "answer": "zupę jarzynową i rybę"},
+        {"label": "d", "prompt": "Kiedy chcą kupić rybę?", "options": ["dziś", "jutro"], "answer": "jutro"},
+        {"label": "e", "prompt": "Czy Mami kupuje piwo?", "options": ["tak", "nie"], "answer": "nie", "feedback": "Angela says: buy one red wine, not two beers."}
+      ],
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Angela", "text": "Mami, co [1]?"},
+            {"speaker": "Mami", "text": "Coś na kolację, owoce i [2]."},
+            {"speaker": "Angela", "text": "Mam ochotę na spaghetti i na sałatkę owocową."},
+            {"speaker": "Mami", "text": "A ja na [3] jarzynową i rybę."},
+            {"speaker": "Angela", "text": "To może dziś zupa i spaghetti, a jutro ryba?"},
+            {"speaker": "Mami", "text": "[4], w takim razie kupujemy teraz owoce i warzywa, a rybę jutro."},
+            {"speaker": "Angela", "text": "Ja kupuję produkty na [5] do spaghetti i na sałatkę, a ty na zupę."},
+            {"speaker": "Mami", "text": "W porządku. A co do picia? Może dwa [6]?"},
+            {"speaker": "Angela", "text": "Do spaghetti? Piwo? Jeśli chcesz, możesz kupić czerwone wino, ale [7], nie dwa."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["kupujemy"]},
+        {"number": 2, "answers": ["warzywa"]},
+        {"number": 3, "answers": ["zupę"]},
+        {"number": 4, "answers": ["Dobrze"]},
+        {"number": 5, "answers": ["sos"]},
+        {"number": 6, "answers": ["piwa"], "feedback": "Neuter nouns take *-a*: *piwa*."},
+        {"number": 7, "answers": ["jedno"], "feedback": "*wino* is neuter → *jedno*."}
+      ],
+      "newWords": [
+        {"polish": "targ", "english": "market (na targu — at the market)"},
+        {"polish": "coś na kolację", "english": "something for dinner"},
+        {"polish": "sałatka owocowa", "english": "fruit salad"},
+        {"polish": "sałatka jarzynowa", "english": "vegetable salad"},
+        {"polish": "jarzyna", "english": "vegetable (= warzywo)"},
+        {"polish": "w takim razie", "english": "in that case"},
+        {"polish": "sos do spaghetti", "english": "spaghetti sauce"},
+        {"polish": "do picia", "english": "to drink"},
+        {"polish": "jeśli", "english": "if"},
+        {"polish": "jeden", "english": "one (jedna f., jedno n.)"},
+        {"polish": "lunch", "english": "lunch"},
+        {"polish": "zupa rybna", "english": "fish soup"}
+      ],
+      "rules": [1]
+    },
+    {
+      "id": "2B",
+      "type": "gap_fill",
+      "title": "Dialogue 2: Angela buys fruit",
+      "instruction": "Angela at the stall. Listen and answer the questions. Then listen again and fill in the missing words.",
+      "tracks": [{"id": "109B2"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Angela", "text": "Poproszę czosnek, cztery pomidory, dwie żółte papryki i dwie czerwone."},
+              {"speaker": "Sprzedawca", "text": "Proszę bardzo, co jeszcze?"},
+              {"speaker": "Angela", "text": "Dwie cebule i świeżą bazylię."},
+              {"speaker": "Sprzedawca", "text": "W doniczce, tak?"},
+              {"speaker": "Angela", "text": "Tak."},
+              {"speaker": "Sprzedawca", "text": "To wszystko?"},
+              {"speaker": "Angela", "text": "Nie, proszę jeszcze cztery banany, ale nie te zielone, proszę te dojrzałe, bardziej żółte."},
+              {"speaker": "Sprzedawca", "text": "Czy mogą być te?"},
+              {"speaker": "Angela", "text": "Tak. Proszę jeszcze trzy jabłka, cztery kiwi, cztery brzoskwinie. Poproszę te duże brzoskwinie."},
+              {"speaker": "Sprzedawca", "text": "Te są ładne."},
+              {"speaker": "Angela", "text": "Dobrze, i jeszcze te ciemne winogrona."},
+              {"speaker": "Sprzedawca", "text": "Te fioletowe są bardzo słodkie, a te różowe mniej."},
+              {"speaker": "Angela", "text": "Mniej? Co to znaczy?"},
+              {"speaker": "Sprzedawca", "text": "Mniej to mniej! No, mniej! Mało słodkie. Nie tak bardzo słodkie. Rozumie pani?"},
+              {"speaker": "Angela", "text": "Aaa, rozumiem. W takim razie proszę te różowe i jeszcze dwie pomarańcze."},
+              {"speaker": "Sprzedawca", "text": "Teraz pomarańcze nie są bardzo dobre, bo to nie jest sezon. Śliwki są dobre. Może woli pani śliwki?"},
+              {"speaker": "Angela", "text": "Dobrze, proszę pół kilo. Uff, to już wszystko."},
+              {"speaker": "Sprzedawca", "text": "42 złote 70 groszy."}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {"label": "a", "prompt": "Ile pomidorów kupuje Angela?", "options": ["dwa", "trzy", "cztery"], "answer": "cztery"},
+        {"label": "b", "prompt": "Jaką paprykę kupuje Angela?", "options": ["żółtą", "czerwoną", "żółtą i czerwoną"], "answer": "żółtą i czerwoną"},
+        {"label": "c", "prompt": "Jaką bazylię kupuje Angela?", "options": ["suszoną", "świeżą"], "answer": "świeżą"},
+        {"label": "d", "prompt": "Jakie banany kupuje Angela?", "options": ["zielone", "dojrzałe"], "answer": "dojrzałe"},
+        {"label": "e", "prompt": "Ile kiwi kupuje Angela?", "options": ["dwa", "trzy", "cztery"], "answer": "cztery"},
+        {"label": "f", "prompt": "Jakie winogrona kupuje Angela?", "options": ["różowe", "ciemne", "fioletowe"], "answer": "różowe", "feedback": "She first asks for the dark ones, but takes the pink ones (less sweet)."},
+        {"label": "g", "prompt": "Czy Angela kupuje pomarańcze?", "options": ["tak", "nie"], "answer": "nie", "feedback": "The oranges are out of season, so she takes plums."},
+        {"label": "h", "prompt": "Ile płaci?", "options": ["24 zł 70 gr", "42 zł 70 gr", "42 zł 17 gr"], "answer": "42 zł 70 gr"}
+      ],
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Angela", "text": "Poproszę czosnek, cztery [1], dwie żółte papryki i dwie [2]."},
+            {"speaker": "Sprzedawca", "text": "Proszę bardzo, co jeszcze?"},
+            {"speaker": "Angela", "text": "Dwie [3] i świeżą bazylię."},
+            {"speaker": "Sprzedawca", "text": "W doniczce, tak?"},
+            {"speaker": "Angela", "text": "Tak."},
+            {"speaker": "Sprzedawca", "text": "To wszystko?"},
+            {"speaker": "Angela", "text": "Nie, proszę jeszcze cztery [4], ale nie te zielone, proszę te dojrzałe, bardziej [5]."},
+            {"speaker": "Sprzedawca", "text": "Czy mogą być te?"},
+            {"speaker": "Angela", "text": "Tak. Proszę jeszcze trzy [6], cztery kiwi, cztery brzoskwinie. Poproszę te duże brzoskwinie."},
+            {"speaker": "Sprzedawca", "text": "Te są [7]."},
+            {"speaker": "Angela", "text": "Dobrze, i jeszcze te ciemne winogrona."},
+            {"speaker": "Sprzedawca", "text": "Te fioletowe są bardzo [8], a te różowe mniej."},
+            {"speaker": "Angela", "text": "Mniej? Co to znaczy?"},
+            {"speaker": "Sprzedawca", "text": "Mniej to mniej! No, mniej! Mało słodkie. Nie tak bardzo słodkie. Rozumie pani?"},
+            {"speaker": "Angela", "text": "Aaa, rozumiem. W takim razie proszę te różowe i jeszcze dwie [9]."},
+            {"speaker": "Sprzedawca", "text": "Teraz pomarańcze nie są bardzo dobre, bo to nie jest sezon. [10] są dobre. Może woli pani śliwki?"},
+            {"speaker": "Angela", "text": "Dobrze, proszę pół kilo. Uff, to już wszystko."},
+            {"speaker": "Sprzedawca", "text": "42 złote 70 groszy."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["pomidory"], "feedback": "Masculine and feminine nouns take *-y*: *pomidory*."},
+        {"number": 2, "answers": ["czerwone"], "feedback": "Adjectives take *-e* in the plural: *dwie czerwone papryki*."},
+        {"number": 3, "answers": ["cebule"], "feedback": "After *sz, cz, ż, rz, dz, ś, ć, ń, c, l, j* → *-e*: *cebule*."},
+        {"number": 4, "answers": ["banany"]},
+        {"number": 5, "answers": ["żółte"]},
+        {"number": 6, "answers": ["jabłka"], "feedback": "Neuter nouns take *-a*: *jabłka*."},
+        {"number": 7, "answers": ["ładne"]},
+        {"number": 8, "answers": ["słodkie"]},
+        {"number": 9, "answers": ["pomarańcze"], "feedback": "After *sz, cz, ż, rz, dz, ś, ć, ń, c, l, j* → *-e*: *pomarańcze*."},
+        {"number": 10, "answers": ["Śliwki"], "feedback": "After *k, g* → *-i*: *śliwki*."}
+      ],
+      "newWords": [
+        {"polish": "świeży", "english": "fresh"},
+        {"polish": "suszony", "english": "dried"},
+        {"polish": "bazylia", "english": "basil"},
+        {"polish": "doniczka", "english": "flowerpot (w doniczce — in a pot)"},
+        {"polish": "dojrzały", "english": "ripe"},
+        {"polish": "ciemny", "english": "dark"},
+        {"polish": "fioletowy", "english": "purple"},
+        {"polish": "różowy", "english": "pink"},
+        {"polish": "mniej", "english": "less"},
+        {"polish": "mało", "english": "little"},
+        {"polish": "sezon", "english": "season"},
+        {"polish": "pół kilo", "english": "half a kilo"}
+      ],
+      "rules": [1, 2]
+    },
+    {
+      "id": "2C",
+      "type": "gap_fill",
+      "title": "Dialogue 3: Mami buys vegetables",
+      "instruction": "Mami buys vegetables. Listen and answer the questions. Then listen again and fill in the missing words.",
+      "tracks": [{"id": "109B3"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Mami", "text": "Poproszę marchewkę."},
+              {"speaker": "Sprzedawca", "text": "Ile?"},
+              {"speaker": "Mami", "text": "Trzy albo nie, cztery marchewki."},
+              {"speaker": "Sprzedawca", "text": "I co jeszcze?"},
+              {"speaker": "Mami", "text": "Jedną pietruszkę."},
+              {"speaker": "Sprzedawca", "text": "Natka czy korzeń?"},
+              {"speaker": "Mami", "text": "Nie rozumiem."},
+              {"speaker": "Sprzedawca", "text": "Natka jest zielona, a korzeń biały."},
+              {"speaker": "Mami", "text": "Aha, to chcę to i to. I jeszcze por, seler i ziemniaki."},
+              {"speaker": "Sprzedawca", "text": "Kilogram?"},
+              {"speaker": "Mami", "text": "Tak. A to? Nie pamiętam, jak to się nazywa."},
+              {"speaker": "Sprzedawca", "text": "To jest fasolka."},
+              {"speaker": "Mami", "text": "A tak! To pół kilo poproszę."},
+              {"speaker": "Sprzedawca", "text": "Proszę bardzo. Czy coś jeszcze?"},
+              {"speaker": "Mami", "text": "Może jeszcze kalafior. Ten średni. To wszystko, dziękuję."},
+              {"speaker": "Sprzedawca", "text": "Wszystko? Mam bardzo słodkie maliny, chce pani?"},
+              {"speaker": "Mami", "text": "O, chętnie."},
+              {"speaker": "Sprzedawca", "text": "19 złotych 32 grosze."}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {"label": "a", "prompt": "Ile marchewek kupuje Mami?", "options": ["trzy", "cztery"], "answer": "cztery", "feedback": "*Trzy albo nie, cztery marchewki.*"},
+        {"label": "b", "prompt": "Ile ziemniaków kupuje Mami?", "options": ["pół kilo", "kilogram"], "answer": "kilogram"},
+        {"label": "c", "prompt": "Ile fasolki kupuje Mami?", "options": ["pół kilo", "kilogram"], "answer": "pół kilo"},
+        {"label": "d", "prompt": "Co kupuje Mami?", "options": ["brokuły", "kalafior"], "answer": "kalafior"},
+        {"label": "e", "prompt": "Czy Mami chce maliny?", "options": ["tak", "nie"], "answer": "tak"},
+        {"label": "f", "prompt": "Ile płaci Mami?", "options": ["9 zł 23 gr", "19 zł 23 gr", "19 zł 32 gr"], "answer": "19 zł 32 gr"}
+      ],
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Mami", "text": "Poproszę marchewkę."},
+            {"speaker": "Sprzedawca", "text": "[1]?"},
+            {"speaker": "Mami", "text": "Trzy albo nie, cztery marchewki."},
+            {"speaker": "Sprzedawca", "text": "I co jeszcze?"},
+            {"speaker": "Mami", "text": "[2] pietruszkę."},
+            {"speaker": "Sprzedawca", "text": "Natka czy korzeń?"},
+            {"speaker": "Mami", "text": "Nie rozumiem."},
+            {"speaker": "Sprzedawca", "text": "Natka jest zielona, a korzeń [3]."},
+            {"speaker": "Mami", "text": "Aha, to chcę to i to. I jeszcze por, [4] i ziemniaki."},
+            {"speaker": "Sprzedawca", "text": "Kilogram?"},
+            {"speaker": "Mami", "text": "Tak. A to? Nie pamiętam, jak to się nazywa."},
+            {"speaker": "Sprzedawca", "text": "To jest [5]."},
+            {"speaker": "Mami", "text": "A tak! To pół kilo poproszę."},
+            {"speaker": "Sprzedawca", "text": "Proszę bardzo. Czy coś jeszcze?"},
+            {"speaker": "Mami", "text": "Może jeszcze [6]. Ten średni. To wszystko, dziękuję."},
+            {"speaker": "Sprzedawca", "text": "Wszystko? Mam bardzo słodkie maliny, chce pani?"},
+            {"speaker": "Mami", "text": "O, chętnie."},
+            {"speaker": "Sprzedawca", "text": "19 [7] 32 grosze."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Ile"]},
+        {"number": 2, "answers": ["Jedną"], "feedback": "*pietruszka* is feminine → *jedną pietruszkę*."},
+        {"number": 3, "answers": ["biały"]},
+        {"number": 4, "answers": ["seler"]},
+        {"number": 5, "answers": ["fasolka"]},
+        {"number": 6, "answers": ["kalafior"]},
+        {"number": 7, "answers": ["złotych"], "feedback": "19 → *złotych*."}
+      ],
+      "newWords": [
+        {"polish": "natka", "english": "parsley leaves"},
+        {"polish": "korzeń", "english": "root"},
+        {"polish": "średni", "english": "medium"},
+        {"polish": "fasolka", "english": "green beans"},
+        {"polish": "kilogram", "english": "kilogram"}
+      ],
+      "rules": [2]
+    },
+    {
+      "id": "2D",
+      "type": "choice",
+      "title": "Who says it?",
+      "instruction": "Who says it: the seller (*sprzedawca*) or the customer (*klient*)?",
+      "shuffle": false,
+      "items": [
+        {"label": "1", "prompt": "Czy są kiszone ogórki?", "options": ["sprzedawca", "klient"], "answer": "klient"},
+        {"label": "2", "prompt": "22 złote 53 grosze.", "options": ["sprzedawca", "klient"], "answer": "sprzedawca"},
+        {"label": "3", "prompt": "Czy to wszystko?", "options": ["sprzedawca", "klient"], "answer": "sprzedawca"},
+        {"label": "4", "prompt": "Poproszę trzy bułki.", "options": ["sprzedawca", "klient"], "answer": "klient"},
+        {"label": "5", "prompt": "Czy ma pan / pani drobne?", "options": ["sprzedawca", "klient"], "answer": "sprzedawca"},
+        {"label": "6", "prompt": "Proszę bardzo, co jeszcze?", "options": ["sprzedawca", "klient"], "answer": "sprzedawca"},
+        {"label": "7", "prompt": "To wszystko.", "options": ["sprzedawca", "klient"], "answer": "klient"},
+        {"label": "8", "prompt": "Ile?", "options": ["sprzedawca", "klient"], "answer": "sprzedawca"},
+        {"label": "9", "prompt": "Dobrze, proszę pół kilo.", "options": ["sprzedawca", "klient"], "answer": "klient"},
+        {"label": "10", "prompt": "Może jeszcze wodę mineralną.", "options": ["sprzedawca", "klient"], "answer": "klient"}
+      ],
+      "newWords": [
+        {"polish": "sprzedawca", "english": "seller"},
+        {"polish": "klient", "english": "customer"},
+        {"polish": "drobne", "english": "small change"},
+        {"polish": "kiszony ogórek", "english": "pickled cucumber"}
+      ]
+    },
+    {
+      "id": "2E",
+      "type": "gap_fill",
+      "title": "Are there blueberries?",
+      "instruction": "Fill in the words from the box. Then listen and check.",
+      "tracks": [{"id": "wb41"}],
+      "wordBox": ["drobne", "smaczne", "wszystko", "kilogram", "jeszcze", "więcej"],
+      "eachAnswerOnce": true,
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Paulina", "text": "Dzień dobry, czy są jagody?"},
+              {"speaker": "Sprzedawca", "text": "Niestety, nie ma, ale mamy bardzo smaczne truskawki."},
+              {"speaker": "Paulina", "text": "Ile kosztują?"},
+              {"speaker": "Sprzedawca", "text": "15 złotych kilogram."},
+              {"speaker": "Paulina", "text": "O, są bardzo drogie. Ale dobrze, poproszę pół kilo."},
+              {"speaker": "Sprzedawca", "text": "Może być trochę więcej?"},
+              {"speaker": "Paulina", "text": "Dobrze, może być. Poproszę jeszcze duży jogurt naturalny."},
+              {"speaker": "Sprzedawca", "text": "Proszę bardzo, czy to wszystko?"},
+              {"speaker": "Paulina", "text": "Tak, dziękuję."},
+              {"speaker": "Sprzedawca", "text": "11 złotych, 52 grosze. Czy ma pani drobne?"},
+              {"speaker": "Paulina", "text": "Niestety, nie mam."}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Paulina", "text": "Dzień dobry, czy są jagody?"},
+            {"speaker": "Sprzedawca", "text": "Niestety, nie ma, ale mamy bardzo [1] truskawki."},
+            {"speaker": "Paulina", "text": "Ile kosztują?"},
+            {"speaker": "Sprzedawca", "text": "15 złotych [2]."},
+            {"speaker": "Paulina", "text": "O, są bardzo drogie. Ale dobrze, poproszę pół kilo."},
+            {"speaker": "Sprzedawca", "text": "Może być trochę [3]?"},
+            {"speaker": "Paulina", "text": "Dobrze, może być. Poproszę [4] duży jogurt naturalny."},
+            {"speaker": "Sprzedawca", "text": "Proszę bardzo, czy to [5]?"},
+            {"speaker": "Paulina", "text": "Tak, dziękuję."},
+            {"speaker": "Sprzedawca", "text": "11 złotych, 52 grosze. Czy ma pani [6]?"},
+            {"speaker": "Paulina", "text": "Niestety, nie mam."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["smaczne"], "feedback": "Adjectives take *-e* in the plural: *smaczne truskawki*."},
+        {"number": 2, "answers": ["kilogram"]},
+        {"number": 3, "answers": ["więcej"]},
+        {"number": 4, "answers": ["jeszcze"]},
+        {"number": 5, "answers": ["wszystko"]},
+        {"number": 6, "answers": ["drobne"]}
+      ],
+      "newWords": [{"polish": "smaczny", "english": "tasty"}, {"polish": "więcej", "english": "more"}],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "3A",
+      "type": "reference",
+      "title": "Plural",
+      "instruction": "*liczba mnoga* (plural): except for groups of men, the nominative and the accusative plural are the same. *To są dojrzałe pomidory. Kupuję dojrzałe pomidory.*",
+      "tables": [
+        {
+          "header": ["", "ending", "example"],
+          "rows": [
+            ["masc. and fem.", "**-y**", "dojrzałe pomidor**y** · świeże ryb**y**"],
+            ["after k, g", "**-i**", "pieczone ziemniak**i** · dobre śliwk**i**"],
+            ["after sz, cz, ż, rz, dz, ś, ć, ń, c, l, j", "**-e**", "smaczne owoc**e** · słodkie pomarańcz**e**"],
+            ["neuter", "**-a**", "zielone jabłk**a**"],
+            ["adjective", "**-e**", "dojrzał**e**, zielon**e**, słodki**e**"]
+          ]
+        },
+        {
+          "header": ["", "2, 3, 4"],
+          "rows": [
+            ["masc. and neut.", "**dwa** / trzy / cztery pomidory · **dwa** piwa"],
+            ["fem.", "**dwie** / trzy / cztery cebule · **dwie** papryki"]
+          ]
+        }
+      ],
+      "notes": ["*pieróg → pierogi, lód → lody, śledź → śledzie, łosoś → łososie*."],
+      "newWords": [{"polish": "liczba mnoga", "english": "plural"}, {"polish": "to są", "english": "these are"}],
+      "rules": [1, 2]
+    },
+    {
+      "id": "3B",
+      "type": "write",
+      "title": "Plural forms",
+      "instruction": "Write the plural.",
+      "items": [
+        {"label": "1", "prompt": "(on) produkt", "answers": ["produkty"], "feedback": "Masculine and feminine nouns take *-y*: *produkty*."},
+        {"label": "2", "prompt": "(on) pomidor", "answers": ["pomidory"], "feedback": "Masculine and feminine nouns take *-y*: *pomidory*."},
+        {"label": "3", "prompt": "(on) banan", "answers": ["banany"], "feedback": "Masculine and feminine nouns take *-y*: *banany*."},
+        {"label": "4", "prompt": "(on) ziemniak", "answers": ["ziemniaki"], "feedback": "After *k, g* → *-i*: *ziemniaki*."},
+        {"label": "5", "prompt": "(on) owoc", "answers": ["owoce"], "feedback": "After *sz, cz, ż, rz, dz, ś, ć, ń, c, l, j* → *-e*: *owoce*."},
+        {"label": "6", "prompt": "(on) grosz", "answers": ["grosze"], "feedback": "After *sz, cz, ż, rz, dz, ś, ć, ń, c, l, j* → *-e*: *grosze*."},
+        {"label": "7", "prompt": "(ona) cytryna", "answers": ["cytryny"], "feedback": "Masculine and feminine nouns take *-y*: *cytryny*."},
+        {"label": "8", "prompt": "(ona) malina", "answers": ["maliny"], "feedback": "Masculine and feminine nouns take *-y*: *maliny*."},
+        {"label": "9", "prompt": "(ona) śliwka", "answers": ["śliwki"], "feedback": "After *k, g* → *-i*: *śliwki*."},
+        {"label": "10", "prompt": "(ona) brzoskwinia", "answers": ["brzoskwinie"], "feedback": "After *sz, cz, ż, rz, dz, ś, ć, ń, c, l, j* → *-e*: *brzoskwinie*."},
+        {"label": "11", "prompt": "(ona) pomarańcza", "answers": ["pomarańcze"], "feedback": "After *sz, cz, ż, rz, dz, ś, ć, ń, c, l, j* → *-e*: *pomarańcze*."},
+        {"label": "12", "prompt": "(ona) cebula", "answers": ["cebule"], "feedback": "After *sz, cz, ż, rz, dz, ś, ć, ń, c, l, j* → *-e*: *cebule*."},
+        {"label": "13", "prompt": "(ono) jajko", "answers": ["jajka"], "feedback": "Neuter nouns take *-a*: *jajka*."},
+        {"label": "14", "prompt": "(ono) warzywo", "answers": ["warzywa"], "feedback": "Neuter nouns take *-a*: *warzywa*."},
+        {"label": "15", "prompt": "(ono) jabłko", "answers": ["jabłka"], "feedback": "Neuter nouns take *-a*: *jabłka*."},
+        {"label": "16", "prompt": "(ono) winogrono", "answers": ["winogrona"], "feedback": "Neuter nouns take *-a*: *winogrona*."},
+        {"label": "17", "prompt": "(ono) piwo", "answers": ["piwa"], "feedback": "Neuter nouns take *-a*: *piwa*."},
+        {"label": "18", "prompt": "(ono) wino", "answers": ["wina"], "feedback": "Neuter nouns take *-a*: *wina*."},
+        {"label": "19", "prompt": "(jakie?) dojrzały banan", "answers": ["dojrzałe banany"], "feedback": "Adjectives take *-e* in the plural: *dojrzałe banany*."},
+        {"label": "20", "prompt": "(jakie?) żółta papryka", "answers": ["żółte papryki"], "feedback": "Adjectives take *-e* in the plural: *żółte papryki*."},
+        {"label": "21", "prompt": "(jakie?) słodkie winogrono", "answers": ["słodkie winogrona"], "feedback": "Adjectives take *-e* in the plural: *słodkie winogrona*."}
+      ],
+      "rules": [1]
+    },
+    {
+      "id": "3C",
+      "type": "choice",
+      "title": "-y, -i, -e or -a?",
+      "instruction": "Which ending does the plural take?",
+      "shuffle": false,
+      "items": [
+        {"label": "1", "prompt": "gruszka", "options": ["-y", "-i", "-e", "-a"], "answer": "-i"},
+        {"label": "2", "prompt": "banan", "options": ["-y", "-i", "-e", "-a"], "answer": "-y"},
+        {"label": "3", "prompt": "pomidor", "options": ["-y", "-i", "-e", "-a"], "answer": "-y"},
+        {"label": "4", "prompt": "ziemniak", "options": ["-y", "-i", "-e", "-a"], "answer": "-i"},
+        {"label": "5", "prompt": "warzywo", "options": ["-y", "-i", "-e", "-a"], "answer": "-a"},
+        {"label": "6", "prompt": "melon", "options": ["-y", "-i", "-e", "-a"], "answer": "-y"},
+        {"label": "7", "prompt": "cytryna", "options": ["-y", "-i", "-e", "-a"], "answer": "-y"},
+        {"label": "8", "prompt": "cebula", "options": ["-y", "-i", "-e", "-a"], "answer": "-e"},
+        {"label": "9", "prompt": "pomarańcza", "options": ["-y", "-i", "-e", "-a"], "answer": "-e"},
+        {"label": "10", "prompt": "śliwka", "options": ["-y", "-i", "-e", "-a"], "answer": "-i"},
+        {"label": "11", "prompt": "jabłko", "options": ["-y", "-i", "-e", "-a"], "answer": "-a"},
+        {"label": "12", "prompt": "wiśnia", "options": ["-y", "-i", "-e", "-a"], "answer": "-e"},
+        {"label": "13", "prompt": "rzodkiewka", "options": ["-y", "-i", "-e", "-a"], "answer": "-i"},
+        {"label": "14", "prompt": "ogórek", "options": ["-y", "-i", "-e", "-a"], "answer": "-i"},
+        {"label": "15", "prompt": "sałata", "options": ["-y", "-i", "-e", "-a"], "answer": "-y"},
+        {"label": "16", "prompt": "kapusta", "options": ["-y", "-i", "-e", "-a"], "answer": "-y"},
+        {"label": "17", "prompt": "masło", "options": ["-y", "-i", "-e", "-a"], "answer": "-a"},
+        {"label": "18", "prompt": "truskawka", "options": ["-y", "-i", "-e", "-a"], "answer": "-i"},
+        {"label": "19", "prompt": "pieczarka", "options": ["-y", "-i", "-e", "-a"], "answer": "-i"},
+        {"label": "20", "prompt": "grzyb", "options": ["-y", "-i", "-e", "-a"], "answer": "-y"},
+        {"label": "21", "prompt": "pieróg", "options": ["-y", "-i", "-e", "-a"], "answer": "-i", "feedback": "*ó* → *o*, and after *g* → *-i*: *pierogi*."},
+        {"label": "22", "prompt": "śledź", "options": ["-y", "-i", "-e", "-a"], "answer": "-e", "feedback": "After *dź* → *-e*: *śledzie*."},
+        {"label": "23", "prompt": "papryka", "options": ["-y", "-i", "-e", "-a"], "answer": "-i"},
+        {"label": "24", "prompt": "olej", "options": ["-y", "-i", "-e", "-a"], "answer": "-e"},
+        {"label": "25", "prompt": "owoc", "options": ["-y", "-i", "-e", "-a"], "answer": "-e"},
+        {"label": "26", "prompt": "wino", "options": ["-y", "-i", "-e", "-a"], "answer": "-a"},
+        {"label": "27", "prompt": "łosoś", "options": ["-y", "-i", "-e", "-a"], "answer": "-e", "feedback": "After *ś* → *-e*: *łososie*."},
+        {"label": "28", "prompt": "chleb", "options": ["-y", "-i", "-e", "-a"], "answer": "-y"},
+        {"label": "29", "prompt": "jajko", "options": ["-y", "-i", "-e", "-a"], "answer": "-a"},
+        {"label": "30", "prompt": "węgorz", "options": ["-y", "-i", "-e", "-a"], "answer": "-e"},
+        {"label": "31", "prompt": "winogrono", "options": ["-y", "-i", "-e", "-a"], "answer": "-a"},
+        {"label": "32", "prompt": "dorsz", "options": ["-y", "-i", "-e", "-a"], "answer": "-e"},
+        {"label": "33", "prompt": "malina", "options": ["-y", "-i", "-e", "-a"], "answer": "-y"},
+        {"label": "34", "prompt": "ser", "options": ["-y", "-i", "-e", "-a"], "answer": "-y"},
+        {"label": "35", "prompt": "ciastko", "options": ["-y", "-i", "-e", "-a"], "answer": "-a"},
+        {"label": "36", "prompt": "lód", "options": ["-y", "-i", "-e", "-a"], "answer": "-y", "feedback": "*ó* → *o*: *lody*."},
+        {"label": "37", "prompt": "kawa", "options": ["-y", "-i", "-e", "-a"], "answer": "-y"},
+        {"label": "38", "prompt": "piwo", "options": ["-y", "-i", "-e", "-a"], "answer": "-a"},
+        {"label": "39", "prompt": "kukurydza", "options": ["-y", "-i", "-e", "-a"], "answer": "-e", "feedback": "After *dz* → *-e*, not *-y*: *kukurydze*."},
+        {"label": "40", "prompt": "pstrąg", "options": ["-y", "-i", "-e", "-a"], "answer": "-i"},
+        {"label": "41", "prompt": "fasola", "options": ["-y", "-i", "-e", "-a"], "answer": "-e", "feedback": "After *l* → *-e*, not *-y*: *fasole*."}
+      ],
+      "newWords": [
+        {"polish": "melon", "english": "melon"},
+        {"polish": "pieróg", "english": "dumpling (pl. pierogi)"},
+        {"polish": "śledź", "english": "herring"},
+        {"polish": "łosoś", "english": "salmon"},
+        {"polish": "węgorz", "english": "eel"},
+        {"polish": "dorsz", "english": "cod"},
+        {"polish": "pstrąg", "english": "trout"},
+        {"polish": "olej", "english": "oil"},
+        {"polish": "ciastko", "english": "biscuit"}
+      ],
+      "rules": [1]
+    },
+    {
+      "id": "3D",
+      "type": "write",
+      "title": "Shopping lists",
+      "instruction": "Two shopping lists. Write each phrase in the plural. You may write the number too, as a digit or a word: *dwa* (masc., neut.) / *dwie* (fem.), *trzy*, *cztery*.",
+      "items": [
+        {"label": "1", "prompt": "2 × (jasny chleb)", "answers": ["jasne chleby", "2 jasne chleby", "dwa jasne chleby"]},
+        {"label": "2", "prompt": "4 × (ciemna bułka)", "answers": ["ciemne bułki", "4 ciemne bułki", "cztery ciemne bułki"]},
+        {"label": "3", "prompt": "2 × (świeże masło)", "answers": ["świeże masła", "2 świeże masła", "dwa świeże masła"]},
+        {"label": "4", "prompt": "3 × (zielony ogórek)", "answers": ["zielone ogórki", "3 zielone ogórki", "trzy zielone ogórki"]},
+        {"label": "5", "prompt": "4 × (duży pomidor)", "answers": ["duże pomidory", "4 duże pomidory", "cztery duże pomidory"]},
+        {"label": "6", "prompt": "2 × (jogurt naturalny)", "answers": ["jogurty naturalne", "2 jogurty naturalne", "dwa jogurty naturalne"]},
+        {"label": "7", "prompt": "2 × (zielone jabłko)", "answers": ["zielone jabłka", "2 zielone jabłka", "dwa zielone jabłka"]},
+        {"label": "8", "prompt": "2 × (sok pomarańczowy)", "answers": ["soki pomarańczowe", "2 soki pomarańczowe", "dwa soki pomarańczowe"]},
+        {"label": "9", "prompt": "4 × (ciemne piwo)", "answers": ["ciemne piwa", "4 ciemne piwa", "cztery ciemne piwa"]},
+        {"label": "10", "prompt": "2 × (woda mineralna)", "answers": ["wody mineralne", "2 wody mineralne", "dwie wody mineralne"], "feedback": "*dwie* with feminine nouns: *dwie cebule* (*dwie wody mineralne*)."},
+        {"label": "11", "prompt": "3 × (średnia cytryna)", "answers": ["średnie cytryny", "3 średnie cytryny", "trzy średnie cytryny"]},
+        {"label": "12", "prompt": "3 × (czerwona papryka)", "answers": ["czerwone papryki", "3 czerwone papryki", "trzy czerwone papryki"]}
+      ],
+      "newWords": [
+        {"polish": "dwa", "english": "two (masc., neut.)"},
+        {"polish": "dwie", "english": "two (fem.)"}
+      ],
+      "rules": [1, 2]
+    },
+    {
+      "id": "3E",
+      "type": "write",
+      "title": "Fill in",
+      "instruction": "Write each phrase in the plural.",
+      "items": [
+        {"label": "1", "prompt": "2 × (mleko)", "answers": ["mleka", "2 mleka", "dwa mleka"]},
+        {"label": "2", "prompt": "2 × (miód)", "answers": ["miody", "2 miody", "dwa miody"]},
+        {"label": "3", "prompt": "3 × (banan)", "answers": ["banany", "3 banany", "trzy banany"]},
+        {"label": "4", "prompt": "4 × (mała bułka)", "answers": ["małe bułki", "4 małe bułki", "cztery małe bułki"]},
+        {"label": "5", "prompt": "2 × (duża kapusta)", "answers": ["duże kapusty", "2 duże kapusty", "dwie duże kapusty"], "feedback": "*dwie* with feminine nouns: *dwie cebule* (*dwie duże kapusty*)."},
+        {"label": "6", "prompt": "3 × (mocna kawa)", "answers": ["mocne kawy", "3 mocne kawy", "trzy mocne kawy"]},
+        {"label": "7", "prompt": "4 × (wytrawne wino)", "answers": ["wytrawne wina", "4 wytrawne wina", "cztery wytrawne wina"]},
+        {"label": "8", "prompt": "3 × (jogurt malinowy)", "answers": ["jogurty malinowe", "3 jogurty malinowe", "trzy jogurty malinowe"]},
+        {"label": "9", "prompt": "2 × (świeży ogórek)", "answers": ["świeże ogórki", "2 świeże ogórki", "dwa świeże ogórki"]},
+        {"label": "10", "prompt": "4 × (młody ziemniak)", "answers": ["młode ziemniaki", "4 młode ziemniaki", "cztery młode ziemniaki"]}
+      ],
+      "newWords": [
+        {"polish": "wytrawny", "english": "dry (wine)"},
+        {"polish": "młody ziemniak", "english": "new potato"}
+      ],
+      "rules": [1, 2]
+    },
+    {
+      "id": "3F",
+      "type": "gap_fill",
+      "title": "Plural (workbook)",
+      "instruction": "Put the words in brackets in the plural. *dawać* (to put in): *oni dają*.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Na stole są dwie [1] (wysoka szklanka) z sokiem."},
+            {"text": "2. Karolina kupuje [2] (hiszpańska pomarańcza)."},
+            {"text": "3. Javier kupuje dwa [3] (średni arbuz)."},
+            {"text": "4. Uwe je na śniadanie dwa [4] (gotowane jajko)."},
+            {"text": "5. Angela ma w torbie cztery [5] (czarny długopis)."},
+            {"text": "6. Mami kupuje dwie [6] (duża ryba) na obiad."},
+            {"text": "7. W koszyku są dwa [7] (słodki ananas)."},
+            {"text": "8. Do sosu dają dwie [8] (cebula) i cztery [9] (pomidor)."},
+            {"text": "9. Uwe ma dwie [10] (komórka) i dwa [11] (komputer)."},
+            {"text": "10. Oni mają [12] (książka), [13] (zeszyt) i [14] (segregator)."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["wysokie szklanki"], "feedback": "After *k, g* → *-i*: *wysokie szklanki*."},
+        {"number": 2, "answers": ["hiszpańskie pomarańcze"], "feedback": "After *sz, cz, ż, rz, dz, ś, ć, ń, c, l, j* → *-e*: *hiszpańskie pomarańcze*."},
+        {"number": 3, "answers": ["średnie arbuzy"]},
+        {"number": 4, "answers": ["gotowane jajka"], "feedback": "Neuter nouns take *-a*: *gotowane jajka*."},
+        {"number": 5, "answers": ["czarne długopisy"]},
+        {"number": 6, "answers": ["duże ryby"]},
+        {"number": 7, "answers": ["słodkie ananasy"]},
+        {"number": 8, "answers": ["cebule"], "feedback": "*dwie* with feminine nouns: *dwie cebule* (*dwie cebule*)."},
+        {"number": 9, "answers": ["pomidory"]},
+        {"number": 10, "answers": ["komórki"]},
+        {"number": 11, "answers": ["komputery"]},
+        {"number": 12, "answers": ["książki"]},
+        {"number": 13, "answers": ["zeszyty"]},
+        {"number": 14, "answers": ["segregatory"]}
+      ],
+      "newWords": [
+        {"polish": "na stole", "english": "on the table"},
+        {"polish": "koszyk", "english": "basket (w koszyku — in the basket)"},
+        {"polish": "dawać", "english": "to give; to put in (do sosu dają — they put in the sauce)"}
+      ],
+      "rules": [1, 2]
+    },
+    {
+      "id": "3G",
+      "type": "gap_fill",
+      "title": "What's for dinner?",
+      "instruction": "Put the words in brackets in the right form: the plural after numbers, the accusative after verbs, the instrumental after *z*.",
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Dietmar", "text": "Co jemy na kolację?"},
+            {"speaker": "Gosia", "text": "Są 4 [1] (pomidor) i 2 [2] (ogórek) i [3] (zielona oliwka – pl.), proponuję [4] (sałatka)."},
+            {"speaker": "Dietmar", "text": "Świetnie, tu mam [5] (wędlina) i [6] (ser), więc ja robię [7] (tost – pl.)."},
+            {"speaker": "Gosia", "text": "O, to dobrze, bo ja bardzo lubię [8] (grzanka – pl.). A co pijemy?"},
+            {"speaker": "Dietmar", "text": "Mam dwa [9] (zimne piwo)."},
+            {"speaker": "Gosia", "text": "Ja wolę [10] (dobra herbata) z [11] (cytryna)."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["pomidory"]},
+        {"number": 2, "answers": ["ogórki"], "feedback": "After *k, g* → *-i*: *ogórki*."},
+        {"number": 3, "answers": ["zielone oliwki"]},
+        {"number": 4, "answers": ["sałatkę"], "feedback": "Accusative (*proponuję sałatkę*)."},
+        {"number": 5, "answers": ["wędlinę"]},
+        {"number": 6, "answers": ["ser"]},
+        {"number": 7, "answers": ["tosty"]},
+        {"number": 8, "answers": ["grzanki"]},
+        {"number": 9, "answers": ["zimne piwa"], "feedback": "Neuter nouns take *-a*: *dwa zimne piwa*."},
+        {"number": 10, "answers": ["dobrą herbatę"]},
+        {"number": 11, "answers": ["cytryną"], "feedback": "After *z* → instrumental (*z cytryną*)."}
+      ],
+      "newWords": [
+        {"polish": "proponować", "english": "to suggest (proponuję — I suggest)"},
+        {"polish": "grzanka", "english": "toast"},
+        {"polish": "więc", "english": "so"}
+      ],
+      "rules": [1, 3]
+    },
+    {
+      "id": "4A",
+      "type": "choice",
+      "title": "Cooking",
+      "instruction": "Mami and Angela are cooking. Listen: true or false? P = true (*prawda*), N = false (*nieprawda*).",
+      "tracks": [{"id": "109D1"}],
+      "shuffle": false,
+      "notes": ["POTRAWA: gotowana · pieczona · wędzona · smażona · duszona"],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Karolina", "text": "Cześć dziewczyny, co robicie? Coś dobrego?"},
+              {"speaker": "Mami", "text": "Ja gotuję zupę jarzynową, a Angela robi sos do spaghetti."},
+              {"speaker": "Karolina", "text": "Mniam, to ten sos tak pięknie pachnie!"},
+              {"speaker": "Angela", "text": "Tak, cebula ze świeżą bazylią, oregano z czosnkiem i innymi przyprawami."},
+              {"speaker": "Karolina", "text": "Uwielbiam duszoną cebulę!"},
+              {"speaker": "Mami", "text": "Duszoną? Co to znaczy?"},
+              {"speaker": "Karolina", "text": "No wiesz, najpierw cebula jest smażona z oliwą na patelni, a potem musisz dodać wodę i jeszcze smażyć. Wasz sos to duszona cebula."},
+              {"speaker": "Mami", "text": "Aha. Skomplikowane."},
+              {"speaker": "Karolina", "text": "Mama zawsze mówi, że duszone mięso jest zdrowsze niż smażone."},
+              {"speaker": "Angela", "text": "Zdrowsze to bardziej zdrowe?"},
+              {"speaker": "Karolina", "text": "Tak, tak. Niestety, mama też mówi, że gotowany kurczak jest zdrowszy niż pieczony."},
+              {"speaker": "Mami", "text": "A ja lubię gotowane ryby i zupę rybną."},
+              {"speaker": "Angela", "text": "Ja wolę wędzone albo pieczone ryby."},
+              {"speaker": "Karolina", "text": "Ja też!"}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {"label": "1", "prompt": "Dziewczyny są w szkole.", "options": ["P", "N"], "answer": "N", "feedback": "They are cooking at home."},
+        {"label": "2", "prompt": "Mami robi sos do spaghetti.", "options": ["P", "N"], "answer": "N", "feedback": "Mami cooks soup; Angela makes the sauce."},
+        {"label": "3", "prompt": "Karolina bardzo lubi duszoną cebulę.", "options": ["P", "N"], "answer": "P"},
+        {"label": "4", "prompt": "Mięso smażone jest zdrowsze niż gotowane.", "options": ["P", "N"], "answer": "N", "feedback": "Stewed meat is healthier than fried."},
+        {"label": "5", "prompt": "Mami lubi gotowane ryby.", "options": ["P", "N"], "answer": "P"},
+        {"label": "6", "prompt": "Karolina woli gotowanego kurczaka niż pieczonego.", "options": ["P", "N"], "answer": "N", "feedback": "She says *niestety* — she prefers it roasted."},
+        {"label": "7", "prompt": "Angela lubi wędzone ryby.", "options": ["P", "N"], "answer": "P"}
+      ],
+      "newWords": [
+        {"polish": "gotowany", "english": "boiled"},
+        {"polish": "pieczony", "english": "roasted"},
+        {"polish": "wędzony", "english": "smoked"},
+        {"polish": "smażony", "english": "fried"},
+        {"polish": "duszony", "english": "stewed"},
+        {"polish": "Mniam!", "english": "Yum!"},
+        {"polish": "pachnieć", "english": "to smell (pięknie pachnie — it smells lovely)"},
+        {"polish": "przyprawa", "english": "spice"},
+        {"polish": "uwielbiać", "english": "to love"},
+        {"polish": "najpierw", "english": "first"},
+        {"polish": "potem", "english": "then"},
+        {"polish": "dodać", "english": "to add"},
+        {"polish": "zdrowszy", "english": "healthier"},
+        {"polish": "oregano", "english": "oregano"},
+        {"polish": "wasz", "english": "your (to several people)"}
+      ],
+      "rules": [4]
+    },
+    {
+      "id": "4B",
+      "type": "gap_fill",
+      "title": "Fill in the text",
+      "instruction": "Put the words in brackets in the right form. Then listen again and check.",
+      "tracks": [{"id": "109D1"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Karolina", "text": "Cześć dziewczyny, co robicie? Coś dobrego?"},
+              {"speaker": "Mami", "text": "Ja gotuję zupę jarzynową, a Angela robi sos do spaghetti."},
+              {"speaker": "Karolina", "text": "Mniam, to ten sos tak pięknie pachnie!"},
+              {"speaker": "Angela", "text": "Tak, cebula ze świeżą bazylią, oregano z czosnkiem i innymi przyprawami."},
+              {"speaker": "Karolina", "text": "Uwielbiam duszoną cebulę!"},
+              {"speaker": "Mami", "text": "Duszoną? Co to znaczy?"},
+              {"speaker": "Karolina", "text": "No wiesz, najpierw cebula jest smażona z oliwą na patelni, a potem musisz dodać wodę i jeszcze smażyć. Wasz sos to duszona cebula."},
+              {"speaker": "Mami", "text": "Aha. Skomplikowane."},
+              {"speaker": "Karolina", "text": "Mama zawsze mówi, że duszone mięso jest zdrowsze niż smażone."},
+              {"speaker": "Angela", "text": "Zdrowsze to bardziej zdrowe?"},
+              {"speaker": "Karolina", "text": "Tak, tak. Niestety, mama też mówi, że gotowany kurczak jest zdrowszy niż pieczony."},
+              {"speaker": "Mami", "text": "A ja lubię gotowane ryby i zupę rybną."},
+              {"speaker": "Angela", "text": "Ja wolę wędzone albo pieczone ryby."},
+              {"speaker": "Karolina", "text": "Ja też!"}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Karolina", "text": "Cześć dziewczyny, co robicie? Coś dobrego?"},
+            {"speaker": "Mami", "text": "Ja gotuję [1] (zupa jarzynowa), a Angela robi sos do spaghetti."},
+            {"speaker": "Karolina", "text": "Mniam, to ten sos tak pięknie pachnie!"},
+            {"speaker": "Angela", "text": "Tak, cebula ze [2] (świeża bazylia), oregano z [3] (czosnek) i innymi przyprawami."},
+            {"speaker": "Karolina", "text": "Uwielbiam duszoną cebulę!"},
+            {"speaker": "Mami", "text": "Duszoną? Co to znaczy?"},
+            {"speaker": "Karolina", "text": "No wiesz, najpierw cebula jest smażona z [4] (oliwa) na patelni, a potem musisz dodać wodę i jeszcze smażyć. Wasz sos to [5] (duszona cebula)."},
+            {"speaker": "Mami", "text": "Aha. Skomplikowane."},
+            {"speaker": "Karolina", "text": "Mama zawsze mówi, że duszone mięso jest zdrowsze niż smażone."},
+            {"speaker": "Angela", "text": "Zdrowsze to bardziej zdrowe?"},
+            {"speaker": "Karolina", "text": "Tak, tak. Niestety, mama też mówi, że gotowany kurczak jest zdrowszy niż pieczony."},
+            {"speaker": "Mami", "text": "A ja lubię [6] (gotowana ryba – pl.) i [7] (zupa rybna)."},
+            {"speaker": "Angela", "text": "Ja wolę [8] (wędzona – pl.) albo [9] (pieczona ryba – pl.)."},
+            {"speaker": "Karolina", "text": "Ja też!"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["zupę jarzynową"], "feedback": "Accusative (*gotuję zupę jarzynową*)."},
+        {"number": 2, "answers": ["świeżą bazylią"], "feedback": "Before *ś* + consonant: *ze świeżą bazylią*."},
+        {"number": 3, "answers": ["czosnkiem"]},
+        {"number": 4, "answers": ["oliwą"]},
+        {"number": 5, "answers": ["duszona cebula"], "feedback": "*to* + nominative: *to duszona cebula*."},
+        {"number": 6, "answers": ["gotowane ryby"], "feedback": "Adjectives take *-e* in the plural: *gotowane ryby*."},
+        {"number": 7, "answers": ["zupę rybną"]},
+        {"number": 8, "answers": ["wędzone"]},
+        {"number": 9, "answers": ["pieczone ryby"]}
+      ],
+      "rules": [3, 1]
+    },
+    {
+      "id": "5A",
+      "type": "choice",
+      "title": "What's in whose basket?",
+      "instruction": "Saturday. Angela, Mami, Javier and Tom are shopping in a supermarket. Listen to the four short dialogues and choose a basket for each person.",
+      "tracks": [
+        {"id": "109E1-1", "label": "Dialogue 1"},
+        {"id": "109E1-2", "label": "Dialogue 2"},
+        {"id": "109E1-3", "label": "Dialogue 3"},
+        {"id": "109E1-4", "label": "Dialogue 4"}
+      ],
+      "shuffle": false,
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "title": "Dialogue 1",
+            "lines": [
+              {"speaker": "Angela", "text": "Przepraszam panią, gdzie są jajka?"},
+              {"speaker": "Ekspedientka", "text": "Jajka są tam, gdzie jest nabiał."},
+              {"speaker": "Angela", "text": "Dziękuję bardzo. A makaron?"},
+              {"speaker": "Ekspedientka", "text": "Makaron to produkty zbożowe, tak jak kasza i ryż."},
+              {"speaker": "Angela", "text": "Bardzo dziękuję."}
+            ]
+          },
+          {
+            "title": "Dialogue 2",
+            "lines": [
+              {"speaker": "Angela", "text": "O, jesteś Mami. Masz już wszystko?"},
+              {"speaker": "Mami", "text": "Mam tylko bułki i masło. Muszę jeszcze kupić ryby."},
+              {"speaker": "Angela", "text": "Gdzie jest pieczywo? Chcę jeszcze ciemny chleb."},
+              {"speaker": "Mami", "text": "Tam prosto i na prawo."},
+              {"speaker": "Angela", "text": "Dziękuję, idę tam za moment, ale teraz kupuję cytryny."},
+              {"speaker": "Mami", "text": "Cytryny? Ja też!"}
+            ]
+          },
+          {
+            "title": "Dialogue 3",
+            "lines": [
+              {"speaker": "Javier", "text": "Przepraszam pana, gdzie są chipsy?"},
+              {"speaker": "Ekspedient", "text": "Tam, gdzie słodycze."},
+              {"speaker": "Javier", "text": "No, ale chipsy są słone!"}
+            ]
+          },
+          {
+            "title": "Dialogue 4",
+            "lines": [
+              {"speaker": "Javier", "text": "Tom, czy wiesz, że w Polsce chipsy są tam, gdzie słodycze, to nielogiczne!"},
+              {"speaker": "Tom", "text": "Wiem, wiem. Słone paluszki też tam są."},
+              {"speaker": "Javier", "text": "Słone paluszki? Co to jest?"},
+              {"speaker": "Tom", "text": "Tutaj mam słone paluszki, to polska specjalność, są idealne do piwa."},
+              {"speaker": "Javier", "text": "Piwo też już masz, ja mam czerwone wino."},
+              {"speaker": "Tom", "text": "Masz też ser i szynkę."},
+              {"speaker": "Javier", "text": "A ty frytki i… co to jest?"},
+              {"speaker": "Tom", "text": "To są kiszone ogórki. Też polska specjalność, są kwaśne i słone."},
+              {"speaker": "Javier", "text": "???"}
+            ]
+          }
+        ]
+      },
+      "legend": [
+        "Koszyk 1: 🍖 szynka · chipsy · 🧀 ser · 🍷 czerwone wino",
+        "Koszyk 2: 🐟 ryba · 🧈 masło · 🥯 bułki · 🍋 cytryna",
+        "Koszyk 3: 🍞 ciemny chleb · 🍋 cytryna · 🥚 jajka · 🍝 makaron",
+        "Koszyk 4: 🍺 piwo · 🥨 słone paluszki · 🍟 frytki · 🥒 kiszone ogórki"
+      ],
+      "items": [
+        {"label": "1", "prompt": "Javier", "options": ["1", "2", "3", "4"], "answer": "1", "feedback": "Dialogue 4: *ja mam czerwone wino*; *masz też ser i szynkę*."},
+        {"label": "2", "prompt": "Tom", "options": ["1", "2", "3", "4"], "answer": "4"},
+        {"label": "3", "prompt": "Angela", "options": ["1", "2", "3", "4"], "answer": "3"},
+        {"label": "4", "prompt": "Mami", "options": ["1", "2", "3", "4"], "answer": "2", "feedback": "Dialogue 2: *bułki i masło*, *ryby*, *cytryny*."}
+      ],
+      "newWords": [
+        {"polish": "supermarket", "english": "supermarket"},
+        {"polish": "nabiał", "english": "dairy"},
+        {"polish": "produkty zbożowe", "english": "cereal products"},
+        {"polish": "pieczywo", "english": "bread and rolls"},
+        {"polish": "prosto", "english": "straight on"},
+        {"polish": "na prawo", "english": "to the right"},
+        {"polish": "słodycze", "english": "sweets"},
+        {"polish": "słone paluszki", "english": "salty sticks"},
+        {"polish": "nielogiczny", "english": "illogical"},
+        {"polish": "specjalność", "english": "speciality"},
+        {"polish": "idealny", "english": "ideal"}
+      ]
+    },
+    {
+      "id": "5B",
+      "type": "choice",
+      "title": "Group the products",
+      "instruction": "In which part of the supermarket is it?",
+      "shuffle": false,
+      "items": [
+        {"label": "1", "prompt": "makaron", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "produkty zbożowe"},
+        {"label": "2", "prompt": "szynka", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "mięso i wędliny"},
+        {"label": "3", "prompt": "sok", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "napoje"},
+        {"label": "4", "prompt": "mleko", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "nabiał"},
+        {"label": "5", "prompt": "jabłka", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "owoce i warzywa"},
+        {"label": "6", "prompt": "chleb", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "pieczywo"},
+        {"label": "7", "prompt": "ryż", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "produkty zbożowe"},
+        {"label": "8", "prompt": "bułki", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "pieczywo"},
+        {"label": "9", "prompt": "ser żółty", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "nabiał"},
+        {"label": "10", "prompt": "kurczak", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "mięso i wędliny"},
+        {"label": "11", "prompt": "wino", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "alkohole"},
+        {"label": "12", "prompt": "kiełbasa", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "mięso i wędliny"},
+        {"label": "13", "prompt": "czekolada", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "słodycze"},
+        {"label": "14", "prompt": "makrela", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "ryby"},
+        {"label": "15", "prompt": "jogurt", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "nabiał"},
+        {"label": "16", "prompt": "mrożone truskawki", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "mrożonki"},
+        {"label": "17", "prompt": "pstrąg", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "ryby"},
+        {"label": "18", "prompt": "ogórki", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "owoce i warzywa"},
+        {"label": "19", "prompt": "woda mineralna", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "napoje"},
+        {"label": "20", "prompt": "płatki kukurydziane", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "produkty zbożowe"},
+        {"label": "21", "prompt": "pomidory", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "owoce i warzywa"},
+        {"label": "22", "prompt": "ser biały", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "nabiał"},
+        {"label": "23", "prompt": "łosoś", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "ryby"},
+        {"label": "24", "prompt": "cytryny", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "owoce i warzywa"},
+        {"label": "25", "prompt": "coca-cola", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "napoje"},
+        {"label": "26", "prompt": "dorsz", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "ryby"},
+        {"label": "27", "prompt": "frytki", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "mrożonki", "feedback": "Frozen chips → *mrożonki*."},
+        {"label": "28", "prompt": "wódka", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "alkohole"},
+        {"label": "29", "prompt": "śledzie", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "ryby"},
+        {"label": "30", "prompt": "chipsy", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "słodycze", "feedback": "In Polish shops chips are shelved with sweets — see dialogue 3."},
+        {"label": "31", "prompt": "śmietana", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "nabiał"},
+        {"label": "32", "prompt": "banany", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "owoce i warzywa"},
+        {"label": "33", "prompt": "kasza", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "produkty zbożowe"},
+        {"label": "34", "prompt": "ciastka", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "słodycze"},
+        {"label": "35", "prompt": "cukierki", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "słodycze"},
+        {"label": "36", "prompt": "jajka", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "nabiał"},
+        {"label": "37", "prompt": "drożdżówka", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "pieczywo"},
+        {"label": "38", "prompt": "piwo", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "alkohole"},
+        {"label": "39", "prompt": "węgorz", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "ryby"},
+        {"label": "40", "prompt": "ziemniaki", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "owoce i warzywa"},
+        {"label": "41", "prompt": "mrożone pierogi", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "mrożonki"},
+        {"label": "42", "prompt": "słone paluszki", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "słodycze", "feedback": "In Polish shops chips are shelved with sweets — see dialogue 3."},
+        {"label": "43", "prompt": "masło", "options": ["nabiał", "napoje", "słodycze", "owoce i warzywa", "alkohole", "ryby", "mięso i wędliny", "mrożonki", "pieczywo", "produkty zbożowe"], "answer": "nabiał"}
+      ],
+      "newWords": [
+        {"polish": "napój", "english": "drink (pl. napoje)"},
+        {"polish": "alkohol", "english": "alcohol"},
+        {"polish": "mrożonki", "english": "frozen food"},
+        {"polish": "mrożony", "english": "frozen"},
+        {"polish": "makrela", "english": "mackerel"},
+        {"polish": "drożdżówka", "english": "sweet bun"},
+        {"polish": "wódka", "english": "vodka"},
+        {"polish": "cukierek", "english": "sweet (pl. cukierki)"}
+      ],
+      "rules": [1]
+    },
+    {
+      "id": "5C",
+      "type": "gap_fill",
+      "title": "Odd one out — why?",
+      "instruction": "Choose the word that doesn't fit. Then say why: *bo to jest …* (the group of products).",
+      "items": [
+        {"label": "1", "prompt": "1. Which word doesn't fit?", "options": ["makrela", "pstrąg", "kurczak", "łosoś"], "answer": "kurczak"},
+        {"label": "2", "prompt": "2. Which word doesn't fit?", "options": ["ryż", "kasza", "por", "makaron"], "answer": "por"},
+        {"label": "3", "prompt": "3. Which word doesn't fit?", "options": ["salami", "ser", "szynka", "kiełbasa"], "answer": "ser"},
+        {"label": "4", "prompt": "4. Which word doesn't fit?", "options": ["chipsy", "słone paluszki", "drożdżówka", "arbuz"], "answer": "arbuz"},
+        {"label": "5", "prompt": "5. Which word doesn't fit?", "options": ["bułka", "brokuły", "groszek", "seler"], "answer": "bułka"},
+        {"label": "6", "prompt": "6. Which word doesn't fit?", "options": ["wiśnie", "jagody", "wino", "ananas"], "answer": "wino"}
+      ],
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. bo to jest [1]"},
+            {"text": "2. bo to jest [2]"},
+            {"text": "3. bo to jest [3]"},
+            {"text": "4. bo to jest [4]"},
+            {"text": "5. bo to jest [5]"},
+            {"text": "6. bo to jest [6]"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["mięso", "mięso i wędliny", "bo to jest mięso", "bo to jest mięso i wędliny"]},
+        {"number": 2, "answers": ["warzywo", "warzywa", "owoce i warzywa", "bo to jest warzywo", "bo to jest warzywa", "bo to jest owoce i warzywa"]},
+        {"number": 3, "answers": ["nabiał", "bo to jest nabiał"]},
+        {"number": 4, "answers": ["owoc", "owoce", "owoce i warzywa", "bo to jest owoc", "bo to jest owoce", "bo to jest owoce i warzywa"], "feedback": "Chips, salty sticks and a sweet bun are all snacks here; *arbuz* is a fruit."},
+        {"number": 5, "answers": ["pieczywo", "bo to jest pieczywo"]},
+        {"number": 6, "answers": ["alkohol", "alkohole", "bo to jest alkohol", "bo to jest alkohole"]}
+      ]
+    },
+    {
+      "id": "5D",
+      "type": "gap_fill",
+      "title": "Mami's shopping",
+      "instruction": "Put the words in brackets in the right form. Then listen and check. *stać* (to stand): *on stoi*.",
+      "tracks": [{"id": "wb42"}],
+      "notes": ["*ananas* and *arbuz* take the animate accusative: *ananasa, małego arbuza*."],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"text": "W koszyku z zakupami są owoce i warzywa. Są tam dojrzałe czerwone pomidory, zielone ogórki i trzy małe cebule. To są produkty na sałatkę, którą Mami planuje robić na kolację. W koszyku są też dwa średnie kalafiory, brokuły i młode ziemniaki."},
+              {"text": "Mami bardzo lubi owoce. Zwykle kupuje banany, pomarańcze, jabłka, ale dziś ma tylko ananasa i małego arbuza. Koszyk z zakupami jest już bardzo ciężki, a Mami chce jeszcze kupić gruszki i wędzoną rybę."},
+              {"text": "Co robić? O, tu obok stoi Javier, on też robi zakupy. Dobrze, że Javier jest sympatycznym kolegą i chętnie pomaga Mami. Javier mówi, że koszyk nie jest bardzo ciężki i że Mami może jeszcze kupić i gruszki, i rybę, i truskawki, bo są bardzo smaczne. Mami jest bardzo zadowolona, dziękuje za pomoc i zaprasza Javiera na kolację."}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"text": "W koszyku z zakupami są [1] i [2] (owoc, warzywo). Są tam [3] (dojrzały czerwony pomidor – pl.), [4] (zielony ogórek – pl.) i trzy [5] (mała cebula). To są [6] (produkt) na sałatkę, którą Mami planuje robić na [7] (kolacja). W koszyku są też dwa [8] (średni kalafior), brokuły i [9] (młody ziemniak – pl.)."},
+            {"text": "Mami bardzo lubi [10] (owoc – pl.). Zwykle kupuje [11] (banan – pl.), [12] (pomarańcza – pl.), [13] (jabłko – pl.), ale dziś ma tylko [14] (ananas) i [15] (mały arbuz). Koszyk z [16] (zakupy) jest już bardzo ciężki, a Mami chce jeszcze kupić [17] (gruszka – pl.) i [18] (wędzona ryba)."},
+            {"text": "Co robić? O, tu obok stoi Javier, on też robi zakupy. Dobrze, że Javier jest [19] (sympatyczny kolega) i chętnie pomaga Mami. Javier mówi, że koszyk nie jest bardzo ciężki i że Mami może jeszcze kupić i [20] (gruszka – pl.), i [21] (ryba), i [22] (truskawka – pl.), bo są bardzo smaczne. Mami jest bardzo zadowolona, dziękuje za pomoc i zaprasza Javiera na [23] (kolacja)."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["owoce"]},
+        {"number": 2, "answers": ["warzywa"]},
+        {"number": 3, "answers": ["dojrzałe czerwone pomidory"], "feedback": "Adjectives take *-e* in the plural: *dojrzałe czerwone pomidory*."},
+        {"number": 4, "answers": ["zielone ogórki"]},
+        {"number": 5, "answers": ["małe cebule"], "feedback": "After *sz, cz, ż, rz, dz, ś, ć, ń, c, l, j* → *-e*: *trzy małe cebule*."},
+        {"number": 6, "answers": ["produkty"]},
+        {"number": 7, "answers": ["kolację"]},
+        {"number": 8, "answers": ["średnie kalafiory"], "feedback": "Masculine and feminine nouns take *-y*: *dwa średnie kalafiory*."},
+        {"number": 9, "answers": ["młode ziemniaki"]},
+        {"number": 10, "answers": ["owoce"]},
+        {"number": 11, "answers": ["banany"]},
+        {"number": 12, "answers": ["pomarańcze"]},
+        {"number": 13, "answers": ["jabłka"]},
+        {"number": 14, "answers": ["ananasa"], "feedback": "*ananas* and *arbuz* take the animate accusative: *ananasa, małego arbuza*."},
+        {"number": 15, "answers": ["małego arbuza"], "feedback": "*ananas* and *arbuz* take the animate accusative: *ananasa, małego arbuza*."},
+        {"number": 16, "answers": ["zakupami"], "feedback": "Plural instrumental: *-ymi / -imi* + *-ami* (*z zakupami*)."},
+        {"number": 17, "answers": ["gruszki"]},
+        {"number": 18, "answers": ["wędzoną rybę"]},
+        {"number": 19, "answers": ["sympatycznym kolegą"], "feedback": "After *z* → instrumental (*jest sympatycznym kolegą*)."},
+        {"number": 20, "answers": ["gruszki"]},
+        {"number": 21, "answers": ["rybę"]},
+        {"number": 22, "answers": ["truskawki"]},
+        {"number": 23, "answers": ["kolację"]}
+      ],
+      "newWords": [
+        {"polish": "obok", "english": "nearby"},
+        {"polish": "pomagać", "english": "to help"},
+        {"polish": "zadowolony", "english": "pleased"},
+        {"polish": "dziękować za pomoc", "english": "to thank for help"},
+        {"polish": "stać", "english": "to stand"}
+      ],
+      "rules": [1, 3]
+    },
+    {
+      "id": "5E",
+      "type": "write",
+      "title": "Put the sentences in order",
+      "instruction": "Make sentences. Model: pije / mlekiem / Kasia / z / kawę → *Kasia pije kawę z mlekiem.*",
+      "items": [
+        {"label": "1", "prompt": "tłustą / jeść / Karol / kiełbasę / lubi", "answers": ["Karol lubi jeść tłustą kiełbasę."]},
+        {"label": "2", "prompt": "ziemniakami / pstrąga / z / proszę / pieczonymi", "answers": ["Proszę pstrąga z pieczonymi ziemniakami."], "feedback": "*pstrąg* takes the animate accusative: *proszę pstrąga*."},
+        {"label": "3", "prompt": "niż / wolę / winogrona / jagody", "answers": ["Wolę winogrona niż jagody.", "Wolę jagody niż winogrona."]},
+        {"label": "4", "prompt": "jajko / na / masz / miękko / ochotę / na / czy", "answers": ["Czy masz ochotę na jajko na miękko?"]},
+        {"label": "5", "prompt": "prosić / czy / i / kubek / mogę / łyżeczkę", "answers": ["Czy mogę prosić kubek i łyżeczkę?", "Czy mogę prosić łyżeczkę i kubek?"]},
+        {"label": "6", "prompt": "niż / kurczak / zdrowszy / gotowany / jest / pieczony", "answers": ["Gotowany kurczak jest zdrowszy niż pieczony."]}
+      ],
+      "rules": [3, 4]
+    },
+    {
+      "id": "6A",
+      "type": "gap_fill",
+      "title": "What soup? What juice?",
+      "instruction": "Write the word, then the soup or the juice it makes. Model: *jarzyny — zupa jarzynowa*.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. 🥗 mixed vegetables: [1] — zupa [2]"},
+            {"text": "2. 🍅: [3] — zupa [4]"},
+            {"text": "3. 🫘 beans: [5] — zupa [6]"},
+            {"text": "4. 🍄 wild mushrooms: [7] — zupa [8]"},
+            {"text": "5. 🍄 button mushrooms: [9] — zupa [10]"},
+            {"text": "6. cauliflower: [11] — zupa [12]"},
+            {"text": "7. 🥦: [13] — zupa [14]"},
+            {"text": "8. 🧅: [15] — zupa [16]"},
+            {"text": "9. 🍊: [17] — sok [18]"},
+            {"text": "10. 🍎: [19] — sok [20]"},
+            {"text": "11. raspberries: [21] — sok [22]"},
+            {"text": "12. 🍋: [23] — sok [24]"},
+            {"text": "13. 🍍: [25] — sok [26]"},
+            {"text": "14. 🍑: [27] — sok [28]"},
+            {"text": "15. 🍇: [29] — sok [30]"},
+            {"text": "16. 🍒: [31] — sok [32]"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["jarzyny", "warzywa"]},
+        {"number": 2, "answers": ["jarzynowa"], "feedback": "*jarzyny → jarzynowa*: the ending drops, then *-owa*."},
+        {"number": 3, "answers": ["pomidory", "pomidor"]},
+        {"number": 4, "answers": ["pomidorowa"], "feedback": "*zupa* is feminine → *-owa*."},
+        {"number": 5, "answers": ["fasola"]},
+        {"number": 6, "answers": ["fasolowa"]},
+        {"number": 7, "answers": ["grzyby", "grzyb"]},
+        {"number": 8, "answers": ["grzybowa"]},
+        {"number": 9, "answers": ["pieczarki", "pieczarka"]},
+        {"number": 10, "answers": ["pieczarkowa"]},
+        {"number": 11, "answers": ["kalafior"]},
+        {"number": 12, "answers": ["kalafiorowa"]},
+        {"number": 13, "answers": ["brokuły", "brokuł"]},
+        {"number": 14, "answers": ["brokułowa"]},
+        {"number": 15, "answers": ["cebula"]},
+        {"number": 16, "answers": ["cebulowa"]},
+        {"number": 17, "answers": ["pomarańcza", "pomarańcze"]},
+        {"number": 18, "answers": ["pomarańczowy"], "feedback": "*sok* is masculine → *-owy*."},
+        {"number": 19, "answers": ["jabłko", "jabłka"]},
+        {"number": 20, "answers": ["jabłkowy"]},
+        {"number": 21, "answers": ["maliny", "malina"]},
+        {"number": 22, "answers": ["malinowy"]},
+        {"number": 23, "answers": ["cytryna", "cytryny"]},
+        {"number": 24, "answers": ["cytrynowy"]},
+        {"number": 25, "answers": ["ananas"]},
+        {"number": 26, "answers": ["ananasowy"]},
+        {"number": 27, "answers": ["brzoskwinia", "brzoskwinie"]},
+        {"number": 28, "answers": ["brzoskwiniowy"], "feedback": "*brzoskwinia → brzoskwiniowy*."},
+        {"number": 29, "answers": ["winogrona", "winogrono"]},
+        {"number": 30, "answers": ["winogronowy"]},
+        {"number": 31, "answers": ["wiśnie", "wiśnia"]},
+        {"number": 32, "answers": ["wiśniowy"]}
+      ],
+      "interchangeable": [["7", "9"], ["8", "10"]],
+      "newWords": [
+        {"polish": "zupa grzybowa", "english": "mushroom soup"},
+        {"polish": "zupa pieczarkowa", "english": "button-mushroom soup"},
+        {"polish": "cytrynowy", "english": "lemon (adj.)"},
+        {"polish": "brzoskwiniowy", "english": "peach (adj.)"},
+        {"polish": "winogronowy", "english": "grape (adj.)"},
+        {"polish": "wiśniowy", "english": "cherry (adj.)"},
+        {"polish": "fasolowy", "english": "bean (adj.)"},
+        {"polish": "kalafiorowy", "english": "cauliflower (adj.)"},
+        {"polish": "brokułowy", "english": "broccoli (adj.)"},
+        {"polish": "cebulowy", "english": "onion (adj.)"}
+      ],
+      "rules": [5],
+      "newWordsUnlock": "after_check"
+    }
+  ],
+  "vocabulary": [
+    {"polish": "owoce: jabłko, gruszka, śliwka, brzoskwinia, truskawka, malina, wiśnia, winogrona, arbuz", "english": "fruit: apple, pear, plum, peach, strawberry, raspberry, cherry, grapes, watermelon"},
+    {"polish": "warzywa: marchewka, ziemniak, cebula, czosnek, papryka, kapusta, kalafior, brokuły, fasola", "english": "vegetables: carrot, potato, onion, garlic, pepper, cabbage, cauliflower, broccoli, beans"},
+    {"polish": "świeży ≠ suszony · miękki ≠ twardy · dojrzały", "english": "fresh ≠ dried · soft ≠ hard · ripe"},
+    {"polish": "słodki, kwaśny, słony, gorzki, ostry", "english": "sweet, sour, salty, bitter, hot"},
+    {"polish": "gotowany, pieczony, smażony, duszony, wędzony", "english": "boiled, roasted, fried, stewed, smoked"},
+    {"polish": "targ · supermarket · koszyk · nabiał · pieczywo · słodycze · mrożonki", "english": "market · supermarket · basket · dairy · bread · sweets · frozen food"},
+    {"polish": "pół kilo · kilogram · drobne · Czy to wszystko?", "english": "half a kilo · kilogram · change · Is that all?"},
+    {"polish": "śledź, łosoś, dorsz, pstrąg, węgorz", "english": "herring, salmon, cod, trout, eel"}
+  ]
+}
