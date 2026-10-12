@@ -137,6 +137,7 @@ data class ItemAsset(
     val feedback: String? = null,
     val picture: PictureAsset? = null,
     val choices: List<ChoiceGroupAsset> = emptyList(),
+    val track: TrackRefAsset? = null,
 )
 
 @Serializable
@@ -168,6 +169,7 @@ data class ScreenAsset(
     val groups: List<GroupAsset> = emptyList(),
     val notes: List<String> = emptyList(),
     val keyboard: String = "text",
+    val match: String = "whole",
     val items: List<ItemAsset> = emptyList(),
     val sections: List<SectionAsset> = emptyList(),
     val gaps: List<GapAsset> = emptyList(),
@@ -255,7 +257,11 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
                 tracks = trackList,
                 transcript = transcriptModel,
                 keyboard = if (keyboard == "digits") AnswerKeyboard.DIGITS else AnswerKeyboard.TEXT,
-                questions = items.mapIndexed { index, item -> item.toQuestion(index.toString()) }.toImmutableList(),
+                questions = items.mapIndexed { index, item ->
+                    item.toQuestion(
+                        index.toString(),
+                    ).copy(match = if (match == "exact_letters") AnswerMatch.EXACT_LETTERS else AnswerMatch.WHOLE)
+                }.toImmutableList(),
                 hint = hint,
                 notes = notes.toImmutableList(),
                 wordBox = wordBox.toImmutableList(),
@@ -268,19 +274,7 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
                 instruction = instruction,
                 tracks = trackList,
                 transcript = transcriptModel,
-                items = items.mapIndexed { index, item ->
-                    ChoiceQuestion(
-                        question = LessonQuestion(
-                            key = index.toString(),
-                            label = item.label,
-                            answers = (listOfNotNull(item.answer) + item.answers).toImmutableList(),
-                            feedback = item.feedback,
-                            prompt = item.prompt,
-                            picture = item.picture?.toModel(),
-                        ),
-                        options = item.options.toImmutableList(),
-                    )
-                }.toImmutableList(),
+                items = items.mapIndexed { index, item -> item.toChoice(index.toString(), track) }.toImmutableList(),
                 legend = legend.toImmutableList(),
                 hint = hint,
                 interchangeable = interchangeable.map { labels ->
@@ -372,7 +366,8 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
                 notes = notes.toImmutableList(),
             )
 
-        "gap_fill" ->
+        "gap_fill" -> {
+            val choices = items.mapIndexed { index, item -> item.toChoice("choice-${index + 1}", track) }
             LessonScreen.GapFill(
                 id = id,
                 title = title,
@@ -386,20 +381,25 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
                         lines = section.lines.map { GapLine(it.speaker, it.text) }.toImmutableList(),
                     )
                 }.toImmutableList(),
-                questions = gaps.sortedBy { it.number }.map { gap ->
-                    LessonQuestion(
-                        key = gap.number.toString(),
-                        label = gap.number.toString(),
-                        answers = gap.answers.toImmutableList(),
-                        feedback = gap.feedback,
-                        variants = gap.variants.toImmutableList(),
-                    )
-                }.toImmutableList(),
+                questions = (
+                    choices.map { it.question } +
+                        gaps.sortedBy { it.number }.map { gap ->
+                            LessonQuestion(
+                                key = gap.number.toString(),
+                                label = gap.number.toString(),
+                                answers = gap.answers.toImmutableList(),
+                                feedback = gap.feedback,
+                                variants = gap.variants.toImmutableList(),
+                            )
+                        }
+                ).toImmutableList(),
                 notes = notes.toImmutableList(),
                 hint = hint,
                 wordBox = wordBox.toImmutableList(),
                 interchangeable = interchangeable.map { it.toImmutableList() }.toImmutableList(),
+                choices = choices.toImmutableList(),
             )
+        }
 
         "free_writing" ->
             LessonScreen.FreeWriting(
@@ -432,6 +432,23 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
             )
     }
 }
+
+private fun ItemAsset.toChoice(
+    key: String,
+    track: (TrackRefAsset) -> LessonTrack?,
+): ChoiceQuestion =
+    ChoiceQuestion(
+        question = LessonQuestion(
+            key = key,
+            label = label,
+            answers = (listOfNotNull(answer) + answers).toImmutableList(),
+            feedback = feedback,
+            prompt = prompt,
+            picture = picture?.toModel(),
+        ),
+        options = options.toImmutableList(),
+        track = this.track?.let(track),
+    )
 
 private fun ItemAsset.toQuestion(key: String): LessonQuestion =
     LessonQuestion(

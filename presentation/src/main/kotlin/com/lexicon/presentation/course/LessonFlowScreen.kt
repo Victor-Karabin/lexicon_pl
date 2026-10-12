@@ -66,6 +66,8 @@ import com.lexicon.interactors.course.MinimalPairItem
 import com.lexicon.interactors.course.Score
 import com.lexicon.interactors.course.TranscribeItem
 import com.lexicon.model.course.AnswerKeyboard
+import com.lexicon.model.course.AnswerMatch
+import com.lexicon.model.course.ChoiceQuestion
 import com.lexicon.model.course.GAP_PATTERN
 import com.lexicon.model.course.LessonId
 import com.lexicon.model.course.LessonQuestion
@@ -84,6 +86,7 @@ import com.lexicon.presentation.conjugation.VerbHeading
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.component.StatChip
 import com.lexicon.presentation.theme.component.tileSkin
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import org.koin.compose.viewmodel.koinViewModel
@@ -325,7 +328,7 @@ private fun ScreenBody(
     when (screen) {
         is LessonScreen.Reference -> ReferenceBody(screen, uiState, actions)
         is LessonScreen.Write -> WriteBody(screen, session, actions)
-        is LessonScreen.Choice -> ChoiceBody(screen, session, actions)
+        is LessonScreen.Choice -> ChoiceBody(screen, uiState, actions)
         is LessonScreen.GapFill -> GapFillBody(screen, uiState, actions)
         is LessonScreen.FreeWriting -> FreeWritingBody(screen, uiState, actions)
         is LessonScreen.Ordering -> OrderingBody(screen, session, actions)
@@ -550,6 +553,7 @@ private fun QuestionField(
         usualForm = session.usualForm(screenId, question.key),
         leading = question.picture?.let { picture -> { ItemPictureView(picture) } },
         imeAction = imeActionOf(session, question.key),
+        highlightChanges = question.match == AnswerMatch.EXACT_LETTERS,
     )
 }
 
@@ -604,9 +608,10 @@ private fun OrderingBody(
 @Composable
 private fun ChoiceBody(
     screen: LessonScreen.Choice,
-    session: LessonSession,
+    uiState: LessonFlowUiState.Loaded,
     actions: LessonFlowActions,
 ) {
+    val session = uiState.session
     if (screen.legend.isNotEmpty()) {
         SectionCard(title = null) {
             screen.legend.forEach { Text(richText(it), style = MaterialTheme.typography.bodyLarge) }
@@ -616,9 +621,22 @@ private fun ChoiceBody(
     val shown = remember(session.script.lessonId, screen, visit) {
         screen.items.associate { it.question.key to session.optionsOf(screen, it, visit).toImmutableList() }
     }
+    ChoiceItems(screen.id, screen.items, shown, uiState, actions)
+}
+
+@Composable
+private fun ChoiceItems(
+    screenId: String,
+    items: List<ChoiceQuestion>,
+    shown: Map<String, ImmutableList<String>>,
+    uiState: LessonFlowUiState.Loaded,
+    actions: LessonFlowActions,
+) {
+    val session = uiState.session
     Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
-        screen.items.forEach { item ->
+        items.forEach { item ->
             val question = item.question
+            item.track?.let { TrackPlayer(it, uiState, actions) }
             val prompt = question.prompt
             if (prompt != null && question.picture == null) {
                 InlineChoiceRow(
@@ -627,8 +645,8 @@ private fun ChoiceBody(
                     groups = listOf(
                         InlineChoiceGroup(
                             options = shown.getValue(question.key),
-                            selected = session.answer(screen.id, question.key).ifEmpty { null },
-                            answer = session.expectedAnswer(screen.id, question.key),
+                            selected = session.answer(screenId, question.key).ifEmpty { null },
+                            answer = session.expectedAnswer(screenId, question.key),
                             info = question.feedback,
                         ),
                     ),
@@ -641,10 +659,10 @@ private fun ChoiceBody(
                 item = MinimalPairItem(
                     "",
                     shown.getValue(question.key),
-                    session.expectedAnswer(screen.id, question.key),
+                    session.expectedAnswer(screenId, question.key),
                 ),
-                selected = session.answer(screen.id, question.key).ifEmpty { null },
-                answerState = answerState(session.verdict(screen.id, question.key), session.isChecked),
+                selected = session.answer(screenId, question.key).ifEmpty { null },
+                answerState = answerState(session.verdict(screenId, question.key), session.isChecked),
                 onSelect = { actions.onAnswerChanged(question.key, it) },
                 info = question.feedback,
                 prompt = question.prompt,
@@ -662,6 +680,9 @@ private fun GapFillBody(
 ) {
     val session = uiState.session
     val questions = screen.questions.associateBy { it.key }
+    if (screen.choices.isNotEmpty()) {
+        ChoiceItems(screen.id, screen.choices, screen.choices.associate { it.question.key to it.options }, uiState, actions)
+    }
     if (screen.wordBox.isNotEmpty()) WordBoxCard(screen.wordBox)
     screen.sections.forEach { section ->
         SectionCard(title = section.title) {

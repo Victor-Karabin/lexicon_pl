@@ -6,6 +6,8 @@ import com.lexicon.model.course.AnswerKeyboard
 import com.lexicon.model.course.AnswerMatch
 import com.lexicon.model.course.ChoiceQuestion
 import com.lexicon.model.course.FormGroup
+import com.lexicon.model.course.GapLine
+import com.lexicon.model.course.GapSection
 import com.lexicon.model.course.InlineChoiceLine
 import com.lexicon.model.course.LessonId
 import com.lexicon.model.course.LessonPhrase
@@ -180,6 +182,27 @@ class LessonExerciseTypesTest {
         val twice = session(pairs).answering("1" to "duży", "4" to "duży", "7" to "sympatyczny").check()
         assertEquals(2, twice.screenScore(pairs).correct)
         assertEquals("inteligentny", twice.expectedAnswer("6B", "4"))
+    }
+
+    @Test
+    fun `a gap fill with a picture choice grades the choice and the gaps together`() {
+        val pictures = persistentListOf("📷 photo album", "📖 book", "🥟 dough", "💻 laptop")
+        val choice = ChoiceQuestion(question("choice-1", "🥟 dough"), pictures)
+        val dialogue = LessonScreen.GapFill(
+            id = "1A",
+            title = "",
+            instruction = "",
+            tracks = persistentListOf(),
+            transcript = null,
+            sections = persistentListOf(GapSection(null, null, persistentListOf(GapLine("Pani Joanna", "[1] pierogi. A ty [2] gotować?")))),
+            questions = persistentListOf(choice.question, question("1", "Gotuję"), question("2", "umiesz")),
+            choices = persistentListOf(choice),
+        )
+        val checked = session(dialogue).answering("choice-1" to "📖 book", "1" to "gotuję", "2" to "umiesz").check()
+        assertEquals(AnswerVerdict.WRONG, checked.verdict("1A", "choice-1"))
+        assertEquals(AnswerVerdict.CORRECT, checked.verdict("1A", "1"))
+        assertEquals(2, checked.screenScore(dialogue).correct)
+        assertEquals(3, checked.screenScore(dialogue).total)
     }
 
     @Test

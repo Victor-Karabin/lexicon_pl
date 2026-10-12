@@ -80,7 +80,7 @@ data class Transcript(
 
 enum class AnswerKeyboard { TEXT, DIGITS }
 
-enum class AnswerMatch { WHOLE, KEY_WORDS }
+enum class AnswerMatch { WHOLE, KEY_WORDS, EXACT_LETTERS }
 
 sealed interface ItemPicture {
     data class Symbol(
@@ -106,6 +106,7 @@ data class LessonQuestion(
 data class ChoiceQuestion(
     val question: LessonQuestion,
     val options: ImmutableList<String>,
+    val track: LessonTrack? = null,
 )
 
 data class InlineChoiceLine(
@@ -272,6 +273,7 @@ sealed interface LessonScreen {
         override val hint: String? = null,
         val wordBox: ImmutableList<String> = persistentListOf(),
         override val interchangeable: ImmutableList<ImmutableList<String>> = persistentListOf(),
+        val choices: ImmutableList<ChoiceQuestion> = persistentListOf(),
     ) : LessonScreen
 
     data class FreeWriting(
@@ -294,7 +296,8 @@ fun LessonScreen.allTracks(): List<LessonTrack> =
     tracks +
         when (this) {
             is LessonScreen.Reference -> groups.mapNotNull { it.track }
-            is LessonScreen.GapFill -> sections.mapNotNull { it.track }
+            is LessonScreen.GapFill -> sections.mapNotNull { it.track } + choices.mapNotNull { it.track }
+            is LessonScreen.Choice -> items.mapNotNull { it.track }
             else -> emptyList()
         }
 

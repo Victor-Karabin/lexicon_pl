@@ -111692,5 +111692,505 @@
    "people"
   ],
   "example": ""
+ },
+ {
+  "id": 7417,
+  "text": "pierogi",
+  "translation": "pierogi (dumplings)",
+  "transcription": "pjɛˈrɔgi",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7418,
+  "text": "nie bardzo",
+  "translation": "not really",
+  "transcription": "ɲɛ ˈbard͡zɔ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7419,
+  "text": "niespecjalnie",
+  "translation": "not particularly",
+  "transcription": "ɲɛspɛˈt͡sjalɲɛ",
+  "partOfSpeech": "adv",
+  "cefr": "A2",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7420,
+  "text": "smaczny",
+  "translation": "tasty",
+  "transcription": "ˈsmat͡ʂnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7421,
+  "text": "ruskie",
+  "translation": "with potato and cottage cheese (pierogi ruskie)",
+  "transcription": "ˈruskjɛ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7422,
+  "text": "nietradycyjny",
+  "translation": "non-traditional",
+  "transcription": "ɲɛtradɨˈt͡sɨjnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "B1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7423,
+  "text": "oliwka",
+  "translation": "olive",
+  "transcription": "ɔˈlifka",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7424,
+  "text": "dwoje",
+  "translation": "two (dwoje dzieci — two children)",
+  "transcription": "ˈdvɔjɛ",
+  "partOfSpeech": "num",
+  "cefr": "A2",
+  "topics": [
+   "numbers",
+   "family"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7425,
+  "text": "iberystyka",
+  "translation": "Spanish and Portuguese studies",
+  "transcription": "ibɛrɨˈstɨka",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "university"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7426,
+  "text": "zakupy",
+  "translation": "shopping (robić zakupy — to go shopping)",
+  "transcription": "zaˈkupɨ",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "shopping",
+   "hobbies"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7427,
+  "text": "mailować",
+  "translation": "to e-mail",
+  "transcription": "maiˈlɔvat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "A2",
+  "topics": [
+   "internet"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7428,
+  "text": "telefonować",
+  "translation": "to phone",
+  "transcription": "tɛlɛfɔˈnɔvat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "A1",
+  "topics": [
+   "smartphone"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7429,
+  "text": "fotografować",
+  "translation": "to photograph",
+  "transcription": "fɔtɔgraˈfɔvat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "A2",
+  "topics": [
+   "hobbies"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7430,
+  "text": "saksofon",
+  "translation": "saxophone",
+  "transcription": "saˈksɔfɔn",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "music"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7431,
+  "text": "pomidorowy",
+  "translation": "tomato (adj.)",
+  "transcription": "pɔmidɔˈrɔvɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7432,
+  "text": "kontaktować się",
+  "translation": "to keep in touch",
+  "transcription": "kɔntaˈktɔvat͡ɕ ɕɛ",
+  "partOfSpeech": "v",
+  "cefr": "A2",
+  "topics": [
+   "internet"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7433,
+  "text": "rolki",
+  "translation": "rollerblades (jeździć na rolkach)",
+  "transcription": "ˈrɔlki",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "sports",
+   "hobbies"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7434,
+  "text": "realnie",
+  "translation": "really, actually",
+  "transcription": "rɛˈalɲɛ",
+  "partOfSpeech": "adv",
+  "cefr": "B1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7435,
+  "text": "spotykać się",
+  "translation": "to meet",
+  "transcription": "spɔˈtɨkat͡ɕ ɕɛ",
+  "partOfSpeech": "v",
+  "cefr": "A1",
+  "topics": [
+   "hobbies",
+   "people"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7436,
+  "text": "fantastycznie",
+  "translation": "fantastic",
+  "transcription": "fantaˈstɨt͡ʂɲɛ",
+  "partOfSpeech": "adv",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7437,
+  "text": "konno",
+  "translation": "on horseback (jeździć konno — to ride a horse)",
+  "transcription": "ˈkɔnnɔ",
+  "partOfSpeech": "adv",
+  "cefr": "A2",
+  "topics": [
+   "sports",
+   "hobbies"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7438,
+  "text": "brydż",
+  "translation": "bridge (card game)",
+  "transcription": "brɨt͡ʂ",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "hobbies"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7439,
+  "text": "squash",
+  "translation": "squash",
+  "transcription": "ˈsuasx",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "sports"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7440,
+  "text": "snowboard",
+  "translation": "snowboard",
+  "transcription": "snɔˈvbɔart",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "sports"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7441,
+  "text": "ambasada",
+  "translation": "embassy",
+  "transcription": "ambaˈsada",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "travel"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7442,
+  "text": "nieaktualny",
+  "translation": "expired",
+  "transcription": "ɲɛaktuˈalnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "travel"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7443,
+  "text": "halo",
+  "translation": "hello (on the phone)",
+  "transcription": "ˈxalɔ",
+  "partOfSpeech": "interj",
+  "cefr": "A1",
+  "topics": [
+   "smartphone"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7444,
+  "text": "pejzaż",
+  "translation": "landscape (painting)",
+  "transcription": "ˈpɛjzaʂ",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "hobbies"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7445,
+  "text": "anons",
+  "translation": "ad",
+  "transcription": "ˈanɔns",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7446,
+  "text": "galeria handlowa",
+  "translation": "shopping mall",
+  "transcription": "gaˈlɛrja xanˈdlɔva",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7447,
+  "text": "parkingowy",
+  "translation": "parking (adj.)",
+  "transcription": "parkinˈgɔvɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "transport"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7448,
+  "text": "masaż",
+  "translation": "massage",
+  "transcription": "ˈmasaʂ",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "health"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7449,
+  "text": "tajski",
+  "translation": "Thai",
+  "transcription": "ˈtajski",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "countries"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7450,
+  "text": "maraton",
+  "translation": "marathon",
+  "transcription": "maˈratɔn",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "sports",
+   "movies"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7451,
+  "text": "tanio",
+  "translation": "cheap, cheaply",
+  "transcription": "ˈtaɲɔ",
+  "partOfSpeech": "adv",
+  "cefr": "A1",
+  "topics": [
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7452,
+  "text": "zrelaksować się",
+  "translation": "to relax",
+  "transcription": "zrɛlaˈksɔvat͡ɕ ɕɛ",
+  "partOfSpeech": "v",
+  "cefr": "A2",
+  "topics": [
+   "hobbies"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7453,
+  "text": "iberoamerykański",
+  "translation": "Ibero-American",
+  "transcription": "ibɛrɔamɛrɨˈkaɲski",
+  "partOfSpeech": "adj",
+  "cefr": "B1",
+  "topics": [
+   "movies"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7454,
+  "text": "hipermarket",
+  "translation": "hypermarket",
+  "transcription": "xipɛrˈmarkɛt",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7455,
+  "text": "dyskoteka",
+  "translation": "disco",
+  "transcription": "dɨskɔˈtɛka",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "music",
+   "hobbies"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7456,
+  "text": "jak leci",
+  "translation": "how's it going",
+  "transcription": "jak ˈlɛt͡ɕi",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "greetings",
+   "daily-conversation"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7457,
+  "text": "specjalistka",
+  "translation": "specialist (woman)",
+  "transcription": "spɛt͡sjaˈlistka",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "professions"
+  ],
+  "example": ""
  }
 ]

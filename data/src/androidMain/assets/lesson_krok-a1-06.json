@@ -1,0 +1,1675 @@
+{
+  "lessonId": "krok-a1-06",
+  "rules": [
+    {
+      "title": "mój, twój (my, your)",
+      "tables": [
+        {
+          "header": ["", "my / your", "examples"],
+          "rows": [
+            ["masculine", "**mój / twój**", "dom, brat, tata, kolega, gospodarz"],
+            ["feminine", "**moja / twoja**", "mama, siostra, kawa, gospodyni"],
+            ["neuter", "**moje / twoje**", "auto, dziecko, mieszkanie, liceum"]
+          ]
+        }
+      ],
+      "notes": ["The form follows the noun's gender. *tata* and *kolega* end in *-a* but are men: *mój tata*."]
+    },
+    {
+      "title": "Three conjugations",
+      "tables": [
+        {
+          "header": ["", "-m, -sz", "-ę, -isz / -ysz", "-ę, -esz"],
+          "rows": [
+            ["ja", "ma**m**", "rob**ię** / tańcz**ę**", "pisz**ę** / gotuj**ę**"],
+            ["ty", "ma**sz**", "rob**isz** / tańcz**ysz**", "pisz**esz** / gotuj**esz**"],
+            ["on / ona / ono", "ma", "rob**i** / tańcz**y**", "pisz**e** / gotuj**e**"],
+            ["my", "ma**my**", "rob**imy** / tańcz**ymy**", "pisz**emy** / gotuj**emy**"],
+            ["wy", "ma**cie**", "rob**icie** / tańcz**ycie**", "pisz**ecie** / gotuj**ecie**"],
+            ["oni / one", "ma**ją**", "rob**ią** / tańcz**ą**", "pisz**ą** / gotuj**ą**"]
+          ]
+        }
+      ],
+      "notes": [
+        "The group shows in the *ja* and *ty* forms.",
+        "*się* stays: *nudzę się, nudzisz się*.",
+        "Stem changes: *pisać → piszę*, *jeździć → jeżdżę*, *chodzić → chodzę*."
+      ]
+    },
+    {
+      "title": "-ować → -uj-",
+      "tables": [
+        {
+          "header": ["gotować", ""],
+          "rows": [
+            ["ja", "gotu**ję**"],
+            ["ty", "gotu**jesz**"],
+            ["on / ona / ono", "gotu**je**"],
+            ["my", "gotu**jemy**"],
+            ["wy", "gotu**jecie**"],
+            ["oni / one", "gotu**ją**"]
+          ]
+        }
+      ],
+      "notes": ["Same pattern: *pracować, studiować, podróżować, kupować, spacerować, malować, fotografować, telefonować, mailować, dyskutować*."]
+    },
+    {
+      "title": "Verb + infinitive",
+      "tables": [
+        {
+          "rows": [
+            ["lubić", "Lubię czytać."],
+            ["umieć", "Umiesz gotować?"],
+            ["chcieć", "Chcę iść na masaż."],
+            ["woleć", "Wolę grać na komputerze."],
+            ["móc", "Mogę? Możemy jeździć w weekendy."]
+          ]
+        }
+      ],
+      "notes": ["The second verb is not conjugated: *Lubisz słuchać muzyki?*"]
+    },
+    {
+      "title": "grać w / na, jeździć na, chodzić na / do",
+      "tables": [
+        {
+          "rows": [
+            ["grać **w** + game or sport", "w tenisa, w piłkę, w szachy, w koszykówkę"],
+            ["grać **na** + instrument", "na gitarze, na pianinie, na saksofonie, na komputerze"],
+            ["jeździć **na**", "na rowerze, na rolkach, na nartach (but *jeździć konno*)"],
+            ["chodzić **na**", "na spacery, na mecz, na spektakl"],
+            ["chodzić **do**", "do kina, do teatru, do restauracji, do klubu"]
+          ]
+        }
+      ],
+      "notes": ["No preposition: *oglądać telewizję, robić zakupy, robić zdjęcia, słuchać muzyki*."]
+    }
+  ],
+  "tracks": [
+    {"id": "106A1", "file": "a1_coursebook_106a1.mp3"},
+    {"id": "106A1-2", "file": "a1_coursebook_106a1-2.mp3"},
+    {"id": "106A1-3", "file": "a1_coursebook_106a1-3.mp3"},
+    {"id": "106A1-4", "file": "a1_coursebook_106a1-4.mp3"},
+    {"id": "106B2", "file": "a1_coursebook_106b2.mp3"},
+    {"id": "106B3", "file": "a1_coursebook_106b3.mp3"},
+    {"id": "106B4", "file": "a1_coursebook_106b4.mp3"},
+    {"id": "106B5", "file": "a1_coursebook_106b5.mp3"},
+    {"id": "wb23", "file": "a1_workbook_23_L06_cwiczenie1_1.mp3"},
+    {"id": "wb24", "file": "a1_workbook_24_L06_cwiczenie1_2.mp3"},
+    {"id": "wb25", "file": "a1_workbook_25_L06_cwiczenie1_3.mp3"},
+    {"id": "wb26", "file": "a1_workbook_26_L06_cwiczenie1_4.mp3"},
+    {"id": "wb27", "file": "a1_workbook_27_L06_cwiczenie2_a.mp3"},
+    {"id": "wb28", "file": "a1_workbook_28_L06_cwiczenie2_b.mp3"},
+    {"id": "wb29", "file": "a1_workbook_29_L06_cwiczenie2_c.mp3"},
+    {"id": "wb30", "file": "a1_workbook_30_L06_cwiczenie2_d.mp3"},
+    {"id": "wb31", "file": "a1_workbook_31_L06_cwiczenie8.mp3"},
+    {"id": "wb32", "file": "a1_workbook_32_L06_cwiczenie9.mp3"}
+  ],
+  "steps": [
+    {"id": "G", "title": "Lesson grammar", "screens": ["0"], "grammar": true},
+    {"id": "1", "title": "What are you doing?", "screens": ["1A", "1B", "1C", "1D", "1E", "1F"]},
+    {"id": "2", "title": "mój, twój", "screens": ["2A", "2B", "2C"]},
+    {"id": "3", "title": "Three conjugations", "screens": ["3A", "3B", "3C", "3D", "3E", "3F", "3G", "3H", "3I", "3J"]},
+    {"id": "4", "title": "Hobbies", "screens": ["4A", "4B", "4C", "4D", "4E", "4F", "4G", "4H", "4I", "4J"]},
+    {"id": "5", "title": "Weekend plans and text messages", "screens": ["5A", "5B", "5C", "5D", "5E", "5F"]},
+    {"id": "6", "title": "Lesson review", "screens": ["6A", "6B"], "review": true}
+  ],
+  "screens": [
+    {
+      "id": "0",
+      "type": "grammar",
+      "title": "Lesson grammar",
+      "instruction": "All the grammar of this lesson before the exercises. The steps repeat the part they need."
+    },
+    {
+      "id": "1A",
+      "type": "gap_fill",
+      "title": "What are you doing? (Pani Joanna)",
+      "instruction": "Mami lives with a Polish host family and asks everyone what they are doing. Listen: which picture is it? Then fill in the dialogue.",
+      "tracks": [{"id": "106A1"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Mami", "text": "Przepraszam, co pani robi?"},
+              {"speaker": "Pani Joanna", "text": "Gotuję pierogi. A ty umiesz gotować?"},
+              {"speaker": "Mami", "text": "Nie bardzo, tylko ryż. Moja mama gotuje bardzo dobrze. Ja nie lubię."},
+              {"speaker": "Pani Joanna", "text": "Aha, to szkoda. Wiesz, może Karol robi coś interesującego?"}
+            ]
+          }
+        ]
+      },
+      "hint": "lubię · gotuję · robi · umiesz",
+      "items": [
+        {"label": "1", "prompt": "Which picture is it?", "options": ["📷 photo album", "📖 book", "🥟 dough", "💻 laptop"], "answer": "🥟 dough"}
+      ],
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Mami", "text": "Przepraszam, co pani robi?"},
+            {"speaker": "Pani Joanna", "text": "[1] pierogi. A ty [2] gotować?"},
+            {"speaker": "Mami", "text": "Nie bardzo, tylko ryż. Moja mama gotuje bardzo dobrze. Ja nie [3]."},
+            {"speaker": "Pani Joanna", "text": "Aha, to szkoda. Wiesz, może Karol [4] coś interesującego?"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Gotuję"]},
+        {"number": 2, "answers": ["umiesz"], "feedback": "*umieć* is -m, -sz: *umiem, umiesz*."},
+        {"number": 3, "answers": ["lubię"]},
+        {"number": 4, "answers": ["robi"]}
+      ],
+      "newWords": [
+        {"polish": "gotować", "english": "to cook"},
+        {"polish": "pierogi", "english": "pierogi (dumplings)"},
+        {"polish": "nie bardzo", "english": "not really"},
+        {"polish": "ryż", "english": "rice"},
+        {"polish": "mama", "english": "mum"},
+        {"polish": "szkoda", "english": "pity"},
+        {"polish": "może", "english": "maybe"},
+        {"polish": "interesujący", "english": "interesting"},
+        {"polish": "umieć", "english": "can, to know how"}
+      ],
+      "rules": [2],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "1B",
+      "type": "gap_fill",
+      "title": "What are you doing? (Karol)",
+      "instruction": "Mami lives with a Polish host family and asks everyone what they are doing. Listen: which picture is it? Then fill in the dialogue.",
+      "tracks": [{"id": "106A1-2"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Mami", "text": "Cześć! Mogę? Co robisz?"},
+              {"speaker": "Karol", "text": "Cześć, proszę. Czytam książkę."},
+              {"speaker": "Mami", "text": "To interesujące?"},
+              {"speaker": "Karol", "text": "Jasne! Bardzo lubię czytać."},
+              {"speaker": "Mami", "text": "Ee, ja niespecjalnie. Wolę grać na komputerze. A co robi twój tata?"},
+              {"speaker": "Karol", "text": "Myślę, że pracuje."}
+            ]
+          }
+        ]
+      },
+      "hint": "czytam · mogę · myślę · grać",
+      "items": [
+        {"label": "1", "prompt": "Which picture is it?", "options": ["📷 photo album", "📖 book", "🥟 dough", "💻 laptop"], "answer": "📖 book"}
+      ],
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Mami", "text": "Cześć! [1]? Co robisz?"},
+            {"speaker": "Karol", "text": "Cześć, proszę. [2] książkę."},
+            {"speaker": "Mami", "text": "To interesujące?"},
+            {"speaker": "Karol", "text": "Jasne! Bardzo lubię czytać."},
+            {"speaker": "Mami", "text": "Ee, ja niespecjalnie. Wolę [3] na komputerze. A co robi twój tata?"},
+            {"speaker": "Karol", "text": "[4], że pracuje."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Mogę"]},
+        {"number": 2, "answers": ["Czytam"]},
+        {"number": 3, "answers": ["grać"], "feedback": "After *woleć* the second verb stays in the infinitive: *wolę grać*."},
+        {"number": 4, "answers": ["Myślę"]}
+      ],
+      "newWords": [
+        {"polish": "jasne", "english": "sure"},
+        {"polish": "niespecjalnie", "english": "not particularly"},
+        {"polish": "woleć", "english": "to prefer"},
+        {"polish": "komputer", "english": "computer (grać na komputerze — to play computer games)"}
+      ],
+      "rules": [2]
+    },
+    {
+      "id": "1C",
+      "type": "gap_fill",
+      "title": "What are you doing? (Pan Grzegorz)",
+      "instruction": "Mami lives with a Polish host family and asks everyone what they are doing. Listen: which picture is it? Then fill in the dialogue.",
+      "tracks": [{"id": "106A1-3"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Mami", "text": "Co pan robi?"},
+              {"speaker": "Pan Grzegorz", "text": "Pracuję: szukam informacji, piszę e-maile."},
+              {"speaker": "Mami", "text": "A co to jest „pu-de-lek”? Pan tu pracuje?"},
+              {"speaker": "Pan Grzegorz", "text": "Yyy, a to? To nic. Tylko informacje o znanych, popularnych aktorach, muzykach."},
+              {"speaker": "Mami", "text": "Hi, hi, to znaczy, że pan teraz nie pracuje, tak?"},
+              {"speaker": "Pan Grzegorz", "text": "Yyy, no nie. Wiesz Mami, moja córka ogląda stare zdjęcia. To bardzo interesujące."}
+            ]
+          }
+        ]
+      },
+      "hint": "piszę · ogląda · pracuje · robi",
+      "items": [
+        {"label": "1", "prompt": "Which picture is it?", "options": ["📷 photo album", "📖 book", "🥟 dough", "💻 laptop"], "answer": "💻 laptop"}
+      ],
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Mami", "text": "Co pan [1]?"},
+            {"speaker": "Pan Grzegorz", "text": "Pracuję: szukam informacji, [2] e-maile."},
+            {"speaker": "Mami", "text": "A co to jest „pu-de-lek”? Pan tu pracuje?"},
+            {"speaker": "Pan Grzegorz", "text": "Yyy, a to? To nic. Tylko informacje o znanych, popularnych aktorach, muzykach."},
+            {"speaker": "Mami", "text": "Hi, hi, to znaczy, że pan teraz nie [3], tak?"},
+            {"speaker": "Pan Grzegorz", "text": "Yyy, no nie. Wiesz Mami, moja córka [4] stare zdjęcia. To bardzo interesujące."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["robi"]},
+        {"number": 2, "answers": ["piszę"], "feedback": "*pisać* is -ę, -esz: *piszę, piszesz, pisze…*"},
+        {"number": 3, "answers": ["pracuje"]},
+        {"number": 4, "answers": ["ogląda"]}
+      ],
+      "notes": ["*Pudelek* is a Polish celebrity-gossip website; Pan Grzegorz is only pretending to work."],
+      "newWords": [
+        {"polish": "informacja", "english": "information"},
+        {"polish": "e-mail", "english": "e-mail"},
+        {"polish": "znany", "english": "famous"},
+        {"polish": "oglądać", "english": "to watch, to look at"},
+        {"polish": "zdjęcie", "english": "photo"}
+      ],
+      "rules": [2],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "1D",
+      "type": "gap_fill",
+      "title": "What are you doing? (Karolina)",
+      "instruction": "Mami lives with a Polish host family and asks everyone what they are doing. Listen: which picture is it? Then fill in the dialogue.",
+      "tracks": [{"id": "106A1-4"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Mami", "text": "A ty, co robisz?"},
+              {"speaker": "Karolina", "text": "Oglądam stare zdjęcia. O, to na przykład moja mama i mój tata na uniwersytecie, a to mój brat na wakacjach."},
+              {"speaker": "Mami", "text": "Hi, hi, jaki mały!"},
+              {"speaker": "Karolina", "text": "No! Mami, a co ty robisz dzisiaj?"},
+              {"speaker": "Mami", "text": "Ja? Ja nic, nudzę się! I jestem trochę smutna."},
+              {"speaker": "Karolina", "text": "Dlaczego?"},
+              {"speaker": "Mami", "text": "Bo moja mama, mój tata, moja siostra i mój brat są w Japonii, a ja tu, w Polsce."}
+            ]
+          }
+        ]
+      },
+      "hint": "oglądam · nudzę · mój · moja",
+      "items": [
+        {"label": "1", "prompt": "Which picture is it?", "options": ["📷 photo album", "📖 book", "🥟 dough", "💻 laptop"], "answer": "📷 photo album"}
+      ],
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Mami", "text": "A ty, co robisz?"},
+            {"speaker": "Karolina", "text": "[1] stare zdjęcia. O, to na przykład moja mama i mój tata na uniwersytecie, a to mój brat na wakacjach."},
+            {"speaker": "Mami", "text": "Hi, hi, jaki mały!"},
+            {"speaker": "Karolina", "text": "No! Mami, a co ty robisz dzisiaj?"},
+            {"speaker": "Mami", "text": "Ja? Ja nic, [2] się! I jestem trochę smutna."},
+            {"speaker": "Karolina", "text": "Dlaczego?"},
+            {"speaker": "Mami", "text": "Bo moja mama, mój tata, [3] siostra i [4] brat są w Japonii, a ja tu, w Polsce."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Oglądam"]},
+        {"number": 2, "answers": ["nudzę"]},
+        {"number": 3, "answers": ["moja"], "feedback": "*siostra* is feminine → *moja*; *brat* is masculine → *mój*."},
+        {"number": 4, "answers": ["mój"], "feedback": "*siostra* is feminine → *moja*; *brat* is masculine → *mój*."}
+      ],
+      "newWords": [
+        {"polish": "uniwersytet", "english": "university"},
+        {"polish": "brat", "english": "brother"},
+        {"polish": "siostra", "english": "sister"},
+        {"polish": "dzisiaj", "english": "today"},
+        {"polish": "nudzić się", "english": "to be bored"}
+      ],
+      "rules": [2, 1]
+    },
+    {
+      "id": "1E",
+      "type": "gap_fill",
+      "title": "What are they doing?",
+      "instruction": "What is each person in the four dialogues doing? Fill in the verb (*on / ona*) from the box.",
+      "wordBox": ["czyta", "nudzi się", "gotuje", "pracuje", "ogląda"],
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Pani Joanna [1]."},
+            {"text": "2. Pan Grzegorz [2] ;-)"},
+            {"text": "3. Karol [3]."},
+            {"text": "4. Karolina [4] stare zdjęcia."},
+            {"text": "5. Mami [5]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["gotuje"]},
+        {"number": 2, "answers": ["pracuje"]},
+        {"number": 3, "answers": ["czyta"]},
+        {"number": 4, "answers": ["ogląda"]},
+        {"number": 5, "answers": ["nudzi się", "się nudzi"]}
+      ],
+      "rules": [2]
+    },
+    {
+      "id": "1F",
+      "type": "reference",
+      "title": "Pierogi",
+      "instruction": "Read about a Polish classic.",
+      "notes": [
+        "Pierogi — tradycyjne polskie danie, bardzo smaczne. Pierogi mogą być z kapustą, mięsem, grzybami albo z owocami, z serem lub ruskie. Ale są też pierogi nietradycyjne: z mozzarellą, z makrelą, z tuńczykiem, pierogi greckie z serem feta, z oliwkami, z brokułami."
+      ],
+      "newWords": [
+        {"polish": "tradycyjny", "english": "traditional"},
+        {"polish": "danie", "english": "dish"},
+        {"polish": "smaczny", "english": "tasty"},
+        {"polish": "kapusta", "english": "cabbage"},
+        {"polish": "mięso", "english": "meat"},
+        {"polish": "owoc", "english": "fruit"},
+        {"polish": "ruskie", "english": "with potato and cottage cheese (pierogi ruskie)"},
+        {"polish": "nietradycyjny", "english": "non-traditional"},
+        {"polish": "tuńczyk", "english": "tuna"},
+        {"polish": "oliwka", "english": "olive"},
+        {"polish": "grecki", "english": "Greek"},
+        {"polish": "albo", "english": "or"},
+        {"polish": "lub", "english": "or"}
+      ]
+    },
+    {
+      "id": "2A",
+      "type": "reference",
+      "title": "mój, moja, moje",
+      "instruction": "*mój* (my) and *twój* (your) agree with the noun's gender, like adjectives.",
+      "tables": [
+        {
+          "header": ["", "my / your", "examples"],
+          "rows": [
+            ["masculine (on)", "**mój / twój**", "dom, brat, tata, kolega, gospodarz"],
+            ["feminine (ona)", "**moja / twoja**", "mama, siostra, kawa, gospodyni"],
+            ["neuter (ono)", "**moje / twoje**", "auto, dziecko, mieszkanie, liceum"]
+          ]
+        }
+      ],
+      "notes": ["*tata* and *kolega* end in *-a* but are men: *mój tata, mój kolega*."],
+      "newWords": [
+        {"polish": "mój", "english": "my (m) — moja (f), moje (n)"},
+        {"polish": "twój", "english": "your (m) — twoja (f), twoje (n)"},
+        {"polish": "liceum", "english": "secondary school"},
+        {"polish": "gospodyni", "english": "hostess"},
+        {"polish": "gospodarz", "english": "host (of a host family)"}
+      ],
+      "rules": [1]
+    },
+    {
+      "id": "2B",
+      "type": "choice",
+      "title": "mój, moja or moje?",
+      "instruction": "Sort the words into three groups.",
+      "shuffle": false,
+      "items": [
+        {"label": "1", "prompt": "mama", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moja, twoja"},
+        {"label": "2", "prompt": "gospodyni", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moja, twoja", "feedback": "A woman → *moja* (the ending is *-i*)."},
+        {"label": "3", "prompt": "samochód", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "mój, twój"},
+        {"label": "4", "prompt": "córka", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moja, twoja"},
+        {"label": "5", "prompt": "koleżanka", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moja, twoja"},
+        {"label": "6", "prompt": "auto", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moje, twoje"},
+        {"label": "7", "prompt": "szkoła", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moja, twoja"},
+        {"label": "8", "prompt": "kolega", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "mój, twój", "feedback": "A man → *mój*, even with *-a*."},
+        {"label": "9", "prompt": "siostra", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moja, twoja"},
+        {"label": "10", "prompt": "syn", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "mój, twój"},
+        {"label": "11", "prompt": "gospodarz", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "mój, twój"},
+        {"label": "12", "prompt": "książka", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moja, twoja"},
+        {"label": "13", "prompt": "dom", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "mój, twój"},
+        {"label": "14", "prompt": "biuro", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moje, twoje"},
+        {"label": "15", "prompt": "krzesło", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moje, twoje"},
+        {"label": "16", "prompt": "tata", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "mój, twój", "feedback": "A man → *mój*, even with *-a*."},
+        {"label": "17", "prompt": "komórka", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moja, twoja"},
+        {"label": "18", "prompt": "długopis", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "mój, twój"},
+        {"label": "19", "prompt": "kawa", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moja, twoja"},
+        {"label": "20", "prompt": "brat", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "mój, twój"},
+        {"label": "21", "prompt": "dziecko", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moje, twoje"},
+        {"label": "22", "prompt": "mieszkanie", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moje, twoje"}
+      ],
+      "newWords": [
+        {"polish": "samochód", "english": "car"},
+        {"polish": "auto", "english": "car"},
+        {"polish": "biuro", "english": "office"}
+      ],
+      "rules": [1]
+    },
+    {
+      "id": "2C",
+      "type": "choice",
+      "title": "mój, moja or moje? (workbook)",
+      "instruction": "Sort the words into three groups.",
+      "shuffle": false,
+      "items": [
+        {"label": "1", "prompt": "telefon", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "mój, twój"},
+        {"label": "2", "prompt": "segregator", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "mój, twój"},
+        {"label": "3", "prompt": "liceum", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moje, twoje", "feedback": "*-um* nouns are neuter → *moje liceum* (like *muzeum*)."},
+        {"label": "4", "prompt": "nauczycielka", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moja, twoja"},
+        {"label": "5", "prompt": "herbata", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moja, twoja"},
+        {"label": "6", "prompt": "student", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "mój, twój"},
+        {"label": "7", "prompt": "miasto", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moje, twoje"},
+        {"label": "8", "prompt": "program", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "mój, twój"},
+        {"label": "9", "prompt": "woda", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moja, twoja"},
+        {"label": "10", "prompt": "komputer", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "mój, twój"},
+        {"label": "11", "prompt": "kino", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moje, twoje"},
+        {"label": "12", "prompt": "film", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "mój, twój"},
+        {"label": "13", "prompt": "studentka", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moja, twoja"},
+        {"label": "14", "prompt": "ołówek", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "mój, twój"},
+        {"label": "15", "prompt": "książka", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moja, twoja"}
+      ],
+      "newWords": [{"polish": "miasto", "english": "city"}],
+      "rules": [1]
+    },
+    {
+      "id": "3A",
+      "type": "reference",
+      "title": "Three conjugations",
+      "instruction": "Polish verbs have three main present-tense patterns. The *ja* and *ty* forms show the pattern.",
+      "tables": [
+        {
+          "header": ["", "-m, -sz", "-ę, -isz / -ysz", "-ę, -esz"],
+          "rows": [
+            ["ja", "ma**m**", "rob**ię** / tańcz**ę**", "pisz**ę** / gotuj**ę**"],
+            ["ty", "ma**sz**", "rob**isz** / tańcz**ysz**", "pisz**esz** / gotuj**esz**"],
+            ["on / ona / ono", "ma", "rob**i** / tańcz**y**", "pisz**e** / gotuj**e**"],
+            ["my", "ma**my**", "rob**imy** / tańcz**ymy**", "pisz**emy** / gotuj**emy**"],
+            ["wy", "ma**cie**", "rob**icie** / tańcz**ycie**", "pisz**ecie** / gotuj**ecie**"],
+            ["oni / one", "ma**ją**", "rob**ią** / tańcz**ą**", "pisz**ą** / gotuj**ą**"]
+          ]
+        }
+      ],
+      "notes": [
+        "*-ować* verbs change *-ow-* to *-uj-*: *gotować → gotuję, gotujesz*; *pracować → pracuję*; *studiować → studiuję*.",
+        "*się* stays: *nudzę się, nudzisz się*. Stem changes: *pisać → piszę*, *jeździć → jeżdżę*, *chodzić → chodzę*."
+      ],
+      "rules": [2, 3]
+    },
+    {
+      "id": "3B",
+      "type": "choice",
+      "title": "Who? ja, ty, on…",
+      "instruction": "Which person is each form?",
+      "shuffle": false,
+      "items": [
+        {"label": "1", "prompt": "gotuję", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "ja"},
+        {"label": "2", "prompt": "uczę się", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "ja"},
+        {"label": "3", "prompt": "gotują", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "oni / one"},
+        {"label": "4", "prompt": "nudzisz się", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "ty"},
+        {"label": "5", "prompt": "oglądasz", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "ty"},
+        {"label": "6", "prompt": "nudzi się", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "on / ona / ono"},
+        {"label": "7", "prompt": "uczy się", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "on / ona / ono"},
+        {"label": "8", "prompt": "oglądam", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "ja"},
+        {"label": "9", "prompt": "ogląda", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "on / ona / ono"},
+        {"label": "10", "prompt": "uczymy się", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "my"},
+        {"label": "11", "prompt": "uczysz się", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "ty"},
+        {"label": "12", "prompt": "gotujecie", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "wy"},
+        {"label": "13", "prompt": "nudzimy się", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "my"},
+        {"label": "14", "prompt": "gotujemy", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "my"},
+        {"label": "15", "prompt": "piszecie", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "wy"},
+        {"label": "16", "prompt": "oglądacie", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "wy"},
+        {"label": "17", "prompt": "gotuje", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "on / ona / ono"},
+        {"label": "18", "prompt": "nudzicie się", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "wy"},
+        {"label": "19", "prompt": "oglądamy", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "my"},
+        {"label": "20", "prompt": "gotujesz", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "ty"},
+        {"label": "21", "prompt": "uczą się", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "oni / one"},
+        {"label": "22", "prompt": "oglądają", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "oni / one"},
+        {"label": "23", "prompt": "nudzą się", "options": ["ja", "ty", "on / ona / ono", "my", "wy", "oni / one"], "answer": "oni / one"}
+      ],
+      "rules": [2]
+    },
+    {
+      "id": "3C",
+      "type": "conjugation",
+      "title": "Conjugation tables",
+      "instruction": "Complete the forms of the six verbs.",
+      "groups": [
+        {
+          "title": "mieć",
+          "translation": "to have · -m, -sz",
+          "items": [
+            {"label": "ja", "answers": ["mam"]},
+            {"label": "ty", "answers": ["masz"]},
+            {"label": "on / ona / ono", "answers": ["ma"]},
+            {"label": "my", "answers": ["mamy"]},
+            {"label": "wy", "answers": ["macie"]},
+            {"label": "oni / one", "answers": ["mają"]}
+          ]
+        },
+        {
+          "title": "rozumieć",
+          "translation": "to understand · -m, -sz",
+          "items": [
+            {"label": "ja", "answers": ["rozumiem"]},
+            {"label": "ty", "answers": ["rozumiesz"]},
+            {"label": "on / ona / ono", "answers": ["rozumie"]},
+            {"label": "my", "answers": ["rozumiemy"]},
+            {"label": "wy", "answers": ["rozumiecie"]},
+            {"label": "oni / one", "answers": ["rozumieją"], "feedback": "*rozumieć* is -m, -sz: *oni rozumieją* (like *mają*)."}
+          ]
+        },
+        {
+          "title": "robić",
+          "translation": "to do · -ę, -isz",
+          "items": [
+            {"label": "ja", "answers": ["robię"]},
+            {"label": "ty", "answers": ["robisz"]},
+            {"label": "on / ona / ono", "answers": ["robi"]},
+            {"label": "my", "answers": ["robimy"]},
+            {"label": "wy", "answers": ["robicie"]},
+            {"label": "oni / one", "answers": ["robią"]}
+          ]
+        },
+        {
+          "title": "tańczyć",
+          "translation": "to dance · -ę, -ysz",
+          "items": [
+            {"label": "ja", "answers": ["tańczę"]},
+            {"label": "ty", "answers": ["tańczysz"], "feedback": "After *cz* write *y*: *tańczysz*."},
+            {"label": "on / ona / ono", "answers": ["tańczy"]},
+            {"label": "my", "answers": ["tańczymy"]},
+            {"label": "wy", "answers": ["tańczycie"]},
+            {"label": "oni / one", "answers": ["tańczą"]}
+          ]
+        },
+        {
+          "title": "pisać",
+          "translation": "to write · -ę, -esz",
+          "items": [
+            {"label": "ja", "answers": ["piszę"], "feedback": "*pisać* is -ę, -esz: *piszę, piszesz, pisze…*"},
+            {"label": "ty", "answers": ["piszesz"]},
+            {"label": "on / ona / ono", "answers": ["pisze"]},
+            {"label": "my", "answers": ["piszemy"]},
+            {"label": "wy", "answers": ["piszecie"]},
+            {"label": "oni / one", "answers": ["piszą"]}
+          ]
+        },
+        {
+          "title": "gotować",
+          "translation": "to cook · -ę, -esz",
+          "items": [
+            {"label": "ja", "answers": ["gotuję"], "feedback": "*-ować → -uj-*: *gotuję*."},
+            {"label": "ty", "answers": ["gotujesz"]},
+            {"label": "on / ona / ono", "answers": ["gotuje"]},
+            {"label": "my", "answers": ["gotujemy"]},
+            {"label": "wy", "answers": ["gotujecie"]},
+            {"label": "oni / one", "answers": ["gotują"]}
+          ]
+        }
+      ],
+      "rules": [2, 3]
+    },
+    {
+      "id": "3D",
+      "type": "choice",
+      "title": "Odd one out",
+      "instruction": "Which form doesn't match the other two in person or number?",
+      "shuffle": false,
+      "items": [
+        {"label": "a", "prompt": "a)", "options": ["ma", "pisze", "czytają"], "answer": "czytają", "feedback": "*czytają* = oni; the others are on / ona."},
+        {"label": "b", "prompt": "b)", "options": ["pracuje", "wiem", "piszę"], "answer": "pracuje", "feedback": "*pracuje* = on / ona; the others are ja."},
+        {"label": "c", "prompt": "c)", "options": ["nudzimy się", "lubisz", "mamy"], "answer": "lubisz", "feedback": "*lubisz* = ty; the others are my."},
+        {"label": "d", "prompt": "d)", "options": ["ogląda", "czytacie", "rozumie"], "answer": "czytacie", "feedback": "*czytacie* = wy; the others are on / ona."},
+        {"label": "e", "prompt": "e)", "options": ["uczysz się", "szukasz", "robi"], "answer": "robi", "feedback": "*robi* = on / ona; the others are ty."},
+        {"label": "f", "prompt": "f)", "options": ["ma", "interesują się", "są"], "answer": "ma", "feedback": "*ma* = on / ona; the others are oni."},
+        {"label": "g", "prompt": "g)", "options": ["mieszkacie", "piszecie", "pracują"], "answer": "pracują", "feedback": "*pracują* = oni; the others are wy."},
+        {"label": "h", "prompt": "h)", "options": ["jesteś", "oglądają", "czytasz"], "answer": "oglądają", "feedback": "*oglądają* = oni; the others are ty."},
+        {"label": "i", "prompt": "i)", "options": ["piszesz", "robi", "uczy się"], "answer": "piszesz", "feedback": "*piszesz* = ty; the others are on / ona."}
+      ],
+      "rules": [2]
+    },
+    {
+      "id": "3E",
+      "type": "choice",
+      "title": "Odd one out (workbook)",
+      "instruction": "Which form doesn't match the other two in person or number?",
+      "shuffle": false,
+      "items": [
+        {"label": "1", "prompt": "1)", "options": ["jest", "śpiewa", "czytają"], "answer": "czytają", "feedback": "*czytają* = oni; the others are on / ona."},
+        {"label": "2", "prompt": "2)", "options": ["chodzę", "czytam", "piszesz"], "answer": "piszesz", "feedback": "*piszesz* = ty; the others are ja."},
+        {"label": "3", "prompt": "3)", "options": ["robimy", "lubisz", "czytamy"], "answer": "lubisz", "feedback": "*lubisz* = ty; the others are my."},
+        {"label": "4", "prompt": "4)", "options": ["pracujecie", "macie", "chcemy"], "answer": "chcemy", "feedback": "*chcemy* = my; the others are wy."},
+        {"label": "5", "prompt": "5)", "options": ["grają", "umieją", "jeździ"], "answer": "jeździ", "feedback": "*jeździ* = on / ona; the others are oni."},
+        {"label": "6", "prompt": "6)", "options": ["powtarzasz", "szukają", "śpiewasz"], "answer": "szukają", "feedback": "*szukają* = oni; the others are ty."},
+        {"label": "7", "prompt": "7)", "options": ["jesteście", "kupujemy", "nudzicie się"], "answer": "kupujemy", "feedback": "*kupujemy* = my; the others are wy."},
+        {"label": "8", "prompt": "8)", "options": ["piszą", "kochają", "kochacie"], "answer": "kochacie", "feedback": "*kochacie* = wy; the others are oni."},
+        {"label": "9", "prompt": "9)", "options": ["grasz", "mieszka", "jest"], "answer": "grasz", "feedback": "*grasz* = ty; the others are on / ona."}
+      ],
+      "newWords": [
+        {"polish": "powtarzać", "english": "to repeat"},
+        {"polish": "kochać", "english": "to love"},
+        {"polish": "kupować", "english": "to buy"}
+      ],
+      "rules": [2]
+    },
+    {
+      "id": "3F",
+      "type": "inline_choice",
+      "title": "What fits?",
+      "instruction": "Choose the right form.",
+      "items": [
+        {
+          "label": "a",
+          "prompt": "Pan Grzegorz [1] oglądać telewizję.",
+          "choices": [{"options": ["lubię", "lubi", "lubić"], "answer": "lubi"}]
+        },
+        {
+          "label": "b",
+          "prompt": "Karolina [1] dużo.",
+          "choices": [{"options": ["uczy się", "uczę się", "uczą się"], "answer": "uczy się"}]
+        },
+        {
+          "label": "c",
+          "prompt": "Uwe [1] bardzo intensywnie.",
+          "choices": [{"options": ["pracuje", "pracować", "pracuję"], "answer": "pracuje"}]
+        },
+        {
+          "label": "d",
+          "prompt": "Państwo Maj [1] dwoje dzieci.",
+          "choices": [
+            {"options": ["mają", "są", "ma"], "answer": "mają", "feedback": "*państwo* = Mr and Mrs → plural: *mają*."}
+          ]
+        },
+        {
+          "label": "e",
+          "prompt": "Oni [1] iberystykę.",
+          "choices": [{"options": ["studiować", "studiują", "studiuje"], "answer": "studiują"}]
+        },
+        {
+          "label": "f",
+          "prompt": "Mami [1] z polską rodziną.",
+          "choices": [{"options": ["mieszka", "mieszkają", "mieszkać"], "answer": "mieszka"}]
+        },
+        {
+          "label": "g",
+          "prompt": "Javier świetnie [1].",
+          "choices": [{"options": ["tańczą", "tańczy", "tańczymy"], "answer": "tańczy"}]
+        },
+        {
+          "label": "h",
+          "prompt": "Angela [1] robić zakupy.",
+          "choices": [{"options": ["lubimy", "lubią", "lubi"], "answer": "lubi"}]
+        },
+        {
+          "label": "i",
+          "prompt": "Pani Joanna i pan Grzegorz [1] dużo książek.",
+          "choices": [{"options": ["czyta", "czytają", "czytać"], "answer": "czytają"}]
+        }
+      ],
+      "newWords": [
+        {"polish": "dużo", "english": "a lot"},
+        {"polish": "dwoje", "english": "two (dwoje dzieci — two children)"},
+        {"polish": "iberystyka", "english": "Spanish and Portuguese studies"},
+        {"polish": "zakupy", "english": "shopping (robić zakupy — to go shopping)"}
+      ],
+      "rules": [2]
+    },
+    {
+      "id": "3G",
+      "type": "gap_fill",
+      "title": "-ować verbs",
+      "instruction": "Put the verb in brackets in the right form.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Mami [1] (mailować) do domu."},
+            {"text": "2. Oni dużo [2] (podróżować) po Europie."},
+            {"text": "3. Co ty teraz [3] (gotować)?"},
+            {"text": "4. Uwe [4] (telefonować) do Mami."},
+            {"text": "5. Co wy [5] (kupować)?"},
+            {"text": "6. Gdzie jesteś? — [6] (ja, spacerować) po parku."},
+            {"text": "7. My [7] (malować) mieszkanie."},
+            {"text": "8. Karolina [8] (fotografować) Kraków."},
+            {"text": "9. Czy wy [9] (pracować) w Warszawie?"},
+            {"text": "10. One [10] (dyskutować) z nauczycielką."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["mailuje"], "feedback": "*-ować → -uj-*: *gotuję, gotujesz, gotuje…*"},
+        {"number": 2, "answers": ["podróżują"]},
+        {"number": 3, "answers": ["gotujesz"]},
+        {"number": 4, "answers": ["telefonuje"]},
+        {"number": 5, "answers": ["kupujecie"]},
+        {"number": 6, "answers": ["Spaceruję"], "feedback": "*-ować → -uj-*: *gotuję, gotujesz, gotuje…*"},
+        {"number": 7, "answers": ["malujemy"]},
+        {"number": 8, "answers": ["fotografuje"]},
+        {"number": 9, "answers": ["pracujecie"]},
+        {"number": 10, "answers": ["dyskutują"]}
+      ],
+      "notes": ["International verbs in *-ować* conjugate the same way: *esemesować, czatować, dekorować*."],
+      "newWords": [
+        {"polish": "mailować", "english": "to e-mail"},
+        {"polish": "podróżować", "english": "to travel"},
+        {"polish": "telefonować", "english": "to phone"},
+        {"polish": "park", "english": "park"},
+        {"polish": "fotografować", "english": "to photograph"},
+        {"polish": "dyskutować", "english": "to discuss"}
+      ],
+      "rules": [3]
+    },
+    {
+      "id": "3H",
+      "type": "gap_fill",
+      "title": "Fill in (workbook)",
+      "instruction": "Put the verb in brackets in the right form.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Co robicie? — (my) [1] (słuchać) muzyki."},
+            {"text": "2. Na wakacjach (ja) [2] (czytać) książki i gazety."},
+            {"text": "3. Mami i Angela nie [3] (grać) na saksofonie."},
+            {"text": "4. Javier bardzo dobrze [4] (tańczyć)."},
+            {"text": "5. Gdzie (ty) [5] (chodzić) na spacery w Krakowie?"},
+            {"text": "6. Co robi Julia? — [6] (pisać) pracę domową."},
+            {"text": "7. Dzisiaj na obiad (ja) [7] (gotować) zupę pomidorową."},
+            {"text": "8. Oni [8] (studiować) w Krakowie."},
+            {"text": "9. Czy dużo (wy) [9] (podróżować) po Polsce?"},
+            {"text": "10. (My) [10] (kontaktować się) przez Internet."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Słuchamy"]},
+        {"number": 2, "answers": ["czytam"]},
+        {"number": 3, "answers": ["grają"]},
+        {"number": 4, "answers": ["tańczy"]},
+        {"number": 5, "answers": ["chodzisz"]},
+        {"number": 6, "answers": ["Pisze"], "feedback": "*pisać* is -ę, -esz: *ona pisze*."},
+        {"number": 7, "answers": ["gotuję"], "feedback": "*-ować → -uj-*: *gotuję, gotujesz, gotuje…*"},
+        {"number": 8, "answers": ["studiują"]},
+        {"number": 9, "answers": ["podróżujecie"], "feedback": "*-ować → -uj-*: *gotuję, gotujesz, gotuje…*"},
+        {"number": 10, "answers": ["Kontaktujemy się", "Się kontaktujemy"]}
+      ],
+      "newWords": [
+        {"polish": "gazeta", "english": "newspaper"},
+        {"polish": "saksofon", "english": "saxophone"},
+        {"polish": "spacer", "english": "walk (chodzić na spacery — to go for walks)"},
+        {"polish": "praca domowa", "english": "homework"},
+        {"polish": "obiad", "english": "lunch"},
+        {"polish": "zupa", "english": "soup"},
+        {"polish": "pomidorowy", "english": "tomato (adj.)"},
+        {"polish": "kontaktować się", "english": "to keep in touch"}
+      ],
+      "rules": [2, 3]
+    },
+    {
+      "id": "3I",
+      "type": "gap_fill",
+      "title": "Uwe and Angela",
+      "instruction": "Put the verbs in the right form, then listen to check.",
+      "tracks": [{"id": "wb31"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Uwe", "text": "Cześć, Angela! Co robisz?"},
+              {"speaker": "Angela", "text": "Czekam na Mami. Planujemy dziś razem jeździć na rolkach."},
+              {"speaker": "Uwe", "text": "Umiesz jeździć na rolkach?"},
+              {"speaker": "Angela", "text": "Oczywiście."},
+              {"speaker": "Uwe", "text": "Ja, niestety, nie umiem."}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Uwe", "text": "Cześć, Angela! Co [1] (robić)?"},
+            {"speaker": "Angela", "text": "[2] (czekać) na Mami. [3] (my, planować) dziś razem jeździć na rolkach."},
+            {"speaker": "Uwe", "text": "[4] (ty, umieć) jeździć na rolkach?"},
+            {"speaker": "Angela", "text": "Oczywiście."},
+            {"speaker": "Uwe", "text": "Ja, niestety, nie [5] (umieć)."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["robisz"]},
+        {"number": 2, "answers": ["Czekam"]},
+        {"number": 3, "answers": ["Planujemy"]},
+        {"number": 4, "answers": ["Umiesz"], "feedback": "*umieć* is -m, -sz: *umiem, umiesz*."},
+        {"number": 5, "answers": ["umiem"]}
+      ],
+      "newWords": [
+        {"polish": "czekać", "english": "to wait"},
+        {"polish": "planować", "english": "to plan"},
+        {"polish": "razem", "english": "together"},
+        {"polish": "rolki", "english": "rollerblades (jeździć na rolkach)"}
+      ],
+      "rules": [2, 4]
+    },
+    {
+      "id": "3J",
+      "type": "gap_fill",
+      "title": "Who dances so beautifully?",
+      "instruction": "Put the verbs in the right form, then listen to check.",
+      "tracks": [{"id": "wb32"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Maria", "text": "Kto tak pięknie tańczy?"},
+              {"speaker": "Tom", "text": "To Javier. On umie świetnie tańczyć."},
+              {"speaker": "Mami", "text": "Myślę, że Javier jest bardzo utalentowany."},
+              {"speaker": "Maria", "text": "Naprawdę?"},
+              {"speaker": "Mami", "text": "Tak. Javier tańczy, ładnie śpiewa, gra też na gitarze i na pianinie."},
+              {"speaker": "Tom", "text": "Ja też dobrze tańczę, gram na pianinie i na skrzypcach."},
+              {"speaker": "Mami", "text": "No tak, ale…"}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Maria", "text": "Kto tak pięknie [1] (tańczyć)?"},
+            {"speaker": "Tom", "text": "To Javier. On [2] (umieć) świetnie [3] (tańczyć)."},
+            {"speaker": "Mami", "text": "[4] (myśleć), że Javier [5] (być) bardzo utalentowany."},
+            {"speaker": "Maria", "text": "Naprawdę?"},
+            {"speaker": "Mami", "text": "Tak. Javier [6] (tańczyć), ładnie [7] (śpiewać), [8] (grać) też na gitarze i na pianinie."},
+            {"speaker": "Tom", "text": "Ja też dobrze [9] (tańczyć), [10] (grać) na pianinie i na skrzypcach."},
+            {"speaker": "Mami", "text": "No tak, ale…"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["tańczy"]},
+        {"number": 2, "answers": ["umie"]},
+        {"number": 3, "answers": ["tańczyć"], "feedback": "After *umieć* → infinitive: *umie tańczyć*."},
+        {"number": 4, "answers": ["Myślę"]},
+        {"number": 5, "answers": ["jest"]},
+        {"number": 6, "answers": ["tańczy"]},
+        {"number": 7, "answers": ["śpiewa"]},
+        {"number": 8, "answers": ["gra"]},
+        {"number": 9, "answers": ["tańczę"]},
+        {"number": 10, "answers": ["gram"]}
+      ],
+      "newWords": [{"polish": "pięknie", "english": "beautifully"}, {"polish": "ładnie", "english": "nicely"}],
+      "rules": [2, 4]
+    },
+    {
+      "id": "4A",
+      "type": "choice",
+      "title": "What do you do after class?",
+      "instruction": "Angela, Mami and Javier talk about their free time. Listen: true or false? P = true (*prawda*), N = false (*nieprawda*).",
+      "tracks": [{"id": "106B2"}],
+      "shuffle": false,
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Angela", "text": "Mami, co robisz po lekcji?"},
+              {"speaker": "Mami", "text": "Ja? Nic specjalnego. Nudzę się."},
+              {"speaker": "Angela", "text": "Nudzisz się? A dlaczego?"},
+              {"speaker": "Mami", "text": "Bo polska mama Joanna gotuje pierogi, tata Grzegorz też pracuje w domu, a Karol czyta. Nie mają czasu."},
+              {"speaker": "Nauczycielka", "text": "Po polsku nie mówimy „polska mama” ani „polski tata”, bo to nie jest realnie twoja mama ani tata. „Gospodyni” i „gospodarz”."},
+              {"speaker": "Angela", "text": "A ty co lubisz robić?"},
+              {"speaker": "Mami", "text": "Bardzo lubię grać na komputerze, malować i słuchać muzyki rockowej."},
+              {"speaker": "Angela", "text": "Ja też lubię słuchać muzyki. I lubię tańczyć, spotykać się ze znajomymi i robić zakupy."},
+              {"speaker": "Javier", "text": "A ja lubię chodzić do klubu, tańczyć i podróżować."},
+              {"speaker": "Mami", "text": "Ja nie umiem tańczyć."},
+              {"speaker": "Javier", "text": "Nie ma problemu, jestem świetnym nauczycielem tańca."},
+              {"speaker": "Angela", "text": "To fantastycznie! W weekend idziemy tańczyć!"},
+              {"speaker": "Mami", "text": "No nie wiem…"}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {"label": "1", "prompt": "Mami nudzi się w domu.", "options": ["P", "N"], "answer": "P"},
+        {"label": "2", "prompt": "Pani Joanna nie ma czasu, bo gotuje.", "options": ["P", "N"], "answer": "P"},
+        {"label": "3", "prompt": "Tata Mami ma na imię Grzegorz.", "options": ["P", "N"], "answer": "N", "feedback": "Grzegorz is the host (*gospodarz*); Mami's father is in Japan."},
+        {"label": "4", "prompt": "Po polsku forma „polska mama” nie jest dobra.", "options": ["P", "N"], "answer": "P"},
+        {"label": "5", "prompt": "Mami i Angela lubią muzykę.", "options": ["P", "N"], "answer": "P"},
+        {"label": "6", "prompt": "Angela i Javier lubią tańczyć.", "options": ["P", "N"], "answer": "P"},
+        {"label": "7", "prompt": "Mami umie tańczyć.", "options": ["P", "N"], "answer": "N"},
+        {"label": "8", "prompt": "Javier jest nauczycielem muzyki.", "options": ["P", "N"], "answer": "N", "feedback": "He is a dance teacher (*nauczyciel tańca*)."},
+        {"label": "9", "prompt": "Mami bardzo chce się uczyć tańczyć.", "options": ["P", "N"], "answer": "N", "feedback": "She says: *No nie wiem…*"}
+      ],
+      "newWords": [
+        {"polish": "czas", "english": "time"},
+        {"polish": "realnie", "english": "really"},
+        {"polish": "spotykać się", "english": "to meet"},
+        {"polish": "znajomy", "english": "friend, acquaintance"},
+        {"polish": "klub", "english": "club"},
+        {"polish": "taniec", "english": "dance"},
+        {"polish": "fantastycznie", "english": "fantastic"}
+      ],
+      "rules": [4]
+    },
+    {
+      "id": "4B",
+      "type": "reference",
+      "title": "Hobby — Co lubisz robić?",
+      "instruction": "Listen and repeat. *Lubię* + infinitive: *Lubię gotować.*",
+      "groups": [
+        {
+          "track": {"id": "106B3"},
+          "phrases": [
+            {"polish": "🚶 chodzić na spacery (na siłownię, do kina, do restauracji)", "english": "to go for walks (to the gym, the cinema, a restaurant)"},
+            {"polish": "📰 czytać książki i gazety", "english": "to read books and newspapers"},
+            {"polish": "🍳 gotować", "english": "to cook"},
+            {"polish": "🎸 grać na gitarze", "english": "to play the guitar"},
+            {"polish": "🐎 jeździć konno", "english": "to ride a horse"},
+            {"polish": "🎨 malować", "english": "to paint"},
+            {"polish": "📺 oglądać telewizję", "english": "to watch TV"},
+            {"polish": "🧳 podróżować", "english": "to travel"},
+            {"polish": "🛍️ robić zakupy", "english": "to go shopping"},
+            {"polish": "📷 robić zdjęcia", "english": "to take photos"},
+            {"polish": "🎧 słuchać muzyki", "english": "to listen to music"},
+            {"polish": "🎤 śpiewać", "english": "to sing"},
+            {"polish": "💃 tańczyć", "english": "to dance"},
+            {"polish": "🗣️ uczyć się języków obcych", "english": "to learn foreign languages"},
+            {"polish": "🏃 uprawiać sport: biegać, pływać", "english": "to do sport: to run, to swim"},
+            {"polish": "🎾 grać w tenisa, w piłkę, w golfa, w szachy, w brydża", "english": "to play tennis, football, golf, chess, bridge"},
+            {"polish": "🚴 jeździć na rowerze, na rolkach, na nartach", "english": "to ride a bike, to rollerblade, to ski"}
+          ]
+        }
+      ],
+      "newWords": [
+        {"polish": "siłownia", "english": "gym"},
+        {"polish": "konno", "english": "on horseback (jeździć konno — to ride a horse)"},
+        {"polish": "obcy", "english": "foreign (języki obce — foreign languages)"},
+        {"polish": "uprawiać", "english": "to do (uprawiać sport — to do sport)"},
+        {"polish": "pływać", "english": "to swim"},
+        {"polish": "piłka", "english": "ball"},
+        {"polish": "szachy", "english": "chess"},
+        {"polish": "brydż", "english": "bridge"}
+      ],
+      "rules": [4, 5]
+    },
+    {
+      "id": "4C",
+      "type": "write",
+      "title": "Label the pictures",
+      "instruction": "Label each picture with an activity from the box.",
+      "wordBox": [
+        "chodzić na spacery",
+        "czytać książki",
+        "gotować",
+        "grać na gitarze",
+        "grać w piłkę",
+        "biegać",
+        "jeździć na nartach",
+        "malować",
+        "oglądać telewizję",
+        "podróżować",
+        "robić zdjęcia",
+        "jeździć konno",
+        "pływać",
+        "słuchać muzyki",
+        "robić zakupy",
+        "śpiewać",
+        "tańczyć",
+        "uczyć się języków obcych",
+        "grać w tenisa"
+      ],
+      "items": [
+        {
+          "label": "1",
+          "picture": {"label": "a man with a camera", "emoji": "📷"},
+          "answers": ["robić zdjęcia"]
+        },
+        {
+          "label": "2",
+          "picture": {"label": "a man on a horse", "emoji": "🐎"},
+          "answers": ["jeździć konno"]
+        },
+        {
+          "label": "3",
+          "picture": {"label": "a woman with shopping bags", "emoji": "🛍️"},
+          "answers": ["robić zakupy"]
+        },
+        {
+          "label": "4",
+          "picture": {"label": "a man singing into a microphone", "emoji": "🎤"},
+          "answers": ["śpiewać"]
+        },
+        {
+          "label": "5",
+          "picture": {"label": "a man with a backpack on a path", "emoji": "🚶"},
+          "answers": ["chodzić na spacery"]
+        },
+        {
+          "label": "6",
+          "picture": {"label": "a boy kicking a ball", "emoji": "⚽"},
+          "answers": ["grać w piłkę"]
+        },
+        {
+          "label": "7",
+          "picture": {"label": "a traveller with a map", "emoji": "🧳"},
+          "answers": ["podróżować"]
+        },
+        {
+          "label": "8",
+          "picture": {"label": "a cook at a pot", "emoji": "🍲"},
+          "answers": ["gotować"]
+        },
+        {
+          "label": "9",
+          "picture": {"label": "a swimmer in goggles", "emoji": "🏊"},
+          "answers": ["pływać"]
+        },
+        {
+          "label": "10",
+          "picture": {"label": "a man with foreign-language textbooks", "emoji": "🗣️"},
+          "answers": ["uczyć się języków obcych"]
+        },
+        {
+          "label": "11",
+          "picture": {"label": "an old man reading", "emoji": "📖"},
+          "answers": ["czytać książki"]
+        },
+        {
+          "label": "12",
+          "picture": {"label": "a boy in headphones", "emoji": "🎧"},
+          "answers": ["słuchać muzyki"]
+        },
+        {
+          "label": "13",
+          "picture": {"label": "a dancing couple", "emoji": "💃"},
+          "answers": ["tańczyć"]
+        },
+        {"label": "14", "picture": {"label": "a running man", "emoji": "🏃"}, "answers": ["biegać"]},
+        {
+          "label": "15",
+          "picture": {"label": "a rocker with a guitar", "emoji": "🎸"},
+          "answers": ["grać na gitarze"]
+        },
+        {
+          "label": "16",
+          "picture": {"label": "a tennis player", "emoji": "🎾"},
+          "answers": ["grać w tenisa"]
+        },
+        {
+          "label": "17",
+          "picture": {"label": "a skier", "emoji": "⛷️"},
+          "answers": ["jeździć na nartach"]
+        },
+        {
+          "label": "18",
+          "picture": {"label": "a man in front of a TV", "emoji": "📺"},
+          "answers": ["oglądać telewizję"]
+        },
+        {
+          "label": "19",
+          "picture": {"label": "a painter at an easel", "emoji": "🎨"},
+          "answers": ["malować"]
+        }
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "4D",
+      "type": "gap_fill",
+      "title": "What are they doing?",
+      "instruction": "Read the dialogues and write what each person does (*on / ona* form).",
+      "sections": [
+        {
+          "title": "A",
+          "lines": [
+            {"speaker": "Pani Maj", "text": "Co robisz?"},
+            {"speaker": "Pan Maj", "text": "Słucham muzyki i czytam."},
+            {"speaker": "Pani Maj", "text": "A Karol i Karolina co robią?"},
+            {"speaker": "Pan Maj", "text": "Grają w szachy."}
+          ]
+        },
+        {
+          "title": "B",
+          "lines": [
+            {"speaker": "Angela", "text": "Cześć Tom, co robisz?"},
+            {"speaker": "Tom", "text": "Robię spaghetti i gotuję makaron."}
+          ]
+        },
+        {
+          "title": "C",
+          "lines": [
+            {"speaker": "Marisa", "text": "Lubisz uprawiać sport?"},
+            {"speaker": "Jonatan", "text": "Tak, biegam, pływam i jeżdżę na rowerze."},
+            {"speaker": "Marisa", "text": "Ja nie lubię biegać, ale jeżdżę konno."}
+          ]
+        },
+        {
+          "lines": [
+            {"text": "1. Pan Maj [1]."},
+            {"text": "2. Karol [2]."},
+            {"text": "3. Tom [3]."},
+            {"text": "4. Jonatan [4]."},
+            {"text": "5. Marisa [5]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["słucha muzyki i czyta", "słucha muzyki, czyta", "czyta i słucha muzyki", "czyta, słucha muzyki"]},
+        {"number": 2, "answers": ["gra w szachy"]},
+        {"number": 3, "answers": ["robi spaghetti i gotuje makaron", "robi spaghetti, gotuje makaron", "gotuje makaron i robi spaghetti", "gotuje makaron, robi spaghetti"]},
+        {"number": 4, "answers": ["biega, pływa i jeździ na rowerze", "biega i pływa i jeździ na rowerze", "biega, pływa, jeździ na rowerze", "biega, jeździ na rowerze i pływa", "biega i jeździ na rowerze i pływa", "biega, jeździ na rowerze, pływa", "pływa, biega i jeździ na rowerze", "pływa i biega i jeździ na rowerze", "pływa, biega, jeździ na rowerze", "pływa, jeździ na rowerze i biega", "pływa i jeździ na rowerze i biega", "pływa, jeździ na rowerze, biega", "jeździ na rowerze, biega i pływa", "jeździ na rowerze i biega i pływa", "jeździ na rowerze, biega, pływa", "jeździ na rowerze, pływa i biega", "jeździ na rowerze i pływa i biega", "jeździ na rowerze, pływa, biega"], "feedback": "*on / ona: jeździ* (*ja: jeżdżę*)."},
+        {"number": 5, "answers": ["jeździ konno"], "feedback": "*on / ona: jeździ* (*ja: jeżdżę*)."}
+      ],
+      "newWords": [{"polish": "makaron", "english": "pasta"}],
+      "rules": [2, 5]
+    },
+    {
+      "id": "4E",
+      "type": "choice",
+      "title": "robię, oglądam, gram…",
+      "instruction": "Which verb goes with each word? Sometimes two fit — choose either.",
+      "shuffle": false,
+      "items": [
+        {"label": "1", "prompt": "zdjęcia", "options": ["robię", "oglądam", "jeżdżę na", "gram na", "gram w", "chodzę na", "chodzę do"], "answer": "robię"},
+        {"label": "2", "prompt": "film", "options": ["robię", "oglądam", "jeżdżę na", "gram na", "gram w", "chodzę na", "chodzę do"], "answer": "oglądam", "answers": ["chodzę na"]},
+        {"label": "3", "prompt": "tenisa", "options": ["robię", "oglądam", "jeżdżę na", "gram na", "gram w", "chodzę na", "chodzę do"], "answer": "gram w", "feedback": "*gram w* + game or sport, *gram na* + instrument."},
+        {"label": "4", "prompt": "gitarze", "options": ["robię", "oglądam", "jeżdżę na", "gram na", "gram w", "chodzę na", "chodzę do"], "answer": "gram na", "feedback": "*gram w* + game or sport, *gram na* + instrument."},
+        {"label": "5", "prompt": "rowerze", "options": ["robię", "oglądam", "jeżdżę na", "gram na", "gram w", "chodzę na", "chodzę do"], "answer": "jeżdżę na"},
+        {"label": "6", "prompt": "teatru", "options": ["robię", "oglądam", "jeżdżę na", "gram na", "gram w", "chodzę na", "chodzę do"], "answer": "chodzę do"},
+        {"label": "7", "prompt": "squasha", "options": ["robię", "oglądam", "jeżdżę na", "gram na", "gram w", "chodzę na", "chodzę do"], "answer": "gram w", "feedback": "*gram w* + game or sport, *gram na* + instrument."},
+        {"label": "8", "prompt": "zakupy", "options": ["robię", "oglądam", "jeżdżę na", "gram na", "gram w", "chodzę na", "chodzę do"], "answer": "robię"},
+        {"label": "9", "prompt": "nartach", "options": ["robię", "oglądam", "jeżdżę na", "gram na", "gram w", "chodzę na", "chodzę do"], "answer": "jeżdżę na"},
+        {"label": "10", "prompt": "telewizję", "options": ["robię", "oglądam", "jeżdżę na", "gram na", "gram w", "chodzę na", "chodzę do"], "answer": "oglądam"},
+        {"label": "11", "prompt": "piłkę nożną", "options": ["robię", "oglądam", "jeżdżę na", "gram na", "gram w", "chodzę na", "chodzę do"], "answer": "gram w", "feedback": "*gram w* + game or sport, *gram na* + instrument."},
+        {"label": "12", "prompt": "mecz", "options": ["robię", "oglądam", "jeżdżę na", "gram na", "gram w", "chodzę na", "chodzę do"], "answer": "oglądam", "answers": ["chodzę na"]},
+        {"label": "13", "prompt": "spektakl", "options": ["robię", "oglądam", "jeżdżę na", "gram na", "gram w", "chodzę na", "chodzę do"], "answer": "oglądam", "answers": ["chodzę na"]},
+        {"label": "14", "prompt": "restauracji", "options": ["robię", "oglądam", "jeżdżę na", "gram na", "gram w", "chodzę na", "chodzę do"], "answer": "chodzę do"},
+        {"label": "15", "prompt": "snowboardzie", "options": ["robię", "oglądam", "jeżdżę na", "gram na", "gram w", "chodzę na", "chodzę do"], "answer": "jeżdżę na"},
+        {"label": "16", "prompt": "spacery", "options": ["robię", "oglądam", "jeżdżę na", "gram na", "gram w", "chodzę na", "chodzę do"], "answer": "chodzę na"},
+        {"label": "17", "prompt": "pianinie", "options": ["robię", "oglądam", "jeżdżę na", "gram na", "gram w", "chodzę na", "chodzę do"], "answer": "gram na", "feedback": "*gram w* + game or sport, *gram na* + instrument."}
+      ],
+      "newWords": [
+        {"polish": "mecz", "english": "match"},
+        {"polish": "spektakl", "english": "show (theatre)"},
+        {"polish": "squash", "english": "squash"},
+        {"polish": "snowboard", "english": "snowboard"}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "4F",
+      "type": "gap_fill",
+      "title": "Phone call A",
+      "instruction": "Listen to the phone call and fill in the missing words.",
+      "tracks": [{"id": "wb27"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Uwe", "text": "Gdzie dzwonisz?"},
+              {"speaker": "Tom", "text": "Telefonuję do ambasady."},
+              {"speaker": "Uwe", "text": "Dlaczego?"},
+              {"speaker": "Tom", "text": "Mój paszport jest nieaktualny."},
+              {"speaker": "Uwe", "text": "To faktycznie masz problem."}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Uwe", "text": "Gdzie dzwonisz?"},
+            {"speaker": "Tom", "text": "Telefonuję [1] ambasady."},
+            {"speaker": "Uwe", "text": "Dlaczego?"},
+            {"speaker": "Tom", "text": "[2] paszport jest [3]."},
+            {"speaker": "Uwe", "text": "To faktycznie masz [4]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["do"]},
+        {"number": 2, "answers": ["Mój"], "feedback": "*paszport* is masculine → *mój*."},
+        {"number": 3, "answers": ["nieaktualny"]},
+        {"number": 4, "answers": ["problem"]}
+      ],
+      "newWords": [
+        {"polish": "dzwonić", "english": "to call"},
+        {"polish": "ambasada", "english": "embassy"},
+        {"polish": "paszport", "english": "passport"},
+        {"polish": "nieaktualny", "english": "expired"},
+        {"polish": "faktycznie", "english": "indeed"}
+      ],
+      "rules": [1],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "4G",
+      "type": "gap_fill",
+      "title": "Phone call B",
+      "instruction": "Listen to the phone call and fill in the missing words.",
+      "tracks": [{"id": "wb28"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Mami", "text": "Halo. Karolina? Gdzie jesteś?"},
+              {"speaker": "Karolina", "text": "Robię zakupy w Galerii Centrum. A ty?"},
+              {"speaker": "Mami", "text": "Spaceruję po parku i robię zdjęcia."},
+              {"speaker": "Karolina", "text": "Co fotografujesz?"},
+              {"speaker": "Mami", "text": "Teraz małe dziecko — jest brudne, ale śliczne."}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Mami", "text": "Halo. Karolina? [1] jesteś?"},
+            {"speaker": "Karolina", "text": "Robię [2] w Galerii Centrum. A ty?"},
+            {"speaker": "Mami", "text": "Spaceruję [3] parku i robię zdjęcia."},
+            {"speaker": "Karolina", "text": "Co fotografujesz?"},
+            {"speaker": "Mami", "text": "Teraz [4] dziecko — jest [5], ale śliczne."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Gdzie"]},
+        {"number": 2, "answers": ["zakupy"]},
+        {"number": 3, "answers": ["po"]},
+        {"number": 4, "answers": ["małe"], "feedback": "*dziecko* is neuter → *małe*, *brudne*."},
+        {"number": 5, "answers": ["brudne"], "feedback": "*dziecko* is neuter → *małe*, *brudne*."}
+      ],
+      "newWords": [
+        {"polish": "halo", "english": "hello (on the phone)"},
+        {"polish": "galeria", "english": "gallery; shopping mall"},
+        {"polish": "śliczny", "english": "lovely"}
+      ],
+      "rules": [2]
+    },
+    {
+      "id": "4H",
+      "type": "gap_fill",
+      "title": "Phone call C",
+      "instruction": "Listen to the phone call and fill in the missing words.",
+      "tracks": [{"id": "wb29"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Javier", "text": "Halo. Tom? Gdzie jesteś?"},
+              {"speaker": "Tom", "text": "Jestem w parku."},
+              {"speaker": "Javier", "text": "Co robisz w parku? Biegasz?"},
+              {"speaker": "Tom", "text": "Nie, nie biegam. Gram w koszykówkę."},
+              {"speaker": "Javier", "text": "Ja też chcę grać!"},
+              {"speaker": "Tom", "text": "OK. Wiesz, gdzie jest Park Jordana?"},
+              {"speaker": "Javier", "text": "Oczywiście."},
+              {"speaker": "Tom", "text": "To czekamy."}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Javier", "text": "Halo. Tom? Gdzie jesteś?"},
+            {"speaker": "Tom", "text": "Jestem [1] parku."},
+            {"speaker": "Javier", "text": "Co robisz w parku? Biegasz?"},
+            {"speaker": "Tom", "text": "Nie, [2] biegam. [3] w koszykówkę."},
+            {"speaker": "Javier", "text": "Ja też [4] grać!"},
+            {"speaker": "Tom", "text": "OK. Wiesz, gdzie jest Park Jordana?"},
+            {"speaker": "Javier", "text": "[5]."},
+            {"speaker": "Tom", "text": "To czekamy."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["w"]},
+        {"number": 2, "answers": ["nie"]},
+        {"number": 3, "answers": ["Gram"], "feedback": "*gram w* + game or sport, *gram na* + instrument."},
+        {"number": 4, "answers": ["chcę"]},
+        {"number": 5, "answers": ["Oczywiście"]}
+      ],
+      "newWords": [{"polish": "koszykówka", "english": "basketball"}],
+      "rules": [2, 5]
+    },
+    {
+      "id": "4I",
+      "type": "gap_fill",
+      "title": "Phone call D",
+      "instruction": "Listen to the phone call and fill in the missing words.",
+      "tracks": [{"id": "wb30"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Mami", "text": "Karol, co oglądasz?"},
+              {"speaker": "Karol", "text": "Fajny film."},
+              {"speaker": "Mami", "text": "Jaki?"},
+              {"speaker": "Karol", "text": "To stara polska komedia. Jest bardzo wesoła. A ty, Mami, co robisz?"},
+              {"speaker": "Mami", "text": "Maluję."},
+              {"speaker": "Karol", "text": "O, co malujesz?"},
+              {"speaker": "Mami", "text": "Teraz maluję pejzaż, ale jestem już zmęczona."}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Mami", "text": "Karol, co oglądasz?"},
+            {"speaker": "Karol", "text": "[1] film."},
+            {"speaker": "Mami", "text": "[2]?"},
+            {"speaker": "Karol", "text": "To stara polska [3]. Jest bardzo [4]. A ty, Mami, co robisz?"},
+            {"speaker": "Mami", "text": "Maluję."},
+            {"speaker": "Karol", "text": "O, co [5]?"},
+            {"speaker": "Mami", "text": "Teraz maluję pejzaż, ale jestem już [6]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Fajny"]},
+        {"number": 2, "answers": ["Jaki"]},
+        {"number": 3, "answers": ["komedia"]},
+        {"number": 4, "answers": ["wesoła"], "feedback": "*komedia* is feminine → *wesoła*."},
+        {"number": 5, "answers": ["malujesz"]},
+        {"number": 6, "answers": ["zmęczona"], "feedback": "Mami is a woman → *zmęczona*."}
+      ],
+      "newWords": [{"polish": "komedia", "english": "comedy"}, {"polish": "pejzaż", "english": "landscape"}],
+      "rules": [2],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "4J",
+      "type": "choice",
+      "title": "Dialogue and picture",
+      "instruction": "Four short dialogues. Listen to each one and choose its picture.",
+      "shuffle": false,
+      "items": [
+        {
+          "label": "1",
+          "prompt": "Which picture is it?",
+          "options": ["📰 a man behind a newspaper", "✍️ a girl writing at a desk", "⌨️ hands on a keyboard", "🏙️ photos of a city"],
+          "answer": "⌨️ hands on a keyboard",
+          "track": {"id": "wb23", "label": "Dialogue 1"}
+        },
+        {
+          "label": "2",
+          "prompt": "Which picture is it?",
+          "options": ["📰 a man behind a newspaper", "✍️ a girl writing at a desk", "⌨️ hands on a keyboard", "🏙️ photos of a city"],
+          "answer": "📰 a man behind a newspaper",
+          "track": {"id": "wb24", "label": "Dialogue 2"}
+        },
+        {
+          "label": "3",
+          "prompt": "Which picture is it?",
+          "options": ["📰 a man behind a newspaper", "✍️ a girl writing at a desk", "⌨️ hands on a keyboard", "🏙️ photos of a city"],
+          "answer": "✍️ a girl writing at a desk",
+          "track": {"id": "wb25", "label": "Dialogue 3"}
+        },
+        {
+          "label": "4",
+          "prompt": "Which picture is it?",
+          "options": ["📰 a man behind a newspaper", "✍️ a girl writing at a desk", "⌨️ hands on a keyboard", "🏙️ photos of a city"],
+          "answer": "🏙️ photos of a city",
+          "track": {"id": "wb26", "label": "Dialogue 4"}
+        }
+      ]
+    },
+    {
+      "id": "5A",
+      "type": "choice",
+      "title": "Weekend plans",
+      "instruction": "Read the ads. Listen to what each person plans for the weekend and choose their ad.",
+      "tracks": [{"id": "106B4"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Angela", "text": "W weekend są w Krakowie moje koleżanki z Londynu. W Polsce jest tanio, dlatego najpierw chcemy zrobić zakupy w galerii handlowej, a potem idziemy na kawę."},
+              {"speaker": "Mami", "text": "Koleżanki z grupy chcą iść do klubu, bo jest koncert. Ja też idę z nimi, ale nie wiem, kto gra."},
+              {"speaker": "Javier", "text": "Co planuję robić w weekend? Jeszcze nie wiem. Chcę iść na festiwal filmów iberoamerykańskich. To może być interesujące oglądać filmy po hiszpańsku w Polsce."},
+              {"speaker": "Uwe", "text": "W weekendy zwykle nie mam czasu, bo pracuję, ale chcę się trochę zrelaksować i iść na masaż."}
+            ]
+          }
+        ]
+      },
+      "legend": [
+        "1. **Galeria Krakowska** — World Class Shopping: 270 sklepów, 1400 miejsc parkingowych, przy Dworcu Głównym",
+        "2. **Thai Therapy Center** — pierwszy w Krakowie tradycyjny masaż tajski, ul. Dietla 103/2",
+        "3. **Kino Radość** — nocne maratony filmowe, nowe filmy polskie, bilet 6 zł",
+        "4. **Jazz noc** — zapraszamy na koncert, 03.10, Alchemia"
+      ],
+      "items": [
+        {"label": "1", "prompt": "Mami", "options": ["1", "2", "3", "4"], "answer": "4"},
+        {"label": "2", "prompt": "Angela", "options": ["1", "2", "3", "4"], "answer": "1"},
+        {"label": "3", "prompt": "Uwe", "options": ["1", "2", "3", "4"], "answer": "2"},
+        {"label": "4", "prompt": "Javier", "options": ["1", "2", "3", "4"], "answer": "3", "feedback": "He wants to see films → the cinema ad (3)."}
+      ],
+      "newWords": [
+        {"polish": "galeria handlowa", "english": "shopping mall"},
+        {"polish": "sklep", "english": "shop"},
+        {"polish": "parkingowy", "english": "parking (adj.)"},
+        {"polish": "dworzec", "english": "station"},
+        {"polish": "masaż", "english": "massage"},
+        {"polish": "tajski", "english": "Thai"},
+        {"polish": "pierwszy", "english": "first"},
+        {"polish": "nocny", "english": "night (adj.)"},
+        {"polish": "maraton", "english": "marathon"},
+        {"polish": "filmowy", "english": "film (adj.)"},
+        {"polish": "bilet", "english": "ticket"},
+        {"polish": "koncert", "english": "concert"},
+        {"polish": "zapraszać", "english": "to invite"},
+        {"polish": "tanio", "english": "cheap"},
+        {"polish": "dlatego", "english": "that's why"},
+        {"polish": "najpierw", "english": "first"},
+        {"polish": "festiwal", "english": "festival"},
+        {"polish": "zwykle", "english": "usually"},
+        {"polish": "zrelaksować się", "english": "to relax"},
+        {"polish": "iberoamerykański", "english": "Ibero-American"},
+        {"polish": "zrobić", "english": "to do, to make"}
+      ],
+      "rules": [4]
+    },
+    {
+      "id": "5B",
+      "type": "inline_choice",
+      "title": "What is true?",
+      "instruction": "Listen again and choose the right answer.",
+      "tracks": [{"id": "106B5"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Angela", "text": "W weekend są w Krakowie moje koleżanki z Londynu. W Polsce jest tanio, dlatego najpierw chcemy zrobić zakupy w galerii handlowej, a potem idziemy na kawę."},
+              {"speaker": "Mami", "text": "Koleżanki z grupy chcą iść do klubu, bo jest koncert. Ja też idę z nimi, ale nie wiem, kto gra."},
+              {"speaker": "Javier", "text": "Co planuję robić w weekend? Jeszcze nie wiem. Chcę iść na festiwal filmów iberoamerykańskich. To może być interesujące oglądać filmy po hiszpańsku w Polsce."},
+              {"speaker": "Uwe", "text": "W weekendy zwykle nie mam czasu, bo pracuję, ale chcę się trochę zrelaksować i iść na masaż."}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {
+          "label": "a",
+          "prompt": "Angela ma koleżanki [1].",
+          "choices": [{"options": ["z Londynu", "z Krakowa", "z uniwersytetu"], "answer": "z Londynu"}]
+        },
+        {
+          "label": "b",
+          "prompt": "Angela chce robić zakupy [1].",
+          "choices": [
+            {"options": ["w hipermarkecie", "na targu", "w galerii handlowej"], "answer": "w galerii handlowej"}
+          ]
+        },
+        {
+          "label": "c",
+          "prompt": "Angela z koleżankami idzie też [1].",
+          "choices": [{"options": ["do restauracji", "na kawę"], "answer": "na kawę"}]
+        },
+        {
+          "label": "d",
+          "prompt": "Mami idzie [1].",
+          "choices": [{"options": ["na dyskotekę", "do klubu"], "answer": "do klubu"}]
+        },
+        {
+          "label": "e",
+          "prompt": "Mami idzie [1].",
+          "choices": [{"options": ["sama", "z koleżankami"], "answer": "z koleżankami"}]
+        },
+        {
+          "label": "f",
+          "prompt": "Javier chce oglądać filmy [1].",
+          "choices": [{"options": ["po hiszpańsku", "po polsku"], "answer": "po hiszpańsku"}]
+        },
+        {
+          "label": "g",
+          "prompt": "Uwe w weekend chce [1].",
+          "choices": [{"options": ["iść na masaż", "pracować"], "answer": "iść na masaż"}]
+        }
+      ],
+      "newWords": [
+        {"polish": "hipermarket", "english": "hypermarket"},
+        {"polish": "targ", "english": "market"},
+        {"polish": "dyskoteka", "english": "disco"},
+        {"polish": "sam", "english": "alone (sama — f)"}
+      ],
+      "rules": [4, 5]
+    },
+    {
+      "id": "5C",
+      "type": "choice",
+      "title": "SMS: what fits?",
+      "instruction": "Match each text message with its reply.",
+      "legend": [
+        "a) Ja nie moge, ucze sie hiszpanskiego. Przepraszam! Ale Javier mowi, ze on ma czas na kawe :-)",
+        "b) Nie, nic nie robię. Nudzę się i oglądam telewizję po polsku. Nic nie rozumiem.",
+        "c) Hej! Niestety, nie jestem specjalistka, ale moze Twoja nauczycielka wie.",
+        "d) Bardzo lubie, ale nie mam roweru ;-(",
+        "e) Tak, swietnie! Gdzie i kiedy?"
+      ],
+      "items": [
+        {"label": "1", "prompt": "Jak leci? Uczysz się?", "options": ["a", "b", "c", "d", "e"], "answer": "b"},
+        {"label": "2", "prompt": "Czesc! Umiesz gotowac pierogi? Gdzie w Internecie sa informacje?", "options": ["a", "b", "c", "d", "e"], "answer": "c"},
+        {"label": "3", "prompt": "Czesc Mami, tu Angela. Lubisz jezdzic na rowerze? Mozemy jezdzic w weekendy.", "options": ["a", "b", "c", "d", "e"], "answer": "d"},
+        {"label": "4", "prompt": "Chcesz isc tanczyc?", "options": ["a", "b", "c", "d", "e"], "answer": "e"},
+        {"label": "5", "prompt": "Spotykamy sie dzis w kawiarni na rynku? Sa tez moje kolezanki z Londynu.", "options": ["a", "b", "c", "d", "e"], "answer": "a"}
+      ],
+      "newWords": [
+        {"polish": "jak leci", "english": "how's it going"},
+        {"polish": "rynek", "english": "market square"},
+        {"polish": "specjalistka", "english": "specialist (woman)"},
+        {"polish": "hej", "english": "hey"}
+      ]
+    },
+    {
+      "id": "5D",
+      "type": "write",
+      "title": "SMS: Polish letters",
+      "instruction": "The text messages are written without Polish letters. Rewrite each one correctly (message 1 and reply b are already correct).",
+      "match": "exact_letters",
+      "notes": ["Every Polish letter counts here: a missing one is a mistake."],
+      "items": [
+        {"label": "2", "prompt": "Czesc! Umiesz gotowac pierogi? Gdzie w Internecie sa informacje?", "answers": ["Cześć! Umiesz gotować pierogi? Gdzie w Internecie są informacje?"]},
+        {"label": "3", "prompt": "Czesc Mami, tu Angela. Lubisz jezdzic na rowerze? Mozemy jezdzic w weekendy.", "answers": ["Cześć Mami, tu Angela. Lubisz jeździć na rowerze? Możemy jeździć w weekendy."]},
+        {"label": "4", "prompt": "Chcesz isc tanczyc?", "answers": ["Chcesz iść tańczyć?"]},
+        {"label": "5", "prompt": "Spotykamy sie dzis w kawiarni na rynku? Sa tez moje kolezanki z Londynu.", "answers": ["Spotykamy się dziś w kawiarni na rynku? Są też moje koleżanki z Londynu."]},
+        {"label": "a", "prompt": "Ja nie moge, ucze sie hiszpanskiego. Przepraszam! Ale Javier mowi, ze on ma czas na kawe :-)", "answers": ["Ja nie mogę, uczę się hiszpańskiego. Przepraszam! Ale Javier mówi, że on ma czas na kawę :-)"]},
+        {"label": "c", "prompt": "Hej! Niestety, nie jestem specjalistka, ale moze Twoja nauczycielka wie.", "answers": ["Hej! Niestety, nie jestem specjalistką, ale może Twoja nauczycielka wie."]},
+        {"label": "d", "prompt": "Bardzo lubie, ale nie mam roweru ;-(", "answers": ["Bardzo lubię, ale nie mam roweru ;-("]},
+        {"label": "e", "prompt": "Tak, swietnie! Gdzie i kiedy?", "answers": ["Tak, świetnie! Gdzie i kiedy?"]}
+      ]
+    },
+    {
+      "id": "5E",
+      "type": "choice",
+      "title": "SMS: what fits? (workbook)",
+      "instruction": "Match each text message with its reply.",
+      "legend": [
+        "a) Super! Idziemy, spotykamy sie w parku?",
+        "b) Tak, mamy czas. Co proponujesz?",
+        "c) Czesc, czekam teraz na Mami, a potem chcemy jezdzic na rolkach.",
+        "d) W parku, siedze i czytam."
+      ],
+      "items": [
+        {"label": "1", "prompt": "Hej Angela, co robisz?", "options": ["a", "b", "c", "d"], "answer": "c"},
+        {"label": "2", "prompt": "Hej, tu Tom, idziecie dzis grac w koszykowke?", "options": ["a", "b", "c", "d"], "answer": "a"},
+        {"label": "3", "prompt": "Czesc, gdzie jestes?", "options": ["a", "b", "c", "d"], "answer": "d"},
+        {"label": "4", "prompt": "Co dzis robimy? Macie dzis czas?", "options": ["a", "b", "c", "d"], "answer": "b"}
+      ],
+      "newWords": [{"polish": "proponować", "english": "to suggest"}]
+    },
+    {
+      "id": "5F",
+      "type": "write",
+      "title": "SMS: Polish letters (workbook)",
+      "instruction": "Rewrite the text messages with Polish letters (message 1 and reply b need no change).",
+      "match": "exact_letters",
+      "notes": ["Every Polish letter counts here: a missing one is a mistake."],
+      "items": [
+        {"label": "2", "prompt": "Hej, tu Tom, idziecie dzis grac w koszykowke?", "answers": ["Hej, tu Tom, idziecie dziś grać w koszykówkę?"]},
+        {"label": "3", "prompt": "Czesc, gdzie jestes?", "answers": ["Cześć, gdzie jesteś?"]},
+        {"label": "4", "prompt": "Co dzis robimy? Macie dzis czas?", "answers": ["Co dziś robimy? Macie dziś czas?"]},
+        {"label": "a", "prompt": "Super! Idziemy, spotykamy sie w parku?", "answers": ["Super! Idziemy, spotykamy się w parku?"]},
+        {"label": "c", "prompt": "Czesc, czekam teraz na Mami, a potem chcemy jezdzic na rolkach.", "answers": ["Cześć, czekam teraz na Mami, a potem chcemy jeździć na rolkach."]},
+        {"label": "d", "prompt": "W parku, siedze i czytam.", "answers": ["W parku, siedzę i czytam."]}
+      ]
+    },
+    {
+      "id": "6A",
+      "type": "write",
+      "title": "Correct the sentence",
+      "instruction": "Each sentence has one mistake. Write it correctly.",
+      "items": [
+        {"label": "a", "prompt": "Bardzo lubię tańcować.", "answers": ["Bardzo lubię tańczyć."], "feedback": "*tańczyć* is -ę, -ysz: *lubię tańczyć*."},
+        {"label": "b", "prompt": "Gram na tenisa.", "answers": ["Gram w tenisa."], "feedback": "*grać w* + game or sport: *w tenisa, w koszykówkę*."},
+        {"label": "c", "prompt": "Oglądam na telewizję.", "answers": ["Oglądam telewizję."], "feedback": "*oglądać* takes no preposition: *oglądam telewizję*."},
+        {"label": "d", "prompt": "Lubisz słuchasz muzyki?", "answers": ["Lubisz słuchać muzyki?"], "feedback": "After *lubić / umieć / chcieć* the second verb stays in the infinitive (*Lubisz słuchać muzyki?*)."},
+        {"label": "e", "prompt": "Nie umiem grać w gitarze.", "answers": ["Nie umiem grać na gitarze."], "feedback": "*grać na* + instrument: *na gitarze, na saksofonie*."},
+        {"label": "f", "prompt": "(ja) Pisze SMS.", "answers": ["Piszę SMS.", "Ja piszę SMS."], "feedback": "*pisać* is -ę, -esz: *(ja) piszę*."},
+        {"label": "g", "prompt": "(ty) Studiować w Polsce?", "answers": ["Studiujesz w Polsce?", "Ty studiujesz w Polsce?"], "feedback": "*-ować → -uj-*: *(ty) studiujesz*."},
+        {"label": "h", "prompt": "Oni czyta gazetę.", "answers": ["Oni czytają gazetę."], "feedback": "*oni* → *-ą*: *czytają*."},
+        {"label": "i", "prompt": "Oni uczę się polskiego.", "answers": ["Oni uczą się polskiego."], "feedback": "*oni* → *-ą*: *uczą się*."},
+        {"label": "j", "prompt": "Karolina lubicie pierogi.", "answers": ["Karolina lubi pierogi."], "feedback": "*Karolina* = *ona*: *lubi*."}
+      ],
+      "newWords": [{"polish": "sms", "english": "text message"}],
+      "rules": [2, 4, 5]
+    },
+    {
+      "id": "6B",
+      "type": "write",
+      "title": "Correct the sentence (workbook)",
+      "instruction": "Correct the mistake and write the sentence correctly.",
+      "items": [
+        {"label": "1", "prompt": "On piszę list.", "answers": ["On pisze list."], "feedback": "*on* → *pisze* (*ja piszę*)."},
+        {"label": "2", "prompt": "Lubić czytasz książki?", "answers": ["Lubisz czytać książki?"], "feedback": "After *lubić / umieć / chcieć* the second verb stays in the infinitive (*Lubisz słuchać muzyki?*)."},
+        {"label": "3", "prompt": "On gra w saksofonie.", "answers": ["On gra na saksofonie."], "feedback": "*grać na* + instrument: *na gitarze, na saksofonie*."},
+        {"label": "4", "prompt": "My gracie w tenisa.", "answers": ["My gramy w tenisa."], "feedback": "*my* → *-my*: *gramy*."},
+        {"label": "5", "prompt": "Czy ty umieć gotować?", "answers": ["Czy ty umiesz gotować?"], "feedback": "*umieć* is -m, -sz: *ty umiesz*."},
+        {"label": "6", "prompt": "Ona gotuję pierogi.", "answers": ["Ona gotuje pierogi."], "feedback": "*ona* → *gotuje* (*ja gotuję*)."},
+        {"label": "7", "prompt": "Tom gra na koszykówkę.", "answers": ["Tom gra w koszykówkę."], "feedback": "*grać w* + game or sport: *w tenisa, w koszykówkę*."},
+        {"label": "8", "prompt": "Oni lubią jeżdżą konno.", "answers": ["Oni lubią jeździć konno."], "feedback": "After *lubić / umieć / chcieć* the second verb stays in the infinitive (*Lubisz słuchać muzyki?*)."}
+      ],
+      "newWords": [{"polish": "list", "english": "letter"}],
+      "rules": [2, 4, 5]
+    }
+  ],
+  "vocabulary": [
+    {"polish": "Co robisz? · nic · nudzę się", "english": "What are you doing? · nothing · I'm bored"},
+    {"polish": "mama, tata, brat, siostra, córka, syn", "english": "mum, dad, brother, sister, daughter, son"},
+    {"polish": "gospodarz, gospodyni", "english": "host, hostess"},
+    {"polish": "mój / moja / moje · twój / twoja / twoje", "english": "my · your"},
+    {"polish": "gotować, pracować, studiować, podróżować, kupować, spacerować, malować", "english": "to cook, work, study, travel, buy, walk, paint"},
+    {"polish": "oglądać (telewizję, zdjęcia), czytać, pisać, szukać, czekać na", "english": "to watch (TV, photos), read, write, look for, wait for"},
+    {"polish": "lubić, umieć, chcieć, woleć, móc + infinitive", "english": "to like, can (know how), want, prefer, may"},
+    {"polish": "grać w tenisa / w piłkę · grać na gitarze / na pianinie", "english": "to play tennis / football · to play the guitar / piano"},
+    {"polish": "jeździć na rowerze / na nartach · jeździć konno", "english": "to ride a bike / to ski · to ride a horse"},
+    {"polish": "chodzić na spacery · chodzić do kina / do klubu", "english": "to go for walks · to go to the cinema / a club"},
+    {"polish": "robić zakupy · robić zdjęcia · słuchać muzyki", "english": "to go shopping · to take photos · to listen to music"},
+    {"polish": "pływać, biegać, śpiewać, tańczyć, uprawiać sport", "english": "to swim, run, sing, dance, do sport"},
+    {"polish": "w weekend · po lekcji · zwykle · najpierw · potem", "english": "at the weekend · after class · usually · first · then"}
+  ]
+}

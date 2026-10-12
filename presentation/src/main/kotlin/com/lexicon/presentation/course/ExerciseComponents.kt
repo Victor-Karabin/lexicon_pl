@@ -61,18 +61,22 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.setProgress
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.course.GAP_MARKER
 import com.lexicon.interactors.course.GapFillItem
 import com.lexicon.interactors.course.InlineChoiceGroup
 import com.lexicon.interactors.course.LETTER_GAP
+import com.lexicon.interactors.course.LessonAnswerChecker
 import com.lexicon.interactors.course.LetterFillItem
 import com.lexicon.interactors.course.MatchItem
 import com.lexicon.interactors.course.MinimalPairItem
@@ -414,6 +418,7 @@ fun TranscribeRow(
     usualForm: String? = null,
     leading: (@Composable () -> Unit)? = null,
     imeAction: ImeAction = ImeAction.Next,
+    highlightChanges: Boolean = false,
 ) {
     var showInfo by rememberSaveable { mutableStateOf(false) }
     val checked = answerState !is AnswerState.Unanswered
@@ -500,6 +505,7 @@ fun TranscribeRow(
             ExpectedAnswer(
                 expected = item.answer,
                 isAlmost = isAlmost,
+                changed = if (highlightChanges) LessonAnswerChecker.changedLetters(item.answer, value) else emptySet(),
                 modifier = Modifier.padding(start = indent, top = Dimens.spacingTiny),
             )
         }
@@ -658,9 +664,23 @@ private fun ExpectedAnswer(
     expected: String,
     isAlmost: Boolean,
     modifier: Modifier = Modifier,
+    changed: Set<Int> = emptySet(),
 ) {
+    val text = stringResource(if (isAlmost) R.string.lesson_flow_almost_expected else R.string.lesson_flow_expected, expected)
+    val start = text.lastIndexOf(expected)
     Text(
-        text = stringResource(if (isAlmost) R.string.lesson_flow_almost_expected else R.string.lesson_flow_expected, expected),
+        text = buildAnnotatedString {
+            append(text)
+            if (start >= 0) {
+                changed.forEach { index ->
+                    addStyle(
+                        SpanStyle(fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline),
+                        start + index,
+                        start + index + 1,
+                    )
+                }
+            }
+        },
         style = MaterialTheme.typography.bodySmall,
         color = if (isAlmost) LexiconWarning else LexiconError,
         modifier = modifier,
