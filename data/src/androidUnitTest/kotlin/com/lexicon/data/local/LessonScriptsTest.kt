@@ -7,6 +7,9 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -15,7 +18,20 @@ import java.io.File
 private const val STEM = 4
 private const val SHORTEST_WORD = 3
 private val afterSubmit = setOf("newWords", "model", "checklist")
-private val knownTypes = setOf("grammar", "reference", "write", "choice", "inline_choice", "order", "form", "gap_fill", "free_writing")
+private val lookupEndings = listOf("", "?", "!", ".", "…", "…?", "…!")
+private val glossGivesAway = setOf("lesson_krok-a1-02.json 3C", "lesson_krok-a1-02.json 8D")
+private val answerKeys = setOf("answers", "variants")
+private val notPrinted = setOf(
+    "gaps", "answers", "answer", "hint", "transcript", "model", "checklist", "newWords", "newWordsUnlock", "variants",
+    "feedback", "rules", "tracks", "wordBox",
+)
+private val screenReference = Regex("""\b[1-9][A-H]\b""")
+private val letterPattern = Regex("""\w_|_\w""")
+private val patternBreak = Regex("""[\s≠]+""")
+private val punctuation = Regex("""[.,?!]""")
+private val knownTypes =
+    setOf("grammar", "reference", "write", "choice", "inline_choice", "order", "form", "gap_fill", "free_writing", "conjugation")
+private val persons = listOf("ja", "ty", "on / ona / ono", "my", "wy", "oni / one")
 
 class LessonScriptsTest {
     private val assets: Map<String, LessonScriptAsset> =
@@ -71,6 +87,77 @@ class LessonScriptsTest {
         }
 
     @Test
+    fun `every new word is a vocabulary entry, so its row shows level, transcription and status`() {
+        val vocabulary = lessonJson.parseToJsonElement(File("src/androidMain/assets/vocabulary_pl.json").readText()).jsonArray
+            .map { it.jsonObject.getValue("text").jsonPrimitive.content }
+            .toSet()
+        val missing = assets.flatMap { (name, asset) ->
+            asset.screens.flatMap { screen ->
+                screen.newWords.map { it.polish }
+                    .filter { bare(it).length >= SHORTEST_WORD && spellingsOf(it).none(vocabulary::contains) }
+                    .map { "$name ${screen.id} $it" }
+            }
+        }
+        assertEquals(emptyList<String>(), missing)
+    }
+
+    private fun bare(text: String): String = text.lowercase().trim().trimEnd('?', '!', '.', '…', ' ')
+
+    private fun spellingsOf(text: String): List<String> {
+        val base = text.trim().trimEnd('?', '!', '.', '…', ' ')
+        return listOf(base, base.replaceFirstChar { it.lowercase() }, base.replaceFirstChar { it.uppercase() })
+            .flatMap { spelling -> lookupEndings.map { spelling + it } }
+    }
+
+    @Test
+    fun `a task never sends the learner to another screen for its recording or text`() =
+        eachScreen { where, screen ->
+            if (screen is LessonScreen.Reference || screen is LessonScreen.Grammar) return@eachScreen
+            assertTrue(where, screenReference.find(screen.instruction) == null)
+        }
+
+    @Test
+    fun `new words wait for the check only when one of them is an answer the screen does not print`() =
+        assets.forEach { (name, asset) ->
+            asset.screens.filter { it.newWords.isNotEmpty() && "$name ${it.id}" !in glossGivesAway }.forEach { screen ->
+                val element = lessonJson.encodeToJsonElement(ScreenAsset.serializer(), screen)
+                val printed = printedText(element).lowercase()
+                val typed = typedAnswers(element).joinToString(" ").lowercase()
+                val hiddenAnswer = screen.newWords.any { word ->
+                    val stems = stemsOf(word.polish)
+                    stems.any { typed.contains(it) } && stems.none { printed.contains(it) }
+                }
+                assertEquals("$name ${screen.id}", hiddenAnswer, screen.newWordsUnlock == "after_check")
+            }
+        }
+
+    private fun stemsOf(polish: String): List<String> {
+        val words = polish.lowercase().split(' ', '/', ',', '·').map { it.trim('.', '?', '!', '…', '(', ')', '"', '„', '”') }
+            .filter { it.isNotEmpty() }
+        return words.filter { it.length >= SHORTEST_WORD }.ifEmpty { words }.map { it.take((it.length - 1).coerceIn(SHORTEST_WORD, STEM)) }
+    }
+
+    private fun printedText(element: JsonElement): String =
+        when (element) {
+            is JsonObject -> element.filterKeys { it !in notPrinted }.values.joinToString(" ") { printedText(it) }
+            is JsonArray -> element.joinToString(" ") { printedText(it) }
+            is JsonPrimitive -> if (element.isString) element.content else ""
+        }
+
+    private fun typedAnswers(element: JsonElement): List<String> =
+        when (element) {
+            is JsonObject -> element.flatMap { (key, value) ->
+                when {
+                    key in answerKeys && value is JsonArray -> value.map { it.jsonPrimitive.content }
+                    key == "answer" && value is JsonPrimitive && value.isString -> listOf(value.content)
+                    else -> typedAnswers(value)
+                }
+            }
+            is JsonArray -> element.flatMap { typedAnswers(it) }
+            is JsonPrimitive -> emptyList()
+        }
+
+    @Test
     fun `steps cover every screen once, in order`() {
         scripts.forEach { (name, script) -> assertEquals(name, script.screens.map { it.id }, script.steps.flatMap { it.screenIds }) }
     }
@@ -90,6 +177,32 @@ class LessonScriptsTest {
     fun `every graded item has an answer`() =
         eachScreen { where, screen ->
             screen.questions.forEach { assertTrue("$where ${it.label}", it.answers.isNotEmpty() && it.answers.all(String::isNotBlank)) }
+        }
+
+    @Test
+    fun `a letter pattern has one gap per missing letter and the given letters of its answer`() =
+        eachScreen { where, screen ->
+            screen.questions.forEach { question ->
+                val prompt = question.prompt?.takeIf { letterPattern.containsMatchIn(it) } ?: return@forEach
+                val pattern = prompt.trim(' ', '.', '?', '!').split(patternBreak)
+                val answer = question.answers.first().replace(punctuation, "").split(patternBreak)
+                val matches = pattern.size == answer.size &&
+                    pattern.zip(answer).all { (shown, word) ->
+                        shown.length == word.length && shown.zip(word).all { (given, letter) -> given == '_' || given == letter }
+                    }
+                assertTrue("$where ${question.label}: $prompt → ${question.answers.first()}", matches)
+            }
+        }
+
+    @Test
+    fun `every conjugation table types all six persons, labelled as in the verb course`() =
+        eachScreen { where, screen ->
+            if (screen !is LessonScreen.Conjugation) return@eachScreen
+            assertTrue(where, screen.tables.isNotEmpty())
+            screen.tables.forEach { table ->
+                assertTrue("$where ${table.verb}", table.verb.isNotBlank() && !table.translation.isNullOrBlank())
+                assertEquals("$where ${table.verb}", persons, table.rows.map { it.label })
+            }
         }
 
     @Test

@@ -45,6 +45,7 @@ import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.TrainingUnavailableContent
 import com.lexicon.presentation.common.debounced
+import com.lexicon.presentation.course.AnswerInputs
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconShapes
@@ -81,15 +82,17 @@ fun CrosswordScreen(
         }
     }
 
-    CrosswordScreenContent(
-        uiState = uiState,
-        onClose = onClose,
-        onClueSelected = viewModel::onClueSelected,
-        onCellTapped = viewModel::onCellTapped,
-        onLetterEntered = viewModel::onLetterEntered,
-        onTipRequested = viewModel::onTipRequested,
-        modifier = modifier,
-    )
+    AnswerInputs {
+        CrosswordScreenContent(
+            uiState = uiState,
+            onClose = onClose,
+            onClueSelected = viewModel::onClueSelected,
+            onCellTapped = viewModel::onCellTapped,
+            onLetterEntered = viewModel::onLetterEntered,
+            onTipRequested = viewModel::onTipRequested,
+            modifier = modifier,
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

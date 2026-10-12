@@ -79,6 +79,8 @@ import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.BottomActionPanel
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.isTyping
+import com.lexicon.presentation.conjugation.PersonFormRow
+import com.lexicon.presentation.conjugation.VerbHeading
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.component.StatChip
 import com.lexicon.presentation.theme.component.tileSkin
@@ -187,9 +189,8 @@ private fun LessonFlowContent(
 
     val shownPlayers = remember((uiState as? LessonFlowUiState.Loaded)?.session?.index) { mutableStateMapOf<String, Boolean>() }
 
-    val isTyping = isTyping()
-
     AnswerInputs {
+        val isTyping = isTyping()
         CompositionLocalProvider(LocalShownPlayers provides shownPlayers) {
             Scaffold(
                 modifier = modifier,
@@ -329,6 +330,7 @@ private fun ScreenBody(
         is LessonScreen.FreeWriting -> FreeWritingBody(screen, uiState, actions)
         is LessonScreen.Ordering -> OrderingBody(screen, session, actions)
         is LessonScreen.Form -> FormBody(screen, session, actions)
+        is LessonScreen.Conjugation -> ConjugationBody(screen, session, actions)
         is LessonScreen.InlineChoice -> InlineChoiceBody(screen, session, actions)
         is LessonScreen.Grammar -> session.script.rules.forEach { RuleView(it) }
     }
@@ -495,6 +497,33 @@ private fun FormBody(
             }
         }
     }
+}
+
+@Composable
+private fun ConjugationBody(
+    screen: LessonScreen.Conjugation,
+    session: LessonSession,
+    actions: LessonFlowActions,
+) {
+    screen.tables.forEach { table ->
+        Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
+            VerbHeading(infinitive = table.verb, translation = table.translation)
+            table.rows.forEach { row ->
+                val expected = session.expectedAnswer(screen.id, row.key)
+                PersonFormRow(
+                    person = row.label,
+                    typed = session.answer(screen.id, row.key),
+                    expected = expected,
+                    verdict = session.verdict(screen.id, row.key).takeIf { session.isChecked(screen.id) },
+                    onAnswerChanged = { actions.onAnswerChanged(row.key, it) },
+                    onSpeak = { actions.onPronounce(expected) },
+                    imeAction = imeActionOf(session, row.key),
+                    info = row.feedback,
+                )
+            }
+        }
+    }
+    screen.notes.forEach { Text(richText(it), style = MaterialTheme.typography.bodyMedium) }
 }
 
 @Composable

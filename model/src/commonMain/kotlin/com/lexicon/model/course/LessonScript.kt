@@ -136,6 +136,12 @@ data class FormGroup(
     val fields: ImmutableList<LessonQuestion>,
 )
 
+data class VerbTable(
+    val verb: String,
+    val translation: String?,
+    val rows: ImmutableList<LessonQuestion>,
+)
+
 data class PhraseGroup(
     val title: String?,
     val track: LessonTrack?,
@@ -239,6 +245,19 @@ sealed interface LessonScreen {
         override val hint: String? = null,
     ) : LessonScreen {
         override val questions: List<LessonQuestion> get() = groups.flatMap { it.fields }
+    }
+
+    data class Conjugation(
+        override val id: String,
+        override val title: String,
+        override val instruction: String,
+        override val tracks: ImmutableList<LessonTrack>,
+        override val transcript: Transcript?,
+        val tables: ImmutableList<VerbTable>,
+        override val hint: String? = null,
+        val notes: ImmutableList<String> = persistentListOf(),
+    ) : LessonScreen {
+        override val questions: List<LessonQuestion> get() = tables.flatMap { it.rows }
     }
 
     data class GapFill(

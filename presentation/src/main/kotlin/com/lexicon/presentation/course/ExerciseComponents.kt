@@ -889,6 +889,7 @@ private fun InlineGap(
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.None,
                 autoCorrectEnabled = false,
+                keyboardType = keyboardTypeFor(expected),
                 imeAction = imeAction,
             ),
             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
@@ -948,3 +949,6 @@ private fun choiceState(
         option == selected -> AnswerChipState.INCORRECT
         else -> AnswerChipState.UNSELECTED
     }
+
+private fun keyboardTypeFor(expected: String): KeyboardType =
+    if (expected.isNotBlank() && expected.all { it.isDigit() || it == ' ' }) KeyboardType.Number else KeyboardType.Text

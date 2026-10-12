@@ -5,12 +5,20 @@ rather than typed by hand: 2000 hand-written IPA strings would be 2000 chances t
 and a rule that is wrong is wrong visibly and in one place.
 
 Covers the rules that matter for citation forms of single words: digraphs, softening
-before <i>, word-final devoicing, regressive voicing assimilation within a word, and
+before <i>, word-final devoicing, regressive voicing assimilation within a word, the
+devoicing of <w> and <rz> after a voiceless consonant, nasal vowels before stops, and
 penultimate stress. It does not attempt sandhi across word boundaries, or the lexical
 exceptions (mostly loanwords) where spelling and pronunciation genuinely diverge.
 """
 
 from __future__ import annotations
+
+# <w> and <rz> are voiced but never pass their voicing back: they turn voiceless after a
+# voiceless consonant instead (przerwa [ˈpʂɛrva], twój [tfuj]). They keep their own
+# symbols until assimilation has run.
+W = "v·"
+RZ = "ʐ·"
+PLAIN = {W: "v", RZ: "ʐ"}
 
 # Longest-first: <dzi> must be tried before <dz>, <ch> before <c>.
 DIGRAPHS = [
@@ -18,7 +26,7 @@ DIGRAPHS = [
     ("ch", "x"),
     ("cz", "t͡ʂ"),
     ("sz", "ʂ"),
-    ("rz", "ʐ"),
+    ("rz", RZ),
     ("dź", "d͡ʑ"),
     ("dż", "d͡ʐ"),
     ("dz", "d͡z"),
@@ -56,7 +64,7 @@ SINGLES = {
     "ś": "ɕ",
     "t": "t",
     "u": "u",
-    "w": "v",
+    "w": W,
     "y": "ɨ",
     "z": "z",
     "ź": "ʑ",
@@ -78,8 +86,20 @@ DEVOICE = {
 }
 VOICE = {v: k for k, v in DEVOICE.items()}
 
+# A nasal vowel before a stop or affricate is an oral vowel plus a nasal consonant made
+# where the stop is; before <l> and <ł> it loses its nasality.
+NASAL_BEFORE = {
+    "p": "m", "b": "m",
+    "t": "n", "d": "n", "t͡s": "n", "d͡z": "n", "t͡ʂ": "n", "d͡ʐ": "n",
+    "k": "ŋ", "g": "ŋ",
+    "t͡ɕ": "ɲ", "d͡ʑ": "ɲ",
+    "l": "", "w": "",
+}
+ORAL = {"ɛ̃": "ɛ", "ɔ̃": "ɔ"}
+
 VOWELS = set("aɛɔiuɨ") | {"ɔ̃", "ɛ̃"}
 SONORANTS = set("mnr lɲjw".replace(" ", ""))
+CODA_SONORANTS = SONORANTS | {"ŋ"}
 
 
 def _to_phonemes(word: str) -> list[str]:
@@ -115,7 +135,7 @@ def _to_phonemes(word: str) -> list[str]:
 
 
 def _is_voiced_obstruent(p: str) -> bool:
-    return p in DEVOICE
+    return PLAIN.get(p, p) in DEVOICE
 
 
 def _is_voiceless_obstruent(p: str) -> bool:
@@ -123,22 +143,41 @@ def _is_voiceless_obstruent(p: str) -> bool:
 
 
 def _assimilate(phonemes: list[str]) -> list[str]:
-    """Regressive voicing assimilation, then word-final devoicing.
+    """Regressive voicing assimilation, <w>/<rz> devoicing, then word-final devoicing.
 
     Polish obstruent clusters take their voicing from the last obstruent, so <książka>
-    is [kɕɔ̃ʂka] and <prośba> is [ˈprɔʑba]. Sonorants do not trigger it.
+    is [kɕɔ̃ʂka] and <prośba> is [ˈprɔʑba]. Sonorants do not trigger it, and neither do
+    <w> and <rz>, which follow a voiceless consonant instead: <przerwa> is [ˈpʂɛrva].
     """
     out = list(phonemes)
     for i in range(len(out) - 2, -1, -1):
         nxt = out[i + 1]
         if _is_voiceless_obstruent(nxt) and _is_voiced_obstruent(out[i]):
-            out[i] = DEVOICE[out[i]]
-        elif _is_voiced_obstruent(nxt) and _is_voiceless_obstruent(out[i]):
-            # <w> and <rz> are the usual exception: they devoice after a voiceless
-            # consonant rather than voicing it, which the loop above already handled.
+            out[i] = DEVOICE[PLAIN.get(out[i], out[i])]
+        elif _is_voiced_obstruent(nxt) and nxt not in PLAIN and _is_voiceless_obstruent(out[i]):
             out[i] = VOICE[out[i]]
+    for i in range(1, len(out)):
+        if out[i] in PLAIN and _is_voiceless_obstruent(out[i - 1]):
+            out[i] = DEVOICE[PLAIN[out[i]]]
+    out = [PLAIN.get(p, p) for p in out]
     if out and _is_voiced_obstruent(out[-1]):
         out[-1] = DEVOICE[out[-1]]
+    return out
+
+
+def _denasalise(phonemes: list[str]) -> list[str]:
+    """Nasal vowels split before stops and lose nasality before <l>/<ł>; final <ę> is oral."""
+    out: list[str] = []
+    for i, p in enumerate(phonemes):
+        nxt = phonemes[i + 1] if i + 1 < len(phonemes) else None
+        if p in ORAL and nxt in NASAL_BEFORE:
+            out.append(ORAL[p])
+            if NASAL_BEFORE[nxt]:
+                out.append(NASAL_BEFORE[nxt])
+        elif p == "ɛ̃" and nxt is None:
+            out.append("ɛ")
+        else:
+            out.append(p)
     return out
 
 
@@ -149,8 +188,12 @@ def _stress(phonemes: list[str]) -> str:
         return "".join(phonemes)
     target = vowel_positions[-2]
     # The mark goes before the whole onset of the stressed syllable, not before its vowel.
+    # A sonorant before another consonant closes the syllable before it (war-sza-wa),
+    # but not before the <i> glide (po-mię-dzy).
     start = target
     while start > 0 and phonemes[start - 1] not in VOWELS:
+        if phonemes[start - 1] in CODA_SONORANTS and start < target and phonemes[start] != "j" and start > 1 and phonemes[start - 2] in VOWELS:
+            break
         start -= 1
     return "".join(phonemes[:start]) + "ˈ" + "".join(phonemes[start:])
 
@@ -159,4 +202,4 @@ def transcribe(word: str) -> str:
     """IPA for a single Polish word or phrase, without surrounding brackets."""
     if " " in word.strip():
         return " ".join(transcribe(part) for part in word.split())
-    return _stress(_assimilate(_to_phonemes(word)))
+    return _stress(_denasalise(_assimilate(_to_phonemes(word))))

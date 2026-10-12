@@ -26,6 +26,7 @@ import com.lexicon.model.course.Transcript
 import com.lexicon.model.course.TranscriptLine
 import com.lexicon.model.course.TranscriptSection
 import com.lexicon.model.course.TranscriptUnlock
+import com.lexicon.model.course.VerbTable
 import com.lexicon.model.course.WritingReview
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableMap
@@ -95,6 +96,7 @@ data class SectionAsset(
 @Serializable
 data class GroupAsset(
     val title: String? = null,
+    val translation: String? = null,
     val track: TrackRefAsset? = null,
     val phrases: List<PhraseAsset> = emptyList(),
     val items: List<ItemAsset> = emptyList(),
@@ -350,6 +352,24 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
                     )
                 }.toImmutableList(),
                 hint = hint,
+            )
+
+        "conjugation" ->
+            LessonScreen.Conjugation(
+                id = id,
+                title = title,
+                instruction = instruction,
+                tracks = trackList,
+                transcript = transcriptModel,
+                tables = groups.mapIndexed { table, asset ->
+                    VerbTable(
+                        verb = asset.title.orEmpty(),
+                        translation = asset.translation,
+                        rows = asset.items.mapIndexed { index, item -> item.toQuestion("$table-$index") }.toImmutableList(),
+                    )
+                }.toImmutableList(),
+                hint = hint,
+                notes = notes.toImmutableList(),
             )
 
         "gap_fill" ->

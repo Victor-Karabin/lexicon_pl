@@ -24,6 +24,12 @@ class WritingReviewPromptTest {
     }
 
     @Test
+    fun `the prompt tells the reviewer to ignore capitals, spaces and punctuation`() {
+        val prompt = writingReviewPrompt(WritingReviewRequestBoundary("Task.", emptyList(), emptyList(), emptyList()))
+        assertTrue(prompt.contains("Ignore capital letters, spaces and punctuation"))
+    }
+
+    @Test
     fun `a reply wrapped in prose or a code fence still parses`() {
         val review =
             parseWritingReview(

@@ -28,8 +28,8 @@ class LessonFourScriptTest {
         val counts = script.screens.filter { it.isGraded }.associate { it.id to it.questions.size }
         val expected = mapOf(
             "1A" to 8, "1B" to 8,
-            "2B" to 6, "2C" to 12, "2D" to 8, "2E" to 7, "2F" to 9, "2G" to 26,
-            "3B" to 16, "3C" to 11, "3D" to 16, "3E" to 11, "3F" to 6, "3G" to 6, "3H" to 6,
+            "2B" to 6, "2C" to 12, "2D" to 8, "2E" to 7, "2F" to 9, "2G" to 27,
+            "3B" to 24, "3C" to 11, "3D" to 16, "3E" to 11, "3F" to 6, "3G" to 6, "3H" to 6,
             "4B" to 6, "4C" to 8, "4D" to 10, "4E" to 12,
             "5C" to 7, "5D" to 8, "5E" to 5,
             "6A" to 9, "6B" to 7, "6C" to 15,
@@ -38,21 +38,24 @@ class LessonFourScriptTest {
     }
 
     @Test
-    fun `the language table gives one form per row and asks for the other three`() {
+    fun `the language table shows each language as four short lines, one given and three to type`() {
         val table = screen("2G") as LessonScreen.GapFill
-        val rows = table.sections.single().lines
-        assertEquals(9, rows.size)
-        assertEquals(2, GAP_PATTERN.findAll(rows.first().text).count())
-        assertTrue(rows.drop(1).all { GAP_PATTERN.findAll(it.text).count() == 3 })
-        assertTrue(rows.first().text.contains("język angielski") && rows.first().text.contains("uczę się angielskiego"))
+        assertEquals(9, table.sections.size)
+        table.sections.forEach { section ->
+            assertEquals(4, section.lines.size)
+            assertEquals(3, section.lines.count { GAP_PATTERN.containsMatchIn(it.text) })
+        }
+        assertEquals("język angielski", table.sections.first().lines.first().text)
+        assertTrue(!table.instruction.contains("One form is given"))
     }
 
     @Test
-    fun `the conjugation screen shows one small table per verb with the given forms as text`() {
-        val tables = (screen("3B") as LessonScreen.GapFill).sections
-        assertEquals(listOf("mówić", "lubić", "kończyć", "tańczyć"), tables.map { it.title.orEmpty().substringBefore(" ") })
-        assertTrue(tables.all { it.lines.size == 6 })
-        assertEquals("(ty) mówisz", tables.first().lines[1].text)
+    fun `the conjugation screen shows one verb table per verb with every form typed`() {
+        val screen = screen("3B") as LessonScreen.Conjugation
+        assertEquals(listOf("mówić", "lubić", "kończyć", "tańczyć"), screen.tables.map { it.verb })
+        assertEquals(listOf("to speak", "to like", "to finish", "to dance"), screen.tables.map { it.translation })
+        assertEquals(24, screen.questions.size)
+        assertEquals(listOf("mówię"), screen.tables.first().rows.first().answers)
     }
 
     @Test

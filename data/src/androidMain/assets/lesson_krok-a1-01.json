@@ -149,7 +149,26 @@
         {"polish": "drzewo", "english": "tree"},
         {"polish": "dziecko", "english": "child"},
         {"polish": "kino", "english": "cinema"},
-        {"polish": "interesujący", "english": "interesting"}
+        {"polish": "interesujący", "english": "interesting"},
+        {"polish": "cześć", "english": "hi; bye"},
+        {"polish": "dziękuję", "english": "thank you"},
+        {"polish": "ósmy", "english": "eighth (ósma — eight o'clock)"},
+        {"polish": "Kraków", "english": "Cracow"},
+        {"polish": "chata", "english": "cottage, hut"},
+        {"polish": "dym", "english": "smoke"},
+        {"polish": "żakiet", "english": "jacket (women's)"},
+        {"polish": "Rzym", "english": "Rome"},
+        {"polish": "rzadko", "english": "rarely"},
+        {"polish": "silny", "english": "strong"},
+        {"polish": "drżeć", "english": "to tremble"},
+        {"polish": "fotografia", "english": "photo, photograph"},
+        {"polish": "bank", "english": "bank"},
+        {"polish": "restauracja", "english": "restaurant"},
+        {"polish": "program", "english": "programme"},
+        {"polish": "teatr", "english": "theatre"},
+        {"polish": "plan", "english": "plan"},
+        {"polish": "projekt", "english": "project"},
+        {"polish": "komputer", "english": "computer"}
       ],
       "rules": [1]
     },
@@ -196,8 +215,8 @@
         {"polish": "sześć", "english": "six"},
         {"polish": "dziewięć", "english": "nine"}
       ],
-      "newWordsUnlock": "after_check",
-      "rules": [1]
+      "rules": [1],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "1C",
@@ -231,7 +250,7 @@
       ],
       "newWords": [
         {"polish": "krzywy", "english": "crooked"},
-        {"polish": "grzyby", "english": "mushrooms"},
+        {"polish": "grzyb", "english": "mushroom"},
         {"polish": "grzeczny", "english": "polite"},
         {"polish": "grzeszny", "english": "sinful"},
         {"polish": "żaden", "english": "none"},
@@ -240,7 +259,7 @@
         {"polish": "ładny", "english": "pretty"},
         {"polish": "długi", "english": "long"},
         {"polish": "mały", "english": "small"},
-        {"polish": "młoda", "english": "young"},
+        {"polish": "młody", "english": "young"},
         {"polish": "moda", "english": "fashion"},
         {"polish": "łódka", "english": "boat"},
         {"polish": "sen", "english": "dream"},
@@ -248,7 +267,22 @@
         {"polish": "żart", "english": "joke"},
         {"polish": "dom", "english": "house"},
         {"polish": "prosię", "english": "piglet"},
-        {"polish": "siny", "english": "bluish"}
+        {"polish": "siny", "english": "bluish"},
+        {"polish": "sześć", "english": "six"},
+        {"polish": "dziesięć", "english": "ten"},
+        {"polish": "sitko", "english": "strainer"},
+        {"polish": "jeden", "english": "one"},
+        {"polish": "prasować", "english": "to iron"},
+        {"polish": "cud", "english": "miracle"},
+        {"polish": "łatwy", "english": "easy"},
+        {"polish": "drugi", "english": "second"},
+        {"polish": "zimno", "english": "cold"},
+        {"polish": "Chiny", "english": "China"},
+        {"polish": "wódka", "english": "vodka"},
+        {"polish": "kaseta", "english": "cassette"},
+        {"polish": "kat", "english": "executioner"},
+        {"polish": "proszę", "english": "please"},
+        {"polish": "z", "english": "with; from (ze before some consonant groups)"}
       ],
       "rules": [1]
     },
@@ -327,15 +361,22 @@
       },
       "newWords": [
         {"polish": "sekretarka", "english": "secretary"},
-        {"polish": "student / studentka", "english": "student (m / f)"},
-        {"polish": "Dobry wieczór", "english": "Good evening"},
+        {"polish": "student", "english": "student (man)"},
+        {"polish": "studentka", "english": "student (woman)"},
+        {"polish": "dobry wieczór", "english": "good evening"},
         {"polish": "Dobranoc", "english": "Good night"},
-        {"polish": "Do widzenia", "english": "Goodbye"},
-        {"polish": "Do zobaczenia", "english": "See you"},
-        {"polish": "Do jutra", "english": "See you tomorrow"},
-        {"polish": "Na razie", "english": "Bye"},
+        {"polish": "do widzenia", "english": "goodbye"},
+        {"polish": "do zobaczenia", "english": "see you"},
+        {"polish": "do jutra", "english": "see you tomorrow"},
+        {"polish": "na razie", "english": "bye (informal)"},
         {"polish": "Pa", "english": "Bye"},
-        {"polish": "Miło mi panią poznać.", "english": "Nice to meet you (to a woman)."}
+        {"polish": "miło", "english": "nicely (miło mi — nice to meet you)"},
+        {"polish": "poznać", "english": "to meet, to get to know"},
+        {"polish": "bardzo", "english": "very"},
+        {"polish": "nazywać się", "english": "to be called"},
+        {"polish": "również", "english": "also, too"},
+        {"polish": "ja", "english": "I (mi, mnie — me)"},
+        {"polish": "pani", "english": "Mrs; madam; you (to a woman, formal)"}
       ],
       "rules": [2]
     },
@@ -408,7 +449,19 @@
         "**Visitor's greeting:** *Dzień dobry* is safer than *Witam* (Witam is usually said by the host).",
         "For later lessons, not counted now: *szukam gabinetu* — szukać takes the genitive; *po lewej stronie* (adjective ending -ej); use *a potem* (\"and then\") for a sequence, not *oraz* (\"as well as\"); *W czym mogę pomóc?* is the set phrase for \"How can I help?\"."
       ],
-      "rules": [2]
+      "rules": [2],
+      "newWords": [
+        {"polish": "szukać", "english": "to look for"},
+        {"polish": "gabinet", "english": "office, study"},
+        {"polish": "iść", "english": "to go (on foot)"},
+        {"polish": "prosto", "english": "straight on"},
+        {"polish": "potem", "english": "then, afterwards"},
+        {"polish": "lewo", "english": "left (na lewo — on the left)"},
+        {"polish": "pomóc", "english": "to help"},
+        {"polish": "móc", "english": "can, to be able to"},
+        {"polish": "imię", "english": "first name"},
+        {"polish": "numer", "english": "number"}
+      ]
     },
     {
       "id": "3A",
@@ -475,7 +528,8 @@
       },
       "newWords": [
         {"polish": "imię", "english": "first name"},
-        {"polish": "Miło mi cię poznać.", "english": "Nice to meet you (informal)."}
+        {"polish": "poznać", "english": "to meet, to get to know"},
+        {"polish": "pan", "english": "Mr; sir; you (to a man, formal)"}
       ],
       "rules": [2]
     },
@@ -506,12 +560,13 @@
       ],
       "newWords": [
         {"polish": "nauczycielka", "english": "(female) teacher"},
-        {"polish": "Proszę się przedstawić.", "english": "Please introduce yourself."},
-        {"polish": "Ojej!", "english": "Oops!"},
-        {"polish": "Uff!", "english": "Phew!"},
-        {"polish": "Skomplikowane!", "english": "Complicated!"}
+        {"polish": "przedstawić się", "english": "to introduce oneself"},
+        {"polish": "ojej", "english": "oh dear, oops"},
+        {"polish": "uff", "english": "phew"},
+        {"polish": "skomplikowany", "english": "Complicated!"},
+        {"polish": "rozumieć", "english": "to understand"},
+        {"polish": "znaczyć", "english": "to mean"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [2]
     },
     {
@@ -534,7 +589,20 @@
         }
       ],
       "notes": ["Tip: 9 / 10 — dzie-**w**-ięć / dzie-**ś**-ięć."],
-      "rules": [3]
+      "rules": [3],
+      "newWords": [
+        {"polish": "zero", "english": "zero"},
+        {"polish": "jeden", "english": "one"},
+        {"polish": "dwa", "english": "two"},
+        {"polish": "trzy", "english": "three"},
+        {"polish": "cztery", "english": "four"},
+        {"polish": "pięć", "english": "five"},
+        {"polish": "sześć", "english": "six"},
+        {"polish": "siedem", "english": "seven"},
+        {"polish": "osiem", "english": "eight"},
+        {"polish": "dziewięć", "english": "nine"},
+        {"polish": "dziesięć", "english": "ten"}
+      ]
     },
     {
       "id": "3D",
@@ -640,16 +708,29 @@
       },
       "newWords": [
         {"polish": "toaleta", "english": "toilet"},
-        {"polish": "komputery", "english": "computers"},
+        {"polish": "komputer", "english": "computer"},
         {"polish": "gratis", "english": "free of charge"},
         {"polish": "kawa", "english": "coffee"},
         {"polish": "herbata", "english": "tea"},
         {"polish": "cukier", "english": "sugar"},
-        {"polish": "program kulturalny", "english": "cultural programme"},
-        {"polish": "coś specjalnego", "english": "something special"},
+        {"polish": "program", "english": "programme"},
+        {"polish": "kulturalny", "english": "cultural"},
+        {"polish": "coś", "english": "something"},
+        {"polish": "specjalny", "english": "special"},
         {"polish": "spotkanie", "english": "meeting"},
         {"polish": "lekcja", "english": "lesson"},
-        {"polish": "rozumiem", "english": "I understand"}
+        {"polish": "rozumieć", "english": "to understand"},
+        {"polish": "tu", "english": "here"},
+        {"polish": "tutaj", "english": "here"},
+        {"polish": "tam", "english": "there"},
+        {"polish": "lewo", "english": "left (na lewo — on the left)"},
+        {"polish": "prawo", "english": "right (na prawo — on the right)"},
+        {"polish": "pytanie", "english": "question"},
+        {"polish": "można", "english": "one can, it's allowed"},
+        {"polish": "palić", "english": "to smoke"},
+        {"polish": "czy", "english": "question word; whether, or"},
+        {"polish": "internet", "english": "internet"},
+        {"polish": "film", "english": "film"}
       ]
     },
     {
@@ -704,11 +785,13 @@
       ],
       "newWords": [
         {"polish": "miejsce", "english": "seat, place"},
-        {"polish": "wolne", "english": "free"},
-        {"polish": "Na zdrowie!", "english": "Bless you! / Cheers!"},
-        {"polish": "otworzyć / zamknąć", "english": "to open / to close"},
+        {"polish": "wolny", "english": "free"},
+        {"polish": "na zdrowie", "english": "bless you; cheers"},
+        {"polish": "otworzyć", "english": "to open"},
+        {"polish": "zamknąć", "english": "to close"},
         {"polish": "okno", "english": "window"},
-        {"polish": "drzwi", "english": "door"}
+        {"polish": "drzwi", "english": "door"},
+        {"polish": "tak", "english": "yes"}
       ],
       "newWordsUnlock": "after_check"
     },
@@ -781,11 +864,21 @@
         ]
       },
       "newWords": [
-        {"polish": "swoje imię i nazwisko", "english": "your first name and surname"},
-        {"polish": "a teraz", "english": "and now"},
+        {"polish": "nazwisko", "english": "surname"},
+        {"polish": "swój", "english": "one's own (my, your, his…)"},
+        {"polish": "teraz", "english": "now"},
         {"polish": "ćwiczenie", "english": "exercise"},
         {"polish": "dialog", "english": "dialogue"},
-        {"polish": "zmęczony", "english": "tired"}
+        {"polish": "zmęczony", "english": "tired"},
+        {"polish": "aha", "english": "I see, aha"},
+        {"polish": "wiedzieć", "english": "to know (a fact)"},
+        {"polish": "powtórzyć", "english": "to repeat"},
+        {"polish": "przeliterować", "english": "to spell"},
+        {"polish": "przeczytać", "english": "to read"},
+        {"polish": "napisać", "english": "to write"},
+        {"polish": "mówić", "english": "to speak, to say"},
+        {"polish": "po polsku", "english": "in Polish"},
+        {"polish": "pytanie", "english": "question"}
       ]
     },
     {
@@ -849,8 +942,11 @@
         {"number": 9, "answers": ["otworzyć"]},
         {"number": 10, "answers": ["to"]}
       ],
-      "newWords": [{"polish": "tekst", "english": "text"}, {"polish": "po niemiecku", "english": "in German"}],
-      "newWordsUnlock": "after_check"
+      "newWords": [
+        {"polish": "tekst", "english": "text"},
+        {"polish": "po niemiecku", "english": "in German"},
+        {"polish": "dobrze", "english": "well, fine"}
+      ]
     },
     {
       "id": "5D",
@@ -917,7 +1013,14 @@
           }
         ]
       },
-      "newWords": [{"polish": "Jestem Japonką.", "english": "I'm Japanese (woman)."}]
+      "newWords": [
+        {"polish": "Japonka", "english": "Japanese woman"},
+        {"polish": "narodowość", "english": "nationality"},
+        {"polish": "adres", "english": "address"},
+        {"polish": "ulica", "english": "street"},
+        {"polish": "numer", "english": "number"},
+        {"polish": "telefon", "english": "telephone"}
+      ]
     },
     {
       "id": "6B",
@@ -952,7 +1055,7 @@
         {"number": 5, "answers": ["607 44 32 89"]},
         {"number": 6, "answers": ["Proszę. Do"], "feedback": "Reply to *Dziękuję* with *Proszę*, then say goodbye: *Do widzenia*."}
       ],
-      "newWords": [{"polish": "Jestem Niemcem.", "english": "I'm German (man)."}],
+      "newWords": [{"polish": "Niemiec", "english": "German man"}],
       "newWordsUnlock": "after_check"
     },
     {
@@ -1015,8 +1118,8 @@
         {"label": "7", "answers": ["restauracja"], "feedback": "*restauracja* — Polish -cja = English -tion: restauracja, informacja, lekcja."}
       ],
       "newWords": [{"polish": "fotograf", "english": "photographer"}, {"polish": "aktor", "english": "actor"}],
-      "newWordsUnlock": "after_check",
-      "rules": [1]
+      "rules": [1],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "7C",
@@ -1043,19 +1146,33 @@
         {"label": "16", "options": ["szelka", "żelka"], "answer": "żelka", "feedback": "sz (hard) vs ś/si (soft); c (ts) vs cz (ch); i vs y."}
       ],
       "newWords": [
-        {"polish": "szyny", "english": "rails"},
+        {"polish": "szyna", "english": "rail"},
         {"polish": "cenny", "english": "valuable"},
         {"polish": "senny", "english": "sleepy"},
         {"polish": "szyba", "english": "windowpane"},
         {"polish": "szary", "english": "grey"},
         {"polish": "córka", "english": "daughter"},
-        {"polish": "cała", "english": "whole"},
-        {"polish": "czyta", "english": "reads"},
+        {"polish": "cały", "english": "whole"},
+        {"polish": "czytać", "english": "to read"},
         {"polish": "cytat", "english": "quote"},
         {"polish": "pić", "english": "to drink"},
         {"polish": "bić", "english": "to beat"},
         {"polish": "wyć", "english": "to howl"},
-        {"polish": "żelka", "english": "jelly sweet"}
+        {"polish": "żelka", "english": "jelly sweet"},
+        {"polish": "cyna", "english": "tin"},
+        {"polish": "siwy", "english": "grey-haired"},
+        {"polish": "szklanka", "english": "glass (for drinking)"},
+        {"polish": "sanki", "english": "sledge"},
+        {"polish": "czary", "english": "magic, spells"},
+        {"polish": "maczek", "english": "little poppy"},
+        {"polish": "kurka", "english": "hen; chanterelle"},
+        {"polish": "ciarki", "english": "goosebumps"},
+        {"polish": "ciało", "english": "body"},
+        {"polish": "czynnik", "english": "factor"},
+        {"polish": "cynik", "english": "cynic"},
+        {"polish": "szelka", "english": "strap, brace"},
+        {"polish": "czarka", "english": "small bowl"},
+        {"polish": "wić", "english": "to weave"}
       ],
       "rules": [1]
     },

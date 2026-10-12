@@ -24,19 +24,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.lexicon.interactors.conjugation.ConjugationStep
 import com.lexicon.interactors.conjugation.GrammaticalPerson
-import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.course.LessonAnswerChecker
-import com.lexicon.interactors.course.TranscribeItem
 import com.lexicon.model.vocabulary.ExampleSentence
 import com.lexicon.presentation.R
-import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.ClueImage
 import com.lexicon.presentation.common.ExampleSentenceRow
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -44,14 +39,12 @@ import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.aspectLabel
 import com.lexicon.presentation.course.AnswerInputs
-import com.lexicon.presentation.course.TranscribeRow
 import com.lexicon.presentation.presets.ImagePickerDialog
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.component.ProgressDots
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
 
-private val PersonColumnWidth = 96.dp
 private val ConjugationImageHeight = 120.dp
 
 object ConjugationTestTags {
@@ -192,21 +185,7 @@ private fun ConjugationContent(
                                 }
                             }
 
-                            Column {
-                                Text(
-                                    text = table.infinitive,
-                                    style = MaterialTheme.typography.titleLarge,
-                                    fontWeight = FontWeight.SemiBold,
-                                    modifier = Modifier.testTag(ConjugationTestTags.INFINITIVE),
-                                )
-                                table.translation?.let { translation ->
-                                    Text(
-                                        text = translation,
-                                        style = MaterialTheme.typography.bodyLarge,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        modifier = Modifier.testTag(ConjugationTestTags.TRANSLATION),
-                                    )
-                                }
+                            VerbHeading(infinitive = table.infinitive, translation = table.translation) {
                                 table.aspect?.let { aspect ->
                                     Text(
                                         text = aspectLabel(aspect),
@@ -235,12 +214,17 @@ private fun ConjugationContent(
 
                             Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)) {
                                 table.steps.forEachIndexed { index, step ->
-                                    PersonRow(
-                                        step = step,
+                                    val person = step.variant.person
+                                    val typed = uiState.answers[person].orEmpty()
+                                    PersonFormRow(
+                                        person = person.label,
+                                        typed = typed,
+                                        expected = LessonAnswerChecker.closest(step.forms, typed),
+                                        verdict = uiState.verdicts[person],
+                                        onAnswerChanged = { onAnswerChanged(person, it) },
+                                        onSpeak = { onSpeak(step.spokenForm) },
                                         imeAction = if (index == table.steps.lastIndex) ImeAction.Done else ImeAction.Next,
-                                        uiState = uiState,
-                                        onAnswerChanged = { onAnswerChanged(step.variant.person, it) },
-                                        onSpeak = onSpeak,
+                                        modifier = Modifier.testTag(ConjugationTestTags.person(person.label)),
                                     )
                                 }
                             }
@@ -255,36 +239,5 @@ private fun ConjugationContent(
                     }
             }
         }
-    }
-}
-
-@Composable
-private fun PersonRow(
-    step: ConjugationStep,
-    uiState: ConjugationUiState,
-    onAnswerChanged: (String) -> Unit,
-    onSpeak: (String) -> Unit,
-    imeAction: ImeAction,
-    modifier: Modifier = Modifier,
-) {
-    val person = step.variant.person
-    val typed = uiState.answers[person].orEmpty()
-    val verdict = uiState.verdicts[person]
-    Box(modifier = modifier.testTag(ConjugationTestTags.person(person.label))) {
-        TranscribeRow(
-            item = TranscribeItem(person.label, LessonAnswerChecker.closest(step.forms, typed)),
-            value = typed,
-            isCorrect = verdict?.let { it == AnswerVerdict.CORRECT },
-            answerState = when {
-                verdict == null -> AnswerState.Unanswered
-                verdict == AnswerVerdict.CORRECT -> AnswerState.Correct
-                else -> AnswerState.Incorrect()
-            },
-            onValueChanged = onAnswerChanged,
-            isAlmost = verdict == AnswerVerdict.ALMOST,
-            labelWidth = PersonColumnWidth,
-            onSpeak = { onSpeak(step.spokenForm) },
-            imeAction = imeAction,
-        )
     }
 }
