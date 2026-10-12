@@ -35,7 +35,7 @@ class LessonKeysTest {
 
     @Test
     fun `every lesson is read`() {
-        assertEquals((1..7).map { "lesson_krok-a1-0$it.json" }, lessons.keys.toList())
+        assertEquals((1..8).map { "lesson_krok-a1-0$it.json" }, lessons.keys.toList())
     }
 
     @Test

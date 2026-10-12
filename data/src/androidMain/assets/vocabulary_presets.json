@@ -7252,8 +7252,8 @@
    "icon": "record_voice_over",
    "color": "#EF6C00",
    "popularity": 5,
-   "estimatedSeconds": 51540,
-   "wordCount": 859,
+   "estimatedSeconds": 52380,
+   "wordCount": 873,
    "vocabularyIds": [
     244,
     372,
@@ -8113,7 +8113,21 @@
     7495,
     7498,
     7499,
-    7503
+    7503,
+    7509,
+    7510,
+    7511,
+    7516,
+    7522,
+    7523,
+    7533,
+    7542,
+    7545,
+    7550,
+    7556,
+    7557,
+    7562,
+    7564
    ]
   },
   {
@@ -8285,8 +8299,8 @@
    "icon": "chat",
    "color": "#EF6C00",
    "popularity": 12,
-   "estimatedSeconds": 79380,
-   "wordCount": 1323,
+   "estimatedSeconds": 79680,
+   "wordCount": 1328,
    "vocabularyIds": [
     1,
     2,
@@ -9610,7 +9624,12 @@
     7434,
     7436,
     7456,
-    7503
+    7503,
+    7509,
+    7518,
+    7519,
+    7556,
+    7566
    ]
   },
   {
@@ -9627,8 +9646,8 @@
    "icon": "family_restroom",
    "color": "#EF6C00",
    "popularity": 13,
-   "estimatedSeconds": 5880,
-   "wordCount": 98,
+   "estimatedSeconds": 5940,
+   "wordCount": 99,
    "vocabularyIds": [
     64,
     123,
@@ -9727,7 +9746,8 @@
     7011,
     7067,
     7215,
-    7424
+    7424,
+    7553
    ]
   },
   {
@@ -10205,8 +10225,8 @@
    "icon": "cleaning_services",
    "color": "#EF6C00",
    "popularity": 16,
-   "estimatedSeconds": 8940,
-   "wordCount": 149,
+   "estimatedSeconds": 9240,
+   "wordCount": 154,
    "vocabularyIds": [
     370,
     371,
@@ -10356,7 +10376,12 @@
     7389,
     7491,
     7493,
-    7494
+    7494,
+    7558,
+    7559,
+    7560,
+    7561,
+    7562
    ]
   },
   {
@@ -10373,8 +10398,8 @@
    "icon": "restaurant",
    "color": "#EF6C00",
    "popularity": 17,
-   "estimatedSeconds": 12300,
-   "wordCount": 205,
+   "estimatedSeconds": 15360,
+   "wordCount": 256,
    "vocabularyIds": [
     144,
     145,
@@ -10580,7 +10605,58 @@
     7490,
     7492,
     7497,
-    7506
+    7506,
+    7510,
+    7511,
+    7512,
+    7513,
+    7514,
+    7515,
+    7516,
+    7517,
+    7520,
+    7521,
+    7522,
+    7523,
+    7524,
+    7525,
+    7526,
+    7527,
+    7528,
+    7529,
+    7530,
+    7531,
+    7532,
+    7533,
+    7534,
+    7535,
+    7536,
+    7538,
+    7539,
+    7540,
+    7541,
+    7542,
+    7543,
+    7544,
+    7545,
+    7546,
+    7547,
+    7548,
+    7549,
+    7550,
+    7551,
+    7552,
+    7554,
+    7555,
+    7557,
+    7563,
+    7564,
+    7565,
+    7567,
+    7568,
+    7569,
+    7570,
+    7571
    ]
   },
   {
@@ -14815,8 +14891,8 @@
    "icon": "school",
    "color": "#4527A0",
    "popularity": 54,
-   "estimatedSeconds": 10200,
-   "wordCount": 170,
+   "estimatedSeconds": 10260,
+   "wordCount": 171,
    "vocabularyIds": [
     185,
     186,
@@ -14987,7 +15063,8 @@
     7213,
     7297,
     7361,
-    7391
+    7391,
+    7537
    ]
   },
   {

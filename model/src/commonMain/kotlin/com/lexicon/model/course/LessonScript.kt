@@ -80,7 +80,7 @@ data class Transcript(
 
 enum class AnswerKeyboard { TEXT, DIGITS }
 
-enum class AnswerMatch { WHOLE, KEY_WORDS, EXACT_LETTERS, NUMBER_SET }
+enum class AnswerMatch { WHOLE, KEY_WORDS, EXACT_LETTERS, SELECTION, ANY_ORDER }
 
 sealed interface ItemPicture {
     data class Symbol(
@@ -279,15 +279,16 @@ sealed interface LessonScreen {
         override val eachAnswerOnce: Boolean = false,
     ) : LessonScreen
 
-    data class NumberGrid(
+    data class SelectionGrid(
         override val id: String,
         override val title: String,
         override val instruction: String,
         override val tracks: ImmutableList<LessonTrack>,
         override val transcript: Transcript?,
-        val size: Int,
+        val options: ImmutableList<String>,
         val columns: Int,
         override val questions: ImmutableList<LessonQuestion>,
+        val legend: ImmutableList<String> = persistentListOf(),
     ) : LessonScreen
 
     data class FreeWriting(

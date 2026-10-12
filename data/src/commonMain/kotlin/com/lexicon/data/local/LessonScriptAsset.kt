@@ -173,6 +173,7 @@ data class ScreenAsset(
     val eachAnswerOnce: Boolean = false,
     val gridSize: Int = 49,
     val gridColumns: Int = 7,
+    val options: List<String> = emptyList(),
     val items: List<ItemAsset> = emptyList(),
     val sections: List<SectionAsset> = emptyList(),
     val gaps: List<GapAsset> = emptyList(),
@@ -403,18 +404,19 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
             )
         }
 
-        "number_grid" ->
-            LessonScreen.NumberGrid(
+        "number_grid", "selection" ->
+            LessonScreen.SelectionGrid(
                 id = id,
                 title = title,
                 instruction = instruction,
                 tracks = trackList,
                 transcript = transcriptModel,
-                size = gridSize,
+                options = options.ifEmpty { (1..gridSize).map(Int::toString) }.toImmutableList(),
                 columns = gridColumns,
                 questions = items.mapIndexed { index, item ->
-                    item.toQuestion(index.toString()).copy(match = AnswerMatch.NUMBER_SET)
+                    item.toQuestion(index.toString()).copy(match = AnswerMatch.SELECTION)
                 }.toImmutableList(),
+                legend = legend.toImmutableList(),
             )
 
         "free_writing" ->
@@ -453,6 +455,7 @@ private fun answerMatch(name: String): AnswerMatch =
     when (name) {
         "exact_letters" -> AnswerMatch.EXACT_LETTERS
         "key_words" -> AnswerMatch.KEY_WORDS
+        "any_order" -> AnswerMatch.ANY_ORDER
         else -> AnswerMatch.WHOLE
     }
 

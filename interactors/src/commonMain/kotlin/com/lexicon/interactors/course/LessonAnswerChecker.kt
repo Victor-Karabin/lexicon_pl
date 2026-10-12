@@ -19,7 +19,13 @@ object LessonAnswerChecker {
 
     private val spaces = Regex("""\s+""")
 
-    private val digitRuns = Regex("""\d+""")
+    private val separators = Regex("""[\s,]+""")
+
+    private val connectors = setOf("i", "z", "ze", "oraz")
+
+    private val openers = setOf("z", "ze")
+
+    private const val LIST_MARK = "|"
 
     private val composed = mapOf(
         "a\u0328" to "ą",
@@ -37,11 +43,20 @@ object LessonAnswerChecker {
         given: String,
         match: AnswerMatch = AnswerMatch.WHOLE,
     ): AnswerVerdict {
-        if (match == AnswerMatch.NUMBER_SET) {
-            val chosen = numbers(given)
+        if (match == AnswerMatch.SELECTION) {
+            val chosen = selection(given)
             return when {
                 chosen.isEmpty() -> AnswerVerdict.EMPTY
-                expected.any { numbers(it) == chosen } -> AnswerVerdict.CORRECT
+                expected.any { selection(it) == chosen } -> AnswerVerdict.CORRECT
+                else -> AnswerVerdict.WRONG
+            }
+        }
+        if (match == AnswerMatch.ANY_ORDER) {
+            val parts = normalise(given.replace(",", " i "))
+            return when {
+                parts.isEmpty() -> AnswerVerdict.EMPTY
+                expected.any { sameList(parts, it, ::normalise) } -> AnswerVerdict.CORRECT
+                expected.any { sameList(fold(parts), it) { key -> fold(normalise(key)) } } -> AnswerVerdict.ALMOST
                 else -> AnswerVerdict.WRONG
             }
         }
@@ -54,7 +69,8 @@ object LessonAnswerChecker {
                 accepted.any { differsOnlyInDiacritics(typed, it) } -> AnswerVerdict.ALMOST
                 else -> AnswerVerdict.WRONG
             }
-            AnswerMatch.EXACT_LETTERS, AnswerMatch.NUMBER_SET -> if (typed in accepted) AnswerVerdict.CORRECT else AnswerVerdict.WRONG
+            AnswerMatch.EXACT_LETTERS, AnswerMatch.SELECTION, AnswerMatch.ANY_ORDER ->
+                if (typed in accepted) AnswerVerdict.CORRECT else AnswerVerdict.WRONG
             AnswerMatch.KEY_WORDS -> when {
                 accepted.any { contains(typed, it) } -> AnswerVerdict.CORRECT
                 accepted.any { contains(fold(typed), fold(it)) } -> AnswerVerdict.ALMOST
@@ -71,7 +87,26 @@ object LessonAnswerChecker {
         return expected.firstOrNull { differsOnlyInDiacritics(typed, normalise(it)) } ?: expected.first()
     }
 
-    fun numbers(text: String): Set<Int> = digitRuns.findAll(text).map { it.value.toInt() }.toSet()
+    fun selection(text: String): Set<String> = text.split(separators).map { it.trim().uppercase() }.filter { it.isNotEmpty() }.toSet()
+
+    fun listItems(key: String): List<String> = key.split(LIST_MARK).drop(1).map { it.trim() }
+
+    private fun sameList(
+        typed: String,
+        key: String,
+        clean: (String) -> String,
+    ): Boolean {
+        val parts = key.split(LIST_MARK).map(clean)
+        val start = parts.first()
+        val items = parts.drop(1).filter { it.isNotEmpty() }
+        if (start.isNotEmpty() && typed != start && !typed.startsWith("$start ")) return false
+        val rest = typed.removePrefix(start).trim().split(' ').filter { it.isNotEmpty() }
+        if (items.isEmpty()) return rest.isEmpty()
+        if (rest.firstOrNull() !in openers) return false
+        val chunks = mutableListOf(mutableListOf<String>())
+        rest.forEach { word -> if (word in connectors) chunks += mutableListOf<String>() else chunks.last() += word }
+        return chunks.map { it.joinToString(" ") }.filter { it.isNotEmpty() }.sorted() == items.sorted()
+    }
 
     fun same(
         first: String,

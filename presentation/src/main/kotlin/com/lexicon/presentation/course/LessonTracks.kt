@@ -21,14 +21,12 @@ data class TrackState(
     val isPlaying: Boolean = false,
     val positionMs: Long = 0,
     val durationMs: Long = 0,
-    val isMissing: Boolean = false,
     val speed: Float = 1f,
 )
 
 data class TrackStates(
     private val durations: Map<String, Long> = emptyMap(),
     private val positions: Map<String, Long> = emptyMap(),
-    private val missing: Set<String> = emptySet(),
     private val playback: AudioPlayback? = null,
     private val speed: Float = 1f,
 ) {
@@ -40,7 +38,6 @@ data class TrackStates(
             isPlaying = live?.isPlaying == true,
             positionMs = live?.positionMs ?: positions[file] ?: 0,
             durationMs = live?.durationMs?.takeIf { it > 0 } ?: durations[file] ?: 0,
-            isMissing = file in missing,
             speed = speed,
         )
     }
@@ -54,14 +51,13 @@ class LessonTracks(
     private data class Known(
         val durations: Map<String, Long> = emptyMap(),
         val positions: Map<String, Long> = emptyMap(),
-        val missing: Set<String> = emptySet(),
     )
 
     private val known = MutableStateFlow(Known())
 
     val states: Flow<TrackStates> =
         combine(known, player.playback, player.speed) { known, playback, speed ->
-            TrackStates(known.durations, known.positions, known.missing, playback, speed)
+            TrackStates(known.durations, known.positions, playback, speed)
         }
 
     fun nextSpeed() {
@@ -76,7 +72,7 @@ class LessonTracks(
     ) {
         if (file in known.value.durations) return
         scope.launch(dispatchers.io) {
-            val path = pathOrMissing(file, remoteId) ?: return@launch
+            val path = library.pathOrNull(file, remoteId) ?: return@launch
             val duration = runSuspendCatching { player.durationOf(path) }.getOrNull() ?: return@launch
             known.update { it.copy(durations = it.durations + (file to duration)) }
         }
@@ -93,7 +89,7 @@ class LessonTracks(
             return
         }
         scope.launch(dispatchers.io) {
-            val path = pathOrMissing(file, remoteId) ?: return@launch
+            val path = library.pathOrNull(file, remoteId) ?: return@launch
             val from = if (playback == null) known.value.positions[file] else null
             runSuspendCatching { player.play(file, path, from) }
                 .onSuccess { known.update { it.copy(positions = it.positions - file) } }
@@ -113,13 +109,4 @@ class LessonTracks(
     }
 
     fun stop() = player.stop()
-
-    private suspend fun pathOrMissing(
-        file: String,
-        remoteId: String?,
-    ): String? {
-        val path = library.pathOrNull(file, remoteId)
-        if (path == null) known.update { it.copy(missing = it.missing + file) }
-        return path
-    }
 }
