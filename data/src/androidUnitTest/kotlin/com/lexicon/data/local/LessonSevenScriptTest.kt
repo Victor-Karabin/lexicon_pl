@@ -16,18 +16,21 @@ class LessonSevenScriptTest {
     private fun screen(id: String) = script.screens.first { it.id == id }
 
     @Test
-    fun `lesson 7 has 37 screens, the grammar screen and six steps, the last one a review`() {
-        assertEquals(37, script.screens.size)
+    fun `lesson 7 shows 35 screens, the grammar screen and six steps, the last one a review`() {
+        assertEquals(35, script.screens.size)
         assertEquals(listOf("G", "1", "2", "3", "4", "5", "6"), script.steps.map { it.id })
         assertEquals(listOf("6A"), script.steps.single { it.isReview }.screenIds)
         assertEquals(5, script.rules.size)
-        assertEquals(29, script.ruleLinks.size)
+        assertEquals(27, script.ruleLinks.size)
     }
 
     @Test
-    fun `only the three recordings still to come from the CD have no download`() {
+    fun `the screens answered only from recordings still to come are kept but skipped`() {
+        assertEquals(listOf("3B", "3E"), asset.screens.filter { it.skipped }.map { it.id })
+        assertTrue(script.screens.none { it.id in setOf("3B", "3E") })
+        assertTrue(script.steps.none { step -> step.screenIds.any { it in setOf("3B", "3E") } })
         val withoutDownload = script.screens.flatMap { it.allTracks() }.filter { it.remoteId == null }.map { it.id }.toSet()
-        assertEquals(missing, withoutDownload)
+        assertEquals(setOf("107LOTTO"), withoutDownload)
     }
 
     @Test
@@ -36,7 +39,7 @@ class LessonSevenScriptTest {
         val expected = mapOf(
             "1A" to 4, "1C" to 20, "1D" to 10, "1E" to 8, "1F" to 10, "1G" to 10,
             "2B" to 6, "2C" to 6, "2D" to 16, "2E" to 7, "2F" to 9, "2G" to 8,
-            "3B" to 6, "3C" to 6, "3D" to 10, "3E" to 10, "3F" to 10, "3G" to 8, "3H" to 5,
+            "3C" to 6, "3D" to 10, "3F" to 10, "3G" to 8, "3H" to 5,
             "4A" to 19, "4B" to 10, "4C" to 11, "4D" to 5, "4E" to 4, "4F" to 11, "4G" to 4, "4H" to 7,
             "5A" to 11, "5B" to 14, "6A" to 11,
         )
@@ -45,7 +48,7 @@ class LessonSevenScriptTest {
 
     @Test
     fun `each Lotto coupon is a grid of 1 to 49 in rows of seven with six numbers to find`() {
-        listOf("3B", "3C").forEach { id ->
+        listOf("3C").forEach { id ->
             val grid = screen(id) as LessonScreen.SelectionGrid
             assertEquals((1..49).map(Int::toString), grid.options)
             assertEquals(7, grid.columns)

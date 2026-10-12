@@ -184,6 +184,7 @@ data class ScreenAsset(
     val newWordsUnlock: String = "always",
     val wordBox: List<String> = emptyList(),
     val rules: List<Int> = emptyList(),
+    val skipped: Boolean = false,
 )
 
 @Serializable
@@ -208,6 +209,7 @@ data class FirstTryAsset(
 @Serializable
 data class LessonProgressAsset(
     val screenIndex: Int = 0,
+    val screenId: String? = null,
     val answers: Map<String, Map<String, String>> = emptyMap(),
     val checked: Set<String> = emptySet(),
     val finished: Set<String> = emptySet(),
@@ -225,11 +227,16 @@ fun LessonScriptAsset.toModel(remoteIds: Map<String, String?>): LessonScript {
             LessonTrack(id = ref.id, label = ref.label, file = asset.file, remoteId = remoteIds[asset.file] ?: asset.remoteId)
         }
 
+    val shown = screens.filterNot { it.skipped }
+    val shownIds = shown.map { it.id }.toSet()
+
     return LessonScript(
         lessonId = LessonId(lessonId),
-        steps = steps.map { LessonStep(it.id, it.title, it.screens.toImmutableList(), it.review, it.grammar) }.toImmutableList(),
-        screens = screens.map { it.toModel(::track) }.toImmutableList(),
-        newWords = screens.filter { it.newWords.isNotEmpty() }.associate { screen ->
+        steps = steps.map { step ->
+            LessonStep(step.id, step.title, step.screens.filter { it in shownIds }.toImmutableList(), step.review, step.grammar)
+        }.filter { it.screenIds.isNotEmpty() }.toImmutableList(),
+        screens = shown.map { it.toModel(::track) }.toImmutableList(),
+        newWords = shown.filter { it.newWords.isNotEmpty() }.associate { screen ->
             screen.id to NewWords(
                 words = screen.newWords.map { LessonPhrase(it.polish, it.english) }.toImmutableList(),
                 unlock = if (screen.newWordsUnlock == "after_check") TranscriptUnlock.AfterCheck else TranscriptUnlock.Always,
@@ -243,7 +250,7 @@ fun LessonScriptAsset.toModel(remoteIds: Map<String, String?>): LessonScript {
                 notes = rule.notes.toImmutableList(),
             )
         }.toImmutableList(),
-        ruleLinks = screens.filter { it.rules.isNotEmpty() }.associate { it.id to it.rules.toImmutableList() }.toImmutableMap(),
+        ruleLinks = shown.filter { it.rules.isNotEmpty() }.associate { it.id to it.rules.toImmutableList() }.toImmutableMap(),
     )
 }
 
@@ -383,18 +390,16 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
                         lines = section.lines.map { GapLine(it.speaker, it.text) }.toImmutableList(),
                     )
                 }.toImmutableList(),
-                questions = (
-                    choices.map { it.question } +
-                        gaps.sortedBy { it.number }.map { gap ->
-                            LessonQuestion(
-                                key = gap.number.toString(),
-                                label = gap.number.toString(),
-                                answers = gap.answers.toImmutableList(),
-                                feedback = gap.feedback,
-                                variants = gap.variants.toImmutableList(),
-                            )
-                        }
-                ).toImmutableList(),
+                gaps = gaps.sortedBy { it.number }.map { gap ->
+                    LessonQuestion(
+                        key = gap.number.toString(),
+                        label = gap.number.toString(),
+                        answers = gap.answers.toImmutableList(),
+                        feedback = gap.feedback,
+                        variants = gap.variants.toImmutableList(),
+                        match = answerMatch(match),
+                    )
+                }.toImmutableList(),
                 notes = notes.toImmutableList(),
                 hint = hint,
                 wordBox = wordBox.toImmutableList(),
@@ -510,6 +515,7 @@ private fun TranscriptAsset.toModel(): Transcript =
 fun LessonProgress.toAsset(): LessonProgressAsset =
     LessonProgressAsset(
         screenIndex = screenIndex,
+        screenId = screenId,
         answers = answers.mapValues { (_, values) -> values.toMap() },
         checked = checked.toSet(),
         finished = finished.toSet(),
@@ -520,6 +526,7 @@ fun LessonProgress.toAsset(): LessonProgressAsset =
 fun LessonProgressAsset.toModel(): LessonProgress =
     LessonProgress(
         screenIndex = screenIndex,
+        screenId = screenId,
         answers = answers.mapValues { (_, values) -> values.toImmutableMap() }.toImmutableMap(),
         checked = checked.toImmutableSet(),
         finished = finished.toImmutableSet(),

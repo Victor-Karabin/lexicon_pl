@@ -174,7 +174,7 @@ class LessonExerciseTypesTest {
             tracks = persistentListOf(),
             transcript = null,
             sections = persistentListOf(),
-            questions = persistentListOf(question("1", "inteligentny"), question("4", "sympatyczny"), question("7", "duży")),
+            gaps = persistentListOf(question("1", "inteligentny"), question("4", "sympatyczny"), question("7", "duży")),
             interchangeable = persistentListOf(persistentListOf("1", "4", "7")),
         )
         val swapped = session(pairs).answering("1" to "duży", "4" to "inteligentny", "7" to "sympatyczny").check()
@@ -182,6 +182,54 @@ class LessonExerciseTypesTest {
         val twice = session(pairs).answering("1" to "duży", "4" to "duży", "7" to "sympatyczny").check()
         assertEquals(2, twice.screenScore(pairs).correct)
         assertEquals("inteligentny", twice.expectedAnswer("6B", "4"))
+    }
+
+    private val pairs = LessonScreen.GapFill(
+        id = "1C",
+        title = "",
+        instruction = "",
+        tracks = persistentListOf(),
+        transcript = null,
+        sections = persistentListOf(GapSection(null, null, persistentListOf(GapLine(null, "czytać [1] · grać w [2] · kupować [3]")))),
+        gaps = persistentListOf(
+            question("1", "gazetę", "książkę"),
+            question("2", "golfa", "piłkę nożną"),
+            question("3", "gazetę", "bilet", "pomidora"),
+        ),
+        eachAnswerOnce = true,
+    )
+
+    @Test
+    fun `a word used first where it is wrong still counts where it is right`() {
+        val checked = session(pairs).answering("1" to "golfa", "2" to "golfa", "3" to "bilet").check()
+        assertEquals(AnswerVerdict.WRONG, checked.verdict("1C", "1"))
+        assertEquals(AnswerVerdict.CORRECT, checked.verdict("1C", "2"))
+    }
+
+    @Test
+    fun `a word rejected as used twice shows a word still free for that field`() {
+        val checked = session(pairs).answering("1" to "gazetę", "2" to "golfa", "3" to "gazetę").check()
+        assertEquals(AnswerVerdict.WRONG, checked.verdict("1C", "3"))
+        assertEquals("bilet", checked.expectedAnswer("1C", "3"))
+    }
+
+    @Test
+    fun `progress resumes on the saved screen even when earlier screens are added or skipped`() {
+        val screens = listOf("1A", "1B", "1C").map { id ->
+            LessonScreen.Reference(id, "", "", persistentListOf(), null, persistentListOf(), persistentListOf(), persistentListOf())
+        }
+        val full = LessonScript(
+            LessonId("krok-a1-07"),
+            persistentListOf(LessonStep("1", "Step", screens.map { it.id }.toImmutableList())),
+            screens.toImmutableList(),
+        )
+        val onLast = LessonSession(full).next().next()
+        assertEquals("1C", onLast.screen.id)
+        val withoutFirst = full.copy(
+            steps = persistentListOf(LessonStep("1", "Step", persistentListOf("1B", "1C"))),
+            screens = screens.drop(1).toImmutableList(),
+        )
+        assertEquals("1C", LessonSession(withoutFirst, onLast.progress).screen.id)
     }
 
     @Test
@@ -195,7 +243,7 @@ class LessonExerciseTypesTest {
             tracks = persistentListOf(),
             transcript = null,
             sections = persistentListOf(GapSection(null, null, persistentListOf(GapLine("Pani Joanna", "[1] pierogi. A ty [2] gotować?")))),
-            questions = persistentListOf(choice.question, question("1", "Gotuję"), question("2", "umiesz")),
+            gaps = persistentListOf(question("1", "Gotuję"), question("2", "umiesz")),
             choices = persistentListOf(choice),
         )
         val checked = session(dialogue).answering("choice-1" to "📖 book", "1" to "gotuję", "2" to "umiesz").check()
@@ -214,7 +262,7 @@ class LessonExerciseTypesTest {
             tracks = persistentListOf(),
             transcript = null,
             sections = persistentListOf(GapSection(null, null, persistentListOf(GapLine(null, "czytać [1], [2] · lubić [3], [4]")))),
-            questions = persistentListOf(
+            gaps = persistentListOf(
                 question("1", "gazetę", "książkę", "list"),
                 question("2", "książkę", "gazetę", "list"),
                 question("3", "piwo", "kawę", "list", "gazetę"),
@@ -255,7 +303,7 @@ class LessonExerciseTypesTest {
             tracks = persistentListOf(),
             transcript = null,
             sections = persistentListOf(),
-            questions = persistentListOf(
+            gaps = persistentListOf(
                 question("1", "zdolna"),
                 question("2", "aktorka"),
                 question("3", "atrakcyjny"),
