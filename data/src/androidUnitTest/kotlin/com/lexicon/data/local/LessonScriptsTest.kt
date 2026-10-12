@@ -49,7 +49,7 @@ class LessonScriptsTest {
 
     @Test
     fun `there is a script for lessons 1 to 8`() {
-        assertEquals((1..8).map { "lesson_krok-a1-0$it.json" }, assets.keys.toList())
+        assertEquals((1..9).map { "lesson_krok-a1-0$it.json" }, assets.keys.toList())
     }
 
     @Test

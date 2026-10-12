@@ -113571,5 +113571,825 @@
    "food"
   ],
   "example": ""
+ },
+ {
+  "id": 7572,
+  "text": "brzoskwinia",
+  "translation": "peach",
+  "transcription": "bʐɔˈskfiɲa",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7573,
+  "text": "kiwi",
+  "translation": "kiwi",
+  "transcription": "ˈkivi",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7574,
+  "text": "winogrona",
+  "translation": "grapes",
+  "transcription": "vinɔˈgrɔna",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7575,
+  "text": "arbuz",
+  "translation": "watermelon",
+  "transcription": "ˈarbus",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7576,
+  "text": "por",
+  "translation": "leek",
+  "transcription": "pɔr",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7577,
+  "text": "seler",
+  "translation": "celeriac",
+  "transcription": "ˈsɛlɛr",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7578,
+  "text": "pietruszka",
+  "translation": "parsley",
+  "transcription": "pjɛˈtruʂka",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7579,
+  "text": "kalafior",
+  "translation": "cauliflower",
+  "transcription": "kaˈlafjɔr",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7580,
+  "text": "brokuł",
+  "translation": "broccoli (usually pl. brokuły)",
+  "transcription": "ˈbrɔkuw",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7581,
+  "text": "rzodkiewka",
+  "translation": "radish",
+  "transcription": "ʐɔˈtkjɛfka",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7582,
+  "text": "fasola",
+  "translation": "beans",
+  "transcription": "faˈsɔla",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7583,
+  "text": "groszek",
+  "translation": "peas",
+  "transcription": "ˈgrɔʂɛk",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7584,
+  "text": "kukurydza",
+  "translation": "sweetcorn",
+  "transcription": "kukuˈrɨd͡za",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7585,
+  "text": "oliwa",
+  "translation": "olive oil",
+  "transcription": "ɔˈliva",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7586,
+  "text": "gyros",
+  "translation": "gyros",
+  "transcription": "ˈgɨrɔs",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7587,
+  "text": "ser feta",
+  "translation": "feta cheese",
+  "transcription": "sɛr ˈfɛta",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7588,
+  "text": "kapusta pekińska",
+  "translation": "Chinese cabbage",
+  "transcription": "kaˈpusta pɛˈkiɲska",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7589,
+  "text": "ogórek konserwowy",
+  "translation": "pickled gherkin",
+  "transcription": "ɔˈgurɛk kɔnsɛrˈvɔvɨ",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7590,
+  "text": "Czy to się je z sosem?",
+  "translation": "Do you eat it with sauce?",
+  "transcription": "t͡ʂɨ tɔ ɕɛ jɛ s ˈsɔsɛm",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7591,
+  "text": "owalny",
+  "translation": "oval",
+  "transcription": "ɔˈvalnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7592,
+  "text": "podłużny",
+  "translation": "long, oblong",
+  "transcription": "pɔˈdwuʐnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7593,
+  "text": "w środku",
+  "translation": "inside",
+  "transcription": "f ˈɕrɔtku",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7594,
+  "text": "coś na kolację",
+  "translation": "something for dinner",
+  "transcription": "t͡sɔɕ na kɔˈlat͡sjɛ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7595,
+  "text": "sałatka owocowa",
+  "translation": "fruit salad",
+  "transcription": "saˈwatka ɔvɔˈt͡sɔva",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7596,
+  "text": "sałatka jarzynowa",
+  "translation": "vegetable salad",
+  "transcription": "saˈwatka jaʐɨˈnɔva",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7597,
+  "text": "jarzyna",
+  "translation": "vegetable (= warzywo)",
+  "transcription": "jaˈʐɨna",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7598,
+  "text": "sos do spaghetti",
+  "translation": "spaghetti sauce",
+  "transcription": "sɔs dɔ spaˈgxɛtti",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7599,
+  "text": "do picia",
+  "translation": "to drink",
+  "transcription": "dɔ ˈpit͡ɕa",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7600,
+  "text": "zupa rybna",
+  "translation": "fish soup",
+  "transcription": "ˈzupa ˈrɨbna",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7601,
+  "text": "bazylia",
+  "translation": "basil",
+  "transcription": "baˈzɨlja",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7602,
+  "text": "pół kilo",
+  "translation": "half a kilo",
+  "transcription": "puw ˈkilɔ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7603,
+  "text": "natka",
+  "translation": "parsley leaves",
+  "transcription": "ˈnatka",
+  "partOfSpeech": "n",
+  "cefr": "B1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7604,
+  "text": "drobne",
+  "translation": "small change",
+  "transcription": "ˈdrɔbnɛ",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7605,
+  "text": "kiszony ogórek",
+  "translation": "pickled cucumber",
+  "transcription": "kiˈʂɔnɨ ɔˈgurɛk",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7606,
+  "text": "to są",
+  "translation": "these are",
+  "transcription": "tɔ sɔ̃",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7607,
+  "text": "melon",
+  "translation": "melon",
+  "transcription": "ˈmɛlɔn",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7608,
+  "text": "pieróg",
+  "translation": "dumpling (pl. pierogi)",
+  "transcription": "ˈpjɛruk",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7609,
+  "text": "dwie",
+  "translation": "two (fem.)",
+  "transcription": "dvjɛ",
+  "partOfSpeech": "num",
+  "cefr": "A1",
+  "topics": [
+   "numbers"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7610,
+  "text": "wytrawny",
+  "translation": "dry (wine)",
+  "transcription": "vɨˈtravnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "B1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7611,
+  "text": "młody ziemniak",
+  "translation": "new potato",
+  "transcription": "ˈmwɔdɨ ˈʑɛmɲak",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7612,
+  "text": "na stole",
+  "translation": "on the table",
+  "transcription": "na ˈstɔlɛ",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "household"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7613,
+  "text": "wędzony",
+  "translation": "smoked",
+  "transcription": "vɛnˈd͡zɔnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7614,
+  "text": "smażony",
+  "translation": "fried",
+  "transcription": "smaˈʐɔnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7615,
+  "text": "duszony",
+  "translation": "stewed",
+  "transcription": "duˈʂɔnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7616,
+  "text": "Mniam!",
+  "translation": "Yum!",
+  "transcription": "mɲam",
+  "partOfSpeech": "interj",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7617,
+  "text": "zdrowszy",
+  "translation": "healthier",
+  "transcription": "ˈzdrɔfʂɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7618,
+  "text": "oregano",
+  "translation": "oregano",
+  "transcription": "ɔrɛˈganɔ",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7619,
+  "text": "nabiał",
+  "translation": "dairy",
+  "transcription": "ˈnabjaw",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food",
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7620,
+  "text": "produkty zbożowe",
+  "translation": "cereal products",
+  "transcription": "prɔˈduktɨ zbɔˈʐɔvɛ",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "food",
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7621,
+  "text": "pieczywo",
+  "translation": "bread and rolls",
+  "transcription": "pjɛˈt͡ʂɨvɔ",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food",
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7622,
+  "text": "słone paluszki",
+  "translation": "salty sticks",
+  "transcription": "ˈswɔnɛ paˈluʂki",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7623,
+  "text": "nielogiczny",
+  "translation": "illogical",
+  "transcription": "ɲɛlɔˈgit͡ʂnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "B1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7624,
+  "text": "specjalność",
+  "translation": "speciality",
+  "transcription": "spɛˈt͡sjalnɔɕt͡ɕ",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7625,
+  "text": "mrożonki",
+  "translation": "frozen food",
+  "transcription": "mrɔˈʐɔnki",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food",
+   "shopping"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7626,
+  "text": "mrożony",
+  "translation": "frozen",
+  "transcription": "mrɔˈʐɔnɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7627,
+  "text": "makrela",
+  "translation": "mackerel",
+  "transcription": "maˈkrɛla",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7628,
+  "text": "drożdżówka",
+  "translation": "sweet bun",
+  "transcription": "drɔˈʐd͡ʐufka",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7629,
+  "text": "dziękować za pomoc",
+  "translation": "to thank for help",
+  "transcription": "d͡ʑɛŋˈkɔvat͡ɕ za ˈpɔmɔt͡s",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "daily-conversation"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7630,
+  "text": "zupa grzybowa",
+  "translation": "mushroom soup",
+  "transcription": "ˈzupa gʐɨˈbɔva",
+  "partOfSpeech": "expr",
+  "cefr": "A1",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7631,
+  "text": "zupa pieczarkowa",
+  "translation": "button-mushroom soup",
+  "transcription": "ˈzupa pjɛt͡ʂarˈkɔva",
+  "partOfSpeech": "expr",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7632,
+  "text": "cytrynowy",
+  "translation": "lemon (adj.)",
+  "transcription": "t͡sɨtrɨˈnɔvɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7633,
+  "text": "brzoskwiniowy",
+  "translation": "peach (adj.)",
+  "transcription": "bʐɔskfiˈɲɔvɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7634,
+  "text": "winogronowy",
+  "translation": "grape (adj.)",
+  "transcription": "vinɔgrɔˈnɔvɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7635,
+  "text": "wiśniowy",
+  "translation": "cherry (adj.)",
+  "transcription": "viˈɕɲɔvɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7636,
+  "text": "fasolowy",
+  "translation": "bean (adj.)",
+  "transcription": "fasɔˈlɔvɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7637,
+  "text": "kalafiorowy",
+  "translation": "cauliflower (adj.)",
+  "transcription": "kalafjɔˈrɔvɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7638,
+  "text": "brokułowy",
+  "translation": "broccoli (adj.)",
+  "transcription": "brɔkuˈwɔvɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7639,
+  "text": "cebulowy",
+  "translation": "onion (adj.)",
+  "transcription": "t͡sɛbuˈlɔvɨ",
+  "partOfSpeech": "adj",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
  }
 ]
