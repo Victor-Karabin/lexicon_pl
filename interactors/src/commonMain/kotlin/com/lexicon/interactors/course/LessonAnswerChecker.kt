@@ -44,6 +44,7 @@ object LessonAnswerChecker {
                 accepted.any { differsOnlyInDiacritics(typed, it) } -> AnswerVerdict.ALMOST
                 else -> AnswerVerdict.WRONG
             }
+            AnswerMatch.EXACT_LETTERS -> if (typed in accepted) AnswerVerdict.CORRECT else AnswerVerdict.WRONG
             AnswerMatch.KEY_WORDS -> when {
                 accepted.any { contains(typed, it) } -> AnswerVerdict.CORRECT
                 accepted.any { contains(fold(typed), fold(it)) } -> AnswerVerdict.ALMOST
@@ -58,6 +59,37 @@ object LessonAnswerChecker {
     ): String {
         val typed = normalise(given)
         return expected.firstOrNull { differsOnlyInDiacritics(typed, normalise(it)) } ?: expected.first()
+    }
+
+    fun changedLetters(
+        expected: String,
+        given: String,
+    ): Set<Int> {
+        val wanted = expected.lowercase()
+        val typed = given.lowercase()
+        val lengths = Array(wanted.length + 1) { IntArray(typed.length + 1) }
+        for (i in wanted.indices.reversed()) {
+            for (j in typed.indices.reversed()) {
+                lengths[i][j] = if (wanted[i] == typed[j]) lengths[i + 1][j + 1] + 1 else maxOf(lengths[i + 1][j], lengths[i][j + 1])
+            }
+        }
+        val changed = mutableSetOf<Int>()
+        var i = 0
+        var j = 0
+        while (i < wanted.length) {
+            when {
+                j < typed.length && wanted[i] == typed[j] -> {
+                    i++
+                    j++
+                }
+                j < typed.length && lengths[i][j + 1] >= lengths[i + 1][j] -> j++
+                else -> {
+                    if (wanted[i].isLetterOrDigit()) changed += i
+                    i++
+                }
+            }
+        }
+        return changed
     }
 
     private fun contains(

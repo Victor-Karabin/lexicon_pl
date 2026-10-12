@@ -243,4 +243,20 @@ class LessonAnswerCheckerTest {
         assertEquals("Tam są kawa i cukier.", LessonAnswerChecker.closest(coffee, "Tam sa kawa i cukier"))
         assertEquals("Kawa i cukier są tam.", LessonAnswerChecker.closest(coffee, "kawa cukier"))
     }
+
+    @Test
+    fun `exact letters accept only the key, ignoring case, spaces and punctuation`() {
+        val key = listOf("Tak, świetnie! Gdzie i kiedy?")
+        assertEquals(AnswerVerdict.CORRECT, LessonAnswerChecker.verdict(key, "tak  świetnie gdzie i kiedy", AnswerMatch.EXACT_LETTERS))
+        assertEquals(AnswerVerdict.WRONG, LessonAnswerChecker.verdict(key, "Tak, swietnie! Gdzie i kiedy?", AnswerMatch.EXACT_LETTERS))
+        assertEquals(AnswerVerdict.ALMOST, LessonAnswerChecker.verdict(key, "Tak, swietnie! Gdzie i kiedy?"))
+    }
+
+    @Test
+    fun `the changed letters are the ones the typed text lacks`() {
+        assertEquals(setOf(5), LessonAnswerChecker.changedLetters("Tak, świetnie!", "Tak, swietnie!"))
+        assertEquals(setOf(1, 2), LessonAnswerChecker.changedLetters("iść", "isc"))
+        assertEquals(emptySet<Int>(), LessonAnswerChecker.changedLetters("Cześć", "cześć"))
+        assertEquals(setOf(3), LessonAnswerChecker.changedLetters("kawę :-)", "kaw"))
+    }
 }

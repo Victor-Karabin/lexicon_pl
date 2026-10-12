@@ -7252,8 +7252,8 @@
    "icon": "record_voice_over",
    "color": "#EF6C00",
    "popularity": 5,
-   "estimatedSeconds": 50820,
-   "wordCount": 847,
+   "estimatedSeconds": 51000,
+   "wordCount": 850,
    "vocabularyIds": [
     244,
     372,
@@ -8101,7 +8101,10 @@
     7361,
     7362,
     7376,
-    7400
+    7400,
+    7418,
+    7446,
+    7456
    ]
   },
   {
@@ -8118,8 +8121,8 @@
    "icon": "waving_hand",
    "color": "#EF6C00",
    "popularity": 10,
-   "estimatedSeconds": 3360,
-   "wordCount": 56,
+   "estimatedSeconds": 3420,
+   "wordCount": 57,
    "vocabularyIds": [
     238,
     240,
@@ -8176,7 +8179,8 @@
     7189,
     7190,
     7233,
-    7234
+    7234,
+    7456
    ]
   },
   {
@@ -8272,8 +8276,8 @@
    "icon": "chat",
    "color": "#EF6C00",
    "popularity": 12,
-   "estimatedSeconds": 79020,
-   "wordCount": 1317,
+   "estimatedSeconds": 79320,
+   "wordCount": 1322,
    "vocabularyIds": [
     1,
     2,
@@ -9591,7 +9595,12 @@
     7345,
     7362,
     7375,
-    7399
+    7399,
+    7418,
+    7419,
+    7434,
+    7436,
+    7456
    ]
   },
   {
@@ -9608,8 +9617,8 @@
    "icon": "family_restroom",
    "color": "#EF6C00",
    "popularity": 13,
-   "estimatedSeconds": 5820,
-   "wordCount": 97,
+   "estimatedSeconds": 5880,
+   "wordCount": 98,
    "vocabularyIds": [
     64,
     123,
@@ -9707,7 +9716,8 @@
     7000,
     7011,
     7067,
-    7215
+    7215,
+    7424
    ]
   },
   {
@@ -10349,8 +10359,8 @@
    "icon": "restaurant",
    "color": "#EF6C00",
    "popularity": 17,
-   "estimatedSeconds": 11220,
-   "wordCount": 187,
+   "estimatedSeconds": 11580,
+   "wordCount": 193,
    "vocabularyIds": [
     144,
     145,
@@ -10538,7 +10548,13 @@
     7333,
     7339,
     7384,
-    7404
+    7404,
+    7417,
+    7420,
+    7421,
+    7422,
+    7423,
+    7431
    ]
   },
   {
@@ -10692,8 +10708,8 @@
    "icon": "shopping_cart",
    "color": "#EF6C00",
    "popularity": 20,
-   "estimatedSeconds": 9120,
-   "wordCount": 152,
+   "estimatedSeconds": 9420,
+   "wordCount": 157,
    "vocabularyIds": [
     170,
     171,
@@ -10846,7 +10862,12 @@
     6998,
     7027,
     7194,
-    7242
+    7242,
+    7426,
+    7445,
+    7446,
+    7451,
+    7454
    ]
   },
   {
@@ -11487,8 +11508,8 @@
    "icon": "pin",
    "color": "#EF6C00",
    "popularity": 25,
-   "estimatedSeconds": 7980,
-   "wordCount": 133,
+   "estimatedSeconds": 8040,
+   "wordCount": 134,
    "vocabularyIds": [
     23,
     55,
@@ -11622,7 +11643,8 @@
     7319,
     7320,
     7321,
-    7322
+    7322,
+    7424
    ]
   },
   {
@@ -12574,8 +12596,8 @@
    "icon": "favorite_border",
    "color": "#6A1B9A",
    "popularity": 32,
-   "estimatedSeconds": 20220,
-   "wordCount": 337,
+   "estimatedSeconds": 20280,
+   "wordCount": 338,
    "vocabularyIds": [
     211,
     350,
@@ -12913,7 +12935,8 @@
     7121,
     7125,
     7174,
-    7385
+    7385,
+    7448
    ]
   },
   {
@@ -13888,8 +13911,8 @@
    "icon": "directions_bus",
    "color": "#0277BD",
    "popularity": 47,
-   "estimatedSeconds": 10980,
-   "wordCount": 183,
+   "estimatedSeconds": 11040,
+   "wordCount": 184,
    "vocabularyIds": [
     68,
     178,
@@ -14073,7 +14096,8 @@
     7138,
     7139,
     7222,
-    7330
+    7330,
+    7447
    ]
   },
   {
@@ -14400,8 +14424,8 @@
    "icon": "public",
    "color": "#0277BD",
    "popularity": 52,
-   "estimatedSeconds": 9660,
-   "wordCount": 161,
+   "estimatedSeconds": 9720,
+   "wordCount": 162,
    "vocabularyIds": [
     67,
     271,
@@ -14563,7 +14587,8 @@
     7401,
     7402,
     7415,
-    7416
+    7416,
+    7449
    ]
   },
   {
@@ -14925,8 +14950,8 @@
    "icon": "account_balance",
    "color": "#4527A0",
    "popularity": 55,
-   "estimatedSeconds": 4080,
-   "wordCount": 68,
+   "estimatedSeconds": 4140,
+   "wordCount": 69,
    "vocabularyIds": [
     188,
     510,
@@ -14995,7 +15020,8 @@
     7356,
     7358,
     7359,
-    7414
+    7414,
+    7425
    ]
   },
   {
@@ -15891,8 +15917,8 @@
    "icon": "badge",
    "color": "#37474F",
    "popularity": 60,
-   "estimatedSeconds": 5280,
-   "wordCount": 88,
+   "estimatedSeconds": 5340,
+   "wordCount": 89,
    "vocabularyIds": [
     186,
     273,
@@ -15981,7 +16007,8 @@
     7336,
     7344,
     7406,
-    7410
+    7410,
+    7457
    ]
   },
   {
@@ -16578,8 +16605,8 @@
    "icon": "language",
    "color": "#455A64",
    "popularity": 64,
-   "estimatedSeconds": 4320,
-   "wordCount": 72,
+   "estimatedSeconds": 4440,
+   "wordCount": 74,
    "vocabularyIds": [
     310,
     436,
@@ -16652,7 +16679,9 @@
     7027,
     7100,
     7291,
-    7292
+    7292,
+    7427,
+    7432
    ]
   },
   {
@@ -16669,8 +16698,8 @@
    "icon": "smartphone",
    "color": "#455A64",
    "popularity": 65,
-   "estimatedSeconds": 2340,
-   "wordCount": 39,
+   "estimatedSeconds": 2460,
+   "wordCount": 41,
    "vocabularyIds": [
     243,
     244,
@@ -16710,7 +16739,9 @@
     3966,
     5266,
     7244,
-    7260
+    7260,
+    7428,
+    7443
    ]
   },
   {
@@ -16773,8 +16804,8 @@
    "icon": "sports_soccer",
    "color": "#AD1457",
    "popularity": 67,
-   "estimatedSeconds": 10440,
-   "wordCount": 174,
+   "estimatedSeconds": 10740,
+   "wordCount": 179,
    "vocabularyIds": [
     217,
     218,
@@ -16949,7 +16980,12 @@
     7288,
     7348,
     7381,
-    7413
+    7413,
+    7433,
+    7437,
+    7439,
+    7440,
+    7450
    ]
   },
   {
@@ -17024,8 +17060,8 @@
    "icon": "music_note",
    "color": "#AD1457",
    "popularity": 69,
-   "estimatedSeconds": 5280,
-   "wordCount": 88,
+   "estimatedSeconds": 5400,
+   "wordCount": 90,
    "vocabularyIds": [
     227,
     283,
@@ -17114,7 +17150,9 @@
     7353,
     7372,
     7409,
-    7412
+    7412,
+    7430,
+    7455
    ]
   },
   {
@@ -17131,8 +17169,8 @@
    "icon": "movie",
    "color": "#AD1457",
    "popularity": 70,
-   "estimatedSeconds": 8760,
-   "wordCount": 146,
+   "estimatedSeconds": 8880,
+   "wordCount": 148,
    "vocabularyIds": [
     282,
     284,
@@ -17279,7 +17317,9 @@
     7085,
     7105,
     7123,
-    7347
+    7347,
+    7450,
+    7453
    ]
   },
   {
@@ -17635,8 +17675,8 @@
    "icon": "interests",
    "color": "#AD1457",
    "popularity": 73,
-   "estimatedSeconds": 4020,
-   "wordCount": 67,
+   "estimatedSeconds": 4560,
+   "wordCount": 76,
    "vocabularyIds": [
     210,
     600,
@@ -17704,7 +17744,16 @@
     7312,
     7314,
     7350,
-    7360
+    7360,
+    7426,
+    7429,
+    7433,
+    7435,
+    7437,
+    7438,
+    7444,
+    7452,
+    7455
    ]
   },
   {

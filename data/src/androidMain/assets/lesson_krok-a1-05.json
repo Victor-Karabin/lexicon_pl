@@ -153,7 +153,6 @@
         {"number": 7, "answers": ["Lubi pracować", "On lubi pracować"]}
       ],
       "newWords": [
-        {"polish": "zawód", "english": "profession (Kim on jest? — What does he do?)"},
         {"polish": "biznesmen", "english": "businessman"},
         {"polish": "ile", "english": "how much, how many (Ile ma lat? — How old is he?)"},
         {"polish": "czterdzieści", "english": "forty"}
@@ -1091,9 +1090,7 @@
         {"polish": "ser", "english": "cheese"},
         {"polish": "oscypek", "english": "oscypek (smoked sheep's cheese)"},
         {"polish": "nowoczesny", "english": "modern"},
-        {"polish": "budynek", "english": "building"},
-        {"polish": "kultura", "english": "culture"},
-        {"polish": "sztuka", "english": "art"}
+        {"polish": "budynek", "english": "building"}
       ],
       "rules": [2, 1]
     },

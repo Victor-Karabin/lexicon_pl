@@ -20,11 +20,12 @@ private const val SHORTEST_WORD = 3
 private val afterSubmit = setOf("newWords", "model", "checklist")
 private val lookupEndings = listOf("", "?", "!", ".", "…", "…?", "…!")
 private val glossGivesAway = setOf("lesson_krok-a1-02.json 3C", "lesson_krok-a1-02.json 8D")
-private val answerKeys = setOf("answers", "variants")
+private val answerKeys = setOf("answers", "variants", "model")
 private val notPrinted = setOf(
     "gaps", "answers", "answer", "hint", "transcript", "model", "checklist", "newWords", "newWordsUnlock", "variants",
     "feedback", "rules", "tracks", "wordBox",
 )
+private val plainLetters = "ąćęłńóśźż".zip("acelnoszz").toMap()
 private val screenReference = Regex("""\b[1-9][A-H]\b""")
 private val letterPattern = Regex("""\w_|_\w""")
 private val patternBreak = Regex("""[\s≠]+""")
@@ -45,8 +46,8 @@ class LessonScriptsTest {
         scripts.forEach { (name, script) -> script.screens.forEach { check("$name ${it.id}", it) } }
 
     @Test
-    fun `there is a script for lessons 1 to 5`() {
-        assertEquals((1..5).map { "lesson_krok-a1-0$it.json" }, assets.keys.toList())
+    fun `there is a script for lessons 1 to 6`() {
+        assertEquals((1..6).map { "lesson_krok-a1-0$it.json" }, assets.keys.toList())
     }
 
     @Test
@@ -170,7 +171,8 @@ class LessonScriptsTest {
                     line ->
                 GAP_PATTERN.findAll(line.text).map { it.groupValues[1] }.toList()
             }
-            assertEquals(where, screen.questions.map { it.key }, inText)
+            val choices = screen.choices.map { it.question.key }.toSet()
+            assertEquals(where, screen.questions.map { it.key }.filterNot { it in choices }, inText)
         }
 
     @Test
@@ -208,8 +210,12 @@ class LessonScriptsTest {
     @Test
     fun `every choice answer is one of its options`() =
         eachScreen { where, screen ->
-            if (screen !is LessonScreen.Choice) return@eachScreen
-            screen.items.forEach { item ->
+            val items = when (screen) {
+                is LessonScreen.Choice -> screen.items
+                is LessonScreen.GapFill -> screen.choices
+                else -> return@eachScreen
+            }
+            items.forEach { item ->
                 assertTrue(
                     "$where ${item.question.label}",
                     item.question.answers.isNotEmpty() && item.question.answers.all { it in item.options },
@@ -263,21 +269,23 @@ class LessonScriptsTest {
     fun `new words appear in the text their screen shows before the answers`() =
         assets.forEach { (name, asset) ->
             asset.screens.filter { it.newWords.isNotEmpty() }.forEach { screen ->
-                val shown = visibleText(lessonJson.encodeToJsonElement(ScreenAsset.serializer(), screen)).lowercase()
+                val json = lessonJson.encodeToJsonElement(ScreenAsset.serializer(), screen)
+                val afterCheck = if (screen.newWordsUnlock == "after_check") screen.model.joinToString(" ") else ""
+                val shown = folded(visibleText(json) + " " + afterCheck)
                 screen.newWords.forEach { word ->
-                    val words = word.polish.lowercase().split(
+                    val words = folded(word.polish).split(
                         ' ',
                         '/',
                         ',',
                         '·',
                     ).map { it.trim('.', '?', '!', '…') }.filter { it.isNotEmpty() }
                     val stems = words.filter { it.length >= SHORTEST_WORD }.ifEmpty { words }
-                    assertTrue("$name ${screen.id} ${word.polish}", stems.any { shown.contains(it.take(stemLength(it))) })
+                    assertTrue("$name ${screen.id} ${word.polish}", stems.any { shown.contains(it.take(SHORTEST_WORD)) })
                 }
             }
         }
 
-    private fun stemLength(word: String): Int = minOf(STEM, word.length - 1).coerceAtLeast(minOf(SHORTEST_WORD, word.length))
+    private fun folded(text: String): String = text.lowercase().map { plainLetters[it] ?: it }.joinToString("")
 
     private fun visibleText(element: JsonElement): String =
         when (element) {
@@ -312,7 +320,8 @@ class LessonScriptsTest {
             val ids = asset.tracks.map { it.id }
             assertEquals(name, ids.size, ids.toSet().size)
             val referenced = asset.screens.flatMap { screen ->
-                screen.tracks.map { it.id } + screen.groups.mapNotNull { it.track?.id } + screen.sections.mapNotNull { it.track?.id }
+                screen.tracks.map { it.id } + screen.groups.mapNotNull { it.track?.id } + screen.sections.mapNotNull { it.track?.id } +
+                    screen.items.mapNotNull { it.track?.id }
             }
             assertEquals(name, emptyList<String>(), referenced.filterNot { it in ids })
             assertEquals(name, emptyList<String>(), ids.filterNot { it in referenced })

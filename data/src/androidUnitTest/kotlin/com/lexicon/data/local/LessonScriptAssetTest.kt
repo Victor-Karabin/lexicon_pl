@@ -128,7 +128,7 @@ class LessonScriptAssetTest {
         assertEquals(TranscriptUnlock.AfterCheck, script.newWords.getValue("4D").unlock)
         assertEquals(TranscriptUnlock.Always, script.newWords.getValue("1A").unlock)
         assertEquals(LessonPhrase("łatwo", "easily"), script.newWords.getValue("1A").words.first())
-        assertEquals(16, script.newWords.size)
+        assertEquals(18, script.newWords.size)
     }
 
     @Test

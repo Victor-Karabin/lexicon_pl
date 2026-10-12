@@ -461,7 +461,8 @@
         {"polish": "móc", "english": "can, to be able to"},
         {"polish": "imię", "english": "first name"},
         {"polish": "numer", "english": "number"}
-      ]
+      ],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "3A",
