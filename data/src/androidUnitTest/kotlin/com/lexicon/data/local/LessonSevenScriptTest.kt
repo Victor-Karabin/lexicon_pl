@@ -46,10 +46,10 @@ class LessonSevenScriptTest {
     @Test
     fun `each Lotto coupon is a grid of 1 to 49 in rows of seven with six numbers to find`() {
         listOf("3B", "3C").forEach { id ->
-            val grid = screen(id) as LessonScreen.NumberGrid
-            assertEquals(49, grid.size)
+            val grid = screen(id) as LessonScreen.SelectionGrid
+            assertEquals((1..49).map(Int::toString), grid.options)
             assertEquals(7, grid.columns)
-            assertTrue(grid.questions.all { it.match == AnswerMatch.NUMBER_SET && it.answers.single().split(" ").size == 6 })
+            assertTrue(grid.questions.all { it.match == AnswerMatch.SELECTION && it.answers.single().split(" ").size == 6 })
         }
     }
 

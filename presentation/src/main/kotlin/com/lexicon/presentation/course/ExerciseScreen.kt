@@ -115,14 +115,6 @@ private fun ExerciseContent(
                                     onSpeedChanged = onSpeedChanged,
                                 )
                             }
-                            if (uiState.track.isMissing) {
-                                Text(
-                                    text = stringResource(R.string.exercise_audio_unavailable),
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    modifier = Modifier.padding(top = Dimens.spacingSmall),
-                                )
-                            }
                         }
                     }
 

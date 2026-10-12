@@ -32,7 +32,7 @@ private val patternBreak = Regex("""[\s≠]+""")
 private val punctuation = Regex("""[.,?!]""")
 private val knownTypes = setOf(
     "grammar", "reference", "write", "choice", "inline_choice", "order", "form", "gap_fill", "free_writing", "conjugation",
-    "number_grid",
+    "number_grid", "selection",
 )
 private val persons = listOf("ja", "ty", "on / ona / ono", "my", "wy", "oni / one")
 
@@ -48,8 +48,8 @@ class LessonScriptsTest {
         scripts.forEach { (name, script) -> script.screens.forEach { check("$name ${it.id}", it) } }
 
     @Test
-    fun `there is a script for lessons 1 to 7`() {
-        assertEquals((1..7).map { "lesson_krok-a1-0$it.json" }, assets.keys.toList())
+    fun `there is a script for lessons 1 to 8`() {
+        assertEquals((1..8).map { "lesson_krok-a1-0$it.json" }, assets.keys.toList())
     }
 
     @Test

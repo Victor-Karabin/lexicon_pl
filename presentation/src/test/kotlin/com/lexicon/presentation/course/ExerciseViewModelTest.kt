@@ -32,6 +32,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -251,7 +252,7 @@ class ExerciseViewModelTest {
         }
 
     @Test
-    fun `a track that cannot be fetched is reported as missing rather than crashing`() =
+    fun `a track that cannot be fetched plays nothing rather than crashing`() =
         runTest {
             coEvery { getLesson(LessonId("lesson-1")) } returns lesson(minimalPair)
             coEvery { audioLibrary.pathOrNull("101a1.mp3", "drive-101a1.mp3") } returns null
@@ -263,7 +264,8 @@ class ExerciseViewModelTest {
             testDispatcher.scheduler.advanceUntilIdle()
 
             val state = viewModel.uiState.value as ExerciseUiState.Loaded
-            assertTrue(state.track.isMissing)
+            assertFalse(state.track.isPlaying)
+            coVerify(exactly = 0) { audioPlayer.play(any(), any(), any()) }
         }
 
     @Test

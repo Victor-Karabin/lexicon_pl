@@ -335,7 +335,7 @@ private fun ScreenBody(
         is LessonScreen.Ordering -> OrderingBody(screen, session, actions)
         is LessonScreen.Form -> FormBody(screen, session, actions)
         is LessonScreen.Conjugation -> ConjugationBody(screen, session, actions)
-        is LessonScreen.NumberGrid -> NumberGridBody(screen, session, actions)
+        is LessonScreen.SelectionGrid -> SelectionGridBody(screen, session, actions)
         is LessonScreen.InlineChoice -> InlineChoiceBody(screen, session, actions)
         is LessonScreen.Grammar -> session.script.rules.forEach { RuleView(it) }
     }
@@ -432,22 +432,13 @@ private fun TrackPlayer(
     Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
         if (showLabel) track.label?.let { Text(it, style = MaterialTheme.typography.labelLarge) }
         val state = uiState.tracks.of(track.file)
-        val comingSoon = state.isMissing && track.remoteId == null
         AudioPlayerRow(
             state = state,
             onPlayPause = { actions.onPlay(track) },
             onSeek = { actions.onSeek(track, it) },
             onSpeedChanged = actions.onSpeedChanged,
             modifier = Modifier.onGloballyPositioned { shownPlayers[track.file] = it.boundsInWindow().height > 0f },
-            enabled = !comingSoon,
         )
-        if (state.isMissing) {
-            Text(
-                stringResource(if (comingSoon) R.string.exercise_audio_coming_soon else R.string.exercise_audio_unavailable),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
         val transcript = session.screen.transcriptFor(track)
         if (transcript != null && session.isTranscriptUnlocked(session.screen)) {
             TranscriptCard(
@@ -534,23 +525,31 @@ private fun ConjugationBody(
 }
 
 @Composable
-private fun NumberGridBody(
-    screen: LessonScreen.NumberGrid,
+private fun SelectionGridBody(
+    screen: LessonScreen.SelectionGrid,
     session: LessonSession,
     actions: LessonFlowActions,
 ) {
+    if (screen.legend.isNotEmpty()) {
+        SectionCard(title = null) {
+            screen.legend.forEach { Text(richText(it), style = MaterialTheme.typography.bodyLarge) }
+        }
+    }
     Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium)) {
         screen.questions.forEach { question ->
-            val selected = LessonAnswerChecker.numbers(session.answer(screen.id, question.key))
-            NumberGridRow(
+            val selected = LessonAnswerChecker.selection(session.answer(screen.id, question.key))
+            SelectionGridRow(
                 label = question.label,
-                size = screen.size,
+                options = screen.options,
                 columns = screen.columns,
                 selected = selected,
-                expected = LessonAnswerChecker.numbers(question.answers.first()).takeIf { session.isChecked(screen.id) },
-                onToggle = { number ->
-                    val toggled = if (number in selected) selected - number else selected + number
-                    actions.onAnswerChanged(question.key, toggled.sorted().joinToString(" "))
+                expected = LessonAnswerChecker.selection(question.answers.first()).takeIf { session.isChecked(screen.id) },
+                onToggle = { option ->
+                    val toggled = if (option.uppercase() in selected) selected - option.uppercase() else selected + option.uppercase()
+                    actions.onAnswerChanged(
+                        question.key,
+                        screen.options.filter { it.uppercase() in toggled }.joinToString(" "),
+                    )
                 },
             )
         }

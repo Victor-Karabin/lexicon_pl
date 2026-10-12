@@ -32,7 +32,7 @@ class LessonSevenKeysTest {
     @Test
     fun `a coupon is right only with exactly its six numbers, in any order`() {
         val coupon = items("3B").first().list("answers")
-        val verdict = { picked: String -> LessonAnswerChecker.verdict(coupon, picked, AnswerMatch.NUMBER_SET) }
+        val verdict = { picked: String -> LessonAnswerChecker.verdict(coupon, picked, AnswerMatch.SELECTION) }
         assertEquals(AnswerVerdict.CORRECT, verdict("34 33 20 12 6 5"))
         assertEquals(AnswerVerdict.WRONG, verdict("5 6 12 20 33"))
         assertEquals(AnswerVerdict.WRONG, verdict("5 6 12 20 33 34 35"))

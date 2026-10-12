@@ -259,4 +259,22 @@ class LessonAnswerCheckerTest {
         assertEquals(emptySet<Int>(), LessonAnswerChecker.changedLetters("Cześć", "cześć"))
         assertEquals(setOf(3), LessonAnswerChecker.changedLetters("kawę :-)", "kaw"))
     }
+
+    @Test
+    fun `a list answer takes its items in any order, joined by commas, i or z`() {
+        val key = listOf("uwe je chleb | masłem | kiełbasą | keczupem")
+        val verdict = { typed: String -> LessonAnswerChecker.verdict(key, typed, AnswerMatch.ANY_ORDER) }
+        assertEquals(AnswerVerdict.CORRECT, verdict("Uwe je chleb z masłem, kiełbasą i keczupem."))
+        assertEquals(AnswerVerdict.CORRECT, verdict("Uwe je chleb z keczupem i z kiełbasą i z masłem"))
+        assertEquals(AnswerVerdict.ALMOST, verdict("Uwe je chleb z maslem, kielbasa i keczupem"))
+        assertEquals(AnswerVerdict.WRONG, verdict("Uwe je chleb z masłem i kiełbasą"))
+        assertEquals(AnswerVerdict.WRONG, verdict("Uwe je chleb masłem, kiełbasą i keczupem"))
+        assertEquals(AnswerVerdict.WRONG, verdict("Uwe je bułkę z masłem, kiełbasą i keczupem"))
+    }
+
+    @Test
+    fun `a selection is right with exactly its options, in any order and case`() {
+        assertEquals(AnswerVerdict.CORRECT, LessonAnswerChecker.verdict(listOf("A D F"), "f a d", AnswerMatch.SELECTION))
+        assertEquals(AnswerVerdict.WRONG, LessonAnswerChecker.verdict(listOf("A D F"), "A D", AnswerMatch.SELECTION))
+    }
 }

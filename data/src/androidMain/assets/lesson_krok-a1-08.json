@@ -1,0 +1,1716 @@
+{
+  "lessonId": "krok-a1-08",
+  "rules": [
+    {
+      "title": "woleć … niż / czy",
+      "tables": [
+        {
+          "rows": [
+            ["ja", "wol**ę**", "my", "wol**imy**"],
+            ["ty", "wol**isz**", "wy", "wol**icie**"],
+            ["on / ona / ono", "wol**i**", "oni / one", "wol**ą**"]
+          ]
+        }
+      ],
+      "notes": [
+        "*woleć* + accusative: *Wolę kawę niż herbatę. Wolisz kawę czy herbatę?*",
+        "Masculine fruit and vegetables are animate: *wolę banana, pomidora*."
+      ]
+    },
+    {
+      "title": "jeść, pić",
+      "tables": [
+        {
+          "header": ["", "jeść", "pić"],
+          "rows": [
+            ["ja", "jem", "piję"],
+            ["ty", "jesz", "pijesz"],
+            ["on / ona / ono", "je", "pije"],
+            ["my", "jemy", "pijemy"],
+            ["wy", "jecie", "pijecie"],
+            ["oni / one", "jedzą", "piją"]
+          ]
+        }
+      ],
+      "notes": [
+        "Both take the accusative: *jem bułkę, piję białą kawę*.",
+        "Meals: *na* + accusative (*na śniadanie / obiad / kolację*); *mieć ochotę na* + accusative."
+      ]
+    },
+    {
+      "title": "Z czym? — z + instrumental",
+      "tables": [
+        {
+          "rows": [
+            ["masculine", "z masł**em**, z żółt**ym** ser**em**"],
+            ["feminine", "z cytryn**ą**, z chud**ą** szynk**ą**"],
+            ["neuter", "z mlek**iem**, z jajk**iem**"]
+          ]
+        }
+      ],
+      "notes": ["Opposite: *bez* — *z cukrem ≠ bez cukru, z mlekiem ≠ bez mleka, z cytryną ≠ bez cytryny, z lodem ≠ bez lodu* (fixed phrases)."]
+    },
+    {
+      "title": "Adjectives -owy, -owa, -owe",
+      "tables": [
+        {
+          "rows": [
+            ["malin(a)", "malin**owy** sok", "malin**owa** herbata", "malin**owe** ciasto"],
+            ["jabłk(o)", "jabłk**owy**", "jabłk**owa**", "jabłk**owe**"],
+            ["ananas", "ananas**owy**", "ananas**owa**", "ananas**owe**"]
+          ]
+        }
+      ],
+      "notes": ["The final *-a / -o* drops: *truskawka → truskawkowy, pomarańcza → pomarańczowy*."]
+    },
+    {
+      "title": "Instrumental plural",
+      "tables": [
+        {
+          "rows": [
+            ["adjective", "**-ymi** (after k, g: **-imi**)"],
+            ["noun", "**-ami**"],
+            ["example", "z suszon**ymi** pomidor**ami**, ze słodk**imi** jabłk**ami**"]
+          ]
+        }
+      ],
+      "notes": ["The same for all genders. Questions: *Z czym? Jakimi?*"]
+    }
+  ],
+  "tracks": [
+    {"id": "108A1", "file": "a1_coursebook_108a1.mp3"},
+    {"id": "108A2", "file": "a1_coursebook_108a2.mp3"},
+    {"id": "108A4", "file": "a1_coursebook_108a4.mp3"},
+    {"id": "108A7", "file": "a1_coursebook_108a7mp3.mp3"},
+    {"id": "108A9", "file": "a1_coursebook_108a9.mp3"},
+    {"id": "108B1", "file": "a1_coursebook_108b1.mp3"},
+    {"id": "108C2", "file": "a1_coursebook_108c2.mp3"},
+    {"id": "108C3", "file": "a1_coursebook_108c3.mp3"},
+    {"id": "wb37", "file": "a1_workbook_37_L08_cwiczenie2.mp3"},
+    {"id": "wb38", "file": "a1_workbook_38_L08_cwiczenie7.mp3"},
+    {"id": "wb39", "file": "a1_workbook_39_L08_cwiczenie12.mp3"}
+  ],
+  "steps": [
+    {"id": "G", "title": "Lesson grammar", "screens": ["0"], "grammar": true},
+    {"id": "1", "title": "Breakfast — woleć", "screens": ["1A", "1B", "1C", "1D", "1E", "1F", "1G", "1H", "1I"]},
+    {"id": "2", "title": "Z czym? · sok malinowy", "screens": ["2A", "2B", "2C", "2D", "2E", "2F", "2G"]},
+    {"id": "3", "title": "What do we like to eat?", "screens": ["3A", "3B", "3C", "3D", "3E", "3F"]},
+    {"id": "4", "title": "Lunch", "screens": ["4A", "4B", "4C", "4D", "4E", "4F", "4G", "4H"]},
+    {"id": "5", "title": "Dinner · tableware", "screens": ["5A", "5B", "5C", "5D", "5E", "5F"]},
+    {"id": "6", "title": "Lesson review", "screens": ["6A"], "review": true}
+  ],
+  "screens": [
+    {
+      "id": "0",
+      "type": "grammar",
+      "title": "Lesson grammar",
+      "instruction": "All the grammar of this lesson before the exercises. The steps repeat the part they need."
+    },
+    {
+      "id": "1A",
+      "type": "reference",
+      "title": "What do you want for breakfast?",
+      "instruction": "Saturday morning. Karolina knocks on Mami's door. Listen to the dialogue. *spać* (to sleep): *śpię, śpisz, śpią*.",
+      "tracks": [{"id": "108A1"}],
+      "transcript": {
+        "unlock": "always",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Karolina", "text": "Mami! Dzień dobry! Czy ty jeszcze śpisz?"},
+              {"speaker": "Mami", "text": "Nie, już nie śpię. Proszę wejść!"},
+              {"speaker": "Karolina", "text": "Mami, co chcesz na śniadanie?"},
+              {"speaker": "Mami", "text": "Na śniadanie?"},
+              {"speaker": "Karolina", "text": "Tak, dziś ja robię śniadanie. Mama i tata jeszcze śpią. Co lubisz jeść?"},
+              {"speaker": "Mami", "text": "Ja? Wszystko, nie ma problemu."},
+              {"speaker": "Karolina", "text": "To fajnie."}
+            ]
+          }
+        ]
+      },
+      "tables": [
+        {
+          "header": ["", "posiłki", ""],
+          "rows": [["🌅", "~6–11", "śniadanie"], ["☀️", "~12–17", "obiad"], ["🌙", "~17–20", "kolacja"]]
+        }
+      ],
+      "newWords": [
+        {"polish": "posiłek", "english": "meal"},
+        {"polish": "śniadanie", "english": "breakfast"},
+        {"polish": "obiad", "english": "lunch"},
+        {"polish": "kolacja", "english": "dinner"},
+        {"polish": "jeszcze", "english": "still"},
+        {"polish": "już", "english": "already"},
+        {"polish": "spać", "english": "to sleep (śpię, śpisz)"},
+        {"polish": "proszę wejść", "english": "come in"},
+        {"polish": "jeść", "english": "to eat"},
+        {"polish": "wszystko", "english": "everything"},
+        {"polish": "fajnie", "english": "cool"}
+      ]
+    },
+    {
+      "id": "1B",
+      "type": "reference",
+      "title": "Breakfast words",
+      "instruction": "The words for the breakfast picture. Listen and repeat.",
+      "groups": [
+        {
+          "track": {"id": "108A2"},
+          "phrases": [
+            {"polish": "🍞 chleb (jasny i ciemny)", "english": "bread (white and brown)"},
+            {"polish": "🥯 bułka", "english": "roll"},
+            {"polish": "⬜ biały ser", "english": "cottage cheese"},
+            {"polish": "🧀 żółty ser", "english": "hard cheese"},
+            {"polish": "🥄 jogurt", "english": "yoghurt"},
+            {"polish": "🥛 mleko", "english": "milk"},
+            {"polish": "🧈 masło · margaryna", "english": "butter · margarine"},
+            {"polish": "🫙 dżem", "english": "jam"},
+            {"polish": "🍯 miód", "english": "honey"},
+            {"polish": "🥚 jajko", "english": "egg"},
+            {"polish": "🍖 szynka", "english": "ham"},
+            {"polish": "🌭 kiełbasa", "english": "sausage"},
+            {"polish": "🥣 płatki śniadaniowe", "english": "cereal"},
+            {"polish": "🍅 pomidor", "english": "tomato"},
+            {"polish": "🥒 ogórek", "english": "cucumber"},
+            {"polish": "☕ kawa", "english": "coffee"},
+            {"polish": "🫖 herbata", "english": "tea"},
+            {"polish": "🍊 sok pomarańczowy", "english": "orange juice"},
+            {"polish": "🍫 kakao", "english": "cocoa"},
+            {"polish": "🍬 cukier", "english": "sugar"},
+            {"polish": "🧂 sól · pieprz", "english": "salt · pepper"},
+            {"polish": "🍋 cytryna", "english": "lemon"}
+          ]
+        }
+      ],
+      "notes": ["*sól* is feminine: *ta sól*."],
+      "newWords": [
+        {"polish": "jasny", "english": "light"},
+        {"polish": "ciemny", "english": "dark"},
+        {"polish": "chleb", "english": "bread"},
+        {"polish": "bułka", "english": "roll"},
+        {"polish": "biały ser", "english": "cottage cheese"},
+        {"polish": "żółty ser", "english": "hard cheese"},
+        {"polish": "jogurt", "english": "yoghurt"},
+        {"polish": "mleko", "english": "milk"},
+        {"polish": "masło", "english": "butter"},
+        {"polish": "margaryna", "english": "margarine"},
+        {"polish": "dżem", "english": "jam"},
+        {"polish": "miód", "english": "honey"},
+        {"polish": "jajko", "english": "egg"},
+        {"polish": "szynka", "english": "ham"},
+        {"polish": "kiełbasa", "english": "sausage"},
+        {"polish": "płatki śniadaniowe", "english": "cereal"},
+        {"polish": "pomidor", "english": "tomato"},
+        {"polish": "ogórek", "english": "cucumber"},
+        {"polish": "kakao", "english": "cocoa"},
+        {"polish": "cukier", "english": "sugar"},
+        {"polish": "sól", "english": "salt"},
+        {"polish": "pieprz", "english": "pepper"},
+        {"polish": "cytryna", "english": "lemon"}
+      ]
+    },
+    {
+      "id": "1C",
+      "type": "write",
+      "title": "What is it?",
+      "instruction": "Label each picture with a word from the box.",
+      "wordBox": [
+        "chleb",
+        "bułka",
+        "ser",
+        "jogurt",
+        "mleko",
+        "masło",
+        "dżem",
+        "jajko",
+        "sól",
+        "wędlina",
+        "płatki śniadaniowe",
+        "pomidor",
+        "ogórek",
+        "herbata",
+        "cytryna",
+        "cukier"
+      ],
+      "items": [
+        {
+          "label": "1",
+          "picture": {"label": "a small pot with a foil lid", "emoji": "🥄"},
+          "answers": ["jogurt"]
+        },
+        {
+          "label": "2",
+          "picture": {"label": "a small round bread", "emoji": "🥯"},
+          "answers": ["bułka"]
+        },
+        {
+          "label": "3",
+          "picture": {"label": "a carton of a white drink", "emoji": "🥛"},
+          "answers": ["mleko"]
+        },
+        {"label": "4", "picture": {"label": "a big loaf", "emoji": "🍞"}, "answers": ["chleb"]},
+        {
+          "label": "5",
+          "picture": {"label": "a yellow piece with holes", "emoji": "🧀"},
+          "answers": ["ser"]
+        },
+        {
+          "label": "6",
+          "picture": {"label": "a yellow block on a dish", "emoji": "🧈"},
+          "answers": ["masło"]
+        },
+        {
+          "label": "7",
+          "picture": {"label": "slices of cold meat on a plate", "emoji": "🍖"},
+          "answers": ["wędlina"]
+        },
+        {
+          "label": "8",
+          "picture": {"label": "a jar of fruit spread", "emoji": "🫙"},
+          "answers": ["dżem"]
+        },
+        {
+          "label": "9",
+          "picture": {"label": "white cubes in a bowl", "emoji": "🍬"},
+          "answers": ["cukier"]
+        },
+        {
+          "label": "10",
+          "picture": {"label": "a small jar with holes in the lid", "emoji": "🧂"},
+          "answers": ["sól"]
+        },
+        {
+          "label": "11",
+          "picture": {"label": "a red round vegetable", "emoji": "🍅"},
+          "answers": ["pomidor"]
+        },
+        {
+          "label": "12",
+          "picture": {"label": "a long green vegetable", "emoji": "🥒"},
+          "answers": ["ogórek"]
+        },
+        {
+          "label": "13",
+          "picture": {"label": "a bowl of dry flakes", "emoji": "🥣"},
+          "answers": ["płatki śniadaniowe"]
+        },
+        {
+          "label": "14",
+          "picture": {"label": "a sour yellow fruit", "emoji": "🍋"},
+          "answers": ["cytryna"]
+        },
+        {
+          "label": "15",
+          "picture": {"label": "a hot drink in a teapot", "emoji": "🫖"},
+          "answers": ["herbata"]
+        },
+        {"label": "16", "picture": {"label": "in an egg cup", "emoji": "🥚"}, "answers": ["jajko"]}
+      ],
+      "newWords": [{"polish": "wędlina", "english": "cold meats"}],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "1D",
+      "type": "gap_fill",
+      "title": "What goes together?",
+      "instruction": "Make eight pairs. Use each word from the box once.",
+      "wordBox": ["dżem", "szynka", "mleko", "mleko", "cytryna", "masło", "cukier", "cukier"],
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. chleb + [1]"},
+            {"text": "2. chleb + [2]"},
+            {"text": "3. chleb + [3]"},
+            {"text": "4. herbata + [4]"},
+            {"text": "5. herbata + [5]"},
+            {"text": "6. kawa + [6]"},
+            {"text": "7. kawa + [7]"},
+            {"text": "8. płatki śniadaniowe + [8]"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["szynka"]},
+        {"number": 2, "answers": ["masło"]},
+        {"number": 3, "answers": ["dżem"]},
+        {"number": 4, "answers": ["cytryna"]},
+        {"number": 5, "answers": ["cukier"]},
+        {"number": 6, "answers": ["cukier"]},
+        {"number": 7, "answers": ["mleko"]},
+        {"number": 8, "answers": ["mleko"]}
+      ],
+      "interchangeable": [["1", "2", "3"], ["4", "5"], ["6", "7"]]
+    },
+    {
+      "id": "1E",
+      "type": "gap_fill",
+      "title": "Light or dark bread?",
+      "instruction": "Karolina makes breakfast. Listen and fill in the missing words.",
+      "tracks": [{"id": "108A4"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Karolina", "text": "Mami, wolisz jasny czy ciemny chleb?"},
+              {"speaker": "Mami", "text": "Wolisz? Nie rozumiem."},
+              {"speaker": "Karolina", "text": "Wolisz… yyy, no preferujesz, bardziej lubisz."},
+              {"speaker": "Mami", "text": "Aha. Wolę ciemny. A co to jest?"},
+              {"speaker": "Karolina", "text": "To jest bułka. Może wolisz bułkę."},
+              {"speaker": "Mami", "text": "Tak, proszę bułkę."},
+              {"speaker": "Karolina", "text": "Ja jem ciemny chleb z margaryną, bo chcę być szczupła."},
+              {"speaker": "Mami", "text": "Ja wolę masło. Czy mogę prosić widelec do masła?"},
+              {"speaker": "Karolina", "text": "Mami, to jest nóż, a to jest widelec."},
+              {"speaker": "Mami", "text": "Tak, tak, teraz pamiętam."},
+              {"speaker": "Karolina", "text": "Chcesz wędlinę czy ser?"},
+              {"speaker": "Mami", "text": "Co to jest wędlina?"},
+              {"speaker": "Karolina", "text": "Wędlina to na przykład: szynka, kiełbasa, salami."},
+              {"speaker": "Mami", "text": "Proszę kiełbasę, bardzo lubię polską kiełbasę."},
+              {"speaker": "Karolina", "text": "Kiełbasa jest tłusta. Ja zwykle jem biały albo żółty ser z pomidorem i z ogórkiem."},
+              {"speaker": "Mami", "text": "To bardzo zdrowe."},
+              {"speaker": "Karolina", "text": "Tak, to prawda. Mami, masz ochotę na jajko? To jajko jest na miękko, a tamto na twardo."},
+              {"speaker": "Mami", "text": "Co to znaczy?"},
+              {"speaker": "Karolina", "text": "Na miękko gotujesz trzy minuty, a na twardo osiem."},
+              {"speaker": "Mami", "text": "Aha, to poproszę na twardo."},
+              {"speaker": "Karolina", "text": "Z majonezem?"},
+              {"speaker": "Mami", "text": "Tak, chętnie."}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Karolina", "text": "Mami, wolisz jasny czy ciemny [1]?"},
+            {"speaker": "Mami", "text": "Wolisz? Nie rozumiem."},
+            {"speaker": "Karolina", "text": "Wolisz… yyy, no preferujesz, bardziej lubisz."},
+            {"speaker": "Mami", "text": "Aha. Wolę [2]. A co to jest?"},
+            {"speaker": "Karolina", "text": "To jest bułka. Może wolisz bułkę."},
+            {"speaker": "Mami", "text": "Tak, proszę bułkę."},
+            {"speaker": "Karolina", "text": "Ja jem ciemny chleb z [3], bo chcę być szczupła."},
+            {"speaker": "Mami", "text": "Ja wolę masło. Czy mogę prosić widelec do masła?"},
+            {"speaker": "Karolina", "text": "Mami, to jest nóż, a to jest [4]."},
+            {"speaker": "Mami", "text": "Tak, tak, teraz pamiętam."},
+            {"speaker": "Karolina", "text": "Chcesz wędlinę czy [5]?"},
+            {"speaker": "Mami", "text": "Co to jest wędlina?"},
+            {"speaker": "Karolina", "text": "Wędlina to na przykład: szynka, kiełbasa, salami."},
+            {"speaker": "Mami", "text": "Proszę [6], bardzo lubię polską kiełbasę."},
+            {"speaker": "Karolina", "text": "Kiełbasa jest tłusta. Ja zwykle jem [7] albo żółty ser z pomidorem i z ogórkiem."},
+            {"speaker": "Mami", "text": "To bardzo zdrowe."},
+            {"speaker": "Karolina", "text": "Tak, to prawda. Mami, masz ochotę na [8]? To jajko jest na miękko, a tamto na twardo."},
+            {"speaker": "Mami", "text": "Co to znaczy?"},
+            {"speaker": "Karolina", "text": "Na miękko gotujesz trzy minuty, a na twardo [9]."},
+            {"speaker": "Mami", "text": "Aha, to poproszę na twardo."},
+            {"speaker": "Karolina", "text": "Z majonezem?"},
+            {"speaker": "Mami", "text": "Tak, chętnie."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["chleb"]},
+        {"number": 2, "answers": ["ciemny"]},
+        {"number": 3, "answers": ["margaryną"], "feedback": "After *z* → instrumental (*z margaryną*)."},
+        {"number": 4, "answers": ["widelec"]},
+        {"number": 5, "answers": ["ser"]},
+        {"number": 6, "answers": ["kiełbasę"], "feedback": "After *woleć / jeść / pić* → accusative (*proszę kiełbasę*)."},
+        {"number": 7, "answers": ["biały"]},
+        {"number": 8, "answers": ["jajko"]},
+        {"number": 9, "answers": ["osiem"]}
+      ],
+      "notes": ["🍴 widelec · 🔪 nóż · 🥄 łyżka · 🍽️ talerz · ☕ kubek"],
+      "newWords": [
+        {"polish": "woleć", "english": "to prefer"},
+        {"polish": "preferować", "english": "to prefer"},
+        {"polish": "bardziej", "english": "more (bardziej lubić — to like more)"},
+        {"polish": "widelec", "english": "fork"},
+        {"polish": "nóż", "english": "knife"},
+        {"polish": "łyżka", "english": "spoon"},
+        {"polish": "talerz", "english": "plate"},
+        {"polish": "kubek", "english": "mug"},
+        {"polish": "salami", "english": "salami"},
+        {"polish": "tłusty", "english": "fatty"},
+        {"polish": "zwykle", "english": "usually"},
+        {"polish": "zdrowy", "english": "healthy"},
+        {"polish": "mieć ochotę na", "english": "to fancy (Masz ochotę na…? — Do you fancy…?)"},
+        {"polish": "na miękko", "english": "soft-boiled"},
+        {"polish": "na twardo", "english": "hard-boiled"},
+        {"polish": "majonez", "english": "mayonnaise"},
+        {"polish": "chętnie", "english": "gladly"},
+        {"polish": "minuta", "english": "minute"},
+        {"polish": "poprosić", "english": "to ask for (poproszę — I'd like)"}
+      ],
+      "rules": [1]
+    },
+    {
+      "id": "1F",
+      "type": "conjugation",
+      "title": "woleć",
+      "instruction": "*woleć* (-ę, -isz) + accusative: *Wolę kawę niż herbatę. Wolisz kawę czy herbatę?* Fill in the forms.",
+      "groups": [
+        {
+          "title": "woleć",
+          "translation": "to prefer · -ę, -isz",
+          "items": [
+            {"label": "ja", "answers": ["wolę"]},
+            {"label": "ty", "answers": ["wolisz"]},
+            {"label": "on / ona / ono", "answers": ["woli"]},
+            {"label": "my", "answers": ["wolimy"]},
+            {"label": "wy", "answers": ["wolicie"]},
+            {"label": "oni / one", "answers": ["wolą"]}
+          ]
+        }
+      ],
+      "newWords": [{"polish": "niż", "english": "than"}],
+      "rules": [1]
+    },
+    {
+      "id": "1G",
+      "type": "gap_fill",
+      "title": "Wolę… niż…",
+      "instruction": "Put the words in brackets in the accusative.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "a. Wolę [1] niż [2] (czarna herbata, zielona)."},
+            {"text": "b. Wolę [3] niż [4] (ciemny chleb, bułka)."},
+            {"text": "c. Angela woli [5] niż [6] (gorąca herbata, zimny sok)."},
+            {"text": "d. Mami woli [7] niż [8] (kiełbasa, żółty ser)."},
+            {"text": "e. Wolimy [9] niż [10] (czarna kawa, biała)."},
+            {"text": "f. Mami woli [11] niż [12] (jajko na twardo, jajecznica)."},
+            {"text": "g. Uwe woli [13] niż [14] (tłusta kiełbasa, chuda)."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["czarną herbatę"], "feedback": "After *woleć / jeść / pić* → accusative (*czarną herbatę*)."},
+        {"number": 2, "answers": ["zieloną"]},
+        {"number": 3, "answers": ["ciemny chleb"]},
+        {"number": 4, "answers": ["bułkę"], "feedback": "After *woleć / jeść / pić* → accusative (*bułkę*)."},
+        {"number": 5, "answers": ["gorącą herbatę"]},
+        {"number": 6, "answers": ["zimny sok"]},
+        {"number": 7, "answers": ["kiełbasę"]},
+        {"number": 8, "answers": ["żółty ser"]},
+        {"number": 9, "answers": ["czarną kawę"]},
+        {"number": 10, "answers": ["białą"]},
+        {"number": 11, "answers": ["jajko na twardo"]},
+        {"number": 12, "answers": ["jajecznicę"]},
+        {"number": 13, "answers": ["tłustą kiełbasę"]},
+        {"number": 14, "answers": ["chudą"]}
+      ],
+      "newWords": [
+        {"polish": "gorący", "english": "hot"},
+        {"polish": "zimny", "english": "cold"},
+        {"polish": "jajecznica", "english": "scrambled eggs"},
+        {"polish": "chudy", "english": "lean"}
+      ],
+      "rules": [1]
+    },
+    {
+      "id": "1H",
+      "type": "gap_fill",
+      "title": "Wolisz… czy…?",
+      "instruction": "Put the words in brackets in the accusative.",
+      "notes": ["Masculine fruit and vegetable names often take *-a*: *wolę banana, pomidora, ogórka*."],
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Wolisz [1] czy [2] (kawa, herbata)?"},
+            {"text": "2. Wolę [3] niż [4] (ser, wędlina)."},
+            {"text": "3. Anka i Sylwia wolą [5] niż [6] (biała kawa, czarna)."},
+            {"text": "4. Wolisz [7] czy [8] (ananas, banan)?"},
+            {"text": "5. Wolimy [9] niż [10] (ryba, mięso)."},
+            {"text": "6. Michał woli [11] niż [12] (sok, woda)."},
+            {"text": "7. Marta woli [13] niż [14] (pomidor, ogórek)."},
+            {"text": "8. Wolicie [15] czy [16] (jasny chleb, ciemny chleb)?"},
+            {"text": "9. Dzieci wolą [17] niż [18] (woda mineralna, czarna herbata)."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["kawę"]},
+        {"number": 2, "answers": ["herbatę"]},
+        {"number": 3, "answers": ["ser"]},
+        {"number": 4, "answers": ["wędlinę"]},
+        {"number": 5, "answers": ["białą kawę"]},
+        {"number": 6, "answers": ["czarną"]},
+        {"number": 7, "answers": ["ananasa"], "feedback": "Masculine fruit and vegetable names often take *-a*: *wolę banana, pomidora, ogórka*."},
+        {"number": 8, "answers": ["banana"], "feedback": "Masculine fruit and vegetable names often take *-a*: *wolę banana, pomidora, ogórka*."},
+        {"number": 9, "answers": ["rybę"]},
+        {"number": 10, "answers": ["mięso"]},
+        {"number": 11, "answers": ["sok"]},
+        {"number": 12, "answers": ["wodę"]},
+        {"number": 13, "answers": ["pomidora"], "feedback": "Masculine fruit and vegetable names often take *-a*: *wolę banana, pomidora, ogórka*."},
+        {"number": 14, "answers": ["ogórka"], "feedback": "Masculine fruit and vegetable names often take *-a*: *wolę banana, pomidora, ogórka*."},
+        {"number": 15, "answers": ["jasny chleb"]},
+        {"number": 16, "answers": ["ciemny chleb"]},
+        {"number": 17, "answers": ["wodę mineralną"]},
+        {"number": 18, "answers": ["czarną herbatę"]}
+      ],
+      "newWords": [
+        {"polish": "ananas", "english": "pineapple"},
+        {"polish": "banan", "english": "banana"},
+        {"polish": "ryba", "english": "fish"},
+        {"polish": "mięso", "english": "meat"},
+        {"polish": "woda mineralna", "english": "mineral water"}
+      ],
+      "rules": [1]
+    },
+    {
+      "id": "1I",
+      "type": "gap_fill",
+      "title": "Fill in",
+      "instruction": "Put *woleć* in the right form.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. (ja) [1] kawę niż kakao."},
+            {"text": "2. Dziewczyny [2] wino niż piwo."},
+            {"text": "3. (ty) [3] jabłko czy śliwkę?"},
+            {"text": "4. (my) [4] mocną herbatę niż słabą."},
+            {"text": "5. Kubuś [5] frytki niż ziemniaki."},
+            {"text": "6. Iwona i Tomek [6] ser niż wędlinę."},
+            {"text": "7. (wy) [7] bułkę czy chleb?"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["Wolę"]},
+        {"number": 2, "answers": ["wolą"]},
+        {"number": 3, "answers": ["Wolisz"]},
+        {"number": 4, "answers": ["Wolimy"]},
+        {"number": 5, "answers": ["woli"]},
+        {"number": 6, "answers": ["wolą"]},
+        {"number": 7, "answers": ["Wolicie"]}
+      ],
+      "newWords": [
+        {"polish": "śliwka", "english": "plum"},
+        {"polish": "jabłko", "english": "apple"},
+        {"polish": "mocny", "english": "strong"},
+        {"polish": "słaby", "english": "weak"},
+        {"polish": "frytki", "english": "chips"},
+        {"polish": "ziemniak", "english": "potato"}
+      ],
+      "rules": [1]
+    },
+    {
+      "id": "2A",
+      "type": "reference",
+      "title": "jogurt malinowy",
+      "instruction": "Sleepy Karol comes into the kitchen. Listen. *jem* + accusative + *z* + instrumental: *Jem chleb z masłem.*",
+      "tracks": [{"id": "108A7"}],
+      "transcript": {
+        "unlock": "always",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Karol", "text": "Cześć, jecie już śniadanie?"},
+              {"speaker": "Karolina", "text": "Tak, jest już późno."},
+              {"speaker": "Karol", "text": "Smacznego."},
+              {"speaker": "Mami", "text": "Dziękujemy."},
+              {"speaker": "Karol", "text": "Co macie dobrego? Mam ochotę na omlet albo jajecznicę."},
+              {"speaker": "Karolina", "text": "Nie ma problemu, tam są jajka, a tam jest patelnia."},
+              {"speaker": "Karol", "text": "No, wiesz. To ja już wolę jogurt z płatkami."},
+              {"speaker": "Mami", "text": "Wolę… moment, ja wolę, ty wolisz. Wolisz jogurt naturalny czy owocowy?"},
+              {"speaker": "Karol", "text": "Brawo Mami! Wolę owocowy."},
+              {"speaker": "Mami", "text": "Jogurt malina czy truskawka?"},
+              {"speaker": "Karol", "text": "Mami, mówimy: malinowy czy truskawkowy?"},
+              {"speaker": "Mami", "text": "Nie mówimy jogurt malina?"},
+              {"speaker": "Karol", "text": "Nie, kiedy pytasz jaki jogurt, mówimy… -owy."},
+              {"speaker": "Mami", "text": "Owy?"},
+              {"speaker": "Karol", "text": "No, malina +owy, truskawka +owy. Rozumiesz?"},
+              {"speaker": "Mami", "text": "Myślę, że tak. Malina -owy."},
+              {"speaker": "Karol", "text": "Nie, nie! Malinowy!"}
+            ]
+          }
+        ]
+      },
+      "tables": [
+        {
+          "header": ["", "sok (jaki?)", "herbata (jaka?)", "ciasto (jakie?)"],
+          "rows": [
+            ["ananas", "ananas**owy**", "ananas**owa**", "ananas**owe**"],
+            ["malin(a)", "malin**owy**", "malin**owa**", "malin**owe**"],
+            ["jabłk(o)", "jabłk**owy**", "jabłk**owa**", "jabłk**owe**"]
+          ]
+        }
+      ],
+      "notes": ["The final *-a / -o* drops, then *-owy / -owa / -owe*."],
+      "newWords": [
+        {"polish": "późno", "english": "late"},
+        {"polish": "smacznego", "english": "enjoy your meal"},
+        {"polish": "omlet", "english": "omelette"},
+        {"polish": "patelnia", "english": "frying pan"},
+        {"polish": "naturalny", "english": "plain, natural"},
+        {"polish": "owocowy", "english": "fruit (adj.)"},
+        {"polish": "malina", "english": "raspberry"},
+        {"polish": "truskawka", "english": "strawberry"},
+        {"polish": "malinowy", "english": "raspberry (adj.)"},
+        {"polish": "truskawkowy", "english": "strawberry (adj.)"},
+        {"polish": "ciasto", "english": "cake"},
+        {"polish": "moment", "english": "moment"}
+      ],
+      "rules": [3, 4]
+    },
+    {
+      "id": "2B",
+      "type": "write",
+      "title": "Jem chleb z masłem",
+      "instruction": "Build the phrase: what (accusative) *z* what (instrumental).",
+      "match": "any_order",
+      "items": [
+        {"label": "a", "prompt": "Jem (chleb, masło, dżem malinowy)", "answers": ["chleb | masłem | dżemem malinowym"], "feedback": "After *z* → instrumental (*z masłem*)."},
+        {"label": "b", "prompt": "Jem (chleb, chuda szynka, ogórek)", "answers": ["chleb | chudą szynką | ogórkiem"]},
+        {"label": "c", "prompt": "Piję (herbata, cukier, cytryna)", "answers": ["herbatę | cukrem | cytryną"], "feedback": "After *z* → instrumental (*z cukrem, z cytryną*)."},
+        {"label": "d", "prompt": "Jem (chleb, żółty ser, pomidor)", "answers": ["chleb | żółtym serem | pomidorem"]},
+        {"label": "e", "prompt": "Jem (bułka, dżem truskawkowy)", "answers": ["bułkę | dżemem truskawkowym"]},
+        {"label": "f", "prompt": "Piję (kawa, mleko)", "answers": ["kawę | mlekiem"]},
+        {"label": "g", "prompt": "Jem (chleb, biały ser, sól)", "answers": ["chleb | białym serem | solą"], "feedback": "*sól* is feminine → *z solą*."},
+        {"label": "h", "prompt": "Piję (woda, sok malinowy, cytryna)", "answers": ["wodę | sokiem malinowym | cytryną"]}
+      ],
+      "rules": [3]
+    },
+    {
+      "id": "2C",
+      "type": "gap_fill",
+      "title": "sok pomidorowy",
+      "instruction": "Make the adjective in *-owy / -owa / -owe*.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "🍅 pomidor: sok [1] · sos [2]"},
+            {"text": "🟣 śliwka: dżem [3] · ciasto [4]"},
+            {"text": "🍌 banan: sok [5] · dżem [6] · ciasto [7]"},
+            {"text": "🍓 truskawka: jogurt [8] · herbata [9] · ciasto [10]"},
+            {"text": "🍎 jabłko: sok [11] · herbata [12] · ciasto [13]"},
+            {"text": "🫐 malina: sok [14] · dżem [15] · herbata [16] · ciasto [17]"},
+            {"text": "🍊 pomarańcza: sok [18] · dżem [19] · herbata [20] · ciasto [21]"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["pomidorowy"]},
+        {"number": 2, "answers": ["pomidorowy"]},
+        {"number": 3, "answers": ["śliwkowy"], "feedback": "The final *-a* drops: *śliwk(a)* → *śliwkowy*."},
+        {"number": 4, "answers": ["śliwkowe"]},
+        {"number": 5, "answers": ["bananowy"]},
+        {"number": 6, "answers": ["bananowy"]},
+        {"number": 7, "answers": ["bananowe"]},
+        {"number": 8, "answers": ["truskawkowy"]},
+        {"number": 9, "answers": ["truskawkowa"]},
+        {"number": 10, "answers": ["truskawkowe"]},
+        {"number": 11, "answers": ["jabłkowy"]},
+        {"number": 12, "answers": ["jabłkowa"]},
+        {"number": 13, "answers": ["jabłkowe"]},
+        {"number": 14, "answers": ["malinowy"]},
+        {"number": 15, "answers": ["malinowy"]},
+        {"number": 16, "answers": ["malinowa"]},
+        {"number": 17, "answers": ["malinowe"]},
+        {"number": 18, "answers": ["pomarańczowy"]},
+        {"number": 19, "answers": ["pomarańczowy"]},
+        {"number": 20, "answers": ["pomarańczowa"]},
+        {"number": 21, "answers": ["pomarańczowe"]}
+      ],
+      "newWords": [
+        {"polish": "sos", "english": "sauce"},
+        {"polish": "pomarańcza", "english": "orange"},
+        {"polish": "bananowy", "english": "banana (adj.)"},
+        {"polish": "śliwkowy", "english": "plum (adj.)"},
+        {"polish": "jabłkowy", "english": "apple (adj.)"}
+      ],
+      "rules": [4]
+    },
+    {
+      "id": "2D",
+      "type": "inline_choice",
+      "title": "What fits?",
+      "instruction": "Choose the right ending.",
+      "items": [
+        {
+          "label": "1",
+          "prompt": "Dżem [1].",
+          "choices": [{"options": ["ananasowa", "ananasowy", "ananasowe"], "answer": "ananasowy"}]
+        },
+        {
+          "label": "2",
+          "prompt": "Jogurt [1].",
+          "choices": [{"options": ["truskawkowy", "truskawkowa", "truskawkowe"], "answer": "truskawkowy"}]
+        },
+        {
+          "label": "3",
+          "prompt": "Ciasto [1].",
+          "choices": [
+            {"options": ["ananasowa", "ananasowy", "ananasowe"], "answer": "ananasowe", "feedback": "*ciasto* is neuter → *-owe*."}
+          ]
+        },
+        {
+          "label": "4",
+          "prompt": "Sos [1].",
+          "choices": [{"options": ["pomidorowy", "pomidorowa", "pomidorowe"], "answer": "pomidorowy"}]
+        },
+        {
+          "label": "5",
+          "prompt": "Zupa [1].",
+          "choices": [{"options": ["pomidorowy", "pomidorowa", "pomidorowe"], "answer": "pomidorowa"}]
+        },
+        {
+          "label": "6",
+          "prompt": "Mleko [1].",
+          "choices": [
+            {"options": ["waniliowy", "waniliowa", "waniliowe"], "answer": "waniliowe", "feedback": "*mleko* is neuter → *-owe*."}
+          ]
+        },
+        {
+          "label": "7",
+          "prompt": "Herbata [1].",
+          "choices": [{"options": ["malinowy", "malinowa", "malinowe"], "answer": "malinowa"}]
+        },
+        {
+          "label": "8",
+          "prompt": "Koktajl [1].",
+          "choices": [{"options": ["bananowy", "bananowa", "bananowe"], "answer": "bananowy"}]
+        }
+      ],
+      "newWords": [
+        {"polish": "waniliowy", "english": "vanilla (adj.)"},
+        {"polish": "koktajl", "english": "shake"},
+        {"polish": "ananasowy", "english": "pineapple (adj.)"}
+      ],
+      "rules": [4]
+    },
+    {
+      "id": "2E",
+      "type": "choice",
+      "title": "Coffee with or without sugar?",
+      "instruction": "Listen to dialogue 3. Then, from the three breakfast dialogues: true or false? P = true (*prawda*), N = false (*nieprawda*).",
+      "tracks": [{"id": "108A9"}],
+      "shuffle": false,
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Karol", "text": "Co pijecie?"},
+              {"speaker": "Karolina", "text": "Poproszę herbatę z cytryną."},
+              {"speaker": "Karol", "text": "A ty Mami? Wolisz kawę czy herbatę?"},
+              {"speaker": "Mami", "text": "Poproszę kawę."},
+              {"speaker": "Karol", "text": "Jaką kawę? Białą czy czarną?"},
+              {"speaker": "Mami", "text": "Białą? Kawa jest zawsze czarna. Tylko herbata jest czarna, zielona, biała."},
+              {"speaker": "Karolina", "text": "Biała — to znaczy z mlekiem."},
+              {"speaker": "Mami", "text": "Teraz rozumiem. Poproszę białą kawę."},
+              {"speaker": "Karol", "text": "Pijesz kawę z cukrem czy bez cukru?"},
+              {"speaker": "Mami", "text": "Z cukrem. Dziękuję bardzo."},
+              {"speaker": "Karol", "text": "Proszę, herbata i kawa. Ja dziś piję kakao."},
+              {"speaker": "Mami", "text": "Kakao z cukrem czy z cytryną?"},
+              {"speaker": "Karol", "text": "Mami, kakao z cytryną?"},
+              {"speaker": "Mami", "text": "Ja tylko ćwiczę narzędnik!"}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {"label": "1", "prompt": "Karolina je bułkę z serem.", "options": ["P", "N"], "answer": "N"},
+        {"label": "2", "prompt": "Mami je ciemny chleb z masłem.", "options": ["P", "N"], "answer": "N"},
+        {"label": "3", "prompt": "Mami je bułkę z wędliną.", "options": ["P", "N"], "answer": "P", "feedback": "*kiełbasa* is a kind of *wędlina*."},
+        {"label": "4", "prompt": "Karol je omlet.", "options": ["P", "N"], "answer": "N"},
+        {"label": "5", "prompt": "Mami pije białą herbatę.", "options": ["P", "N"], "answer": "N", "feedback": "She drinks *biała kawa* — coffee with milk."},
+        {"label": "6", "prompt": "Karolina pije herbatę z mlekiem.", "options": ["P", "N"], "answer": "N"},
+        {"label": "7", "prompt": "Karol pije kakao.", "options": ["P", "N"], "answer": "P"}
+      ],
+      "newWords": [
+        {"polish": "bez", "english": "without (bez cukru — without sugar)"},
+        {"polish": "cukier", "english": "sugar"},
+        {"polish": "zawsze", "english": "always"},
+        {"polish": "narzędnik", "english": "instrumental (case)"}
+      ],
+      "rules": [3]
+    },
+    {
+      "id": "2F",
+      "type": "write",
+      "title": "What do they eat and drink?",
+      "instruction": "Finish each sentence. Model: *Marysia je chleb z masłem i szynką i pije sok bananowy.* (chleb, masło, szynka, sok + banan)",
+      "match": "any_order",
+      "items": [
+        {"label": "1", "prompt": "Karol pije (mocna kawa, cukier).", "answers": ["mocną kawę | cukrem"]},
+        {"label": "2", "prompt": "Czy lubicie jeść (bułka, masło, dżem + truskawka)?", "answers": ["bułkę | masłem | dżemem truskawkowym"]},
+        {"label": "3", "prompt": "My pijemy (herbata, mleko).", "answers": ["herbatę | mlekiem"]},
+        {"label": "4", "prompt": "Asia je (bułka, żółty ser, pomidor).", "answers": ["bułkę | żółtym serem | pomidorem"]},
+        {"label": "5", "prompt": "Paulina i Piotrek piją (sok + jabłko, ciasto + malina).", "answers": ["sok jabłkowy i jedzą ciasto malinowe"], "feedback": "*pić*, then *jeść*: *piją sok jabłkowy i jedzą ciasto malinowe*."},
+        {"label": "6", "prompt": "Czy lubisz pić (sok + pomidor)?", "answers": ["sok pomidorowy"]},
+        {"label": "7", "prompt": "Piję (woda mineralna, lód, cytryna).", "answers": ["wodę mineralną | lodem | cytryną"]},
+        {"label": "8", "prompt": "Adam i Wojtek jedzą (ciemny chleb, margaryna, wędlina).", "answers": ["ciemny chleb | margaryną | wędliną"]},
+        {"label": "9", "prompt": "Kasia je (jogurt, płatki).", "answers": ["jogurt | płatkami"], "feedback": "Plural instrumental: *-ymi / -imi* + *-ami* (*z płatkami*)."},
+        {"label": "10", "prompt": "Tomek pije (czarna herbata, miód).", "answers": ["czarną herbatę | miodem"]}
+      ],
+      "newWords": [{"polish": "lód", "english": "ice (z lodem — with ice)"}],
+      "rules": [3, 4]
+    },
+    {
+      "id": "2G",
+      "type": "write",
+      "title": "Opposites",
+      "instruction": "Write the opposite.",
+      "items": [
+        {"label": "1", "prompt": "słaby ≠", "answers": ["mocny"]},
+        {"label": "2", "prompt": "bez cukru ≠", "answers": ["z cukrem"], "feedback": "After *z* → instrumental (*z cukrem*)."},
+        {"label": "3", "prompt": "chudy ≠", "answers": ["tłusty"]},
+        {"label": "4", "prompt": "bez lodu ≠", "answers": ["z lodem"]},
+        {"label": "5", "prompt": "ciemny ≠", "answers": ["jasny"]},
+        {"label": "6", "prompt": "bez cytryny ≠", "answers": ["z cytryną"]},
+        {"label": "7", "prompt": "bez mleka ≠", "answers": ["z mlekiem"]}
+      ],
+      "rules": [3]
+    },
+    {
+      "id": "3A",
+      "type": "write",
+      "title": "What do you eat for breakfast?",
+      "instruction": "The class talks about food. Listen and write what Tom, Angela and Uwe eat for breakfast. A short answer with the main words is fine.",
+      "tracks": [{"id": "108B1"}],
+      "match": "key_words",
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Nauczycielka", "text": "Dzień dobry, dziś bardzo „smaczny” temat: JEDZENIE."},
+              {"speaker": "Angela", "text": "Smaczny? Jak obiad?"},
+              {"speaker": "Nauczycielka", "text": "Tak, to taki żart."},
+              {"speaker": "Tom", "text": "Jedzenie, to ja już jestem głodny."},
+              {"speaker": "Nauczycielka", "text": "Tom, co zwykle jesz na śniadanie w domu?"},
+              {"speaker": "Tom", "text": "W USA? Jem grzankę z dżemem albo z masłem orzechowym."},
+              {"speaker": "Nauczycielka", "text": "A co pijesz?"},
+              {"speaker": "Tom", "text": "Kawę z mlekiem."},
+              {"speaker": "Nauczycielka", "text": "Z cukrem czy bez cukru?"},
+              {"speaker": "Tom", "text": "Bez cukru."},
+              {"speaker": "Nauczycielka", "text": "Angela, co zwykle jedzą Anglicy na śniadanie?"},
+              {"speaker": "Angela", "text": "Na tradycyjne śniadanie jemy bardzo dużo: jajko z bekonem, pieczarki, fasolkę."},
+              {"speaker": "Mami", "text": "O, to bardzo ciężkie!"},
+              {"speaker": "Angela", "text": "To prawda. Ja normalnie jem tylko jogurt lub mleko z płatkami. A ty Mami, co jesz na śniadanie w Japonii?"},
+              {"speaker": "Mami", "text": "Ryż i delikatną zupę miso."},
+              {"speaker": "Angela", "text": "Zupę? Na śniadanie?"},
+              {"speaker": "Mami", "text": "Tak."},
+              {"speaker": "Tom", "text": "A co jecie w Niemczech?"},
+              {"speaker": "Uwe", "text": "Jogurt, mleko z płatkami, jakiś owoc albo kanapkę."},
+              {"speaker": "Tom", "text": "Co to jest kanapka?"},
+              {"speaker": "Mami", "text": "Ja wiem, kanapka to chleb z masłem i na przykład z szynką albo z serem. Kiedy jest pauza, jem zawsze kanapkę."},
+              {"speaker": "Tom", "text": "Aha, już wiem. Uwe, z czym zwykle jesz kanapkę?"},
+              {"speaker": "Uwe", "text": "Jem kanapkę z szynką albo z chudą kiełbasą i z pomidorem."},
+              {"speaker": "Mami", "text": "Wolisz ciemny chleb czy jasny?"},
+              {"speaker": "Uwe", "text": "Wolę jasny chleb."},
+              {"speaker": "Mami", "text": "A co pijesz?"},
+              {"speaker": "Uwe", "text": "Mocną czarną kawę i sok pomarańczowy."},
+              {"speaker": "Mami", "text": "Ja też wolę kawę, ale wolę słabą i białą."}
+            ]
+          }
+        ]
+      },
+      "notes": [
+        "jasny ≠ ciemny · mocny ≠ słaby · tłusty ≠ chudy · z cukrem ≠ bez cukru · z mlekiem ≠ bez mleka · z cytryną ≠ bez cytryny · z lodem ≠ bez lodu · *na* śniadanie / obiad / kolację"
+      ],
+      "items": [
+        {"label": "Tom", "prompt": "Na śniadanie jem", "answers": ["grzankę"]},
+        {"label": "Angela", "prompt": "Na śniadanie jem", "answers": ["mleko z płatkami", "jogurt z płatkami", "płatki z mlekiem"]},
+        {"label": "Uwe", "prompt": "Na śniadanie jem", "answers": ["kanapkę"]}
+      ],
+      "newWords": [
+        {"polish": "jedzenie", "english": "food"},
+        {"polish": "temat", "english": "topic"},
+        {"polish": "głodny", "english": "hungry"},
+        {"polish": "grzanka", "english": "toast"},
+        {"polish": "masło orzechowe", "english": "peanut butter"},
+        {"polish": "bekon", "english": "bacon"},
+        {"polish": "pieczarka", "english": "mushroom"},
+        {"polish": "fasolka", "english": "beans"},
+        {"polish": "ciężki", "english": "heavy"},
+        {"polish": "ryż", "english": "rice"},
+        {"polish": "delikatny", "english": "delicate"},
+        {"polish": "owoc", "english": "fruit"},
+        {"polish": "kanapka", "english": "sandwich"},
+        {"polish": "pauza", "english": "break"},
+        {"polish": "jakiś", "english": "some"},
+        {"polish": "miso", "english": "miso"}
+      ],
+      "rules": [2, 3],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "3B",
+      "type": "selection",
+      "title": "Who eats and drinks what?",
+      "instruction": "The same talk. Mark every letter that fits each person (what they eat and drink).",
+      "tracks": [{"id": "wb38"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Nauczycielka", "text": "Dzień dobry, dziś bardzo „smaczny” temat: JEDZENIE."},
+              {"speaker": "Angela", "text": "Smaczny? Jak obiad?"},
+              {"speaker": "Nauczycielka", "text": "Tak, to taki żart."},
+              {"speaker": "Tom", "text": "Jedzenie, to ja już jestem głodny."},
+              {"speaker": "Nauczycielka", "text": "Tom, co zwykle jesz na śniadanie w domu?"},
+              {"speaker": "Tom", "text": "W USA? Jem grzankę z dżemem albo z masłem orzechowym."},
+              {"speaker": "Nauczycielka", "text": "A co pijesz?"},
+              {"speaker": "Tom", "text": "Kawę z mlekiem."},
+              {"speaker": "Nauczycielka", "text": "Z cukrem czy bez cukru?"},
+              {"speaker": "Tom", "text": "Bez cukru."},
+              {"speaker": "Nauczycielka", "text": "Angela, co zwykle jedzą Anglicy na śniadanie?"},
+              {"speaker": "Angela", "text": "Na tradycyjne śniadanie jemy bardzo dużo: jajko z bekonem, pieczarki, fasolkę."},
+              {"speaker": "Mami", "text": "O, to bardzo ciężkie!"},
+              {"speaker": "Angela", "text": "To prawda. Ja normalnie jem tylko jogurt lub mleko z płatkami. A ty Mami, co jesz na śniadanie w Japonii?"},
+              {"speaker": "Mami", "text": "Ryż i delikatną zupę miso."},
+              {"speaker": "Angela", "text": "Zupę? Na śniadanie?"},
+              {"speaker": "Mami", "text": "Tak."},
+              {"speaker": "Tom", "text": "A co jecie w Niemczech?"},
+              {"speaker": "Uwe", "text": "Jogurt, mleko z płatkami, jakiś owoc albo kanapkę."},
+              {"speaker": "Tom", "text": "Co to jest kanapka?"},
+              {"speaker": "Mami", "text": "Ja wiem, kanapka to chleb z masłem i na przykład z szynką albo z serem. Kiedy jest pauza, jem zawsze kanapkę."},
+              {"speaker": "Tom", "text": "Aha, już wiem. Uwe, z czym zwykle jesz kanapkę?"},
+              {"speaker": "Uwe", "text": "Jem kanapkę z szynką albo z chudą kiełbasą i z pomidorem."},
+              {"speaker": "Mami", "text": "Wolisz ciemny chleb czy jasny?"},
+              {"speaker": "Uwe", "text": "Wolę jasny chleb."},
+              {"speaker": "Mami", "text": "A co pijesz?"},
+              {"speaker": "Uwe", "text": "Mocną czarną kawę i sok pomarańczowy."},
+              {"speaker": "Mami", "text": "Ja też wolę kawę, ale wolę słabą i białą."}
+            ]
+          }
+        ]
+      },
+      "legend": [
+        "A. mocną czarną kawę",
+        "B. słabą białą kawę",
+        "C. kawę z mlekiem bez cukru",
+        "D. sok pomarańczowy",
+        "E. jogurt lub mleko z płatkami",
+        "F. kanapkę z szynką lub z kiełbasą i z pomidorem",
+        "G. grzankę z dżemem albo z masłem orzechowym",
+        "H. ryż i delikatną zupę"
+      ],
+      "options": ["A", "B", "C", "D", "E", "F", "G", "H"],
+      "gridColumns": 8,
+      "items": [
+        {"label": "Tom", "answers": ["C G"]},
+        {"label": "Angela", "answers": ["E"]},
+        {"label": "Mami", "answers": ["B H"]},
+        {"label": "Uwe", "answers": ["A D F"]}
+      ],
+      "rules": [2]
+    },
+    {
+      "id": "3C",
+      "type": "conjugation",
+      "title": "jeść and pić",
+      "instruction": "*jeść* is irregular (like *mam, masz*); *pić* is -ę, -esz. Both take the accusative. Fill in the tables.",
+      "groups": [
+        {
+          "title": "jeść",
+          "translation": "to eat · irregular",
+          "items": [
+            {"label": "ja", "answers": ["jem"]},
+            {"label": "ty", "answers": ["jesz"]},
+            {"label": "on / ona / ono", "answers": ["je"]},
+            {"label": "my", "answers": ["jemy"]},
+            {"label": "wy", "answers": ["jecie"]},
+            {"label": "oni / one", "answers": ["jedzą"], "feedback": "*oni jedzą* — with *dz*."}
+          ]
+        },
+        {
+          "title": "pić",
+          "translation": "to drink · -ę, -esz",
+          "items": [
+            {"label": "ja", "answers": ["piję"]},
+            {"label": "ty", "answers": ["pijesz"]},
+            {"label": "on / ona / ono", "answers": ["pije"]},
+            {"label": "my", "answers": ["pijemy"]},
+            {"label": "wy", "answers": ["pijecie"]},
+            {"label": "oni / one", "answers": ["piją"]}
+          ]
+        }
+      ],
+      "newWords": [{"polish": "pić", "english": "to drink"}],
+      "rules": [2]
+    },
+    {
+      "id": "3D",
+      "type": "gap_fill",
+      "title": "jem? jesz? piję? pijesz?",
+      "instruction": "Fill in *jeść* or *pić*.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "a. Oni [1] chleb z szynką i [2] mocną herbatę."},
+            {"text": "b. Karolina [3] bułkę z masłem."},
+            {"text": "c. Mami [4] jogurt z płatkami."},
+            {"text": "d. Ja tylko [5] czarną kawę."},
+            {"text": "e. Czy wy [6] jajecznicę?"},
+            {"text": "f. Tak, (my) [7] jajecznicę i [8] gorącą herbatę."},
+            {"text": "g. Karol [9] kakao."},
+            {"text": "h. Co (wy) [10]? Sok pomarańczowy."},
+            {"text": "i. Czy ty [11] kawę? Nie, herbatę."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["jedzą"], "feedback": "*oni jedzą* — with *dz*."},
+        {"number": 2, "answers": ["piją"]},
+        {"number": 3, "answers": ["je"]},
+        {"number": 4, "answers": ["je"]},
+        {"number": 5, "answers": ["piję"]},
+        {"number": 6, "answers": ["jecie"]},
+        {"number": 7, "answers": ["jemy"]},
+        {"number": 8, "answers": ["pijemy"]},
+        {"number": 9, "answers": ["pije"]},
+        {"number": 10, "answers": ["pijecie"]},
+        {"number": 11, "answers": ["pijesz"]}
+      ],
+      "rules": [2]
+    },
+    {
+      "id": "3E",
+      "type": "gap_fill",
+      "title": "Eat or drink?",
+      "instruction": "Fill in the right form of *jeść* or *pić*.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Ania [1] kanapkę z serem i [2] mleko."},
+            {"text": "2. Łucja i Julia [3] płatki z mlekiem."},
+            {"text": "3. Co wy [4]? Pizzę."},
+            {"text": "4. Co oni [5]? Herbatę."},
+            {"text": "5. Dziecko [6] banana."},
+            {"text": "6. Javier bardzo lubi [7] polską kiełbasę."},
+            {"text": "7. (My) [8] spaghetti i [9] czerwone wino."},
+            {"text": "8. Co wy [10]? Kawę czy herbatę?"},
+            {"text": "9. Oni [11] risotto."},
+            {"text": "10. Co ty [12] na śniadanie?"},
+            {"text": "11. (Ja) [13] bułkę z szynką i [14] sok pomarańczowy."},
+            {"text": "12. Co ty [15]? Sok czy wodę?"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["je"]},
+        {"number": 2, "answers": ["pije"]},
+        {"number": 3, "answers": ["jedzą"]},
+        {"number": 4, "answers": ["jecie"]},
+        {"number": 5, "answers": ["piją"]},
+        {"number": 6, "answers": ["je"], "feedback": "Masculine fruit and vegetable names often take *-a*: *wolę banana, pomidora, ogórka*."},
+        {"number": 7, "answers": ["jeść"], "feedback": "After *lubić* → infinitive: *jeść*."},
+        {"number": 8, "answers": ["jemy"]},
+        {"number": 9, "answers": ["pijemy"]},
+        {"number": 10, "answers": ["pijecie"]},
+        {"number": 11, "answers": ["jedzą"]},
+        {"number": 12, "answers": ["jesz"]},
+        {"number": 13, "answers": ["jem"]},
+        {"number": 14, "answers": ["piję"]},
+        {"number": 15, "answers": ["pijesz"]}
+      ],
+      "rules": [2]
+    },
+    {
+      "id": "3F",
+      "type": "write",
+      "title": "What do they put on a sandwich?",
+      "instruction": "Write what each person eats: *… je chleb z …*. The ingredients may come in any order.",
+      "match": "any_order",
+      "items": [
+        {"label": "1", "prompt": "Uwe (🍞 bread · 🧈 butter · 🌭 sausage · 🥫 keczup · 🟡 musztarda)", "answers": ["uwe je chleb | masłem | kiełbasą | keczupem | musztardą"], "feedback": "After *z* → instrumental (*z masłem, kiełbasą, keczupem i musztardą*)."},
+        {"label": "2", "prompt": "Angela (🍞 bread · 🧀 żółty ser · 🍅 tomato · 🍖 ham)", "answers": ["angela je chleb | żółtym serem | pomidorem | szynką"]},
+        {"label": "3", "prompt": "Karolina (🥯 roll · 🧈 butter · ⬜ biały ser · 🫙 jam · 🍯 honey)", "answers": ["karolina je bułkę | masłem | białym serem | dżemem | miodem"]},
+        {"label": "4", "prompt": "Ja (🥯 roll · 🥚 egg · 🍖 wędlina · 🟡 musztarda)", "answers": ["ja jem bułkę | jajkiem | wędliną | musztardą"], "feedback": "*ja* → *jem*."}
+      ],
+      "newWords": [{"polish": "keczup", "english": "ketchup"}, {"polish": "musztarda", "english": "mustard"}],
+      "rules": [3]
+    },
+    {
+      "id": "4A",
+      "type": "choice",
+      "title": "Lunch",
+      "instruction": "Sort the dishes: the first course (*pierwsze danie*) and the three parts of the main course (*drugie danie*).",
+      "shuffle": false,
+      "items": [
+        {"label": "1", "prompt": "kurczak", "options": ["pierwsze danie", "mięso, ryba", "dodatki", "sałatki, warzywa"], "answer": "mięso, ryba"},
+        {"label": "2", "prompt": "frytki", "options": ["pierwsze danie", "mięso, ryba", "dodatki", "sałatki, warzywa"], "answer": "dodatki"},
+        {"label": "3", "prompt": "ziemniaki", "options": ["pierwsze danie", "mięso, ryba", "dodatki", "sałatki, warzywa"], "answer": "dodatki"},
+        {"label": "4", "prompt": "makaron", "options": ["pierwsze danie", "mięso, ryba", "dodatki", "sałatki, warzywa"], "answer": "dodatki"},
+        {"label": "5", "prompt": "ryż", "options": ["pierwsze danie", "mięso, ryba", "dodatki", "sałatki, warzywa"], "answer": "dodatki"},
+        {"label": "6", "prompt": "ryba", "options": ["pierwsze danie", "mięso, ryba", "dodatki", "sałatki, warzywa"], "answer": "mięso, ryba"},
+        {"label": "7", "prompt": "kotlet", "options": ["pierwsze danie", "mięso, ryba", "dodatki", "sałatki, warzywa"], "answer": "mięso, ryba"},
+        {"label": "8", "prompt": "zupa", "options": ["pierwsze danie", "mięso, ryba", "dodatki", "sałatki, warzywa"], "answer": "pierwsze danie"},
+        {"label": "9", "prompt": "sałata", "options": ["pierwsze danie", "mięso, ryba", "dodatki", "sałatki, warzywa"], "answer": "sałatki, warzywa"},
+        {"label": "10", "prompt": "mięso", "options": ["pierwsze danie", "mięso, ryba", "dodatki", "sałatki, warzywa"], "answer": "mięso, ryba"},
+        {"label": "11", "prompt": "surówka", "options": ["pierwsze danie", "mięso, ryba", "dodatki", "sałatki, warzywa"], "answer": "sałatki, warzywa"},
+        {"label": "12", "prompt": "kasza", "options": ["pierwsze danie", "mięso, ryba", "dodatki", "sałatki, warzywa"], "answer": "dodatki"},
+        {"label": "13", "prompt": "sałatka", "options": ["pierwsze danie", "mięso, ryba", "dodatki", "sałatki, warzywa"], "answer": "sałatki, warzywa"}
+      ],
+      "newWords": [
+        {"polish": "danie", "english": "course, dish (pierwsze danie — first course)"},
+        {"polish": "kurczak", "english": "chicken"},
+        {"polish": "kotlet", "english": "cutlet"},
+        {"polish": "dodatek", "english": "side dish"},
+        {"polish": "kasza", "english": "groats"},
+        {"polish": "sałata", "english": "lettuce"},
+        {"polish": "sałatka", "english": "salad"},
+        {"polish": "surówka", "english": "raw-vegetable salad"},
+        {"polish": "warzywo", "english": "vegetable"}
+      ]
+    },
+    {
+      "id": "4B",
+      "type": "reference",
+      "title": "Fish and chips",
+      "instruction": "Mami and Angela talk about English food. Listen.",
+      "tracks": [{"id": "108C2"}],
+      "transcript": {
+        "unlock": "always",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Mami", "text": "Angela, czy to prawda, że w Anglii zawsze jecie rybę z frytkami na obiad? A może to tylko stereotyp?"},
+              {"speaker": "Angela", "text": "To jest i stereotyp, i prawda. Ja bardzo lubię rybę z frytkami. Lubię też spaghetti i pizzę. Moja mama gotuje świetne mięso z sosem gravy — to nasza ulubiona potrawa."},
+              {"speaker": "Mami", "text": "Ja też jem często rybę na obiad. Bardzo lubię frutti di mare. Przepraszam, jak się mówi po polsku frutti di mare?"},
+              {"speaker": "Nauczycielka", "text": "Owoce morza."},
+              {"speaker": "Mami", "text": "Dziękuję."}
+            ]
+          }
+        ]
+      },
+      "newWords": [
+        {"polish": "stereotyp", "english": "stereotype"},
+        {"polish": "ulubiony", "english": "favourite"},
+        {"polish": "potrawa", "english": "dish"},
+        {"polish": "często", "english": "often"},
+        {"polish": "owoce morza", "english": "seafood"}
+      ]
+    },
+    {
+      "id": "4C",
+      "type": "choice",
+      "title": "Who eats what?",
+      "instruction": "The friends go for lunch. Listen: who orders what?",
+      "tracks": [{"id": "108C3"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Javier", "text": "Uwe, idziemy na obiad?"},
+              {"speaker": "Uwe", "text": "Tak, jestem głodny, tu blisko jest dobry bar."},
+              {"speaker": "Javier", "text": "A wy, dziewczyny?"},
+              {"speaker": "Angela", "text": "Dlaczego nie! Tom, idziesz z nami?"},
+              {"speaker": "Tom", "text": "Tak, mam ochotę na pizzę i zimne piwo."},
+              {"speaker": "Uwe", "text": "Piwo to dobry pomysł, ale ja wolę pieczonego kurczaka z frytkami."},
+              {"speaker": "Javier", "text": "Tam są dobre ruskie pierogi. Mam ochotę na pierogi."},
+              {"speaker": "Mami", "text": "Ja też, a ty Angela?"},
+              {"speaker": "Angela", "text": "A czy są tam pierogi na słodko z serem i śmietaną?"},
+              {"speaker": "Javier", "text": "Myślę, że tak."}
+            ]
+          }
+        ]
+      },
+      "legend": ["a) ruskie pierogi", "b) pierogi z serem i śmietaną", "c) pizza i piwo", "d) kurczak, frytki i piwo"],
+      "items": [
+        {"label": "1", "prompt": "Javier", "options": ["a", "b", "c", "d"], "answer": "a"},
+        {"label": "2", "prompt": "Uwe", "options": ["a", "b", "c", "d"], "answer": "d"},
+        {"label": "3", "prompt": "Angela", "options": ["a", "b", "c", "d"], "answer": "b"},
+        {"label": "4", "prompt": "Tom", "options": ["a", "b", "c", "d"], "answer": "c"}
+      ],
+      "newWords": [
+        {"polish": "bar", "english": "snack bar"},
+        {"polish": "blisko", "english": "nearby"},
+        {"polish": "pieczony", "english": "roast (adj.)"},
+        {"polish": "śmietana", "english": "sour cream"},
+        {"polish": "na słodko", "english": "sweet (dish)"}
+      ]
+    },
+    {
+      "id": "4D",
+      "type": "reference",
+      "title": "Instrumental plural",
+      "instruction": "The instrumental plural is the same for all genders.",
+      "tables": [
+        {
+          "header": ["", "plural instrumental"],
+          "rows": [
+            ["adjective", "**-ymi** (after k, g: **-imi**)"],
+            ["noun", "**-ami**"],
+            ["example", "sałata z suszon**ymi** pomidor**ami** · sos z zielon**ymi** oliwk**ami** · deser ze słodk**imi** jabłk**ami**"],
+            ["question", "Z czym? Jakimi?"]
+          ]
+        }
+      ],
+      "newWords": [
+        {"polish": "suszony", "english": "dried"},
+        {"polish": "oliwka", "english": "olive"},
+        {"polish": "deser", "english": "dessert"},
+        {"polish": "słodki", "english": "sweet"}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "4E",
+      "type": "gap_fill",
+      "title": "With what?",
+      "instruction": "Put the words in brackets in the instrumental plural.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "a. pizza z [1] (pieczarka)"},
+            {"text": "b. ryba z [2] (frytka)"},
+            {"text": "c. kotlet z [3] (ziemniak) i [4] (kiszony ogórek)"},
+            {"text": "d. sałatka z [5] (pomidor), [6] (czarna oliwka), [7] (gotowane jajko)"},
+            {"text": "e. ciasto z [8] (jabłko) i [9] (malina)"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["pieczarkami"]},
+        {"number": 2, "answers": ["frytkami"]},
+        {"number": 3, "answers": ["ziemniakami"]},
+        {"number": 4, "answers": ["kiszonymi ogórkami"], "feedback": "Plural instrumental: *-ymi / -imi* + *-ami* (*z kiszonymi ogórkami*)."},
+        {"number": 5, "answers": ["pomidorami"]},
+        {"number": 6, "answers": ["czarnymi oliwkami"]},
+        {"number": 7, "answers": ["gotowanymi jajkami"]},
+        {"number": 8, "answers": ["jabłkami"]},
+        {"number": 9, "answers": ["malinami"]}
+      ],
+      "newWords": [{"polish": "kiszony", "english": "pickled"}, {"polish": "gotowany", "english": "boiled"}],
+      "rules": [5]
+    },
+    {
+      "id": "4F",
+      "type": "gap_fill",
+      "title": "Instrumental plural (workbook)",
+      "instruction": "Put the words in brackets in the instrumental plural.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Pizza z [1] (pieczarka)."},
+            {"text": "2. Ryba z [2] (pieczony ziemniak)."},
+            {"text": "3. Ciasto z [3] (rodzynki)."},
+            {"text": "4. Pizza z [4] (krewetka) i [5] (zielona oliwka)."},
+            {"text": "5. Lody z [6] (owoc) i [7] (bakalia)."},
+            {"text": "6. Pierogi z [8] (grzyb) albo z [9] (truskawka)."},
+            {"text": "7. Mleko z [10] (suszony banan) i [11] (płatki kukurydziane)."},
+            {"text": "8. Bułka z [12] (jagoda)."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["pieczarkami"]},
+        {"number": 2, "answers": ["pieczonymi ziemniakami"], "feedback": "Plural instrumental: *-ymi / -imi* + *-ami* (*z pieczonymi ziemniakami*)."},
+        {"number": 3, "answers": ["rodzynkami"]},
+        {"number": 4, "answers": ["krewetkami"]},
+        {"number": 5, "answers": ["zielonymi oliwkami"]},
+        {"number": 6, "answers": ["owocami"]},
+        {"number": 7, "answers": ["bakaliami"]},
+        {"number": 8, "answers": ["grzybami"]},
+        {"number": 9, "answers": ["truskawkami"]},
+        {"number": 10, "answers": ["suszonymi bananami"]},
+        {"number": 11, "answers": ["płatkami kukurydzianymi"], "feedback": "Plural instrumental: *-ymi / -imi* + *-ami* (*płatkami kukurydzianymi*)."},
+        {"number": 12, "answers": ["jagodami"]}
+      ],
+      "newWords": [
+        {"polish": "rodzynki", "english": "raisins"},
+        {"polish": "krewetka", "english": "prawn"},
+        {"polish": "lody", "english": "ice cream"},
+        {"polish": "bakalie", "english": "dried fruit and nuts"},
+        {"polish": "płatki kukurydziane", "english": "cornflakes"},
+        {"polish": "jagoda", "english": "blueberry"}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "4G",
+      "type": "gap_fill",
+      "title": "Accusative or instrumental?",
+      "instruction": "Put the words in brackets in the accusative or the instrumental.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "Na śniadanie zwykle jem [1] (chleb) z [2] (masło) i z [3] (chuda szynka), jem też [4] (żółty ser). Często piję [5] (biała kawa) z [6] (cukier). Na obiad jem [7] (zupa pomidorowa) z [8] (ryż) albo [9] (rosół) z [10] (makaron). Lubię [11] (mięso) z [12] (pieczone ziemniaki) i z [13] (zielona sałata). Na kolację jem coś lekkiego i piję [14] (herbata) z [15] (cytryna)."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["chleb"]},
+        {"number": 2, "answers": ["masłem"]},
+        {"number": 3, "answers": ["chudą szynką"], "feedback": "After *z* → instrumental (*z chudą szynką*)."},
+        {"number": 4, "answers": ["żółty ser"]},
+        {"number": 5, "answers": ["białą kawę"], "feedback": "After *woleć / jeść / pić* → accusative (*piję białą kawę*)."},
+        {"number": 6, "answers": ["cukrem"]},
+        {"number": 7, "answers": ["zupę pomidorową"]},
+        {"number": 8, "answers": ["ryżem"]},
+        {"number": 9, "answers": ["rosół"]},
+        {"number": 10, "answers": ["makaronem"]},
+        {"number": 11, "answers": ["mięso"]},
+        {"number": 12, "answers": ["pieczonymi ziemniakami"], "feedback": "Plural instrumental: *-ymi / -imi* + *-ami* (*z pieczonymi ziemniakami*)."},
+        {"number": 13, "answers": ["zieloną sałatą"]},
+        {"number": 14, "answers": ["herbatę"]},
+        {"number": 15, "answers": ["cytryną"]}
+      ],
+      "newWords": [{"polish": "rosół", "english": "broth"}, {"polish": "lekki", "english": "light"}],
+      "rules": [3, 5]
+    },
+    {
+      "id": "4H",
+      "type": "write",
+      "title": "What do we eat for lunch?",
+      "instruction": "Fill in the letters and write each word in full.",
+      "items": [
+        {"label": "1", "prompt": "ro_ó_", "answers": ["rosół"], "feedback": "*rosół* — *ó* and *ł*."},
+        {"label": "2", "prompt": "z_e_ni_ki", "answers": ["ziemniaki"]},
+        {"label": "3", "prompt": "pi__o_i", "answers": ["pierogi"]},
+        {"label": "4", "prompt": "r_b_", "answers": ["ryba"]},
+        {"label": "5", "prompt": "_ię_o", "answers": ["mięso"]},
+        {"label": "6", "prompt": "s__ów_a", "answers": ["surówka"], "feedback": "*surówka* — with *ó*."},
+        {"label": "7", "prompt": "__zz_", "answers": ["pizza"]},
+        {"label": "8", "prompt": "_ał__ka", "answers": ["sałatka"]},
+        {"label": "9", "prompt": "m_k_r__", "answers": ["makaron"]},
+        {"label": "10", "prompt": "k_s_a", "answers": ["kasza"]}
+      ]
+    },
+    {
+      "id": "5A",
+      "type": "gap_fill",
+      "title": "What's for dinner?",
+      "instruction": "Fill in the words from the box.",
+      "wordBox": ["robią", "sałatka", "herbatę", "idę", "kolację", "na"],
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Pan Maj", "text": "Kochanie, co dziś jest na [1]?"},
+            {"speaker": "Pani Maj", "text": "[2] jarzynowa."},
+            {"speaker": "Pan Maj", "text": "To świetnie. Gdzie Karol i Karolina?"},
+            {"speaker": "Pani Maj", "text": "[3] tosty i [4]."},
+            {"speaker": "Karol", "text": "Gotowe! Mami, zapraszamy [5] kolację."},
+            {"speaker": "Mami", "text": "Dziękuję bardzo, już [6]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["kolację"]},
+        {"number": 2, "answers": ["Sałatka"]},
+        {"number": 3, "answers": ["Robią"]},
+        {"number": 4, "answers": ["herbatę"]},
+        {"number": 5, "answers": ["na"]},
+        {"number": 6, "answers": ["idę"]}
+      ],
+      "newWords": [
+        {"polish": "kochanie", "english": "darling"},
+        {"polish": "jarzynowy", "english": "vegetable (adj.)"},
+        {"polish": "tost", "english": "toast"},
+        {"polish": "gotowe", "english": "ready"},
+        {"polish": "zapraszać", "english": "to invite (zapraszamy na kolację)"}
+      ]
+    },
+    {
+      "id": "5B",
+      "type": "gap_fill",
+      "title": "Sałatka jarzynowa",
+      "instruction": "What is the Polish salad made of? Put the words in brackets in the instrumental.",
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Pani Maj", "text": "Smacznego."},
+            {"speaker": "Karolina", "text": "Mami, to jest tradycyjna polska sałatka."},
+            {"speaker": "Mami", "text": "Z [1] (co) ona jest?"},
+            {"speaker": "Karolina", "text": "Z [2] (ziemniak – pl.), z [3] (marchewka), cebulą, z [4] (jajko – pl.), [5] (kiszony ogórek – pl.), [6] (jabłko – pl.) i oczywiście z [7] (majonez). Jest pyszna!"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["czym"], "feedback": "*Z czym?* — *co* in the instrumental."},
+        {"number": 2, "answers": ["ziemniakami"]},
+        {"number": 3, "answers": ["marchewką"]},
+        {"number": 4, "answers": ["jajkami"]},
+        {"number": 5, "answers": ["kiszonymi ogórkami"], "feedback": "Plural instrumental: *-ymi / -imi* + *-ami* (*kiszonymi ogórkami*)."},
+        {"number": 6, "answers": ["jabłkami"]},
+        {"number": 7, "answers": ["majonezem"]}
+      ],
+      "newWords": [
+        {"polish": "marchewka", "english": "carrot"},
+        {"polish": "cebula", "english": "onion"},
+        {"polish": "pyszny", "english": "delicious"}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "5C",
+      "type": "gap_fill",
+      "title": "Szwedzki stół",
+      "instruction": "Listen and fill in the missing words.",
+      "tracks": [{"id": "wb37"}],
+      "hint": "smacznego · jest · możesz · Szwecji · dlaczego · stół · zapraszam · polski",
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Karolina", "text": "Proszę Mami, zapraszam. Dziś jest szwedzki stół."},
+              {"speaker": "Mami", "text": "Szwedzki stół? Ze Szwecji? IKEA, tak?"},
+              {"speaker": "Karolina", "text": "Nie, nie. Mówimy szwedzki stół, kiedy jest wszystko i ty możesz sama wybierać."},
+              {"speaker": "Mami", "text": "Dlaczego nie polski stół?"},
+              {"speaker": "Karolina", "text": "Hm, no nie wiem. Smacznego."},
+              {"speaker": "Mami", "text": "Dziękuję. Smacznego."}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Karolina", "text": "Proszę Mami, [1]. Dziś [2] szwedzki stół."},
+            {"speaker": "Mami", "text": "Szwedzki [3]? Ze [4]? IKEA, tak?"},
+            {"speaker": "Karolina", "text": "Nie, nie. Mówimy szwedzki stół, kiedy jest wszystko i ty [5] sama wybierać."},
+            {"speaker": "Mami", "text": "[6] nie [7] stół?"},
+            {"speaker": "Karolina", "text": "Hm, no nie wiem. Smacznego."},
+            {"speaker": "Mami", "text": "Dziękuję. [8]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["zapraszam"]},
+        {"number": 2, "answers": ["jest"]},
+        {"number": 3, "answers": ["stół"]},
+        {"number": 4, "answers": ["Szwecji"]},
+        {"number": 5, "answers": ["możesz"]},
+        {"number": 6, "answers": ["Dlaczego"]},
+        {"number": 7, "answers": ["polski"]},
+        {"number": 8, "answers": ["Smacznego"]}
+      ],
+      "newWords": [
+        {"polish": "szwedzki stół", "english": "buffet"},
+        {"polish": "wybierać", "english": "to choose"}
+      ]
+    },
+    {
+      "id": "5D",
+      "type": "write",
+      "title": "Tableware",
+      "instruction": "Listen, fill in the letters and write each word in full.",
+      "tracks": [{"id": "wb39"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"text": "łyżka, nóż, widelec, łyżeczka, serwetka, talerz, miska, talerzyk, kubek, filiżanka, kieliszek, szklanka, czajnik, garnek, patelnia, dzbanek, otwieracz do butelek"}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {"label": "1", "prompt": "ł_ż_a", "answers": ["łyżka"]},
+        {"label": "2", "prompt": "_óż", "answers": ["nóż"], "feedback": "*nóż* — *ó* and *ż*."},
+        {"label": "3", "prompt": "w_d_le_", "answers": ["widelec"]},
+        {"label": "4", "prompt": "ł__e__ka", "answers": ["łyżeczka"]},
+        {"label": "5", "prompt": "_e_w__ka", "answers": ["serwetka"]},
+        {"label": "6", "prompt": "_a__rz", "answers": ["talerz"]},
+        {"label": "7", "prompt": "m__k_", "answers": ["miska"]},
+        {"label": "8", "prompt": "t_le__y_", "answers": ["talerzyk"]},
+        {"label": "9", "prompt": "k___k", "answers": ["kubek"]},
+        {"label": "10", "prompt": "_il_ża__a", "answers": ["filiżanka"], "feedback": "*filiżanka* — with *ż*."},
+        {"label": "11", "prompt": "k__li__ek", "answers": ["kieliszek"]},
+        {"label": "12", "prompt": "__kla__a", "answers": ["szklanka"]},
+        {"label": "13", "prompt": "__aj__k", "answers": ["czajnik"]},
+        {"label": "14", "prompt": "__rn_k", "answers": ["garnek"]},
+        {"label": "15", "prompt": "__te_n_a", "answers": ["patelnia"]},
+        {"label": "16", "prompt": "__ban__", "answers": ["dzbanek"]},
+        {"label": "17", "prompt": "otwi_ra__ __ b__el_k", "answers": ["otwieracz do butelek"]}
+      ],
+      "newWords": [
+        {"polish": "łyżeczka", "english": "teaspoon"},
+        {"polish": "serwetka", "english": "napkin"},
+        {"polish": "miska", "english": "bowl"},
+        {"polish": "talerzyk", "english": "saucer"},
+        {"polish": "filiżanka", "english": "cup"},
+        {"polish": "kieliszek", "english": "wine glass"},
+        {"polish": "szklanka", "english": "glass"},
+        {"polish": "czajnik", "english": "kettle"},
+        {"polish": "garnek", "english": "pot"},
+        {"polish": "dzbanek", "english": "jug"},
+        {"polish": "otwieracz do butelek", "english": "bottle opener"}
+      ],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "5E",
+      "type": "write",
+      "title": "What is it?",
+      "instruction": "Label each picture with a word from the box.",
+      "wordBox": [
+        "widelec",
+        "nóż",
+        "dzbanek",
+        "miska",
+        "szklanka",
+        "łyżka",
+        "łyżeczka",
+        "kubek",
+        "talerz",
+        "kieliszek",
+        "otwieracz do butelek",
+        "serwetka",
+        "garnek",
+        "filiżanka",
+        "talerzyk",
+        "czajnik",
+        "patelnia"
+      ],
+      "items": [
+        {"label": "1", "picture": {"label": "four prongs", "emoji": "🍴"}, "answers": ["widelec"]},
+        {"label": "2", "picture": {"label": "for cutting", "emoji": "🔪"}, "answers": ["nóż"]},
+        {
+          "label": "3",
+          "picture": {"label": "a vessel with a handle and a spout", "emoji": "🫗"},
+          "answers": ["dzbanek"]
+        },
+        {
+          "label": "4",
+          "picture": {"label": "deep, for soup or cereal", "emoji": "🥣"},
+          "answers": ["miska"]
+        },
+        {
+          "label": "5",
+          "picture": {"label": "a tall glass, no handle", "emoji": "🥛"},
+          "answers": ["szklanka"]
+        },
+        {"label": "6", "picture": {"label": "big, for soup", "emoji": "🥄"}, "answers": ["łyżka"]},
+        {
+          "label": "7",
+          "picture": {"label": "small, for sugar", "emoji": "🥄"},
+          "answers": ["łyżeczka"]
+        },
+        {
+          "label": "8",
+          "picture": {"label": "big, with a handle, for tea", "emoji": "☕"},
+          "answers": ["kubek"]
+        },
+        {"label": "9", "picture": {"label": "big and flat", "emoji": "🍽️"}, "answers": ["talerz"]},
+        {
+          "label": "10",
+          "picture": {"label": "a glass on a stem, for wine", "emoji": "🍷"},
+          "answers": ["kieliszek"]
+        },
+        {
+          "label": "11",
+          "picture": {"label": "opens a bottle", "emoji": "🍾"},
+          "answers": ["otwieracz do butelek"]
+        },
+        {
+          "label": "12",
+          "picture": {"label": "paper, next to the plate", "emoji": "🧻"},
+          "answers": ["serwetka"]
+        },
+        {
+          "label": "13",
+          "picture": {"label": "big, on the stove, for soup", "emoji": "🍲"},
+          "answers": ["garnek"]
+        },
+        {
+          "label": "14",
+          "picture": {"label": "small, with a saucer, for coffee", "emoji": "☕"},
+          "answers": ["filiżanka"]
+        },
+        {
+          "label": "15",
+          "picture": {"label": "small and flat, under a cup", "emoji": "🍽️"},
+          "answers": ["talerzyk"]
+        },
+        {"label": "16", "picture": {"label": "boils water", "emoji": "🫖"}, "answers": ["czajnik"]},
+        {
+          "label": "17",
+          "picture": {"label": "flat, for fried eggs", "emoji": "🍳"},
+          "answers": ["patelnia"]
+        }
+      ]
+    },
+    {
+      "id": "5F",
+      "type": "gap_fill",
+      "title": "What do they eat and drink?",
+      "instruction": "Write from the notes what they eat and drink.\n**śniadanie (Kamila):** ciemny chleb, masło; biały ser, dżem + malina; biała kawa, cukier\n**obiad (Gosia i Arek):** zupa + ogórek; kurczak, surówka; Gosia: frytki; Arek: pieczone ziemniaki; woda mineralna, cytryna\n**kolacja (ja i Zosia):** tosty (ser, szynka); sałatka (pomidor – pl., ogórek – pl., cebula, zielona oliwka – pl.); słaba herbata",
+      "notes": ["Masculine fruit and vegetable names often take *-a*: *wolę banana, pomidora, ogórka*."],
+      "sections": [
+        {
+          "lines": [
+            {"text": "Na [1] Kamila je [2] z [3] i z [4], je też [5]. Zwykle pije [6] z [7]."},
+            {"text": "Gosia i Arek dziś [8] na pierwsze danie [9]. Na drugie danie jedzą [10] z [11]. Gosia je drugie danie z [12], a Arek z [13]. Oni piją [14] z [15]."},
+            {"text": "Na kolację, ja i Zosia, [16] tosty z [17] i z [18]. Jemy też [19] z [20], [21], [22] i z [23]. Pijemy [24]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["śniadanie"]},
+        {"number": 2, "answers": ["ciemny chleb"]},
+        {"number": 3, "answers": ["masłem"]},
+        {"number": 4, "answers": ["białym serem"]},
+        {"number": 5, "answers": ["dżem malinowy"]},
+        {"number": 6, "answers": ["białą kawę"]},
+        {"number": 7, "answers": ["cukrem"]},
+        {"number": 8, "answers": ["jedzą"]},
+        {"number": 9, "answers": ["zupę ogórkową"]},
+        {"number": 10, "answers": ["kurczaka"], "feedback": "*kurczak* → *kurczaka* in the accusative, like animate nouns."},
+        {"number": 11, "answers": ["surówką"]},
+        {"number": 12, "answers": ["frytkami"]},
+        {"number": 13, "answers": ["pieczonymi ziemniakami"], "feedback": "Plural instrumental: *-ymi / -imi* + *-ami* (*z pieczonymi ziemniakami*)."},
+        {"number": 14, "answers": ["wodę mineralną"]},
+        {"number": 15, "answers": ["cytryną"]},
+        {"number": 16, "answers": ["jemy"]},
+        {"number": 17, "answers": ["serem"]},
+        {"number": 18, "answers": ["szynką"]},
+        {"number": 19, "answers": ["sałatkę"]},
+        {"number": 20, "answers": ["pomidorami"]},
+        {"number": 21, "answers": ["ogórkami"]},
+        {"number": 22, "answers": ["cebulą"]},
+        {"number": 23, "answers": ["zielonymi oliwkami"], "feedback": "Plural instrumental: *-ymi / -imi* + *-ami* (*z zielonymi oliwkami*)."},
+        {"number": 24, "answers": ["słabą herbatę"]}
+      ],
+      "interchangeable": [["3", "4"], ["17", "18"], ["20", "21", "22", "23"]],
+      "newWords": [{"polish": "ogórkowy", "english": "cucumber (adj.) (zupa ogórkowa — cucumber soup)"}],
+      "rules": [2, 3, 5]
+    },
+    {
+      "id": "6A",
+      "type": "choice",
+      "title": "Product or dish?",
+      "instruction": "Is it a product or a ready dish?",
+      "shuffle": false,
+      "items": [
+        {"label": "1", "prompt": "ser", "options": ["produkt", "potrawa"], "answer": "produkt"},
+        {"label": "2", "prompt": "spaghetti", "options": ["produkt", "potrawa"], "answer": "potrawa"},
+        {"label": "3", "prompt": "szynka", "options": ["produkt", "potrawa"], "answer": "produkt"},
+        {"label": "4", "prompt": "zupa", "options": ["produkt", "potrawa"], "answer": "potrawa"},
+        {"label": "5", "prompt": "kotlet schabowy", "options": ["produkt", "potrawa"], "answer": "potrawa"},
+        {"label": "6", "prompt": "frytki", "options": ["produkt", "potrawa"], "answer": "potrawa", "answers": ["produkt"], "feedback": "*frytki* can be bought ready or made: both count."},
+        {"label": "7", "prompt": "jajko", "options": ["produkt", "potrawa"], "answer": "produkt"},
+        {"label": "8", "prompt": "omlet", "options": ["produkt", "potrawa"], "answer": "potrawa"},
+        {"label": "9", "prompt": "jogurt", "options": ["produkt", "potrawa"], "answer": "produkt"},
+        {"label": "10", "prompt": "pizza", "options": ["produkt", "potrawa"], "answer": "potrawa"},
+        {"label": "11", "prompt": "jajecznica", "options": ["produkt", "potrawa"], "answer": "potrawa"},
+        {"label": "12", "prompt": "kebab", "options": ["produkt", "potrawa"], "answer": "potrawa"},
+        {"label": "13", "prompt": "mięso", "options": ["produkt", "potrawa"], "answer": "produkt"},
+        {"label": "14", "prompt": "pierogi", "options": ["produkt", "potrawa"], "answer": "potrawa"},
+        {"label": "15", "prompt": "ryba", "options": ["produkt", "potrawa"], "answer": "produkt", "answers": ["potrawa"], "feedback": "*ryba* is a product and a dish."}
+      ],
+      "newWords": [
+        {"polish": "produkt", "english": "product"},
+        {"polish": "kotlet schabowy", "english": "pork chop"},
+        {"polish": "kebab", "english": "kebab"}
+      ]
+    }
+  ],
+  "vocabulary": [
+    {"polish": "śniadanie · obiad · kolacja · Smacznego!", "english": "breakfast · lunch · dinner · Enjoy your meal!"},
+    {"polish": "głodny · zaspany · chętnie · mieć ochotę na", "english": "hungry · sleepy · gladly · to fancy"},
+    {"polish": "jeść · pić · woleć", "english": "to eat · to drink · to prefer"},
+    {"polish": "chleb, bułka, masło, ser, szynka, kiełbasa, jajko, dżem, miód", "english": "bread, roll, butter, cheese, ham, sausage, egg, jam, honey"},
+    {"polish": "kawa, herbata, mleko, sok, cukier, cytryna, sól", "english": "coffee, tea, milk, juice, sugar, lemon, salt"},
+    {"polish": "zupa, mięso, ryba, kurczak, ziemniaki, frytki, ryż, makaron, sałatka", "english": "soup, meat, fish, chicken, potatoes, chips, rice, pasta, salad"},
+    {"polish": "z cukrem ≠ bez cukru · mocny ≠ słaby · tłusty ≠ chudy", "english": "with ≠ without sugar · strong ≠ weak · fatty ≠ lean"},
+    {"polish": "malinowy, truskawkowy, jabłkowy, pomidorowy", "english": "raspberry, strawberry, apple, tomato (adj.)"},
+    {"polish": "talerz, kubek, szklanka, widelec, nóż, łyżka", "english": "plate, mug, glass, fork, knife, spoon"}
+  ]
+}
