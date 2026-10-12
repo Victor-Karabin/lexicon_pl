@@ -276,14 +276,6 @@
     <string name="lesson_words">New words</string>
     <string name="exercise_play">Play</string>
     <string name="exercise_pause">Pause</string>
-    <string name="answer_keyboard_shift">Shift</string>
-    <string name="answer_keyboard_delete">Delete</string>
-    <string name="answer_keyboard_space">space</string>
-    <string name="answer_keyboard_next">Next</string>
-    <string name="answer_keyboard_done">Done</string>
-    <string name="answer_keyboard_new_line">New line</string>
-    <string name="answer_keyboard_digits">123</string>
-    <string name="answer_keyboard_letters">abc</string>
     <string name="exercise_speed">%1$s×</string>
     <string name="exercise_speed_description">Playback speed %1$s×, tap to change</string>
     <string name="exercise_check">Check</string>
