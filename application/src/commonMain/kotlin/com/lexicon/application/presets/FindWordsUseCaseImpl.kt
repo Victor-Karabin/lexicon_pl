@@ -5,7 +5,7 @@ import com.lexicon.interactors.presets.FindWordsUseCase
 import com.lexicon.model.vocabulary.Word
 
 private val trailing = charArrayOf('?', '!', '.', '…', ' ')
-private val endings = listOf("", "?", "!", ".", "…")
+private val endings = listOf("", "?", "!", ".", "…", "…?", "…!")
 
 class FindWordsUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,

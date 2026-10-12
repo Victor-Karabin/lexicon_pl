@@ -15,6 +15,8 @@ import androidx.compose.ui.platform.InterceptPlatformTextInput
 
 private val LocalTextInputActive = compositionLocalOf { false }
 
+val LocalAnswerKeyboardShown = compositionLocalOf { false }
+
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TrackTextInput(content: @Composable () -> Unit) {
@@ -35,4 +37,4 @@ fun TrackTextInput(content: @Composable () -> Unit) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun isTyping(): Boolean = LocalTextInputActive.current && WindowInsets.isImeVisible
+fun isTyping(): Boolean = LocalAnswerKeyboardShown.current || (LocalTextInputActive.current && WindowInsets.isImeVisible)

@@ -26,8 +26,15 @@ CASES = {
     "dziecko": "ˈd͡ʑɛt͡skɔ",
     "dzień": "d͡ʑɛɲ",
     # Nasal vowels, and <ó>/<ł> spelling one sound each.
-    "ręka": "ˈrɛ̃ka",
+    "książę": "ˈkɕɔ̃ʐɛ",
     "stół": "stuw",
+    # A nasal vowel before a stop is a vowel plus a nasal consonant; final <ę> is oral.
+    "ręka": "ˈrɛŋka",
+    "wypoczęty": "vɨpɔˈt͡ʂɛntɨ",
+    "kąpać": "ˈkɔmpat͡ɕ",
+    "pięć": "pjɛɲt͡ɕ",
+    "wziął": "vʑɔw",
+    "się": "ɕɛ",
     # <i> as a softness marker before a vowel, not a syllable of its own.
     "pies": "pjɛs",
     "miasto": "ˈmjastɔ",
@@ -40,9 +47,25 @@ CASES = {
     "książka": "ˈkɕɔ̃ʂka",
     "wszystko": "ˈfʂɨstkɔ",
     "prośba": "ˈprɔʑba",
+    # <w> and <rz> turn voiceless after a voiceless consonant instead of voicing it.
+    "przerwa": "ˈpʂɛrva",
+    "twoja": "ˈtfɔja",
+    "kwiat": "kfjat",
+    "trzy": "tʂɨ",
+    "swój": "sfuj",
+    "krzesło": "ˈkʂɛswɔ",
+    "drzwi": "dʐvi",
+    "zwierzę": "ˈzvjɛʐɛ",
+    "liczba": "ˈlid͡ʐba",
     # Stress on the penultimate syllable, marked before the whole onset.
     "jabłko": "ˈjabwkɔ",
     "biblioteka": "bibljɔˈtɛka",
+    "Warszawa": "varˈʂava",
+    "pomiędzy": "pɔˈmjɛnd͡zɨ",
+    "krwawy": "ˈkrvavɨ",
+    "dziękuję": "d͡ʑɛŋˈkujɛ",
+    "przyjaciel": "pʂɨˈjat͡ɕɛl",
+    "mężczyzna": "mɛ̃ˈʂt͡ʂɨzna",
     # Multi-word entries are transcribed word by word.
     "dzień dobry": "d͡ʑɛɲ ˈdɔbrɨ",
 }

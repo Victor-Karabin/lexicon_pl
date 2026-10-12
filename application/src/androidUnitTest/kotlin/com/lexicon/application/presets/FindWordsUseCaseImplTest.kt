@@ -17,7 +17,13 @@ class FindWordsUseCaseImplTest {
         text: String,
     ) = Word(VocabularyId(id), text, "gloss", "")
 
-    private val stored = listOf(word(1, "część"), word(2, "cześć"), word(3, "jak się mówi po polsku?"), word(4, "co"))
+    private val stored = listOf(
+        word(1, "część"),
+        word(2, "cześć"),
+        word(3, "jak się mówi po polsku?"),
+        word(4, "co"),
+        word(5, "Czy wiesz…?"),
+    )
 
     private val repository: VocabularyRepository = mockk {
         coEvery { wordsWithTexts(any()) } answers { stored.filter { it.text in firstArg<List<String>>() } }
@@ -31,6 +37,7 @@ class FindWordsUseCaseImplTest {
             assertEquals(VocabularyId(2), found.getValue("Cześć").id)
             assertEquals(VocabularyId(3), found.getValue("jak się mówi po polsku…?").id)
             assertEquals(VocabularyId(4), found.getValue("Co?").id)
+            assertEquals(VocabularyId(5), FindWordsUseCaseImpl(repository)(listOf("Czy wiesz…?")).getValue("Czy wiesz…?").id)
             assertEquals(setOf("Cześć", "jak się mówi po polsku…?", "Co?"), found.keys)
         }
 

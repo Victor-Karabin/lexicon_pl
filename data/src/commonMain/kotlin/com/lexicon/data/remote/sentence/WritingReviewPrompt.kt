@@ -43,9 +43,15 @@ Return only JSON, with no Markdown around it:
 * improvements: up to four short sentences, most important first. Quote the
   learner's Polish exactly and give the corrected Polish. Leave the list empty
   when there is nothing to fix.
-* Point out only real mistakes: wrong words, wrong forms, missing Polish
-  letters, or formal and informal mixed up. Never swap a correct phrase for
-  another correct one, such as "Miło mi" for "Bardzo mi miło".
+* Judge only the sense: meaning, logic, word choice, word forms and the
+  spelling of the letters, Polish letters included.
+* Ignore capital letters, spaces and punctuation (commas, full stops, dashes,
+  question and exclamation marks) completely. They are never a mistake and
+  never a strength: do not mention them, and when you quote a correction,
+  change only the real mistake.
+* Point out only real mistakes: wrong words, wrong forms, misspelt words,
+  missing Polish letters, or formal and informal mixed up. Never swap a correct
+  phrase for another correct one, such as "Miło mi" for "Bardzo mi miło".
 * If an answer is empty, not in Polish, or misses the task, say so as an
   improvement.
 """

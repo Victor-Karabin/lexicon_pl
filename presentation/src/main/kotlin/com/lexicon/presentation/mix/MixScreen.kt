@@ -49,6 +49,7 @@ import com.lexicon.presentation.common.TrainingUnavailableContent
 import com.lexicon.presentation.common.TrueOrFalseAnswerRow
 import com.lexicon.presentation.common.debounced
 import com.lexicon.presentation.common.shuffleIntoTiles
+import com.lexicon.presentation.course.AnswerInputs
 import com.lexicon.presentation.pronunciation.RecordingState
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
@@ -88,28 +89,30 @@ fun MixScreen(
         }
     }
 
-    MixScreenContent(
-        uiState = uiState,
-        onClose = onClose,
-        onAnswerChanged = viewModel::onAnswerChanged,
-        onTileSelected = viewModel::onTileSelected,
-        onOptionSelected = viewModel::onOptionSelected,
-        onReplayAudio = viewModel::onReplayAudio,
-        onRecordRequested = {
-            if (hasRecordAudioPermission) {
-                viewModel.onRecordRequested()
-            } else {
-                permissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
-            }
-        },
-        onTrueOrFalseAnswer = viewModel::onTrueOrFalseAnswer,
-        onUndo = viewModel::onUndo,
-        onTipRequested = viewModel::onTipRequested,
-        onSkip = viewModel::onSkip,
-        onCheck = viewModel::onCheck,
-        onNext = viewModel::onNext,
-        modifier = modifier,
-    )
+    AnswerInputs {
+        MixScreenContent(
+            uiState = uiState,
+            onClose = onClose,
+            onAnswerChanged = viewModel::onAnswerChanged,
+            onTileSelected = viewModel::onTileSelected,
+            onOptionSelected = viewModel::onOptionSelected,
+            onReplayAudio = viewModel::onReplayAudio,
+            onRecordRequested = {
+                if (hasRecordAudioPermission) {
+                    viewModel.onRecordRequested()
+                } else {
+                    permissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+                }
+            },
+            onTrueOrFalseAnswer = viewModel::onTrueOrFalseAnswer,
+            onUndo = viewModel::onUndo,
+            onTipRequested = viewModel::onTipRequested,
+            onSkip = viewModel::onSkip,
+            onCheck = viewModel::onCheck,
+            onNext = viewModel::onNext,
+            modifier = modifier,
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -127,18 +127,21 @@
         }
       ],
       "newWords": [
-        {"polish": "kto? / co?", "english": "who? / what?"},
+        {"polish": "kto", "english": "who"},
+        {"polish": "co", "english": "what"},
         {"polish": "słownik", "english": "dictionary"},
-        {"polish": "Nie pamiętam.", "english": "I don't remember."},
+        {"polish": "pamiętać", "english": "to remember"},
         {"polish": "po hiszpańsku", "english": "in Spanish"},
-        {"polish": "czytamy", "english": "we read"},
+        {"polish": "czytać", "english": "to read"},
         {"polish": "normalnie", "english": "normally"},
         {"polish": "jeszcze", "english": "also, still"},
         {"polish": "niestety", "english": "unfortunately"},
-        {"polish": "polsko-hiszpański / polsko-japoński", "english": "Polish-Spanish / Polish-Japanese"},
+        {"polish": "polsko-hiszpański", "english": "Polish-Spanish"},
+        {"polish": "polsko-japoński", "english": "Polish-Japanese"},
         {"polish": "Argentyna", "english": "Argentina"},
         {"polish": "Japonia", "english": "Japan"},
-        {"polish": "za mały", "english": "too small"}
+        {"polish": "za", "english": "too (za mały — too small)"},
+        {"polish": "mały", "english": "small"}
       ],
       "rules": [1]
     },
@@ -216,15 +219,15 @@
         {"number": 8, "answers": ["jest"]}
       ],
       "newWords": [
-        {"polish": "model numer jeden", "english": "the number-one model"},
-        {"polish": "Super!", "english": "Great!"},
-        {"polish": "fajna fotografia", "english": "a cool photo"},
-        {"polish": "prawda?", "english": "right?"},
+        {"polish": "model", "english": "model"},
+        {"polish": "super", "english": "great"},
+        {"polish": "fajny", "english": "cool, nice"},
+        {"polish": "fotografia", "english": "photo, photograph"},
+        {"polish": "prawda", "english": "truth (…, prawda? — …, right?)"},
         {"polish": "palma", "english": "palm tree"},
-        {"polish": "z wakacji", "english": "from the holidays"},
-        {"polish": "z Brazylii", "english": "from Brazil"}
+        {"polish": "wakacje", "english": "holidays"},
+        {"polish": "Brazylia", "english": "Brazil"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [1]
     },
     {
@@ -260,15 +263,17 @@
         {"number": 9, "answers": ["Dziękuję"], "feedback": "*dziękuję* has two *ę* (and *proszę* ends in *ę* too)."}
       ],
       "newWords": [
-        {"polish": "modna", "english": "fashionable"},
-        {"polish": "Nic specjalnego.", "english": "Nothing special."},
+        {"polish": "modny", "english": "fashionable"},
+        {"polish": "nic", "english": "nothing"},
         {"polish": "paszport", "english": "passport"},
-        {"polish": "ołówek z gumką", "english": "pencil with an eraser"},
-        {"polish": "mapa Krakowa", "english": "map of Kraków"},
-        {"polish": "tylko jeden", "english": "only one"}
+        {"polish": "ołówek", "english": "pencil"},
+        {"polish": "gumka", "english": "eraser"},
+        {"polish": "mapa", "english": "map"},
+        {"polish": "Kraków", "english": "Cracow"},
+        {"polish": "tylko", "english": "only"}
       ],
-      "newWordsUnlock": "after_check",
-      "rules": [1]
+      "rules": [1],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "1E",
@@ -326,8 +331,7 @@
         {"number": 3, "answers": ["klucz"]},
         {"number": 4, "answers": ["płyta"]}
       ],
-      "newWords": [{"polish": "Pamiętacie?", "english": "Do you (pl.) remember?"}],
-      "newWordsUnlock": "after_check",
+      "newWords": [{"polish": "pamiętać", "english": "to remember"}],
       "rules": [1]
     },
     {
@@ -732,9 +736,10 @@
       ],
       "newWords": [
         {"polish": "rzeczownik", "english": "noun"},
-        {"polish": "Wiecie?", "english": "Do you (pl.) know?"},
-        {"polish": "Nie wiemy.", "english": "We don't know."},
-        {"polish": "rodzaj męski / żeński / nijaki", "english": "masculine / feminine / neuter gender"},
+        {"polish": "wiedzieć", "english": "to know (a fact)"},
+        {"polish": "rodzaj męski", "english": "masculine gender"},
+        {"polish": "rodzaj żeński", "english": "feminine gender"},
+        {"polish": "rodzaj nijaki", "english": "neuter gender"},
         {"polish": "tata", "english": "dad"},
         {"polish": "muzeum", "english": "museum"}
       ],
@@ -859,9 +864,10 @@
       ],
       "notes": ["After *k* and *g* the masculine ending is *-i* and the neuter is *-ie*: polski, polskie; męski, męskie."],
       "newWords": [
-        {"polish": "ten / ta / to", "english": "this (m / f / n)"},
-        {"polish": "jaki? / jaka? / jakie?", "english": "what kind of? (m / f / n)"},
-        {"polish": "Komórka ma radio.", "english": "The phone has a radio."},
+        {"polish": "ten", "english": "this (m) — ta (f), to (n)"},
+        {"polish": "jaki", "english": "what kind of (m) — jaka (f), jakie (n)"},
+        {"polish": "komórka", "english": "mobile phone"},
+        {"polish": "radio", "english": "radio"},
         {"polish": "japoński", "english": "Japanese"},
         {"polish": "hiszpański", "english": "Spanish"}
       ],
@@ -884,7 +890,7 @@
         {"label": "9", "prompt": "japońskie", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jakie?"},
         {"label": "10", "prompt": "modna", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaka?"}
       ],
-      "newWords": [{"polish": "fajna", "english": "cool"}, {"polish": "męski", "english": "male, men's"}],
+      "newWords": [{"polish": "fajny", "english": "cool"}, {"polish": "męski", "english": "male, men's"}],
       "rules": [3]
     },
     {
@@ -911,12 +917,12 @@
         {"polish": "sympatyczny", "english": "nice, likeable"},
         {"polish": "inteligentny", "english": "intelligent"},
         {"polish": "zestresowany", "english": "stressed"},
-        {"polish": "aktywna", "english": "active"},
-        {"polish": "energiczna", "english": "energetic"},
-        {"polish": "romantyczna", "english": "romantic"},
-        {"polish": "spontaniczne", "english": "spontaneous"},
-        {"polish": "kreatywne", "english": "creative"},
-        {"polish": "ambitne", "english": "ambitious"}
+        {"polish": "aktywny", "english": "active"},
+        {"polish": "energiczny", "english": "energetic"},
+        {"polish": "romantyczny", "english": "romantic"},
+        {"polish": "spontaniczny", "english": "spontaneous"},
+        {"polish": "kreatywny", "english": "creative"},
+        {"polish": "ambitny", "english": "ambitious"}
       ],
       "rules": [3]
     },
@@ -1044,7 +1050,6 @@
         {"label": "9", "prompt": "~~To centrum jest duży.~~", "answers": ["To centrum jest duże."], "feedback": "*mało*, *dużo* are adverbs (\"little\", \"a lot\"); the neuter adjective ends in *-e*: *małe*, *duże*."}
       ],
       "newWords": [{"polish": "autobus", "english": "bus"}],
-      "newWordsUnlock": "after_check",
       "rules": [3, 2]
     },
     {
@@ -1079,7 +1084,6 @@
       ],
       "interchangeable": [["1", "4", "7"], ["2", "6"], ["3", "5", "8"]],
       "newWords": [{"polish": "aktorka", "english": "actress"}, {"polish": "słowo", "english": "word"}],
-      "newWordsUnlock": "after_check",
       "rules": [3, 2]
     },
     {
@@ -1116,7 +1120,6 @@
         {"polish": "Huta", "english": "steelworks"},
         {"polish": "Stare Miasto", "english": "Old Town"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [3, 2]
     },
     {
@@ -1278,7 +1281,7 @@
         {"label": "1", "prompt": "T_ ta_lic_ jest c_ar_a.", "answers": ["Ta tablica jest czarna."]},
         {"label": "2", "prompt": "T_ kr_es_o jest z_el_n_.", "answers": ["To krzesło jest zielone."]},
         {"label": "3", "prompt": "T__ k_be_ jest po_a_a_c_owy.", "answers": ["Ten kubek jest pomarańczowy."]},
-        {"label": "4", "prompt": "___n ze__yt jest n_eb_es__.", "answers": ["Ten zeszyt jest niebieski."]},
+        {"label": "4", "prompt": "__n ze__yt jest n_eb_es__.", "answers": ["Ten zeszyt jest niebieski."]},
         {"label": "5", "prompt": "T_ ksi__ka jest c_er_on_.", "answers": ["Ta książka jest czerwona."]},
         {"label": "6", "prompt": "T_ k_m_rk_ jest _za_a.", "answers": ["Ta komórka jest szara."], "feedback": "Count the gaps: *_za_a* has 5 letters → *szara* (not *czarna*)."},
         {"label": "7", "prompt": "T_ t_rb_ jest f_o_e_o_a.", "answers": ["Ta torba jest fioletowa."]},
@@ -1383,7 +1386,6 @@
         {"polish": "rewolucja", "english": "revolution"},
         {"polish": "pantera", "english": "panther"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [3]
     },
     {

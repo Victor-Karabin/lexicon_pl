@@ -138,9 +138,10 @@
       ],
       "newWords": [
         {"polish": "ciekawe", "english": "I wonder"},
-        {"polish": "w naszej grupie", "english": "in our group"},
-        {"polish": "myślę, że…", "english": "I think that…"},
-        {"polish": "Czy wiesz…?", "english": "Do you know…?"}
+        {"polish": "nasz", "english": "our"},
+        {"polish": "grupa", "english": "group"},
+        {"polish": "myśleć", "english": "to think"},
+        {"polish": "wiedzieć", "english": "to know (a fact)"}
       ]
     },
     {
@@ -227,10 +228,8 @@
       "notes": ["After *po*: *-ski* → *-sku*, *-cki* → *-cku* (*niemiecki* → *po niemiecku*)."],
       "newWords": [
         {"polish": "język", "english": "language"},
-        {"polish": "Jaki znasz język?", "english": "Which language do you know?"},
-        {"polish": "znam", "english": "I know"},
-        {"polish": "znasz", "english": "you know"},
-        {"polish": "mówić po polsku", "english": "to speak Polish"},
+        {"polish": "znać", "english": "to know (a person, a language)"},
+        {"polish": "po polsku", "english": "in Polish"},
         {"polish": "francuski", "english": "French"},
         {"polish": "angielski", "english": "English"},
         {"polish": "włoski", "english": "Italian"},
@@ -277,17 +276,17 @@
         {"number": 6, "answers": ["po japońsku"]}
       ],
       "newWords": [
-        {"polish": "Mówimy po polsku!", "english": "We speak Polish!"},
-        {"polish": "To żart.", "english": "It's a joke."},
+        {"polish": "po polsku", "english": "in Polish"},
+        {"polish": "żart", "english": "joke"},
         {"polish": "masz rację", "english": "you're right"},
         {"polish": "słowo", "english": "word"},
         {"polish": "tylko", "english": "only"},
         {"polish": "trochę", "english": "a little"},
-        {"polish": "Mnie też.", "english": "Me too."},
-        {"polish": "nasza grupa", "english": "our group"},
-        {"polish": "Cieszę się!", "english": "I'm glad!"}
+        {"polish": "mnie też", "english": "me too"},
+        {"polish": "nasz", "english": "our"},
+        {"polish": "grupa", "english": "group"},
+        {"polish": "cieszyć się", "english": "to be glad"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [2]
     },
     {
@@ -330,10 +329,11 @@
       "newWords": [
         {"polish": "Rosja", "english": "Russia"},
         {"polish": "Ameryka", "english": "America"},
-        {"polish": "Austria", "english": "Austria"}
+        {"polish": "Austria", "english": "Austria"},
+        {"polish": "rosyjski", "english": "Russian"}
       ],
-      "newWordsUnlock": "after_check",
-      "rules": [2]
+      "rules": [2],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "2D",
@@ -364,8 +364,7 @@
         {"number": 7, "answers": ["niemiecku"], "feedback": "*mówić po* + the form in *-u*: *po polsku*, *po niemiecku*."},
         {"number": 8, "answers": ["szwedzku"]}
       ],
-      "newWords": [{"polish": "ze Szwecji", "english": "from Sweden"}],
-      "newWordsUnlock": "after_check",
+      "newWords": [{"polish": "Szwecja", "english": "Sweden"}],
       "rules": [2]
     },
     {
@@ -424,7 +423,8 @@
           ]
         }
       ],
-      "rules": [2]
+      "rules": [2],
+      "newWords": [{"polish": "chiński", "english": "Chinese"}]
     },
     {
       "id": "2F",
@@ -454,62 +454,136 @@
       ],
       "newWords": [
         {"polish": "Holandia", "english": "the Netherlands"},
-        {"polish": "Węgry / z Węgier", "english": "Hungary / from Hungary"},
+        {"polish": "Węgry", "english": "Hungary (z Węgier — from Hungary)"},
         {"polish": "oczywiście", "english": "of course"},
-        {"polish": "świetnie", "english": "great"}
+        {"polish": "świetnie", "english": "great"},
+        {"polish": "chcieć", "english": "to want"},
+        {"polish": "węgierski", "english": "Hungarian"},
+        {"polish": "holenderski", "english": "Dutch"},
+        {"polish": "Budapeszt", "english": "Budapest"}
       ],
-      "newWordsUnlock": "after_check",
-      "rules": [2]
+      "rules": [2],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "2G",
       "type": "gap_fill",
       "title": "język · znać · uczyć się · mówić po",
-      "instruction": "Complete the table: *język* (which), *znam* (what), *uczę się* (*-ego*), *mówię po* (*-u*). One form is given in each row.",
+      "instruction": "Complete the forms: *język* (which), *znam* (what), *uczę się* (*-ego*), *mówię po* (*-u*).",
       "sections": [
         {
+          "title": "1",
           "lines": [
-            {"text": "1. język angielski · znam [1] · uczę się angielskiego · mówię po [2]"},
-            {"text": "2. język [3] · znam niemiecki · uczę się [4] · mówię po [5]"},
-            {"text": "3. język [6] · znam [7] · uczę się [8] · mówię po portugalsku"},
-            {"text": "4. język [9] · znam [10] · uczę się japońskiego · mówię po [11]"},
-            {"text": "5. język polski · znam [12] · uczę się [13] · mówię po [14]"},
-            {"text": "6. język [15] · znam [16] · uczę się [17] · mówię po hiszpańsku"},
-            {"text": "7. język [18] · znam włoski · uczę się [19] · mówię po [20]"},
-            {"text": "8. język [21] · znam [22] · uczę się francuskiego · mówię po [23]"},
-            {"text": "9. język [24] · znam [25] · uczę się [26] · mówię po rosyjsku"}
+            {"text": "język angielski"},
+            {"text": "znam [1]"},
+            {"text": "uczę się [2]"},
+            {"text": "mówię po [3]"}
+          ]
+        },
+        {
+          "title": "2",
+          "lines": [
+            {"text": "język [4]"},
+            {"text": "znam niemiecki"},
+            {"text": "uczę się [5]"},
+            {"text": "mówię po [6]"}
+          ]
+        },
+        {
+          "title": "3",
+          "lines": [
+            {"text": "język [7]"},
+            {"text": "znam [8]"},
+            {"text": "uczę się [9]"},
+            {"text": "mówię po portugalsku"}
+          ]
+        },
+        {
+          "title": "4",
+          "lines": [
+            {"text": "język [10]"},
+            {"text": "znam [11]"},
+            {"text": "uczę się japońskiego"},
+            {"text": "mówię po [12]"}
+          ]
+        },
+        {
+          "title": "5",
+          "lines": [
+            {"text": "język polski"},
+            {"text": "znam [13]"},
+            {"text": "uczę się [14]"},
+            {"text": "mówię po [15]"}
+          ]
+        },
+        {
+          "title": "6",
+          "lines": [
+            {"text": "język [16]"},
+            {"text": "znam [17]"},
+            {"text": "uczę się [18]"},
+            {"text": "mówię po hiszpańsku"}
+          ]
+        },
+        {
+          "title": "7",
+          "lines": [
+            {"text": "język [19]"},
+            {"text": "znam włoski"},
+            {"text": "uczę się [20]"},
+            {"text": "mówię po [21]"}
+          ]
+        },
+        {
+          "title": "8",
+          "lines": [
+            {"text": "język [22]"},
+            {"text": "znam [23]"},
+            {"text": "uczę się francuskiego"},
+            {"text": "mówię po [24]"}
+          ]
+        },
+        {
+          "title": "9",
+          "lines": [
+            {"text": "język [25]"},
+            {"text": "znam [26]"},
+            {"text": "uczę się [27]"},
+            {"text": "mówię po rosyjsku"}
           ]
         }
       ],
       "gaps": [
         {"number": 1, "answers": ["angielski"]},
-        {"number": 2, "answers": ["angielsku"]},
-        {"number": 3, "answers": ["niemiecki"]},
-        {"number": 4, "answers": ["niemieckiego"]},
-        {"number": 5, "answers": ["niemiecku"]},
-        {"number": 6, "answers": ["portugalski"]},
+        {"number": 2, "answers": ["angielskiego"]},
+        {"number": 3, "answers": ["angielsku"]},
+        {"number": 4, "answers": ["niemiecki"]},
+        {"number": 5, "answers": ["niemieckiego"]},
+        {"number": 6, "answers": ["niemiecku"]},
         {"number": 7, "answers": ["portugalski"]},
-        {"number": 8, "answers": ["portugalskiego"]},
-        {"number": 9, "answers": ["japoński"]},
+        {"number": 8, "answers": ["portugalski"]},
+        {"number": 9, "answers": ["portugalskiego"]},
         {"number": 10, "answers": ["japoński"]},
-        {"number": 11, "answers": ["japońsku"]},
-        {"number": 12, "answers": ["polski"]},
-        {"number": 13, "answers": ["polskiego"]},
-        {"number": 14, "answers": ["polsku"]},
-        {"number": 15, "answers": ["hiszpański"]},
+        {"number": 11, "answers": ["japoński"]},
+        {"number": 12, "answers": ["japońsku"]},
+        {"number": 13, "answers": ["polski"]},
+        {"number": 14, "answers": ["polskiego"]},
+        {"number": 15, "answers": ["polsku"]},
         {"number": 16, "answers": ["hiszpański"]},
-        {"number": 17, "answers": ["hiszpańskiego"]},
-        {"number": 18, "answers": ["włoski"]},
-        {"number": 19, "answers": ["włoskiego"]},
-        {"number": 20, "answers": ["włosku"]},
-        {"number": 21, "answers": ["francuski"]},
+        {"number": 17, "answers": ["hiszpański"]},
+        {"number": 18, "answers": ["hiszpańskiego"]},
+        {"number": 19, "answers": ["włoski"]},
+        {"number": 20, "answers": ["włoskiego"]},
+        {"number": 21, "answers": ["włosku"]},
         {"number": 22, "answers": ["francuski"]},
-        {"number": 23, "answers": ["francusku"]},
-        {"number": 24, "answers": ["rosyjski"]},
+        {"number": 23, "answers": ["francuski"]},
+        {"number": 24, "answers": ["francusku"]},
         {"number": 25, "answers": ["rosyjski"]},
-        {"number": 26, "answers": ["rosyjskiego"]}
+        {"number": 26, "answers": ["rosyjski"]},
+        {"number": 27, "answers": ["rosyjskiego"]}
       ],
-      "rules": [2]
+      "rules": [2],
+      "newWords": [{"polish": "portugalski", "english": "Portuguese"}]
     },
     {
       "id": "3A",
@@ -538,72 +612,58 @@
     },
     {
       "id": "3B",
-      "type": "gap_fill",
+      "type": "conjugation",
       "title": "Conjugation tables",
-      "instruction": "Complete the forms of the four verbs.",
-      "sections": [
+      "instruction": "Complete the forms of the four verbs. They all take *-ę, -isz (-ysz)*.",
+      "groups": [
         {
-          "title": "mówić (-ę / -isz)",
-          "lines": [
-            {"text": "(ja) [1]"},
-            {"text": "(ty) mówisz"},
-            {"text": "on / ona / ono [2]"},
-            {"text": "(my) [3]"},
-            {"text": "(wy) [4]"},
-            {"text": "oni / one [5]"}
+          "title": "mówić",
+          "translation": "to speak",
+          "items": [
+            {"label": "ja", "answers": ["mówię"], "feedback": "This group has *-ę* for \"I\": *mówię*, *lubię* — not *-m*."},
+            {"label": "ty", "answers": ["mówisz"]},
+            {"label": "on / ona / ono", "answers": ["mówi"]},
+            {"label": "my", "answers": ["mówimy"]},
+            {"label": "wy", "answers": ["mówicie"]},
+            {"label": "oni / one", "answers": ["mówią"]}
           ]
         },
         {
-          "title": "lubić (-ę / -isz)",
-          "lines": [
-            {"text": "(ja) [6]"},
-            {"text": "(ty) [7]"},
-            {"text": "on / ona / ono [8]"},
-            {"text": "(my) [9]"},
-            {"text": "(wy) lubicie"},
-            {"text": "oni / one [10]"}
+          "title": "lubić",
+          "translation": "to like",
+          "items": [
+            {"label": "ja", "answers": ["lubię"], "feedback": "This group has *-ę* for \"I\": *mówię*, *lubię* — not *-m*."},
+            {"label": "ty", "answers": ["lubisz"]},
+            {"label": "on / ona / ono", "answers": ["lubi"]},
+            {"label": "my", "answers": ["lubimy"]},
+            {"label": "wy", "answers": ["lubicie"]},
+            {"label": "oni / one", "answers": ["lubią"]}
           ]
         },
         {
-          "title": "kończyć (-ę / -ysz)",
-          "lines": [
-            {"text": "(ja) kończę"},
-            {"text": "(ty) kończysz"},
-            {"text": "on / ona / ono kończy"},
-            {"text": "(my) kończymy"},
-            {"text": "(wy) [11]"},
-            {"text": "oni / one [12]"}
+          "title": "kończyć",
+          "translation": "to finish",
+          "items": [
+            {"label": "ja", "answers": ["kończę"]},
+            {"label": "ty", "answers": ["kończysz"], "feedback": "After *cz* write *y*: *kończysz*."},
+            {"label": "on / ona / ono", "answers": ["kończy"]},
+            {"label": "my", "answers": ["kończymy"]},
+            {"label": "wy", "answers": ["kończycie"]},
+            {"label": "oni / one", "answers": ["kończą"]}
           ]
         },
         {
-          "title": "tańczyć (-ę / -ysz)",
-          "lines": [
-            {"text": "(ja) [13]"},
-            {"text": "(ty) [14]"},
-            {"text": "on / ona / ono tańczy"},
-            {"text": "(my) [15]"},
-            {"text": "(wy) [16]"},
-            {"text": "oni / one tańczą"}
+          "title": "tańczyć",
+          "translation": "to dance",
+          "items": [
+            {"label": "ja", "answers": ["tańczę"]},
+            {"label": "ty", "answers": ["tańczysz"], "feedback": "After *cz* write *y*: *tańczysz*."},
+            {"label": "on / ona / ono", "answers": ["tańczy"]},
+            {"label": "my", "answers": ["tańczymy"]},
+            {"label": "wy", "answers": ["tańczycie"]},
+            {"label": "oni / one", "answers": ["tańczą"]}
           ]
         }
-      ],
-      "gaps": [
-        {"number": 1, "answers": ["mówię"], "feedback": "This group has *-ę* for \"I\": *mówię*, *lubię* — not *-m*."},
-        {"number": 2, "answers": ["mówi"]},
-        {"number": 3, "answers": ["mówimy"]},
-        {"number": 4, "answers": ["mówicie"]},
-        {"number": 5, "answers": ["mówią"], "feedback": "This group has *-ę* for \"I\": *mówię*, *lubię* — not *-m*."},
-        {"number": 6, "answers": ["lubię"]},
-        {"number": 7, "answers": ["lubisz"]},
-        {"number": 8, "answers": ["lubi"]},
-        {"number": 9, "answers": ["lubimy"]},
-        {"number": 10, "answers": ["lubią"]},
-        {"number": 11, "answers": ["kończycie"], "feedback": "After *cz* write *y*: *kończycie*."},
-        {"number": 12, "answers": ["kończą"]},
-        {"number": 13, "answers": ["tańczę"]},
-        {"number": 14, "answers": ["tańczysz"]},
-        {"number": 15, "answers": ["tańczymy"]},
-        {"number": 16, "answers": ["tańczycie"]}
       ],
       "newWords": [
         {"polish": "mówić", "english": "to speak"},
@@ -611,7 +671,6 @@
         {"polish": "kończyć", "english": "to finish"},
         {"polish": "tańczyć", "english": "to dance"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [1]
     },
     {
@@ -655,16 +714,17 @@
         {"polish": "kino", "english": "cinema"},
         {"polish": "salsa", "english": "salsa"},
         {"polish": "tango", "english": "tango"},
-        {"polish": "cieszyć się", "english": "to be glad"}
+        {"polish": "cieszyć się", "english": "to be glad"},
+        {"polish": "pizza", "english": "pizza"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [1]
     },
     {
       "id": "3D",
       "type": "gap_fill",
       "title": "Dialogue: put the verbs in",
-      "instruction": "The same dialogue as in 2B. Put the verbs in brackets in the right form.",
+      "instruction": "Javier, Mami and Pierre meet. Put the verbs in brackets in the right form, then listen to check.",
+      "tracks": [{"id": "104A2"}],
       "sections": [
         {
           "lines": [
@@ -743,12 +803,15 @@
         {"number": 11, "answers": ["lubią"]}
       ],
       "newWords": [
-        {"polish": "jeździć na nartach", "english": "to ski"},
-        {"polish": "siedzieć w kawiarni", "english": "to sit in a café"},
-        {"polish": "chodzić na kurs", "english": "to attend a course"},
-        {"polish": "robić", "english": "to do"}
+        {"polish": "jeździć", "english": "to ride, to go (jeździć na nartach — to ski)"},
+        {"polish": "narty", "english": "skis"},
+        {"polish": "siedzieć", "english": "to sit"},
+        {"polish": "kawiarnia", "english": "café"},
+        {"polish": "chodzić", "english": "to go, to attend (chodzić na kurs — to attend a course)"},
+        {"polish": "kurs", "english": "course"},
+        {"polish": "robić", "english": "to do"},
+        {"polish": "spaghetti", "english": "spaghetti"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [1]
     },
     {
@@ -777,11 +840,12 @@
         {"number": 6, "answers": ["kurs"]}
       ],
       "newWords": [
-        {"polish": "nauczyciel / nauczycielka", "english": "teacher (m / f)"},
+        {"polish": "nauczyciel", "english": "teacher (man)"},
+        {"polish": "nauczycielka", "english": "teacher (woman)"},
         {"polish": "to znaczy", "english": "that means"}
       ],
-      "newWordsUnlock": "after_check",
-      "rules": [1, 2]
+      "rules": [1, 2],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "3G",
@@ -864,13 +928,12 @@
       "newWords": [
         {"polish": "dlaczego", "english": "why"},
         {"polish": "dziś", "english": "today"},
-        {"polish": "smutna", "english": "sad"},
+        {"polish": "smutny", "english": "sad"},
         {"polish": "intensywnie", "english": "intensely"},
-        {"polish": "o Adamie", "english": "about Adam"},
         {"polish": "wysoki", "english": "tall"},
         {"polish": "przystojny", "english": "handsome"},
         {"polish": "wysportowany", "english": "sporty"},
-        {"polish": "planuje", "english": "plans"},
+        {"polish": "planować", "english": "to plan"},
         {"polish": "japonistyka", "english": "Japanese studies"},
         {"polish": "już", "english": "already"},
         {"polish": "problem", "english": "problem"}
@@ -897,15 +960,14 @@
         {"number": 5, "answers": ["y"]},
         {"number": 6, "answers": ["i"], "feedback": "*wysoki* ends in *-i*: after *k* and *g* the masculine ending is *-i*."}
       ],
-      "newWords": [{"polish": "ładna", "english": "pretty"}],
-      "newWordsUnlock": "after_check",
+      "newWords": [{"polish": "ładny", "english": "pretty"}],
       "rules": [5]
     },
     {
       "id": "4C",
       "type": "gap_fill",
       "title": "Opposites by ear",
-      "instruction": "The speaker reads pairs of opposites. Listen and write the missing word of each pair.",
+      "instruction": "The speaker reads adjectives, mostly in pairs of opposites. Listen and write the missing words.",
       "tracks": [{"id": "104C3"}],
       "hint": "wysoki · brudna · pracowity · gruby · smutna · młody · brzydka · chora",
       "transcript": {
@@ -913,7 +975,7 @@
         "sections": [
           {
             "lines": [
-              {"text": "pracowity, leniwy, gruby, szczupły, chudy, wysoki, niski, średniego wzrostu, wesoła, smutna, przystojny, ładna, brzydka, zmęczony, wysportowany, stary, młody, zdrowa, chora, czysta, brudna"}
+              {"text": "pracowity, leniwy, gruby, szczupły, wysoki, niski, średniego wzrostu, wesoła, smutna, przystojny, ładna, brzydka, zmęczony, wysportowany, stary, młody, zdrowa, chora, czysta, brudna"}
             ]
           }
         ]
@@ -924,11 +986,15 @@
             {"text": "1. [1] ≠ leniwy"},
             {"text": "2. [2] ≠ szczupły"},
             {"text": "3. [3] ≠ niski"},
-            {"text": "4. wesoła ≠ [4]"},
-            {"text": "5. ładna ≠ [5]"},
-            {"text": "6. stary ≠ [6]"},
-            {"text": "7. zdrowa ≠ [7]"},
-            {"text": "8. czysta ≠ [8]"}
+            {"text": "4. średniego wzrostu"},
+            {"text": "5. wesoła ≠ [4]"},
+            {"text": "6. przystojny"},
+            {"text": "7. ładna ≠ [5]"},
+            {"text": "8. zmęczony"},
+            {"text": "9. wysportowany"},
+            {"text": "10. stary ≠ [6]"},
+            {"text": "11. zdrowa ≠ [7]"},
+            {"text": "12. czysta ≠ [8]"}
           ]
         }
       ],
@@ -943,20 +1009,28 @@
         {"number": 8, "answers": ["brudna"]}
       ],
       "newWords": [
-        {"polish": "pracowity ↔ leniwy", "english": "hard-working ↔ lazy"},
-        {"polish": "gruby ↔ szczupły", "english": "fat ↔ slim"},
-        {"polish": "chudy", "english": "thin"},
-        {"polish": "wysoki ↔ niski", "english": "tall ↔ short"},
+        {"polish": "pracowity", "english": "hard-working"},
+        {"polish": "leniwy", "english": "lazy"},
+        {"polish": "gruby", "english": "fat"},
+        {"polish": "szczupły", "english": "slim"},
+        {"polish": "wysoki", "english": "tall"},
+        {"polish": "niski", "english": "short"},
         {"polish": "średniego wzrostu", "english": "of medium height"},
-        {"polish": "wesoła ↔ smutna", "english": "cheerful ↔ sad"},
-        {"polish": "ładna ↔ brzydka", "english": "pretty ↔ ugly"},
+        {"polish": "wesoły", "english": "cheerful"},
+        {"polish": "smutny", "english": "sad"},
+        {"polish": "ładny", "english": "pretty"},
+        {"polish": "brzydki", "english": "ugly"},
+        {"polish": "przystojny", "english": "handsome"},
         {"polish": "zmęczony", "english": "tired"},
+        {"polish": "wysportowany", "english": "sporty"},
         {"polish": "młody", "english": "young"},
-        {"polish": "zdrowa ↔ chora", "english": "healthy ↔ ill"},
-        {"polish": "czysta ↔ brudna", "english": "clean ↔ dirty"}
+        {"polish": "zdrowy", "english": "healthy"},
+        {"polish": "chory", "english": "ill"},
+        {"polish": "czysty", "english": "clean"},
+        {"polish": "brudny", "english": "dirty"}
       ],
-      "newWordsUnlock": "after_check",
-      "rules": [5]
+      "rules": [5],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "4D",
@@ -996,9 +1070,9 @@
         {"polish": "pracować", "english": "to work"},
         {"polish": "ani… ani…", "english": "neither… nor…"},
         {"polish": "mężczyzna", "english": "man"},
-        {"polish": "sport", "english": "sport"}
+        {"polish": "sport", "english": "sport"},
+        {"polish": "tamten", "english": "that (one over there)"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [5]
     },
     {
@@ -1012,14 +1086,19 @@
         {"label": "3", "prompt": "w_s_ki ≠ nis_i", "answers": ["wysoki ≠ niski"]},
         {"label": "4", "prompt": "_re_n_eg_ w_r__t_", "answers": ["średniego wzrostu"]},
         {"label": "5", "prompt": "zd_o_y ≠ _h__y", "answers": ["zdrowy ≠ chory"]},
-        {"label": "6", "prompt": "_ad_y ≠ br__yd_i", "answers": ["ładny ≠ brzydki"], "feedback": "*ładny* starts with *ł*; *brzydki* has *rz*."},
-        {"label": "7", "prompt": "p__ys_ojn_", "answers": ["przystojny"]},
+        {"label": "6", "prompt": "_ad_y ≠ br__d_i", "answers": ["ładny ≠ brzydki"], "feedback": "*ładny* starts with *ł*; *brzydki* has *rz*."},
+        {"label": "7", "prompt": "p__ys_ojn_ ≠ b_zy_k_", "answers": ["przystojny ≠ brzydki"]},
         {"label": "8", "prompt": "_r_co_ity ≠ l_n__y", "answers": ["pracowity ≠ leniwy"]},
         {"label": "9", "prompt": "s_u_ny ≠ w_s__y", "answers": ["smutny ≠ wesoły"]},
-        {"label": "10", "prompt": "cz_s_y ≠ b__u_ny", "answers": ["czysty ≠ brudny"]},
-        {"label": "11", "prompt": "zm__c_o_y", "answers": ["zmęczony"], "feedback": "*zmęczony* — with *ę*."},
-        {"label": "12", "prompt": "w__p_rt_wa__y", "answers": ["wysportowany"]}
-      ]
+        {"label": "10", "prompt": "cz_s_y ≠ b_u_ny", "answers": ["czysty ≠ brudny"]},
+        {"label": "11", "prompt": "zm_c_o_y ≠ w_po__ę_y", "answers": ["zmęczony ≠ wypoczęty"], "feedback": "*zmęczony* and *wypoczęty* — both with *ę*."},
+        {"label": "12", "prompt": "w__p_rt_wa_y ≠ n_ew_s__rt_wa_y", "answers": ["wysportowany ≠ niewysportowany"], "feedback": "*nie* is written together with the adjective: *niewysportowany*."}
+      ],
+      "newWords": [
+        {"polish": "wypoczęty", "english": "rested"},
+        {"polish": "niewysportowany", "english": "unathletic"}
+      ],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "5A",
@@ -1057,12 +1136,15 @@
       "newWords": [
         {"polish": "przerwa", "english": "break"},
         {"polish": "lektorka", "english": "(language) teacher"},
-        {"polish": "miła", "english": "nice"},
+        {"polish": "miły", "english": "nice"},
+        {"polish": "atrakcyjny", "english": "attractive"},
+        {"polish": "energiczny", "english": "energetic"},
+        {"polish": "spontaniczny", "english": "spontaneous"},
+        {"polish": "sympatyczny", "english": "nice, friendly"},
         {"polish": "na pewno", "english": "surely"},
         {"polish": "chyba", "english": "probably"},
-        {"polish": "twoja koleżanka", "english": "your friend"},
-        {"polish": "Jestem pewny / pewna, że…", "english": "I'm sure that…"},
-        {"polish": "Nie wiem, czy…", "english": "I don't know if…"}
+        {"polish": "pewny", "english": "sure"},
+        {"polish": "koleżanka", "english": "friend (woman)"}
       ],
       "rules": [3]
     },
@@ -1146,12 +1228,12 @@
         {"polish": "talent", "english": "talent"},
         {"polish": "nerwowy", "english": "nervous"},
         {"polish": "zdenerwować się", "english": "to get angry"},
-        {"polish": "ambicje", "english": "ambitions"},
+        {"polish": "ambicja", "english": "ambition"},
         {"polish": "cały czas", "english": "all the time"},
         {"polish": "modelka", "english": "model"},
-        {"polish": "szybko się uczy", "english": "learns fast"}
+        {"polish": "szybko", "english": "quickly"},
+        {"polish": "kiedy", "english": "when"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [5]
     },
     {
@@ -1160,11 +1242,11 @@
       "title": "Build the sentence",
       "instruction": "Make a sentence from the words.",
       "items": [
-        {"label": "1", "prompt": "że / ty / myślę / pracowity / jesteś", "answers": ["Myślę, że ty jesteś pracowity."], "feedback": "A comma before *że* and *czy*."},
-        {"label": "2", "prompt": "czy / wiem / on / nie / sympatyczny / jest", "answers": ["Nie wiem, czy on jest sympatyczny."], "feedback": "A comma before *że* and *czy*."},
-        {"label": "3", "prompt": "wiem / czy / miła / jest / ona / nie", "answers": ["Nie wiem, czy ona jest miła."], "feedback": "A comma before *że* and *czy*."},
-        {"label": "4", "prompt": "pewny / on / jest / że / energiczny / jestem", "answers": ["Jestem pewny, że on jest energiczny."], "feedback": "A comma before *że* and *czy*."},
-        {"label": "5", "prompt": "ona / jestem / że / pewna / ambitna / jest", "answers": ["Jestem pewna, że ona jest ambitna."], "feedback": "A comma before *że* and *czy*."}
+        {"label": "1", "prompt": "że / ty / myślę / pracowity / jesteś", "answers": ["Myślę, że ty jesteś pracowity."]},
+        {"label": "2", "prompt": "czy / wiem / on / nie / sympatyczny / jest", "answers": ["Nie wiem, czy on jest sympatyczny."]},
+        {"label": "3", "prompt": "wiem / czy / miła / jest / ona / nie", "answers": ["Nie wiem, czy ona jest miła."]},
+        {"label": "4", "prompt": "pewny / on / jest / że / energiczny / jestem", "answers": ["Jestem pewny, że on jest energiczny."]},
+        {"label": "5", "prompt": "ona / jestem / że / pewna / ambitna / jest", "answers": ["Jestem pewna, że ona jest ambitna."]}
       ],
       "rules": [3]
     },
@@ -1178,7 +1260,7 @@
         "Ona jest wysoka i szczupła. Myślę, że ona jest wesoła i sympatyczna.",
         "On jest wysoki i przystojny. Myślę, że on jest pracowity, ale zmęczony."
       ],
-      "checklist": ["*ona* → the adjective ends in *-a*, *on* → *-y / -i*, *ono* → *-e*.", "A comma before *że*: *Myślę, że…*"],
+      "checklist": ["*ona* → the adjective ends in *-a*, *on* → *-y / -i*, *ono* → *-e*."],
       "rules": [3, 5]
     },
     {
@@ -1241,7 +1323,7 @@
           "choices": [{"options": ["i", "ale", "bo"], "answer": "bo"}]
         }
       ],
-      "newWords": [{"polish": "niewysportowana", "english": "unathletic"}],
+      "newWords": [{"polish": "niewysportowany", "english": "unathletic"}],
       "rules": [4]
     },
     {
@@ -1312,10 +1394,7 @@
           "choices": [{"options": ["i", "ani", "ale", "bo"], "answer": "bo"}]
         }
       ],
-      "newWords": [
-        {"polish": "ani… ani…", "english": "neither… nor…"},
-        {"polish": "nie pisze", "english": "doesn't write"}
-      ],
+      "newWords": [{"polish": "ani… ani…", "english": "neither… nor…"}],
       "rules": [4]
     }
   ],

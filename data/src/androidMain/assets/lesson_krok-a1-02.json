@@ -134,6 +134,17 @@
             {"polish": "karta studenta, segregator, mapa", "english": "student card, binder, map"}
           ]
         }
+      ],
+      "newWords": [
+        {"polish": "skąd", "english": "where from"},
+        {"polish": "Anglia", "english": "England"},
+        {"polish": "USA", "english": "the USA"},
+        {"polish": "mieszkać", "english": "to live"},
+        {"polish": "mieszkanie", "english": "flat, apartment"},
+        {"polish": "karta", "english": "card"},
+        {"polish": "mapa", "english": "map"},
+        {"polish": "segregator", "english": "ring binder"},
+        {"polish": "przez", "english": "through, by"}
       ]
     },
     {
@@ -184,12 +195,15 @@
         {"number": 18, "answers": ["Proszę"]}
       ],
       "newWords": [
-        {"polish": "Francja, Niemcy", "english": "France, Germany (z Francji, z Niemiec)"},
+        {"polish": "Francja", "english": "France (z Francji)"},
+        {"polish": "Niemcy", "english": "Germany (z Niemiec)"},
         {"polish": "w porządku", "english": "all right, fine"},
-        {"polish": "intensywny kurs języka polskiego", "english": "intensive Polish course"}
+        {"polish": "intensywny", "english": "intensive"},
+        {"polish": "kurs", "english": "course"},
+        {"polish": "język", "english": "language"}
       ],
-      "newWordsUnlock": "after_check",
-      "rules": [4]
+      "rules": [4],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "1C",
@@ -286,7 +300,16 @@
         }
       ],
       "notes": ["The reply to *Co słychać?* is *…a u ciebie?*, not *…a ty?*"],
-      "newWords": [{"polish": "dialog oficjalny", "english": "formal dialogue"}],
+      "newWords": [
+        {"polish": "oficjalny", "english": "formal, official"},
+        {"polish": "co słychać", "english": "how are things"},
+        {"polish": "wszystko", "english": "everything"},
+        {"polish": "świetnie", "english": "great"},
+        {"polish": "ale", "english": "but"},
+        {"polish": "nic", "english": "nothing"},
+        {"polish": "nowy", "english": "new (nic nowego — nothing new)"},
+        {"polish": "po staremu", "english": "as usual"}
+      ],
       "rules": [1]
     },
     {
@@ -312,11 +335,11 @@
       "items": [
         {"label": "1", "prompt": "c_eść", "answers": ["cześć"], "feedback": "*cześć* — cz-e-ść; it rhymes with *sześć* (6)."},
         {"label": "2", "prompt": "c_ s_yc_ać", "answers": ["co słychać"]},
-        {"label": "3", "prompt": "ws_ys_ _o _ po_ _ąd_u", "answers": ["wszystko w porządku"], "feedback": "*porządku* — *rz* (sounds like *ż*) and *ą*."},
+        {"label": "3", "prompt": "ws_ys__o _ po__ąd_u", "answers": ["wszystko w porządku"], "feedback": "*porządku* — *rz* (sounds like *ż*) and *ą*."},
         {"label": "4", "prompt": "_o u ci_b_e", "answers": ["co u ciebie"]},
         {"label": "5", "prompt": "n_c n_w_g_", "answers": ["nic nowego"]},
         {"label": "6", "prompt": "dz_ęk_j_ _szy_t_o św_et_i_", "answers": ["dziękuję, wszystko świetnie"]},
-        {"label": "7", "prompt": "_o st_re_ _", "answers": ["po staremu"]}
+        {"label": "7", "prompt": "_o st_re__", "answers": ["po staremu"]}
       ],
       "rules": [1]
     },
@@ -397,25 +420,30 @@
         {"number": 6, "answers": ["w"]}
       ],
       "newWords": [
-        {"polish": "Uwaga!", "english": "Careful! / Attention!"},
+        {"polish": "uwaga", "english": "attention, careful"},
         {"polish": "Nowy Jork", "english": "New York (w Nowym Jorku)"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [1]
     },
     {
       "id": "3A",
-      "type": "write",
-      "title": "być — to be",
-      "instruction": "Fill in the forms of *być* (to be).",
+      "type": "conjugation",
+      "title": "Conjugation table",
+      "instruction": "Fill in the forms of *być*.",
       "hint": "jestem · jesteś · jest · jesteśmy · jesteście · są",
-      "items": [
-        {"label": "(ja)", "answers": ["jestem"]},
-        {"label": "(ty)", "answers": ["jesteś"]},
-        {"label": "on / ona / ono", "answers": ["jest"]},
-        {"label": "(my)", "answers": ["jesteśmy"], "feedback": "*jesteśmy* and *jesteście* keep *ś*; the soft \"ch\" before a vowel is spelled *ci*, never *czi*: jeste-ście."},
-        {"label": "(wy)", "answers": ["jesteście"], "feedback": "*jesteśmy* and *jesteście* keep *ś*; the soft \"ch\" before a vowel is spelled *ci*, never *czi*: jeste-ście."},
-        {"label": "oni / one", "answers": ["są"]}
+      "groups": [
+        {
+          "title": "być",
+          "translation": "to be",
+          "items": [
+            {"label": "ja", "answers": ["jestem"]},
+            {"label": "ty", "answers": ["jesteś"]},
+            {"label": "on / ona / ono", "answers": ["jest"]},
+            {"label": "my", "answers": ["jesteśmy"], "feedback": "*jesteśmy* and *jesteście* keep *ś*; the soft \"ch\" before a vowel is spelled *ci*, never *czi*: jeste-ście."},
+            {"label": "wy", "answers": ["jesteście"], "feedback": "*jesteśmy* and *jesteście* keep *ś*; the soft \"ch\" before a vowel is spelled *ci*, never *czi*: jeste-ście."},
+            {"label": "oni / one", "answers": ["są"]}
+          ]
+        }
       ],
       "notes": [
         "on + on / on + ona / on + ono → **oni** (at least one man); ona + ona / ona + ono / ono + ono → **one** (no men).",
@@ -473,10 +501,13 @@
         {"number": 19, "answers": ["państwo"]}
       ],
       "newWords": [
-        {"polish": "w domu / w pracy", "english": "at home / at work"},
-        {"polish": "też", "english": "too, also"}
+        {"polish": "dom", "english": "house, home (w domu — at home)"},
+        {"polish": "praca", "english": "work, job (w pracy — at work)"},
+        {"polish": "też", "english": "too, also"},
+        {"polish": "my", "english": "we"},
+        {"polish": "wy", "english": "you (plural)"},
+        {"polish": "państwo", "english": "you (to a mixed group); ladies and gentlemen"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [2, 1]
     },
     {
@@ -493,8 +524,8 @@
         {"label": "6", "prompt": "dziecko", "options": ["on", "ona", "ono", "oni", "one"], "answer": "ono"}
       ],
       "newWords": [{"polish": "dziecko", "english": "child (ono)"}],
-      "newWordsUnlock": "after_check",
-      "rules": [1]
+      "rules": [1],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "3D",
@@ -552,8 +583,7 @@
         {"number": 9, "answers": ["są"]},
         {"number": 10, "answers": ["jest"]}
       ],
-      "newWords": [{"polish": "w hotelu", "english": "in a hotel"}],
-      "newWordsUnlock": "after_check",
+      "newWords": [{"polish": "hotel", "english": "hotel"}],
       "rules": [2]
     },
     {
@@ -570,8 +600,10 @@
         {"label": "6", "prompt": "Ona jest tam.", "answers": ["One są tam."]},
         {"label": "7", "prompt": "On jest w sekretariacie.", "answers": ["Oni są w sekretariacie."]}
       ],
-      "newWords": [{"polish": "w szkole", "english": "at school"}],
-      "newWordsUnlock": "after_check",
+      "newWords": [
+        {"polish": "szkoła", "english": "school"},
+        {"polish": "sekretariat", "english": "school office"}
+      ],
       "rules": [2, 1]
     },
     {
@@ -619,21 +651,43 @@
         }
       ],
       "notes": ["After *z* (from) and *w* (in) the noun changes its ending (cases come later). Learn the pairs: *z Polski — w Krakowie*."],
-      "rules": [4]
+      "rules": [4],
+      "newWords": [
+        {"polish": "Hiszpania", "english": "Spain"},
+        {"polish": "Madryt", "english": "Madrid"},
+        {"polish": "Rosja", "english": "Russia"},
+        {"polish": "Moskwa", "english": "Moscow"},
+        {"polish": "Austria", "english": "Austria"},
+        {"polish": "Wiedeń", "english": "Vienna"},
+        {"polish": "Francja", "english": "France"},
+        {"polish": "Paryż", "english": "Paris"},
+        {"polish": "Włochy", "english": "Italy"},
+        {"polish": "Rzym", "english": "Rome"},
+        {"polish": "Niemcy", "english": "Germany"},
+        {"polish": "Berlin", "english": "Berlin"},
+        {"polish": "Anglia", "english": "England"},
+        {"polish": "Londyn", "english": "London"}
+      ]
     },
     {
       "id": "4B",
-      "type": "write",
-      "title": "mieszkać — to live",
-      "instruction": "Fill in the forms of *mieszkać* (to live).",
+      "type": "conjugation",
+      "title": "Conjugation table",
+      "instruction": "Fill in the forms of *mieszkać*.",
       "hint": "mieszkam · mieszkasz · mieszka · mieszkamy · mieszkacie · mieszkają",
-      "items": [
-        {"label": "(ja)", "answers": ["mieszkam"]},
-        {"label": "(ty)", "answers": ["mieszkasz"]},
-        {"label": "on / ona / ono", "answers": ["mieszka"]},
-        {"label": "(my)", "answers": ["mieszkamy"]},
-        {"label": "(wy)", "answers": ["mieszkacie"]},
-        {"label": "oni / one", "answers": ["mieszkają"]}
+      "groups": [
+        {
+          "title": "mieszkać",
+          "translation": "to live",
+          "items": [
+            {"label": "ja", "answers": ["mieszkam"]},
+            {"label": "ty", "answers": ["mieszkasz"]},
+            {"label": "on / ona / ono", "answers": ["mieszka"]},
+            {"label": "my", "answers": ["mieszkamy"]},
+            {"label": "wy", "answers": ["mieszkacie"]},
+            {"label": "oni / one", "answers": ["mieszkają"]}
+          ]
+        }
       ],
       "rules": [3]
     },
@@ -679,12 +733,11 @@
         {"number": 15, "answers": ["mieszkają"]}
       ],
       "newWords": [
-        {"polish": "w Europie", "english": "in Europe"},
-        {"polish": "z polską rodziną", "english": "with a Polish family"},
-        {"polish": "państwo Kowalscy", "english": "Mr and Mrs Kowalski"},
-        {"polish": "w Warszawie", "english": "in Warsaw"}
+        {"polish": "Europa", "english": "Europe"},
+        {"polish": "rodzina", "english": "family"},
+        {"polish": "państwo", "english": "Mr and Mrs (państwo Kowalscy — the Kowalskis)"},
+        {"polish": "Warszawa", "english": "Warsaw"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [3, 4]
     },
     {
@@ -710,7 +763,8 @@
         "*mieć* is irregular in the stem (*mam, masz…*).",
         "*grać w tenisa / na gitarze* = play tennis / the guitar."
       ],
-      "rules": [3]
+      "rules": [3],
+      "newWords": [{"polish": "grać", "english": "to play"}]
     },
     {
       "id": "5B",
@@ -792,10 +846,11 @@
       ],
       "newWords": [
         {"polish": "na przykład", "english": "for example"},
-        {"polish": "grać w tenisa / na gitarze", "english": "to play tennis / the guitar"},
+        {"polish": "grać", "english": "to play"},
+        {"polish": "tenis", "english": "tennis"},
+        {"polish": "gitara", "english": "guitar"},
         {"polish": "ale", "english": "but"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [3]
     },
     {
@@ -831,11 +886,7 @@
         {"number": 9, "answers": ["grasz"]},
         {"number": 10, "answers": ["mają"]}
       ],
-      "newWords": [
-        {"polish": "grać w golfa", "english": "to play golf"},
-        {"polish": "Przepraszamy.", "english": "We're sorry."}
-      ],
-      "newWordsUnlock": "after_check",
+      "newWords": [{"polish": "golf", "english": "golf"}],
       "rules": [3]
     },
     {
@@ -862,7 +913,20 @@
       "notes": [
         "*-naście* = -teen; *dwadzieścia* = twenty; 21 = *dwadzieścia jeden*. Watch the stems: *czter-naście* (14), *pięt-naście* (15), *dziewięt-naście* (19)."
       ],
-      "rules": [6]
+      "rules": [6],
+      "newWords": [
+        {"polish": "jedenaście", "english": "eleven"},
+        {"polish": "dwanaście", "english": "twelve"},
+        {"polish": "trzynaście", "english": "thirteen"},
+        {"polish": "czternaście", "english": "fourteen"},
+        {"polish": "piętnaście", "english": "fifteen"},
+        {"polish": "szesnaście", "english": "sixteen"},
+        {"polish": "siedemnaście", "english": "seventeen"},
+        {"polish": "osiemnaście", "english": "eighteen"},
+        {"polish": "dziewiętnaście", "english": "nineteen"},
+        {"polish": "dwadzieścia", "english": "twenty"}
+      ],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "6B",
@@ -949,7 +1013,6 @@
         {"number": 9, "answers": ["6"]}
       ],
       "newWords": [{"polish": "Dworzec Główny", "english": "Main Railway Station"}],
-      "newWordsUnlock": "after_check",
       "rules": [6]
     },
     {
@@ -1017,7 +1080,20 @@
           ]
         }
       ],
-      "rules": [5]
+      "rules": [5],
+      "newWords": [
+        {"polish": "dlaczego", "english": "why"},
+        {"polish": "bo", "english": "because"},
+        {"polish": "żeby", "english": "in order to, so that"},
+        {"polish": "uczyć", "english": "to teach"},
+        {"polish": "uczyć się", "english": "to learn"},
+        {"polish": "studiować", "english": "to study (at university)"},
+        {"polish": "naprawdę", "english": "really"},
+        {"polish": "chłopak", "english": "boyfriend; boy"},
+        {"polish": "dziewczyna", "english": "girlfriend; girl"},
+        {"polish": "twój", "english": "your"},
+        {"polish": "centrum", "english": "centre (w centrum — in the city centre)"}
+      ]
     },
     {
       "id": "7B",
@@ -1033,7 +1109,7 @@
         {"label": "5", "prompt": "Uczę się, bo", "options": ["A", "B", "C", "D", "E", "F"], "answer": "C", "feedback": "*żeby* + infinitive (*studiować*); *bo* + a full clause (*to moje hobby*)."},
         {"label": "6", "prompt": "Mieszkam", "options": ["A", "B", "C", "D", "E", "F"], "answer": "E"}
       ],
-      "newWords": [{"polish": "To moje hobby.", "english": "It's my hobby."}],
+      "newWords": [{"polish": "hobby", "english": "hobby"}],
       "rules": [5]
     },
     {
@@ -1084,11 +1160,13 @@
         }
       ],
       "newWords": [
-        {"polish": "w centrum", "english": "in the city centre"},
-        {"polish": "ulica świętego Jana", "english": "St John's Street"},
-        {"polish": "mój / twój numer", "english": "my / your number"}
+        {"polish": "centrum", "english": "centre (w centrum — in the city centre)"},
+        {"polish": "ulica", "english": "street"},
+        {"polish": "święty", "english": "saint"},
+        {"polish": "mój", "english": "my"},
+        {"polish": "numer", "english": "number"},
+        {"polish": "twój", "english": "your"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [4, 5]
     },
     {
@@ -1241,8 +1319,10 @@
         {"label": "5", "prompt": "Julia uczy się hiszpańskiego, … to jej hobby.", "options": ["żeby", "bo"], "answer": "bo", "feedback": "*żeby* + infinitive (*-ć*); *bo* + a full clause."}
       ],
       "newWords": [
-        {"polish": "jej / jego", "english": "her / his"},
-        {"polish": "uczyć się hiszpańskiego", "english": "to learn Spanish"}
+        {"polish": "jej", "english": "her"},
+        {"polish": "jego", "english": "his"},
+        {"polish": "uczyć się", "english": "to learn"},
+        {"polish": "hiszpański", "english": "Spanish"}
       ],
       "rules": [5]
     },
@@ -1282,10 +1362,10 @@
         {"polish": "dane osobowe", "english": "personal details"},
         {"polish": "Argentyńczyk", "english": "Argentinian (man)"},
         {"polish": "oczywiście", "english": "of course"},
-        {"polish": "grupa / klasa", "english": "group / classroom"},
-        {"polish": "Miłej lekcji!", "english": "Enjoy the lesson!"}
+        {"polish": "grupa", "english": "group"},
+        {"polish": "klasa", "english": "classroom"},
+        {"polish": "lekcja", "english": "lesson"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [3]
     },
     {
@@ -1330,11 +1410,12 @@
         {"label": "l", "speaker": "Angela", "prompt": "Moja mama jest z Polski.", "answer": "11"}
       ],
       "newWords": [
-        {"polish": "Witam.", "english": "Hello / Welcome (formal)."},
+        {"polish": "witam", "english": "hello, welcome (formal)"},
         {"polish": "mąż", "english": "husband"},
-        {"polish": "koleżanka / kolega", "english": "friend, colleague (f / m)"},
-        {"polish": "Bardzo mi miło państwa poznać.", "english": "Very nice to meet you (to a couple)."},
-        {"polish": "mówić po polsku", "english": "to speak Polish"}
+        {"polish": "koleżanka", "english": "friend, colleague (woman)"},
+        {"polish": "kolega", "english": "friend, colleague (man)"},
+        {"polish": "państwo", "english": "you (to a mixed group or a couple); ladies and gentlemen"},
+        {"polish": "po polsku", "english": "in Polish"}
       ],
       "rules": [2]
     },
@@ -1389,7 +1470,15 @@
         {"label": "6", "prompt": "dobrze", "options": ["+++", "++", "+", "+/−", "−", "−−", "−−−"], "answer": "+"},
         {"label": "7", "prompt": "bardzo źle", "options": ["+++", "++", "+", "+/−", "−", "−−", "−−−"], "answer": "−−"}
       ],
-      "newWords": [{"polish": "tak sobie", "english": "so-so"}, {"polish": "fatalnie", "english": "terribly"}],
+      "newWords": [
+        {"polish": "tak sobie", "english": "so-so"},
+        {"polish": "fatalnie", "english": "terribly"},
+        {"polish": "ile", "english": "how much, how many"},
+        {"polish": "plus", "english": "plus"},
+        {"polish": "zły", "english": "bad"},
+        {"polish": "brawo", "english": "bravo, well done"},
+        {"polish": "po angielsku", "english": "in English"}
+      ],
       "newWordsUnlock": "after_check"
     },
     {
@@ -1414,8 +1503,7 @@
       "notes": [
         "*pani* takes the 3rd-person verb (*pani jest, pani mieszka*); *ty* takes the *-sz* form (*jesteś, mieszkasz*). *panie* means ladies — one woman is *pani*."
       ],
-      "newWords": [{"polish": "uczyć się angielskiego", "english": "to learn English"}],
-      "newWordsUnlock": "after_check",
+      "newWords": [{"polish": "angielski", "english": "English"}],
       "rules": [1, 2, 3]
     }
   ],

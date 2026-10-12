@@ -29,6 +29,7 @@ import com.lexicon.interactors.passage.PassageSegment
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.course.AnswerInputs
 import com.lexicon.presentation.course.ExerciseAudioButton
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.component.AnswerChip
@@ -47,21 +48,23 @@ fun PassageScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    PassageContent(
-        uiState = uiState,
-        withWordBank = withWordBank,
-        onClose = onClose,
-        onSpeak = viewModel::onSpeak,
-        onAnswerChanged = viewModel::onAnswerChanged,
-        onBankWordSelected = viewModel::onBankWordSelected,
-        onGapCleared = viewModel::onGapCleared,
-        onCheck = viewModel::onCheck,
-        onNext = {
-            val correct = uiState.correctCount
-            onSessionComplete(correct, uiState.expected.size - correct, 0, 0)
-        },
-        modifier = modifier,
-    )
+    AnswerInputs {
+        PassageContent(
+            uiState = uiState,
+            withWordBank = withWordBank,
+            onClose = onClose,
+            onSpeak = viewModel::onSpeak,
+            onAnswerChanged = viewModel::onAnswerChanged,
+            onBankWordSelected = viewModel::onBankWordSelected,
+            onGapCleared = viewModel::onGapCleared,
+            onCheck = viewModel::onCheck,
+            onNext = {
+                val correct = uiState.correctCount
+                onSessionComplete(correct, uiState.expected.size - correct, 0, 0)
+            },
+            modifier = modifier,
+        )
+    }
 }
 
 @OptIn(ExperimentalLayoutApi::class)

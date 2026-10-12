@@ -153,14 +153,13 @@
         {"number": 7, "answers": ["Lubi pracować", "On lubi pracować"]}
       ],
       "newWords": [
-        {"polish": "Kim on jest?", "english": "What does he do?"},
+        {"polish": "zawód", "english": "profession (Kim on jest? — What does he do?)"},
         {"polish": "biznesmen", "english": "businessman"},
-        {"polish": "Ile ma lat?", "english": "How old is he?"},
-        {"polish": "On ma 44 lata.", "english": "He is 44."},
-        {"polish": "Co lubi robić?", "english": "What does he like doing?"}
+        {"polish": "ile", "english": "how much, how many (Ile ma lat? — How old is he?)"},
+        {"polish": "czterdzieści", "english": "forty"}
       ],
-      "newWordsUnlock": "after_check",
-      "rules": [5]
+      "rules": [5],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "1B",
@@ -192,8 +191,10 @@
         {"label": "k", "prompt": "20 lat. Mami bardzo", "answer": "10"}
       ],
       "newWords": [
-        {"polish": "chce studiować", "english": "wants to study"},
-        {"polish": "słuchać muzyki", "english": "to listen to music"}
+        {"polish": "chcieć", "english": "to want"},
+        {"polish": "studiować", "english": "to study (at university)"},
+        {"polish": "słuchać", "english": "to listen"},
+        {"polish": "muzyka", "english": "music"}
       ],
       "rules": [5]
     },
@@ -201,9 +202,15 @@
       "id": "1C",
       "type": "gap_fill",
       "title": "Questions about the text",
-      "instruction": "Write the question to each answer about Mami (the text in 1B).",
+      "instruction": "Read and listen to the text about Mami, then write the question to each answer.",
+      "tracks": [{"id": "wb18"}],
       "wordBox": ["dlaczego", "kto", "gdzie", "skąd", "czy", "co", "jaka", "ile"],
       "sections": [
+        {
+          "lines": [
+            {"text": "To jest Mami Takada. Ona jest z Japonii. Mieszka w Tokio, ale teraz jest w Krakowie. Mami uczy się języka polskiego, bo chce studiować w Polsce. Mami jest młoda, szczupła i ładna. Ma 20 lat. Mami bardzo lubi słuchać muzyki."}
+          ]
+        },
         {
           "lines": [
             {"text": "1. [1]? — Mami Takada."},
@@ -265,16 +272,16 @@
       ],
       "newWords": [
         {"polish": "śpiewać", "english": "to sing"},
-        {"polish": "grać w tenisa", "english": "to play tennis"},
+        {"polish": "grać", "english": "to play"},
+        {"polish": "tenis", "english": "tennis"},
         {"polish": "biegać", "english": "to run"}
-      ],
-      "newWordsUnlock": "after_check"
+      ]
     },
     {
       "id": "1E",
       "type": "free_writing",
       "title": "This is Angela",
-      "instruction": "Write a presentation (*prezentacja*) of Angela like the text about Uwe in 1A, then write questions to it.\nAngela Brown · Anglia, Londyn · 27 lat · lektorka języka angielskiego · wysoka, szczupła, ładna, młoda · czytać książki",
+      "instruction": "Write a presentation (*prezentacja*) of Angela like the text about Uwe, then write questions to it.\n*To jest Uwe. Uwe Stein. On jest z Niemiec. Mieszka w Berlinie. Jest wysoki, przystojny i wysportowany. Uwe to biznesmen. Ma 44 lata. Lubi pracować.*\nAngela Brown · Anglia, Londyn · 27 lat · lektorka języka angielskiego · wysoka, szczupła, ładna, młoda · czytać książki",
       "fields": [{"label": "Text about Angela"}, {"label": "Questions"}],
       "model": [
         "To jest Angela. Angela Brown. Ona jest z Anglii. Mieszka w Londynie. Jest wysoka, szczupła, ładna i młoda. Angela to lektorka języka angielskiego. Ma 27 lat. Lubi czytać książki.",
@@ -283,8 +290,7 @@
       "checklist": ["*ona* → adjectives in *-a*.", "*27 lat* (not *lata*).", "*z Anglii*, *w Londynie*."],
       "newWords": [
         {"polish": "prezentacja", "english": "presentation"},
-        {"polish": "lektorka języka angielskiego", "english": "English teacher"},
-        {"polish": "czytać książki", "english": "to read books"},
+        {"polish": "książka", "english": "book"},
         {"polish": "Londyn", "english": "London"}
       ],
       "rules": [5]
@@ -356,7 +362,6 @@
         {"polish": "dziewięćdziesiąt", "english": "90"},
         {"polish": "sto", "english": "100"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [4]
     },
     {
@@ -418,13 +423,7 @@
         {"label": "i", "prompt": "77 − 55 =", "answers": ["dwadzieścia dwa"]},
         {"label": "j", "prompt": "110 − 9 =", "answers": ["sto jeden"]}
       ],
-      "newWords": [
-        {"polish": "Ile to jest?", "english": "How much is it?"},
-        {"polish": "plus", "english": "plus"},
-        {"polish": "minus", "english": "minus"},
-        {"polish": "jest (=)", "english": "equals"}
-      ],
-      "newWordsUnlock": "after_check",
+      "newWords": [{"polish": "plus", "english": "plus"}, {"polish": "minus", "english": "minus"}],
       "rules": [4]
     },
     {
@@ -456,7 +455,6 @@
         {"label": "10", "answers": ["dziewięćdziesiąt osiem"]}
       ],
       "newWords": [{"polish": "lektor", "english": "speaker (on the recording)"}],
-      "newWordsUnlock": "after_check",
       "rules": [4]
     },
     {
@@ -475,8 +473,7 @@
       "newWords": [
         {"polish": "numer telefonu", "english": "phone number"},
         {"polish": "zanotować", "english": "to note down"}
-      ],
-      "newWordsUnlock": "after_check"
+      ]
     },
     {
       "id": "3A",
@@ -518,13 +515,12 @@
       ],
       "notes": ["In Poland people don't ask women their age."],
       "newWords": [
-        {"polish": "Ile masz lat?", "english": "How old are you?"},
+        {"polish": "ile", "english": "how much, how many (Ile masz lat? — How old are you?)"},
         {"polish": "rok", "english": "year"},
         {"polish": "lata", "english": "years"},
-        {"polish": "lat", "english": "years"},
         {"polish": "prawie", "english": "almost"},
-        {"polish": "17 i pół", "english": "17 and a half"},
-        {"polish": "Dlaczego pytasz?", "english": "Why do you ask?"},
+        {"polish": "pół", "english": "half"},
+        {"polish": "pytać", "english": "to ask"},
         {"polish": "ćwiczyć", "english": "to practise"},
         {"polish": "kobieta", "english": "woman"},
         {"polish": "nieelegancko", "english": "impolite"},
@@ -660,8 +656,6 @@
         {"number": 4, "answers": ["10", "5", "6", "7", "8", "9", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "25", "26", "27", "28", "29", "30", "31", "35", "36", "37", "38", "39", "40", "41", "45", "46", "47", "48", "49", "50", "51", "55", "56", "57", "58", "59", "60", "61", "65", "66", "67", "68", "69", "70", "71", "75", "76", "77", "78", "79", "80", "81", "85", "86", "87", "88", "89", "90", "91", "95", "96", "97", "98", "99", "100", "101", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120"], "feedback": "Before *lat* the number doesn't end in 2, 3 or 4 (12–14 are fine): 10, 18, 45…"},
         {"number": 5, "answers": ["23", "2", "3", "4", "22", "24", "32", "33", "34", "42", "43", "44", "52", "53", "54", "62", "63", "64", "72", "73", "74", "82", "83", "84", "92", "93", "94", "102", "103", "104"], "feedback": "Before *lata* the number ends in 2, 3 or 4, but not 12–14: 22, 43, 84…"}
       ],
-      "newWords": [{"polish": "Jak myślisz?", "english": "What do you think?"}],
-      "newWordsUnlock": "after_check",
       "rules": [5]
     },
     {
@@ -855,18 +849,28 @@
         {"label": "11", "prompt": "dentysta", "answers": ["dentystka"]}
       ],
       "newWords": [
-        {"polish": "forma żeńska", "english": "feminine form"},
-        {"polish": "barman / barmanka", "english": "bartender"},
-        {"polish": "artysta / artystka", "english": "artist"},
-        {"polish": "poeta / poetka", "english": "poet (m / f)"},
+        {"polish": "forma", "english": "form"},
+        {"polish": "żeński", "english": "feminine"},
+        {"polish": "barman", "english": "bartender (man)"},
+        {"polish": "barmanka", "english": "bartender (woman)"},
+        {"polish": "artysta", "english": "artist (man)"},
+        {"polish": "artystka", "english": "artist (woman)"},
+        {"polish": "poeta", "english": "poet (man)"},
+        {"polish": "poetka", "english": "poet (woman)"},
         {"polish": "architekt", "english": "architect"},
         {"polish": "taksówkarz", "english": "taxi driver"},
         {"polish": "minister", "english": "minister"},
         {"polish": "prezydent", "english": "president"},
         {"polish": "kierowca", "english": "driver"},
-        {"polish": "profesor", "english": "professor"}
+        {"polish": "profesor", "english": "professor"},
+        {"polish": "lekarka", "english": "doctor (woman)"},
+        {"polish": "dentystka", "english": "dentist (woman)"},
+        {"polish": "dziennikarka", "english": "journalist (woman)"},
+        {"polish": "kelnerka", "english": "waitress"},
+        {"polish": "kucharka", "english": "cook (woman)"},
+        {"polish": "tancerka", "english": "dancer (woman)"},
+        {"polish": "emerytka", "english": "pensioner (woman)"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [6]
     },
     {
@@ -910,15 +914,18 @@
         {"polish": "modelka", "english": "model"},
         {"polish": "znany", "english": "well-known"},
         {"polish": "doskonały", "english": "excellent"},
-        {"polish": "który / która", "english": "who (m / f)"},
-        {"polish": "prowadzić program w telewizji", "english": "to host a TV show"},
-        {"polish": "grać na skrzypcach", "english": "to play the violin"},
+        {"polish": "który", "english": "who, which (m) — która (f)"},
+        {"polish": "prowadzić", "english": "to host, to run"},
+        {"polish": "telewizja", "english": "television"},
+        {"polish": "skrzypce", "english": "violin"},
         {"polish": "filmowy", "english": "film (adj.)"},
         {"polish": "publikować", "english": "to publish"},
-        {"polish": "romantyczny", "english": "romantic"}
+        {"polish": "romantyczny", "english": "romantic"},
+        {"polish": "popularny", "english": "popular"},
+        {"polish": "świetny", "english": "great, excellent"}
       ],
-      "newWordsUnlock": "after_check",
-      "rules": [6]
+      "rules": [6],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "4E",
@@ -952,8 +959,8 @@
         {"polish": "zdolny", "english": "gifted"},
         {"polish": "atrakcyjny", "english": "attractive"}
       ],
-      "newWordsUnlock": "after_check",
-      "rules": [6]
+      "rules": [6],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "5A",
@@ -991,7 +998,7 @@
       ],
       "newWords": [
         {"polish": "razem", "english": "together"},
-        {"polish": "przy stoliku", "english": "at a table"},
+        {"polish": "stolik", "english": "small table (przy stoliku — at a table)"},
         {"polish": "fotografia", "english": "photo"},
         {"polish": "rodzina", "english": "family"},
         {"polish": "żona", "english": "wife"},
@@ -1000,15 +1007,16 @@
         {"polish": "piękny", "english": "beautiful"},
         {"polish": "popularny", "english": "popular"},
         {"polish": "teatr", "english": "theatre"},
-        {"polish": "Kim jesteś z zawodu?", "english": "What do you do (for a living)?"},
-        {"polish": "skomplikowane", "english": "complicated"},
-        {"polish": "grać na gitarze", "english": "to play the guitar"},
-        {"polish": "na akordeonie", "english": "the accordion"},
-        {"polish": "na pianinie", "english": "the piano"},
-        {"polish": "instruktor tanga", "english": "tango instructor"},
+        {"polish": "zawód", "english": "profession (Kim jesteś z zawodu? — What do you do?)"},
+        {"polish": "skomplikowany", "english": "complicated"},
+        {"polish": "gitara", "english": "guitar"},
+        {"polish": "akordeon", "english": "accordion"},
+        {"polish": "pianino", "english": "piano"},
+        {"polish": "instruktor", "english": "instructor"},
         {"polish": "umieć", "english": "to be able to"},
         {"polish": "prawda", "english": "true"},
-        {"polish": "nieprawda", "english": "false"}
+        {"polish": "nieprawda", "english": "false"},
+        {"polish": "przy", "english": "at, by (przy stoliku — at a table)"}
       ],
       "rules": [1, 2]
     },
@@ -1079,12 +1087,14 @@
         {"polish": "sekretarka", "english": "secretary"},
         {"polish": "stolica", "english": "capital"},
         {"polish": "miasto", "english": "city"},
-        {"polish": "regionalny ser", "english": "regional cheese"},
+        {"polish": "regionalny", "english": "regional"},
+        {"polish": "ser", "english": "cheese"},
         {"polish": "oscypek", "english": "oscypek (smoked sheep's cheese)"},
-        {"polish": "nowoczesny budynek", "english": "modern building"},
-        {"polish": "centrum kultury i sztuki", "english": "centre of culture and art"}
+        {"polish": "nowoczesny", "english": "modern"},
+        {"polish": "budynek", "english": "building"},
+        {"polish": "kultura", "english": "culture"},
+        {"polish": "sztuka", "english": "art"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [2, 1]
     },
     {
@@ -1189,7 +1199,6 @@
         {"polish": "chłopak", "english": "boy"},
         {"polish": "dziewczyna", "english": "girl"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [1]
     },
     {
@@ -1221,20 +1230,20 @@
       ],
       "interchangeable": [["1", "2"], ["4", "5"]],
       "newWords": [
-        {"polish": "Co czytasz?", "english": "What are you reading?"},
-        {"polish": "książka biograficzna", "english": "biography"},
+        {"polish": "biograficzny", "english": "biographical (książka biograficzna — biography)"},
         {"polish": "dramaturg", "english": "playwright"},
         {"polish": "filozof", "english": "philosopher"},
         {"polish": "niestety", "english": "unfortunately"},
-        {"polish": "nie martw się", "english": "don't worry"},
+        {"polish": "martwić się", "english": "to worry (nie martw się — don't worry)"},
         {"polish": "interesować się", "english": "to be interested in"},
         {"polish": "sztuka", "english": "art"},
         {"polish": "malarstwo", "english": "painting"},
         {"polish": "na przykład", "english": "for example"},
-        {"polish": "czarna magia", "english": "a mystery (lit. \"black magic\")"}
+        {"polish": "czarna magia", "english": "a mystery (lit. \"black magic\")"},
+        {"polish": "dla", "english": "for"}
       ],
-      "newWordsUnlock": "after_check",
-      "rules": [3]
+      "rules": [3],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "6B",
@@ -1260,21 +1269,20 @@
         {"number": 5, "answers": ["fotografią"]}
       ],
       "newWords": [
-        {"polish": "Czym się interesujesz?", "english": "What are you interested in?"},
-        {"polish": "zainteresowania", "english": "interests"},
+        {"polish": "zainteresowanie", "english": "interest"},
         {"polish": "literatura", "english": "literature"},
         {"polish": "muzyka", "english": "music"},
         {"polish": "historia", "english": "history"},
         {"polish": "tenis", "english": "tennis"},
         {"polish": "boks", "english": "boxing"},
         {"polish": "piłka nożna", "english": "football"},
-        {"polish": "muzyka rockowa", "english": "rock music"},
-        {"polish": "francuskie filmy", "english": "French films"},
-        {"polish": "sporty ekstremalne", "english": "extreme sports"},
-        {"polish": "książki kryminalne", "english": "crime novels"}
+        {"polish": "rockowy", "english": "rock (adj.)"},
+        {"polish": "film", "english": "film"},
+        {"polish": "ekstremalny", "english": "extreme"},
+        {"polish": "kryminalny", "english": "crime (adj.); kryminał — crime novel"}
       ],
-      "newWordsUnlock": "after_check",
-      "rules": [3]
+      "rules": [3],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "6C",
@@ -1300,15 +1308,15 @@
         {"number": 5, "answers": ["psychologią i muzyką klasyczną", "psychologią, muzyką klasyczną"]}
       ],
       "newWords": [
-        {"polish": "współczesny teatr", "english": "contemporary theatre"},
+        {"polish": "współczesny", "english": "contemporary"},
+        {"polish": "teatr", "english": "theatre"},
         {"polish": "moda", "english": "fashion"},
         {"polish": "polityka", "english": "politics"},
         {"polish": "ekonomia", "english": "economics"},
         {"polish": "folklor", "english": "folklore"},
         {"polish": "psychologia", "english": "psychology"},
-        {"polish": "muzyka klasyczna", "english": "classical music"}
+        {"polish": "klasyczny", "english": "classical"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [3]
     },
     {
@@ -1371,14 +1379,15 @@
       "newWords": [
         {"polish": "Włoszka", "english": "Italian woman"},
         {"polish": "jeszcze", "english": "still"},
-        {"polish": "zostać (lekarzem)", "english": "to become (a doctor)"},
-        {"polish": "medycyna naturalna", "english": "natural medicine"},
-        {"polish": "historia sztuki", "english": "art history"},
+        {"polish": "zostać", "english": "to become (zostać lekarzem — to become a doctor)"},
+        {"polish": "medycyna", "english": "medicine"},
+        {"polish": "naturalny", "english": "natural"},
+        {"polish": "historia", "english": "history"},
         {"polish": "spacerować", "english": "to go for walks"},
-        {"polish": "w weekendy", "english": "at weekends"}
+        {"polish": "weekend", "english": "weekend"}
       ],
-      "newWordsUnlock": "after_check",
-      "rules": [3, 2]
+      "rules": [3, 2],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "6E",
@@ -1404,13 +1413,14 @@
         {"number": 9, "answers": ["muzyką"]}
       ],
       "newWords": [
-        {"polish": "studiować grafikę komputerową", "english": "to study computer graphics"},
+        {"polish": "grafika", "english": "graphic design"},
+        {"polish": "komputerowy", "english": "computer (adj.)"},
         {"polish": "ASP", "english": "Academy of Fine Arts"},
         {"polish": "silny", "english": "strong"},
-        {"polish": "robić zdjęcia", "english": "to take photos"}
+        {"polish": "zdjęcie", "english": "photo"}
       ],
-      "newWordsUnlock": "after_check",
-      "rules": [3]
+      "rules": [3],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "6F",
@@ -1439,8 +1449,7 @@
         {"number": 12, "answers": ["muzyką"]},
         {"number": 13, "answers": ["sportem"]}
       ],
-      "newWords": [{"polish": "chodzić do szkoły", "english": "to go to school"}],
-      "newWordsUnlock": "after_check",
+      "newWords": [{"polish": "Polka", "english": "Polish woman"}],
       "rules": [1, 3]
     },
     {
@@ -1463,11 +1472,10 @@
       ],
       "newWords": [
         {"polish": "normalnie", "english": "usually"},
-        {"polish": "a konkretnie", "english": "to be precise"},
+        {"polish": "konkretnie", "english": "specifically"},
         {"polish": "architektura", "english": "architecture"},
         {"polish": "malować", "english": "to paint"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [1, 5]
     },
     {
@@ -1633,9 +1641,9 @@
         {"polish": "Portugalka", "english": "Portuguese woman"},
         {"polish": "Portugalczyk", "english": "Portuguese man"},
         {"polish": "Amerykanka", "english": "American woman"},
-        {"polish": "Amerykanin", "english": "American man"}
+        {"polish": "Amerykanin", "english": "American man"},
+        {"polish": "Hiszpanka", "english": "Spanish woman"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [1, 2]
     },
     {

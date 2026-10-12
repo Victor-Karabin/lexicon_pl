@@ -34,6 +34,7 @@ import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.TrainingUnavailableContent
+import com.lexicon.presentation.course.AnswerInputs
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconShapes
@@ -73,18 +74,20 @@ fun DictationScreen(
         }
     }
 
-    DictationScreenContent(
-        uiState = uiState,
-        onClose = onClose,
-        onAnswerChanged = viewModel::onAnswerChanged,
-        onReplayAudio = viewModel::onReplayAudio,
-        onTipRequested = viewModel::onTipRequested,
-        onSkip = viewModel::onSkip,
-        onCheck = viewModel::onCheck,
-        onNext = viewModel::onNext,
-        modifier = modifier,
-        focusRequester = focusRequester,
-    )
+    AnswerInputs {
+        DictationScreenContent(
+            uiState = uiState,
+            onClose = onClose,
+            onAnswerChanged = viewModel::onAnswerChanged,
+            onReplayAudio = viewModel::onReplayAudio,
+            onTipRequested = viewModel::onTipRequested,
+            onSkip = viewModel::onSkip,
+            onCheck = viewModel::onCheck,
+            onNext = viewModel::onNext,
+            modifier = modifier,
+            focusRequester = focusRequester,
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
