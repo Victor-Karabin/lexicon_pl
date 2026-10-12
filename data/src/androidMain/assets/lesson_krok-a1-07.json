@@ -1,0 +1,1703 @@
+{
+  "lessonId": "krok-a1-07",
+  "rules": [
+    {
+      "title": "Accusative singular — Kogo? Co?",
+      "tables": [
+        {
+          "header": ["", "masc. animate", "masc. inanimate", "fem.", "neut."],
+          "rows": [
+            ["adjective", "-ego", "-y / -i (= nominative)", "-ą", "-e (= nominative)"],
+            ["noun", "-a", "= nominative", "-ę", "= nominative"],
+            ["example", "inteligentn**ego** brat**a**", "woln**y** czas", "dług**ą** list**ę**", "sportow**e** aut**o**"]
+          ]
+        }
+      ],
+      "notes": [
+        "Used after *mieć, lubić, znać, kochać, czytać, oglądać, kupować, pić, proszę…*",
+        "*mój → mojego, twój → twojego, moja → moją*. Masculine nouns in *-a*: *dobrego tatę*.",
+        "Games and some fruit and vegetables are animate: *grać w golfa, kupić pomidora*."
+      ]
+    },
+    {
+      "title": "Kogo? Co? Jakiego? Jaki? Jaką? Jakie?",
+      "tables": [
+        {
+          "rows": [
+            ["Kogo znasz?", "people and animals"],
+            ["Co czytasz? W co grasz?", "things"],
+            ["Jakiego brata? Jaki samochód? Jaką kawę? Jakie auto?", "the question word agrees like an adjective"]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Czy jest…? Czy są…? — Nie ma",
+      "tables": [
+        {
+          "rows": [
+            ["Czy jest gazeta?", "Tak, jest. / Nie, nie ma."],
+            ["Czy są papierosy?", "Tak, są. / Nie, nie ma."]
+          ]
+        }
+      ],
+      "notes": ["Shopping: *Proszę* + accusative (*Proszę Gazetę Krakowską*); *Ile kosztuje? / Ile kosztują?*; *Czy coś jeszcze?*"]
+    },
+    {
+      "title": "złoty, grosz after numbers",
+      "tables": [
+        {
+          "header": ["", "złoty", "grosz"],
+          "rows": [
+            ["1", "złoty", "grosz"],
+            ["2, 3, 4 · 22–24 · 32–34…", "złote", "grosze"],
+            ["5–21 · 25–31… · 12–14", "złotych", "groszy"]
+          ]
+        }
+      ],
+      "notes": ["Like *rok / lata / lat*: *33 złote*, but *21 złotych*, *12 złotych*."]
+    },
+    {
+      "title": "Numbers 100–1000",
+      "tables": [
+        {
+          "rows": [
+            ["100 sto", "600 sześćset"],
+            ["200 dwieście", "700 siedemset"],
+            ["300 trzysta", "800 osiemset"],
+            ["400 czterysta", "900 dziewięćset"],
+            ["500 pięćset", "1000 tysiąc"]
+          ]
+        }
+      ],
+      "notes": [
+        "*-sta* after 3 and 4, *-set* after 5–9.",
+        "Compounds: *sto dwadzieścia trzy* (123), *tysiąc trzysta sześćdziesiąt dziewięć* (1369)."
+      ]
+    }
+  ],
+  "tracks": [
+    {"id": "107A1", "file": "a1_coursebook_107a1.mp3"},
+    {"id": "107B1", "file": "a1_coursebook_107b1.mp3"},
+    {"id": "107LOTTO", "file": "a1_coursebook_107lotto.mp3"},
+    {"id": "107B5", "file": "a1_coursebook_107b5.mp3"},
+    {"id": "107B6", "file": "a1_coursebook_107b6.mp3"},
+    {"id": "107B7", "file": "a1_coursebook_107b7.mp3"},
+    {"id": "107C2-A", "file": "a1_coursebook_107c2-a.mp3"},
+    {"id": "107C2-B", "file": "a1_coursebook_107c2-b.mp3"},
+    {"id": "107C2-C", "file": "a1_coursebook_107c2-c.mp3"},
+    {"id": "wb33", "file": "a1_workbook_33_L07_cwiczenie1.mp3"},
+    {"id": "wb34", "file": "a1_workbook_34_L07_cwiczenie2.mp3"},
+    {"id": "wb35", "file": "a1_workbook_35_L07_cwiczenie10.mp3"},
+    {"id": "wb36", "file": "a1_workbook_36_L07_cwiczenie11.mp3"}
+  ],
+  "steps": [
+    {"id": "G", "title": "Lesson grammar", "screens": ["0"], "grammar": true},
+    {"id": "1", "title": "Accusative — Kogo? Co?", "screens": ["1A", "1B", "1C", "1D", "1E", "1F", "1G"]},
+    {"id": "2", "title": "At the kiosk", "screens": ["2A", "2B", "2C", "2D", "2E", "2F", "2G", "2H", "2I"]},
+    {"id": "3", "title": "Numbers 100–1000 · Lotto", "screens": ["3A", "3B", "3C", "3D", "3E", "3F", "3G", "3H"]},
+    {"id": "4", "title": "In the shopping mall", "screens": ["4A", "4B", "4C", "4D", "4E", "4F", "4G", "4H"]},
+    {"id": "5", "title": "Tom and Uwe", "screens": ["5A", "5B", "5C"]},
+    {"id": "6", "title": "Lesson review", "screens": ["6A"], "review": true}
+  ],
+  "screens": [
+    {
+      "id": "0",
+      "type": "grammar",
+      "title": "Lesson grammar",
+      "instruction": "All the grammar of this lesson before the exercises. The steps repeat the part they need."
+    },
+    {
+      "id": "1A",
+      "type": "choice",
+      "title": "Mami, what are you doing?",
+      "instruction": "Karolina, Mami, Pani Maj and Karol are at home. Listen: who could say it?",
+      "tracks": [{"id": "107A1"}],
+      "shuffle": false,
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Karolina", "text": "Mami, co robisz? Masz wolny czas czy jesteś zajęta?"},
+              {"speaker": "Mami", "text": "Nudzę się…"},
+              {"speaker": "Karolina", "text": "Może spacer?"},
+              {"speaker": "Pani Maj", "text": "Dziewczyny, a może galeria handlowa, co? Tu jest lista zakupów."},
+              {"speaker": "Karolina", "text": "Jest krótka? No, to nie ma problemu. Mami, a ty masz swoją listę?"},
+              {"speaker": "Mami", "text": "Tak, ale ja mam długą listę. Zakupy to jest mój plan na jutro, ale może być też na dzisiaj."},
+              {"speaker": "Karolina", "text": "OK, a ty Karol, co chcesz z galerii?"},
+              {"speaker": "Karol", "text": "Sportowe auto?"},
+              {"speaker": "Karolina", "text": "Cha, cha, cha, ale mam inteligentnego brata…!"}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {"label": "1", "prompt": "Mam wolny czas.", "options": ["Mami", "Karol", "Karolina"], "answer": "Mami", "feedback": "Karolina asks Mami: *Masz wolny czas?* — Mami says she's bored, so she has free time."},
+        {"label": "2", "prompt": "Mam długą listę.", "options": ["Mami", "Karol", "Karolina"], "answer": "Mami"},
+        {"label": "3", "prompt": "Mam sportowe auto.", "options": ["Mami", "Karol", "Karolina"], "answer": "Karol"},
+        {"label": "4", "prompt": "Mam inteligentnego brata.", "options": ["Mami", "Karol", "Karolina"], "answer": "Karolina"}
+      ],
+      "newWords": [
+        {"polish": "wolny", "english": "free"},
+        {"polish": "zajęty", "english": "busy"},
+        {"polish": "wolny czas", "english": "free time"},
+        {"polish": "dziewczyna", "english": "girl (dziewczyny — girls)"},
+        {"polish": "galeria handlowa", "english": "shopping mall"},
+        {"polish": "lista zakupów", "english": "shopping list"},
+        {"polish": "krótki", "english": "short"},
+        {"polish": "długi", "english": "long"},
+        {"polish": "swój", "english": "one's own"},
+        {"polish": "plan", "english": "plan"},
+        {"polish": "jutro", "english": "tomorrow"},
+        {"polish": "sportowy", "english": "sports (adj.)"},
+        {"polish": "inteligentny", "english": "clever"}
+      ],
+      "rules": [1]
+    },
+    {
+      "id": "1B",
+      "type": "reference",
+      "title": "Accusative — Kogo? Co?",
+      "instruction": "After *mieć, lubić, znać, czytać, oglądać, kupować…* use the accusative (*biernik*).",
+      "tables": [
+        {
+          "header": ["", "masc. animate", "masc. inanimate", "fem.", "neut."],
+          "rows": [
+            ["adjective", "-ego", "-y / -i (= nominative)", "-ą", "-e (= nominative)"],
+            ["noun", "-a", "= nominative", "-ę", "= nominative"],
+            ["example", "inteligentn**ego** brat**a**", "woln**y** czas", "dług**ą** list**ę**", "sportow**e** aut**o**"],
+            ["question", "Jakiego?", "Jaki?", "Jaką?", "Jakie?"]
+          ]
+        }
+      ],
+      "notes": [
+        "*mój → mojego, twój → twojego; moja → moją*.",
+        "Masculine nouns in *-a*: *dobrego tatę*.",
+        "Games and some fruit and vegetables are animate: *grać w golfa, w tenisa; kupić pomidora*."
+      ],
+      "newWords": [{"polish": "biernik", "english": "accusative"}],
+      "rules": [1, 2]
+    },
+    {
+      "id": "1C",
+      "type": "gap_fill",
+      "title": "What fits?",
+      "instruction": "Match two words from the box with each verb. Use each word once.",
+      "wordBox": [
+        "bilet",
+        "makaron",
+        "piłkę nożną",
+        "listę",
+        "telewizję",
+        "gazetę",
+        "pracę domową",
+        "dyskotekę",
+        "film",
+        "książkę",
+        "zupę",
+        "zdjęcie",
+        "golfa",
+        "pomidora",
+        "list",
+        "zdanie",
+        "piwo",
+        "gimnastykę",
+        "kawę",
+        "słowo"
+      ],
+      "eachAnswerOnce": true,
+      "sections": [
+        {
+          "lines": [
+            {"text": "czytać [1], [2]"},
+            {"text": "oglądać [3], [4]"},
+            {"text": "robić [5], [6]"},
+            {"text": "gotować [7], [8]"},
+            {"text": "chodzić na [9], [10]"},
+            {"text": "grać w [11], [12]"},
+            {"text": "kupować [13], [14]"},
+            {"text": "pisać [15], [16]"},
+            {"text": "powtórzyć [17], [18]"},
+            {"text": "lubić [19], [20]"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["gazetę", "książkę", "list", "listę", "zdanie", "słowo"]},
+        {"number": 2, "answers": ["książkę", "gazetę", "list", "listę", "zdanie", "słowo"]},
+        {"number": 3, "answers": ["telewizję", "film"]},
+        {"number": 4, "answers": ["film", "telewizję"]},
+        {"number": 5, "answers": ["pracę domową", "zdjęcie", "zupę", "kawę", "makaron", "listę"]},
+        {"number": 6, "answers": ["zdjęcie", "pracę domową", "zupę", "kawę", "makaron", "listę"]},
+        {"number": 7, "answers": ["zupę", "makaron"]},
+        {"number": 8, "answers": ["makaron", "zupę"]},
+        {"number": 9, "answers": ["dyskotekę", "gimnastykę"]},
+        {"number": 10, "answers": ["gimnastykę", "dyskotekę"]},
+        {"number": 11, "answers": ["piłkę nożną", "golfa"], "feedback": "*grać w* + a game: *w piłkę nożną, w golfa*."},
+        {"number": 12, "answers": ["golfa", "piłkę nożną"], "feedback": "*grać w* + a game: *w piłkę nożną, w golfa*."},
+        {"number": 13, "answers": ["bilet", "pomidora", "gazetę", "książkę", "piwo", "kawę", "makaron"]},
+        {"number": 14, "answers": ["pomidora", "bilet", "gazetę", "książkę", "piwo", "kawę", "makaron"]},
+        {"number": 15, "answers": ["list", "listę", "zdanie", "słowo", "pracę domową"]},
+        {"number": 16, "answers": ["listę", "list", "zdanie", "słowo", "pracę domową"]},
+        {"number": 17, "answers": ["zdanie", "słowo"]},
+        {"number": 18, "answers": ["słowo", "zdanie"]},
+        {"number": 19, "answers": ["piwo", "kawę", "bilet", "makaron", "piłkę nożną", "listę", "telewizję", "gazetę", "pracę domową", "dyskotekę", "film", "książkę", "zupę", "zdjęcie", "golfa", "pomidora", "list", "zdanie", "gimnastykę", "słowo"]},
+        {"number": 20, "answers": ["kawę", "piwo", "bilet", "makaron", "piłkę nożną", "listę", "telewizję", "gazetę", "pracę domową", "dyskotekę", "film", "książkę", "zupę", "zdjęcie", "golfa", "pomidora", "list", "zdanie", "gimnastykę", "słowo"]}
+      ],
+      "newWords": [
+        {"polish": "bilet", "english": "ticket"},
+        {"polish": "zupa", "english": "soup"},
+        {"polish": "golf", "english": "golf"},
+        {"polish": "pomidor", "english": "tomato"},
+        {"polish": "zdanie", "english": "sentence"},
+        {"polish": "słowo", "english": "word"},
+        {"polish": "piwo", "english": "beer"},
+        {"polish": "gimnastyka", "english": "gymnastics"},
+        {"polish": "powtórzyć", "english": "to repeat"}
+      ],
+      "rules": [1],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "1D",
+      "type": "inline_choice",
+      "title": "Kogo? Co?",
+      "instruction": "*Kogo* (people, animals) or *Co* (things)?",
+      "items": [
+        {
+          "label": "1",
+          "prompt": "[1] gotujesz?",
+          "choices": [{"options": ["Kogo", "Co"], "answer": "Co"}]
+        },
+        {
+          "label": "2",
+          "prompt": "[1] czytasz? „Gazetę Wyborczą”?",
+          "choices": [{"options": ["Kogo", "Co"], "answer": "Co"}]
+        },
+        {
+          "label": "3",
+          "prompt": "[1] znacie? Agnieszkę i Piotra?",
+          "choices": [{"options": ["Kogo", "Co"], "answer": "Kogo"}]
+        },
+        {
+          "label": "4",
+          "prompt": "[1] oni piszą?",
+          "choices": [{"options": ["Kogo", "Co"], "answer": "Co"}]
+        },
+        {
+          "label": "5",
+          "prompt": "[1] lubisz? Brada Pitta?!",
+          "choices": [{"options": ["Kogo", "Co"], "answer": "Kogo"}]
+        },
+        {
+          "label": "6",
+          "prompt": "[1] robi mama? Pierogi ruskie!",
+          "choices": [{"options": ["Kogo", "Co"], "answer": "Co"}]
+        },
+        {
+          "label": "7",
+          "prompt": "[1] lubię? Hm, lubię kino i teatr.",
+          "choices": [{"options": ["Kogo", "Co"], "answer": "Co"}]
+        },
+        {
+          "label": "8",
+          "prompt": "W [1] dobrze grasz? W golfa czy w tenisa?",
+          "choices": [
+            {"options": ["kogo", "co"], "answer": "co", "feedback": "*golfa* looks animate, but a game is a thing → *W co grasz?*"}
+          ]
+        },
+        {
+          "label": "9",
+          "prompt": "[1] masz w torbie?",
+          "choices": [{"options": ["Kogo", "Co"], "answer": "Co"}]
+        },
+        {
+          "label": "10",
+          "prompt": "[1] on fotografuje? On fotografuje moją koleżankę.",
+          "choices": [{"options": ["Kogo", "Co"], "answer": "Kogo"}]
+        }
+      ],
+      "newWords": [{"polish": "torba", "english": "bag"}],
+      "rules": [2]
+    },
+    {
+      "id": "1E",
+      "type": "gap_fill",
+      "title": "Fill in",
+      "instruction": "Put the phrase in brackets in the accusative.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Znam [1] (twój brat)."},
+            {"text": "2. Lubię [2] (zielona herbata)."},
+            {"text": "3. Ona robi [3] (tajski masaż)."},
+            {"text": "4. My piszemy [4] (długi e-mail)."},
+            {"text": "5. Mama gotuje [5] (zupa pomidorowa)."},
+            {"text": "6. Czy oglądasz [6] (polska telewizja)?"},
+            {"text": "7. Masz [7] (sympatyczna siostra)."},
+            {"text": "8. Lubimy [8] (Krakowski Rynek)."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["twojego brata"], "feedback": "Masc. animate: *-ego* + *-a* (*twojego brata*)."},
+        {"number": 2, "answers": ["zieloną herbatę"], "feedback": "Fem.: *-ą* + *-ę* (*zieloną herbatę*)."},
+        {"number": 3, "answers": ["tajski masaż"], "feedback": "Masc. inanimate = nominative (*tajski masaż*)."},
+        {"number": 4, "answers": ["długi e-mail"], "feedback": "Masc. inanimate = nominative (*długi e-mail*)."},
+        {"number": 5, "answers": ["zupę pomidorową"], "feedback": "Fem.: *-ą* + *-ę* (*zupę pomidorową*)."},
+        {"number": 6, "answers": ["polską telewizję"], "feedback": "Fem.: *-ą* + *-ę* (*polską telewizję*)."},
+        {"number": 7, "answers": ["sympatyczną siostrę"], "feedback": "Fem.: *-ą* + *-ę* (*sympatyczną siostrę*)."},
+        {"number": 8, "answers": ["Krakowski Rynek"], "feedback": "Masc. inanimate = nominative (*Krakowski Rynek*)."}
+      ],
+      "newWords": [
+        {"polish": "zielony", "english": "green"},
+        {"polish": "herbata", "english": "tea"},
+        {"polish": "rynek", "english": "market square (Krakowski Rynek — Kraków Main Square)"}
+      ],
+      "rules": [1]
+    },
+    {
+      "id": "1F",
+      "type": "gap_fill",
+      "title": "Fill in (workbook)",
+      "instruction": "Put the phrase in brackets in the accusative.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "1. Angela pije [1] (czarna kawa)."},
+            {"text": "2. Uwe ma [2] (nowy samochód)."},
+            {"text": "3. Tom ma [3] (duży pies)."},
+            {"text": "4. Pani Maj gotuje [4] (dobre risotto)."},
+            {"text": "5. Karolina zna [5] (dobra dentystka)."},
+            {"text": "6. Grzegorz czyta [6] (ciekawy artykuł)."},
+            {"text": "7. Ewa kocha [7] (twój brat)."},
+            {"text": "8. Tom ma [8] (sympatyczna dziewczyna)."},
+            {"text": "9. Javier lubi [9] (czerwone wino)."},
+            {"text": "10. Czy wy znacie [10] (moja nauczycielka)?"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["czarną kawę"], "feedback": "Fem.: *-ą* + *-ę* (*czarną kawę*)."},
+        {"number": 2, "answers": ["nowy samochód"], "feedback": "Masc. inanimate = nominative (*nowy samochód*)."},
+        {"number": 3, "answers": ["dużego psa"], "feedback": "*pies* is animate: *dużego psa* (the *e* drops: *pies → psa*)."},
+        {"number": 4, "answers": ["dobre risotto"], "feedback": "Neut. = nominative (*dobre risotto*)."},
+        {"number": 5, "answers": ["dobrą dentystkę"]},
+        {"number": 6, "answers": ["ciekawy artykuł"], "feedback": "Masc. inanimate = nominative (*ciekawy artykuł*)."},
+        {"number": 7, "answers": ["twojego brata"], "feedback": "Masc. animate: *-ego* + *-a* (*twojego brata*)."},
+        {"number": 8, "answers": ["sympatyczną dziewczynę"]},
+        {"number": 9, "answers": ["czerwone wino"], "feedback": "Neut. = nominative (*czerwone wino*)."},
+        {"number": 10, "answers": ["moją nauczycielkę"]}
+      ],
+      "newWords": [
+        {"polish": "pić", "english": "to drink"},
+        {"polish": "czarny", "english": "black"},
+        {"polish": "pies", "english": "dog"},
+        {"polish": "risotto", "english": "risotto"},
+        {"polish": "dentystka", "english": "dentist (woman)"},
+        {"polish": "ciekawy", "english": "interesting"},
+        {"polish": "artykuł", "english": "article"},
+        {"polish": "czerwony", "english": "red"},
+        {"polish": "wino", "english": "wine"}
+      ],
+      "rules": [1]
+    },
+    {
+      "id": "1G",
+      "type": "inline_choice",
+      "title": "Jaki? Jakiego? Jaką? Jakie?",
+      "instruction": "Choose the right question word.",
+      "items": [
+        {
+          "label": "1",
+          "prompt": "Angela, [1] chcesz kawę?",
+          "choices": [{"options": ["jaka", "jak", "jaką"], "answer": "jaką"}]
+        },
+        {
+          "label": "2",
+          "prompt": "[1] Uwe ma samochód?",
+          "choices": [{"options": ["Jaki", "Jakim", "Jakiego"], "answer": "Jaki"}]
+        },
+        {
+          "label": "3",
+          "prompt": "[1] dziewczynę ma Tom?",
+          "choices": [{"options": ["Jaka", "Jaką", "Jakie"], "answer": "Jaką"}]
+        },
+        {
+          "label": "4",
+          "prompt": "[1] mleko lubisz?",
+          "choices": [{"options": ["Jakiego", "Jakie", "Jaki"], "answer": "Jakie"}]
+        },
+        {
+          "label": "5",
+          "prompt": "[1] muzykę lubi Angela?",
+          "choices": [{"options": ["Jaki", "Jaka", "Jaką"], "answer": "Jaką"}]
+        },
+        {
+          "label": "6",
+          "prompt": "[1] auto chce Karol?",
+          "choices": [{"options": ["Jakiego", "Jaki", "Jakie"], "answer": "Jakie"}]
+        },
+        {
+          "label": "7",
+          "prompt": "[1] kota ma Uwe?",
+          "choices": [{"options": ["Jakim", "Jakiego", "Jaki"], "answer": "Jakiego"}]
+        },
+        {
+          "label": "8",
+          "prompt": "[1] sok lubicie?",
+          "choices": [{"options": ["Jakie", "Jaki", "Jakiego"], "answer": "Jaki"}]
+        },
+        {
+          "label": "9",
+          "prompt": "[1] chcesz pomidora? Tego dużego?",
+          "choices": [
+            {"options": ["Jaki", "Jakiego", "Jakim"], "answer": "Jakiego", "feedback": "*pomidor* is animate in the accusative: *Jakiego pomidora?*"}
+          ]
+        },
+        {
+          "label": "10",
+          "prompt": "[1] kompozytora lubisz?",
+          "choices": [{"options": ["Jaki", "Jakim", "Jakiego"], "answer": "Jakiego"}]
+        }
+      ],
+      "newWords": [
+        {"polish": "mleko", "english": "milk"},
+        {"polish": "sok", "english": "juice"},
+        {"polish": "kot", "english": "cat"},
+        {"polish": "kompozytor", "english": "composer"}
+      ],
+      "rules": [2, 1]
+    },
+    {
+      "id": "2A",
+      "type": "reference",
+      "title": "At the kiosk",
+      "instruction": "Mami and Karolina at a kiosk. Listen to the dialogue.",
+      "tracks": [{"id": "107B1"}],
+      "transcript": {
+        "unlock": "always",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Mami", "text": "Dzień dobry. Czy jest „Gazeta Krakowska”?"},
+              {"speaker": "Pani", "text": "Tak, jest."},
+              {"speaker": "Mami", "text": "Proszę „Gazetę Krakowską”. Ile kosztuje?"},
+              {"speaker": "Pani", "text": "2 złote 50 groszy. Czy coś jeszcze?"},
+              {"speaker": "Mami", "text": "Czy jest mała mapa Krakowa?"},
+              {"speaker": "Pani", "text": "Nie ma."},
+              {"speaker": "Mami", "text": "A bilet normalny?"},
+              {"speaker": "Pani", "text": "Też nie ma. Jest ulgowy. Jest pani studentką?"},
+              {"speaker": "Mami", "text": "Tak, jestem!"},
+              {"speaker": "Karolina", "text": "Nie, Mami, nie studiujesz na uniwersytecie, musisz mieć bilet normalny."},
+              {"speaker": "Pani", "text": "Czy to wszystko?"},
+              {"speaker": "Karolina", "text": "Czy są papierosy?"},
+              {"speaker": "Pani", "text": "A ile masz lat?"},
+              {"speaker": "Karolina", "text": "Yyy, 17 i pół."},
+              {"speaker": "Pani", "text": "No to nie ma. Musisz mieć 18 lat."},
+              {"speaker": "Karolina", "text": "Ale to dla taty!"},
+              {"speaker": "Pani", "text": "Tak, tak, na pewno. Do widzenia."}
+            ]
+          }
+        ]
+      },
+      "tables": [
+        {
+          "header": ["number", "złoty", "grosz"],
+          "rows": [
+            ["1", "złoty", "grosz"],
+            ["2, 3, 4 · 22–24 · 32–34…", "złote", "grosze"],
+            ["5–21 · 25–31… · 12–14", "złotych", "groszy"]
+          ]
+        },
+        {
+          "header": ["", "+", "−"],
+          "rows": [["Czy jest…?", "Tak, jest.", "Nie, nie ma."], ["Czy są…?", "Tak, są.", "Nie, nie ma."]]
+        }
+      ],
+      "newWords": [
+        {"polish": "kiosk", "english": "kiosk"},
+        {"polish": "kosztować", "english": "to cost"},
+        {"polish": "złoty", "english": "zloty"},
+        {"polish": "grosz", "english": "grosz"},
+        {"polish": "normalny", "english": "full-price"},
+        {"polish": "ulgowy", "english": "reduced (ticket)"},
+        {"polish": "musieć", "english": "must, to have to"},
+        {"polish": "papieros", "english": "cigarette"},
+        {"polish": "dla", "english": "for"}
+      ],
+      "rules": [3, 4]
+    },
+    {
+      "id": "2B",
+      "type": "write",
+      "title": "Proszę…",
+      "instruction": "Mami buys everything on her shopping list. What does she say? Put the words in the accusative.",
+      "wordBox": ["Gazeta Krakowska", "mała mapa", "czerwony długopis", "miętowa guma do żucia", "bilet normalny", "kolorowy magazyn"],
+      "items": [
+        {
+          "label": "1",
+          "prompt": "Proszę",
+          "picture": {"label": "a red pen", "emoji": "🖊️"},
+          "answers": ["czerwony długopis"]
+        },
+        {
+          "label": "2",
+          "prompt": "Proszę",
+          "picture": {"label": "the magazine \"Trend\"", "emoji": "📔"},
+          "answers": ["kolorowy magazyn", "magazyn Trend", "czasopismo Trend"]
+        },
+        {
+          "label": "3",
+          "prompt": "Proszę",
+          "picture": {"label": "a small map of Kraków", "emoji": "🗺️"},
+          "answers": ["małą mapę", "małą mapę Krakowa", "mapę Krakowa"],
+          "feedback": "Fem.: *-ą* + *-ę* (*małą mapę*)."
+        },
+        {
+          "label": "4",
+          "prompt": "Proszę",
+          "picture": {"label": "a ticket \"2,50 zł N\"", "emoji": "🎫"},
+          "answers": ["bilet normalny"]
+        },
+        {
+          "label": "5",
+          "prompt": "Proszę",
+          "picture": {"label": "a pack of mint chewing gum", "emoji": "🍬"},
+          "answers": ["miętową gumę do żucia"],
+          "feedback": "Fem.: *-ą* + *-ę* (*miętową gumę*)."
+        },
+        {
+          "label": "6",
+          "prompt": "Proszę",
+          "picture": {"label": "\"Polska Gazeta Krakowska\"", "emoji": "📰"},
+          "answers": ["Gazetę Krakowską"],
+          "feedback": "Fem.: *-ą* + *-ę* (*Gazetę Krakowską*)."
+        }
+      ],
+      "newWords": [
+        {"polish": "magazyn", "english": "magazine"},
+        {"polish": "kolorowy", "english": "colourful"},
+        {"polish": "miętowy", "english": "mint (adj.)"},
+        {"polish": "guma do żucia", "english": "chewing gum"},
+        {"polish": "długopis", "english": "pen"}
+      ],
+      "rules": [1, 3],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "2C",
+      "type": "write",
+      "title": "Proszę… (workbook)",
+      "instruction": "Ask at the kiosk. Put the words in the accusative.",
+      "items": [
+        {"label": "1", "prompt": "(sok pomarańczowy) Proszę", "answers": ["sok pomarańczowy"], "feedback": "Masc. inanimate = nominative (*sok pomarańczowy*)."},
+        {"label": "2", "prompt": "(duży zeszyt) Proszę", "answers": ["duży zeszyt"]},
+        {"label": "3", "prompt": "(„Gazeta Sportowa”) Proszę", "answers": ["Gazetę Sportową"], "feedback": "Fem.: *-ą* + *-ę* (*Gazetę Sportową*)."},
+        {"label": "4", "prompt": "(niebieski długopis) Proszę", "answers": ["niebieski długopis"]},
+        {"label": "5", "prompt": "(guma owocowa) Proszę", "answers": ["gumę owocową"], "feedback": "Fem.: *-ą* + *-ę* (*gumę owocową*)."},
+        {"label": "6", "prompt": "(mała karta telefoniczna) Proszę", "answers": ["małą kartę telefoniczną"], "feedback": "Fem.: *-ą* + *-ę* (*małą kartę telefoniczną*)."}
+      ],
+      "newWords": [
+        {"polish": "pomarańczowy", "english": "orange (adj.)"},
+        {"polish": "zeszyt", "english": "notebook"},
+        {"polish": "niebieski", "english": "blue"},
+        {"polish": "owocowy", "english": "fruit (adj.)"},
+        {"polish": "telefoniczny", "english": "phone (adj.)"}
+      ],
+      "rules": [1, 3]
+    },
+    {
+      "id": "2D",
+      "type": "inline_choice",
+      "title": "złote? złotych? grosze? groszy?",
+      "instruction": "Choose the right form.",
+      "items": [
+        {
+          "label": "a",
+          "prompt": "33 [1] 15 [2]",
+          "choices": [
+            {"options": ["złote", "złotych"], "answer": "złote", "feedback": "*złoty / grosz* follow *rok / lata / lat*: *33 złote, 34 złote*, but *12 złotych, 21 złotych*."},
+            {"options": ["grosze", "groszy"], "answer": "groszy", "feedback": "*złoty / grosz* follow *rok / lata / lat*: *33 złote, 34 złote*, but *12 złotych, 21 złotych*."}
+          ]
+        },
+        {
+          "label": "b",
+          "prompt": "12 [1] 50 [2]",
+          "choices": [
+            {"options": ["złote", "złotych"], "answer": "złotych", "feedback": "12–14 → *złotych*, like *12 lat*."},
+            {"options": ["grosze", "groszy"], "answer": "groszy", "feedback": "12–14 → *złotych*, like *12 lat*."}
+          ]
+        },
+        {
+          "label": "c",
+          "prompt": "45 [1] 10 [2]",
+          "choices": [
+            {"options": ["złote", "złotych"], "answer": "złotych"},
+            {"options": ["grosze", "groszy"], "answer": "groszy"}
+          ]
+        },
+        {
+          "label": "d",
+          "prompt": "6 [1] 20 [2]",
+          "choices": [
+            {"options": ["złote", "złotych"], "answer": "złotych"},
+            {"options": ["grosze", "groszy"], "answer": "groszy"}
+          ]
+        },
+        {
+          "label": "e",
+          "prompt": "60 [1] 02 [2]",
+          "choices": [
+            {"options": ["złote", "złotych"], "answer": "złotych"},
+            {"options": ["grosze", "groszy"], "answer": "grosze"}
+          ]
+        },
+        {
+          "label": "f",
+          "prompt": "21 [1] 05 [2]",
+          "choices": [
+            {"options": ["złote", "złotych"], "answer": "złotych", "feedback": "*złoty / grosz* follow *rok / lata / lat*: *33 złote, 34 złote*, but *12 złotych, 21 złotych*."},
+            {"options": ["grosze", "groszy"], "answer": "groszy", "feedback": "*złoty / grosz* follow *rok / lata / lat*: *33 złote, 34 złote*, but *12 złotych, 21 złotych*."}
+          ]
+        },
+        {
+          "label": "g",
+          "prompt": "99 [1] 99 [2]",
+          "choices": [
+            {"options": ["złote", "złotych"], "answer": "złotych"},
+            {"options": ["grosze", "groszy"], "answer": "groszy"}
+          ]
+        },
+        {
+          "label": "h",
+          "prompt": "34 [1] 80 [2]",
+          "choices": [
+            {"options": ["złote", "złotych"], "answer": "złote"},
+            {"options": ["grosze", "groszy"], "answer": "groszy"}
+          ]
+        }
+      ],
+      "rules": [4]
+    },
+    {
+      "id": "2E",
+      "type": "gap_fill",
+      "title": "At the kiosk",
+      "instruction": "Complete the dialogue.",
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Mami", "text": "Dzień dobry. Czy [1] magazyn „Viva”?"},
+            {"speaker": "Pani", "text": "Tak, jest."},
+            {"speaker": "Mami", "text": "Ile [2]?"},
+            {"speaker": "Pani", "text": "9 [3] 99 [4]. Czy coś [5]?"},
+            {"speaker": "Mami", "text": "[6] jest ołówek?"},
+            {"speaker": "Pani", "text": "Nie [7]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["jest"]},
+        {"number": 2, "answers": ["kosztuje"]},
+        {"number": 3, "answers": ["złotych"], "feedback": "*złoty / grosz* follow *rok / lata / lat*: *33 złote, 34 złote*, but *12 złotych, 21 złotych*."},
+        {"number": 4, "answers": ["groszy"]},
+        {"number": 5, "answers": ["jeszcze"]},
+        {"number": 6, "answers": ["Czy"]},
+        {"number": 7, "answers": ["ma"]}
+      ],
+      "rules": [3, 4]
+    },
+    {
+      "id": "2F",
+      "type": "gap_fill",
+      "title": "Karol at the kiosk",
+      "instruction": "Complete the dialogue.",
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Karol", "text": "Dzień [1]. Czy [2] duży zeszyt?"},
+            {"speaker": "Sprzedawca", "text": "Format A4? Nie, nie ma."},
+            {"speaker": "Karol", "text": "A [3] jest mały?"},
+            {"speaker": "Sprzedawca", "text": "Tak, jest."},
+            {"speaker": "Karol", "text": "[4] kosztuje?"},
+            {"speaker": "Sprzedawca", "text": "2 [5] 10 [6]. Czy coś [7]?"},
+            {"speaker": "Karol", "text": "[8] jest czarny długopis?"},
+            {"speaker": "Sprzedawca", "text": "Nie [9]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["dobry"]},
+        {"number": 2, "answers": ["jest"]},
+        {"number": 3, "answers": ["czy"]},
+        {"number": 4, "answers": ["Ile"]},
+        {"number": 5, "answers": ["złote"], "feedback": "*złoty / grosz* follow *rok / lata / lat*: *33 złote, 34 złote*, but *12 złotych, 21 złotych*."},
+        {"number": 6, "answers": ["groszy"]},
+        {"number": 7, "answers": ["jeszcze"]},
+        {"number": 8, "answers": ["Czy"]},
+        {"number": 9, "answers": ["ma"]}
+      ],
+      "newWords": [
+        {"polish": "sprzedawca", "english": "shop assistant"},
+        {"polish": "format", "english": "size (format A4)"}
+      ],
+      "rules": [3, 4]
+    },
+    {
+      "id": "2G",
+      "type": "write",
+      "title": "How much is it?",
+      "instruction": "Write the price in words: *kosztuje / kosztują* + the sum.",
+      "items": [
+        {
+          "label": "1",
+          "prompt": "Chipsy (5 zł 20 gr)",
+          "picture": {"label": "crisps", "emoji": "🥔"},
+          "answers": ["kosztują pięć złotych dwadzieścia groszy", "kosztują pięć złotych i dwadzieścia groszy"],
+          "feedback": "Plural nouns (*chipsy, papierosy*) → *kosztują*."
+        },
+        {
+          "label": "2",
+          "prompt": "Ołówek (1 zł)",
+          "picture": {"label": "a pencil", "emoji": "✏️"},
+          "answers": ["kosztuje jeden złoty", "kosztuje złotówkę", "kosztuje złoty"]
+        },
+        {
+          "label": "3",
+          "prompt": "Komórka (339 zł)",
+          "picture": {"label": "a mobile phone", "emoji": "📱"},
+          "answers": ["kosztuje trzysta trzydzieści dziewięć złotych"]
+        },
+        {
+          "label": "4",
+          "prompt": "Miód (5 zł 20 gr)",
+          "picture": {"label": "honey", "emoji": "🍯"},
+          "answers": ["kosztuje pięć złotych dwadzieścia groszy", "kosztuje pięć złotych i dwadzieścia groszy"]
+        },
+        {
+          "label": "5",
+          "prompt": "Notes (12 zł)",
+          "picture": {"label": "a notepad", "emoji": "📒"},
+          "answers": ["kosztuje dwanaście złotych"],
+          "feedback": "12–14 → *złotych*: *dwanaście złotych*."
+        },
+        {
+          "label": "6",
+          "prompt": "Bilet (2 zł 50 gr)",
+          "picture": {"label": "a ticket", "emoji": "🎫"},
+          "answers": ["kosztuje dwa złote pięćdziesiąt groszy", "kosztuje dwa złote i pięćdziesiąt groszy"],
+          "feedback": "*złoty / grosz* follow *rok / lata / lat*: *33 złote, 34 złote*, but *12 złotych, 21 złotych*."
+        },
+        {
+          "label": "7",
+          "prompt": "Cola (3 zł)",
+          "picture": {"label": "a can of cola", "emoji": "🥤"},
+          "answers": ["kosztuje trzy złote"]
+        },
+        {
+          "label": "8",
+          "prompt": "Papierosy (8 zł 50 gr)",
+          "picture": {"label": "cigarettes", "emoji": "🚬"},
+          "answers": ["kosztują osiem złotych pięćdziesiąt groszy", "kosztują osiem złotych i pięćdziesiąt groszy"],
+          "feedback": "Plural nouns (*chipsy, papierosy*) → *kosztują*."
+        }
+      ],
+      "newWords": [
+        {"polish": "chipsy", "english": "crisps"},
+        {"polish": "miód", "english": "honey"},
+        {"polish": "notes", "english": "notepad"},
+        {"polish": "cola", "english": "cola"},
+        {"polish": "trzysta", "english": "300"}
+      ],
+      "rules": [4, 5],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "2H",
+      "type": "free_writing",
+      "title": "Mami at the kiosk",
+      "instruction": "Write a similar dialogue between Mami and the shop assistant (6 lines).\n*miętowa guma do żucia / 3 zł · czerwony długopis* (not available)",
+      "fields": [{"label": "Dialogue"}],
+      "model": [
+        "Mami: Dzień dobry. Czy jest miętowa guma do żucia?\nPani: Tak, jest.\nMami: Ile kosztuje?\nPani: 3 złote. Czy coś jeszcze?\nMami: Czy jest czerwony długopis?\nPani: Nie, nie ma."
+      ],
+      "checklist": ["*Czy jest* + nominative.", "*3 złote*.", "*Nie, nie ma.*"],
+      "rules": [3]
+    },
+    {
+      "id": "2I",
+      "type": "free_writing",
+      "title": "Javier at the kiosk",
+      "instruction": "Write a dialogue between Javier and the shop assistant (6 lines).\n*karta telefoniczna / 25 zł · mały notes* (not available)",
+      "fields": [{"label": "Dialogue"}],
+      "model": [
+        "Javier: Dzień dobry, czy jest karta telefoniczna?\nSprzedawca: Tak, jest.\nJavier: Ile kosztuje?\nSprzedawca: 25 złotych. Czy coś jeszcze?\nJavier: Czy jest mały notes?\nSprzedawca: Niestety, nie ma."
+      ],
+      "checklist": ["*Czy jest* + nominative.", "*25 złotych* (25 ends in 5).", "*Nie, nie ma.*"],
+      "rules": [3, 4]
+    },
+    {
+      "id": "3A",
+      "type": "reference",
+      "title": "LOTTO",
+      "instruction": "Karolina explains Lotto to Mami.",
+      "tracks": [{"id": "107LOTTO"}],
+      "transcript": {
+        "unlock": "always",
+        "open": true,
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Karolina", "text": "O, tu jest LOTTO. Gramy?"},
+              {"speaker": "Mami", "text": "Nie bardzo rozumiem…"},
+              {"speaker": "Karolina", "text": "To jest loteria. Musimy typować 6 numerów. Limit jest 49. Jeden kupon kosztuje 2 złote. Kiedy dobrze wytypujesz 3 numery, masz 16 złotych!"}
+            ]
+          }
+        ]
+      },
+      "notes": ["„Z loterii możemy mieć DUŻĄ SUMĘ, nie tylko 16 złotych…”"],
+      "newWords": [
+        {"polish": "loteria", "english": "lottery"},
+        {"polish": "kupon", "english": "coupon"},
+        {"polish": "limit", "english": "limit"},
+        {"polish": "suma", "english": "sum"},
+        {"polish": "typować", "english": "to pick"},
+        {"polish": "wytypować", "english": "to guess right"}
+      ]
+    },
+    {
+      "id": "3B",
+      "type": "number_grid",
+      "title": "What does the speaker say? (Lotto)",
+      "instruction": "The speaker reads 6 numbers for each coupon. Mark them.",
+      "tracks": [{"id": "107B5"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"text": "Kupon 1: 5, 6, 12, 20, 33, 34 · Kupon 2: 3, 13, 33, 36, 44, 49 · Kupon 3: 9, 10, 19, 29, 36, 48 · Kupon 4: 5, 15, 17, 18, 37, 39 · Kupon 5: 1, 7, 16, 23, 24, 28 · Kupon 6: 8, 11, 18, 23, 31, 46"}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {"label": "Kupon 1", "answers": ["5 6 12 20 33 34"]},
+        {"label": "Kupon 2", "answers": ["3 13 33 36 44 49"]},
+        {"label": "Kupon 3", "answers": ["9 10 19 29 36 48"]},
+        {"label": "Kupon 4", "answers": ["5 15 17 18 37 39"]},
+        {"label": "Kupon 5", "answers": ["1 7 16 23 24 28"]},
+        {"label": "Kupon 6", "answers": ["8 11 18 23 31 46"]}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "3C",
+      "type": "number_grid",
+      "title": "What does the speaker say? (Lotto, workbook)",
+      "instruction": "The speaker reads 6 numbers for each coupon. Mark them.",
+      "tracks": [{"id": "wb35"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"text": "Kupon 1: 8, 12, 20, 33, 45, 49 · Kupon 2: 3, 7, 14, 16, 28, 39 · Kupon 3: 2, 9, 15, 19, 24, 32 · Kupon 4: 5, 10, 11, 18, 30, 41 · Kupon 5: 1, 17, 25, 34, 37, 43 · Kupon 6: 4, 13, 23, 31, 39, 49"}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {"label": "Kupon 1", "answers": ["8 12 20 33 45 49"]},
+        {"label": "Kupon 2", "answers": ["3 7 14 16 28 39"]},
+        {"label": "Kupon 3", "answers": ["2 9 15 19 24 32"]},
+        {"label": "Kupon 4", "answers": ["5 10 11 18 30 41"]},
+        {"label": "Kupon 5", "answers": ["1 17 25 34 37 43"]},
+        {"label": "Kupon 6", "answers": ["4 13 23 31 39 49"]}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "3D",
+      "type": "inline_choice",
+      "title": "sto, dwieście…",
+      "instruction": "Listen and choose the right spelling.",
+      "tracks": [{"id": "107B6"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"text": "sto, dwieście, trzysta, czterysta, pięćset, sześćset, siedemset, osiemset, dziewięćset, tysiąc"}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {
+          "label": "1",
+          "prompt": "100 [1]",
+          "choices": [{"options": ["sta", "sto"], "answer": "sto"}]
+        },
+        {
+          "label": "2",
+          "prompt": "200 [1]",
+          "choices": [
+            {"options": ["dwasto", "dwieście"], "answer": "dwieście", "feedback": "*-sta* after 3 and 4 (*trzysta, czterysta*), *-set* after 5–9 (*pięćset*); 200 = *dwieście*."}
+          ]
+        },
+        {
+          "label": "3",
+          "prompt": "300 [1]",
+          "choices": [
+            {"options": ["trzysta", "trzysto"], "answer": "trzysta", "feedback": "*-sta* after 3 and 4 (*trzysta, czterysta*), *-set* after 5–9 (*pięćset*); 200 = *dwieście*."}
+          ]
+        },
+        {
+          "label": "4",
+          "prompt": "400 [1]",
+          "choices": [
+            {"options": ["czteryset", "czterysta"], "answer": "czterysta", "feedback": "*-sta* after 3 and 4 (*trzysta, czterysta*), *-set* after 5–9 (*pięćset*); 200 = *dwieście*."}
+          ]
+        },
+        {
+          "label": "5",
+          "prompt": "500 [1]",
+          "choices": [
+            {"options": ["pięćset", "pięćsta"], "answer": "pięćset", "feedback": "*-sta* after 3 and 4 (*trzysta, czterysta*), *-set* after 5–9 (*pięćset*); 200 = *dwieście*."}
+          ]
+        },
+        {
+          "label": "6",
+          "prompt": "600 [1]",
+          "choices": [
+            {"options": ["sześćsto", "sześćset"], "answer": "sześćset", "feedback": "*-sta* after 3 and 4 (*trzysta, czterysta*), *-set* after 5–9 (*pięćset*); 200 = *dwieście*."}
+          ]
+        },
+        {
+          "label": "7",
+          "prompt": "700 [1]",
+          "choices": [
+            {"options": ["siedemście", "siedemset"], "answer": "siedemset", "feedback": "*-sta* after 3 and 4 (*trzysta, czterysta*), *-set* after 5–9 (*pięćset*); 200 = *dwieście*."}
+          ]
+        },
+        {
+          "label": "8",
+          "prompt": "800 [1]",
+          "choices": [
+            {"options": ["osiemset", "osiemsta"], "answer": "osiemset", "feedback": "*-sta* after 3 and 4 (*trzysta, czterysta*), *-set* after 5–9 (*pięćset*); 200 = *dwieście*."}
+          ]
+        },
+        {
+          "label": "9",
+          "prompt": "900 [1]",
+          "choices": [
+            {"options": ["dziewięćset", "dziesięćset"], "answer": "dziewięćset", "feedback": "*-sta* after 3 and 4 (*trzysta, czterysta*), *-set* after 5–9 (*pięćset*); 200 = *dwieście*."}
+          ]
+        },
+        {
+          "label": "10",
+          "prompt": "1000 [1]",
+          "choices": [{"options": ["tysiąc", "tysięcy"], "answer": "tysiąc"}]
+        }
+      ],
+      "newWords": [
+        {"polish": "sto", "english": "100"},
+        {"polish": "dwieście", "english": "200"},
+        {"polish": "trzysta", "english": "300"},
+        {"polish": "czterysta", "english": "400"},
+        {"polish": "pięćset", "english": "500"},
+        {"polish": "sześćset", "english": "600"},
+        {"polish": "siedemset", "english": "700"},
+        {"polish": "osiemset", "english": "800"},
+        {"polish": "dziewięćset", "english": "900"},
+        {"polish": "tysiąc", "english": "1000"}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "3E",
+      "type": "write",
+      "title": "What does the speaker say?",
+      "instruction": "Listen and write the numbers in digits.",
+      "tracks": [{"id": "107B7"}],
+      "keyboard": "digits",
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"text": "a) sto dwadzieścia trzy · b) dziewięćset dziewiętnaście · c) trzysta trzydzieści cztery · d) pięćset pięćdziesiąt · e) sześćset szesnaście · f) siedemset dziesięć · g) czterysta cztery · h) osiemset dwadzieścia trzy · i) dwieście dwanaście · j) tysiąc trzysta sześćdziesiąt dziewięć"}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {"label": "a", "answers": ["123"]},
+        {"label": "b", "answers": ["919"]},
+        {"label": "c", "answers": ["334"]},
+        {"label": "d", "answers": ["550"]},
+        {"label": "e", "answers": ["616"]},
+        {"label": "f", "answers": ["710"]},
+        {"label": "g", "answers": ["404"]},
+        {"label": "h", "answers": ["823"]},
+        {"label": "i", "answers": ["212"]},
+        {"label": "j", "answers": ["1369"]}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "3F",
+      "type": "write",
+      "title": "What does the speaker say? (workbook)",
+      "instruction": "Listen and write the numbers in words.",
+      "tracks": [{"id": "wb36"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"text": "212 dwieście dwanaście · 304 trzysta cztery · 333 trzysta trzydzieści trzy · 405 czterysta pięć · 507 pięćset siedem · 609 sześćset dziewięć · 721 siedemset dwadzieścia jeden · 806 osiemset sześć · 901 dziewięćset jeden · 1100 tysiąc sto"}
+            ]
+          }
+        ]
+      },
+      "items": [
+        {"label": "1", "answers": ["dwieście dwanaście", "212 dwieście dwanaście"], "feedback": "*-sta* after 3 and 4 (*trzysta, czterysta*), *-set* after 5–9 (*pięćset*); 200 = *dwieście*."},
+        {"label": "2", "answers": ["trzysta cztery", "304 trzysta cztery"]},
+        {"label": "3", "answers": ["trzysta trzydzieści trzy", "333 trzysta trzydzieści trzy"]},
+        {"label": "4", "answers": ["czterysta pięć", "405 czterysta pięć"]},
+        {"label": "5", "answers": ["pięćset siedem", "507 pięćset siedem"]},
+        {"label": "6", "answers": ["sześćset dziewięć", "609 sześćset dziewięć"]},
+        {"label": "7", "answers": ["siedemset dwadzieścia jeden", "721 siedemset dwadzieścia jeden"]},
+        {"label": "8", "answers": ["osiemset sześć", "806 osiemset sześć"]},
+        {"label": "9", "answers": ["dziewięćset jeden", "901 dziewięćset jeden"]},
+        {"label": "10", "answers": ["tysiąc sto", "1100 tysiąc sto"]}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "3G",
+      "type": "write",
+      "title": "Write in words",
+      "instruction": "Write each number in words.",
+      "items": [
+        {"label": "a", "prompt": "678", "answers": ["sześćset siedemdziesiąt osiem"]},
+        {"label": "b", "prompt": "456", "answers": ["czterysta pięćdziesiąt sześć"]},
+        {"label": "c", "prompt": "349", "answers": ["trzysta czterdzieści dziewięć"]},
+        {"label": "d", "prompt": "212", "answers": ["dwieście dwanaście"], "feedback": "*-sta* after 3 and 4 (*trzysta, czterysta*), *-set* after 5–9 (*pięćset*); 200 = *dwieście*."},
+        {"label": "e", "prompt": "199", "answers": ["sto dziewięćdziesiąt dziewięć"]},
+        {"label": "f", "prompt": "954", "answers": ["dziewięćset pięćdziesiąt cztery"]},
+        {"label": "g", "prompt": "865", "answers": ["osiemset sześćdziesiąt pięć"]},
+        {"label": "h", "prompt": "555", "answers": ["pięćset pięćdziesiąt pięć"]}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "3H",
+      "type": "write",
+      "title": "How much is it?",
+      "instruction": "Work it out and write the result in words.",
+      "items": [
+        {"label": "1", "prompt": "785 − 141 =", "answers": ["sześćset czterdzieści cztery"]},
+        {"label": "2", "prompt": "902 + 99 =", "answers": ["tysiąc jeden"]},
+        {"label": "3", "prompt": "343 + 13 =", "answers": ["trzysta pięćdziesiąt sześć"]},
+        {"label": "4", "prompt": "505 − 203 =", "answers": ["trzysta dwa"]},
+        {"label": "5", "prompt": "412 + 412 =", "answers": ["osiemset dwadzieścia cztery"]}
+      ],
+      "rules": [5]
+    },
+    {
+      "id": "4A",
+      "type": "write",
+      "title": "Shopping-mall plan",
+      "instruction": "The first floor (*I piętro*) of a shopping mall. Where can you buy it? Write the shop number.",
+      "keyboard": "digits",
+      "wordBox": [
+        "1 RTV",
+        "2 PIEKARNIA",
+        "3 ODZIEŻ",
+        "4 BIŻUTERIA",
+        "5 OBUWIE",
+        "6 HERBACIARNIA",
+        "7 OPTYK",
+        "8 FRYZJER",
+        "9 CUKIERNIA",
+        "10 BIURO PODRÓŻY",
+        "11 BANK",
+        "12 KAWIARNIA",
+        "13 KWIACIARNIA",
+        "14 KIOSK",
+        "15 APTEKA",
+        "16 DROGERIA",
+        "17 DELIKATESY",
+        "18 PRALNIA",
+        "19 AGD"
+      ],
+      "items": [
+        {"label": "1", "picture": {"label": "a vase of roses", "emoji": "🌹"}, "answers": ["13"]},
+        {
+          "label": "2",
+          "picture": {"label": "a cup of tea and tea packets", "emoji": "🍵"},
+          "answers": ["6"]
+        },
+        {
+          "label": "3",
+          "picture": {"label": "perfume, shampoo, cream, soap", "emoji": "🧴"},
+          "answers": ["16"]
+        },
+        {"label": "4", "picture": {"label": "a box with a ring", "emoji": "💍"}, "answers": ["4"]},
+        {
+          "label": "5",
+          "picture": {"label": "a hairbrush and a comb", "emoji": "🪮"},
+          "answers": ["8"]
+        },
+        {"label": "6", "picture": {"label": "sunglasses", "emoji": "🕶️"}, "answers": ["7"]},
+        {"label": "7", "picture": {"label": "red high heels", "emoji": "👠"}, "answers": ["5"]},
+        {"label": "8", "picture": {"label": "a blender", "emoji": "🌀"}, "answers": ["19"]},
+        {
+          "label": "9",
+          "picture": {"label": "a washing machine", "emoji": "🧺"},
+          "answers": ["18", "19"],
+          "feedback": "The book's logic is a washing machine → *pralnia* (laundry); *AGD* (19) is also right."
+        },
+        {"label": "10", "picture": {"label": "a dark-blue T-shirt", "emoji": "👕"}, "answers": ["3"]},
+        {"label": "11", "picture": {"label": "newspapers", "emoji": "📰"}, "answers": ["14"]},
+        {"label": "12", "picture": {"label": "a flat-screen TV", "emoji": "📺"}, "answers": ["1"]},
+        {
+          "label": "13",
+          "picture": {"label": "a cup of coffee with a biscuit", "emoji": "☕"},
+          "answers": ["12"]
+        },
+        {"label": "14", "picture": {"label": "a box of pills", "emoji": "💊"}, "answers": ["15"]},
+        {
+          "label": "15",
+          "picture": {"label": "a chocolate cake with a cherry", "emoji": "🎂"},
+          "answers": ["9"]
+        },
+        {
+          "label": "16",
+          "picture": {"label": "a basket of bread rolls", "emoji": "🥖"},
+          "answers": ["2"]
+        },
+        {
+          "label": "17",
+          "picture": {"label": "a travel catalogue \"EGIPT\"", "emoji": "✈️"},
+          "answers": ["10"]
+        },
+        {
+          "label": "18",
+          "picture": {"label": "bank cards, a deposit", "emoji": "💳"},
+          "answers": ["11"]
+        },
+        {
+          "label": "19",
+          "picture": {"label": "kiwis and a jar of jam", "emoji": "🥝"},
+          "answers": ["17"]
+        }
+      ],
+      "newWords": [
+        {"polish": "piętro", "english": "floor"},
+        {"polish": "piekarnia", "english": "bakery"},
+        {"polish": "cukiernia", "english": "cake shop"},
+        {"polish": "odzież", "english": "clothes"},
+        {"polish": "obuwie", "english": "shoes"},
+        {"polish": "biżuteria", "english": "jewellery"},
+        {"polish": "herbaciarnia", "english": "tea shop"},
+        {"polish": "kawiarnia", "english": "café"},
+        {"polish": "optyk", "english": "optician"},
+        {"polish": "fryzjer", "english": "hairdresser"},
+        {"polish": "biuro podróży", "english": "travel agency"},
+        {"polish": "kwiaciarnia", "english": "florist"},
+        {"polish": "apteka", "english": "pharmacy"},
+        {"polish": "drogeria", "english": "drugstore"},
+        {"polish": "delikatesy", "english": "delicatessen"},
+        {"polish": "pralnia", "english": "laundry"}
+      ]
+    },
+    {
+      "id": "4B",
+      "type": "choice",
+      "title": "Shop and product",
+      "instruction": "What can you buy in each shop?",
+      "legend": [
+        "a. ciastko, pączek",
+        "b. buty, sandały",
+        "c. telewizor, DVD",
+        "d. gazeta, papierosy",
+        "e. aspiryna",
+        "f. szampon, żel pod prysznic",
+        "g. okulary",
+        "h. kawa, herbata",
+        "i. bilet lotniczy, wczasy all inclusive",
+        "j. chleb, bułki"
+      ],
+      "items": [
+        {"label": "1", "prompt": "RTV", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "c"},
+        {"label": "2", "prompt": "PIEKARNIA", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "j"},
+        {"label": "3", "prompt": "OPTYK", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "g"},
+        {"label": "4", "prompt": "CUKIERNIA", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "a"},
+        {"label": "5", "prompt": "BIURO PODRÓŻY", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "i"},
+        {"label": "6", "prompt": "KAWIARNIA", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "h"},
+        {"label": "7", "prompt": "KIOSK", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "d"},
+        {"label": "8", "prompt": "APTEKA", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "e"},
+        {"label": "9", "prompt": "DROGERIA", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "f"},
+        {"label": "10", "prompt": "OBUWIE", "options": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], "answer": "b"}
+      ],
+      "newWords": [
+        {"polish": "ciastko", "english": "cake"},
+        {"polish": "pączek", "english": "doughnut"},
+        {"polish": "buty", "english": "shoes"},
+        {"polish": "sandały", "english": "sandals"},
+        {"polish": "telewizor", "english": "TV set"},
+        {"polish": "aspiryna", "english": "aspirin"},
+        {"polish": "okulary", "english": "glasses"},
+        {"polish": "szampon", "english": "shampoo"},
+        {"polish": "żel pod prysznic", "english": "shower gel"},
+        {"polish": "bilet lotniczy", "english": "plane ticket"},
+        {"polish": "wczasy", "english": "holiday package"},
+        {"polish": "chleb", "english": "bread"},
+        {"polish": "bułka", "english": "roll"}
+      ]
+    },
+    {
+      "id": "4C",
+      "type": "gap_fill",
+      "title": "Karolina and Mami in the mall",
+      "instruction": "What do Karolina and Mami want to buy? Put the words in brackets in the right form.",
+      "sections": [
+        {
+          "lines": [
+            {"text": "Karolina interesuje się fotografią i [1] (chcieć) nowy aparat fotograficzny, bo stary nie [2] (robić) dobrych zdjęć. Chce też [3] (duży album) i [4] (karta) pamięci do aparatu, no i może jeszcze [5] (ładna torba) na aparat albo [6] (statyw)."},
+            {"text": "Mami chce [7] (mała mapa) Krakowa, [8] (ołówek) i [9] (gumka), [10] (czerwony długopis), [11] (kolorowy magazyn) i kosmetyki."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["chce"]},
+        {"number": 2, "answers": ["robi"]},
+        {"number": 3, "answers": ["duży album"], "feedback": "Masc. inanimate = nominative (*duży album*)."},
+        {"number": 4, "answers": ["kartę"]},
+        {"number": 5, "answers": ["ładną torbę"], "feedback": "Fem.: *-ą* + *-ę* (*ładną torbę*)."},
+        {"number": 6, "answers": ["statyw"]},
+        {"number": 7, "answers": ["małą mapę"], "feedback": "Fem.: *-ą* + *-ę* (*małą mapę*)."},
+        {"number": 8, "answers": ["ołówek"]},
+        {"number": 9, "answers": ["gumkę"], "feedback": "Fem.: *-ą* + *-ę* (*gumkę*)."},
+        {"number": 10, "answers": ["czerwony długopis"]},
+        {"number": 11, "answers": ["kolorowy magazyn"]}
+      ],
+      "newWords": [
+        {"polish": "aparat fotograficzny", "english": "camera"},
+        {"polish": "album", "english": "album"},
+        {"polish": "karta pamięci", "english": "memory card"},
+        {"polish": "statyw", "english": "tripod"},
+        {"polish": "gumka", "english": "eraser"},
+        {"polish": "kosmetyki", "english": "cosmetics"}
+      ],
+      "rules": [1]
+    },
+    {
+      "id": "4D",
+      "type": "write",
+      "title": "Questions about the text",
+      "instruction": "Answer the questions about Karolina and Mami. A short answer is fine.",
+      "match": "key_words",
+      "items": [
+        {"label": "1", "prompt": "Co Karolina chce kupić?", "answers": ["aparat"]},
+        {"label": "2", "prompt": "Dlaczego ona chce kupić nowy aparat?", "answers": ["nie robi dobrych zdjęć"]},
+        {"label": "3", "prompt": "Jaką torbę chce Karolina?", "answers": ["ładną"]},
+        {"label": "4", "prompt": "Jaką mapę chce Mami?", "answers": ["małą"]},
+        {"label": "5", "prompt": "Jaki długopis chce Mami?", "answers": ["czerwony"]}
+      ],
+      "newWords": [{"polish": "kupić", "english": "to buy (perfective)"}],
+      "rules": [1]
+    },
+    {
+      "id": "4E",
+      "type": "gap_fill",
+      "title": "Where can I buy a map?",
+      "instruction": "Listen and fill in the missing words.",
+      "tracks": [{"id": "107C2-A"}],
+      "hint": "rozumiesz · restauracji · drogerii · sklep",
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Mami", "text": "A gdzie ja mogę kupić mapę?"},
+              {"speaker": "Karolina", "text": "W Empiku. A kosmetyki w drogerii."},
+              {"speaker": "Mami", "text": "O, nie ma pani ani pana! Dlaczego?"},
+              {"speaker": "Karolina", "text": "To sklep samoobsługowy. Ty sama decydujesz, co kupujesz, a tam jest kasa; rozumiesz?"},
+              {"speaker": "Mami", "text": "Rozumiem, self-service, tak? Jak w restauracji albo w supermarkecie?"},
+              {"speaker": "Karolina", "text": "Dokładnie!"}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Mami", "text": "A gdzie ja mogę kupić mapę?"},
+            {"speaker": "Karolina", "text": "W Empiku. A kosmetyki w [1]."},
+            {"speaker": "Mami", "text": "O, nie ma pani ani pana! Dlaczego?"},
+            {"speaker": "Karolina", "text": "To [2] samoobsługowy. Ty sama decydujesz, co kupujesz, a tam jest kasa; [3]?"},
+            {"speaker": "Mami", "text": "Rozumiem, self-service, tak? Jak w [4] albo w supermarkecie?"},
+            {"speaker": "Karolina", "text": "Dokładnie!"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["drogerii"]},
+        {"number": 2, "answers": ["sklep"]},
+        {"number": 3, "answers": ["rozumiesz"]},
+        {"number": 4, "answers": ["restauracji"]}
+      ],
+      "newWords": [
+        {"polish": "samoobsługowy", "english": "self-service"},
+        {"polish": "decydować", "english": "to decide"},
+        {"polish": "kasa", "english": "till"},
+        {"polish": "supermarket", "english": "supermarket"},
+        {"polish": "dokładnie", "english": "exactly"}
+      ]
+    },
+    {
+      "id": "4F",
+      "type": "gap_fill",
+      "title": "A camera",
+      "instruction": "Listen and fill in the missing words.",
+      "tracks": [{"id": "107C2-B"}],
+      "hint": "aparat · torba · ma · firmy · kosztuje · pan · dobry · złotych · tani · dobry · słucham",
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Karolina", "text": "Dzień dobry."},
+              {"speaker": "Pan", "text": "Dzień dobry, słucham?"},
+              {"speaker": "Karolina", "text": "Czy jest dobry, ale niedrogi aparat fotograficzny?"},
+              {"speaker": "Pan", "text": "Jakiej firmy?"},
+              {"speaker": "Karolina", "text": "Nie wiem, jaką firmę pan poleca?"},
+              {"speaker": "Pan", "text": "Może Kodak? Ten aparat jest bardzo dobry: mały, tani, funkcjonalny. Kosztuje tylko 300 złotych."},
+              {"speaker": "Karolina", "text": "A ten?"},
+              {"speaker": "Pan", "text": "Ten kosztuje 422 złote, to promocja, bo karta pamięci i torba są gratis."},
+              {"speaker": "Karolina", "text": "Super! Biorę ten. A jest album na fotografie?"},
+              {"speaker": "Pan", "text": "Niestety, nie ma."}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Karolina", "text": "Dzień [1]."},
+            {"speaker": "Pan", "text": "Dzień dobry, [2]?"},
+            {"speaker": "Karolina", "text": "Czy jest [3], ale niedrogi [4] fotograficzny?"},
+            {"speaker": "Pan", "text": "Jakiej [5]?"},
+            {"speaker": "Karolina", "text": "Nie wiem, jaką firmę [6] poleca?"},
+            {"speaker": "Pan", "text": "Może Kodak? Ten aparat jest bardzo dobry: mały, [7], funkcjonalny. Kosztuje tylko 300 [8]."},
+            {"speaker": "Karolina", "text": "A ten?"},
+            {"speaker": "Pan", "text": "Ten [9] 422 złote, to promocja, bo karta pamięci i [10] są gratis."},
+            {"speaker": "Karolina", "text": "Super! Biorę ten. A jest album na fotografie?"},
+            {"speaker": "Pan", "text": "Niestety, nie [11]."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["dobry"]},
+        {"number": 2, "answers": ["słucham"]},
+        {"number": 3, "answers": ["dobry"]},
+        {"number": 4, "answers": ["aparat"]},
+        {"number": 5, "answers": ["firmy"]},
+        {"number": 6, "answers": ["pan"]},
+        {"number": 7, "answers": ["tani"]},
+        {"number": 8, "answers": ["złotych"], "feedback": "*złoty / grosz* follow *rok / lata / lat*: *33 złote, 34 złote*, but *12 złotych, 21 złotych*."},
+        {"number": 9, "answers": ["kosztuje"]},
+        {"number": 10, "answers": ["torba"]},
+        {"number": 11, "answers": ["ma"]}
+      ],
+      "newWords": [
+        {"polish": "słucham", "english": "how can I help? (in a shop)"},
+        {"polish": "niedrogi", "english": "inexpensive"},
+        {"polish": "tani", "english": "cheap"},
+        {"polish": "firma", "english": "brand, company"},
+        {"polish": "polecać", "english": "to recommend"},
+        {"polish": "funkcjonalny", "english": "practical"},
+        {"polish": "promocja", "english": "special offer"}
+      ],
+      "rules": [4],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "4G",
+      "type": "gap_fill",
+      "title": "Have you got everything?",
+      "instruction": "Listen and fill in the missing words.",
+      "tracks": [{"id": "107C2-C"}],
+      "hint": "tam · wszystko · pięćset · kartę",
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Karolina", "text": "Masz wszystko?"},
+              {"speaker": "Mami", "text": "Tak, wszystko. Ale nie mam pieniędzy…"},
+              {"speaker": "Karolina", "text": "A masz kartę do bankomatu? Bo tam jest bankomat."},
+              {"speaker": "Mami", "text": "Mam, ale w domu. Tutaj mam jeszcze euro."},
+              {"speaker": "Karolina", "text": "OK, kantor też tu jest. Ile masz euro?"},
+              {"speaker": "Mami", "text": "Pięćset."},
+              {"speaker": "Karolina", "text": "Ho, ho, ho, ale jesteś bogata! No, jeszcze tylko zakupy dla mamy i do domu."},
+              {"speaker": "Mami", "text": "Nie, nie do domu, tu jest tak interesująco!"}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Karolina", "text": "Masz [1]?"},
+            {"speaker": "Mami", "text": "Tak, wszystko. Ale nie mam pieniędzy…"},
+            {"speaker": "Karolina", "text": "A masz [2] do bankomatu? Bo [3] jest bankomat."},
+            {"speaker": "Mami", "text": "Mam, ale w domu. Tutaj mam jeszcze euro."},
+            {"speaker": "Karolina", "text": "OK, kantor też tu jest. Ile masz euro?"},
+            {"speaker": "Mami", "text": "[4]."},
+            {"speaker": "Karolina", "text": "Ho, ho, ho, ale jesteś bogata! No, jeszcze tylko zakupy dla mamy i do domu."},
+            {"speaker": "Mami", "text": "Nie, nie do domu, tu jest tak interesująco!"}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["wszystko"]},
+        {"number": 2, "answers": ["kartę"], "feedback": "Fem.: *-ą* + *-ę* (*kartę*)."},
+        {"number": 3, "answers": ["tam"]},
+        {"number": 4, "answers": ["Pięćset"]}
+      ],
+      "newWords": [
+        {"polish": "pieniądze", "english": "money"},
+        {"polish": "bankomat", "english": "cash machine"},
+        {"polish": "kantor", "english": "exchange office"},
+        {"polish": "euro", "english": "euro"},
+        {"polish": "bogaty", "english": "rich"}
+      ]
+    },
+    {
+      "id": "4H",
+      "type": "choice",
+      "title": "True or false?",
+      "instruction": "From dialogues B and C: true or false? P = true (*prawda*), N = false (*nieprawda*).",
+      "tracks": [{"id": "107C2-B", "label": "Dialogue B"}, {"id": "107C2-C", "label": "Dialogue C"}],
+      "shuffle": false,
+      "items": [
+        {"label": "1", "prompt": "Karolina chce tani aparat.", "options": ["P", "N"], "answer": "P"},
+        {"label": "2", "prompt": "Karolina kupuje aparat za 300 złotych.", "options": ["P", "N"], "answer": "N", "feedback": "The camera she takes costs 422 złote."},
+        {"label": "3", "prompt": "Karolina nie płaci za kartę pamięci i torbę.", "options": ["P", "N"], "answer": "P"},
+        {"label": "4", "prompt": "Karolina kupuje też album na fotografie.", "options": ["P", "N"], "answer": "N"},
+        {"label": "5", "prompt": "Sklep fotograficzny jest samoobsługowy.", "options": ["P", "N"], "answer": "N", "feedback": "The self-service shop is in dialogue A; here a salesman serves her."},
+        {"label": "6", "prompt": "Mami ma polskie pieniądze.", "options": ["P", "N"], "answer": "N", "feedback": "She has euro."},
+        {"label": "7", "prompt": "Mami lubi galerię handlową.", "options": ["P", "N"], "answer": "P"}
+      ],
+      "newWords": [{"polish": "płacić", "english": "to pay (płacić za… — to pay for…)"}]
+    },
+    {
+      "id": "5A",
+      "type": "choice",
+      "title": "What are you doing?",
+      "instruction": "Tom and Uwe talk on the phone. Listen: true or false? P = true (*prawda*), N = false (*nieprawda*).",
+      "tracks": [{"id": "wb33"}],
+      "shuffle": false,
+      "items": [
+        {"label": "1", "prompt": "Uwe nie robi nic specjalnego.", "options": ["P", "N"], "answer": "P"},
+        {"label": "2", "prompt": "Uwe czyta gazetę.", "options": ["P", "N"], "answer": "N"},
+        {"label": "3", "prompt": "Uwe czyta po niemiecku.", "options": ["P", "N"], "answer": "P"},
+        {"label": "4", "prompt": "Tom pisze list.", "options": ["P", "N"], "answer": "N"},
+        {"label": "5", "prompt": "Tom ogląda dobrą komedię.", "options": ["P", "N"], "answer": "N"},
+        {"label": "6", "prompt": "Tom ma wolny czas i nie wie, co robić.", "options": ["P", "N"], "answer": "P"},
+        {"label": "7", "prompt": "Uwe proponuje pub.", "options": ["P", "N"], "answer": "P"},
+        {"label": "8", "prompt": "Tom chce robić pizzę albo gotować spaghetti.", "options": ["P", "N"], "answer": "N"},
+        {"label": "9", "prompt": "Tom mówi, że telewizja nie jest interesująca.", "options": ["P", "N"], "answer": "P"},
+        {"label": "10", "prompt": "Tom chce iść na spacer i rozmawiać po polsku.", "options": ["P", "N"], "answer": "P"},
+        {"label": "11", "prompt": "Uwe ma małego kota.", "options": ["P", "N"], "answer": "N"}
+      ],
+      "newWords": [{"polish": "rozmawiać", "english": "to talk"}, {"polish": "pub", "english": "pub"}]
+    },
+    {
+      "id": "5B",
+      "type": "gap_fill",
+      "title": "Tom and Uwe",
+      "instruction": "Listen again and fill in the missing words.",
+      "tracks": [{"id": "wb34"}],
+      "hint": "mecz · polsku · czytam · czas · pomysł · piszę · albo · rozmawiamy · robimy · domu · oglądasz · wiem · nieciekawa · spacer",
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"speaker": "Tom", "text": "Cześć Uwe. Co robisz?"},
+              {"speaker": "Uwe", "text": "Cześć Tom. Nic specjalnego. Czytam książkę."},
+              {"speaker": "Tom", "text": "Po polsku?"},
+              {"speaker": "Uwe", "text": "Nie, czytam niemiecką książkę. A ty, co robisz?"},
+              {"speaker": "Tom", "text": "Teraz piszę zadanie domowe i oglądam mecz."},
+              {"speaker": "Uwe", "text": "Piszesz zadanie i oglądasz mecz?"},
+              {"speaker": "Tom", "text": "Tak, bo zadanie jest łatwe, a mecz jest nudny."},
+              {"speaker": "Uwe", "text": "Aha, czyli masz wolny czas?"},
+              {"speaker": "Tom", "text": "Tak, mam wolny czas i nie wiem, co robić."},
+              {"speaker": "Uwe", "text": "Może pub?"},
+              {"speaker": "Tom", "text": "Pub? Nie. W domu mam dobre piwo. Wiesz, mam plan — spotykamy się u mnie, robimy dobrą pizzę albo gotujemy risotto."},
+              {"speaker": "Uwe", "text": "To dobry pomysł. A co potem? Oglądamy telewizję?"},
+              {"speaker": "Tom", "text": "Nie, telewizja jest nieciekawa. Ja mam dużego psa. On bardzo lubi spacerować. Potem idziemy na długi spacer i rozmawiamy po polsku."},
+              {"speaker": "Uwe", "text": "Spacer jest OK. Wiesz, ty masz psa, a ja mam dużego kota, ma na imię Garfield, ale on nie lubi spacerować, a ja lubię."}
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "lines": [
+            {"speaker": "Tom", "text": "Cześć Uwe. Co robisz?"},
+            {"speaker": "Uwe", "text": "Cześć Tom. Nic specjalnego. Czytam książkę."},
+            {"speaker": "Tom", "text": "Po [1]?"},
+            {"speaker": "Uwe", "text": "Nie, [2] niemiecką książkę. A ty, co robisz?"},
+            {"speaker": "Tom", "text": "Teraz [3] zadanie domowe i oglądam [4]."},
+            {"speaker": "Uwe", "text": "Piszesz zadanie i [5] mecz?"},
+            {"speaker": "Tom", "text": "Tak, bo zadanie jest łatwe, a mecz jest nudny."},
+            {"speaker": "Uwe", "text": "Aha, czyli masz wolny [6]?"},
+            {"speaker": "Tom", "text": "Tak, mam wolny czas i nie [7], co robić."},
+            {"speaker": "Uwe", "text": "Może pub?"},
+            {"speaker": "Tom", "text": "Pub? Nie. W [8] mam dobre piwo. Wiesz, mam plan — spotykamy się u mnie, [9] dobrą pizzę [10] gotujemy risotto."},
+            {"speaker": "Uwe", "text": "To dobry [11]. A co potem? Oglądamy telewizję?"},
+            {"speaker": "Tom", "text": "Nie, telewizja jest [12]. Ja mam dużego psa. On bardzo lubi spacerować. Potem idziemy na długi [13] i [14] po polsku."},
+            {"speaker": "Uwe", "text": "Spacer jest OK. Wiesz, ty masz psa, a ja mam dużego kota, ma na imię Garfield, ale on nie lubi spacerować, a ja lubię."}
+          ]
+        }
+      ],
+      "gaps": [
+        {"number": 1, "answers": ["polsku"]},
+        {"number": 2, "answers": ["czytam"]},
+        {"number": 3, "answers": ["piszę"]},
+        {"number": 4, "answers": ["mecz"]},
+        {"number": 5, "answers": ["oglądasz"]},
+        {"number": 6, "answers": ["czas"]},
+        {"number": 7, "answers": ["wiem"]},
+        {"number": 8, "answers": ["domu"]},
+        {"number": 9, "answers": ["robimy"]},
+        {"number": 10, "answers": ["albo"]},
+        {"number": 11, "answers": ["pomysł"]},
+        {"number": 12, "answers": ["nieciekawa"]},
+        {"number": 13, "answers": ["spacer"], "feedback": "Masc. inanimate = nominative (*długi spacer*)."},
+        {"number": 14, "answers": ["rozmawiamy"]}
+      ],
+      "newWords": [
+        {"polish": "zadanie", "english": "task"},
+        {"polish": "domowy", "english": "home (adj.) (zadanie domowe — homework)"},
+        {"polish": "nudny", "english": "boring"},
+        {"polish": "łatwy", "english": "easy"},
+        {"polish": "czyli", "english": "so, that is"},
+        {"polish": "pomysł", "english": "idea"},
+        {"polish": "nieciekawy", "english": "dull"}
+      ],
+      "rules": [1],
+      "newWordsUnlock": "after_check"
+    },
+    {
+      "id": "5C",
+      "type": "free_writing",
+      "title": "What has she got? What does she like?",
+      "instruction": "A woman with a cup of coffee. Describe what she has and what she likes (accusative).\n👧👦 córka i syn · 🏠 dom · 🚲 rower · 🐈‍⬛ czarny kot · 🐕 duży pies · 📘 książka „Impresjonizm” · 📕 gruby słownik · 📱 mała komórka · 👛 portfel · 🍫 czekolada · 🧃 sok · 🥛 mleko · ☕ czarna kawa",
+      "fields": [{"label": "Description"}],
+      "model": [
+        "Ona ma małą, ładną córkę i sympatycznego syna. Ona ma ładny dom. Ma czarnego kota i dużego psa. Ma stary, ale dobry rower. Ma ciekawą książkę, bo lubi czytać. Lubi też malarstwo. Ma gruby słownik i małą komórkę. Ona bardzo lubi czarną kawę, czekoladę, sok i mleko."
+      ],
+      "checklist": ["Masc. animate → *-ego … -a* (*dużego psa*).", "Fem. → *-ą … -ę*."],
+      "newWords": [
+        {"polish": "słownik", "english": "dictionary"},
+        {"polish": "portfel", "english": "wallet"},
+        {"polish": "czekolada", "english": "chocolate"}
+      ],
+      "rules": [1]
+    },
+    {
+      "id": "6A",
+      "type": "inline_choice",
+      "title": "What fits?",
+      "instruction": "Choose the accusative.",
+      "items": [
+        {
+          "label": "1",
+          "prompt": "Mam [1].",
+          "choices": [
+            {"options": ["brat", "bratem", "brata"], "answer": "brata", "feedback": "Masc. animate: *-ego* + *-a* (*brata*)."}
+          ]
+        },
+        {
+          "label": "2",
+          "prompt": "Mam [1].",
+          "choices": [{"options": ["czas", "czasem", "czasu"], "answer": "czas"}]
+        },
+        {
+          "label": "3",
+          "prompt": "Proszę [1].",
+          "choices": [
+            {"options": ["pomidora", "pomidorem", "pomidor"], "answer": "pomidora", "feedback": "*pomidor* is animate in the accusative: *pomidora*."}
+          ]
+        },
+        {
+          "label": "4",
+          "prompt": "Oglądam [1].",
+          "choices": [{"options": ["filmem", "filmu", "film"], "answer": "film"}]
+        },
+        {
+          "label": "5",
+          "prompt": "Piszę [1].",
+          "choices": [{"options": ["książkę", "książka", "książką"], "answer": "książkę"}]
+        },
+        {
+          "label": "6",
+          "prompt": "Czytam [1].",
+          "choices": [
+            {"options": ["list", "lista", "listem"], "answer": "list", "feedback": "*list* (letter) is masc. inanimate → *list*; *lista* (list) would be *listę*."}
+          ]
+        },
+        {
+          "label": "7",
+          "prompt": "Gotuję [1].",
+          "choices": [{"options": ["zupa", "zupą", "zupę"], "answer": "zupę"}]
+        },
+        {
+          "label": "8",
+          "prompt": "Robię [1].",
+          "choices": [{"options": ["pizzę", "pizza", "pizzą"], "answer": "pizzę"}]
+        },
+        {
+          "label": "9",
+          "prompt": "Mam [1].",
+          "choices": [{"options": ["mama", "mamą", "mamę"], "answer": "mamę"}]
+        },
+        {
+          "label": "10",
+          "prompt": "Znam [1].",
+          "choices": [{"options": ["Krakowa", "Krakowem", "Kraków"], "answer": "Kraków"}]
+        },
+        {
+          "label": "11",
+          "prompt": "Gram w [1].",
+          "choices": [
+            {"options": ["golf", "golfem", "golfa"], "answer": "golfa", "feedback": "Games are animate in the accusative: *w golfa, w tenisa*."}
+          ]
+        }
+      ],
+      "rules": [1]
+    }
+  ],
+  "vocabulary": [
+    {"polish": "zakupy · lista zakupów · kiosk · galeria handlowa", "english": "shopping · shopping list · kiosk · shopping mall"},
+    {"polish": "Proszę… · Ile kosztuje? · Czy jest…? · Nie ma. · Czy coś jeszcze?", "english": "Please… · How much? · Is there…? · There isn't. · Anything else?"},
+    {"polish": "złoty · grosz · pieniądze · bankomat · kantor", "english": "zloty · grosz · money · cash machine · exchange office"},
+    {"polish": "kosztować · płacić · polecać · kupować", "english": "to cost · to pay · to recommend · to buy"},
+    {"polish": "krótki ↔ długi · wolny ↔ zajęty · drogi ↔ tani · bogaty ↔ biedny", "english": "short ↔ long · free ↔ busy · expensive ↔ cheap · rich ↔ poor"},
+    {"polish": "sto … tysiąc", "english": "100 … 1000"},
+    {"polish": "gazeta · mapa · długopis · ołówek · bilet · guma do żucia", "english": "newspaper · map · pen · pencil · ticket · chewing gum"},
+    {"polish": "apteka · piekarnia · cukiernia · drogeria · kwiaciarnia · kawiarnia", "english": "pharmacy · bakery · cake shop · drugstore · florist · café"},
+    {"polish": "aparat fotograficzny · karta pamięci · torba", "english": "camera · memory card · bag"}
+  ]
+}

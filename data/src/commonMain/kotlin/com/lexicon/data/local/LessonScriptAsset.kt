@@ -170,6 +170,9 @@ data class ScreenAsset(
     val notes: List<String> = emptyList(),
     val keyboard: String = "text",
     val match: String = "whole",
+    val eachAnswerOnce: Boolean = false,
+    val gridSize: Int = 49,
+    val gridColumns: Int = 7,
     val items: List<ItemAsset> = emptyList(),
     val sections: List<SectionAsset> = emptyList(),
     val gaps: List<GapAsset> = emptyList(),
@@ -258,9 +261,7 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
                 transcript = transcriptModel,
                 keyboard = if (keyboard == "digits") AnswerKeyboard.DIGITS else AnswerKeyboard.TEXT,
                 questions = items.mapIndexed { index, item ->
-                    item.toQuestion(
-                        index.toString(),
-                    ).copy(match = if (match == "exact_letters") AnswerMatch.EXACT_LETTERS else AnswerMatch.WHOLE)
+                    item.toQuestion(index.toString()).copy(match = answerMatch(match))
                 }.toImmutableList(),
                 hint = hint,
                 notes = notes.toImmutableList(),
@@ -398,8 +399,23 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
                 wordBox = wordBox.toImmutableList(),
                 interchangeable = interchangeable.map { it.toImmutableList() }.toImmutableList(),
                 choices = choices.toImmutableList(),
+                eachAnswerOnce = eachAnswerOnce,
             )
         }
+
+        "number_grid" ->
+            LessonScreen.NumberGrid(
+                id = id,
+                title = title,
+                instruction = instruction,
+                tracks = trackList,
+                transcript = transcriptModel,
+                size = gridSize,
+                columns = gridColumns,
+                questions = items.mapIndexed { index, item ->
+                    item.toQuestion(index.toString()).copy(match = AnswerMatch.NUMBER_SET)
+                }.toImmutableList(),
+            )
 
         "free_writing" ->
             LessonScreen.FreeWriting(
@@ -432,6 +448,13 @@ private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonS
             )
     }
 }
+
+private fun answerMatch(name: String): AnswerMatch =
+    when (name) {
+        "exact_letters" -> AnswerMatch.EXACT_LETTERS
+        "key_words" -> AnswerMatch.KEY_WORDS
+        else -> AnswerMatch.WHOLE
+    }
 
 private fun ItemAsset.toChoice(
     key: String,

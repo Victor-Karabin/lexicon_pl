@@ -30,8 +30,10 @@ private val screenReference = Regex("""\b[1-9][A-H]\b""")
 private val letterPattern = Regex("""\w_|_\w""")
 private val patternBreak = Regex("""[\s≠]+""")
 private val punctuation = Regex("""[.,?!]""")
-private val knownTypes =
-    setOf("grammar", "reference", "write", "choice", "inline_choice", "order", "form", "gap_fill", "free_writing", "conjugation")
+private val knownTypes = setOf(
+    "grammar", "reference", "write", "choice", "inline_choice", "order", "form", "gap_fill", "free_writing", "conjugation",
+    "number_grid",
+)
 private val persons = listOf("ja", "ty", "on / ona / ono", "my", "wy", "oni / one")
 
 class LessonScriptsTest {
@@ -46,8 +48,8 @@ class LessonScriptsTest {
         scripts.forEach { (name, script) -> script.screens.forEach { check("$name ${it.id}", it) } }
 
     @Test
-    fun `there is a script for lessons 1 to 6`() {
-        assertEquals((1..6).map { "lesson_krok-a1-0$it.json" }, assets.keys.toList())
+    fun `there is a script for lessons 1 to 7`() {
+        assertEquals((1..7).map { "lesson_krok-a1-0$it.json" }, assets.keys.toList())
     }
 
     @Test
@@ -280,7 +282,10 @@ class LessonScriptsTest {
                         '·',
                     ).map { it.trim('.', '?', '!', '…') }.filter { it.isNotEmpty() }
                     val stems = words.filter { it.length >= SHORTEST_WORD }.ifEmpty { words }
-                    assertTrue("$name ${screen.id} ${word.polish}", stems.any { shown.contains(it.take(SHORTEST_WORD)) })
+                    assertTrue(
+                        "$name ${screen.id} ${word.polish}",
+                        stems.any { shown.contains(it.take(minOf(SHORTEST_WORD, it.length - 1).coerceAtLeast(1))) },
+                    )
                 }
             }
         }
@@ -334,7 +339,15 @@ class LessonScriptsTest {
                 screen.fields.indices.filter(screen::isMultiline).map { "$name ${screen.id} $it" }
             }
         }
-        assertEquals(listOf("lesson_krok-a1-01.json 2D 0", "lesson_krok-a1-01.json 2D 1"), multiline)
+        assertEquals(
+            listOf(
+                "lesson_krok-a1-01.json 2D 0",
+                "lesson_krok-a1-01.json 2D 1",
+                "lesson_krok-a1-07.json 2H 0",
+                "lesson_krok-a1-07.json 2I 0",
+            ),
+            multiline,
+        )
     }
 
     @Test

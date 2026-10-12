@@ -284,6 +284,7 @@
     <string name="exercises_heading">Exercises</string>
     <string name="exercise_repeat_hint">Listen, then say each word out loud.</string>
     <string name="exercise_audio_unavailable">This recording could not be loaded.</string>
+    <string name="exercise_audio_coming_soon">Audio coming soon</string>
     <string name="lesson_not_found">This lesson is no longer in the course.</string>
     <string name="lesson_flow_start">Start lesson</string>
     <string name="lesson_flow_continue">Continue lesson</string>
@@ -296,6 +297,8 @@
     <string name="lesson_flow_hide_hint">Hide hint</string>
     <string name="lesson_flow_almost_expected">Almost — check the Polish letters: %1$s</string>
     <string name="lesson_flow_expected">Correct answer: %1$s</string>
+    <string name="lesson_flow_missed_numbers">Missed: %1$s</string>
+    <string name="lesson_flow_extra_numbers">Not drawn: %1$s</string>
     <string name="lesson_flow_model_answer">Model answer</string>
     <string name="lesson_flow_finish">Finish lesson</string>
     <string name="lesson_flow_completed">Lesson complete</string>

@@ -154,7 +154,11 @@ data class LessonSession(
         if (!isChecked(screenId)) return null
         val screen = script.screens.firstOrNull { it.id == screenId } ?: return null
         val question = screen.questions.firstOrNull { it.key == key } ?: return null
-        return verdictOf(assigned(screen, question), answer(screenId, key))
+        val given = answer(screenId, key)
+        val verdict = verdictOf(assigned(screen, question), given)
+        val usedBefore = screen.eachAnswerOnce &&
+            screen.questions.takeWhile { it.key != key }.any { LessonAnswerChecker.same(answer(screenId, it.key), given) }
+        return if (usedBefore && verdict == AnswerVerdict.CORRECT) AnswerVerdict.WRONG else verdict
     }
 
     fun expectedAnswer(

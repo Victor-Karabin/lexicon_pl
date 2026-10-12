@@ -61,6 +61,7 @@ import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.course.GAP_MARKER
 import com.lexicon.interactors.course.GapFillItem
 import com.lexicon.interactors.course.InlineChoiceGroup
+import com.lexicon.interactors.course.LessonAnswerChecker
 import com.lexicon.interactors.course.LessonSession
 import com.lexicon.interactors.course.MinimalPairItem
 import com.lexicon.interactors.course.Score
@@ -334,6 +335,7 @@ private fun ScreenBody(
         is LessonScreen.Ordering -> OrderingBody(screen, session, actions)
         is LessonScreen.Form -> FormBody(screen, session, actions)
         is LessonScreen.Conjugation -> ConjugationBody(screen, session, actions)
+        is LessonScreen.NumberGrid -> NumberGridBody(screen, session, actions)
         is LessonScreen.InlineChoice -> InlineChoiceBody(screen, session, actions)
         is LessonScreen.Grammar -> session.script.rules.forEach { RuleView(it) }
     }
@@ -430,16 +432,18 @@ private fun TrackPlayer(
     Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
         if (showLabel) track.label?.let { Text(it, style = MaterialTheme.typography.labelLarge) }
         val state = uiState.tracks.of(track.file)
+        val comingSoon = state.isMissing && track.remoteId == null
         AudioPlayerRow(
             state = state,
             onPlayPause = { actions.onPlay(track) },
             onSeek = { actions.onSeek(track, it) },
             onSpeedChanged = actions.onSpeedChanged,
             modifier = Modifier.onGloballyPositioned { shownPlayers[track.file] = it.boundsInWindow().height > 0f },
+            enabled = !comingSoon,
         )
         if (state.isMissing) {
             Text(
-                stringResource(R.string.exercise_audio_unavailable),
+                stringResource(if (comingSoon) R.string.exercise_audio_coming_soon else R.string.exercise_audio_unavailable),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -527,6 +531,30 @@ private fun ConjugationBody(
         }
     }
     screen.notes.forEach { Text(richText(it), style = MaterialTheme.typography.bodyMedium) }
+}
+
+@Composable
+private fun NumberGridBody(
+    screen: LessonScreen.NumberGrid,
+    session: LessonSession,
+    actions: LessonFlowActions,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium)) {
+        screen.questions.forEach { question ->
+            val selected = LessonAnswerChecker.numbers(session.answer(screen.id, question.key))
+            NumberGridRow(
+                label = question.label,
+                size = screen.size,
+                columns = screen.columns,
+                selected = selected,
+                expected = LessonAnswerChecker.numbers(question.answers.first()).takeIf { session.isChecked(screen.id) },
+                onToggle = { number ->
+                    val toggled = if (number in selected) selected - number else selected + number
+                    actions.onAnswerChanged(question.key, toggled.sorted().joinToString(" "))
+                },
+            )
+        }
+    }
 }
 
 @Composable

@@ -80,7 +80,7 @@ data class Transcript(
 
 enum class AnswerKeyboard { TEXT, DIGITS }
 
-enum class AnswerMatch { WHOLE, KEY_WORDS, EXACT_LETTERS }
+enum class AnswerMatch { WHOLE, KEY_WORDS, EXACT_LETTERS, NUMBER_SET }
 
 sealed interface ItemPicture {
     data class Symbol(
@@ -160,6 +160,8 @@ sealed interface LessonScreen {
     val hint: String? get() = null
 
     val interchangeable: List<List<String>> get() = emptyList()
+
+    val eachAnswerOnce: Boolean get() = false
 
     val isGraded: Boolean get() = questions.isNotEmpty()
 
@@ -274,6 +276,18 @@ sealed interface LessonScreen {
         val wordBox: ImmutableList<String> = persistentListOf(),
         override val interchangeable: ImmutableList<ImmutableList<String>> = persistentListOf(),
         val choices: ImmutableList<ChoiceQuestion> = persistentListOf(),
+        override val eachAnswerOnce: Boolean = false,
+    ) : LessonScreen
+
+    data class NumberGrid(
+        override val id: String,
+        override val title: String,
+        override val instruction: String,
+        override val tracks: ImmutableList<LessonTrack>,
+        override val transcript: Transcript?,
+        val size: Int,
+        val columns: Int,
+        override val questions: ImmutableList<LessonQuestion>,
     ) : LessonScreen
 
     data class FreeWriting(

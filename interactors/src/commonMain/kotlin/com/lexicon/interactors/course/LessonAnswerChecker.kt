@@ -19,6 +19,8 @@ object LessonAnswerChecker {
 
     private val spaces = Regex("""\s+""")
 
+    private val digitRuns = Regex("""\d+""")
+
     private val composed = mapOf(
         "a\u0328" to "ą",
         "c\u0301" to "ć",
@@ -35,6 +37,14 @@ object LessonAnswerChecker {
         given: String,
         match: AnswerMatch = AnswerMatch.WHOLE,
     ): AnswerVerdict {
+        if (match == AnswerMatch.NUMBER_SET) {
+            val chosen = numbers(given)
+            return when {
+                chosen.isEmpty() -> AnswerVerdict.EMPTY
+                expected.any { numbers(it) == chosen } -> AnswerVerdict.CORRECT
+                else -> AnswerVerdict.WRONG
+            }
+        }
         val typed = normalise(given)
         if (typed.isEmpty()) return AnswerVerdict.EMPTY
         val accepted = expected.map(::normalise)
@@ -44,7 +54,7 @@ object LessonAnswerChecker {
                 accepted.any { differsOnlyInDiacritics(typed, it) } -> AnswerVerdict.ALMOST
                 else -> AnswerVerdict.WRONG
             }
-            AnswerMatch.EXACT_LETTERS -> if (typed in accepted) AnswerVerdict.CORRECT else AnswerVerdict.WRONG
+            AnswerMatch.EXACT_LETTERS, AnswerMatch.NUMBER_SET -> if (typed in accepted) AnswerVerdict.CORRECT else AnswerVerdict.WRONG
             AnswerMatch.KEY_WORDS -> when {
                 accepted.any { contains(typed, it) } -> AnswerVerdict.CORRECT
                 accepted.any { contains(fold(typed), fold(it)) } -> AnswerVerdict.ALMOST
@@ -60,6 +70,13 @@ object LessonAnswerChecker {
         val typed = normalise(given)
         return expected.firstOrNull { differsOnlyInDiacritics(typed, normalise(it)) } ?: expected.first()
     }
+
+    fun numbers(text: String): Set<Int> = digitRuns.findAll(text).map { it.value.toInt() }.toSet()
+
+    fun same(
+        first: String,
+        second: String,
+    ): Boolean = normalise(first).let { it.isNotEmpty() && it == normalise(second) }
 
     fun changedLetters(
         expected: String,

@@ -206,6 +206,30 @@ class LessonExerciseTypesTest {
     }
 
     @Test
+    fun `on a screen that uses each answer once, a word typed twice is wrong the second time`() {
+        val pairs = LessonScreen.GapFill(
+            id = "1C",
+            title = "",
+            instruction = "",
+            tracks = persistentListOf(),
+            transcript = null,
+            sections = persistentListOf(GapSection(null, null, persistentListOf(GapLine(null, "czytać [1], [2] · lubić [3], [4]")))),
+            questions = persistentListOf(
+                question("1", "gazetę", "książkę", "list"),
+                question("2", "książkę", "gazetę", "list"),
+                question("3", "piwo", "kawę", "list", "gazetę"),
+                question("4", "kawę", "piwo", "list", "gazetę"),
+            ),
+            eachAnswerOnce = true,
+        )
+        val checked = session(pairs).answering("1" to "gazetę", "2" to "list", "3" to "gazetę", "4" to "kawę").check()
+        assertEquals(AnswerVerdict.CORRECT, checked.verdict("1C", "1"))
+        assertEquals(AnswerVerdict.CORRECT, checked.verdict("1C", "2"))
+        assertEquals(AnswerVerdict.WRONG, checked.verdict("1C", "3"))
+        assertEquals(AnswerVerdict.CORRECT, checked.verdict("1C", "4"))
+    }
+
+    @Test
     fun `a choice item with two right options accepts either`() {
         val endings = LessonScreen.Choice(
             id = "2C",
