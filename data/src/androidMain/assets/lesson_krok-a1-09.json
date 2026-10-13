@@ -240,7 +240,7 @@
         {"label": "2", "prompt": "🥕 carrot (base) · celeriac · 🍎 apple · 🍋 lemon", "answers": ["marchewka | selerem | jabłkiem | cytryną"], "feedback": "After *z* → instrumental (*z selerem, z jabłkiem i z cytryną*)."},
         {"label": "3", "prompt": "🍅 tomatoes (base) · 🥒 cucumber · red pepper · 🧅 onion · 🧄 garlic · 🫒 olive oil", "answers": ["pomidory | ogórkiem | papryką | cebulą | czosnkiem | oliwą"]},
         {"label": "4", "prompt": "🥬 lettuce (base) · 🌽 sweetcorn · 🍅 tomato · 🫘 beans · 🧄 garlic · 🫑 green pepper · 🫒 olive oil", "answers": ["sałata | kukurydzą | pomidorem | fasolą | papryką | czosnkiem | oliwą"]},
-        {"label": "5", "prompt": "🥬 lettuce (base) · 🥒 cucumber · radish · sour cream", "answers": ["sałata | ogórkiem | rzodkiewką | śmietaną"], "feedback": "Before *ś* + consonant: *ze śmietaną*."}
+        {"label": "5", "prompt": "🥬 lettuce (base) · 🥒 cucumber · radish · sour cream", "answers": ["sałata | ogórkiem | rzodkiewką | ze śmietaną"], "feedback": "Before *ś* + consonant: *ze śmietaną*."}
       ],
       "newWords": [
         {"polish": "rodzynki", "english": "raisins"},
@@ -877,16 +877,16 @@
       "title": "Shopping lists",
       "instruction": "Two shopping lists. Write each phrase in the plural. You may write the number too, as a digit or a word: *dwa* (masc., neut.) / *dwie* (fem.), *trzy*, *cztery*.",
       "items": [
-        {"label": "1", "prompt": "2 × (jasny chleb)", "answers": ["jasne chleby", "2 jasne chleby", "dwa jasne chleby"]},
+        {"label": "1", "prompt": "2 × (jasny chleb)", "answers": ["jasne chleby", "2 jasne chleby", "dwa jasne chleby"], "feedback": "*dwa* with masculine and neuter nouns: *dwa jasne chleby*."},
         {"label": "2", "prompt": "4 × (ciemna bułka)", "answers": ["ciemne bułki", "4 ciemne bułki", "cztery ciemne bułki"]},
-        {"label": "3", "prompt": "2 × (świeże masło)", "answers": ["świeże masła", "2 świeże masła", "dwa świeże masła"]},
+        {"label": "3", "prompt": "2 × (świeże masło)", "answers": ["świeże masła", "2 świeże masła", "dwa świeże masła"], "feedback": "*dwa* with masculine and neuter nouns: *dwa świeże masła*."},
         {"label": "4", "prompt": "3 × (zielony ogórek)", "answers": ["zielone ogórki", "3 zielone ogórki", "trzy zielone ogórki"]},
         {"label": "5", "prompt": "4 × (duży pomidor)", "answers": ["duże pomidory", "4 duże pomidory", "cztery duże pomidory"]},
-        {"label": "6", "prompt": "2 × (jogurt naturalny)", "answers": ["jogurty naturalne", "2 jogurty naturalne", "dwa jogurty naturalne"]},
-        {"label": "7", "prompt": "2 × (zielone jabłko)", "answers": ["zielone jabłka", "2 zielone jabłka", "dwa zielone jabłka"]},
-        {"label": "8", "prompt": "2 × (sok pomarańczowy)", "answers": ["soki pomarańczowe", "2 soki pomarańczowe", "dwa soki pomarańczowe"]},
+        {"label": "6", "prompt": "2 × (jogurt naturalny)", "answers": ["jogurty naturalne", "2 jogurty naturalne", "dwa jogurty naturalne"], "feedback": "*dwa* with masculine and neuter nouns: *dwa jogurty naturalne*."},
+        {"label": "7", "prompt": "2 × (zielone jabłko)", "answers": ["zielone jabłka", "2 zielone jabłka", "dwa zielone jabłka"], "feedback": "*dwa* with masculine and neuter nouns: *dwa zielone jabłka*."},
+        {"label": "8", "prompt": "2 × (sok pomarańczowy)", "answers": ["soki pomarańczowe", "2 soki pomarańczowe", "dwa soki pomarańczowe"], "feedback": "*dwa* with masculine and neuter nouns: *dwa soki pomarańczowe*."},
         {"label": "9", "prompt": "4 × (ciemne piwo)", "answers": ["ciemne piwa", "4 ciemne piwa", "cztery ciemne piwa"]},
-        {"label": "10", "prompt": "2 × (woda mineralna)", "answers": ["wody mineralne", "2 wody mineralne", "dwie wody mineralne"], "feedback": "*dwie* with feminine nouns: *dwie cebule* (*dwie wody mineralne*)."},
+        {"label": "10", "prompt": "2 × (woda mineralna)", "answers": ["wody mineralne", "2 wody mineralne", "dwie wody mineralne"], "feedback": "*dwie* with feminine nouns: *dwie wody mineralne*."},
         {"label": "11", "prompt": "3 × (średnia cytryna)", "answers": ["średnie cytryny", "3 średnie cytryny", "trzy średnie cytryny"]},
         {"label": "12", "prompt": "3 × (czerwona papryka)", "answers": ["czerwone papryki", "3 czerwone papryki", "trzy czerwone papryki"]}
       ],
@@ -902,15 +902,15 @@
       "title": "Fill in",
       "instruction": "Write each phrase in the plural.",
       "items": [
-        {"label": "1", "prompt": "2 × (mleko)", "answers": ["mleka", "2 mleka", "dwa mleka"]},
-        {"label": "2", "prompt": "2 × (miód)", "answers": ["miody", "2 miody", "dwa miody"]},
+        {"label": "1", "prompt": "2 × (mleko)", "answers": ["mleka", "2 mleka", "dwa mleka"], "feedback": "*dwa* with masculine and neuter nouns: *dwa mleka*."},
+        {"label": "2", "prompt": "2 × (miód)", "answers": ["miody", "2 miody", "dwa miody"], "feedback": "*dwa* with masculine and neuter nouns: *dwa miody*."},
         {"label": "3", "prompt": "3 × (banan)", "answers": ["banany", "3 banany", "trzy banany"]},
         {"label": "4", "prompt": "4 × (mała bułka)", "answers": ["małe bułki", "4 małe bułki", "cztery małe bułki"]},
-        {"label": "5", "prompt": "2 × (duża kapusta)", "answers": ["duże kapusty", "2 duże kapusty", "dwie duże kapusty"], "feedback": "*dwie* with feminine nouns: *dwie cebule* (*dwie duże kapusty*)."},
+        {"label": "5", "prompt": "2 × (duża kapusta)", "answers": ["duże kapusty", "2 duże kapusty", "dwie duże kapusty"], "feedback": "*dwie* with feminine nouns: *dwie duże kapusty*."},
         {"label": "6", "prompt": "3 × (mocna kawa)", "answers": ["mocne kawy", "3 mocne kawy", "trzy mocne kawy"]},
         {"label": "7", "prompt": "4 × (wytrawne wino)", "answers": ["wytrawne wina", "4 wytrawne wina", "cztery wytrawne wina"]},
         {"label": "8", "prompt": "3 × (jogurt malinowy)", "answers": ["jogurty malinowe", "3 jogurty malinowe", "trzy jogurty malinowe"]},
-        {"label": "9", "prompt": "2 × (świeży ogórek)", "answers": ["świeże ogórki", "2 świeże ogórki", "dwa świeże ogórki"]},
+        {"label": "9", "prompt": "2 × (świeży ogórek)", "answers": ["świeże ogórki", "2 świeże ogórki", "dwa świeże ogórki"], "feedback": "*dwa* with masculine and neuter nouns: *dwa świeże ogórki*."},
         {"label": "10", "prompt": "4 × (młody ziemniak)", "answers": ["młode ziemniaki", "4 młode ziemniaki", "cztery młode ziemniaki"]}
       ],
       "newWords": [
@@ -948,7 +948,7 @@
         {"number": 5, "answers": ["czarne długopisy"]},
         {"number": 6, "answers": ["duże ryby"]},
         {"number": 7, "answers": ["słodkie ananasy"]},
-        {"number": 8, "answers": ["cebule"], "feedback": "*dwie* with feminine nouns: *dwie cebule* (*dwie cebule*)."},
+        {"number": 8, "answers": ["cebule"], "feedback": "*dwie* with feminine nouns: *dwie cebule*."},
         {"number": 9, "answers": ["pomidory"]},
         {"number": 10, "answers": ["komórki"]},
         {"number": 11, "answers": ["komputery"]},
@@ -1009,7 +1009,7 @@
       "shuffle": false,
       "notes": ["POTRAWA: gotowana · pieczona · wędzona · smażona · duszona"],
       "transcript": {
-        "unlock": "after_check",
+        "unlock": "after_screen:4B",
         "sections": [
           {
             "lines": [
@@ -1310,7 +1310,7 @@
       "title": "Mami's shopping",
       "instruction": "Put the words in brackets in the right form. Then listen and check. *stać* (to stand): *on stoi*.",
       "tracks": [{"id": "wb42"}],
-      "notes": ["*ananas* and *arbuz* take the animate accusative: *ananasa, małego arbuza*."],
+      "notes": ["Some masculine fruit names take the animate accusative in *-a*, like *banan → kupuję banana*."],
       "transcript": {
         "unlock": "after_check",
         "sections": [
@@ -1346,12 +1346,12 @@
         {"number": 11, "answers": ["banany"]},
         {"number": 12, "answers": ["pomarańcze"]},
         {"number": 13, "answers": ["jabłka"]},
-        {"number": 14, "answers": ["ananasa"], "feedback": "*ananas* and *arbuz* take the animate accusative: *ananasa, małego arbuza*."},
-        {"number": 15, "answers": ["małego arbuza"], "feedback": "*ananas* and *arbuz* take the animate accusative: *ananasa, małego arbuza*."},
+        {"number": 14, "answers": ["ananasa"], "feedback": "*ananas* takes the animate accusative: *ananasa*."},
+        {"number": 15, "answers": ["małego arbuza"], "feedback": "*arbuz* takes the animate accusative: *małego arbuza*."},
         {"number": 16, "answers": ["zakupami"], "feedback": "Plural instrumental: *-ymi / -imi* + *-ami* (*z zakupami*)."},
         {"number": 17, "answers": ["gruszki"]},
         {"number": 18, "answers": ["wędzoną rybę"]},
-        {"number": 19, "answers": ["sympatycznym kolegą"], "feedback": "After *z* → instrumental (*jest sympatycznym kolegą*)."},
+        {"number": 19, "answers": ["sympatycznym kolegą"], "feedback": "After *być* → instrumental: *Javier jest sympatycznym kolegą*."},
         {"number": 20, "answers": ["gruszki"]},
         {"number": 21, "answers": ["rybę"]},
         {"number": 22, "answers": ["truskawki"]},

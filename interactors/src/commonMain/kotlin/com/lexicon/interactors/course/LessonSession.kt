@@ -186,7 +186,7 @@ data class LessonSession(
             val taken = screen.questions.filter { it.key != key }.map { answer(screenId, it.key) }
             return answers.firstOrNull { candidate -> taken.none { LessonAnswerChecker.same(it, candidate) } } ?: answers.first()
         }
-        return LessonAnswerChecker.closest(answers, answer(screenId, key))
+        return LessonAnswerChecker.written(LessonAnswerChecker.closest(answers, answer(screenId, key)))
     }
 
     fun usualForm(
@@ -197,7 +197,7 @@ data class LessonSession(
         val screen = script.screens.firstOrNull { it.id == screenId } ?: return null
         val question = assigned(screen, screen.questions.firstOrNull { it.key == key } ?: return null)
         val asWritten = LessonAnswerChecker.verdict(question.answers, answer(screenId, key), question.match)
-        return question.answers.first().takeIf { asWritten != AnswerVerdict.CORRECT }
+        return LessonAnswerChecker.written(question.answers.first()).takeIf { asWritten != AnswerVerdict.CORRECT }
     }
 
     private fun verdictOf(
