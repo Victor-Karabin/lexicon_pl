@@ -139,9 +139,7 @@
       "newWords": [
         {"polish": "ciekawe", "english": "I wonder"},
         {"polish": "nasz", "english": "our"},
-        {"polish": "grupa", "english": "group"},
-        {"polish": "myśleć", "english": "to think"},
-        {"polish": "wiedzieć", "english": "to know (a fact)"}
+        {"polish": "myśleć", "english": "to think"}
       ]
     },
     {
@@ -227,11 +225,8 @@
       ],
       "notes": ["After *po*: *-ski* → *-sku*, *-cki* → *-cku* (*niemiecki* → *po niemiecku*)."],
       "newWords": [
-        {"polish": "język", "english": "language"},
         {"polish": "znać", "english": "to know (a person, a language)"},
-        {"polish": "po polsku", "english": "in Polish"},
         {"polish": "francuski", "english": "French"},
-        {"polish": "angielski", "english": "English"},
         {"polish": "włoski", "english": "Italian"},
         {"polish": "szwedzki", "english": "Swedish"}
       ],
@@ -276,15 +271,8 @@
         {"number": 6, "answers": ["po japońsku"]}
       ],
       "newWords": [
-        {"polish": "po polsku", "english": "in Polish"},
-        {"polish": "żart", "english": "joke"},
         {"polish": "masz rację", "english": "you're right"},
-        {"polish": "słowo", "english": "word"},
-        {"polish": "tylko", "english": "only"},
         {"polish": "trochę", "english": "a little"},
-        {"polish": "mnie też", "english": "me too"},
-        {"polish": "nasz", "english": "our"},
-        {"polish": "grupa", "english": "group"},
         {"polish": "cieszyć się", "english": "to be glad"}
       ],
       "rules": [2]
@@ -326,12 +314,7 @@
         {"number": 11, "answers": ["hiszpańsku"]},
         {"number": 12, "answers": ["niemiecku"], "feedback": "In Argentina people speak Spanish, in Austria German."}
       ],
-      "newWords": [
-        {"polish": "Rosja", "english": "Russia"},
-        {"polish": "Ameryka", "english": "America"},
-        {"polish": "Austria", "english": "Austria"},
-        {"polish": "rosyjski", "english": "Russian"}
-      ],
+      "newWords": [{"polish": "Ameryka", "english": "America"}, {"polish": "rosyjski", "english": "Russian"}],
       "rules": [2],
       "newWordsUnlock": "after_check"
     },
@@ -455,8 +438,6 @@
       "newWords": [
         {"polish": "Holandia", "english": "the Netherlands"},
         {"polish": "Węgry", "english": "Hungary (z Węgier — from Hungary)"},
-        {"polish": "oczywiście", "english": "of course"},
-        {"polish": "świetnie", "english": "great"},
         {"polish": "chcieć", "english": "to want"},
         {"polish": "węgierski", "english": "Hungarian"},
         {"polish": "holenderski", "english": "Dutch"},
@@ -607,7 +588,7 @@
         "After *sz*, *rz / ż*, *cz* write *y* instead of *i* (*uczysz*, *tańczysz*).",
         "Don't mix with the *-m / -sz* group: *mam, masz* — but *myślę, myślisz*."
       ],
-      "newWords": [{"polish": "myśleć", "english": "to think"}, {"polish": "uczyć", "english": "to teach"}],
+      "newWords": [{"polish": "tańczyć", "english": "to dance"}],
       "rules": [1]
     },
     {
@@ -665,12 +646,7 @@
           ]
         }
       ],
-      "newWords": [
-        {"polish": "mówić", "english": "to speak"},
-        {"polish": "lubić", "english": "to like"},
-        {"polish": "kończyć", "english": "to finish"},
-        {"polish": "tańczyć", "english": "to dance"}
-      ],
+      "newWords": [{"polish": "lubić", "english": "to like"}, {"polish": "kończyć", "english": "to finish"}],
       "rules": [1]
     },
     {
@@ -709,12 +685,9 @@
         {"number": 11, "answers": ["tańczysz"], "feedback": "After *cz* write *y*: *tańczysz*."}
       ],
       "newWords": [
-        {"polish": "palić", "english": "to smoke"},
         {"polish": "pisać", "english": "to write"},
-        {"polish": "kino", "english": "cinema"},
         {"polish": "salsa", "english": "salsa"},
         {"polish": "tango", "english": "tango"},
-        {"polish": "cieszyć się", "english": "to be glad"},
         {"polish": "pizza", "english": "pizza"}
       ],
       "rules": [1]
@@ -808,7 +781,6 @@
         {"polish": "siedzieć", "english": "to sit"},
         {"polish": "kawiarnia", "english": "café"},
         {"polish": "chodzić", "english": "to go, to attend (chodzić na kurs — to attend a course)"},
-        {"polish": "kurs", "english": "course"},
         {"polish": "robić", "english": "to do"},
         {"polish": "spaghetti", "english": "spaghetti"}
       ],
@@ -839,13 +811,7 @@
         {"number": 5, "answers": ["uczę"], "feedback": "A teacher *uczy* (teaches): *uczę języka niemieckiego*; a student *uczy się*."},
         {"number": 6, "answers": ["kurs"]}
       ],
-      "newWords": [
-        {"polish": "nauczyciel", "english": "teacher (man)"},
-        {"polish": "nauczycielka", "english": "teacher (woman)"},
-        {"polish": "to znaczy", "english": "that means"}
-      ],
-      "rules": [1, 2],
-      "newWordsUnlock": "after_check"
+      "rules": [1, 2]
     },
     {
       "id": "3G",
@@ -926,7 +892,6 @@
         }
       ],
       "newWords": [
-        {"polish": "dlaczego", "english": "why"},
         {"polish": "dziś", "english": "today"},
         {"polish": "smutny", "english": "sad"},
         {"polish": "intensywnie", "english": "intensely"},
@@ -960,7 +925,6 @@
         {"number": 5, "answers": ["y"]},
         {"number": 6, "answers": ["i"], "feedback": "*wysoki* ends in *-i*: after *k* and *g* the masculine ending is *-i*."}
       ],
-      "newWords": [{"polish": "ładny", "english": "pretty"}],
       "rules": [5]
     },
     {
@@ -1013,17 +977,10 @@
         {"polish": "leniwy", "english": "lazy"},
         {"polish": "gruby", "english": "fat"},
         {"polish": "szczupły", "english": "slim"},
-        {"polish": "wysoki", "english": "tall"},
         {"polish": "niski", "english": "short"},
         {"polish": "średniego wzrostu", "english": "of medium height"},
         {"polish": "wesoły", "english": "cheerful"},
-        {"polish": "smutny", "english": "sad"},
-        {"polish": "ładny", "english": "pretty"},
         {"polish": "brzydki", "english": "ugly"},
-        {"polish": "przystojny", "english": "handsome"},
-        {"polish": "zmęczony", "english": "tired"},
-        {"polish": "wysportowany", "english": "sporty"},
-        {"polish": "młody", "english": "young"},
         {"polish": "zdrowy", "english": "healthy"},
         {"polish": "chory", "english": "ill"},
         {"polish": "czysty", "english": "clean"},
@@ -1067,7 +1024,6 @@
       ],
       "newWords": [
         {"polish": "temperatura", "english": "temperature"},
-        {"polish": "pracować", "english": "to work"},
         {"polish": "ani… ani…", "english": "neither… nor…"},
         {"polish": "mężczyzna", "english": "man"},
         {"polish": "sport", "english": "sport"},
@@ -1136,15 +1092,9 @@
       "newWords": [
         {"polish": "przerwa", "english": "break"},
         {"polish": "lektorka", "english": "(language) teacher"},
-        {"polish": "miły", "english": "nice"},
-        {"polish": "atrakcyjny", "english": "attractive"},
-        {"polish": "energiczny", "english": "energetic"},
-        {"polish": "spontaniczny", "english": "spontaneous"},
-        {"polish": "sympatyczny", "english": "nice, friendly"},
         {"polish": "na pewno", "english": "surely"},
         {"polish": "chyba", "english": "probably"},
-        {"polish": "pewny", "english": "sure"},
-        {"polish": "koleżanka", "english": "friend (woman)"}
+        {"polish": "pewny", "english": "sure"}
       ],
       "rules": [3]
     },
@@ -1231,8 +1181,8 @@
         {"polish": "ambicja", "english": "ambition"},
         {"polish": "cały czas", "english": "all the time"},
         {"polish": "modelka", "english": "model"},
-        {"polish": "szybko", "english": "quickly"},
-        {"polish": "kiedy", "english": "when"}
+        {"polish": "kiedy", "english": "when"},
+        {"polish": "dużo", "english": "a lot"}
       ],
       "rules": [5]
     },
@@ -1323,7 +1273,6 @@
           "choices": [{"options": ["i", "ale", "bo"], "answer": "bo"}]
         }
       ],
-      "newWords": [{"polish": "niewysportowany", "english": "unathletic"}],
       "rules": [4]
     },
     {
@@ -1394,7 +1343,6 @@
           "choices": [{"options": ["i", "ani", "ale", "bo"], "answer": "bo"}]
         }
       ],
-      "newWords": [{"polish": "ani… ani…", "english": "neither… nor…"}],
       "rules": [4]
     }
   ],

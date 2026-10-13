@@ -31,6 +31,8 @@ object LessonAnswerChecker {
 
     private const val LIST_MARK = "|"
 
+    private const val CLOSE_SHARE = 3
+
     private val composed = mapOf(
         "a\u0328" to "ą",
         "c\u0301" to "ć",
@@ -128,6 +130,16 @@ object LessonAnswerChecker {
         first: String,
         second: String,
     ): Boolean = normalise(first).let { it.isNotEmpty() && it == normalise(second) }
+
+    fun wrongLetters(
+        expected: String,
+        given: String,
+    ): Set<Int> {
+        if (given.isBlank()) return emptySet()
+        val changed = changedLetters(expected, given)
+        val letters = expected.count { it.isLetterOrDigit() }
+        return changed.takeIf { it.size <= maxOf(1, letters / CLOSE_SHARE) }.orEmpty()
+    }
 
     fun changedLetters(
         expected: String,

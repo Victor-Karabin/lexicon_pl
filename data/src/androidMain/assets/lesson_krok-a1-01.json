@@ -207,8 +207,6 @@
         ]
       },
       "newWords": [
-        {"polish": "cześć", "english": "hi"},
-        {"polish": "dziękuję", "english": "thank you"},
         {"polish": "przepraszam", "english": "sorry / excuse me"},
         {"polish": "gdzie", "english": "where"},
         {"polish": "powtórzyć", "english": "to repeat"},
@@ -268,7 +266,6 @@
         {"polish": "dom", "english": "house"},
         {"polish": "prosię", "english": "piglet"},
         {"polish": "siny", "english": "bluish"},
-        {"polish": "sześć", "english": "six"},
         {"polish": "dziesięć", "english": "ten"},
         {"polish": "sitko", "english": "strainer"},
         {"polish": "jeden", "english": "one"},
@@ -376,7 +373,8 @@
         {"polish": "nazywać się", "english": "to be called"},
         {"polish": "również", "english": "also, too"},
         {"polish": "ja", "english": "I (mi, mnie — me)"},
-        {"polish": "pani", "english": "Mrs; madam; you (to a woman, formal)"}
+        {"polish": "pani", "english": "Mrs; madam; you (to a woman, formal)"},
+        {"polish": "mnie też", "english": "me too"}
       ],
       "rules": [2]
     },
@@ -527,11 +525,7 @@
           }
         ]
       },
-      "newWords": [
-        {"polish": "imię", "english": "first name"},
-        {"polish": "poznać", "english": "to meet, to get to know"},
-        {"polish": "pan", "english": "Mr; sir; you (to a man, formal)"}
-      ],
+      "newWords": [{"polish": "pan", "english": "Mr; sir; you (to a man, formal)"}],
       "rules": [2]
     },
     {
@@ -566,7 +560,9 @@
         {"polish": "uff", "english": "phew"},
         {"polish": "skomplikowany", "english": "Complicated!"},
         {"polish": "rozumieć", "english": "to understand"},
-        {"polish": "znaczyć", "english": "to mean"}
+        {"polish": "znaczyć", "english": "to mean"},
+        {"polish": "to znaczy", "english": "that means"},
+        {"polish": "prezentacja", "english": "presentation"}
       ],
       "rules": [2]
     },
@@ -593,16 +589,12 @@
       "rules": [3],
       "newWords": [
         {"polish": "zero", "english": "zero"},
-        {"polish": "jeden", "english": "one"},
         {"polish": "dwa", "english": "two"},
         {"polish": "trzy", "english": "three"},
         {"polish": "cztery", "english": "four"},
         {"polish": "pięć", "english": "five"},
-        {"polish": "sześć", "english": "six"},
         {"polish": "siedem", "english": "seven"},
-        {"polish": "osiem", "english": "eight"},
-        {"polish": "dziewięć", "english": "nine"},
-        {"polish": "dziesięć", "english": "ten"}
+        {"polish": "osiem", "english": "eight"}
       ]
     },
     {
@@ -709,22 +701,17 @@
       },
       "newWords": [
         {"polish": "toaleta", "english": "toilet"},
-        {"polish": "komputer", "english": "computer"},
         {"polish": "gratis", "english": "free of charge"},
         {"polish": "kawa", "english": "coffee"},
-        {"polish": "herbata", "english": "tea"},
         {"polish": "cukier", "english": "sugar"},
-        {"polish": "program", "english": "programme"},
         {"polish": "kulturalny", "english": "cultural"},
         {"polish": "coś", "english": "something"},
         {"polish": "specjalny", "english": "special"},
         {"polish": "spotkanie", "english": "meeting"},
         {"polish": "lekcja", "english": "lesson"},
-        {"polish": "rozumieć", "english": "to understand"},
         {"polish": "tu", "english": "here"},
         {"polish": "tutaj", "english": "here"},
         {"polish": "tam", "english": "there"},
-        {"polish": "lewo", "english": "left (na lewo — on the left)"},
         {"polish": "prawo", "english": "right (na prawo — on the right)"},
         {"polish": "pytanie", "english": "question"},
         {"polish": "można", "english": "one can, it's allowed"},
@@ -873,13 +860,11 @@
         {"polish": "zmęczony", "english": "tired"},
         {"polish": "aha", "english": "I see, aha"},
         {"polish": "wiedzieć", "english": "to know (a fact)"},
-        {"polish": "powtórzyć", "english": "to repeat"},
         {"polish": "przeliterować", "english": "to spell"},
         {"polish": "przeczytać", "english": "to read"},
         {"polish": "napisać", "english": "to write"},
         {"polish": "mówić", "english": "to speak, to say"},
-        {"polish": "po polsku", "english": "in Polish"},
-        {"polish": "pytanie", "english": "question"}
+        {"polish": "po polsku", "english": "in Polish"}
       ]
     },
     {
@@ -895,8 +880,7 @@
         {"label": "4", "prompt": "Co to znaczy „dziękuję”?", "options": ["A", "B", "C", "D", "E", "F"], "answer": "F"},
         {"label": "5", "prompt": "Co to znaczy „dom”?", "options": ["A", "B", "C", "D", "E", "F"], "answer": "C", "feedback": "*Dom* means \"house\", but the translation isn't among the replies. Each reply is used once, so the only one left is C — *Nie wiem* (\"I don't know\"): someone is asked the meaning and doesn't know it. In real life you would answer \"House\"."},
         {"label": "6", "prompt": "Proszę przeczytać „dom”.", "options": ["A", "B", "C", "D", "E", "F"], "answer": "E", "feedback": "*przeliterować* = spell (d-o-m); *przeczytać* = read aloud (Dom)."}
-      ],
-      "newWords": [{"polish": "dom", "english": "house"}]
+      ]
     },
     {
       "id": "5C",
@@ -1019,8 +1003,8 @@
         {"polish": "narodowość", "english": "nationality"},
         {"polish": "adres", "english": "address"},
         {"polish": "ulica", "english": "street"},
-        {"polish": "numer", "english": "number"},
-        {"polish": "telefon", "english": "telephone"}
+        {"polish": "telefon", "english": "telephone"},
+        {"polish": "numer telefonu", "english": "phone number"}
       ]
     },
     {
@@ -1204,7 +1188,9 @@
         {"label": "18", "prompt": "Gor_ów Wielko_ol_ki", "answers": ["Gorzów Wielkopolski"], "feedback": "rz and ż sound the same; ó and u sound the same — remember the spelling: Rzeszów, Kraków, Gorzów."},
         {"label": "19", "prompt": "Z_elona _óra", "answers": ["Zielona Góra"]}
       ],
-      "rules": [1]
+      "rules": [1],
+      "newWords": [{"polish": "Warszawa", "english": "Warsaw"}, {"polish": "zielony", "english": "green"}],
+      "newWordsUnlock": "after_check"
     }
   ],
   "vocabulary": [

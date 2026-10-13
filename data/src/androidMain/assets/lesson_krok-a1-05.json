@@ -137,24 +137,23 @@
             {"text": "b. Skąd on jest? [2]."},
             {"text": "c. [3]? On mieszka w Berlinie."},
             {"text": "d. [4]? On jest wysoki, przystojny i wysportowany."},
-            {"text": "e. [5]? To jest biznesmen."},
+            {"text": "e. [5]? On jest biznesmenem."},
             {"text": "f. Ile ma lat? [6]."},
             {"text": "g. Co lubi robić? [7]."}
           ]
         }
       ],
       "gaps": [
-        {"number": 1, "answers": ["Kto to jest"]},
+        {"number": 1, "answers": ["Kto to jest", "Kto to"]},
         {"number": 2, "answers": ["On jest z Niemiec", "Jest z Niemiec", "Z Niemiec"]},
-        {"number": 3, "answers": ["Gdzie on mieszka", "Gdzie mieszka"]},
-        {"number": 4, "answers": ["Jaki on jest", "Jaki jest"]},
-        {"number": 5, "answers": ["Kim on jest", "Kim jest", "Co on robi", "Co robi", "Kto to jest"]},
+        {"number": 3, "answers": ["Gdzie on mieszka", "Gdzie mieszka on", "Gdzie Uwe mieszka", "Gdzie mieszka Uwe", "Gdzie mieszka"]},
+        {"number": 4, "answers": ["Jaki on jest", "Jaki jest on", "Jaki Uwe jest", "Jaki jest Uwe", "Jaki jest"]},
+        {"number": 5, "answers": ["Kim on jest", "Kim jest on", "Kim Uwe jest", "Kim jest Uwe", "Kim jest", "Kim on jest z zawodu", "Kim Uwe jest z zawodu", "Kim jest z zawodu", "Co on robi", "Co robi on", "Co Uwe robi", "Co robi Uwe", "Co robi"], "feedback": "*Kim on jest?* asks about a job; the answer takes *być* + instrumental: *On jest biznesmenem* (or *to* + nominative: *Uwe to biznesmen*)."},
         {"number": 6, "answers": ["On ma 44 lata", "Ma 44 lata", "On ma czterdzieści cztery lata", "Ma czterdzieści cztery lata"], "feedback": "44 ends in 4 → *lata*."},
         {"number": 7, "answers": ["Lubi pracować", "On lubi pracować"]}
       ],
       "newWords": [
         {"polish": "biznesmen", "english": "businessman"},
-        {"polish": "ile", "english": "how much, how many (Ile ma lat? — How old is he?)"},
         {"polish": "czterdzieści", "english": "forty"}
       ],
       "rules": [5],
@@ -189,12 +188,7 @@
         {"label": "j", "prompt": "w Tokio, ale teraz", "answer": "4"},
         {"label": "k", "prompt": "20 lat. Mami bardzo", "answer": "10"}
       ],
-      "newWords": [
-        {"polish": "chcieć", "english": "to want"},
-        {"polish": "studiować", "english": "to study (at university)"},
-        {"polish": "słuchać", "english": "to listen"},
-        {"polish": "muzyka", "english": "music"}
-      ],
+      "newWords": [{"polish": "słuchać", "english": "to listen"}],
       "rules": [5]
     },
     {
@@ -224,14 +218,14 @@
         }
       ],
       "gaps": [
-        {"number": 1, "answers": ["Kto to jest"]},
-        {"number": 2, "answers": ["Skąd ona jest", "Skąd jest"]},
-        {"number": 3, "answers": ["Gdzie ona mieszka", "Gdzie mieszka"]},
-        {"number": 4, "answers": ["Jaka ona jest", "Jaka jest"]},
-        {"number": 5, "answers": ["Ile ona ma lat", "Ile ma lat"]},
-        {"number": 6, "answers": ["Czy ona jest szczupła", "Czy jest szczupła"]},
-        {"number": 7, "answers": ["Co ona lubi robić", "Co lubi robić"]},
-        {"number": 8, "answers": ["Dlaczego ona uczy się polskiego", "Dlaczego uczy się polskiego", "Dlaczego ona uczy się języka polskiego", "Dlaczego uczy się języka polskiego"]}
+        {"number": 1, "answers": ["Kto to jest", "Kto to"]},
+        {"number": 2, "answers": ["Skąd ona jest", "Skąd jest ona", "Skąd Mami jest", "Skąd jest Mami", "Skąd jest"]},
+        {"number": 3, "answers": ["Gdzie ona mieszka", "Gdzie mieszka ona", "Gdzie Mami mieszka", "Gdzie mieszka Mami", "Gdzie mieszka"]},
+        {"number": 4, "answers": ["Jaka ona jest", "Jaka jest ona", "Jaka Mami jest", "Jaka jest Mami", "Jaka jest"]},
+        {"number": 5, "answers": ["Ile ona ma lat", "Ile Mami ma lat", "Ile ma lat", "Ile ona lat ma", "Ile Mami lat ma", "Ile lat ma Mami", "Ile lat ma"]},
+        {"number": 6, "answers": ["Czy ona jest szczupła", "Czy Mami jest szczupła", "Czy jest szczupła", "Ona jest szczupła", "Mami jest szczupła", "Jest szczupła"]},
+        {"number": 7, "answers": ["Co ona lubi robić", "Co Mami lubi robić", "Co lubi robić Mami", "Co lubi robić", "Co ona lubi", "Co lubi ona", "Co Mami lubi", "Co lubi Mami", "Co lubi"]},
+        {"number": 8, "answers": ["Dlaczego ona uczy się polskiego", "Dlaczego Mami uczy się polskiego", "Dlaczego uczy się polskiego", "Dlaczego ona uczy się języka polskiego", "Dlaczego Mami uczy się języka polskiego", "Dlaczego uczy się języka polskiego", "Dlaczego ona się uczy polskiego", "Dlaczego Mami się uczy polskiego", "Dlaczego się uczy polskiego", "Dlaczego ona się uczy języka polskiego", "Dlaczego Mami się uczy języka polskiego", "Dlaczego się uczy języka polskiego"]}
       ],
       "rules": [5]
     },
@@ -269,12 +263,7 @@
         {"number": 9, "answers": ["gram"]},
         {"number": 10, "answers": ["biegam"]}
       ],
-      "newWords": [
-        {"polish": "śpiewać", "english": "to sing"},
-        {"polish": "grać", "english": "to play"},
-        {"polish": "tenis", "english": "tennis"},
-        {"polish": "biegać", "english": "to run"}
-      ]
+      "newWords": [{"polish": "śpiewać", "english": "to sing"}, {"polish": "biegać", "english": "to run"}]
     },
     {
       "id": "1E",
@@ -287,11 +276,6 @@
         "Kto to jest? · Skąd ona jest? · Gdzie ona mieszka? · Jaka ona jest? · Kim ona jest? · Ile ma lat? · Co lubi robić?"
       ],
       "checklist": ["*ona* → adjectives in *-a*.", "*27 lat* (not *lata*).", "*z Anglii*, *w Londynie*."],
-      "newWords": [
-        {"polish": "prezentacja", "english": "presentation"},
-        {"polish": "książka", "english": "book"},
-        {"polish": "Londyn", "english": "London"}
-      ],
       "rules": [5]
     },
     {
@@ -312,8 +296,9 @@
       "id": "2A",
       "type": "gap_fill",
       "title": "Twenty, thirty…",
-      "instruction": "Numbers (*liczebniki*): calculate and type the result in digits. Then listen to hear the words.",
+      "instruction": "Numbers (*liczebniki*): write each number as a word. Then listen and check.",
       "tracks": [{"id": "105B1"}],
+      "notes": ["*-dzieści* after 2, 3, 4, as in *dwadzieścia*; *-dziesiąt* after 5–9."],
       "transcript": {
         "unlock": "after_check",
         "sections": [
@@ -327,33 +312,31 @@
       "sections": [
         {
           "lines": [
-            {"text": "2 × 10 = 20 — dwa-dzieścia"},
-            {"text": "1. 3 × 10 = [1] — trzy-dzieści"},
-            {"text": "2. 4 × 10 = [2] — czter-dzieści"},
-            {"text": "3. 5 × 10 = [3] — pięć-dziesiąt"},
-            {"text": "4. 6 × 10 = [4] — sześć-dziesiąt"},
-            {"text": "5. 7 × 10 = [5] — siedem-dziesiąt"},
-            {"text": "6. 8 × 10 = [6] — osiem-dziesiąt"},
-            {"text": "7. 9 × 10 = [7] — dziewięć-dziesiąt"},
-            {"text": "8. 10 × 10 = [8] — sto"}
+            {"text": "20 — dwadzieścia"},
+            {"text": "1. 30 — [1]"},
+            {"text": "2. 40 — [2]"},
+            {"text": "3. 50 — [3]"},
+            {"text": "4. 60 — [4]"},
+            {"text": "5. 70 — [5]"},
+            {"text": "6. 80 — [6]"},
+            {"text": "7. 90 — [7]"},
+            {"text": "8. 100 — [8]"}
           ]
         }
       ],
       "gaps": [
-        {"number": 1, "answers": ["30"]},
-        {"number": 2, "answers": ["40"]},
-        {"number": 3, "answers": ["50"]},
-        {"number": 4, "answers": ["60"]},
-        {"number": 5, "answers": ["70"]},
-        {"number": 6, "answers": ["80"]},
-        {"number": 7, "answers": ["90"]},
-        {"number": 8, "answers": ["100"]}
+        {"number": 1, "answers": ["trzydzieści"], "feedback": "*trzy* + *-dzieści*."},
+        {"number": 2, "answers": ["czterdzieści"], "feedback": "*cztery* → *czter-* + *-dzieści*."},
+        {"number": 3, "answers": ["pięćdziesiąt"], "feedback": "*pięć* + *-dziesiąt*."},
+        {"number": 4, "answers": ["sześćdziesiąt"], "feedback": "*sześć* + *-dziesiąt*."},
+        {"number": 5, "answers": ["siedemdziesiąt"], "feedback": "*siedem* + *-dziesiąt*."},
+        {"number": 6, "answers": ["osiemdziesiąt"], "feedback": "*osiem* + *-dziesiąt*."},
+        {"number": 7, "answers": ["dziewięćdziesiąt"], "feedback": "*dziewięć* + *-dziesiąt*."},
+        {"number": 8, "answers": ["sto"], "feedback": "100 is a word of its own: *sto*."}
       ],
       "newWords": [
         {"polish": "liczebnik", "english": "numeral"},
-        {"polish": "dwadzieścia", "english": "20"},
         {"polish": "trzydzieści", "english": "30"},
-        {"polish": "czterdzieści", "english": "40"},
         {"polish": "pięćdziesiąt", "english": "50"},
         {"polish": "sześćdziesiąt", "english": "60"},
         {"polish": "siedemdziesiąt", "english": "70"},
@@ -361,6 +344,7 @@
         {"polish": "dziewięćdziesiąt", "english": "90"},
         {"polish": "sto", "english": "100"}
       ],
+      "newWordsUnlock": "after_check",
       "rules": [4]
     },
     {
@@ -392,7 +376,7 @@
       "id": "2C",
       "type": "choice",
       "title": "What fits?",
-      "instruction": "Choose the ending for each beginning.",
+      "instruction": "Choose the ending for each beginning. Where a number is given, choose the ending that makes it.",
       "items": [
         {"label": "1", "prompt": "pięć-", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-dziesiąt"},
         {"label": "2", "prompt": "pięt-", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-naście"},
@@ -400,7 +384,13 @@
         {"label": "4", "prompt": "szes-", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-naście"},
         {"label": "5", "prompt": "czter-", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-naście", "answers": ["-dzieści"], "feedback": "Both work: *czternaście* (14) and *czterdzieści* (40)."},
         {"label": "6", "prompt": "dziewięt-", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-naście"},
-        {"label": "7", "prompt": "dziewięć-", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-dziesiąt"}
+        {"label": "7", "prompt": "dziewięć-", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-dziesiąt"},
+        {"label": "8", "prompt": "trzy- (30)", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-dzieści"},
+        {"label": "9", "prompt": "trzy- (13)", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-naście"},
+        {"label": "10", "prompt": "czter- (40)", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-dzieści"},
+        {"label": "11", "prompt": "siedem- (70)", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-dziesiąt"},
+        {"label": "12", "prompt": "siedem- (17)", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-naście"},
+        {"label": "13", "prompt": "osiem- (18)", "options": ["-naście", "-dzieści", "-dziesiąt"], "answer": "-naście"}
       ],
       "rules": [4]
     },
@@ -422,7 +412,7 @@
         {"label": "i", "prompt": "77 − 55 =", "answers": ["dwadzieścia dwa"]},
         {"label": "j", "prompt": "110 − 9 =", "answers": ["sto jeden"]}
       ],
-      "newWords": [{"polish": "plus", "english": "plus"}, {"polish": "minus", "english": "minus"}],
+      "newWords": [{"polish": "minus", "english": "minus"}],
       "rules": [4]
     },
     {
@@ -469,10 +459,7 @@
         {"label": "Janek", "answers": ["72 40 30 96"]},
         {"label": "Michał", "answers": ["22 12 58 49"]}
       ],
-      "newWords": [
-        {"polish": "numer telefonu", "english": "phone number"},
-        {"polish": "zanotować", "english": "to note down"}
-      ]
+      "newWords": [{"polish": "zanotować", "english": "to note down"}]
     },
     {
       "id": "3A",
@@ -514,7 +501,6 @@
       ],
       "notes": ["In Poland people don't ask women their age."],
       "newWords": [
-        {"polish": "ile", "english": "how much, how many (Ile masz lat? — How old are you?)"},
         {"polish": "rok", "english": "year"},
         {"polish": "lata", "english": "years"},
         {"polish": "prawie", "english": "almost"},
@@ -523,8 +509,7 @@
         {"polish": "ćwiczyć", "english": "to practise"},
         {"polish": "kobieta", "english": "woman"},
         {"polish": "nieelegancko", "english": "impolite"},
-        {"polish": "nie ma problemu", "english": "no problem"},
-        {"polish": "mąż", "english": "husband"}
+        {"polish": "nie ma problemu", "english": "no problem"}
       ],
       "rules": [5]
     },
@@ -782,11 +767,8 @@
       "newWords": [
         {"polish": "zawód", "english": "profession"},
         {"polish": "kelner", "english": "waiter"},
-        {"polish": "nauczyciel", "english": "teacher"},
-        {"polish": "fotograf", "english": "photographer"},
         {"polish": "informatyk", "english": "IT specialist"},
         {"polish": "rolnik", "english": "farmer"},
-        {"polish": "muzyk", "english": "musician"},
         {"polish": "inżynier", "english": "engineer"},
         {"polish": "policjant", "english": "police officer"},
         {"polish": "kucharz", "english": "cook"},
@@ -795,8 +777,7 @@
         {"polish": "urzędnik", "english": "clerk"},
         {"polish": "lekarz", "english": "doctor"},
         {"polish": "dziennikarz", "english": "journalist"},
-        {"polish": "emeryt", "english": "pensioner"},
-        {"polish": "aktor", "english": "actor"}
+        {"polish": "emeryt", "english": "pensioner"}
       ],
       "newWordsUnlock": "after_check"
     },
@@ -849,7 +830,6 @@
       ],
       "newWords": [
         {"polish": "forma", "english": "form"},
-        {"polish": "żeński", "english": "feminine"},
         {"polish": "barman", "english": "bartender (man)"},
         {"polish": "barmanka", "english": "bartender (woman)"},
         {"polish": "artysta", "english": "artist (man)"},
@@ -868,7 +848,8 @@
         {"polish": "kelnerka", "english": "waitress"},
         {"polish": "kucharka", "english": "cook (woman)"},
         {"polish": "tancerka", "english": "dancer (woman)"},
-        {"polish": "emerytka", "english": "pensioner (woman)"}
+        {"polish": "emerytka", "english": "pensioner (woman)"},
+        {"polish": "sam", "english": "alone (sama — f)"}
       ],
       "rules": [6]
     },
@@ -910,7 +891,6 @@
         {"polish": "polityk", "english": "politician"},
         {"polish": "malarz", "english": "painter"},
         {"polish": "pisarz", "english": "writer"},
-        {"polish": "modelka", "english": "model"},
         {"polish": "znany", "english": "well-known"},
         {"polish": "doskonały", "english": "excellent"},
         {"polish": "który", "english": "who, which (m) — która (f)"},
@@ -919,7 +899,6 @@
         {"polish": "skrzypce", "english": "violin"},
         {"polish": "filmowy", "english": "film (adj.)"},
         {"polish": "publikować", "english": "to publish"},
-        {"polish": "romantyczny", "english": "romantic"},
         {"polish": "popularny", "english": "popular"},
         {"polish": "świetny", "english": "great, excellent"}
       ],
@@ -953,11 +932,7 @@
         {"number": 8, "answers": ["polityk"]}
       ],
       "interchangeable": [["3", "5", "7"]],
-      "newWords": [
-        {"polish": "aktorka", "english": "actress"},
-        {"polish": "zdolny", "english": "gifted"},
-        {"polish": "atrakcyjny", "english": "attractive"}
-      ],
+      "newWords": [{"polish": "zdolny", "english": "gifted"}],
       "rules": [6],
       "newWordsUnlock": "after_check"
     },
@@ -998,22 +973,11 @@
       "newWords": [
         {"polish": "razem", "english": "together"},
         {"polish": "stolik", "english": "small table (przy stoliku — at a table)"},
-        {"polish": "fotografia", "english": "photo"},
-        {"polish": "rodzina", "english": "family"},
-        {"polish": "żona", "english": "wife"},
-        {"polish": "syn", "english": "son"},
-        {"polish": "dziecko", "english": "child"},
         {"polish": "piękny", "english": "beautiful"},
-        {"polish": "popularny", "english": "popular"},
-        {"polish": "teatr", "english": "theatre"},
-        {"polish": "zawód", "english": "profession (Kim jesteś z zawodu? — What do you do?)"},
-        {"polish": "skomplikowany", "english": "complicated"},
-        {"polish": "gitara", "english": "guitar"},
         {"polish": "akordeon", "english": "accordion"},
         {"polish": "pianino", "english": "piano"},
         {"polish": "instruktor", "english": "instructor"},
         {"polish": "umieć", "english": "to be able to"},
-        {"polish": "prawda", "english": "true"},
         {"polish": "nieprawda", "english": "false"},
         {"polish": "przy", "english": "at, by (przy stoliku — at a table)"}
       ],
@@ -1082,12 +1046,8 @@
         {"number": 10, "answers": ["nowoczesny budynek"]}
       ],
       "newWords": [
-        {"polish": "świetny", "english": "excellent"},
-        {"polish": "sekretarka", "english": "secretary"},
         {"polish": "stolica", "english": "capital"},
-        {"polish": "miasto", "english": "city"},
         {"polish": "regionalny", "english": "regional"},
-        {"polish": "ser", "english": "cheese"},
         {"polish": "oscypek", "english": "oscypek (smoked sheep's cheese)"},
         {"polish": "nowoczesny", "english": "modern"},
         {"polish": "budynek", "english": "building"}
@@ -1153,7 +1113,6 @@
           ]
         }
       ],
-      "newWords": [{"polish": "tata", "english": "dad"}],
       "rules": [1]
     },
     {
@@ -1189,13 +1148,7 @@
         {"number": 9, "answers": ["wysokim chłopakiem"], "feedback": "After *k*: *-im*, *-iem* → *wysokim chłopakiem*."},
         {"number": 10, "answers": ["szczupłą dziewczyną"]}
       ],
-      "newWords": [
-        {"polish": "córka", "english": "daughter"},
-        {"polish": "drogi", "english": "expensive"},
-        {"polish": "auto", "english": "car"},
-        {"polish": "chłopak", "english": "boy"},
-        {"polish": "dziewczyna", "english": "girl"}
-      ],
+      "newWords": [{"polish": "drogi", "english": "expensive"}],
       "rules": [1]
     },
     {
@@ -1230,12 +1183,10 @@
         {"polish": "biograficzny", "english": "biographical (książka biograficzna — biography)"},
         {"polish": "dramaturg", "english": "playwright"},
         {"polish": "filozof", "english": "philosopher"},
-        {"polish": "niestety", "english": "unfortunately"},
         {"polish": "martwić się", "english": "to worry (nie martw się — don't worry)"},
         {"polish": "interesować się", "english": "to be interested in"},
         {"polish": "sztuka", "english": "art"},
         {"polish": "malarstwo", "english": "painting"},
-        {"polish": "na przykład", "english": "for example"},
         {"polish": "czarna magia", "english": "a mystery (lit. \"black magic\")"},
         {"polish": "dla", "english": "for"}
       ],
@@ -1268,13 +1219,10 @@
       "newWords": [
         {"polish": "zainteresowanie", "english": "interest"},
         {"polish": "literatura", "english": "literature"},
-        {"polish": "muzyka", "english": "music"},
         {"polish": "historia", "english": "history"},
-        {"polish": "tenis", "english": "tennis"},
         {"polish": "boks", "english": "boxing"},
         {"polish": "piłka nożna", "english": "football"},
         {"polish": "rockowy", "english": "rock (adj.)"},
-        {"polish": "film", "english": "film"},
         {"polish": "ekstremalny", "english": "extreme"},
         {"polish": "kryminalny", "english": "crime (adj.); kryminał — crime novel"}
       ],
@@ -1306,9 +1254,6 @@
       ],
       "newWords": [
         {"polish": "współczesny", "english": "contemporary"},
-        {"polish": "teatr", "english": "theatre"},
-        {"polish": "moda", "english": "fashion"},
-        {"polish": "polityka", "english": "politics"},
         {"polish": "ekonomia", "english": "economics"},
         {"polish": "folklor", "english": "folklore"},
         {"polish": "psychologia", "english": "psychology"},
@@ -1375,11 +1320,9 @@
       ],
       "newWords": [
         {"polish": "Włoszka", "english": "Italian woman"},
-        {"polish": "jeszcze", "english": "still"},
         {"polish": "zostać", "english": "to become (zostać lekarzem — to become a doctor)"},
         {"polish": "medycyna", "english": "medicine"},
         {"polish": "naturalny", "english": "natural"},
-        {"polish": "historia", "english": "history"},
         {"polish": "spacerować", "english": "to go for walks"},
         {"polish": "weekend", "english": "weekend"}
       ],
@@ -1413,11 +1356,9 @@
         {"polish": "grafika", "english": "graphic design"},
         {"polish": "komputerowy", "english": "computer (adj.)"},
         {"polish": "ASP", "english": "Academy of Fine Arts"},
-        {"polish": "silny", "english": "strong"},
         {"polish": "zdjęcie", "english": "photo"}
       ],
-      "rules": [3],
-      "newWordsUnlock": "after_check"
+      "rules": [3]
     },
     {
       "id": "6F",
@@ -1455,20 +1396,19 @@
       "title": "Questions about Mami",
       "instruction": "Write a question to each highlighted part.\nTo jest **(1) Mami**. Ona nazywa się **(2) Mami Takada**. Jest **(3) z Japonii**. Normalnie mieszka w Tokio, ale teraz mieszka **(4) w Krakowie**. Ma **(5) 20 lat**. Jest **(6) niska, szczupła i sympatyczna**. Mówi po japońsku, dobrze po angielsku i zna trochę **(7) polski**. Ona jest dobrą **(8) studentką**. Teraz ona intensywnie uczy się języka polskiego, bo planuje studiować malarstwo **(9) w Polsce**, a konkretnie w Krakowie. Interesuje się **(10) muzyką rockową, malarstwem i architekturą**. Ona bardzo lubi **(11) malować**.",
       "items": [
-        {"label": "1", "prompt": "Mami", "answers": ["Kto to jest?"]},
-        {"label": "2", "prompt": "Mami Takada", "answers": ["Jak ona się nazywa?", "Jak się nazywa?", "Jak nazywa się?"]},
-        {"label": "3", "prompt": "z Japonii", "answers": ["Skąd ona jest?", "Skąd jest?"]},
-        {"label": "4", "prompt": "w Krakowie", "answers": ["Gdzie ona teraz mieszka?", "Gdzie teraz mieszka?", "Gdzie ona mieszka teraz?", "Gdzie mieszka teraz?", "Gdzie ona mieszka?", "Gdzie mieszka?"]},
-        {"label": "5", "prompt": "20 lat", "answers": ["Ile ona ma lat?", "Ile ma lat?", "Ile lat ona ma?", "Ile lat ma?"]},
-        {"label": "6", "prompt": "niska, szczupła i sympatyczna", "answers": ["Jaka ona jest?", "Jaka jest?"]},
-        {"label": "7", "prompt": "polski", "answers": ["Jaki język ona zna trochę?", "Jaki język zna trochę?", "Jaki język ona trochę zna?", "Jaki język trochę zna?", "Co ona zna trochę?", "Co zna trochę?", "Co ona trochę zna?", "Co trochę zna?"]},
-        {"label": "8", "prompt": "studentką", "answers": ["Kim ona jest?", "Kim jest?"], "feedback": "*Kim?* asks about the instrumental (*studentką*)."},
-        {"label": "9", "prompt": "w Polsce", "answers": ["Gdzie ona planuje studiować malarstwo?", "Gdzie planuje studiować malarstwo?", "Gdzie ona planuje studiować?", "Gdzie planuje studiować?"]},
-        {"label": "10", "prompt": "muzyką rockową, malarstwem i architekturą", "answers": ["Czym ona się interesuje?", "Czym się interesuje?", "Czym się ona interesuje?"], "feedback": "*Czym?* asks about the instrumental."},
-        {"label": "11", "prompt": "malować", "answers": ["Co ona bardzo lubi robić?", "Co bardzo lubi robić?", "Co ona lubi robić?", "Co lubi robić?"]}
+        {"label": "1", "prompt": "Mami", "answers": ["Kto to jest?", "Kto to?"]},
+        {"label": "2", "prompt": "Mami Takada", "answers": ["Jak ona się nazywa?", "Jak Mami się nazywa?", "Jak się nazywa Mami?", "Jak się nazywa?", "Jak ona nazywa się?", "Jak Mami nazywa się?", "Jak nazywa się Mami?", "Jak nazywa się?", "Jak się ona nazywa?", "Jak się Mami nazywa?"]},
+        {"label": "3", "prompt": "z Japonii", "answers": ["Skąd ona jest?", "Skąd jest ona?", "Skąd Mami jest?", "Skąd jest Mami?", "Skąd jest?"]},
+        {"label": "4", "prompt": "w Krakowie", "answers": ["Gdzie ona teraz mieszka?", "Gdzie Mami teraz mieszka?", "Gdzie teraz mieszka Mami?", "Gdzie teraz mieszka?", "Gdzie ona mieszka teraz?", "Gdzie Mami mieszka teraz?", "Gdzie mieszka teraz Mami?", "Gdzie mieszka teraz?", "Gdzie ona mieszka?", "Gdzie mieszka ona?", "Gdzie Mami mieszka?", "Gdzie mieszka Mami?", "Gdzie mieszka?", "Gdzie teraz ona mieszka?", "Gdzie teraz Mami mieszka?"]},
+        {"label": "5", "prompt": "20 lat", "answers": ["Ile ona ma lat?", "Ile Mami ma lat?", "Ile ma lat?", "Ile ona lat ma?", "Ile Mami lat ma?", "Ile lat ma Mami?", "Ile lat ma?", "Ile lat ona ma?", "Ile lat Mami ma?"]},
+        {"label": "6", "prompt": "niska, szczupła i sympatyczna", "answers": ["Jaka ona jest?", "Jaka jest ona?", "Jaka Mami jest?", "Jaka jest Mami?", "Jaka jest?"]},
+        {"label": "7", "prompt": "polski", "answers": ["Jaki język ona zna trochę?", "Jaki język Mami zna trochę?", "Jaki język zna trochę?", "Jaki język ona trochę zna?", "Jaki język Mami trochę zna?", "Jaki język trochę zna?", "Jaki język ona zna?", "Jaki język zna ona?", "Jaki język Mami zna?", "Jaki język zna Mami?", "Jaki język zna?", "Co ona zna trochę?", "Co Mami zna trochę?", "Co zna trochę?", "Co ona trochę zna?", "Co Mami trochę zna?", "Co trochę zna?", "Co ona zna?", "Co zna ona?", "Co Mami zna?", "Co zna Mami?", "Co zna?"]},
+        {"label": "8", "prompt": "studentką", "answers": ["Kim ona jest?", "Kim jest ona?", "Kim Mami jest?", "Kim jest Mami?", "Kim jest?"], "feedback": "*Kim?* asks about the instrumental (*studentką*)."},
+        {"label": "9", "prompt": "w Polsce", "answers": ["Gdzie ona planuje studiować malarstwo?", "Gdzie Mami planuje studiować malarstwo?", "Gdzie planuje studiować malarstwo?", "Gdzie ona planuje studiować?", "Gdzie Mami planuje studiować?", "Gdzie planuje studiować Mami?", "Gdzie planuje studiować?", "Gdzie ona chce studiować malarstwo?", "Gdzie Mami chce studiować malarstwo?", "Gdzie chce studiować malarstwo?", "Gdzie ona chce studiować?", "Gdzie Mami chce studiować?", "Gdzie chce studiować Mami?", "Gdzie chce studiować?"]},
+        {"label": "10", "prompt": "muzyką rockową, malarstwem i architekturą", "answers": ["Czym ona się interesuje?", "Czym Mami się interesuje?", "Czym się interesuje Mami?", "Czym się interesuje?", "Czym ona interesuje się?", "Czym Mami interesuje się?", "Czym interesuje się Mami?", "Czym interesuje się?", "Czym się ona interesuje?", "Czym się Mami interesuje?"], "feedback": "*Czym?* asks about the instrumental."},
+        {"label": "11", "prompt": "malować", "answers": ["Co ona bardzo lubi robić?", "Co Mami bardzo lubi robić?", "Co bardzo lubi robić?", "Co ona lubi robić?", "Co Mami lubi robić?", "Co lubi robić Mami?", "Co lubi robić?", "Co ona bardzo lubi?", "Co Mami bardzo lubi?", "Co bardzo lubi Mami?", "Co bardzo lubi?", "Co ona lubi?", "Co lubi ona?", "Co Mami lubi?", "Co lubi Mami?", "Co lubi?"]}
       ],
       "newWords": [
-        {"polish": "normalnie", "english": "usually"},
         {"polish": "konkretnie", "english": "specifically"},
         {"polish": "architektura", "english": "architecture"},
         {"polish": "malować", "english": "to paint"}

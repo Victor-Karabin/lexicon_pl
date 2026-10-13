@@ -67,7 +67,6 @@ import com.lexicon.interactors.course.MinimalPairItem
 import com.lexicon.interactors.course.Score
 import com.lexicon.interactors.course.TranscribeItem
 import com.lexicon.model.course.AnswerKeyboard
-import com.lexicon.model.course.AnswerMatch
 import com.lexicon.model.course.ChoiceQuestion
 import com.lexicon.model.course.GAP_PATTERN
 import com.lexicon.model.course.LessonId
@@ -580,7 +579,6 @@ private fun QuestionField(
         usualForm = session.usualForm(screenId, question.key),
         leading = question.picture?.let { picture -> { ItemPictureView(picture) } },
         imeAction = imeActionOf(session, question.key),
-        highlightChanges = question.match == AnswerMatch.EXACT_LETTERS,
     )
 }
 

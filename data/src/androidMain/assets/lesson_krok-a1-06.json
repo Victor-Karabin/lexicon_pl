@@ -162,16 +162,11 @@
       "newWords": [
         {"polish": "gotować", "english": "to cook"},
         {"polish": "pierogi", "english": "pierogi (dumplings)"},
-        {"polish": "nie bardzo", "english": "not really"},
         {"polish": "ryż", "english": "rice"},
-        {"polish": "mama", "english": "mum"},
         {"polish": "szkoda", "english": "pity"},
-        {"polish": "może", "english": "maybe"},
-        {"polish": "interesujący", "english": "interesting"},
-        {"polish": "umieć", "english": "can, to know how"}
+        {"polish": "może", "english": "maybe"}
       ],
-      "rules": [2],
-      "newWordsUnlock": "after_check"
+      "rules": [2]
     },
     {
       "id": "1B",
@@ -219,8 +214,7 @@
       "newWords": [
         {"polish": "jasne", "english": "sure"},
         {"polish": "niespecjalnie", "english": "not particularly"},
-        {"polish": "woleć", "english": "to prefer"},
-        {"polish": "komputer", "english": "computer (grać na komputerze — to play computer games)"}
+        {"polish": "woleć", "english": "to prefer"}
       ],
       "rules": [2]
     },
@@ -271,9 +265,7 @@
       "newWords": [
         {"polish": "informacja", "english": "information"},
         {"polish": "e-mail", "english": "e-mail"},
-        {"polish": "znany", "english": "famous"},
-        {"polish": "oglądać", "english": "to watch, to look at"},
-        {"polish": "zdjęcie", "english": "photo"}
+        {"polish": "oglądać", "english": "to watch, to look at"}
       ],
       "rules": [2],
       "newWordsUnlock": "after_check"
@@ -324,7 +316,6 @@
         {"number": 4, "answers": ["mój"], "feedback": "*siostra* is feminine → *moja*; *brat* is masculine → *mój*."}
       ],
       "newWords": [
-        {"polish": "uniwersytet", "english": "university"},
         {"polish": "brat", "english": "brother"},
         {"polish": "siostra", "english": "sister"},
         {"polish": "dzisiaj", "english": "today"},
@@ -379,7 +370,9 @@
         {"polish": "oliwka", "english": "olive"},
         {"polish": "grecki", "english": "Greek"},
         {"polish": "albo", "english": "or"},
-        {"polish": "lub", "english": "or"}
+        {"polish": "lub", "english": "or"},
+        {"polish": "brokuł", "english": "broccoli (usually pl. brokuły)"},
+        {"polish": "makrela", "english": "mackerel"}
       ]
     },
     {
@@ -399,8 +392,6 @@
       ],
       "notes": ["*tata* and *kolega* end in *-a* but are men: *mój tata, mój kolega*."],
       "newWords": [
-        {"polish": "mój", "english": "my (m) — moja (f), moje (n)"},
-        {"polish": "twój", "english": "your (m) — twoja (f), twoje (n)"},
         {"polish": "liceum", "english": "secondary school"},
         {"polish": "gospodyni", "english": "hostess"},
         {"polish": "gospodarz", "english": "host (of a host family)"}
@@ -437,11 +428,7 @@
         {"label": "21", "prompt": "dziecko", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moje, twoje"},
         {"label": "22", "prompt": "mieszkanie", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moje, twoje"}
       ],
-      "newWords": [
-        {"polish": "samochód", "english": "car"},
-        {"polish": "auto", "english": "car"},
-        {"polish": "biuro", "english": "office"}
-      ],
+      "newWords": [{"polish": "samochód", "english": "car"}, {"polish": "biuro", "english": "office"}],
       "rules": [1]
     },
     {
@@ -467,7 +454,6 @@
         {"label": "14", "prompt": "ołówek", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "mój, twój"},
         {"label": "15", "prompt": "książka", "options": ["mój, twój", "moja, twoja", "moje, twoje"], "answer": "moja, twoja"}
       ],
-      "newWords": [{"polish": "miasto", "english": "city"}],
       "rules": [1]
     },
     {
@@ -706,7 +692,6 @@
         }
       ],
       "newWords": [
-        {"polish": "dużo", "english": "a lot"},
         {"polish": "dwoje", "english": "two (dwoje dzieci — two children)"},
         {"polish": "iberystyka", "english": "Spanish and Portuguese studies"},
         {"polish": "zakupy", "english": "shopping (robić zakupy — to go shopping)"}
@@ -791,7 +776,6 @@
         {"number": 10, "answers": ["Kontaktujemy się", "Się kontaktujemy"]}
       ],
       "newWords": [
-        {"polish": "gazeta", "english": "newspaper"},
         {"polish": "saksofon", "english": "saxophone"},
         {"polish": "spacer", "english": "walk (chodzić na spacery — to go for walks)"},
         {"polish": "praca domowa", "english": "homework"},
@@ -842,8 +826,6 @@
       ],
       "newWords": [
         {"polish": "czekać", "english": "to wait"},
-        {"polish": "planować", "english": "to plan"},
-        {"polish": "razem", "english": "together"},
         {"polish": "rolki", "english": "rollerblades (jeździć na rolkach)"}
       ],
       "rules": [2, 4]
@@ -939,7 +921,6 @@
         {"label": "9", "prompt": "Mami bardzo chce się uczyć tańczyć.", "options": ["P", "N"], "answer": "N", "feedback": "She says: *No nie wiem…*"}
       ],
       "newWords": [
-        {"polish": "czas", "english": "time"},
         {"polish": "realnie", "english": "really"},
         {"polish": "spotykać się", "english": "to meet"},
         {"polish": "znajomy", "english": "friend, acquaintance"},
@@ -984,7 +965,6 @@
         {"polish": "obcy", "english": "foreign (języki obce — foreign languages)"},
         {"polish": "uprawiać", "english": "to do (uprawiać sport — to do sport)"},
         {"polish": "pływać", "english": "to swim"},
-        {"polish": "piłka", "english": "ball"},
         {"polish": "szachy", "english": "chess"},
         {"polish": "brydż", "english": "bridge"}
       ],
@@ -1158,7 +1138,10 @@
         {"number": 4, "answers": ["biega, pływa i jeździ na rowerze", "biega i pływa i jeździ na rowerze", "biega, pływa, jeździ na rowerze", "biega, jeździ na rowerze i pływa", "biega i jeździ na rowerze i pływa", "biega, jeździ na rowerze, pływa", "pływa, biega i jeździ na rowerze", "pływa i biega i jeździ na rowerze", "pływa, biega, jeździ na rowerze", "pływa, jeździ na rowerze i biega", "pływa i jeździ na rowerze i biega", "pływa, jeździ na rowerze, biega", "jeździ na rowerze, biega i pływa", "jeździ na rowerze i biega i pływa", "jeździ na rowerze, biega, pływa", "jeździ na rowerze, pływa i biega", "jeździ na rowerze i pływa i biega", "jeździ na rowerze, pływa, biega"], "feedback": "*on / ona: jeździ* (*ja: jeżdżę*)."},
         {"number": 5, "answers": ["jeździ konno"], "feedback": "*on / ona: jeździ* (*ja: jeżdżę*)."}
       ],
-      "newWords": [{"polish": "makaron", "english": "pasta"}],
+      "newWords": [
+        {"polish": "makaron", "english": "pasta"},
+        {"polish": "słucham", "english": "how can I help? (in a shop)"}
+      ],
       "rules": [2, 5]
     },
     {
@@ -1234,7 +1217,6 @@
       "newWords": [
         {"polish": "dzwonić", "english": "to call"},
         {"polish": "ambasada", "english": "embassy"},
-        {"polish": "paszport", "english": "passport"},
         {"polish": "nieaktualny", "english": "expired"},
         {"polish": "faktycznie", "english": "indeed"}
       ],
@@ -1452,13 +1434,11 @@
         {"polish": "galeria handlowa", "english": "shopping mall"},
         {"polish": "sklep", "english": "shop"},
         {"polish": "parkingowy", "english": "parking (adj.)"},
-        {"polish": "dworzec", "english": "station"},
         {"polish": "masaż", "english": "massage"},
         {"polish": "tajski", "english": "Thai"},
         {"polish": "pierwszy", "english": "first"},
         {"polish": "nocny", "english": "night (adj.)"},
         {"polish": "maraton", "english": "marathon"},
-        {"polish": "filmowy", "english": "film (adj.)"},
         {"polish": "bilet", "english": "ticket"},
         {"polish": "koncert", "english": "concert"},
         {"polish": "zapraszać", "english": "to invite"},
@@ -1534,8 +1514,7 @@
       "newWords": [
         {"polish": "hipermarket", "english": "hypermarket"},
         {"polish": "targ", "english": "market"},
-        {"polish": "dyskoteka", "english": "disco"},
-        {"polish": "sam", "english": "alone (sama — f)"}
+        {"polish": "dyskoteka", "english": "disco"}
       ],
       "rules": [4, 5]
     },
@@ -1560,7 +1539,6 @@
       ],
       "newWords": [
         {"polish": "jak leci", "english": "how's it going"},
-        {"polish": "rynek", "english": "market square"},
         {"polish": "specjalistka", "english": "specialist (woman)"},
         {"polish": "hej", "english": "hey"}
       ]

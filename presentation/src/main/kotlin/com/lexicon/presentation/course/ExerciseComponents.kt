@@ -64,6 +64,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.setProgress
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -423,7 +424,6 @@ fun TranscribeRow(
     usualForm: String? = null,
     leading: (@Composable () -> Unit)? = null,
     imeAction: ImeAction = ImeAction.Next,
-    highlightChanges: Boolean = false,
 ) {
     var showInfo by rememberSaveable { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
@@ -518,9 +518,7 @@ fun TranscribeRow(
             }
         }
         if (isCorrect == false) {
-            val changed = remember(item.answer, value, highlightChanges) {
-                if (highlightChanges) LessonAnswerChecker.changedLetters(item.answer, value) else emptySet()
-            }
+            val changed = remember(item.answer, value) { LessonAnswerChecker.wrongLetters(item.answer, value) }
             ExpectedAnswer(
                 expected = item.answer,
                 isAlmost = isAlmost,
@@ -690,15 +688,7 @@ private fun ExpectedAnswer(
     Text(
         text = buildAnnotatedString {
             append(text)
-            if (start >= 0) {
-                changed.forEach { index ->
-                    addStyle(
-                        SpanStyle(fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline),
-                        start + index,
-                        start + index + 1,
-                    )
-                }
-            }
+            if (start >= 0) markLetters(start, changed)
         },
         style = MaterialTheme.typography.bodySmall,
         color = if (isAlmost) LexiconWarning else LexiconError,
@@ -944,8 +934,12 @@ private fun InlineGap(
             },
         )
         if (isCorrect == false) {
+            val changed = remember(expected, value) { LessonAnswerChecker.wrongLetters(expected, value) }
             Text(
-                text = expected,
+                text = buildAnnotatedString {
+                    append(expected)
+                    markLetters(0, changed)
+                },
                 style = MaterialTheme.typography.labelMedium,
                 color = if (isAlmost) LexiconWarning else LexiconError,
                 textAlign = TextAlign.Center,
@@ -959,6 +953,15 @@ private fun InlineGap(
                 textAlign = TextAlign.Center,
             )
         }
+    }
+}
+
+private fun AnnotatedString.Builder.markLetters(
+    start: Int,
+    changed: Set<Int>,
+) {
+    changed.forEach { index ->
+        addStyle(SpanStyle(fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline), start + index, start + index + 1)
     }
 }
 

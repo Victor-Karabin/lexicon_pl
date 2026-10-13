@@ -128,31 +128,18 @@
         }
       ],
       "newWords": [
-        {"polish": "owoc", "english": "fruit"},
-        {"polish": "warzywo", "english": "vegetable"},
         {"polish": "gruszka", "english": "pear"},
-        {"polish": "śliwka", "english": "plum"},
         {"polish": "brzoskwinia", "english": "peach"},
         {"polish": "kiwi", "english": "kiwi"},
         {"polish": "winogrona", "english": "grapes"},
-        {"polish": "truskawka", "english": "strawberry"},
-        {"polish": "malina", "english": "raspberry"},
         {"polish": "wiśnia", "english": "cherry"},
-        {"polish": "ananas", "english": "pineapple"},
         {"polish": "arbuz", "english": "watermelon"},
-        {"polish": "jagoda", "english": "blueberry (pl. jagody)"},
-        {"polish": "ziemniak", "english": "potato"},
-        {"polish": "marchewka", "english": "carrot"},
         {"polish": "por", "english": "leek"},
         {"polish": "seler", "english": "celeriac"},
-        {"polish": "cebula", "english": "onion"},
         {"polish": "pietruszka", "english": "parsley"},
-        {"polish": "papryka", "english": "pepper"},
         {"polish": "czosnek", "english": "garlic"},
         {"polish": "kalafior", "english": "cauliflower"},
-        {"polish": "brokuł", "english": "broccoli (usually pl. brokuły)"},
         {"polish": "rzodkiewka", "english": "radish"},
-        {"polish": "kapusta", "english": "cabbage"},
         {"polish": "fasola", "english": "beans"},
         {"polish": "groszek", "english": "peas"},
         {"polish": "kukurydza", "english": "sweetcorn"}
@@ -242,11 +229,7 @@
         {"label": "4", "prompt": "🥬 lettuce (base) · 🌽 sweetcorn · 🍅 tomato · 🫘 beans · 🧄 garlic · 🫑 green pepper · 🫒 olive oil", "answers": ["sałata | kukurydzą | pomidorem | fasolą | papryką | czosnkiem | oliwą"]},
         {"label": "5", "prompt": "🥬 lettuce (base) · 🥒 cucumber · radish · sour cream", "answers": ["sałata | ogórkiem | rzodkiewką | ze śmietaną"], "feedback": "Before *ś* + consonant: *ze śmietaną*."}
       ],
-      "newWords": [
-        {"polish": "rodzynki", "english": "raisins"},
-        {"polish": "śmietana", "english": "sour cream"},
-        {"polish": "oliwa", "english": "olive oil"}
-      ],
+      "newWords": [{"polish": "oliwa", "english": "olive oil"}],
       "rules": [3]
     },
     {
@@ -282,11 +265,8 @@
       ],
       "newWords": [
         {"polish": "gyros", "english": "gyros"},
-        {"polish": "ser feta", "english": "feta cheese"},
-        {"polish": "grecki", "english": "Greek"},
         {"polish": "kapusta pekińska", "english": "Chinese cabbage"},
-        {"polish": "ogórek konserwowy", "english": "pickled gherkin"},
-        {"polish": "Czy to się je z sosem?", "english": "Do you eat it with sauce?"}
+        {"polish": "ogórek konserwowy", "english": "pickled gherkin"}
       ],
       "rules": [3]
     },
@@ -322,15 +302,13 @@
       "newWords": [
         {"polish": "smak", "english": "taste"},
         {"polish": "kształt", "english": "shape"},
-        {"polish": "słodki", "english": "sweet"},
         {"polish": "kwaśny", "english": "sour"},
         {"polish": "słony", "english": "salty"},
         {"polish": "gorzki", "english": "bitter"},
         {"polish": "ostry", "english": "hot (spicy)"},
         {"polish": "okrągły", "english": "round"},
         {"polish": "owalny", "english": "oval"},
-        {"polish": "podłużny", "english": "long"},
-        {"polish": "jak", "english": "like (słodki jak cukier)"}
+        {"polish": "podłużny", "english": "long"}
       ],
       "rules": [4],
       "newWordsUnlock": "after_check"
@@ -346,12 +324,7 @@
         "Pomidor. Jest czerwony, okrągły i miękki. Ma delikatny smak. Jest dobry z cebulą, z solą i z oliwą."
       ],
       "checklist": ["The adjective agrees with the fruit: *truskawka — słodka*, *pomidor — słodki*.", "*z* + instrumental."],
-      "newWords": [
-        {"polish": "ulubiony", "english": "favourite"},
-        {"polish": "delikatny", "english": "mild"},
-        {"polish": "miękki", "english": "soft"},
-        {"polish": "twardy", "english": "hard"}
-      ],
+      "newWords": [{"polish": "miękki", "english": "soft"}, {"polish": "twardy", "english": "hard"}],
       "rules": [4]
     },
     {
@@ -477,16 +450,10 @@
         {"number": 7, "answers": ["jedno"], "feedback": "*wino* is neuter → *jedno*."}
       ],
       "newWords": [
-        {"polish": "targ", "english": "market (na targu — at the market)"},
-        {"polish": "coś na kolację", "english": "something for dinner"},
-        {"polish": "sałatka owocowa", "english": "fruit salad"},
-        {"polish": "sałatka jarzynowa", "english": "vegetable salad"},
         {"polish": "jarzyna", "english": "vegetable (= warzywo)"},
         {"polish": "w takim razie", "english": "in that case"},
-        {"polish": "sos do spaghetti", "english": "spaghetti sauce"},
         {"polish": "do picia", "english": "to drink"},
         {"polish": "jeśli", "english": "if"},
-        {"polish": "jeden", "english": "one (jedna f., jedno n.)"},
         {"polish": "lunch", "english": "lunch"},
         {"polish": "zupa rybna", "english": "fish soup"}
       ],
@@ -573,17 +540,14 @@
       ],
       "newWords": [
         {"polish": "świeży", "english": "fresh"},
-        {"polish": "suszony", "english": "dried"},
         {"polish": "bazylia", "english": "basil"},
         {"polish": "doniczka", "english": "flowerpot (w doniczce — in a pot)"},
         {"polish": "dojrzały", "english": "ripe"},
-        {"polish": "ciemny", "english": "dark"},
-        {"polish": "fioletowy", "english": "purple"},
-        {"polish": "różowy", "english": "pink"},
         {"polish": "mniej", "english": "less"},
         {"polish": "mało", "english": "little"},
         {"polish": "sezon", "english": "season"},
-        {"polish": "pół kilo", "english": "half a kilo"}
+        {"polish": "pół kilo", "english": "half a kilo"},
+        {"polish": "dwie", "english": "two (fem.)"}
       ],
       "rules": [1, 2]
     },
@@ -664,8 +628,6 @@
       "newWords": [
         {"polish": "natka", "english": "parsley leaves"},
         {"polish": "korzeń", "english": "root"},
-        {"polish": "średni", "english": "medium"},
-        {"polish": "fasolka", "english": "green beans"},
         {"polish": "kilogram", "english": "kilogram"}
       ],
       "rules": [2]
@@ -688,12 +650,7 @@
         {"label": "9", "prompt": "Dobrze, proszę pół kilo.", "options": ["sprzedawca", "klient"], "answer": "klient"},
         {"label": "10", "prompt": "Może jeszcze wodę mineralną.", "options": ["sprzedawca", "klient"], "answer": "klient"}
       ],
-      "newWords": [
-        {"polish": "sprzedawca", "english": "seller"},
-        {"polish": "klient", "english": "customer"},
-        {"polish": "drobne", "english": "small change"},
-        {"polish": "kiszony ogórek", "english": "pickled cucumber"}
-      ]
+      "newWords": [{"polish": "klient", "english": "customer"}, {"polish": "drobne", "english": "small change"}]
     },
     {
       "id": "2E",
@@ -748,7 +705,7 @@
         {"number": 5, "answers": ["wszystko"]},
         {"number": 6, "answers": ["drobne"]}
       ],
-      "newWords": [{"polish": "smaczny", "english": "tasty"}, {"polish": "więcej", "english": "more"}],
+      "newWords": [{"polish": "więcej", "english": "more"}],
       "newWordsUnlock": "after_check"
     },
     {
@@ -776,7 +733,11 @@
         }
       ],
       "notes": ["*pieróg → pierogi, lód → lody, śledź → śledzie, łosoś → łososie*."],
-      "newWords": [{"polish": "liczba mnoga", "english": "plural"}, {"polish": "to są", "english": "these are"}],
+      "newWords": [
+        {"polish": "liczba mnoga", "english": "plural"},
+        {"polish": "śledź", "english": "herring"},
+        {"polish": "łosoś", "english": "salmon"}
+      ],
       "rules": [1, 2]
     },
     {
@@ -860,14 +821,10 @@
       ],
       "newWords": [
         {"polish": "melon", "english": "melon"},
-        {"polish": "pieróg", "english": "dumpling (pl. pierogi)"},
-        {"polish": "śledź", "english": "herring"},
-        {"polish": "łosoś", "english": "salmon"},
         {"polish": "węgorz", "english": "eel"},
         {"polish": "dorsz", "english": "cod"},
         {"polish": "pstrąg", "english": "trout"},
-        {"polish": "olej", "english": "oil"},
-        {"polish": "ciastko", "english": "biscuit"}
+        {"polish": "olej", "english": "oil"}
       ],
       "rules": [1]
     },
@@ -890,10 +847,6 @@
         {"label": "11", "prompt": "3 × (średnia cytryna)", "answers": ["średnie cytryny", "3 średnie cytryny", "trzy średnie cytryny"]},
         {"label": "12", "prompt": "3 × (czerwona papryka)", "answers": ["czerwone papryki", "3 czerwone papryki", "trzy czerwone papryki"]}
       ],
-      "newWords": [
-        {"polish": "dwa", "english": "two (masc., neut.)"},
-        {"polish": "dwie", "english": "two (fem.)"}
-      ],
       "rules": [1, 2]
     },
     {
@@ -913,10 +866,7 @@
         {"label": "9", "prompt": "2 × (świeży ogórek)", "answers": ["świeże ogórki", "2 świeże ogórki", "dwa świeże ogórki"], "feedback": "*dwa* with masculine and neuter nouns: *dwa świeże ogórki*."},
         {"label": "10", "prompt": "4 × (młody ziemniak)", "answers": ["młode ziemniaki", "4 młode ziemniaki", "cztery młode ziemniaki"]}
       ],
-      "newWords": [
-        {"polish": "wytrawny", "english": "dry (wine)"},
-        {"polish": "młody ziemniak", "english": "new potato"}
-      ],
+      "newWords": [{"polish": "wytrawny", "english": "dry (wine)"}],
       "rules": [1, 2]
     },
     {
@@ -993,11 +943,7 @@
         {"number": 10, "answers": ["dobrą herbatę"]},
         {"number": 11, "answers": ["cytryną"], "feedback": "After *z* → instrumental (*z cytryną*)."}
       ],
-      "newWords": [
-        {"polish": "proponować", "english": "to suggest (proponuję — I suggest)"},
-        {"polish": "grzanka", "english": "toast"},
-        {"polish": "więc", "english": "so"}
-      ],
+      "newWords": [{"polish": "więc", "english": "so"}],
       "rules": [1, 3]
     },
     {
@@ -1041,8 +987,6 @@
         {"label": "7", "prompt": "Angela lubi wędzone ryby.", "options": ["P", "N"], "answer": "P"}
       ],
       "newWords": [
-        {"polish": "gotowany", "english": "boiled"},
-        {"polish": "pieczony", "english": "roasted"},
         {"polish": "wędzony", "english": "smoked"},
         {"polish": "smażony", "english": "fried"},
         {"polish": "duszony", "english": "stewed"},
@@ -1050,8 +994,6 @@
         {"polish": "pachnieć", "english": "to smell (pięknie pachnie — it smells lovely)"},
         {"polish": "przyprawa", "english": "spice"},
         {"polish": "uwielbiać", "english": "to love"},
-        {"polish": "najpierw", "english": "first"},
-        {"polish": "potem", "english": "then"},
         {"polish": "dodać", "english": "to add"},
         {"polish": "zdrowszy", "english": "healthier"},
         {"polish": "oregano", "english": "oregano"},
@@ -1194,12 +1136,9 @@
         {"label": "4", "prompt": "Mami", "options": ["1", "2", "3", "4"], "answer": "2", "feedback": "Dialogue 2: *bułki i masło*, *ryby*, *cytryny*."}
       ],
       "newWords": [
-        {"polish": "supermarket", "english": "supermarket"},
         {"polish": "nabiał", "english": "dairy"},
         {"polish": "produkty zbożowe", "english": "cereal products"},
         {"polish": "pieczywo", "english": "bread and rolls"},
-        {"polish": "prosto", "english": "straight on"},
-        {"polish": "na prawo", "english": "to the right"},
         {"polish": "słodycze", "english": "sweets"},
         {"polish": "słone paluszki", "english": "salty sticks"},
         {"polish": "nielogiczny", "english": "illogical"},
@@ -1263,9 +1202,7 @@
         {"polish": "alkohol", "english": "alcohol"},
         {"polish": "mrożonki", "english": "frozen food"},
         {"polish": "mrożony", "english": "frozen"},
-        {"polish": "makrela", "english": "mackerel"},
         {"polish": "drożdżówka", "english": "sweet bun"},
-        {"polish": "wódka", "english": "vodka"},
         {"polish": "cukierek", "english": "sweet (pl. cukierki)"}
       ],
       "rules": [1]
