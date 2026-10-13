@@ -261,6 +261,22 @@ class LessonAnswerCheckerTest {
     }
 
     @Test
+    fun `a close answer marks the letters of the right answer it got wrong`() {
+        assertEquals(setOf(2), LessonAnswerChecker.wrongLetters("dwanaście", "dwunaście"))
+        assertEquals(setOf(5), LessonAnswerChecker.wrongLetters("dwanaście", "dwanascie"))
+        assertEquals(setOf(9, 10), LessonAnswerChecker.wrongLetters("czterdzieści", "czterdziesi"))
+        assertEquals(setOf(8), LessonAnswerChecker.wrongLetters("Wolę kawę.", "wolę kawe"))
+    }
+
+    @Test
+    fun `an answer far from the right one or empty marks nothing`() {
+        assertEquals(emptySet<Int>(), LessonAnswerChecker.wrongLetters("dwanaście", "trzy"))
+        assertEquals(emptySet<Int>(), LessonAnswerChecker.wrongLetters("pomarańcza", "jabłko"))
+        assertEquals(emptySet<Int>(), LessonAnswerChecker.wrongLetters("dwanaście", ""))
+        assertEquals(emptySet<Int>(), LessonAnswerChecker.wrongLetters("Dwanaście", "dwanaście"))
+    }
+
+    @Test
     fun `a list answer takes its items in any order, joined by commas, i or z`() {
         val key = listOf("uwe je chleb | masłem | kiełbasą | keczupem")
         val verdict = { typed: String -> LessonAnswerChecker.verdict(key, typed, AnswerMatch.ANY_ORDER) }

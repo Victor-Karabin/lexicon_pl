@@ -5,11 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.lexicon.interactors.conjugation.ConjugationCourse
 import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
 import com.lexicon.interactors.course.ObserveCoursesUseCase
+import com.lexicon.interactors.numbers.LoadNumberCourseUseCase
+import com.lexicon.interactors.numbers.NumberCourse
 import com.lexicon.interactors.presets.CountWordsToReviewUseCase
 import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
 import com.lexicon.interactors.vocabularycourse.GetCourseProgressUseCase
 import com.lexicon.interactors.vocabularycourse.GetDailyStudyTimeUseCase
-import com.lexicon.interactors.vocabularycourse.GetStudyStreakUseCase
 import com.lexicon.interactors.vocabularycourse.NextCourseTrainingUseCase
 import com.lexicon.interactors.vocabularycourse.ObserveVocabularyCourseUseCase
 import com.lexicon.interactors.vocabularycourse.StudyTimeHistory
@@ -38,16 +39,18 @@ data class DashboardUiState(
     val isLoading: Boolean = true,
     val course: VocabularyCourse? = null,
     val progress: CourseProgress? = null,
-    val streakDays: Int = 0,
     val wordsToReview: Int = 0,
     val launch: LaunchTraining? = null,
     val openCards: Boolean = false,
     val nothingToPractise: Boolean = false,
     val studyTime: StudyTimeHistory? = null,
     val conjugationCourses: ImmutableList<ConjugationCourse> = persistentListOf(),
+    val numberCourse: NumberCourse? = null,
     val courses: ImmutableList<Course> = persistentListOf(),
     val languageTag: String = "en",
 ) {
+    val accuracy: Int? get() = progress?.metric(ProgressMetricType.ACCURACY)?.takeIf { it.isMeasured }?.current
+
     val knownWords: Int get() = progress?.metric(ProgressMetricType.VOCABULARY)?.current ?: 0
 
     val learningWords: Int
@@ -58,7 +61,7 @@ class DashboardViewModel(
     private val getProgress: GetCourseProgressUseCase,
     private val queue: NextCourseTrainingUseCase,
     private val loadConjugationCourses: LoadConjugationCoursesUseCase,
-    private val getStreak: GetStudyStreakUseCase,
+    private val loadNumberCourse: LoadNumberCourseUseCase,
     private val countWordsToReview: CountWordsToReviewUseCase,
     private val getDailyStudyTime: GetDailyStudyTimeUseCase,
     observeCourse: ObserveVocabularyCourseUseCase,
@@ -73,19 +76,21 @@ class DashboardViewModel(
             observeCourse().collect { course ->
                 val progress = getProgress()
                 val courses = loadConjugationCourses()
+                val numberCourse = loadNumberCourse()
                 _uiState.update {
                     it.copy(
                         isLoading = false,
                         course = course,
                         progress = progress,
                         conjugationCourses = courses,
+                        numberCourse = numberCourse,
                         nothingToPractise = false,
                     )
                 }
             }
         }
         viewModelScope.launch {
-            observeWordStatuses().drop(1).collect { refreshConjugation() }
+            observeWordStatuses().drop(1).collect { refreshCourses() }
         }
         viewModelScope.launch {
             observeCourses().collect { courses ->
@@ -98,13 +103,11 @@ class DashboardViewModel(
         viewModelScope.launch {
             val studyTime = getDailyStudyTime()
             val wordsToReview = countWordsToReview()
-            val streakDays = getStreak()
             val progress = getProgress()
             _uiState.update {
                 it.copy(
                     studyTime = studyTime,
                     wordsToReview = wordsToReview,
-                    streakDays = streakDays,
                     progress = progress,
                     nothingToPractise = false,
                 )
@@ -132,9 +135,11 @@ class DashboardViewModel(
 
     fun onLaunchHandled() = _uiState.update { it.copy(launch = null, openCards = false) }
 
-    fun refreshConjugation() {
+    fun refreshCourses() {
         viewModelScope.launch {
-            _uiState.update { it.copy(conjugationCourses = loadConjugationCourses()) }
+            val conjugation = loadConjugationCourses()
+            val numbers = loadNumberCourse()
+            _uiState.update { it.copy(conjugationCourses = conjugation, numberCourse = numbers) }
         }
     }
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render scanned Krok po kroku PDFs to text with tesseract.
+"""Render scanned coursebook PDFs to text with tesseract.
 
 The A1 coursebook is a native digital PDF and needs no OCR. The A2 coursebook
 carries an embedded OCR layer produced by I.R.I.S. that substitutes Cyrillic

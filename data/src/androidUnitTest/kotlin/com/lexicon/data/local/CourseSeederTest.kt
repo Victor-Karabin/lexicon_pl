@@ -37,7 +37,7 @@ class CourseSeederTest {
                         id = "krok-a1",
                         order = 1,
                         level = "A1",
-                        title = mapOf("en" to "Polski krok po kroku 1"),
+                        title = mapOf("en" to "Polish for Beginners 1"),
                         lessons = lessons.toList(),
                     ),
                 ),

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Maps the Krok po kroku recordings to their Google Drive file ids.
+"""Maps the coursebook recordings to their Google Drive file ids.
 
 The 488 tracks are 454 MB, so they are not in the APK. They can be side-loaded
 with install_audio.sh, but a phone that has not been side-loaded can fetch them

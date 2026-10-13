@@ -389,7 +389,6 @@
         {"label": "e", "speaker": "Mami", "prompt": "Teraz rozumiem. Tak, wszystko dobrze.", "answer": "6"},
         {"label": "f", "speaker": "Nauczycielka", "prompt": "„Co u ciebie?” – to znaczy „Co słychać u ciebie?”. Czy wszystko dobrze?", "answer": "5"}
       ],
-      "newWords": [{"polish": "czy", "english": "question particle (yes/no questions)"}],
       "rules": [1]
     },
     {
@@ -450,7 +449,8 @@
         "pan + pan → **panowie** (gentlemen); pani + pani → **panie** (ladies); pan + pani, panowie + panie → **państwo** (ladies and gentlemen / a married couple).",
         "*pan*, *pani* take the 3rd-person verb: *pan jest*, *pani jest*; *panowie / panie / państwo są*."
       ],
-      "rules": [2, 1]
+      "rules": [2, 1],
+      "newWords": [{"polish": "państwo", "english": "you (to a mixed group); ladies and gentlemen"}]
     },
     {
       "id": "3B",
@@ -501,12 +501,9 @@
         {"number": 19, "answers": ["państwo"]}
       ],
       "newWords": [
-        {"polish": "dom", "english": "house, home (w domu — at home)"},
         {"polish": "praca", "english": "work, job (w pracy — at work)"},
-        {"polish": "też", "english": "too, also"},
         {"polish": "my", "english": "we"},
-        {"polish": "wy", "english": "you (plural)"},
-        {"polish": "państwo", "english": "you (to a mixed group); ladies and gentlemen"}
+        {"polish": "wy", "english": "you (plural)"}
       ],
       "rules": [2, 1]
     },
@@ -523,9 +520,7 @@
         {"label": "5", "prompt": "Angela i Tom", "options": ["on", "ona", "ono", "oni", "one"], "answer": "oni", "feedback": "One man in the group is enough for *oni*."},
         {"label": "6", "prompt": "dziecko", "options": ["on", "ona", "ono", "oni", "one"], "answer": "ono"}
       ],
-      "newWords": [{"polish": "dziecko", "english": "child (ono)"}],
-      "rules": [1],
-      "newWordsUnlock": "after_check"
+      "rules": [1]
     },
     {
       "id": "3D",
@@ -600,10 +595,7 @@
         {"label": "6", "prompt": "Ona jest tam.", "answers": ["One są tam."]},
         {"label": "7", "prompt": "On jest w sekretariacie.", "answers": ["Oni są w sekretariacie."]}
       ],
-      "newWords": [
-        {"polish": "szkoła", "english": "school"},
-        {"polish": "sekretariat", "english": "school office"}
-      ],
+      "newWords": [{"polish": "sekretariat", "english": "school office"}],
       "rules": [2, 1]
     },
     {
@@ -659,13 +651,9 @@
         {"polish": "Moskwa", "english": "Moscow"},
         {"polish": "Austria", "english": "Austria"},
         {"polish": "Wiedeń", "english": "Vienna"},
-        {"polish": "Francja", "english": "France"},
         {"polish": "Paryż", "english": "Paris"},
         {"polish": "Włochy", "english": "Italy"},
-        {"polish": "Rzym", "english": "Rome"},
-        {"polish": "Niemcy", "english": "Germany"},
         {"polish": "Berlin", "english": "Berlin"},
-        {"polish": "Anglia", "english": "England"},
         {"polish": "Londyn", "english": "London"}
       ]
     },
@@ -732,12 +720,7 @@
         {"number": 14, "answers": ["mieszkają"]},
         {"number": 15, "answers": ["mieszkają"]}
       ],
-      "newWords": [
-        {"polish": "Europa", "english": "Europe"},
-        {"polish": "rodzina", "english": "family"},
-        {"polish": "państwo", "english": "Mr and Mrs (państwo Kowalscy — the Kowalskis)"},
-        {"polish": "Warszawa", "english": "Warsaw"}
-      ],
+      "newWords": [{"polish": "Europa", "english": "Europe"}, {"polish": "rodzina", "english": "family"}],
       "rules": [3, 4]
     },
     {
@@ -764,7 +747,11 @@
         "*grać w tenisa / na gitarze* = play tennis / the guitar."
       ],
       "rules": [3],
-      "newWords": [{"polish": "grać", "english": "to play"}]
+      "newWords": [
+        {"polish": "grać", "english": "to play"},
+        {"polish": "tenis", "english": "tennis"},
+        {"polish": "gitara", "english": "guitar"}
+      ]
     },
     {
       "id": "5B",
@@ -844,13 +831,7 @@
         {"number": 8, "answers": ["gracie"]},
         {"number": 9, "answers": ["gramy"]}
       ],
-      "newWords": [
-        {"polish": "na przykład", "english": "for example"},
-        {"polish": "grać", "english": "to play"},
-        {"polish": "tenis", "english": "tennis"},
-        {"polish": "gitara", "english": "guitar"},
-        {"polish": "ale", "english": "but"}
-      ],
+      "newWords": [{"polish": "na przykład", "english": "for example"}],
       "rules": [3]
     },
     {
@@ -978,7 +959,8 @@
       "notes": [
         "Aleja Mickiewicza 28 · ul. Starowiślna 17 · ul. Szewska 3 · ul. Sienna 12 · Plac Mariacki 5 · Rynek Główny 7 · ul. Radziwiłłowska 29 · Pl. Szczepański 13 · ul. Świętej Anny 23 · ul. Straszewskiego 11 · ul. Pachońskiego 19 · ul. Szeroka 18 · ul. Wąska 16 · ul. Kościuszki 22 · Plac Wszystkich Świętych 9 · Plac Wolnica 8 · ul. Brzoskwiniowa 6 · ul. Pszona 27 · ul. Grzegórzecka 6 · Aleje Trzech Wieszczów",
         "**ul.** = ulica (street), **al.** = aleja (avenue), **pl.** = plac (square). The house number is read as a plain number: *Szewska trzy*."
-      ]
+      ],
+      "newWords": [{"polish": "Rynek", "english": "market square"}]
     },
     {
       "id": "6E",
@@ -1092,7 +1074,9 @@
         {"polish": "chłopak", "english": "boyfriend; boy"},
         {"polish": "dziewczyna", "english": "girlfriend; girl"},
         {"polish": "twój", "english": "your"},
-        {"polish": "centrum", "english": "centre (w centrum — in the city centre)"}
+        {"polish": "centrum", "english": "centre (w centrum — in the city centre)"},
+        {"polish": "święty", "english": "saint"},
+        {"polish": "mój", "english": "my"}
       ]
     },
     {
@@ -1158,14 +1142,6 @@
             {"label": "Dlaczego uczy się polskiego?", "answers": ["żeby pracować w Warszawie", "pracować w Warszawie", "praca w Warszawie"]}
           ]
         }
-      ],
-      "newWords": [
-        {"polish": "centrum", "english": "centre (w centrum — in the city centre)"},
-        {"polish": "ulica", "english": "street"},
-        {"polish": "święty", "english": "saint"},
-        {"polish": "mój", "english": "my"},
-        {"polish": "numer", "english": "number"},
-        {"polish": "twój", "english": "your"}
       ],
       "rules": [4, 5]
     },
@@ -1260,7 +1236,9 @@
           ]
         }
       ],
-      "rules": [4, 5]
+      "rules": [4, 5],
+      "newWords": [{"polish": "jej", "english": "her"}],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "7F",
@@ -1304,7 +1282,9 @@
           ]
         }
       ],
-      "rules": [4, 5]
+      "rules": [4, 5],
+      "newWords": [{"polish": "jego", "english": "his"}],
+      "newWordsUnlock": "after_check"
     },
     {
       "id": "7G",
@@ -1318,12 +1298,7 @@
         {"label": "4", "prompt": "Tom uczy się polskiego, … jego dziewczyna jest z Polski.", "options": ["żeby", "bo"], "answer": "bo", "feedback": "*żeby* + infinitive (*-ć*); *bo* + a full clause."},
         {"label": "5", "prompt": "Julia uczy się hiszpańskiego, … to jej hobby.", "options": ["żeby", "bo"], "answer": "bo", "feedback": "*żeby* + infinitive (*-ć*); *bo* + a full clause."}
       ],
-      "newWords": [
-        {"polish": "jej", "english": "her"},
-        {"polish": "jego", "english": "his"},
-        {"polish": "uczyć się", "english": "to learn"},
-        {"polish": "hiszpański", "english": "Spanish"}
-      ],
+      "newWords": [{"polish": "hiszpański", "english": "Spanish"}, {"polish": "mama", "english": "mum"}],
       "rules": [5]
     },
     {
@@ -1364,7 +1339,7 @@
         {"polish": "oczywiście", "english": "of course"},
         {"polish": "grupa", "english": "group"},
         {"polish": "klasa", "english": "classroom"},
-        {"polish": "lekcja", "english": "lesson"}
+        {"polish": "miły", "english": "nice, kind"}
       ],
       "rules": [3]
     },
@@ -1413,9 +1388,7 @@
         {"polish": "witam", "english": "hello, welcome (formal)"},
         {"polish": "mąż", "english": "husband"},
         {"polish": "koleżanka", "english": "friend, colleague (woman)"},
-        {"polish": "kolega", "english": "friend, colleague (man)"},
-        {"polish": "państwo", "english": "you (to a mixed group or a couple); ladies and gentlemen"},
-        {"polish": "po polsku", "english": "in Polish"}
+        {"polish": "kolega", "english": "friend, colleague (man)"}
       ],
       "rules": [2]
     },
@@ -1487,18 +1460,18 @@
       "title": "Ask the questions",
       "instruction": "Write the question for each answer: formal (*pani*) and informal (*ty*).",
       "items": [
-        {"label": "1", "prompt": "*Mam na imię Anna.* — formal (*pani*)", "answers": ["Jak pani ma na imię?", "Jak ma pani na imię?", "Jak pan ma na imię?", "Jak ma pan na imię?"], "variants": ["Jakie ma pani imię?", "Jakie ma pan imię?"]},
+        {"label": "1", "prompt": "*Mam na imię Anna.* — formal (*pani*)", "answers": ["Jak pani ma na imię?", "Jak pan ma na imię?", "Jak ma pani na imię?", "Jak ma pan na imię?"], "variants": ["Jakie ma pani imię?", "Jakie ma pan imię?"]},
         {"label": "2", "prompt": "*Mam na imię Anna.* — informal (*ty*)", "answers": ["Jak masz na imię?", "Jak ty masz na imię?"], "variants": ["Jakie masz imię?"]},
-        {"label": "3", "prompt": "*Nazywam się Rojek.* — formal (*pani*)", "answers": ["Jak się pani nazywa?", "Jak się pan nazywa?"], "variants": ["Jak pani się nazywa?", "Jak pani nazywa się?", "Jak pan się nazywa?", "Jak pan nazywa się?"]},
-        {"label": "4", "prompt": "*Nazywam się Rojek.* — informal (*ty*)", "answers": ["Jak się nazywasz?", "Jak ty się nazywasz?"], "variants": ["Jak nazywasz się?"]},
+        {"label": "3", "prompt": "*Nazywam się Rojek.* — formal (*pani*)", "answers": ["Jak się pani nazywa?", "Jak pani się nazywa?", "Jak się nazywa pani?", "Jak pan się nazywa?", "Jak się nazywa pan?", "Jak pani nazywa się?", "Jak nazywa się pani?", "Jak pan nazywa się?", "Jak nazywa się pan?", "Jak się pan nazywa?"], "variants": ["Jak pani się nazywa?", "Jak pani nazywa się?", "Jak pan się nazywa?", "Jak pan nazywa się?"]},
+        {"label": "4", "prompt": "*Nazywam się Rojek.* — informal (*ty*)", "answers": ["Jak się nazywasz?", "Jak ty się nazywasz?", "Jak ty nazywasz się?", "Jak nazywasz się?", "Jak się ty nazywasz?"], "variants": ["Jak nazywasz się?"]},
         {"label": "5", "prompt": "*Jestem z Polski.* — formal (*pani*)", "answers": ["Skąd pani jest?", "Skąd jest pani?", "Skąd pan jest?", "Skąd jest pan?"]},
         {"label": "6", "prompt": "*Jestem z Polski.* — informal (*ty*)", "answers": ["Skąd jesteś?", "Skąd ty jesteś?"], "feedback": "*być* is irregular: *jesteś*, not *jestesz*."},
         {"label": "7", "prompt": "*Mieszkam w Krakowie.* — formal (*pani*)", "answers": ["Gdzie pani mieszka?", "Gdzie mieszka pani?", "Gdzie pan mieszka?", "Gdzie mieszka pan?"]},
         {"label": "8", "prompt": "*Mieszkam w Krakowie.* — informal (*ty*)", "answers": ["Gdzie mieszkasz?", "Gdzie ty mieszkasz?"]},
-        {"label": "9", "prompt": "*Tak, mam telefon.* — formal (*pani*)", "answers": ["Czy ma pani telefon?", "Ma pani telefon?", "Czy pani ma telefon?", "Pani ma telefon?", "Czy ma pan telefon?", "Ma pan telefon?", "Czy pan ma telefon?", "Pani ma telefon?"]},
-        {"label": "10", "prompt": "*Tak, mam telefon.* — informal (*ty*)", "answers": ["Czy masz telefon?", "Masz telefon?"]},
-        {"label": "11", "prompt": "*Uczę się angielskiego, bo to moje hobby.* — formal (*pani*)", "answers": ["Dlaczego uczy się pani angielskiego?", "Dlaczego pani uczy się angielskiego?", "Dlaczego uczy się pan angielskiego?", "Dlaczego pan uczy się angielskiego?"], "variants": ["Dlaczego pani się uczy angielskiego?", "Dlaczego pan się uczy angielskiego?"], "feedback": "With *pani* the verb is 3rd person: *uczy się pani*, not *pani uczę się*. *dlaczego* is one word."},
-        {"label": "12", "prompt": "*Uczę się angielskiego, bo to moje hobby.* — informal (*ty*)", "answers": ["Dlaczego uczysz się angielskiego?", "Dlaczego ty uczysz się angielskiego?"], "variants": ["Dlaczego się uczysz angielskiego?"], "feedback": "*uczysz* (not *uczesz*); *dlaczego* is one word."}
+        {"label": "9", "prompt": "*Tak, mam telefon.* — formal (*pani*)", "answers": ["Czy ma pani telefon?", "Czy pani ma telefon?", "Czy pan ma telefon?", "Pani ma telefon?", "Pan ma telefon?", "Ma pani telefon?", "Czy ma pan telefon?", "Ma pan telefon?"]},
+        {"label": "10", "prompt": "*Tak, mam telefon.* — informal (*ty*)", "answers": ["Czy masz telefon?", "Czy ty masz telefon?", "Ty masz telefon?", "Masz telefon?"]},
+        {"label": "11", "prompt": "*Uczę się angielskiego, bo to moje hobby.* — formal (*pani*)", "answers": ["Dlaczego uczy się pani angielskiego?", "Dlaczego pani uczy się angielskiego?", "Dlaczego pan uczy się angielskiego?", "Dlaczego pani się uczy angielskiego?", "Dlaczego pan się uczy angielskiego?", "Dlaczego uczy się pan angielskiego?"], "variants": ["Dlaczego pani się uczy angielskiego?", "Dlaczego pan się uczy angielskiego?"], "feedback": "With *pani* the verb is 3rd person: *uczy się pani*, not *pani uczę się*. *dlaczego* is one word."},
+        {"label": "12", "prompt": "*Uczę się angielskiego, bo to moje hobby.* — informal (*ty*)", "answers": ["Dlaczego uczysz się angielskiego?", "Dlaczego ty uczysz się angielskiego?", "Dlaczego ty się uczysz angielskiego?", "Dlaczego się uczysz angielskiego?"], "variants": ["Dlaczego się uczysz angielskiego?"], "feedback": "*uczysz* (not *uczesz*); *dlaczego* is one word."}
       ],
       "notes": [
         "*pani* takes the 3rd-person verb (*pani jest, pani mieszka*); *ty* takes the *-sz* form (*jesteś, mieszkasz*). *panie* means ladies — one woman is *pani*."

@@ -65,6 +65,10 @@ group, so a new `.swift` file under `Lexicon/` needs no project edit.
 
 ## What is not here yet
 
+- **The numbers course.** Android has it (see [docs/numbers.md](../docs/numbers.md)); the
+  shared use cases are ready, the SwiftUI screens and the dashboard card are not.
+- **The dashboard still shows the study streak.** Android dropped it from the vocabulary
+  course card; `GetStudyStreakUseCase` stays in the shared core until iOS follows.
 - **Unsplash.** Pexels, Pixabay and Openverse are wired; adding it is another
   `RemoteImageSource`-shaped class in `iosMain`.
 - **Landscape is enabled on iPad but unverified.** The layouts are vertical scrolls of

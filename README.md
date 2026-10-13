@@ -30,9 +30,12 @@ days, streaks and accuracy are recorded as you go.
 **A course that always runs.** The *vocabulary course* is on the dashboard from the first
 launch: the words you mark to learn, favourites first, plus known words for review, through
 a queue of trainings that repeats round after round. You tune it on the Plan tab. A
-*course* teaches a fixed body of material — the Krok po kroku
-textbook, with its own audio and exercises. A *conjugation course* drills the forms of
-verbs you pick from a catalogue of 4,545.
+*course* teaches a fixed body of material — *Polish for Beginners*, built from a printed
+A1 coursebook, with its own audio and exercises. A *conjugation course* drills the forms of
+verbs you pick from a catalogue of 4,545. A *numbers course* drills writing numbers in
+Polish words: you type the numbers and ranges to practise (`1-20, 35, 2024`), and each one
+is shown in digits, read aloud on demand, and answered in words, with its transcription
+after the check.
 
 **Written and spoken by machine where it helps.** Example sentences, and the passages the
 reading trainings use, are written by OpenAI around the word being practised. Translation
@@ -140,7 +143,8 @@ history with it. That makes a bump a deliberate act.
 | [Architecture](docs/architecture.md) | Modules, layering rules, where things live, conventions |
 | [Universal DDD Language](docs/domain/universal-ddd-language.md) | The vocabulary: contexts, entities, aggregates, services |
 | [Vocabulary and presets](docs/vocabulary-presets.md) | How the catalogue, presets and the study set work |
-| [Course](docs/course.md) | The Krok po kroku course: lessons, audio, exercises |
+| [Course](docs/course.md) | The Polish for Beginners course: lessons, audio, exercises |
+| [Numbers](docs/numbers.md) | The numbers course: choosing numbers, the words, transcriptions, progress |
 
 ## Status
 

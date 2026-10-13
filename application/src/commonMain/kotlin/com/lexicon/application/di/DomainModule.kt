@@ -34,6 +34,11 @@ import com.lexicon.application.imagetest.SubmitImageTestAnswerUseCaseImpl
 import com.lexicon.application.memorycards.StartMemoryCardsSessionUseCaseImpl
 import com.lexicon.application.memorycards.SubmitMemoryCardsStepResultUseCaseImpl
 import com.lexicon.application.mix.StartMixSessionUseCaseImpl
+import com.lexicon.application.numbers.LoadNumberCourseUseCaseImpl
+import com.lexicon.application.numbers.LoadNumberSpecUseCaseImpl
+import com.lexicon.application.numbers.NextNumberUseCaseImpl
+import com.lexicon.application.numbers.SaveNumberCourseUseCaseImpl
+import com.lexicon.application.numbers.SubmitNumberAnswerUseCaseImpl
 import com.lexicon.application.passage.StartPassageSessionUseCaseImpl
 import com.lexicon.application.passage.SubmitPassageAnswersUseCaseImpl
 import com.lexicon.application.presets.CountWordsToReviewUseCaseImpl
@@ -133,6 +138,11 @@ import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
 import com.lexicon.interactors.memorycards.StartMemoryCardsSessionUseCase
 import com.lexicon.interactors.memorycards.SubmitMemoryCardsStepResultUseCase
 import com.lexicon.interactors.mix.StartMixSessionUseCase
+import com.lexicon.interactors.numbers.LoadNumberCourseUseCase
+import com.lexicon.interactors.numbers.LoadNumberSpecUseCase
+import com.lexicon.interactors.numbers.NextNumberUseCase
+import com.lexicon.interactors.numbers.SaveNumberCourseUseCase
+import com.lexicon.interactors.numbers.SubmitNumberAnswerUseCase
 import com.lexicon.interactors.passage.StartPassageSessionUseCase
 import com.lexicon.interactors.passage.SubmitPassageAnswersUseCase
 import com.lexicon.interactors.presets.CountWordsToReviewUseCase
@@ -255,6 +265,12 @@ val domainModule = module {
     factoryOf(::StartPassageSessionUseCaseImpl) { bind<StartPassageSessionUseCase>() }
     factoryOf(::StartFillwordSessionUseCaseImpl) { bind<StartFillwordSessionUseCase>() }
     factoryOf(::StartPronunciationSentencesUseCaseImpl) { bind<StartPronunciationSentencesUseCase>() }
+
+    factoryOf(::LoadNumberCourseUseCaseImpl) { bind<LoadNumberCourseUseCase>() }
+    factoryOf(::LoadNumberSpecUseCaseImpl) { bind<LoadNumberSpecUseCase>() }
+    factoryOf(::SaveNumberCourseUseCaseImpl) { bind<SaveNumberCourseUseCase>() }
+    factoryOf(::NextNumberUseCaseImpl) { bind<NextNumberUseCase>() }
+    factoryOf(::SubmitNumberAnswerUseCaseImpl) { bind<SubmitNumberAnswerUseCase>() }
 
     factoryOf(::LoadConjugationVerbsUseCaseImpl) { bind<LoadConjugationVerbsUseCase>() }
     factory<DeleteConjugationVerbUseCase> {

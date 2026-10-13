@@ -57,6 +57,8 @@ fun MainScreen(
     onAddPreset: () -> Unit,
     onConjugationSelected: () -> Unit,
     onTrainConjugation: (String) -> Unit,
+    onNumbersSelected: () -> Unit,
+    onTrainNumbers: () -> Unit,
     onReviewWords: () -> Unit,
     modifier: Modifier = Modifier,
     initialTab: MainTab = MainTab.DASHBOARD,
@@ -86,6 +88,7 @@ fun MainScreen(
                     onStartTraining = { training, words -> onStartTraining(training, words.map { it.value }) },
                     onOpenCards = onOpenCards,
                     onOpenConjugation = onTrainConjugation,
+                    onOpenNumbers = onTrainNumbers,
                     onReviewWords = onReviewWords,
                     onCourseSelected = { onCourseSelected(it.value) },
                     modifier = content,
@@ -103,6 +106,7 @@ fun MainScreen(
                     onCourseSelected = { onCourseSelected(it.value) },
                     onOpenCourseSettings = onOpenCourseSettings,
                     onConjugationSelected = onConjugationSelected,
+                    onNumbersSelected = onNumbersSelected,
                     modifier = content,
                 )
             MainTab.SETTINGS -> SettingsScreen(modifier = content)

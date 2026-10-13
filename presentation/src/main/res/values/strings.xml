@@ -76,6 +76,7 @@
 
     <!-- Verb conjugation course -->
     <string name="conjugation_title">Verb Conjugation</string>
+    <string name="conjugation_medallion">V</string>
     <string name="training_conjugation_blurb">Pick verbs and learn how they change by person</string>
     <string name="conjugation_select_title">Choose verbs</string>
     <string name="conjugation_search_hint">Search verb</string>
@@ -89,6 +90,23 @@
     <string name="conjugation_remove">Remove the conjugation course</string>
     <string name="conjugation_verbs_chip">%1$d verbs</string>
     <string name="conjugation_attempted_chip">%1$d of %2$d tried</string>
+    <string name="numbers_title">Numbers</string>
+    <string name="numbers_blurb">Type the numbers you want and learn to write them in Polish</string>
+    <string name="numbers_medallion">123</string>
+    <string name="numbers_setup_hint">Type single numbers and ranges, separated by commas. The training uses exactly these numbers.</string>
+    <string name="numbers_input_label">Numbers to practise</string>
+    <string name="numbers_input_placeholder">1-20, 35, 100-110</string>
+    <string name="numbers_count">%1$d numbers</string>
+    <string name="numbers_error_empty">Type at least one number or range.</string>
+    <string name="numbers_error_unreadable">Can\'t read “%1$s”. Use numbers like 35 or ranges like 1-20.</string>
+    <string name="numbers_error_too_large">Numbers go up to 999 999 999.</string>
+    <string name="numbers_error_too_many">At most 100 000 numbers at a time.</string>
+    <string name="numbers_start">Start</string>
+    <string name="numbers_listen">Listen</string>
+    <string name="numbers_write_prompt">Write the number in words</string>
+    <string name="numbers_progress">%1$d of %2$d numbers mastered</string>
+    <string name="numbers_attempted_chip">%1$d of %2$d tried</string>
+    <string name="numbers_none">Choose the numbers to practise first.</string>
 
     <!-- Mix -->
     <string name="mix_title">Mix</string>
@@ -238,6 +256,7 @@
     <string name="vocabulary_course_title">Vocabulary course</string>
     <string name="vocabulary_course_round">Round %1$d · %2$d of %3$d trainings</string>
     <string name="vocabulary_course_learning">%1$d to learn · %2$d known</string>
+    <string name="vocabulary_course_learning_accuracy">%1$s · %2$d%% correct</string>
     <string name="vocabulary_course_reset">Start the queue again</string>
     <string name="vocabulary_course_settings_title">Vocabulary course</string>
     <string name="vocabulary_course_settings_scope">Words you mark To learn come first, favourites before the rest. Reviews are picked at random from the words you know.</string>

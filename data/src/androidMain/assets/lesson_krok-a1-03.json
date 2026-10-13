@@ -128,11 +128,9 @@
       ],
       "newWords": [
         {"polish": "kto", "english": "who"},
-        {"polish": "co", "english": "what"},
         {"polish": "słownik", "english": "dictionary"},
         {"polish": "pamiętać", "english": "to remember"},
         {"polish": "po hiszpańsku", "english": "in Spanish"},
-        {"polish": "czytać", "english": "to read"},
         {"polish": "normalnie", "english": "normally"},
         {"polish": "jeszcze", "english": "also, still"},
         {"polish": "niestety", "english": "unfortunately"},
@@ -140,8 +138,7 @@
         {"polish": "polsko-japoński", "english": "Polish-Japanese"},
         {"polish": "Argentyna", "english": "Argentina"},
         {"polish": "Japonia", "english": "Japan"},
-        {"polish": "za", "english": "too (za mały — too small)"},
-        {"polish": "mały", "english": "small"}
+        {"polish": "za", "english": "too (za mały — too small)"}
       ],
       "rules": [1]
     },
@@ -171,7 +168,6 @@
         {"label": "16", "answers": ["segregator"]}
       ],
       "newWords": [
-        {"polish": "książka", "english": "book"},
         {"polish": "zeszyt", "english": "exercise book"},
         {"polish": "długopis", "english": "pen"},
         {"polish": "tablica", "english": "board"},
@@ -222,7 +218,6 @@
         {"polish": "model", "english": "model"},
         {"polish": "super", "english": "great"},
         {"polish": "fajny", "english": "cool, nice"},
-        {"polish": "fotografia", "english": "photo, photograph"},
         {"polish": "prawda", "english": "truth (…, prawda? — …, right?)"},
         {"polish": "palma", "english": "palm tree"},
         {"polish": "wakacje", "english": "holidays"},
@@ -264,16 +259,10 @@
       ],
       "newWords": [
         {"polish": "modny", "english": "fashionable"},
-        {"polish": "nic", "english": "nothing"},
         {"polish": "paszport", "english": "passport"},
-        {"polish": "ołówek", "english": "pencil"},
-        {"polish": "gumka", "english": "eraser"},
-        {"polish": "mapa", "english": "map"},
-        {"polish": "Kraków", "english": "Cracow"},
         {"polish": "tylko", "english": "only"}
       ],
-      "rules": [1],
-      "newWordsUnlock": "after_check"
+      "rules": [1]
     },
     {
       "id": "1E",
@@ -331,7 +320,6 @@
         {"number": 3, "answers": ["klucz"]},
         {"number": 4, "answers": ["płyta"]}
       ],
-      "newWords": [{"polish": "pamiętać", "english": "to remember"}],
       "rules": [1]
     },
     {
@@ -736,7 +724,6 @@
       ],
       "newWords": [
         {"polish": "rzeczownik", "english": "noun"},
-        {"polish": "wiedzieć", "english": "to know (a fact)"},
         {"polish": "rodzaj męski", "english": "masculine gender"},
         {"polish": "rodzaj żeński", "english": "feminine gender"},
         {"polish": "rodzaj nijaki", "english": "neuter gender"},
@@ -806,10 +793,8 @@
       ],
       "newWords": [
         {"polish": "miasto", "english": "city"},
-        {"polish": "film", "english": "film"},
         {"polish": "ankieta", "english": "questionnaire"},
         {"polish": "nauczyciel", "english": "(male) teacher"},
-        {"polish": "projekt", "english": "project"},
         {"polish": "uniwersytet", "english": "university"},
         {"polish": "filharmonia", "english": "philharmonic"},
         {"polish": "muzyka", "english": "music"},
@@ -866,10 +851,8 @@
       "newWords": [
         {"polish": "ten", "english": "this (m) — ta (f), to (n)"},
         {"polish": "jaki", "english": "what kind of (m) — jaka (f), jakie (n)"},
-        {"polish": "komórka", "english": "mobile phone"},
         {"polish": "radio", "english": "radio"},
-        {"polish": "japoński", "english": "Japanese"},
-        {"polish": "hiszpański", "english": "Spanish"}
+        {"polish": "japoński", "english": "Japanese"}
       ],
       "rules": [3]
     },
@@ -890,7 +873,6 @@
         {"label": "9", "prompt": "japońskie", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jakie?"},
         {"label": "10", "prompt": "modna", "options": ["jaki?", "jaka?", "jakie?"], "answer": "jaka?"}
       ],
-      "newWords": [{"polish": "fajny", "english": "cool"}, {"polish": "męski", "english": "male, men's"}],
       "rules": [3]
     },
     {
@@ -1013,7 +995,6 @@
           ]
         }
       ],
-      "newWords": [{"polish": "miły", "english": "nice, kind"}],
       "rules": [3, 2]
     },
     {
@@ -1115,7 +1096,6 @@
         {"number": 7, "answers": ["Stare"]}
       ],
       "newWords": [
-        {"polish": "Rynek", "english": "market square"},
         {"polish": "Synagoga", "english": "synagogue"},
         {"polish": "Huta", "english": "steelworks"},
         {"polish": "Stare Miasto", "english": "Old Town"}
@@ -1170,11 +1150,9 @@
       "newWords": [
         {"polish": "czerwony", "english": "red"},
         {"polish": "niebieski", "english": "blue"},
-        {"polish": "zielony", "english": "green"},
         {"polish": "żółty", "english": "yellow"},
         {"polish": "czarny", "english": "black"},
         {"polish": "biały", "english": "white"},
-        {"polish": "szary", "english": "grey"},
         {"polish": "brązowy", "english": "brown"},
         {"polish": "różowy", "english": "pink"},
         {"polish": "fioletowy", "english": "purple"},
@@ -1379,7 +1357,6 @@
         {"polish": "sałata", "english": "lettuce"},
         {"polish": "myszka", "english": "little mouse"},
         {"polish": "niebo", "english": "sky"},
-        {"polish": "noc", "english": "night"},
         {"polish": "medal", "english": "medal"},
         {"polish": "humor", "english": "humour"},
         {"polish": "armia", "english": "army"},

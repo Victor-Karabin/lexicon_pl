@@ -4,6 +4,7 @@ import com.lexicon.boundary.CatalogSeedGate
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.ImageProvider
+import com.lexicon.boundary.NumberRepository
 import com.lexicon.boundary.ReviewScheduleRepository
 import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.SettingsRepository
@@ -46,6 +47,7 @@ import com.lexicon.data.repository.FallbackTranslatorImpl
 import com.lexicon.data.repository.InMemorySessionStore
 import com.lexicon.data.repository.MergingTranslationSuggester
 import com.lexicon.data.repository.MergingWordLevelGuesser
+import com.lexicon.data.repository.NumberRepositoryImpl
 import com.lexicon.data.repository.ReviewScheduleRepositoryImpl
 import com.lexicon.data.repository.StudyRecordRepositoryImpl
 import com.lexicon.data.repository.TrainingHistoryRepositoryImpl
@@ -85,6 +87,7 @@ val dataModule = module {
     factory { get<AppDatabase>().studyDayDao() }
     factory { get<AppDatabase>().vocabularyCourseDao() }
     factory { get<AppDatabase>().conjugationDao() }
+    factory { get<AppDatabase>().numberDao() }
 
     single(settingsDataStoreQualifier) { get<DataStorePathResolver>().createDataStore(SETTINGS_STORE_NAME) }
     single(vocabularySyncDataStoreQualifier) { get<DataStorePathResolver>().createDataStore(VOCABULARY_SYNC_STORE_NAME) }
@@ -113,6 +116,7 @@ val dataModule = module {
     factoryOf(::VocabularyPresetAssetLoader)
     factoryOf(::ConjugationAssetLoader)
     singleOf(::ConjugationRepositoryImpl) { bind<ConjugationRepository>() }
+    singleOf(::NumberRepositoryImpl) { bind<NumberRepository>() }
     singleOf(::CatalogSeedGateImpl) { bind<CatalogSeedGate>() }
     factoryOf(::CourseAssetLoader)
 

@@ -82,7 +82,7 @@ class LessonThreeScriptTest {
     @Test
     fun `classroom words open after the dictation is checked`() {
         assertEquals(TranscriptUnlock.AfterCheck, script.newWords.getValue("1B").unlock)
-        assertEquals(13, script.newWords.getValue("1B").words.size)
+        assertEquals(12, script.newWords.getValue("1B").words.size)
         assertNull(screen("2A").hint)
     }
 }

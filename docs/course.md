@@ -1,8 +1,10 @@
 # The course (Plan tab)
 
 The Plan tab holds an ordered path through the vocabulary: the lesson sequence of
-*Polski krok po kroku*. Where the Vocabulary tab lets a learner pick any preset,
-the course answers "what should I study next".
+an A1 coursebook and its workbook, shown in the app as **Polish for Beginners 1**
+(*Polski dla początkujących 1*) — the book's name appears nowhere in the app. Where the
+Vocabulary tab lets a learner pick any preset, the course answers "what should I study
+next".
 
 A lesson carries the book's own syllabus (what it teaches you to say, its topic
 vocabulary, its grammar point), the words it introduces, and the recordings that
@@ -101,7 +103,7 @@ appear rather than trusting an OCR digit.
 
 ### Translations
 
-*Krok po kroku* is monolingual. Lesson words are matched to the existing corpus by
+The coursebook is monolingual. Lesson words are matched to the existing corpus by
 Polish form, folded through the same `foldForSearch` the app uses. Whatever does
 not match has to be authored:
 

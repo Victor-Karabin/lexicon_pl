@@ -1,4 +1,4 @@
-# Krok po kroku prints some new words with their conjugation, their aspect partner or
+# The coursebook prints some new words with their conjugation, their aspect partner or
 # in the gender the dialogue happens to use. This maps the printed form back to the
 # corpus headword, so the lesson still links to a real vocabulary entry.
 #

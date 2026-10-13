@@ -139,19 +139,11 @@
         {"label": "4", "prompt": "Mam inteligentnego brata.", "options": ["Mami", "Karol", "Karolina"], "answer": "Karolina"}
       ],
       "newWords": [
-        {"polish": "wolny", "english": "free"},
         {"polish": "zajęty", "english": "busy"},
-        {"polish": "wolny czas", "english": "free time"},
-        {"polish": "dziewczyna", "english": "girl (dziewczyny — girls)"},
         {"polish": "galeria handlowa", "english": "shopping mall"},
         {"polish": "lista zakupów", "english": "shopping list"},
         {"polish": "krótki", "english": "short"},
-        {"polish": "długi", "english": "long"},
-        {"polish": "swój", "english": "one's own"},
-        {"polish": "plan", "english": "plan"},
-        {"polish": "jutro", "english": "tomorrow"},
-        {"polish": "sportowy", "english": "sports (adj.)"},
-        {"polish": "inteligentny", "english": "clever"}
+        {"polish": "sportowy", "english": "sports (adj.)"}
       ],
       "rules": [1]
     },
@@ -176,7 +168,11 @@
         "Masculine nouns in *-a*: *dobrego tatę*.",
         "Games and some fruit and vegetables are animate: *grać w golfa, w tenisa; kupić pomidora*."
       ],
-      "newWords": [{"polish": "biernik", "english": "accusative"}],
+      "newWords": [
+        {"polish": "biernik", "english": "accusative"},
+        {"polish": "pomidor", "english": "tomato"},
+        {"polish": "kupić", "english": "to buy (perfective)"}
+      ],
       "rules": [1, 2]
     },
     {
@@ -246,15 +242,9 @@
         {"number": 20, "answers": ["kawę", "piwo", "bilet", "makaron", "piłkę nożną", "listę", "telewizję", "gazetę", "pracę domową", "dyskotekę", "film", "książkę", "zupę", "zdjęcie", "golfa", "pomidora", "list", "zdanie", "gimnastykę", "słowo"]}
       ],
       "newWords": [
-        {"polish": "bilet", "english": "ticket"},
-        {"polish": "zupa", "english": "soup"},
-        {"polish": "golf", "english": "golf"},
-        {"polish": "pomidor", "english": "tomato"},
         {"polish": "zdanie", "english": "sentence"},
-        {"polish": "słowo", "english": "word"},
         {"polish": "piwo", "english": "beer"},
-        {"polish": "gimnastyka", "english": "gymnastics"},
-        {"polish": "powtórzyć", "english": "to repeat"}
+        {"polish": "gimnastyka", "english": "gymnastics"}
       ],
       "rules": [1],
       "newWordsUnlock": "after_check"
@@ -318,7 +308,6 @@
           "choices": [{"options": ["Kogo", "Co"], "answer": "Kogo"}]
         }
       ],
-      "newWords": [{"polish": "torba", "english": "bag"}],
       "rules": [2]
     },
     {
@@ -349,11 +338,6 @@
         {"number": 6, "answers": ["polską telewizję"], "feedback": "Fem.: *-ą* + *-ę* (*polską telewizję*)."},
         {"number": 7, "answers": ["sympatyczną siostrę"], "feedback": "Fem.: *-ą* + *-ę* (*sympatyczną siostrę*)."},
         {"number": 8, "answers": ["Krakowski Rynek"], "feedback": "Masc. inanimate = nominative (*Krakowski Rynek*)."}
-      ],
-      "newWords": [
-        {"polish": "zielony", "english": "green"},
-        {"polish": "herbata", "english": "tea"},
-        {"polish": "rynek", "english": "market square (Krakowski Rynek — Kraków Main Square)"}
       ],
       "rules": [1]
     },
@@ -391,15 +375,9 @@
         {"number": 10, "answers": ["moją nauczycielkę"]}
       ],
       "newWords": [
-        {"polish": "pić", "english": "to drink"},
-        {"polish": "czarny", "english": "black"},
         {"polish": "pies", "english": "dog"},
         {"polish": "risotto", "english": "risotto"},
-        {"polish": "dentystka", "english": "dentist (woman)"},
-        {"polish": "ciekawy", "english": "interesting"},
-        {"polish": "artykuł", "english": "article"},
-        {"polish": "czerwony", "english": "red"},
-        {"polish": "wino", "english": "wine"}
+        {"polish": "artykuł", "english": "article"}
       ],
       "rules": [1]
     },
@@ -462,12 +440,7 @@
           "choices": [{"options": ["Jaki", "Jakim", "Jakiego"], "answer": "Jakiego"}]
         }
       ],
-      "newWords": [
-        {"polish": "mleko", "english": "milk"},
-        {"polish": "sok", "english": "juice"},
-        {"polish": "kot", "english": "cat"},
-        {"polish": "kompozytor", "english": "composer"}
-      ],
+      "newWords": [{"polish": "kot", "english": "cat"}, {"polish": "kompozytor", "english": "composer"}],
       "rules": [2, 1]
     },
     {
@@ -524,8 +497,7 @@
         {"polish": "normalny", "english": "full-price"},
         {"polish": "ulgowy", "english": "reduced (ticket)"},
         {"polish": "musieć", "english": "must, to have to"},
-        {"polish": "papieros", "english": "cigarette"},
-        {"polish": "dla", "english": "for"}
+        {"polish": "papieros", "english": "cigarette"}
       ],
       "rules": [3, 4]
     },
@@ -587,8 +559,7 @@
         {"polish": "magazyn", "english": "magazine"},
         {"polish": "kolorowy", "english": "colourful"},
         {"polish": "miętowy", "english": "mint (adj.)"},
-        {"polish": "guma do żucia", "english": "chewing gum"},
-        {"polish": "długopis", "english": "pen"}
+        {"polish": "guma do żucia", "english": "chewing gum"}
       ],
       "rules": [1, 3],
       "newWordsUnlock": "after_check"
@@ -607,9 +578,6 @@
         {"label": "6", "prompt": "(mała karta telefoniczna) Proszę", "answers": ["małą kartę telefoniczną", "Proszę małą kartę telefoniczną"], "feedback": "Fem.: *-ą* + *-ę* (*małą kartę telefoniczną*)."}
       ],
       "newWords": [
-        {"polish": "pomarańczowy", "english": "orange (adj.)"},
-        {"polish": "zeszyt", "english": "notebook"},
-        {"polish": "niebieski", "english": "blue"},
         {"polish": "owocowy", "english": "fruit (adj.)"},
         {"polish": "telefoniczny", "english": "phone (adj.)"}
       ],
@@ -1012,9 +980,7 @@
         }
       ],
       "newWords": [
-        {"polish": "sto", "english": "100"},
         {"polish": "dwieście", "english": "200"},
-        {"polish": "trzysta", "english": "300"},
         {"polish": "czterysta", "english": "400"},
         {"polish": "pięćset", "english": "500"},
         {"polish": "sześćset", "english": "600"},
@@ -1215,7 +1181,6 @@
         {"polish": "obuwie", "english": "shoes"},
         {"polish": "biżuteria", "english": "jewellery"},
         {"polish": "herbaciarnia", "english": "tea shop"},
-        {"polish": "kawiarnia", "english": "café"},
         {"polish": "optyk", "english": "optician"},
         {"polish": "fryzjer", "english": "hairdresser"},
         {"polish": "biuro podróży", "english": "travel agency"},
@@ -1302,7 +1267,6 @@
         {"polish": "album", "english": "album"},
         {"polish": "karta pamięci", "english": "memory card"},
         {"polish": "statyw", "english": "tripod"},
-        {"polish": "gumka", "english": "eraser"},
         {"polish": "kosmetyki", "english": "cosmetics"}
       ],
       "rules": [1]
@@ -1320,7 +1284,6 @@
         {"label": "4", "prompt": "Jaką mapę chce Mami?", "answers": ["małą"]},
         {"label": "5", "prompt": "Jaki długopis chce Mami?", "answers": ["czerwony"]}
       ],
-      "newWords": [{"polish": "kupić", "english": "to buy (perfective)"}],
       "rules": [1]
     },
     {
@@ -1427,7 +1390,6 @@
         {"number": 11, "answers": ["ma"]}
       ],
       "newWords": [
-        {"polish": "słucham", "english": "how can I help? (in a shop)"},
         {"polish": "niedrogi", "english": "inexpensive"},
         {"polish": "tani", "english": "cheap"},
         {"polish": "firma", "english": "brand, company"},
@@ -1598,9 +1560,7 @@
       ],
       "newWords": [
         {"polish": "zadanie", "english": "task"},
-        {"polish": "domowy", "english": "home (adj.) (zadanie domowe — homework)"},
         {"polish": "nudny", "english": "boring"},
-        {"polish": "łatwy", "english": "easy"},
         {"polish": "czyli", "english": "so, that is"},
         {"polish": "pomysł", "english": "idea"},
         {"polish": "nieciekawy", "english": "dull"}
@@ -1618,11 +1578,7 @@
         "Ona ma małą, ładną córkę i sympatycznego syna. Ona ma ładny dom. Ma czarnego kota i dużego psa. Ma stary, ale dobry rower. Ma ciekawą książkę, bo lubi czytać. Lubi też malarstwo. Ma gruby słownik i małą komórkę. Ona bardzo lubi czarną kawę, czekoladę, sok i mleko."
       ],
       "checklist": ["Masc. animate → *-ego … -a* (*dużego psa*).", "Fem. → *-ą … -ę*."],
-      "newWords": [
-        {"polish": "słownik", "english": "dictionary"},
-        {"polish": "portfel", "english": "wallet"},
-        {"polish": "czekolada", "english": "chocolate"}
-      ],
+      "newWords": [{"polish": "portfel", "english": "wallet"}, {"polish": "czekolada", "english": "chocolate"}],
       "rules": [1]
     },
     {

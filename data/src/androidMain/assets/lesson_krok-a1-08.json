@@ -137,14 +137,10 @@
       "newWords": [
         {"polish": "posiłek", "english": "meal"},
         {"polish": "śniadanie", "english": "breakfast"},
-        {"polish": "obiad", "english": "lunch"},
         {"polish": "kolacja", "english": "dinner"},
-        {"polish": "jeszcze", "english": "still"},
-        {"polish": "już", "english": "already"},
         {"polish": "spać", "english": "to sleep (śpię, śpisz)"},
         {"polish": "proszę wejść", "english": "come in"},
         {"polish": "jeść", "english": "to eat"},
-        {"polish": "wszystko", "english": "everything"},
         {"polish": "fajnie", "english": "cool"}
       ]
     },
@@ -184,26 +180,19 @@
       ],
       "notes": ["*sól* is feminine: *ta sól*."],
       "newWords": [
-        {"polish": "jasny", "english": "light"},
         {"polish": "ciemny", "english": "dark"},
-        {"polish": "chleb", "english": "bread"},
-        {"polish": "bułka", "english": "roll"},
         {"polish": "biały ser", "english": "cottage cheese"},
         {"polish": "żółty ser", "english": "hard cheese"},
         {"polish": "jogurt", "english": "yoghurt"},
-        {"polish": "mleko", "english": "milk"},
         {"polish": "masło", "english": "butter"},
         {"polish": "margaryna", "english": "margarine"},
         {"polish": "dżem", "english": "jam"},
-        {"polish": "miód", "english": "honey"},
         {"polish": "jajko", "english": "egg"},
         {"polish": "szynka", "english": "ham"},
         {"polish": "kiełbasa", "english": "sausage"},
         {"polish": "płatki śniadaniowe", "english": "cereal"},
-        {"polish": "pomidor", "english": "tomato"},
         {"polish": "ogórek", "english": "cucumber"},
         {"polish": "kakao", "english": "cocoa"},
-        {"polish": "cukier", "english": "sugar"},
         {"polish": "sól", "english": "salt"},
         {"polish": "pieprz", "english": "pepper"},
         {"polish": "cytryna", "english": "lemon"}
@@ -419,18 +408,14 @@
       ],
       "notes": ["🍴 widelec · 🔪 nóż · 🥄 łyżka · 🍽️ talerz · ☕ kubek"],
       "newWords": [
-        {"polish": "woleć", "english": "to prefer"},
         {"polish": "preferować", "english": "to prefer"},
         {"polish": "bardziej", "english": "more (bardziej lubić — to like more)"},
         {"polish": "widelec", "english": "fork"},
         {"polish": "nóż", "english": "knife"},
         {"polish": "łyżka", "english": "spoon"},
         {"polish": "talerz", "english": "plate"},
-        {"polish": "kubek", "english": "mug"},
         {"polish": "salami", "english": "salami"},
         {"polish": "tłusty", "english": "fatty"},
-        {"polish": "zwykle", "english": "usually"},
-        {"polish": "zdrowy", "english": "healthy"},
         {"polish": "mieć ochotę na", "english": "to fancy (Masz ochotę na…? — Do you fancy…?)"},
         {"polish": "na miękko", "english": "soft-boiled"},
         {"polish": "na twardo", "english": "hard-boiled"},
@@ -550,7 +535,6 @@
         {"polish": "ananas", "english": "pineapple"},
         {"polish": "banan", "english": "banana"},
         {"polish": "ryba", "english": "fish"},
-        {"polish": "mięso", "english": "meat"},
         {"polish": "woda mineralna", "english": "mineral water"}
       ],
       "rules": [1]
@@ -640,8 +624,6 @@
         {"polish": "smacznego", "english": "enjoy your meal"},
         {"polish": "omlet", "english": "omelette"},
         {"polish": "patelnia", "english": "frying pan"},
-        {"polish": "naturalny", "english": "plain, natural"},
-        {"polish": "owocowy", "english": "fruit (adj.)"},
         {"polish": "malina", "english": "raspberry"},
         {"polish": "truskawka", "english": "strawberry"},
         {"polish": "malinowy", "english": "raspberry (adj.)"},
@@ -818,9 +800,7 @@
       ],
       "newWords": [
         {"polish": "bez", "english": "without (bez cukru — without sugar)"},
-        {"polish": "cukier", "english": "sugar"},
-        {"polish": "zawsze", "english": "always"},
-        {"polish": "narzędnik", "english": "instrumental (case)"}
+        {"polish": "zawsze", "english": "always"}
       ],
       "rules": [3]
     },
@@ -923,9 +903,7 @@
         {"polish": "pieczarka", "english": "mushroom"},
         {"polish": "fasolka", "english": "beans"},
         {"polish": "ciężki", "english": "heavy"},
-        {"polish": "ryż", "english": "rice"},
         {"polish": "delikatny", "english": "delicate"},
-        {"polish": "owoc", "english": "fruit"},
         {"polish": "kanapka", "english": "sandwich"},
         {"polish": "pauza", "english": "break"},
         {"polish": "jakiś", "english": "some"},
@@ -1028,7 +1006,6 @@
           ]
         }
       ],
-      "newWords": [{"polish": "pić", "english": "to drink"}],
       "rules": [2]
     },
     {
@@ -1145,12 +1122,10 @@
         {"label": "13", "prompt": "sałatka", "options": ["pierwsze danie", "mięso, ryba", "dodatki", "sałatki, warzywa"], "answer": "sałatki, warzywa"}
       ],
       "newWords": [
-        {"polish": "danie", "english": "course, dish (pierwsze danie — first course)"},
         {"polish": "kurczak", "english": "chicken"},
         {"polish": "kotlet", "english": "cutlet"},
         {"polish": "dodatek", "english": "side dish"},
         {"polish": "kasza", "english": "groats"},
-        {"polish": "sałata", "english": "lettuce"},
         {"polish": "sałatka", "english": "salad"},
         {"polish": "surówka", "english": "raw-vegetable salad"},
         {"polish": "warzywo", "english": "vegetable"}
@@ -1242,7 +1217,6 @@
       ],
       "newWords": [
         {"polish": "suszony", "english": "dried"},
-        {"polish": "oliwka", "english": "olive"},
         {"polish": "deser", "english": "dessert"},
         {"polish": "słodki", "english": "sweet"}
       ],
@@ -1275,7 +1249,11 @@
         {"number": 8, "answers": ["jabłkami"]},
         {"number": 9, "answers": ["malinami"]}
       ],
-      "newWords": [{"polish": "kiszony", "english": "pickled"}, {"polish": "gotowany", "english": "boiled"}],
+      "newWords": [
+        {"polish": "kiszony", "english": "pickled"},
+        {"polish": "gotowany", "english": "boiled"},
+        {"polish": "kiszony ogórek", "english": "pickled cucumber"}
+      ],
       "rules": [5]
     },
     {
@@ -1401,8 +1379,7 @@
         {"polish": "kochanie", "english": "darling"},
         {"polish": "jarzynowy", "english": "vegetable (adj.)"},
         {"polish": "tost", "english": "toast"},
-        {"polish": "gotowe", "english": "ready"},
-        {"polish": "zapraszać", "english": "to invite (zapraszamy na kolację)"}
+        {"polish": "gotowe", "english": "ready"}
       ]
     },
     {
@@ -1527,7 +1504,6 @@
         {"polish": "talerzyk", "english": "saucer"},
         {"polish": "filiżanka", "english": "cup"},
         {"polish": "kieliszek", "english": "wine glass"},
-        {"polish": "szklanka", "english": "glass"},
         {"polish": "czajnik", "english": "kettle"},
         {"polish": "garnek", "english": "pot"},
         {"polish": "dzbanek", "english": "jug"},
