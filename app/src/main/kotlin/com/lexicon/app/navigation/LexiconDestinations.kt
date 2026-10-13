@@ -33,6 +33,8 @@ internal object LexiconDestinations {
     const val CONJUGATION = "conjugation/{courseId}"
     const val CONJUGATION_VERBS = "conjugation/verbs"
     const val REVIEW_WORDS = "review/words"
+    const val NUMBERS_SETUP = "numbers/setup"
+    const val NUMBERS = "numbers/train"
 
     fun conjugationCourse(courseId: String) = "conjugation/$courseId"
 

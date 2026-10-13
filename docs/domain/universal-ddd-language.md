@@ -32,7 +32,7 @@ data android  application     adapters     use-case implementations
 ```
 
 `model` depends on nothing but the Kotlin standard library and immutable collections.
-Five of the seven contexts have their model there; Conjugation and Catalogue do not yet
+Five of the eight contexts have their model there; Conjugation, Numbers and Catalogue do not yet
 (see [Known gaps](#known-gaps)).
 
 ## Bounded Contexts
@@ -45,6 +45,7 @@ Five of the seven contexts have their model there; Conjugation and Catalogue do 
 | Vocabulary course | The always-on course: its settings, its queue and where the learner is in it | `model.vocabularycourse` | `interactors.vocabularycourse` |
 | Course | Fixed teaching material — lessons and exercises | `model.course` | `interactors.course` |
 | Conjugation | Verbs, their forms, and courses over them | — | `interactors.conjugation` |
+| Numbers | Numbers the learner chose, their Polish words and per-number progress | — | `interactors.numbers` |
 | Catalogue | Seeding shipped data into the database | — | `interactors.sync` |
 
 **Training is one context, not thirteen.** `dictation`, `crossword`, `imagetest` and the
@@ -83,7 +84,7 @@ under [Context-Specific Terminology](#context-specific-terminology) and must not
 | Study time policy | How much of the gap between two answers counts as studying | Scheduling | — | `StudyTimePolicy` |
 | Word mastery | A word whose review interval has passed the settings' threshold | Scheduling | *learned* | `ReviewState.isMastered` |
 | Study day | A calendar day on which the learner practised, with its totals | Scheduling | *session day* | `StudyDayBoundary` |
-| Streak | Consecutive study days | Scheduling | — | `GetStudyStreakUseCase` |
+| Streak | Consecutive study days. Shown on iOS only; Android no longer displays it | Scheduling | — | `GetStudyStreakUseCase` |
 | Vocabulary course | The one course that always runs on the dashboard, over the words the learner marked. There is nothing to create, start or stop | Vocabulary course | *program*, *plan* | `VocabularyCourse` |
 | Course settings | New words a day, reviews a day and the queue — all the learner configures | Vocabulary course | *config* | `CourseSettings` |
 | New words | The words being learnt this round: up to the day's number, favourites before words merely marked to learn. They stay the same until their status changes | Vocabulary course | *daily words* | `VocabularyCourse.newWords`, `learningWordIds()` |
@@ -105,6 +106,11 @@ under [Context-Specific Terminology](#context-specific-terminology) and must not
 | Stem | The longest prefix every usable form of a verb shares | Conjugation | *root*, *base* | `ConjugationSplit.stem` |
 | Variant mastery | A conjugation variant answered correctly enough times in a row | Conjugation | *learned* | `MASTERY_STREAK` |
 | Conjugation course | A chosen set of verbs practised together, with its own progress | Conjugation | *course* unqualified | `ConjugationCourse` |
+| Number selection | The numbers and ranges the learner typed, read into a sorted set — or the reason they cannot be read | Numbers | *range*, *spec* | `NumberSelection` |
+| Number words | A number written out in Polish, in the nominative masculine form | Numbers | *spelling* | `PolishNumbers.words` |
+| Number question | One number to write: its digits, accepted spellings and transcription | Numbers | *step* | `NumberQuestion` |
+| Number mastery | A number answered correctly twice in a row | Numbers | *learned* | `NumberProgress.MASTERY_STREAK` |
+| Numbers course | The chosen numbers practised together, with their progress | Numbers | *course* unqualified | `NumberCourse` |
 | Catalogue | A body of shipped data seeded into the database from an asset | Catalogue | *database*, *source* | `SeedCatalogsUseCase` |
 | Seeding | Writing a catalogue's asset into the database | Catalogue | *sync*, *import*, *download* | `seedFromAsset()` |
 | Fingerprint | A cheap identity for an asset, used to skip unchanged seeding | Catalogue | *hash* | `CatalogSeedStore` |
@@ -122,6 +128,7 @@ Objects with identity that persists across changes.
 | Course | `CourseId` | Course | `completedCount`, `currentLesson`, `isComplete` |
 | Lesson | `LessonId` | Course | — |
 | Conjugation course | `ConjugationCourse.id` | Conjugation | — |
+| Numbers course | the single stored row | Numbers | — |
 | Verb | infinitive | Conjugation | `formsFor`, `split`, `isComplete` |
 
 ## Value Objects
@@ -160,6 +167,7 @@ reads its parts back out is ceremony.
 | Vocabulary course | its settings and its place in the queue | the queue is never empty; the place is always inside the queue | In the use cases: `UpdateCourseSettingsUseCase` keeps the previous queue rather than store an empty one, and the place is clamped on read |
 | Course | its lessons, their words, audio and exercises | lesson progress belongs to exactly one course | By the schema — progress is keyed by lesson |
 | Conjugation course | its chosen verbs and their per-variant progress | progress is scoped to one course, so two courses over one verb do not share it | By the schema — progress is keyed by course |
+| Numbers course | the typed choice and per-number progress | only a readable choice is stored; progress belongs to the number, so it survives a change of choice | In `SaveNumberCourseUseCase`, which parses before saving; by the schema — progress is keyed by number |
 | Verb | its forms per person | a form is never invented; absent means absent | By construction — forms are read from the asset, never derived |
 
 ## Domain Services
@@ -174,6 +182,7 @@ Operations that belong to no single entity.
 | Queue resolver | Finds the next training the course can actually run with the words it has, and keeps the step over any it cannot | `NextCourseTrainingUseCase` |
 | Answer normaliser | Decides whether a written or spoken answer matches | `AnswerNormalizer` |
 | Conjugation splitter | Derives stem and endings from a verb's own forms | `VerbConjugation.split()` |
+| Number speller | Writes a number in Polish words and transcribes it | `PolishNumbers` |
 | Voice choice | The voice the learner will hear: theirs, or the first on offer | `List<SpeechVoice>.chosen()` |
 
 ## Ports
@@ -182,7 +191,7 @@ Everything the domain needs from the outside, declared in `boundary` and impleme
 `data` (persistence) or `android` (device and network).
 
 **Repositories** — `VocabularyRepository`, `VocabularyPresetRepository`,
-`CourseRepository`, `ConjugationRepository`, `VocabularyCourseRepository`,
+`CourseRepository`, `ConjugationRepository`, `NumberRepository`, `VocabularyCourseRepository`,
 `TrainingHistoryRepository`, `ReviewScheduleRepository`, `StudyRecordRepository`,
 `SettingsRepository`, `SessionStore`
 
@@ -222,6 +231,9 @@ Introducing an event type is a domain change and requires updating this document
 | Change the course | Store new settings; a changed queue starts from its first training | `UpdateCourseSettingsUseCase` |
 | Create a conjugation course | Fix a set of verbs as a course | `CreateConjugationCourseUseCase` |
 | Restore the verbs | Re-seed the verb catalogue from its asset | `RestoreConjugationVerbsUseCase` |
+| Choose the numbers | Store the typed numbers and ranges as the numbers course, if they can be read | `SaveNumberCourseUseCase` |
+| Ask a number | Pick the next number: not asked this session, not mastered, tried the fewest times | `NextNumberUseCase` |
+| Answer a number | Check the words and record the attempt | `SubmitNumberAnswerUseCase` |
 | Seed the catalogues | Write shipped assets into the database | `SeedCatalogsUseCase` |
 
 ## Domain States
@@ -235,6 +247,7 @@ Introducing an event type is a domain change and requires updating this document
 | Answer (UI) | `Unanswered`, `Correct`, `Incorrect`, `Skipped` |
 | Conjugation answer mode | `FULL_FORM`, `ENDING` |
 | Verb completeness | complete, partial, unusable |
+| Number selection | `Valid`, `Empty`, `Unreadable`, `TooLarge`, `TooMany` |
 
 **Verb completeness** is domain-significant: the source records verbs with every person,
 verbs with only some (`boleć` has only the third persons), and verbs with none. Only
@@ -271,10 +284,13 @@ These words carry different meanings in different contexts and must not be unifi
 
 | Word | In one context | In another |
 | --- | --- | --- |
-| **Course** | Course — a sequence of authored lessons (Krok po kroku) | Conjugation course — a chosen set of verbs |
+| **Course** | Course — a sequence of authored lessons (Polish for Beginners) | Conjugation course — a chosen set of verbs |
 | | | Vocabulary course — the always-on queue over the learner's marked words |
+| | | Numbers course — the numbers the learner typed |
 | **Mastery** | Scheduling: a word whose review interval passed the threshold (21 days by default) | Conjugation: a variant answered correctly twice in a row |
+| | | Numbers: a number answered correctly twice in a row |
 | **Progress** | Vocabulary course: words known out of words known or being learnt | Conjugation: variants mastered out of total |
+| | | Numbers: numbers mastered out of the numbers chosen |
 | | | Course: lessons completed |
 | **Step** | Training: one question in a session | Conjugation: one person row inside a table |
 | | | Catalogue: one catalogue being seeded |
@@ -291,6 +307,8 @@ this document describes.
 - **Conjugation has no model package.** `VerbConjugation`, `ConjugationVariant`,
   `ConjugationSplit` and `MASTERY_STREAK` still live in `interactors.conjugation`. They
   are well modelled; they are simply in the application layer.
+- **Numbers has no model package.** `PolishNumbers`, `NumberSelection` and
+  `NumberProgress` live in `interactors.numbers`, like Conjugation's model.
 - **Catalogue has no model package.** Seeding is orchestration over ports, with the only
   rule — the fingerprint comparison — inside the repositories.
 - **The preset list carries word ids it no longer displays.** Since counts and membership

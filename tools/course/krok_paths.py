@@ -1,4 +1,4 @@
-"""Locations of the Krok po kroku source material.
+"""Locations of the coursebook source material.
 
 The books live outside the repository, next to it, because they are commercial
 coursebooks and must not be committed. Everything derived from them lands in

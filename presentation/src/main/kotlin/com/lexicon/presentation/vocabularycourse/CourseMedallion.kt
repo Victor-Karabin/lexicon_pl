@@ -1,7 +1,7 @@
 package com.lexicon.presentation.vocabularycourse
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.School
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
@@ -17,6 +17,6 @@ fun CourseMedallion(
     size: Dp = MedallionSize,
 ) {
     Medallion(skin = skin, modifier = modifier, size = size) {
-        MedallionIcon(Icons.Default.Favorite, skin)
+        MedallionIcon(Icons.Default.School, skin)
     }
 }

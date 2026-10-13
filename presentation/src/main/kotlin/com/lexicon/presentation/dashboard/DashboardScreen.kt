@@ -17,8 +17,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoStories
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Inbox
-import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Tag
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -42,6 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.conjugation.ConjugationCourse
+import com.lexicon.interactors.numbers.NumberCourse
 import com.lexicon.interactors.vocabularycourse.VocabularyCourse
 import com.lexicon.model.course.CourseId
 import com.lexicon.model.vocabulary.VocabularyId
@@ -54,9 +55,9 @@ import com.lexicon.presentation.course.CourseTile
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.GradientTile
-import com.lexicon.presentation.theme.component.LexiconProgressBar
 import com.lexicon.presentation.theme.component.Medallion
 import com.lexicon.presentation.theme.component.MedallionIcon
+import com.lexicon.presentation.theme.component.MedallionText
 import com.lexicon.presentation.theme.component.StatChip
 import com.lexicon.presentation.theme.component.TileChips
 import com.lexicon.presentation.theme.component.TileSkin
@@ -75,7 +76,6 @@ private val RingStroke = 5.dp
 private val PipSize = 10.dp
 private val PipBorder = 2.dp
 private val MetricBarHeight = 3.dp
-private val StreakIconSize = 20.dp
 private val ButtonIconSize = 18.dp
 
 private const val TRACK_ALPHA = 0.25f
@@ -85,6 +85,7 @@ fun DashboardScreen(
     onStartTraining: (training: String, wordIds: List<VocabularyId>) -> Unit,
     onOpenCards: () -> Unit,
     onOpenConjugation: (String) -> Unit,
+    onOpenNumbers: () -> Unit,
     onReviewWords: () -> Unit,
     onCourseSelected: (CourseId) -> Unit,
     modifier: Modifier = Modifier,
@@ -107,13 +108,14 @@ fun DashboardScreen(
 
     LaunchedEffect(Unit) {
         viewModel.onResumed()
-        viewModel.refreshConjugation()
+        viewModel.refreshCourses()
     }
 
     DashboardContent(
         uiState = uiState,
         onContinue = viewModel::onContinue,
         onOpenConjugation = onOpenConjugation,
+        onOpenNumbers = onOpenNumbers,
         onReviewWords = onReviewWords,
         onCourseSelected = onCourseSelected,
         modifier = modifier,
@@ -125,6 +127,7 @@ private fun DashboardContent(
     uiState: DashboardUiState,
     onContinue: () -> Unit,
     onOpenConjugation: (String) -> Unit,
+    onOpenNumbers: () -> Unit,
     onReviewWords: () -> Unit,
     onCourseSelected: (CourseId) -> Unit,
     modifier: Modifier = Modifier,
@@ -147,6 +150,8 @@ private fun DashboardContent(
                     ConjugationCourseCard(course = course, onOpen = { onOpenConjugation(course.id) })
                 }
 
+                uiState.numberCourse?.let { NumberCourseCard(course = it, onOpen = onOpenNumbers) }
+
                 CourseCard(uiState = uiState, onContinue = onContinue)
 
                 uiState.courses.forEach { course ->
@@ -163,13 +168,60 @@ private fun DashboardContent(
 }
 
 @Composable
-@OptIn(ExperimentalLayoutApi::class)
 private fun ConjugationCourseCard(
     course: ConjugationCourse,
     onOpen: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     val progress = course.progress
+    DrillCourseCard(
+        title = stringResource(R.string.conjugation_title),
+        medallion = stringResource(R.string.conjugation_medallion),
+        fraction = progress.fraction,
+        summary = stringResource(R.string.conjugation_progress, progress.mastered, progress.total),
+        onOpen = onOpen,
+    ) { skin ->
+        StatChip(icon = Icons.Default.Translate, text = stringResource(R.string.conjugation_verbs_chip, progress.verbs), skin = skin)
+        StatChip(
+            icon = Icons.Default.CheckCircle,
+            text = stringResource(R.string.conjugation_attempted_chip, progress.attempted, progress.total),
+            skin = skin,
+        )
+    }
+}
+
+@Composable
+private fun NumberCourseCard(
+    course: NumberCourse,
+    onOpen: () -> Unit,
+) {
+    val progress = course.progress
+    DrillCourseCard(
+        title = stringResource(R.string.numbers_title),
+        medallion = stringResource(R.string.numbers_medallion),
+        fraction = progress.fraction,
+        summary = stringResource(R.string.numbers_progress, progress.mastered, progress.total),
+        onOpen = onOpen,
+    ) { skin ->
+        StatChip(icon = Icons.Default.Tag, text = stringResource(R.string.numbers_count, progress.total), skin = skin)
+        StatChip(
+            icon = Icons.Default.CheckCircle,
+            text = stringResource(R.string.numbers_attempted_chip, progress.attempted, progress.total),
+            skin = skin,
+        )
+    }
+}
+
+@Composable
+@OptIn(ExperimentalLayoutApi::class)
+private fun DrillCourseCard(
+    title: String,
+    medallion: String,
+    fraction: Float,
+    summary: String,
+    onOpen: () -> Unit,
+    modifier: Modifier = Modifier,
+    chips: @Composable (TileSkin) -> Unit,
+) {
     val skin = tileSkin(highlighted = true)
 
     GradientTile(skin = skin, modifier = modifier.fillMaxWidth(), onClick = onOpen) {
@@ -177,12 +229,8 @@ private fun ConjugationCourseCard(
             horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            ProgressRing(
-                fraction = progress.fraction,
-                skin = skin,
-                description = stringResource(R.string.conjugation_progress, progress.mastered, progress.total),
-            ) {
-                Medallion(skin = skin) { MedallionIcon(Icons.Default.Translate, skin) }
+            ProgressRing(fraction = fraction, skin = skin, description = summary) {
+                Medallion(skin = skin) { MedallionText(medallion, skin) }
             }
             Column(modifier = Modifier.weight(1f)) {
                 Text(
@@ -191,31 +239,20 @@ private fun ConjugationCourseCard(
                     color = skin.muted(),
                 )
                 Text(
-                    text = stringResource(R.string.conjugation_title),
+                    text = title,
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.SemiBold,
                     color = skin.onTile,
                 )
                 Text(
-                    text = stringResource(R.string.conjugation_progress, progress.mastered, progress.total),
+                    text = summary,
                     style = MaterialTheme.typography.bodyMedium,
                     color = skin.muted(),
                 )
             }
         }
 
-        TileChips {
-            StatChip(
-                icon = Icons.Default.Translate,
-                text = stringResource(R.string.conjugation_verbs_chip, progress.verbs),
-                skin = skin,
-            )
-            StatChip(
-                icon = Icons.Default.CheckCircle,
-                text = stringResource(R.string.conjugation_attempted_chip, progress.attempted, progress.total),
-                skin = skin,
-            )
-        }
+        TileChips { chips(skin) }
     }
 }
 
@@ -248,20 +285,14 @@ private fun CourseCard(
                     style = MaterialTheme.typography.bodyMedium,
                     color = skin.muted(),
                 )
+                val words = stringResource(R.string.vocabulary_course_learning, uiState.learningWords, uiState.knownWords)
                 Text(
-                    text = stringResource(R.string.vocabulary_course_learning, uiState.learningWords, uiState.knownWords),
+                    text = uiState.accuracy?.let { stringResource(R.string.vocabulary_course_learning_accuracy, words, it) } ?: words,
                     style = MaterialTheme.typography.bodySmall,
                     color = skin.muted(),
                 )
             }
-            if (uiState.streakDays > 0) {
-                StreakBadge(days = uiState.streakDays, skin = skin)
-            }
         }
-
-        uiState.progress
-            ?.metric(ProgressMetricType.ACCURACY)
-            ?.let { MetricRow(it, skin) }
 
         if (uiState.nothingToPractise) {
             Text(
@@ -370,76 +401,6 @@ private fun ProgressRing(
     }
 }
 
-@Composable
-private fun StreakBadge(
-    days: Int,
-    skin: TileSkin,
-) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Icon(
-            imageVector = Icons.Default.LocalFireDepartment,
-            contentDescription = null,
-            tint = skin.onTile,
-            modifier = Modifier.size(StreakIconSize),
-        )
-        Text(
-            text = "$days",
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color = skin.onTile,
-        )
-        Text(
-            text = stringResource(R.string.dashboard_streak_unit),
-            style = MaterialTheme.typography.labelSmall,
-            color = skin.muted(),
-        )
-    }
-}
-
-@Composable
-private fun MetricRow(
-    metric: ProgressMetric,
-    skin: TileSkin,
-) {
-    Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-        ) {
-            Text(
-                text = stringResource(metric.type.label()),
-                style = MaterialTheme.typography.bodySmall,
-                color = skin.muted(),
-                modifier = Modifier.weight(1f),
-            )
-            Text(
-                text = when {
-                    !metric.isMeasured -> stringResource(R.string.dashboard_metric_unmeasured)
-
-                    metric.type == ProgressMetricType.ACCURACY -> "${metric.current}%"
-                    else -> "${metric.current} / ${metric.target}"
-                },
-                style = MaterialTheme.typography.bodySmall,
-                fontWeight = FontWeight.SemiBold,
-                color = skin.onTile,
-            )
-        }
-        LexiconProgressBar(
-            progress = { if (metric.target > 0) metric.current.toFloat() / metric.target else 0f },
-            color = skin.onTile,
-            trackColor = skin.onTile.copy(alpha = TRACK_ALPHA),
-            gapSize = 0.dp,
-            modifier = Modifier.fillMaxWidth().height(MetricBarHeight),
-        )
-    }
-}
-
-private fun ProgressMetricType.label(): Int =
-    when (this) {
-        ProgressMetricType.VOCABULARY -> R.string.dashboard_metric_vocabulary
-        ProgressMetricType.ACCURACY -> R.string.dashboard_metric_accuracy
-    }
-
 @LightDarkPreview
 @Composable
 private fun DashboardPreview() {
@@ -459,11 +420,11 @@ private fun DashboardPreview() {
                         ProgressMetric(ProgressMetricType.ACCURACY, current = 87, target = 100),
                     ),
                 ),
-                streakDays = 9,
                 wordsToReview = 2400,
             ),
             onContinue = {},
             onOpenConjugation = {},
+            onOpenNumbers = {},
             onCourseSelected = {},
             onReviewWords = {},
         )

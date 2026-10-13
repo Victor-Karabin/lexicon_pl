@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Parse Krok po kroku lesson structure out of the book text.
+"""Parse the coursebook lesson structure out of the book text.
 
 Every lesson opens on a page laid out the same way:
 

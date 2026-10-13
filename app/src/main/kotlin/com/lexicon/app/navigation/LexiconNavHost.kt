@@ -39,6 +39,8 @@ import com.lexicon.presentation.main.SplashScreen
 import com.lexicon.presentation.main.trainingDisplayName
 import com.lexicon.presentation.memorycards.MemoryCardsScreen
 import com.lexicon.presentation.mix.MixScreen
+import com.lexicon.presentation.numbers.NumberCourseScreen
+import com.lexicon.presentation.numbers.NumberTrainingScreen
 import com.lexicon.presentation.passage.PASSAGE_BANK_ARG
 import com.lexicon.presentation.passage.PassageScreen
 import com.lexicon.presentation.presets.CreatePresetScreen
@@ -106,6 +108,8 @@ fun LexiconNavHost(
                 onAddPreset = { navController.navigate(LexiconDestinations.CREATE_PRESET) },
                 onConjugationSelected = { navController.navigate(LexiconDestinations.CONJUGATION_VERBS) },
                 onTrainConjugation = { navController.navigate(LexiconDestinations.conjugationCourse(it)) },
+                onNumbersSelected = { navController.navigate(LexiconDestinations.NUMBERS_SETUP) },
+                onTrainNumbers = { navController.navigate(LexiconDestinations.NUMBERS) },
                 onReviewWords = { navController.navigate(LexiconDestinations.REVIEW_WORDS) },
             )
         }
@@ -497,6 +501,24 @@ fun LexiconNavHost(
         ) {
             ConjugationScreen(
                 onSessionComplete = onStepSessionComplete(LexiconDestinations.CONJUGATION)(""),
+                onClose = closeToMain,
+            )
+        }
+
+        composable(route = LexiconDestinations.NUMBERS_SETUP) {
+            NumberCourseScreen(
+                onStarted = {
+                    navController.navigate(LexiconDestinations.NUMBERS) {
+                        popUpTo(LexiconDestinations.NUMBERS_SETUP) { inclusive = true }
+                    }
+                },
+                onClose = closeToMain,
+            )
+        }
+
+        composable(route = LexiconDestinations.NUMBERS) {
+            NumberTrainingScreen(
+                onSessionComplete = onStepSessionComplete(LexiconDestinations.NUMBERS)(""),
                 onClose = closeToMain,
             )
         }

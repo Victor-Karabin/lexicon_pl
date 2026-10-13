@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Side-loads the Krok po kroku recordings onto a connected device.
+# Side-loads the coursebook recordings onto a connected device.
 #
 # The 488 tracks are 454 MB, so they are never bundled in the APK. This unpacks them
 # from the source archives into the local cache and pushes them to the app's own

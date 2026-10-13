@@ -1,11 +1,11 @@
-# Vocabulary introduced by the Polski krok po kroku lessons and not already in the corpus.
+# Vocabulary introduced by the coursebook lessons and not already in the corpus.
 # Columns as in core.tsv.
 #
 # The file name keeps this list last in the topic glob. Ids are handed out in load
 # order, so a file sorting earlier would renumber every word after it and scramble
 # which word a stored favourite points at.
 #
-# Krok po kroku is monolingual: the books print these words with no translation, so
+# The coursebook is monolingual: the books print these words with no translation, so
 # every English gloss here is authored. Headwords are normalised — the books print
 # "spać (śpię, śpisz)" and "zamawiać/zamówić", which map back to their entries here
 # through tools/course/word_forms.tsv.

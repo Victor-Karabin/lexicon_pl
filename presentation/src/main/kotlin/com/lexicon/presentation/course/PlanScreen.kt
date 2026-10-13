@@ -56,7 +56,6 @@ import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.GradientTile
 import com.lexicon.presentation.theme.component.LexiconProgressBar
 import com.lexicon.presentation.theme.component.Medallion
-import com.lexicon.presentation.theme.component.MedallionIcon
 import com.lexicon.presentation.theme.component.MedallionText
 import com.lexicon.presentation.theme.component.StatChip
 import com.lexicon.presentation.theme.component.TileChips
@@ -77,6 +76,7 @@ fun PlanScreen(
     onCourseSelected: (CourseId) -> Unit,
     onOpenCourseSettings: () -> Unit,
     onConjugationSelected: () -> Unit,
+    onNumbersSelected: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PlanViewModel = koinViewModel(),
 ) {
@@ -87,6 +87,7 @@ fun PlanScreen(
         onPinToggled = viewModel::onPinToggled,
         onOpenCourseSettings = onOpenCourseSettings,
         onConjugationSelected = onConjugationSelected,
+        onNumbersSelected = onNumbersSelected,
         modifier = modifier,
     )
 }
@@ -98,6 +99,7 @@ private fun PlanContent(
     onPinToggled: (Course) -> Unit,
     onOpenCourseSettings: () -> Unit,
     onConjugationSelected: () -> Unit,
+    onNumbersSelected: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when {
@@ -128,13 +130,31 @@ private fun PlanContent(
                     )
                 }
 
-                item(key = "conjugation-course") { ConjugationCourseTile(onClick = onConjugationSelected) }
+                item(key = "conjugation-course") {
+                    DrillCourseTile(
+                        title = stringResource(R.string.conjugation_title),
+                        blurb = stringResource(R.string.training_conjugation_blurb),
+                        medallion = stringResource(R.string.conjugation_medallion),
+                        onClick = onConjugationSelected,
+                    )
+                }
+                item(key = "numbers-course") {
+                    DrillCourseTile(
+                        title = stringResource(R.string.numbers_title),
+                        blurb = stringResource(R.string.numbers_blurb),
+                        medallion = stringResource(R.string.numbers_medallion),
+                        onClick = onNumbersSelected,
+                    )
+                }
             }
     }
 }
 
 @Composable
-private fun ConjugationCourseTile(
+private fun DrillCourseTile(
+    title: String,
+    blurb: String,
+    medallion: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -142,16 +162,16 @@ private fun ConjugationCourseTile(
 
     GradientTile(skin = skin, modifier = modifier.fillMaxWidth().clickable(onClick = onClick)) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium)) {
-            Medallion(skin = skin) { MedallionIcon(Icons.Default.Translate, skin) }
+            Medallion(skin = skin) { MedallionText(medallion, skin) }
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = stringResource(R.string.conjugation_title),
+                    text = title,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
                     color = skin.onTile,
                 )
                 Text(
-                    text = stringResource(R.string.training_conjugation_blurb),
+                    text = blurb,
                     style = MaterialTheme.typography.bodySmall,
                     color = skin.muted(),
                     overflow = TextOverflow.Ellipsis,
@@ -397,7 +417,7 @@ internal fun previewCourse(): Course =
         id = CourseId("krok-a1"),
         order = 1,
         level = CefrLevel.A1,
-        title = LocalizedText(mapOf("en" to "Polski krok po kroku 1")),
+        title = LocalizedText(mapOf("en" to "Polish for Beginners 1")),
         lessons = listOf(
             LessonSummary(LessonId("1"), 1, "PIERWSZY DZIEŃ W SZKOLE", 8, isCompleted = true),
             LessonSummary(LessonId("2"), 2, "CZEŚĆ, SKĄD JESTEŚ?", 10, isCompleted = true),
@@ -416,6 +436,7 @@ private fun PlanPreview() {
             onPinToggled = {},
             onOpenCourseSettings = {},
             onConjugationSelected = {},
+            onNumbersSelected = {},
         )
     }
 }
@@ -430,6 +451,7 @@ private fun PlanEmptyPreview() {
             onPinToggled = {},
             onOpenCourseSettings = {},
             onConjugationSelected = {},
+            onNumbersSelected = {},
         )
     }
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Builds the shipped course asset from the extracted Krok po kroku structure.
+"""Builds the shipped course asset from the extracted coursebook structure.
 
 Run from anywhere:  python3 tools/course/build_course.py
 
@@ -14,7 +14,7 @@ Writes
 
 Lesson vocabulary is stored as ids into the existing corpus, never as its own
 copy of the words: a lesson gets its transcription, CEFR band and translation
-from the same rows every training already uses. Krok po kroku is monolingual, so
+from the same rows every training already uses. The coursebook is monolingual, so
 a word the corpus does not already carry has to be authored into
 tools/vocabulary/corpus/topics/zz-krok.tsv first — `--report-missing` lists them.
 Forms the books print with a conjugation or an aspect partner are mapped back to
@@ -56,7 +56,7 @@ COURSES = [
         "workbook": "a1_workbook",
         "order": 1,
         "level": "A1",
-        "title": {"en": "Polski krok po kroku 1", "pl": "Polski krok po kroku 1"},
+        "title": {"en": "Polish for Beginners 1", "pl": "Polski dla początkujących 1"},
     },
     {
         "id": "krok-a2",
@@ -64,7 +64,7 @@ COURSES = [
         "workbook": None,
         "order": 2,
         "level": "A2",
-        "title": {"en": "Polski krok po kroku 2", "pl": "Polski krok po kroku 2"},
+        "title": {"en": "Polish for Beginners 2", "pl": "Polski dla początkujących 2"},
         # Not shipped yet. extract_krok.py recovers all 23 A2 lessons and their
         # titles, but the new-word lists are printed in coloured bold on a coloured
         # band, which the scan reads badly: headwords come back misspelled

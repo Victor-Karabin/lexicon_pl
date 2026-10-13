@@ -12,7 +12,7 @@ Writes
     krok/for_upload/README.md
 
 The app downloads a recording by its Google Drive id and stores it under the
-file name the lesson asks for, so the names here are the contract: Krok po kroku
+file name the lesson asks for, so the names here are the contract: coursebook
 files keep exactly the names extract_audio.py gives them (including the four
 misspelled source names the course already refers to). Each part is one flat
 folder, because fetch_drive_manifest.py lists a Drive folder in one request;
@@ -149,7 +149,7 @@ def write_readme(rows: list[dict], missing: list[tuple[str, str]]) -> None:
         "",
         "## File names",
         "",
-        "- Krok po kroku: `a1_coursebook_<book><lesson><section><task>.mp3` (`101a1` = book 1, lesson 01, section A, task 1),",
+        "- Coursebook: `a1_coursebook_<book><lesson><section><task>.mp3` (`101a1` = book 1, lesson 01, section A, task 1),",
         "  `a1_workbook_<nn>_L<lesson>_cwiczenie<exercise>.mp3`, `a2_coursebook_<book><lesson><section><task>.mp3`.",
         "  Four A1 names keep a typo from the source discs (`0102e3`, `0122b1-1mp3`, `108a7mp3`, `123aa2-3`)",
         "  because the course already refers to them by those names.",

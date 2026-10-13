@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Unpack the Krok po kroku audio archives and map every track to a lesson.
+"""Unpack the coursebook audio archives and map every track to a lesson.
 
 The three .docx files are ZIP archives of MP3s, not documents. Their filenames
 carry the book's own numbering, which is what lets a track be attached to the

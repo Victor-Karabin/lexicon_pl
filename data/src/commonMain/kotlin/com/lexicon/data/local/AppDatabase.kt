@@ -31,8 +31,10 @@ import androidx.room.RoomDatabaseConstructor
         ConjugationCourseEntity::class,
         ConjugationCourseVerbEntity::class,
         ConjugationProgressEntity::class,
+        NumberCourseEntity::class,
+        NumberProgressEntity::class,
     ],
-    version = 38,
+    version = 39,
     exportSchema = false,
 )
 @ConstructedBy(AppDatabaseConstructor::class)
@@ -54,6 +56,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun vocabularyCourseDao(): VocabularyCourseDao
 
     abstract fun conjugationDao(): ConjugationDao
+
+    abstract fun numberDao(): NumberDao
 }
 
 @Suppress("KotlinNoActualForExpect", "EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
