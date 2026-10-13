@@ -273,6 +273,26 @@ class LessonAnswerCheckerTest {
     }
 
     @Test
+    fun `a list item marked ze is wrong after a bare z`() {
+        val key = listOf("sałata | ogórkiem | ze śmietaną")
+        val verdict = { typed: String -> LessonAnswerChecker.verdict(key, typed, AnswerMatch.ANY_ORDER) }
+        assertEquals(AnswerVerdict.CORRECT, verdict("sałata z ogórkiem i ze śmietaną"))
+        assertEquals(AnswerVerdict.CORRECT, verdict("sałata ze śmietaną i z ogórkiem"))
+        assertEquals(AnswerVerdict.CORRECT, verdict("sałata z ogórkiem i śmietaną"))
+        assertEquals(AnswerVerdict.WRONG, verdict("sałata z ogórkiem i z śmietaną"))
+        assertEquals(AnswerVerdict.WRONG, verdict("sałata z smietana i z ogorkiem"))
+    }
+
+    @Test
+    fun `a list key is written out as a phrase`() {
+        assertEquals("marchewka z selerem, z jabłkiem i z cytryną", LessonAnswerChecker.written("marchewka | selerem | jabłkiem | cytryną"))
+        assertEquals("sałata z ogórkiem i ze śmietaną", LessonAnswerChecker.written("sałata | ogórkiem | ze śmietaną"))
+        assertEquals("kawę z mlekiem", LessonAnswerChecker.written("kawę | mlekiem"))
+        assertEquals("sok pomidorowy", LessonAnswerChecker.written("sok pomidorowy"))
+        assertEquals("Tak", LessonAnswerChecker.written("Tak"))
+    }
+
+    @Test
     fun `a selection is right with exactly its options, in any order and case`() {
         assertEquals(AnswerVerdict.CORRECT, LessonAnswerChecker.verdict(listOf("A D F"), "f a d", AnswerMatch.SELECTION))
         assertEquals(AnswerVerdict.WRONG, LessonAnswerChecker.verdict(listOf("A D F"), "A D", AnswerMatch.SELECTION))

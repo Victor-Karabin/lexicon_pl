@@ -23,7 +23,11 @@ object LessonAnswerChecker {
 
     private val connectors = setOf("i", "z", "ze", "oraz")
 
-    private val openers = setOf("z", "ze")
+    private const val Z = "z"
+
+    private const val ZE = "ze"
+
+    private val openers = setOf(Z, ZE)
 
     private const val LIST_MARK = "|"
 
@@ -89,7 +93,15 @@ object LessonAnswerChecker {
 
     fun selection(text: String): Set<String> = text.split(separators).map { it.trim().uppercase() }.filter { it.isNotEmpty() }.toSet()
 
-    fun listItems(key: String): List<String> = key.split(LIST_MARK).drop(1).map { it.trim() }
+    fun written(key: String): String {
+        val parts = key.split(LIST_MARK).map { it.trim() }
+        val items = parts.drop(1).filter { it.isNotEmpty() }.map { if (it.startsWith("$ZE ")) it else "$Z $it" }
+        return when (items.size) {
+            0 -> parts.first()
+            1 -> "${parts.first()} ${items.single()}"
+            else -> "${parts.first()} ${items.dropLast(1).joinToString(", ")} i ${items.last()}"
+        }
+    }
 
     private fun sameList(
         typed: String,
@@ -103,9 +115,13 @@ object LessonAnswerChecker {
         val rest = typed.removePrefix(start).trim().split(' ').filter { it.isNotEmpty() }
         if (items.isEmpty()) return rest.isEmpty()
         if (rest.firstOrNull() !in openers) return false
-        val chunks = mutableListOf(mutableListOf<String>())
-        rest.forEach { word -> if (word in connectors) chunks += mutableListOf<String>() else chunks.last() += word }
-        return chunks.map { it.joinToString(" ") }.filter { it.isNotEmpty() }.sorted() == items.sorted()
+        val chunks = mutableListOf<Pair<String, MutableList<String>>>()
+        rest.forEach { word -> if (word in connectors) chunks += word to mutableListOf() else chunks.last().second += word }
+        val given = chunks.filter { it.second.isNotEmpty() }.map { (connector, words) -> connector to words.joinToString(" ") }
+        val wanted = items.map { it.removePrefix("$ZE ") }
+        if (given.map { it.second }.sorted() != wanted.sorted()) return false
+        val needZe = items.filter { it.startsWith("$ZE ") }.map { it.removePrefix("$ZE ") }.toSet()
+        return given.none { (connector, item) -> connector == Z && item in needZe }
     }
 
     fun same(
