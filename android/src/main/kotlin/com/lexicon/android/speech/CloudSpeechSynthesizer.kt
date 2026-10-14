@@ -21,6 +21,7 @@ class CloudSpeechSynthesizer(
     private val dispatchers: DispatcherProvider,
 ) : SpeechSynthesizer {
     private val lock = Mutex()
+    private val speaking = Mutex()
     private var cached: List<SpeechVoice>? = null
 
     override suspend fun voices(): List<SpeechVoice> {
@@ -38,17 +39,21 @@ class CloudSpeechSynthesizer(
     }
 
     override suspend fun speak(text: String) {
-        if (text.isBlank()) return
-        val path = withContext(dispatchers.io) { audioFor(text) }
+        if (text.isBlank() || !speaking.tryLock()) return
+        try {
+            val path = withContext(dispatchers.io) { audioFor(text) }
 
-        if (path == null) {
-            Log.w(TAG, "No Cloud audio; speaking with the device voice instead")
-            fallback.speak(text)
-        } else {
-            runSuspendCatching { player.play(path) }.onFailure { failure ->
-                Log.w(TAG, "Playing Cloud audio failed; speaking with the device voice instead", failure)
+            if (path == null) {
+                Log.w(TAG, "No Cloud audio; speaking with the device voice instead")
                 fallback.speak(text)
+            } else {
+                runSuspendCatching { player.play(path) }.onFailure { failure ->
+                    Log.w(TAG, "Playing Cloud audio failed; speaking with the device voice instead", failure)
+                    fallback.speak(text)
+                }
             }
+        } finally {
+            speaking.unlock()
         }
     }
 

@@ -101,6 +101,7 @@ fun NumberTrainingScreen(
                             uiState = uiState,
                             question = question,
                             onAnswerChanged = viewModel::onAnswerChanged,
+                            onCheck = viewModel::onCheck,
                             onSpeak = viewModel::onSpeak,
                             modifier = Modifier.weight(1f),
                         )
@@ -121,6 +122,7 @@ private fun NumberQuestionBody(
     uiState: NumberTrainingUiState,
     question: NumberQuestion,
     onAnswerChanged: (String) -> Unit,
+    onCheck: () -> Unit,
     onSpeak: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -168,6 +170,7 @@ private fun NumberQuestionBody(
             isAlmost = verdict == AnswerVerdict.ALMOST,
             prompt = stringResource(R.string.numbers_write_prompt),
             imeAction = ImeAction.Done,
+            onDone = onCheck,
         )
 
         if (uiState.isAnswered) {
