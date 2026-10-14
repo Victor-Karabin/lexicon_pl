@@ -87,7 +87,7 @@ class ReviewWordsViewModel(
     }
 
     fun onDeleted() {
-        val word = _uiState.value.current ?: return
+        val word = _uiState.value.current?.takeIf { it.isUserCreated } ?: return
         _uiState.update { it.copy(chosen = null) }
 
         settleJob?.cancel()

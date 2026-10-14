@@ -97,7 +97,11 @@ private fun ReviewWordsContent(
         topBar = { TrainingTopBar(title = stringResource(R.string.review_words_title), onClose = onClose) },
         bottomBar = {
             if (!uiState.isLoading && !uiState.isFinished) {
-                ReviewChoices(chosen = uiState.chosen, onStatusChosen = onStatusChosen, onDeleted = onDeleted)
+                ReviewChoices(
+                    chosen = uiState.chosen,
+                    onStatusChosen = onStatusChosen,
+                    onDeleted = onDeleted.takeIf { uiState.current?.isUserCreated == true },
+                )
             }
         },
     ) { padding ->
@@ -156,7 +160,7 @@ private fun ReviewWordsContent(
 private fun ReviewChoices(
     chosen: WordStatus?,
     onStatusChosen: (WordStatus) -> Unit,
-    onDeleted: () -> Unit,
+    onDeleted: (() -> Unit)?,
 ) {
     Column(
         modifier = Modifier
@@ -194,20 +198,22 @@ private fun ReviewChoices(
             )
         }
 
-        OutlinedButton(
-            onClick = onDeleted,
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error),
-        ) {
-            Icon(
-                imageVector = Icons.Default.DeleteOutline,
-                contentDescription = null,
-                modifier = Modifier.size(ChoiceIconSize),
-            )
-            Text(
-                text = stringResource(R.string.review_words_delete),
-                modifier = Modifier.padding(start = Dimens.spacingSmall),
-            )
+        onDeleted?.let { delete ->
+            OutlinedButton(
+                onClick = delete,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error),
+            ) {
+                Icon(
+                    imageVector = Icons.Default.DeleteOutline,
+                    contentDescription = null,
+                    modifier = Modifier.size(ChoiceIconSize),
+                )
+                Text(
+                    text = stringResource(R.string.review_words_delete),
+                    modifier = Modifier.padding(start = Dimens.spacingSmall),
+                )
+            }
         }
     }
 }

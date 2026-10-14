@@ -23,7 +23,7 @@ class DeleteWordUseCasesImplTest {
     private val deleteWord = DeleteWordUseCaseImpl(vocabulary, conjugations)
     private val restoreWord = RestoreWordUseCaseImpl(vocabulary, conjugations, fillWordGrammar, appScope)
 
-    private val kotkowac = Word(VocabularyId(-1), "kotkować", "to kitten", "", partOfSpeech = PartOfSpeech.VERB)
+    private val kotkowac = Word(VocabularyId(-1), "kotkować", "to kitten", "", partOfSpeech = PartOfSpeech.VERB, isUserCreated = true)
 
     @Test
     fun `deleting a word takes the conjugation written for it out of the verb list`() =
@@ -34,6 +34,17 @@ class DeleteWordUseCasesImplTest {
 
             coVerify { vocabulary.deleteWord(-1) }
             coVerify { conjugations.deleteUserVerb("kotkować") }
+        }
+
+    @Test
+    fun `a word that came with the app is never deleted`() =
+        runTest {
+            coEvery { vocabulary.getWord(1) } returns Word(VocabularyId(1), "mieć", "to have", "", partOfSpeech = PartOfSpeech.VERB)
+
+            deleteWord(VocabularyId(1))
+
+            coVerify(exactly = 0) { vocabulary.deleteWord(any()) }
+            coVerify(exactly = 0) { conjugations.deleteUserVerb(any()) }
         }
 
     @Test

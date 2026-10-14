@@ -39,7 +39,7 @@ private const val AFTER_IT_SETTLES_MS = 500L
 class ReviewWordsViewModelTest {
     private val dispatcher = StandardTestDispatcher()
 
-    private val kot = Word(VocabularyId(1L), "kot", "cat", "kɔt")
+    private val kot = Word(VocabularyId(1L), "kot", "cat", "kɔt", isUserCreated = true)
     private val pies = Word(VocabularyId(2L), "pies", "dog", "pjɛs")
 
     private val getWordsToReview: GetWordsToReviewUseCase = mockk {
@@ -152,6 +152,19 @@ class ReviewWordsViewModelTest {
 
             assertEquals(WordStatus.FAVOURITE, viewModel.uiState.value.chosen)
             assertEquals(kot, viewModel.uiState.value.current)
+        }
+
+    @Test
+    fun `a word that came with the app cannot be deleted`() =
+        runTest(dispatcher) {
+            coEvery { getWordsToReview(any()) } returns persistentListOf(pies) andThen persistentListOf()
+            val viewModel = viewModel()
+            advanceUntilIdle()
+
+            viewModel.onDeleted()
+            advanceTimeBy(AFTER_IT_SETTLES_MS)
+
+            coVerify(exactly = 0) { deleteWord(any()) }
         }
 
     @Test
