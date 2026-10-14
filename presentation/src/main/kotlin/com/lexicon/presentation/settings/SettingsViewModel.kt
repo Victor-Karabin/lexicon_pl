@@ -2,6 +2,7 @@ package com.lexicon.presentation.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lexicon.boundary.DeviceLanguageSupport
 import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.boundary.SpeechVoice
 import com.lexicon.common.DispatcherProvider
@@ -30,6 +31,7 @@ class SettingsViewModel(
     private val updatePassMark: UpdatePassMarkUseCase,
     private val updateVoice: UpdateVoiceUseCase,
     private val speechSynthesizer: SpeechSynthesizer,
+    private val languageSupport: DeviceLanguageSupport,
     private val dispatchers: DispatcherProvider,
 ) : ViewModel() {
     val uiState: StateFlow<AppSettings> =
@@ -41,6 +43,18 @@ class SettingsViewModel(
 
     private val _voices = MutableStateFlow<ImmutableList<SpeechVoice>>(persistentListOf())
     val voices: StateFlow<ImmutableList<SpeechVoice>> = _voices.asStateFlow()
+
+    private val _polishSetup = MutableStateFlow(PolishSetup())
+    val polishSetup: StateFlow<PolishSetup> = _polishSetup.asStateFlow()
+
+    fun onResumed() {
+        viewModelScope.launch(dispatchers.io) {
+            _polishSetup.value = PolishSetup(
+                needsKeyboard = !languageSupport.hasPolishKeyboard(),
+                needsVoice = !languageSupport.hasPolishVoice(),
+            )
+        }
+    }
 
     init {
         viewModelScope.launch(dispatchers.io) {

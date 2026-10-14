@@ -6,6 +6,7 @@ import com.lexicon.android.audio.AndroidAudioPlayer
 import com.lexicon.android.audio.AndroidAudioRecorder
 import com.lexicon.android.audio.AudioRecorder
 import com.lexicon.android.cloud.CloudSpeechApi
+import com.lexicon.android.language.AndroidDeviceLanguageSupport
 import com.lexicon.android.lesson.AndroidLessonAudioLibrary
 import com.lexicon.android.lesson.AndroidLessonAudioPlayer
 import com.lexicon.android.recognition.AndroidSpeechRecognizerService
@@ -17,6 +18,7 @@ import com.lexicon.android.speech.SpeechStore
 import com.lexicon.android.speech.VoicePreference
 import com.lexicon.boundary.AppVersionProvider
 import com.lexicon.boundary.AudioPlayer
+import com.lexicon.boundary.DeviceLanguageSupport
 import com.lexicon.boundary.LessonAudioLibrary
 import com.lexicon.boundary.LessonAudioPlayer
 import com.lexicon.boundary.SettingsRepository
@@ -45,6 +47,8 @@ val androidModule = module {
             dispatchers = get(),
         )
     }
+    single<DeviceLanguageSupport> { AndroidDeviceLanguageSupport(context = get()) }
+
     single<AudioRecorder> { AndroidAudioRecorder(cacheDirectory = get<Context>().cacheDir, dispatchers = get()) }
 
     single<SpeechRecognizerService> {
