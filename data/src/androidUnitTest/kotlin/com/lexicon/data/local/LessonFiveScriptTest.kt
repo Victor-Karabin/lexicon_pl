@@ -35,7 +35,7 @@ class LessonFiveScriptTest {
             "4A" to 17, "4B" to 17, "4C" to 11, "4D" to 10, "4E" to 4,
             "5A" to 6, "5C" to 10, "5D" to 8, "5E" to 10,
             "6A" to 5, "6B" to 5, "6C" to 5, "6D" to 9, "6E" to 9, "6F" to 13,
-            "7A" to 11, "7B" to 12, "7C" to 10, "7D" to 25, "7E" to 13,
+            "7A" to 11, "7B" to 12, "7C" to 10, "7D" to 32, "7E" to 13,
         )
         assertEquals(expected, counts)
     }
@@ -104,6 +104,12 @@ class LessonFiveScriptTest {
     fun `a choice item can accept both endings`() {
         val endings = screen("2C") as LessonScreen.Choice
         assertEquals(listOf("-naście", "-dzieści"), endings.items[4].question.answers)
+    }
+
+    @Test
+    fun `7B accepts co lubi as well as co lubi robic`() {
+        val answers = screen("7B").questions.single { it.key == "10" }.answers
+        assertTrue(answers.containsAll(listOf("Co lubi robić", "Co lubi", "Co on lubi")))
     }
 
     @Test
