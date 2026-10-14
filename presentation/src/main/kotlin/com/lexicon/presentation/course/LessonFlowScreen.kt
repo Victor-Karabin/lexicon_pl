@@ -3,11 +3,8 @@ package com.lexicon.presentation.course
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,7 +22,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
-import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Replay
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material3.AlertDialog
@@ -43,13 +39,11 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -85,6 +79,7 @@ import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.BottomActionPanel
+import com.lexicon.presentation.common.ScrollToTopButton
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.isTyping
 import com.lexicon.presentation.conjugation.PersonFormRow
@@ -95,7 +90,6 @@ import com.lexicon.presentation.theme.component.tileSkin
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 import kotlin.random.Random
 
@@ -261,26 +255,6 @@ private fun LessonFlowContent(
                         }
                 }
             }
-        }
-    }
-}
-
-@Composable
-private fun ScrollToTopButton(
-    scroll: ScrollState,
-    enabled: Boolean,
-    modifier: Modifier = Modifier,
-) {
-    val scrolled by remember(scroll) { derivedStateOf { scroll.value > 0 } }
-    val scope = rememberCoroutineScope()
-    AnimatedVisibility(
-        visible = enabled && scrolled,
-        modifier = modifier,
-        enter = fadeIn() + scaleIn(),
-        exit = fadeOut() + scaleOut(),
-    ) {
-        SmallFloatingActionButton(onClick = { scope.launch { scroll.animateScrollTo(0) } }) {
-            Icon(Icons.Default.ArrowUpward, contentDescription = stringResource(R.string.lesson_flow_scroll_to_top))
         }
     }
 }

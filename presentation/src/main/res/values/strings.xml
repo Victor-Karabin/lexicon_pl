@@ -374,7 +374,7 @@
     <string name="lesson_flow_review_badge">Review</string>
     <string name="lesson_flow_grammar_badge">G</string>
     <string name="lesson_flow_grammar">Grammar</string>
-    <string name="lesson_flow_scroll_to_top">Scroll to top</string>
+    <string name="scroll_to_top">Scroll to top</string>
     <string name="lesson_flow_rule">Rule %1$d: %2$s</string>
     <string name="lesson_flow_rule_heading">%1$d. %2$s</string>
     <string name="lesson_flow_see_rule">See rule %1$d</string>
