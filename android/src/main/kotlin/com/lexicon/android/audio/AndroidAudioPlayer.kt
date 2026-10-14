@@ -5,6 +5,7 @@ import com.lexicon.boundary.AudioPlaybackFailed
 import com.lexicon.boundary.AudioPlayer
 import com.lexicon.common.DispatcherProvider
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -12,7 +13,18 @@ import kotlin.coroutines.resumeWithException
 class AndroidAudioPlayer(
     private val dispatchers: DispatcherProvider,
 ) : AudioPlayer {
+    private val playing = Mutex()
+
     override suspend fun play(filePath: String) {
+        if (!playing.tryLock()) return
+        try {
+            playFile(filePath)
+        } finally {
+            playing.unlock()
+        }
+    }
+
+    private suspend fun playFile(filePath: String) {
         withContext(dispatchers.io) {
             suspendCancellableCoroutine { continuation ->
                 val player = MediaPlayer()
