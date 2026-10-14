@@ -36,7 +36,7 @@ class LessonFiveScriptTest {
             "4A" to 17, "4B" to 17, "4C" to 11, "4D" to 10, "4E" to 8,
             "5A" to 6, "5C" to 10, "5D" to 8, "5E" to 10,
             "6A" to 5, "6B" to 5, "6C" to 5, "6D" to 9, "6E" to 9, "6F" to 13,
-            "7A" to 11, "7B" to 12, "7C" to 10, "7D" to 25, "7E" to 13,
+            "7A" to 11, "7B" to 12, "7C" to 10, "7D" to 32, "7E" to 13,
         )
         assertEquals(expected, counts)
     }

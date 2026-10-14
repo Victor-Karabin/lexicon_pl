@@ -1488,7 +1488,7 @@
       "id": "7D",
       "type": "gap_fill",
       "title": "Nationality: to jest / jest",
-      "instruction": "After *to* use the nominative, after *jest* the instrumental. Some forms are given.",
+      "instruction": "After *to* use the nominative, after *jest* the instrumental.",
       "sections": [
         {
           "title": "Angela / Jonatan (z Anglii)",
@@ -1500,44 +1500,50 @@
         {
           "title": "Petra / Uwe (z Niemiec)",
           "lines": [
-            {"text": "Petra to Niemka · Uwe to Niemiec"},
-            {"text": "Petra jest Niemką · Uwe jest [5]"}
+            {"text": "Petra to [5] · Uwe to [6]"},
+            {"text": "Petra jest [7] · Uwe jest [8]"}
           ]
         },
         {
           "title": "Adèle / Pierre (z Francji)",
           "lines": [
-            {"text": "Adèle to [6] · Pierre to [7]"},
-            {"text": "Adèle jest [8] · Pierre jest Francuzem"}
+            {"text": "Adèle to [9] · Pierre to [10]"},
+            {"text": "Adèle jest [11] · Pierre jest [12]"}
           ]
         },
         {
           "title": "Manuela / Pedro (z Hiszpanii)",
           "lines": [
-            {"text": "Manuela to [9] · Pedro to [10]"},
-            {"text": "Manuela jest [11] · Pedro jest [12]"}
+            {"text": "Manuela to [13] · Pedro to [14]"},
+            {"text": "Manuela jest [15] · Pedro jest [16]"}
           ]
         },
         {
           "title": "Maria / Paolo (z Włoch)",
-          "lines": [{"text": "Maria to [13] · Paolo to [14]"}, {"text": "Maria jest [15] · Paolo jest [16]"}]
+          "lines": [
+            {"text": "Maria to [17] · Paolo to [18]"},
+            {"text": "Maria jest [19] · Paolo jest [20]"}
+          ]
         },
         {
           "title": "Inês / Luis (z Portugalii)",
-          "lines": [{"text": "Inês to [17] · Luis to [18]"}, {"text": "Inês jest [19] · Luis jest [20]"}]
+          "lines": [
+            {"text": "Inês to [21] · Luis to [22]"},
+            {"text": "Inês jest [23] · Luis jest [24]"}
+          ]
         },
         {
           "title": "Wendy / Tom (z USA)",
           "lines": [
-            {"text": "Wendy to Amerykanka · Tom to Amerykanin"},
-            {"text": "Wendy jest [21] · Tom jest [22]"}
+            {"text": "Wendy to [25] · Tom to [26]"},
+            {"text": "Wendy jest [27] · Tom jest [28]"}
           ]
         },
         {
           "title": "Ajako / Satoshi (z Japonii)",
           "lines": [
-            {"text": "Ajako to [23] · Satoshi to [24]"},
-            {"text": "Ajako jest Japonką · Satoshi jest [25]"}
+            {"text": "Ajako to [29] · Satoshi to [30]"},
+            {"text": "Ajako jest [31] · Satoshi jest [32]"}
           ]
         }
       ],
@@ -1546,27 +1552,34 @@
         {"number": 2, "answers": ["Anglik"]},
         {"number": 3, "answers": ["Angielką"], "feedback": "After *być* (to be someone) use the instrumental: *-ym/-im + -em/-iem* (masc., neut.), *-ą + -ą* (fem.)."},
         {"number": 4, "answers": ["Anglikiem"]},
-        {"number": 5, "answers": ["Niemcem"], "feedback": "*Niemiec* → *Niemcem* (the *e* drops)."},
-        {"number": 6, "answers": ["Francuzka"]},
-        {"number": 7, "answers": ["Francuz"]},
-        {"number": 8, "answers": ["Francuzką"]},
-        {"number": 9, "answers": ["Hiszpanka"]},
-        {"number": 10, "answers": ["Hiszpan"]},
-        {"number": 11, "answers": ["Hiszpanką"]},
-        {"number": 12, "answers": ["Hiszpanem"]},
-        {"number": 13, "answers": ["Włoszka"]},
-        {"number": 14, "answers": ["Włoch"]},
-        {"number": 15, "answers": ["Włoszką"]},
-        {"number": 16, "answers": ["Włochem"]},
-        {"number": 17, "answers": ["Portugalka"]},
-        {"number": 18, "answers": ["Portugalczyk"]},
-        {"number": 19, "answers": ["Portugalką"]},
-        {"number": 20, "answers": ["Portugalczykiem"]},
-        {"number": 21, "answers": ["Amerykanką"]},
-        {"number": 22, "answers": ["Amerykaninem"]},
-        {"number": 23, "answers": ["Japonka"]},
-        {"number": 24, "answers": ["Japończyk"]},
-        {"number": 25, "answers": ["Japończykiem"]}
+        {"number": 5, "answers": ["Niemka"]},
+        {"number": 6, "answers": ["Niemiec"]},
+        {"number": 7, "answers": ["Niemką"]},
+        {"number": 8, "answers": ["Niemcem"], "feedback": "*Niemiec* → *Niemcem* (the *e* drops)."},
+        {"number": 9, "answers": ["Francuzka"]},
+        {"number": 10, "answers": ["Francuz"]},
+        {"number": 11, "answers": ["Francuzką"]},
+        {"number": 12, "answers": ["Francuzem"]},
+        {"number": 13, "answers": ["Hiszpanka"]},
+        {"number": 14, "answers": ["Hiszpan"]},
+        {"number": 15, "answers": ["Hiszpanką"]},
+        {"number": 16, "answers": ["Hiszpanem"]},
+        {"number": 17, "answers": ["Włoszka"]},
+        {"number": 18, "answers": ["Włoch"]},
+        {"number": 19, "answers": ["Włoszką"]},
+        {"number": 20, "answers": ["Włochem"]},
+        {"number": 21, "answers": ["Portugalka"]},
+        {"number": 22, "answers": ["Portugalczyk"]},
+        {"number": 23, "answers": ["Portugalką"]},
+        {"number": 24, "answers": ["Portugalczykiem"]},
+        {"number": 25, "answers": ["Amerykanka"]},
+        {"number": 26, "answers": ["Amerykanin"]},
+        {"number": 27, "answers": ["Amerykanką"]},
+        {"number": 28, "answers": ["Amerykaninem"]},
+        {"number": 29, "answers": ["Japonka"]},
+        {"number": 30, "answers": ["Japończyk"]},
+        {"number": 31, "answers": ["Japonką"]},
+        {"number": 32, "answers": ["Japończykiem"]}
       ],
       "newWords": [
         {"polish": "Włoch", "english": "Italian man"},
