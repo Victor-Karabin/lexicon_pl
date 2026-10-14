@@ -391,7 +391,7 @@
     <string name="lesson_flow_done">Done</string>
     <string name="lesson_flow_new_words">New words (%1$d)</string>
     <string name="lesson_flow_hide_new_words">Hide new words</string>
-    <string name="lesson_flow_review_badge">Review</string>
+    <string name="lesson_flow_review_badge">Lesson review</string>
     <string name="lesson_flow_grammar_badge">G</string>
     <string name="lesson_flow_grammar">Grammar</string>
     <string name="scroll_to_top">Scroll to top</string>
