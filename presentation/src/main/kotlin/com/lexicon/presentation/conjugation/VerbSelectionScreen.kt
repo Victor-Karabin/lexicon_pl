@@ -3,6 +3,7 @@ package com.lexicon.presentation.conjugation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,6 +30,8 @@ import com.lexicon.presentation.R
 import com.lexicon.presentation.common.DeleteAction
 import com.lexicon.presentation.common.DeleteActionWidth
 import com.lexicon.presentation.common.LoadMoreOnScroll
+import com.lexicon.presentation.common.ScrollToTopClearance
+import com.lexicon.presentation.common.ScrollToTopLayout
 import com.lexicon.presentation.common.SwipeToRevealContainer
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.presets.WordRow
@@ -122,39 +125,42 @@ private fun VerbSelectionContent(
                 onLoadMore = onMoreVerbs,
             )
 
-            LazyColumn(
-                state = list,
-                modifier = Modifier.weight(1f).testTag(VerbSelectionTestTags.LIST),
-            ) {
-                items(uiState.verbs, key = { it.infinitive }) { verb ->
-                    SwipeToRevealContainer(
-                        revealWidth = DeleteActionWidth,
-                        backgroundContent = { DeleteAction(onClick = { onVerbDeleted(verb.infinitive) }) },
-                    ) {
-                        val word = uiState.words[verb.infinitive]
-                        val partial = stringResource(R.string.conjugation_partial, verb.persons.size).takeUnless { verb.isComplete }
-                        WordRow(
-                            word = word,
-                            text = verb.infinitive,
-                            translation = verb.translation.orEmpty(),
-                            status = uiState.statusOf(verb),
-                            onStatusCycled = { onStatusCycled(verb) },
-                            onPronounce = { onPronounce(verb) },
-                            detail = listOfNotNull(word?.detailLine(), partial).joinToString(" · ").ifEmpty { null },
-                            modifier = Modifier
-                                .background(MaterialTheme.colorScheme.surface)
-                                .testTag(VerbSelectionTestTags.verb(verb.infinitive)),
-                        )
-                    }
-                }
-
-                if (uiState.isLoadingMore) {
-                    item {
-                        Box(
-                            modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
-                            contentAlignment = Alignment.Center,
+            ScrollToTopLayout(list = list, modifier = Modifier.weight(1f)) {
+                LazyColumn(
+                    state = list,
+                    modifier = Modifier.fillMaxSize().testTag(VerbSelectionTestTags.LIST),
+                    contentPadding = PaddingValues(bottom = ScrollToTopClearance),
+                ) {
+                    items(uiState.verbs, key = { it.infinitive }) { verb ->
+                        SwipeToRevealContainer(
+                            revealWidth = DeleteActionWidth,
+                            backgroundContent = { DeleteAction(onClick = { onVerbDeleted(verb.infinitive) }) },
                         ) {
-                            CircularProgressIndicator()
+                            val word = uiState.words[verb.infinitive]
+                            val partial = stringResource(R.string.conjugation_partial, verb.persons.size).takeUnless { verb.isComplete }
+                            WordRow(
+                                word = word,
+                                text = verb.infinitive,
+                                translation = verb.translation.orEmpty(),
+                                status = uiState.statusOf(verb),
+                                onStatusCycled = { onStatusCycled(verb) },
+                                onPronounce = { onPronounce(verb) },
+                                detail = listOfNotNull(word?.detailLine(), partial).joinToString(" · ").ifEmpty { null },
+                                modifier = Modifier
+                                    .background(MaterialTheme.colorScheme.surface)
+                                    .testTag(VerbSelectionTestTags.verb(verb.infinitive)),
+                            )
+                        }
+                    }
+
+                    if (uiState.isLoadingMore) {
+                        item {
+                            Box(
+                                modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                CircularProgressIndicator()
+                            }
                         }
                     }
                 }

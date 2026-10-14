@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -35,6 +36,8 @@ import com.lexicon.model.vocabulary.WordStatus
 import com.lexicon.model.vocabulary.resolve
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
+import com.lexicon.presentation.common.ScrollToTopClearance
+import com.lexicon.presentation.common.ScrollToTopLayout
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
@@ -166,17 +169,23 @@ private fun PresetDetailContent(
                             CircularProgressIndicator()
                         }
                     } else {
-                        LazyColumn(contentPadding = PaddingValues(vertical = Dimens.spacingSmall)) {
-                            wordRows(
-                                words = uiState.words,
-                                statuses = uiState.wordStatuses,
-                                onStatusCycled = onWordStatusCycled,
-                                onPronounce = onPronounceWord,
-                                onChangePresets = onChangePresets,
-                                onDelete = onWordDeleted,
-                                onEdit = { onEditWord(it.id) },
-                                selection = selection,
-                            )
+                        val list = rememberLazyListState()
+                        ScrollToTopLayout(list = list) {
+                            LazyColumn(
+                                state = list,
+                                contentPadding = PaddingValues(top = Dimens.spacingSmall, bottom = ScrollToTopClearance),
+                            ) {
+                                wordRows(
+                                    words = uiState.words,
+                                    statuses = uiState.wordStatuses,
+                                    onStatusCycled = onWordStatusCycled,
+                                    onPronounce = onPronounceWord,
+                                    onChangePresets = onChangePresets,
+                                    onDelete = onWordDeleted,
+                                    onEdit = { onEditWord(it.id) },
+                                    selection = selection,
+                                )
+                            }
                         }
                     }
                 }
