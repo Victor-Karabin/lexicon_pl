@@ -1607,18 +1607,18 @@
       "id": "7E",
       "type": "gap_fill",
       "title": "Nationality: mówią / znają",
-      "instruction": "*mówić po* + *-u*, *znać* + the language. Some forms are given.",
+      "instruction": "*mówić po* + *-u*, *znać* + the language. The flag shows the country.",
       "sections": [
         {
           "lines": [
-            {"text": "1. Angela i Jonatan mówią po [1], znają [2]."},
-            {"text": "2. Petra i Uwe mówią po [3], znają [4]."},
-            {"text": "3. Adèle i Pierre mówią po [5], znają [6]."},
-            {"text": "4. Manuela i Pedro mówią po [7], znają hiszpański."},
-            {"text": "5. Maria i Paolo mówią po włosku, znają [8]."},
-            {"text": "6. Inês i Luis mówią po [9], znają portugalski."},
-            {"text": "7. Wendy i Tom mówią po [10], znają [11]."},
-            {"text": "8. Ajako i Satoshi mówią po [12], znają [13]."}
+            {"text": "1. 🇬🇧 Angela i Jonatan mówią po [1], znają [2]."},
+            {"text": "2. 🇩🇪 Petra i Uwe mówią po [3], znają [4]."},
+            {"text": "3. 🇫🇷 Adèle i Pierre mówią po [5], znają [6]."},
+            {"text": "4. 🇪🇸 Manuela i Pedro mówią po [7], znają [8]."},
+            {"text": "5. 🇮🇹 Maria i Paolo mówią po [9], znają [10]."},
+            {"text": "6. 🇵🇹 Inês i Luis mówią po [11], znają [12]."},
+            {"text": "7. 🇺🇸 Wendy i Tom mówią po [13], znają [14]."},
+            {"text": "8. 🇯🇵 Ajako i Satoshi mówią po [15], znają [16]."}
           ]
         }
       ],
@@ -1630,12 +1630,15 @@
         {"number": 5, "answers": ["francusku", "po francusku"]},
         {"number": 6, "answers": ["francuski"]},
         {"number": 7, "answers": ["hiszpańsku", "po hiszpańsku"]},
-        {"number": 8, "answers": ["włoski"]},
-        {"number": 9, "answers": ["portugalsku", "po portugalsku"]},
-        {"number": 10, "answers": ["angielsku", "po angielsku"]},
-        {"number": 11, "answers": ["angielski"]},
-        {"number": 12, "answers": ["japońsku", "po japońsku"]},
-        {"number": 13, "answers": ["japoński"]}
+        {"number": 8, "answers": ["hiszpański"]},
+        {"number": 9, "answers": ["włosku", "po włosku"]},
+        {"number": 10, "answers": ["włoski"]},
+        {"number": 11, "answers": ["portugalsku", "po portugalsku"]},
+        {"number": 12, "answers": ["portugalski"]},
+        {"number": 13, "answers": ["angielsku", "po angielsku"]},
+        {"number": 14, "answers": ["angielski"]},
+        {"number": 15, "answers": ["japońsku", "po japońsku"]},
+        {"number": 16, "answers": ["japoński"]}
       ]
     }
   ],
