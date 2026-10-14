@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
@@ -424,9 +425,14 @@ fun TranscribeRow(
     usualForm: String? = null,
     leading: (@Composable () -> Unit)? = null,
     imeAction: ImeAction = ImeAction.Next,
+    onDone: (() -> Unit)? = null,
 ) {
     var showInfo by rememberSaveable { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
+    val done = {
+        focusManager.clearFocus()
+        onDone?.invoke()
+    }
     val checked = answerState !is AnswerState.Unanswered
     val wraps = item.answer.length > WRAPPING_ANSWER_LENGTH
     val inline = labelWidth != null || (prompt == null && item.label.length <= SHORT_OPTION_LENGTH)
@@ -472,7 +478,7 @@ fun TranscribeRow(
                     if ('\n' !in typed) {
                         onValueChanged(typed)
                     } else if (imeAction == ImeAction.Done) {
-                        focusManager.clearFocus()
+                        done()
                     } else {
                         focusManager.moveFocus(FocusDirection.Next)
                     }
@@ -488,6 +494,7 @@ fun TranscribeRow(
                     autoCorrectEnabled = false,
                     imeAction = imeAction,
                 ),
+                keyboardActions = KeyboardActions(onDone = { done() }),
                 modifier = Modifier.weight(1f),
                 decorationBox = { field ->
                     Row(
