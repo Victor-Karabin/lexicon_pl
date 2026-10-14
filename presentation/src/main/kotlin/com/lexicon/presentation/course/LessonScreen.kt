@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
@@ -43,6 +44,8 @@ import com.lexicon.model.vocabulary.WordStatus
 import com.lexicon.model.vocabulary.statusOf
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
+import com.lexicon.presentation.common.ScrollToTopButton
+import com.lexicon.presentation.common.ScrollToTopClearance
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.presets.VocabularyWordRow
 import com.lexicon.presentation.theme.Dimens
@@ -120,15 +123,24 @@ private fun LessonContent(
                     )
                 }
 
-            is LessonUiState.Loaded ->
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize().padding(padding),
-                    contentPadding = PaddingValues(bottom = Dimens.spacingXl),
-                ) {
-                    lessonHeader(uiState, onStartLesson)
-                    if (!uiState.hasScript) exercisesBlock(uiState.lesson.exercises, onExerciseSelected)
-                    wordsBlock(uiState, onWordStatusCycled, onPronounceWord, onEditWord)
+            is LessonUiState.Loaded -> {
+                val list = rememberLazyListState()
+                Box(modifier = Modifier.fillMaxSize().padding(padding)) {
+                    LazyColumn(
+                        state = list,
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(bottom = ScrollToTopClearance),
+                    ) {
+                        lessonHeader(uiState, onStartLesson)
+                        if (!uiState.hasScript) exercisesBlock(uiState.lesson.exercises, onExerciseSelected)
+                        wordsBlock(uiState, onWordStatusCycled, onPronounceWord, onEditWord)
+                    }
+                    ScrollToTopButton(
+                        list = list,
+                        modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = Dimens.spacingMedium),
+                    )
                 }
+            }
         }
     }
 }
