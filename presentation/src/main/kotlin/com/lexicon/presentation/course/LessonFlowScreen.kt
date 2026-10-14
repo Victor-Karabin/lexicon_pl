@@ -180,7 +180,11 @@ private fun LessonFlowContent(
         else -> stringResource(R.string.course_title)
     }
 
-    (uiState as? LessonFlowUiState.Loaded)?.retry?.let { RetryDialog(it, actions.onRetryAcknowledged) }
+    (uiState as? LessonFlowUiState.Loaded)?.let { loaded ->
+        loaded.retry?.let {
+            RetryDialog(it, loaded.session.passMark, actions.onRetryAcknowledged)
+        }
+    }
     (uiState as? LessonFlowUiState.Loaded)?.let { loaded ->
         loaded.grammar?.let { sheet ->
             GrammarSheet(
@@ -257,6 +261,7 @@ private fun LessonFlowContent(
 @Composable
 private fun RetryDialog(
     retry: Score,
+    passMark: Int,
     onAcknowledged: () -> Unit,
 ) {
     AlertDialog(
@@ -269,7 +274,7 @@ private fun RetryDialog(
                     retry.correct,
                     retry.total,
                     retry.percent,
-                    Score.PASS_MARK,
+                    passMark,
                 ),
             )
         },

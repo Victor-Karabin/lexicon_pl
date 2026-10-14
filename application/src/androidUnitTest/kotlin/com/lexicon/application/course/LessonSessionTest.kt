@@ -177,6 +177,20 @@ class LessonSessionTest {
     }
 
     @Test
+    fun `the pass mark is the learner's setting`() {
+        val threeOfFive = answered(atDictation, "jeden", "dwa", "trzy", "x", "y")
+        assertNull(threeOfFive.copy(passMark = 60).check().failedScore)
+        assertEquals(3 to 5, threeOfFive.copy(passMark = 70).check().failedScore?.let { it.correct to it.total })
+        assertNull(answered(atDictation, "x", "x", "x", "x", "x").copy(passMark = 0).check().failedScore)
+        assertEquals(
+            4 to 5,
+            answered(atDictation, "jeden", "dwa", "trzy", "cztery", "x").copy(passMark = 100).check().failedScore?.let {
+                it.correct to it.total
+            },
+        )
+    }
+
+    @Test
     fun `a failed last exercise starts again instead of finishing the lesson, even after a restart of the app`() {
         val single = LessonScript(
             lessonId = LessonId("lesson"),

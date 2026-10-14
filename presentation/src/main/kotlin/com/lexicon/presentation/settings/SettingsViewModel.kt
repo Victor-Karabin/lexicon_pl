@@ -8,6 +8,7 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.interactors.settings.ObserveSettingsUseCase
 import com.lexicon.interactors.settings.ThemeMode
+import com.lexicon.interactors.settings.UpdatePassMarkUseCase
 import com.lexicon.interactors.settings.UpdateStepCountUseCase
 import com.lexicon.interactors.settings.UpdateThemeModeUseCase
 import com.lexicon.interactors.settings.UpdateVoiceUseCase
@@ -26,6 +27,7 @@ class SettingsViewModel(
     observeSettings: ObserveSettingsUseCase,
     private val updateThemeMode: UpdateThemeModeUseCase,
     private val updateStepCount: UpdateStepCountUseCase,
+    private val updatePassMark: UpdatePassMarkUseCase,
     private val updateVoice: UpdateVoiceUseCase,
     private val speechSynthesizer: SpeechSynthesizer,
     private val dispatchers: DispatcherProvider,
@@ -59,6 +61,10 @@ class SettingsViewModel(
 
     fun onStepCountChanged(stepCount: Int) {
         viewModelScope.launch(dispatchers.io) { updateStepCount(stepCount) }
+    }
+
+    fun onPassMarkChanged(passMark: Int) {
+        viewModelScope.launch(dispatchers.io) { updatePassMark(passMark) }
     }
 
     private companion object {
