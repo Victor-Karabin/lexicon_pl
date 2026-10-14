@@ -909,8 +909,8 @@
       "id": "4E",
       "type": "gap_fill",
       "title": "Who is it? What is he like?",
-      "instruction": "Use each word from the box once: an adjective and a profession for each person.",
-      "wordBox": ["aktor", "aktorka", "malarz", "polityk", "zdolna", "dobry", "utalentowany", "atrakcyjny"],
+      "instruction": "Describe each person: an adjective from the box in the form that fits, and a profession.",
+      "wordBox": ["aktor", "aktorka", "malarz", "polityk", "zdolny", "dobry", "utalentowany", "atrakcyjny"],
       "sections": [
         {
           "lines": [
@@ -922,10 +922,10 @@
         }
       ],
       "gaps": [
-        {"number": 1, "answers": ["zdolna aktorka"], "feedback": "*aktorka* is feminine, so only *zdolna* fits."},
-        {"number": 2, "answers": ["atrakcyjny aktor", "dobry aktor", "utalentowany aktor"]},
-        {"number": 3, "answers": ["dobry malarz", "atrakcyjny malarz", "utalentowany malarz"]},
-        {"number": 4, "answers": ["utalentowany polityk", "atrakcyjny polityk", "dobry polityk"]}
+        {"number": 1, "answers": ["zdolna aktorka", "dobra aktorka", "utalentowana aktorka", "atrakcyjna aktorka"], "feedback": "*aktorka* is feminine, so the adjective ends in *-a*: *zdolna*, *dobra*, *utalentowana*, *atrakcyjna aktorka*."},
+        {"number": 2, "answers": ["atrakcyjny aktor", "zdolny aktor", "dobry aktor", "utalentowany aktor"]},
+        {"number": 3, "answers": ["dobry malarz", "zdolny malarz", "utalentowany malarz", "atrakcyjny malarz"]},
+        {"number": 4, "answers": ["utalentowany polityk", "zdolny polityk", "dobry polityk", "atrakcyjny polityk"]}
       ],
       "newWords": [{"polish": "zdolny", "english": "gifted"}],
       "rules": [6]

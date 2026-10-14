@@ -90,10 +90,14 @@ class LessonFiveScriptTest {
     }
 
     @Test
-    fun `4E takes the adjective and the profession in one field`() {
+    fun `4E accepts any adjective from the box in the form that fits the person`() {
+        val people = screen("4E").questions
         assertTrue(screen("4E").interchangeable.isEmpty())
-        assertEquals("zdolna aktorka", screen("4E").questions.first().answers.single())
-        assertTrue("dobry aktor" in screen("4E").questions[1].answers)
+        assertEquals(
+            setOf("zdolna aktorka", "dobra aktorka", "utalentowana aktorka", "atrakcyjna aktorka"),
+            people.first().answers.toSet(),
+        )
+        assertTrue(people.drop(1).all { person -> person.answers.size == 4 && person.answers.none { it.contains("na ") } })
     }
 
     @Test
