@@ -243,8 +243,6 @@ data class LessonSession(
 
     fun isTranscriptUnlocked(screen: LessonScreen): Boolean = isUnlocked(screen.transcript?.unlock, screen)
 
-    fun isNewWordsUnlocked(screen: LessonScreen): Boolean = isUnlocked(script.newWords[screen.id]?.unlock, screen)
-
     private fun isUnlocked(
         unlock: TranscriptUnlock?,
         screen: LessonScreen,

@@ -773,8 +773,7 @@
         {"polish": "lekarz", "english": "doctor"},
         {"polish": "dziennikarz", "english": "journalist"},
         {"polish": "emeryt", "english": "pensioner"}
-      ],
-      "newWordsUnlock": "after_check"
+      ]
     },
     {
       "id": "4B",
@@ -858,15 +857,15 @@
         {
           "lines": [
             {"text": "1. Angela Merkel to znany niemiecki [1]."},
-            {"text": "2. Cézanne to świetny francuski [2]."},
+            {"text": "2. Cézanne to świetny francuski [2], który malował obrazy."},
             {"text": "3. Oprah Winfrey to popularna [3], która prowadzi swój program w telewizji."},
-            {"text": "4. Thomas Mann to doskonały niemiecki [4]."},
+            {"text": "4. Thomas Mann to doskonały niemiecki [4], który napisał powieść „Buddenbrookowie”."},
             {"text": "5. Sylwia to bardzo dobra [5], która uczy polskiego."},
-            {"text": "6. Claudia Schiffer to atrakcyjna [6]."},
+            {"text": "6. Claudia Schiffer to atrakcyjna [6], która pozuje do zdjęć w magazynach mody."},
             {"text": "7. Nigel Kennedy to [7], który świetnie gra na skrzypcach."},
-            {"text": "8. Meryl Streep to doskonała [8] filmowa."},
+            {"text": "8. Meryl Streep to doskonała [8] filmowa, która dostała trzy Oscary."},
             {"text": "9. David Doubilet to znany [9], który publikuje fotografie w National Geographic."},
-            {"text": "10. Shelley to angielski [10] romantyczny."}
+            {"text": "10. Shelley to angielski [10] romantyczny, który pisał wiersze."}
           ]
         }
       ],
@@ -895,10 +894,16 @@
         {"polish": "filmowy", "english": "film (adj.)"},
         {"polish": "publikować", "english": "to publish"},
         {"polish": "popularny", "english": "popular"},
-        {"polish": "świetny", "english": "great, excellent"}
+        {"polish": "świetny", "english": "great, excellent"},
+        {"polish": "malować", "english": "to paint"},
+        {"polish": "obraz", "english": "painting"},
+        {"polish": "powieść", "english": "novel"},
+        {"polish": "pozować", "english": "to pose"},
+        {"polish": "zdjęcie", "english": "photo"},
+        {"polish": "magazyn", "english": "magazine"},
+        {"polish": "dostać", "english": "to get"}
       ],
-      "rules": [6],
-      "newWordsUnlock": "after_check"
+      "rules": [6]
     },
     {
       "id": "4E",
@@ -909,27 +914,21 @@
       "sections": [
         {
           "lines": [
-            {"text": "1. To jest [1] [2] Nicole Kidman."},
-            {"text": "2. To jest [3] [4] Johnny Depp."},
-            {"text": "3. To jest [5] [6] Van Gogh."},
-            {"text": "4. To jest [7] [8] Lech Wałęsa."}
+            {"text": "1. To jest [1] Nicole Kidman."},
+            {"text": "2. To jest [2] Johnny Depp."},
+            {"text": "3. To jest [3] Van Gogh."},
+            {"text": "4. To jest [4] Lech Wałęsa."}
           ]
         }
       ],
       "gaps": [
-        {"number": 1, "answers": ["zdolna"], "feedback": "*aktorka* is feminine, so only *zdolna* fits."},
-        {"number": 2, "answers": ["aktorka"]},
-        {"number": 3, "answers": ["atrakcyjny"]},
-        {"number": 4, "answers": ["aktor"]},
-        {"number": 5, "answers": ["dobry"]},
-        {"number": 6, "answers": ["malarz"]},
-        {"number": 7, "answers": ["utalentowany"]},
-        {"number": 8, "answers": ["polityk"]}
+        {"number": 1, "answers": ["zdolna aktorka"], "feedback": "*aktorka* is feminine, so only *zdolna* fits."},
+        {"number": 2, "answers": ["atrakcyjny aktor", "dobry aktor", "utalentowany aktor"]},
+        {"number": 3, "answers": ["dobry malarz", "atrakcyjny malarz", "utalentowany malarz"]},
+        {"number": 4, "answers": ["utalentowany polityk", "atrakcyjny polityk", "dobry polityk"]}
       ],
-      "interchangeable": [["3", "5", "7"]],
       "newWords": [{"polish": "zdolny", "english": "gifted"}],
-      "rules": [6],
-      "newWordsUnlock": "after_check"
+      "rules": [6]
     },
     {
       "id": "5A",
@@ -1185,8 +1184,7 @@
         {"polish": "czarna magia", "english": "a mystery (lit. \"black magic\")"},
         {"polish": "dla", "english": "for"}
       ],
-      "rules": [3],
-      "newWordsUnlock": "after_check"
+      "rules": [3]
     },
     {
       "id": "6B",
@@ -1221,8 +1219,7 @@
         {"polish": "ekstremalny", "english": "extreme"},
         {"polish": "kryminalny", "english": "crime (adj.); kryminał — crime novel"}
       ],
-      "rules": [3],
-      "newWordsUnlock": "after_check"
+      "rules": [3]
     },
     {
       "id": "6C",
@@ -1321,8 +1318,7 @@
         {"polish": "spacerować", "english": "to go for walks"},
         {"polish": "weekend", "english": "weekend"}
       ],
-      "rules": [3, 2],
-      "newWordsUnlock": "after_check"
+      "rules": [3, 2]
     },
     {
       "id": "6E",
@@ -1350,8 +1346,7 @@
       "newWords": [
         {"polish": "grafika", "english": "graphic design"},
         {"polish": "komputerowy", "english": "computer (adj.)"},
-        {"polish": "ASP", "english": "Academy of Fine Arts"},
-        {"polish": "zdjęcie", "english": "photo"}
+        {"polish": "ASP", "english": "Academy of Fine Arts"}
       ],
       "rules": [3]
     },
@@ -1405,8 +1400,7 @@
       ],
       "newWords": [
         {"polish": "konkretnie", "english": "specifically"},
-        {"polish": "architektura", "english": "architecture"},
-        {"polish": "malować", "english": "to paint"}
+        {"polish": "architektura", "english": "architecture"}
       ],
       "rules": [1, 5]
     },

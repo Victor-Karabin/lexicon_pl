@@ -81,7 +81,7 @@ sealed interface LessonFlowUiState {
             get() = results == null && session.script.rules.isNotEmpty() && session.screen !is LessonScreen.Grammar
 
         val showsNewWords: Boolean
-            get() = results == null && session.screen.id in session.script.newWords && session.isNewWordsUnlocked(session.screen)
+            get() = results == null && session.screen.id in session.script.newWords
     }
 }
 

@@ -10,16 +10,12 @@ import com.lexicon.model.course.GapLine
 import com.lexicon.model.course.GapSection
 import com.lexicon.model.course.InlineChoiceLine
 import com.lexicon.model.course.LessonId
-import com.lexicon.model.course.LessonPhrase
 import com.lexicon.model.course.LessonQuestion
 import com.lexicon.model.course.LessonScreen
 import com.lexicon.model.course.LessonScript
 import com.lexicon.model.course.LessonStep
-import com.lexicon.model.course.NewWords
 import com.lexicon.model.course.OrderLine
-import com.lexicon.model.course.TranscriptUnlock
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableList
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -98,21 +94,6 @@ class LessonExerciseTypesTest {
         assertEquals("Thomas", heard.usualForm("6B", "1"))
         assertNull(session(form).withAnswer("1", "Thomas").check().usualForm("6B", "1"))
         assertNull(session(form).withAnswer("1", "Tom").check().usualForm("6B", "1"))
-    }
-
-    @Test
-    fun `new words that give the answers away open only after the check`() {
-        val words = NewWords(persistentListOf(LessonPhrase("okno", "window")), TranscriptUnlock.AfterCheck)
-        val script = LessonScript(
-            LessonId("krok-a1-01"),
-            persistentListOf(LessonStep("1", "Step", persistentListOf("2E"))),
-            persistentListOf(order),
-            persistentMapOf("2E" to words),
-        )
-        val start = LessonSession(script)
-        assertFalse(start.isNewWordsUnlocked(order))
-        val checked = start.withPositionToggled("b").withPositionToggled("c").withPositionToggled("a").check()
-        assertTrue(checked.isNewWordsUnlocked(order))
     }
 
     @Test

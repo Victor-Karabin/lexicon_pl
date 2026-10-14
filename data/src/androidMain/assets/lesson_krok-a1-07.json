@@ -140,7 +140,6 @@
       ],
       "newWords": [
         {"polish": "zajęty", "english": "busy"},
-        {"polish": "galeria handlowa", "english": "shopping mall"},
         {"polish": "lista zakupów", "english": "shopping list"},
         {"polish": "krótki", "english": "short"},
         {"polish": "sportowy", "english": "sports (adj.)"}
@@ -246,8 +245,7 @@
         {"polish": "piwo", "english": "beer"},
         {"polish": "gimnastyka", "english": "gymnastics"}
       ],
-      "rules": [1],
-      "newWordsUnlock": "after_check"
+      "rules": [1]
     },
     {
       "id": "1D",
@@ -556,13 +554,11 @@
         }
       ],
       "newWords": [
-        {"polish": "magazyn", "english": "magazine"},
         {"polish": "kolorowy", "english": "colourful"},
         {"polish": "miętowy", "english": "mint (adj.)"},
         {"polish": "guma do żucia", "english": "chewing gum"}
       ],
-      "rules": [1, 3],
-      "newWordsUnlock": "after_check"
+      "rules": [1, 3]
     },
     {
       "id": "2C",
@@ -1383,10 +1379,10 @@
         {"polish": "firma", "english": "brand, company"},
         {"polish": "polecać", "english": "to recommend"},
         {"polish": "funkcjonalny", "english": "practical"},
-        {"polish": "promocja", "english": "special offer"}
+        {"polish": "promocja", "english": "special offer"},
+        {"polish": "brać", "english": "to take"}
       ],
-      "rules": [4],
-      "newWordsUnlock": "after_check"
+      "rules": [4]
     },
     {
       "id": "4G",
@@ -1553,8 +1549,7 @@
         {"polish": "pomysł", "english": "idea"},
         {"polish": "nieciekawy", "english": "dull"}
       ],
-      "rules": [1],
-      "newWordsUnlock": "after_check"
+      "rules": [1]
     },
     {
       "id": "5C",

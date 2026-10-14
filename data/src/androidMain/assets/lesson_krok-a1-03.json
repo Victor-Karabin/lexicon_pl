@@ -180,8 +180,7 @@
         {"polish": "komórka", "english": "mobile phone"},
         {"polish": "płyta CD", "english": "CD"},
         {"polish": "torba", "english": "bag"}
-      ],
-      "newWordsUnlock": "after_check"
+      ]
     },
     {
       "id": "1C",
@@ -1157,8 +1156,7 @@
         {"polish": "różowy", "english": "pink"},
         {"polish": "fioletowy", "english": "purple"},
         {"polish": "pomarańczowy", "english": "orange"}
-      ],
-      "newWordsUnlock": "after_check"
+      ]
     },
     {
       "id": "7B",

@@ -10423,8 +10423,8 @@
    "icon": "restaurant",
    "color": "#EF6C00",
    "popularity": 17,
-   "estimatedSeconds": 18960,
-   "wordCount": 316,
+   "estimatedSeconds": 19020,
+   "wordCount": 317,
    "vocabularyIds": [
     140,
     141,
@@ -10741,7 +10741,8 @@
     7583,
     7584,
     7585,
-    7586
+    7586,
+    7588
    ]
   },
   {
@@ -15969,8 +15970,8 @@
    "icon": "badge",
    "color": "#37474F",
    "popularity": 60,
-   "estimatedSeconds": 5400,
-   "wordCount": 90,
+   "estimatedSeconds": 5460,
+   "wordCount": 91,
    "vocabularyIds": [
     182,
     269,
@@ -16061,7 +16062,8 @@
     7360,
     7364,
     7411,
-    7417
+    7417,
+    7587
    ]
   },
   {

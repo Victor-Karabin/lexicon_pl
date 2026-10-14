@@ -1,7 +1,6 @@
 package com.lexicon.data.local
 
 import com.lexicon.model.course.LessonScreen
-import com.lexicon.model.course.TranscriptUnlock
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -33,7 +32,7 @@ class LessonFiveScriptTest {
             "1A" to 7, "1B" to 11, "1C" to 8, "1D" to 10,
             "2A" to 8, "2B" to 16, "2C" to 13, "2D" to 10, "2E" to 10, "2F" to 4,
             "3B" to 19, "3C" to 14, "3D" to 6, "3E" to 5,
-            "4A" to 17, "4B" to 17, "4C" to 11, "4D" to 10, "4E" to 8,
+            "4A" to 17, "4B" to 17, "4C" to 11, "4D" to 10, "4E" to 4,
             "5A" to 6, "5C" to 10, "5D" to 8, "5E" to 10,
             "6A" to 5, "6B" to 5, "6C" to 5, "6D" to 9, "6E" to 9, "6F" to 13,
             "7A" to 11, "7B" to 12, "7C" to 10, "7D" to 25, "7E" to 13,
@@ -86,10 +85,15 @@ class LessonFiveScriptTest {
     }
 
     @Test
-    fun `either order is fine for the paired gaps of 6A and the adjectives of 4E`() {
+    fun `either order is fine for the paired gaps of 6A`() {
         assertEquals(listOf(listOf("1", "2"), listOf("4", "5")), screen("6A").interchangeable)
-        assertEquals(listOf(listOf("3", "5", "7")), screen("4E").interchangeable)
-        assertEquals("zdolna", screen("4E").questions.first().answers.single())
+    }
+
+    @Test
+    fun `4E takes the adjective and the profession in one field`() {
+        assertTrue(screen("4E").interchangeable.isEmpty())
+        assertEquals("zdolna aktorka", screen("4E").questions.first().answers.single())
+        assertTrue("dobry aktor" in screen("4E").questions[1].answers)
     }
 
     @Test
@@ -105,8 +109,7 @@ class LessonFiveScriptTest {
     }
 
     @Test
-    fun `the professions open their new words after the check, and the answer-free free writing has no model`() {
-        assertEquals(TranscriptUnlock.AfterCheck, script.newWords.getValue("4A").unlock)
+    fun `the answer-free free writing has no model`() {
         assertTrue((screen("1F") as LessonScreen.FreeWriting).model.isEmpty())
         assertEquals(2, (screen("1E") as LessonScreen.FreeWriting).model.size)
     }
