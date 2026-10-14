@@ -429,6 +429,7 @@ fun TranscribeRow(
     imeAction: ImeAction = ImeAction.Next,
     onDone: (() -> Unit)? = null,
     focusRequester: FocusRequester? = null,
+    reservesInfoSlot: Boolean = true,
 ) {
     var showInfo by rememberSaveable { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
@@ -527,7 +528,7 @@ fun TranscribeRow(
                     }
                 }
             }
-            if (info != null || onSpeak == null) {
+            if (info != null || (onSpeak == null && reservesInfoSlot)) {
                 Box(modifier = Modifier.size(InfoButtonSize)) {
                     if (checked && info != null) InfoButton(onClick = { showInfo = !showInfo })
                 }

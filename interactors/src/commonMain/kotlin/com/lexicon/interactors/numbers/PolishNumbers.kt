@@ -219,18 +219,7 @@ object PolishNumbers {
         return rules.toList()
     }
 
-    fun digits(
-        value: Long,
-        kind: NumberKind = NumberKind.CARDINAL,
-    ): String =
-        grouped(value) +
-            when (kind) {
-                NumberKind.CARDINAL -> ""
-                NumberKind.ORDINAL -> "."
-                NumberKind.ENUMERATION -> ")"
-            }
-
-    private fun grouped(value: Long): String =
+    fun digits(value: Long): String =
         if (value < GROUPED_FROM) {
             value.toString()
         } else {

@@ -134,15 +134,13 @@ class PolishNumbersTest {
             (1L..10L).map { PolishNumbers.words(it, NumberKind.ENUMERATION) },
         )
         assertEquals(listOf(false, true, true, false), listOf(0L, 1L, 10L, 11L).map { PolishNumbers.hasForm(it, NumberKind.ENUMERATION) })
-        assertEquals("2)", PolishNumbers.digits(2, NumberKind.ENUMERATION))
         assertEquals("pɔ ˈdrugʲɛ", PolishNumbers.transcription(2, NumberKind.ENUMERATION))
         assertEquals(listOf(NumberRule.ENUMERATION), PolishNumbers.rules(2, NumberKind.ENUMERATION))
         (1L..10L).forEach { assertTrue("$it", PolishNumbers.transcription(it, NumberKind.ENUMERATION).isNotBlank()) }
     }
 
     @Test
-    fun `an ordinal is shown with a dot and transcribed from its words`() {
-        assertEquals("21.", PolishNumbers.digits(21, NumberKind.ORDINAL))
+    fun `an ordinal is transcribed from its words`() {
         assertEquals("dvuˈd͡ʑɛstɨ ˈpjɛrfʂɨ", PolishNumbers.transcription(21, NumberKind.ORDINAL))
         (1L..20_000L step 13).filter { PolishNumbers.hasForm(it, NumberKind.ORDINAL) }.forEach {
             assertTrue("$it", PolishNumbers.transcription(it, NumberKind.ORDINAL).isNotBlank())
