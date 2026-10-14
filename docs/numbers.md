@@ -40,7 +40,8 @@ Parsing is `NumberSelection.parse`, in `interactors.numbers`.
 - The learner types the words. Capitals, spaces and punctuation do not matter; a slip in
   the Polish letters only (`dwanascie`) is "almost", as everywhere else.
 - After **Check** the screen shows the correct words when the answer was wrong, and the
-  IPA transcription of the number either way.
+  IPA transcription of the number either way, in square brackets like every transcription
+  in the app: `[dvaˈnaɕt͡ɕɛ]`.
 
 **Accepted answers.** The standard form, and the same with a leading *jeden* said aloud
 before *tysiąc* or *milion*: both *tysiąc sto* and *jeden tysiąc sto* are right for 1 100.

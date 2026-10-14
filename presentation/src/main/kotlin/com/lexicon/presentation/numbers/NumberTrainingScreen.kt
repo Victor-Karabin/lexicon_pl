@@ -172,7 +172,7 @@ private fun NumberQuestionBody(
 
         if (uiState.isAnswered) {
             Text(
-                text = stringResource(R.string.pronunciation_ipa_format, question.transcription),
+                text = "[${question.transcription}]",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.testTag(NumberTrainingTestTags.TRANSCRIPTION),
