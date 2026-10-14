@@ -19,6 +19,8 @@ import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.settings.UpdateVoiceUseCase
 import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
+import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.CoroutineScope
@@ -68,6 +70,7 @@ class OneLineUseCaseBindingsTest : KoinTest {
     @Test
     fun `deleting and restoring a word reaches exactly that word`() =
         runTest {
+            coEvery { vocabulary.getWord(7L) } returns Word(VocabularyId(7L), "kotkować", "to kitten", "", isUserCreated = true)
             get<DeleteWordUseCase>()(VocabularyId(7L))
             get<RestoreWordUseCase>()(VocabularyId(7L))
 

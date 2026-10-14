@@ -11,7 +11,7 @@ import com.lexicon.model.vocabulary.WordStatus
 import com.lexicon.model.vocabulary.statusOf
 import com.lexicon.presentation.common.SwipeToRevealContainer
 import com.lexicon.presentation.common.WordRowActions
-import com.lexicon.presentation.common.WordRowActionsWidth
+import com.lexicon.presentation.common.wordRowActionsWidth
 import com.lexicon.presentation.theme.Dimens
 
 fun LazyListScope.wordRows(
@@ -25,14 +25,15 @@ fun LazyListScope.wordRows(
     selection: WordSelection,
 ) {
     itemsIndexed(words, key = { _, word -> word.id.value }) { index, word ->
+        val canDelete = word.isUserCreated
         SwipeToRevealContainer(
-            revealWidth = WordRowActionsWidth,
+            revealWidth = wordRowActionsWidth(canDelete),
             enabled = !selection.isActive,
             collapseSignal = selection.isActive,
             backgroundContent = {
                 WordRowActions(
                     onChangePresets = { onChangePresets(word) },
-                    onDelete = { onDelete(word) },
+                    onDelete = if (canDelete) ({ onDelete(word) }) else null,
                 )
             },
         ) {
@@ -41,10 +42,15 @@ fun LazyListScope.wordRows(
                 status = statuses.statusOf(word.id),
                 onStatusCycled = { onStatusCycled(word.id) },
                 onPronounce = { onPronounce(word) },
-                onClick = { if (selection.isActive) selection.toggle(word.id) else onEdit(word) },
-                isSelecting = selection.isActive,
+                onClick = {
+                    when {
+                        !selection.isActive -> onEdit(word)
+                        canDelete -> selection.toggle(word.id)
+                    }
+                },
+                isSelecting = selection.isActive && canDelete,
                 isSelected = selection.contains(word.id),
-                onLongClick = { selection.toggle(word.id) },
+                onLongClick = if (canDelete) ({ selection.toggle(word.id) }) else null,
             )
         }
         if (index < words.lastIndex) {

@@ -27,6 +27,7 @@ data class Word(
     val picture: String? = null,
     val partOfSpeech: PartOfSpeech? = null,
     val forms: WordForms? = null,
+    val isUserCreated: Boolean = false,
 ) {
     init {
         require(text.isNotBlank()) { "a word must have text" }

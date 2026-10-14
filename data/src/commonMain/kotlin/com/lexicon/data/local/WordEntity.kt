@@ -52,6 +52,7 @@ fun WordEntity.toWord(): Word =
         picture = picture,
         partOfSpeech = PartOfSpeech.ofTag(partOfSpeech),
         forms = formsOf(partOfSpeech = partOfSpeech, gender = gender, declension = declension, adjectiveForms = adjectiveForms),
+        isUserCreated = isUserCreated,
     )
 
 private const val FORM_SEPARATOR = '|'
