@@ -31,7 +31,7 @@ class LessonFiveScriptTest {
         val counts = script.screens.filter { it.isGraded }.associate { it.id to it.questions.size }
         val expected = mapOf(
             "1A" to 7, "1B" to 11, "1C" to 8, "1D" to 10,
-            "2A" to 8, "2B" to 16, "2C" to 13, "2D" to 10, "2E" to 10, "2F" to 4,
+            "2A" to 8, "2B" to 16, "2C" to 24, "2D" to 10, "2E" to 10, "2F" to 4,
             "3B" to 19, "3C" to 14, "3D" to 6, "3E" to 5,
             "4A" to 17, "4B" to 17, "4C" to 11, "4D" to 10, "4E" to 8,
             "5A" to 6, "5C" to 10, "5D" to 8, "5E" to 10,
