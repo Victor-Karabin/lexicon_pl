@@ -295,8 +295,7 @@
         },
         {"label": "16", "picture": {"label": "in an egg cup", "emoji": "🥚"}, "answers": ["jajko"]}
       ],
-      "newWords": [{"polish": "wędlina", "english": "cold meats"}],
-      "newWordsUnlock": "after_check"
+      "newWords": [{"polish": "wędlina", "english": "cold meats"}]
     },
     {
       "id": "1D",
@@ -909,8 +908,7 @@
         {"polish": "jakiś", "english": "some"},
         {"polish": "miso", "english": "miso"}
       ],
-      "rules": [2, 3],
-      "newWordsUnlock": "after_check"
+      "rules": [2, 3]
     },
     {
       "id": "3B",
@@ -1508,8 +1506,7 @@
         {"polish": "garnek", "english": "pot"},
         {"polish": "dzbanek", "english": "jug"},
         {"polish": "otwieracz do butelek", "english": "bottle opener"}
-      ],
-      "newWordsUnlock": "after_check"
+      ]
     },
     {
       "id": "5E",

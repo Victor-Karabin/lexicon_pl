@@ -267,8 +267,7 @@
         {"polish": "e-mail", "english": "e-mail"},
         {"polish": "oglądać", "english": "to watch, to look at"}
       ],
-      "rules": [2],
-      "newWordsUnlock": "after_check"
+      "rules": [2]
     },
     {
       "id": "1D",
@@ -1220,8 +1219,7 @@
         {"polish": "nieaktualny", "english": "expired"},
         {"polish": "faktycznie", "english": "indeed"}
       ],
-      "rules": [1],
-      "newWordsUnlock": "after_check"
+      "rules": [1]
     },
     {
       "id": "4G",
@@ -1359,8 +1357,7 @@
         {"number": 6, "answers": ["zmęczona"], "feedback": "Mami is a woman → *zmęczona*."}
       ],
       "newWords": [{"polish": "komedia", "english": "comedy"}, {"polish": "pejzaż", "english": "landscape"}],
-      "rules": [2],
-      "newWordsUnlock": "after_check"
+      "rules": [2]
     },
     {
       "id": "4J",

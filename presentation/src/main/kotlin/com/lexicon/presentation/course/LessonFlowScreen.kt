@@ -313,15 +313,13 @@ private fun ScreenBody(
         }
     }
     session.script.newWords[screen.id]?.let { newWords ->
-        if (session.isNewWordsUnlocked(screen)) {
-            NewWordsCard(
-                words = newWords.words,
-                entries = uiState.newWordEntries,
-                statuses = uiState.wordStatuses,
-                onPronounce = actions.onPronounce,
-                onStatusCycled = actions.onWordStatusCycled,
-            )
-        }
+        NewWordsCard(
+            words = newWords.words,
+            entries = uiState.newWordEntries,
+            statuses = uiState.wordStatuses,
+            onPronounce = actions.onPronounce,
+            onStatusCycled = actions.onWordStatusCycled,
+        )
     }
     Text(richText(screen.instruction), style = MaterialTheme.typography.bodyMedium)
     screen.tracks.forEach { TrackPlayer(it, uiState, actions) }

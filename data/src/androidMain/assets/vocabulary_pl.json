@@ -113655,5 +113655,29 @@
    "food"
   ],
   "example": ""
+ },
+ {
+  "id": 7587,
+  "text": "pozować",
+  "translation": "to pose",
+  "transcription": "pɔˈzɔvat͡ɕ",
+  "partOfSpeech": "v",
+  "cefr": "B1",
+  "topics": [
+   "professions"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7588,
+  "text": "feta",
+  "translation": "feta (cheese)",
+  "transcription": "ˈfɛta",
+  "partOfSpeech": "n",
+  "cefr": "A2",
+  "topics": [
+   "food"
+  ],
+  "example": ""
  }
 ]

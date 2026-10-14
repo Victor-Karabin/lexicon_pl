@@ -124,10 +124,7 @@ class LessonScriptAssetTest {
     }
 
     @Test
-    fun `new words open after the check where they are the answers, and right away elsewhere`() {
-        assertEquals(TranscriptUnlock.AfterCheck, script.newWords.getValue("1B").unlock)
-        assertEquals(TranscriptUnlock.AfterCheck, script.newWords.getValue("4D").unlock)
-        assertEquals(TranscriptUnlock.Always, script.newWords.getValue("1A").unlock)
+    fun `every new-words section carries its words`() {
         assertEquals(LessonPhrase("łatwo", "easily"), script.newWords.getValue("1A").words.first())
         assertEquals(17, script.newWords.size)
     }

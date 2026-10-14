@@ -15,16 +15,11 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.File
 
-private const val STEM = 4
 private const val SHORTEST_WORD = 3
 private val afterSubmit = setOf("newWords", "model", "checklist")
 private val lookupEndings = listOf("", "?", "!", ".", "…", "…?", "…!")
-private val glossGivesAway = setOf("lesson_krok-a1-02.json 3C", "lesson_krok-a1-02.json 8D")
-private val answerKeys = setOf("answers", "variants", "model")
-private val notPrinted = setOf(
-    "gaps", "answers", "answer", "hint", "transcript", "model", "checklist", "newWords", "newWordsUnlock", "variants",
-    "feedback", "rules", "tracks", "wordBox",
-)
+private val irregularStems = mapOf("brać" to listOf("bior"))
+
 private val plainLetters = "ąćęłńóśźż".zip("acelnoszz").toMap()
 private val screenReference = Regex("""\b[1-9][A-H]\b""")
 private val letterPattern = Regex("""\w_|_\w""")
@@ -117,47 +112,6 @@ class LessonScriptsTest {
         eachScreen { where, screen ->
             if (screen is LessonScreen.Reference || screen is LessonScreen.Grammar) return@eachScreen
             assertTrue(where, screenReference.find(screen.instruction) == null)
-        }
-
-    @Test
-    fun `new words wait for the check only when one of them is an answer the screen does not print`() =
-        assets.forEach { (name, asset) ->
-            asset.screens.filter { it.newWords.isNotEmpty() && "$name ${it.id}" !in glossGivesAway }.forEach { screen ->
-                val element = lessonJson.encodeToJsonElement(ScreenAsset.serializer(), screen)
-                val printed = printedText(element).lowercase()
-                val typed = typedAnswers(element).joinToString(" ").lowercase()
-                val hiddenAnswer = screen.newWords.any { word ->
-                    val stems = stemsOf(word.polish)
-                    stems.any { typed.contains(it) } && stems.none { printed.contains(it) }
-                }
-                assertEquals("$name ${screen.id}", hiddenAnswer, screen.newWordsUnlock == "after_check")
-            }
-        }
-
-    private fun stemsOf(polish: String): List<String> {
-        val words = polish.lowercase().split(' ', '/', ',', '·').map { it.trim('.', '?', '!', '…', '(', ')', '"', '„', '”') }
-            .filter { it.isNotEmpty() }
-        return words.filter { it.length >= SHORTEST_WORD }.ifEmpty { words }.map { it.take((it.length - 1).coerceIn(SHORTEST_WORD, STEM)) }
-    }
-
-    private fun printedText(element: JsonElement): String =
-        when (element) {
-            is JsonObject -> element.filterKeys { it !in notPrinted }.values.joinToString(" ") { printedText(it) }
-            is JsonArray -> element.joinToString(" ") { printedText(it) }
-            is JsonPrimitive -> if (element.isString) element.content else ""
-        }
-
-    private fun typedAnswers(element: JsonElement): List<String> =
-        when (element) {
-            is JsonObject -> element.flatMap { (key, value) ->
-                when {
-                    key in answerKeys && value is JsonArray -> value.map { it.jsonPrimitive.content }
-                    key == "answer" && value is JsonPrimitive && value.isString -> listOf(value.content)
-                    else -> typedAnswers(value)
-                }
-            }
-            is JsonArray -> element.flatMap { typedAnswers(it) }
-            is JsonPrimitive -> emptyList()
         }
 
     @Test
@@ -268,12 +222,11 @@ class LessonScriptsTest {
         }
 
     @Test
-    fun `new words appear in the text their screen shows before the answers`() =
+    fun `new words appear in the text of their screen or its model answer`() =
         assets.forEach { (name, asset) ->
             asset.screens.filter { it.newWords.isNotEmpty() }.forEach { screen ->
                 val json = lessonJson.encodeToJsonElement(ScreenAsset.serializer(), screen)
-                val afterCheck = if (screen.newWordsUnlock == "after_check") screen.model.joinToString(" ") else ""
-                val shown = folded(visibleText(json) + " " + afterCheck)
+                val shown = folded(visibleText(json) + " " + screen.model.joinToString(" "))
                 screen.newWords.forEach { word ->
                     val words = folded(word.polish).split(
                         ' ',
@@ -284,7 +237,8 @@ class LessonScriptsTest {
                     val stems = words.filter { it.length >= SHORTEST_WORD }.ifEmpty { words }
                     assertTrue(
                         "$name ${screen.id} ${word.polish}",
-                        stems.any { shown.contains(it.take(minOf(SHORTEST_WORD, it.length - 1).coerceAtLeast(1))) },
+                        stems.any { shown.contains(it.take(minOf(SHORTEST_WORD, it.length - 1).coerceAtLeast(1))) } ||
+                            irregularStems[word.polish].orEmpty().any { shown.contains(it) },
                     )
                 }
             }

@@ -210,8 +210,7 @@
         {"polish": "gdzie", "english": "where"},
         {"polish": "powtórzyć", "english": "to repeat"}
       ],
-      "rules": [1],
-      "newWordsUnlock": "after_check"
+      "rules": [1]
     },
     {
       "id": "1C",
@@ -453,8 +452,7 @@
         {"polish": "móc", "english": "can, to be able to"},
         {"polish": "imię", "english": "first name"},
         {"polish": "numer", "english": "number"}
-      ],
-      "newWordsUnlock": "after_check"
+      ]
     },
     {
       "id": "3A",
@@ -765,8 +763,7 @@
         {"polish": "okno", "english": "window"},
         {"polish": "drzwi", "english": "door"},
         {"polish": "tak", "english": "yes"}
-      ],
-      "newWordsUnlock": "after_check"
+      ]
     },
     {
       "id": "5A",
@@ -1025,8 +1022,7 @@
         {"number": 5, "answers": ["607 44 32 89"]},
         {"number": 6, "answers": ["Proszę. Do"], "feedback": "Reply to *Dziękuję* with *Proszę*, then say goodbye: *Do widzenia*."}
       ],
-      "newWords": [{"polish": "Niemiec", "english": "German man"}],
-      "newWordsUnlock": "after_check"
+      "newWords": [{"polish": "Niemiec", "english": "German man"}]
     },
     {
       "id": "6C",
@@ -1088,8 +1084,7 @@
         {"label": "7", "answers": ["restauracja"], "feedback": "*restauracja* — Polish -cja = English -tion: restauracja, informacja, lekcja."}
       ],
       "newWords": [{"polish": "fotograf", "english": "photographer"}, {"polish": "aktor", "english": "actor"}],
-      "rules": [1],
-      "newWordsUnlock": "after_check"
+      "rules": [1]
     },
     {
       "id": "7C",
@@ -1174,8 +1169,7 @@
         {"label": "19", "prompt": "Z_elona _óra", "answers": ["Zielona Góra"]}
       ],
       "rules": [1],
-      "newWords": [{"polish": "Warszawa", "english": "Warsaw"}, {"polish": "zielony", "english": "green"}],
-      "newWordsUnlock": "after_check"
+      "newWords": [{"polish": "Warszawa", "english": "Warsaw"}, {"polish": "zielony", "english": "green"}]
     }
   ],
   "vocabulary": [

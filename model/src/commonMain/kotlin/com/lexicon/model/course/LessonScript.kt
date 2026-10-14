@@ -39,7 +39,6 @@ data class LessonStep(
 
 data class NewWords(
     val words: ImmutableList<LessonPhrase>,
-    val unlock: TranscriptUnlock,
 )
 
 data class LessonTrack(
