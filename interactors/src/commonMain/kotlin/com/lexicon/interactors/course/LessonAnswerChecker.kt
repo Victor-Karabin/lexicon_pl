@@ -90,7 +90,25 @@ object LessonAnswerChecker {
         given: String,
     ): String {
         val typed = normalise(given)
-        return expected.firstOrNull { differsOnlyInDiacritics(typed, normalise(it)) } ?: expected.first()
+        return expected.firstOrNull { differsOnlyInDiacritics(typed, normalise(it)) }
+            ?: expected.minBy { editDistance(normalise(it), typed) }
+    }
+
+    private fun editDistance(
+        first: String,
+        second: String,
+    ): Int {
+        var previous = IntArray(second.length + 1) { it }
+        for (i in first.indices) {
+            val current = IntArray(second.length + 1)
+            current[0] = i + 1
+            for (j in second.indices) {
+                val substitution = previous[j] + if (first[i] == second[j]) 0 else 1
+                current[j + 1] = minOf(substitution, previous[j + 1] + 1, current[j] + 1)
+            }
+            previous = current
+        }
+        return previous[second.length]
     }
 
     fun selection(text: String): Set<String> = text.split(separators).map { it.trim().uppercase() }.filter { it.isNotEmpty() }.toSet()

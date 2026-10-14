@@ -245,6 +245,19 @@ class LessonAnswerCheckerTest {
     }
 
     @Test
+    fun `a wrong answer is compared with the accepted wording nearest to it, not the first one`() {
+        val list = listOf("sportem, historią i współczesnym teatrem", "sportem, historią, współczesnym teatrem")
+        assertEquals(
+            "sportem, historią, współczesnym teatrem",
+            LessonAnswerChecker.closest(list, "sportem, historią, współczesnym teatrzem"),
+        )
+        assertEquals(
+            "sportem, historią i współczesnym teatrem",
+            LessonAnswerChecker.closest(list, "sportem, historią i współczesnym teatrzem"),
+        )
+    }
+
+    @Test
     fun `exact letters accept only the key, ignoring case, spaces and punctuation`() {
         val key = listOf("Tak, świetnie! Gdzie i kiedy?")
         assertEquals(AnswerVerdict.CORRECT, LessonAnswerChecker.verdict(key, "tak  świetnie gdzie i kiedy", AnswerMatch.EXACT_LETTERS))
