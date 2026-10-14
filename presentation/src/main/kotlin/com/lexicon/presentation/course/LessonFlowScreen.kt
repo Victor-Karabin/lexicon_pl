@@ -109,6 +109,7 @@ class LessonFlowActions(
     val onAnswerChanged: (String, String) -> Unit,
     val onLineTapped: (String) -> Unit,
     val onCheck: () -> Unit,
+    val onKeyboardDone: () -> Unit,
     val onNext: () -> Unit,
     val onBack: () -> Unit,
     val onTranscriptToggled: (String) -> Unit,
@@ -140,6 +141,7 @@ fun LessonFlowScreen(
             onAnswerChanged = viewModel::onAnswerChanged,
             onLineTapped = viewModel::onLineTapped,
             onCheck = viewModel::onCheck,
+            onKeyboardDone = viewModel::onKeyboardDone,
             onNext = viewModel::onNext,
             onBack = viewModel::onBack,
             onTranscriptToggled = viewModel::onTranscriptToggled,
@@ -193,7 +195,7 @@ private fun LessonFlowContent(
 
     val shownPlayers = remember((uiState as? LessonFlowUiState.Loaded)?.session?.index) { mutableStateMapOf<String, Boolean>() }
 
-    AnswerInputs {
+    AnswerInputs(onDone = actions.onKeyboardDone) {
         val isTyping = isTyping()
         CompositionLocalProvider(LocalShownPlayers provides shownPlayers) {
             Scaffold(

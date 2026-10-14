@@ -206,6 +206,11 @@ class LessonFlowViewModel(
         }
     }
 
+    fun onKeyboardDone() {
+        val session = content.value?.session ?: return
+        if (session.isFullyAnswered && session.canCheck) onCheck()
+    }
+
     fun onNext() {
         val session = content.value?.session ?: return
         if (session.needsCheck) return
