@@ -122,6 +122,7 @@ class ConjugationViewModel(
                     word = step.spokenForm,
                     translation = "${table.infinitive} · ${step.variant.person.label}",
                     outcome = if (right) AnswerState.Correct else AnswerState.Incorrect(step.spokenForm),
+                    typed = state.answers[step.variant.person],
                 )
             }
 

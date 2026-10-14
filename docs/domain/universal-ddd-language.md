@@ -107,9 +107,11 @@ under [Context-Specific Terminology](#context-specific-terminology) and must not
 | Variant mastery | A conjugation variant answered correctly enough times in a row | Conjugation | *learned* | `MASTERY_STREAK` |
 | Conjugation course | A chosen set of verbs practised together, with its own progress | Conjugation | *course* unqualified | `ConjugationCourse` |
 | Number selection | The numbers and ranges the learner typed, read into a sorted set — or the reason they cannot be read | Numbers | *range*, *spec* | `NumberSelection` |
-| Number words | A number written out in Polish, in the nominative masculine form | Numbers | *spelling* | `PolishNumbers.words` |
-| Number question | One number to write: its digits, accepted spellings and transcription | Numbers | *step* | `NumberQuestion` |
-| Number mastery | A number whose last answer was right; a wrong answer takes it back | Numbers | *learned* | `NumberProgress.MASTERY_STREAK` |
+| Number form | One way a number is practised: cardinal (*dwa*), ordinal (*drugi*) or list point (*po drugie*) | Numbers | *variant*, *type* | `NumberForm`, `NumberKind` |
+| Number words | A number written out in Polish in one form, nominative masculine | Numbers | *spelling* | `PolishNumbers.words` |
+| Number rule | One rule of how a number's words are built, shown after the check | Numbers | *hint* | `NumberRule`, `PolishNumbers.rules` |
+| Number question | One number form to write: its digits, accepted spellings, transcription and rules | Numbers | *step* | `NumberQuestion` |
+| Number mastery | A number form whose last answer was right; a wrong answer takes it back | Numbers | *learned* | `NumberProgress.MASTERY_STREAK` |
 | Numbers course | The chosen numbers practised together, with their progress | Numbers | *course* unqualified | `NumberCourse` |
 | Catalogue | A body of shipped data seeded into the database from an asset | Catalogue | *database*, *source* | `SeedCatalogsUseCase` |
 | Seeding | Writing a catalogue's asset into the database | Catalogue | *sync*, *import*, *download* | `seedFromAsset()` |
@@ -167,7 +169,7 @@ reads its parts back out is ceremony.
 | Vocabulary course | its settings and its place in the queue | the queue is never empty; the place is always inside the queue | In the use cases: `UpdateCourseSettingsUseCase` keeps the previous queue rather than store an empty one, and the place is clamped on read |
 | Course | its lessons, their words, audio and exercises | lesson progress belongs to exactly one course | By the schema — progress is keyed by lesson |
 | Conjugation course | its chosen verbs and their per-variant progress | progress is scoped to one course, so two courses over one verb do not share it | By the schema — progress is keyed by course |
-| Numbers course | the typed choice and per-number progress | only a readable choice is stored; progress belongs to the number, so it survives a change of choice | In `SaveNumberCourseUseCase`, which parses before saving; by the schema — progress is keyed by number |
+| Numbers course | the typed choice and per-number progress | only a readable choice is stored; progress belongs to the number form, so it survives a change of choice | In `SaveNumberCourseUseCase`, which parses before saving; by the schema — progress is keyed by number and form |
 | Verb | its forms per person | a form is never invented; absent means absent | By construction — forms are read from the asset, never derived |
 
 ## Domain Services
@@ -232,7 +234,7 @@ Introducing an event type is a domain change and requires updating this document
 | Create a conjugation course | Fix a set of verbs as a course | `CreateConjugationCourseUseCase` |
 | Restore the verbs | Re-seed the verb catalogue from its asset | `RestoreConjugationVerbsUseCase` |
 | Choose the numbers | Store the typed numbers and ranges as the numbers course, if they can be read | `SaveNumberCourseUseCase` |
-| Ask a number | Pick the next number: not asked this session, not mastered, tried the fewest times | `NextNumberUseCase` |
+| Ask a number | Pick the next number form: not asked this session, not mastered, tried the fewest times | `NextNumberUseCase` |
 | Answer a number | Check the words and record the attempt | `SubmitNumberAnswerUseCase` |
 | Seed the catalogues | Write shipped assets into the database | `SeedCatalogsUseCase` |
 
@@ -288,9 +290,9 @@ These words carry different meanings in different contexts and must not be unifi
 | | | Vocabulary course — the always-on queue over the learner's marked words |
 | | | Numbers course — the numbers the learner typed |
 | **Mastery** | Scheduling: a word whose review interval passed the threshold (21 days by default) | Conjugation: a variant answered correctly twice in a row |
-| | | Numbers: a number whose last answer was right |
+| | | Numbers: a number form whose last answer was right |
 | **Progress** | Vocabulary course: words known out of words known or being learnt | Conjugation: variants mastered out of total |
-| | | Numbers: numbers mastered out of the numbers chosen |
+| | | Numbers: forms mastered out of all forms of the numbers chosen |
 | | | Course: lessons completed |
 | **Step** | Training: one question in a session | Conjugation: one person row inside a table |
 | | | Catalogue: one catalogue being seeded |

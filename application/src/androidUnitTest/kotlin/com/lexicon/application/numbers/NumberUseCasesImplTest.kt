@@ -3,6 +3,8 @@ package com.lexicon.application.numbers
 import com.lexicon.boundary.NumberProgressBoundary
 import com.lexicon.boundary.NumberRepository
 import com.lexicon.interactors.course.AnswerVerdict
+import com.lexicon.interactors.numbers.NumberForm
+import com.lexicon.interactors.numbers.NumberKind
 import com.lexicon.interactors.numbers.NumberQuestion
 import com.lexicon.interactors.numbers.NumberSelection
 import kotlinx.coroutines.test.runTest
@@ -15,7 +17,21 @@ class NumberUseCasesImplTest {
     private class FakeNumbers(
         var spec: String? = null,
     ) : NumberRepository {
-        val rows = mutableMapOf<Long, NumberProgressBoundary>()
+        val rows = mutableMapOf<Pair<Long, NumberKind>, NumberProgressBoundary>()
+
+        fun row(
+            value: Long,
+            kind: NumberKind = NumberKind.CARDINAL,
+            attempted: Int,
+            streak: Int,
+        ) {
+            rows[value to kind] = NumberProgressBoundary(value, kind.name, attempted, streak, attempted - streak, streak)
+        }
+
+        fun streakOf(
+            value: Long,
+            kind: NumberKind = NumberKind.CARDINAL,
+        ): Int = rows.getValue(value to kind).streak
 
         override suspend fun spec(): String? = spec
 
@@ -27,10 +43,12 @@ class NumberUseCasesImplTest {
 
         override suspend fun recordAttempt(
             value: Long,
+            kind: String,
             isCorrect: Boolean,
         ) {
-            val old = rows[value] ?: NumberProgressBoundary(value, 0, 0, 0, 0)
-            rows[value] = old.copy(
+            val key = value to NumberKind.valueOf(kind)
+            val old = rows[key] ?: NumberProgressBoundary(value, kind, 0, 0, 0, 0)
+            rows[key] = old.copy(
                 attempted = old.attempted + 1,
                 correct = old.correct + if (isCorrect) 1 else 0,
                 incorrect = old.incorrect + if (isCorrect) 0 else 1,
@@ -38,6 +56,12 @@ class NumberUseCasesImplTest {
             )
         }
     }
+
+    private fun cardinal(value: Long) = NumberForm(value, NumberKind.CARDINAL)
+
+    private fun ordinal(value: Long) = NumberForm(value, NumberKind.ORDINAL)
+
+    private fun listing(value: Long) = NumberForm(value, NumberKind.ENUMERATION)
 
     @Test
     fun `there is no course until numbers are chosen`() =
@@ -58,21 +82,41 @@ class NumberUseCasesImplTest {
         }
 
     @Test
-    fun `progress counts the chosen numbers mastered and tried`() =
+    fun `every number is practised as a cardinal and, where it has them, as an ordinal and a list point`() {
+        assertEquals(
+            listOf(
+                cardinal(0),
+                cardinal(1),
+                ordinal(1),
+                listing(1),
+                cardinal(1_000),
+                ordinal(1_000),
+                cardinal(2_000),
+                cardinal(2_024),
+                ordinal(2_024),
+            ),
+            NumberForm.formsOf(listOf(0, 1, 1_000, 2_000, 2_024)),
+        )
+    }
+
+    @Test
+    fun `progress counts the forms mastered and tried`() =
         runTest {
             val numbers = FakeNumbers(spec = "1-4")
-            numbers.rows[1] = NumberProgressBoundary(1, attempted = 2, correct = 2, incorrect = 0, streak = 2)
-            numbers.rows[2] = NumberProgressBoundary(2, attempted = 1, correct = 0, incorrect = 1, streak = 0)
-            numbers.rows[50] = NumberProgressBoundary(50, attempted = 3, correct = 3, incorrect = 0, streak = 3)
+            numbers.row(1, attempted = 2, streak = 2)
+            numbers.row(1, NumberKind.ORDINAL, attempted = 1, streak = 1)
+            numbers.row(2, attempted = 1, streak = 0)
+            numbers.row(50, attempted = 3, streak = 3)
 
             val progress = LoadNumberCourseUseCaseImpl(numbers)()!!.progress
-            assertEquals(4, progress.total)
-            assertEquals(1, progress.mastered)
-            assertEquals(2, progress.attempted)
+            assertEquals(4, progress.numbers)
+            assertEquals(12, progress.total)
+            assertEquals(2, progress.mastered)
+            assertEquals(3, progress.attempted)
         }
 
     @Test
-    fun `one right answer masters a number and a wrong one takes it back`() =
+    fun `one right answer masters a form and a wrong one takes it back`() =
         runTest {
             val numbers = FakeNumbers(spec = "1-2")
             val submit = SubmitNumberAnswerUseCaseImpl(numbers)
@@ -81,32 +125,40 @@ class NumberUseCasesImplTest {
             submit(NumberQuestion.of(1), "jeden")
             assertEquals(1, load()!!.progress.mastered)
 
+            submit(NumberQuestion.of(1, NumberKind.ORDINAL), "pierwszy")
+            assertEquals(2, load()!!.progress.mastered)
+
+            submit(NumberQuestion.of(1, NumberKind.ENUMERATION), "po pierwsze")
+            assertEquals(3, load()!!.progress.mastered)
+
             submit(NumberQuestion.of(1), "dwa")
-            assertEquals(0, load()!!.progress.mastered)
+            assertEquals(2, load()!!.progress.mastered)
         }
 
     @Test
-    fun `the next number is one not asked yet, not mastered, and tried the fewest times`() =
+    fun `the next form is one not asked yet, not mastered, and tried the fewest times`() =
         runTest {
-            val numbers = FakeNumbers(spec = "1-4")
-            numbers.rows[1] = NumberProgressBoundary(1, attempted = 2, correct = 2, incorrect = 0, streak = 2)
-            numbers.rows[2] = NumberProgressBoundary(2, attempted = 1, correct = 0, incorrect = 1, streak = 0)
-            numbers.rows[3] = NumberProgressBoundary(3, attempted = 3, correct = 1, incorrect = 2, streak = 0)
+            val numbers = FakeNumbers(spec = "1-2")
+            numbers.row(1, attempted = 2, streak = 2)
+            numbers.row(1, NumberKind.ORDINAL, attempted = 1, streak = 0)
+            numbers.row(1, NumberKind.ENUMERATION, attempted = 1, streak = 1)
+            numbers.row(2, attempted = 3, streak = 0)
+            numbers.row(2, NumberKind.ENUMERATION, attempted = 1, streak = 1)
 
             val next = NextNumberUseCaseImpl(numbers)
-            assertEquals(4L, next(random = Random(1))?.value)
-            assertEquals(2L, next(asked = setOf(4), random = Random(1))?.value)
+            assertEquals(ordinal(2), next(random = Random(1))?.form)
+            assertEquals(ordinal(1), next(asked = setOf(ordinal(2)), random = Random(1))?.form)
         }
 
     @Test
-    fun `when every number was asked the session starts over rather than stopping`() =
+    fun `when every form was asked the session starts over rather than stopping`() =
         runTest {
             val numbers = FakeNumbers(spec = "8")
-            assertEquals(8L, NextNumberUseCaseImpl(numbers)(asked = setOf(8))?.value)
+            assertEquals(8L, NextNumberUseCaseImpl(numbers)(asked = setOf(cardinal(8), ordinal(8), listing(8)))?.value)
         }
 
     @Test
-    fun `an answer is checked against the words and recorded`() =
+    fun `an answer is checked against the words of its form and recorded`() =
         runTest {
             val numbers = FakeNumbers(spec = "1-30")
             val submit = SubmitNumberAnswerUseCaseImpl(numbers)
@@ -115,9 +167,16 @@ class NumberUseCasesImplTest {
             assertEquals(AnswerVerdict.ALMOST, submit(NumberQuestion.of(12), "dwanascie"))
             assertEquals(AnswerVerdict.WRONG, submit(NumberQuestion.of(13), "trzy"))
             assertEquals(AnswerVerdict.CORRECT, submit(NumberQuestion.of(1_100), "jeden tysiąc sto"))
+            assertEquals(AnswerVerdict.CORRECT, submit(NumberQuestion.of(21, NumberKind.ORDINAL), "dwudziesty pierwszy"))
+            assertEquals(AnswerVerdict.WRONG, submit(NumberQuestion.of(2, NumberKind.ORDINAL), "dwa"))
+            assertEquals(AnswerVerdict.CORRECT, submit(NumberQuestion.of(3, NumberKind.ENUMERATION), "po trzecie"))
+            assertEquals(AnswerVerdict.WRONG, submit(NumberQuestion.of(4, NumberKind.ENUMERATION), "po czwarty"))
 
-            assertEquals(1, numbers.rows.getValue(21).streak)
-            assertEquals(0, numbers.rows.getValue(12).streak)
-            assertEquals(1, numbers.rows.getValue(13).incorrect)
+            assertEquals(1, numbers.streakOf(21))
+            assertEquals(0, numbers.streakOf(12))
+            assertEquals(1, numbers.streakOf(21, NumberKind.ORDINAL))
+            assertEquals(0, numbers.streakOf(2, NumberKind.ORDINAL))
+            assertEquals(1, numbers.streakOf(3, NumberKind.ENUMERATION))
+            assertEquals(0, numbers.streakOf(4, NumberKind.ENUMERATION))
         }
 }

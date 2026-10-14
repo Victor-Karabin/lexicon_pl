@@ -129,7 +129,7 @@ class PuzzleViewModel(
                         skipped = skipped,
                     ),
                 )
-            applyOutcome(response.outcome, response.expectedText, state.tipUsed)
+            applyOutcome(response.outcome, response.expectedText, state.tipUsed, submittedText)
         }
     }
 
@@ -137,6 +137,7 @@ class PuzzleViewModel(
         outcome: StepOutcome,
         expectedText: String,
         tipUsed: Boolean,
+        typed: String,
     ) {
         val step = currentStepOrNull()
         when (outcome) {
@@ -148,7 +149,7 @@ class PuzzleViewModel(
             }
 
             StepOutcome.INCORRECT -> {
-                tally.record(AnswerState.Incorrect(expectedText), step?.expectedText, step?.clueText.orEmpty(), tipUsed)
+                tally.record(AnswerState.Incorrect(expectedText), step?.expectedText, step?.clueText.orEmpty(), tipUsed, typed)
                 updateLoaded { it.copy(answerState = AnswerState.Incorrect(expectedText), isSubmitting = false) }
             }
 

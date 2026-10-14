@@ -141,17 +141,6 @@ wiosna	spring	n	A1	dates,weather
 lato	summer	n	A1	dates,weather
 jesień	autumn	n	A1	dates,weather
 zima	winter	n	A1	dates,weather
-trzy	three	num	A1	numbers
-cztery	four	num	A1	numbers
-pięć	five	num	A1	numbers
-sześć	six	num	A1	numbers
-siedem	seven	num	A1	numbers
-osiem	eight	num	A1	numbers
-dziewięć	nine	num	A1	numbers
-dziesięć	ten	num	A1	numbers
-sto	hundred	num	A1	numbers
-tysiąc	thousand	num	A1	numbers
-zero	zero	num	A1	numbers
 połowa	half	n	A1	numbers
 ćwierć	quarter	n	A2	numbers
 tuzin	dozen	n	B1	numbers

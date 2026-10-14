@@ -202,7 +202,7 @@ private fun NumberCourseCard(
         summary = stringResource(R.string.numbers_progress, progress.mastered, progress.total),
         onOpen = onOpen,
     ) { skin ->
-        StatChip(icon = Icons.Default.Tag, text = stringResource(R.string.numbers_count, progress.total), skin = skin)
+        StatChip(icon = Icons.Default.Tag, text = stringResource(R.string.numbers_count, progress.numbers), skin = skin)
         StatChip(
             icon = Icons.Default.CheckCircle,
             text = stringResource(R.string.numbers_attempted_chip, progress.attempted, progress.total),

@@ -24,21 +24,22 @@ class NumberRepositoryImplTest {
     @Test
     fun `a right answer extends the streak and a wrong one resets it`() =
         runTest {
-            coEvery { dao.progressFor(7) } returns NumberProgressEntity(7, attempted = 3, correct = 2, incorrect = 1, streak = 2)
+            coEvery { dao.progressFor(7, "CARDINAL") } returns
+                NumberProgressEntity(7, "CARDINAL", attempted = 3, correct = 2, incorrect = 1, streak = 2)
 
-            repository.recordAttempt(7, isCorrect = true)
-            coVerify { dao.save(NumberProgressEntity(7, attempted = 4, correct = 3, incorrect = 1, streak = 3)) }
+            repository.recordAttempt(7, kind = "CARDINAL", isCorrect = true)
+            coVerify { dao.save(NumberProgressEntity(7, "CARDINAL", attempted = 4, correct = 3, incorrect = 1, streak = 3)) }
 
-            repository.recordAttempt(7, isCorrect = false)
-            coVerify { dao.save(NumberProgressEntity(7, attempted = 4, correct = 2, incorrect = 2, streak = 0)) }
+            repository.recordAttempt(7, kind = "CARDINAL", isCorrect = false)
+            coVerify { dao.save(NumberProgressEntity(7, "CARDINAL", attempted = 4, correct = 2, incorrect = 2, streak = 0)) }
         }
 
     @Test
     fun `a first attempt starts the counts`() =
         runTest {
-            coEvery { dao.progressFor(9) } returns null
-            repository.recordAttempt(9, isCorrect = true)
-            coVerify { dao.save(NumberProgressEntity(9, attempted = 1, correct = 1, incorrect = 0, streak = 1)) }
+            coEvery { dao.progressFor(9, "ORDINAL") } returns null
+            repository.recordAttempt(9, kind = "ORDINAL", isCorrect = true)
+            coVerify { dao.save(NumberProgressEntity(9, "ORDINAL", attempted = 1, correct = 1, incorrect = 0, streak = 1)) }
         }
 
     @Test

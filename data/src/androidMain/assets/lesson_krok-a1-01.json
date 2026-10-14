@@ -152,7 +152,6 @@
         {"polish": "interesujący", "english": "interesting"},
         {"polish": "cześć", "english": "hi; bye"},
         {"polish": "dziękuję", "english": "thank you"},
-        {"polish": "ósmy", "english": "eighth (ósma — eight o'clock)"},
         {"polish": "Kraków", "english": "Cracow"},
         {"polish": "chata", "english": "cottage, hut"},
         {"polish": "dym", "english": "smoke"},
@@ -209,9 +208,7 @@
       "newWords": [
         {"polish": "przepraszam", "english": "sorry / excuse me"},
         {"polish": "gdzie", "english": "where"},
-        {"polish": "powtórzyć", "english": "to repeat"},
-        {"polish": "sześć", "english": "six"},
-        {"polish": "dziewięć", "english": "nine"}
+        {"polish": "powtórzyć", "english": "to repeat"}
       ],
       "rules": [1],
       "newWordsUnlock": "after_check"
@@ -266,13 +263,10 @@
         {"polish": "dom", "english": "house"},
         {"polish": "prosię", "english": "piglet"},
         {"polish": "siny", "english": "bluish"},
-        {"polish": "dziesięć", "english": "ten"},
         {"polish": "sitko", "english": "strainer"},
-        {"polish": "jeden", "english": "one"},
         {"polish": "prasować", "english": "to iron"},
         {"polish": "cud", "english": "miracle"},
         {"polish": "łatwy", "english": "easy"},
-        {"polish": "drugi", "english": "second"},
         {"polish": "zimno", "english": "cold"},
         {"polish": "Chiny", "english": "China"},
         {"polish": "wódka", "english": "vodka"},
@@ -586,16 +580,7 @@
         }
       ],
       "notes": ["Tip: 9 / 10 — dzie-**w**-ięć / dzie-**ś**-ięć."],
-      "rules": [3],
-      "newWords": [
-        {"polish": "zero", "english": "zero"},
-        {"polish": "dwa", "english": "two"},
-        {"polish": "trzy", "english": "three"},
-        {"polish": "cztery", "english": "four"},
-        {"polish": "pięć", "english": "five"},
-        {"polish": "siedem", "english": "seven"},
-        {"polish": "osiem", "english": "eight"}
-      ]
+      "rules": [3]
     },
     {
       "id": "3D",
@@ -1211,7 +1196,6 @@
     {"polish": "dziękuję", "english": "thank you"},
     {"polish": "szkoła", "english": "school"},
     {"polish": "nauczycielka", "english": "teacher (female)"},
-    {"polish": "zero … dziesięć", "english": "numbers 0–10"},
     {"polish": "gdzie jest…?", "english": "where is…?"},
     {"polish": "tu / tutaj · tam", "english": "here · there"},
     {"polish": "na lewo · na prawo", "english": "on the left · on the right"},

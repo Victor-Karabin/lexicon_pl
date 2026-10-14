@@ -31,4 +31,5 @@ data class WordResultEntry(
     val translation: String,
     val outcome: AnswerState,
     val tipUsed: Boolean = false,
+    val typed: String? = null,
 )

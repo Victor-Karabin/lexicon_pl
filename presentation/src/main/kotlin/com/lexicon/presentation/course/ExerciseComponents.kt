@@ -51,6 +51,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -426,6 +428,7 @@ fun TranscribeRow(
     leading: (@Composable () -> Unit)? = null,
     imeAction: ImeAction = ImeAction.Next,
     onDone: (() -> Unit)? = null,
+    focusRequester: FocusRequester? = null,
 ) {
     var showInfo by rememberSaveable { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
@@ -495,7 +498,9 @@ fun TranscribeRow(
                     imeAction = imeAction,
                 ),
                 keyboardActions = KeyboardActions(onDone = { done() }),
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .then(focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier),
                 decorationBox = { field ->
                     Row(
                         modifier = Modifier
@@ -509,18 +514,22 @@ fun TranscribeRow(
                     }
                 },
             )
-            if (checked && onSpeak != null) {
-                IconButton(onClick = onSpeak, modifier = Modifier.size(InfoButtonSize)) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.VolumeUp,
-                        contentDescription = stringResource(R.string.word_pronounce, item.answer),
-                        tint = MaterialTheme.colorScheme.primary,
-                    )
+            if (onSpeak != null) {
+                Box(modifier = Modifier.size(InfoButtonSize)) {
+                    if (checked) {
+                        IconButton(onClick = onSpeak, modifier = Modifier.size(InfoButtonSize)) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.VolumeUp,
+                                contentDescription = stringResource(R.string.word_pronounce, item.answer),
+                                tint = MaterialTheme.colorScheme.primary,
+                            )
+                        }
+                    }
                 }
             }
-            if (checked && (info != null || onSpeak == null)) {
+            if (info != null || onSpeak == null) {
                 Box(modifier = Modifier.size(InfoButtonSize)) {
-                    if (info != null) InfoButton(onClick = { showInfo = !showInfo })
+                    if (checked && info != null) InfoButton(onClick = { showInfo = !showInfo })
                 }
             }
         }
@@ -963,7 +972,7 @@ private fun InlineGap(
     }
 }
 
-private fun AnnotatedString.Builder.markLetters(
+fun AnnotatedString.Builder.markLetters(
     start: Int,
     changed: Set<Int>,
 ) {

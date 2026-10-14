@@ -25,6 +25,7 @@ class SessionTally(
         word: String? = null,
         translation: String = "",
         tipUsed: Boolean = false,
+        typed: String? = null,
     ) {
         when (outcome) {
             AnswerState.Correct -> correct++
@@ -32,7 +33,7 @@ class SessionTally(
             is AnswerState.Skipped -> skipped++
             AnswerState.Unanswered -> return
         }
-        if (word != null) words += WordResultEntry(word, translation, outcome, tipUsed)
+        if (word != null) words += WordResultEntry(word, translation, outcome, tipUsed, typed)
     }
 
     suspend fun complete() {

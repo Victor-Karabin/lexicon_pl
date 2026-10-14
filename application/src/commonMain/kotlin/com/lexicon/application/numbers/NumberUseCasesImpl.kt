@@ -8,6 +8,8 @@ import com.lexicon.interactors.numbers.LoadNumberSpecUseCase
 import com.lexicon.interactors.numbers.NextNumberUseCase
 import com.lexicon.interactors.numbers.NumberCourse
 import com.lexicon.interactors.numbers.NumberCourseProgress
+import com.lexicon.interactors.numbers.NumberForm
+import com.lexicon.interactors.numbers.NumberKind
 import com.lexicon.interactors.numbers.NumberProgress
 import com.lexicon.interactors.numbers.NumberQuestion
 import com.lexicon.interactors.numbers.NumberSelection
@@ -21,29 +23,33 @@ private suspend fun NumberRepository.chosenNumbers(): Pair<String, List<Long>>? 
     return spec to selection.numbers
 }
 
-private suspend fun NumberRepository.progressByValue(): Map<Long, NumberProgress> =
-    progress().associate {
-        it.value to NumberProgress(
-            value = it.value,
+private suspend fun NumberRepository.progressByForm(): Map<NumberForm, NumberProgress> =
+    progress().mapNotNull {
+        val kind = NumberKind.entries.firstOrNull { kind -> kind.name == it.kind } ?: return@mapNotNull null
+        val form = NumberForm(it.value, kind)
+        form to NumberProgress(
+            form = form,
             attempted = it.attempted,
             correct = it.correct,
             incorrect = it.incorrect,
             streak = it.streak,
         )
-    }
+    }.toMap()
 
 class LoadNumberCourseUseCaseImpl(
     private val numbers: NumberRepository,
 ) : LoadNumberCourseUseCase {
     override suspend fun invoke(): NumberCourse? {
         val (spec, chosen) = numbers.chosenNumbers() ?: return null
-        val progress = numbers.progressByValue()
+        val progress = numbers.progressByForm()
+        val forms = NumberForm.formsOf(chosen)
         return NumberCourse(
             spec = spec,
             progress = NumberCourseProgress(
-                total = chosen.size,
-                mastered = chosen.count { progress[it]?.isMastered == true },
-                attempted = chosen.count { (progress[it]?.attempted ?: 0) > 0 },
+                numbers = chosen.size,
+                total = forms.size,
+                mastered = forms.count { progress[it]?.isMastered == true },
+                attempted = forms.count { (progress[it]?.attempted ?: 0) > 0 },
             ),
         )
     }
@@ -69,18 +75,19 @@ class NextNumberUseCaseImpl(
     private val numbers: NumberRepository,
 ) : NextNumberUseCase {
     override suspend fun invoke(
-        asked: Set<Long>,
+        asked: Set<NumberForm>,
         random: Random,
     ): NumberQuestion? {
         val (_, chosen) = numbers.chosenNumbers() ?: return null
-        val progress = numbers.progressByValue()
+        val progress = numbers.progressByForm()
+        val forms = NumberForm.formsOf(chosen)
 
-        val fresh = chosen.filterNot { it in asked }.ifEmpty { chosen }
+        val fresh = forms.filterNot { it in asked }.ifEmpty { forms }
         val pool = fresh.filterNot { progress[it]?.isMastered == true }.ifEmpty { fresh }
         val fewest = pool.minOf { progress[it]?.attempted ?: 0 }
-        val value = pool.filter { (progress[it]?.attempted ?: 0) == fewest }.random(random)
+        val form = pool.filter { (progress[it]?.attempted ?: 0) == fewest }.random(random)
 
-        return NumberQuestion.of(value)
+        return NumberQuestion.of(form)
     }
 }
 
@@ -92,7 +99,7 @@ class SubmitNumberAnswerUseCaseImpl(
         typed: String,
     ): AnswerVerdict {
         val verdict = LessonAnswerChecker.verdict(question.answers, typed)
-        numbers.recordAttempt(question.value, isCorrect = verdict == AnswerVerdict.CORRECT)
+        numbers.recordAttempt(question.value, kind = question.kind.name, isCorrect = verdict == AnswerVerdict.CORRECT)
         return verdict
     }
 }

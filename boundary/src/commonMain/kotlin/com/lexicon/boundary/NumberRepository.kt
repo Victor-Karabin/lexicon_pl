@@ -2,6 +2,7 @@ package com.lexicon.boundary
 
 data class NumberProgressBoundary(
     val value: Long,
+    val kind: String,
     val attempted: Int,
     val correct: Int,
     val incorrect: Int,
@@ -17,6 +18,7 @@ interface NumberRepository {
 
     suspend fun recordAttempt(
         value: Long,
+        kind: String,
         isCorrect: Boolean,
     )
 }
