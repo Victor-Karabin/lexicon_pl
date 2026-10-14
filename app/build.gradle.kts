@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.baselineprofile)
 }
 
 val hasGoogleServicesConfig = file("google-services.json").exists()
@@ -48,7 +49,10 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
@@ -85,6 +89,9 @@ dependencies {
     // Espresso before 3.7 calls InputManager.getInstance, which newer Android no longer has.
     androidTestImplementation(libs.androidx.espresso.core)
     debugImplementation(libs.compose.ui.test.manifest)
+
+    implementation(libs.androidx.profileinstaller)
+    baselineProfile(projects.baselineprofile)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

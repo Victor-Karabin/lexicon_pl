@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -43,20 +45,23 @@ fun SwipeToRevealContainer(
     val scope = rememberCoroutineScope()
 
     val offsetX = remember { Animatable(0f) }
+    val revealed by remember { derivedStateOf { offsetX.value != 0f } }
 
     LaunchedEffect(collapseSignal) {
         if (collapseSignal != null) offsetX.animateTo(0f)
     }
 
     Box(modifier = modifier.fillMaxWidth()) {
-        Box(
-            modifier = Modifier.matchParentSize(),
-            contentAlignment = Alignment.CenterEnd,
-        ) {
+        if (revealed) {
             Box(
-                modifier = Modifier.width(revealWidth).fillMaxHeight(),
-                content = backgroundContent,
-            )
+                modifier = Modifier.matchParentSize(),
+                contentAlignment = Alignment.CenterEnd,
+            ) {
+                Box(
+                    modifier = Modifier.width(revealWidth).fillMaxHeight(),
+                    content = backgroundContent,
+                )
+            }
         }
 
         Box(

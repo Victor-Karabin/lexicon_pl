@@ -67,7 +67,7 @@ class PresetDetailViewModel(
 
     private data class Content(
         val preset: VocabularyPreset?,
-        val words: List<Word>,
+        val words: ImmutableList<Word>,
         val wordsLoaded: Boolean = false,
         val lastDeleted: DeletedItem? = null,
     )
@@ -104,8 +104,7 @@ class PresetDetailViewModel(
                 else ->
                     PresetDetailUiState.Loaded(
                         preset = loaded.preset,
-                        words = loaded.words
-                            .toImmutableList(),
+                        words = loaded.words,
                         wordStatuses = statuses,
                         isLoadingWords = !loaded.wordsLoaded,
                         lastDeleted = loaded.lastDeleted,
@@ -121,13 +120,13 @@ class PresetDetailViewModel(
         viewModelScope.launch(dispatchers.io) {
             val preset = getPreset(presetId)
             if (preset == null) {
-                content.value = Content(preset = null, words = emptyList())
+                content.value = Content(preset = null, words = persistentListOf())
                 return@launch
             }
-            content.value = Content(preset = preset, words = emptyList())
+            content.value = Content(preset = preset, words = persistentListOf())
             content.value = Content(
                 preset = preset,
-                words = getPresetVocabulary(presetId).sortedForDisplay(),
+                words = getPresetVocabulary(presetId).sortedForDisplay().toImmutableList(),
                 wordsLoaded = true,
             )
         }
@@ -140,7 +139,7 @@ class PresetDetailViewModel(
             content.update { current ->
                 current?.copy(
                     preset = refreshed ?: current.preset,
-                    words = current.words.filterNot { it.id == word.id },
+                    words = current.words.filterNot { it.id == word.id }.toImmutableList(),
                     lastDeleted = DeletedItem.Word(word.id, word.text),
                 )
             }
@@ -155,7 +154,7 @@ class PresetDetailViewModel(
             content.update { current ->
                 current?.copy(
                     preset = refreshed ?: current.preset,
-                    words = current.words.filterNot { it.id in ids },
+                    words = current.words.filterNot { it.id in ids }.toImmutableList(),
                     lastDeleted = DeletedItem.Words(ids.toList()),
                 )
             }
@@ -170,7 +169,7 @@ class PresetDetailViewModel(
             content.update { current ->
                 current?.copy(
                     preset = refreshed ?: current.preset,
-                    words = getPresetVocabulary(presetId).sortedForDisplay(),
+                    words = getPresetVocabulary(presetId).sortedForDisplay().toImmutableList(),
                     lastDeleted = null,
                 )
             }
@@ -181,7 +180,7 @@ class PresetDetailViewModel(
 
     private suspend fun refreshWords() {
         val refreshed = getPreset(presetId)
-        val words = getPresetVocabulary(presetId).sortedForDisplay()
+        val words = getPresetVocabulary(presetId).sortedForDisplay().toImmutableList()
         content.update { current ->
             current?.copy(preset = refreshed ?: current.preset, words = words)
         }

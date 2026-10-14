@@ -62,7 +62,7 @@ class LessonViewModel(
 
     private data class Content(
         val lesson: Lesson?,
-        val words: List<Word> = emptyList(),
+        val words: ImmutableList<Word> = persistentListOf(),
         val wordsLoaded: Boolean = false,
         val hasScript: Boolean = false,
         val isScriptStarted: Boolean = false,
@@ -78,7 +78,7 @@ class LessonViewModel(
                 else ->
                     LessonUiState.Loaded(
                         lesson = loaded.lesson,
-                        words = loaded.words.toImmutableList(),
+                        words = loaded.words,
                         wordStatuses = statuses,
                         isLoadingWords = !loaded.wordsLoaded,
                         hasScript = loaded.hasScript,
@@ -125,7 +125,7 @@ class LessonViewModel(
         content.value = Content(lesson = lesson, hasScript = hasScript, isScriptStarted = isScriptStarted)
         content.value = Content(
             lesson = lesson,
-            words = getLessonVocabulary(lessonId).sortedForDisplay(),
+            words = getLessonVocabulary(lessonId).sortedForDisplay().toImmutableList(),
             wordsLoaded = true,
             hasScript = hasScript,
             isScriptStarted = isScriptStarted,
