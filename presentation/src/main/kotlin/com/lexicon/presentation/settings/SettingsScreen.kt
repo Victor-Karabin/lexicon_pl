@@ -14,12 +14,16 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Keyboard
+import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Palette
+import androidx.compose.material.icons.filled.RecordVoiceOver
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -34,12 +38,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.boundary.SpeechVoice
 import com.lexicon.boundary.chosen
@@ -70,10 +76,20 @@ fun SettingsScreen(
 ) {
     val settings by viewModel.uiState.collectAsStateWithLifecycle()
     val voices by viewModel.voices.collectAsStateWithLifecycle()
+    val polishSetup by viewModel.polishSetup.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+
+    LifecycleResumeEffect(Unit) {
+        viewModel.onResumed()
+        onPauseOrDispose {}
+    }
 
     SettingsScreenContent(
         settings = settings,
         voices = voices,
+        polishSetup = polishSetup,
+        onAddKeyboard = context::openKeyboardSettings,
+        onInstallVoice = context::openVoiceInstall,
         onThemeModeSelected = viewModel::onThemeModeSelected,
         onStepCountChanged = viewModel::onStepCountChanged,
         onVoiceSelected = viewModel::onVoiceSelected,
@@ -85,6 +101,9 @@ fun SettingsScreen(
 private fun SettingsScreenContent(
     settings: AppSettings,
     voices: List<SpeechVoice>,
+    polishSetup: PolishSetup,
+    onAddKeyboard: () -> Unit,
+    onInstallVoice: () -> Unit,
     onThemeModeSelected: (ThemeMode) -> Unit,
     onStepCountChanged: (Int) -> Unit,
     onVoiceSelected: (SpeechVoice) -> Unit,
@@ -98,6 +117,10 @@ private fun SettingsScreenContent(
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
     ) {
         val skin = tileSkin()
+
+        if (!polishSetup.isComplete) {
+            PolishSetupTile(polishSetup = polishSetup, onAddKeyboard = onAddKeyboard, onInstallVoice = onInstallVoice)
+        }
 
         GradientTile(skin = skin) {
             SettingHeading(
@@ -332,6 +355,62 @@ private fun CollapsibleHeading(
 }
 
 @Composable
+private fun PolishSetupTile(
+    polishSetup: PolishSetup,
+    onAddKeyboard: () -> Unit,
+    onInstallVoice: () -> Unit,
+) {
+    val skin = tileSkin(highlighted = true)
+    GradientTile(skin = skin) {
+        SettingHeading(icon = Icons.Default.Language, text = stringResource(R.string.settings_polish_setup), skin = skin)
+        if (polishSetup.needsKeyboard) {
+            PolishSetupItem(
+                icon = Icons.Default.Keyboard,
+                title = stringResource(R.string.settings_polish_keyboard),
+                note = stringResource(R.string.settings_polish_keyboard_note),
+                skin = skin,
+                onClick = onAddKeyboard,
+            )
+        }
+        if (polishSetup.needsVoice) {
+            PolishSetupItem(
+                icon = Icons.Default.RecordVoiceOver,
+                title = stringResource(R.string.settings_polish_voice),
+                note = stringResource(R.string.settings_polish_voice_note),
+                skin = skin,
+                onClick = onInstallVoice,
+            )
+        }
+    }
+}
+
+@Composable
+private fun PolishSetupItem(
+    icon: ImageVector,
+    title: String,
+    note: String,
+    skin: TileSkin,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(LexiconShapes.small)
+            .clickable(onClick = onClick)
+            .padding(vertical = Dimens.spacingSmall),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(imageVector = icon, contentDescription = null, tint = skin.onTile)
+        Column(modifier = Modifier.weight(1f)) {
+            Text(text = title, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold, color = skin.onTile)
+            Text(text = note, style = MaterialTheme.typography.bodySmall, color = skin.muted())
+        }
+        Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null, tint = skin.onTile)
+    }
+}
+
+@Composable
 private fun SettingHeading(
     icon: ImageVector,
     text: String,
@@ -367,6 +446,9 @@ private fun SettingsScreenPreview() {
         SettingsScreenContent(
             settings = AppSettings(themeMode = ThemeMode.SYSTEM, stepCount = 10),
             voices = emptyList(),
+            polishSetup = PolishSetup(needsKeyboard = true, needsVoice = true),
+            onAddKeyboard = {},
+            onInstallVoice = {},
             onThemeModeSelected = {},
             onVoiceSelected = {},
             onStepCountChanged = {},
@@ -381,6 +463,9 @@ private fun SettingsScreenDarkSelectedPreview() {
         SettingsScreenContent(
             settings = AppSettings(themeMode = ThemeMode.DARK, stepCount = AppSettings.MAX_STEP_COUNT),
             voices = emptyList(),
+            polishSetup = PolishSetup(),
+            onAddKeyboard = {},
+            onInstallVoice = {},
             onThemeModeSelected = {},
             onVoiceSelected = {},
             onStepCountChanged = {},
@@ -395,6 +480,9 @@ private fun SettingsScreenMinimumStepsPreview() {
         SettingsScreenContent(
             settings = AppSettings(themeMode = ThemeMode.LIGHT, stepCount = AppSettings.MIN_STEP_COUNT),
             voices = emptyList(),
+            polishSetup = PolishSetup(),
+            onAddKeyboard = {},
+            onInstallVoice = {},
             onThemeModeSelected = {},
             onVoiceSelected = {},
             onStepCountChanged = {},

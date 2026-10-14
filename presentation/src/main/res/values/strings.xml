@@ -63,6 +63,11 @@
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_training">Training</string>
     <string name="settings_step_count">Steps per session</string>
+    <string name="settings_polish_setup">Polish on this phone</string>
+    <string name="settings_polish_keyboard">Add the Polish keyboard</string>
+    <string name="settings_polish_keyboard_note">None of your keyboards types Polish yet. Add Polish to your keyboard\'s languages to type ą, ę, ł and the rest.</string>
+    <string name="settings_polish_voice">Install the Polish voice</string>
+    <string name="settings_polish_voice_note">This phone has no Polish voice. Install it so words can still be read aloud when the cloud voice is not available.</string>
     <string name="settings_voice">Voice</string>
     <string name="settings_voice_note">Tap a name to hear it.</string>
     <string name="settings_sources">Sources</string>
