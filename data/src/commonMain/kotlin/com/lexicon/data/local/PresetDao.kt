@@ -63,6 +63,28 @@ interface PresetDao {
 
     @Query(
         """
+        SELECT id FROM words
+        WHERE isDeleted = 0 AND id NOT IN (
+            SELECT pw.wordId FROM preset_words pw INNER JOIN presets p ON p.id = pw.presetId
+        )
+        ORDER BY id
+        """,
+    )
+    suspend fun getUnsortedWordIds(): List<Long>
+
+    @Query(
+        """
+        SELECT id FROM words
+        WHERE isDeleted = 0 AND id NOT IN (
+            SELECT pw.wordId FROM preset_words pw INNER JOIN presets p ON p.id = pw.presetId
+        )
+        ORDER BY id
+        """,
+    )
+    fun observeUnsortedWordIds(): Flow<List<Long>>
+
+    @Query(
+        """
         SELECT pw.presetId FROM preset_words pw
         INNER JOIN presets p ON p.id = pw.presetId
         WHERE pw.wordId = :wordId

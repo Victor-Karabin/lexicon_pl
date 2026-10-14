@@ -76,6 +76,14 @@ class OneLineUseCaseBindingsTest : KoinTest {
         }
 
     @Test
+    fun `the unsorted preset is never deleted`() =
+        runTest {
+            get<DeletePresetUseCase>()(PresetId.UNSORTED)
+
+            coVerify(exactly = 0) { presets.deletePreset(any()) }
+        }
+
+    @Test
     fun `deleting a preset leaves the words it listed alone`() =
         runTest {
             get<DeletePresetUseCase>()(PresetId("food"))

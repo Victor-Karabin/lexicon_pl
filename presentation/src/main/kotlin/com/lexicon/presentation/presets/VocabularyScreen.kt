@@ -303,6 +303,7 @@ private fun PresetResults(
                 items(uiState.presets, key = { it.id.value }) { preset ->
                     SwipeToRevealContainer(
                         revealWidth = DeleteActionWidth,
+                        enabled = !preset.isUnsorted,
                         backgroundContent = { DeleteAction(onClick = { onPresetDeleted(preset) }) },
                     ) {
                         PresetCard(

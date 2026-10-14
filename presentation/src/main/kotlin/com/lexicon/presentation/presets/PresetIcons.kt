@@ -70,6 +70,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Hotel
 import androidx.compose.material.icons.filled.HowToVote
 import androidx.compose.material.icons.filled.Icecream
+import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.Interests
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Kitchen
@@ -173,6 +174,7 @@ private val PRESET_ICONS: Map<String, ImageVector> = mapOf(
     "card_giftcard" to Icons.Default.CardGiftcard,
     "casino" to Icons.Default.Casino,
     "category" to Icons.Default.Category,
+    "inbox" to Icons.Default.Inbox,
     "celebration" to Icons.Default.Celebration,
     "chair" to Icons.Default.Chair,
     "chat" to Icons.AutoMirrored.Filled.Chat,

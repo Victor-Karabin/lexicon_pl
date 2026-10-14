@@ -205,6 +205,7 @@ import com.lexicon.interactors.wordmatch.StartWordMatchSessionUseCase
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultUseCase
 import com.lexicon.model.scheduling.ReviewSettings
 import com.lexicon.model.scheduling.StudyTimePolicy
+import com.lexicon.model.vocabulary.PresetId
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
@@ -329,7 +330,7 @@ val domainModule = module {
     factoryOf(::RestoreWordUseCaseImpl) { bind<RestoreWordUseCase>() }
     factory<DeletePresetUseCase> {
         val presets = get<VocabularyPresetRepository>()
-        DeletePresetUseCase { presets.deletePreset(it.value) }
+        DeletePresetUseCase { if (it != PresetId.UNSORTED) presets.deletePreset(it.value) }
     }
     factory<RestorePresetUseCase> {
         val presets = get<VocabularyPresetRepository>()

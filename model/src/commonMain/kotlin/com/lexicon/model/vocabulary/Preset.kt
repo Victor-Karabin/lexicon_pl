@@ -3,7 +3,11 @@ package com.lexicon.model.vocabulary
 import kotlinx.collections.immutable.ImmutableList
 import kotlin.time.Duration
 
-data class PresetId(val value: String)
+data class PresetId(val value: String) {
+    companion object {
+        val UNSORTED = PresetId("unsorted")
+    }
+}
 
 data class PresetCategory(
     val id: String,
@@ -22,4 +26,6 @@ data class VocabularyPreset(
     val estimatedDuration: Duration,
     val vocabularyIds: ImmutableList<VocabularyId>,
     val wordCount: Int = vocabularyIds.size,
-)
+) {
+    val isUnsorted: Boolean get() = id == PresetId.UNSORTED
+}

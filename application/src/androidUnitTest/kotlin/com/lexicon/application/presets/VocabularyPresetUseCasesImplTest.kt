@@ -122,4 +122,18 @@ class VocabularyPresetUseCasesImplTest {
 
             assertEquals(listOf("everyday-life", "nature"), ordered.map { it.id })
         }
+
+    @Test
+    fun `the change-presets list leaves out unsorted, whose words come and go by themselves`() =
+        runTest {
+            val repository: VocabularyPresetRepository = mockk {
+                coEvery { getCategories() } returns categories + PresetCategoryBoundary("unsorted", -2, mapOf("en" to "Unsorted"))
+                coEvery { getPresets() } returns listOf(preset("unsorted", categoryId = "unsorted"), preset("food"))
+                coEvery { getPresetIdsForWord(1L) } returns emptyList()
+            }
+
+            val memberships = GetWordPresetMembershipsUseCaseImpl(repository)(VocabularyId(1L))
+
+            assertEquals(listOf("food"), memberships.map { it.preset.id.value })
+        }
 }
