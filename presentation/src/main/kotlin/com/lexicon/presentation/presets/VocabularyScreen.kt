@@ -51,6 +51,8 @@ import com.lexicon.presentation.common.DeleteAction
 import com.lexicon.presentation.common.DeleteActionWidth
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.LoadMoreOnScroll
+import com.lexicon.presentation.common.ScrollToTopClearance
+import com.lexicon.presentation.common.ScrollToTopLayout
 import com.lexicon.presentation.common.SwipeToRevealContainer
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
@@ -262,25 +264,27 @@ private fun WordResults(
     val list = rememberLazyListState()
     LoadMoreOnScroll(list = list, isLoading = uiState.isLoadingMoreWords, onLoadMore = onMoreWords)
 
-    LazyColumn(state = list, contentPadding = PaddingValues(vertical = Dimens.spacingSmall)) {
-        wordRows(
-            words = uiState.words,
-            statuses = uiState.wordStatuses,
-            onStatusCycled = onWordStatusCycled,
-            onPronounce = onPronounceWord,
-            onChangePresets = onChangePresets,
-            onDelete = onWordDeleted,
-            onEdit = { onEditWord(it.id) },
-            selection = selection,
-        )
+    ScrollToTopLayout(list = list) {
+        LazyColumn(state = list, contentPadding = PaddingValues(top = Dimens.spacingSmall, bottom = ScrollToTopClearance)) {
+            wordRows(
+                words = uiState.words,
+                statuses = uiState.wordStatuses,
+                onStatusCycled = onWordStatusCycled,
+                onPronounce = onPronounceWord,
+                onChangePresets = onChangePresets,
+                onDelete = onWordDeleted,
+                onEdit = { onEditWord(it.id) },
+                selection = selection,
+            )
 
-        if (uiState.isLoadingMoreWords) {
-            item {
-                Box(
-                    modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    CircularProgressIndicator()
+            if (uiState.isLoadingMoreWords) {
+                item {
+                    Box(
+                        modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        CircularProgressIndicator()
+                    }
                 }
             }
         }
@@ -295,24 +299,34 @@ private fun PresetResults(
 ) {
     when {
         uiState.hasNoPresetsAtAll -> Message(stringResource(R.string.presets_catalog_empty))
-        else ->
-            LazyColumn(
-                contentPadding = PaddingValues(Dimens.spacingMedium),
-                verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-            ) {
-                items(uiState.presets, key = { it.id.value }) { preset ->
-                    SwipeToRevealContainer(
-                        revealWidth = DeleteActionWidth,
-                        backgroundContent = { DeleteAction(onClick = { onPresetDeleted(preset) }) },
-                    ) {
-                        PresetCard(
-                            preset = preset,
-                            languageTag = uiState.languageTag,
-                            onClick = { onPresetSelected(preset.id) },
-                        )
+        else -> {
+            val list = rememberLazyListState()
+            ScrollToTopLayout(list = list) {
+                LazyColumn(
+                    state = list,
+                    contentPadding = PaddingValues(
+                        start = Dimens.spacingMedium,
+                        top = Dimens.spacingMedium,
+                        end = Dimens.spacingMedium,
+                        bottom = ScrollToTopClearance,
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                ) {
+                    items(uiState.presets, key = { it.id.value }) { preset ->
+                        SwipeToRevealContainer(
+                            revealWidth = DeleteActionWidth,
+                            backgroundContent = { DeleteAction(onClick = { onPresetDeleted(preset) }) },
+                        ) {
+                            PresetCard(
+                                preset = preset,
+                                languageTag = uiState.languageTag,
+                                onClick = { onPresetSelected(preset.id) },
+                            )
+                        }
                     }
                 }
             }
+        }
     }
 }
 

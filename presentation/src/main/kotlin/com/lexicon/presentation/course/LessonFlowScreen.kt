@@ -79,7 +79,6 @@ import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.BottomActionPanel
-import com.lexicon.presentation.common.ScrollToTopButton
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.isTyping
 import com.lexicon.presentation.conjugation.PersonFormRow
@@ -229,28 +228,22 @@ private fun LessonFlowContent(
 
                     is LessonFlowUiState.Loaded ->
                         key(uiState.session.index, uiState.results != null) {
-                            val scroll = rememberScrollState()
-                            Box(Modifier.fillMaxSize().padding(padding).imePadding()) {
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .verticalScroll(scroll)
-                                        .padding(Dimens.spacingMedium)
-                                        .padding(bottom = if (isTyping) 0.dp else GrammarButtonClearance),
-                                    verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-                                ) {
-                                    val results = uiState.results
-                                    if (results != null) {
-                                        LessonResultsView(results, uiState.lessonTitle, onRuleOpened = actions.onGrammarShown)
-                                    } else {
-                                        ScreenBody(uiState, actions)
-                                    }
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(padding)
+                                    .imePadding()
+                                    .verticalScroll(rememberScrollState())
+                                    .padding(Dimens.spacingMedium)
+                                    .padding(bottom = if (isTyping) 0.dp else GrammarButtonClearance),
+                                verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                            ) {
+                                val results = uiState.results
+                                if (results != null) {
+                                    LessonResultsView(results, uiState.lessonTitle, onRuleOpened = actions.onGrammarShown)
+                                } else {
+                                    ScreenBody(uiState, actions)
                                 }
-                                ScrollToTopButton(
-                                    scroll = scroll,
-                                    enabled = uiState.showsNewWords && !isTyping,
-                                    modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = Dimens.spacingMedium),
-                                )
                             }
                         }
                 }
