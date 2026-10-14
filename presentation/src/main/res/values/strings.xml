@@ -360,6 +360,9 @@
     <string name="lesson_not_found">This lesson is no longer in the course.</string>
     <string name="lesson_flow_start">Start lesson</string>
     <string name="lesson_flow_continue">Continue lesson</string>
+    <string name="lesson_results">Results</string>
+    <string name="lesson_results_title">Lesson %1$d results</string>
+    <string name="lesson_results_none">No results yet. Finish the lesson to see them here.</string>
     <string name="lesson_flow_position">%1$s · %2$d/%3$d</string>
     <string name="lesson_flow_next">Next</string>
     <string name="lesson_flow_back">Back</string>

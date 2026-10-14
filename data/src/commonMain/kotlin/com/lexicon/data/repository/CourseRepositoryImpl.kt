@@ -11,6 +11,7 @@ import com.lexicon.data.local.AssetReader
 import com.lexicon.data.local.CourseDao
 import com.lexicon.data.local.CourseSeeder
 import com.lexicon.data.local.DashboardCourseEntity
+import com.lexicon.data.local.LessonLastResultEntity
 import com.lexicon.data.local.LessonProgressAsset
 import com.lexicon.data.local.LessonProgressEntity
 import com.lexicon.data.local.LessonScriptAsset
@@ -133,6 +134,18 @@ class CourseRepositoryImpl(
     ) {
         courseDao.upsertScriptProgress(
             LessonScriptProgressEntity(lessonId, lessonJson.encodeToString(LessonProgressAsset.serializer(), progress.toAsset())),
+        )
+    }
+
+    override suspend fun getLastFinishedProgress(lessonId: String): LessonProgress? =
+        courseDao.getLastResult(lessonId)?.let { lessonJson.decodeFromString<LessonProgressAsset>(it.progressJson).toModel() }
+
+    override suspend fun saveLastFinishedProgress(
+        lessonId: String,
+        progress: LessonProgress,
+    ) {
+        courseDao.upsertLastResult(
+            LessonLastResultEntity(lessonId, lessonJson.encodeToString(LessonProgressAsset.serializer(), progress.toAsset())),
         )
     }
 }

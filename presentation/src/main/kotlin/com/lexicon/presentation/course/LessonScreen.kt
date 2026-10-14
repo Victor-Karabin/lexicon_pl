@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Assessment
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -22,6 +23,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -60,6 +62,7 @@ fun LessonScreen(
     onEditWord: (VocabularyId) -> Unit,
     onExerciseSelected: (LessonExercise) -> Unit,
     onStartLesson: () -> Unit,
+    onShowResults: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LessonViewModel = koinViewModel(),
 ) {
@@ -78,6 +81,7 @@ fun LessonScreen(
         onEditWord = onEditWord,
         onExerciseSelected = onExerciseSelected,
         onStartLesson = onStartLesson,
+        onShowResults = onShowResults,
         modifier = modifier,
     )
 }
@@ -92,6 +96,7 @@ private fun LessonContent(
     onEditWord: (VocabularyId) -> Unit,
     onExerciseSelected: (LessonExercise) -> Unit,
     onStartLesson: () -> Unit,
+    onShowResults: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val title = when (uiState) {
@@ -131,7 +136,7 @@ private fun LessonContent(
                         modifier = Modifier.fillMaxSize(),
                         contentPadding = PaddingValues(bottom = ScrollToTopClearance),
                     ) {
-                        lessonHeader(uiState, onStartLesson)
+                        lessonHeader(uiState, onStartLesson, onShowResults)
                         if (!uiState.hasScript) exercisesBlock(uiState.lesson.exercises, onExerciseSelected)
                         wordsBlock(uiState, onWordStatusCycled, onPronounceWord, onEditWord)
                     }
@@ -144,6 +149,7 @@ private fun LessonContent(
 private fun LazyListScope.lessonHeader(
     uiState: LessonUiState.Loaded,
     onStartLesson: () -> Unit,
+    onShowResults: () -> Unit,
 ) = item {
     Column(modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium)) {
         Text(
@@ -152,12 +158,23 @@ private fun LazyListScope.lessonHeader(
             fontWeight = FontWeight.SemiBold,
         )
         if (uiState.hasScript) {
-            Button(onClick = onStartLesson, modifier = Modifier.padding(top = Dimens.spacingMedium)) {
-                Icon(Icons.Default.PlayArrow, contentDescription = null)
-                Text(
-                    text = stringResource(if (uiState.isScriptStarted) R.string.lesson_flow_continue else R.string.lesson_flow_start),
-                    modifier = Modifier.padding(start = Dimens.spacingSmall),
-                )
+            Row(
+                modifier = Modifier.padding(top = Dimens.spacingMedium),
+                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+            ) {
+                Button(onClick = onStartLesson) {
+                    Icon(Icons.Default.PlayArrow, contentDescription = null)
+                    Text(
+                        text = stringResource(if (uiState.isScriptStarted) R.string.lesson_flow_continue else R.string.lesson_flow_start),
+                        modifier = Modifier.padding(start = Dimens.spacingSmall),
+                    )
+                }
+                if (uiState.hasResults) {
+                    OutlinedButton(onClick = onShowResults) {
+                        Icon(Icons.Default.Assessment, contentDescription = null)
+                        Text(text = stringResource(R.string.lesson_results), modifier = Modifier.padding(start = Dimens.spacingSmall))
+                    }
+                }
             }
         }
     }
@@ -282,6 +299,7 @@ private fun LessonPreview() {
             onEditWord = {},
             onExerciseSelected = {},
             onStartLesson = {},
+            onShowResults = {},
         )
     }
 }
@@ -298,6 +316,7 @@ private fun LessonNotFoundPreview() {
             onEditWord = {},
             onExerciseSelected = {},
             onStartLesson = {},
+            onShowResults = {},
         )
     }
 }

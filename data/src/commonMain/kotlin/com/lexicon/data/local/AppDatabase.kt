@@ -22,6 +22,7 @@ import androidx.room.RoomDatabaseConstructor
         LessonAudioEntity::class,
         LessonProgressEntity::class,
         LessonScriptProgressEntity::class,
+        LessonLastResultEntity::class,
         LessonExerciseEntity::class,
         LessonExerciseItemEntity::class,
         WordReviewEntity::class,
@@ -34,7 +35,7 @@ import androidx.room.RoomDatabaseConstructor
         NumberCourseEntity::class,
         NumberProgressEntity::class,
     ],
-    version = 42,
+    version = 43,
     exportSchema = false,
 )
 @ConstructedBy(AppDatabaseConstructor::class)

@@ -35,4 +35,11 @@ interface CourseRepository {
         lessonId: String,
         progress: LessonProgress,
     )
+
+    suspend fun getLastFinishedProgress(lessonId: String): LessonProgress?
+
+    suspend fun saveLastFinishedProgress(
+        lessonId: String,
+        progress: LessonProgress,
+    )
 }

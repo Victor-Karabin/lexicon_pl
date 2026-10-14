@@ -27,6 +27,7 @@ import com.lexicon.presentation.course.EXERCISE_ID_ARG
 import com.lexicon.presentation.course.ExerciseScreen
 import com.lexicon.presentation.course.LESSON_ID_ARG
 import com.lexicon.presentation.course.LessonFlowScreen
+import com.lexicon.presentation.course.LessonResultsScreen
 import com.lexicon.presentation.course.LessonScreen
 import com.lexicon.presentation.crossword.CrosswordScreen
 import com.lexicon.presentation.dictation.DictationScreen
@@ -199,7 +200,15 @@ fun LexiconNavHost(
                     navController.navigate(LexiconDestinations.exercise(lessonId, exercise.id))
                 },
                 onStartLesson = { navController.navigate(LexiconDestinations.lessonFlow(lessonId)) },
+                onShowResults = { navController.navigate(LexiconDestinations.lessonResults(lessonId)) },
             )
+        }
+
+        composable(
+            route = LexiconDestinations.LESSON_RESULTS,
+            arguments = listOf(navArgument(LESSON_ID_ARG) { type = NavType.StringType }),
+        ) {
+            LessonResultsScreen(onClose = { navController.popBackStack() })
         }
 
         composable(

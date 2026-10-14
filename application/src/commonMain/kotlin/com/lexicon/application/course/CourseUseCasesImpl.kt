@@ -6,15 +6,19 @@ import com.lexicon.boundary.WritingReviewRequestBoundary
 import com.lexicon.boundary.WritingReviewResultBoundary
 import com.lexicon.boundary.WritingReviewer
 import com.lexicon.boundary.WrittenAnswerBoundary
+import com.lexicon.interactors.course.GetLastLessonResultsUseCase
 import com.lexicon.interactors.course.GetLessonProgressUseCase
 import com.lexicon.interactors.course.GetLessonScriptUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.GetLessonVocabularyUseCase
 import com.lexicon.interactors.course.Lesson
+import com.lexicon.interactors.course.LessonResults
+import com.lexicon.interactors.course.LessonSession
 import com.lexicon.interactors.course.ObserveCoursesUseCase
 import com.lexicon.interactors.course.ResetLessonProgressUseCase
 import com.lexicon.interactors.course.ReviewWritingUseCase
 import com.lexicon.interactors.course.SaveLessonProgressUseCase
+import com.lexicon.interactors.course.SaveLessonResultsUseCase
 import com.lexicon.interactors.course.SetCourseOnDashboardUseCase
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
 import com.lexicon.interactors.course.WritingReviewOutcome
@@ -121,5 +125,25 @@ class ReviewWritingUseCaseImpl(
             WritingReviewResultBoundary.Offline -> WritingReviewOutcome.Offline
             is WritingReviewResultBoundary.Refused -> WritingReviewOutcome.Unavailable
         }
+    }
+}
+
+class SaveLessonResultsUseCaseImpl(
+    private val repository: CourseRepository,
+) : SaveLessonResultsUseCase {
+    override suspend fun invoke(
+        id: LessonId,
+        progress: LessonProgress,
+    ) = repository.saveLastFinishedProgress(id.value, progress)
+}
+
+class GetLastLessonResultsUseCaseImpl(
+    private val repository: CourseRepository,
+) : GetLastLessonResultsUseCase {
+    override suspend fun invoke(id: LessonId): LessonResults? {
+        val script = repository.getLessonScript(id.value) ?: return null
+        repository.getLastFinishedProgress(id.value)?.let { return LessonSession(script, it).results }
+        val current = repository.getLessonScriptProgress(id.value) ?: return null
+        return LessonSession(script, current).takeIf { it.isAtEnd }?.results
     }
 }

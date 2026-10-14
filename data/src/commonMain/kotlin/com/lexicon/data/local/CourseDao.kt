@@ -96,6 +96,12 @@ interface CourseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertScriptProgress(progress: LessonScriptProgressEntity)
 
+    @Query("SELECT * FROM lesson_last_results WHERE lessonId = :lessonId")
+    suspend fun getLastResult(lessonId: String): LessonLastResultEntity?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertLastResult(result: LessonLastResultEntity)
+
     @Transaction
     suspend fun replaceCatalog(
         courses: List<CourseEntity>,

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
+import com.lexicon.interactors.course.GetLastLessonResultsUseCase
 import com.lexicon.interactors.course.GetLessonProgressUseCase
 import com.lexicon.interactors.course.GetLessonScriptUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
@@ -42,6 +43,7 @@ sealed interface LessonUiState {
         val isLoadingWords: Boolean = true,
         val hasScript: Boolean = false,
         val isScriptStarted: Boolean = false,
+        val hasResults: Boolean = false,
     ) : LessonUiState
 }
 
@@ -53,6 +55,7 @@ class LessonViewModel(
     private val getLessonVocabulary: GetLessonVocabularyUseCase,
     private val getLessonScript: GetLessonScriptUseCase,
     private val getLessonProgress: GetLessonProgressUseCase,
+    private val getLastLessonResults: GetLastLessonResultsUseCase,
     private val setWordStatus: SetWordStatusUseCase,
     observeWordStatuses: ObserveWordStatusesUseCase,
     private val dispatchers: DispatcherProvider,
@@ -66,6 +69,7 @@ class LessonViewModel(
         val wordsLoaded: Boolean = false,
         val hasScript: Boolean = false,
         val isScriptStarted: Boolean = false,
+        val hasResults: Boolean = false,
     )
 
     private val content = MutableStateFlow<Content?>(null)
@@ -83,6 +87,7 @@ class LessonViewModel(
                         isLoadingWords = !loaded.wordsLoaded,
                         hasScript = loaded.hasScript,
                         isScriptStarted = loaded.isScriptStarted,
+                        hasResults = loaded.hasResults,
                     )
             }
         }.stateIn(
@@ -122,13 +127,15 @@ class LessonViewModel(
         val script = getLessonScript(lessonId)
         val hasScript = script != null
         val isScriptStarted = script != null && LessonSession.isInProgress(script, getLessonProgress(lessonId))
-        content.value = Content(lesson = lesson, hasScript = hasScript, isScriptStarted = isScriptStarted)
+        val hasResults = script != null && getLastLessonResults(lessonId) != null
+        content.value = Content(lesson = lesson, hasScript = hasScript, isScriptStarted = isScriptStarted, hasResults = hasResults)
         content.value = Content(
             lesson = lesson,
             words = getLessonVocabulary(lessonId).sortedForDisplay().toImmutableList(),
             wordsLoaded = true,
             hasScript = hasScript,
             isScriptStarted = isScriptStarted,
+            hasResults = hasResults,
         )
     }
 

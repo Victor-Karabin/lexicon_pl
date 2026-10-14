@@ -1,5 +1,6 @@
 package com.lexicon.application.course
 
+import com.lexicon.boundary.CourseRepository
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.course.LessonSession
 import com.lexicon.model.course.AnswerKeyboard
@@ -12,7 +13,10 @@ import com.lexicon.model.course.LessonStep
 import com.lexicon.model.course.Transcript
 import com.lexicon.model.course.TranscriptUnlock
 import com.lexicon.model.course.WritingReview
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -233,4 +237,26 @@ class LessonSessionTest {
         assertTrue(checked.isTranscriptUnlocked(script.screens[0]))
         assertTrue(checked.isTranscriptUnlocked(script.screens[1]))
     }
+
+    @Test
+    fun `the last results come from the kept attempt, or from a finished one not yet restarted`() =
+        runTest {
+            val finished = answered(answered(atDictation, "jeden", "dwa", "trzy", "cztery", "pięć").check().next(), "sześć")
+                .check().next().withAnswer("0", "Dzień dobry.").check()
+            assertTrue(finished.isAtEnd)
+            val repository: CourseRepository = mockk(relaxed = true) {
+                coEvery { getLessonScript(any()) } returns script
+            }
+            val results = GetLastLessonResultsUseCaseImpl(repository)
+
+            coEvery { repository.getLastFinishedProgress(any()) } returns finished.progress
+            assertEquals(finished.results, results(LessonId("krok-a1-01")))
+
+            coEvery { repository.getLastFinishedProgress(any()) } returns null
+            coEvery { repository.getLessonScriptProgress(any()) } returns finished.progress
+            assertEquals(finished.results, results(LessonId("krok-a1-01")))
+
+            coEvery { repository.getLessonScriptProgress(any()) } returns atDictation.progress
+            assertNull(results(LessonId("krok-a1-01")))
+        }
 }

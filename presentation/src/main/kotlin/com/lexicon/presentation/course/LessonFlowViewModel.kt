@@ -17,6 +17,7 @@ import com.lexicon.interactors.course.LessonSession
 import com.lexicon.interactors.course.ObserveCoursesUseCase
 import com.lexicon.interactors.course.ReviewWritingUseCase
 import com.lexicon.interactors.course.SaveLessonProgressUseCase
+import com.lexicon.interactors.course.SaveLessonResultsUseCase
 import com.lexicon.interactors.course.Score
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
 import com.lexicon.interactors.course.WritingReviewOutcome
@@ -89,6 +90,7 @@ class LessonFlowViewModel(
     private val getLessonProgress: GetLessonProgressUseCase,
     private val saveLessonProgress: SaveLessonProgressUseCase,
     private val setLessonCompleted: SetLessonCompletedUseCase,
+    private val saveLessonResults: SaveLessonResultsUseCase,
     private val getLesson: GetLessonUseCase,
     private val observeCourses: ObserveCoursesUseCase,
     private val reviewWriting: ReviewWritingUseCase,
@@ -268,6 +270,8 @@ class LessonFlowViewModel(
         viewModelScope.launch(dispatchers.io) {
             runSuspendCatching { setLessonCompleted(lessonId, true) }
                 .onFailure { Log.w(TAG, "The lesson could not be marked as done", it) }
+            runSuspendCatching { saveLessonResults(lessonId, session.progress) }
+                .onFailure { Log.w(TAG, "The lesson results could not be kept", it) }
             val next = runSuspendCatching { nextLessonId() }
                 .onFailure { Log.w(TAG, "The next lesson could not be found", it) }
                 .getOrNull()
