@@ -83,6 +83,7 @@ class NumberTrainingViewModel(
             results += WordResultEntry(
                 word = question.words,
                 translation = question.digits,
+                translationText = question.label(),
                 outcome = if (right) AnswerState.Correct else AnswerState.Incorrect(question.words),
                 typed = state.answer,
             )

@@ -39,8 +39,8 @@ Every chosen number is practised in each form it has (`NumberKind`, `NumberForm.
 | Form | Shown as | Asked for | Which numbers |
 | --- | --- | --- | --- |
 | cardinal | `21` | *dwadzieścia jeden* | all |
-| ordinal | `21.` | *dwudziesty pierwszy* — masculine | 1 to 999 999 999, except round thousands above 1 000 and round millions |
-| list point | `2)` | *po drugie* — "secondly" | 1 to 10 |
+| ordinal | `21st` | *dwudziesty pierwszy* — masculine | 1 to 999 999 999, except round thousands above 1 000 and round millions |
+| list point | `secondly` | *po drugie* | 1 to 10 |
 
 Round thousands and millions above 1 000 (*dwutysięczny*, *milionowy*) are left out: they
 are built as one compound word, a separate system. *Po jedenaste* and higher exist but are
@@ -49,8 +49,10 @@ rare, so list points stop at ten. Choosing `1-4` therefore gives twelve forms to
 ## A training step
 
 - The number is shown large, in digits, grouped in threes from 10 000 up (`2024`,
-  `12 345`); an ordinal ends with a dot, a list point with a bracket.
-- The prompt above the field names the form, and the field has focus with the keyboard
+  `12 345`); an ordinal takes its English suffix (`11th`, `21st`, `2024th`), and a list
+  point is shown as its English adverb (`secondly`). The labels come from
+  `strings.xml` (`NumberLabel.kt`); `PolishNumbers.digits` is only the grouped number.
+- The prompt above the field names the form without giving examples that answer it, and the field has focus with the keyboard
   open as soon as the step appears. The keyboard's Done key checks the answer.
 - A play button beside it is always there, before and after the check. It reads the
   number aloud with the app's voice.

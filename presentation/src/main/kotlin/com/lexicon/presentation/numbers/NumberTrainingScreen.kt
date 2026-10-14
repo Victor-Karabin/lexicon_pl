@@ -43,6 +43,7 @@ import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.SessionNavigationEvent
 import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
+import com.lexicon.presentation.common.text
 import com.lexicon.presentation.course.AnswerInputs
 import com.lexicon.presentation.course.TranscribeRow
 import com.lexicon.presentation.course.richText
@@ -148,7 +149,7 @@ private fun NumberQuestionBody(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = question.digits,
+                text = question.label().text(),
                 style = MaterialTheme.typography.displayMedium,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center,
@@ -185,6 +186,7 @@ private fun NumberQuestionBody(
             imeAction = ImeAction.Done,
             onDone = onCheck,
             focusRequester = focus,
+            reservesInfoSlot = false,
         )
 
         if (uiState.isAnswered) {

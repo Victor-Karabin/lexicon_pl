@@ -35,7 +35,7 @@ data class NumberQuestion(
             NumberQuestion(
                 value = value,
                 kind = kind,
-                digits = PolishNumbers.digits(value, kind),
+                digits = PolishNumbers.digits(value),
                 answers = PolishNumbers.answers(value, kind).toImmutableList(),
                 transcription = PolishNumbers.transcription(value, kind),
                 rules = PolishNumbers.rules(value, kind).toImmutableList(),

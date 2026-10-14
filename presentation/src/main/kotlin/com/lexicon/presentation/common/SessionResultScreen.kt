@@ -202,7 +202,7 @@ private fun WordResultRow(
             Column {
                 ResultWord(entry)
                 Text(
-                    entry.translation,
+                    entry.translationText?.text() ?: entry.translation,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
