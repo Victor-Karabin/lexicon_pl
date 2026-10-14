@@ -1328,11 +1328,11 @@
       "id": "6E",
       "type": "gap_fill",
       "title": "Marta Nowak",
-      "instruction": "Turn each picture into a word.",
+      "instruction": "Write each word in brackets in the form that fits the sentence.",
       "sections": [
         {
           "lines": [
-            {"text": "To jest Marta Nowak. Ona jest z 🇵🇱 [1]. Mieszka w Warszawie. Ma 23 lata. Jest 📏 152 cm [2], 😊 [3] i 🏋️ [4], ale teraz jest 💊 [5]. Studiuje grafikę komputerową na ASP. Ona świetnie mówi po 🇬🇧 [6] i trochę po hiszpańsku. Interesuje się 📷 [7], 🎾 [8] i 🎺 [9]. Ona bardzo lubi robić zdjęcia."}
+            {"text": "To jest Marta Nowak. Ona jest z 🇵🇱 [1] (Polska). Mieszka w Warszawie. Ma 23 lata. Jest 📏 152 cm [2] (niski), 😊 [3] (wesoły) i 🏋️ [4] (wysportowany), ale teraz jest 💊 [5] (chory). Studiuje grafikę komputerową na ASP. Ona świetnie mówi po 🇬🇧 [6] (angielski) i trochę po hiszpańsku. Interesuje się 📷 [7] (fotografia), 🎾 [8] (sport) i 🎺 [9] (muzyka). Ona bardzo lubi robić zdjęcia."}
           ]
         }
       ],
