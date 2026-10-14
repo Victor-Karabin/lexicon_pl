@@ -22,11 +22,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import com.lexicon.interactors.course.LessonAnswerChecker
 import com.lexicon.presentation.R
+import com.lexicon.presentation.course.markLetters
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconError
 import com.lexicon.presentation.theme.LexiconSuccess
@@ -143,6 +147,24 @@ private fun SessionResultScreenContent(
 }
 
 @Composable
+private fun ResultWord(entry: WordResultEntry) {
+    val changed = remember(entry) {
+        entry.typed?.takeIf { entry.outcome is AnswerState.Incorrect }?.let { LessonAnswerChecker.wrongLetters(entry.word, it) }.orEmpty()
+    }
+    if (changed.isEmpty()) {
+        Text(entry.word, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
+    } else {
+        Text(
+            text = buildAnnotatedString {
+                append(entry.word)
+                markLetters(0, changed)
+            },
+            style = MaterialTheme.typography.bodyLarge,
+        )
+    }
+}
+
+@Composable
 private fun WordResultRow(
     order: Int,
     entry: WordResultEntry,
@@ -178,7 +200,7 @@ private fun WordResultRow(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Column {
-                Text(entry.word, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
+                ResultWord(entry)
                 Text(
                     entry.translation,
                     style = MaterialTheme.typography.bodySmall,

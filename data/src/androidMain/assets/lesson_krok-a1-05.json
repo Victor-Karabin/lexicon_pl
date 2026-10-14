@@ -123,14 +123,19 @@
       "id": "1A",
       "type": "gap_fill",
       "title": "This is Uwe",
-      "instruction": "Read and listen. Then write the missing question or answer.",
+      "instruction": "Listen to the recording about Uwe. Then write the missing question or answer.",
       "tracks": [{"id": "105A1"}],
+      "transcript": {
+        "unlock": "after_check",
+        "sections": [
+          {
+            "lines": [
+              {"text": "To jest Uwe. Uwe Stein. On jest z Niemiec. Mieszka w Berlinie. Jest wysoki, przystojny i wysportowany. Uwe to biznesmen. Ma 44 lata. Lubi pracować."}
+            ]
+          }
+        ]
+      },
       "sections": [
-        {
-          "lines": [
-            {"text": "To jest Uwe. Uwe Stein. On jest z Niemiec. Mieszka w Berlinie. Jest wysoki, przystojny i wysportowany. Uwe to biznesmen. Ma 44 lata. Lubi pracować."}
-          ]
-        },
         {
           "lines": [
             {"text": "a. [1]? To jest Uwe."},
@@ -153,11 +158,9 @@
         {"number": 7, "answers": ["Lubi pracować", "On lubi pracować"]}
       ],
       "newWords": [
-        {"polish": "biznesmen", "english": "businessman"},
-        {"polish": "czterdzieści", "english": "forty"}
+        {"polish": "biznesmen", "english": "businessman"}
       ],
-      "rules": [5],
-      "newWordsUnlock": "after_check"
+      "rules": [5]
     },
     {
       "id": "1B",
@@ -335,16 +338,8 @@
         {"number": 8, "answers": ["sto"], "feedback": "100 is a word of its own: *sto*."}
       ],
       "newWords": [
-        {"polish": "liczebnik", "english": "numeral"},
-        {"polish": "trzydzieści", "english": "30"},
-        {"polish": "pięćdziesiąt", "english": "50"},
-        {"polish": "sześćdziesiąt", "english": "60"},
-        {"polish": "siedemdziesiąt", "english": "70"},
-        {"polish": "osiemdziesiąt", "english": "80"},
-        {"polish": "dziewięćdziesiąt", "english": "90"},
-        {"polish": "sto", "english": "100"}
+        {"polish": "liczebnik", "english": "numeral"}
       ],
-      "newWordsUnlock": "after_check",
       "rules": [4]
     },
     {
@@ -1625,7 +1620,6 @@
     {"polish": "lekarka, nauczycielka, kelnerka, kucharka, aktorka, dziennikarka, tancerka", "english": "female forms"},
     {"polish": "malarz, pisarz, polityk, poeta, artysta, modelka", "english": "painter, writer, politician, poet, artist, model"},
     {"polish": "Ile masz lat? · rok · lata · lat · prawie · pół", "english": "How old are you? · year(s) · almost · half"},
-    {"polish": "dwadzieścia … dziewięćdziesiąt, sto", "english": "20 … 90, 100"},
     {"polish": "Czym się interesujesz? · interesować się", "english": "What are you interested in? · to be interested in"},
     {"polish": "sport, muzyka, malarstwo, sztuka, literatura, fotografia, historia", "english": "sport, music, painting, art, literature, photography, history"},
     {"polish": "rodzina · żona · mąż · syn · córka · dziecko · tata", "english": "family · wife · husband · son · daughter · child · dad"},

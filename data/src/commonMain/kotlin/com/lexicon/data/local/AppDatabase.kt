@@ -34,7 +34,7 @@ import androidx.room.RoomDatabaseConstructor
         NumberCourseEntity::class,
         NumberProgressEntity::class,
     ],
-    version = 39,
+    version = 41,
     exportSchema = false,
 )
 @ConstructedBy(AppDatabaseConstructor::class)

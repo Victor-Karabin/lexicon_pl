@@ -104,9 +104,32 @@
     <string name="numbers_start">Start</string>
     <string name="numbers_listen">Listen</string>
     <string name="numbers_write_prompt">Write the number in words</string>
-    <string name="numbers_progress">%1$d of %2$d numbers mastered</string>
+    <string name="numbers_write_ordinal_prompt">Write the ordinal in words, masculine: pierwszy, drugi…</string>
+    <string name="numbers_write_enumeration_prompt">Write it as a point in a list: po pierwsze (firstly), po drugie (secondly)…</string>
+    <string name="numbers_progress">%1$d of %2$d forms mastered</string>
     <string name="numbers_attempted_chip">%1$d of %2$d tried</string>
     <string name="numbers_none">Choose the numbers to practise first.</string>
+    <string name="numbers_rules_title">How it is built</string>
+    <string name="numbers_rule_units">0–10 are single words: *zero, jeden, dwa, trzy, cztery, pięć, sześć, siedem, osiem, dziewięć, dziesięć*.</string>
+    <string name="numbers_rule_teens">11–19 end in *-naście*: *jedenaście, dwanaście, czternaście*. 15 and 19 drop the *ć*: *piętnaście, dziewiętnaście*.</string>
+    <string name="numbers_rule_tens_to_forty">20 is *dwadzieścia*; 30 and 40 end in *-dzieści*: *trzydzieści, czterdzieści*.</string>
+    <string name="numbers_rule_tens_from_fifty">50–90 end in *-dziesiąt*: *pięćdziesiąt, sześćdziesiąt, siedemdziesiąt, osiemdziesiąt, dziewięćdziesiąt*.</string>
+    <string name="numbers_rule_tens_and_units">Tens and units are two words: *dwadzieścia jeden, czterdzieści pięć*.</string>
+    <string name="numbers_rule_hundreds">Hundreds: *sto, dwieście, trzysta, czterysta*, then *-set*: *pięćset, sześćset, siedemset, osiemset, dziewięćset*.</string>
+    <string name="numbers_rule_million">1 000 000 is *milion* (also *jeden milion*).</string>
+    <string name="numbers_rule_millions_few">*miliony* after numbers ending in 2, 3 or 4, except 12–14: *dwa miliony, dwadzieścia trzy miliony*.</string>
+    <string name="numbers_rule_millions_many">*milionów* after all other numbers: *pięć milionów, dwanaście milionów, dwadzieścia jeden milionów*.</string>
+    <string name="numbers_rule_thousand">1 000 is *tysiąc* (also *jeden tysiąc*).</string>
+    <string name="numbers_rule_thousands_few">*tysiące* after numbers ending in 2, 3 or 4, except 12–14: *dwa tysiące, dwadzieścia trzy tysiące*.</string>
+    <string name="numbers_rule_ordinal_units">1st–10th: *pierwszy, drugi, trzeci, czwarty, piąty, szósty, siódmy, ósmy, dziewiąty, dziesiąty*.</string>
+    <string name="numbers_rule_ordinal_teens">11th–19th end in *-nasty*: *jedenasty, dwunasty, czternasty*; 15th and 19th are *piętnasty, dziewiętnasty*.</string>
+    <string name="numbers_rule_ordinal_tens">20th–90th: *dwudziesty, trzydziesty, czterdziesty, pięćdziesiąty, sześćdziesiąty, siedemdziesiąty, osiemdziesiąty, dziewięćdziesiąty*.</string>
+    <string name="numbers_rule_ordinal_tens_and_units">Both words are ordinal: *dwudziesty pierwszy, czterdziesty piąty*.</string>
+    <string name="numbers_rule_ordinal_hundreds">Round hundredths: *setny, dwusetny, trzechsetny, czterechsetny, pięćsetny … dziewięćsetny*. Otherwise the hundreds stay as they are and only the end is ordinal: *sto pierwszy, dwieście dwudziesty*.</string>
+    <string name="numbers_rule_ordinal_thousand">1000th is *tysięczny*.</string>
+    <string name="numbers_rule_enumeration">Firstly, secondly…: *po* + the ordinal with the neuter ending *-e*: *pierwszy → po pierwsze, drugi → po drugie, trzeci → po trzecie, dziesiąty → po dziesiąte*.</string>
+    <string name="numbers_rule_ordinal_last_part">Above 1000 the thousands and millions keep their usual form; only the end is ordinal: *tysiąc pierwszy, dwa tysiące dwudziesty czwarty*.</string>
+    <string name="numbers_rule_thousands_many">*tysięcy* after all other numbers: *pięć tysięcy, dwanaście tysięcy, dwadzieścia jeden tysięcy*.</string>
 
     <!-- Mix -->
     <string name="mix_title">Mix</string>
@@ -336,6 +359,7 @@
     <string name="lesson_flow_review_badge">Review</string>
     <string name="lesson_flow_grammar_badge">G</string>
     <string name="lesson_flow_grammar">Grammar</string>
+    <string name="lesson_flow_scroll_to_top">Scroll to top</string>
     <string name="lesson_flow_rule">Rule %1$d: %2$s</string>
     <string name="lesson_flow_rule_heading">%1$d. %2$s</string>
     <string name="lesson_flow_see_rule">See rule %1$d</string>

@@ -894,20 +894,7 @@
       "notes": [
         "*-naście* = -teen; *dwadzieścia* = twenty; 21 = *dwadzieścia jeden*. Watch the stems: *czter-naście* (14), *pięt-naście* (15), *dziewięt-naście* (19)."
       ],
-      "rules": [6],
-      "newWords": [
-        {"polish": "jedenaście", "english": "eleven"},
-        {"polish": "dwanaście", "english": "twelve"},
-        {"polish": "trzynaście", "english": "thirteen"},
-        {"polish": "czternaście", "english": "fourteen"},
-        {"polish": "piętnaście", "english": "fifteen"},
-        {"polish": "szesnaście", "english": "sixteen"},
-        {"polish": "siedemnaście", "english": "seventeen"},
-        {"polish": "osiemnaście", "english": "eighteen"},
-        {"polish": "dziewiętnaście", "english": "nineteen"},
-        {"polish": "dwadzieścia", "english": "twenty"}
-      ],
-      "newWordsUnlock": "after_check"
+      "rules": [6]
     },
     {
       "id": "6B",
@@ -1492,7 +1479,6 @@
     {"polish": "on, ona, ono, oni, one", "english": "he, she, it, they (m.), they (non-m.)"},
     {"polish": "pan, pani, panowie, panie, państwo", "english": "Sir, Madam, gentlemen, ladies, ladies and gentlemen"},
     {"polish": "mieszkać, mieć, nazywać się, rozumieć, grać, czytać", "english": "to live, have, be called, understand, play, read"},
-    {"polish": "jedenaście … dwadzieścia dziewięć", "english": "11 … 29"},
     {"polish": "ulica, aleja, plac, dworzec", "english": "street, avenue, square, station"},
     {"polish": "dlaczego? · żeby · bo", "english": "why? · in order to · because"},
     {"polish": "uczyć się polskiego · studiować · pracować", "english": "learn Polish · study · work"},

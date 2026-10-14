@@ -73,7 +73,7 @@ class CourseAssetTest {
             listOf(
                 "dzień dobry", "cześć", "nazywam się", "mam na imię", "bardzo mi miło", "miło mi", "mnie również", "a ty?",
                 "jak się pan nazywa?", "jak się pani nazywa?", "jak masz na imię?", "nie rozumiem", "proszę powtórzyć",
-                "przepraszam", "dziękuję", "szkoła", "nauczycielka", "zero", "pięć", "dziesięć",
+                "przepraszam", "dziękuję", "szkoła", "nauczycielka",
             )
         assertEquals(emptyList<String>(), taught.filterNot { it in words })
     }

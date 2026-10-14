@@ -22,11 +22,6 @@ przeliterować	to spell (perfective)	v	A1	classroom
 numer telefonu	phone number	expr	A1	daily-conversation
 do jutra	see you tomorrow	expr	A1	daily-conversation
 one	they (women, children, things)	prn	A1	introductions
-jedenaście	eleven	num	A1	numbers
-trzynaście	thirteen	num	A1	numbers
-czternaście	fourteen	num	A1	numbers
-osiemnaście	eighteen	num	A1	numbers
-dziewiętnaście	nineteen	num	A1	numbers
 fatalnie	terribly	adv	A1	daily-conversation
 tak sobie	so-so	expr	A1	daily-conversation
 po staremu	same as always	expr	A1	daily-conversation
@@ -46,8 +41,6 @@ kelnerka	waitress	n	A1	professions
 kucharka	cook (woman)	n	A1	professions
 tancerka	dancer (woman)	n	A1	professions
 modelka	model (fashion)	n	A1	professions
-siedemdziesiąt	seventy	num	A1	numbers
-dziewięćdziesiąt	ninety	num	A1	numbers
 interesować się	to be interested in	v	A1	hobbies,daily-conversation
 malarstwo	painting (the art)	n	A1	hobbies
 kim jesteś z zawodu	what do you do for a living?	expr	A1	introductions,professions
@@ -343,12 +336,6 @@ loteria	lottery	n	A2	hobbies
 kupon	coupon	n	A2	shopping
 typować	to pick (numbers, a winner)	v	B1	hobbies
 wytypować	to guess right (numbers)	v	B1	hobbies
-czterysta	four hundred	num	A1	numbers
-pięćset	five hundred	num	A1	numbers
-sześćset	six hundred	num	A1	numbers
-siedemset	seven hundred	num	A1	numbers
-osiemset	eight hundred	num	A1	numbers
-dziewięćset	nine hundred	num	A1	numbers
 cukiernia	cake shop	n	A1	shopping,food
 odzież	clothes	n	A2	shopping
 obuwie	shoes, footwear	n	A2	shopping
@@ -476,7 +463,6 @@ kiszony ogórek	pickled cucumber	expr	A2	food
 to są	these are	expr	A1	daily-conversation
 melon	melon	n	A1	food
 pieróg	dumpling (pl. pierogi)	n	A1	food
-dwie	two (fem.)	num	A1	numbers
 wytrawny	dry (wine)	adj	B1	food
 młody ziemniak	new potato	expr	A2	food
 na stole	on the table	expr	A1	household

@@ -17,6 +17,7 @@ class NumberRepositoryImpl(
         dao.progress().map {
             NumberProgressBoundary(
                 value = it.value,
+                kind = it.kind,
                 attempted = it.attempted,
                 correct = it.correct,
                 incorrect = it.incorrect,
@@ -26,12 +27,14 @@ class NumberRepositoryImpl(
 
     override suspend fun recordAttempt(
         value: Long,
+        kind: String,
         isCorrect: Boolean,
     ) {
-        val existing = dao.progressFor(value)
+        val existing = dao.progressFor(value, kind)
         dao.save(
             NumberProgressEntity(
                 value = value,
+                kind = kind,
                 attempted = (existing?.attempted ?: 0) + 1,
                 correct = (existing?.correct ?: 0) + if (isCorrect) 1 else 0,
                 incorrect = (existing?.incorrect ?: 0) + if (isCorrect) 0 else 1,

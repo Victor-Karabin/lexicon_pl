@@ -6,6 +6,7 @@ import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.numbers.NextNumberUseCase
+import com.lexicon.interactors.numbers.NumberForm
 import com.lexicon.interactors.numbers.NumberQuestion
 import com.lexicon.interactors.numbers.SubmitNumberAnswerUseCase
 import com.lexicon.interactors.settings.AppSettings
@@ -52,14 +53,14 @@ class NumberTrainingViewModel(
     private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
     val navigationEvents: SharedFlow<SessionNavigationEvent> = _navigationEvents.asSharedFlow()
 
-    private val asked = mutableSetOf<Long>()
+    private val asked = mutableSetOf<NumberForm>()
     private val results = mutableListOf<WordResultEntry>()
     private var correct = 0
     private var incorrect = 0
 
     init {
         viewModelScope.launch(dispatchers.io) {
-            val first = nextNumber(asked)?.also { asked += it.value }
+            val first = nextNumber(asked)?.also { asked += it.form }
             _uiState.update { it.copy(isLoading = false, question = first, totalSteps = AppSettings.DEFAULT_STEP_COUNT) }
         }
     }
@@ -83,6 +84,7 @@ class NumberTrainingViewModel(
                 word = question.words,
                 translation = question.digits,
                 outcome = if (right) AnswerState.Correct else AnswerState.Incorrect(question.words),
+                typed = state.answer,
             )
             _uiState.update { it.copy(verdict = verdict) }
         }
@@ -100,7 +102,7 @@ class NumberTrainingViewModel(
                 return@launch
             }
 
-            asked += question.value
+            asked += question.form
             _uiState.update { it.copy(question = question, stepIndex = nextIndex, answer = "", verdict = null) }
         }
     }

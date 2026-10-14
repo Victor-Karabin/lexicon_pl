@@ -129,7 +129,6 @@ przyszłość	future	n	A2	time
 uciec	to escape	v	A2	emergency
 temat	subject	n	A1	school,daily-conversation
 położyć	to put (perfective)	v	A1	home,household
-trzydzieści	thirty	num	A1	numbers,time
 rzucić	to give up (perfective)	v	A2	health
 przygotować	to prepare (perfective)	v	A1	daily-conversation,work
 wystarczać	to be enough	v	A2	daily-conversation
@@ -221,7 +220,6 @@ zasnąć	to fall asleep	v	A1	health,home
 podnieść	to lift	v	A2	home,fitness
 torba	bag	n	A1	shopping,travel
 wpaść	to drop in	v	B1	daily-conversation,relationships
-trzeci	third	num	A1	numbers,dates
 przetłumaczyć	to translate (perfective)	v	A2	books,school
 popełnić	to commit	v	B2	law,emotions
 narzekać	to complain	v	A2	daily-conversation,work
@@ -335,8 +333,6 @@ przypominać	to remind	v	B1	people,body
 jazda	driving licence	n	A2	transport,law
 okropny	terrible	adj	A2	emotions,health
 ostrożny	careful	adj	A1	daily-conversation,health
-szósty	sixth	num	A1	numbers,time
-siódmy	seventh	num	A1	numbers,time
 spodobać	to like (perfective)	v	A2	emotions,daily-conversation
 hiszpański	spanish	adj	A1	countries
 przeprowadzić	to move (perfective)	v	A2	home,travel
@@ -375,7 +371,6 @@ jedynie	only	part	A2	daily-conversation
 posiadać	have	v	B2	business
 przyjaciółka	friend	n	A1	relationships
 dziennie	a day	adv	A2	time,health
-dwadzieścia	twenty	num	A1	numbers
 wściekły	furious	adj	B1	emotions
 telewizor	television	n	A1	home,smartphone
 pobliże	nearby	adv	A2	directions,cities
@@ -447,7 +442,6 @@ pozwalać	to allow	v	A2	school,daily-conversation
 karmić	to feed	v	A2	animals
 zniszczyć	to destroy (perfective)	v	A2	law,emergency
 dziewczynka	little girl	n	A1	people,family
-piąty	fifth	adj	A1	numbers,school
 interes	business	n	A2	business,work
 wyjeżdżać	to leave	v	A1	travel,transport
 czyż	isn't it	part	B1	daily-conversation
@@ -463,7 +457,6 @@ wytłumaczyć	to explain (perfective)	v	A1	school,daily-conversation
 przegrać	to lose (perfective)	v	A2	sports
 wzgląd	regardless of	prep	B1	daily-conversation
 zdradzić	to tell on	v	B1	relationships
-dziewiąty	ninth	adj	A1	dates,time
 odjeżdżać	to leave	v	A1	transport,travel
 odebrać	to answer (perfective)	v	A2	daily-conversation
 kontynuować	to continue	v	A1	studying,daily-conversation
@@ -536,15 +529,12 @@ usunąć	to remove	v	A2	computer,health
 skontaktować	to contact (perfective)	v	A2	daily-conversation,work
 zadawać	to ask	v	A1	school,daily-conversation
 wyrazić	to express (perfective)	v	A2	daily-conversation,books
-czwarty	fourth	adj	A1	numbers,time
 ojczysty	native	adj	A2	countries
 dosyć	fed up	part	A2	emotions,daily-conversation
 drink	drink	n	A2	drinks,daily-conversation
 pokonać	to beat (perfective)	v	A2	sports,games
-ósmy	eighth	adj	A1	numbers,time
 zoo	zoo	n	A1	animals
 śmierdzieć	to smell	v	A2	health,home
-milion	million	num	A1	numbers,finance
 zaatakować	to attack (perfective)	v	A2	law,police
 prawnik	lawyer	n	A2	law,work
 uciekać	to run away	v	A2	emotions,daily-conversation
@@ -650,7 +640,6 @@ doskonały	excellent	adj	A2
 niesamowity	amazing	adj	A2	emotions
 ciążyć	pregnant	adj	A2	health,family
 świeczka	candle	n	A1	home
-piętnaście	fifteen	num	A1	numbers
 lokalny	local	adj	A2	cities,people
 stosunek	terms	n	B2	relationships
 zaakceptować	accept	v	A2	business
@@ -659,7 +648,6 @@ zarówno	both	conj	A2
 doczekać	look forward to	v	B1	daily-conversation
 stanąć	stop (perfective)	v	A2	daily-conversation
 modlić	pray	v	A2	
-dziesiąty	tenth	adj	A1	numbers,dates
 stwierdzić	state (perfective)	v	B2	studying,daily-conversation
 lalka	doll	n	A1	games
 uniknąć	avoid (perfective)	v	B1	daily-conversation
@@ -714,7 +702,6 @@ normalny	normal	adj	A2	people,health
 wyjazd	departure	n	A2	travel,transport
 wkurzyć	annoy (perfective)	v	B2	emotions,daily-conversation
 wspomnieć	mention (perfective)	v	B1	daily-conversation
-dwanaście	twelve	num	A1	numbers
 puścić	let go	v	B2	daily-conversation
 darmo	for free	adv	A1	shopping
 dzieciak	kid	n	A2	people,daily-conversation
@@ -767,7 +754,6 @@ dzieciństwo	childhood	n	A2	family,people
 kamera	camera	n	A1	computer,travel
 rozejrzeć	to look around	v	B1	directions,shopping
 wyjątek	except	prep	A2	food,numbers
-pięćdziesiąt	fifty	num	A1	numbers
 jajo	egg	n	A1	food,animals
 niedawno	recently	adv	A2	time
 supermarket	supermarket	n	A1	shopping,food
@@ -896,7 +882,6 @@ oblać	to fail	v	A2	school,studying
 nadawać	to be suitable	v	B1	work,home
 uczestniczyć	to participate	v	B1	meetings,sports
 tuż	right	adv	A1	directions
-czterdzieści	forty	num	A1	numbers
 marynarz	sailor	n	A2	transport,sea
 przejrzeć	to review	v	B1	school,studying
 doprowadzić	to lead (perfective)	v	B1	directions,travel
@@ -1026,7 +1011,6 @@ dokończyć	to finish (perfective)	v	A2	work,studying
 zapewniać	to provide	v	B1	business,school
 zamieszkać	to move (perfective)	v	A2	travel,home
 manga	manga	n	B1	books,movies
-dwudziesty	twentieth	adj	A1	dates,numbers
 utknąć	to get stuck (perfective)	v	A2	transport,travel
 trójka	three	num	A1	numbers
 skorpion	scorpion	n	B1	animals,insects
@@ -1160,7 +1144,6 @@ pułapka	trap	n	B1	animals,games
 podejmować	to make	v	B1	business,daily-conversation
 postąpić	to act	v	B1	people,personality
 zaprojektować	to design	v	A2	computer,professions
-trzysta	three hundred	num	A1	numbers
 mur	wall	n	A1	home,cities
 klaskać	to clap	v	A1	daily-conversation,school
 wpół	half past	adv	A2	time
@@ -1374,7 +1357,6 @@ zagraniczny	foreign	adj	A2	countries,travel
 atmosfera	atmosphere	n	B1	nature,people
 atomowy	atomic	adj	B2	
 znajomość	acquaintance	n	B1	people,relationships
-siedemnaście	seventeen	num	A1	numbers
 postać	figure	n	B1	people,movies
 chrześcijanin	christian	n	B1	people
 schodzić	go down	v	B2	directions
@@ -1635,7 +1617,6 @@ kolumna	column	n	B1	books,computer
 dowcip	joke	n	A1	daily-conversation,movies
 wybuch	explosion	n	B1	emergency,law
 niewiarygodny	unbelievable	adj	B2	emotions,daily-conversation
-dwieście	two hundred	num	A1	numbers,shopping
 rozejść	spread	v	B2	daily-conversation
 ojczyzna	homeland	n	B2	countries,politics
 handlowy	shopping	adj	B1	shopping,cities
@@ -1769,7 +1750,6 @@ tarapaty	trouble	n	B1	daily-conversation
 zakłopotać	embarrassed	adj	B1	emotions
 spłukać	broke	adj	B2	finance,daily-conversation
 ślimak	snail	n	A2	animals
-sześćdziesiąt	sixty	num	A1	numbers
 zareagować	to react (perfective)	v	B1	daily-conversation,emotions
 ukąsić	to sting (perfective)	v	B1	insects,health
 zaplanować	to plan (perfective)	v	A2	work,travel
@@ -1790,7 +1770,6 @@ chrapać	to snore	v	A2	health,home
 atakować	to attack	v	A2	police,law
 gładki	smooth	adj	A2	appearance,body
 oświadczyć	to declare (perfective)	v	B1	business,law
-szesnaście	sixteen	num	A1	numbers,dates
 niewinność	innocence	n	B1	law,people
 satelita	satellite	n	B1	
 tutejszy	local	adj	B1	cities,people
@@ -1882,7 +1861,6 @@ pocić	to sweat	v	A2	health,body
 ksiądz	priest	n	A2	people
 stek	steak	n	A1	food
 nawiedzić	to haunt	v	C1	nature
-osiemdziesiąt	eighty	num	A1	numbers
 wojenny	martial	adj	C1	politics,law
 mrugnąć	to wink	v	A2	body,daily-conversation
 przebaczyć	to forgive (perfective)	v	A2	relationships,law
@@ -1895,7 +1873,6 @@ niepoprawny	incorrect	adj	B1	school,studying
 presja	pressure	n	A2	work,emotions
 kozi	goat	adj	A2	food
 zdrajca	traitor	n	B2	law,politics
-dwunasty	twelve	num	A1	numbers,time
 meksykański	mexican	adj	A2	countries,food
 niecierpliwy	impatient	adj	B1	emotions,daily-conversation
 podkreślić	to emphasize	v	B1	people,studying

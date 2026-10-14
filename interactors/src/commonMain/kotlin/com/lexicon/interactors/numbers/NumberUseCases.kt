@@ -5,27 +5,50 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlin.random.Random
 
+data class NumberForm(
+    val value: Long,
+    val kind: NumberKind,
+) {
+    companion object {
+        fun formsOf(numbers: List<Long>): List<NumberForm> =
+            numbers.flatMap { value ->
+                NumberKind.entries.filter { PolishNumbers.hasForm(value, it) }.map { NumberForm(value, it) }
+            }
+    }
+}
+
 data class NumberQuestion(
     val value: Long,
+    val kind: NumberKind,
     val digits: String,
     val answers: ImmutableList<String>,
     val transcription: String,
+    val rules: ImmutableList<NumberRule>,
 ) {
     val words: String get() = answers.first()
 
     companion object {
-        fun of(value: Long): NumberQuestion =
+        fun of(
+            value: Long,
+            kind: NumberKind = NumberKind.CARDINAL,
+        ): NumberQuestion =
             NumberQuestion(
                 value = value,
-                digits = PolishNumbers.digits(value),
-                answers = PolishNumbers.answers(value).toImmutableList(),
-                transcription = PolishNumbers.transcription(value),
+                kind = kind,
+                digits = PolishNumbers.digits(value, kind),
+                answers = PolishNumbers.answers(value, kind).toImmutableList(),
+                transcription = PolishNumbers.transcription(value, kind),
+                rules = PolishNumbers.rules(value, kind).toImmutableList(),
             )
+
+        fun of(form: NumberForm): NumberQuestion = of(form.value, form.kind)
     }
+
+    val form: NumberForm get() = NumberForm(value, kind)
 }
 
 data class NumberProgress(
-    val value: Long,
+    val form: NumberForm,
     val attempted: Int = 0,
     val correct: Int = 0,
     val incorrect: Int = 0,
@@ -39,6 +62,7 @@ data class NumberProgress(
 }
 
 data class NumberCourseProgress(
+    val numbers: Int,
     val total: Int,
     val mastered: Int,
     val attempted: Int,
@@ -67,7 +91,7 @@ interface SaveNumberCourseUseCase {
 
 interface NextNumberUseCase {
     suspend operator fun invoke(
-        asked: Set<Long> = emptySet(),
+        asked: Set<NumberForm> = emptySet(),
         random: Random = Random.Default,
     ): NumberQuestion?
 }

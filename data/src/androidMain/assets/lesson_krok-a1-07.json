@@ -783,11 +783,9 @@
         {"polish": "chipsy", "english": "crisps"},
         {"polish": "miód", "english": "honey"},
         {"polish": "notes", "english": "notepad"},
-        {"polish": "cola", "english": "cola"},
-        {"polish": "trzysta", "english": "300"}
+        {"polish": "cola", "english": "cola"}
       ],
-      "rules": [4, 5],
-      "newWordsUnlock": "after_check"
+      "rules": [4, 5]
     },
     {
       "id": "2H",
@@ -978,16 +976,6 @@
           "prompt": "1000 [1]",
           "choices": [{"options": ["tysiąc", "tysięcy"], "answer": "tysiąc"}]
         }
-      ],
-      "newWords": [
-        {"polish": "dwieście", "english": "200"},
-        {"polish": "czterysta", "english": "400"},
-        {"polish": "pięćset", "english": "500"},
-        {"polish": "sześćset", "english": "600"},
-        {"polish": "siedemset", "english": "700"},
-        {"polish": "osiemset", "english": "800"},
-        {"polish": "dziewięćset", "english": "900"},
-        {"polish": "tysiąc", "english": "1000"}
       ],
       "rules": [5]
     },
@@ -1660,7 +1648,6 @@
     {"polish": "złoty · grosz · pieniądze · bankomat · kantor", "english": "zloty · grosz · money · cash machine · exchange office"},
     {"polish": "kosztować · płacić · polecać · kupować", "english": "to cost · to pay · to recommend · to buy"},
     {"polish": "krótki ↔ długi · wolny ↔ zajęty · drogi ↔ tani · bogaty ↔ biedny", "english": "short ↔ long · free ↔ busy · expensive ↔ cheap · rich ↔ poor"},
-    {"polish": "sto … tysiąc", "english": "100 … 1000"},
     {"polish": "gazeta · mapa · długopis · ołówek · bilet · guma do żucia", "english": "newspaper · map · pen · pencil · ticket · chewing gum"},
     {"polish": "apteka · piekarnia · cukiernia · drogeria · kwiaciarnia · kawiarnia", "english": "pharmacy · bakery · cake shop · drugstore · florist · café"},
     {"polish": "aparat fotograficzny · karta pamięci · torba", "english": "camera · memory card · bag"}

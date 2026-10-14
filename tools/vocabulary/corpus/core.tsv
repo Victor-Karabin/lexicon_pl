@@ -24,7 +24,6 @@ gdy	when	conj	A1	time
 czy	whether	part	A1	daily-conversation
 dla	for	prep	A1
 też	too	adv	A1	daily-conversation
-jeden	one	num	A1	numbers
 wszystko	all	prn	A1	daily-conversation
 sobie	oneself	prn	A1
 taki	such	prn	A1
@@ -56,7 +55,6 @@ iść	to go	v	A1	directions
 pod	under	prep	A1	directions
 sposób	way	n	A2
 znać	to know (someone)	v	A1	daily-conversation
-dwa	two	num	A1	numbers
 razem	together	adv	A1	relationships
 inny	other	adj	A1
 mówić	to speak	v	A1	daily-conversation
@@ -108,8 +106,6 @@ mniej	less	adv	A1	numbers
 najlepszy	best	adj	A2
 lepszy	better	adj	A2
 gorszy	worse	adj	A2
-pierwszy	first	num	A1	numbers
-drugi	second	num	A1	numbers
 ostatni	last	adj	A1	time
 następny	next	adj	A2	time
 cały	whole	adj	A1

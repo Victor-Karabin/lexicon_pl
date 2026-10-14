@@ -21,8 +21,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -32,7 +35,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.course.LessonAnswerChecker
 import com.lexicon.interactors.course.TranscribeItem
+import com.lexicon.interactors.numbers.NumberKind
 import com.lexicon.interactors.numbers.NumberQuestion
+import com.lexicon.interactors.numbers.NumberRule
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.SessionNavigationEvent
@@ -40,6 +45,7 @@ import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.course.AnswerInputs
 import com.lexicon.presentation.course.TranscribeRow
+import com.lexicon.presentation.course.richText
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.component.ProgressDots
 import org.koin.androidx.compose.koinViewModel
@@ -48,6 +54,7 @@ object NumberTrainingTestTags {
     const val NUMBER = "number_training_number"
     const val LISTEN = "number_training_listen"
     const val TRANSCRIPTION = "number_training_transcription"
+    const val RULES = "number_training_rules"
     const val EMPTY = "number_training_empty"
 }
 
@@ -157,6 +164,12 @@ private fun NumberQuestionBody(
         }
 
         val verdict = uiState.verdict
+        val focus = remember { FocusRequester() }
+        val keyboard = LocalSoftwareKeyboardController.current
+        LaunchedEffect(uiState.stepIndex) {
+            focus.requestFocus()
+            keyboard?.show()
+        }
         TranscribeRow(
             item = TranscribeItem("", LessonAnswerChecker.closest(question.answers, uiState.answer)),
             value = uiState.answer,
@@ -168,9 +181,10 @@ private fun NumberQuestionBody(
             },
             onValueChanged = onAnswerChanged,
             isAlmost = verdict == AnswerVerdict.ALMOST,
-            prompt = stringResource(R.string.numbers_write_prompt),
+            prompt = stringResource(question.kind.prompt()),
             imeAction = ImeAction.Done,
             onDone = onCheck,
+            focusRequester = focus,
         )
 
         if (uiState.isAnswered) {
@@ -180,6 +194,55 @@ private fun NumberQuestionBody(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.testTag(NumberTrainingTestTags.TRANSCRIPTION),
             )
+            NumberRules(rules = question.rules)
         }
     }
 }
+
+@Composable
+private fun NumberRules(rules: List<NumberRule>) {
+    Column(
+        modifier = Modifier.fillMaxWidth().testTag(NumberTrainingTestTags.RULES),
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
+    ) {
+        Text(
+            text = stringResource(R.string.numbers_rules_title),
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        rules.forEach { rule ->
+            Text(text = richText(stringResource(rule.text())), style = MaterialTheme.typography.bodyMedium)
+        }
+    }
+}
+
+private fun NumberKind.prompt(): Int =
+    when (this) {
+        NumberKind.CARDINAL -> R.string.numbers_write_prompt
+        NumberKind.ORDINAL -> R.string.numbers_write_ordinal_prompt
+        NumberKind.ENUMERATION -> R.string.numbers_write_enumeration_prompt
+    }
+
+private fun NumberRule.text(): Int =
+    when (this) {
+        NumberRule.UNITS -> R.string.numbers_rule_units
+        NumberRule.TEENS -> R.string.numbers_rule_teens
+        NumberRule.TENS_TO_FORTY -> R.string.numbers_rule_tens_to_forty
+        NumberRule.TENS_FROM_FIFTY -> R.string.numbers_rule_tens_from_fifty
+        NumberRule.TENS_AND_UNITS -> R.string.numbers_rule_tens_and_units
+        NumberRule.HUNDREDS -> R.string.numbers_rule_hundreds
+        NumberRule.MILLION -> R.string.numbers_rule_million
+        NumberRule.MILLIONS_FEW -> R.string.numbers_rule_millions_few
+        NumberRule.MILLIONS_MANY -> R.string.numbers_rule_millions_many
+        NumberRule.THOUSAND -> R.string.numbers_rule_thousand
+        NumberRule.THOUSANDS_FEW -> R.string.numbers_rule_thousands_few
+        NumberRule.THOUSANDS_MANY -> R.string.numbers_rule_thousands_many
+        NumberRule.ORDINAL_UNITS -> R.string.numbers_rule_ordinal_units
+        NumberRule.ORDINAL_TEENS -> R.string.numbers_rule_ordinal_teens
+        NumberRule.ORDINAL_TENS -> R.string.numbers_rule_ordinal_tens
+        NumberRule.ORDINAL_TENS_AND_UNITS -> R.string.numbers_rule_ordinal_tens_and_units
+        NumberRule.ORDINAL_HUNDREDS -> R.string.numbers_rule_ordinal_hundreds
+        NumberRule.ORDINAL_THOUSAND -> R.string.numbers_rule_ordinal_thousand
+        NumberRule.ORDINAL_LAST_PART -> R.string.numbers_rule_ordinal_last_part
+        NumberRule.ENUMERATION -> R.string.numbers_rule_enumeration
+    }
