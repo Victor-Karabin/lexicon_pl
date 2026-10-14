@@ -68,8 +68,16 @@
     {"id": "101b1", "file": "a1_coursebook_101b1.mp3"},
     {"id": "101A5", "file": "a1_coursebook_101A5.mp3"},
     {"id": "101c1", "file": "a1_coursebook_101c1.mp3"},
+    {"id": "101c1-2", "file": "a1_coursebook_101c1-2.mp3"},
+    {"id": "101c1-3", "file": "a1_coursebook_101c1-3.mp3"},
     {"id": "101D1", "file": "a1_coursebook_101D1.mp3"},
+    {"id": "101D1-2", "file": "a1_coursebook_101D1-2.mp3"},
+    {"id": "101D1-3", "file": "a1_coursebook_101D1-3.mp3"},
+    {"id": "101D1-4", "file": "a1_coursebook_101D1-4.mp3"},
     {"id": "101E1", "file": "a1_coursebook_101E1.mp3"},
+    {"id": "101E1-2", "file": "a1_coursebook_101E1-2.mp3"},
+    {"id": "101E1-3", "file": "a1_coursebook_101E1-3.mp3"},
+    {"id": "101E1-4", "file": "a1_coursebook_101E1-4.mp3"},
     {"id": "101E2", "file": "a1_coursebook_101E2.mp3"}
   ],
   "steps": [
@@ -459,7 +467,7 @@
       "type": "reference",
       "title": "\"What's your name?\" — informal vs formal",
       "instruction": "Read how to ask someone's name and how to answer, then listen to three introductions.",
-      "tracks": [{"id": "101c1"}],
+      "tracks": [{"id": "101c1", "label": "Dialogue 1"}, {"id": "101c1-2", "label": "Dialogue 2"}, {"id": "101c1-3", "label": "Dialogue 3"}],
       "groups": [
         {
           "title": "Informal (ty)",
@@ -624,7 +632,7 @@
       "type": "reference",
       "title": "Where is…?",
       "instruction": "Listen 2–3 times and repeat. Use the phrases to understand the dialogues.",
-      "tracks": [{"id": "101D1"}],
+      "tracks": [{"id": "101D1", "label": "Dialogue 1"}, {"id": "101D1-2", "label": "Dialogue 2"}, {"id": "101D1-3", "label": "Dialogue 3"}, {"id": "101D1-4", "label": "Dialogue 4"}],
       "groups": [
         {
           "phrases": [
@@ -770,7 +778,7 @@
       "type": "reference",
       "title": "I don't understand. Please repeat!",
       "instruction": "Listen and repeat. Use the phrases to understand the dialogues.",
-      "tracks": [{"id": "101E1", "label": "Dialogues"}, {"id": "101E2", "label": "Phrases"}],
+      "tracks": [{"id": "101E1", "label": "Dialogue 1"}, {"id": "101E1-2", "label": "Dialogue 2"}, {"id": "101E1-3", "label": "Dialogue 3"}, {"id": "101E1-4", "label": "Dialogue 4"}, {"id": "101E2", "label": "Phrases"}],
       "groups": [
         {
           "phrases": [
