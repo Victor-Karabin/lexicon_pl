@@ -14474,8 +14474,8 @@
    "icon": "public",
    "color": "#0277BD",
    "popularity": 52,
-   "estimatedSeconds": 9720,
-   "wordCount": 162,
+   "estimatedSeconds": 10140,
+   "wordCount": 169,
    "vocabularyIds": [
     65,
     267,
@@ -14638,7 +14638,14 @@
     7356,
     7369,
     7370,
-    7403
+    7403,
+    7589,
+    7590,
+    7591,
+    7592,
+    7593,
+    7594,
+    7595
    ]
   },
   {

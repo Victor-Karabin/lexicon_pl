@@ -1592,7 +1592,14 @@
         {"polish": "Portugalczyk", "english": "Portuguese man"},
         {"polish": "Amerykanka", "english": "American woman"},
         {"polish": "Amerykanin", "english": "American man"},
-        {"polish": "Hiszpanka", "english": "Spanish woman"}
+        {"polish": "Hiszpanka", "english": "Spanish woman"},
+        {"polish": "Angielka", "english": "Englishwoman"},
+        {"polish": "Anglik", "english": "Englishman"},
+        {"polish": "Niemka", "english": "German woman"},
+        {"polish": "Francuzka", "english": "Frenchwoman"},
+        {"polish": "Francuz", "english": "Frenchman"},
+        {"polish": "Hiszpan", "english": "Spanish man"},
+        {"polish": "Japończyk", "english": "Japanese man"}
       ],
       "rules": [1, 2]
     },

@@ -113679,5 +113679,96 @@
    "food"
   ],
   "example": ""
+ },
+ {
+  "id": 7589,
+  "text": "Angielka",
+  "translation": "Englishwoman",
+  "transcription": "anˈgjɛlka",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "countries",
+   "people"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7590,
+  "text": "Anglik",
+  "translation": "Englishman",
+  "transcription": "ˈanglik",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "countries",
+   "people"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7591,
+  "text": "Niemka",
+  "translation": "German woman",
+  "transcription": "ˈɲɛmka",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "countries",
+   "people"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7592,
+  "text": "Francuzka",
+  "translation": "Frenchwoman",
+  "transcription": "franˈt͡suska",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "countries",
+   "people"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7593,
+  "text": "Francuz",
+  "translation": "Frenchman",
+  "transcription": "ˈfrant͡sus",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "countries",
+   "people"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7594,
+  "text": "Hiszpan",
+  "translation": "Spanish man",
+  "transcription": "ˈxiʂpan",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "countries",
+   "people"
+  ],
+  "example": ""
+ },
+ {
+  "id": 7595,
+  "text": "Japończyk",
+  "translation": "Japanese man",
+  "transcription": "jaˈpɔɲt͡ʂɨk",
+  "partOfSpeech": "n",
+  "cefr": "A1",
+  "topics": [
+   "countries",
+   "people"
+  ],
+  "example": ""
  }
 ]
