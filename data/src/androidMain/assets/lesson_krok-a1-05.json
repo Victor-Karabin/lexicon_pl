@@ -1443,8 +1443,8 @@
         {"number": 6, "answers": ["Jakim"], "feedback": "*Jakim studentem?* — the answer is in the instrumental (*zdolnym*), so the question is too."},
         {"number": 7, "answers": ["Jaki"]},
         {"number": 8, "answers": ["Kim"], "feedback": "*Kim?* — the answer is in the instrumental (*architektem*)."},
-        {"number": 9, "answers": ["Co robi"]},
-        {"number": 10, "answers": ["Co lubi robić"]},
+        {"number": 9, "answers": ["Co robi", "Co on robi"]},
+        {"number": 10, "answers": ["Co lubi robić", "Co lubi", "Co on lubi robić", "Co on lubi", "Co Peter lubi robić", "Co Peter lubi", "Co lubi robić Peter", "Co lubi Peter"]},
         {"number": 11, "answers": ["Czym"]},
         {"number": 12, "answers": ["Dlaczego"]}
       ]

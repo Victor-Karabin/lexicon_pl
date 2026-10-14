@@ -99,6 +99,12 @@ class LessonFiveScriptTest {
     }
 
     @Test
+    fun `7B accepts co lubi as well as co lubi robic`() {
+        val answers = screen("7B").questions.single { it.key == "10" }.answers
+        assertTrue(answers.containsAll(listOf("Co lubi robić", "Co lubi", "Co on lubi")))
+    }
+
+    @Test
     fun `questions accept the version without the pronoun`() {
         assertTrue(screen("1A").questions[2].answers.containsAll(listOf("Gdzie on mieszka", "Gdzie mieszka")))
         assertTrue(screen("7A").questions[1].answers.containsAll(listOf("Jak ona się nazywa?", "Jak się nazywa?")))
