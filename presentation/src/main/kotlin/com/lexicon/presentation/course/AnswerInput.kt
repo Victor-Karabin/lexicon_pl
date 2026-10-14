@@ -5,6 +5,8 @@ import android.text.InputType
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.InterceptPlatformTextInput
 import androidx.compose.ui.platform.PlatformTextInputMethodRequest
@@ -12,9 +14,21 @@ import java.util.Locale
 
 private val polish = LocaleList(Locale.forLanguageTag("pl-PL"))
 
+val LocalAnswerDone = staticCompositionLocalOf<() -> Unit> { {} }
+
+@Composable
+fun AnswerInputs(
+    onDone: () -> Unit = {},
+    content: @Composable () -> Unit,
+) {
+    CompositionLocalProvider(LocalAnswerDone provides onDone) {
+        PolishTextInput(content)
+    }
+}
+
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun AnswerInputs(content: @Composable () -> Unit) {
+private fun PolishTextInput(content: @Composable () -> Unit) {
     InterceptPlatformTextInput(
         interceptor = { request, nextHandler ->
             nextHandler.startInputMethod(

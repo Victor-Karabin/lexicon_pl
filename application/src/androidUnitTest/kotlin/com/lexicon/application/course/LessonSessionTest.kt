@@ -90,6 +90,12 @@ class LessonSessionTest {
     }
 
     @Test
+    fun `a screen is fully answered only when every field has an answer`() {
+        assertFalse(answered(atDictation, "jeden", "dwa").isFullyAnswered)
+        assertTrue(answered(atDictation, "jeden", "dwa", "trzy", "cztery", "pięć").isFullyAnswered)
+    }
+
+    @Test
     fun `answers cannot change once a screen is checked`() {
         val checked = answered(atDictation, "jeden", "dwa", "trzy", "cztery", "pięć").check()
         assertEquals("jeden", checked.withAnswer("0", "zero").answer("1B", "0"))

@@ -433,9 +433,10 @@ fun TranscribeRow(
 ) {
     var showInfo by rememberSaveable { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
+    val answerDone = LocalAnswerDone.current
     val done = {
         focusManager.clearFocus()
-        onDone?.invoke()
+        (onDone ?: answerDone)()
     }
     val checked = answerState !is AnswerState.Unanswered
     val wraps = item.answer.length > WRAPPING_ANSWER_LENGTH
@@ -920,6 +921,8 @@ private fun InlineGap(
     )
     val measurer = rememberTextMeasurer()
     val density = LocalDensity.current
+    val focusManager = LocalFocusManager.current
+    val answerDone = LocalAnswerDone.current
     val typedWidth = with(density) { measurer.measure(value, style).size.width.toDp() } + GapTextPadding
     val minWidth = if (expected.length <= ENDING_LENGTH) EndingGapMinWidth else GapMinWidth
     val width = typedWidth.coerceIn(minWidth, GapMaxWidth)
@@ -937,6 +940,12 @@ private fun InlineGap(
                 autoCorrectEnabled = false,
                 keyboardType = keyboardTypeFor(expected),
                 imeAction = imeAction,
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    focusManager.clearFocus()
+                    answerDone()
+                },
             ),
             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
             decorationBox = { field ->

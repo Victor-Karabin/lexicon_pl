@@ -71,7 +71,14 @@ data class LessonSession(
         get() =
             when (val current = screen) {
                 is LessonScreen.FreeWriting -> !isFinished && current.fields.indices.any { answer(current.id, it.toString()).isNotBlank() }
-                else -> current.isGraded && !isChecked && current.questions.all { answer(current.id, it.key).isNotBlank() }
+                else -> current.isGraded && !isChecked && isFullyAnswered
+            }
+
+    val isFullyAnswered: Boolean
+        get() =
+            when (val current = screen) {
+                is LessonScreen.FreeWriting -> current.fields.indices.all { answer(current.id, it.toString()).isNotBlank() }
+                else -> current.questions.all { answer(current.id, it.key).isNotBlank() }
             }
 
     val needsCheck: Boolean get() = !isFinished && (screen.isGraded || screen is LessonScreen.FreeWriting)

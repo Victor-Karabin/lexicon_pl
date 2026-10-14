@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CoPresent
@@ -34,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -371,6 +373,8 @@ fun FreeWritingFields(
     modifier: Modifier = Modifier,
     multiline: List<Boolean> = emptyList(),
 ) {
+    val focusManager = LocalFocusManager.current
+    val answerDone = LocalAnswerDone.current
     Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium)) {
         fields.forEachIndexed { index, label ->
             val isMultiline = multiline.getOrElse(index) { false }
@@ -386,6 +390,12 @@ fun FreeWritingFields(
                         isMultiline -> ImeAction.Default
                         index == fields.lastIndex -> ImeAction.Done
                         else -> ImeAction.Next
+                    },
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        focusManager.clearFocus()
+                        answerDone()
                     },
                 ),
                 modifier = Modifier.fillMaxWidth(),
