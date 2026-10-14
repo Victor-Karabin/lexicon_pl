@@ -34,7 +34,7 @@ data class NumberProgress(
     val isMastered: Boolean get() = streak >= MASTERY_STREAK
 
     companion object {
-        const val MASTERY_STREAK = 2
+        const val MASTERY_STREAK = 1
     }
 }
 

@@ -72,6 +72,20 @@ class NumberUseCasesImplTest {
         }
 
     @Test
+    fun `one right answer masters a number and a wrong one takes it back`() =
+        runTest {
+            val numbers = FakeNumbers(spec = "1-2")
+            val submit = SubmitNumberAnswerUseCaseImpl(numbers)
+            val load = LoadNumberCourseUseCaseImpl(numbers)
+
+            submit(NumberQuestion.of(1), "jeden")
+            assertEquals(1, load()!!.progress.mastered)
+
+            submit(NumberQuestion.of(1), "dwa")
+            assertEquals(0, load()!!.progress.mastered)
+        }
+
+    @Test
     fun `the next number is one not asked yet, not mastered, and tried the fewest times`() =
         runTest {
             val numbers = FakeNumbers(spec = "1-4")

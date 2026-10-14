@@ -65,8 +65,9 @@ pięćdziesiąt, sześćdziesiąt, dziewięćdziesiąt*.
 
 ## Progress
 
-- **Mastered**: a number answered right twice in a row (`NumberProgress.MASTERY_STREAK`).
-  A wrong answer resets its streak.
+- **Mastered**: a number whose last answer was right — one correct answer is enough
+  (`NumberProgress.MASTERY_STREAK`). A wrong answer later takes it back until it is
+  answered right again.
 - **Next number**: one not asked yet in this session, not mastered, and tried the fewest
   times, picked at random among equals. When every chosen number is mastered, the
   training keeps going over all of them rather than stopping.
