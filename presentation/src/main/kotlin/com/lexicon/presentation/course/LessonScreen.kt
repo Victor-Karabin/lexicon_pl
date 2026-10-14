@@ -23,9 +23,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -106,7 +106,20 @@ private fun LessonContent(
 
     Scaffold(
         modifier = modifier,
-        topBar = { TrainingTopBar(title = title, onClose = onClose) },
+        topBar = {
+            TrainingTopBar(
+                title = title,
+                onClose = onClose,
+                actions = {
+                    if ((uiState as? LessonUiState.Loaded)?.hasResults == true) {
+                        TextButton(onClick = onShowResults) {
+                            Icon(Icons.Default.Assessment, contentDescription = null)
+                            Text(text = stringResource(R.string.lesson_results), modifier = Modifier.padding(start = Dimens.spacingSmall))
+                        }
+                    }
+                },
+            )
+        },
     ) { padding ->
         when (uiState) {
             is LessonUiState.Loading ->
@@ -136,7 +149,7 @@ private fun LessonContent(
                         modifier = Modifier.fillMaxSize(),
                         contentPadding = PaddingValues(bottom = ScrollToTopClearance),
                     ) {
-                        lessonHeader(uiState, onStartLesson, onShowResults)
+                        lessonHeader(uiState, onStartLesson)
                         if (!uiState.hasScript) exercisesBlock(uiState.lesson.exercises, onExerciseSelected)
                         wordsBlock(uiState, onWordStatusCycled, onPronounceWord, onEditWord)
                     }
@@ -149,7 +162,6 @@ private fun LessonContent(
 private fun LazyListScope.lessonHeader(
     uiState: LessonUiState.Loaded,
     onStartLesson: () -> Unit,
-    onShowResults: () -> Unit,
 ) = item {
     Column(modifier = Modifier.fillMaxWidth().padding(Dimens.spacingMedium)) {
         Text(
@@ -158,23 +170,12 @@ private fun LazyListScope.lessonHeader(
             fontWeight = FontWeight.SemiBold,
         )
         if (uiState.hasScript) {
-            Row(
-                modifier = Modifier.padding(top = Dimens.spacingMedium),
-                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-            ) {
-                Button(onClick = onStartLesson) {
-                    Icon(Icons.Default.PlayArrow, contentDescription = null)
-                    Text(
-                        text = stringResource(if (uiState.isScriptStarted) R.string.lesson_flow_continue else R.string.lesson_flow_start),
-                        modifier = Modifier.padding(start = Dimens.spacingSmall),
-                    )
-                }
-                if (uiState.hasResults) {
-                    OutlinedButton(onClick = onShowResults) {
-                        Icon(Icons.Default.Assessment, contentDescription = null)
-                        Text(text = stringResource(R.string.lesson_results), modifier = Modifier.padding(start = Dimens.spacingSmall))
-                    }
-                }
+            Button(onClick = onStartLesson, modifier = Modifier.padding(top = Dimens.spacingMedium)) {
+                Icon(Icons.Default.PlayArrow, contentDescription = null)
+                Text(
+                    text = stringResource(if (uiState.isScriptStarted) R.string.lesson_flow_continue else R.string.lesson_flow_start),
+                    modifier = Modifier.padding(start = Dimens.spacingSmall),
+                )
             }
         }
     }
