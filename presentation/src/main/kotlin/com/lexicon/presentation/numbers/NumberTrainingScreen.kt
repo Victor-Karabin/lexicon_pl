@@ -35,6 +35,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.course.LessonAnswerChecker
 import com.lexicon.interactors.course.TranscribeItem
+import com.lexicon.interactors.numbers.NumberGender
 import com.lexicon.interactors.numbers.NumberKind
 import com.lexicon.interactors.numbers.NumberQuestion
 import com.lexicon.interactors.numbers.NumberRule
@@ -182,7 +183,7 @@ private fun NumberQuestionBody(
             },
             onValueChanged = onAnswerChanged,
             isAlmost = verdict == AnswerVerdict.ALMOST,
-            prompt = stringResource(question.kind.prompt()),
+            prompt = stringResource(question.prompt()),
             imeAction = ImeAction.Done,
             onDone = onCheck,
             focusRequester = focus,
@@ -218,10 +219,21 @@ private fun NumberRules(rules: List<NumberRule>) {
     }
 }
 
-private fun NumberKind.prompt(): Int =
-    when (this) {
-        NumberKind.CARDINAL -> R.string.numbers_write_prompt
-        NumberKind.ORDINAL -> R.string.numbers_write_ordinal_prompt
+private fun NumberQuestion.prompt(): Int =
+    when (kind) {
+        NumberKind.CARDINAL ->
+            when (gender) {
+                null -> R.string.numbers_write_prompt
+                NumberGender.MASCULINE -> R.string.numbers_write_masculine_prompt
+                NumberGender.FEMININE -> R.string.numbers_write_feminine_prompt
+                NumberGender.NEUTER -> R.string.numbers_write_neuter_prompt
+            }
+        NumberKind.ORDINAL ->
+            when (gender) {
+                NumberGender.FEMININE -> R.string.numbers_write_ordinal_feminine_prompt
+                NumberGender.NEUTER -> R.string.numbers_write_ordinal_neuter_prompt
+                else -> R.string.numbers_write_ordinal_prompt
+            }
         NumberKind.ENUMERATION -> R.string.numbers_write_enumeration_prompt
     }
 
@@ -247,4 +259,7 @@ private fun NumberRule.text(): Int =
         NumberRule.ORDINAL_THOUSAND -> R.string.numbers_rule_ordinal_thousand
         NumberRule.ORDINAL_LAST_PART -> R.string.numbers_rule_ordinal_last_part
         NumberRule.ENUMERATION -> R.string.numbers_rule_enumeration
+        NumberRule.ORDINAL_GENDERS -> R.string.numbers_rule_ordinal_genders
+        NumberRule.ONE_GENDERS -> R.string.numbers_rule_one_genders
+        NumberRule.TWO_GENDERS -> R.string.numbers_rule_two_genders
     }

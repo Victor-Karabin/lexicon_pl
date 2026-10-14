@@ -1,5 +1,6 @@
 package com.lexicon.application.numbers
 
+import com.lexicon.interactors.numbers.NumberGender
 import com.lexicon.interactors.numbers.NumberKind
 import com.lexicon.interactors.numbers.NumberRule
 import com.lexicon.interactors.numbers.PolishNumbers
@@ -149,11 +150,16 @@ class PolishNumbersTest {
 
     @Test
     fun `an ordinal shows the ordinal rules`() {
-        assertEquals(listOf(NumberRule.ORDINAL_TENS, NumberRule.ORDINAL_TENS_AND_UNITS), PolishNumbers.rules(21, NumberKind.ORDINAL))
-        assertEquals(listOf(NumberRule.ORDINAL_HUNDREDS), PolishNumbers.rules(300, NumberKind.ORDINAL))
-        assertEquals(listOf(NumberRule.ORDINAL_THOUSAND), PolishNumbers.rules(1_000, NumberKind.ORDINAL))
+        val genders = NumberRule.ORDINAL_GENDERS
+        assertEquals(
+            listOf(genders, NumberRule.ORDINAL_TENS, NumberRule.ORDINAL_TENS_AND_UNITS),
+            PolishNumbers.rules(21, NumberKind.ORDINAL),
+        )
+        assertEquals(listOf(genders, NumberRule.ORDINAL_HUNDREDS), PolishNumbers.rules(300, NumberKind.ORDINAL))
+        assertEquals(listOf(genders, NumberRule.ORDINAL_THOUSAND), PolishNumbers.rules(1_000, NumberKind.ORDINAL))
         assertEquals(
             listOf(
+                genders,
                 NumberRule.ORDINAL_LAST_PART,
                 NumberRule.THOUSANDS_FEW,
                 NumberRule.UNITS,
@@ -162,6 +168,48 @@ class PolishNumbersTest {
             ),
             PolishNumbers.rules(2_024, NumberKind.ORDINAL),
         )
+    }
+
+    @Test
+    fun `ordinals take -a for feminine and -e for neuter in every ordinal word`() {
+        val feminine = NumberGender.FEMININE
+        val neuter = NumberGender.NEUTER
+        assertEquals("pierwsza", PolishNumbers.words(1, NumberKind.ORDINAL, feminine))
+        assertEquals("druga", PolishNumbers.words(2, NumberKind.ORDINAL, feminine))
+        assertEquals("trzecia", PolishNumbers.words(3, NumberKind.ORDINAL, feminine))
+        assertEquals("drugie", PolishNumbers.words(2, NumberKind.ORDINAL, neuter))
+        assertEquals("trzecie", PolishNumbers.words(3, NumberKind.ORDINAL, neuter))
+        assertEquals("dwudziesta pierwsza", PolishNumbers.words(21, NumberKind.ORDINAL, feminine))
+        assertEquals("sto dwudzieste drugie", PolishNumbers.words(122, NumberKind.ORDINAL, neuter))
+        assertEquals("dwa tysiące dwudziesta czwarta", PolishNumbers.words(2_024, NumberKind.ORDINAL, feminine))
+        assertEquals("tysięczne", PolishNumbers.words(1_000, NumberKind.ORDINAL, neuter))
+        assertEquals("ˈdruga", PolishNumbers.transcription(2, NumberKind.ORDINAL, feminine))
+        assertEquals("dvuˈd͡ʑɛsta ˈpjɛrfʂa", PolishNumbers.transcription(21, NumberKind.ORDINAL, feminine))
+        (1L..2_000L step 7).filter { PolishNumbers.hasForm(it, NumberKind.ORDINAL) }.forEach { value ->
+            NumberGender.entries.forEach {
+                assertTrue(
+                    "$value $it",
+                    PolishNumbers.transcription(value, NumberKind.ORDINAL, it).isNotBlank(),
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `1 and numbers ending in 2 change with the gender, other cardinals do not`() {
+        assertEquals(listOf("jeden", "jedna", "jedno"), NumberGender.entries.map { PolishNumbers.words(1, NumberKind.CARDINAL, it) })
+        assertEquals(listOf("dwa", "dwie", "dwa"), NumberGender.entries.map { PolishNumbers.words(2, NumberKind.CARDINAL, it) })
+        assertEquals("dwadzieścia dwie", PolishNumbers.words(22, NumberKind.CARDINAL, NumberGender.FEMININE))
+        assertEquals("dwieście dwie", PolishNumbers.words(202, NumberKind.CARDINAL, NumberGender.FEMININE))
+        assertEquals("ˈjɛdna", PolishNumbers.transcription(1, NumberKind.CARDINAL, NumberGender.FEMININE))
+        assertEquals("dvaˈd͡ʑɛɕt͡ɕa dvjɛ", PolishNumbers.transcription(22, NumberKind.CARDINAL, NumberGender.FEMININE))
+        assertEquals(
+            listOf(true, true, false, false, true, true, false, false),
+            listOf(1L, 2L, 3L, 12L, 22L, 1_002L, 2_000L, 21L).map { PolishNumbers.hasGenders(it, NumberKind.CARDINAL) },
+        )
+        assertEquals(false, PolishNumbers.hasGenders(2, NumberKind.ENUMERATION))
+        assertEquals(listOf(NumberRule.ONE_GENDERS, NumberRule.UNITS), PolishNumbers.rules(1))
+        assertEquals(NumberRule.TWO_GENDERS, PolishNumbers.rules(22).first())
     }
 
     @Test

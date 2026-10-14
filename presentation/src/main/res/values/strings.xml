@@ -104,7 +104,12 @@
     <string name="numbers_start">Start</string>
     <string name="numbers_listen">Listen</string>
     <string name="numbers_write_prompt">Write the number in words</string>
+    <string name="numbers_write_masculine_prompt">Write the number in words, masculine</string>
+    <string name="numbers_write_feminine_prompt">Write the number in words, feminine</string>
+    <string name="numbers_write_neuter_prompt">Write the number in words, neuter</string>
     <string name="numbers_write_ordinal_prompt">Write the ordinal in words, masculine</string>
+    <string name="numbers_write_ordinal_feminine_prompt">Write the ordinal in words, feminine</string>
+    <string name="numbers_write_ordinal_neuter_prompt">Write the ordinal in words, neuter</string>
     <string name="numbers_write_enumeration_prompt">Write it in Polish, as when listing points</string>
     <string name="numbers_cardinal_label">%1$s</string>
     <string name="numbers_ordinal_st">%1$sst</string>
@@ -143,6 +148,9 @@
     <string name="numbers_rule_ordinal_hundreds">100th, 200th … 900th are one word ending in *-setny*: *setny, dwusetny, trzechsetny, czterechsetny, pięćsetny … dziewięćsetny*.\nIn other numbers the hundreds stay as they are and only the end is ordinal: *sto pierwszy* (101st), *dwieście dwudziesty* (220th).</string>
     <string name="numbers_rule_ordinal_thousand">1000th is *tysięczny*.</string>
     <string name="numbers_rule_enumeration">Firstly, secondly… are *po* + the ordinal, with its ending changed to *-e*:\n• *pierwszy* → *po pierwsze*, *czwarty* → *po czwarte*, *dziesiąty* → *po dziesiąte* — **-y** becomes **-e**\n• *drugi* → *po drugie*, *trzeci* → *po trzecie* — **-i** becomes **-ie**</string>
+    <string name="numbers_rule_ordinal_genders">Ordinals change their ending with the gender of the noun:\n• masculine *-y*, *-i*: *pierwszy*, *drugi*, *trzeci*\n• feminine *-a*: *pierwsza*, *druga*, *trzecia*\n• neuter *-e*: *pierwsze*, *drugie*, *trzecie*\nIn a longer ordinal every ordinal word changes: *dwudziesta pierwsza* (21st, feminine).</string>
+    <string name="numbers_rule_one_genders">1 changes with the gender of the noun: *jeden* (masculine, *jeden dom*), *jedna* (feminine, *jedna książka*), *jedno* (neuter, *jedno okno*).</string>
+    <string name="numbers_rule_two_genders">2 is *dwie* with feminine nouns and *dwa* with masculine and neuter ones: *dwie książki*, *dwa domy*, *dwa okna*. Longer numbers ending in 2 do the same: *dwadzieścia dwie książki*.</string>
     <string name="numbers_rule_ordinal_last_part">Above 1000 the thousands and millions keep their usual form; only the end is ordinal: *tysiąc pierwszy, dwa tysiące dwudziesty czwarty*.</string>
     <string name="numbers_rule_thousands_many">*tysięcy* after all other numbers: *pięć tysięcy, dwanaście tysięcy, dwadzieścia jeden tysięcy*.</string>
 

@@ -39,12 +39,24 @@ Every chosen number is practised in each form it has (`NumberKind`, `NumberForm.
 | Form | Shown as | Asked for | Which numbers |
 | --- | --- | --- | --- |
 | cardinal | `21` | *dwadzieścia jeden* | all |
-| ordinal | `21st` | *dwudziesty pierwszy* — masculine | 1 to 999 999 999, except round thousands above 1 000 and round millions |
+| ordinal | `21st` | *dwudziesty pierwszy*, *dwudziesta pierwsza*, *dwudzieste pierwsze* | 1 to 999 999 999, except round thousands above 1 000 and round millions |
 | list point | `secondly` | *po drugie* | 1 to 10 |
 
-Round thousands and millions above 1 000 (*dwutysięczny*, *milionowy*) are left out: they
-are built as one compound word, a separate system. *Po jedenaste* and higher exist but are
-rare, so list points stop at ten. Choosing `1-4` therefore gives twelve forms to master.
+**Genders** (`NumberGender`, `PolishNumbers.hasGenders`). A form whose words change with the
+noun is asked three times, masculine, feminine and neuter, and the prompt names the gender:
+
+- every ordinal: *pierwszy / pierwsza / pierwsze*, and in a longer ordinal every ordinal
+  word changes (*dwudziesta pierwsza*);
+- the cardinal 1: *jeden / jedna / jedno*;
+- cardinals ending in 2, except those ending in 12: *dwa / dwie / dwa*, also inside longer
+  numbers (*dwadzieścia dwie*, *dwieście dwie*). The neuter is asked even though it matches
+  the masculine.
+
+Other cardinals and list points have one form. Round thousands and millions above 1 000
+(*dwutysięczny*, *milionowy*) are left out: they are built as one compound word, a separate
+system. *Po jedenaste* and higher exist but are rare, so list points stop at ten. Choosing
+`3-4` therefore gives ten forms to master: per number one cardinal, three ordinals and one
+list point.
 
 ## A training step
 
@@ -89,11 +101,15 @@ Ordinals and list points:
 | other hundreds | the hundreds stay cardinal, only the end is ordinal | *sto pierwszy*, *dwieście dwudziesty* |
 | 1000th | one word | *tysięczny* |
 | above 1000 | thousands and millions stay cardinal, only the end is ordinal | *dwa tysiące dwudziesty czwarty* |
-| list points | *po* + the ordinal with the neuter ending *-e* | *po pierwsze, po drugie, po trzecie* |
+| feminine | the ordinal ends in *-a* (*-gi* → *-ga*, *-ci* → *-cia*) | *pierwsza, druga, trzecia* |
+| neuter | the ordinal ends in *-e* (*-i* → *-ie*) | *pierwsze, drugie, trzecie* |
+| list points | *po* + the neuter ordinal | *po pierwsze, po drugie, po trzecie* |
 
-**Transcription.** Every number is built from 91 words, and the transcription is those
-words' IPA joined with spaces — the same thing `tools/vocabulary/g2p.py` does for a
-phrase. The table in `PolishNumbers` was made with `g2p.py`, with six words corrected by
+**Transcription.** Every number is built from a small set of words, and the transcription
+is those words' IPA joined with spaces. Feminine and neuter ordinals take the masculine IPA
+with the last vowel changed (*ɨ* → *a* or *ɛ*); *druga, drugie, trzecia, trzecie, jedna,
+jedno* and *dwie* are written out. Joining word IPA is what `tools/vocabulary/g2p.py` does
+for a phrase too. The table in `PolishNumbers` was made with `g2p.py`, with six words corrected by
 hand where the transcriber is wrong: *piętnaście, szesnaście, dziewiętnaście,
 pięćdziesiąt, sześćdziesiąt, dziewięćdziesiąt*.
 
