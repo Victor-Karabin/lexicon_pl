@@ -34,6 +34,31 @@ internal fun userPresetId(
 
 private const val USER_PRESET_SLUG_MAX = 40
 
+const val UNSORTED_PRESET_ID = "unsorted"
+private const val UNSORTED_CATEGORY_ORDER = -2
+
+internal val unsortedCategory =
+    PresetCategoryEntity(
+        id = UNSORTED_PRESET_ID,
+        sortOrder = UNSORTED_CATEGORY_ORDER,
+        titleJson = mapOf("en" to "Unsorted", "pl" to "Nieposortowane").encodeLocalized(),
+    )
+
+internal val unsortedPreset =
+    PresetEntity(
+        id = UNSORTED_PRESET_ID,
+        categoryId = UNSORTED_PRESET_ID,
+        titleJson = mapOf("en" to "Unsorted", "pl" to "Nieposortowane").encodeLocalized(),
+        descriptionJson = mapOf(
+            "en" to "Words that are in no other preset. Add a word to a preset and it leaves this list.",
+            "pl" to "Słowa, które nie należą do żadnego innego zestawu. Dodaj słowo do zestawu, a zniknie z tej listy.",
+        ).encodeLocalized(),
+        icon = "inbox",
+        color = "#607D8B",
+        popularity = 0,
+        estimatedSeconds = 0,
+    )
+
 internal fun userPresetCategory(title: Map<String, String> = USER_PRESET_CATEGORY_TITLE): PresetCategoryEntity =
     PresetCategoryEntity(
         id = USER_PRESET_CATEGORY_ID,
