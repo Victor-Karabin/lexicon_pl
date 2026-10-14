@@ -62,6 +62,23 @@ class SettingsUseCaseImplsTest {
         }
 
     @Test
+    fun `the pass mark is stored in steps of ten between 0 and 100`() =
+        runTest {
+            val update = UpdatePassMarkUseCaseImpl(settingsRepository)
+            update(70)
+            update(84)
+            update(86)
+            update(-5)
+            update(130)
+
+            coVerify { settingsRepository.setPassMark(70) }
+            coVerify { settingsRepository.setPassMark(80) }
+            coVerify { settingsRepository.setPassMark(90) }
+            coVerify { settingsRepository.setPassMark(0) }
+            coVerify { settingsRepository.setPassMark(100) }
+        }
+
+    @Test
     fun `an unset request step count falls back to the configured setting`() =
         runTest {
             coEvery { settingsRepository.getSettings() } returns

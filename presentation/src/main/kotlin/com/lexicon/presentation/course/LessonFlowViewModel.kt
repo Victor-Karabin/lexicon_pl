@@ -23,6 +23,7 @@ import com.lexicon.interactors.course.WritingReviewOutcome
 import com.lexicon.interactors.presets.FindWordsUseCase
 import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
 import com.lexicon.interactors.presets.SetWordStatusUseCase
+import com.lexicon.interactors.settings.ObserveSettingsUseCase
 import com.lexicon.interactors.training.RecordStudyActivityUseCase
 import com.lexicon.model.course.LessonId
 import com.lexicon.model.course.LessonProgress
@@ -99,6 +100,7 @@ class LessonFlowViewModel(
     observeWordStatuses: ObserveWordStatusesUseCase,
     private val speechSynthesizer: SpeechSynthesizer,
     private val recordStudy: RecordStudyActivityUseCase,
+    private val observeSettings: ObserveSettingsUseCase,
     audioLibrary: LessonAudioLibrary,
     audioPlayer: LessonAudioPlayer,
     private val dispatchers: DispatcherProvider,
@@ -159,7 +161,8 @@ class LessonFlowViewModel(
             val progress = runSuspendCatching { getLessonProgress(lessonId) }
                 .onFailure { Log.w(TAG, "Saved lesson progress could not be read; starting the lesson afresh", it) }
                 .getOrNull()
-            val session = script?.let { LessonSession.resume(it, progress) }
+            val passMark = observeSettings().first().passMark
+            val session = script?.let { LessonSession.resume(it, progress, passMark) }
             val lesson = getLesson(lessonId)
             content.value = Content(session = session, lessonNumber = lesson?.number, lessonTitle = lesson?.title)
             session?.let(::preload)

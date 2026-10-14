@@ -74,6 +74,7 @@ import com.lexicon.application.puzzle.StartPuzzleSessionUseCaseImpl
 import com.lexicon.application.puzzle.SubmitPuzzleAnswerUseCaseImpl
 import com.lexicon.application.settings.ObserveSettingsUseCaseImpl
 import com.lexicon.application.settings.StepCountResolver
+import com.lexicon.application.settings.UpdatePassMarkUseCaseImpl
 import com.lexicon.application.settings.UpdateStepCountUseCaseImpl
 import com.lexicon.application.settings.UpdateThemeModeUseCaseImpl
 import com.lexicon.application.sync.SeedCatalogsUseCaseImpl
@@ -180,6 +181,7 @@ import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerUseCase
 import com.lexicon.interactors.settings.ObserveSettingsUseCase
+import com.lexicon.interactors.settings.UpdatePassMarkUseCase
 import com.lexicon.interactors.settings.UpdateStepCountUseCase
 import com.lexicon.interactors.settings.UpdateThemeModeUseCase
 import com.lexicon.interactors.settings.UpdateVoiceUseCase
@@ -238,6 +240,7 @@ val domainModule = module {
     factoryOf(::ObserveSettingsUseCaseImpl) { bind<ObserveSettingsUseCase>() }
     factoryOf(::UpdateThemeModeUseCaseImpl) { bind<UpdateThemeModeUseCase>() }
     factoryOf(::UpdateStepCountUseCaseImpl) { bind<UpdateStepCountUseCase>() }
+    factoryOf(::UpdatePassMarkUseCaseImpl) { bind<UpdatePassMarkUseCase>() }
     factory<UpdateVoiceUseCase> {
         val settings = get<SettingsRepository>()
         UpdateVoiceUseCase { settings.setVoiceId(it) }

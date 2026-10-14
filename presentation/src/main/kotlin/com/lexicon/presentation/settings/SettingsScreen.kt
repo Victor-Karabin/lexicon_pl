@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Palette
+import androidx.compose.material.icons.filled.School
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -76,6 +77,7 @@ fun SettingsScreen(
         voices = voices,
         onThemeModeSelected = viewModel::onThemeModeSelected,
         onStepCountChanged = viewModel::onStepCountChanged,
+        onPassMarkChanged = viewModel::onPassMarkChanged,
         onVoiceSelected = viewModel::onVoiceSelected,
         modifier = modifier,
     )
@@ -87,6 +89,7 @@ private fun SettingsScreenContent(
     voices: List<SpeechVoice>,
     onThemeModeSelected: (ThemeMode) -> Unit,
     onStepCountChanged: (Int) -> Unit,
+    onPassMarkChanged: (Int) -> Unit,
     onVoiceSelected: (SpeechVoice) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -163,6 +166,43 @@ private fun SettingsScreenContent(
 
             Text(
                 text = stringResource(R.string.settings_step_count_note),
+                style = MaterialTheme.typography.bodySmall,
+                color = skin.muted(),
+            )
+        }
+
+        GradientTile(skin = skin) {
+            SettingHeading(
+                icon = Icons.Default.School,
+                text = stringResource(R.string.settings_lessons),
+                skin = skin,
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    text = stringResource(R.string.settings_pass_mark),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = skin.onTile,
+                )
+                Text(
+                    text = stringResource(R.string.settings_pass_mark_value, settings.passMark),
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = skin.onTile,
+                )
+            }
+
+            LexiconSlider(
+                value = settings.passMark / AppSettings.PASS_MARK_STEP,
+                range = AppSettings.PassMarks.first / AppSettings.PASS_MARK_STEP..AppSettings.PassMarks.last / AppSettings.PASS_MARK_STEP,
+                onValueChange = { onPassMarkChanged(it * AppSettings.PASS_MARK_STEP) },
+            )
+
+            Text(
+                text = stringResource(R.string.settings_pass_mark_note),
                 style = MaterialTheme.typography.bodySmall,
                 color = skin.muted(),
             )
@@ -370,6 +410,7 @@ private fun SettingsScreenPreview() {
             onThemeModeSelected = {},
             onVoiceSelected = {},
             onStepCountChanged = {},
+            onPassMarkChanged = {},
         )
     }
 }
@@ -384,6 +425,7 @@ private fun SettingsScreenDarkSelectedPreview() {
             onThemeModeSelected = {},
             onVoiceSelected = {},
             onStepCountChanged = {},
+            onPassMarkChanged = {},
         )
     }
 }
@@ -398,6 +440,7 @@ private fun SettingsScreenMinimumStepsPreview() {
             onThemeModeSelected = {},
             onVoiceSelected = {},
             onStepCountChanged = {},
+            onPassMarkChanged = {},
         )
     }
 }

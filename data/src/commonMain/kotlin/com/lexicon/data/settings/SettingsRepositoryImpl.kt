@@ -18,6 +18,7 @@ private object Keys {
     val ThemeMode = stringPreferencesKey("theme_mode")
     val StepCount = intPreferencesKey("step_count")
     val VoiceId = stringPreferencesKey("voice_id")
+    val PassMark = intPreferencesKey("lesson_pass_mark")
 }
 
 class SettingsRepositoryImpl(
@@ -41,6 +42,10 @@ class SettingsRepositoryImpl(
         }
     }
 
+    override suspend fun setPassMark(passMark: Int) {
+        dataStore.edit { it[Keys.PassMark] = passMark }
+    }
+
     private fun Preferences.toSettings(): AppSettingsBoundary =
         AppSettingsBoundary(
             themeMode = this[Keys.ThemeMode]
@@ -48,5 +53,6 @@ class SettingsRepositoryImpl(
                 ?: ThemeModeBoundary.SYSTEM,
             stepCount = this[Keys.StepCount] ?: DEFAULT_STEP_COUNT,
             voiceId = this[Keys.VoiceId],
+            passMark = this[Keys.PassMark],
         )
 }

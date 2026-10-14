@@ -63,6 +63,10 @@
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_training">Training</string>
     <string name="settings_step_count">Steps per session</string>
+    <string name="settings_lessons">Lessons</string>
+    <string name="settings_pass_mark">Pass mark for an exercise</string>
+    <string name="settings_pass_mark_value">%1$d%%</string>
+    <string name="settings_pass_mark_note" formatted="false">An exercise scored below this starts again, keeping your right answers. At 0% an exercise never repeats.</string>
     <string name="settings_voice">Voice</string>
     <string name="settings_voice_note">Tap a name to hear it.</string>
     <string name="settings_sources">Sources</string>
