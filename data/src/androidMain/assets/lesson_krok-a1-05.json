@@ -1611,7 +1611,7 @@
       "sections": [
         {
           "lines": [
-            {"text": "1. 🇬🇧 Angela i Jonatan mówią po [1], znają [2]."},
+            {"text": "1. 🇵🇱 Agnieszka i Janek mówią po [1], znają [2]."},
             {"text": "2. 🇩🇪 Petra i Uwe mówią po [3], znają [4]."},
             {"text": "3. 🇫🇷 Adèle i Pierre mówią po [5], znają [6]."},
             {"text": "4. 🇪🇸 Manuela i Pedro mówią po [7], znają [8]."},
@@ -1623,8 +1623,8 @@
         }
       ],
       "gaps": [
-        {"number": 1, "answers": ["angielsku", "po angielsku"], "feedback": "*mówić po* + *-u*: *po angielsku*; *znać* + *angielski*."},
-        {"number": 2, "answers": ["angielski"]},
+        {"number": 1, "answers": ["polsku", "po polsku"], "feedback": "*mówić po* + *-u*: *po polsku*; *znać* + *polski*."},
+        {"number": 2, "answers": ["polski"]},
         {"number": 3, "answers": ["niemiecku", "po niemiecku"]},
         {"number": 4, "answers": ["niemiecki"]},
         {"number": 5, "answers": ["francusku", "po francusku"]},
