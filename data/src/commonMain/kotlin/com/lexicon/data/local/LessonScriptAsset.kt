@@ -1,5 +1,6 @@
 package com.lexicon.data.local
 
+import com.lexicon.common.polishTranscription
 import com.lexicon.model.course.AnswerKeyboard
 import com.lexicon.model.course.AnswerMatch
 import com.lexicon.model.course.ChoiceQuestion
@@ -236,7 +237,9 @@ fun LessonScriptAsset.toModel(remoteIds: Map<String, String?>): LessonScript {
         }.filter { it.screenIds.isNotEmpty() }.toImmutableList(),
         screens = shown.map { it.toModel(::track) }.toImmutableList(),
         newWords = shown.filter { it.newWords.isNotEmpty() }.associate { screen ->
-            screen.id to NewWords(words = screen.newWords.map { LessonPhrase(it.polish, it.english) }.toImmutableList())
+            screen.id to NewWords(
+                words = screen.newWords.map { LessonPhrase(it.polish, it.english, polishTranscription(it.polish)) }.toImmutableList(),
+            )
         }.toImmutableMap(),
         rules = rules.mapIndexed { index, rule ->
             GrammarRule(

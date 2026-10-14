@@ -545,7 +545,8 @@
         {"polish": "mniej", "english": "less"},
         {"polish": "mało", "english": "little"},
         {"polish": "sezon", "english": "season"},
-        {"polish": "pół kilo", "english": "half a kilo"}
+        {"polish": "pół kilo", "english": "half a kilo"},
+        {"polish": "dwie", "english": "two (fem.)"}
       ],
       "rules": [1, 2]
     },

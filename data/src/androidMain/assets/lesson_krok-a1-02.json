@@ -893,7 +893,19 @@
       "notes": [
         "*-naście* = -teen; *dwadzieścia* = twenty; 21 = *dwadzieścia jeden*. Watch the stems: *czter-naście* (14), *pięt-naście* (15), *dziewięt-naście* (19)."
       ],
-      "rules": [6]
+      "rules": [6],
+      "newWords": [
+        {"polish": "jedenaście", "english": "eleven"},
+        {"polish": "dwanaście", "english": "twelve"},
+        {"polish": "trzynaście", "english": "thirteen"},
+        {"polish": "czternaście", "english": "fourteen"},
+        {"polish": "piętnaście", "english": "fifteen"},
+        {"polish": "szesnaście", "english": "sixteen"},
+        {"polish": "siedemnaście", "english": "seventeen"},
+        {"polish": "osiemnaście", "english": "eighteen"},
+        {"polish": "dziewiętnaście", "english": "nineteen"},
+        {"polish": "dwadzieścia", "english": "twenty"}
+      ]
     },
     {
       "id": "6B",

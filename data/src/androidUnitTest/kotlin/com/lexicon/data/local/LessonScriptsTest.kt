@@ -7,9 +7,6 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.jsonArray
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -17,7 +14,6 @@ import java.io.File
 
 private const val SHORTEST_WORD = 3
 private val afterSubmit = setOf("newWords", "model", "checklist")
-private val lookupEndings = listOf("", "?", "!", ".", "…", "…?", "…!")
 private val irregularStems = mapOf("brać" to listOf("bior"))
 
 private val plainLetters = "ąćęłńóśźż".zip("acelnoszz").toMap()
@@ -83,29 +79,6 @@ class LessonScriptsTest {
                 assertTrue("$name ${screen.id}", labels.none(String::isBlank))
             }
         }
-
-    @Test
-    fun `every new word is a vocabulary entry, so its row shows level, transcription and status`() {
-        val vocabulary = lessonJson.parseToJsonElement(File("src/androidMain/assets/vocabulary_pl.json").readText()).jsonArray
-            .map { it.jsonObject.getValue("text").jsonPrimitive.content }
-            .toSet()
-        val missing = assets.flatMap { (name, asset) ->
-            asset.screens.flatMap { screen ->
-                screen.newWords.map { it.polish }
-                    .filter { bare(it).length >= SHORTEST_WORD && spellingsOf(it).none(vocabulary::contains) }
-                    .map { "$name ${screen.id} $it" }
-            }
-        }
-        assertEquals(emptyList<String>(), missing)
-    }
-
-    private fun bare(text: String): String = text.lowercase().trim().trimEnd('?', '!', '.', '…', ' ')
-
-    private fun spellingsOf(text: String): List<String> {
-        val base = text.trim().trimEnd('?', '!', '.', '…', ' ')
-        return listOf(base, base.replaceFirstChar { it.lowercase() }, base.replaceFirstChar { it.uppercase() })
-            .flatMap { spelling -> lookupEndings.map { spelling + it } }
-    }
 
     @Test
     fun `a task never sends the learner to another screen for its recording or text`() =

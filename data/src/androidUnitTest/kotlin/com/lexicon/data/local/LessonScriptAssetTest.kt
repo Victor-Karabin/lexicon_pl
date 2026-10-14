@@ -125,8 +125,8 @@ class LessonScriptAssetTest {
 
     @Test
     fun `every new-words section carries its words`() {
-        assertEquals(LessonPhrase("łatwo", "easily"), script.newWords.getValue("1A").words.first())
-        assertEquals(17, script.newWords.size)
+        assertEquals(LessonPhrase("łatwo", "easily", "ˈwatfɔ"), script.newWords.getValue("1A").words.first())
+        assertEquals(18, script.newWords.size)
     }
 
     @Test

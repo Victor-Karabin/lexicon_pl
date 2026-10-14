@@ -320,6 +320,7 @@ fun LessonScreen.allTracks(): List<LessonTrack> =
 data class LessonPhrase(
     val polish: String,
     val english: String,
+    val transcription: String = "",
 )
 
 data class WritingReview(

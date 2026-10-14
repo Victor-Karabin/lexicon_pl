@@ -62,6 +62,7 @@ import com.lexicon.model.vocabulary.WordStatus
 import com.lexicon.model.vocabulary.statusOf
 import com.lexicon.presentation.R
 import com.lexicon.presentation.presets.WordRow
+import com.lexicon.presentation.presets.detailLine
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconShapes
 
@@ -338,6 +339,7 @@ fun NewWordsCard(
                 status = word?.let { statuses.statusOf(it.id) },
                 onStatusCycled = { word?.let { onStatusCycled(it.id) } },
                 onPronounce = { onPronounce(phrase.polish.trimEnd('…')) },
+                detail = word?.detailLine() ?: phrase.detailLine(),
             )
         }
     }

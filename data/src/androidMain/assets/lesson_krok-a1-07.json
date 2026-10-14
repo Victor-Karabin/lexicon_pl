@@ -779,7 +779,8 @@
         {"polish": "chipsy", "english": "crisps"},
         {"polish": "miód", "english": "honey"},
         {"polish": "notes", "english": "notepad"},
-        {"polish": "cola", "english": "cola"}
+        {"polish": "cola", "english": "cola"},
+        {"polish": "trzysta", "english": "300"}
       ],
       "rules": [4, 5]
     },
@@ -972,6 +973,16 @@
           "prompt": "1000 [1]",
           "choices": [{"options": ["tysiąc", "tysięcy"], "answer": "tysiąc"}]
         }
+      ],
+      "newWords": [
+        {"polish": "dwieście", "english": "200"},
+        {"polish": "czterysta", "english": "400"},
+        {"polish": "pięćset", "english": "500"},
+        {"polish": "sześćset", "english": "600"},
+        {"polish": "siedemset", "english": "700"},
+        {"polish": "osiemset", "english": "800"},
+        {"polish": "dziewięćset", "english": "900"},
+        {"polish": "tysiąc", "english": "1000"}
       ],
       "rules": [5]
     },

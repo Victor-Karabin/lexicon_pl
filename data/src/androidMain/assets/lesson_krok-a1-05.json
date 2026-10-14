@@ -158,7 +158,8 @@
         {"number": 7, "answers": ["Lubi pracować", "On lubi pracować"]}
       ],
       "newWords": [
-        {"polish": "biznesmen", "english": "businessman"}
+        {"polish": "biznesmen", "english": "businessman"},
+        {"polish": "czterdzieści", "english": "forty"}
       ],
       "rules": [5]
     },
@@ -338,7 +339,14 @@
         {"number": 8, "answers": ["sto"], "feedback": "100 is a word of its own: *sto*."}
       ],
       "newWords": [
-        {"polish": "liczebnik", "english": "numeral"}
+        {"polish": "liczebnik", "english": "numeral"},
+        {"polish": "trzydzieści", "english": "30"},
+        {"polish": "pięćdziesiąt", "english": "50"},
+        {"polish": "sześćdziesiąt", "english": "60"},
+        {"polish": "siedemdziesiąt", "english": "70"},
+        {"polish": "osiemdziesiąt", "english": "80"},
+        {"polish": "dziewięćdziesiąt", "english": "90"},
+        {"polish": "sto", "english": "100"}
       ],
       "rules": [4]
     },

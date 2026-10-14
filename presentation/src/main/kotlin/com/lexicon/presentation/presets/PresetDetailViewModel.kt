@@ -206,4 +206,6 @@ class PresetDetailViewModel(
 
 private val polishCollator: Collator = Collator.getInstance(Locale.forLanguageTag("pl"))
 
-internal fun List<Word>.sortedForDisplay(): List<Word> = sortedWith(compareBy(polishCollator) { it.text })
+internal fun List<Word>.sortedForDisplay(): List<Word> = sortedForDisplay { it.text }
+
+internal fun <T> List<T>.sortedForDisplay(text: (T) -> String): List<T> = sortedWith(compareBy(polishCollator, text))

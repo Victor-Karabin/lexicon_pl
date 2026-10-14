@@ -1,0 +1,2170 @@
+[
+ {
+  "code": "AF",
+  "english": "Afghanistan",
+  "polish": [
+   "Afganistan"
+  ],
+  "man": "Afgańczyk",
+  "woman": "Afganka",
+  "capital": "Kabul",
+  "capitalEnglish": "Kabul"
+ },
+ {
+  "code": "AL",
+  "english": "Albania",
+  "polish": [
+   "Albania"
+  ],
+  "man": "Albańczyk",
+  "woman": "Albanka",
+  "capital": "Tirana",
+  "capitalEnglish": "Tirana"
+ },
+ {
+  "code": "DZ",
+  "english": "Algeria",
+  "polish": [
+   "Algieria"
+  ],
+  "man": "Algierczyk",
+  "woman": "Algierka",
+  "capital": "Algier",
+  "capitalEnglish": "Algiers"
+ },
+ {
+  "code": "AD",
+  "english": "Andorra",
+  "polish": [
+   "Andora"
+  ],
+  "man": "Andorczyk",
+  "woman": "Andorka",
+  "capital": "Andora",
+  "capitalEnglish": "Andorra la Vella"
+ },
+ {
+  "code": "AO",
+  "english": "Angola",
+  "polish": [
+   "Angola"
+  ],
+  "man": "Angolczyk",
+  "woman": "Angolka",
+  "capital": "Luanda",
+  "capitalEnglish": "Luanda"
+ },
+ {
+  "code": "AG",
+  "english": "Antigua and Barbuda",
+  "polish": [
+   "Antigua i Barbuda"
+  ],
+  "man": null,
+  "woman": null,
+  "capital": "Saint John’s",
+  "capitalEnglish": "Saint John's"
+ },
+ {
+  "code": "AR",
+  "english": "Argentina",
+  "polish": [
+   "Argentyna"
+  ],
+  "man": "Argentyńczyk",
+  "woman": "Argentynka",
+  "capital": "Buenos Aires",
+  "capitalEnglish": "Buenos Aires"
+ },
+ {
+  "code": "AM",
+  "english": "Armenia",
+  "polish": [
+   "Armenia"
+  ],
+  "man": "Armeńczyk",
+  "woman": "Armenka",
+  "capital": "Erywań",
+  "capitalEnglish": "Yerevan"
+ },
+ {
+  "code": "AU",
+  "english": "Australia",
+  "polish": [
+   "Australia"
+  ],
+  "man": "Australijczyk",
+  "woman": "Australijka",
+  "capital": "Canberra",
+  "capitalEnglish": "Canberra"
+ },
+ {
+  "code": "AT",
+  "english": "Austria",
+  "polish": [
+   "Austria"
+  ],
+  "man": "Austriak",
+  "woman": "Austriaczka",
+  "capital": "Wiedeń",
+  "capitalEnglish": "Vienna"
+ },
+ {
+  "code": "AZ",
+  "english": "Azerbaijan",
+  "polish": [
+   "Azerbejdżan"
+  ],
+  "man": "Azerbejdżanin",
+  "woman": "Azerbejdżanka",
+  "capital": "Baku",
+  "capitalEnglish": "Baku"
+ },
+ {
+  "code": "BS",
+  "english": "Bahamas",
+  "polish": [
+   "Bahamy"
+  ],
+  "man": "Bahamczyk",
+  "woman": "Bahamka",
+  "capital": "Nassau",
+  "capitalEnglish": "Nassau"
+ },
+ {
+  "code": "BH",
+  "english": "Bahrain",
+  "polish": [
+   "Bahrajn"
+  ],
+  "man": "Bahrańczyk",
+  "woman": "Bahranka",
+  "capital": "Manama",
+  "capitalEnglish": "Manama"
+ },
+ {
+  "code": "BD",
+  "english": "Bangladesh",
+  "polish": [
+   "Bangladesz"
+  ],
+  "man": "Banglijczyk",
+  "woman": "Banglijka",
+  "capital": "Dhaka",
+  "capitalEnglish": "Dhaka"
+ },
+ {
+  "code": "BB",
+  "english": "Barbados",
+  "polish": [
+   "Barbados"
+  ],
+  "man": null,
+  "woman": null,
+  "capital": "Bridgetown",
+  "capitalEnglish": "Bridgetown"
+ },
+ {
+  "code": "BY",
+  "english": "Belarus",
+  "polish": [
+   "Białoruś"
+  ],
+  "man": "Białorusin",
+  "woman": "Białorusinka",
+  "capital": "Mińsk",
+  "capitalEnglish": "Minsk"
+ },
+ {
+  "code": "BE",
+  "english": "Belgium",
+  "polish": [
+   "Belgia"
+  ],
+  "man": "Belg",
+  "woman": "Belgijka",
+  "capital": "Bruksela",
+  "capitalEnglish": "Brussels"
+ },
+ {
+  "code": "BZ",
+  "english": "Belize",
+  "polish": [
+   "Belize"
+  ],
+  "man": "Belizeńczyk",
+  "woman": "Belizenka",
+  "capital": "Belmopan",
+  "capitalEnglish": "Belmopan"
+ },
+ {
+  "code": "BJ",
+  "english": "Benin",
+  "polish": [
+   "Benin"
+  ],
+  "man": "Benińczyk",
+  "woman": "Beninka",
+  "capital": "Porto-Novo",
+  "capitalEnglish": "Porto-Novo"
+ },
+ {
+  "code": "BT",
+  "english": "Bhutan",
+  "polish": [
+   "Bhutan"
+  ],
+  "man": "Bhutańczyk",
+  "woman": "Bhutanka",
+  "capital": "Thimphu",
+  "capitalEnglish": "Thimphu"
+ },
+ {
+  "code": "BO",
+  "english": "Bolivia",
+  "polish": [
+   "Boliwia"
+  ],
+  "man": "Boliwijczyk",
+  "woman": "Boliwijka",
+  "capital": "Sucre",
+  "capitalEnglish": "Sucre"
+ },
+ {
+  "code": "BA",
+  "english": "Bosnia and Herzegovina",
+  "polish": [
+   "Bośnia i Hercegowina"
+  ],
+  "man": null,
+  "woman": null,
+  "capital": "Sarajewo",
+  "capitalEnglish": "Sarajevo"
+ },
+ {
+  "code": "BW",
+  "english": "Botswana",
+  "polish": [
+   "Botswana"
+  ],
+  "man": "Botswańczyk",
+  "woman": "Botswanka",
+  "capital": "Gaborone",
+  "capitalEnglish": "Gaborone"
+ },
+ {
+  "code": "BR",
+  "english": "Brazil",
+  "polish": [
+   "Brazylia"
+  ],
+  "man": "Brazylijczyk",
+  "woman": "Brazylijka",
+  "capital": "Brasília",
+  "capitalEnglish": "Brasília"
+ },
+ {
+  "code": "BN",
+  "english": "Brunei",
+  "polish": [
+   "Brunei"
+  ],
+  "man": "Brunejczyk",
+  "woman": "Brunejka",
+  "capital": "Bandar Seri Begawan",
+  "capitalEnglish": "Bandar Seri Begawan"
+ },
+ {
+  "code": "BG",
+  "english": "Bulgaria",
+  "polish": [
+   "Bułgaria"
+  ],
+  "man": "Bułgar",
+  "woman": "Bułgarka",
+  "capital": "Sofia",
+  "capitalEnglish": "Sofia"
+ },
+ {
+  "code": "BF",
+  "english": "Burkina Faso",
+  "polish": [
+   "Burkina Faso"
+  ],
+  "man": "Burkińczyk",
+  "woman": "Burkinka",
+  "capital": "Wagadugu",
+  "capitalEnglish": "Ouagadougou"
+ },
+ {
+  "code": "BI",
+  "english": "Burundi",
+  "polish": [
+   "Burundi"
+  ],
+  "man": "Burundyjczyk",
+  "woman": "Burundyjka",
+  "capital": "Gitega",
+  "capitalEnglish": "Gitega"
+ },
+ {
+  "code": "CV",
+  "english": "Cabo Verde",
+  "polish": [
+   "Republika Zielonego Przylądka"
+  ],
+  "man": null,
+  "woman": null,
+  "capital": "Praia",
+  "capitalEnglish": "Praia"
+ },
+ {
+  "code": "KH",
+  "english": "Cambodia",
+  "polish": [
+   "Kambodża"
+  ],
+  "man": "Kambodżanin",
+  "woman": "Kambodżanka",
+  "capital": "Phnom Penh",
+  "capitalEnglish": "Phnom Penh"
+ },
+ {
+  "code": "CM",
+  "english": "Cameroon",
+  "polish": [
+   "Kamerun"
+  ],
+  "man": "Kameruńczyk",
+  "woman": "Kamerunka",
+  "capital": "Jaunde",
+  "capitalEnglish": "Yaoundé"
+ },
+ {
+  "code": "CA",
+  "english": "Canada",
+  "polish": [
+   "Kanada"
+  ],
+  "man": "Kanadyjczyk",
+  "woman": "Kanadyjka",
+  "capital": "Ottawa",
+  "capitalEnglish": "Ottawa"
+ },
+ {
+  "code": "CF",
+  "english": "Central African Republic",
+  "polish": [
+   "Republika Środkowoafrykańska"
+  ],
+  "man": "Środkowoafrykańczyk",
+  "woman": "Środkowoafrykanka",
+  "capital": "Bangi",
+  "capitalEnglish": "Bangui"
+ },
+ {
+  "code": "TD",
+  "english": "Chad",
+  "polish": [
+   "Czad"
+  ],
+  "man": "Czadyjczyk",
+  "woman": "Czadyjka",
+  "capital": "Ndżamena",
+  "capitalEnglish": "N'Djamena"
+ },
+ {
+  "code": "CL",
+  "english": "Chile",
+  "polish": [
+   "Chile"
+  ],
+  "man": "Chilijczyk",
+  "woman": "Chilijka",
+  "capital": "Santiago",
+  "capitalEnglish": "Santiago"
+ },
+ {
+  "code": "CN",
+  "english": "China",
+  "polish": [
+   "Chiny"
+  ],
+  "man": "Chińczyk",
+  "woman": "Chinka",
+  "capital": "Pekin",
+  "capitalEnglish": "Beijing"
+ },
+ {
+  "code": "CO",
+  "english": "Colombia",
+  "polish": [
+   "Kolumbia"
+  ],
+  "man": "Kolumbijczyk",
+  "woman": "Kolumbijka",
+  "capital": "Bogota",
+  "capitalEnglish": "Bogotá"
+ },
+ {
+  "code": "KM",
+  "english": "Comoros",
+  "polish": [
+   "Komory"
+  ],
+  "man": "Komoryjczyk",
+  "woman": "Komoryjka",
+  "capital": "Moroni",
+  "capitalEnglish": "Moroni"
+ },
+ {
+  "code": "CK",
+  "english": "Cook Islands",
+  "polish": [
+   "Wyspy Cooka"
+  ],
+  "man": null,
+  "woman": null,
+  "capital": "Avarua",
+  "capitalEnglish": "Avarua"
+ },
+ {
+  "code": "CR",
+  "english": "Costa Rica",
+  "polish": [
+   "Kostaryka"
+  ],
+  "man": "Kostarykanin",
+  "woman": "Kostarykanka",
+  "capital": "San José",
+  "capitalEnglish": "San José"
+ },
+ {
+  "code": "HR",
+  "english": "Croatia",
+  "polish": [
+   "Chorwacja"
+  ],
+  "man": "Chorwat",
+  "woman": "Chorwatka",
+  "capital": "Zagrzeb",
+  "capitalEnglish": "Zagreb"
+ },
+ {
+  "code": "CU",
+  "english": "Cuba",
+  "polish": [
+   "Kuba"
+  ],
+  "man": "Kubańczyk",
+  "woman": "Kubanka",
+  "capital": "Hawana",
+  "capitalEnglish": "Havana"
+ },
+ {
+  "code": "CY",
+  "english": "Cyprus",
+  "polish": [
+   "Cypr"
+  ],
+  "man": "Cypryjczyk",
+  "woman": "Cypryjka",
+  "capital": "Nikozja",
+  "capitalEnglish": "Nicosia"
+ },
+ {
+  "code": "CZ",
+  "english": "Czechia",
+  "polish": [
+   "Czechy"
+  ],
+  "man": "Czech",
+  "woman": "Czeszka",
+  "capital": "Praga",
+  "capitalEnglish": "Prague"
+ },
+ {
+  "code": "CI",
+  "english": "Côte d'Ivoire",
+  "polish": [
+   "Wybrzeże Kości Słoniowej"
+  ],
+  "man": null,
+  "woman": null,
+  "capital": "Jamusukro",
+  "capitalEnglish": "Yamoussoukro"
+ },
+ {
+  "code": "CD",
+  "english": "Democratic Republic of the Congo",
+  "polish": [
+   "Demokratyczna Republika Konga"
+  ],
+  "man": "Kongijczyk",
+  "woman": "Kongijka",
+  "capital": "Kinszasa",
+  "capitalEnglish": "Kinshasa"
+ },
+ {
+  "code": "DK",
+  "english": "Denmark",
+  "polish": [
+   "Dania"
+  ],
+  "man": "Duńczyk",
+  "woman": "Dunka",
+  "capital": "Kopenhaga",
+  "capitalEnglish": "Copenhagen"
+ },
+ {
+  "code": "DJ",
+  "english": "Djibouti",
+  "polish": [
+   "Dżibuti"
+  ],
+  "man": "Dżibutyjczyk",
+  "woman": "Dżibutyjka",
+  "capital": "Dżibuti",
+  "capitalEnglish": "Djibouti"
+ },
+ {
+  "code": "DM",
+  "english": "Dominica",
+  "polish": [
+   "Dominika"
+  ],
+  "man": "Dominikańczyk",
+  "woman": "Dominikanka",
+  "capital": "Roseau",
+  "capitalEnglish": "Roseau"
+ },
+ {
+  "code": "DO",
+  "english": "Dominican Republic",
+  "polish": [
+   "Dominikana"
+  ],
+  "man": "Dominikanin",
+  "woman": "Dominikanka",
+  "capital": "Santo Domingo",
+  "capitalEnglish": "Santo Domingo"
+ },
+ {
+  "code": "EC",
+  "english": "Ecuador",
+  "polish": [
+   "Ekwador"
+  ],
+  "man": "Ekwadorczyk",
+  "woman": "Ekwadorka",
+  "capital": "Quito",
+  "capitalEnglish": "Quito"
+ },
+ {
+  "code": "EG",
+  "english": "Egypt",
+  "polish": [
+   "Egipt"
+  ],
+  "man": "Egipcjanin",
+  "woman": "Egipcjanka",
+  "capital": "Kair",
+  "capitalEnglish": "Cairo"
+ },
+ {
+  "code": "SV",
+  "english": "El Salvador",
+  "polish": [
+   "Salwador"
+  ],
+  "man": "Salwadorczyk",
+  "woman": "Salwadorka",
+  "capital": "San Salvador",
+  "capitalEnglish": "San Salvador"
+ },
+ {
+  "code": "GQ",
+  "english": "Equatorial Guinea",
+  "polish": [
+   "Gwinea Równikowa"
+  ],
+  "man": "Gwinejczyk",
+  "woman": "Gwinejka",
+  "capital": "Ciudad de la Paz",
+  "capitalEnglish": "Ciudad de la Paz"
+ },
+ {
+  "code": "ER",
+  "english": "Eritrea",
+  "polish": [
+   "Erytrea"
+  ],
+  "man": "Erytrejczyk",
+  "woman": "Erytrejka",
+  "capital": "Asmara",
+  "capitalEnglish": "Asmara"
+ },
+ {
+  "code": "EE",
+  "english": "Estonia",
+  "polish": [
+   "Estonia"
+  ],
+  "man": "Estończyk",
+  "woman": "Estonka",
+  "capital": "Tallinn",
+  "capitalEnglish": "Tallinn"
+ },
+ {
+  "code": "SZ",
+  "english": "Eswatini",
+  "polish": [
+   "Eswatini"
+  ],
+  "man": "Eswatinijczyk",
+  "woman": "Eswatinijka",
+  "capital": "Mbabane",
+  "capitalEnglish": "Mbabane"
+ },
+ {
+  "code": "ET",
+  "english": "Ethiopia",
+  "polish": [
+   "Etiopia"
+  ],
+  "man": "Etiopczyk",
+  "woman": "Etiopka",
+  "capital": "Addis Abeba",
+  "capitalEnglish": "Addis Ababa"
+ },
+ {
+  "code": "FJ",
+  "english": "Fiji",
+  "polish": [
+   "Fidżi"
+  ],
+  "man": "Fidżyjczyk",
+  "woman": "Fidżyjka",
+  "capital": "Suva",
+  "capitalEnglish": "Suva"
+ },
+ {
+  "code": "FI",
+  "english": "Finland",
+  "polish": [
+   "Finlandia"
+  ],
+  "man": "Finlandczyk",
+  "woman": "Finlandka",
+  "capital": "Helsinki",
+  "capitalEnglish": "Helsinki"
+ },
+ {
+  "code": "FR",
+  "english": "France",
+  "polish": [
+   "Francja"
+  ],
+  "man": "Francuz",
+  "woman": "Francuzka",
+  "capital": "Paryż",
+  "capitalEnglish": "Paris"
+ },
+ {
+  "code": "GA",
+  "english": "Gabon",
+  "polish": [
+   "Gabon"
+  ],
+  "man": "Gabończyk",
+  "woman": "Gabonka",
+  "capital": "Libreville",
+  "capitalEnglish": "Libreville"
+ },
+ {
+  "code": "GM",
+  "english": "Gambia",
+  "polish": [
+   "Gambia"
+  ],
+  "man": "Gambijczyk",
+  "woman": "Gambijka",
+  "capital": "Bandżul",
+  "capitalEnglish": "Banjul"
+ },
+ {
+  "code": "GE",
+  "english": "Georgia",
+  "polish": [
+   "Gruzja"
+  ],
+  "man": "Gruzin",
+  "woman": "Gruzinka",
+  "capital": "Tbilisi",
+  "capitalEnglish": "Tbilisi"
+ },
+ {
+  "code": "DE",
+  "english": "Germany",
+  "polish": [
+   "Niemcy"
+  ],
+  "man": "Niemiec",
+  "woman": "Niemka",
+  "capital": "Berlin",
+  "capitalEnglish": "Berlin"
+ },
+ {
+  "code": "GH",
+  "english": "Ghana",
+  "polish": [
+   "Ghana"
+  ],
+  "man": "Ghańczyk",
+  "woman": "Ghanka",
+  "capital": "Akra",
+  "capitalEnglish": "Accra"
+ },
+ {
+  "code": "GR",
+  "english": "Greece",
+  "polish": [
+   "Grecja"
+  ],
+  "man": "Grek",
+  "woman": "Greczynka",
+  "capital": "Ateny",
+  "capitalEnglish": "Athens"
+ },
+ {
+  "code": "GD",
+  "english": "Grenada",
+  "polish": [
+   "Grenada"
+  ],
+  "man": "Grenadyjczyk",
+  "woman": "Grenadyjka",
+  "capital": "Saint George’s",
+  "capitalEnglish": "Saint George's"
+ },
+ {
+  "code": "GT",
+  "english": "Guatemala",
+  "polish": [
+   "Gwatemala"
+  ],
+  "man": "Gwatemalczyk",
+  "woman": "Gwatemalka",
+  "capital": "Gwatemala",
+  "capitalEnglish": "Guatemala City"
+ },
+ {
+  "code": "GN",
+  "english": "Guinea",
+  "polish": [
+   "Gwinea"
+  ],
+  "man": "Gwinejczyk",
+  "woman": "Gwinejka",
+  "capital": "Konakry",
+  "capitalEnglish": "Conakry"
+ },
+ {
+  "code": "GW",
+  "english": "Guinea-Bissau",
+  "polish": [
+   "Gwinea Bissau"
+  ],
+  "man": "Gwinejczyk",
+  "woman": "Gwinejka",
+  "capital": "Bissau",
+  "capitalEnglish": "Bissau"
+ },
+ {
+  "code": "GY",
+  "english": "Guyana",
+  "polish": [
+   "Gujana"
+  ],
+  "man": "Gujańczyk",
+  "woman": "Gujanka",
+  "capital": "Georgetown",
+  "capitalEnglish": "Georgetown"
+ },
+ {
+  "code": "HT",
+  "english": "Haiti",
+  "polish": [
+   "Haiti"
+  ],
+  "man": "Haitańczyk",
+  "woman": "Haitanka",
+  "capital": "Port-au-Prince",
+  "capitalEnglish": "Port-au-Prince"
+ },
+ {
+  "code": "HN",
+  "english": "Honduras",
+  "polish": [
+   "Honduras"
+  ],
+  "man": "Honduranin",
+  "woman": "Honduranka",
+  "capital": "Tegucigalpa",
+  "capitalEnglish": "Tegucigalpa"
+ },
+ {
+  "code": "HU",
+  "english": "Hungary",
+  "polish": [
+   "Węgry"
+  ],
+  "man": "Węgier",
+  "woman": "Węgierka",
+  "capital": "Budapeszt",
+  "capitalEnglish": "Budapest"
+ },
+ {
+  "code": "IS",
+  "english": "Iceland",
+  "polish": [
+   "Islandia"
+  ],
+  "man": "Islandczyk",
+  "woman": "Islandka",
+  "capital": "Reykjavík",
+  "capitalEnglish": "Reykjavík"
+ },
+ {
+  "code": "IN",
+  "english": "India",
+  "polish": [
+   "Indie"
+  ],
+  "man": "Indus",
+  "woman": "Induska",
+  "capital": "Nowe Delhi",
+  "capitalEnglish": "New Delhi"
+ },
+ {
+  "code": "ID",
+  "english": "Indonesia",
+  "polish": [
+   "Indonezja"
+  ],
+  "man": "Indonezyjczyk",
+  "woman": "Indonezyjka",
+  "capital": "Dżakarta",
+  "capitalEnglish": "Jakarta"
+ },
+ {
+  "code": "IR",
+  "english": "Iran",
+  "polish": [
+   "Iran"
+  ],
+  "man": "Irańczyk",
+  "woman": "Iranka",
+  "capital": "Teheran",
+  "capitalEnglish": "Tehran"
+ },
+ {
+  "code": "IQ",
+  "english": "Iraq",
+  "polish": [
+   "Irak"
+  ],
+  "man": "Irakijczyk",
+  "woman": "Irakijka",
+  "capital": "Bagdad",
+  "capitalEnglish": "Baghdad"
+ },
+ {
+  "code": "IE",
+  "english": "Ireland",
+  "polish": [
+   "Irlandia"
+  ],
+  "man": "Irlandczyk",
+  "woman": "Irlandka",
+  "capital": "Dublin",
+  "capitalEnglish": "Dublin"
+ },
+ {
+  "code": "IL",
+  "english": "Israel",
+  "polish": [
+   "Izrael"
+  ],
+  "man": "Izraelczyk",
+  "woman": "Izraelka",
+  "capital": "Jerozolima",
+  "capitalEnglish": "Jerusalem"
+ },
+ {
+  "code": "IT",
+  "english": "Italy",
+  "polish": [
+   "Włochy"
+  ],
+  "man": "Włoch",
+  "woman": "Włoszka",
+  "capital": "Rzym",
+  "capitalEnglish": "Rome"
+ },
+ {
+  "code": "JM",
+  "english": "Jamaica",
+  "polish": [
+   "Jamajka"
+  ],
+  "man": "Jamajczyk",
+  "woman": "Jamajka",
+  "capital": "Kingston",
+  "capitalEnglish": "Kingston"
+ },
+ {
+  "code": "JP",
+  "english": "Japan",
+  "polish": [
+   "Japonia"
+  ],
+  "man": "Japończyk",
+  "woman": "Japonka",
+  "capital": "Tokio",
+  "capitalEnglish": "Tokyo"
+ },
+ {
+  "code": "JO",
+  "english": "Jordan",
+  "polish": [
+   "Jordania"
+  ],
+  "man": "Jordańczyk",
+  "woman": "Jordanka",
+  "capital": "Amman",
+  "capitalEnglish": "Amman"
+ },
+ {
+  "code": "KZ",
+  "english": "Kazakhstan",
+  "polish": [
+   "Kazachstan"
+  ],
+  "man": "Kazachstańczyk",
+  "woman": "Kazachstanka",
+  "capital": "Astana",
+  "capitalEnglish": "Astana"
+ },
+ {
+  "code": "KE",
+  "english": "Kenya",
+  "polish": [
+   "Kenia"
+  ],
+  "man": "Kenijczyk",
+  "woman": "Kenijka",
+  "capital": "Nairobi",
+  "capitalEnglish": "Nairobi"
+ },
+ {
+  "code": "KI",
+  "english": "Kiribati",
+  "polish": [
+   "Kiribati"
+  ],
+  "man": "Kiribatyjczyk",
+  "woman": "Kiribatyjka",
+  "capital": "Bairiki",
+  "capitalEnglish": "Bairiki"
+ },
+ {
+  "code": "XK",
+  "english": "Kosovo",
+  "polish": [
+   "Kosowo"
+  ],
+  "man": null,
+  "woman": null,
+  "capital": "Prisztina",
+  "capitalEnglish": "Pristina"
+ },
+ {
+  "code": "KW",
+  "english": "Kuwait",
+  "polish": [
+   "Kuwejt"
+  ],
+  "man": "Kuwejtczyk",
+  "woman": "Kuwejtka",
+  "capital": "Kuwejt",
+  "capitalEnglish": "Kuwait City"
+ },
+ {
+  "code": "KG",
+  "english": "Kyrgyzstan",
+  "polish": [
+   "Kirgistan"
+  ],
+  "man": "Kirgistańczyk",
+  "woman": "Kirgistanka",
+  "capital": "Biszkek",
+  "capitalEnglish": "Bishkek"
+ },
+ {
+  "code": "LA",
+  "english": "Laos",
+  "polish": [
+   "Laos"
+  ],
+  "man": "Laotańczyk",
+  "woman": "Laotanka",
+  "capital": "Wientian",
+  "capitalEnglish": "Vientiane"
+ },
+ {
+  "code": "LV",
+  "english": "Latvia",
+  "polish": [
+   "Łotwa"
+  ],
+  "man": "Łotysz",
+  "woman": "Łotyszka",
+  "capital": "Ryga",
+  "capitalEnglish": "Riga"
+ },
+ {
+  "code": "LB",
+  "english": "Lebanon",
+  "polish": [
+   "Liban"
+  ],
+  "man": "Libańczyk",
+  "woman": "Libanka",
+  "capital": "Bejrut",
+  "capitalEnglish": "Beirut"
+ },
+ {
+  "code": "LS",
+  "english": "Lesotho",
+  "polish": [
+   "Lesotho"
+  ],
+  "man": "Lesotyjczyk",
+  "woman": "Lesotyjka",
+  "capital": "Maseru",
+  "capitalEnglish": "Maseru"
+ },
+ {
+  "code": "LR",
+  "english": "Liberia",
+  "polish": [
+   "Liberia"
+  ],
+  "man": "Liberyjczyk",
+  "woman": "Liberyjka",
+  "capital": "Monrovia",
+  "capitalEnglish": "Monrovia"
+ },
+ {
+  "code": "LY",
+  "english": "Libya",
+  "polish": [
+   "Libia"
+  ],
+  "man": "Libijczyk",
+  "woman": "Libijka",
+  "capital": "Trypolis",
+  "capitalEnglish": "Tripoli"
+ },
+ {
+  "code": "LI",
+  "english": "Liechtenstein",
+  "polish": [
+   "Liechtenstein"
+  ],
+  "man": "Liechtensteińczyk",
+  "woman": "Liechtensteinka",
+  "capital": "Vaduz",
+  "capitalEnglish": "Vaduz"
+ },
+ {
+  "code": "LT",
+  "english": "Lithuania",
+  "polish": [
+   "Litwa"
+  ],
+  "man": "Litwin",
+  "woman": "Litwinka",
+  "capital": "Wilno",
+  "capitalEnglish": "Vilnius"
+ },
+ {
+  "code": "LU",
+  "english": "Luxembourg",
+  "polish": [
+   "Luksemburg"
+  ],
+  "man": "Luksemburczyk",
+  "woman": "Luksemburka",
+  "capital": "Luksemburg",
+  "capitalEnglish": "Luxembourg"
+ },
+ {
+  "code": "MG",
+  "english": "Madagascar",
+  "polish": [
+   "Madagaskar"
+  ],
+  "man": "Madagaskarczyk",
+  "woman": "Madagaskarka",
+  "capital": "Antananarywa",
+  "capitalEnglish": "Antananarivo"
+ },
+ {
+  "code": "MW",
+  "english": "Malawi",
+  "polish": [
+   "Malawi"
+  ],
+  "man": "Malawijczyk",
+  "woman": "Malawijka",
+  "capital": "Lilongwe",
+  "capitalEnglish": "Lilongwe"
+ },
+ {
+  "code": "MY",
+  "english": "Malaysia",
+  "polish": [
+   "Malezja"
+  ],
+  "man": "Malezyjczyk",
+  "woman": "Malezyjka",
+  "capital": "Kuala Lumpur",
+  "capitalEnglish": "Kuala Lumpur"
+ },
+ {
+  "code": "MV",
+  "english": "Maldives",
+  "polish": [
+   "Malediwy"
+  ],
+  "man": "Malediwczyk",
+  "woman": "Malediwka",
+  "capital": "Male",
+  "capitalEnglish": "Malé"
+ },
+ {
+  "code": "ML",
+  "english": "Mali",
+  "polish": [
+   "Mali"
+  ],
+  "man": "Malijczyk",
+  "woman": "Malijka",
+  "capital": "Bamako",
+  "capitalEnglish": "Bamako"
+ },
+ {
+  "code": "MT",
+  "english": "Malta",
+  "polish": [
+   "Malta"
+  ],
+  "man": "Maltańczyk",
+  "woman": "Maltanka",
+  "capital": "Valletta",
+  "capitalEnglish": "Valletta"
+ },
+ {
+  "code": "MH",
+  "english": "Marshall Islands",
+  "polish": [
+   "Wyspy Marshalla"
+  ],
+  "man": null,
+  "woman": null,
+  "capital": "Delap",
+  "capitalEnglish": "Delap"
+ },
+ {
+  "code": "MR",
+  "english": "Mauritania",
+  "polish": [
+   "Mauretania"
+  ],
+  "man": "Mauretańczyk",
+  "woman": "Mauretanka",
+  "capital": "Nawakszut",
+  "capitalEnglish": "Nouakchott"
+ },
+ {
+  "code": "MU",
+  "english": "Mauritius",
+  "polish": [
+   "Mauritius"
+  ],
+  "man": "Maurytyjczyk",
+  "woman": "Maurytyjka",
+  "capital": "Port Louis",
+  "capitalEnglish": "Port Louis"
+ },
+ {
+  "code": "MX",
+  "english": "Mexico",
+  "polish": [
+   "Meksyk"
+  ],
+  "man": "Meksykanin",
+  "woman": "Meksykanka",
+  "capital": "Meksyk",
+  "capitalEnglish": "Mexico City"
+ },
+ {
+  "code": "FM",
+  "english": "Micronesia",
+  "polish": [
+   "Mikronezja"
+  ],
+  "man": "Mikronezyjczyk",
+  "woman": "Mikronezyjka",
+  "capital": "Palikir",
+  "capitalEnglish": "Palikir"
+ },
+ {
+  "code": "MD",
+  "english": "Moldova",
+  "polish": [
+   "Mołdawia"
+  ],
+  "man": "Mołdawianin",
+  "woman": "Mołdawianka",
+  "capital": "Kiszyniów",
+  "capitalEnglish": "Chișinău"
+ },
+ {
+  "code": "MC",
+  "english": "Monaco",
+  "polish": [
+   "Monako"
+  ],
+  "man": "Monakijczyk",
+  "woman": "Monakijka",
+  "capital": "Monako",
+  "capitalEnglish": "Monaco"
+ },
+ {
+  "code": "MN",
+  "english": "Mongolia",
+  "polish": [
+   "Mongolia"
+  ],
+  "man": "Mongoł",
+  "woman": "Mongołka",
+  "capital": "Ułan Bator",
+  "capitalEnglish": "Ulaanbaatar"
+ },
+ {
+  "code": "ME",
+  "english": "Montenegro",
+  "polish": [
+   "Czarnogóra"
+  ],
+  "man": "Czarnogórzanin",
+  "woman": "Czarnogórzanka",
+  "capital": "Podgorica",
+  "capitalEnglish": "Podgorica"
+ },
+ {
+  "code": "MA",
+  "english": "Morocco",
+  "polish": [
+   "Maroko"
+  ],
+  "man": "Marokańczyk",
+  "woman": "Marokanka",
+  "capital": "Rabat",
+  "capitalEnglish": "Rabat"
+ },
+ {
+  "code": "MZ",
+  "english": "Mozambique",
+  "polish": [
+   "Mozambik"
+  ],
+  "man": "Mozambijczyk",
+  "woman": "Mozambijka",
+  "capital": "Maputo",
+  "capitalEnglish": "Maputo"
+ },
+ {
+  "code": "MM",
+  "english": "Myanmar",
+  "polish": [
+   "Mjanma"
+  ],
+  "man": "Mjanmańczyk",
+  "woman": "Mjanmanka",
+  "capital": "Naypyidaw",
+  "capitalEnglish": "Naypyidaw"
+ },
+ {
+  "code": "NA",
+  "english": "Namibia",
+  "polish": [
+   "Namibia"
+  ],
+  "man": "Namibijczyk",
+  "woman": "Namibijka",
+  "capital": "Windhuk",
+  "capitalEnglish": "Windhoek"
+ },
+ {
+  "code": "NR",
+  "english": "Nauru",
+  "polish": [
+   "Naoero",
+   "Nauru"
+  ],
+  "man": "Nauruańczyk",
+  "woman": "Nauruanka",
+  "capital": "Yaren",
+  "capitalEnglish": "Yaren"
+ },
+ {
+  "code": "NP",
+  "english": "Nepal",
+  "polish": [
+   "Nepal"
+  ],
+  "man": "Nepalczyk",
+  "woman": "Nepalka",
+  "capital": "Katmandu",
+  "capitalEnglish": "Kathmandu"
+ },
+ {
+  "code": "NL",
+  "english": "Netherlands",
+  "polish": [
+   "Holandia"
+  ],
+  "man": "Holender",
+  "woman": "Holenderka",
+  "capital": "Amsterdam",
+  "capitalEnglish": "Amsterdam"
+ },
+ {
+  "code": "NZ",
+  "english": "New Zealand",
+  "polish": [
+   "Nowa Zelandia"
+  ],
+  "man": "Nowozelandczyk",
+  "woman": "Nowozelandka",
+  "capital": "Wellington",
+  "capitalEnglish": "Wellington"
+ },
+ {
+  "code": "NI",
+  "english": "Nicaragua",
+  "polish": [
+   "Nikaragua"
+  ],
+  "man": "Nikaraguańczyk",
+  "woman": "Nikaraguanka",
+  "capital": "Managua",
+  "capitalEnglish": "Managua"
+ },
+ {
+  "code": "NE",
+  "english": "Niger",
+  "polish": [
+   "Niger"
+  ],
+  "man": "Nigerczyk",
+  "woman": "Nigerka",
+  "capital": "Niamey",
+  "capitalEnglish": "Niamey"
+ },
+ {
+  "code": "NG",
+  "english": "Nigeria",
+  "polish": [
+   "Nigeria"
+  ],
+  "man": "Nigeryjczyk",
+  "woman": "Nigeryjka",
+  "capital": "Abudża",
+  "capitalEnglish": "Abuja"
+ },
+ {
+  "code": "NU",
+  "english": "Niue",
+  "polish": [
+   "Niue"
+  ],
+  "man": null,
+  "woman": null,
+  "capital": "Alofi",
+  "capitalEnglish": "Alofi"
+ },
+ {
+  "code": "KP",
+  "english": "North Korea",
+  "polish": [
+   "Korea Północna"
+  ],
+  "man": "Koreańczyk",
+  "woman": "Koreanka",
+  "capital": "Pjongjang",
+  "capitalEnglish": "Pyongyang"
+ },
+ {
+  "code": "MK",
+  "english": "North Macedonia",
+  "polish": [
+   "Macedonia Północna"
+  ],
+  "man": "Macedończyk",
+  "woman": "Macedonka",
+  "capital": "Skopje",
+  "capitalEnglish": "Skopje"
+ },
+ {
+  "code": "NO",
+  "english": "Norway",
+  "polish": [
+   "Norwegia"
+  ],
+  "man": "Norweg",
+  "woman": "Norweżka",
+  "capital": "Oslo",
+  "capitalEnglish": "Oslo"
+ },
+ {
+  "code": "OM",
+  "english": "Oman",
+  "polish": [
+   "Oman"
+  ],
+  "man": "Omańczyk",
+  "woman": "Omanka",
+  "capital": "Maskat",
+  "capitalEnglish": "Muscat"
+ },
+ {
+  "code": "PK",
+  "english": "Pakistan",
+  "polish": [
+   "Pakistan"
+  ],
+  "man": "Pakistańczyk",
+  "woman": "Pakistanka",
+  "capital": "Islamabad",
+  "capitalEnglish": "Islamabad"
+ },
+ {
+  "code": "PW",
+  "english": "Palau",
+  "polish": [
+   "Palau"
+  ],
+  "man": "Palauańczyk",
+  "woman": "Palauanka",
+  "capital": "Ngerulmud",
+  "capitalEnglish": "Ngerulmud"
+ },
+ {
+  "code": "PA",
+  "english": "Panama",
+  "polish": [
+   "Panama"
+  ],
+  "man": "Panamczyk",
+  "woman": "Panamka",
+  "capital": "Panama",
+  "capitalEnglish": "Panama City"
+ },
+ {
+  "code": "PG",
+  "english": "Papua New Guinea",
+  "polish": [
+   "Papua-Nowa Gwinea"
+  ],
+  "man": "Papuańczyk",
+  "woman": "Papuanka",
+  "capital": "Port Moresby",
+  "capitalEnglish": "Port Moresby"
+ },
+ {
+  "code": "PY",
+  "english": "Paraguay",
+  "polish": [
+   "Paragwaj"
+  ],
+  "man": "Paragwajczyk",
+  "woman": "Paragwajka",
+  "capital": "Asunción",
+  "capitalEnglish": "Asunción"
+ },
+ {
+  "code": "PE",
+  "english": "Peru",
+  "polish": [
+   "Peru"
+  ],
+  "man": "Peruwiańczyk",
+  "woman": "Peruwianka",
+  "capital": "Lima",
+  "capitalEnglish": "Lima"
+ },
+ {
+  "code": "PH",
+  "english": "Philippines",
+  "polish": [
+   "Filipiny"
+  ],
+  "man": "Filipińczyk",
+  "woman": "Filipinka",
+  "capital": "Manila",
+  "capitalEnglish": "Manila"
+ },
+ {
+  "code": "PL",
+  "english": "Poland",
+  "polish": [
+   "Polska"
+  ],
+  "man": "Polak",
+  "woman": "Polka",
+  "capital": "Warszawa",
+  "capitalEnglish": "Warsaw"
+ },
+ {
+  "code": "PT",
+  "english": "Portugal",
+  "polish": [
+   "Portugalia"
+  ],
+  "man": "Portugalczyk",
+  "woman": "Portugalka",
+  "capital": "Lizbona",
+  "capitalEnglish": "Lisbon"
+ },
+ {
+  "code": "QA",
+  "english": "Qatar",
+  "polish": [
+   "Katar"
+  ],
+  "man": "Katarczyk",
+  "woman": "Katarka",
+  "capital": "Doha",
+  "capitalEnglish": "Doha"
+ },
+ {
+  "code": "CG",
+  "english": "Republic of the Congo",
+  "polish": [
+   "Kongo"
+  ],
+  "man": "Kongijczyk",
+  "woman": "Kongijka",
+  "capital": "Brazzaville",
+  "capitalEnglish": "Brazzaville"
+ },
+ {
+  "code": "RO",
+  "english": "Romania",
+  "polish": [
+   "Rumunia"
+  ],
+  "man": "Rumun",
+  "woman": "Rumunka",
+  "capital": "Bukareszt",
+  "capitalEnglish": "Bucharest"
+ },
+ {
+  "code": "RU",
+  "english": "Russia",
+  "polish": [
+   "Rosja"
+  ],
+  "man": "Rosjanin",
+  "woman": "Rosjanka",
+  "capital": "Moskwa",
+  "capitalEnglish": "Moscow"
+ },
+ {
+  "code": "RW",
+  "english": "Rwanda",
+  "polish": [
+   "Rwanda"
+  ],
+  "man": "Rwandyjczyk",
+  "woman": "Rwandyjka",
+  "capital": "Kigali",
+  "capitalEnglish": "Kigali"
+ },
+ {
+  "code": "KN",
+  "english": "Saint Kitts and Nevis",
+  "polish": [
+   "Saint Kitts i Nevis"
+  ],
+  "man": null,
+  "woman": null,
+  "capital": "Basseterre",
+  "capitalEnglish": "Basseterre"
+ },
+ {
+  "code": "LC",
+  "english": "Saint Lucia",
+  "polish": [
+   "Saint Lucia"
+  ],
+  "man": null,
+  "woman": null,
+  "capital": "Castries",
+  "capitalEnglish": "Castries"
+ },
+ {
+  "code": "VC",
+  "english": "Saint Vincent and the Grenadines",
+  "polish": [
+   "Saint Vincent i Grenadyny"
+  ],
+  "man": null,
+  "woman": null,
+  "capital": "Kingstown",
+  "capitalEnglish": "Kingstown"
+ },
+ {
+  "code": "WS",
+  "english": "Samoa",
+  "polish": [
+   "Samoa"
+  ],
+  "man": "Samoańczyk",
+  "woman": "Samoanka",
+  "capital": "Apia",
+  "capitalEnglish": "Apia"
+ },
+ {
+  "code": "SM",
+  "english": "San Marino",
+  "polish": [
+   "San Marino"
+  ],
+  "man": "Sanmaryńczyk",
+  "woman": "Sanmarynka",
+  "capital": "San Marino",
+  "capitalEnglish": "San Marino"
+ },
+ {
+  "code": "SA",
+  "english": "Saudi Arabia",
+  "polish": [
+   "Arabia Saudyjska"
+  ],
+  "man": "Saudyjczyk",
+  "woman": "Saudyjka",
+  "capital": "Rijad",
+  "capitalEnglish": "Riyadh"
+ },
+ {
+  "code": "SN",
+  "english": "Senegal",
+  "polish": [
+   "Senegal"
+  ],
+  "man": "Senegalczyk",
+  "woman": "Senegalka",
+  "capital": "Dakar",
+  "capitalEnglish": "Dakar"
+ },
+ {
+  "code": "RS",
+  "english": "Serbia",
+  "polish": [
+   "Serbia"
+  ],
+  "man": "Serb",
+  "woman": "Serbka",
+  "capital": "Belgrad",
+  "capitalEnglish": "Belgrade"
+ },
+ {
+  "code": "SC",
+  "english": "Seychelles",
+  "polish": [
+   "Seszele"
+  ],
+  "man": "Seszelczyk",
+  "woman": "Seszelka",
+  "capital": "Victoria",
+  "capitalEnglish": "Victoria"
+ },
+ {
+  "code": "SL",
+  "english": "Sierra Leone",
+  "polish": [
+   "Sierra Leone"
+  ],
+  "man": "Sierraleończyk",
+  "woman": "Sierraleonka",
+  "capital": "Freetown",
+  "capitalEnglish": "Freetown"
+ },
+ {
+  "code": "SG",
+  "english": "Singapore",
+  "polish": [
+   "Singapur"
+  ],
+  "man": "Singapurczyk",
+  "woman": "Singapurka",
+  "capital": "Singapur",
+  "capitalEnglish": "Singapore"
+ },
+ {
+  "code": "SK",
+  "english": "Slovakia",
+  "polish": [
+   "Słowacja"
+  ],
+  "man": "Słowak",
+  "woman": "Słowaczka",
+  "capital": "Bratysława",
+  "capitalEnglish": "Bratislava"
+ },
+ {
+  "code": "SI",
+  "english": "Slovenia",
+  "polish": [
+   "Słowenia"
+  ],
+  "man": "Słoweniec",
+  "woman": "Słowenka",
+  "capital": "Lublana",
+  "capitalEnglish": "Ljubljana"
+ },
+ {
+  "code": "SB",
+  "english": "Solomon Islands",
+  "polish": [
+   "Wyspy Salomona"
+  ],
+  "man": null,
+  "woman": null,
+  "capital": "Honiara",
+  "capitalEnglish": "Honiara"
+ },
+ {
+  "code": "SO",
+  "english": "Somalia",
+  "polish": [
+   "Somalia"
+  ],
+  "man": "Somalijczyk",
+  "woman": "Somalijka",
+  "capital": "Mogadiszu",
+  "capitalEnglish": "Mogadishu"
+ },
+ {
+  "code": "ZA",
+  "english": "South Africa",
+  "polish": [
+   "Południowa Afryka"
+  ],
+  "man": "Południowoafrykańczyk",
+  "woman": "Południowoafrykanka",
+  "capital": "Pretoria",
+  "capitalEnglish": "Pretoria"
+ },
+ {
+  "code": "KR",
+  "english": "South Korea",
+  "polish": [
+   "Korea Południowa"
+  ],
+  "man": "Koreańczyk",
+  "woman": "Koreanka",
+  "capital": "Seul",
+  "capitalEnglish": "Seoul"
+ },
+ {
+  "code": "SS",
+  "english": "South Sudan",
+  "polish": [
+   "Sudan Południowy"
+  ],
+  "man": "Sudańczyk",
+  "woman": "Sudanka",
+  "capital": "Dżuba",
+  "capitalEnglish": "Juba"
+ },
+ {
+  "code": "ES",
+  "english": "Spain",
+  "polish": [
+   "Hiszpania"
+  ],
+  "man": "Hiszpan",
+  "woman": "Hiszpanka",
+  "capital": "Madryt",
+  "capitalEnglish": "Madrid"
+ },
+ {
+  "code": "LK",
+  "english": "Sri Lanka",
+  "polish": [
+   "Sri Lanka"
+  ],
+  "man": "Lankijczyk",
+  "woman": "Lankijka",
+  "capital": "Sri Dźajawardanapura Kotte",
+  "capitalEnglish": "Sri Jayawardenepura Kotte"
+ },
+ {
+  "code": "SD",
+  "english": "Sudan",
+  "polish": [
+   "Sudan"
+  ],
+  "man": "Sudańczyk",
+  "woman": "Sudanka",
+  "capital": "Chartum",
+  "capitalEnglish": "Khartoum"
+ },
+ {
+  "code": "SR",
+  "english": "Suriname",
+  "polish": [
+   "Surinam"
+  ],
+  "man": "Surinamczyk",
+  "woman": "Surinamka",
+  "capital": "Paramaribo",
+  "capitalEnglish": "Paramaribo"
+ },
+ {
+  "code": "SE",
+  "english": "Sweden",
+  "polish": [
+   "Szwecja"
+  ],
+  "man": "Szwed",
+  "woman": "Szwedka",
+  "capital": "Sztokholm",
+  "capitalEnglish": "Stockholm"
+ },
+ {
+  "code": "CH",
+  "english": "Switzerland",
+  "polish": [
+   "Szwajcaria"
+  ],
+  "man": "Szwajcar",
+  "woman": "Szwajcarka",
+  "capital": "Berno",
+  "capitalEnglish": "Bern"
+ },
+ {
+  "code": "SY",
+  "english": "Syria",
+  "polish": [
+   "Syria"
+  ],
+  "man": "Syryjczyk",
+  "woman": "Syryjka",
+  "capital": "Damaszek",
+  "capitalEnglish": "Damascus"
+ },
+ {
+  "code": "ST",
+  "english": "São Tomé and Príncipe",
+  "polish": [
+   "Wyspy Świętego Tomasza i Książęca"
+  ],
+  "man": null,
+  "woman": null,
+  "capital": "São Tomé",
+  "capitalEnglish": "São Tomé"
+ },
+ {
+  "code": "TJ",
+  "english": "Tajikistan",
+  "polish": [
+   "Tadżykistan"
+  ],
+  "man": "Tadżykistańczyk",
+  "woman": "Tadżykistanka",
+  "capital": "Duszanbe",
+  "capitalEnglish": "Dushanbe"
+ },
+ {
+  "code": "TZ",
+  "english": "Tanzania",
+  "polish": [
+   "Tanzania"
+  ],
+  "man": "Tanzańczyk",
+  "woman": "Tanzanka",
+  "capital": "Dodoma",
+  "capitalEnglish": "Dodoma"
+ },
+ {
+  "code": "TH",
+  "english": "Thailand",
+  "polish": [
+   "Tajlandia"
+  ],
+  "man": "Tajlandczyk",
+  "woman": "Tajlandka",
+  "capital": "Bangkok",
+  "capitalEnglish": "Bangkok"
+ },
+ {
+  "code": "TL",
+  "english": "Timor-Leste",
+  "polish": [
+   "Timor Wschodni"
+  ],
+  "man": "Timorczyk",
+  "woman": "Timorka",
+  "capital": "Dili",
+  "capitalEnglish": "Dili"
+ },
+ {
+  "code": "TG",
+  "english": "Togo",
+  "polish": [
+   "Togo"
+  ],
+  "man": "Togijczyk",
+  "woman": "Togijka",
+  "capital": "Lomé",
+  "capitalEnglish": "Lomé"
+ },
+ {
+  "code": "TO",
+  "english": "Tonga",
+  "polish": [
+   "Tonga"
+  ],
+  "man": "Tongijczyk",
+  "woman": "Tongijka",
+  "capital": "Nuku’alofa",
+  "capitalEnglish": "Nukuʻalofa"
+ },
+ {
+  "code": "TT",
+  "english": "Trinidad and Tobago",
+  "polish": [
+   "Trynidad i Tobago"
+  ],
+  "man": null,
+  "woman": null,
+  "capital": "Port-of-Spain",
+  "capitalEnglish": "Port of Spain"
+ },
+ {
+  "code": "TN",
+  "english": "Tunisia",
+  "polish": [
+   "Tunezja"
+  ],
+  "man": "Tunezyjczyk",
+  "woman": "Tunezyjka",
+  "capital": "Tunis",
+  "capitalEnglish": "Tunis"
+ },
+ {
+  "code": "TR",
+  "english": "Turkey",
+  "polish": [
+   "Turcja"
+  ],
+  "man": "Turek",
+  "woman": "Turczynka",
+  "capital": "Ankara",
+  "capitalEnglish": "Ankara"
+ },
+ {
+  "code": "TM",
+  "english": "Turkmenistan",
+  "polish": [
+   "Turkmenistan"
+  ],
+  "man": "Turkmenistańczyk",
+  "woman": "Turkmenistanka",
+  "capital": "Aszchabad",
+  "capitalEnglish": "Ashgabat"
+ },
+ {
+  "code": "TV",
+  "english": "Tuvalu",
+  "polish": [
+   "Tuvalu"
+  ],
+  "man": "Tuwalczyk",
+  "woman": "Tuwalka",
+  "capital": "Vaiaku",
+  "capitalEnglish": "Vaiaku"
+ },
+ {
+  "code": "UG",
+  "english": "Uganda",
+  "polish": [
+   "Uganda"
+  ],
+  "man": "Ugandyjczyk",
+  "woman": "Ugandyjka",
+  "capital": "Kampala",
+  "capitalEnglish": "Kampala"
+ },
+ {
+  "code": "UA",
+  "english": "Ukraine",
+  "polish": [
+   "Ukraina"
+  ],
+  "man": "Ukrainiec",
+  "woman": "Ukrainka",
+  "capital": "Kijów",
+  "capitalEnglish": "Kyiv"
+ },
+ {
+  "code": "AE",
+  "english": "United Arab Emirates",
+  "polish": [
+   "Zjednoczone Emiraty Arabskie"
+  ],
+  "man": "Emiratczyk",
+  "woman": "Emiratka",
+  "capital": "Abu Zabi",
+  "capitalEnglish": "Abu Dhabi"
+ },
+ {
+  "code": "GB",
+  "english": "United Kingdom",
+  "polish": [
+   "Wielka Brytania"
+  ],
+  "man": "Brytyjczyk",
+  "woman": "Brytyjka",
+  "capital": "Londyn",
+  "capitalEnglish": "London"
+ },
+ {
+  "code": "US",
+  "english": "United States",
+  "polish": [
+   "Stany Zjednoczone"
+  ],
+  "man": "Amerykanin",
+  "woman": "Amerykanka",
+  "capital": "Waszyngton",
+  "capitalEnglish": "Washington, D.C."
+ },
+ {
+  "code": "UY",
+  "english": "Uruguay",
+  "polish": [
+   "Urugwaj"
+  ],
+  "man": "Urugwajczyk",
+  "woman": "Urugwajka",
+  "capital": "Montevideo",
+  "capitalEnglish": "Montevideo"
+ },
+ {
+  "code": "UZ",
+  "english": "Uzbekistan",
+  "polish": [
+   "Uzbekistan"
+  ],
+  "man": "Uzbekistańczyk",
+  "woman": "Uzbekistanka",
+  "capital": "Taszkent",
+  "capitalEnglish": "Tashkent"
+ },
+ {
+  "code": "VU",
+  "english": "Vanuatu",
+  "polish": [
+   "Vanuatu"
+  ],
+  "man": "Vanuatczyk",
+  "woman": "Vanuatka",
+  "capital": "Port Vila",
+  "capitalEnglish": "Port Vila"
+ },
+ {
+  "code": "VA",
+  "english": "Vatican City",
+  "polish": [
+   "Watykan"
+  ],
+  "man": "Watykańczyk",
+  "woman": "Watykanka",
+  "capital": "Watykan",
+  "capitalEnglish": "Vatican City"
+ },
+ {
+  "code": "VE",
+  "english": "Venezuela",
+  "polish": [
+   "Wenezuela"
+  ],
+  "man": "Wenezuelczyk",
+  "woman": "Wenezuelka",
+  "capital": "Caracas",
+  "capitalEnglish": "Caracas"
+ },
+ {
+  "code": "VN",
+  "english": "Vietnam",
+  "polish": [
+   "Wietnam"
+  ],
+  "man": "Wietnamczyk",
+  "woman": "Wietnamka",
+  "capital": "Hanoi",
+  "capitalEnglish": "Hanoi"
+ },
+ {
+  "code": "YE",
+  "english": "Yemen",
+  "polish": [
+   "Jemen"
+  ],
+  "man": "Jemeńczyk",
+  "woman": "Jemenka",
+  "capital": "Sana",
+  "capitalEnglish": "Sanaa"
+ },
+ {
+  "code": "ZM",
+  "english": "Zambia",
+  "polish": [
+   "Zambia"
+  ],
+  "man": "Zambijczyk",
+  "woman": "Zambijka",
+  "capital": "Lusaka",
+  "capitalEnglish": "Lusaka"
+ },
+ {
+  "code": "ZW",
+  "english": "Zimbabwe",
+  "polish": [
+   "Zimbabwe"
+  ],
+  "man": "Zimbabweńczyk",
+  "woman": "Zimbabwenka",
+  "capital": "Harare",
+  "capitalEnglish": "Harare"
+ }
+]
