@@ -2,6 +2,8 @@ package com.lexicon.interactors.numbers
 
 enum class NumberKind { CARDINAL, ORDINAL, ENUMERATION }
 
+enum class NumberGender { MASCULINE, FEMININE, NEUTER }
+
 enum class NumberRule {
     UNITS,
     TEENS,
@@ -23,6 +25,9 @@ enum class NumberRule {
     ORDINAL_THOUSAND,
     ORDINAL_LAST_PART,
     ENUMERATION,
+    ORDINAL_GENDERS,
+    ONE_GENDERS,
+    TWO_GENDERS,
 }
 
 object PolishNumbers {
@@ -157,17 +162,23 @@ object PolishNumbers {
         "dziewięćsetny" to "d͡ʑɛvjɛɲt͡ɕˈsɛtnɨ",
         "tysięczny" to "tɨˈɕɛnt͡ʂnɨ",
         "po" to "pɔ",
-        "pierwsze" to "ˈpjɛrfʂɛ",
+        "jedna" to "ˈjɛdna",
+        "jedno" to "ˈjɛdnɔ",
+        "dwie" to "dvjɛ",
+        "druga" to "ˈdruga",
         "drugie" to "ˈdrugʲɛ",
+        "trzecia" to "ˈtʂɛt͡ɕa",
         "trzecie" to "ˈtʂɛt͡ɕɛ",
-        "czwarte" to "ˈt͡ʂfartɛ",
-        "piąte" to "ˈpjɔntɛ",
-        "szóste" to "ˈʂustɛ",
-        "siódme" to "ˈɕudmɛ",
-        "ósme" to "ˈusmɛ",
-        "dziewiąte" to "d͡ʑɛˈvjɔntɛ",
-        "dziesiąte" to "d͡ʑɛˈɕɔntɛ",
     )
+
+    private val ordinalWords: Set<String> =
+        (ordinalUnits + ordinalTeens + ordinalTens + ordinalHundreds + THOUSANDTH).filter { it.isNotEmpty() }.toSet()
+
+    private val transcriptions: Map<String, String> =
+        ipa + ordinalWords.filter { it.endsWith('y') }.flatMap { word ->
+            val stem = ipa.getValue(word).dropLast(1)
+            listOf(gendered(word, NumberGender.FEMININE) to stem + "a", gendered(word, NumberGender.NEUTER) to stem + "ɛ")
+        }
 
     fun hasForm(
         value: Long,
@@ -179,24 +190,53 @@ object PolishNumbers {
             NumberKind.ENUMERATION -> value in 1..ENUMERATED_UP_TO
         }
 
+    fun hasGenders(
+        value: Long,
+        kind: NumberKind,
+    ): Boolean =
+        when (kind) {
+            NumberKind.CARDINAL -> value == 1L || endsInTwo(value)
+            NumberKind.ORDINAL -> hasForm(value, kind)
+            NumberKind.ENUMERATION -> false
+        }
+
     fun words(
         value: Long,
         kind: NumberKind = NumberKind.CARDINAL,
-    ): String = spell(value, kind, explicitOne = false)
+        gender: NumberGender? = null,
+    ): String = spell(value, kind, gender, explicitOne = false)
 
     fun answers(
         value: Long,
         kind: NumberKind = NumberKind.CARDINAL,
-    ): List<String> = listOf(words(value, kind), spell(value, kind, explicitOne = true)).distinct()
+        gender: NumberGender? = null,
+    ): List<String> = listOf(words(value, kind, gender), spell(value, kind, gender, explicitOne = true)).distinct()
 
     fun transcription(
         value: Long,
         kind: NumberKind = NumberKind.CARDINAL,
-    ): String = words(value, kind).split(' ').joinToString(" ") { ipa.getValue(it) }
+        gender: NumberGender? = null,
+    ): String = words(value, kind, gender).split(' ').joinToString(" ") { transcriptions.getValue(it) }
 
     fun rules(
         value: Long,
         kind: NumberKind = NumberKind.CARDINAL,
+    ): List<NumberRule> = listOfNotNull(genderRule(value, kind)) + formRules(value, kind)
+
+    private fun genderRule(
+        value: Long,
+        kind: NumberKind,
+    ): NumberRule? =
+        when {
+            !hasGenders(value, kind) -> null
+            kind == NumberKind.ORDINAL -> NumberRule.ORDINAL_GENDERS
+            value == 1L -> NumberRule.ONE_GENDERS
+            else -> NumberRule.TWO_GENDERS
+        }
+
+    private fun formRules(
+        value: Long,
+        kind: NumberKind,
     ): List<NumberRule> {
         require(hasForm(value, kind)) { "$value has no ${kind.name.lowercase()} form here" }
         if (kind == NumberKind.ENUMERATION) return listOf(NumberRule.ENUMERATION)
@@ -229,10 +269,27 @@ object PolishNumbers {
     private fun spell(
         value: Long,
         kind: NumberKind,
+        gender: NumberGender?,
         explicitOne: Boolean,
     ): String {
         require(hasForm(value, kind)) { "$value has no ${kind.name.lowercase()} form here" }
-        if (kind == NumberKind.ENUMERATION) return "$ENUMERATION_WORD ${neuter(ordinalBelowThousand(value.toInt()))}"
+        require(gender == null || hasGenders(value, kind)) { "$value has no gender forms as ${kind.name.lowercase()}" }
+        val masculine = spell(value, kind, explicitOne)
+        return when {
+            gender == null || gender == NumberGender.MASCULINE -> masculine
+            kind == NumberKind.ORDINAL -> masculine.split(' ').joinToString(" ") { if (it in ordinalWords) gendered(it, gender) else it }
+            value == 1L -> if (gender == NumberGender.FEMININE) "jedna" else "jedno"
+            gender == NumberGender.FEMININE -> masculine.removeSuffix(units[2]) + "dwie"
+            else -> masculine
+        }
+    }
+
+    private fun spell(
+        value: Long,
+        kind: NumberKind,
+        explicitOne: Boolean,
+    ): String {
+        if (kind == NumberKind.ENUMERATION) return "$ENUMERATION_WORD ${gendered(ordinalBelowThousand(value.toInt()), NumberGender.NEUTER)}"
         if (kind == NumberKind.ORDINAL && value == THOUSAND.toLong()) return THOUSANDTH
         if (value == 0L) return units.first()
 
@@ -343,7 +400,25 @@ object PolishNumbers {
         return listOfNotNull(hundreds[value / 100].ifEmpty { null }, tail).joinToString(" ")
     }
 
-    private fun neuter(ordinal: String): String = ordinal.dropLast(1) + if (ordinal.endsWith('i')) "ie" else "e"
+    private fun endsInTwo(value: Long): Boolean {
+        val rest = value % THOUSAND
+        return rest % 10 == 2L && rest % 100 != 12L
+    }
+
+    private fun gendered(
+        ordinal: String,
+        gender: NumberGender,
+    ): String =
+        when (gender) {
+            NumberGender.MASCULINE -> ordinal
+            NumberGender.FEMININE ->
+                when {
+                    ordinal.endsWith("gi") -> ordinal.dropLast(1) + "a"
+                    ordinal.endsWith('i') -> ordinal + "a"
+                    else -> ordinal.dropLast(1) + "a"
+                }
+            NumberGender.NEUTER -> ordinal.dropLast(1) + if (ordinal.endsWith('i')) "ie" else "e"
+        }
 
     private class GroupForms(
         val one: String,

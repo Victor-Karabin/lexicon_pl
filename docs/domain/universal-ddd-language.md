@@ -107,7 +107,7 @@ under [Context-Specific Terminology](#context-specific-terminology) and must not
 | Variant mastery | A conjugation variant answered correctly enough times in a row | Conjugation | *learned* | `MASTERY_STREAK` |
 | Conjugation course | A chosen set of verbs practised together, with its own progress | Conjugation | *course* unqualified | `ConjugationCourse` |
 | Number selection | The numbers and ranges the learner typed, read into a sorted set — or the reason they cannot be read | Numbers | *range*, *spec* | `NumberSelection` |
-| Number form | One way a number is practised: cardinal (*dwa*), ordinal (*drugi*) or list point (*po drugie*) | Numbers | *variant*, *type* | `NumberForm`, `NumberKind` |
+| Number form | One way a number is practised: cardinal (*dwa*), ordinal (*drugi*) or list point (*po drugie*), and for ordinals, 1 and numbers ending in 2 also a gender (*druga*, *dwie*) | Numbers | *variant*, *type* | `NumberForm`, `NumberKind`, `NumberGender` |
 | Number words | A number written out in Polish in one form, nominative masculine | Numbers | *spelling* | `PolishNumbers.words` |
 | Number rule | One rule of how a number's words are built, shown after the check | Numbers | *hint* | `NumberRule`, `PolishNumbers.rules` |
 | Number question | One number form to write: its digits, accepted spellings, transcription and rules | Numbers | *step* | `NumberQuestion` |

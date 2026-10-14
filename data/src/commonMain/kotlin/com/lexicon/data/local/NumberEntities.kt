@@ -15,10 +15,11 @@ data class NumberCourseEntity(
     val spec: String,
 )
 
-@Entity(tableName = "number_progress", primaryKeys = ["value", "kind"])
+@Entity(tableName = "number_progress", primaryKeys = ["value", "kind", "gender"])
 data class NumberProgressEntity(
     val value: Long,
     val kind: String,
+    val gender: String,
     val attempted: Int,
     val correct: Int,
     val incorrect: Int,
@@ -36,10 +37,11 @@ interface NumberDao {
     @Query("SELECT * FROM number_progress")
     suspend fun progress(): List<NumberProgressEntity>
 
-    @Query("SELECT * FROM number_progress WHERE value = :value AND kind = :kind LIMIT 1")
+    @Query("SELECT * FROM number_progress WHERE value = :value AND kind = :kind AND gender = :gender LIMIT 1")
     suspend fun progressFor(
         value: Long,
         kind: String,
+        gender: String,
     ): NumberProgressEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

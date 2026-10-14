@@ -9,6 +9,7 @@ import com.lexicon.interactors.numbers.NextNumberUseCase
 import com.lexicon.interactors.numbers.NumberCourse
 import com.lexicon.interactors.numbers.NumberCourseProgress
 import com.lexicon.interactors.numbers.NumberForm
+import com.lexicon.interactors.numbers.NumberGender
 import com.lexicon.interactors.numbers.NumberKind
 import com.lexicon.interactors.numbers.NumberProgress
 import com.lexicon.interactors.numbers.NumberQuestion
@@ -26,7 +27,8 @@ private suspend fun NumberRepository.chosenNumbers(): Pair<String, List<Long>>? 
 private suspend fun NumberRepository.progressByForm(): Map<NumberForm, NumberProgress> =
     progress().mapNotNull {
         val kind = NumberKind.entries.firstOrNull { kind -> kind.name == it.kind } ?: return@mapNotNull null
-        val form = NumberForm(it.value, kind)
+        val gender = NumberGender.entries.firstOrNull { gender -> gender.name == it.gender }
+        val form = NumberForm(it.value, kind, gender)
         form to NumberProgress(
             form = form,
             attempted = it.attempted,
@@ -99,7 +101,12 @@ class SubmitNumberAnswerUseCaseImpl(
         typed: String,
     ): AnswerVerdict {
         val verdict = LessonAnswerChecker.verdict(question.answers, typed)
-        numbers.recordAttempt(question.value, kind = question.kind.name, isCorrect = verdict == AnswerVerdict.CORRECT)
+        numbers.recordAttempt(
+            question.value,
+            kind = question.kind.name,
+            gender = question.gender?.name.orEmpty(),
+            isCorrect = verdict == AnswerVerdict.CORRECT,
+        )
         return verdict
     }
 }
