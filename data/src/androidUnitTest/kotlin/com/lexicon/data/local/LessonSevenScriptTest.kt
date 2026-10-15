@@ -37,7 +37,7 @@ class LessonSevenScriptTest {
     fun `graded screens hold the number of items the plan asks for`() {
         val counts = script.screens.filter { it.isGraded }.associate { it.id to it.questions.size }
         val expected = mapOf(
-            "1A" to 4, "1C" to 20, "1D" to 10, "1E" to 8, "1F" to 10, "1G" to 10,
+            "1A" to 6, "1C" to 20, "1D" to 10, "1E" to 8, "1F" to 10, "1G" to 10,
             "2B" to 6, "2C" to 6, "2D" to 16, "2E" to 7, "2F" to 9, "2G" to 8,
             "3C" to 6, "3D" to 10, "3F" to 10, "3G" to 8, "3H" to 5,
             "4A" to 19, "4B" to 10, "4C" to 11, "4D" to 5, "4E" to 4, "4F" to 11, "4G" to 4, "4H" to 7,

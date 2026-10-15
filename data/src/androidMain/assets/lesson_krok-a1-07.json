@@ -111,7 +111,7 @@
       "id": "1A",
       "type": "choice",
       "title": "Mami, what are you doing?",
-      "instruction": "Karolina, Mami, Pani Maj and Karol are at home. Listen: who could say it?",
+      "instruction": "Karolina, Mami, Pani Maj and Karol are at home. Listen: who says it?",
       "tracks": [{"id": "107A1"}],
       "shuffle": false,
       "transcript": {
@@ -133,10 +133,12 @@
         ]
       },
       "items": [
-        {"label": "1", "prompt": "Mam wolny czas.", "options": ["Mami", "Karol", "Karolina"], "answer": "Mami", "feedback": "Karolina asks Mami: *Masz wolny czas?* — Mami says she's bored, so she has free time."},
-        {"label": "2", "prompt": "Mam długą listę.", "options": ["Mami", "Karol", "Karolina"], "answer": "Mami"},
-        {"label": "3", "prompt": "Mam sportowe auto.", "options": ["Mami", "Karol", "Karolina"], "answer": "Karol"},
-        {"label": "4", "prompt": "Mam inteligentnego brata.", "options": ["Mami", "Karol", "Karolina"], "answer": "Karolina"}
+        {"label": "1", "prompt": "Masz wolny czas czy jesteś zajęta?", "options": ["Karolina", "Mami", "Pani Maj", "Karol"], "answer": "Karolina"},
+        {"label": "2", "prompt": "Nudzę się.", "options": ["Karolina", "Mami", "Pani Maj", "Karol"], "answer": "Mami"},
+        {"label": "3", "prompt": "Tu jest lista zakupów.", "options": ["Karolina", "Mami", "Pani Maj", "Karol"], "answer": "Pani Maj"},
+        {"label": "4", "prompt": "Ja mam długą listę.", "options": ["Karolina", "Mami", "Pani Maj", "Karol"], "answer": "Mami"},
+        {"label": "5", "prompt": "Sportowe auto?", "options": ["Karolina", "Mami", "Pani Maj", "Karol"], "answer": "Karol"},
+        {"label": "6", "prompt": "Ale mam inteligentnego brata!", "options": ["Karolina", "Mami", "Pani Maj", "Karol"], "answer": "Karolina"}
       ],
       "newWords": [
         {"polish": "zajęty", "english": "busy"},
