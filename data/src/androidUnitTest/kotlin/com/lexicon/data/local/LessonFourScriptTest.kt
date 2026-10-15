@@ -2,7 +2,6 @@ package com.lexicon.data.local
 
 import com.lexicon.model.course.GAP_PATTERN
 import com.lexicon.model.course.LessonScreen
-import com.lexicon.model.course.TranscriptUnlock
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -89,8 +88,7 @@ class LessonFourScriptTest {
     }
 
     @Test
-    fun `answers that are the new words open them after the check`() {
-        assertEquals(TranscriptUnlock.AfterCheck, script.newWords.getValue("4C").unlock)
+    fun `4C lists the adjectives it asks for`() {
         assertEquals("wysoki · brudna · pracowity · gruby · smutna · młody · brzydka · chora", screen("4C").hint)
     }
 }

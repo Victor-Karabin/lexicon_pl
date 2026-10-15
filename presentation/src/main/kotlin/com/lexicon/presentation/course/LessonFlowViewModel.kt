@@ -17,12 +17,14 @@ import com.lexicon.interactors.course.LessonSession
 import com.lexicon.interactors.course.ObserveCoursesUseCase
 import com.lexicon.interactors.course.ReviewWritingUseCase
 import com.lexicon.interactors.course.SaveLessonProgressUseCase
+import com.lexicon.interactors.course.SaveLessonResultsUseCase
 import com.lexicon.interactors.course.Score
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
 import com.lexicon.interactors.course.WritingReviewOutcome
 import com.lexicon.interactors.presets.FindWordsUseCase
 import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
 import com.lexicon.interactors.presets.SetWordStatusUseCase
+import com.lexicon.interactors.settings.ObserveSettingsUseCase
 import com.lexicon.interactors.training.RecordStudyActivityUseCase
 import com.lexicon.model.course.LessonId
 import com.lexicon.model.course.LessonProgress
@@ -79,9 +81,6 @@ sealed interface LessonFlowUiState {
     ) : LessonFlowUiState {
         val showsGrammarButton: Boolean
             get() = results == null && session.script.rules.isNotEmpty() && session.screen !is LessonScreen.Grammar
-
-        val showsNewWords: Boolean
-            get() = results == null && session.screen.id in session.script.newWords && session.isNewWordsUnlocked(session.screen)
     }
 }
 
@@ -91,6 +90,7 @@ class LessonFlowViewModel(
     private val getLessonProgress: GetLessonProgressUseCase,
     private val saveLessonProgress: SaveLessonProgressUseCase,
     private val setLessonCompleted: SetLessonCompletedUseCase,
+    private val saveLessonResults: SaveLessonResultsUseCase,
     private val getLesson: GetLessonUseCase,
     private val observeCourses: ObserveCoursesUseCase,
     private val reviewWriting: ReviewWritingUseCase,
@@ -99,6 +99,7 @@ class LessonFlowViewModel(
     observeWordStatuses: ObserveWordStatusesUseCase,
     private val speechSynthesizer: SpeechSynthesizer,
     private val recordStudy: RecordStudyActivityUseCase,
+    private val observeSettings: ObserveSettingsUseCase,
     audioLibrary: LessonAudioLibrary,
     audioPlayer: LessonAudioPlayer,
     private val dispatchers: DispatcherProvider,
@@ -159,7 +160,8 @@ class LessonFlowViewModel(
             val progress = runSuspendCatching { getLessonProgress(lessonId) }
                 .onFailure { Log.w(TAG, "Saved lesson progress could not be read; starting the lesson afresh", it) }
                 .getOrNull()
-            val session = script?.let { LessonSession.resume(it, progress) }
+            val passMark = observeSettings().first().passMark
+            val session = script?.let { LessonSession.resume(it, progress, passMark) }
             val lesson = getLesson(lessonId)
             content.value = Content(session = session, lessonNumber = lesson?.number, lessonTitle = lesson?.title)
             session?.let(::preload)
@@ -204,6 +206,11 @@ class LessonFlowViewModel(
             content.update { it?.copy(isReviewing = false, reviewProblem = outcome.problem()) }
             change { current -> if (outcome is WritingReviewOutcome.Reviewed) current.withReview(outcome.review) else current.check() }
         }
+    }
+
+    fun onKeyboardDone() {
+        val session = content.value?.session ?: return
+        if (session.isFullyAnswered && session.canCheck) onCheck()
     }
 
     fun onNext() {
@@ -263,6 +270,8 @@ class LessonFlowViewModel(
         viewModelScope.launch(dispatchers.io) {
             runSuspendCatching { setLessonCompleted(lessonId, true) }
                 .onFailure { Log.w(TAG, "The lesson could not be marked as done", it) }
+            runSuspendCatching { saveLessonResults(lessonId, session.progress) }
+                .onFailure { Log.w(TAG, "The lesson results could not be kept", it) }
             val next = runSuspendCatching { nextLessonId() }
                 .onFailure { Log.w(TAG, "The next lesson could not be found", it) }
                 .getOrNull()

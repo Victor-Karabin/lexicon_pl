@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -17,12 +18,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import com.lexicon.model.course.LessonPhrase
 import com.lexicon.model.vocabulary.Word
 import com.lexicon.model.vocabulary.WordStatus
 import com.lexicon.presentation.R
@@ -63,6 +66,8 @@ internal fun Word.detailLine(): String? {
         else -> phonetic ?: band
     }
 }
+
+internal fun LessonPhrase.detailLine(): String? = transcription.takeIf { it.isNotBlank() }?.let { "[$it]" }
 
 @Composable
 fun VocabularyWordRow(
@@ -173,6 +178,10 @@ private fun WordRow(
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        status?.let { WordStatusButton(status = it, onClick = onStatusCycled) }
+        if (status != null) {
+            WordStatusButton(status = status, onClick = onStatusCycled)
+        } else {
+            Spacer(modifier = Modifier.minimumInteractiveComponentSize())
+        }
     }
 }

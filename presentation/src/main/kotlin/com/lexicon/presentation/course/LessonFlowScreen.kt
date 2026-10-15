@@ -79,7 +79,6 @@ import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.BottomActionPanel
-import com.lexicon.presentation.common.ScrollToTopButton
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.isTyping
 import com.lexicon.presentation.conjugation.PersonFormRow
@@ -109,6 +108,7 @@ class LessonFlowActions(
     val onAnswerChanged: (String, String) -> Unit,
     val onLineTapped: (String) -> Unit,
     val onCheck: () -> Unit,
+    val onKeyboardDone: () -> Unit,
     val onNext: () -> Unit,
     val onBack: () -> Unit,
     val onTranscriptToggled: (String) -> Unit,
@@ -140,6 +140,7 @@ fun LessonFlowScreen(
             onAnswerChanged = viewModel::onAnswerChanged,
             onLineTapped = viewModel::onLineTapped,
             onCheck = viewModel::onCheck,
+            onKeyboardDone = viewModel::onKeyboardDone,
             onNext = viewModel::onNext,
             onBack = viewModel::onBack,
             onTranscriptToggled = viewModel::onTranscriptToggled,
@@ -179,7 +180,11 @@ private fun LessonFlowContent(
         else -> stringResource(R.string.course_title)
     }
 
-    (uiState as? LessonFlowUiState.Loaded)?.retry?.let { RetryDialog(it, actions.onRetryAcknowledged) }
+    (uiState as? LessonFlowUiState.Loaded)?.let { loaded ->
+        loaded.retry?.let {
+            RetryDialog(it, loaded.session.passMark, actions.onRetryAcknowledged)
+        }
+    }
     (uiState as? LessonFlowUiState.Loaded)?.let { loaded ->
         loaded.grammar?.let { sheet ->
             GrammarSheet(
@@ -193,7 +198,7 @@ private fun LessonFlowContent(
 
     val shownPlayers = remember((uiState as? LessonFlowUiState.Loaded)?.session?.index) { mutableStateMapOf<String, Boolean>() }
 
-    AnswerInputs {
+    AnswerInputs(onDone = actions.onKeyboardDone) {
         val isTyping = isTyping()
         CompositionLocalProvider(LocalShownPlayers provides shownPlayers) {
             Scaffold(
@@ -229,28 +234,22 @@ private fun LessonFlowContent(
 
                     is LessonFlowUiState.Loaded ->
                         key(uiState.session.index, uiState.results != null) {
-                            val scroll = rememberScrollState()
-                            Box(Modifier.fillMaxSize().padding(padding).imePadding()) {
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .verticalScroll(scroll)
-                                        .padding(Dimens.spacingMedium)
-                                        .padding(bottom = if (isTyping) 0.dp else GrammarButtonClearance),
-                                    verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-                                ) {
-                                    val results = uiState.results
-                                    if (results != null) {
-                                        LessonResultsView(results, uiState.lessonTitle, onRuleOpened = actions.onGrammarShown)
-                                    } else {
-                                        ScreenBody(uiState, actions)
-                                    }
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(padding)
+                                    .imePadding()
+                                    .verticalScroll(rememberScrollState())
+                                    .padding(Dimens.spacingMedium)
+                                    .padding(bottom = if (isTyping) 0.dp else GrammarButtonClearance),
+                                verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                            ) {
+                                val results = uiState.results
+                                if (results != null) {
+                                    LessonResultsView(results, uiState.lessonTitle, onRuleOpened = actions.onGrammarShown)
+                                } else {
+                                    ScreenBody(uiState, actions)
                                 }
-                                ScrollToTopButton(
-                                    scroll = scroll,
-                                    enabled = uiState.showsNewWords && !isTyping,
-                                    modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = Dimens.spacingMedium),
-                                )
                             }
                         }
                 }
@@ -262,6 +261,7 @@ private fun LessonFlowContent(
 @Composable
 private fun RetryDialog(
     retry: Score,
+    passMark: Int,
     onAcknowledged: () -> Unit,
 ) {
     AlertDialog(
@@ -274,7 +274,7 @@ private fun RetryDialog(
                     retry.correct,
                     retry.total,
                     retry.percent,
-                    Score.PASS_MARK,
+                    passMark,
                 ),
             )
         },
@@ -318,15 +318,13 @@ private fun ScreenBody(
         }
     }
     session.script.newWords[screen.id]?.let { newWords ->
-        if (session.isNewWordsUnlocked(screen)) {
-            NewWordsCard(
-                words = newWords.words,
-                entries = uiState.newWordEntries,
-                statuses = uiState.wordStatuses,
-                onPronounce = actions.onPronounce,
-                onStatusCycled = actions.onWordStatusCycled,
-            )
-        }
+        NewWordsCard(
+            words = newWords.words,
+            entries = uiState.newWordEntries,
+            statuses = uiState.wordStatuses,
+            onPronounce = actions.onPronounce,
+            onStatusCycled = actions.onWordStatusCycled,
+        )
     }
     Text(richText(screen.instruction), style = MaterialTheme.typography.bodyMedium)
     screen.tracks.forEach { TrackPlayer(it, uiState, actions) }

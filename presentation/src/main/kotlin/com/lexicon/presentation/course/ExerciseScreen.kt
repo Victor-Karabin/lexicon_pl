@@ -42,7 +42,7 @@ fun ExerciseScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    AnswerInputs {
+    AnswerInputs(onDone = viewModel::onKeyboardDone) {
         ExerciseContent(
             uiState = uiState,
             onClose = onClose,

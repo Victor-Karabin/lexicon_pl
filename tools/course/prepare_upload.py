@@ -53,7 +53,7 @@ class Part:
 
 
 PARTS = [
-    Part("krok_po_kroku_1_a1", "coursebook", "Podrecznik_1_A1-A2", "a1_coursebook", True, 220),
+    Part("krok_po_kroku_1_a1", "coursebook", "Podrecznik_1_A1-A2", "a1_coursebook", True, 237),
     Part("krok_po_kroku_1_a1", "workbook", "Zeszyt_cwiczen_1", "a1_workbook", True, 88),
     Part("krok_po_kroku_2_a2", "coursebook", "Podrecznik_2_A2-B1", "a2_coursebook", True, 180),
     Part("polski_na_dobry_start_a1", "coursebook", "Polski_na_dobry_start_A1/mp3", "pnds_coursebook", False, 126),

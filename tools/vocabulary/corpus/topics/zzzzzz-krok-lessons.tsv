@@ -91,7 +91,6 @@ twój numer	your number	expr	A1	introductions
 jej	her (possessive)	prn	A1	people
 uczyć się hiszpańskiego	to learn Spanish	expr	A1	studying
 dane osobowe	personal details	expr	A1	office
-Argentyńczyk	Argentinian (man)	n	A1	countries,people
 Miłej lekcji!	enjoy the lesson!	expr	A1	classroom
 Witam.	hello, welcome (formal, said by the host)	expr	A1	greetings
 Bardzo mi miło państwa poznać.	very nice to meet you (to a couple)	expr	A1	introductions,greetings
@@ -101,7 +100,6 @@ po hiszpańsku	in Spanish	expr	A1	countries
 czytamy	we read	expr	A1	books
 polsko-hiszpański	Polish-Spanish	adj	A1	books
 polsko-japoński	Polish-Japanese	adj	A1	books
-Argentyna	Argentina	n	A1	countries
 za mały	too small	expr	A1	shopping
 płyta CD	CD	n	A1	music
 model numer jeden	the number-one model	expr	A1	smartphone
@@ -142,9 +140,7 @@ To żart.	it's a joke	expr	A1	daily-conversation
 Mnie też.	me too	expr	A1	daily-conversation
 nasza grupa	our group	expr	A1	classroom
 Ameryka	America	n	A1	countries
-Austria	Austria	n	A1	countries
 ze Szwecji	from Sweden	expr	A1	countries
-Holandia	the Netherlands	n	A1	countries
 z Węgier	from Hungary	expr	A1	countries
 salsa	salsa (the dance)	n	A1	music,hobbies
 tango	tango	n	A1	music,hobbies
@@ -175,7 +171,6 @@ chce studiować	wants to study	expr	A1	university
 słuchać muzyki	to listen to music	expr	A1	music,hobbies
 lektorka języka angielskiego	English teacher (woman)	expr	A1	professions
 czytać książki	to read books	expr	A1	books,hobbies
-Londyn	London	n	A1	cities
 autoprezentacja	introducing yourself	n	A1	introductions
 liczebnik	numeral	n	A1	numbers
 Ile to jest?	how much is it?	expr	A1	numbers
@@ -214,7 +209,6 @@ współczesny teatr	contemporary theatre	expr	A1	hobbies
 folklor	folklore	n	A1	music
 psychologia	psychology	n	A1	university
 muzyka klasyczna	classical music	expr	A1	music
-Włoszka	Italian woman	n	A1	countries,people
 medycyna naturalna	natural medicine	expr	A1	medicine
 historia sztuki	art history	expr	A1	university
 w weekendy	at weekends	expr	A1	time
@@ -223,22 +217,14 @@ ASP	Academy of Fine Arts (Akademia Sztuk Pięknych)	n	A1	university
 robić zdjęcia	to take photos	expr	A1	hobbies
 chodzić do szkoły	to go to school	expr	A1	school
 a konkretnie	to be precise	expr	A1	daily-conversation
-Włoch	Italian man	n	A1	countries,people
-Portugalka	Portuguese woman	n	A1	countries,people
-Portugalczyk	Portuguese man	n	A1	countries,people
-Amerykanka	American woman	n	A1	countries,people
-Amerykanin	American man	n	A1	countries,people
 wypoczęty	rested	adj	A1	appearance
 chata	cottage, hut	n	A2	home
-Rzym	Rome	n	A1	cities
 sitko	strainer	n	B1	household
 kaseta	cassette	n	A2	music
 poznać	to meet, to get to know	v	A1	introductions
 przedstawić się	to introduce oneself	v	A1	introductions
 aha	I see, aha	interj	A1	daily-conversation
 po polsku	in Polish	expr	A1	studying
-Japonka	Japanese woman	n	A1	countries,people
-Niemiec	German man	n	A1	countries,people
 cyna	tin	n	B2	nature
 siwy	grey-haired	adj	A2	appearance
 sanki	sledge	n	A2	sports
@@ -250,20 +236,12 @@ cynik	cynic	n	B2	personality
 szelka	strap, brace	n	B2	household
 czarka	small bowl	n	C1	household
 wić	to weave	v	C1	household
-USA	the USA	n	A1	countries
 sekretariat	school office	n	A1	school
-Madryt	Madrid	n	A1	cities
-Moskwa	Moscow	n	A1	cities
-Wiedeń	Vienna	n	A1	cities
-Paryż	Paris	n	A1	cities
-Berlin	Berlin	n	A1	cities
 Europa	Europe	n	A1	countries
 święty	saint	adj	A2	people
 brawo	bravo, well done	interj	A1	daily-conversation
 po angielsku	in English	expr	A1	studying
-Brazylia	Brazil	n	A1	countries
 holenderski	Dutch	adj	A1	countries
-Budapeszt	Budapest	n	A1	cities
 spaghetti	spaghetti	n	A1	food
 żeński	feminine	adj	A1	studying
 dentystka	dentist (woman)	n	A1	professions
@@ -275,8 +253,6 @@ biograficzny	biographical (książka biograficzna — biography)	adj	A1	books
 rockowy	rock (adj.)	adj	A1	music
 ekstremalny	extreme	adj	A1	sports
 grafika	graphic design	n	A1	university
-Polka	Polish woman	n	A1	countries,people
-Hiszpanka	Spanish woman	n	A1	countries,people
 pierogi	pierogi (dumplings)	n	A1	food
 nie bardzo	not really	expr	A1	daily-conversation
 niespecjalnie	not particularly	adv	A2	daily-conversation
@@ -493,3 +469,5 @@ fasolowy	bean (adj.)	adj	A2	food
 kalafiorowy	cauliflower (adj.)	adj	A2	food
 brokułowy	broccoli (adj.)	adj	A2	food
 cebulowy	onion (adj.)	adj	A2	food
+pozować	to pose	v	B1	professions
+feta	feta (cheese)	n	A2	food

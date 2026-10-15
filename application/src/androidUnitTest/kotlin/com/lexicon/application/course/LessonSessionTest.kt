@@ -1,5 +1,6 @@
 package com.lexicon.application.course
 
+import com.lexicon.boundary.CourseRepository
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.course.LessonSession
 import com.lexicon.model.course.AnswerKeyboard
@@ -12,7 +13,10 @@ import com.lexicon.model.course.LessonStep
 import com.lexicon.model.course.Transcript
 import com.lexicon.model.course.TranscriptUnlock
 import com.lexicon.model.course.WritingReview
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -87,6 +91,12 @@ class LessonSessionTest {
         val checked = answered(atDictation, "jeden", "dwa", "trzy", "cztery", "pięć").check()
         assertFalse(checked.needsCheck)
         assertEquals("2A", checked.next().screen.id)
+    }
+
+    @Test
+    fun `a screen is fully answered only when every field has an answer`() {
+        assertFalse(answered(atDictation, "jeden", "dwa").isFullyAnswered)
+        assertTrue(answered(atDictation, "jeden", "dwa", "trzy", "cztery", "pięć").isFullyAnswered)
     }
 
     @Test
@@ -171,6 +181,20 @@ class LessonSessionTest {
     }
 
     @Test
+    fun `the pass mark is the learner's setting`() {
+        val threeOfFive = answered(atDictation, "jeden", "dwa", "trzy", "x", "y")
+        assertNull(threeOfFive.copy(passMark = 60).check().failedScore)
+        assertEquals(3 to 5, threeOfFive.copy(passMark = 70).check().failedScore?.let { it.correct to it.total })
+        assertNull(answered(atDictation, "x", "x", "x", "x", "x").copy(passMark = 0).check().failedScore)
+        assertEquals(
+            4 to 5,
+            answered(atDictation, "jeden", "dwa", "trzy", "cztery", "x").copy(passMark = 100).check().failedScore?.let {
+                it.correct to it.total
+            },
+        )
+    }
+
+    @Test
     fun `a failed last exercise starts again instead of finishing the lesson, even after a restart of the app`() {
         val single = LessonScript(
             lessonId = LessonId("lesson"),
@@ -213,4 +237,26 @@ class LessonSessionTest {
         assertTrue(checked.isTranscriptUnlocked(script.screens[0]))
         assertTrue(checked.isTranscriptUnlocked(script.screens[1]))
     }
+
+    @Test
+    fun `the last results come from the kept attempt, or from a finished one not yet restarted`() =
+        runTest {
+            val finished = answered(answered(atDictation, "jeden", "dwa", "trzy", "cztery", "pięć").check().next(), "sześć")
+                .check().next().withAnswer("0", "Dzień dobry.").check()
+            assertTrue(finished.isAtEnd)
+            val repository: CourseRepository = mockk(relaxed = true) {
+                coEvery { getLessonScript(any()) } returns script
+            }
+            val results = GetLastLessonResultsUseCaseImpl(repository)
+
+            coEvery { repository.getLastFinishedProgress(any()) } returns finished.progress
+            assertEquals(finished.results, results(LessonId("krok-a1-01")))
+
+            coEvery { repository.getLastFinishedProgress(any()) } returns null
+            coEvery { repository.getLessonScriptProgress(any()) } returns finished.progress
+            assertEquals(finished.results, results(LessonId("krok-a1-01")))
+
+            coEvery { repository.getLessonScriptProgress(any()) } returns atDictation.progress
+            assertNull(results(LessonId("krok-a1-01")))
+        }
 }

@@ -63,6 +63,15 @@
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_training">Training</string>
     <string name="settings_step_count">Steps per session</string>
+    <string name="settings_lessons">Lessons</string>
+    <string name="settings_pass_mark">Pass mark for an exercise</string>
+    <string name="settings_pass_mark_value">%1$d%%</string>
+    <string name="settings_pass_mark_note" formatted="false">An exercise scored below this starts again, keeping your right answers. At 0% an exercise never repeats.</string>
+    <string name="settings_polish_setup">Polish on this phone</string>
+    <string name="settings_polish_keyboard">Add the Polish keyboard</string>
+    <string name="settings_polish_keyboard_note">None of your keyboards types Polish yet. Add Polish to your keyboard\'s languages to type ą, ę, ł and the rest.</string>
+    <string name="settings_polish_voice">Install the Polish voice</string>
+    <string name="settings_polish_voice_note">This phone has no Polish voice. Install it so words can still be read aloud when the cloud voice is not available.</string>
     <string name="settings_voice">Voice</string>
     <string name="settings_voice_note">Tap a name to hear it.</string>
     <string name="settings_sources">Sources</string>
@@ -104,7 +113,12 @@
     <string name="numbers_start">Start</string>
     <string name="numbers_listen">Listen</string>
     <string name="numbers_write_prompt">Write the number in words</string>
+    <string name="numbers_write_masculine_prompt">Write the number in words, masculine</string>
+    <string name="numbers_write_feminine_prompt">Write the number in words, feminine</string>
+    <string name="numbers_write_neuter_prompt">Write the number in words, neuter</string>
     <string name="numbers_write_ordinal_prompt">Write the ordinal in words, masculine</string>
+    <string name="numbers_write_ordinal_feminine_prompt">Write the ordinal in words, feminine</string>
+    <string name="numbers_write_ordinal_neuter_prompt">Write the ordinal in words, neuter</string>
     <string name="numbers_write_enumeration_prompt">Write it in Polish, as when listing points</string>
     <string name="numbers_cardinal_label">%1$s</string>
     <string name="numbers_ordinal_st">%1$sst</string>
@@ -143,6 +157,9 @@
     <string name="numbers_rule_ordinal_hundreds">100th, 200th … 900th are one word ending in *-setny*: *setny, dwusetny, trzechsetny, czterechsetny, pięćsetny … dziewięćsetny*.\nIn other numbers the hundreds stay as they are and only the end is ordinal: *sto pierwszy* (101st), *dwieście dwudziesty* (220th).</string>
     <string name="numbers_rule_ordinal_thousand">1000th is *tysięczny*.</string>
     <string name="numbers_rule_enumeration">Firstly, secondly… are *po* + the ordinal, with its ending changed to *-e*:\n• *pierwszy* → *po pierwsze*, *czwarty* → *po czwarte*, *dziesiąty* → *po dziesiąte* — **-y** becomes **-e**\n• *drugi* → *po drugie*, *trzeci* → *po trzecie* — **-i** becomes **-ie**</string>
+    <string name="numbers_rule_ordinal_genders">Ordinals change their ending with the gender of the noun:\n• masculine *-y*, *-i*: *pierwszy*, *drugi*, *trzeci*\n• feminine *-a*: *pierwsza*, *druga*, *trzecia*\n• neuter *-e*: *pierwsze*, *drugie*, *trzecie*\nIn a longer ordinal every ordinal word changes: *dwudziesta pierwsza* (21st, feminine).</string>
+    <string name="numbers_rule_one_genders">1 changes with the gender of the noun: *jeden* (masculine, *jeden dom*), *jedna* (feminine, *jedna książka*), *jedno* (neuter, *jedno okno*).</string>
+    <string name="numbers_rule_two_genders">2 is *dwie* with feminine nouns and *dwa* with masculine and neuter ones: *dwie książki*, *dwa domy*, *dwa okna*. Longer numbers ending in 2 do the same: *dwadzieścia dwie książki*.</string>
     <string name="numbers_rule_ordinal_last_part">Above 1000 the thousands and millions keep their usual form; only the end is ordinal: *tysiąc pierwszy, dwa tysiące dwudziesty czwarty*.</string>
     <string name="numbers_rule_thousands_many">*tysięcy* after all other numbers: *pięć tysięcy, dwanaście tysięcy, dwadzieścia jeden tysięcy*.</string>
 
@@ -343,6 +360,9 @@
     <string name="lesson_not_found">This lesson is no longer in the course.</string>
     <string name="lesson_flow_start">Start lesson</string>
     <string name="lesson_flow_continue">Continue lesson</string>
+    <string name="lesson_results">Results</string>
+    <string name="lesson_results_title">Lesson %1$d results</string>
+    <string name="lesson_results_none">No results yet. Finish the lesson to see them here.</string>
     <string name="lesson_flow_position">%1$s · %2$d/%3$d</string>
     <string name="lesson_flow_next">Next</string>
     <string name="lesson_flow_back">Back</string>
@@ -371,7 +391,7 @@
     <string name="lesson_flow_done">Done</string>
     <string name="lesson_flow_new_words">New words (%1$d)</string>
     <string name="lesson_flow_hide_new_words">Hide new words</string>
-    <string name="lesson_flow_review_badge">Review</string>
+    <string name="lesson_flow_review_badge">Lesson review</string>
     <string name="lesson_flow_grammar_badge">G</string>
     <string name="lesson_flow_grammar">Grammar</string>
     <string name="scroll_to_top">Scroll to top</string>

@@ -16,9 +16,10 @@ class DeleteWordUseCaseImpl(
     private val conjugations: ConjugationRepository,
 ) : DeleteWordUseCase {
     override suspend fun invoke(id: VocabularyId) {
-        val word = vocabularyRepository.getWord(id.value)
+        val word = vocabularyRepository.getWord(id.value) ?: return
+        if (!word.isUserCreated) return
         vocabularyRepository.deleteWord(id.value)
-        word?.let { conjugations.deleteUserVerb(it.text) }
+        conjugations.deleteUserVerb(word.text)
     }
 }
 

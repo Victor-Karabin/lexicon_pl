@@ -2,7 +2,6 @@ package com.lexicon.data.local
 
 import com.lexicon.model.course.ItemPicture
 import com.lexicon.model.course.LessonScreen
-import com.lexicon.model.course.TranscriptUnlock
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -80,8 +79,7 @@ class LessonThreeScriptTest {
     }
 
     @Test
-    fun `classroom words open after the dictation is checked`() {
-        assertEquals(TranscriptUnlock.AfterCheck, script.newWords.getValue("1B").unlock)
+    fun `the dictation brings the classroom words`() {
         assertEquals(12, script.newWords.getValue("1B").words.size)
         assertNull(screen("2A").hint)
     }

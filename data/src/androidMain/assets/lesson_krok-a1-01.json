@@ -68,8 +68,16 @@
     {"id": "101b1", "file": "a1_coursebook_101b1.mp3"},
     {"id": "101A5", "file": "a1_coursebook_101A5.mp3"},
     {"id": "101c1", "file": "a1_coursebook_101c1.mp3"},
+    {"id": "101c1-2", "file": "a1_coursebook_101c1-2.mp3"},
+    {"id": "101c1-3", "file": "a1_coursebook_101c1-3.mp3"},
     {"id": "101D1", "file": "a1_coursebook_101D1.mp3"},
+    {"id": "101D1-2", "file": "a1_coursebook_101D1-2.mp3"},
+    {"id": "101D1-3", "file": "a1_coursebook_101D1-3.mp3"},
+    {"id": "101D1-4", "file": "a1_coursebook_101D1-4.mp3"},
     {"id": "101E1", "file": "a1_coursebook_101E1.mp3"},
+    {"id": "101E1-2", "file": "a1_coursebook_101E1-2.mp3"},
+    {"id": "101E1-3", "file": "a1_coursebook_101E1-3.mp3"},
+    {"id": "101E1-4", "file": "a1_coursebook_101E1-4.mp3"},
     {"id": "101E2", "file": "a1_coursebook_101E2.mp3"}
   ],
   "steps": [
@@ -152,6 +160,7 @@
         {"polish": "interesujący", "english": "interesting"},
         {"polish": "cześć", "english": "hi; bye"},
         {"polish": "dziękuję", "english": "thank you"},
+        {"polish": "ósmy", "english": "eighth (ósma — eight o'clock)"},
         {"polish": "Kraków", "english": "Cracow"},
         {"polish": "chata", "english": "cottage, hut"},
         {"polish": "dym", "english": "smoke"},
@@ -208,10 +217,11 @@
       "newWords": [
         {"polish": "przepraszam", "english": "sorry / excuse me"},
         {"polish": "gdzie", "english": "where"},
-        {"polish": "powtórzyć", "english": "to repeat"}
+        {"polish": "powtórzyć", "english": "to repeat"},
+        {"polish": "sześć", "english": "six"},
+        {"polish": "dziewięć", "english": "nine"}
       ],
-      "rules": [1],
-      "newWordsUnlock": "after_check"
+      "rules": [1]
     },
     {
       "id": "1C",
@@ -263,10 +273,13 @@
         {"polish": "dom", "english": "house"},
         {"polish": "prosię", "english": "piglet"},
         {"polish": "siny", "english": "bluish"},
+        {"polish": "dziesięć", "english": "ten"},
         {"polish": "sitko", "english": "strainer"},
+        {"polish": "jeden", "english": "one"},
         {"polish": "prasować", "english": "to iron"},
         {"polish": "cud", "english": "miracle"},
         {"polish": "łatwy", "english": "easy"},
+        {"polish": "drugi", "english": "second"},
         {"polish": "zimno", "english": "cold"},
         {"polish": "Chiny", "english": "China"},
         {"polish": "wódka", "english": "vodka"},
@@ -453,15 +466,14 @@
         {"polish": "móc", "english": "can, to be able to"},
         {"polish": "imię", "english": "first name"},
         {"polish": "numer", "english": "number"}
-      ],
-      "newWordsUnlock": "after_check"
+      ]
     },
     {
       "id": "3A",
       "type": "reference",
       "title": "\"What's your name?\" — informal vs formal",
       "instruction": "Read how to ask someone's name and how to answer, then listen to three introductions.",
-      "tracks": [{"id": "101c1"}],
+      "tracks": [{"id": "101c1", "label": "Dialogue 1"}, {"id": "101c1-2", "label": "Dialogue 2"}, {"id": "101c1-3", "label": "Dialogue 3"}],
       "groups": [
         {
           "title": "Informal (ty)",
@@ -580,7 +592,16 @@
         }
       ],
       "notes": ["Tip: 9 / 10 — dzie-**w**-ięć / dzie-**ś**-ięć."],
-      "rules": [3]
+      "rules": [3],
+      "newWords": [
+        {"polish": "zero", "english": "zero"},
+        {"polish": "dwa", "english": "two"},
+        {"polish": "trzy", "english": "three"},
+        {"polish": "cztery", "english": "four"},
+        {"polish": "pięć", "english": "five"},
+        {"polish": "siedem", "english": "seven"},
+        {"polish": "osiem", "english": "eight"}
+      ]
     },
     {
       "id": "3D",
@@ -626,7 +647,7 @@
       "type": "reference",
       "title": "Where is…?",
       "instruction": "Listen 2–3 times and repeat. Use the phrases to understand the dialogues.",
-      "tracks": [{"id": "101D1"}],
+      "tracks": [{"id": "101D1", "label": "Dialogue 1"}, {"id": "101D1-2", "label": "Dialogue 2"}, {"id": "101D1-3", "label": "Dialogue 3"}, {"id": "101D1-4", "label": "Dialogue 4"}],
       "groups": [
         {
           "phrases": [
@@ -765,15 +786,14 @@
         {"polish": "okno", "english": "window"},
         {"polish": "drzwi", "english": "door"},
         {"polish": "tak", "english": "yes"}
-      ],
-      "newWordsUnlock": "after_check"
+      ]
     },
     {
       "id": "5A",
       "type": "reference",
       "title": "I don't understand. Please repeat!",
       "instruction": "Listen and repeat. Use the phrases to understand the dialogues.",
-      "tracks": [{"id": "101E1", "label": "Dialogues"}, {"id": "101E2", "label": "Phrases"}],
+      "tracks": [{"id": "101E1", "label": "Dialogue 1"}, {"id": "101E1-2", "label": "Dialogue 2"}, {"id": "101E1-3", "label": "Dialogue 3"}, {"id": "101E1-4", "label": "Dialogue 4"}, {"id": "101E2", "label": "Phrases"}],
       "groups": [
         {
           "phrases": [
@@ -1025,8 +1045,7 @@
         {"number": 5, "answers": ["607 44 32 89"]},
         {"number": 6, "answers": ["Proszę. Do"], "feedback": "Reply to *Dziękuję* with *Proszę*, then say goodbye: *Do widzenia*."}
       ],
-      "newWords": [{"polish": "Niemiec", "english": "German man"}],
-      "newWordsUnlock": "after_check"
+      "newWords": [{"polish": "Niemiec", "english": "German man"}]
     },
     {
       "id": "6C",
@@ -1088,8 +1107,7 @@
         {"label": "7", "answers": ["restauracja"], "feedback": "*restauracja* — Polish -cja = English -tion: restauracja, informacja, lekcja."}
       ],
       "newWords": [{"polish": "fotograf", "english": "photographer"}, {"polish": "aktor", "english": "actor"}],
-      "rules": [1],
-      "newWordsUnlock": "after_check"
+      "rules": [1]
     },
     {
       "id": "7C",
@@ -1174,8 +1192,7 @@
         {"label": "19", "prompt": "Z_elona _óra", "answers": ["Zielona Góra"]}
       ],
       "rules": [1],
-      "newWords": [{"polish": "Warszawa", "english": "Warsaw"}, {"polish": "zielony", "english": "green"}],
-      "newWordsUnlock": "after_check"
+      "newWords": [{"polish": "Warszawa", "english": "Warsaw"}, {"polish": "zielony", "english": "green"}]
     }
   ],
   "vocabulary": [

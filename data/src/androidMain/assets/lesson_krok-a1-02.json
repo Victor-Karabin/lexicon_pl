@@ -202,8 +202,7 @@
         {"polish": "kurs", "english": "course"},
         {"polish": "język", "english": "language"}
       ],
-      "rules": [4],
-      "newWordsUnlock": "after_check"
+      "rules": [4]
     },
     {
       "id": "1C",
@@ -894,7 +893,19 @@
       "notes": [
         "*-naście* = -teen; *dwadzieścia* = twenty; 21 = *dwadzieścia jeden*. Watch the stems: *czter-naście* (14), *pięt-naście* (15), *dziewięt-naście* (19)."
       ],
-      "rules": [6]
+      "rules": [6],
+      "newWords": [
+        {"polish": "jedenaście", "english": "eleven"},
+        {"polish": "dwanaście", "english": "twelve"},
+        {"polish": "trzynaście", "english": "thirteen"},
+        {"polish": "czternaście", "english": "fourteen"},
+        {"polish": "piętnaście", "english": "fifteen"},
+        {"polish": "szesnaście", "english": "sixteen"},
+        {"polish": "siedemnaście", "english": "seventeen"},
+        {"polish": "osiemnaście", "english": "eighteen"},
+        {"polish": "dziewiętnaście", "english": "nineteen"},
+        {"polish": "dwadzieścia", "english": "twenty"}
+      ]
     },
     {
       "id": "6B",
@@ -1224,8 +1235,7 @@
         }
       ],
       "rules": [4, 5],
-      "newWords": [{"polish": "jej", "english": "her"}],
-      "newWordsUnlock": "after_check"
+      "newWords": [{"polish": "jej", "english": "her"}]
     },
     {
       "id": "7F",
@@ -1270,8 +1280,7 @@
         }
       ],
       "rules": [4, 5],
-      "newWords": [{"polish": "jego", "english": "his"}],
-      "newWordsUnlock": "after_check"
+      "newWords": [{"polish": "jego", "english": "his"}]
     },
     {
       "id": "7G",
@@ -1438,8 +1447,7 @@
         {"polish": "zły", "english": "bad"},
         {"polish": "brawo", "english": "bravo, well done"},
         {"polish": "po angielsku", "english": "in English"}
-      ],
-      "newWordsUnlock": "after_check"
+      ]
     },
     {
       "id": "8E",

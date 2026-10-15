@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Assessment
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -24,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -38,16 +40,19 @@ import com.lexicon.interactors.course.LessonExercise
 import com.lexicon.interactors.course.questionCount
 import com.lexicon.model.course.CourseId
 import com.lexicon.model.course.LessonId
+import com.lexicon.model.course.LessonPhrase
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
 import com.lexicon.model.vocabulary.WordStatus
 import com.lexicon.model.vocabulary.statusOf
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
-import com.lexicon.presentation.common.ScrollToTopButton
 import com.lexicon.presentation.common.ScrollToTopClearance
+import com.lexicon.presentation.common.ScrollToTopLayout
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.presets.VocabularyWordRow
+import com.lexicon.presentation.presets.WordRow
+import com.lexicon.presentation.presets.detailLine
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
 import kotlinx.collections.immutable.persistentListOf
@@ -60,6 +65,7 @@ fun LessonScreen(
     onEditWord: (VocabularyId) -> Unit,
     onExerciseSelected: (LessonExercise) -> Unit,
     onStartLesson: () -> Unit,
+    onShowResults: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LessonViewModel = koinViewModel(),
 ) {
@@ -74,10 +80,11 @@ fun LessonScreen(
         uiState = uiState,
         onClose = onClose,
         onWordStatusCycled = viewModel::onWordStatusCycled,
-        onPronounceWord = viewModel::onPronounceWord,
+        onPronounce = viewModel::onPronounce,
         onEditWord = onEditWord,
         onExerciseSelected = onExerciseSelected,
         onStartLesson = onStartLesson,
+        onShowResults = onShowResults,
         modifier = modifier,
     )
 }
@@ -88,10 +95,11 @@ private fun LessonContent(
     uiState: LessonUiState,
     onClose: () -> Unit,
     onWordStatusCycled: (VocabularyId) -> Unit,
-    onPronounceWord: (Word) -> Unit,
+    onPronounce: (String) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
     onExerciseSelected: (LessonExercise) -> Unit,
     onStartLesson: () -> Unit,
+    onShowResults: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val title = when (uiState) {
@@ -101,7 +109,20 @@ private fun LessonContent(
 
     Scaffold(
         modifier = modifier,
-        topBar = { TrainingTopBar(title = title, onClose = onClose) },
+        topBar = {
+            TrainingTopBar(
+                title = title,
+                onClose = onClose,
+                actions = {
+                    if ((uiState as? LessonUiState.Loaded)?.hasResults == true) {
+                        TextButton(onClick = onShowResults) {
+                            Icon(Icons.Default.Assessment, contentDescription = null)
+                            Text(text = stringResource(R.string.lesson_results), modifier = Modifier.padding(start = Dimens.spacingSmall))
+                        }
+                    }
+                },
+            )
+        },
     ) { padding ->
         when (uiState) {
             is LessonUiState.Loading ->
@@ -125,7 +146,7 @@ private fun LessonContent(
 
             is LessonUiState.Loaded -> {
                 val list = rememberLazyListState()
-                Box(modifier = Modifier.fillMaxSize().padding(padding)) {
+                ScrollToTopLayout(list = list, modifier = Modifier.fillMaxSize().padding(padding)) {
                     LazyColumn(
                         state = list,
                         modifier = Modifier.fillMaxSize(),
@@ -133,12 +154,8 @@ private fun LessonContent(
                     ) {
                         lessonHeader(uiState, onStartLesson)
                         if (!uiState.hasScript) exercisesBlock(uiState.lesson.exercises, onExerciseSelected)
-                        wordsBlock(uiState, onWordStatusCycled, onPronounceWord, onEditWord)
+                        wordsBlock(uiState, onWordStatusCycled, onPronounce, onEditWord)
                     }
-                    ScrollToTopButton(
-                        list = list,
-                        modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = Dimens.spacingMedium),
-                    )
                 }
             }
         }
@@ -211,7 +228,7 @@ private fun LazyListScope.exercisesBlock(
 private fun LazyListScope.wordsBlock(
     uiState: LessonUiState.Loaded,
     onWordStatusCycled: (VocabularyId) -> Unit,
-    onPronounceWord: (Word) -> Unit,
+    onPronounce: (String) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
 ) {
     item { SectionHeading(stringResource(R.string.lesson_words)) }
@@ -226,14 +243,30 @@ private fun LazyListScope.wordsBlock(
         }
         return
     }
-    itemsIndexed(uiState.words, key = { _, word -> word.id.value }) { index, word ->
-        VocabularyWordRow(
-            word = word,
-            status = uiState.wordStatuses.statusOf(word.id),
-            onStatusCycled = { onWordStatusCycled(word.id) },
-            onPronounce = { onPronounceWord(word) },
-            onClick = { onEditWord(word.id) },
-        )
+    itemsIndexed(uiState.words, key = { _, item -> item.key }) { index, item ->
+        when (item) {
+            is LessonWord.Entry -> {
+                val word = item.word
+                VocabularyWordRow(
+                    word = word,
+                    status = uiState.wordStatuses.statusOf(word.id),
+                    onStatusCycled = { onWordStatusCycled(word.id) },
+                    onPronounce = { onPronounce(word.text) },
+                    onClick = { onEditWord(word.id) },
+                )
+            }
+
+            is LessonWord.Plain ->
+                WordRow(
+                    word = null,
+                    text = item.phrase.polish,
+                    translation = item.phrase.english,
+                    status = null,
+                    onStatusCycled = {},
+                    onPronounce = { onPronounce(item.phrase.polish.trimEnd('…')) },
+                    detail = item.phrase.detailLine(),
+                )
+        }
         if (index < uiState.words.lastIndex) {
             HorizontalDivider(modifier = Modifier.padding(horizontal = Dimens.spacingMedium))
         }
@@ -274,18 +307,20 @@ private fun LessonPreview() {
             uiState = LessonUiState.Loaded(
                 lesson = previewLesson,
                 words = persistentListOf(
-                    Word(VocabularyId(1), "proszę", "please", "ˈprɔʂɛ", status = WordStatus.TO_LEARN),
-                    Word(VocabularyId(2), "dziękuję", "thank you", "d͡ʑɛŋˈkujɛ"),
-                    Word(VocabularyId(3), "przepraszam", "sorry", "pʂɛˈpraʂam"),
+                    LessonWord.Entry(Word(VocabularyId(1), "proszę", "please", "ˈprɔʂɛ", status = WordStatus.TO_LEARN)),
+                    LessonWord.Plain(LessonPhrase("dwa", "two", "dva")),
+                    LessonWord.Entry(Word(VocabularyId(2), "dziękuję", "thank you", "d͡ʑɛŋˈkujɛ")),
+                    LessonWord.Entry(Word(VocabularyId(3), "przepraszam", "sorry", "pʂɛˈpraʂam")),
                 ),
                 isLoadingWords = false,
             ),
             onClose = {},
             onWordStatusCycled = {},
-            onPronounceWord = {},
+            onPronounce = {},
             onEditWord = {},
             onExerciseSelected = {},
             onStartLesson = {},
+            onShowResults = {},
         )
     }
 }
@@ -298,10 +333,11 @@ private fun LessonNotFoundPreview() {
             uiState = LessonUiState.NotFound,
             onClose = {},
             onWordStatusCycled = {},
-            onPronounceWord = {},
+            onPronounce = {},
             onEditWord = {},
             onExerciseSelected = {},
             onStartLesson = {},
+            onShowResults = {},
         )
     }
 }

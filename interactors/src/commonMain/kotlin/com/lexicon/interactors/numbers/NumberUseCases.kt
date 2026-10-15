@@ -8,11 +8,18 @@ import kotlin.random.Random
 data class NumberForm(
     val value: Long,
     val kind: NumberKind,
+    val gender: NumberGender? = null,
 ) {
     companion object {
         fun formsOf(numbers: List<Long>): List<NumberForm> =
             numbers.flatMap { value ->
-                NumberKind.entries.filter { PolishNumbers.hasForm(value, it) }.map { NumberForm(value, it) }
+                NumberKind.entries.filter { PolishNumbers.hasForm(value, it) }.flatMap { kind ->
+                    if (PolishNumbers.hasGenders(value, kind)) {
+                        NumberGender.entries.map { NumberForm(value, kind, it) }
+                    } else {
+                        listOf(NumberForm(value, kind))
+                    }
+                }
             }
     }
 }
@@ -20,6 +27,7 @@ data class NumberForm(
 data class NumberQuestion(
     val value: Long,
     val kind: NumberKind,
+    val gender: NumberGender?,
     val digits: String,
     val answers: ImmutableList<String>,
     val transcription: String,
@@ -31,20 +39,22 @@ data class NumberQuestion(
         fun of(
             value: Long,
             kind: NumberKind = NumberKind.CARDINAL,
+            gender: NumberGender? = null,
         ): NumberQuestion =
             NumberQuestion(
                 value = value,
                 kind = kind,
+                gender = gender,
                 digits = PolishNumbers.digits(value),
-                answers = PolishNumbers.answers(value, kind).toImmutableList(),
-                transcription = PolishNumbers.transcription(value, kind),
+                answers = PolishNumbers.answers(value, kind, gender).toImmutableList(),
+                transcription = PolishNumbers.transcription(value, kind, gender),
                 rules = PolishNumbers.rules(value, kind).toImmutableList(),
             )
 
-        fun of(form: NumberForm): NumberQuestion = of(form.value, form.kind)
+        fun of(form: NumberForm): NumberQuestion = of(form.value, form.kind, form.gender)
     }
 
-    val form: NumberForm get() = NumberForm(value, kind)
+    val form: NumberForm get() = NumberForm(value, kind, gender)
 }
 
 data class NumberProgress(

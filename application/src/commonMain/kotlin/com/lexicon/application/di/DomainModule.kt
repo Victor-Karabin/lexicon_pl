@@ -11,6 +11,7 @@ import com.lexicon.application.conjugation.NextConjugationTableUseCaseImpl
 import com.lexicon.application.conjugation.SubmitConjugationAnswerUseCaseImpl
 import com.lexicon.application.conjugation.ToggleVerbInStudySetUseCaseImpl
 import com.lexicon.application.course.CheckExerciseAnswerUseCaseImpl
+import com.lexicon.application.course.GetLastLessonResultsUseCaseImpl
 import com.lexicon.application.course.GetLessonProgressUseCaseImpl
 import com.lexicon.application.course.GetLessonScriptUseCaseImpl
 import com.lexicon.application.course.GetLessonUseCaseImpl
@@ -19,6 +20,7 @@ import com.lexicon.application.course.ObserveCoursesUseCaseImpl
 import com.lexicon.application.course.ResetLessonProgressUseCaseImpl
 import com.lexicon.application.course.ReviewWritingUseCaseImpl
 import com.lexicon.application.course.SaveLessonProgressUseCaseImpl
+import com.lexicon.application.course.SaveLessonResultsUseCaseImpl
 import com.lexicon.application.course.SetCourseOnDashboardUseCaseImpl
 import com.lexicon.application.course.SetLessonCompletedUseCaseImpl
 import com.lexicon.application.crossword.StartCrosswordSessionUseCaseImpl
@@ -74,6 +76,7 @@ import com.lexicon.application.puzzle.StartPuzzleSessionUseCaseImpl
 import com.lexicon.application.puzzle.SubmitPuzzleAnswerUseCaseImpl
 import com.lexicon.application.settings.ObserveSettingsUseCaseImpl
 import com.lexicon.application.settings.StepCountResolver
+import com.lexicon.application.settings.UpdatePassMarkUseCaseImpl
 import com.lexicon.application.settings.UpdateStepCountUseCaseImpl
 import com.lexicon.application.settings.UpdateThemeModeUseCaseImpl
 import com.lexicon.application.sync.SeedCatalogsUseCaseImpl
@@ -116,6 +119,7 @@ import com.lexicon.interactors.conjugation.RestoreConjugationVerbsUseCase
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
 import com.lexicon.interactors.conjugation.ToggleVerbInStudySetUseCase
 import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
+import com.lexicon.interactors.course.GetLastLessonResultsUseCase
 import com.lexicon.interactors.course.GetLessonProgressUseCase
 import com.lexicon.interactors.course.GetLessonScriptUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
@@ -124,6 +128,7 @@ import com.lexicon.interactors.course.ObserveCoursesUseCase
 import com.lexicon.interactors.course.ResetLessonProgressUseCase
 import com.lexicon.interactors.course.ReviewWritingUseCase
 import com.lexicon.interactors.course.SaveLessonProgressUseCase
+import com.lexicon.interactors.course.SaveLessonResultsUseCase
 import com.lexicon.interactors.course.SetCourseOnDashboardUseCase
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
 import com.lexicon.interactors.crossword.StartCrosswordSessionUseCase
@@ -180,6 +185,7 @@ import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerUseCase
 import com.lexicon.interactors.settings.ObserveSettingsUseCase
+import com.lexicon.interactors.settings.UpdatePassMarkUseCase
 import com.lexicon.interactors.settings.UpdateStepCountUseCase
 import com.lexicon.interactors.settings.UpdateThemeModeUseCase
 import com.lexicon.interactors.settings.UpdateVoiceUseCase
@@ -205,6 +211,7 @@ import com.lexicon.interactors.wordmatch.StartWordMatchSessionUseCase
 import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultUseCase
 import com.lexicon.model.scheduling.ReviewSettings
 import com.lexicon.model.scheduling.StudyTimePolicy
+import com.lexicon.model.vocabulary.PresetId
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
@@ -238,6 +245,7 @@ val domainModule = module {
     factoryOf(::ObserveSettingsUseCaseImpl) { bind<ObserveSettingsUseCase>() }
     factoryOf(::UpdateThemeModeUseCaseImpl) { bind<UpdateThemeModeUseCase>() }
     factoryOf(::UpdateStepCountUseCaseImpl) { bind<UpdateStepCountUseCase>() }
+    factoryOf(::UpdatePassMarkUseCaseImpl) { bind<UpdatePassMarkUseCase>() }
     factory<UpdateVoiceUseCase> {
         val settings = get<SettingsRepository>()
         UpdateVoiceUseCase { settings.setVoiceId(it) }
@@ -329,7 +337,7 @@ val domainModule = module {
     factoryOf(::RestoreWordUseCaseImpl) { bind<RestoreWordUseCase>() }
     factory<DeletePresetUseCase> {
         val presets = get<VocabularyPresetRepository>()
-        DeletePresetUseCase { presets.deletePreset(it.value) }
+        DeletePresetUseCase { if (it != PresetId.UNSORTED) presets.deletePreset(it.value) }
     }
     factory<RestorePresetUseCase> {
         val presets = get<VocabularyPresetRepository>()
@@ -340,6 +348,8 @@ val domainModule = module {
     factoryOf(::GetLessonUseCaseImpl) { bind<GetLessonUseCase>() }
     factoryOf(::GetLessonVocabularyUseCaseImpl) { bind<GetLessonVocabularyUseCase>() }
     factoryOf(::SetLessonCompletedUseCaseImpl) { bind<SetLessonCompletedUseCase>() }
+    factoryOf(::SaveLessonResultsUseCaseImpl) { bind<SaveLessonResultsUseCase>() }
+    factoryOf(::GetLastLessonResultsUseCaseImpl) { bind<GetLastLessonResultsUseCase>() }
     factoryOf(::SetCourseOnDashboardUseCaseImpl) { bind<SetCourseOnDashboardUseCase>() }
     factoryOf(::ResetLessonProgressUseCaseImpl) { bind<ResetLessonProgressUseCase>() }
     factoryOf(::RecordStudyActivityUseCaseImpl) { bind<RecordStudyActivityUseCase>() }

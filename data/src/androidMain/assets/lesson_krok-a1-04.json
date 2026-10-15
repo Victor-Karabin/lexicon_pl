@@ -315,8 +315,7 @@
         {"number": 12, "answers": ["niemiecku"], "feedback": "In Argentina people speak Spanish, in Austria German."}
       ],
       "newWords": [{"polish": "Ameryka", "english": "America"}, {"polish": "rosyjski", "english": "Russian"}],
-      "rules": [2],
-      "newWordsUnlock": "after_check"
+      "rules": [2]
     },
     {
       "id": "2D",
@@ -443,8 +442,7 @@
         {"polish": "holenderski", "english": "Dutch"},
         {"polish": "Budapeszt", "english": "Budapest"}
       ],
-      "rules": [2],
-      "newWordsUnlock": "after_check"
+      "rules": [2]
     },
     {
       "id": "2G",
@@ -986,8 +984,7 @@
         {"polish": "czysty", "english": "clean"},
         {"polish": "brudny", "english": "dirty"}
       ],
-      "rules": [5],
-      "newWordsUnlock": "after_check"
+      "rules": [5]
     },
     {
       "id": "4D",
@@ -1053,8 +1050,7 @@
       "newWords": [
         {"polish": "wypoczęty", "english": "rested"},
         {"polish": "niewysportowany", "english": "unathletic"}
-      ],
-      "newWordsUnlock": "after_check"
+      ]
     },
     {
       "id": "5A",

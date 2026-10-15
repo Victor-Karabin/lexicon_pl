@@ -8,6 +8,7 @@ import com.lexicon.presentation.conjugation.VerbSelectionViewModel
 import com.lexicon.presentation.course.CourseDetailViewModel
 import com.lexicon.presentation.course.ExerciseViewModel
 import com.lexicon.presentation.course.LessonFlowViewModel
+import com.lexicon.presentation.course.LessonResultsViewModel
 import com.lexicon.presentation.course.LessonViewModel
 import com.lexicon.presentation.course.PlanViewModel
 import com.lexicon.presentation.crossword.CrosswordViewModel
@@ -62,6 +63,7 @@ val viewModelModule = module {
     viewModelOf(::ExerciseViewModel)
     viewModelOf(::LessonFlowViewModel)
     viewModelOf(::LessonViewModel)
+    viewModelOf(::LessonResultsViewModel)
     viewModelOf(::CrosswordViewModel)
     viewModelOf(::DictationViewModel)
     viewModelOf(::DictationPuzzleViewModel)

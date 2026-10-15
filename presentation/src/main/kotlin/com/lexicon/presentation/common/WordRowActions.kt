@@ -24,21 +24,23 @@ import androidx.compose.ui.unit.dp
 import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.LexiconTheme
 
-val WordRowActionsWidth = DeleteActionWidth * 2
+fun wordRowActionsWidth(canDelete: Boolean) = if (canDelete) DeleteActionWidth * 2 else DeleteActionWidth
 
 private val PreviewRowHeight = 76.dp
 
 @Composable
 fun WordRowActions(
     onChangePresets: () -> Unit,
-    onDelete: () -> Unit,
+    onDelete: (() -> Unit)?,
 ) {
     Row(modifier = Modifier.fillMaxSize()) {
         Box(modifier = Modifier.width(DeleteActionWidth).fillMaxHeight()) {
             ChangePresetsAction(onClick = onChangePresets)
         }
-        Box(modifier = Modifier.width(DeleteActionWidth).fillMaxHeight()) {
-            DeleteAction(onClick = onDelete)
+        onDelete?.let { delete ->
+            Box(modifier = Modifier.width(DeleteActionWidth).fillMaxHeight()) {
+                DeleteAction(onClick = delete)
+            }
         }
     }
 }
@@ -75,7 +77,7 @@ private fun ChangePresetsAction(onClick: () -> Unit) {
 @Composable
 private fun WordRowActionsPreview() {
     LexiconTheme {
-        Box(modifier = Modifier.width(WordRowActionsWidth).height(PreviewRowHeight)) {
+        Box(modifier = Modifier.width(wordRowActionsWidth(canDelete = true)).height(PreviewRowHeight)) {
             WordRowActions(onChangePresets = {}, onDelete = {})
         }
     }

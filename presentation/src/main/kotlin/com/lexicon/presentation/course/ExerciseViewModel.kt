@@ -183,6 +183,12 @@ class ExerciseViewModel(
         }
     }
 
+    fun onKeyboardDone() {
+        val current = content.value ?: return
+        val filled = current.responses.isNotEmpty() && current.responses.all { row -> row.all { it.isNotBlank() } }
+        if (current.answerState is AnswerState.Unanswered && filled) onCheck()
+    }
+
     private fun studied() = recordStudy.markIn(viewModelScope, dispatchers)
 
     fun onRetry() {

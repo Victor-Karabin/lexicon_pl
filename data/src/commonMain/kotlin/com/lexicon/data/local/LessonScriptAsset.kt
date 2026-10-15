@@ -1,5 +1,6 @@
 package com.lexicon.data.local
 
+import com.lexicon.common.polishTranscription
 import com.lexicon.model.course.AnswerKeyboard
 import com.lexicon.model.course.AnswerMatch
 import com.lexicon.model.course.ChoiceQuestion
@@ -181,7 +182,6 @@ data class ScreenAsset(
     val model: List<String> = emptyList(),
     val checklist: List<String> = emptyList(),
     val newWords: List<PhraseAsset> = emptyList(),
-    val newWordsUnlock: String = "always",
     val wordBox: List<String> = emptyList(),
     val rules: List<Int> = emptyList(),
     val skipped: Boolean = false,
@@ -238,8 +238,7 @@ fun LessonScriptAsset.toModel(remoteIds: Map<String, String?>): LessonScript {
         screens = shown.map { it.toModel(::track) }.toImmutableList(),
         newWords = shown.filter { it.newWords.isNotEmpty() }.associate { screen ->
             screen.id to NewWords(
-                words = screen.newWords.map { LessonPhrase(it.polish, it.english) }.toImmutableList(),
-                unlock = if (screen.newWordsUnlock == "after_check") TranscriptUnlock.AfterCheck else TranscriptUnlock.Always,
+                words = screen.newWords.map { LessonPhrase(it.polish, it.english, polishTranscription(it.polish)) }.toImmutableList(),
             )
         }.toImmutableMap(),
         rules = rules.mapIndexed { index, rule ->

@@ -8,6 +8,7 @@ data class AppSettingsBoundary(
     val themeMode: ThemeModeBoundary,
     val stepCount: Int,
     val voiceId: String? = null,
+    val passMark: Int? = null,
 )
 
 interface SettingsRepository {
@@ -20,4 +21,6 @@ interface SettingsRepository {
     suspend fun setStepCount(stepCount: Int)
 
     suspend fun setVoiceId(voiceId: String?)
+
+    suspend fun setPassMark(passMark: Int)
 }

@@ -266,7 +266,8 @@
       "newWords": [
         {"polish": "gyros", "english": "gyros"},
         {"polish": "kapusta pekińska", "english": "Chinese cabbage"},
-        {"polish": "ogórek konserwowy", "english": "pickled gherkin"}
+        {"polish": "ogórek konserwowy", "english": "pickled gherkin"},
+        {"polish": "feta", "english": "feta (cheese)"}
       ],
       "rules": [3]
     },
@@ -310,8 +311,7 @@
         {"polish": "owalny", "english": "oval"},
         {"polish": "podłużny", "english": "long"}
       ],
-      "rules": [4],
-      "newWordsUnlock": "after_check"
+      "rules": [4]
     },
     {
       "id": "1H",
@@ -391,8 +391,7 @@
         {"polish": "w środku", "english": "inside"},
         {"polish": "raczej", "english": "rather"}
       ],
-      "rules": [4],
-      "newWordsUnlock": "after_check"
+      "rules": [4]
     },
     {
       "id": "2A",
@@ -546,7 +545,8 @@
         {"polish": "mniej", "english": "less"},
         {"polish": "mało", "english": "little"},
         {"polish": "sezon", "english": "season"},
-        {"polish": "pół kilo", "english": "half a kilo"}
+        {"polish": "pół kilo", "english": "half a kilo"},
+        {"polish": "dwie", "english": "two (fem.)"}
       ],
       "rules": [1, 2]
     },
@@ -704,8 +704,7 @@
         {"number": 5, "answers": ["wszystko"]},
         {"number": 6, "answers": ["drobne"]}
       ],
-      "newWords": [{"polish": "więcej", "english": "more"}],
-      "newWordsUnlock": "after_check"
+      "newWords": [{"polish": "więcej", "english": "more"}]
     },
     {
       "id": "3A",
@@ -1391,8 +1390,7 @@
         {"polish": "brokułowy", "english": "broccoli (adj.)"},
         {"polish": "cebulowy", "english": "onion (adj.)"}
       ],
-      "rules": [5],
-      "newWordsUnlock": "after_check"
+      "rules": [5]
     }
   ],
   "vocabulary": [

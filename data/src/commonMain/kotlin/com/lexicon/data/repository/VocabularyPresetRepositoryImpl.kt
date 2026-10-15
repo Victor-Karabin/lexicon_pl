@@ -6,12 +6,16 @@ import com.lexicon.boundary.VocabularyPresetBoundary
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.data.local.PresetDao
 import com.lexicon.data.local.PresetEntity
+import com.lexicon.data.local.UNSORTED_PRESET_ID
 import com.lexicon.data.local.USER_PRESET_CATEGORY_ID
 import com.lexicon.data.local.VocabularyPresetSeeder
 import com.lexicon.data.local.encodeLocalized
 import com.lexicon.data.local.toBoundary
+import com.lexicon.data.local.unsortedCategory
+import com.lexicon.data.local.unsortedPreset
 import com.lexicon.data.local.userPresetId
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
@@ -27,25 +31,25 @@ class VocabularyPresetRepositoryImpl(
         seeder.ensureSeeded()
         val membership = presetDao.getAllMemberships().groupBy { it.presetId }
         val counts = presetDao.getWordCounts().associateBy { it.presetId }
-        return presetDao.getPresets().map { preset ->
+        val presets = presetDao.getPresets().map { preset ->
             preset.toBoundary(membership[preset.id].orEmpty().map { it.wordId }, counts[preset.id])
         }
+        return listOf(unsortedPreset.toBoundary(presetDao.getUnsortedWordIds())) + presets
     }
 
     override fun observePresets(): Flow<List<VocabularyPresetBoundary>> =
-        presetDao
-            .observeMemberships()
-            .onStart { seeder.ensureSeeded() }
-            .map { memberships ->
-                val byPreset = memberships.groupBy { it.presetId }
-                val counts = presetDao.getWordCounts().associateBy { it.presetId }
+        combine(presetDao.observeMemberships(), presetDao.observeUnsortedWordIds()) { memberships, unsorted ->
+            val byPreset = memberships.groupBy { it.presetId }
+            val counts = presetDao.getWordCounts().associateBy { it.presetId }
+            listOf(unsortedPreset.toBoundary(unsorted)) +
                 presetDao.getPresets().map { preset ->
                     preset.toBoundary(byPreset[preset.id].orEmpty().map { it.wordId }, counts[preset.id])
                 }
-            }
+        }.onStart { seeder.ensureSeeded() }
 
     override suspend fun getPreset(id: String): VocabularyPresetBoundary? {
         seeder.ensureSeeded()
+        if (id == UNSORTED_PRESET_ID) return unsortedPreset.toBoundary(presetDao.getUnsortedWordIds())
         val preset = presetDao.getPreset(id) ?: return null
         return preset.toBoundary(presetDao.getWordIds(id))
     }
@@ -83,6 +87,7 @@ class VocabularyPresetRepositoryImpl(
     }
 
     override suspend fun deletePreset(id: String) {
+        if (id == UNSORTED_PRESET_ID) return
         seeder.ensureSeeded()
         seeder.delete(id)
     }
@@ -99,12 +104,13 @@ class VocabularyPresetRepositoryImpl(
         wordId: Long,
         isMember: Boolean,
     ) {
+        if (presetId == UNSORTED_PRESET_ID) return
         seeder.ensureSeeded()
         presetDao.setWordInPreset(presetId, wordId, isMember)
     }
 
     override suspend fun getCategories(): List<PresetCategoryBoundary> {
         seeder.ensureSeeded()
-        return presetDao.getCategories().map { it.toBoundary() }
+        return (listOf(unsortedCategory) + presetDao.getCategories()).map { it.toBoundary() }
     }
 }

@@ -1,5 +1,6 @@
 package com.lexicon.interactors.course
 
+import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.model.course.ChoiceQuestion
 import com.lexicon.model.course.FirstTry
 import com.lexicon.model.course.GrammarRule
@@ -21,11 +22,7 @@ data class Score(
 ) {
     val percent: Int get() = if (total == 0) 100 else correct * 100 / total
 
-    val isPassed: Boolean get() = correct * 100 >= total * PASS_MARK
-
-    companion object {
-        const val PASS_MARK = 80
-    }
+    fun isPassed(passMark: Int): Boolean = correct * 100 >= total * passMark
 }
 
 data class StepScore(
@@ -52,6 +49,7 @@ data class LessonResults(
 data class LessonSession(
     val script: LessonScript,
     val progress: LessonProgress = LessonProgress(),
+    val passMark: Int = AppSettings.DEFAULT_PASS_MARK,
 ) {
     val index: Int
         get() = progress.screenId?.let { id -> script.screens.indexOfFirst { it.id == id }.takeIf { it >= 0 } }
@@ -71,7 +69,14 @@ data class LessonSession(
         get() =
             when (val current = screen) {
                 is LessonScreen.FreeWriting -> !isFinished && current.fields.indices.any { answer(current.id, it.toString()).isNotBlank() }
-                else -> current.isGraded && !isChecked && current.questions.all { answer(current.id, it.key).isNotBlank() }
+                else -> current.isGraded && !isChecked && isFullyAnswered
+            }
+
+    val isFullyAnswered: Boolean
+        get() =
+            when (val current = screen) {
+                is LessonScreen.FreeWriting -> current.fields.indices.all { answer(current.id, it.toString()).isNotBlank() }
+                else -> current.questions.all { answer(current.id, it.key).isNotBlank() }
             }
 
     val needsCheck: Boolean get() = !isFinished && (screen.isGraded || screen is LessonScreen.FreeWriting)
@@ -93,7 +98,7 @@ data class LessonSession(
         )
 
     val failedScore: Score?
-        get() = screenScore(screen).takeIf { screen.isGraded && isChecked && !it.isPassed }
+        get() = screenScore(screen).takeIf { screen.isGraded && isChecked && !it.isPassed(passMark) }
 
     fun isChecked(screenId: String): Boolean = screenId in progress.checked
 
@@ -243,8 +248,6 @@ data class LessonSession(
 
     fun isTranscriptUnlocked(screen: LessonScreen): Boolean = isUnlocked(screen.transcript?.unlock, screen)
 
-    fun isNewWordsUnlocked(screen: LessonScreen): Boolean = isUnlocked(script.newWords[screen.id]?.unlock, screen)
-
     private fun isUnlocked(
         unlock: TranscriptUnlock?,
         screen: LessonScreen,
@@ -282,9 +285,10 @@ data class LessonSession(
         fun resume(
             script: LessonScript,
             progress: LessonProgress?,
+            passMark: Int = AppSettings.DEFAULT_PASS_MARK,
         ): LessonSession {
-            val saved = LessonSession(script, progress ?: LessonProgress())
-            return if (saved.isAtEnd) LessonSession(script) else saved
+            val saved = LessonSession(script, progress ?: LessonProgress(), passMark)
+            return if (saved.isAtEnd) LessonSession(script, passMark = passMark) else saved
         }
 
         fun isInProgress(
