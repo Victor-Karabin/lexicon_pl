@@ -26,7 +26,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.conjugation.GrammaticalPerson
 import com.lexicon.interactors.course.LessonAnswerChecker
@@ -44,8 +43,6 @@ import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.component.ProgressDots
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
-
-private val ConjugationImageHeight = 120.dp
 
 object ConjugationTestTags {
     const val INFINITIVE = "conjugation_infinitive"
@@ -140,7 +137,7 @@ private fun ConjugationContent(
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
-                            text = stringResource(R.string.conjugation_none),
+                            text = stringResource(if (uiState.isComplete) R.string.conjugation_complete else R.string.conjugation_none),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = TextAlign.Center,
@@ -168,7 +165,7 @@ private fun ConjugationContent(
                                 ClueImage(
                                     imageUrl = table.imageUrl,
                                     fallbackText = table.infinitive,
-                                    height = ConjugationImageHeight,
+                                    height = DrillImageHeight,
                                     modifier = Modifier.testTag(ConjugationTestTags.IMAGE),
                                 )
                                 IconButton(

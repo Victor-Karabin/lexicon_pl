@@ -32,7 +32,7 @@ data android  application     adapters     use-case implementations
 ```
 
 `model` depends on nothing but the Kotlin standard library and immutable collections.
-Five of the eight contexts have their model there; Conjugation, Numbers and Catalogue do not yet
+Five of the nine contexts have their model there; Conjugation, Declension, Numbers and Catalogue do not yet
 (see [Known gaps](#known-gaps)).
 
 ## Bounded Contexts
@@ -43,8 +43,9 @@ Five of the eight contexts have their model there; Conjugation, Numbers and Cata
 | Training | A single practice session and what it records | `model.training` | `interactors.<training>` × 13 |
 | Scheduling | Review intervals, mastery, study days, streaks | `model.scheduling` | — |
 | Vocabulary course | The always-on course: its settings, its queue and where the learner is in it | `model.vocabularycourse` | `interactors.vocabularycourse` |
-| Course | Fixed teaching material — lessons and exercises | `model.course` | `interactors.course` |
+| Course | Fixed teaching material — lessons and exercises, and reference rules | `model.course`, `model.rules` | `interactors.course`, `interactors.rules` |
 | Conjugation | Verbs, their forms, and courses over them | — | `interactors.conjugation` |
+| Declension | Nouns and adjectives by case, and the Cases course over them | — | `interactors.declension` |
 | Numbers | Numbers the learner chose, their Polish words and per-number progress | — | `interactors.numbers` |
 | Catalogue | Seeding shipped data into the database | — | `interactors.sync` |
 
@@ -104,8 +105,11 @@ under [Context-Specific Terminology](#context-specific-terminology) and must not
 | Conjugated form | What a verb becomes for a given person | Conjugation | *answer*, *inflection* | `formsFor(person)` |
 | Ending | The part of a conjugated form that differs from the verb's shared stem | Conjugation | *termination* | `ConjugationSplit.endings` |
 | Stem | The longest prefix every usable form of a verb shares | Conjugation | *root*, *base* | `ConjugationSplit.stem` |
-| Variant mastery | A conjugation variant answered correctly enough times in a row | Conjugation | *learned* | `MASTERY_STREAK` |
+| Variant mastery | A conjugation or declension variant answered correctly enough times in a row | Conjugation, Declension | *learned* | `TABLE_DRILL_MASTERY_STREAK` |
 | Conjugation course | A chosen set of verbs practised together, with its own progress | Conjugation | *course* unqualified | `ConjugationCourse` |
+| Declension column | One number or gender of a declinable word — singular or plural for a noun; masculine, feminine, neuter, plural for men or other plural for an adjective — asked as one table of seven cases | Declension | *form group* | `DeclensionColumn` |
+| Declension variant | One word, column and case — the unit of progress in the Cases course | Declension | *cell* | `DeclensionVariant` |
+| Cases course | The nouns and adjectives marked to learn, drilled one declension column at a time | Declension | *declension course* in UI text | `DeclensionCourse`, `NextDeclensionTableUseCase` |
 | Number selection | The numbers and ranges the learner typed, read into a sorted set — or the reason they cannot be read | Numbers | *range*, *spec* | `NumberSelection` |
 | Number form | One way a number is practised: cardinal (*dwa*), ordinal (*drugi*) or list point (*po drugie*), and for ordinals, 1 and numbers ending in 2 also a gender (*druga*, *dwie*) | Numbers | *variant*, *type* | `NumberForm`, `NumberKind`, `NumberGender` |
 | Number words | A number written out in Polish in one form, nominative masculine | Numbers | *spelling* | `PolishNumbers.words` |
@@ -116,6 +120,7 @@ under [Context-Specific Terminology](#context-specific-terminology) and must not
 | Catalogue | A body of shipped data seeded into the database from an asset | Catalogue | *database*, *source* | `SeedCatalogsUseCase` |
 | Seeding | Writing a catalogue's asset into the database | Catalogue | *sync*, *import*, *download* | `seedFromAsset()` |
 | Fingerprint | A cheap identity for an asset, used to skip unchanged seeding | Catalogue | *hash* | `CatalogSeedStore` |
+| Reference rule | A grammar topic read on its own, outside any lesson — for example *Przypadki*, the cases, opened from the book icon of the Cases course. It has titled sections of text, tables and notes | Course | *cheat sheet*, *lesson rule* (that is a lesson's numbered grammar rule) | `ReferenceRule`, `ReferenceRuleId`, `GetReferenceRuleUseCase` |
 
 ## Entities
 
@@ -309,6 +314,8 @@ this document describes.
 - **Conjugation has no model package.** `VerbConjugation`, `ConjugationVariant`,
   `ConjugationSplit` and `MASTERY_STREAK` still live in `interactors.conjugation`. They
   are well modelled; they are simply in the application layer.
+- **Declension has no model package.** `DeclinableWord`, `PolishAdjectives` and
+  `DeclensionVariant` live in `interactors.declension`, beside Conjugation's model.
 - **Numbers has no model package.** `PolishNumbers`, `NumberSelection` and
   `NumberProgress` live in `interactors.numbers`, like Conjugation's model.
 - **Catalogue has no model package.** Seeding is orchestration over ports, with the only

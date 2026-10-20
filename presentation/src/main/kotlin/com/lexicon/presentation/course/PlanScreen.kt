@@ -77,6 +77,7 @@ fun PlanScreen(
     onOpenCourseSettings: () -> Unit,
     onConjugationSelected: () -> Unit,
     onNumbersSelected: () -> Unit,
+    onDeclensionSelected: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PlanViewModel = koinViewModel(),
 ) {
@@ -88,6 +89,7 @@ fun PlanScreen(
         onOpenCourseSettings = onOpenCourseSettings,
         onConjugationSelected = onConjugationSelected,
         onNumbersSelected = onNumbersSelected,
+        onDeclensionSelected = onDeclensionSelected,
         modifier = modifier,
     )
 }
@@ -100,6 +102,7 @@ private fun PlanContent(
     onOpenCourseSettings: () -> Unit,
     onConjugationSelected: () -> Unit,
     onNumbersSelected: () -> Unit,
+    onDeclensionSelected: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when {
@@ -136,6 +139,14 @@ private fun PlanContent(
                         blurb = stringResource(R.string.training_conjugation_blurb),
                         medallion = stringResource(R.string.conjugation_medallion),
                         onClick = onConjugationSelected,
+                    )
+                }
+                item(key = "declension-course") {
+                    DrillCourseTile(
+                        title = stringResource(R.string.declension_title),
+                        blurb = stringResource(R.string.declension_blurb),
+                        medallion = stringResource(R.string.declension_medallion),
+                        onClick = onDeclensionSelected,
                     )
                 }
                 item(key = "numbers-course") {
@@ -437,6 +448,7 @@ private fun PlanPreview() {
             onOpenCourseSettings = {},
             onConjugationSelected = {},
             onNumbersSelected = {},
+            onDeclensionSelected = {},
         )
     }
 }
@@ -452,6 +464,7 @@ private fun PlanEmptyPreview() {
             onOpenCourseSettings = {},
             onConjugationSelected = {},
             onNumbersSelected = {},
+            onDeclensionSelected = {},
         )
     }
 }

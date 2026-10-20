@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.lexicon.interactors.conjugation.ConjugationCourse
 import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
 import com.lexicon.interactors.course.ObserveCoursesUseCase
+import com.lexicon.interactors.declension.DeclensionCourse
+import com.lexicon.interactors.declension.LoadDeclensionCoursesUseCase
 import com.lexicon.interactors.numbers.LoadNumberCourseUseCase
 import com.lexicon.interactors.numbers.NumberCourse
 import com.lexicon.interactors.presets.CountWordsToReviewUseCase
@@ -45,6 +47,7 @@ data class DashboardUiState(
     val nothingToPractise: Boolean = false,
     val studyTime: StudyTimeHistory? = null,
     val conjugationCourses: ImmutableList<ConjugationCourse> = persistentListOf(),
+    val declensionCourses: ImmutableList<DeclensionCourse> = persistentListOf(),
     val numberCourse: NumberCourse? = null,
     val courses: ImmutableList<Course> = persistentListOf(),
     val languageTag: String = "en",
@@ -61,6 +64,7 @@ class DashboardViewModel(
     private val getProgress: GetCourseProgressUseCase,
     private val queue: NextCourseTrainingUseCase,
     private val loadConjugationCourses: LoadConjugationCoursesUseCase,
+    private val loadDeclensionCourses: LoadDeclensionCoursesUseCase,
     private val loadNumberCourse: LoadNumberCourseUseCase,
     private val countWordsToReview: CountWordsToReviewUseCase,
     private val getDailyStudyTime: GetDailyStudyTimeUseCase,
@@ -76,6 +80,7 @@ class DashboardViewModel(
             observeCourse().collect { course ->
                 val progress = getProgress()
                 val courses = loadConjugationCourses()
+                val declension = loadDeclensionCourses()
                 val numberCourse = loadNumberCourse()
                 _uiState.update {
                     it.copy(
@@ -83,6 +88,7 @@ class DashboardViewModel(
                         course = course,
                         progress = progress,
                         conjugationCourses = courses,
+                        declensionCourses = declension,
                         numberCourse = numberCourse,
                         nothingToPractise = false,
                     )
@@ -138,8 +144,9 @@ class DashboardViewModel(
     fun refreshCourses() {
         viewModelScope.launch {
             val conjugation = loadConjugationCourses()
+            val declension = loadDeclensionCourses()
             val numbers = loadNumberCourse()
-            _uiState.update { it.copy(conjugationCourses = conjugation, numberCourse = numbers) }
+            _uiState.update { it.copy(conjugationCourses = conjugation, declensionCourses = declension, numberCourse = numbers) }
         }
     }
 }

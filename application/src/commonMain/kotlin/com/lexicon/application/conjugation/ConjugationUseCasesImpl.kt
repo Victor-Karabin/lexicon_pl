@@ -1,5 +1,6 @@
 package com.lexicon.application.conjugation
 
+import com.lexicon.application.paging.filteredPage
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.VocabularyRepository
@@ -32,10 +33,6 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 
-private const val VERB_PAGE = 40
-
-private const val PAGES_BEFORE_GIVING_UP = 20
-
 class LoadConjugationVerbsUseCaseImpl(
     private val conjugations: ConjugationRepository,
 ) : LoadConjugationVerbsUseCase {
@@ -61,28 +58,12 @@ class LoadConjugationVerbsUseCaseImpl(
         offset: Int,
     ): VerbPage {
         val needle = query.trim()
-        val found = mutableListOf<VerbConjugation>()
-
-        var cursor = offset
-        var reads = 0
-        var isLast = false
-        while (found.size < VERB_PAGE && reads < PAGES_BEFORE_GIVING_UP) {
-            val batchStart = cursor
-            val batch = conjugations.verbPage(query = needle, limit = VERB_PAGE, offset = batchStart)
-            reads++
-
-            for (row in batch) {
-                cursor++
-                row.toVerb().takeIf { it.isTeachable }?.let { found += it }
-                if (found.size == VERB_PAGE) break
-            }
-
-            if (batch.size < VERB_PAGE && cursor == batchStart + batch.size) {
-                isLast = true
-                break
-            }
-        }
-        return VerbPage(verbs = found.toImmutableList(), nextOffset = cursor, isLast = isLast)
+        val page = filteredPage(
+            offset = offset,
+            fetch = { limit, from -> conjugations.verbPage(query = needle, limit = limit, offset = from) },
+            accept = { row -> row.toVerb().takeIf { it.isTeachable } },
+        )
+        return VerbPage(verbs = page.items.toImmutableList(), nextOffset = page.nextOffset, isLast = page.isLast)
     }
 
     private fun VerbConjugation.matches(needle: String): Boolean =

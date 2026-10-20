@@ -1,0 +1,482 @@
+{
+  "rules": [
+    {
+      "id": "przypadki",
+      "title": "Przypadki",
+      "sections": [
+        {
+          "title": "The seven cases",
+          "intro": [
+            "Polish nouns, adjectives and pronouns change their ending by **case**. There are seven. Six show what a word does in the sentence; the seventh, the **vocative**, is for calling someone."
+          ],
+          "tables": [
+            {
+              "header": [
+                "Case",
+                "Questions",
+                "Used for",
+                "Prepositions and verbs"
+              ],
+              "rows": [
+                [
+                  "**Mianownik** (nominative)",
+                  "kto? co?",
+                  "the subject; the dictionary form",
+                  "*To jest…*"
+                ],
+                [
+                  "**Dopełniacz** (genitive)",
+                  "kogo? czego?",
+                  "possession, **negation**, quantity",
+                  "**do, od, z** (from), **bez, dla, u**, obok, koło, około, podczas, według · *nie ma, szukać, potrzebować, słuchać, uczyć się, bać się*"
+                ],
+                [
+                  "**Celownik** (dative)",
+                  "komu? czemu?",
+                  "to whom something is given or done",
+                  "dzięki, przeciw(ko) · *dać, pomagać, dziękować, podobać się, wierzyć*"
+                ],
+                [
+                  "**Biernik** (accusative)",
+                  "kogo? co?",
+                  "the direct object",
+                  "**na** (where to), **w** (*grać w*), **przez, za** (*dziękuję za*), **o** (*pytać o*) · *mieć, lubić, znać, kupować, widzieć*"
+                ],
+                [
+                  "**Narzędnik** (instrumental)",
+                  "kim? czym?",
+                  "a job after *być*, a tool, transport",
+                  "**z** (with), **przed, za, nad, pod, między** (where) · *być, interesować się, zajmować się, jechać autobusem*"
+                ],
+                [
+                  "**Miejscownik** (locative)",
+                  "o kim? o czym?",
+                  "**only after a preposition**: place, topic",
+                  "**w, na** (where), **o** (about), **przy, po**"
+                ],
+                [
+                  "**Wołacz** (vocative)",
+                  "—",
+                  "calling someone",
+                  "*Panie Janie! Pani Anno! Mamo!*"
+                ]
+              ]
+            }
+          ],
+          "notes": [
+            "**Negation turns the accusative into the genitive:** *Mam kota* → *Nie mam kota*; *Lubię kawę* → *Nie lubię kawy*.",
+            "**Masculine living beings: accusative = genitive:** *widzę studenta, psa*. Things keep the nominative: *widzę dom*.",
+            "**w / na:** where? → locative (*w Krakowie, na plaży*); where to? → accusative (*na plażę*). Into a town is *do* + genitive (*do Krakowa*)."
+          ]
+        },
+        {
+          "title": "Noun endings: singular",
+          "intro": [],
+          "tables": [
+            {
+              "header": [
+                "Case",
+                "Masc. living (student, pies)",
+                "Masc. things (dom, stół)",
+                "Fem. (kobieta, ulica)",
+                "Neut. (okno, morze)"
+              ],
+              "rows": [
+                [
+                  "**M.**",
+                  "student, pies",
+                  "dom, stół",
+                  "kobiet**a**, ulic**a**",
+                  "okn**o**, morz**e**"
+                ],
+                [
+                  "**D.**",
+                  "student**a**, ps**a**",
+                  "dom**u**, stoł**u** (some **-a**: komputer**a**)",
+                  "kobiet**y**, ulic**y**, książk**i**",
+                  "okn**a**, morz**a**"
+                ],
+                [
+                  "**C.**",
+                  "student**owi**, ps**u**",
+                  "dom**owi**",
+                  "kobie**cie**, ulic**y**, mat**ce**",
+                  "okn**u**, morz**u**"
+                ],
+                [
+                  "**B.**",
+                  "**= D.**: student**a**, ps**a**",
+                  "**= M.**: dom, stół",
+                  "kobiet**ę**, ulic**ę**",
+                  "**= M.**: okno, morze"
+                ],
+                [
+                  "**N.**",
+                  "student**em**, ps**em**",
+                  "dom**em**, stoł**em**",
+                  "kobiet**ą**, ulic**ą**",
+                  "okn**em**, morz**em**"
+                ],
+                [
+                  "**Ms.**",
+                  "studen**cie**; syn**u**, pan**u**",
+                  "sto**le**; dom**u**, park**u**",
+                  "kobie**cie**, ulic**y**",
+                  "ok**nie**; morz**u**, jabłk**u**"
+                ],
+                [
+                  "**W.**",
+                  "studen**cie**!, syn**u**!",
+                  "—",
+                  "kobiet**o**!, mam**o**!, Kasi**u**!",
+                  "= M."
+                ]
+              ]
+            }
+          ],
+          "notes": [
+            "Short dative **-u**: *panu, bratu, ojcu, psu, kotu, chłopcu, Bogu*.",
+            "**Genitive of masculine things: -u or -a.** Most take **-u**: *domu, samochodu, sklepu*. **-a** is common for tools and devices (*noża, komputera*), measures (*kilograma*), months (*stycznia*) and Polish towns (*Krakowa, Gdańska*). Learn it with the word.",
+            "**Locative of masculine and neuter nouns:** usually **-e** with a stem change (*stół → stole, las → lesie*); **-u** after **k, g, ch** (*w parku, na brzegu*), after soft consonants (*w kraju, na koniu, w pokoju*) and in *w domu, o synu, o panu*.",
+            "**Feminine:** dative = locative (*kobiecie, mapie, ulicy*)."
+          ]
+        },
+        {
+          "title": "Noun endings: plural",
+          "intro": [
+            "The plural is simpler: the dative (**-om**), instrumental (**-ami**) and locative (**-ach**) are the same for every gender."
+          ],
+          "tables": [
+            {
+              "header": [
+                "Case",
+                "Masc. persons (studenci)",
+                "Other masc. (domy, psy)",
+                "Fem. (kobiety)",
+                "Neut. (okna)"
+              ],
+              "rows": [
+                [
+                  "**M.**",
+                  "studen**ci**, Pola**cy**, pan**owie**",
+                  "dom**y**, ps**y**, klucz**e**",
+                  "kobiet**y**, książk**i**, ulic**e**",
+                  "okn**a**"
+                ],
+                [
+                  "**D.**",
+                  "student**ów**",
+                  "dom**ów**; klucz**y**, kon**i**",
+                  "kobiet**Ø**, ksią**żek**, lekcj**i**",
+                  "ok**ien**, miast**Ø**"
+                ],
+                [
+                  "**C.**",
+                  "student**om**",
+                  "dom**om**",
+                  "kobiet**om**",
+                  "okn**om**"
+                ],
+                [
+                  "**B.**",
+                  "**= D.**: student**ów**",
+                  "**= M.**: domy",
+                  "**= M.**: kobiety",
+                  "**= M.**: okna"
+                ],
+                [
+                  "**N.**",
+                  "student**ami**",
+                  "dom**ami**",
+                  "kobiet**ami**",
+                  "okn**ami**"
+                ],
+                [
+                  "**Ms.**",
+                  "student**ach**",
+                  "dom**ach**",
+                  "kobiet**ach**",
+                  "okn**ach**"
+                ],
+                [
+                  "**W.**",
+                  "= M.",
+                  "= M.",
+                  "= M.",
+                  "= M."
+                ]
+              ]
+            }
+          ],
+          "notes": [
+            "**Ø** is no ending at all: *kobieta → kobiet, miasto → miast*. An **-e-** often appears in the stem: *książka → książek, okno → okien*.",
+            "Instrumental exceptions with **-mi**: *ludźmi, dziećmi, pieniędzmi*.",
+            "**Masculine-personal** (*męskoosobowy*) means men, or a group with at least one man. Only these nouns have their own forms (*studenci, Polacy, panowie, dobrzy*); animals, things and women do not (*psy, domy, kobiety*)."
+          ]
+        },
+        {
+          "title": "Adjectives (dobry, polski)",
+          "intro": [],
+          "tables": [
+            {
+              "header": [
+                "Case",
+                "Masc.",
+                "Fem.",
+                "Neut.",
+                "Pl. masc. persons",
+                "Pl. others"
+              ],
+              "rows": [
+                [
+                  "**M.**",
+                  "dobr**y**",
+                  "dobr**a**",
+                  "dobr**e**",
+                  "dobr**zy**, pols**cy**",
+                  "dobr**e**"
+                ],
+                [
+                  "**D.**",
+                  "dobr**ego**",
+                  "dobr**ej**",
+                  "dobr**ego**",
+                  "dobr**ych**",
+                  "dobr**ych**"
+                ],
+                [
+                  "**C.**",
+                  "dobr**emu**",
+                  "dobr**ej**",
+                  "dobr**emu**",
+                  "dobr**ym**",
+                  "dobr**ym**"
+                ],
+                [
+                  "**B.**",
+                  "dobr**ego** (living) / dobr**y** (things)",
+                  "dobr**ą**",
+                  "dobr**e**",
+                  "dobr**ych**",
+                  "dobr**e**"
+                ],
+                [
+                  "**N.**",
+                  "dobr**ym**",
+                  "dobr**ą**",
+                  "dobr**ym**",
+                  "dobr**ymi**",
+                  "dobr**ymi**"
+                ],
+                [
+                  "**Ms.**",
+                  "dobr**ym**",
+                  "dobr**ej**",
+                  "dobr**ym**",
+                  "dobr**ych**",
+                  "dobr**ych**"
+                ],
+                [
+                  "**W.**",
+                  "= M.: dobr**y**",
+                  "= M.: dobr**a**",
+                  "= M.: dobr**e**",
+                  "= M.: dobr**zy**",
+                  "= M.: dobr**e**"
+                ]
+              ]
+            }
+          ],
+          "notes": [
+            "After **k, g** write **-i-** instead of **-y-**: *polski, polskiego, polskim, polskich*."
+          ]
+        },
+        {
+          "title": "Personal pronouns",
+          "intro": [],
+          "tables": [
+            {
+              "header": [
+                "M.",
+                "D.",
+                "C.",
+                "B.",
+                "N.",
+                "Ms."
+              ],
+              "rows": [
+                [
+                  "ja",
+                  "mnie",
+                  "mi / mnie",
+                  "mnie",
+                  "mną",
+                  "mnie"
+                ],
+                [
+                  "ty",
+                  "ciebie / cię",
+                  "tobie / ci",
+                  "ciebie / cię",
+                  "tobą",
+                  "tobie"
+                ],
+                [
+                  "on, ono",
+                  "jego / go / niego",
+                  "jemu / mu / niemu",
+                  "jego / go / niego (ono: je / nie)",
+                  "nim",
+                  "nim"
+                ],
+                [
+                  "ona",
+                  "jej / niej",
+                  "jej / niej",
+                  "ją / nią",
+                  "nią",
+                  "niej"
+                ],
+                [
+                  "my",
+                  "nas",
+                  "nam",
+                  "nas",
+                  "nami",
+                  "nas"
+                ],
+                [
+                  "wy",
+                  "was",
+                  "wam",
+                  "was",
+                  "wami",
+                  "was"
+                ],
+                [
+                  "oni / one",
+                  "ich / nich",
+                  "im / nim",
+                  "ich / nich (one: je / nie)",
+                  "nimi",
+                  "nich"
+                ]
+              ]
+            }
+          ],
+          "notes": [
+            "**Short forms** (*cię, ci, go, mu*) are unstressed: *Widzę cię*.",
+            "**Long forms** (*ciebie, tobie, jego, jemu*) start a sentence or carry emphasis: *Ciebie kocham!*",
+            "**Forms with n-** follow a preposition: *dla niego, z nią, o nich*."
+          ]
+        },
+        {
+          "title": "Stem changes before -e",
+          "intro": [
+            "Before the ending **-e** (locative, feminine dative, vocative) the last consonant softens."
+          ],
+          "tables": [
+            {
+              "header": [
+                "Change",
+                "Example"
+              ],
+              "rows": [
+                [
+                  "t → ci",
+                  "student → studen**cie**, kot → ko**cie**"
+                ],
+                [
+                  "d → dzi",
+                  "woda → wo**dzie**"
+                ],
+                [
+                  "r → rz",
+                  "siostra → sios**trze**"
+                ],
+                [
+                  "ł → l",
+                  "szkoła → szko**le**, stół → sto**le**"
+                ],
+                [
+                  "n → ni",
+                  "okno → ok**nie**"
+                ],
+                [
+                  "s → si, z → zi",
+                  "las → le**sie**, wóz → wo**zie**"
+                ],
+                [
+                  "st → ści",
+                  "miasto → mie**ście**"
+                ],
+                [
+                  "p, b, m, w, f → pi, bi, mi, wi, fi",
+                  "mapa → ma**pie**, Warszawa → Warsza**wie**"
+                ],
+                [
+                  "k → c, g → dz, ch → sz",
+                  "**feminine only**: matka → mat**ce**, noga → no**dze**; masculine takes **-u**: w park**u**"
+                ]
+              ]
+            }
+          ],
+          "notes": [
+            "The vowel in the stem may change too: **o → e** (*las → lesie*), **ó → o** (*stół → stole*), **a → e** (*miasto → mieście*)."
+          ]
+        },
+        {
+          "title": "One phrase through the cases",
+          "intro": [],
+          "tables": [
+            {
+              "header": [
+                "Case",
+                "mój nowy dom",
+                "moja dobra koleżanka"
+              ],
+              "rows": [
+                [
+                  "**M.**",
+                  "To jest mój nowy dom.",
+                  "To jest moja dobra koleżanka."
+                ],
+                [
+                  "**D.**",
+                  "Nie mam mojego nowego domu.",
+                  "Nie widzę mojej dobrej koleżanki."
+                ],
+                [
+                  "**C.**",
+                  "Przyglądam się mojemu nowemu domowi.",
+                  "Daję prezent mojej dobrej koleżance."
+                ],
+                [
+                  "**B.**",
+                  "Lubię mój nowy dom.",
+                  "Lubię moją dobrą koleżankę."
+                ],
+                [
+                  "**N.**",
+                  "Interesuję się moim nowym domem.",
+                  "Idę do kina z moją dobrą koleżanką."
+                ],
+                [
+                  "**Ms.**",
+                  "Mieszkam w moim nowym domu.",
+                  "Myślę o mojej dobrej koleżance."
+                ],
+                [
+                  "**W.**",
+                  "Mój nowy domie!",
+                  "Moja dobra koleżanko!"
+                ]
+              ]
+            }
+          ],
+          "notes": []
+        }
+      ]
+    }
+  ]
+}

@@ -3,8 +3,10 @@ package com.lexicon.data.di
 import com.lexicon.boundary.CatalogSeedGate
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.CourseRepository
+import com.lexicon.boundary.DeclensionRepository
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.NumberRepository
+import com.lexicon.boundary.ReferenceRuleRepository
 import com.lexicon.boundary.ReviewScheduleRepository
 import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.SettingsRepository
@@ -42,12 +44,14 @@ import com.lexicon.data.repository.CorpusTranslationSuggester
 import com.lexicon.data.repository.CorpusTranslatorImpl
 import com.lexicon.data.repository.CorpusWordLevelGuesser
 import com.lexicon.data.repository.CourseRepositoryImpl
+import com.lexicon.data.repository.DeclensionRepositoryImpl
 import com.lexicon.data.repository.FallbackImageProviderImpl
 import com.lexicon.data.repository.FallbackTranslatorImpl
 import com.lexicon.data.repository.InMemorySessionStore
 import com.lexicon.data.repository.MergingTranslationSuggester
 import com.lexicon.data.repository.MergingWordLevelGuesser
 import com.lexicon.data.repository.NumberRepositoryImpl
+import com.lexicon.data.repository.ReferenceRuleRepositoryImpl
 import com.lexicon.data.repository.ReviewScheduleRepositoryImpl
 import com.lexicon.data.repository.StudyRecordRepositoryImpl
 import com.lexicon.data.repository.TrainingHistoryRepositoryImpl
@@ -88,6 +92,7 @@ val dataModule = module {
     factory { get<AppDatabase>().vocabularyCourseDao() }
     factory { get<AppDatabase>().conjugationDao() }
     factory { get<AppDatabase>().numberDao() }
+    factory { get<AppDatabase>().declensionDao() }
 
     single(settingsDataStoreQualifier) { get<DataStorePathResolver>().createDataStore(SETTINGS_STORE_NAME) }
     single(vocabularySyncDataStoreQualifier) { get<DataStorePathResolver>().createDataStore(VOCABULARY_SYNC_STORE_NAME) }
@@ -116,6 +121,8 @@ val dataModule = module {
     factoryOf(::VocabularyPresetAssetLoader)
     factoryOf(::ConjugationAssetLoader)
     singleOf(::ConjugationRepositoryImpl) { bind<ConjugationRepository>() }
+    singleOf(::ReferenceRuleRepositoryImpl) { bind<ReferenceRuleRepository>() }
+    singleOf(::DeclensionRepositoryImpl) { bind<DeclensionRepository>() }
     singleOf(::NumberRepositoryImpl) { bind<NumberRepository>() }
     singleOf(::CatalogSeedGateImpl) { bind<CatalogSeedGate>() }
     factoryOf(::CourseAssetLoader)

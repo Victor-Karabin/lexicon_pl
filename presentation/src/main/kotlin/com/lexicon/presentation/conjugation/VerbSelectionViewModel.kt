@@ -35,7 +35,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-private const val SEARCH_SETTLE_MS = 300L
 private const val TAG = "VerbSelection"
 
 data class VerbSelectionUiState(

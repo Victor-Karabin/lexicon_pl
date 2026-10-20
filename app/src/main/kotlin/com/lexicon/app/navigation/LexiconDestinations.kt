@@ -6,6 +6,7 @@ import com.lexicon.presentation.course.COURSE_ID_ARG
 import com.lexicon.presentation.main.MainTab
 import com.lexicon.presentation.main.TrainingIds
 import com.lexicon.presentation.presets.WORD_ID_ARG
+import com.lexicon.presentation.rules.RULE_ID_ARG
 
 internal object LexiconDestinations {
     const val SPLASH = "splash"
@@ -32,11 +33,18 @@ internal object LexiconDestinations {
     val FILLWORD = TrainingIds.FILLWORD
     const val CONJUGATION = "conjugation/{courseId}"
     const val CONJUGATION_VERBS = "conjugation/verbs"
+    const val DECLENSION = "declension/{$COURSE_ID_ARG}"
+    const val DECLENSION_WORDS = "declension/words"
     const val REVIEW_WORDS = "review/words"
     const val NUMBERS_SETUP = "numbers/setup"
     const val NUMBERS = "numbers/train"
+    const val RULE = "rules/{$RULE_ID_ARG}"
+
+    fun rule(ruleId: String) = "rules/$ruleId"
 
     fun conjugationCourse(courseId: String) = "conjugation/$courseId"
+
+    fun declensionCourse(courseId: String) = "declension/$courseId"
 
     fun trainingRoute(training: String) = "$training?$TRAINING_WORDS_ARG={$TRAINING_WORDS_ARG}&$COURSE_RUN_ARG={$COURSE_RUN_ARG}"
 

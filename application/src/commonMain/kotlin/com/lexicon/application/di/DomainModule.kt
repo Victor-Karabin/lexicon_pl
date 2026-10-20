@@ -25,6 +25,10 @@ import com.lexicon.application.course.SetCourseOnDashboardUseCaseImpl
 import com.lexicon.application.course.SetLessonCompletedUseCaseImpl
 import com.lexicon.application.crossword.StartCrosswordSessionUseCaseImpl
 import com.lexicon.application.crossword.SubmitCrosswordUseCaseImpl
+import com.lexicon.application.declension.LoadDeclensionCoursesUseCaseImpl
+import com.lexicon.application.declension.LoadDeclinableWordsUseCaseImpl
+import com.lexicon.application.declension.NextDeclensionTableUseCaseImpl
+import com.lexicon.application.declension.SubmitDeclensionAnswerUseCaseImpl
 import com.lexicon.application.dictation.AnswerNormalizer
 import com.lexicon.application.dictation.StartDictationSessionUseCaseImpl
 import com.lexicon.application.dictation.SubmitDictationAnswerUseCaseImpl
@@ -74,6 +78,7 @@ import com.lexicon.application.pronunciation.StartPronunciationSessionUseCaseImp
 import com.lexicon.application.pronunciation.SubmitPronunciationResultUseCaseImpl
 import com.lexicon.application.puzzle.StartPuzzleSessionUseCaseImpl
 import com.lexicon.application.puzzle.SubmitPuzzleAnswerUseCaseImpl
+import com.lexicon.application.rules.GetReferenceRuleUseCaseImpl
 import com.lexicon.application.settings.ObserveSettingsUseCaseImpl
 import com.lexicon.application.settings.StepCountResolver
 import com.lexicon.application.settings.UpdatePassMarkUseCaseImpl
@@ -133,6 +138,10 @@ import com.lexicon.interactors.course.SetCourseOnDashboardUseCase
 import com.lexicon.interactors.course.SetLessonCompletedUseCase
 import com.lexicon.interactors.crossword.StartCrosswordSessionUseCase
 import com.lexicon.interactors.crossword.SubmitCrosswordUseCase
+import com.lexicon.interactors.declension.LoadDeclensionCoursesUseCase
+import com.lexicon.interactors.declension.LoadDeclinableWordsUseCase
+import com.lexicon.interactors.declension.NextDeclensionTableUseCase
+import com.lexicon.interactors.declension.SubmitDeclensionAnswerUseCase
 import com.lexicon.interactors.dictation.StartDictationSessionUseCase
 import com.lexicon.interactors.dictation.SubmitDictationAnswerUseCase
 import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionUseCase
@@ -184,6 +193,7 @@ import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerUseCase
+import com.lexicon.interactors.rules.GetReferenceRuleUseCase
 import com.lexicon.interactors.settings.ObserveSettingsUseCase
 import com.lexicon.interactors.settings.UpdatePassMarkUseCase
 import com.lexicon.interactors.settings.UpdateStepCountUseCase
@@ -354,6 +364,11 @@ val domainModule = module {
     factoryOf(::ResetLessonProgressUseCaseImpl) { bind<ResetLessonProgressUseCase>() }
     factoryOf(::RecordStudyActivityUseCaseImpl) { bind<RecordStudyActivityUseCase>() }
     factoryOf(::GetLessonScriptUseCaseImpl) { bind<GetLessonScriptUseCase>() }
+    factoryOf(::GetReferenceRuleUseCaseImpl) { bind<GetReferenceRuleUseCase>() }
+    factoryOf(::LoadDeclinableWordsUseCaseImpl) { bind<LoadDeclinableWordsUseCase>() }
+    factoryOf(::LoadDeclensionCoursesUseCaseImpl) { bind<LoadDeclensionCoursesUseCase>() }
+    factoryOf(::NextDeclensionTableUseCaseImpl) { bind<NextDeclensionTableUseCase>() }
+    factoryOf(::SubmitDeclensionAnswerUseCaseImpl) { bind<SubmitDeclensionAnswerUseCase>() }
     factoryOf(::GetLessonProgressUseCaseImpl) { bind<GetLessonProgressUseCase>() }
     factoryOf(::SaveLessonProgressUseCaseImpl) { bind<SaveLessonProgressUseCase>() }
     factoryOf(::ReviewWritingUseCaseImpl) { bind<ReviewWritingUseCase>() }
