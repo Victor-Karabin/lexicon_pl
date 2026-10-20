@@ -10,4 +10,4 @@ data class TextResource(
 )
 
 @Composable
-fun TextResource.text(): String = stringResource(id, *args.toTypedArray())
+fun TextResource.text(): String = stringResource(id, *args.map { if (it is TextResource) it.text() else it }.toTypedArray())

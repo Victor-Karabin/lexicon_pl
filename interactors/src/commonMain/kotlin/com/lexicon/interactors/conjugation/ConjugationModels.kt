@@ -1,10 +1,12 @@
 package com.lexicon.interactors.conjugation
 
+import com.lexicon.interactors.training.STUDY_SET_COURSE_ID
+import com.lexicon.interactors.training.TABLE_DRILL_MASTERY_STREAK
 import com.lexicon.model.vocabulary.Aspect
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-const val VERB_COURSE_ID = "study-set"
+const val VERB_COURSE_ID = STUDY_SET_COURSE_ID
 
 enum class GrammaticalPerson(
     val sourceKey: String,
@@ -71,7 +73,7 @@ data class ConjugationVariantProgress(
     val isMastered: Boolean get() = streak >= MASTERY_STREAK
 
     companion object {
-        const val MASTERY_STREAK = 2
+        const val MASTERY_STREAK = TABLE_DRILL_MASTERY_STREAK
     }
 }
 

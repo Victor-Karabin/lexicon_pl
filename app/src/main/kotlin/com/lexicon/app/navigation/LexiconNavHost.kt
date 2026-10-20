@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.lexicon.model.rules.CASES_RULE
 import com.lexicon.model.training.TrainingType
 import com.lexicon.presentation.common.LocalCourseReset
 import com.lexicon.presentation.common.SessionResultScreen
@@ -30,6 +31,8 @@ import com.lexicon.presentation.course.LessonFlowScreen
 import com.lexicon.presentation.course.LessonResultsScreen
 import com.lexicon.presentation.course.LessonScreen
 import com.lexicon.presentation.crossword.CrosswordScreen
+import com.lexicon.presentation.declension.DeclensionScreen
+import com.lexicon.presentation.declension.DeclensionWordsScreen
 import com.lexicon.presentation.dictation.DictationScreen
 import com.lexicon.presentation.dictationpuzzle.DictationPuzzleScreen
 import com.lexicon.presentation.fillword.FillwordScreen
@@ -53,6 +56,8 @@ import com.lexicon.presentation.pronunciation.PRONUNCIATION_SENTENCES_ARG
 import com.lexicon.presentation.pronunciation.PronunciationScreen
 import com.lexicon.presentation.puzzle.PuzzleScreen
 import com.lexicon.presentation.review.ReviewWordsScreen
+import com.lexicon.presentation.rules.RULE_ID_ARG
+import com.lexicon.presentation.rules.ReferenceRuleScreen
 import com.lexicon.presentation.trueorfalse.TrueOrFalseScreen
 import com.lexicon.presentation.vocabularycourse.CourseRunStep
 import com.lexicon.presentation.vocabularycourse.CourseRunViewModel
@@ -109,10 +114,19 @@ fun LexiconNavHost(
                 onAddPreset = { navController.navigate(LexiconDestinations.CREATE_PRESET) },
                 onConjugationSelected = { navController.navigate(LexiconDestinations.CONJUGATION_VERBS) },
                 onTrainConjugation = { navController.navigate(LexiconDestinations.conjugationCourse(it)) },
+                onTrainDeclension = { navController.navigate(LexiconDestinations.declensionCourse(it)) },
+                onDeclensionSelected = { navController.navigate(LexiconDestinations.DECLENSION_WORDS) },
                 onNumbersSelected = { navController.navigate(LexiconDestinations.NUMBERS_SETUP) },
                 onTrainNumbers = { navController.navigate(LexiconDestinations.NUMBERS) },
                 onReviewWords = { navController.navigate(LexiconDestinations.REVIEW_WORDS) },
             )
+        }
+
+        composable(
+            route = LexiconDestinations.RULE,
+            arguments = listOf(navArgument(RULE_ID_ARG) { type = NavType.StringType }),
+        ) {
+            ReferenceRuleScreen(onClose = { navController.popBackStack() })
         }
 
         composable(LexiconDestinations.REVIEW_WORDS) {
@@ -253,6 +267,7 @@ fun LexiconNavHost(
             }
 
         val closeToMain: () -> Unit = { navController.popBackStack(LexiconDestinations.MAIN, inclusive = false) }
+        val openCasesRule: () -> Unit = { navController.navigate(LexiconDestinations.rule(CASES_RULE.value)) }
 
         val goToVocabulary: () -> Unit = {
             navController.navigate(LexiconDestinations.main(MainTab.VOCABULARY)) {
@@ -510,6 +525,21 @@ fun LexiconNavHost(
         ) {
             ConjugationScreen(
                 onSessionComplete = onStepSessionComplete(LexiconDestinations.CONJUGATION)(""),
+                onClose = closeToMain,
+            )
+        }
+
+        composable(route = LexiconDestinations.DECLENSION_WORDS) {
+            DeclensionWordsScreen(onOpenRules = openCasesRule, onClose = closeToMain)
+        }
+
+        composable(
+            route = LexiconDestinations.DECLENSION,
+            arguments = listOf(navArgument(COURSE_ID_ARG) { type = NavType.StringType }),
+        ) {
+            DeclensionScreen(
+                onSessionComplete = onStepSessionComplete(LexiconDestinations.DECLENSION)(""),
+                onOpenRules = openCasesRule,
                 onClose = closeToMain,
             )
         }

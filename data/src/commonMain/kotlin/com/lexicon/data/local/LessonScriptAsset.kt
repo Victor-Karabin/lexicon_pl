@@ -253,7 +253,7 @@ fun LessonScriptAsset.toModel(remoteIds: Map<String, String?>): LessonScript {
     )
 }
 
-private fun TableAsset.toModel(): LessonTable = LessonTable(header.toImmutableList(), rows.map { it.toImmutableList() }.toImmutableList())
+internal fun TableAsset.toModel(): LessonTable = LessonTable(header.toImmutableList(), rows.map { it.toImmutableList() }.toImmutableList())
 
 private fun ScreenAsset.toModel(track: (TrackRefAsset) -> LessonTrack?): LessonScreen {
     val trackList = tracks.mapNotNull(track).toImmutableList()

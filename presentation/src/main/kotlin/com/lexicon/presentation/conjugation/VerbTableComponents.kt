@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.course.TranscribeItem
@@ -17,6 +18,10 @@ import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.course.TranscribeRow
 
 private val PersonColumnWidth = 96.dp
+
+internal val DrillImageHeight = 120.dp
+
+internal const val SEARCH_SETTLE_MS = 300L
 
 @Composable
 fun VerbHeading(
@@ -55,6 +60,7 @@ fun PersonFormRow(
     imeAction: ImeAction,
     modifier: Modifier = Modifier,
     info: String? = null,
+    labelWidth: Dp = PersonColumnWidth,
 ) {
     Box(modifier = modifier) {
         TranscribeRow(
@@ -69,7 +75,7 @@ fun PersonFormRow(
             onValueChanged = onAnswerChanged,
             isAlmost = verdict == AnswerVerdict.ALMOST,
             info = info,
-            labelWidth = PersonColumnWidth,
+            labelWidth = labelWidth,
             onSpeak = onSpeak,
             imeAction = imeAction,
         )

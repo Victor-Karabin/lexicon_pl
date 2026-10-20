@@ -42,6 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.conjugation.ConjugationCourse
+import com.lexicon.interactors.declension.DeclensionCourse
 import com.lexicon.interactors.numbers.NumberCourse
 import com.lexicon.interactors.vocabularycourse.VocabularyCourse
 import com.lexicon.model.course.CourseId
@@ -85,6 +86,7 @@ fun DashboardScreen(
     onStartTraining: (training: String, wordIds: List<VocabularyId>) -> Unit,
     onOpenCards: () -> Unit,
     onOpenConjugation: (String) -> Unit,
+    onOpenDeclension: (String) -> Unit,
     onOpenNumbers: () -> Unit,
     onReviewWords: () -> Unit,
     onCourseSelected: (CourseId) -> Unit,
@@ -115,6 +117,7 @@ fun DashboardScreen(
         uiState = uiState,
         onContinue = viewModel::onContinue,
         onOpenConjugation = onOpenConjugation,
+        onOpenDeclension = onOpenDeclension,
         onOpenNumbers = onOpenNumbers,
         onReviewWords = onReviewWords,
         onCourseSelected = onCourseSelected,
@@ -127,6 +130,7 @@ private fun DashboardContent(
     uiState: DashboardUiState,
     onContinue: () -> Unit,
     onOpenConjugation: (String) -> Unit,
+    onOpenDeclension: (String) -> Unit,
     onOpenNumbers: () -> Unit,
     onReviewWords: () -> Unit,
     onCourseSelected: (CourseId) -> Unit,
@@ -148,6 +152,10 @@ private fun DashboardContent(
             ) {
                 uiState.conjugationCourses.forEach { course ->
                     ConjugationCourseCard(course = course, onOpen = { onOpenConjugation(course.id) })
+                }
+
+                uiState.declensionCourses.forEach { course ->
+                    DeclensionCourseCard(course = course, onOpen = { onOpenDeclension(course.id) })
                 }
 
                 uiState.numberCourse?.let { NumberCourseCard(course = it, onOpen = onOpenNumbers) }
@@ -184,6 +192,28 @@ private fun ConjugationCourseCard(
         StatChip(
             icon = Icons.Default.CheckCircle,
             text = stringResource(R.string.conjugation_attempted_chip, progress.attempted, progress.total),
+            skin = skin,
+        )
+    }
+}
+
+@Composable
+private fun DeclensionCourseCard(
+    course: DeclensionCourse,
+    onOpen: () -> Unit,
+) {
+    val progress = course.progress
+    DrillCourseCard(
+        title = stringResource(R.string.declension_title),
+        medallion = stringResource(R.string.declension_medallion),
+        fraction = progress.fraction,
+        summary = stringResource(R.string.declension_progress, progress.mastered, progress.total),
+        onOpen = onOpen,
+    ) { skin ->
+        StatChip(icon = Icons.Default.Translate, text = stringResource(R.string.declension_words_chip, progress.words), skin = skin)
+        StatChip(
+            icon = Icons.Default.CheckCircle,
+            text = stringResource(R.string.declension_attempted_chip, progress.attempted, progress.total),
             skin = skin,
         )
     }
@@ -424,6 +454,7 @@ private fun DashboardPreview() {
             ),
             onContinue = {},
             onOpenConjugation = {},
+            onOpenDeclension = {},
             onOpenNumbers = {},
             onCourseSelected = {},
             onReviewWords = {},

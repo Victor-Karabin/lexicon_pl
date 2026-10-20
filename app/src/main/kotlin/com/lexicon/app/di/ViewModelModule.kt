@@ -13,6 +13,8 @@ import com.lexicon.presentation.course.LessonViewModel
 import com.lexicon.presentation.course.PlanViewModel
 import com.lexicon.presentation.crossword.CrosswordViewModel
 import com.lexicon.presentation.dashboard.DashboardViewModel
+import com.lexicon.presentation.declension.DeclensionViewModel
+import com.lexicon.presentation.declension.DeclensionWordsViewModel
 import com.lexicon.presentation.dictation.DictationViewModel
 import com.lexicon.presentation.dictationpuzzle.DictationPuzzleViewModel
 import com.lexicon.presentation.fillword.FillwordViewModel
@@ -30,6 +32,7 @@ import com.lexicon.presentation.presets.VocabularyViewModel
 import com.lexicon.presentation.pronunciation.PronunciationViewModel
 import com.lexicon.presentation.puzzle.PuzzleViewModel
 import com.lexicon.presentation.review.ReviewWordsViewModel
+import com.lexicon.presentation.rules.ReferenceRuleViewModel
 import com.lexicon.presentation.settings.SettingsViewModel
 import com.lexicon.presentation.trueorfalse.TrueOrFalseViewModel
 import com.lexicon.presentation.vocabularycourse.CourseRunViewModel
@@ -64,6 +67,9 @@ val viewModelModule = module {
     viewModelOf(::LessonFlowViewModel)
     viewModelOf(::LessonViewModel)
     viewModelOf(::LessonResultsViewModel)
+    viewModelOf(::ReferenceRuleViewModel)
+    viewModelOf(::DeclensionWordsViewModel)
+    viewModelOf(::DeclensionViewModel)
     viewModelOf(::CrosswordViewModel)
     viewModelOf(::DictationViewModel)
     viewModelOf(::DictationPuzzleViewModel)

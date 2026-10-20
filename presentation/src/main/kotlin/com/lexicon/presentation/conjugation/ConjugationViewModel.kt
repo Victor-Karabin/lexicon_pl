@@ -8,6 +8,7 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.conjugation.ChooseVerbImageUseCase
 import com.lexicon.interactors.conjugation.ConjugationTable
 import com.lexicon.interactors.conjugation.GrammaticalPerson
+import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
 import com.lexicon.interactors.conjugation.LoadVerbImageChoicesUseCase
 import com.lexicon.interactors.conjugation.NextConjugationTableUseCase
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerRequest
@@ -44,7 +45,7 @@ data class ConjugationUiState(
     val answers: ImmutableMap<GrammaticalPerson, String> = persistentMapOf(),
     val verdicts: ImmutableMap<GrammaticalPerson, AnswerVerdict> = persistentMapOf(),
     val answerState: AnswerState = AnswerState.Unanswered,
-    val hasNoVerbs: Boolean = false,
+    val isComplete: Boolean = false,
     val isPickingImage: Boolean = false,
     val imageChoices: ImmutableList<String> = persistentListOf(),
     val isLoadingImages: Boolean = false,
@@ -64,6 +65,7 @@ class ConjugationViewModel(
     private val submitAnswer: SubmitConjugationAnswerUseCase,
     private val loadImageChoices: LoadVerbImageChoicesUseCase,
     private val chooseImage: ChooseVerbImageUseCase,
+    private val loadCourses: LoadConjugationCoursesUseCase,
     private val speechSynthesizer: SpeechSynthesizer,
     private val lastSessionResultsHolder: LastSessionResultsHolder,
     private val recordStudy: RecordStudyActivityUseCase,
@@ -88,8 +90,8 @@ class ConjugationViewModel(
                 it.copy(
                     isLoading = false,
                     table = first,
-                    hasNoVerbs = first == null,
                     totalSteps = AppSettings.DEFAULT_STEP_COUNT,
+                    isComplete = first == null && isCourseComplete(),
                 )
             }
         }
@@ -167,6 +169,8 @@ class ConjugationViewModel(
     }
 
     private fun studied() = recordStudy.markIn(viewModelScope, dispatchers)
+
+    private suspend fun isCourseComplete(): Boolean = loadCourses().firstOrNull()?.progress?.isComplete == true
 
     fun onSpeak(form: String) {
         if (form.isBlank()) return

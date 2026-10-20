@@ -137,7 +137,7 @@ private fun grammarRows(grammar: WordGrammar): List<Pair<String, String>> =
 
 private fun CaseForms.joined(): String = listOfNotNull(singular, plural).joinToString(" / ")
 
-private fun GrammaticalCase.labelId(): Int =
+internal fun GrammaticalCase.labelId(): Int =
     when (this) {
         GrammaticalCase.NOMINATIVE -> R.string.grammar_case_nominative
         GrammaticalCase.GENITIVE -> R.string.grammar_case_genitive
@@ -148,7 +148,7 @@ private fun GrammaticalCase.labelId(): Int =
         GrammaticalCase.VOCATIVE -> R.string.grammar_case_vocative
     }
 
-private fun PartOfSpeech.labelId(): Int =
+internal fun PartOfSpeech.labelId(): Int =
     when (this) {
         PartOfSpeech.NOUN -> R.string.grammar_pos_n
         PartOfSpeech.VERB -> R.string.grammar_pos_v
@@ -163,7 +163,7 @@ private fun PartOfSpeech.labelId(): Int =
         PartOfSpeech.PHRASE -> R.string.grammar_pos_expr
     }
 
-private fun Gender.labelId(): Int =
+internal fun Gender.labelId(): Int =
     when (this) {
         Gender.MASCULINE_PERSONAL -> R.string.grammar_gender_masculine_personal
         Gender.MASCULINE_ANIMATE -> R.string.grammar_gender_masculine_animate
