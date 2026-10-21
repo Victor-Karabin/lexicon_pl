@@ -98,4 +98,44 @@ class GetDailyStudyTimeUseCaseImplTest {
             assertEquals(1, history.totalMinutes)
             assertFalse(history.isEmpty)
         }
+
+    @Test
+    fun `study time rounds to the nearest minute and never reads below one for a studied day`() =
+        runTest {
+            val seconds = listOf(0L, 29L, 30L, 89L, 90L, 150L)
+            studied(*seconds.mapIndexed { index, value -> TODAY - index to value }.toTypedArray())
+
+            val history = useCase()
+
+            val minutesBySeconds = history.days.associate { it.studiedSeconds to it.studiedMinutes }
+            assertEquals(0, minutesBySeconds.getValue(0L))
+            assertEquals(1, minutesBySeconds.getValue(29L))
+            assertEquals(1, minutesBySeconds.getValue(30L))
+            assertEquals(1, minutesBySeconds.getValue(89L))
+            assertEquals(2, minutesBySeconds.getValue(90L))
+            assertEquals(3, minutesBySeconds.getValue(150L))
+        }
+
+    @Test
+    fun `the total rounds the summed seconds rather than the daily minutes`() =
+        runTest {
+            studied(TODAY to 40L, TODAY - 1 to 40L, TODAY - 2 to 40L)
+
+            val history = useCase()
+
+            assertEquals(120L, history.totalSeconds)
+            assertEquals(2, history.totalMinutes)
+            assertEquals(listOf(1, 1, 1), history.days.filter { it.wasStudied }.map { it.studiedMinutes })
+        }
+
+    @Test
+    fun `a week with nothing studied totals zero minutes`() =
+        runTest {
+            studied()
+
+            val history = useCase()
+
+            assertEquals(0, history.totalMinutes)
+            assertEquals(0, history.days.first().studiedMinutes)
+        }
 }

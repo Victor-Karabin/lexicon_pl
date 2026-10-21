@@ -1,19 +1,13 @@
 package com.lexicon.presentation.presets
 
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
-import com.lexicon.interactors.presets.PresetMembership
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
-import com.lexicon.model.vocabulary.LocalizedText
-import com.lexicon.model.vocabulary.PresetCategory
 import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
-import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
@@ -22,7 +16,6 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import kotlin.time.Duration.Companion.seconds
 
 class ChangePresetsControllerTest {
     private val dispatcher = StandardTestDispatcher()
@@ -32,28 +25,12 @@ class ChangePresetsControllerTest {
     private val getMemberships: GetWordPresetMembershipsUseCase = mockk()
     private val setMembership: SetWordPresetMembershipUseCase = mockk(relaxed = true)
 
-    private fun preset(id: String) =
-        VocabularyPreset(
-            id = PresetId(id),
-            title = LocalizedText(mapOf("en" to id)),
-            description = LocalizedText(mapOf("en" to id)),
-            category = PresetCategory(id = "cat", order = 0, title = LocalizedText(mapOf("en" to "Category"))),
-            icon = null,
-            color = null,
-            popularity = 0,
-            estimatedDuration = 0.seconds,
-            vocabularyIds = persistentListOf(),
-        )
-
-    private fun memberships(vararg pairs: Pair<String, Boolean>) =
-        pairs.map { (id, isMember) -> PresetMembership(preset(id), isMember) }.toImmutableList()
-
     private fun TestScope.controller() = ChangePresetsController(this, dispatcher, getMemberships, setMembership)
 
     @Test
     fun `opening loads the word's memberships and counts the ones it is in`() =
         runTest(dispatcher) {
-            coEvery { getMemberships(kot.id) } returns memberships("food" to true, "travel" to false, "verbs" to true)
+            coEvery { getMemberships(kot.id) } returns membershipsOf("food" to true, "travel" to false, "verbs" to true)
 
             val controller = controller()
             controller.open(kot, languageTag = "en")
@@ -68,7 +45,7 @@ class ChangePresetsControllerTest {
     @Test
     fun `toggling a preset on updates the chip and persists the change`() =
         runTest(dispatcher) {
-            coEvery { getMemberships(kot.id) } returns memberships("food" to false)
+            coEvery { getMemberships(kot.id) } returns membershipsOf("food" to false)
 
             val controller = controller()
             controller.open(kot, languageTag = "en")
@@ -84,7 +61,7 @@ class ChangePresetsControllerTest {
     @Test
     fun `toggling a preset off leaves the word in the others — membership is not exclusive`() =
         runTest(dispatcher) {
-            coEvery { getMemberships(kot.id) } returns memberships("food" to true, "verbs" to true)
+            coEvery { getMemberships(kot.id) } returns membershipsOf("food" to true, "verbs" to true)
 
             val controller = controller()
             controller.open(kot, languageTag = "en")
@@ -102,7 +79,7 @@ class ChangePresetsControllerTest {
     @Test
     fun `dismissing closes the sheet`() =
         runTest(dispatcher) {
-            coEvery { getMemberships(kot.id) } returns memberships("food" to true)
+            coEvery { getMemberships(kot.id) } returns membershipsOf("food" to true)
 
             val controller = controller()
             controller.open(kot, languageTag = "en")

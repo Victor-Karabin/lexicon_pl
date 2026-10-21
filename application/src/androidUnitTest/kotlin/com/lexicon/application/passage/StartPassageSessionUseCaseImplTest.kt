@@ -308,4 +308,137 @@ class StartPassageSessionUseCaseImplTest {
 
             assertEquals(2, session.passage.sentences.size)
         }
+
+    private fun givenWords(vararg words: Word) {
+        givenStepCount()
+        coEvery { vocabulary.studySetWordIds() } returns words.map { it.id.value }
+        coEvery { vocabulary.getItemsByIds(any()) } returns words.toList()
+    }
+
+    private fun capturingRequests(): List<SentenceRequestBoundary> {
+        val requests = mutableListOf<SentenceRequestBoundary>()
+        coEvery { generator.generate(capture(requests)) } answers {
+            SentenceResultBoundary.Generated("Mam ${firstArg<SentenceRequestBoundary>().word}.")
+        }
+        return requests
+    }
+
+    @Test
+    fun `when every sentence is offline the passage is offline`() =
+        runTest {
+            givenStudySet("nowy", "okno")
+            coEvery { generator.generate(any()) } returns SentenceResultBoundary.Offline
+
+            assertEquals(PassageSessionResult.Offline, run())
+        }
+
+    @Test
+    fun `offline wins over a refusal`() =
+        runTest {
+            givenStudySet("nowy", "okno")
+            coEvery { generator.generate(any()) } answers {
+                if (firstArg<SentenceRequestBoundary>().word == "nowy") {
+                    SentenceResultBoundary.Offline
+                } else {
+                    SentenceResultBoundary.Refused("busy")
+                }
+            }
+
+            assertEquals(PassageSessionResult.Offline, run())
+        }
+
+    @Test
+    fun `a refusal alone passes its reason on`() =
+        runTest {
+            givenStudySet("nowy")
+            coEvery { generator.generate(any()) } returns SentenceResultBoundary.Refused("busy")
+
+            assertEquals(PassageSessionResult.Refused("busy"), run())
+        }
+
+    @Test
+    fun `a refusal reason is passed on even when the other sentences never used their word`() =
+        runTest {
+            givenStudySet("nowy", "okno")
+            coEvery { generator.generate(any()) } answers {
+                if (firstArg<SentenceRequestBoundary>().word == "nowy") {
+                    SentenceResultBoundary.Refused("busy")
+                } else {
+                    SentenceResultBoundary.Generated("Zupełnie inne zdanie.")
+                }
+            }
+
+            assertEquals(PassageSessionResult.Refused("busy"), run())
+        }
+
+    @Test
+    fun `sentences that never use their word are refused with a fixed reason`() =
+        runTest {
+            givenStudySet("nowy", "okno")
+            answering(mapOf("nowy" to "Zupełnie inne zdanie.", "okno" to "Kolejne inne zdanie."))
+
+            assertEquals(PassageSessionResult.Refused("no sentence used the word it was given"), run())
+        }
+
+    @Test
+    fun `sentences are asked for with no context and no required words`() =
+        runTest {
+            givenWords(Word(VocabularyId(1), "nowy", "new", "x", cefr = CefrLevel.A2))
+            val requests = capturingRequests()
+
+            run()
+
+            assertEquals(
+                listOf(
+                    SentenceRequestBoundary(
+                        word = "nowy",
+                        translation = "new",
+                        level = "A2",
+                        context = "",
+                        requiredWords = emptyList(),
+                    ),
+                ),
+                requests,
+            )
+        }
+
+    @Test
+    fun `the level is the highest level among the words asked about`() =
+        runTest {
+            givenWords(
+                Word(VocabularyId(1), "nowy", "x", "x", cefr = CefrLevel.A2),
+                Word(VocabularyId(2), "okno", "x", "x", cefr = CefrLevel.B1),
+                Word(VocabularyId(3), "dom", "x", "x"),
+            )
+            val requests = capturingRequests()
+
+            run()
+
+            assertEquals(3, requests.size)
+            assertTrue(requests.all { it.level == "B1" })
+        }
+
+    @Test
+    fun `without any level among the words the level is A1`() =
+        runTest {
+            givenWords(Word(VocabularyId(1), "nowy", "x", "x"), Word(VocabularyId(2), "okno", "x", "x"))
+            val requests = capturingRequests()
+
+            run()
+
+            assertTrue(requests.all { it.level == "A1" })
+        }
+
+    @Test
+    fun `two spare sentences are asked for on top of the step count`() =
+        runTest {
+            stepCount = 3
+            givenStudySet("nowy", "okno", "gdy", "lampa", "stol", "kot", "dom", "zegar")
+            val requests = capturingRequests()
+
+            run()
+
+            assertEquals(5, requests.size)
+            assertEquals(5, requests.map { it.word }.toSet().size)
+        }
 }

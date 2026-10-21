@@ -1,11 +1,12 @@
 package com.lexicon.application.pronunciation
 
-import com.lexicon.application.passage.maxLevel
 import com.lexicon.application.settings.StepCountResolver
+import com.lexicon.application.training.failure
+import com.lexicon.application.training.maxLevel
 import com.lexicon.application.training.open
+import com.lexicon.application.training.sentencesFor
 import com.lexicon.application.training.wordsToStudy
 import com.lexicon.boundary.SentenceGenerator
-import com.lexicon.boundary.SentenceRequestBoundary
 import com.lexicon.boundary.SentenceResultBoundary
 import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.VocabularyRepository
@@ -15,9 +16,6 @@ import com.lexicon.interactors.pronunciation.PronunciationStepResponse
 import com.lexicon.interactors.pronunciation.StartPronunciationSentencesUseCase
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionRequest
 import com.lexicon.model.training.TrainingType
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
 
 class StartPronunciationSentencesUseCaseImpl(
     private val vocabulary: VocabularyRepository,
@@ -33,22 +31,7 @@ class StartPronunciationSentencesUseCaseImpl(
         val wanted = stepCountResolver.resolve(request.stepCount).coerceAtMost(studySet.size)
         val targets = studySet.shuffled().take(wanted)
 
-        val generated = coroutineScope {
-            targets
-                .map { word ->
-                    async {
-                        word to generator.generate(
-                            SentenceRequestBoundary(
-                                word = word.text,
-                                translation = word.translation,
-                                level = level,
-                                context = "",
-                                requiredWords = emptyList(),
-                            ),
-                        )
-                    }
-                }.awaitAll()
-        }
+        val generated = generator.sentencesFor(targets, level)
 
         val sentences = generated.mapNotNull { (word, result) ->
             (result as? SentenceResultBoundary.Generated)?.sentence?.trim()?.takeIf { it.isNotEmpty() }?.let { word to it }
@@ -63,11 +46,11 @@ class StartPronunciationSentencesUseCaseImpl(
             )
         }
         if (steps.isEmpty()) {
-            val results = generated.map { it.second }
-            if (results.any { it is SentenceResultBoundary.Offline }) return PronunciationSentencesResult.Offline
-            results.firstNotNullOfOrNull { it as? SentenceResultBoundary.Refused }
-                ?.let { return PronunciationSentencesResult.Refused(it.reason) }
-            return PronunciationSentencesResult.Refused("no sentence came back")
+            return when (val failure = generated.map { it.second }.failure()) {
+                SentenceResultBoundary.Offline -> PronunciationSentencesResult.Offline
+                is SentenceResultBoundary.Refused -> PronunciationSentencesResult.Refused(failure.reason)
+                else -> PronunciationSentencesResult.Refused("no sentence came back")
+            }
         }
 
         val sessionId = sessions.open(TrainingType.PRONUNCIATION_SENTENCES, sentences.map { (word, sentence) -> word.id to sentence })

@@ -13,6 +13,7 @@ import com.lexicon.interactors.numbers.LoadNumberCourseUseCase
 import com.lexicon.interactors.numbers.NumberCourse
 import com.lexicon.interactors.presets.CountWordsToReviewUseCase
 import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
+import com.lexicon.interactors.vocabularycourse.CourseLaunch
 import com.lexicon.interactors.vocabularycourse.GetCourseProgressUseCase
 import com.lexicon.interactors.vocabularycourse.GetDailyStudyTimeUseCase
 import com.lexicon.interactors.vocabularycourse.NextCourseTrainingUseCase
@@ -20,10 +21,10 @@ import com.lexicon.interactors.vocabularycourse.ObserveVocabularyCourseUseCase
 import com.lexicon.interactors.vocabularycourse.StudyTimeHistory
 import com.lexicon.interactors.vocabularycourse.VocabularyCourse
 import com.lexicon.model.course.Course
-import com.lexicon.model.training.TrainingType
-import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabularycourse.CourseProgress
 import com.lexicon.model.vocabularycourse.ProgressMetricType
+import com.lexicon.presentation.vocabularycourse.CourseRunStep
+import com.lexicon.presentation.vocabularycourse.stepFor
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -34,17 +35,12 @@ import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-data class LaunchTraining(
-    val training: TrainingType,
-    val wordIds: ImmutableList<VocabularyId>,
-)
-
 data class DashboardUiState(
     val isLoading: Boolean = true,
     val course: VocabularyCourse? = null,
     val progress: CourseProgress? = null,
     val wordsToReview: Int = 0,
-    val launch: LaunchTraining? = null,
+    val launch: CourseLaunch? = null,
     val openCards: Boolean = false,
     val nothingToPractise: Boolean = false,
     val studyTime: StudyTimeHistory? = null,
@@ -64,6 +60,21 @@ data class DashboardUiState(
     val learningWords: Int
         get() = progress?.metric(ProgressMetricType.VOCABULARY)?.let { it.target - it.current } ?: 0
 }
+
+private data class CourseGroups(
+    val conjugation: ImmutableList<ConjugationCourse>,
+    val declension: ImmutableList<DeclensionCourse>,
+    val numbers: NumberCourse?,
+    val countries: CountryCourse?,
+)
+
+private fun DashboardUiState.with(groups: CourseGroups): DashboardUiState =
+    copy(
+        conjugationCourses = groups.conjugation,
+        declensionCourses = groups.declension,
+        numberCourse = groups.numbers,
+        countryCourse = groups.countries,
+    )
 
 class DashboardViewModel(
     private val getProgress: GetCourseProgressUseCase,
@@ -85,21 +96,14 @@ class DashboardViewModel(
         viewModelScope.launch {
             observeCourse().collect { course ->
                 val progress = getProgress()
-                val courses = loadConjugationCourses()
-                val declension = loadDeclensionCourses()
-                val numberCourse = loadNumberCourse()
-                val countryCourse = loadCountryCourse()
+                val groups = loadCourseGroups()
                 _uiState.update {
                     it.copy(
                         isLoading = false,
                         course = course,
                         progress = progress,
-                        conjugationCourses = courses,
-                        declensionCourses = declension,
-                        numberCourse = numberCourse,
-                        countryCourse = countryCourse,
                         nothingToPractise = false,
-                    )
+                    ).with(groups)
                 }
             }
         }
@@ -132,16 +136,13 @@ class DashboardViewModel(
     fun onContinue() {
         val course = _uiState.value.course ?: return
 
-        if (course.showCardsNext) {
-            _uiState.update { it.copy(openCards = true) }
-            return
-        }
         viewModelScope.launch {
-            val next = queue.next()
+            val step = queue.stepFor(course)
             _uiState.update {
-                when (next) {
-                    null -> it.copy(nothingToPractise = true)
-                    else -> it.copy(launch = LaunchTraining(next.training, next.wordIds))
+                when (step) {
+                    CourseRunStep.Cards -> it.copy(openCards = true)
+                    is CourseRunStep.Next -> it.copy(launch = CourseLaunch(step.training, step.wordIds))
+                    else -> it.copy(nothingToPractise = true)
                 }
             }
         }
@@ -151,18 +152,16 @@ class DashboardViewModel(
 
     fun refreshCourses() {
         viewModelScope.launch {
-            val conjugation = loadConjugationCourses()
-            val declension = loadDeclensionCourses()
-            val numbers = loadNumberCourse()
-            val countries = loadCountryCourse()
-            _uiState.update {
-                it.copy(
-                    conjugationCourses = conjugation,
-                    declensionCourses = declension,
-                    numberCourse = numbers,
-                    countryCourse = countries,
-                )
-            }
+            val groups = loadCourseGroups()
+            _uiState.update { it.with(groups) }
         }
     }
+
+    private suspend fun loadCourseGroups(): CourseGroups =
+        CourseGroups(
+            conjugation = loadConjugationCourses(),
+            declension = loadDeclensionCourses(),
+            numbers = loadNumberCourse(),
+            countries = loadCountryCourse(),
+        )
 }

@@ -14,11 +14,9 @@ class GetWordPresetMembershipsUseCaseImpl(
 ) : GetWordPresetMembershipsUseCase {
     override suspend fun invoke(wordId: VocabularyId): ImmutableList<PresetMembership> {
         val memberOf = repository.getPresetIdsForWord(wordId.value).toSet()
-        val categories = repository.getCategories().associate { it.id to it.toCategory() }
         return repository.getPresets()
-            .mapNotNull { preset -> categories[preset.categoryId]?.let(preset::toPreset) }
+            .toSortedPresets(repository.getCategories())
             .filterNot { it.isUnsorted }
-            .sortedWith(compareBy({ it.category.order }, { it.popularity }))
             .map { PresetMembership(preset = it, isMember = it.id.value in memberOf) }
             .toImmutableList()
     }

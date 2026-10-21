@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.boundary.SpeechSynthesizer
+import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.presets.CreateWordUseCase
 import com.lexicon.interactors.presets.GenerateWordExampleUseCase
 import com.lexicon.interactors.presets.GetPinnedImageUseCase
@@ -13,7 +14,7 @@ import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.GetWordUseCase
 import com.lexicon.interactors.presets.PresetMembership
 import com.lexicon.interactors.presets.SearchImageCandidatesUseCase
-import com.lexicon.interactors.presets.SetWordPresetUseCase
+import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.SuggestTranslationsUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
@@ -90,7 +91,7 @@ class CreateWordViewModel(
     private val getWordPresetMemberships: GetWordPresetMembershipsUseCase,
     private val getPinnedImage: GetPinnedImageUseCase,
     private val generateExample: GenerateWordExampleUseCase,
-    private val setWordPreset: SetWordPresetUseCase,
+    private val setWordPreset: SetWordPresetMembershipUseCase,
     private val speechSynthesizer: SpeechSynthesizer,
 ) : ViewModel() {
     private val editing: VocabularyId? =
@@ -221,7 +222,7 @@ class CreateWordViewModel(
         val id = editing ?: return
         presetJobs[presetId]?.cancel()
         presetJobs[presetId] = viewModelScope.launch {
-            setWordPreset(wordId = id, presetId = presetId, isMember = isMember)
+            runSuspendCatching { setWordPreset(presetId = presetId, wordId = id, isMember = isMember) }
                 .onFailure {
                     showMembership(presetId, !isMember)
                     _uiState.update { it.copy(presetFailed = true) }

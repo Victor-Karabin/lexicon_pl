@@ -2,6 +2,7 @@ package com.lexicon.application.dictation
 
 import com.lexicon.application.settings.StepCountResolver
 import com.lexicon.application.training.open
+import com.lexicon.application.training.randomWords
 import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.dictation.DictationSessionResponse
@@ -16,10 +17,9 @@ class StartDictationSessionUseCaseImpl(
     private val sessions: SessionStore,
 ) : StartDictationSessionUseCase {
     override suspend fun invoke(request: StartDictationSessionRequest): DictationSessionResponse {
-        val stepCount = stepCountResolver.resolve(request.stepCount)
-        val words = vocabularyRepository.getRandomItems(stepCount, request.vocabularyIds)
+        val words = vocabularyRepository.randomWords(stepCountResolver, request.stepCount, request.vocabularyIds)
 
-        val sessionId = sessions.open(TrainingType.DICTATION, words.map { it.id to it.text })
+        val sessionId = sessions.open(TrainingType.DICTATION, words)
 
         return DictationSessionResponse(
             sessionId = sessionId.value,

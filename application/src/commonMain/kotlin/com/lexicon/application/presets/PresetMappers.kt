@@ -25,3 +25,9 @@ fun VocabularyPresetBoundary.toPreset(category: PresetCategory): VocabularyPrese
         vocabularyIds = vocabularyIds.map(::VocabularyId).toImmutableList(),
         wordCount = wordCount,
     )
+
+internal fun List<VocabularyPresetBoundary>.toSortedPresets(categories: List<PresetCategoryBoundary>): List<VocabularyPreset> {
+    val byId = categories.associate { it.id to it.toCategory() }
+    return mapNotNull { preset -> byId[preset.categoryId]?.let(preset::toPreset) }
+        .sortedWith(compareBy({ it.category.order }, { it.popularity }))
+}

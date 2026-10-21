@@ -1,9 +1,8 @@
-@file:OptIn(ExperimentalUuidApi::class)
-
 package com.lexicon.application.pronunciation
 
 import com.lexicon.application.settings.StepCountResolver
 import com.lexicon.application.training.open
+import com.lexicon.application.training.randomWords
 import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.pronunciation.PronunciationSessionResponse
@@ -11,7 +10,6 @@ import com.lexicon.interactors.pronunciation.PronunciationStepResponse
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionRequest
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.model.training.TrainingType
-import kotlin.uuid.ExperimentalUuidApi
 
 class StartPronunciationSessionUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,
@@ -19,8 +17,7 @@ class StartPronunciationSessionUseCaseImpl(
     private val sessions: SessionStore,
 ) : StartPronunciationSessionUseCase {
     override suspend fun invoke(request: StartPronunciationSessionRequest): PronunciationSessionResponse {
-        val stepCount = stepCountResolver.resolve(request.stepCount)
-        val words = vocabularyRepository.getRandomItems(stepCount, request.vocabularyIds)
+        val words = vocabularyRepository.randomWords(stepCountResolver, request.stepCount, request.vocabularyIds)
         val steps =
             words.mapIndexed { index, word ->
                 PronunciationStepResponse(
@@ -31,7 +28,7 @@ class StartPronunciationSessionUseCaseImpl(
                     transcription = word.transcription,
                 )
             }
-        val sessionId = sessions.open(TrainingType.PRONUNCIATION_CHECK, words.map { it.id to it.text })
+        val sessionId = sessions.open(TrainingType.PRONUNCIATION_CHECK, words)
         return PronunciationSessionResponse(sessionId = sessionId.value, steps = steps)
     }
 }

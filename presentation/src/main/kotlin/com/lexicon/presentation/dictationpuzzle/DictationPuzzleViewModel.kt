@@ -19,6 +19,7 @@ import com.lexicon.presentation.common.SessionTally
 import com.lexicon.presentation.common.shuffleIntoTiles
 import com.lexicon.presentation.common.speakQuietly
 import com.lexicon.presentation.common.trainingVocabularyIds
+import com.lexicon.presentation.puzzle.PuzzleUiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -40,8 +41,8 @@ class DictationPuzzleViewModel(
 ) : ViewModel() {
     private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
 
-    private val _uiState = MutableStateFlow<DictationPuzzleUiState>(DictationPuzzleUiState.Loading)
-    val uiState: StateFlow<DictationPuzzleUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow<PuzzleUiState>(PuzzleUiState.Loading)
+    val uiState: StateFlow<PuzzleUiState> = _uiState.asStateFlow()
     private val tally = SessionTally(lastSessionResultsHolder)
 
     val navigationEvents: SharedFlow<SessionNavigationEvent> = tally.events
@@ -59,7 +60,7 @@ class DictationPuzzleViewModel(
             sessionId = response.sessionId
             steps = response.steps
             if (steps.isEmpty()) {
-                _uiState.update { DictationPuzzleUiState.Unavailable }
+                _uiState.update { PuzzleUiState.Unavailable }
                 return@launch
             }
             openStep(0)
@@ -70,7 +71,7 @@ class DictationPuzzleViewModel(
     private fun openStep(index: Int) {
         val step = steps.getOrNull(index) ?: return
         _uiState.update {
-            DictationPuzzleUiState.Loaded(
+            PuzzleUiState.Loaded(
                 stepIndex = index,
                 totalSteps = steps.size,
                 stepTiles = shuffleIntoTiles(step.expectedText),
@@ -88,20 +89,20 @@ class DictationPuzzleViewModel(
     }
 
     fun onTileSelected(tile: LetterTile) {
-        val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
+        val state = _uiState.value as? PuzzleUiState.Loaded ?: return
         if (!state.isEditable) return
         if (state.placedTiles.any { it.id == tile.id }) return
         updateLoaded { it.copy(placedTiles = it.placedTiles + tile) }
     }
 
     fun onUndo() {
-        val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
+        val state = _uiState.value as? PuzzleUiState.Loaded ?: return
         if (!state.canUndo) return
         updateLoaded { it.copy(placedTiles = it.placedTiles.dropLast(1)) }
     }
 
     fun onTipRequested() {
-        val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
+        val state = _uiState.value as? PuzzleUiState.Loaded ?: return
         if (!state.canUseTip) return
         val step = currentStepOrNull() ?: return
         tally.countTip()
@@ -109,13 +110,13 @@ class DictationPuzzleViewModel(
     }
 
     fun onCheck() {
-        val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
+        val state = _uiState.value as? PuzzleUiState.Loaded ?: return
         if (!state.canCheck) return
         submitCurrentStep(submittedText = state.builtAnswer, skipped = false)
     }
 
     fun onSkip() {
-        val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
+        val state = _uiState.value as? PuzzleUiState.Loaded ?: return
         if (!state.canSkip) return
         submitCurrentStep(submittedText = "", skipped = true)
     }
@@ -125,7 +126,7 @@ class DictationPuzzleViewModel(
         skipped: Boolean,
     ) {
         val step = currentStepOrNull() ?: return
-        val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
+        val state = _uiState.value as? PuzzleUiState.Loaded ?: return
         updateLoaded { it.copy(isSubmitting = true) }
         viewModelScope.launch(dispatchers.io) {
             val response =
@@ -174,14 +175,14 @@ class DictationPuzzleViewModel(
     }
 
     fun onNext() {
-        val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
+        val state = _uiState.value as? PuzzleUiState.Loaded ?: return
         if (!state.awaitingNext) return
         updateLoaded { it.copy(isSubmitting = true) }
         viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
     }
 
     private suspend fun advanceToNextStep() {
-        val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return
+        val state = _uiState.value as? PuzzleUiState.Loaded ?: return
         val nextIndex = state.stepIndex + 1
         if (nextIndex >= steps.size) {
             updateLoaded { it.copy(isSessionComplete = true) }
@@ -193,11 +194,11 @@ class DictationPuzzleViewModel(
     }
 
     private fun currentStepOrNull(): DictationPuzzleStepResponse? {
-        val state = _uiState.value as? DictationPuzzleUiState.Loaded ?: return null
+        val state = _uiState.value as? PuzzleUiState.Loaded ?: return null
         return steps.getOrNull(state.stepIndex)
     }
 
-    private inline fun updateLoaded(transform: (DictationPuzzleUiState.Loaded) -> DictationPuzzleUiState.Loaded) {
-        _uiState.update { current -> if (current is DictationPuzzleUiState.Loaded) transform(current) else current }
+    private inline fun updateLoaded(transform: (PuzzleUiState.Loaded) -> PuzzleUiState.Loaded) {
+        _uiState.update { current -> if (current is PuzzleUiState.Loaded) transform(current) else current }
     }
 }

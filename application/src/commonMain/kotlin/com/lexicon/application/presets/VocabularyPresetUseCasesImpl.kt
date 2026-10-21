@@ -19,11 +19,7 @@ class GetVocabularyPresetsUseCaseImpl(
     private val repository: VocabularyPresetRepository,
 ) : GetVocabularyPresetsUseCase {
     override suspend fun invoke(): ImmutableList<VocabularyPreset> {
-        val categories = repository.getCategories().associate { it.id to it.toCategory() }
-        return repository.getPresets()
-            .mapNotNull { preset -> categories[preset.categoryId]?.let(preset::toPreset) }
-            .sortedWith(compareBy({ it.category.order }, { it.popularity }))
-            .toImmutableList()
+        return repository.getPresets().toSortedPresets(repository.getCategories()).toImmutableList()
     }
 }
 
@@ -32,11 +28,7 @@ class ObserveVocabularyPresetsUseCaseImpl(
 ) : ObserveVocabularyPresetsUseCase {
     override fun invoke(): Flow<ImmutableList<VocabularyPreset>> =
         repository.observePresets().map { presets ->
-            val categories = repository.getCategories().associate { it.id to it.toCategory() }
-            presets
-                .mapNotNull { preset -> categories[preset.categoryId]?.let(preset::toPreset) }
-                .sortedWith(compareBy({ it.category.order }, { it.popularity }))
-                .toImmutableList()
+            presets.toSortedPresets(repository.getCategories()).toImmutableList()
         }
 }
 

@@ -31,6 +31,7 @@ import com.lexicon.presentation.common.TrainingActionRow
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.TrainingUnavailableContent
 import com.lexicon.presentation.common.shuffleIntoTiles
+import com.lexicon.presentation.puzzle.PuzzleUiState
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
 import com.lexicon.presentation.theme.component.PlayButton
@@ -73,7 +74,7 @@ fun DictationPuzzleScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DictationPuzzleScreenContent(
-    uiState: DictationPuzzleUiState,
+    uiState: PuzzleUiState,
     onClose: () -> Unit,
     onReplayAudio: () -> Unit,
     onUndo: () -> Unit,
@@ -89,10 +90,10 @@ private fun DictationPuzzleScreenContent(
         topBar = { TrainingTopBar(title = stringResource(R.string.dictation_puzzle_title), onClose = onClose) },
     ) { padding ->
         when (uiState) {
-            DictationPuzzleUiState.Unavailable ->
+            PuzzleUiState.Unavailable ->
                 TrainingUnavailableContent(onClose = onClose, modifier = Modifier.padding(padding))
 
-            is DictationPuzzleUiState.Loading ->
+            is PuzzleUiState.Loading ->
                 Column(
                     modifier = Modifier.fillMaxSize().padding(padding),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -100,7 +101,7 @@ private fun DictationPuzzleScreenContent(
                 ) {
                     CircularProgressIndicator()
                 }
-            is DictationPuzzleUiState.Loaded -> {
+            is PuzzleUiState.Loaded -> {
                 Column(modifier = Modifier.fillMaxSize().padding(padding)) {
                     Column(
                         modifier = Modifier
@@ -180,7 +181,7 @@ private fun DictationPuzzleScreenUnansweredPreview() {
     LexiconTheme {
         DictationPuzzleScreenContent(
             uiState =
-                DictationPuzzleUiState.Loaded(
+                PuzzleUiState.Loaded(
                     stepIndex = 2,
                     totalSteps = 10,
                     stepTiles = previewTiles,
@@ -204,7 +205,7 @@ private fun DictationPuzzleScreenIncorrectPreview() {
     LexiconTheme {
         DictationPuzzleScreenContent(
             uiState =
-                DictationPuzzleUiState.Loaded(
+                PuzzleUiState.Loaded(
                     stepIndex = 2,
                     totalSteps = 10,
                     stepTiles = previewTiles,

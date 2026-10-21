@@ -14,13 +14,11 @@ import com.lexicon.model.training.StepOutcome
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
-import com.lexicon.presentation.common.WordResultEntry
+import com.lexicon.presentation.common.SessionTally
 import com.lexicon.presentation.common.trainingVocabularyIds
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -31,15 +29,16 @@ class CrosswordViewModel(
     private val startSessionUseCase: StartCrosswordSessionUseCase,
     private val submitCrosswordUseCase: SubmitCrosswordUseCase,
     private val dispatchers: DispatcherProvider,
-    private val lastSessionResultsHolder: LastSessionResultsHolder,
+    lastSessionResultsHolder: LastSessionResultsHolder,
 ) : ViewModel() {
     private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
 
     private val _uiState = MutableStateFlow<CrosswordUiState>(CrosswordUiState.Loading)
     val uiState: StateFlow<CrosswordUiState> = _uiState.asStateFlow()
 
-    private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
-    val navigationEvents: SharedFlow<SessionNavigationEvent> = _navigationEvents.asSharedFlow()
+    private val tally = SessionTally(lastSessionResultsHolder)
+
+    val navigationEvents: SharedFlow<SessionNavigationEvent> = tally.events
 
     private lateinit var sessionId: String
 
@@ -180,18 +179,15 @@ class CrosswordViewModel(
                 return@launch
             }
 
-            lastSessionResultsHolder.wordResults = response.wordResults.map { result ->
+            response.wordResults.forEach { result ->
                 val word = state.words.first { it.vocabularyItemId == result.vocabularyItemId }
-                WordResultEntry(
-                    word = result.expectedText,
-                    translation = word.clueText,
-                    outcome = if (result.outcome == StepOutcome.CORRECT) {
-                        AnswerState.Correct
-                    } else {
-                        AnswerState.Incorrect(result.expectedText)
-                    },
-                    tipUsed = result.tipUsed,
-                )
+                val outcome = if (result.outcome == StepOutcome.CORRECT) {
+                    AnswerState.Correct
+                } else {
+                    AnswerState.Incorrect(result.expectedText)
+                }
+                tally.record(outcome, result.expectedText, word.clueText, result.tipUsed)
+                if (result.tipUsed) tally.countTip()
             }
 
             val correct = response.wordResults.count { it.outcome == StepOutcome.CORRECT }
@@ -202,14 +198,7 @@ class CrosswordViewModel(
                     focusedCell = null,
                 )
             }
-            _navigationEvents.emit(
-                SessionNavigationEvent.SessionComplete(
-                    correct = correct,
-                    incorrect = response.wordResults.size - correct,
-                    skipped = 0,
-                    tipsUsed = response.wordResults.count { it.tipUsed },
-                ),
-            )
+            tally.complete()
         }
     }
 

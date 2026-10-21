@@ -1,15 +1,12 @@
 package com.lexicon.application.dictationpuzzle
 
 import com.lexicon.application.dictation.AnswerNormalizer
-import com.lexicon.application.training.recordOutcome
-import com.lexicon.application.training.stepAt
+import com.lexicon.application.training.submitTyped
 import com.lexicon.boundary.SessionStore
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerRequest
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerResponse
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerUseCase
 import com.lexicon.interactors.training.RecordAnswerUseCase
-import com.lexicon.interactors.training.RecordedAnswer
-import com.lexicon.model.training.StepOutcome
 import com.lexicon.model.training.TrainingType
 
 class SubmitDictationPuzzleAnswerUseCaseImpl(
@@ -18,36 +15,18 @@ class SubmitDictationPuzzleAnswerUseCaseImpl(
     private val sessions: SessionStore,
 ) : SubmitDictationPuzzleAnswerUseCase {
     override suspend fun invoke(request: SubmitDictationPuzzleAnswerRequest): SubmitDictationPuzzleAnswerResponse {
-        val step = sessions.stepAt(request.sessionId, request.stepIndex)
-        val expectedText = step?.expectedAnswer ?: request.expectedText
-        val outcome = resolveOutcome(request, expectedText)
-        val isFirstAnswer = sessions.recordOutcome(request.sessionId, request.stepIndex, outcome, request.tipUsed)
-
-        if (isFirstAnswer) {
-            recordAnswer(
-                RecordedAnswer(
-                    sessionId = request.sessionId,
-                    trainingType = TrainingType.DICTATION_PUZZLE,
-                    stepIndex = request.stepIndex,
-                    vocabularyItemId = step?.wordId?.value ?: request.vocabularyItemId,
-                    expectedAnswer = expectedText,
-                    submittedAnswer = request.submittedText,
-                    outcome = outcome,
-                    tipUsed = request.tipUsed,
-                ),
-            )
-        }
-
-        return SubmitDictationPuzzleAnswerResponse(outcome = outcome, expectedText = expectedText)
+        val answer = sessions.submitTyped(
+            training = TrainingType.DICTATION_PUZZLE,
+            sessionId = request.sessionId,
+            stepIndex = request.stepIndex,
+            fallbackExpectedText = request.expectedText,
+            fallbackVocabularyItemId = request.vocabularyItemId,
+            submittedText = request.submittedText,
+            skipped = request.skipped,
+            tipUsed = request.tipUsed,
+            recordAnswer = recordAnswer,
+            matches = answerNormalizer::matches,
+        )
+        return SubmitDictationPuzzleAnswerResponse(outcome = answer.outcome, expectedText = answer.expectedText)
     }
-
-    private fun resolveOutcome(
-        request: SubmitDictationPuzzleAnswerRequest,
-        expectedText: String,
-    ): StepOutcome =
-        when {
-            request.skipped -> StepOutcome.SKIPPED
-            answerNormalizer.matches(expectedText, request.submittedText) -> StepOutcome.CORRECT
-            else -> StepOutcome.INCORRECT
-        }
 }

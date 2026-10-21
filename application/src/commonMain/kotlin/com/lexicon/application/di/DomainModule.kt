@@ -71,7 +71,6 @@ import com.lexicon.application.presets.RestoreWordUseCaseImpl
 import com.lexicon.application.presets.SearchImageCandidatesUseCaseImpl
 import com.lexicon.application.presets.SearchVocabularyUseCaseImpl
 import com.lexicon.application.presets.SetWordPresetMembershipUseCaseImpl
-import com.lexicon.application.presets.SetWordPresetUseCaseImpl
 import com.lexicon.application.presets.SetWordStatusUseCaseImpl
 import com.lexicon.application.presets.SuggestTranslationsUseCaseImpl
 import com.lexicon.application.presets.TranslateWordUseCaseImpl
@@ -188,7 +187,6 @@ import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SearchImageCandidatesUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
 import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
-import com.lexicon.interactors.presets.SetWordPresetUseCase
 import com.lexicon.interactors.presets.SetWordStatusUseCase
 import com.lexicon.interactors.presets.SuggestTranslationsUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
@@ -326,7 +324,6 @@ val domainModule = module {
     factoryOf(::CreateWordUseCaseImpl) { bind<CreateWordUseCase>() }
     factoryOf(::UpdateWordUseCaseImpl) { bind<UpdateWordUseCase>() }
     factoryOf(::GenerateWordExampleUseCaseImpl) { bind<GenerateWordExampleUseCase>() }
-    factoryOf(::SetWordPresetUseCaseImpl) { bind<SetWordPresetUseCase>() }
     factory<GetWordUseCase> {
         val vocabulary = get<VocabularyRepository>()
         GetWordUseCase { vocabulary.getWord(it.value) }

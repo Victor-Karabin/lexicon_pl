@@ -50,6 +50,7 @@ import com.lexicon.model.vocabulary.LocalizedText
 import com.lexicon.model.vocabulary.resolve
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
+import com.lexicon.presentation.common.SectionHeading
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconSuccess
 import com.lexicon.presentation.theme.LexiconTheme
@@ -125,7 +126,13 @@ private fun PlanContent(
                     VocabularyCourseTile(course = uiState.course, onClick = onOpenCourseSettings)
                 }
 
-                item(key = "courses-heading") { SectionHeading(stringResource(R.string.plan_courses)) }
+                item(key = "courses-heading") {
+                    SectionHeading(
+                        text = stringResource(R.string.plan_courses),
+                        modifier = Modifier.padding(top = Dimens.spacingSmall, bottom = Dimens.spacingTiny),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
 
                 items(uiState.courses.filter { it.lessons.isNotEmpty() }, key = { it.id.value }) { course ->
                     CourseTile(
@@ -206,17 +213,6 @@ private fun DrillCourseTile(
             )
         }
     }
-}
-
-@Composable
-private fun SectionHeading(text: String) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.titleSmall,
-        fontWeight = FontWeight.SemiBold,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        modifier = Modifier.padding(top = Dimens.spacingSmall, bottom = Dimens.spacingTiny),
-    )
 }
 
 @OptIn(ExperimentalLayoutApi::class)

@@ -28,11 +28,14 @@ class SubmitDictationAnswerUseCaseImplTest {
         submittedText: String = "kot",
         tipUsed: Boolean = false,
         skipped: Boolean = false,
+        sessionId: String = "session-1",
+        expectedText: String = "kot",
+        vocabularyItemId: Long = 1L,
     ) = SubmitDictationAnswerRequest(
-        sessionId = "session-1",
+        sessionId = sessionId,
         stepIndex = 0,
-        vocabularyItemId = 1L,
-        expectedText = "kot",
+        vocabularyItemId = vocabularyItemId,
+        expectedText = expectedText,
         submittedText = submittedText,
         tipUsed = tipUsed,
         skipped = skipped,
@@ -106,5 +109,45 @@ class SubmitDictationAnswerUseCaseImplTest {
             useCase(request(submittedText = "kot").copy(sessionId = sessionId))
 
             coVerify(exactly = 1) { recordAnswer(any()) }
+        }
+
+    @Test
+    fun `the expected text and word come from the stored session, not from the caller`() =
+        runTest {
+            val sessionId = sessions.open(TrainingType.DICTATION, listOf(VocabularyId(5L) to "kot")).value
+
+            val response = useCase(request(sessionId = sessionId, expectedText = "pies", submittedText = "pies", vocabularyItemId = 9L))
+
+            assertEquals(StepOutcome.INCORRECT, response.outcome)
+            assertEquals("kot", response.expectedText)
+            coVerify {
+                recordAnswer(
+                    RecordedAnswer(
+                        sessionId = sessionId,
+                        trainingType = TrainingType.DICTATION,
+                        stepIndex = 0,
+                        vocabularyItemId = 5L,
+                        expectedAnswer = "kot",
+                        submittedAnswer = "pies",
+                        outcome = StepOutcome.INCORRECT,
+                    ),
+                )
+            }
+        }
+
+    @Test
+    fun `without a stored session the request's expected text and word are used and the answer is still recorded`() =
+        runTest {
+            val response = useCase(request(sessionId = "unknown", expectedText = "pies", submittedText = "pies", vocabularyItemId = 9L))
+
+            assertEquals(StepOutcome.CORRECT, response.outcome)
+            assertEquals("pies", response.expectedText)
+            coVerify(exactly = 1) {
+                recordAnswer(
+                    match<RecordedAnswer> {
+                        it.sessionId == "unknown" && it.vocabularyItemId == 9L && it.expectedAnswer == "pies"
+                    },
+                )
+            }
         }
 }

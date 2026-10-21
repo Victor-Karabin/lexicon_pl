@@ -49,6 +49,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.vocabularycourse.CourseSettings
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
+import com.lexicon.presentation.common.SectionHeading
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.main.sortedByTitle
 import com.lexicon.presentation.main.trainingCatalog
@@ -146,10 +147,10 @@ private fun CourseSettingsContent(
                 onChange = onReviewsChanged,
             )
 
-            SectionLabel(stringResource(R.string.vocabulary_course_trainings))
+            SectionHeading(stringResource(R.string.vocabulary_course_trainings))
             TrainingPicker(onAdd = onTrainingAdded)
 
-            SectionLabel(stringResource(R.string.vocabulary_course_queue))
+            SectionHeading(stringResource(R.string.vocabulary_course_queue))
             Text(
                 text = stringResource(
                     if (uiState.keptLastTraining) R.string.vocabulary_course_queue_keeps_one else R.string.vocabulary_course_queue_note,
@@ -337,11 +338,6 @@ private fun QueueRow(
             }
         }
     }
-}
-
-@Composable
-private fun SectionLabel(text: String) {
-    Text(text = text, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
 }
 
 @LightDarkPreview

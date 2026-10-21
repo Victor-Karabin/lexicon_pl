@@ -1,9 +1,5 @@
 package com.lexicon.presentation.mix
 
-import android.Manifest
-import android.content.pm.PackageManager
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -22,14 +18,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.mix.MixStep
 import com.lexicon.presentation.R
@@ -48,6 +39,7 @@ import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.common.TrainingUnavailableContent
 import com.lexicon.presentation.common.TrueOrFalseAnswerRow
 import com.lexicon.presentation.common.debounced
+import com.lexicon.presentation.common.rememberRecordAudioRequest
 import com.lexicon.presentation.common.shuffleIntoTiles
 import com.lexicon.presentation.course.AnswerInputs
 import com.lexicon.presentation.pronunciation.RecognitionErrorMessage
@@ -68,18 +60,7 @@ fun MixScreen(
     viewModel: MixViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val context = LocalContext.current
-    var hasRecordAudioPermission by remember {
-        mutableStateOf(
-            ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) ==
-                PackageManager.PERMISSION_GRANTED,
-        )
-    }
-    val permissionLauncher =
-        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-            hasRecordAudioPermission = granted
-            if (granted) viewModel.onRecordRequested()
-        }
+    val requestRecording = rememberRecordAudioRequest(onGranted = viewModel::onRecordRequested)
 
     LaunchedEffect(Unit) {
         viewModel.navigationEvents.collect { event ->
@@ -98,13 +79,7 @@ fun MixScreen(
             onTileSelected = viewModel::onTileSelected,
             onOptionSelected = viewModel::onOptionSelected,
             onReplayAudio = viewModel::onReplayAudio,
-            onRecordRequested = {
-                if (hasRecordAudioPermission) {
-                    viewModel.onRecordRequested()
-                } else {
-                    permissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
-                }
-            },
+            onRecordRequested = requestRecording,
             onTrueOrFalseAnswer = viewModel::onTrueOrFalseAnswer,
             onUndo = viewModel::onUndo,
             onTipRequested = viewModel::onTipRequested,

@@ -40,7 +40,7 @@ class StartImageTestSessionUseCaseImpl(
                     async { buildStep(index, subject, pool, request.optionCount) }
                 }.map { it.await() }
             }
-        val sessionId = sessions.open(TrainingType.IMAGE_TEST, subjects.map { it.id to it.text })
+        val sessionId = sessions.open(TrainingType.IMAGE_TEST, subjects)
         return ImageTestSessionResponse(sessionId = sessionId.value, steps = steps)
     }
 
