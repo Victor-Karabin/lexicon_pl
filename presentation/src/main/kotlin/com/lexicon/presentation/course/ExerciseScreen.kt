@@ -65,8 +65,8 @@ fun ExerciseScreen(
 private fun ExerciseContent(
     uiState: ExerciseUiState,
     onClose: () -> Unit,
-    onPlayAudio: () -> Unit,
-    onSeekAudio: (Long) -> Unit,
+    onPlayAudio: (Int) -> Unit,
+    onSeekAudio: (Long, Int) -> Unit,
     onSpeedChanged: () -> Unit,
     onOptionSelected: (Int, String) -> Unit,
     onGapChanged: (Int, Int, String) -> Unit,
@@ -106,13 +106,14 @@ private fun ExerciseContent(
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold,
                             )
-                            if (uiState.exercise.audioFile != null) {
-                                AudioPlayerRow(
-                                    state = uiState.track,
-                                    onPlayPause = onPlayAudio,
-                                    onSeek = onSeekAudio,
-                                    modifier = Modifier.padding(top = Dimens.spacingMedium),
+                            uiState.tracks.forEachIndexed { part, state ->
+                                LabelledAudioPlayer(
+                                    label = stringResource(R.string.exercise_audio_part, part + 1).takeIf { uiState.tracks.size > 1 },
+                                    state = state,
+                                    onPlayPause = { onPlayAudio(part) },
+                                    onSeek = { onSeekAudio(it, part) },
                                     onSpeedChanged = onSpeedChanged,
+                                    modifier = Modifier.padding(top = Dimens.spacingMedium),
                                 )
                             }
                         }

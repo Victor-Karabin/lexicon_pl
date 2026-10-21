@@ -42,15 +42,18 @@ class AndroidLessonAudioPlayer(
         fromMs: Long?,
     ) {
         withContext(dispatchers.io) {
-            synchronized(lock) {
-                if (loadedFile != file) load(file, path)
-                player?.run {
-                    fromMs?.let { seekTo(it.toInt()) }
-                    start()
-                    applySpeed(this)
+            try {
+                synchronized(lock) {
+                    if (loadedFile != file) load(file, path)
+                    player?.run {
+                        fromMs?.let { seekTo(it.toInt()) }
+                        start()
+                        applySpeed(this)
+                    }
                 }
+            } finally {
+                publish()
             }
-            publish()
             startTicking()
         }
     }
@@ -104,17 +107,25 @@ class AndroidLessonAudioPlayer(
         file: String,
         path: String,
     ) {
+        ticker?.cancel()
         runCatching { player?.release() }
-        player =
-            MediaPlayer().apply {
-                setDataSource(path)
-                prepare()
-                setOnCompletionListener {
-                    ticker?.cancel()
-                    it.seekTo(0)
-                    publish()
-                }
-            }
+        player = null
+        loadedFile = null
+
+        val prepared = MediaPlayer()
+        try {
+            prepared.setDataSource(path)
+            prepared.prepare()
+        } catch (failure: Exception) {
+            runCatching { prepared.release() }
+            throw failure
+        }
+        prepared.setOnCompletionListener {
+            ticker?.cancel()
+            it.seekTo(0)
+            publish()
+        }
+        player = prepared
         loadedFile = file
     }
 

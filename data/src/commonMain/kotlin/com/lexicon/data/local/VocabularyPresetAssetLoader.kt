@@ -11,7 +11,7 @@ class VocabularyPresetAssetLoader(
 
     fun load(): VocabularyPresetCatalogAsset = json.decodeFromString(readAsset())
 
-    fun fingerprint(): String = readAsset().let { "${it.length}:${it.hashCode()}" }
+    fun fingerprint(): String = readAsset().assetFingerprint()
 
     private fun readAsset(): String = assets.readText(PRESET_ASSET_PATH)
 }

@@ -142,12 +142,7 @@ class PronunciationViewModel(
                     )
                 }
             } catch (failure: SpeechRecognitionFailed) {
-                val errorType = if (failure.message?.contains("not available") == true) {
-                    RecognitionErrorType.UNAVAILABLE
-                } else {
-                    RecognitionErrorType.FAILED
-                }
-                updateLoaded { it.copy(recordingState = RecordingState.IDLE, recognitionError = errorType) }
+                updateLoaded { it.copy(recordingState = RecordingState.IDLE, recognitionError = failure.reason.toErrorType()) }
             }
         }
     }

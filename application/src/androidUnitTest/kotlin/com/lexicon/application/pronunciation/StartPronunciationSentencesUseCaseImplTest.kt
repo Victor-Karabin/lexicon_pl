@@ -1,6 +1,7 @@
 package com.lexicon.application.pronunciation
 
 import com.lexicon.application.settings.StepCountResolver
+import com.lexicon.application.training.FakeSessionStore
 import com.lexicon.boundary.AppSettingsBoundary
 import com.lexicon.boundary.SentenceGenerator
 import com.lexicon.boundary.SentenceRequestBoundary
@@ -23,7 +24,7 @@ class StartPronunciationSentencesUseCaseImplTest {
     private val vocabulary: VocabularyRepository = mockk()
     private val generator: SentenceGenerator = mockk()
     private val settings: SettingsRepository = mockk()
-    private val useCase = StartPronunciationSentencesUseCaseImpl(vocabulary, generator, StepCountResolver(settings))
+    private val useCase = StartPronunciationSentencesUseCaseImpl(vocabulary, generator, StepCountResolver(settings), FakeSessionStore())
 
     private var stepCount = 5
 

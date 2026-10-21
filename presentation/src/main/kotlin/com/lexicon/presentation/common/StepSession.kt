@@ -2,7 +2,7 @@ package com.lexicon.presentation.common
 
 import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
-import com.lexicon.interactors.settings.AppSettings
+import com.lexicon.interactors.settings.GetStepCountUseCase
 import com.lexicon.interactors.training.RecordStudyActivityUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,10 +16,12 @@ class StepSession<T, K>(
     private val speechSynthesizer: SpeechSynthesizer,
     private val resultsHolder: LastSessionResultsHolder,
     private val recordStudy: RecordStudyActivityUseCase,
+    private val getStepCount: GetStepCountUseCase,
     private val keyOf: (T) -> K,
     private val pick: suspend (asked: Set<K>) -> T?,
 ) {
-    val totalSteps: Int = AppSettings.DEFAULT_STEP_COUNT
+    var totalSteps: Int = 0
+        private set
 
     private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
     val navigationEvents: SharedFlow<SessionNavigationEvent> = _navigationEvents.asSharedFlow()
@@ -34,6 +36,7 @@ class StepSession<T, K>(
 
     fun begin(onFirst: (T?) -> Unit) {
         scope.launch(dispatchers.io) {
+            totalSteps = getStepCount()
             val first = pick(asked)?.also { asked += keyOf(it) }
             onFirst(first)
         }

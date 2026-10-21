@@ -9,6 +9,8 @@ import com.lexicon.interactors.conjugation.ConjugationVariantProgress
 import com.lexicon.interactors.conjugation.GrammaticalPerson
 import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
 import com.lexicon.interactors.conjugation.NextConjugationTableUseCase
+import com.lexicon.interactors.settings.AppSettings
+import com.lexicon.interactors.settings.GetStepCountUseCase
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -42,6 +44,7 @@ class ConjugationViewModelTest {
         coEvery { this@mockk(any()) } returns null
     }
     private val loadCourses: LoadConjugationCoursesUseCase = mockk()
+    private val getStepCount: GetStepCountUseCase = mockk { coEvery { this@mockk() } returns AppSettings.DEFAULT_STEP_COUNT }
 
     @Before
     fun setUp() = Dispatchers.setMain(testDispatcher)
@@ -60,6 +63,7 @@ class ConjugationViewModelTest {
             mockk(relaxed = true),
             LastSessionResultsHolder(),
             mockk(relaxed = true),
+            getStepCount,
             dispatchers,
         )
 

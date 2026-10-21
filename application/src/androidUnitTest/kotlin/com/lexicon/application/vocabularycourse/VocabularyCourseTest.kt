@@ -6,6 +6,8 @@ import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.vocabularycourse.CourseSettings
 import com.lexicon.interactors.vocabularycourse.defaultCourseQueue
 import com.lexicon.model.training.TrainingType
+import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.collections.immutable.persistentListOf
@@ -99,6 +101,66 @@ class VocabularyCourseTest {
 
             assertEquals(TrainingType.DICTATION, launch?.training)
             assertEquals(1, courses.stored.value?.position)
+        }
+
+    @Test
+    fun `stepping over the last trainings back to the top starts the next round`() =
+        runTest {
+            coEvery { vocabulary.learningWordIds(any()) } returns listOf(1L, 2L, 3L)
+            coEvery { vocabulary.randomKnownWordIds(any()) } returns emptyList()
+            val courses = InMemoryCourses(course(listOf("dictation", "crossword"), position = 1, round = 0, cardsSeenRound = 0))
+
+            val launch = NextCourseTrainingUseCaseImpl(courses, vocabulary).next()
+
+            assertEquals(TrainingType.DICTATION, launch?.training)
+            assertEquals(0, courses.stored.value?.position)
+            assertEquals(1, courses.stored.value?.round)
+            assertTrue(GetVocabularyCourseUseCaseImpl(courses, vocabulary)().showCardsNext)
+        }
+
+    @Test
+    fun `stepping over a training without passing the end keeps the round`() =
+        runTest {
+            coEvery { vocabulary.learningWordIds(any()) } returns listOf(1L, 2L, 3L)
+            coEvery { vocabulary.randomKnownWordIds(any()) } returns emptyList()
+            val courses = InMemoryCourses(course(listOf("crossword", "dictation"), position = 0, round = 0, cardsSeenRound = 0))
+
+            NextCourseTrainingUseCaseImpl(courses, vocabulary).next()
+
+            assertEquals(1, courses.stored.value?.position)
+            assertEquals(0, courses.stored.value?.round)
+        }
+
+    @Test
+    fun `phrases do not count toward the crossword minimum, so a phrase-heavy session steps over it`() =
+        runTest {
+            coEvery { vocabulary.learningWordIds(any()) } returns listOf(1L, 2L, 3L, 4L)
+            coEvery { vocabulary.randomKnownWordIds(any()) } returns listOf(101L, 102L, 103L, 104L, 105L, 106L)
+            coEvery { vocabulary.getItemsByIds(any()) } answers {
+                firstArg<List<Long>>().map { id ->
+                    Word(VocabularyId(id), if (id % 2 == 0L) "dzień dobry $id" else "slowo$id", "t", "t")
+                }
+            }
+            val courses = InMemoryCourses(course(listOf("crossword", "dictation")))
+
+            val launch = NextCourseTrainingUseCaseImpl(courses, vocabulary).next()
+
+            assertEquals(TrainingType.DICTATION, launch?.training)
+        }
+
+    @Test
+    fun `a crossword is launched when enough single words are in the session`() =
+        runTest {
+            coEvery { vocabulary.learningWordIds(any()) } returns listOf(1L, 2L, 3L, 4L)
+            coEvery { vocabulary.randomKnownWordIds(any()) } returns listOf(101L, 102L, 103L, 104L, 105L, 106L)
+            coEvery { vocabulary.getItemsByIds(any()) } answers {
+                firstArg<List<Long>>().map { id -> Word(VocabularyId(id), "slowo$id", "t", "t") }
+            }
+            val courses = InMemoryCourses(course(listOf("crossword", "dictation")))
+
+            val launch = NextCourseTrainingUseCaseImpl(courses, vocabulary).next()
+
+            assertEquals(TrainingType.CROSSWORD, launch?.training)
         }
 
     @Test

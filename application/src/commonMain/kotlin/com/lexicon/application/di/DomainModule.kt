@@ -85,6 +85,7 @@ import com.lexicon.application.pronunciation.SubmitPronunciationResultUseCaseImp
 import com.lexicon.application.puzzle.StartPuzzleSessionUseCaseImpl
 import com.lexicon.application.puzzle.SubmitPuzzleAnswerUseCaseImpl
 import com.lexicon.application.rules.GetReferenceRuleUseCaseImpl
+import com.lexicon.application.settings.GetStepCountUseCaseImpl
 import com.lexicon.application.settings.ObserveSettingsUseCaseImpl
 import com.lexicon.application.settings.StepCountResolver
 import com.lexicon.application.settings.UpdatePassMarkUseCaseImpl
@@ -206,6 +207,7 @@ import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 import com.lexicon.interactors.puzzle.StartPuzzleSessionUseCase
 import com.lexicon.interactors.puzzle.SubmitPuzzleAnswerUseCase
 import com.lexicon.interactors.rules.GetReferenceRuleUseCase
+import com.lexicon.interactors.settings.GetStepCountUseCase
 import com.lexicon.interactors.settings.ObserveSettingsUseCase
 import com.lexicon.interactors.settings.UpdatePassMarkUseCase
 import com.lexicon.interactors.settings.UpdateStepCountUseCase
@@ -265,6 +267,7 @@ val domainModule = module {
     factoryOf(::StartCrosswordSessionUseCaseImpl) { bind<StartCrosswordSessionUseCase>() }
     factoryOf(::SubmitCrosswordUseCaseImpl) { bind<SubmitCrosswordUseCase>() }
     factoryOf(::ObserveSettingsUseCaseImpl) { bind<ObserveSettingsUseCase>() }
+    factoryOf(::GetStepCountUseCaseImpl) { bind<GetStepCountUseCase>() }
     factoryOf(::UpdateThemeModeUseCaseImpl) { bind<UpdateThemeModeUseCase>() }
     factoryOf(::UpdateStepCountUseCaseImpl) { bind<UpdateStepCountUseCase>() }
     factoryOf(::UpdatePassMarkUseCaseImpl) { bind<UpdatePassMarkUseCase>() }

@@ -37,6 +37,11 @@ class TrainingTypeRequirementsTest {
     }
 
     @Test
+    fun `only Crossword leaves phrases out of its words`() {
+        assertEquals(listOf(TrainingType.CROSSWORD), TrainingType.entries.filter { it.excludesPhrases })
+    }
+
+    @Test
     fun `every training needs at least one word`() {
         assertTrue(TrainingType.entries.all { it.minimumWords >= 1 })
     }

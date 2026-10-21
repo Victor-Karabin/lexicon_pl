@@ -1,17 +1,22 @@
 package com.lexicon.interactors.course
 
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 sealed interface LessonExercise {
     val id: String
     val instruction: String
     val audioFile: String?
+    val moreAudioFiles: ImmutableList<String>
+
+    val audioFiles: List<String> get() = listOfNotNull(audioFile) + moreAudioFiles
 
     data class Repeat(
         override val id: String,
         override val instruction: String,
         override val audioFile: String?,
         val words: ImmutableList<String>,
+        override val moreAudioFiles: ImmutableList<String> = persistentListOf(),
     ) : LessonExercise
 
     data class MinimalPair(
@@ -19,6 +24,7 @@ sealed interface LessonExercise {
         override val instruction: String,
         override val audioFile: String?,
         val items: ImmutableList<MinimalPairItem>,
+        override val moreAudioFiles: ImmutableList<String> = persistentListOf(),
     ) : LessonExercise
 
     data class GapFill(
@@ -26,6 +32,7 @@ sealed interface LessonExercise {
         override val instruction: String,
         override val audioFile: String?,
         val items: ImmutableList<GapFillItem>,
+        override val moreAudioFiles: ImmutableList<String> = persistentListOf(),
     ) : LessonExercise
 
     data class Transcribe(
@@ -33,6 +40,7 @@ sealed interface LessonExercise {
         override val instruction: String,
         override val audioFile: String?,
         val items: ImmutableList<TranscribeItem>,
+        override val moreAudioFiles: ImmutableList<String> = persistentListOf(),
     ) : LessonExercise
 
     data class Match(
@@ -40,6 +48,7 @@ sealed interface LessonExercise {
         override val instruction: String,
         override val audioFile: String?,
         val items: ImmutableList<MatchItem>,
+        override val moreAudioFiles: ImmutableList<String> = persistentListOf(),
     ) : LessonExercise
 
     data class LetterFill(
@@ -47,6 +56,7 @@ sealed interface LessonExercise {
         override val instruction: String,
         override val audioFile: String?,
         val items: ImmutableList<LetterFillItem>,
+        override val moreAudioFiles: ImmutableList<String> = persistentListOf(),
     ) : LessonExercise
 }
 

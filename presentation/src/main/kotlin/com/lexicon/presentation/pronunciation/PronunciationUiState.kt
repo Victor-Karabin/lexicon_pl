@@ -1,11 +1,18 @@
 package com.lexicon.presentation.pronunciation
 
+import com.lexicon.boundary.SpeechRecognitionFailureReason
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.revealedAnswer
 
 enum class RecordingState { IDLE, RECORDING, PROCESSING, RECORDED }
 
 enum class RecognitionErrorType { UNAVAILABLE, FAILED }
+
+fun SpeechRecognitionFailureReason.toErrorType(): RecognitionErrorType =
+    when (this) {
+        SpeechRecognitionFailureReason.UNAVAILABLE -> RecognitionErrorType.UNAVAILABLE
+        SpeechRecognitionFailureReason.FAILED -> RecognitionErrorType.FAILED
+    }
 
 enum class UnavailableReason { EMPTY_STUDY_SET, OFFLINE, REFUSED }
 

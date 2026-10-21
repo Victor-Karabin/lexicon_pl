@@ -9,6 +9,7 @@ import android.speech.SpeechRecognizer
 import android.util.Log
 import com.lexicon.android.speech.POLISH_LANGUAGE_TAG
 import com.lexicon.boundary.SpeechRecognitionFailed
+import com.lexicon.boundary.SpeechRecognitionFailureReason
 import com.lexicon.boundary.SpeechRecognitionResult
 import com.lexicon.boundary.SpeechRecognizerService
 import com.lexicon.common.DispatcherProvider
@@ -52,7 +53,7 @@ class AndroidSpeechRecognizerService(
     override suspend fun recognize(): SpeechRecognitionResult {
         if (!SpeechRecognizer.isRecognitionAvailable(context)) {
             Log.w(TAG, "isRecognitionAvailable() is false — no speech recognizer service on this device/emulator image")
-            throw SpeechRecognitionFailed("Speech recognition is not available on this device")
+            throw SpeechRecognitionFailed("Speech recognition is not available on this device", SpeechRecognitionFailureReason.UNAVAILABLE)
         }
         return withContext(dispatchers.main) {
             suspendCancellableCoroutine { continuation ->
@@ -85,7 +86,9 @@ class AndroidSpeechRecognizerService(
                             Log.w(TAG, "SpeechRecognizer error: $error ($errorName) for $POLISH_LANGUAGE_TAG")
                             recognizer.destroy()
                             if (continuation.isActive) {
-                                continuation.resumeWithException(SpeechRecognitionFailed("Recognition error $error ($errorName)"))
+                                continuation.resumeWithException(
+                                    SpeechRecognitionFailed("Recognition error $error ($errorName)", SpeechRecognitionFailureReason.FAILED),
+                                )
                             }
                         }
 

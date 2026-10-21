@@ -11,7 +11,7 @@ class CourseAssetLoader(
 
     fun load(): CourseCatalogAsset = json.decodeFromString(readAsset())
 
-    fun fingerprint(): String = readAsset().let { "${it.length}:${it.hashCode()}" }
+    fun fingerprint(): String = readAsset().assetFingerprint()
 
     private fun readAsset(): String = assets.readText(COURSE_ASSET_PATH)
 }

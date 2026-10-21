@@ -2,13 +2,13 @@ package com.lexicon.application.pronunciation
 
 import com.lexicon.application.dictation.AnswerNormalizer
 import com.lexicon.application.training.recordOutcome
-import com.lexicon.application.training.stepAt
 import com.lexicon.boundary.SessionStore
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultRequest
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultResponse
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultUseCase
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
+import com.lexicon.model.training.SessionId
 import com.lexicon.model.training.StepOutcome
 import com.lexicon.model.training.TrainingType
 
@@ -18,7 +18,8 @@ class SubmitPronunciationResultUseCaseImpl(
     private val sessions: SessionStore,
 ) : SubmitPronunciationResultUseCase {
     override suspend fun invoke(request: SubmitPronunciationResultRequest): SubmitPronunciationResultResponse {
-        val step = sessions.stepAt(request.sessionId, request.stepIndex)
+        val session = sessions.find(SessionId(request.sessionId))
+        val step = session?.question(request.stepIndex)
         val expectedText = step?.expectedAnswer ?: request.expectedText
         val outcome = resolveOutcome(request, expectedText)
         val isFirstAnswer = sessions.recordOutcome(request.sessionId, request.stepIndex, outcome, request.tipUsed)
@@ -27,7 +28,7 @@ class SubmitPronunciationResultUseCaseImpl(
             recordAnswer(
                 RecordedAnswer(
                     sessionId = request.sessionId,
-                    trainingType = TrainingType.PRONUNCIATION_CHECK,
+                    trainingType = session?.training ?: TrainingType.PRONUNCIATION_CHECK,
                     stepIndex = request.stepIndex,
                     vocabularyItemId = step?.wordId?.value ?: request.vocabularyItemId,
                     expectedAnswer = expectedText,

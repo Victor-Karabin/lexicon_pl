@@ -1,13 +1,16 @@
 package com.lexicon.android.lesson
 
 import android.content.Context
+import android.util.Log
 import com.lexicon.boundary.LessonAudioLibrary
 import com.lexicon.common.DispatcherProvider
+import com.lexicon.common.runSuspendCatching
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.Response
 import java.io.File
 import java.util.concurrent.ConcurrentHashMap
 
@@ -44,18 +47,43 @@ class AndroidLessonAudioLibrary(
             target.parentFile?.mkdirs()
 
             val partial = File("${target.absolutePath}.part")
-            runCatching {
-                val request = Request.Builder().url(DOWNLOAD_URL.format(remoteId)).build()
-                httpClient.newCall(request).execute().use { response ->
-                    val body = response.body
-                    if (!response.isSuccessful || body == null) return@use null
-                    partial.outputStream().use { out -> body.byteStream().copyTo(out) }
-                    if (partial.renameTo(target)) target.absolutePath else null
-                }
-            }.getOrNull().also { if (it == null) partial.delete() }
+            var saved: String? = null
+            try {
+                saved = runSuspendCatching {
+                    val request = Request.Builder().url(DOWNLOAD_URL.format(remoteId)).build()
+                    httpClient.newCall(request).execute().use { response -> save(file, response, partial, target) }
+                }.onFailure { Log.w(TAG, "The recording $file could not be downloaded", it) }.getOrNull()
+            } finally {
+                if (saved == null) partial.delete()
+            }
+            saved
         }
 
+    private fun save(
+        file: String,
+        response: Response,
+        partial: File,
+        target: File,
+    ): String? {
+        val body = response.body
+        if (!response.isSuccessful || body == null) {
+            Log.w(TAG, "The recording $file came back with HTTP ${response.code}")
+            return null
+        }
+        val type = body.contentType()
+        if (type?.type != AUDIO_TYPE) {
+            Log.w(TAG, "The recording $file came back as $type, not audio")
+            return null
+        }
+        partial.outputStream().use { out -> body.byteStream().copyTo(out) }
+        return target.absolutePath.takeIf { partial.renameTo(target) }
+    }
+
     private companion object {
+        const val TAG = "LessonAudioLibrary"
+
+        const val AUDIO_TYPE = "audio"
+
         const val AUDIO_DIRECTORY = "lesson_audio"
 
         const val DOWNLOAD_URL = "https://drive.usercontent.google.com/download?id=%s&export=download"

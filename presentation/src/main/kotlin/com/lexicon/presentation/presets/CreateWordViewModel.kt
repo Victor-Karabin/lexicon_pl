@@ -1,5 +1,6 @@
 package com.lexicon.presentation.presets
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -33,6 +34,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+private const val TAG = "CreateWordViewModel"
+
 private const val TYPING_SETTLE_MS = 600L
 
 const val WORD_ID_ARG = "wordId"
@@ -61,6 +64,7 @@ data class CreateWordUiState(
     val hasSearchedImages: Boolean = false,
     val isSaving: Boolean = false,
     val problem: WordDraftProblem? = null,
+    val saveFailed: Boolean = false,
     val savedWord: String? = null,
 ) {
     val canSave: Boolean get() = text.isNotBlank() && translation.isNotBlank() && !isSaving
@@ -225,7 +229,7 @@ class CreateWordViewModel(
         }
     }
 
-    fun onErrorShown() = _uiState.update { it.copy(presetFailed = false, exampleFailed = false) }
+    fun onErrorShown() = _uiState.update { it.copy(presetFailed = false, exampleFailed = false, saveFailed = false) }
 
     private fun showMembership(
         presetId: PresetId,
@@ -287,12 +291,9 @@ class CreateWordViewModel(
             result.fold(
                 onSuccess = { word -> _uiState.update { it.copy(isSaving = false, savedWord = word.text) } },
                 onFailure = { error ->
-                    _uiState.update {
-                        it.copy(
-                            isSaving = false,
-                            problem = (error as? WordDraftException)?.problem ?: WordDraftProblem.MISSING_TEXT,
-                        )
-                    }
+                    val problem = (error as? WordDraftException)?.problem
+                    if (problem == null) Log.w(TAG, "The word could not be saved", error)
+                    _uiState.update { it.copy(isSaving = false, problem = problem, saveFailed = problem == null) }
                 },
             )
         }
@@ -330,19 +331,23 @@ class CreateWordViewModel(
         target: (CreateWordUiState) -> String,
     ) {
         _uiState.update { it.copy(isTranslating = true) }
-        val translated = translateWord(from, toPolish = toPolish)
+        try {
+            val translated = translateWord(from, toPolish = toPolish)
 
-        val fills = translated != null && target(_uiState.value).isBlank()
+            val fills = translated != null && target(_uiState.value).isBlank()
 
-        if (fills) {
-            if (toPolish) textWasFilledIn = true else translationWasFilledIn = true
-        }
-        _uiState.update { state ->
-            when {
-                !fills -> state.copy(isTranslating = false)
-                toPolish -> state.copy(text = translated.orEmpty(), isTranslating = false)
-                else -> state.copy(translation = translated.orEmpty(), isTranslating = false)
+            if (fills) {
+                if (toPolish) textWasFilledIn = true else translationWasFilledIn = true
             }
+            _uiState.update { state ->
+                when {
+                    !fills -> state
+                    toPolish -> state.copy(text = translated.orEmpty())
+                    else -> state.copy(translation = translated.orEmpty())
+                }
+            }
+        } finally {
+            _uiState.update { it.copy(isTranslating = false) }
         }
 
         if (!toPolish) scheduleImageSearch(_uiState.value.translation)

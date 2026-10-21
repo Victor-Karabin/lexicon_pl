@@ -58,6 +58,48 @@ class WordDaoTest {
         }
 
     @Test
+    fun anExactMatchFindsTheWordWhateverItsAccentsAndCase() =
+        runTest {
+            words.insertAll(listOf(word(1, "kość", "bone"), word(2, "kot", "cat")))
+
+            assertEquals(listOf("kość"), words.withExactMatch(foldedQuery = "kosc", limit = 10).map { it.text })
+        }
+
+    @Test
+    fun anExactMatchFindsTheEntryWhoseTranslationIsTheQuery() =
+        runTest {
+            words.insertAll(listOf(word(1, "ser", "cheese"), word(2, "kot", "cat")))
+
+            assertEquals(listOf("ser"), words.withExactMatch(foldedQuery = "cheese", limit = 10).map { it.text })
+        }
+
+    @Test
+    fun anExactMatchIgnoresDeletedWords() =
+        runTest {
+            words.insertAll(listOf(word(1, "ser", "cheese"), word(2, "ser", "senate")))
+            words.setDeleted(id = 2, isDeleted = true)
+
+            assertEquals(listOf(1L), words.withExactMatch(foldedQuery = "ser", limit = 10).map { it.id })
+        }
+
+    @Test
+    fun anExactMatchDoesNotReturnLongerWordsThatShareThePrefixOrSuffix() =
+        runTest {
+            words.insertAll(
+                listOf(
+                    word(1, "ser", "cheese"),
+                    word(2, "serce", "heart"),
+                    word(3, "ser biały", "white cheese"),
+                    word(4, "kaser", "cheesecloth"),
+                    word(5, "a", "goat cheese"),
+                ),
+            )
+
+            assertEquals(listOf(1L), words.withExactMatch(foldedQuery = "ser", limit = 10).map { it.id })
+            assertEquals(listOf(1L), words.withExactMatch(foldedQuery = "cheese", limit = 10).map { it.id })
+        }
+
+    @Test
     fun pagesFollowOneAnotherWithoutRepeatingOrSkipping() =
         runTest {
             words.insertAll((1..25).map { word(it.toLong(), "word$it", "gloss$it") })

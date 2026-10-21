@@ -50,6 +50,7 @@ import com.lexicon.presentation.common.TrueOrFalseAnswerRow
 import com.lexicon.presentation.common.debounced
 import com.lexicon.presentation.common.shuffleIntoTiles
 import com.lexicon.presentation.course.AnswerInputs
+import com.lexicon.presentation.pronunciation.RecognitionErrorMessage
 import com.lexicon.presentation.pronunciation.RecordingState
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
@@ -312,6 +313,9 @@ private fun ColumnScope.StepContent(
                         RecordingState.PROCESSING -> stringResource(R.string.pronunciation_recognizing)
                     },
                 )
+            }
+            uiState.recognitionError?.let { errorType ->
+                RecognitionErrorMessage(errorType, Modifier.padding(top = Dimens.spacingMedium))
             }
             if (uiState.answerText.isNotEmpty()) {
                 Text(

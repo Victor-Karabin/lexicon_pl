@@ -3,6 +3,7 @@ package com.lexicon.application.passage
 import com.lexicon.application.dictation.AnswerNormalizer
 import com.lexicon.application.settings.StepCountResolver
 import com.lexicon.application.training.open
+import com.lexicon.application.training.recordOutcome
 import com.lexicon.boundary.SentenceGenerator
 import com.lexicon.boundary.SentenceRequestBoundary
 import com.lexicon.boundary.SentenceResultBoundary
@@ -20,7 +21,9 @@ import com.lexicon.interactors.passage.SubmitPassageAnswersResponse
 import com.lexicon.interactors.passage.SubmitPassageAnswersUseCase
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
+import com.lexicon.model.training.Session
 import com.lexicon.model.training.SessionId
+import com.lexicon.model.training.Step
 import com.lexicon.model.training.StepOutcome
 import com.lexicon.model.training.TrainingType
 import com.lexicon.model.vocabulary.CefrLevel
@@ -126,6 +129,12 @@ private fun String.grewFrom(stem: String): Boolean {
     return if (stem.length < MIN_STEM) word == stem else word.startsWith(stem)
 }
 
+private data class GradedGap(
+    val expected: String,
+    val wordId: Long?,
+    val translation: String,
+)
+
 class SubmitPassageAnswersUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val recordAnswer: RecordAnswerUseCase,
@@ -135,39 +144,48 @@ class SubmitPassageAnswersUseCaseImpl(
     override suspend fun invoke(request: SubmitPassageAnswersRequest): SubmitPassageAnswersResponse {
         val session = sessions.find(SessionId(request.sessionId))
         val training = session?.training ?: TrainingType.PASSAGE_WRITE
+        val gaps = session?.let { storedGaps(it) } ?: requestedGaps(request)
 
-        val results = request.expected.mapIndexed { index, expected ->
+        val results = gaps.mapIndexed { index, gap ->
             val submitted = request.answers.getOrElse(index) { "" }
-            val right = answerNormalizer.matches(expected, submitted)
-            val word = vocabulary.findWordByText(request.words.getOrElse(index) { expected })
+            val right = answerNormalizer.matches(gap.expected, submitted)
+            val outcome = if (right) StepOutcome.CORRECT else StepOutcome.INCORRECT
 
-            if (word != null) {
+            if (sessions.recordOutcome(request.sessionId, index, outcome) && gap.wordId != null) {
                 recordAnswer(
                     RecordedAnswer(
                         sessionId = request.sessionId,
                         trainingType = training,
                         stepIndex = index,
-                        vocabularyItemId = word.id.value,
-                        expectedAnswer = expected,
+                        vocabularyItemId = gap.wordId,
+                        expectedAnswer = gap.expected,
                         submittedAnswer = submitted,
-                        outcome = if (right) {
-                            StepOutcome.CORRECT
-                        } else {
-                            StepOutcome.INCORRECT
-                        },
+                        outcome = outcome,
                         tipUsed = false,
                     ),
                 )
             }
 
             PassageGapResult(
-                expected = expected,
+                expected = gap.expected,
                 submitted = submitted,
-                translation = word?.translation.orEmpty(),
+                translation = gap.translation,
                 isCorrect = right,
             )
         }
 
         return SubmitPassageAnswersResponse(results = results)
     }
+
+    private suspend fun storedGaps(session: Session): List<GradedGap> {
+        val questions = session.steps.filterIsInstance<Step.Question>()
+        val words = vocabulary.getItemsByIds(questions.map { it.wordId.value }).associateBy { it.id }
+        return questions.map { GradedGap(it.expectedAnswer, it.wordId.value, words[it.wordId]?.translation.orEmpty()) }
+    }
+
+    private suspend fun requestedGaps(request: SubmitPassageAnswersRequest): List<GradedGap> =
+        request.expected.mapIndexed { index, expected ->
+            val word = vocabulary.findWordByText(request.words.getOrElse(index) { expected })
+            GradedGap(expected, word?.id?.value, word?.translation.orEmpty())
+        }
 }

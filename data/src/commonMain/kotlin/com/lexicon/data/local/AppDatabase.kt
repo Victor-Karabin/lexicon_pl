@@ -38,7 +38,7 @@ import androidx.room.RoomDatabaseConstructor
         CountryProgressEntity::class,
         DeclensionProgressEntity::class,
     ],
-    version = 45,
+    version = 46,
     exportSchema = false,
 )
 @ConstructedBy(AppDatabaseConstructor::class)

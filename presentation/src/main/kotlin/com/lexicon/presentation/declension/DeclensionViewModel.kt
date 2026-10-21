@@ -12,7 +12,7 @@ import com.lexicon.interactors.declension.LoadDeclensionCoursesUseCase
 import com.lexicon.interactors.declension.NextDeclensionTableUseCase
 import com.lexicon.interactors.declension.SubmitDeclensionAnswerRequest
 import com.lexicon.interactors.declension.SubmitDeclensionAnswerUseCase
-import com.lexicon.interactors.settings.AppSettings
+import com.lexicon.interactors.settings.GetStepCountUseCase
 import com.lexicon.interactors.training.RecordStudyActivityUseCase
 import com.lexicon.model.vocabulary.GrammaticalCase
 import com.lexicon.presentation.R
@@ -62,6 +62,7 @@ class DeclensionViewModel(
     private val speechSynthesizer: SpeechSynthesizer,
     private val lastSessionResultsHolder: LastSessionResultsHolder,
     private val recordStudy: RecordStudyActivityUseCase,
+    private val getStepCount: GetStepCountUseCase,
     private val dispatchers: DispatcherProvider,
 ) : ViewModel() {
     private val courseId: String = savedStateHandle.get<String>(COURSE_ID_ARG).orEmpty()
@@ -83,7 +84,7 @@ class DeclensionViewModel(
                 it.copy(
                     isLoading = false,
                     table = first,
-                    totalSteps = AppSettings.DEFAULT_STEP_COUNT,
+                    totalSteps = getStepCount(),
                     isComplete = first == null && isCourseComplete(),
                 )
             }

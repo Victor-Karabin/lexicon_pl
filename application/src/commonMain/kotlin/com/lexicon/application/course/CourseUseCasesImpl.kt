@@ -140,10 +140,13 @@ class SaveLessonResultsUseCaseImpl(
 class GetLastLessonResultsUseCaseImpl(
     private val repository: CourseRepository,
 ) : GetLastLessonResultsUseCase {
-    override suspend fun invoke(id: LessonId): LessonResults? {
+    override suspend fun invoke(
+        id: LessonId,
+        passMark: Int,
+    ): LessonResults? {
         val script = repository.getLessonScript(id.value) ?: return null
-        repository.getLastFinishedProgress(id.value)?.let { return LessonSession(script, it).results }
+        repository.getLastFinishedProgress(id.value)?.let { return LessonSession(script, it, passMark).results }
         val current = repository.getLessonScriptProgress(id.value) ?: return null
-        return LessonSession(script, current).takeIf { it.isAtEnd }?.results
+        return LessonSession(script, current, passMark).takeIf { it.isAtEnd }?.results
     }
 }

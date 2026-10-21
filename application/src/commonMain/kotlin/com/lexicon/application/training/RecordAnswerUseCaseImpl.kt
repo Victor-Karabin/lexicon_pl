@@ -54,12 +54,21 @@ class RecordAnswerUseCaseImpl(
             reviews.save(answer.vocabularyItemId, nextState, answeredAtEpochMillis)
         }
 
-        studyRecord.record(
-            epochDay = todayEpochDay,
-            addedSeconds = studyTimePolicy.creditedSeconds(answeredAtEpochMillis, previousAnswerAtEpochMillis),
-            wasNew = !wasReview && answer.outcome.countsAsAnswered,
-            wasCorrect = answer.outcome.isCorrect,
-            atEpochMillis = answeredAtEpochMillis,
-        )
+        val addedSeconds = studyTimePolicy.creditedSeconds(answeredAtEpochMillis, previousAnswerAtEpochMillis)
+        if (answer.outcome.countsAsAnswered) {
+            studyRecord.record(
+                epochDay = todayEpochDay,
+                addedSeconds = addedSeconds,
+                wasNew = !wasReview,
+                wasCorrect = answer.outcome.isCorrect,
+                atEpochMillis = answeredAtEpochMillis,
+            )
+        } else {
+            studyRecord.recordTime(
+                epochDay = todayEpochDay,
+                addedSeconds = addedSeconds,
+                atEpochMillis = answeredAtEpochMillis,
+            )
+        }
     }
 }

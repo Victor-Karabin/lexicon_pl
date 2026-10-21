@@ -27,7 +27,7 @@ fun LessonAsset.toAudioEntities(): List<LessonAudioEntity> =
                 lessonId = id,
                 file = track.file,
                 section = track.section,
-                task = track.task,
+                task = track.task ?: 0,
                 part = track.part,
                 position = index,
                 remoteId = track.remoteId,
@@ -67,6 +67,7 @@ fun LessonAsset.toExerciseEntities(): List<LessonExerciseEntity> =
             type = exercise.type,
             instruction = exercise.instruction,
             audioFile = exercise.audioFile,
+            moreAudioFilesJson = exercise.moreAudioFiles.encodeList(),
             position = index,
         )
     }
@@ -91,6 +92,7 @@ fun LessonExerciseEntity.toBoundary(items: List<LessonExerciseItemEntity>): Less
         type = type,
         instruction = instruction,
         audioFile = audioFile,
+        moreAudioFiles = moreAudioFilesJson.decodeList(),
         items = items.sortedBy { it.position }.map {
             ExerciseItemBoundary(
                 label = it.label,

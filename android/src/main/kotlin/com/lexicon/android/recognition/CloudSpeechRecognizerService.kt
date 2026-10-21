@@ -6,6 +6,7 @@ import com.lexicon.android.audio.RECORDING_SAMPLE_RATE_HZ
 import com.lexicon.android.cloud.CloudSpeechApi
 import com.lexicon.android.speech.POLISH_LANGUAGE_TAG
 import com.lexicon.boundary.SpeechRecognitionFailed
+import com.lexicon.boundary.SpeechRecognitionFailureReason
 import com.lexicon.boundary.SpeechRecognitionResult
 import com.lexicon.boundary.SpeechRecognizerService
 import com.lexicon.common.DispatcherProvider
@@ -24,7 +25,7 @@ class CloudSpeechRecognizerService(
 
         val path = recorder.record() ?: run {
             Log.w(TAG, "The microphone produced nothing to recognise")
-            throw SpeechRecognitionFailed("Nothing was recorded")
+            throw SpeechRecognitionFailed("Nothing was recorded", SpeechRecognitionFailureReason.FAILED)
         }
 
         val transcript = withContext(dispatchers.io) {
@@ -35,7 +36,7 @@ class CloudSpeechRecognizerService(
 
         if (transcript == null) {
             Log.w(TAG, "Cloud returned no transcript; asking for the phrase again")
-            throw SpeechRecognitionFailed("Speech could not be recognised just now")
+            throw SpeechRecognitionFailed("Speech could not be recognised just now", SpeechRecognitionFailureReason.FAILED)
         }
 
         return SpeechRecognitionResult(

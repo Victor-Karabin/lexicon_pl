@@ -11,7 +11,7 @@ class VocabularySeedAssetLoader(
 
     fun load(): List<WordEntity> = json.decodeFromString<List<VocabularySeedItem>>(readAsset()).map { it.toEntity() }
 
-    fun fingerprint(): String = readAsset().let { "${it.length}:${it.hashCode()}" }
+    fun fingerprint(): String = readAsset().assetFingerprint()
 
     private fun readAsset(): String = assets.readText(VOCABULARY_ASSET_PATH)
 }

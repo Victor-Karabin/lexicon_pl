@@ -44,6 +44,7 @@ data class LessonExerciseBoundary(
     val instruction: String,
     val audioFile: String?,
     val items: List<ExerciseItemBoundary>,
+    val moreAudioFiles: List<String> = emptyList(),
 )
 
 data class ExerciseItemBoundary(

@@ -2,26 +2,27 @@ package com.lexicon.application.pronunciation
 
 import com.lexicon.application.passage.maxLevel
 import com.lexicon.application.settings.StepCountResolver
+import com.lexicon.application.training.open
 import com.lexicon.boundary.SentenceGenerator
 import com.lexicon.boundary.SentenceRequestBoundary
 import com.lexicon.boundary.SentenceResultBoundary
+import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.pronunciation.PronunciationSentencesResult
 import com.lexicon.interactors.pronunciation.PronunciationSessionResponse
 import com.lexicon.interactors.pronunciation.PronunciationStepResponse
 import com.lexicon.interactors.pronunciation.StartPronunciationSentencesUseCase
+import com.lexicon.model.training.TrainingType
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 class StartPronunciationSentencesUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val generator: SentenceGenerator,
     private val stepCountResolver: StepCountResolver,
+    private val sessions: SessionStore,
 ) : StartPronunciationSentencesUseCase {
-    @OptIn(ExperimentalUuidApi::class)
     override suspend fun invoke(): PronunciationSentencesResult {
         val studySet = vocabulary.getItemsByIds(vocabulary.studySetWordIds())
         if (studySet.isEmpty()) return PronunciationSentencesResult.EmptyStudySet
@@ -47,18 +48,18 @@ class StartPronunciationSentencesUseCaseImpl(
                 }.awaitAll()
         }
 
-        val steps = generated
-            .mapNotNull { (word, result) ->
-                (result as? SentenceResultBoundary.Generated)?.sentence?.trim()?.takeIf { it.isNotEmpty() }?.let { word to it }
-            }.mapIndexed { index, (word, sentence) ->
-                PronunciationStepResponse(
-                    stepIndex = index,
-                    vocabularyItemId = word.id.value,
-                    expectedText = sentence,
-                    clueText = sentence,
-                    transcription = "",
-                )
-            }
+        val sentences = generated.mapNotNull { (word, result) ->
+            (result as? SentenceResultBoundary.Generated)?.sentence?.trim()?.takeIf { it.isNotEmpty() }?.let { word to it }
+        }
+        val steps = sentences.mapIndexed { index, (word, sentence) ->
+            PronunciationStepResponse(
+                stepIndex = index,
+                vocabularyItemId = word.id.value,
+                expectedText = sentence,
+                clueText = sentence,
+                transcription = "",
+            )
+        }
         if (steps.isEmpty()) {
             val results = generated.map { it.second }
             if (results.any { it is SentenceResultBoundary.Offline }) return PronunciationSentencesResult.Offline
@@ -67,8 +68,10 @@ class StartPronunciationSentencesUseCaseImpl(
             return PronunciationSentencesResult.Refused("no sentence came back")
         }
 
+        val sessionId = sessions.open(TrainingType.PRONUNCIATION_SENTENCES, sentences.map { (word, sentence) -> word.id to sentence })
+
         return PronunciationSentencesResult.Ready(
-            PronunciationSessionResponse(sessionId = Uuid.random().toString(), steps = steps),
+            PronunciationSessionResponse(sessionId = sessionId.value, steps = steps),
         )
     }
 }

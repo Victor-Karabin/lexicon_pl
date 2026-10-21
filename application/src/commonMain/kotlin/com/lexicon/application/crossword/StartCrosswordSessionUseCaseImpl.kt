@@ -1,23 +1,24 @@
-@file:OptIn(ExperimentalUuidApi::class)
-
 package com.lexicon.application.crossword
 
+import com.lexicon.application.training.open
+import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.crossword.CrosswordSessionResponse
 import com.lexicon.interactors.crossword.CrosswordWordPlacement
 import com.lexicon.interactors.crossword.StartCrosswordSessionRequest
 import com.lexicon.interactors.crossword.StartCrosswordSessionUseCase
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
+import com.lexicon.model.training.TrainingType
+import com.lexicon.model.vocabulary.VocabularyId
 
 private const val CANDIDATE_POOL_SIZE = 200
 
 class StartCrosswordSessionUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,
+    private val sessions: SessionStore,
 ) : StartCrosswordSessionUseCase {
     override suspend fun invoke(request: StartCrosswordSessionRequest): CrosswordSessionResponse {
         val words = vocabularyRepository.getRandomItems(CANDIDATE_POOL_SIZE, request.vocabularyIds)
-            .filterNot { it.isPhrase }
+            .filter(TrainingType.CROSSWORD::admits)
             .take(request.wordCount)
 
         val layout = CrosswordGridGenerator.generate(words)
@@ -33,8 +34,10 @@ class StartCrosswordSessionUseCaseImpl(
             )
         }
 
+        val sessionId = sessions.open(TrainingType.CROSSWORD, placements.map { VocabularyId(it.vocabularyItemId) to it.expectedText })
+
         return CrosswordSessionResponse(
-            sessionId = Uuid.random().toString(),
+            sessionId = sessionId.value,
             words = placements,
             rowCount = layout.rowCount,
             colCount = layout.colCount,

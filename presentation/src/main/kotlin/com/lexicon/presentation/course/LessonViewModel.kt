@@ -17,6 +17,7 @@ import com.lexicon.interactors.course.LessonSession
 import com.lexicon.interactors.presets.FindWordsUseCase
 import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
 import com.lexicon.interactors.presets.SetWordStatusUseCase
+import com.lexicon.interactors.settings.ObserveSettingsUseCase
 import com.lexicon.model.course.LessonId
 import com.lexicon.model.course.LessonPhrase
 import com.lexicon.model.course.LessonScript
@@ -33,6 +34,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -79,6 +81,7 @@ class LessonViewModel(
     private val getLessonScript: GetLessonScriptUseCase,
     private val getLessonProgress: GetLessonProgressUseCase,
     private val getLastLessonResults: GetLastLessonResultsUseCase,
+    private val observeSettings: ObserveSettingsUseCase,
     private val findWords: FindWordsUseCase,
     private val setWordStatus: SetWordStatusUseCase,
     observeWordStatuses: ObserveWordStatusesUseCase,
@@ -150,8 +153,9 @@ class LessonViewModel(
         }
         val script = getLessonScript(lessonId)
         val hasScript = script != null
-        val isScriptStarted = script != null && LessonSession.isInProgress(script, getLessonProgress(lessonId))
-        val hasResults = script != null && getLastLessonResults(lessonId) != null
+        val passMark = observeSettings().first().passMark
+        val isScriptStarted = script != null && LessonSession.isInProgress(script, getLessonProgress(lessonId), passMark)
+        val hasResults = script != null && getLastLessonResults(lessonId, passMark) != null
         content.value = Content(lesson = lesson, hasScript = hasScript, isScriptStarted = isScriptStarted, hasResults = hasResults)
         content.value = Content(
             lesson = lesson,

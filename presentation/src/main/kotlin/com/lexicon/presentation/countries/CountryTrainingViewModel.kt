@@ -10,6 +10,7 @@ import com.lexicon.interactors.countries.NextCountryUseCase
 import com.lexicon.interactors.countries.SubmitCountryAnswersUseCase
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.course.LessonAnswerChecker
+import com.lexicon.interactors.settings.GetStepCountUseCase
 import com.lexicon.interactors.training.RecordStudyActivityUseCase
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
@@ -49,6 +50,7 @@ class CountryTrainingViewModel(
     speechSynthesizer: SpeechSynthesizer,
     lastSessionResultsHolder: LastSessionResultsHolder,
     recordStudy: RecordStudyActivityUseCase,
+    getStepCount: GetStepCountUseCase,
     private val dispatchers: DispatcherProvider,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(CountryTrainingUiState())
@@ -60,6 +62,7 @@ class CountryTrainingViewModel(
         speechSynthesizer = speechSynthesizer,
         resultsHolder = lastSessionResultsHolder,
         recordStudy = recordStudy,
+        getStepCount = getStepCount,
         keyOf = Country::code,
         pick = { asked -> nextCountry(asked) },
     )

@@ -78,6 +78,7 @@ fun LessonExerciseBoundary.toExercise(): LessonExercise? =
                 id = id,
                 instruction = instruction,
                 audioFile = audioFile,
+                moreAudioFiles = moreAudioFiles.toImmutableList(),
                 words = items.mapNotNull { it.prompt }.toImmutableList(),
             )
 
@@ -86,6 +87,7 @@ fun LessonExerciseBoundary.toExercise(): LessonExercise? =
                 id = id,
                 instruction = instruction,
                 audioFile = audioFile,
+                moreAudioFiles = moreAudioFiles.toImmutableList(),
                 items = items
                     .filter { it.options.size == 2 && it.answers.isNotEmpty() }
                     .map {
@@ -102,6 +104,7 @@ fun LessonExerciseBoundary.toExercise(): LessonExercise? =
                 id = id,
                 instruction = instruction,
                 audioFile = audioFile,
+                moreAudioFiles = moreAudioFiles.toImmutableList(),
                 items = items
                     .filter { it.prompt != null }
                     .map {
@@ -118,6 +121,7 @@ fun LessonExerciseBoundary.toExercise(): LessonExercise? =
                 id = id,
                 instruction = instruction,
                 audioFile = audioFile,
+                moreAudioFiles = moreAudioFiles.toImmutableList(),
                 items = items
                     .filter { it.answers.isNotEmpty() }
                     .map { TranscribeItem(label = it.label.orEmpty(), answer = it.answers.first()) }
@@ -129,6 +133,7 @@ fun LessonExerciseBoundary.toExercise(): LessonExercise? =
                 id = id,
                 instruction = instruction,
                 audioFile = audioFile,
+                moreAudioFiles = moreAudioFiles.toImmutableList(),
                 items = items
                     .filter { it.prompt != null && it.answers.isNotEmpty() }
                     .map {
@@ -145,6 +150,7 @@ fun LessonExerciseBoundary.toExercise(): LessonExercise? =
                 id = id,
                 instruction = instruction,
                 audioFile = audioFile,
+                moreAudioFiles = moreAudioFiles.toImmutableList(),
                 items = items
                     .filter { it.prompt != null && it.answers.isNotEmpty() }
                     .filter { it.prompt.orEmpty().count { gap -> gap == LETTER_GAP } == it.answers.size }

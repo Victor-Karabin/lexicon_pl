@@ -9,6 +9,7 @@ import com.lexicon.interactors.countries.NextCountryUseCase
 import com.lexicon.interactors.countries.SubmitCountryAnswersUseCase
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.settings.AppSettings
+import com.lexicon.interactors.settings.GetStepCountUseCase
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
@@ -53,6 +54,7 @@ class CountryTrainingViewModelTest {
     private val submitAnswers: SubmitCountryAnswersUseCase = mockk()
     private val speechSynthesizer: SpeechSynthesizer = mockk(relaxed = true)
     private val results = LastSessionResultsHolder()
+    private val getStepCount: GetStepCountUseCase = mockk { coEvery { this@mockk() } returns AppSettings.DEFAULT_STEP_COUNT }
 
     @Before
     fun setUp() = Dispatchers.setMain(testDispatcher)
@@ -61,7 +63,7 @@ class CountryTrainingViewModelTest {
     fun tearDown() = Dispatchers.resetMain()
 
     private fun TestScope.viewModel(): CountryTrainingViewModel =
-        CountryTrainingViewModel(nextCountry, submitAnswers, speechSynthesizer, results, mockk(relaxed = true), dispatchers)
+        CountryTrainingViewModel(nextCountry, submitAnswers, speechSynthesizer, results, mockk(relaxed = true), getStepCount, dispatchers)
             .also { advanceUntilIdle() }
 
     private fun TestScope.fill(

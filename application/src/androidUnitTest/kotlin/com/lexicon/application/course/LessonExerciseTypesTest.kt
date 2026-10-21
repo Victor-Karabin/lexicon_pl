@@ -2,6 +2,7 @@ package com.lexicon.application.course
 
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.course.LessonSession
+import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.model.course.AnswerKeyboard
 import com.lexicon.model.course.AnswerMatch
 import com.lexicon.model.course.ChoiceQuestion
@@ -78,6 +79,7 @@ class LessonExerciseTypesTest {
                 persistentListOf(LessonStep("1", "Step", persistentListOf(screen.id))),
                 persistentListOf(screen),
             ),
+            passMark = PASS_MARK,
         )
 
     private fun LessonSession.answering(vararg values: Pair<String, String>) =
@@ -204,13 +206,13 @@ class LessonExerciseTypesTest {
             persistentListOf(LessonStep("1", "Step", screens.map { it.id }.toImmutableList())),
             screens.toImmutableList(),
         )
-        val onLast = LessonSession(full).next().next()
+        val onLast = LessonSession(full, passMark = PASS_MARK).next().next()
         assertEquals("1C", onLast.screen.id)
         val withoutFirst = full.copy(
             steps = persistentListOf(LessonStep("1", "Step", persistentListOf("1B", "1C"))),
             screens = screens.drop(1).toImmutableList(),
         )
-        assertEquals("1C", LessonSession(withoutFirst, onLast.progress).screen.id)
+        assertEquals("1C", LessonSession(withoutFirst, onLast.progress, PASS_MARK).screen.id)
     }
 
     @Test
@@ -387,5 +389,9 @@ class LessonExerciseTypesTest {
         assertEquals(AnswerVerdict.ALMOST, filled.verdict("7C", "0-1"))
         assertEquals(AnswerVerdict.WRONG, filled.verdict("7C", "0-2"))
         assertEquals(AnswerVerdict.WRONG, filled.verdict("7C", "0-3"))
+    }
+
+    private companion object {
+        const val PASS_MARK = AppSettings.DEFAULT_PASS_MARK
     }
 }

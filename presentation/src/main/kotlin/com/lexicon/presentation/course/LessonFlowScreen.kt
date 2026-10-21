@@ -433,16 +433,14 @@ private fun TrackPlayer(
 ) {
     val session = uiState.session
     val shownPlayers = LocalShownPlayers.current
-    Column(verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
-        if (showLabel) track.label?.let { Text(it, style = MaterialTheme.typography.labelLarge) }
-        val state = uiState.tracks.of(track.file)
-        AudioPlayerRow(
-            state = state,
-            onPlayPause = { actions.onPlay(track) },
-            onSeek = { actions.onSeek(track, it) },
-            onSpeedChanged = actions.onSpeedChanged,
-            modifier = Modifier.onGloballyPositioned { shownPlayers[track.file] = it.boundsInWindow().height > 0f },
-        )
+    LabelledAudioPlayer(
+        label = track.label.takeIf { showLabel },
+        state = uiState.tracks.of(track.file),
+        onPlayPause = { actions.onPlay(track) },
+        onSeek = { actions.onSeek(track, it) },
+        onSpeedChanged = actions.onSpeedChanged,
+        playerModifier = Modifier.onGloballyPositioned { shownPlayers[track.file] = it.boundsInWindow().height > 0f },
+    ) {
         val transcript = session.screen.transcriptFor(track)
         if (transcript != null && session.isTranscriptUnlocked(session.screen)) {
             TranscriptCard(

@@ -127,7 +127,8 @@ class RecordAnswerUseCaseImplTest {
 
             coVerify { history.recordResult(any()) }
             coVerify(exactly = 0) { reviews.save(any(), any(), any()) }
-            coVerify { studyRecord.record(TODAY, any(), wasNew = false, wasCorrect = false, atEpochMillis = any()) }
+            coVerify(exactly = 0) { studyRecord.record(any(), any(), any(), any(), any()) }
+            coVerify { studyRecord.recordTime(TODAY, any(), NOW) }
         }
 
     @Test

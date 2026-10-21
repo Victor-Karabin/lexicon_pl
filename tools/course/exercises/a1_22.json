@@ -1,0 +1,138 @@
+{
+  "lesson": 22,
+  "exercises": [
+    {
+      "tag": "122B1",
+      "type": "gap_fill",
+      "instruction": "Proszę posłuchać i uzupełnić.",
+      "items": [
+        {
+          "label": "Pani Joanna",
+          "prompt": "Halo!",
+          "answers": []
+        },
+        {
+          "label": "Angela",
+          "prompt": "Dzień dobry, mówi Angela. Czy mogę rozmawiać z Mami?",
+          "answers": []
+        },
+        {
+          "label": "Pani Joanna",
+          "prompt": "Dzień dobry. Nie ma jej. Poszły z Karoliną na zakupy. Czy coś ___?",
+          "answers": [
+            "przekazać"
+          ]
+        },
+        {
+          "label": "Angela",
+          "prompt": "Proszę jej powiedzieć, że ___ za godzinę.",
+          "answers": [
+            "zadzwonię"
+          ]
+        },
+        {
+          "label": "Uwe",
+          "prompt": "To numer 0900 764 532. Po usłyszeniu sygnału proszę zostawić ___.",
+          "answers": [
+            "wiadomość"
+          ]
+        },
+        {
+          "label": "Angela",
+          "prompt": "Cześć, tu Angela. Pewnie masz jakieś spotkanie. Jak ___, to zadzwoń do mnie na komórkę. Do usłyszenia!",
+          "answers": [
+            "skończysz"
+          ]
+        },
+        {
+          "label": "Angela",
+          "prompt": "O, cześć Javier, w końcu ___; wiesz, dzwonię, bo...",
+          "answers": [
+            "odebrałeś"
+          ]
+        },
+        {
+          "label": "Głos",
+          "prompt": "___!",
+          "answers": [
+            "Pomyłka"
+          ]
+        },
+        {
+          "label": "Angela",
+          "prompt": "Przepraszam.",
+          "answers": []
+        },
+        {
+          "label": "Dziewczyna",
+          "prompt": "Halo?",
+          "answers": []
+        },
+        {
+          "label": "Angela",
+          "prompt": "Eeee, czy to numer 606 999 741?",
+          "answers": []
+        },
+        {
+          "label": "Dziewczyna",
+          "prompt": "Eeee, nie wiem. To ___ Javiera.",
+          "answers": [
+            "komórka"
+          ]
+        },
+        {
+          "label": "Angela",
+          "prompt": "Proszę mi go dać do telefonu!",
+          "answers": []
+        },
+        {
+          "label": "Dziewczyna",
+          "prompt": "Zaraz ___, teraz jest w...",
+          "answers": [
+            "wróci"
+          ]
+        },
+        {
+          "label": "Angela",
+          "prompt": "Proszę mu przekazać, że dzwoniła Angela, koleżanka ze szkoły.",
+          "answers": []
+        },
+        {
+          "label": "Dziewczyna",
+          "prompt": "Na pewno do pani ___.",
+          "answers": [
+            "oddzwoni"
+          ]
+        },
+        {
+          "label": "Mami",
+          "prompt": "No, w końcu odebrałaś! Cały czas było ___.",
+          "answers": [
+            "zajęte"
+          ]
+        },
+        {
+          "label": "Angela",
+          "prompt": "A, bo dzwoniłam do wszystkich w sprawie weekendu, ale albo ___ ___, albo ___. Z nikim nie porozmawiałam!",
+          "answers": [
+            "poczta",
+            "głosowa",
+            "nieważne"
+          ]
+        },
+        {
+          "label": "Mami",
+          "prompt": "Zostawiłaś wiadomość? Oddzwonią?",
+          "answers": []
+        },
+        {
+          "label": "Angela",
+          "prompt": "Ciekawe tylko kiedy... ___ im SMS-a, kiedy coś zaplanujemy. Koniec, kropka!",
+          "answers": [
+            "Wyślemy"
+          ]
+        }
+      ]
+    }
+  ]
+}

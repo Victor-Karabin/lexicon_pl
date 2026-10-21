@@ -46,7 +46,7 @@ class SubmitDictationAnswerUseCaseImpl(
     ): StepOutcome =
         when {
             request.skipped -> StepOutcome.SKIPPED
-            answerNormalizer.matches(expectedText, request.submittedText) -> StepOutcome.CORRECT
+            answerNormalizer.matchesIgnoringPunctuation(expectedText, request.submittedText) -> StepOutcome.CORRECT
             else -> StepOutcome.INCORRECT
         }
 }
