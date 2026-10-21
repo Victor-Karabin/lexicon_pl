@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.interactors.conjugation.ConjugationCourse
 import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
+import com.lexicon.interactors.countries.CountryCourse
+import com.lexicon.interactors.countries.LoadCountryCourseUseCase
 import com.lexicon.interactors.course.ObserveCoursesUseCase
 import com.lexicon.interactors.declension.DeclensionCourse
 import com.lexicon.interactors.declension.LoadDeclensionCoursesUseCase
@@ -49,6 +51,7 @@ data class DashboardUiState(
     val conjugationCourses: ImmutableList<ConjugationCourse> = persistentListOf(),
     val declensionCourses: ImmutableList<DeclensionCourse> = persistentListOf(),
     val numberCourse: NumberCourse? = null,
+    val countryCourse: CountryCourse? = null,
     val courses: ImmutableList<Course> = persistentListOf(),
     val languageTag: String = "en",
 ) {
@@ -66,6 +69,7 @@ class DashboardViewModel(
     private val loadConjugationCourses: LoadConjugationCoursesUseCase,
     private val loadDeclensionCourses: LoadDeclensionCoursesUseCase,
     private val loadNumberCourse: LoadNumberCourseUseCase,
+    private val loadCountryCourse: LoadCountryCourseUseCase,
     private val countWordsToReview: CountWordsToReviewUseCase,
     private val getDailyStudyTime: GetDailyStudyTimeUseCase,
     observeCourse: ObserveVocabularyCourseUseCase,
@@ -82,6 +86,7 @@ class DashboardViewModel(
                 val courses = loadConjugationCourses()
                 val declension = loadDeclensionCourses()
                 val numberCourse = loadNumberCourse()
+                val countryCourse = loadCountryCourse()
                 _uiState.update {
                     it.copy(
                         isLoading = false,
@@ -90,6 +95,7 @@ class DashboardViewModel(
                         conjugationCourses = courses,
                         declensionCourses = declension,
                         numberCourse = numberCourse,
+                        countryCourse = countryCourse,
                         nothingToPractise = false,
                     )
                 }
@@ -146,7 +152,15 @@ class DashboardViewModel(
             val conjugation = loadConjugationCourses()
             val declension = loadDeclensionCourses()
             val numbers = loadNumberCourse()
-            _uiState.update { it.copy(conjugationCourses = conjugation, declensionCourses = declension, numberCourse = numbers) }
+            val countries = loadCountryCourse()
+            _uiState.update {
+                it.copy(
+                    conjugationCourses = conjugation,
+                    declensionCourses = declension,
+                    numberCourse = numbers,
+                    countryCourse = countries,
+                )
+            }
         }
     }
 }

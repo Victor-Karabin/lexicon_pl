@@ -1,5 +1,6 @@
 package com.lexicon.application.numbers
 
+import com.lexicon.application.training.nextToPractise
 import com.lexicon.boundary.NumberRepository
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.course.LessonAnswerChecker
@@ -7,7 +8,6 @@ import com.lexicon.interactors.numbers.LoadNumberCourseUseCase
 import com.lexicon.interactors.numbers.LoadNumberSpecUseCase
 import com.lexicon.interactors.numbers.NextNumberUseCase
 import com.lexicon.interactors.numbers.NumberCourse
-import com.lexicon.interactors.numbers.NumberCourseProgress
 import com.lexicon.interactors.numbers.NumberForm
 import com.lexicon.interactors.numbers.NumberGender
 import com.lexicon.interactors.numbers.NumberKind
@@ -16,6 +16,7 @@ import com.lexicon.interactors.numbers.NumberQuestion
 import com.lexicon.interactors.numbers.NumberSelection
 import com.lexicon.interactors.numbers.SaveNumberCourseUseCase
 import com.lexicon.interactors.numbers.SubmitNumberAnswerUseCase
+import com.lexicon.interactors.training.DrillCourseProgress
 import kotlin.random.Random
 
 private suspend fun NumberRepository.chosenNumbers(): Pair<String, List<Long>>? {
@@ -47,8 +48,8 @@ class LoadNumberCourseUseCaseImpl(
         val forms = NumberForm.formsOf(chosen)
         return NumberCourse(
             spec = spec,
-            progress = NumberCourseProgress(
-                numbers = chosen.size,
+            progress = DrillCourseProgress(
+                items = chosen.size,
                 total = forms.size,
                 mastered = forms.count { progress[it]?.isMastered == true },
                 attempted = forms.count { (progress[it]?.attempted ?: 0) > 0 },
@@ -84,12 +85,14 @@ class NextNumberUseCaseImpl(
         val progress = numbers.progressByForm()
         val forms = NumberForm.formsOf(chosen)
 
-        val fresh = forms.filterNot { it in asked }.ifEmpty { forms }
-        val pool = fresh.filterNot { progress[it]?.isMastered == true }.ifEmpty { fresh }
-        val fewest = pool.minOf { progress[it]?.attempted ?: 0 }
-        val form = pool.filter { (progress[it]?.attempted ?: 0) == fewest }.random(random)
+        val form = forms.nextToPractise(
+            wasAsked = { it in asked },
+            isMastered = { progress[it]?.isMastered == true },
+            attempts = { progress[it]?.attempted ?: 0 },
+            random = random,
+        )
 
-        return NumberQuestion.of(form)
+        return form?.let(NumberQuestion::of)
     }
 }
 

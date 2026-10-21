@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
@@ -23,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import com.lexicon.model.course.LessonPhrase
@@ -118,16 +120,35 @@ fun WordRow(
     )
 }
 
+@Composable
+fun ChecklistRow(
+    text: String,
+    isChecked: Boolean,
+    onToggle: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    WordRow(
+        text = text,
+        translation = null,
+        detail = null,
+        onPronounce = null,
+        status = null,
+        modifier = modifier.toggleable(value = isChecked, role = Role.Checkbox, onValueChange = { onToggle() }),
+        isSelecting = true,
+        isSelected = isChecked,
+    )
+}
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun WordRow(
     text: String,
-    translation: String,
+    translation: String?,
     detail: String?,
-    onPronounce: () -> Unit,
+    onPronounce: (() -> Unit)?,
     status: WordStatus?,
-    onStatusCycled: () -> Unit,
     modifier: Modifier = Modifier,
+    onStatusCycled: () -> Unit = {},
     onClick: (() -> Unit)? = null,
     isSelecting: Boolean = false,
     isSelected: Boolean = false,
@@ -158,11 +179,13 @@ private fun WordRow(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Medium,
             )
-            Text(
-                text = translation,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+            translation?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
             detail?.let {
                 Text(
                     text = it,
@@ -171,16 +194,18 @@ private fun WordRow(
                 )
             }
         }
-        IconButton(onClick = onPronounce) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.VolumeUp,
-                contentDescription = stringResource(R.string.word_pronounce, text),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+        onPronounce?.let {
+            IconButton(onClick = it) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.VolumeUp,
+                    contentDescription = stringResource(R.string.word_pronounce, text),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
         if (status != null) {
             WordStatusButton(status = status, onClick = onStatusCycled)
-        } else {
+        } else if (onPronounce != null) {
             Spacer(modifier = Modifier.minimumInteractiveComponentSize())
         }
     }

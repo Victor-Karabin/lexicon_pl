@@ -77,6 +77,7 @@ fun PlanScreen(
     onOpenCourseSettings: () -> Unit,
     onConjugationSelected: () -> Unit,
     onNumbersSelected: () -> Unit,
+    onCountriesSelected: () -> Unit,
     onDeclensionSelected: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PlanViewModel = koinViewModel(),
@@ -89,6 +90,7 @@ fun PlanScreen(
         onOpenCourseSettings = onOpenCourseSettings,
         onConjugationSelected = onConjugationSelected,
         onNumbersSelected = onNumbersSelected,
+        onCountriesSelected = onCountriesSelected,
         onDeclensionSelected = onDeclensionSelected,
         modifier = modifier,
     )
@@ -102,6 +104,7 @@ private fun PlanContent(
     onOpenCourseSettings: () -> Unit,
     onConjugationSelected: () -> Unit,
     onNumbersSelected: () -> Unit,
+    onCountriesSelected: () -> Unit,
     onDeclensionSelected: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -155,6 +158,14 @@ private fun PlanContent(
                         blurb = stringResource(R.string.numbers_blurb),
                         medallion = stringResource(R.string.numbers_medallion),
                         onClick = onNumbersSelected,
+                    )
+                }
+                item(key = "countries-course") {
+                    DrillCourseTile(
+                        title = stringResource(R.string.countries_title),
+                        blurb = stringResource(R.string.countries_blurb),
+                        medallion = stringResource(R.string.countries_medallion),
+                        onClick = onCountriesSelected,
                     )
                 }
             }
@@ -448,6 +459,7 @@ private fun PlanPreview() {
             onOpenCourseSettings = {},
             onConjugationSelected = {},
             onNumbersSelected = {},
+            onCountriesSelected = {},
             onDeclensionSelected = {},
         )
     }
@@ -464,6 +476,7 @@ private fun PlanEmptyPreview() {
             onOpenCourseSettings = {},
             onConjugationSelected = {},
             onNumbersSelected = {},
+            onCountriesSelected = {},
             onDeclensionSelected = {},
         )
     }

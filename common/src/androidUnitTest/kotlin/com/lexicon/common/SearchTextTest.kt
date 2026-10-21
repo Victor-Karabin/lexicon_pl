@@ -40,4 +40,25 @@ class SearchTextTest {
     fun `an empty string folds to empty rather than failing`() {
         assertEquals("", "".foldForSearch())
     }
+
+    @Test
+    fun `accents that are not Polish stay in the plain fold`() {
+        assertEquals("côte d'ivoire", "Côte d'Ivoire".foldForSearch())
+    }
+
+    @Test
+    fun `the accent fold also drops other Latin accents and keeps the Polish fold`() {
+        assertEquals("cote d'ivoire", "Côte d'Ivoire".foldAccentsForSearch())
+        assertEquals("sao tome and principe", "São Tomé and Príncipe".foldAccentsForSearch())
+        assertEquals("zolw", "ŻÓŁW".foldAccentsForSearch())
+        assertEquals("brasilia", "Brasília".foldAccentsForSearch())
+    }
+
+    @Test
+    fun `the accent fold is idempotent and trims`() {
+        val once = "  Reykjavík ".foldAccentsForSearch()
+
+        assertEquals("reykjavik", once)
+        assertEquals(once, once.foldAccentsForSearch())
+    }
 }

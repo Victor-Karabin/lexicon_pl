@@ -100,7 +100,7 @@ private fun NumberCourseContent(
                 enabled = uiState.canStart,
                 modifier = Modifier.fillMaxWidth().testTag(NumberCourseTestTags.START),
             ) {
-                Text(stringResource(R.string.numbers_start))
+                Text(stringResource(R.string.course_start))
             }
         }
     }

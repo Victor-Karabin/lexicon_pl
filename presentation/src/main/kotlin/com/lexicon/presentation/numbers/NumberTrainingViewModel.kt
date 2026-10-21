@@ -6,22 +6,17 @@ import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.numbers.NextNumberUseCase
-import com.lexicon.interactors.numbers.NumberForm
 import com.lexicon.interactors.numbers.NumberQuestion
 import com.lexicon.interactors.numbers.SubmitNumberAnswerUseCase
-import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.interactors.training.RecordStudyActivityUseCase
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
+import com.lexicon.presentation.common.StepSession
 import com.lexicon.presentation.common.WordResultEntry
-import com.lexicon.presentation.common.markIn
-import com.lexicon.presentation.common.speakQuietly
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -40,33 +35,36 @@ data class NumberTrainingUiState(
 }
 
 class NumberTrainingViewModel(
-    private val nextNumber: NextNumberUseCase,
+    nextNumber: NextNumberUseCase,
     private val submitAnswer: SubmitNumberAnswerUseCase,
-    private val speechSynthesizer: SpeechSynthesizer,
-    private val lastSessionResultsHolder: LastSessionResultsHolder,
-    private val recordStudy: RecordStudyActivityUseCase,
+    speechSynthesizer: SpeechSynthesizer,
+    lastSessionResultsHolder: LastSessionResultsHolder,
+    recordStudy: RecordStudyActivityUseCase,
     private val dispatchers: DispatcherProvider,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(NumberTrainingUiState())
     val uiState: StateFlow<NumberTrainingUiState> = _uiState.asStateFlow()
 
-    private val _navigationEvents = MutableSharedFlow<SessionNavigationEvent>()
-    val navigationEvents: SharedFlow<SessionNavigationEvent> = _navigationEvents.asSharedFlow()
+    private val session = StepSession(
+        scope = viewModelScope,
+        dispatchers = dispatchers,
+        speechSynthesizer = speechSynthesizer,
+        resultsHolder = lastSessionResultsHolder,
+        recordStudy = recordStudy,
+        keyOf = NumberQuestion::form,
+        pick = { asked -> nextNumber(asked) },
+    )
 
-    private val asked = mutableSetOf<NumberForm>()
-    private val results = mutableListOf<WordResultEntry>()
-    private var correct = 0
-    private var incorrect = 0
+    val navigationEvents: SharedFlow<SessionNavigationEvent> = session.navigationEvents
 
     init {
-        viewModelScope.launch(dispatchers.io) {
-            val first = nextNumber(asked)?.also { asked += it.form }
-            _uiState.update { it.copy(isLoading = false, question = first, totalSteps = AppSettings.DEFAULT_STEP_COUNT) }
+        session.begin { first ->
+            _uiState.update { it.copy(isLoading = false, question = first, totalSteps = session.totalSteps) }
         }
     }
 
     fun onAnswerChanged(value: String) {
-        studied()
+        session.studied()
         _uiState.update { if (it.isAnswered) it else it.copy(answer = value) }
     }
 
@@ -74,44 +72,32 @@ class NumberTrainingViewModel(
         val state = _uiState.value
         val question = state.question ?: return
         if (!state.canCheck) return
-        studied()
+        session.studied()
 
         viewModelScope.launch(dispatchers.io) {
             val verdict = submitAnswer(question, state.answer)
-            val right = verdict == AnswerVerdict.CORRECT
-            if (right) correct++ else incorrect++
-            results += WordResultEntry(
-                word = question.words,
-                translation = question.digits,
-                translationText = question.label(),
-                outcome = if (right) AnswerState.Correct else AnswerState.Incorrect(question.words),
-                typed = state.answer,
+            session.record(
+                WordResultEntry(
+                    word = question.words,
+                    translation = question.digits,
+                    translationText = question.label(),
+                    outcome = if (verdict == AnswerVerdict.CORRECT) AnswerState.Correct else AnswerState.Incorrect(question.words),
+                    typed = state.answer,
+                ),
             )
             _uiState.update { it.copy(verdict = verdict) }
         }
     }
 
     fun onNext() {
-        studied()
-        viewModelScope.launch(dispatchers.io) {
-            val nextIndex = _uiState.value.stepIndex + 1
-            val question = if (nextIndex < _uiState.value.totalSteps) nextNumber(asked) else null
-
-            if (question == null) {
-                lastSessionResultsHolder.wordResults = results.toList()
-                _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correct, incorrect, 0, 0))
-                return@launch
-            }
-
-            asked += question.form
-            _uiState.update { it.copy(question = question, stepIndex = nextIndex, answer = "", verdict = null) }
+        session.studied()
+        session.advance(_uiState.value.stepIndex) { question, index ->
+            _uiState.update { it.copy(question = question, stepIndex = index, answer = "", verdict = null) }
         }
     }
 
     fun onSpeak() {
         val words = _uiState.value.question?.words ?: return
-        viewModelScope.launch(dispatchers.io) { speechSynthesizer.speakQuietly(words) }
+        session.speak(words)
     }
-
-    private fun studied() = recordStudy.markIn(viewModelScope, dispatchers)
 }

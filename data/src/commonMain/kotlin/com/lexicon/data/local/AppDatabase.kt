@@ -34,9 +34,11 @@ import androidx.room.RoomDatabaseConstructor
         ConjugationProgressEntity::class,
         NumberCourseEntity::class,
         NumberProgressEntity::class,
+        CountryChoiceEntity::class,
+        CountryProgressEntity::class,
         DeclensionProgressEntity::class,
     ],
-    version = 44,
+    version = 45,
     exportSchema = false,
 )
 @ConstructedBy(AppDatabaseConstructor::class)
@@ -60,6 +62,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun conjugationDao(): ConjugationDao
 
     abstract fun numberDao(): NumberDao
+
+    abstract fun countryDao(): CountryDao
 
     abstract fun declensionDao(): DeclensionDao
 }
