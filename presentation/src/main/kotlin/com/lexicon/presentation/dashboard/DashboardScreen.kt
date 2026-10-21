@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.AutoStories
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Tag
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material3.Button
@@ -35,6 +36,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -42,6 +44,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.conjugation.ConjugationCourse
+import com.lexicon.interactors.countries.CountryCourse
 import com.lexicon.interactors.declension.DeclensionCourse
 import com.lexicon.interactors.numbers.NumberCourse
 import com.lexicon.interactors.vocabularycourse.VocabularyCourse
@@ -88,6 +91,7 @@ fun DashboardScreen(
     onOpenConjugation: (String) -> Unit,
     onOpenDeclension: (String) -> Unit,
     onOpenNumbers: () -> Unit,
+    onOpenCountries: () -> Unit,
     onReviewWords: () -> Unit,
     onCourseSelected: (CourseId) -> Unit,
     modifier: Modifier = Modifier,
@@ -119,6 +123,7 @@ fun DashboardScreen(
         onOpenConjugation = onOpenConjugation,
         onOpenDeclension = onOpenDeclension,
         onOpenNumbers = onOpenNumbers,
+        onOpenCountries = onOpenCountries,
         onReviewWords = onReviewWords,
         onCourseSelected = onCourseSelected,
         modifier = modifier,
@@ -132,6 +137,7 @@ private fun DashboardContent(
     onOpenConjugation: (String) -> Unit,
     onOpenDeclension: (String) -> Unit,
     onOpenNumbers: () -> Unit,
+    onOpenCountries: () -> Unit,
     onReviewWords: () -> Unit,
     onCourseSelected: (CourseId) -> Unit,
     modifier: Modifier = Modifier,
@@ -160,6 +166,8 @@ private fun DashboardContent(
 
                 uiState.numberCourse?.let { NumberCourseCard(course = it, onOpen = onOpenNumbers) }
 
+                uiState.countryCourse?.let { CountryCourseCard(course = it, onOpen = onOpenCountries) }
+
                 CourseCard(uiState = uiState, onContinue = onContinue)
 
                 uiState.courses.forEach { course ->
@@ -186,14 +194,11 @@ private fun ConjugationCourseCard(
         medallion = stringResource(R.string.conjugation_medallion),
         fraction = progress.fraction,
         summary = stringResource(R.string.conjugation_progress, progress.mastered, progress.total),
+        attempted = progress.attempted,
+        total = progress.total,
         onOpen = onOpen,
     ) { skin ->
         StatChip(icon = Icons.Default.Translate, text = stringResource(R.string.conjugation_verbs_chip, progress.verbs), skin = skin)
-        StatChip(
-            icon = Icons.Default.CheckCircle,
-            text = stringResource(R.string.conjugation_attempted_chip, progress.attempted, progress.total),
-            skin = skin,
-        )
     }
 }
 
@@ -208,14 +213,11 @@ private fun DeclensionCourseCard(
         medallion = stringResource(R.string.declension_medallion),
         fraction = progress.fraction,
         summary = stringResource(R.string.declension_progress, progress.mastered, progress.total),
+        attempted = progress.attempted,
+        total = progress.total,
         onOpen = onOpen,
     ) { skin ->
         StatChip(icon = Icons.Default.Translate, text = stringResource(R.string.declension_words_chip, progress.words), skin = skin)
-        StatChip(
-            icon = Icons.Default.CheckCircle,
-            text = stringResource(R.string.declension_attempted_chip, progress.attempted, progress.total),
-            skin = skin,
-        )
     }
 }
 
@@ -230,12 +232,32 @@ private fun NumberCourseCard(
         medallion = stringResource(R.string.numbers_medallion),
         fraction = progress.fraction,
         summary = stringResource(R.string.numbers_progress, progress.mastered, progress.total),
+        attempted = progress.attempted,
+        total = progress.total,
         onOpen = onOpen,
     ) { skin ->
-        StatChip(icon = Icons.Default.Tag, text = stringResource(R.string.numbers_count, progress.numbers), skin = skin)
+        StatChip(icon = Icons.Default.Tag, text = stringResource(R.string.numbers_count, progress.items), skin = skin)
+    }
+}
+
+@Composable
+private fun CountryCourseCard(
+    course: CountryCourse,
+    onOpen: () -> Unit,
+) {
+    val progress = course.progress
+    DrillCourseCard(
+        title = stringResource(R.string.countries_title),
+        medallion = stringResource(R.string.countries_medallion),
+        fraction = progress.fraction,
+        summary = stringResource(R.string.countries_progress, progress.mastered, progress.total),
+        attempted = progress.attempted,
+        total = progress.total,
+        onOpen = onOpen,
+    ) { skin ->
         StatChip(
-            icon = Icons.Default.CheckCircle,
-            text = stringResource(R.string.numbers_attempted_chip, progress.attempted, progress.total),
+            icon = Icons.Default.Public,
+            text = pluralStringResource(R.plurals.countries_count, progress.items, progress.items),
             skin = skin,
         )
     }
@@ -248,6 +270,8 @@ private fun DrillCourseCard(
     medallion: String,
     fraction: Float,
     summary: String,
+    attempted: Int,
+    total: Int,
     onOpen: () -> Unit,
     modifier: Modifier = Modifier,
     chips: @Composable (TileSkin) -> Unit,
@@ -282,7 +306,14 @@ private fun DrillCourseCard(
             }
         }
 
-        TileChips { chips(skin) }
+        TileChips {
+            chips(skin)
+            StatChip(
+                icon = Icons.Default.CheckCircle,
+                text = stringResource(R.string.drill_attempted_chip, attempted, total),
+                skin = skin,
+            )
+        }
     }
 }
 
@@ -456,6 +487,7 @@ private fun DashboardPreview() {
             onOpenConjugation = {},
             onOpenDeclension = {},
             onOpenNumbers = {},
+            onOpenCountries = {},
             onCourseSelected = {},
             onReviewWords = {},
         )

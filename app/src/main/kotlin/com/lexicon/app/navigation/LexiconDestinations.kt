@@ -38,6 +38,8 @@ internal object LexiconDestinations {
     const val REVIEW_WORDS = "review/words"
     const val NUMBERS_SETUP = "numbers/setup"
     const val NUMBERS = "numbers/train"
+    const val COUNTRIES_SETUP = "countries/setup"
+    const val COUNTRIES = "countries/train"
     const val RULE = "rules/{$RULE_ID_ARG}"
 
     fun rule(ruleId: String) = "rules/$ruleId"

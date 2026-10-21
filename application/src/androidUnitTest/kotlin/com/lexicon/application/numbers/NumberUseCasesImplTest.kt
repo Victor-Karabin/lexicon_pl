@@ -117,7 +117,7 @@ class NumberUseCasesImplTest {
             numbers.row(50, attempted = 3, streak = 3)
 
             val progress = LoadNumberCourseUseCaseImpl(numbers)()!!.progress
-            assertEquals(2, progress.numbers)
+            assertEquals(2, progress.items)
             assertEquals(10, progress.total)
             assertEquals(2, progress.mastered)
             assertEquals(3, progress.attempted)

@@ -98,7 +98,7 @@
     <string name="conjugation_progress">%1$d of %2$d forms mastered</string>
     <string name="conjugation_remove">Remove the conjugation course</string>
     <string name="conjugation_verbs_chip">%1$d verbs</string>
-    <string name="conjugation_attempted_chip">%1$d of %2$d tried</string>
+    <string name="drill_attempted_chip">%1$d of %2$d tried</string>
     <string name="numbers_title">Numbers</string>
     <string name="numbers_blurb">Type the numbers you want and learn to write them in Polish</string>
     <string name="numbers_medallion">123</string>
@@ -110,7 +110,7 @@
     <string name="numbers_error_unreadable">Can\'t read “%1$s”. Use numbers like 35 or ranges like 1-20.</string>
     <string name="numbers_error_too_large">Numbers go up to 999 999 999.</string>
     <string name="numbers_error_too_many">At most 100 000 numbers at a time.</string>
-    <string name="numbers_start">Start</string>
+    <string name="course_start">Start</string>
     <string name="numbers_listen">Listen</string>
     <string name="numbers_write_prompt">Write the number in words</string>
     <string name="numbers_write_masculine_prompt">Write the number in words, masculine</string>
@@ -136,7 +136,6 @@
     <string name="numbers_list_point_9">ninthly</string>
     <string name="numbers_list_point_10">tenthly</string>
     <string name="numbers_progress">%1$d of %2$d forms mastered</string>
-    <string name="numbers_attempted_chip">%1$d of %2$d tried</string>
     <string name="numbers_none">Choose the numbers to practise first.</string>
     <string name="numbers_rules_title">How it is built</string>
     <string name="numbers_rule_units">0–10 are single words: *zero, jeden, dwa, trzy, cztery, pięć, sześć, siedem, osiem, dziewięć, dziesięć*.</string>
@@ -162,6 +161,19 @@
     <string name="numbers_rule_two_genders">2 is *dwie* with feminine nouns and *dwa* with masculine and neuter ones: *dwie książki*, *dwa domy*, *dwa okna*. Longer numbers ending in 2 do the same: *dwadzieścia dwie książki*.</string>
     <string name="numbers_rule_ordinal_last_part">Above 1000 the thousands and millions keep their usual form; only the end is ordinal: *tysiąc pierwszy, dwa tysiące dwudziesty czwarty*.</string>
     <string name="numbers_rule_thousands_many">*tysięcy* after all other numbers: *pięć tysięcy, dwanaście tysięcy, dwadzieścia jeden tysięcy*.</string>
+    <string name="countries_title">Countries</string>
+    <string name="countries_blurb">Choose countries and learn their Polish names, nationalities and capitals</string>
+    <string name="countries_medallion">🌍</string>
+    <string name="countries_select_title">Choose countries</string>
+    <string name="countries_search_hint">Search country</string>
+    <string name="countries_select_all">Select all</string>
+    <string name="countries_clear">Clear</string>
+    <string name="countries_field_country">Country</string>
+    <string name="countries_field_man">Man</string>
+    <string name="countries_field_woman">Woman</string>
+    <string name="countries_field_capital">Capital</string>
+    <string name="countries_progress">%1$d of %2$d answers mastered</string>
+    <string name="countries_none">Choose the countries to practise first.</string>
 
     <!-- Mix -->
     <string name="mix_title">Mix</string>
@@ -337,7 +349,6 @@
     <string name="declension_none">Choose some nouns or adjectives first — mark them to learn and the course is built from them.</string>
     <string name="declension_progress">%1$d of %2$d forms mastered</string>
     <string name="declension_words_chip">%1$d words</string>
-    <string name="declension_attempted_chip">%1$d of %2$d tried</string>
     <string name="declension_rules">Przypadki: the rules</string>
     <string name="declension_complete">Every form mastered. Mark more nouns or adjectives to learn to carry on.</string>
     <string name="declension_result_label">%1$s · %2$s · %3$s</string>
@@ -396,7 +407,7 @@
     <string name="lesson_flow_next_lesson">Next lesson</string>
     <string name="lesson_flow_to_improve">What to work on</string>
     <string name="lesson_flow_no_mistakes">No mistakes on the first try. Well done!</string>
-    <string name="lesson_flow_exercise">%1$s · %2$s</string>
+    <string name="dot_separated_pair">%1$s · %2$s</string>
     <string name="lesson_flow_first_try">%1$d of %2$d on the first try</string>
     <string name="lesson_flow_rules_to_revisit">Rules to revisit</string>
     <string name="lesson_flow_by_step">By step</string>
@@ -484,6 +495,10 @@
     <string name="ios_camera_usage">Take a photograph to use as the picture on one of your own words.</string>
     <string name="ios_microphone_usage">Pronunciation Check listens to you saying a word so it can tell you whether it came out right.</string>
     <string name="ios_speech_recognition_usage">Pronunciation Check turns what you said into text so it can compare it with the word on screen.</string>
+    <plurals name="countries_count">
+        <item quantity="one">%1$d country</item>
+        <item quantity="other">%1$d countries</item>
+    </plurals>
     <plurals name="selection_count">
         <item quantity="one">%1$d selected</item>
         <item quantity="other">%1$d selected</item>

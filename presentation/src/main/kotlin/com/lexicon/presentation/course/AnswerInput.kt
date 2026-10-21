@@ -6,6 +6,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.InterceptPlatformTextInput
@@ -16,12 +17,15 @@ private val polish = LocaleList(Locale.forLanguageTag("pl-PL"))
 
 val LocalAnswerDone = staticCompositionLocalOf<() -> Unit> { {} }
 
+val LocalAnswerReady = compositionLocalOf { true }
+
 @Composable
 fun AnswerInputs(
     onDone: () -> Unit = {},
+    isReady: Boolean = true,
     content: @Composable () -> Unit,
 ) {
-    CompositionLocalProvider(LocalAnswerDone provides onDone) {
+    CompositionLocalProvider(LocalAnswerDone provides onDone, LocalAnswerReady provides isReady) {
         PolishTextInput(content)
     }
 }

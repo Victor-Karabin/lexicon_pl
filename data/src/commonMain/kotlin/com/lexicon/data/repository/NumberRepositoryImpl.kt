@@ -2,6 +2,7 @@ package com.lexicon.data.repository
 
 import com.lexicon.boundary.NumberProgressBoundary
 import com.lexicon.boundary.NumberRepository
+import com.lexicon.data.local.AttemptCounts
 import com.lexicon.data.local.NumberCourseEntity
 import com.lexicon.data.local.NumberDao
 import com.lexicon.data.local.NumberProgressEntity
@@ -33,15 +34,16 @@ class NumberRepositoryImpl(
         isCorrect: Boolean,
     ) {
         val existing = dao.progressFor(value, kind, gender)
+        val counts = AttemptCounts.of(existing).after(isCorrect)
         dao.save(
             NumberProgressEntity(
                 value = value,
                 kind = kind,
                 gender = gender,
-                attempted = (existing?.attempted ?: 0) + 1,
-                correct = (existing?.correct ?: 0) + if (isCorrect) 1 else 0,
-                incorrect = (existing?.incorrect ?: 0) + if (isCorrect) 0 else 1,
-                streak = if (isCorrect) (existing?.streak ?: 0) + 1 else 0,
+                attempted = counts.attempted,
+                correct = counts.correct,
+                incorrect = counts.incorrect,
+                streak = counts.streak,
             ),
         )
     }

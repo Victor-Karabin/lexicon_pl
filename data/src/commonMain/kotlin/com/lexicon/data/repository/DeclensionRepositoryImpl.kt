@@ -2,6 +2,7 @@ package com.lexicon.data.repository
 
 import com.lexicon.boundary.DeclensionProgressBoundary
 import com.lexicon.boundary.DeclensionRepository
+import com.lexicon.data.local.AttemptCounts
 import com.lexicon.data.local.DeclensionDao
 import com.lexicon.data.local.DeclensionProgressEntity
 import com.lexicon.data.local.VocabularySeeder
@@ -47,16 +48,17 @@ class DeclensionRepositoryImpl(
         isCorrect: Boolean,
     ) {
         val existing = dao.progressFor(courseId, word, column, case)
+        val counts = AttemptCounts.of(existing).after(isCorrect)
         dao.save(
             DeclensionProgressEntity(
                 courseId = courseId,
                 word = word,
                 column = column,
                 grammaticalCase = case,
-                attempted = (existing?.attempted ?: 0) + 1,
-                correct = (existing?.correct ?: 0) + if (isCorrect) 1 else 0,
-                incorrect = (existing?.incorrect ?: 0) + if (isCorrect) 0 else 1,
-                streak = if (isCorrect) (existing?.streak ?: 0) + 1 else 0,
+                attempted = counts.attempted,
+                correct = counts.correct,
+                incorrect = counts.incorrect,
+                streak = counts.streak,
             ),
         )
     }

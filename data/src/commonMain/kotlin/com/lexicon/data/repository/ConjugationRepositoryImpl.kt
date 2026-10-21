@@ -6,6 +6,7 @@ import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.SeedOutcomeBoundary
 import com.lexicon.boundary.VerbConjugationBoundary
 import com.lexicon.common.Clock
+import com.lexicon.data.local.AttemptCounts
 import com.lexicon.data.local.CatalogSeedStore
 import com.lexicon.data.local.ConjugationAssetLoader
 import com.lexicon.data.local.ConjugationCourseEntity
@@ -127,15 +128,16 @@ class ConjugationRepositoryImpl(
         isCorrect: Boolean,
     ) {
         val existing = dao.progressFor(courseId, infinitive, person)
+        val counts = AttemptCounts.of(existing).after(isCorrect)
         dao.save(
             ConjugationProgressEntity(
                 courseId = courseId,
                 infinitive = infinitive,
                 person = person,
-                attempted = (existing?.attempted ?: 0) + 1,
-                correct = (existing?.correct ?: 0) + if (isCorrect) 1 else 0,
-                incorrect = (existing?.incorrect ?: 0) + if (isCorrect) 0 else 1,
-                streak = if (isCorrect) (existing?.streak ?: 0) + 1 else 0,
+                attempted = counts.attempted,
+                correct = counts.correct,
+                incorrect = counts.incorrect,
+                streak = counts.streak,
             ),
         )
     }

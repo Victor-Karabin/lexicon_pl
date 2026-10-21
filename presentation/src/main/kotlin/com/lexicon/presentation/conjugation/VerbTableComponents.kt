@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -60,6 +61,8 @@ fun PersonFormRow(
     imeAction: ImeAction,
     modifier: Modifier = Modifier,
     info: String? = null,
+    placeholder: String? = null,
+    focusRequester: FocusRequester? = null,
     labelWidth: Dp = PersonColumnWidth,
 ) {
     Box(modifier = modifier) {
@@ -75,6 +78,8 @@ fun PersonFormRow(
             onValueChanged = onAnswerChanged,
             isAlmost = verdict == AnswerVerdict.ALMOST,
             info = info,
+            placeholder = placeholder,
+            focusRequester = focusRequester,
             labelWidth = labelWidth,
             onSpeak = onSpeak,
             imeAction = imeAction,

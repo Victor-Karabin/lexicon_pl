@@ -422,6 +422,7 @@ fun TranscribeRow(
     isAlmost: Boolean = false,
     info: String? = null,
     prompt: String? = null,
+    placeholder: String? = null,
     labelWidth: Dp? = null,
     onSpeak: (() -> Unit)? = null,
     usualForm: String? = null,
@@ -434,9 +435,12 @@ fun TranscribeRow(
     var showInfo by rememberSaveable { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     val answerDone = LocalAnswerDone.current
+    val answerReady = LocalAnswerReady.current
     val done = {
-        focusManager.clearFocus()
-        (onDone ?: answerDone)()
+        if (answerReady) {
+            focusManager.clearFocus()
+            (onDone ?: answerDone)()
+        }
     }
     val checked = answerState !is AnswerState.Unanswered
     val wraps = item.answer.length > WRAPPING_ANSWER_LENGTH
@@ -511,7 +515,16 @@ fun TranscribeRow(
                             .padding(horizontal = Dimens.spacingMedium, vertical = Dimens.spacingSmall),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Box(modifier = Modifier.weight(1f)) { field() }
+                        Box(modifier = Modifier.weight(1f)) {
+                            if (value.isEmpty() && placeholder != null) {
+                                Text(
+                                    text = placeholder,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
+                            field()
+                        }
                         if (isCorrect == true) Icon(Icons.Default.Check, contentDescription = null, tint = LexiconSuccess)
                     }
                 },

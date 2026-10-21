@@ -464,7 +464,7 @@ fun LessonResultsView(
             results.toImprove.take(MAX_EXERCISES_TO_IMPROVE).forEach { exercise ->
                 Row(modifier = Modifier.fillMaxWidth()) {
                     Text(
-                        stringResource(R.string.lesson_flow_exercise, exercise.screen.id, exercise.screen.title),
+                        stringResource(R.string.dot_separated_pair, exercise.screen.id, exercise.screen.title),
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.weight(1f),
                     )

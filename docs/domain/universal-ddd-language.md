@@ -32,7 +32,7 @@ data android  application     adapters     use-case implementations
 ```
 
 `model` depends on nothing but the Kotlin standard library and immutable collections.
-Five of the nine contexts have their model there; Conjugation, Declension, Numbers and Catalogue do not yet
+Five of the ten contexts have their model there; Conjugation, Declension, Numbers, Countries and Catalogue do not yet
 (see [Known gaps](#known-gaps)).
 
 ## Bounded Contexts
@@ -47,6 +47,7 @@ Five of the nine contexts have their model there; Conjugation, Declension, Numbe
 | Conjugation | Verbs, their forms, and courses over them | — | `interactors.conjugation` |
 | Declension | Nouns and adjectives by case, and the Cases course over them | — | `interactors.declension` |
 | Numbers | Numbers the learner chose, their Polish words and per-number progress | — | `interactors.numbers` |
+| Countries | Countries the learner chose, their Polish names, nationalities and capitals, and per-field progress | — | `interactors.countries` |
 | Catalogue | Seeding shipped data into the database | — | `interactors.sync` |
 
 **Training is one context, not thirteen.** `dictation`, `crossword`, `imagetest` and the
@@ -117,6 +118,11 @@ under [Context-Specific Terminology](#context-specific-terminology) and must not
 | Number question | One number form to write: its digits, accepted spellings, transcription and rules | Numbers | *step* | `NumberQuestion` |
 | Number mastery | A number form whose last answer was right; a wrong answer takes it back | Numbers | *learned* | `NumberProgress.MASTERY_STREAK` |
 | Numbers course | The chosen numbers practised together, with their progress | Numbers | *course* unqualified | `NumberCourse` |
+| Country | One of the 197 states of the official Polish list: its code, English and Polish names, the man's and woman's nationality where the list gives one, and its capital in Polish and English | Countries | *state*, *nation* | `Country` |
+| Country field | One thing asked about a country: its name, the nationality of a man, the nationality of a woman, or its capital. A country the list gives no nationality for has only the name and the capital | Countries | *form* | `CountryField`, `Country.fields` |
+| Country mastery | A country field whose last answer was right; a wrong answer takes it back | Countries | *learned* | `CountryFieldProgress.MASTERY_STREAK` |
+| Countries course | The chosen countries practised together, with their progress | Countries | *course* unqualified | `CountryCourse` |
+| Drill course progress | Items chosen, fields to master, fields mastered and fields tried, for a Numbers or Countries course | Numbers, Countries | — | `DrillCourseProgress` |
 | Catalogue | A body of shipped data seeded into the database from an asset | Catalogue | *database*, *source* | `SeedCatalogsUseCase` |
 | Seeding | Writing a catalogue's asset into the database | Catalogue | *sync*, *import*, *download* | `seedFromAsset()` |
 | Fingerprint | A cheap identity for an asset, used to skip unchanged seeding | Catalogue | *hash* | `CatalogSeedStore` |
@@ -136,6 +142,7 @@ Objects with identity that persists across changes.
 | Lesson | `LessonId` | Course | — |
 | Conjugation course | `ConjugationCourse.id` | Conjugation | — |
 | Numbers course | the single stored row | Numbers | — |
+| Country | country code | Countries | `fields`, `answers`, `flag` |
 | Verb | infinitive | Conjugation | `formsFor`, `split`, `isComplete` |
 
 ## Value Objects
@@ -175,6 +182,7 @@ reads its parts back out is ceremony.
 | Course | its lessons, their words, audio and exercises | lesson progress belongs to exactly one course | By the schema — progress is keyed by lesson |
 | Conjugation course | its chosen verbs and their per-variant progress | progress is scoped to one course, so two courses over one verb do not share it | By the schema — progress is keyed by course |
 | Numbers course | the typed choice and per-number progress | only a readable choice is stored; progress belongs to the number form, so it survives a change of choice | In `SaveNumberCourseUseCase`, which parses before saving; by the schema — progress is keyed by number and form |
+| Countries course | the chosen country codes and per-field progress | a choice holds only codes that are in the list; progress belongs to the country and field, so it survives a change of choice | In `SaveCountryChoiceUseCase`, which drops unknown codes; by the schema — progress is keyed by country and field |
 | Verb | its forms per person | a form is never invented; absent means absent | By construction — forms are read from the asset, never derived |
 
 ## Domain Services
@@ -190,6 +198,7 @@ Operations that belong to no single entity.
 | Answer normaliser | Decides whether a written or spoken answer matches | `AnswerNormalizer` |
 | Conjugation splitter | Derives stem and endings from a verb's own forms | `VerbConjugation.split()` |
 | Number speller | Writes a number in Polish words and transcribes it | `PolishNumbers` |
+| Practice picker | Picks the next item of a drill: not asked this session, not mastered, tried the fewest times, at random among equals | `nextToPractise` |
 | Voice choice | The voice the learner will hear: theirs, or the first on offer | `List<SpeechVoice>.chosen()` |
 
 ## Ports
@@ -198,7 +207,7 @@ Everything the domain needs from the outside, declared in `boundary` and impleme
 `data` (persistence) or `android` (device and network).
 
 **Repositories** — `VocabularyRepository`, `VocabularyPresetRepository`,
-`CourseRepository`, `ConjugationRepository`, `NumberRepository`, `VocabularyCourseRepository`,
+`CourseRepository`, `ConjugationRepository`, `NumberRepository`, `CountryRepository`, `VocabularyCourseRepository`,
 `TrainingHistoryRepository`, `ReviewScheduleRepository`, `StudyRecordRepository`,
 `SettingsRepository`, `SessionStore`
 
@@ -241,6 +250,9 @@ Introducing an event type is a domain change and requires updating this document
 | Choose the numbers | Store the typed numbers and ranges as the numbers course, if they can be read | `SaveNumberCourseUseCase` |
 | Ask a number | Pick the next number form: not asked this session, not mastered, tried the fewest times | `NextNumberUseCase` |
 | Answer a number | Check the words and record the attempt | `SubmitNumberAnswerUseCase` |
+| Choose the countries | Store the ticked countries, in list order, dropping codes that are not in the list; an empty choice clears the course | `SaveCountryChoiceUseCase` |
+| Ask a country | Pick the next country: not asked this session, not fully mastered, asked the fewest steps (counted on its Country field) | `NextCountryUseCase` |
+| Answer a country | Check each field of the country and record one attempt per field | `SubmitCountryAnswersUseCase` |
 | Seed the catalogues | Write shipped assets into the database | `SeedCatalogsUseCase` |
 
 ## Domain States
@@ -294,10 +306,13 @@ These words carry different meanings in different contexts and must not be unifi
 | **Course** | Course — a sequence of authored lessons (Polish for Beginners) | Conjugation course — a chosen set of verbs |
 | | | Vocabulary course — the always-on queue over the learner's marked words |
 | | | Numbers course — the numbers the learner typed |
+| | | Countries course — the countries the learner ticked |
 | **Mastery** | Scheduling: a word whose review interval passed the threshold (21 days by default) | Conjugation: a variant answered correctly twice in a row |
 | | | Numbers: a number form whose last answer was right |
+| | | Countries: a country field whose last answer was right |
 | **Progress** | Vocabulary course: words known out of words known or being learnt | Conjugation: variants mastered out of total |
 | | | Numbers: forms mastered out of all forms of the numbers chosen |
+| | | Countries: fields mastered out of all fields of the countries chosen |
 | | | Course: lessons completed |
 | **Step** | Training: one question in a session | Conjugation: one person row inside a table |
 | | | Catalogue: one catalogue being seeded |
@@ -318,6 +333,8 @@ this document describes.
   `DeclensionVariant` live in `interactors.declension`, beside Conjugation's model.
 - **Numbers has no model package.** `PolishNumbers`, `NumberSelection` and
   `NumberProgress` live in `interactors.numbers`, like Conjugation's model.
+- **Countries has no model package.** `Country`, `CountryField` and `CountryFieldProgress` live in
+  `interactors.countries`, like Numbers'.
 - **Catalogue has no model package.** Seeding is orchestration over ports, with the only
   rule — the fingerprint comparison — inside the repositories.
 - **The preset list carries word ids it no longer displays.** Since counts and membership

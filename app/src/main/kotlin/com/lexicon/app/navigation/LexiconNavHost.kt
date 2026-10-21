@@ -22,6 +22,8 @@ import com.lexicon.presentation.common.TrainingGate
 import com.lexicon.presentation.conjugation.CONJUGATION_COURSE_ARG
 import com.lexicon.presentation.conjugation.ConjugationScreen
 import com.lexicon.presentation.conjugation.VerbSelectionScreen
+import com.lexicon.presentation.countries.CountryCourseScreen
+import com.lexicon.presentation.countries.CountryTrainingScreen
 import com.lexicon.presentation.course.COURSE_ID_ARG
 import com.lexicon.presentation.course.CourseDetailScreen
 import com.lexicon.presentation.course.EXERCISE_ID_ARG
@@ -118,6 +120,8 @@ fun LexiconNavHost(
                 onDeclensionSelected = { navController.navigate(LexiconDestinations.DECLENSION_WORDS) },
                 onNumbersSelected = { navController.navigate(LexiconDestinations.NUMBERS_SETUP) },
                 onTrainNumbers = { navController.navigate(LexiconDestinations.NUMBERS) },
+                onCountriesSelected = { navController.navigate(LexiconDestinations.COUNTRIES_SETUP) },
+                onTrainCountries = { navController.navigate(LexiconDestinations.COUNTRIES) },
                 onReviewWords = { navController.navigate(LexiconDestinations.REVIEW_WORDS) },
             )
         }
@@ -558,6 +562,24 @@ fun LexiconNavHost(
         composable(route = LexiconDestinations.NUMBERS) {
             NumberTrainingScreen(
                 onSessionComplete = onStepSessionComplete(LexiconDestinations.NUMBERS)(""),
+                onClose = closeToMain,
+            )
+        }
+
+        composable(route = LexiconDestinations.COUNTRIES_SETUP) {
+            CountryCourseScreen(
+                onStarted = {
+                    navController.navigate(LexiconDestinations.COUNTRIES) {
+                        popUpTo(LexiconDestinations.COUNTRIES_SETUP) { inclusive = true }
+                    }
+                },
+                onClose = closeToMain,
+            )
+        }
+
+        composable(route = LexiconDestinations.COUNTRIES) {
+            CountryTrainingScreen(
+                onSessionComplete = onStepSessionComplete(LexiconDestinations.COUNTRIES)(""),
                 onClose = closeToMain,
             )
         }

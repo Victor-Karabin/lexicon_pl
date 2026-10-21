@@ -116,13 +116,15 @@ pięćdziesiąt, sześćdziesiąt, dziewięćdziesiąt*.
 ## Progress
 
 - **Mastered**: a form whose last answer was right — one correct answer is enough
-  (`NumberProgress.MASTERY_STREAK`). A wrong answer later takes it back until it is
-  answered right again.
+  (`NumberProgress.MASTERY_STREAK`, the shared `SINGLE_ANSWER_MASTERY_STREAK`). A wrong
+  answer later takes it back until it is answered right again.
 - **Next form**: one not asked yet in this session, not mastered, and tried the fewest
-  times, picked at random among equals. When every form is mastered, the training keeps
+  times, picked at random among equals (`nextToPractise`, shared with the
+  [Countries course](countries.md)). When every form is mastered, the training keeps
   going over all of them rather than stopping.
 - The dashboard card shows forms mastered out of all forms of the chosen numbers, with
-  chips for the count of numbers and how many forms have been tried.
+  chips for the count of numbers and how many forms have been tried
+  (`DrillCourseProgress`, shared with the Countries course).
 
 ## Where it lives
 

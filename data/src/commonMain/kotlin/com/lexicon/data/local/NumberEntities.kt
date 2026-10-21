@@ -20,11 +20,11 @@ data class NumberProgressEntity(
     val value: Long,
     val kind: String,
     val gender: String,
-    val attempted: Int,
-    val correct: Int,
-    val incorrect: Int,
-    val streak: Int,
-)
+    override val attempted: Int,
+    override val correct: Int,
+    override val incorrect: Int,
+    override val streak: Int,
+) : AttemptRecord
 
 @Dao
 interface NumberDao {

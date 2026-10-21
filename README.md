@@ -35,7 +35,10 @@ A1 coursebook, with its own audio and exercises. A *conjugation course* drills t
 verbs you pick from a catalogue of 4,545. A *numbers course* drills writing numbers in
 Polish words: you type the numbers and ranges to practise (`1-20, 35, 2024`), and each one
 is shown in digits, read aloud on demand, and answered in words, with its transcription
-after the check.
+after the check. A *countries course* drills the 197 states of the official Polish list:
+you tick the countries to practise, and each is shown as a flag and its English name and
+answered in Polish, with the country, the word for a man and a woman from it, and the
+capital.
 
 **Written and spoken by machine where it helps.** Example sentences, and the passages the
 reading trainings use, are written by OpenAI around the word being practised. Translation
@@ -136,6 +139,11 @@ The schema takes Room's destructive fallback rather than migrations — the proj
 pre-release, so a version bump drops the database and re-seeds it, taking word statuses and
 history with it. That makes a bump a deliberate act.
 
+The countries course's names, nationalities and capitals come from the official list
+*Urzędowy wykaz nazw państw i terytoriów niesamodzielnych*, 8th edition (2025), published
+by the Komisja Standaryzacji Nazw Geograficznych poza Granicami Rzeczypospolitej Polskiej
+(KSNG): <https://www.gov.pl/web/ksng/Urzedowy-wykaz-nazw-panstw-i-terytoriow-niesamodzielnych>.
+
 ## Documentation
 
 | | |
@@ -145,8 +153,9 @@ history with it. That makes a bump a deliberate act.
 | [Vocabulary and presets](docs/vocabulary-presets.md) | How the catalogue, presets and the study set work |
 | [Course](docs/course.md) | The Polish for Beginners course: lessons, audio, exercises |
 | [Numbers](docs/numbers.md) | The numbers course: choosing numbers, the words, transcriptions, progress |
+| [Countries](docs/countries.md) | The countries course: choosing countries, accepted answers, progress, the data and its source |
 
 ## Status
 
-Pre-release, version 0.1.0. 518 Kotlin files and 42 Swift files. 78 unit-test files,
+Pre-release, version 0.1.0. 665 Kotlin files and 48 Swift files. 137 unit-test files,
 seven instrumented tests over real SQLite, and five end-to-end tests driving the app.

@@ -2,6 +2,7 @@ package com.lexicon.data.di
 
 import com.lexicon.boundary.CatalogSeedGate
 import com.lexicon.boundary.ConjugationRepository
+import com.lexicon.boundary.CountryRepository
 import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.DeclensionRepository
 import com.lexicon.boundary.ImageProvider
@@ -43,6 +44,7 @@ import com.lexicon.data.repository.ConjugationRepositoryImpl
 import com.lexicon.data.repository.CorpusTranslationSuggester
 import com.lexicon.data.repository.CorpusTranslatorImpl
 import com.lexicon.data.repository.CorpusWordLevelGuesser
+import com.lexicon.data.repository.CountryRepositoryImpl
 import com.lexicon.data.repository.CourseRepositoryImpl
 import com.lexicon.data.repository.DeclensionRepositoryImpl
 import com.lexicon.data.repository.FallbackImageProviderImpl
@@ -92,6 +94,7 @@ val dataModule = module {
     factory { get<AppDatabase>().vocabularyCourseDao() }
     factory { get<AppDatabase>().conjugationDao() }
     factory { get<AppDatabase>().numberDao() }
+    factory { get<AppDatabase>().countryDao() }
     factory { get<AppDatabase>().declensionDao() }
 
     single(settingsDataStoreQualifier) { get<DataStorePathResolver>().createDataStore(SETTINGS_STORE_NAME) }
@@ -124,6 +127,7 @@ val dataModule = module {
     singleOf(::ReferenceRuleRepositoryImpl) { bind<ReferenceRuleRepository>() }
     singleOf(::DeclensionRepositoryImpl) { bind<DeclensionRepository>() }
     singleOf(::NumberRepositoryImpl) { bind<NumberRepository>() }
+    singleOf(::CountryRepositoryImpl) { bind<CountryRepository>() }
     singleOf(::CatalogSeedGateImpl) { bind<CatalogSeedGate>() }
     factoryOf(::CourseAssetLoader)
 

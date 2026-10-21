@@ -1,6 +1,8 @@
 package com.lexicon.interactors.numbers
 
 import com.lexicon.interactors.course.AnswerVerdict
+import com.lexicon.interactors.training.DrillCourseProgress
+import com.lexicon.interactors.training.SINGLE_ANSWER_MASTERY_STREAK
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlin.random.Random
@@ -67,24 +69,13 @@ data class NumberProgress(
     val isMastered: Boolean get() = streak >= MASTERY_STREAK
 
     companion object {
-        const val MASTERY_STREAK = 1
+        const val MASTERY_STREAK = SINGLE_ANSWER_MASTERY_STREAK
     }
-}
-
-data class NumberCourseProgress(
-    val numbers: Int,
-    val total: Int,
-    val mastered: Int,
-    val attempted: Int,
-) {
-    val fraction: Float get() = if (total == 0) 0f else mastered.toFloat() / total
-
-    val isComplete: Boolean get() = total > 0 && mastered == total
 }
 
 data class NumberCourse(
     val spec: String,
-    val progress: NumberCourseProgress,
+    val progress: DrillCourseProgress,
 )
 
 interface LoadNumberCourseUseCase {

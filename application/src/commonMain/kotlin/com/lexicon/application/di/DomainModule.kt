@@ -10,6 +10,12 @@ import com.lexicon.application.conjugation.LoadVerbImageChoicesUseCaseImpl
 import com.lexicon.application.conjugation.NextConjugationTableUseCaseImpl
 import com.lexicon.application.conjugation.SubmitConjugationAnswerUseCaseImpl
 import com.lexicon.application.conjugation.ToggleVerbInStudySetUseCaseImpl
+import com.lexicon.application.countries.LoadCountriesUseCaseImpl
+import com.lexicon.application.countries.LoadCountryChoiceUseCaseImpl
+import com.lexicon.application.countries.LoadCountryCourseUseCaseImpl
+import com.lexicon.application.countries.NextCountryUseCaseImpl
+import com.lexicon.application.countries.SaveCountryChoiceUseCaseImpl
+import com.lexicon.application.countries.SubmitCountryAnswersUseCaseImpl
 import com.lexicon.application.course.CheckExerciseAnswerUseCaseImpl
 import com.lexicon.application.course.GetLastLessonResultsUseCaseImpl
 import com.lexicon.application.course.GetLessonProgressUseCaseImpl
@@ -123,6 +129,12 @@ import com.lexicon.interactors.conjugation.NextConjugationTableUseCase
 import com.lexicon.interactors.conjugation.RestoreConjugationVerbsUseCase
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
 import com.lexicon.interactors.conjugation.ToggleVerbInStudySetUseCase
+import com.lexicon.interactors.countries.LoadCountriesUseCase
+import com.lexicon.interactors.countries.LoadCountryChoiceUseCase
+import com.lexicon.interactors.countries.LoadCountryCourseUseCase
+import com.lexicon.interactors.countries.NextCountryUseCase
+import com.lexicon.interactors.countries.SaveCountryChoiceUseCase
+import com.lexicon.interactors.countries.SubmitCountryAnswersUseCase
 import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
 import com.lexicon.interactors.course.GetLastLessonResultsUseCase
 import com.lexicon.interactors.course.GetLessonProgressUseCase
@@ -289,6 +301,12 @@ val domainModule = module {
     factoryOf(::SaveNumberCourseUseCaseImpl) { bind<SaveNumberCourseUseCase>() }
     factoryOf(::NextNumberUseCaseImpl) { bind<NextNumberUseCase>() }
     factoryOf(::SubmitNumberAnswerUseCaseImpl) { bind<SubmitNumberAnswerUseCase>() }
+    factoryOf(::LoadCountriesUseCaseImpl) { bind<LoadCountriesUseCase>() }
+    factoryOf(::LoadCountryChoiceUseCaseImpl) { bind<LoadCountryChoiceUseCase>() }
+    factoryOf(::LoadCountryCourseUseCaseImpl) { bind<LoadCountryCourseUseCase>() }
+    factoryOf(::NextCountryUseCaseImpl) { bind<NextCountryUseCase>() }
+    factoryOf(::SaveCountryChoiceUseCaseImpl) { bind<SaveCountryChoiceUseCase>() }
+    factoryOf(::SubmitCountryAnswersUseCaseImpl) { bind<SubmitCountryAnswersUseCase>() }
 
     factoryOf(::LoadConjugationVerbsUseCaseImpl) { bind<LoadConjugationVerbsUseCase>() }
     factory<DeleteConjugationVerbUseCase> {
