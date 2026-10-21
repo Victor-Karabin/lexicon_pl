@@ -5,6 +5,7 @@ import kotlinx.collections.immutable.ImmutableList
 data class StartPassageSessionRequest(
     val withWordBank: Boolean = false,
     val stepCount: Int? = null,
+    val vocabularyIds: List<Long> = emptyList(),
 )
 
 sealed interface PassageSessionResult {

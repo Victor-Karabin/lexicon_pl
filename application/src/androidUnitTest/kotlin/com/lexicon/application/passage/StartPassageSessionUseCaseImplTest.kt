@@ -16,6 +16,7 @@ import com.lexicon.model.vocabulary.CefrLevel
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -30,12 +31,21 @@ class StartPassageSessionUseCaseImplTest {
 
     private var stepCount = 6
 
-    private fun givenStudySet(vararg words: String) {
-        coEvery { settings.getSettings() } returns
-            AppSettingsBoundary(themeMode = ThemeModeBoundary.SYSTEM, stepCount = stepCount)
-        val items = words.mapIndexed { index, word ->
+    private val requested = mutableListOf<String>()
+
+    private fun items(vararg words: String) =
+        words.mapIndexed { index, word ->
             Word(VocabularyId(index + 1L), word, "x", "x", cefr = CefrLevel.A1)
         }
+
+    private fun givenStepCount() {
+        coEvery { settings.getSettings() } returns
+            AppSettingsBoundary(themeMode = ThemeModeBoundary.SYSTEM, stepCount = stepCount)
+    }
+
+    private fun givenStudySet(vararg words: String) {
+        givenStepCount()
+        val items = items(*words)
         coEvery { vocabulary.studySetWordIds() } returns items.map { it.id.value }
         coEvery { vocabulary.getItemsByIds(any()) } returns items
     }
@@ -43,11 +53,13 @@ class StartPassageSessionUseCaseImplTest {
     private fun answering(sentences: Map<String, String>) {
         coEvery { generator.generate(any()) } answers {
             val word = firstArg<SentenceRequestBoundary>().word
+            requested += word
             SentenceResultBoundary.Generated(sentences.getValue(word))
         }
     }
 
-    private suspend fun run(): PassageSessionResult = useCase(StartPassageSessionRequest(withWordBank = true))
+    private suspend fun run(vocabularyIds: List<Long> = emptyList()): PassageSessionResult =
+        useCase(StartPassageSessionRequest(withWordBank = true, vocabularyIds = vocabularyIds))
 
     @Test
     fun `every sentence shown has something to fill in`() =
@@ -233,5 +245,67 @@ class StartPassageSessionUseCaseImplTest {
             val session = run() as PassageSessionResult.Ready
 
             assertEquals(listOf("nowy", "okno"), session.passage.gaps.map { it.word }.sorted())
+        }
+
+    @Test
+    fun `a lesson's word list is the only thing sentences are written for and the study set is not read`() =
+        runTest {
+            givenStepCount()
+            val lesson = listOf(2L, 3L)
+            coEvery { vocabulary.getItemsByIds(lesson) } returns items("nowy", "okno", "gdy").filter { it.id.value in lesson }
+            answering(mapOf("okno" to "Otwórz okno.", "gdy" to "Gdy wrócę, zadzwonię."))
+
+            val session = run(lesson) as PassageSessionResult.Ready
+
+            assertEquals(setOf("okno", "gdy"), requested.toSet())
+            assertEquals(listOf("gdy", "okno"), session.passage.gaps.map { it.word }.sorted())
+            coVerify(exactly = 0) { vocabulary.studySetWordIds() }
+        }
+
+    @Test
+    fun `without a word list the study set is used`() =
+        runTest {
+            givenStudySet("nowy", "okno")
+            answering(mapOf("nowy" to "Mam nowy telefon.", "okno" to "Otwórz okno."))
+
+            run(vocabularyIds = emptyList())
+
+            assertEquals(setOf("nowy", "okno"), requested.toSet())
+            coVerify(exactly = 1) { vocabulary.studySetWordIds() }
+        }
+
+    @Test
+    fun `a lesson with fewer words than the step count gives fewer sentences and no top-up`() =
+        runTest {
+            stepCount = 6
+            givenStepCount()
+            val lesson = listOf(1L, 2L)
+            coEvery { vocabulary.getItemsByIds(lesson) } returns items("nowy", "okno")
+            answering(mapOf("nowy" to "Mam nowy telefon.", "okno" to "Otwórz okno."))
+
+            val session = run(lesson) as PassageSessionResult.Ready
+
+            assertEquals(2, session.passage.sentences.size)
+            assertEquals(setOf("nowy", "okno"), requested.toSet())
+        }
+
+    @Test
+    fun `a lesson word whose sentence is refused leaves one sentence fewer`() =
+        runTest {
+            stepCount = 6
+            givenStepCount()
+            val lesson = listOf(1L, 2L, 3L)
+            coEvery { vocabulary.getItemsByIds(lesson) } returns items("nowy", "okno", "dom")
+            coEvery { generator.generate(any()) } answers {
+                when (val word = firstArg<SentenceRequestBoundary>().word) {
+                    "dom" -> SentenceResultBoundary.Refused("busy")
+                    "nowy" -> SentenceResultBoundary.Generated("Mam nowy telefon.")
+                    else -> SentenceResultBoundary.Generated("Otwórz proszę $word.")
+                }
+            }
+
+            val session = run(lesson) as PassageSessionResult.Ready
+
+            assertEquals(2, session.passage.sentences.size)
         }
 }

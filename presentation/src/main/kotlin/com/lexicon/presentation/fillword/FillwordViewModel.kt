@@ -1,26 +1,36 @@
 package com.lexicon.presentation.fillword
 
+import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.common.DispatcherProvider
+import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.fillword.FillwordCell
 import com.lexicon.interactors.fillword.FillwordPuzzle
 import com.lexicon.interactors.fillword.FillwordSessionResult
 import com.lexicon.interactors.fillword.FillwordWord
+import com.lexicon.interactors.fillword.StartFillwordSessionRequest
 import com.lexicon.interactors.fillword.StartFillwordSessionUseCase
+import com.lexicon.interactors.fillword.SubmitFillwordRequest
+import com.lexicon.interactors.fillword.SubmitFillwordUseCase
 import com.lexicon.interactors.training.RecordStudyActivityUseCase
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.WordResultEntry
 import com.lexicon.presentation.common.markIn
+import com.lexicon.presentation.common.trainingVocabularyIds
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toImmutableSet
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
+private const val TAG = "Fillword"
 
 data class FillwordUiState(
     val isLoading: Boolean = true,
@@ -43,7 +53,9 @@ data class FillwordUiState(
 }
 
 class FillwordViewModel(
+    savedStateHandle: SavedStateHandle,
     private val startSession: StartFillwordSessionUseCase,
+    private val submitFillword: SubmitFillwordUseCase,
     private val lastSessionResultsHolder: LastSessionResultsHolder,
     private val recordStudy: RecordStudyActivityUseCase,
     private val dispatchers: DispatcherProvider,
@@ -51,11 +63,23 @@ class FillwordViewModel(
     private val _uiState = MutableStateFlow(FillwordUiState())
     val uiState: StateFlow<FillwordUiState> = _uiState.asStateFlow()
 
+    private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
+
+    private var sessionId: String = ""
+
+    @Volatile
+    private var isSubmitting = false
+
+    @Volatile
+    private var isSubmitted = false
+
     init {
         viewModelScope.launch(dispatchers.io) {
-            when (val session = startSession()) {
-                is FillwordSessionResult.Ready ->
+            when (val session = startSession(StartFillwordSessionRequest(vocabularyIds = vocabularyIds))) {
+                is FillwordSessionResult.Ready -> {
+                    sessionId = session.sessionId
                     _uiState.update { it.copy(isLoading = false, puzzle = session.puzzle) }
+                }
 
                 FillwordSessionResult.EmptyStudySet -> _uiState.update { it.copy(isLoading = false) }
             }
@@ -63,8 +87,8 @@ class FillwordViewModel(
     }
 
     fun onCheck() {
-        studied()
         _uiState.update { it.copy(isRevealed = true, anchor = null) }
+        if (!submitRound()) studied()
     }
 
     fun onFinished() {
@@ -81,7 +105,6 @@ class FillwordViewModel(
     }
 
     fun onCellTapped(cell: FillwordCell) {
-        studied()
         _uiState.update { state ->
             if (state.isRevealed) return@update state
             val anchor = state.anchor
@@ -91,14 +114,35 @@ class FillwordViewModel(
                 else -> state.claim(anchor, cell)
             }
         }
+        if (!submitIfComplete()) studied()
     }
 
     fun onCellsTraced(
         from: FillwordCell,
         to: FillwordCell,
     ) {
-        studied()
         _uiState.update { it.claim(from, to) }
+        if (!submitIfComplete()) studied()
+    }
+
+    private fun submitIfComplete(): Boolean = _uiState.value.isComplete && submitRound()
+
+    private fun submitRound(): Boolean {
+        val state = _uiState.value
+        state.puzzle ?: return false
+        if (sessionId.isEmpty() || isSubmitted || isSubmitting) return false
+        isSubmitting = true
+        viewModelScope.launch(dispatchers.io + NonCancellable) {
+            try {
+                runSuspendCatching {
+                    submitFillword(SubmitFillwordRequest(sessionId = sessionId, foundWords = state.found))
+                }.onSuccess { isSubmitted = true }
+                    .onFailure { Log.w(TAG, "The round could not be recorded", it) }
+            } finally {
+                isSubmitting = false
+            }
+        }
+        return true
     }
 
     private fun studied() = recordStudy.markIn(viewModelScope, dispatchers)

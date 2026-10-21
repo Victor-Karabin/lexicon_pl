@@ -16,6 +16,7 @@ import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.WordResultEntry
 import com.lexicon.presentation.common.speakQuietly
+import com.lexicon.presentation.common.trainingVocabularyIds
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -63,6 +64,8 @@ class PassageViewModel(
 ) : ViewModel() {
     private val withWordBank: Boolean = savedStateHandle.get<String>(PASSAGE_BANK_ARG).toBoolean()
 
+    private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
+
     private val _uiState = MutableStateFlow(PassageUiState())
     val uiState: StateFlow<PassageUiState> = _uiState.asStateFlow()
 
@@ -73,7 +76,7 @@ class PassageViewModel(
 
     init {
         viewModelScope.launch(dispatchers.io) {
-            when (val session = startSession(StartPassageSessionRequest(withWordBank = withWordBank))) {
+            when (val session = startSession(StartPassageSessionRequest(withWordBank = withWordBank, vocabularyIds = vocabularyIds))) {
                 is PassageSessionResult.Ready -> {
                     sessionId = session.sessionId
                     _uiState.update {

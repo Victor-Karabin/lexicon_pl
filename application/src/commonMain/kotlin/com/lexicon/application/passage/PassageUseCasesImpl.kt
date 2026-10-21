@@ -4,6 +4,7 @@ import com.lexicon.application.dictation.AnswerNormalizer
 import com.lexicon.application.settings.StepCountResolver
 import com.lexicon.application.training.open
 import com.lexicon.application.training.recordOutcome
+import com.lexicon.application.training.wordsToStudy
 import com.lexicon.boundary.SentenceGenerator
 import com.lexicon.boundary.SentenceRequestBoundary
 import com.lexicon.boundary.SentenceResultBoundary
@@ -47,7 +48,7 @@ class StartPassageSessionUseCaseImpl(
 ) : StartPassageSessionUseCase {
     @OptIn(ExperimentalUuidApi::class)
     override suspend fun invoke(request: StartPassageSessionRequest): PassageSessionResult {
-        val studySet = vocabulary.getItemsByIds(vocabulary.studySetWordIds())
+        val studySet = vocabulary.wordsToStudy(request.vocabularyIds)
         if (studySet.isEmpty()) return PassageSessionResult.EmptyStudySet
 
         val level = studySet.maxLevel()

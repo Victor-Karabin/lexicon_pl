@@ -5,12 +5,18 @@ import com.lexicon.boundary.SpeechRecognitionFailed
 import com.lexicon.boundary.SpeechRecognitionFailureReason
 import com.lexicon.boundary.SpeechRecognizerService
 import com.lexicon.common.DispatcherProvider
+import com.lexicon.interactors.pronunciation.PronunciationSentencesResult
 import com.lexicon.interactors.pronunciation.PronunciationSessionResponse
 import com.lexicon.interactors.pronunciation.PronunciationStepResponse
+import com.lexicon.interactors.pronunciation.StartPronunciationSentencesUseCase
+import com.lexicon.interactors.pronunciation.StartPronunciationSessionRequest
 import com.lexicon.interactors.pronunciation.StartPronunciationSessionUseCase
 import com.lexicon.presentation.common.LastSessionResultsHolder
+import com.lexicon.presentation.common.TRAINING_WORDS_ARG
+import com.lexicon.presentation.common.asTrainingWordsArgument
 import io.mockk.coEvery
 import io.mockk.mockk
+import io.mockk.slot
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -90,5 +96,40 @@ class PronunciationViewModelTest {
     fun `an unavailable recogniser is still unavailable when its message is worded differently`() =
         runTest(testDispatcher) {
             assertEquals(RecognitionErrorType.UNAVAILABLE, failingWith("No engine", SpeechRecognitionFailureReason.UNAVAILABLE))
+        }
+
+    @Test
+    fun `a lesson's word list reaches the sentences request`() =
+        runTest(testDispatcher) {
+            val request = slot<StartPronunciationSessionRequest>()
+            val sentences: StartPronunciationSentencesUseCase = mockk {
+                coEvery { this@mockk(capture(request)) } returns
+                    PronunciationSentencesResult.Ready(
+                        PronunciationSessionResponse(
+                            "session-1",
+                            listOf(PronunciationStepResponse(0, 1L, "To jest kot.", "To jest kot.", "")),
+                        ),
+                    )
+            }
+
+            PronunciationViewModel(
+                savedStateHandle = SavedStateHandle(
+                    mapOf(
+                        PRONUNCIATION_SENTENCES_ARG to "true",
+                        TRAINING_WORDS_ARG to listOf(7L, 11L).asTrainingWordsArgument(),
+                    ),
+                ),
+                startSessionUseCase = mockk(),
+                startSentencesUseCase = sentences,
+                submitResultUseCase = mockk(),
+                speechSynthesizer = mockk(relaxed = true),
+                speechRecognizerService = recognizer,
+                audioPlayer = mockk(relaxed = true),
+                dispatchers = dispatchers,
+                lastSessionResultsHolder = LastSessionResultsHolder(),
+            )
+            advanceUntilIdle()
+
+            assertEquals(listOf(7L, 11L), request.captured.vocabularyIds)
         }
 }

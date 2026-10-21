@@ -1,12 +1,16 @@
 package com.lexicon.application.fillword
 
+import com.lexicon.application.training.open
+import com.lexicon.application.training.wordsToStudy
+import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.fillword.FillwordPuzzle
 import com.lexicon.interactors.fillword.FillwordSessionResult
+import com.lexicon.interactors.fillword.StartFillwordSessionRequest
 import com.lexicon.interactors.fillword.StartFillwordSessionUseCase
+import com.lexicon.model.training.TrainingType
+import com.lexicon.model.vocabulary.Word
 import kotlin.random.Random
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 private const val GRID_SIZE = 10
 
@@ -20,22 +24,18 @@ private const val PACKING_ATTEMPTS = 12
 
 class StartFillwordSessionUseCaseImpl(
     private val vocabulary: VocabularyRepository,
+    private val sessions: SessionStore,
 ) : StartFillwordSessionUseCase {
-    @OptIn(ExperimentalUuidApi::class)
-    override suspend fun invoke(): FillwordSessionResult {
-        val studySet = vocabulary.getItemsByIds(vocabulary.studySetWordIds())
-        if (studySet.isEmpty()) return FillwordSessionResult.EmptyStudySet
-
-        val chosen = studySet
-            .map { it.text.uppercase() to it.translation }
-            .filter { (text, _) -> text.none(Char::isWhitespace) && text.length in MIN_WORD_LENGTH..GRID_SIZE }
-            .distinctBy { (text, _) -> text }
+    override suspend fun invoke(request: StartFillwordSessionRequest): FillwordSessionResult {
+        val chosen = vocabulary.wordsToStudy(request.vocabularyIds)
+            .filter { word -> word.gridForm.none(Char::isWhitespace) && word.gridForm.length in MIN_WORD_LENGTH..GRID_SIZE }
+            .distinctBy { it.gridForm }
             .shuffled()
             .fillGrid()
         if (chosen.isEmpty()) return FillwordSessionResult.EmptyStudySet
 
-        val words = chosen.map { (text, _) -> text }
-        val translations = chosen.toMap()
+        val words = chosen.map { it.gridForm }
+        val translations = chosen.associate { it.gridForm to it.translation }
 
         var best = pack(words, translations)
         repeat(PACKING_ATTEMPTS - 1) {
@@ -45,13 +45,19 @@ class StartFillwordSessionUseCaseImpl(
             }
         }
 
-        return FillwordSessionResult.Ready(sessionId = Uuid.random().toString(), puzzle = best)
+        val byGridForm = chosen.associateBy { it.gridForm }
+        val sessionId = sessions.open(
+            TrainingType.FILLWORD,
+            best.words.map { placed -> byGridForm.getValue(placed.word).let { it.id to it.text } },
+        )
+
+        return FillwordSessionResult.Ready(sessionId = sessionId.value, puzzle = best)
     }
 
-    private fun List<Pair<String, String>>.fillGrid(): List<Pair<String, String>> {
+    private fun List<Word>.fillGrid(): List<Word> {
         var letters = 0
-        return takeWhile { (word, _) ->
-            letters += word.length
+        return takeWhile { word ->
+            letters += word.gridForm.length
             letters <= MAX_LETTERS
         }.take(MAX_WORDS)
     }
@@ -64,4 +70,6 @@ class StartFillwordSessionUseCaseImpl(
         words.sortedByDescending { it.length }.forEach(builder::add)
         return builder.toPuzzle(translations)
     }
+
+    private val Word.gridForm: String get() = text.uppercase()
 }

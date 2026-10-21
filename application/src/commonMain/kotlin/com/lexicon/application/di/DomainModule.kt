@@ -38,6 +38,7 @@ import com.lexicon.application.dictation.SubmitDictationAnswerUseCaseImpl
 import com.lexicon.application.dictationpuzzle.StartDictationPuzzleSessionUseCaseImpl
 import com.lexicon.application.dictationpuzzle.SubmitDictationPuzzleAnswerUseCaseImpl
 import com.lexicon.application.fillword.StartFillwordSessionUseCaseImpl
+import com.lexicon.application.fillword.SubmitFillwordUseCaseImpl
 import com.lexicon.application.imagetest.StartImageTestSessionUseCaseImpl
 import com.lexicon.application.imagetest.SubmitImageTestAnswerUseCaseImpl
 import com.lexicon.application.memorycards.StartMemoryCardsSessionUseCaseImpl
@@ -152,6 +153,7 @@ import com.lexicon.interactors.dictation.SubmitDictationAnswerUseCase
 import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionUseCase
 import com.lexicon.interactors.dictationpuzzle.SubmitDictationPuzzleAnswerUseCase
 import com.lexicon.interactors.fillword.StartFillwordSessionUseCase
+import com.lexicon.interactors.fillword.SubmitFillwordUseCase
 import com.lexicon.interactors.imagetest.StartImageTestSessionUseCase
 import com.lexicon.interactors.imagetest.SubmitImageTestAnswerUseCase
 import com.lexicon.interactors.memorycards.StartMemoryCardsSessionUseCase
@@ -289,6 +291,7 @@ val domainModule = module {
     factoryOf(::UpdateCourseSettingsUseCaseImpl) { bind<UpdateCourseSettingsUseCase>() }
     factoryOf(::StartPassageSessionUseCaseImpl) { bind<StartPassageSessionUseCase>() }
     factoryOf(::StartFillwordSessionUseCaseImpl) { bind<StartFillwordSessionUseCase>() }
+    factoryOf(::SubmitFillwordUseCaseImpl) { bind<SubmitFillwordUseCase>() }
     factoryOf(::StartPronunciationSentencesUseCaseImpl) { bind<StartPronunciationSentencesUseCase>() }
 
     factoryOf(::LoadNumberCourseUseCaseImpl) { bind<LoadNumberCourseUseCase>() }

@@ -11,5 +11,5 @@ sealed interface PronunciationSentencesResult {
 }
 
 interface StartPronunciationSentencesUseCase {
-    suspend operator fun invoke(): PronunciationSentencesResult
+    suspend operator fun invoke(request: StartPronunciationSessionRequest): PronunciationSentencesResult
 }

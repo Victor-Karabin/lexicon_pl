@@ -48,7 +48,7 @@ class PronunciationViewModel(
     private val dispatchers: DispatcherProvider,
     private val lastSessionResultsHolder: LastSessionResultsHolder,
 ) : ViewModel() {
-    private val vocabularyIds = savedStateHandle.trainingVocabularyIds()
+    private val sessionRequest = StartPronunciationSessionRequest(vocabularyIds = savedStateHandle.trainingVocabularyIds())
 
     private val readsSentences: Boolean = savedStateHandle.get<String>(PRONUNCIATION_SENTENCES_ARG).toBoolean()
 
@@ -68,7 +68,7 @@ class PronunciationViewModel(
     private fun startSession() {
         viewModelScope.launch(dispatchers.io) {
             val response = when {
-                readsSentences -> when (val result = startSentencesUseCase()) {
+                readsSentences -> when (val result = startSentencesUseCase(sessionRequest)) {
                     is PronunciationSentencesResult.Ready -> result.session
 
                     PronunciationSentencesResult.EmptyStudySet ->
@@ -81,7 +81,7 @@ class PronunciationViewModel(
                         return@launch showUnavailable(UnavailableReason.REFUSED)
                 }
 
-                else -> startSessionUseCase(StartPronunciationSessionRequest(vocabularyIds = vocabularyIds))
+                else -> startSessionUseCase(sessionRequest)
             }
 
             sessionId = response.sessionId
