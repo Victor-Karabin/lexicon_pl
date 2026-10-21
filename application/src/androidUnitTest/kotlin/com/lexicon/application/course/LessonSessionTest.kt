@@ -3,6 +3,7 @@ package com.lexicon.application.course
 import com.lexicon.boundary.CourseRepository
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.course.LessonSession
+import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.model.course.AnswerKeyboard
 import com.lexicon.model.course.FirstTry
 import com.lexicon.model.course.LessonId
@@ -75,11 +76,11 @@ class LessonSessionTest {
         vararg values: String,
     ) = values.foldIndexed(session) { index, current, value -> current.withAnswer(index.toString(), value) }
 
-    private val atDictation = LessonSession(script).next()
+    private val atDictation = LessonSession(script, passMark = PASS_MARK).next()
 
     @Test
     fun `a screen with nothing to answer moves on with next`() {
-        assertEquals("1B", LessonSession(script).next().screen.id)
+        assertEquals("1B", LessonSession(script, passMark = PASS_MARK).next().screen.id)
         assertTrue("1A" in atDictation.progress.finished)
     }
 
@@ -147,14 +148,14 @@ class LessonSessionTest {
     @Test
     fun `a finished lesson starts over when opened again, an unfinished one resumes`() {
         val half = answered(atDictation, "jeden", "dwa", "trzy", "cztery", "pięć").check()
-        assertEquals("1B", LessonSession.resume(script, half.progress).screen.id)
-        assertTrue(LessonSession.isInProgress(script, half.progress))
+        assertEquals("1B", LessonSession.resume(script, half.progress, PASS_MARK).screen.id)
+        assertTrue(LessonSession.isInProgress(script, half.progress, PASS_MARK))
 
         val done = answered(half.next(), "sześć").check().next().withAnswer("0", "Cześć!").check()
         assertTrue(done.isAtEnd)
-        assertEquals("1A", LessonSession.resume(script, done.progress).screen.id)
-        assertFalse(LessonSession.isInProgress(script, done.progress))
-        assertFalse(LessonSession.isInProgress(script, null))
+        assertEquals("1A", LessonSession.resume(script, done.progress, PASS_MARK).screen.id)
+        assertFalse(LessonSession.isInProgress(script, done.progress, PASS_MARK))
+        assertFalse(LessonSession.isInProgress(script, null, PASS_MARK))
     }
 
     @Test
@@ -201,10 +202,10 @@ class LessonSessionTest {
             steps = persistentListOf(LessonStep("1", "One", persistentListOf("1A"))),
             screens = persistentListOf(write("1A", "jeden", "dwa")),
         )
-        val failed = answered(LessonSession(single), "x", "dwa").check()
+        val failed = answered(LessonSession(single, passMark = PASS_MARK), "x", "dwa").check()
         assertFalse(failed.isAtEnd)
-        assertEquals("1A", LessonSession.resume(single, failed.progress).screen.id)
-        assertTrue(LessonSession.resume(single, failed.progress).isChecked("1A"))
+        assertEquals("1A", LessonSession.resume(single, failed.progress, PASS_MARK).screen.id)
+        assertTrue(LessonSession.resume(single, failed.progress, PASS_MARK).isChecked("1A"))
 
         val again = failed.next()
         assertFalse(again.isChecked("1A"))
@@ -230,7 +231,7 @@ class LessonSessionTest {
 
     @Test
     fun `transcripts open after their own check or after the screen they wait for`() {
-        val start = LessonSession(script)
+        val start = LessonSession(script, passMark = PASS_MARK)
         assertFalse(start.isTranscriptUnlocked(script.screens[0]))
         assertFalse(start.isTranscriptUnlocked(script.screens[1]))
         val checked = answered(atDictation, "jeden", "dwa", "trzy", "cztery", "pięć").check()
@@ -250,13 +251,17 @@ class LessonSessionTest {
             val results = GetLastLessonResultsUseCaseImpl(repository)
 
             coEvery { repository.getLastFinishedProgress(any()) } returns finished.progress
-            assertEquals(finished.results, results(LessonId("krok-a1-01")))
+            assertEquals(finished.results, results(LessonId("krok-a1-01"), PASS_MARK))
 
             coEvery { repository.getLastFinishedProgress(any()) } returns null
             coEvery { repository.getLessonScriptProgress(any()) } returns finished.progress
-            assertEquals(finished.results, results(LessonId("krok-a1-01")))
+            assertEquals(finished.results, results(LessonId("krok-a1-01"), PASS_MARK))
 
             coEvery { repository.getLessonScriptProgress(any()) } returns atDictation.progress
-            assertNull(results(LessonId("krok-a1-01")))
+            assertNull(results(LessonId("krok-a1-01"), PASS_MARK))
         }
+
+    private companion object {
+        const val PASS_MARK = AppSettings.DEFAULT_PASS_MARK
+    }
 }

@@ -361,6 +361,8 @@
     <string name="example_hint">A sentence using the word</string>
     <string name="example_offline">No example could be written just now.</string>
     <string name="preset_change_failed">That preset could not be changed. Try again.</string>
+    <string name="training_close">Close</string>
+    <string name="create_word_save_error">The word could not be saved. Try again.</string>
     <string name="course_title">Course</string>
     <string name="course_empty">The course could not be loaded.</string>
     <string name="course_progress">%1$d of %2$d lessons done</string>
@@ -375,6 +377,7 @@
     <string name="lesson_words">New words</string>
     <string name="exercise_play">Play</string>
     <string name="exercise_pause">Pause</string>
+    <string name="exercise_audio_part">Part %1$d</string>
     <string name="exercise_speed">%1$s×</string>
     <string name="exercise_speed_description">Playback speed %1$s×, tap to change</string>
     <string name="exercise_check">Check</string>

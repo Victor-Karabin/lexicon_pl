@@ -31,7 +31,7 @@ class ConjugationAssetLoader(
 ) {
     fun load(): List<VerbConjugationBoundary> = parseConjugations(readAsset())
 
-    fun fingerprint(): String = readAsset().let { "${'$'}{it.length}:${'$'}{it.hashCode()}" }
+    fun fingerprint(): String = readAsset().assetFingerprint()
 
     private fun readAsset(): String = assets.readText(CONJUGATION_ASSET_PATH)
 }

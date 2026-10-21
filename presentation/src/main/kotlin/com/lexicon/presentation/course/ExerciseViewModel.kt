@@ -36,7 +36,7 @@ sealed interface ExerciseUiState {
         val correctness: ImmutableList<ImmutableList<Boolean>> = persistentListOf(),
         val answerState: AnswerState = AnswerState.Unanswered,
         val correctCount: Int = 0,
-        val track: TrackState = TrackState(),
+        val tracks: ImmutableList<TrackState> = persistentListOf(),
         val selectedPrompt: Int? = null,
     ) : ExerciseUiState {
         val choices: ImmutableList<String>
@@ -65,7 +65,7 @@ class ExerciseViewModel(
 
     private data class Content(
         val exercise: LessonExercise?,
-        val remoteId: String? = null,
+        val remoteIds: Map<String, String?> = emptyMap(),
         val responses: List<List<String>> = emptyList(),
         val correctness: List<List<Boolean>> = emptyList(),
         val answerState: AnswerState = AnswerState.Unanswered,
@@ -89,7 +89,7 @@ class ExerciseViewModel(
                         correctness = loaded.correctness.map { it.toImmutableList() }.toImmutableList(),
                         answerState = loaded.answerState,
                         correctCount = loaded.correctCount,
-                        track = loaded.exercise.audioFile?.let(tracks::of) ?: TrackState(),
+                        tracks = loaded.exercise.audioFiles.map(tracks::of).toImmutableList(),
                         selectedPrompt = loaded.selectedPrompt,
                     )
             }
@@ -103,26 +103,30 @@ class ExerciseViewModel(
         viewModelScope.launch(dispatchers.io) {
             val lesson = getLesson(lessonId)
             val exercise = lesson?.exercises?.firstOrNull { it.id == exerciseId }
+            val files = exercise?.audioFiles.orEmpty()
             content.value = Content(
                 exercise = exercise,
-                remoteId = lesson?.audio?.firstOrNull { it.file == exercise?.audioFile }?.remoteId,
+                remoteIds = files.associateWith { file -> lesson?.audio?.firstOrNull { it.file == file }?.remoteId },
                 responses = blankResponses(exercise),
             )
-            content.value?.let { loaded -> loaded.exercise?.audioFile?.let { tracks.preload(this, it, loaded.remoteId) } }
+            files.forEach { file -> tracks.preload(this, file, content.value?.remoteIds?.get(file)) }
         }
     }
 
-    fun onPlayAudio() {
+    fun onPlayAudio(part: Int = 0) {
         studied()
         val loaded = content.value ?: return
-        val file = loaded.exercise?.audioFile ?: return
-        tracks.toggle(viewModelScope, file, loaded.remoteId)
+        val file = loaded.exercise?.audioFiles?.getOrNull(part) ?: return
+        tracks.toggle(viewModelScope, file, loaded.remoteIds[file])
     }
 
     fun onSpeedChanged() = tracks.nextSpeed()
 
-    fun onSeekAudio(positionMs: Long) {
-        val file = content.value?.exercise?.audioFile ?: return
+    fun onSeekAudio(
+        positionMs: Long,
+        part: Int = 0,
+    ) {
+        val file = content.value?.exercise?.audioFiles?.getOrNull(part) ?: return
         tracks.seek(file, positionMs)
     }
 

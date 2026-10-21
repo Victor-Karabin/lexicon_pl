@@ -29,6 +29,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -72,20 +73,16 @@ class VocabularyViewModel(
 
     init {
         viewModelScope.launch(dispatchers.io) {
-            observePresets().collect { presets ->
-                _uiState.update { current ->
-                    if (current is VocabularyUiState.Loaded) {
-                        current.copy(presets = presets)
-                    } else {
-                        VocabularyUiState.Loaded(presets = presets)
+            combine(observePresets(), observeWordStatuses()) { presets, statuses -> presets to statuses }
+                .collect { (presets, statuses) ->
+                    _uiState.update { current ->
+                        if (current is VocabularyUiState.Loaded) {
+                            current.copy(presets = presets, wordStatuses = statuses)
+                        } else {
+                            VocabularyUiState.Loaded(presets = presets, wordStatuses = statuses)
+                        }
                     }
                 }
-            }
-        }
-        viewModelScope.launch(dispatchers.io) {
-            observeWordStatuses().collect { statuses ->
-                updateLoaded { it.copy(wordStatuses = statuses) }
-            }
         }
         observeQuery()
     }

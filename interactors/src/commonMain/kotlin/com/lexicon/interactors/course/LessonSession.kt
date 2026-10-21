@@ -1,6 +1,5 @@
 package com.lexicon.interactors.course
 
-import com.lexicon.interactors.settings.AppSettings
 import com.lexicon.model.course.ChoiceQuestion
 import com.lexicon.model.course.FirstTry
 import com.lexicon.model.course.GrammarRule
@@ -49,7 +48,7 @@ data class LessonResults(
 data class LessonSession(
     val script: LessonScript,
     val progress: LessonProgress = LessonProgress(),
-    val passMark: Int = AppSettings.DEFAULT_PASS_MARK,
+    val passMark: Int,
 ) {
     val index: Int
         get() = progress.screenId?.let { id -> script.screens.indexOfFirst { it.id == id }.takeIf { it >= 0 } }
@@ -285,7 +284,7 @@ data class LessonSession(
         fun resume(
             script: LessonScript,
             progress: LessonProgress?,
-            passMark: Int = AppSettings.DEFAULT_PASS_MARK,
+            passMark: Int,
         ): LessonSession {
             val saved = LessonSession(script, progress ?: LessonProgress(), passMark)
             return if (saved.isAtEnd) LessonSession(script, passMark = passMark) else saved
@@ -294,6 +293,7 @@ data class LessonSession(
         fun isInProgress(
             script: LessonScript,
             progress: LessonProgress?,
-        ): Boolean = progress != null && !LessonSession(script, progress).isAtEnd
+            passMark: Int,
+        ): Boolean = progress != null && !LessonSession(script, progress, passMark).isAtEnd
     }
 }

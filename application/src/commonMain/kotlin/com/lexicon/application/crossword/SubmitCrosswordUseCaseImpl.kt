@@ -1,6 +1,8 @@
 package com.lexicon.application.crossword
 
 import com.lexicon.application.dictation.AnswerNormalizer
+import com.lexicon.application.training.recordOutcome
+import com.lexicon.boundary.SessionStore
 import com.lexicon.interactors.crossword.CrosswordWordResult
 import com.lexicon.interactors.crossword.SubmitCrosswordRequest
 import com.lexicon.interactors.crossword.SubmitCrosswordResponse
@@ -13,6 +15,7 @@ import com.lexicon.model.training.TrainingType
 class SubmitCrosswordUseCaseImpl(
     private val recordAnswer: RecordAnswerUseCase,
     private val answerNormalizer: AnswerNormalizer,
+    private val sessions: SessionStore,
 ) : SubmitCrosswordUseCase {
     override suspend fun invoke(request: SubmitCrosswordRequest): SubmitCrosswordResponse {
         val wordResults = request.words.mapIndexed { index, submission ->
@@ -21,18 +24,20 @@ class SubmitCrosswordUseCaseImpl(
             } else {
                 StepOutcome.INCORRECT
             }
-            recordAnswer(
-                RecordedAnswer(
-                    sessionId = request.sessionId,
-                    trainingType = TrainingType.CROSSWORD,
-                    stepIndex = index,
-                    vocabularyItemId = submission.vocabularyItemId,
-                    expectedAnswer = submission.expectedText,
-                    submittedAnswer = submission.submittedText,
-                    outcome = outcome,
-                    tipUsed = submission.tipUsed,
-                ),
-            )
+            if (sessions.recordOutcome(request.sessionId, index, outcome, submission.tipUsed)) {
+                recordAnswer(
+                    RecordedAnswer(
+                        sessionId = request.sessionId,
+                        trainingType = TrainingType.CROSSWORD,
+                        stepIndex = index,
+                        vocabularyItemId = submission.vocabularyItemId,
+                        expectedAnswer = submission.expectedText,
+                        submittedAnswer = submission.submittedText,
+                        outcome = outcome,
+                        tipUsed = submission.tipUsed,
+                    ),
+                )
+            }
             CrosswordWordResult(submission.vocabularyItemId, submission.expectedText, outcome, submission.tipUsed)
         }
 

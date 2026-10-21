@@ -1,8 +1,6 @@
 package com.lexicon.application.dictation
 
-private val PUNCTUATION = Regex("[^\\p{L}\\p{N}\\s]")
-
-private val RUNS_OF_SPACE = Regex("\\s+")
+import com.lexicon.interactors.course.LessonAnswerChecker
 
 class AnswerNormalizer {
     fun matches(
@@ -10,17 +8,15 @@ class AnswerNormalizer {
         submitted: String,
     ): Boolean = normalize(expected) == normalize(submitted)
 
+    fun matchesIgnoringPunctuation(
+        expected: String,
+        submitted: String,
+    ): Boolean = LessonAnswerChecker.same(expected, submitted)
+
     fun matchesSpoken(
         expected: String,
         submitted: String,
-    ): Boolean = spoken(expected) == spoken(submitted)
+    ): Boolean = matchesIgnoringPunctuation(expected, submitted)
 
     private fun normalize(text: String): String = text.trim().lowercase()
-
-    private fun spoken(text: String): String =
-        text
-            .replace(PUNCTUATION, " ")
-            .replace(RUNS_OF_SPACE, " ")
-            .trim()
-            .lowercase()
 }

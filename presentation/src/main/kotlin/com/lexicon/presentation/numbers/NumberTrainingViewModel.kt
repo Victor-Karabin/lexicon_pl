@@ -8,6 +8,7 @@ import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.numbers.NextNumberUseCase
 import com.lexicon.interactors.numbers.NumberQuestion
 import com.lexicon.interactors.numbers.SubmitNumberAnswerUseCase
+import com.lexicon.interactors.settings.GetStepCountUseCase
 import com.lexicon.interactors.training.RecordStudyActivityUseCase
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
@@ -40,6 +41,7 @@ class NumberTrainingViewModel(
     speechSynthesizer: SpeechSynthesizer,
     lastSessionResultsHolder: LastSessionResultsHolder,
     recordStudy: RecordStudyActivityUseCase,
+    getStepCount: GetStepCountUseCase,
     private val dispatchers: DispatcherProvider,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(NumberTrainingUiState())
@@ -51,6 +53,7 @@ class NumberTrainingViewModel(
         speechSynthesizer = speechSynthesizer,
         resultsHolder = lastSessionResultsHolder,
         recordStudy = recordStudy,
+        getStepCount = getStepCount,
         keyOf = NumberQuestion::form,
         pick = { asked -> nextNumber(asked) },
     )

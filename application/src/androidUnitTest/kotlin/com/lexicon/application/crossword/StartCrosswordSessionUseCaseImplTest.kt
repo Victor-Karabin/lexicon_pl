@@ -1,5 +1,6 @@
 package com.lexicon.application.crossword
 
+import com.lexicon.application.training.FakeSessionStore
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.crossword.StartCrosswordSessionRequest
 import com.lexicon.model.vocabulary.VocabularyId
@@ -13,7 +14,7 @@ import org.junit.Test
 
 class StartCrosswordSessionUseCaseImplTest {
     private val vocabularyRepository: VocabularyRepository = mockk()
-    private val useCase = StartCrosswordSessionUseCaseImpl(vocabularyRepository)
+    private val useCase = StartCrosswordSessionUseCaseImpl(vocabularyRepository, FakeSessionStore())
 
     private val items = listOf(
         Word(VocabularyId(1), "kot", "cat", "kɔt"),

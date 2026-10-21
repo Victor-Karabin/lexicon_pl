@@ -49,7 +49,7 @@ fun TrainingTopBar(
         },
         navigationIcon = {
             IconButton(onClick = onClose) {
-                Icon(Icons.Default.Close, contentDescription = null)
+                Icon(Icons.Default.Close, contentDescription = stringResource(R.string.training_close))
             }
         },
     )

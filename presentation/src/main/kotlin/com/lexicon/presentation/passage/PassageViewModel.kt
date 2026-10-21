@@ -68,6 +68,9 @@ class PassageViewModel(
 
     private var sessionId: String = ""
 
+    @Volatile
+    private var isSubmitting = false
+
     init {
         viewModelScope.launch(dispatchers.io) {
             when (val session = startSession(StartPassageSessionRequest(withWordBank = withWordBank))) {
@@ -140,26 +143,32 @@ class PassageViewModel(
     fun onCheck() {
         val state = _uiState.value
         state.passage ?: return
+        if (state.isChecked || isSubmitting) return
+        isSubmitting = true
         viewModelScope.launch(dispatchers.io) {
-            val result = submitAnswers(
-                SubmitPassageAnswersRequest(
-                    sessionId = sessionId,
-                    expected = state.expected,
-                    answers = state.answers,
-                    words = state.words,
-                ),
-            )
-
-            lastSessionResultsHolder.wordResults = result.results.map { gap ->
-                WordResultEntry(
-                    word = gap.expected,
-                    translation = gap.translation,
-                    outcome = if (gap.isCorrect) AnswerState.Correct else AnswerState.Incorrect(gap.expected),
+            try {
+                val result = submitAnswers(
+                    SubmitPassageAnswersRequest(
+                        sessionId = sessionId,
+                        expected = state.expected,
+                        answers = state.answers,
+                        words = state.words,
+                    ),
                 )
-            }
 
-            _uiState.update {
-                it.copy(isChecked = true, correctness = result.correct.toImmutableList())
+                lastSessionResultsHolder.wordResults = result.results.map { gap ->
+                    WordResultEntry(
+                        word = gap.expected,
+                        translation = gap.translation,
+                        outcome = if (gap.isCorrect) AnswerState.Correct else AnswerState.Incorrect(gap.expected),
+                    )
+                }
+
+                _uiState.update {
+                    it.copy(isChecked = true, correctness = result.correct.toImmutableList())
+                }
+            } finally {
+                isSubmitting = false
             }
         }
     }

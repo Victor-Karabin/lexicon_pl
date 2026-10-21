@@ -1,5 +1,6 @@
 package com.lexicon.presentation.mix
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -33,6 +34,7 @@ import com.lexicon.presentation.common.shuffleIntoTiles
 import com.lexicon.presentation.common.speakQuietly
 import com.lexicon.presentation.common.trainingVocabularyIds
 import com.lexicon.presentation.pronunciation.RecordingState
+import com.lexicon.presentation.pronunciation.toErrorType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -40,6 +42,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
+private const val TAG = "MixViewModel"
 
 private const val CORRECT_ANSWER_ADVANCE_DELAY_MS = 500L
 private const val SKIPPED_ANSWER_ADVANCE_DELAY_MS = 700L
@@ -124,7 +128,10 @@ class MixViewModel(
     }
 
     fun onTileSelected(tile: LetterTile) {
-        updateLoaded { if (it.isEditable) it.copy(placedTiles = it.placedTiles + tile) else it }
+        updateLoaded {
+            val canPlace = it.isEditable && it.placedTiles.none { placed -> placed.id == tile.id }
+            if (canPlace) it.copy(placedTiles = it.placedTiles + tile) else it
+        }
     }
 
     fun onUndo() {
@@ -152,7 +159,7 @@ class MixViewModel(
     fun onRecordRequested() {
         val state = _uiState.value as? MixUiState.Loaded ?: return
         if (!state.canRecord) return
-        updateLoaded { it.copy(recordingState = RecordingState.RECORDING, answerText = "") }
+        updateLoaded { it.copy(recordingState = RecordingState.RECORDING, answerText = "", recognitionError = null) }
         viewModelScope.launch(dispatchers.io) {
             try {
                 val result = speechRecognizerService.recognize()
@@ -165,7 +172,8 @@ class MixViewModel(
                     )
                 }
             } catch (failure: SpeechRecognitionFailed) {
-                updateLoaded { it.copy(recordingState = RecordingState.IDLE) }
+                Log.w(TAG, "Speech could not be recognised (${failure.reason})", failure)
+                updateLoaded { it.copy(recordingState = RecordingState.IDLE, recognitionError = failure.reason.toErrorType()) }
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.lexicon.application.crossword
 
 import com.lexicon.application.dictation.AnswerNormalizer
+import com.lexicon.application.training.FakeSessionStore
 import com.lexicon.interactors.crossword.CrosswordWordSubmission
 import com.lexicon.interactors.crossword.SubmitCrosswordRequest
 import com.lexicon.interactors.training.RecordAnswerUseCase
@@ -14,7 +15,7 @@ import org.junit.Test
 
 class SubmitCrosswordUseCaseImplTest {
     private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
-    private val useCase = SubmitCrosswordUseCaseImpl(recordAnswer, AnswerNormalizer())
+    private val useCase = SubmitCrosswordUseCaseImpl(recordAnswer, AnswerNormalizer(), FakeSessionStore())
 
     private fun submission(
         id: Long,

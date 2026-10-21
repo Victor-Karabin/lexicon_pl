@@ -10,4 +10,9 @@ interface SpeechRecognizerService {
     suspend fun recognize(): SpeechRecognitionResult
 }
 
-class SpeechRecognitionFailed(message: String) : Exception(message)
+enum class SpeechRecognitionFailureReason { UNAVAILABLE, FAILED }
+
+class SpeechRecognitionFailed(
+    message: String,
+    val reason: SpeechRecognitionFailureReason,
+) : Exception(message)

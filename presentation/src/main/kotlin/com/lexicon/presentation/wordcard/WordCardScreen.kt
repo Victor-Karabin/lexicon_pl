@@ -18,10 +18,14 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.wordcard.WordCardStep
 import com.lexicon.model.vocabulary.VocabularyId
@@ -50,7 +54,14 @@ fun WordCardScreen(
         if (uiState.isFinished) onFinished()
     }
 
-    LaunchedEffect(Unit) { viewModel.load() }
+    var editedWordId by rememberSaveable { mutableStateOf<Long?>(null) }
+    LifecycleResumeEffect(Unit) {
+        editedWordId?.let { id ->
+            viewModel.onWordEdited(id)
+            editedWordId = null
+        }
+        onPauseOrDispose {}
+    }
 
     WordCardContent(
         uiState = uiState,
@@ -59,7 +70,12 @@ fun WordCardScreen(
         onPrevious = viewModel::onPrevious,
         onPronounce = viewModel::onPronounce,
         onSpeakExample = viewModel::onSpeakExample,
-        onEdit = { uiState.current?.let { onEditWord(it.vocabularyItemId) } },
+        onEdit = {
+            uiState.current?.let {
+                editedWordId = it.vocabularyItemId
+                onEditWord(it.vocabularyItemId)
+            }
+        },
         modifier = modifier,
     )
 }

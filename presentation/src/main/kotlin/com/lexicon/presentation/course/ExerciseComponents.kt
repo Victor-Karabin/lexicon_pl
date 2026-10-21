@@ -9,6 +9,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
@@ -154,6 +155,30 @@ fun ExerciseAudioButton(
             text = stringResource(if (isPlaying) R.string.exercise_pause else R.string.exercise_play),
             modifier = Modifier.padding(start = Dimens.spacingSmall),
         )
+    }
+}
+
+@Composable
+fun LabelledAudioPlayer(
+    label: String?,
+    state: TrackState,
+    onPlayPause: () -> Unit,
+    onSeek: (Long) -> Unit,
+    onSpeedChanged: () -> Unit,
+    modifier: Modifier = Modifier,
+    playerModifier: Modifier = Modifier,
+    below: @Composable ColumnScope.() -> Unit = {},
+) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny)) {
+        label?.let { Text(it, style = MaterialTheme.typography.labelLarge) }
+        AudioPlayerRow(
+            state = state,
+            onPlayPause = onPlayPause,
+            onSeek = onSeek,
+            onSpeedChanged = onSpeedChanged,
+            modifier = playerModifier,
+        )
+        below()
     }
 }
 

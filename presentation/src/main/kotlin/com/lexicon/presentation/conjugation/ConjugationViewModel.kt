@@ -14,7 +14,7 @@ import com.lexicon.interactors.conjugation.NextConjugationTableUseCase
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerRequest
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
 import com.lexicon.interactors.course.AnswerVerdict
-import com.lexicon.interactors.settings.AppSettings
+import com.lexicon.interactors.settings.GetStepCountUseCase
 import com.lexicon.interactors.training.RecordStudyActivityUseCase
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LastSessionResultsHolder
@@ -69,6 +69,7 @@ class ConjugationViewModel(
     private val speechSynthesizer: SpeechSynthesizer,
     private val lastSessionResultsHolder: LastSessionResultsHolder,
     private val recordStudy: RecordStudyActivityUseCase,
+    private val getStepCount: GetStepCountUseCase,
     private val dispatchers: DispatcherProvider,
 ) : ViewModel() {
     private val courseId: String = savedStateHandle.get<String>(CONJUGATION_COURSE_ARG).orEmpty()
@@ -83,6 +84,12 @@ class ConjugationViewModel(
     private var correct = 0
     private var incorrect = 0
 
+    @Volatile
+    private var isChecking = false
+
+    @Volatile
+    private var isMoving = false
+
     init {
         viewModelScope.launch(dispatchers.io) {
             val first = nextQuestion(courseId)
@@ -90,7 +97,7 @@ class ConjugationViewModel(
                 it.copy(
                     isLoading = false,
                     table = first,
-                    totalSteps = AppSettings.DEFAULT_STEP_COUNT,
+                    totalSteps = getStepCount(),
                     isComplete = first == null && isCourseComplete(),
                 )
             }
@@ -110,46 +117,47 @@ class ConjugationViewModel(
     fun onCheck() {
         val state = _uiState.value
         val table = state.table ?: return
-        if (!state.canCheck) return
+        if (!state.canCheck || isChecking) return
+        isChecking = true
         studied()
 
         viewModelScope.launch(dispatchers.io) {
-            val response = submitAnswer(SubmitConjugationAnswerRequest(courseId, table, state.answers))
-            val allRight = response.allCorrect
+            try {
+                val response = submitAnswer(SubmitConjugationAnswerRequest(courseId, table, state.answers))
+                val allRight = response.allCorrect
 
-            table.steps.forEach { step ->
-                val right = response.correctness[step.variant.person] == true
-                if (right) correct++ else incorrect++
-                results += WordResultEntry(
-                    word = step.spokenForm,
-                    translation = "${table.infinitive} · ${step.variant.person.label}",
-                    outcome = if (right) AnswerState.Correct else AnswerState.Incorrect(step.spokenForm),
-                    typed = state.answers[step.variant.person],
-                )
-            }
+                table.steps.forEach { step ->
+                    val right = response.correctness[step.variant.person] == true
+                    if (right) correct++ else incorrect++
+                    results += WordResultEntry(
+                        word = step.spokenForm,
+                        translation = "${table.infinitive} · ${step.variant.person.label}",
+                        outcome = if (right) AnswerState.Correct else AnswerState.Incorrect(step.spokenForm),
+                        typed = state.answers[step.variant.person],
+                    )
+                }
 
-            _uiState.update {
-                it.copy(
-                    verdicts = response.verdicts.toImmutableMap(),
-                    answerState = if (allRight) AnswerState.Correct else AnswerState.Incorrect(""),
-                )
+                _uiState.update {
+                    it.copy(
+                        verdicts = response.verdicts.toImmutableMap(),
+                        answerState = if (allRight) AnswerState.Correct else AnswerState.Incorrect(""),
+                    )
+                }
+            } finally {
+                isChecking = false
             }
         }
     }
 
     fun onNext() {
+        if (isMoving) return
+        isMoving = true
         studied()
         viewModelScope.launch(dispatchers.io) {
             val state = _uiState.value
             val nextIndex = state.stepIndex + 1
+            val table = if (nextIndex >= state.totalSteps) null else nextQuestion(courseId)
 
-            if (nextIndex >= state.totalSteps) {
-                lastSessionResultsHolder.wordResults = results.toList()
-                _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correct, incorrect, 0, 0))
-                return@launch
-            }
-
-            val table = nextQuestion(courseId)
             if (table == null) {
                 lastSessionResultsHolder.wordResults = results.toList()
                 _navigationEvents.emit(SessionNavigationEvent.SessionComplete(correct, incorrect, 0, 0))
@@ -165,6 +173,7 @@ class ConjugationViewModel(
                     answerState = AnswerState.Unanswered,
                 )
             }
+            isMoving = false
         }
     }
 

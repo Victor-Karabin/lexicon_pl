@@ -1,5 +1,7 @@
 package com.lexicon.model.training
 
+import com.lexicon.model.vocabulary.Word
+
 private const val ONE_WORD_PER_STEP = 1
 
 enum class TrainingType(
@@ -23,6 +25,10 @@ enum class TrainingType(
     FILLWORD("fillword", ONE_WORD_PER_STEP),
     CONJUGATION("conjugation", ONE_WORD_PER_STEP),
     ;
+
+    val excludesPhrases: Boolean get() = this == CROSSWORD
+
+    fun admits(word: Word): Boolean = !excludesPhrases || !word.isPhrase
 
     companion object {
         fun ofId(id: String): TrainingType? = entries.firstOrNull { it.id == id }

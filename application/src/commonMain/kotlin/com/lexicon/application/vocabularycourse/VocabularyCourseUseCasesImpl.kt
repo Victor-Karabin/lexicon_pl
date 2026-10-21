@@ -119,15 +119,26 @@ class NextCourseTrainingUseCaseImpl(
         val words = sessionWords(course).ifEmpty { return null }
 
         val size = course.queue.size
+        val start = course.position.coerceIn(0, size - 1)
         for (skipped in 0 until size) {
-            val index = (course.position.coerceIn(0, size - 1) + skipped) % size
+            val index = (start + skipped) % size
             val training = TrainingType.ofId(course.queue[index]) ?: continue
-            if (words.size < training.minimumWords) continue
+            if (!hasEnoughWords(training, words)) continue
 
-            if (index != course.position) courses.save(course.copy(position = index))
+            val round = course.round + (start + skipped) / size
+            if (index != course.position || round != course.round) courses.save(course.copy(position = index, round = round))
             return CourseLaunch(training = training, wordIds = words)
         }
         return null
+    }
+
+    private suspend fun hasEnoughWords(
+        training: TrainingType,
+        words: List<VocabularyId>,
+    ): Boolean {
+        if (words.size < training.minimumWords) return false
+        if (!training.excludesPhrases) return true
+        return vocabulary.getItemsByIds(words.map { it.value }).count { training.admits(it) } >= training.minimumWords
     }
 
     private suspend fun sessionWords(course: VocabularyCourseBoundary): ImmutableList<VocabularyId> {

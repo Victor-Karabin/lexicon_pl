@@ -1,0 +1,307 @@
+{
+  "lesson": 9,
+  "exercises": [
+    {
+      "tag": "109B4",
+      "type": "gap_fill",
+      "instruction": "Proszę posłuchać i uzupełnić.",
+      "items": [
+        {
+          "label": "Angela",
+          "prompt": "Mami, co ___?",
+          "answers": [
+            "kupujemy"
+          ]
+        },
+        {
+          "label": "Mami",
+          "prompt": "Coś na kolację, owoce i ___.",
+          "answers": [
+            "warzywa"
+          ]
+        },
+        {
+          "label": "Angela",
+          "prompt": "Mam ochotę na spaghetti i na sałatkę owocową.",
+          "answers": []
+        },
+        {
+          "label": "Mami",
+          "prompt": "A ja na ___ jarzynową i rybę.",
+          "answers": [
+            "zupę"
+          ]
+        },
+        {
+          "label": "Angela",
+          "prompt": "To może dziś zupa i spaghetti, a jutro ryba?",
+          "answers": []
+        },
+        {
+          "label": "Mami",
+          "prompt": "___, w takim razie kupujemy teraz owoce i warzywa, a rybę jutro.",
+          "answers": [
+            "Dobrze"
+          ]
+        },
+        {
+          "label": "Angela",
+          "prompt": "Ja kupuję produkty na ___ do spaghetti i na sałatkę, a ty na zupę.",
+          "answers": [
+            "sos"
+          ]
+        },
+        {
+          "label": "Mami",
+          "prompt": "W porządku. A co do picia? Może dwa ___?",
+          "answers": [
+            "piwa"
+          ]
+        },
+        {
+          "label": "Angela",
+          "prompt": "Do spaghetti? Piwo? Jeśli chcesz możesz kupić czerwone wino, ale ___, nie dwa.",
+          "answers": [
+            "jedno"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "109B4",
+      "type": "gap_fill",
+      "instruction": "Proszę posłuchać i uzupełnić.",
+      "items": [
+        {
+          "label": "Angela",
+          "prompt": "Poproszę czosnek, cztery ___, dwie żółte papryki i dwie ___.",
+          "answers": [
+            "pomidory",
+            "czerwone"
+          ]
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "Proszę bardzo, co jeszcze?",
+          "answers": []
+        },
+        {
+          "label": "Angela",
+          "prompt": "Dwie ___ i świeżą bazylię.",
+          "answers": [
+            "cebule"
+          ]
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "W doniczce, tak?",
+          "answers": []
+        },
+        {
+          "label": "Angela",
+          "prompt": "Tak.",
+          "answers": []
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "To wszystko?",
+          "answers": []
+        },
+        {
+          "label": "Angela",
+          "prompt": "Nie, proszę jeszcze cztery ___, ale nie te zielone, proszę te dojrzałe, bardziej ___.",
+          "answers": [
+            "banany",
+            "żółte"
+          ]
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "Czy mogą być te?",
+          "answers": []
+        },
+        {
+          "label": "Angela",
+          "prompt": "Tak. Proszę jeszcze trzy ___, cztery kiwi, cztery brzoskwinie. Poproszę te duże brzoskwinie.",
+          "answers": [
+            "jabłka"
+          ]
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "Te są ___.",
+          "answers": [
+            "ładne"
+          ]
+        },
+        {
+          "label": "Angela",
+          "prompt": "Dobrze i jeszcze te ciemne winogrona.",
+          "answers": []
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "Te fioletowe są bardzo ___, a te różowe mniej.",
+          "answers": [
+            "słodkie"
+          ]
+        },
+        {
+          "label": "Angela",
+          "prompt": "Mniej? Co to znaczy?",
+          "answers": []
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "Mniej to mniej!",
+          "answers": []
+        },
+        {
+          "label": "Angela",
+          "prompt": "???",
+          "answers": []
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "No, mniej! Mało słodkie. Nie tak bardzo słodkie. Rozumie pani?",
+          "answers": []
+        },
+        {
+          "label": "Angela",
+          "prompt": "Aaa, rozumiem. W takim razie proszę te różowe i jeszcze dwie ___.",
+          "answers": [
+            "pomarańcze"
+          ]
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "Teraz pomarańcze nie są bardzo dobre, bo to nie jest sezon. ___ są dobre. Może woli pani śliwki?",
+          "answers": [
+            "Śliwki"
+          ]
+        },
+        {
+          "label": "Angela",
+          "prompt": "Dobrze, proszę pół kilo. Uff, to już wszystko.",
+          "answers": []
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "42 złote 70 groszy.",
+          "answers": []
+        }
+      ]
+    },
+    {
+      "tag": "109B4",
+      "type": "gap_fill",
+      "instruction": "Proszę posłuchać i uzupełnić.",
+      "items": [
+        {
+          "label": "Mami",
+          "prompt": "Poproszę marchewkę.",
+          "answers": []
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "___?",
+          "answers": [
+            "Ile"
+          ]
+        },
+        {
+          "label": "Mami",
+          "prompt": "Trzy albo nie, cztery marchewki.",
+          "answers": []
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "I co jeszcze?",
+          "answers": []
+        },
+        {
+          "label": "Mami",
+          "prompt": "___ pietruszkę.",
+          "answers": [
+            "Jedną"
+          ]
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "Natka czy korzeń?",
+          "answers": []
+        },
+        {
+          "label": "Mami",
+          "prompt": "Nie rozumiem.",
+          "answers": []
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "Natka jest zielona, a korzeń ___.",
+          "answers": [
+            "biały"
+          ]
+        },
+        {
+          "label": "Mami",
+          "prompt": "Aha, to chcę to i to. I jeszcze por, ___ i ziemniaki.",
+          "answers": [
+            "seler"
+          ]
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "Kilogram?",
+          "answers": []
+        },
+        {
+          "label": "Mami",
+          "prompt": "Tak. A to? Nie pamiętam, jak to się nazywa.",
+          "answers": []
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "To jest ___.",
+          "answers": [
+            "fasolka"
+          ]
+        },
+        {
+          "label": "Mami",
+          "prompt": "A tak! To pół kilo poproszę.",
+          "answers": []
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "Proszę bardzo. Czy coś jeszcze?",
+          "answers": []
+        },
+        {
+          "label": "Mami",
+          "prompt": "Może jeszcze ___. Ten średni. To wszystko, dziękuję.",
+          "answers": [
+            "kalafior"
+          ]
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "Wszystko? Mam bardzo słodkie maliny, chce pani?",
+          "answers": []
+        },
+        {
+          "label": "Mami",
+          "prompt": "O, chętnie.",
+          "answers": []
+        },
+        {
+          "label": "Sprzedawca",
+          "prompt": "19 ___ 32 grosze.",
+          "answers": [
+            "złotych"
+          ]
+        }
+      ]
+    }
+  ]
+}

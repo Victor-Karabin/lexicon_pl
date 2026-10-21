@@ -1,0 +1,58 @@
+{
+  "lesson": 26,
+  "exercises": [
+    {
+      "tag": "126C9",
+      "type": "gap_fill",
+      "instruction": "Proszę posłuchać dialogu i uzupełnić.",
+      "items": [
+        {
+          "label": "Policjant",
+          "prompt": "Słucham pana?",
+          "answers": []
+        },
+        {
+          "label": "Tom",
+          "prompt": "Ktoś ukradł mi ___.",
+          "answers": [
+            "portfel"
+          ]
+        },
+        {
+          "label": "Policjant",
+          "prompt": "___ to się stało?",
+          "answers": [
+            "Gdzie"
+          ]
+        },
+        {
+          "label": "Tom",
+          "prompt": "W pubie. Miałem go w kieszeni w ___ i powiesiłem kurtkę na krześle.",
+          "answers": [
+            "kurtce"
+          ]
+        },
+        {
+          "label": "Policjant",
+          "prompt": "Czy miał pan jakieś dokumenty w portfelu?",
+          "answers": []
+        },
+        {
+          "label": "Tom",
+          "prompt": "Nie. Karty kredytowe już zablokowałem, ale przyszedłem zgłosić kradzież, bo ___ zarejestrowała mężczyznę, który ___ portfel.",
+          "answers": [
+            "kamera",
+            "ukradł"
+          ]
+        },
+        {
+          "label": "Policjant",
+          "prompt": "Dziękuję bardzo, to cenna informacja. Proszę jeszcze ___ ten formularz.",
+          "answers": [
+            "wypełnić"
+          ]
+        }
+      ]
+    }
+  ]
+}

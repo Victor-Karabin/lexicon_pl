@@ -264,7 +264,7 @@ class ExerciseViewModelTest {
             testDispatcher.scheduler.advanceUntilIdle()
 
             val state = viewModel.uiState.value as ExerciseUiState.Loaded
-            assertFalse(state.track.isPlaying)
+            assertFalse(state.tracks.first().isPlaying)
             coVerify(exactly = 0) { audioPlayer.play(any(), any(), any()) }
         }
 
@@ -301,7 +301,7 @@ class ExerciseViewModelTest {
             assertEquals(
                 "a position chosen before playing is kept for the start",
                 5_000L,
-                (viewModel.uiState.value as ExerciseUiState.Loaded).track.positionMs,
+                (viewModel.uiState.value as ExerciseUiState.Loaded).tracks.first().positionMs,
             )
         }
 
@@ -315,6 +315,6 @@ class ExerciseViewModelTest {
             val viewModel = viewModel(exerciseId = minimalPair.id)
             testDispatcher.scheduler.advanceUntilIdle()
 
-            assertEquals(81_000L, (viewModel.uiState.value as ExerciseUiState.Loaded).track.durationMs)
+            assertEquals(81_000L, (viewModel.uiState.value as ExerciseUiState.Loaded).tracks.first().durationMs)
         }
 }

@@ -5,6 +5,7 @@ import com.lexicon.interactors.mix.MixTrainingType
 import com.lexicon.presentation.common.AnswerState
 import com.lexicon.presentation.common.LetterTile
 import com.lexicon.presentation.common.revealedAnswer
+import com.lexicon.presentation.pronunciation.RecognitionErrorType
 import com.lexicon.presentation.pronunciation.RecordingState
 
 sealed interface MixUiState {
@@ -24,6 +25,7 @@ sealed interface MixUiState {
         val correctOption: String? = null,
         val answeredTrue: Boolean? = null,
         val recordingState: RecordingState = RecordingState.IDLE,
+        val recognitionError: RecognitionErrorType? = null,
         val recognizedConfidence: Float? = null,
         val tipUsed: Boolean = false,
         val tipText: String? = null,

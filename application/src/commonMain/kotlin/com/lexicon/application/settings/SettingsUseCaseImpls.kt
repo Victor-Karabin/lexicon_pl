@@ -2,6 +2,7 @@ package com.lexicon.application.settings
 
 import com.lexicon.boundary.SettingsRepository
 import com.lexicon.interactors.settings.AppSettings
+import com.lexicon.interactors.settings.GetStepCountUseCase
 import com.lexicon.interactors.settings.ObserveSettingsUseCase
 import com.lexicon.interactors.settings.ThemeMode
 import com.lexicon.interactors.settings.UpdatePassMarkUseCase
@@ -39,4 +40,10 @@ class UpdatePassMarkUseCaseImpl(
         val rounded = (passMark + step / 2) / step * step
         settingsRepository.setPassMark(rounded.coerceIn(AppSettings.PassMarks))
     }
+}
+
+class GetStepCountUseCaseImpl(
+    private val stepCountResolver: StepCountResolver,
+) : GetStepCountUseCase {
+    override suspend fun invoke(): Int = stepCountResolver.resolve(null)
 }

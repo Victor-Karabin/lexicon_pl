@@ -135,11 +135,13 @@ private fun CreateWordContent(
 
     val exampleFailed = stringResource(R.string.example_offline)
     val presetFailed = stringResource(R.string.preset_change_failed)
+    val saveFailed = stringResource(R.string.create_word_save_error)
 
-    LaunchedEffect(uiState.exampleFailed, uiState.presetFailed) {
+    LaunchedEffect(uiState.exampleFailed, uiState.presetFailed, uiState.saveFailed) {
         val message = when {
             uiState.exampleFailed -> exampleFailed
             uiState.presetFailed -> presetFailed
+            uiState.saveFailed -> saveFailed
             else -> return@LaunchedEffect
         }
         snackbar.showSnackbar(message)

@@ -23,6 +23,7 @@ import com.lexicon.interactors.course.GetLastLessonResultsUseCase
 import com.lexicon.interactors.course.GetLessonScriptUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
 import com.lexicon.interactors.course.LessonResults
+import com.lexicon.interactors.settings.ObserveSettingsUseCase
 import com.lexicon.model.course.GrammarRule
 import com.lexicon.model.course.LessonId
 import com.lexicon.presentation.R
@@ -34,6 +35,7 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -51,6 +53,7 @@ data class LessonResultsUiState(
 class LessonResultsViewModel(
     savedStateHandle: SavedStateHandle,
     private val getLastLessonResults: GetLastLessonResultsUseCase,
+    private val observeSettings: ObserveSettingsUseCase,
     private val getLesson: GetLessonUseCase,
     private val getLessonScript: GetLessonScriptUseCase,
     private val dispatchers: DispatcherProvider,
@@ -67,7 +70,7 @@ class LessonResultsViewModel(
                 isLoading = false,
                 lessonNumber = lesson?.number,
                 lessonTitle = lesson?.title,
-                results = getLastLessonResults(lessonId),
+                results = getLastLessonResults(lessonId, observeSettings().first().passMark),
                 rules = getLessonScript(lessonId)?.rules.orEmpty().toImmutableList(),
             )
         }

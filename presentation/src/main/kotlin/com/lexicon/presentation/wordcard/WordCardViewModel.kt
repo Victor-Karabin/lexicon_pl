@@ -5,12 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.boundary.SpeechSynthesizer
 import com.lexicon.common.DispatcherProvider
+import com.lexicon.interactors.vocabularycourse.GetWordCardsUseCase
 import com.lexicon.interactors.wordcard.RecordWordCardSeenRequest
 import com.lexicon.interactors.wordcard.RecordWordCardSeenUseCase
 import com.lexicon.interactors.wordcard.StartWordCardSessionRequest
 import com.lexicon.interactors.wordcard.StartWordCardSessionUseCase
 import com.lexicon.interactors.wordcard.WordCardStep
 import com.lexicon.model.vocabulary.ExampleSentence
+import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.presentation.common.speakQuietly
 import com.lexicon.presentation.common.trainingVocabularyIds
 import kotlinx.collections.immutable.ImmutableList
@@ -37,6 +39,7 @@ class WordCardViewModel(
     savedStateHandle: SavedStateHandle,
     private val startSession: StartWordCardSessionUseCase,
     private val recordSeen: RecordWordCardSeenUseCase,
+    private val getWordCards: GetWordCardsUseCase,
     private val speechSynthesizer: SpeechSynthesizer,
     private val dispatchers: DispatcherProvider,
 ) : ViewModel() {
@@ -53,7 +56,7 @@ class WordCardViewModel(
         load()
     }
 
-    fun load() {
+    private fun load() {
         viewModelScope.launch(dispatchers.io) {
             val session = startSession(StartWordCardSessionRequest(vocabularyIds = vocabularyIds))
             sessionId = session.sessionId
@@ -65,6 +68,31 @@ class WordCardViewModel(
                 )
             }
             recordCurrent()
+        }
+    }
+
+    fun onWordEdited(id: Long) {
+        if (_uiState.value.cards.none { it.vocabularyItemId == id }) return
+        viewModelScope.launch(dispatchers.io) {
+            val fresh = getWordCards(listOf(VocabularyId(id))).firstOrNull() ?: return@launch
+            _uiState.update { state ->
+                state.copy(
+                    cards = state.cards
+                        .map { card ->
+                            if (card.vocabularyItemId != id) {
+                                card
+                            } else {
+                                card.copy(
+                                    text = fresh.text,
+                                    translation = fresh.translation,
+                                    transcription = fresh.transcription,
+                                    imageUrl = fresh.imageUrl,
+                                    example = fresh.example,
+                                )
+                            }
+                        }.toImmutableList(),
+                )
+            }
         }
     }
 

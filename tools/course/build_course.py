@@ -37,6 +37,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -98,26 +99,25 @@ def load_json(path: Path) -> dict | list:
 
 @dataclass(frozen=True)
 class WordIndex:
-    """Corpus ids by spelling, then by folded spelling for OCR that lost a diacritic.
+    """Corpus words by spelling, then by folded spelling for OCR that lost a diacritic.
 
     The folded key alone conflates real words: cześć and część, pięć and piec.
     """
 
-    exact: dict[str, int]
-    folded: dict[str, int]
+    exact: dict[str, list[dict]]
+    folded: dict[str, list[dict]]
 
     @classmethod
     def of(cls, words: list[dict]) -> "WordIndex":
-        exact: dict[str, int] = {}
-        folded: dict[str, int] = {}
+        exact: dict[str, list[dict]] = {}
+        folded: dict[str, list[dict]] = {}
         for word in words:
-            exact.setdefault(word["text"].lower().strip(), word["id"])
-            folded.setdefault(fold(word["text"]), word["id"])
+            exact.setdefault(word["text"].lower().strip(), []).append(word)
+            folded.setdefault(fold(word["text"]), []).append(word)
         return cls(exact, folded)
 
-    def get(self, word: str) -> int | None:
-        found = self.exact.get(word.lower().strip())
-        return found if found is not None else self.folded.get(fold(word))
+    def candidates(self, word: str) -> list[dict]:
+        return self.exact.get(word.lower().strip()) or self.folded.get(fold(word), [])
 
 
 def vocabulary_index() -> WordIndex:
@@ -128,12 +128,12 @@ def vocabulary_texts() -> dict[int, str]:
     return {word["id"]: word["text"] for word in load_json(VOCABULARY_ASSET)}
 
 
-def script_words(lesson_id: str) -> list[str]:
-    """The Polish column of a guided lesson's vocabulary table, or nothing without a script."""
+def script_words(lesson_id: str) -> list[tuple[str, str]]:
+    """The Polish and English columns of a guided lesson's vocabulary table, or nothing without a script."""
     path = ASSET_DIR / f"lesson_{lesson_id}.json"
     if not path.exists():
         return []
-    return [phrase["polish"].rstrip("…").strip() for phrase in load_json(path)["vocabulary"]]
+    return [(phrase["polish"].rstrip("…").strip(), phrase.get("english", "")) for phrase in load_json(path)["vocabulary"]]
 
 
 def word_forms() -> dict[str, list[str]]:
@@ -147,12 +147,40 @@ def word_forms() -> dict[str, list[str]]:
     return forms
 
 
-def resolve_word(word: str, index: WordIndex, forms: dict[str, list[str]]) -> list[int] | None:
+def pick_word(word: str, index: WordIndex, gloss: str | None) -> int | None:
+    headword, _, pinned = word.partition("@")
+    found = index.candidates(headword)
+    if not found:
+        return None
+    if pinned:
+        if not any(str(candidate["id"]) == pinned for candidate in found):
+            raise BuildError(f"{word!r}: id {pinned} is not one of the corpus words spelled {headword!r}")
+        return int(pinned)
+    if len(found) == 1:
+        return found[0]["id"]
+
+    matching = [candidate for candidate in found if gloss and means(candidate.get("translation", ""), gloss)]
+    if len(matching) == 1:
+        return matching[0]["id"]
+
+    options = ", ".join(f"{candidate['id']} ({candidate.get('translation', '')})" for candidate in found)
+    raise BuildError(
+        f"{headword!r} is spelled by several corpus words: {options}; "
+        f"the lesson's English gloss {gloss!r} does not pick exactly one. "
+        f"Pin one in word_forms.tsv as {headword}@<id>."
+    )
+
+
+def means(translation: str, gloss: str) -> bool:
+    return bool(translation.strip()) and re.search(rf"(?<!\w){re.escape(translation.strip().lower())}(?!\w)", gloss.lower()) is not None
+
+
+def resolve_word(word: str, index: WordIndex, forms: dict[str, list[str]], gloss: str | None = None) -> list[int] | None:
     """Vocabulary ids for a printed lesson word, or None when nothing matches."""
     key = fold(word)
     if key in forms:
-        return [word_id for h in forms[key] if (word_id := index.get(h)) is not None]
-    word_id = index.get(word)
+        return [word_id for h in forms[key] if (word_id := pick_word(h, index, gloss)) is not None]
+    word_id = pick_word(word, index, gloss)
     return [word_id] if word_id is not None else None
 
 
@@ -263,8 +291,8 @@ def build_lesson(
             continue
         link(resolved)
 
-    for word in script_words(lesson_id):
-        resolved = resolve_word(word, index, forms)
+    for word, gloss in script_words(lesson_id):
+        resolved = resolve_word(word, index, forms, gloss)
         if not resolved:
             raise BuildError(
                 f"{lesson_id}: script word {word!r} is not in the corpus; add it to "
@@ -280,24 +308,65 @@ def build_lesson(
         "vocabularyIds": vocabulary_ids,
         "vocabularyWords": [texts[word_id] for word_id in vocabulary_ids],
         "audio": lesson_audio(coursebook_tracks + uploaded + workbook_tracks, lesson["number"], remote),
-        "exercises": [
-            {
-                "id": f"{course['id']}-{lesson['number']:02d}-{e['tag']}",
+        "exercises": build_exercises(lesson_id, exercises.get(lesson["number"], []), coursebook_tracks),
+    }
+
+
+def recordings_of(recordings: list[str], position: int, exercises: int) -> list[str]:
+    if exercises == 1:
+        return recordings
+    if len(recordings) == exercises:
+        return [recordings[position]]
+    return recordings[:1]
+
+
+def build_exercises(lesson_id: str, exercises: list[dict], coursebook_tracks: list[dict]) -> list[dict]:
+    built: list[dict] = []
+    tags = list(dict.fromkeys(e["tag"] for e in exercises))
+    for tag in tags:
+        sharing = [e for e in exercises if e["tag"] == tag]
+        recordings = [t["file"] for t in coursebook_tracks if audio_tag_of(t) == tag]
+        if len(sharing) > 1 and len(recordings) > 1 and len(recordings) != len(sharing):
+            raise BuildError(f"{lesson_id}-{tag}: {len(sharing)} exercises share the tag but {len(recordings)} recordings do")
+        for position, e in enumerate(sharing):
+            files = recordings_of(recordings, position, len(sharing))
+            exercise = {
+                "id": f"{lesson_id}-{tag}" + (f"-{position + 1}" if position else ""),
                 "type": e["type"],
                 "instruction": e["instruction"],
-                "audioFile": next(
-                    (t["file"] for t in coursebook_tracks if audio_tag_of(t) == e["tag"]), None
-                ),
+                "audioFile": files[0] if files else None,
                 "items": e["items"],
                 "handAuthored": e.get("handAuthored", False),
             }
-            for e in exercises.get(lesson["number"], [])
-        ],
-    }
+            if len(files) > 1:
+                exercise["moreAudioFiles"] = files[1:]
+            built.append(exercise)
+    return built
+
+
+GAP = "___"
+
+SPLIT_WORD_GAP = re.compile(rf"(?<=[^\W_]){GAP}|{GAP}(?=[^\W_])")
+
+
+def validate_exercises(lesson: dict, seen_exercise_ids: set[str]) -> None:
+    for exercise in lesson.get("exercises", []):
+        if exercise["id"] in seen_exercise_ids:
+            raise BuildError(f"duplicate exercise id: {exercise['id']}")
+        seen_exercise_ids.add(exercise["id"])
+
+        for item in exercise["items"]:
+            for answer in item.get("answers", []):
+                if not re.search(r"\w", answer):
+                    raise BuildError(f"{exercise['id']}: the answer {answer!r} is only punctuation")
+            prompt = item.get("prompt") or ""
+            if SPLIT_WORD_GAP.search(prompt):
+                raise BuildError(f"{exercise['id']}: the gap in {prompt!r} splits a word")
 
 
 def validate(courses: list[dict]) -> None:
     seen_lesson_ids: set[str] = set()
+    seen_exercise_ids: set[str] = set()
     for course in courses:
         if not course["lessons"]:
             raise BuildError(f"{course['id']}: no lessons")
@@ -317,6 +386,7 @@ def validate(courses: list[dict]) -> None:
                     f"{lesson['id']}: only {len(lesson['vocabularyIds'])} words resolved, "
                     f"expected at least {MIN_WORDS_PER_LESSON}"
                 )
+            validate_exercises(lesson, seen_exercise_ids)
 
 
 def build(report_missing: bool) -> int:

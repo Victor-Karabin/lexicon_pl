@@ -23,6 +23,7 @@ fails the build here rather than at runtime on a user's phone.
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -32,6 +33,8 @@ from g2p import transcribe  # noqa: E402
 ROOT = Path(__file__).resolve().parents[2]
 TOOLS = ROOT / "tools" / "vocabulary"
 ASSETS = ROOT / "data" / "src" / "androidMain" / "assets"
+
+CYRILLIC = re.compile("[\u0400-\u04FF]")
 
 CEFR_LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"]
 POS_TAGS = {"n", "v", "adj", "adv", "prn", "num", "prep", "conj", "part", "interj", "expr"}
@@ -278,6 +281,11 @@ def validate(words: list[dict], presets: list[dict], categories: list[dict]) -> 
         # enough material to build a step, and Image Test needs six distinct options.
         if 0 < preset["wordCount"] < 6:
             problems.append(f"preset '{preset['id']}' has only {preset['wordCount']} words, too few to train")
+
+    for word in words:
+        cyrillic = [field for field, value in word.items() if isinstance(value, str) and CYRILLIC.search(value)]
+        if cyrillic:
+            problems.append(f"Cyrillic in {', '.join(cyrillic)} of '{word['text']}'")
 
     # Every level is offered as a filter chip, so a level with no words is a control that
     # silently does nothing — which is how C2 shipped empty.

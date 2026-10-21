@@ -186,15 +186,7 @@ private fun PronunciationScreenContent(
                         }
 
                         uiState.recognitionError?.let { errorType ->
-                            Text(
-                                text = when (errorType) {
-                                    RecognitionErrorType.UNAVAILABLE -> stringResource(R.string.pronunciation_recognition_unavailable)
-                                    RecognitionErrorType.FAILED -> stringResource(R.string.pronunciation_recognition_failed)
-                                },
-                                color = LexiconError,
-                                modifier = Modifier.padding(top = Dimens.spacingMedium),
-                                style = MaterialTheme.typography.bodyMedium,
-                            )
+                            RecognitionErrorMessage(errorType, Modifier.padding(top = Dimens.spacingMedium))
                         }
 
                         uiState.recognizedText?.let { recognized ->

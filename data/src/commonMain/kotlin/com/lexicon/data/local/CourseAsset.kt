@@ -31,7 +31,7 @@ data class LessonAsset(
 data class LessonAudioAsset(
     val file: String,
     val section: String? = null,
-    val task: Int = 0,
+    val task: Int? = null,
     val part: String? = null,
     val remoteId: String? = null,
 )
@@ -42,6 +42,7 @@ data class LessonExerciseAsset(
     val type: String,
     val instruction: String,
     val audioFile: String? = null,
+    val moreAudioFiles: List<String> = emptyList(),
     val items: List<ExerciseItemAsset> = emptyList(),
 )
 

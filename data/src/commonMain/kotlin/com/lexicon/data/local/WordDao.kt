@@ -87,6 +87,21 @@ interface WordDao {
         offset: Int,
     ): List<WordEntity>
 
+    @Query(
+        """
+        SELECT * FROM words
+        WHERE isDeleted = 0
+          AND ((searchKey LIKE :foldedQuery || ' %' AND LENGTH(text) = LENGTH(:foldedQuery))
+            OR (searchKey LIKE '% ' || :foldedQuery AND LENGTH(translation) = LENGTH(:foldedQuery)))
+        ORDER BY text
+        LIMIT :limit
+        """,
+    )
+    suspend fun withExactMatch(
+        foldedQuery: String,
+        limit: Int,
+    ): List<WordEntity>
+
     @Query("SELECT * FROM words WHERE isDeleted = 0 AND translation LIKE '%' || :sense || '%' LIMIT :limit")
     suspend fun withTranslationContaining(
         sense: String,

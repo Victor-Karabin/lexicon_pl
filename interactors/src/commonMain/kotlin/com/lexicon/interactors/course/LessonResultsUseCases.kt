@@ -11,5 +11,8 @@ fun interface SaveLessonResultsUseCase {
 }
 
 fun interface GetLastLessonResultsUseCase {
-    suspend operator fun invoke(id: LessonId): LessonResults?
+    suspend operator fun invoke(
+        id: LessonId,
+        passMark: Int,
+    ): LessonResults?
 }

@@ -77,6 +77,7 @@ data class LessonExerciseEntity(
     val type: String,
     val instruction: String,
     val audioFile: String?,
+    val moreAudioFilesJson: String,
     val position: Int,
 )
 
