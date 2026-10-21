@@ -249,7 +249,6 @@
     <string name="create_word_image_position_hint">Drag the frame over the part of the picture you want.</string>
     <string name="create_word_image_use">Use</string>
     <string name="create_word_image_adjust">Adjust</string>
-    <string name="create_word_image_more">More</string>
     <string name="create_word_image_none">Type a word to look for a picture.</string>
     <string name="create_word_image_empty">No pictures were found for this word.</string>
     <string name="create_word_image_selected">Selected picture</string>
@@ -270,7 +269,6 @@
     <string name="cards_none">No new words today.</string>
     <string name="dashboard_continuing">Continuing</string>
     <string name="dashboard_continue">Continue</string>
-    <string name="dashboard_metric_vocabulary">Words mastered</string>
     <string name="dashboard_metric_unmeasured">—</string>
     <string name="dashboard_metric_accuracy">Correct answers</string>
     <string name="dashboard_study_time_week">Study time this week</string>
@@ -308,7 +306,6 @@
     <string name="passage_offline">No connection. The text is written fresh each time, so this training needs the internet.</string>
     <string name="passage_refused">The text could not be written just now. Try again in a moment.</string>
     <string name="training_mix_blurb">A little of every training</string>
-    <string name="training_coming_soon">Coming soon</string>
     <string name="result_done">Done</string>
     <string name="result_next_training">Next training</string>
     <string name="result_accuracy">answered correctly</string>
@@ -519,10 +516,6 @@
     <plurals name="presets_word_count_label">
         <item quantity="one">word</item>
         <item quantity="other">words</item>
-    </plurals>
-    <plurals name="dashboard_word_total">
-        <item quantity="one">%1$d word in your study set</item>
-        <item quantity="other">%1$d words in your study set</item>
     </plurals>
     <string name="training_unavailable_title">Nothing to practise here</string>
     <string name="training_unavailable_body">This training could not build a round from your study set. Try another training, or add a few more words.</string>

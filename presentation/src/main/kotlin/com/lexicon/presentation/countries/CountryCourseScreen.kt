@@ -22,7 +22,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -36,16 +35,6 @@ import com.lexicon.presentation.presets.ChecklistRow
 import com.lexicon.presentation.presets.VocabularySearchField
 import com.lexicon.presentation.theme.Dimens
 import org.koin.androidx.compose.koinViewModel
-
-object CountryCourseTestTags {
-    const val SEARCH = "country_course_search"
-    const val LIST = "country_course_list"
-    const val SELECT_ALL = "country_course_select_all"
-    const val CLEAR = "country_course_clear"
-    const val START = "country_course_start"
-
-    fun country(code: String) = "country_course_item_$code"
-}
 
 @Composable
 fun CountryCourseScreen(
@@ -92,8 +81,7 @@ private fun CountryCourseContent(
                 onQueryChanged = onQueryChanged,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = Dimens.spacingMedium)
-                    .testTag(CountryCourseTestTags.SEARCH),
+                    .padding(horizontal = Dimens.spacingMedium),
             )
 
             if (uiState.isLoading) {
@@ -112,7 +100,7 @@ private fun CountryCourseContent(
             ScrollToTopLayout(list = list, modifier = Modifier.weight(1f)) {
                 LazyColumn(
                     state = list,
-                    modifier = Modifier.fillMaxSize().testTag(CountryCourseTestTags.LIST),
+                    modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(bottom = ScrollToTopClearance),
                 ) {
                     items(uiState.shown, key = Country::code) { country ->
@@ -120,7 +108,6 @@ private fun CountryCourseContent(
                             text = "${country.flag} ${country.english}",
                             isChecked = country.code in uiState.chosen,
                             onToggle = { onToggled(country.code) },
-                            modifier = Modifier.testTag(CountryCourseTestTags.country(country.code)),
                         )
                     }
                 }
@@ -130,7 +117,7 @@ private fun CountryCourseContent(
                 Button(
                     onClick = onStart,
                     enabled = uiState.canStart,
-                    modifier = Modifier.weight(1f).testTag(CountryCourseTestTags.START),
+                    modifier = Modifier.weight(1f),
                 ) {
                     Text(stringResource(R.string.course_start))
                 }
@@ -158,10 +145,10 @@ private fun SelectionBar(
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.weight(1f),
         )
-        TextButton(onClick = onSelectAll, modifier = Modifier.testTag(CountryCourseTestTags.SELECT_ALL)) {
+        TextButton(onClick = onSelectAll) {
             Text(stringResource(R.string.countries_select_all))
         }
-        TextButton(onClick = onClear, modifier = Modifier.testTag(CountryCourseTestTags.CLEAR)) {
+        TextButton(onClick = onClear) {
             Text(stringResource(R.string.countries_clear))
         }
     }

@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -19,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconTheme
@@ -54,7 +51,7 @@ private fun TrainingTile(
 ) {
     val skin = tileSkin()
 
-    GradientTile(skin = skin, onClick = onClick.takeIf { entry.isEnabled }) {
+    GradientTile(skin = skin, onClick = onClick) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             verticalAlignment = Alignment.CenterVertically,
@@ -69,39 +66,18 @@ private fun TrainingTile(
                     color = skin.onTile,
                 )
                 Text(
-                    text = stringResource(
-                        if (entry.isEnabled) entry.blurb else R.string.training_coming_soon,
-                    ),
+                    text = stringResource(entry.blurb),
                     style = MaterialTheme.typography.bodySmall,
                     color = skin.muted(),
                 )
             }
 
-            if (entry.isEnabled) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                    contentDescription = null,
-                    tint = skin.muted(),
-                )
-            }
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = null,
+                tint = skin.muted(),
+            )
         }
-    }
-}
-
-@Composable
-fun ComingSoonScreen(
-    title: String,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier.fillMaxWidth().padding(Dimens.spacingMedium),
-        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-    ) {
-        Text(title, style = MaterialTheme.typography.headlineSmall)
-        Text(
-            text = stringResource(R.string.training_coming_soon),
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
     }
 }
 

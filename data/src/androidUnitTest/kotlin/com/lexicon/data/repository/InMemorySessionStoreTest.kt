@@ -3,6 +3,7 @@ package com.lexicon.data.repository
 import com.lexicon.model.training.Session
 import com.lexicon.model.training.SessionId
 import com.lexicon.model.training.Step
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.model.training.TrainingType
 import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.toImmutableList
@@ -33,17 +34,9 @@ class InMemorySessionStoreTest {
     fun `saving the same session again replaces it rather than growing the store`() =
         runTest {
             store.save(session("a"))
-            store.save(session("a").answer(0, com.lexicon.model.training.StepOutcome.CORRECT))
+            store.save(session("a").answer(0, StepOutcome.CORRECT))
 
-            assertEquals(1, store.find(SessionId("a"))?.correctCount)
-        }
-
-    @Test
-    fun `a removed session is gone`() =
-        runTest {
-            store.save(session("a"))
-            store.remove(SessionId("a"))
-            assertNull(store.find(SessionId("a")))
+            assertEquals(listOf<StepOutcome?>(StepOutcome.CORRECT), store.find(SessionId("a"))?.steps?.map { it.outcome })
         }
 
     @Test
@@ -80,10 +73,10 @@ class InMemorySessionStoreTest {
                 ),
             )
 
-            store.update(id) { it.answer(0, com.lexicon.model.training.StepOutcome.CORRECT) }
-            store.update(id) { it.answer(1, com.lexicon.model.training.StepOutcome.CORRECT) }
+            store.update(id) { it.answer(0, StepOutcome.CORRECT) }
+            store.update(id) { it.answer(1, StepOutcome.CORRECT) }
 
-            assertEquals(2, store.find(id)?.correctCount)
+            assertEquals(listOf<StepOutcome?>(StepOutcome.CORRECT, StepOutcome.CORRECT), store.find(id)?.steps?.map { it.outcome })
         }
 
     @Test

@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -26,11 +25,6 @@ import com.lexicon.presentation.R
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import org.koin.androidx.compose.koinViewModel
-
-object NumberCourseTestTags {
-    const val INPUT = "number_course_input"
-    const val START = "number_course_start"
-}
 
 @Composable
 fun NumberCourseScreen(
@@ -92,13 +86,13 @@ private fun NumberCourseContent(
                     autoCorrectEnabled = false,
                     imeAction = ImeAction.Done,
                 ),
-                modifier = Modifier.fillMaxWidth().testTag(NumberCourseTestTags.INPUT),
+                modifier = Modifier.fillMaxWidth(),
             )
 
             Button(
                 onClick = onStart,
                 enabled = uiState.canStart,
-                modifier = Modifier.fillMaxWidth().testTag(NumberCourseTestTags.START),
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(stringResource(R.string.course_start))
             }

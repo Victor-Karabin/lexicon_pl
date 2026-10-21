@@ -8,8 +8,6 @@ interface SessionStore {
 
     suspend fun find(id: SessionId): Session?
 
-    suspend fun remove(id: SessionId)
-
     suspend fun update(
         id: SessionId,
         transform: (Session) -> Session,

@@ -116,14 +116,6 @@ class VocabularyPresetUseCasesImplTest {
         }
 
     @Test
-    fun `categories come back in their declared order`() =
-        runTest {
-            val ordered = GetPresetCategoriesUseCaseImpl(presetRepository)()
-
-            assertEquals(listOf("everyday-life", "nature"), ordered.map { it.id })
-        }
-
-    @Test
     fun `the change-presets list leaves out unsorted, whose words come and go by themselves`() =
         runTest {
             val repository: VocabularyPresetRepository = mockk {

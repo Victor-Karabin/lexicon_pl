@@ -52,14 +52,6 @@ class ExampleSentenceTest {
     }
 
     @Test
-    fun `marking is what parsing undoes`() {
-        val marked = "Mam czarnego **kota**."
-        val sentence = ExampleSentence.parse(marked)
-
-        assertEquals(marked, ExampleSentence.mark(sentence.text, sentence.emphasis))
-    }
-
-    @Test
     fun `an unmarked sentence takes its emphasis from the word itself`() {
         val sentence = ExampleSentence.of("Chcę kawę, ale bez cukru.", word = "ale")
 

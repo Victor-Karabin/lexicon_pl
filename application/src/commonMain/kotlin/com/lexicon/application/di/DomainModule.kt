@@ -59,7 +59,6 @@ import com.lexicon.application.presets.FillWordGrammarUseCaseImpl
 import com.lexicon.application.presets.FindWordsUseCaseImpl
 import com.lexicon.application.presets.GenerateWordExampleUseCaseImpl
 import com.lexicon.application.presets.GetPinnedImageUseCaseImpl
-import com.lexicon.application.presets.GetPresetCategoriesUseCaseImpl
 import com.lexicon.application.presets.GetPresetVocabularyUseCaseImpl
 import com.lexicon.application.presets.GetVocabularyPresetUseCaseImpl
 import com.lexicon.application.presets.GetVocabularyPresetsUseCaseImpl
@@ -175,7 +174,6 @@ import com.lexicon.interactors.presets.FillWordGrammarUseCase
 import com.lexicon.interactors.presets.FindWordsUseCase
 import com.lexicon.interactors.presets.GenerateWordExampleUseCase
 import com.lexicon.interactors.presets.GetPinnedImageUseCase
-import com.lexicon.interactors.presets.GetPresetCategoriesUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
@@ -271,7 +269,6 @@ val domainModule = module {
     }
     factoryOf(::StartMixSessionUseCaseImpl) { bind<StartMixSessionUseCase>() }
     factoryOf(::GetVocabularyPresetsUseCaseImpl) { bind<GetVocabularyPresetsUseCase>() }
-    factoryOf(::GetPresetCategoriesUseCaseImpl) { bind<GetPresetCategoriesUseCase>() }
     factoryOf(::GetVocabularyPresetUseCaseImpl) { bind<GetVocabularyPresetUseCase>() }
     factoryOf(::GetPresetVocabularyUseCaseImpl) { bind<GetPresetVocabularyUseCase>() }
     factoryOf(::SetWordStatusUseCaseImpl) { bind<SetWordStatusUseCase>() }

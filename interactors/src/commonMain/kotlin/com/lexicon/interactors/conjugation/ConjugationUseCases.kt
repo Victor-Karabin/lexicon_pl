@@ -4,8 +4,6 @@ import com.lexicon.interactors.course.AnswerVerdict
 import kotlinx.collections.immutable.ImmutableList
 
 interface LoadConjugationVerbsUseCase {
-    suspend operator fun invoke(query: String = ""): ImmutableList<VerbConjugation>
-
     suspend fun page(
         query: String = "",
         offset: Int = 0,

@@ -18,8 +18,3 @@ data class PresetCategoryBoundary(
     val order: Int,
     val title: Map<String, String>,
 )
-
-data class VocabularyPresetCatalogBoundary(
-    val categories: List<PresetCategoryBoundary>,
-    val presets: List<VocabularyPresetBoundary>,
-)

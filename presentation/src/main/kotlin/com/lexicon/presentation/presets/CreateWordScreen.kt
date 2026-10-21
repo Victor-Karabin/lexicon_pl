@@ -79,7 +79,6 @@ private val CandidateHeight = 72.dp
 private val ProgressSize = 18.dp
 private val ProgressStroke = 2.dp
 private val SelectedBorder = 3.dp
-private val ImageRowHeight = 112.dp
 
 @Composable
 fun CreateWordScreen(

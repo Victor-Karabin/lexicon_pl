@@ -82,7 +82,7 @@ class DictationSessionUseCaseTest {
 
             val session = sessions.find(SessionId(id))!!
             assertEquals(StepOutcome.CORRECT, session.step(0).outcome)
-            assertEquals(1, session.correctCount)
+            assertEquals(listOf<StepOutcome?>(StepOutcome.CORRECT, null), session.steps.map { it.outcome })
             assertEquals(1, session.currentStep?.index)
         }
 

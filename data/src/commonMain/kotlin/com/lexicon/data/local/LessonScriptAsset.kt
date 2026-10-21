@@ -57,7 +57,6 @@ data class RuleAsset(
 data class TrackAsset(
     val id: String,
     val file: String,
-    val remoteId: String? = null,
 )
 
 @Serializable
@@ -224,7 +223,7 @@ fun LessonScriptAsset.toModel(remoteIds: Map<String, String?>): LessonScript {
 
     fun track(ref: TrackRefAsset): LessonTrack? =
         byId[ref.id]?.let { asset ->
-            LessonTrack(id = ref.id, label = ref.label, file = asset.file, remoteId = remoteIds[asset.file] ?: asset.remoteId)
+            LessonTrack(id = ref.id, label = ref.label, file = asset.file, remoteId = remoteIds[asset.file])
         }
 
     val shown = screens.filterNot { it.skipped }

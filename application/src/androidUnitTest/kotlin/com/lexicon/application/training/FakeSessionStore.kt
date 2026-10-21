@@ -13,10 +13,6 @@ class FakeSessionStore : SessionStore {
 
     override suspend fun find(id: SessionId): Session? = sessions[id]
 
-    override suspend fun remove(id: SessionId) {
-        sessions.remove(id)
-    }
-
     override suspend fun update(
         id: SessionId,
         transform: (Session) -> Session,

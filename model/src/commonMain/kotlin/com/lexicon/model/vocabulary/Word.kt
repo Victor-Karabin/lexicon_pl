@@ -33,8 +33,6 @@ data class Word(
         require(text.isNotBlank()) { "a word must have text" }
     }
 
-    val hasExample: Boolean get() = example.isNotBlank()
-
     val isPhrase: Boolean get() = text.contains(' ')
 
     val pictureSubject: String get() = picture?.takeIf { it.isNotBlank() } ?: translation

@@ -2,12 +2,10 @@ package com.lexicon.application.presets
 
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
-import com.lexicon.interactors.presets.GetPresetCategoriesUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
-import com.lexicon.model.vocabulary.PresetCategory
 import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.Word
@@ -40,13 +38,6 @@ class ObserveVocabularyPresetsUseCaseImpl(
                 .sortedWith(compareBy({ it.category.order }, { it.popularity }))
                 .toImmutableList()
         }
-}
-
-class GetPresetCategoriesUseCaseImpl(
-    private val repository: VocabularyPresetRepository,
-) : GetPresetCategoriesUseCase {
-    override suspend fun invoke(): ImmutableList<PresetCategory> =
-        repository.getCategories().map { it.toCategory() }.sortedBy { it.order }.toImmutableList()
 }
 
 class GetVocabularyPresetUseCaseImpl(

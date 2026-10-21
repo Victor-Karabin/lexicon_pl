@@ -11,6 +11,5 @@ object Dimens {
     val spacingXl = 32.dp
     val spacingXxl = 48.dp
 
-    val iconSize = 32.dp
     val tileVerticalSpacing = spacingTiny
 }

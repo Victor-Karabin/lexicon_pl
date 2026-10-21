@@ -23,7 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.lexicon.presentation.R
@@ -31,11 +30,6 @@ import com.lexicon.presentation.theme.Dimens
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
-
-object ImagePickerTestTags {
-    const val DIALOG = "image_picker_dialog"
-    const val GRID = "image_picker_grid"
-}
 
 private const val COLUMNS = 2
 
@@ -69,7 +63,7 @@ fun ImagePickerDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        modifier = modifier.testTag(ImagePickerTestTags.DIALOG),
+        modifier = modifier,
         title = { Text(stringResource(R.string.create_word_image)) },
         confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_done)) } },
         text = {
@@ -78,8 +72,7 @@ fun ImagePickerDialog(
                 state = grid,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(min = GridMinHeight, max = GridMaxHeight)
-                    .testTag(ImagePickerTestTags.GRID),
+                    .heightIn(min = GridMinHeight, max = GridMaxHeight),
                 horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
                 verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
             ) {

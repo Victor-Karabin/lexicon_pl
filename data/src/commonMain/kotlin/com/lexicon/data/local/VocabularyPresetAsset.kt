@@ -1,8 +1,5 @@
 package com.lexicon.data.local
 
-import com.lexicon.boundary.PresetCategoryBoundary
-import com.lexicon.boundary.VocabularyPresetBoundary
-import com.lexicon.boundary.VocabularyPresetCatalogBoundary
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -30,24 +27,3 @@ data class VocabularyPresetAsset(
     val estimatedSeconds: Long = 0,
     val vocabularyIds: List<Long> = emptyList(),
 )
-
-fun VocabularyPresetCatalogAsset.toBoundary(): VocabularyPresetCatalogBoundary =
-    VocabularyPresetCatalogBoundary(
-        categories = categories.map {
-            PresetCategoryBoundary(id = it.id, order = it.order, title = it.title)
-        },
-        presets = presets.map {
-            VocabularyPresetBoundary(
-                id = it.id,
-                categoryId = it.category,
-                title = it.title,
-                description = it.description,
-                icon = it.icon,
-                color = it.color,
-                popularity = it.popularity,
-                estimatedSeconds = it.estimatedSeconds,
-                vocabularyIds = it.vocabularyIds,
-                wordCount = it.vocabularyIds.size,
-            )
-        },
-    )

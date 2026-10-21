@@ -26,7 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -51,14 +50,6 @@ import com.lexicon.presentation.course.richText
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.component.ProgressDots
 import org.koin.androidx.compose.koinViewModel
-
-object NumberTrainingTestTags {
-    const val NUMBER = "number_training_number"
-    const val LISTEN = "number_training_listen"
-    const val TRANSCRIPTION = "number_training_transcription"
-    const val RULES = "number_training_rules"
-    const val EMPTY = "number_training_empty"
-}
 
 @Composable
 fun NumberTrainingScreen(
@@ -100,7 +91,6 @@ fun NumberTrainingScreen(
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.testTag(NumberTrainingTestTags.EMPTY),
                         )
                     }
 
@@ -154,9 +144,9 @@ private fun NumberQuestionBody(
                 style = MaterialTheme.typography.displayMedium,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.weight(1f, fill = false).testTag(NumberTrainingTestTags.NUMBER),
+                modifier = Modifier.weight(1f, fill = false),
             )
-            IconButton(onClick = onSpeak, modifier = Modifier.testTag(NumberTrainingTestTags.LISTEN)) {
+            IconButton(onClick = onSpeak) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.VolumeUp,
                     contentDescription = stringResource(R.string.numbers_listen),
@@ -195,7 +185,6 @@ private fun NumberQuestionBody(
                 text = "[${question.transcription}]",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.testTag(NumberTrainingTestTags.TRANSCRIPTION),
             )
             NumberRules(rules = question.rules)
         }
@@ -205,7 +194,7 @@ private fun NumberQuestionBody(
 @Composable
 private fun NumberRules(rules: List<NumberRule>) {
     Column(
-        modifier = Modifier.fillMaxWidth().testTag(NumberTrainingTestTags.RULES),
+        modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingTiny),
     ) {
         Text(

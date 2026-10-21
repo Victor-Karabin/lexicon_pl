@@ -32,23 +32,6 @@ data class ExampleSentence(
 
             return parsed.copy(emphasis = parsed.text.emphasisFor(word))
         }
-
-        fun mark(
-            text: String,
-            emphasis: List<IntRange>,
-        ): String {
-            if (emphasis.isEmpty()) return text
-
-            val marked = StringBuilder()
-            var cursor = 0
-            emphasis.sortedBy { it.first }.forEach { range ->
-                if (range.first < cursor || range.last >= text.length) return@forEach
-                marked.append(text, cursor, range.first).append(MARKER)
-                marked.append(text, range.first, range.last + 1).append(MARKER)
-                cursor = range.last + 1
-            }
-            return marked.append(text, cursor, text.length).toString()
-        }
     }
 }
 

@@ -6,7 +6,6 @@ import com.lexicon.boundary.CourseRepository
 import com.lexicon.boundary.SeedOutcomeBoundary
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
-import com.lexicon.boundary.wasAlreadyCurrent
 import com.lexicon.interactors.sync.CatalogSeedStatus
 import com.lexicon.interactors.sync.SeedStepStatus
 import com.lexicon.interactors.sync.isBlocked

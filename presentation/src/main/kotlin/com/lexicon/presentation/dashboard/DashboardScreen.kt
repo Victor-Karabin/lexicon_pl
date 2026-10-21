@@ -77,9 +77,6 @@ private const val QUARTER_TURN_DEGREES = 90f
 
 private val RingSize = 72.dp
 private val RingStroke = 5.dp
-private val PipSize = 10.dp
-private val PipBorder = 2.dp
-private val MetricBarHeight = 3.dp
 private val ButtonIconSize = 18.dp
 
 private const val TRACK_ALPHA = 0.25f

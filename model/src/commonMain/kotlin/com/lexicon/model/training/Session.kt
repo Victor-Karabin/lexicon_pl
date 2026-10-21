@@ -62,14 +62,6 @@ data class Session(
 
     val currentStep: Step? get() = steps.firstOrNull { !it.isAnswered }
 
-    val correctCount: Int get() = countOf(StepOutcome.CORRECT)
-
-    val incorrectCount: Int get() = countOf(StepOutcome.INCORRECT)
-
-    val skippedCount: Int get() = countOf(StepOutcome.SKIPPED)
-
-    val tipsUsedCount: Int get() = steps.count { it.tipUsed }
-
     fun step(index: Int): Step = steps.getOrNull(index) ?: throw NoSuchStep("session ${id.value} has no step $index")
 
     fun question(index: Int): Step.Question? = steps.getOrNull(index) as? Step.Question
@@ -85,6 +77,4 @@ data class Session(
         }
         return copy(steps = steps.toMutableList().also { it[index] = step.answered(outcome, tipUsed) }.toImmutableList())
     }
-
-    private fun countOf(outcome: StepOutcome): Int = steps.count { it.outcome == outcome }
 }

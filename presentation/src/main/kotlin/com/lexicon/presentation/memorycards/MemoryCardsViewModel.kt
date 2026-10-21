@@ -181,12 +181,6 @@ class MemoryCardsViewModel(
         }
     }
 
-    fun onNext() {
-        val state = _uiState.value as? MemoryCardsUiState.Loaded ?: return
-        if (!state.awaitingNext) return
-        viewModelScope.launch(dispatchers.io) { advanceToNextStep() }
-    }
-
     private suspend fun advanceToNextStep() {
         val state = _uiState.value as? MemoryCardsUiState.Loaded ?: return
         val nextIndex = state.stepIndex + 1
