@@ -143,6 +143,16 @@ it travels as a `?words=` argument on the training route. Unlike the study set,
 a lesson-scoped session ignores the study-set flag: picking the lesson is already
 the choice of what to practise.
 
+When the vocabulary course launches Fillword, Passage or Sentences, they use the
+course's words too. Fillword packs the course words that fit the grid, and each
+placed word is recorded when the round ends, on the last word found or on Check:
+found is correct, not found is a lapse. Leaving mid-round records nothing. Passage
+and Sentences write sentences only for the course words and are never topped up
+from outside them. Passage asks for a couple of spare sentences, so a refused one
+is replaced by a spare course word while any is left; Sentences has no spares, so
+a sentence that does not come back leaves one step fewer. Fewer course words than
+the step count gives fewer steps in both.
+
 ### Audio
 
 454 MB does not belong in an APK, so the tracks are side-loaded:

@@ -12,6 +12,7 @@ import com.lexicon.boundary.SettingsRepository
 import com.lexicon.boundary.ThemeModeBoundary
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.pronunciation.PronunciationSentencesResult
+import com.lexicon.interactors.pronunciation.StartPronunciationSessionRequest
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultRequest
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
@@ -107,7 +108,7 @@ class PronunciationSentencesRecordingTest {
                 SentenceResultBoundary.Generated("To jest ${firstArg<SentenceRequestBoundary>().word}.")
             }
 
-            val response = (start() as PronunciationSentencesResult.Ready).session
+            val response = (start(StartPronunciationSessionRequest()) as PronunciationSentencesResult.Ready).session
 
             val stored = checkNotNull(sessions.find(SessionId(response.sessionId)))
             assertEquals(TrainingType.PRONUNCIATION_SENTENCES, stored.training)

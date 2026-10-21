@@ -7,13 +7,17 @@ import com.lexicon.interactors.passage.PassageGapResult
 import com.lexicon.interactors.passage.PassageSegment
 import com.lexicon.interactors.passage.PassageSentence
 import com.lexicon.interactors.passage.PassageSessionResult
+import com.lexicon.interactors.passage.StartPassageSessionRequest
 import com.lexicon.interactors.passage.StartPassageSessionUseCase
 import com.lexicon.interactors.passage.SubmitPassageAnswersResponse
 import com.lexicon.interactors.passage.SubmitPassageAnswersUseCase
 import com.lexicon.presentation.common.LastSessionResultsHolder
+import com.lexicon.presentation.common.TRAINING_WORDS_ARG
+import com.lexicon.presentation.common.asTrainingWordsArgument
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.slot
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +28,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -47,6 +52,7 @@ class PassageViewModelTest {
 
     private val submitAnswers: SubmitPassageAnswersUseCase = mockk()
     private val results = LastSessionResultsHolder()
+    private val request = slot<StartPassageSessionRequest>()
 
     @Before
     fun setUp() = Dispatchers.setMain(testDispatcher)
@@ -54,12 +60,13 @@ class PassageViewModelTest {
     @After
     fun tearDown() = Dispatchers.resetMain()
 
-    private fun viewModel(): PassageViewModel {
+    private fun viewModel(vocabularyIds: List<Long>? = null): PassageViewModel {
         val start: StartPassageSessionUseCase = mockk {
-            coEvery { this@mockk(any()) } returns PassageSessionResult.Ready("session-1", passage, persistentListOf())
+            coEvery { this@mockk(capture(request)) } returns PassageSessionResult.Ready("session-1", passage, persistentListOf())
         }
+        val arguments = vocabularyIds?.let { mapOf(TRAINING_WORDS_ARG to it.asTrainingWordsArgument()) }.orEmpty()
         return PassageViewModel(
-            savedStateHandle = SavedStateHandle(),
+            savedStateHandle = SavedStateHandle(arguments),
             startSession = start,
             submitAnswers = submitAnswers,
             lastSessionResultsHolder = results,
@@ -67,6 +74,24 @@ class PassageViewModelTest {
             dispatchers = dispatchers,
         )
     }
+
+    @Test
+    fun `a lesson's word list reaches the session request`() =
+        runTest(testDispatcher) {
+            viewModel(vocabularyIds = listOf(7L, 11L, 13L))
+            advanceUntilIdle()
+
+            assertEquals(listOf(7L, 11L, 13L), request.captured.vocabularyIds)
+        }
+
+    @Test
+    fun `an unscoped passage draws from the whole study set`() =
+        runTest(testDispatcher) {
+            viewModel()
+            advanceUntilIdle()
+
+            assertEquals(emptyList<Long>(), request.captured.vocabularyIds)
+        }
 
     @Test
     fun `pressing Check twice before the first check returns submits the passage once`() =

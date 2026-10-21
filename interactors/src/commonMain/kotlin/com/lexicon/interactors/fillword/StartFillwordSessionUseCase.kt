@@ -9,6 +9,10 @@ sealed interface FillwordSessionResult {
     data object EmptyStudySet : FillwordSessionResult
 }
 
+data class StartFillwordSessionRequest(
+    val vocabularyIds: List<Long> = emptyList(),
+)
+
 interface StartFillwordSessionUseCase {
-    suspend operator fun invoke(): FillwordSessionResult
+    suspend operator fun invoke(request: StartFillwordSessionRequest): FillwordSessionResult
 }

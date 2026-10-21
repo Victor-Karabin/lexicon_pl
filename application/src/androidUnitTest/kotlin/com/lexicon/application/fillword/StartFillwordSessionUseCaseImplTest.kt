@@ -1,12 +1,18 @@
 package com.lexicon.application.fillword
 
+import com.lexicon.application.training.FakeSessionStore
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.fillword.FillwordCell
 import com.lexicon.interactors.fillword.FillwordPuzzle
 import com.lexicon.interactors.fillword.FillwordSessionResult
+import com.lexicon.interactors.fillword.StartFillwordSessionRequest
+import com.lexicon.model.training.SessionId
+import com.lexicon.model.training.Step
+import com.lexicon.model.training.TrainingType
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -19,7 +25,8 @@ private const val LAYOUTS = 200
 
 class StartFillwordSessionUseCaseImplTest {
     private val vocabulary: VocabularyRepository = mockk()
-    private val useCase = StartFillwordSessionUseCaseImpl(vocabulary)
+    private val sessions = FakeSessionStore()
+    private val useCase = StartFillwordSessionUseCaseImpl(vocabulary, sessions)
 
     private val studySet = listOf(
         "kot" to "cat", "dom" to "house", "okno" to "window", "stół" to "table",
@@ -33,7 +40,12 @@ class StartFillwordSessionUseCaseImplTest {
         coEvery { vocabulary.getItemsByIds(any()) } returns studySet
     }
 
-    private suspend fun puzzle(): FillwordPuzzle = (useCase() as FillwordSessionResult.Ready).puzzle
+    private suspend fun ready(request: StartFillwordSessionRequest = StartFillwordSessionRequest()) =
+        useCase(request) as FillwordSessionResult.Ready
+
+    private suspend fun puzzle(): FillwordPuzzle = ready().puzzle
+
+    private fun wordFor(placed: String): Word = studySet.first { it.text.uppercase() == placed }
 
     private fun FillwordPuzzle.everyWordReadable(): Boolean =
         words.all { word ->
@@ -189,6 +201,73 @@ class StartFillwordSessionUseCaseImplTest {
             coEvery { vocabulary.studySetWordIds() } returns emptyList()
             coEvery { vocabulary.getItemsByIds(any()) } returns emptyList()
 
-            assertEquals(FillwordSessionResult.EmptyStudySet, useCase())
+            assertEquals(FillwordSessionResult.EmptyStudySet, useCase(StartFillwordSessionRequest()))
+        }
+
+    @Test
+    fun `a lesson's word list is the only thing packed and the study set is not read`() =
+        runTest {
+            val lesson = listOf(1L, 2L, 3L)
+            coEvery { vocabulary.getItemsByIds(lesson) } returns studySet.filter { it.id.value in lesson }
+
+            repeat(LAYOUTS) {
+                val puzzle = ready(StartFillwordSessionRequest(vocabularyIds = lesson)).puzzle
+
+                assertTrue(puzzle.words.isNotEmpty())
+                assertTrue(puzzle.words.all { it.word in setOf("KOT", "DOM", "OKNO") })
+            }
+            coVerify(exactly = 0) { vocabulary.studySetWordIds() }
+        }
+
+    @Test
+    fun `without a word list the study set is packed`() =
+        runTest {
+            givenStudySet()
+
+            ready(StartFillwordSessionRequest(vocabularyIds = emptyList()))
+
+            coVerify(exactly = 1) { vocabulary.studySetWordIds() }
+            coVerify { vocabulary.getItemsByIds(studySet.map { it.id.value }) }
+        }
+
+    @Test
+    fun `a lesson whose words do not fit the grid has no puzzle`() =
+        runTest {
+            val lesson = listOf(90L, 91L, 92L)
+            coEvery { vocabulary.getItemsByIds(lesson) } returns listOf(
+                Word(VocabularyId(90), "dzień dobry", "good morning", "x"),
+                Word(VocabularyId(91), "niepodległość", "independence", "x"),
+                Word(VocabularyId(92), "ja", "I", "x"),
+            )
+
+            assertEquals(
+                FillwordSessionResult.EmptyStudySet,
+                useCase(StartFillwordSessionRequest(vocabularyIds = lesson)),
+            )
+        }
+
+    @Test
+    fun `a lesson that resolves to no words has no puzzle`() =
+        runTest {
+            coEvery { vocabulary.getItemsByIds(listOf(404L)) } returns emptyList()
+
+            assertEquals(
+                FillwordSessionResult.EmptyStudySet,
+                useCase(StartFillwordSessionRequest(vocabularyIds = listOf(404L))),
+            )
+        }
+
+    @Test
+    fun `a started puzzle is stored as a Fillword session with a step per placed word in puzzle order`() =
+        runTest {
+            givenStudySet()
+
+            val ready = ready()
+
+            val stored = checkNotNull(sessions.find(SessionId(ready.sessionId)))
+            val steps = stored.steps.map { it as Step.Question }
+            assertEquals(TrainingType.FILLWORD, stored.training)
+            assertEquals(ready.puzzle.words.map { wordFor(it.word).id.value }, steps.map { it.wordId.value })
+            assertEquals(ready.puzzle.words.map { wordFor(it.word).text }, steps.map { it.expectedAnswer })
         }
 }
