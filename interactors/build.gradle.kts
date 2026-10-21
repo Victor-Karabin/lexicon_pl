@@ -3,8 +3,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
-
-    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -23,7 +21,6 @@ kotlin {
             api(projects.model)
             implementation(libs.kotlinx.coroutines.core)
             api(libs.kotlinx.collections.immutable)
-            api(libs.kotlinx.serialization.json)
         }
         androidUnitTest.dependencies {
             implementation(libs.bundles.unit.test)

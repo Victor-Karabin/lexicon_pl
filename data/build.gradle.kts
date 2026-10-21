@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -43,15 +42,12 @@ kotlin {
 
             implementation(libs.retrofit.core)
             implementation(libs.retrofit.kotlinx.serialization)
-            implementation(libs.okhttp.core)
-            implementation(libs.okhttp.logging)
         }
         androidUnitTest.dependencies {
             implementation(libs.bundles.unit.test)
         }
         androidInstrumentedTest.dependencies {
             implementation(libs.bundles.instrumented.test)
-            implementation(libs.room.testing)
         }
     }
 }
@@ -60,10 +56,6 @@ dependencies {
     add("kspAndroid", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)
     add("kspIosSimulatorArm64", libs.room.compiler)
-}
-
-room {
-    schemaDirectory("$projectDir/schemas")
 }
 
 android {
