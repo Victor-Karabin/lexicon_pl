@@ -183,6 +183,118 @@
               "remoteId": "1uBtBbxFa9hbNGTVZZJ56lWSDQoIlVCtE"
             },
             {
+              "file": "a1_coursebook_101A5.mp3",
+              "section": "A",
+              "task": 5,
+              "part": null,
+              "remoteId": "10QRbm6B8zxctbxgsPcq2E0_TnESSetYf"
+            },
+            {
+              "file": "a1_coursebook_101D1-2.mp3",
+              "section": "D",
+              "task": 1,
+              "part": "2",
+              "remoteId": "1Bi1IgBIh88HhdwGenhkoGgi07JfGHSw_"
+            },
+            {
+              "file": "a1_coursebook_101D1-3.mp3",
+              "section": "D",
+              "task": 1,
+              "part": "3",
+              "remoteId": "1rrcBfUnzjj1nYY52mNF2mTN4QJVDrn8h"
+            },
+            {
+              "file": "a1_coursebook_101D1-4.mp3",
+              "section": "D",
+              "task": 1,
+              "part": "4",
+              "remoteId": "1PnwCchmN8l1qOnvf2Iwg5490gpalHkQv"
+            },
+            {
+              "file": "a1_coursebook_101D1.mp3",
+              "section": "D",
+              "task": 1,
+              "part": null,
+              "remoteId": "1CewbbGkyiopGNFYcTN6572jHRSp-jDoS"
+            },
+            {
+              "file": "a1_coursebook_101E1-2.mp3",
+              "section": "E",
+              "task": 1,
+              "part": "2",
+              "remoteId": "1aUSJdl99iuPgek2Jtk9TwIlThn2ilVd-"
+            },
+            {
+              "file": "a1_coursebook_101E1-3.mp3",
+              "section": "E",
+              "task": 1,
+              "part": "3",
+              "remoteId": "1X64EEKIa4DEb01pUsyEUoNdWtYTe2pEw"
+            },
+            {
+              "file": "a1_coursebook_101E1-4.mp3",
+              "section": "E",
+              "task": 1,
+              "part": "4",
+              "remoteId": "17bUkYibHWeDUCY7-YCGDPMdqOCHCRHUH"
+            },
+            {
+              "file": "a1_coursebook_101E1.mp3",
+              "section": "E",
+              "task": 1,
+              "part": null,
+              "remoteId": "1cUdaMBfkl8dieLziRKEiFax6dP0082J-"
+            },
+            {
+              "file": "a1_coursebook_101E2.mp3",
+              "section": "E",
+              "task": 2,
+              "part": null,
+              "remoteId": "13aha3ImLpMIy9ABesl2NtE0bO6JDwuRR"
+            },
+            {
+              "file": "a1_coursebook_101b1-2.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "2",
+              "remoteId": "14epJFoeQ05y3DGeIA-JQUqZN0jV6oXc7"
+            },
+            {
+              "file": "a1_coursebook_101b1-3.mp3",
+              "section": "B",
+              "task": 1,
+              "part": "3",
+              "remoteId": "1ae2IcY3QPc5o0oFvqQVs8RfugFmiDgsd"
+            },
+            {
+              "file": "a1_coursebook_101b1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": null,
+              "remoteId": "1e2JiDqklVVqIXX7w3TenN0CGBtFANA6w"
+            },
+            {
+              "file": "a1_coursebook_101c1-2.mp3",
+              "section": "C",
+              "task": 1,
+              "part": "2",
+              "remoteId": "1C8jgMeWW45f-HMPs38OWHj2ksdRt3YvD"
+            },
+            {
+              "file": "a1_coursebook_101c1-3.mp3",
+              "section": "C",
+              "task": 1,
+              "part": "3",
+              "remoteId": "10fyUJ5PHceH-SwRGPSZMwGs0oeECLvQ6"
+            },
+            {
+              "file": "a1_coursebook_101c1.mp3",
+              "section": "C",
+              "task": 1,
+              "part": null,
+              "remoteId": "1dvUgyIEE08ybVuS0LMLcpopHBUyHwFhh"
+            },
+            {
               "file": "a1_workbook_01_L01_cwiczenie2.mp3",
               "section": null,
               "task": 2,
@@ -1003,6 +1115,13 @@
               "remoteId": "1Fw3xTEcdYESiNFjtvKXc4HY8fkAP3Ntj"
             },
             {
+              "file": "a1_coursebook_102e4.mp3",
+              "section": "E",
+              "task": 4,
+              "part": null,
+              "remoteId": "16uYyGyh8VLcpI9vGxJCInMGF-YGIiVdS"
+            },
+            {
               "file": "a1_workbook_09_L02_cwiczenie2.mp3",
               "section": null,
               "task": 2,
@@ -1195,6 +1314,27 @@
               "remoteId": "1ynC9NG4ObzYfHYpEKVn9qBfrsshQ1uN1"
             },
             {
+              "file": "a1_coursebook_103a4-2.mp3",
+              "section": "A",
+              "task": 4,
+              "part": "2",
+              "remoteId": "1M3N5ZaUzV3VaqmPTPkS8kmTlLdA2IqyE"
+            },
+            {
+              "file": "a1_coursebook_103b1.mp3",
+              "section": "B",
+              "task": 1,
+              "part": null,
+              "remoteId": "1huwR8-CINMJU7Z06tZ9_RqUx3bNvLGk7"
+            },
+            {
+              "file": "a1_coursebook_103d1.mp3",
+              "section": "D",
+              "task": 1,
+              "part": null,
+              "remoteId": "1ME7rq9gIBWUjVrpdXVWZI7KjTerI87Uh"
+            },
+            {
               "file": "a1_workbook_14_L03_cwiczenie1.mp3",
               "section": null,
               "task": 1,
@@ -1362,6 +1502,13 @@
               "task": 6,
               "part": null,
               "remoteId": "1W16etFAIbpKq9rZFvlpUQfWFJsyjL1eP"
+            },
+            {
+              "file": "a1_coursebook_104c7.mp3",
+              "section": "C",
+              "task": 7,
+              "part": null,
+              "remoteId": "1haL2Upe4o8VBZzGYE1oamZ1vKpGzt_A9"
             },
             {
               "file": "a1_workbook_17_L04_cwiczenie8.mp3",
@@ -1975,6 +2122,27 @@
               "task": 2,
               "part": "c",
               "remoteId": "1hjrHbtCtbhIlrsqIiit0Q8Wis9XJGoc-"
+            },
+            {
+              "file": "a1_coursebook_107b5.mp3",
+              "section": "B",
+              "task": 5,
+              "part": null,
+              "remoteId": "1khXHF4vHR9NUUGLxRyLrVWobAwRyzqGR"
+            },
+            {
+              "file": "a1_coursebook_107b7.mp3",
+              "section": "B",
+              "task": 7,
+              "part": null,
+              "remoteId": "1YtcxQkdIy-d8OFCIVeS6dhGqVjtOv8KE"
+            },
+            {
+              "file": "a1_coursebook_107lotto.mp3",
+              "section": null,
+              "task": null,
+              "part": "lotto",
+              "remoteId": "1pWhzD_LmTF2w3oBp6y9vgpX-iWFTxRkh"
             },
             {
               "file": "a1_workbook_33_L07_cwiczenie1.mp3",
