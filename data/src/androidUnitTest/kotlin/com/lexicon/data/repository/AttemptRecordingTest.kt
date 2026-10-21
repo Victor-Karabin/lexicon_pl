@@ -22,7 +22,6 @@ class AttemptRecordingTest {
         ConjugationAssetLoader(mockk<AssetReader>(relaxed = true)),
         conjugationDao,
         mockk<CatalogSeedStore>(relaxed = true),
-        mockk(relaxed = true),
     )
 
     @Test

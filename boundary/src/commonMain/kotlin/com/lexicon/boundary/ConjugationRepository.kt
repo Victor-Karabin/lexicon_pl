@@ -10,11 +10,6 @@ data class VerbConjugationBoundary(
     val aspect: Aspect? = null,
 )
 
-data class ConjugationCourseBoundary(
-    val id: String,
-    val infinitives: List<String>,
-)
-
 data class ConjugationProgressBoundary(
     val infinitive: String,
     val person: String,
@@ -48,12 +43,6 @@ interface ConjugationRepository {
     suspend fun hasDeletedVerbs(): Boolean
 
     suspend fun restoreVerbs()
-
-    suspend fun courses(): List<ConjugationCourseBoundary>
-
-    suspend fun createCourse(infinitives: List<String>): String
-
-    suspend fun deleteCourse(courseId: String)
 
     suspend fun progress(courseId: String): List<ConjugationProgressBoundary>
 

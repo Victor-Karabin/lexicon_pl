@@ -89,14 +89,11 @@
     <string name="training_conjugation_blurb">Pick verbs and learn how they change by person</string>
     <string name="conjugation_select_title">Choose verbs</string>
     <string name="conjugation_search_hint">Search verb</string>
-    <string name="conjugation_selected_count">%1$d selected</string>
-    <string name="conjugation_create">Create the course</string>
     <string name="conjugation_restore_all">Restore all</string>
     <string name="conjugation_partial">only %1$d of 6 persons in the source</string>
     <string name="conjugation_none">Choose some verbs first — the course is built from the ones you pick.</string>
     <string name="conjugation_complete">Every form mastered. Pick more verbs to carry on.</string>
     <string name="conjugation_progress">%1$d of %2$d forms mastered</string>
-    <string name="conjugation_remove">Remove the conjugation course</string>
     <string name="conjugation_verbs_chip">%1$d verbs</string>
     <string name="drill_attempted_chip">%1$d of %2$d tried</string>
     <string name="numbers_title">Numbers</string>
@@ -185,8 +182,6 @@
     <string name="preset_detail_title">Preset</string>
     <string name="preset_detail_not_found">This preset is no longer available.</string>
     <string name="word_pronounce">Play “%1$s”</string>
-    <string name="study_set_add">Add to study set</string>
-    <string name="study_set_remove">Remove from study set</string>
     <string name="word_status_undefined">Not set. Tap to mark as to learn</string>
     <string name="word_status_to_learn">To learn. Tap to mark as favourite</string>
     <string name="word_status_favourite">Favourite. Tap to mark as known</string>
@@ -456,8 +451,6 @@
     <string name="create_word_presets_failed">The word\'s presets could not be read, so nothing was saved. Try again.</string>
     <string name="create_word_save_failed">That word could not be saved. Check both fields are filled in.</string>
     <string name="lesson_recordings">Recordings</string>
-    <string name="conjugation_no_course">No course yet</string>
-    <string name="conjugation_no_course_body">Pick the verbs you want to drill and they become a course you can come back to.</string>
     <string name="conjugation_done_title">Nothing left to drill</string>
     <string name="conjugation_pick_for">Pick for %1$s</string>
     <string name="conjugation_tap_row">Tap a row, then pick its ending</string>

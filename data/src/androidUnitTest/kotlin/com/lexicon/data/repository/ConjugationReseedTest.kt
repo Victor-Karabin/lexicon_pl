@@ -19,7 +19,7 @@ class ConjugationReseedTest {
     private val dao: ConjugationDao = mockk(relaxed = true) { coEvery { countVerbs() } returns 2 }
     private val syncStore: CatalogSeedStore = mockk(relaxed = true)
 
-    private fun repository(text: String) = ConjugationRepositoryImpl(loader(text), dao, syncStore, mockk(relaxed = true))
+    private fun repository(text: String) = ConjugationRepositoryImpl(loader(text), dao, syncStore)
 
     @Test
     fun `an installed app that already holds the asset does not seed again`() =

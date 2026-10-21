@@ -4,9 +4,8 @@ A course that drills writing numbers as Polish words. The learner types the numb
 practise; each training shows one of them in digits and asks for the words — as a plain
 number, as an ordinal, or as a point in a list.
 
-It works the way the conjugation course does: a choice made on the Plan tab becomes a
-course with its own progress on the dashboard, and a training is ten steps followed by the
-usual results screen.
+A choice made on the Plan tab becomes a course with its own progress on the dashboard, and a
+training is ten steps followed by the usual results screen.
 
 ## Choosing the numbers
 

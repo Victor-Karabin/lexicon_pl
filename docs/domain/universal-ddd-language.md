@@ -44,7 +44,7 @@ Five of the ten contexts have their model there; Conjugation, Declension, Number
 | Scheduling | Review intervals, mastery, study days, streaks | `model.scheduling` | — |
 | Vocabulary course | The always-on course: its settings, its queue and where the learner is in it | `model.vocabularycourse` | `interactors.vocabularycourse` |
 | Course | Fixed teaching material — lessons and exercises, and reference rules | `model.course`, `model.rules` | `interactors.course`, `interactors.rules` |
-| Conjugation | Verbs, their forms, and courses over them | — | `interactors.conjugation` |
+| Conjugation | Verbs, their forms, and the verb course over the study set | — | `interactors.conjugation` |
 | Declension | Nouns and adjectives by case, and the Cases course over them | — | `interactors.declension` |
 | Numbers | Numbers the learner chose, their Polish words and per-number progress | — | `interactors.numbers` |
 | Countries | Countries the learner chose, their Polish names, nationalities and capitals, and per-field progress | — | `interactors.countries` |
@@ -107,7 +107,7 @@ under [Context-Specific Terminology](#context-specific-terminology) and must not
 | Ending | The part of a conjugated form that differs from the verb's shared stem | Conjugation | *termination* | `ConjugationSplit.endings` |
 | Stem | The longest prefix every usable form of a verb shares | Conjugation | *root*, *base* | `ConjugationSplit.stem` |
 | Variant mastery | A conjugation or declension variant answered correctly enough times in a row | Conjugation, Declension | *learned* | `TABLE_DRILL_MASTERY_STREAK` |
-| Conjugation course | A chosen set of verbs practised together, with its own progress | Conjugation | *course* unqualified | `ConjugationCourse` |
+| Conjugation course | The study-set verbs practised together, with one shared progress; there is exactly one (`study-set`) | Conjugation | *course* unqualified | `ConjugationCourse` |
 | Declension column | One number or gender of a declinable word — singular or plural for a noun; masculine, feminine, neuter, plural for men or other plural for an adjective — asked as one table of seven cases | Declension | *form group* | `DeclensionColumn` |
 | Declension variant | One word, column and case — the unit of progress in the Cases course | Declension | *cell* | `DeclensionVariant` |
 | Cases course | The nouns and adjectives marked to learn, drilled one declension column at a time | Declension | *declension course* in UI text | `DeclensionCourse`, `NextDeclensionTableUseCase` |
@@ -180,7 +180,7 @@ reads its parts back out is ceremony.
 | Preset | its words and membership overrides | a hand-made membership survives a catalogue re-seed | In the seeder, with tests that fail if the carve-out is reverted. Owning a thousand words to protect it would cost more than it saves |
 | Vocabulary course | its settings and its place in the queue | the queue is never empty; the place is always inside the queue | In the use cases: `UpdateCourseSettingsUseCase` keeps the previous queue rather than store an empty one, and the place is clamped on read |
 | Course | its lessons, their words, audio and exercises | lesson progress belongs to exactly one course | By the schema — progress is keyed by lesson |
-| Conjugation course | its chosen verbs and their per-variant progress | progress is scoped to one course, so two courses over one verb do not share it | By the schema — progress is keyed by course |
+| Conjugation course | the study-set verbs and their per-variant progress | one course exists; its progress is keyed by its id | In `LoadConjugationCoursesUseCase`, which builds only the `study-set` course; by the schema — progress is keyed by course id |
 | Numbers course | the typed choice and per-number progress | only a readable choice is stored; progress belongs to the number form, so it survives a change of choice | In `SaveNumberCourseUseCase`, which parses before saving; by the schema — progress is keyed by number and form |
 | Countries course | the chosen country codes and per-field progress | a choice holds only codes that are in the list; progress belongs to the country and field, so it survives a change of choice | In `SaveCountryChoiceUseCase`, which drops unknown codes; by the schema — progress is keyed by country and field |
 | Verb | its forms per person | a form is never invented; absent means absent | By construction — forms are read from the asset, never derived |
@@ -238,14 +238,13 @@ Introducing an event type is a domain change and requires updating this document
 | Operation | Meaning | Entry point |
 | --- | --- | --- |
 | Mark a word | Move a word to its next status | `SetWordStatusUseCase` |
-| Star a verb | Add a verb to the study set as a word, creating it if it does not exist | `ToggleVerbInStudySetUseCase` |
+| Star a verb | Add a verb to the study set by its word status; `EnsureVerbWordUseCase` creates the word if it is missing | `SetWordStatusUseCase` |
 | Start a session | Draw words and open a session over them | `Start*SessionUseCase` |
 | Submit an answer | Mark one step against the session's expected answer | `Submit*UseCase` |
 | Record an answer | Store the result, advance the review schedule, credit the study day | `RecordAnswerUseCase` |
 | Advance the course | Mark the current training done and find the next runnable one, starting a new round after the last | `NextCourseTrainingUseCase` |
 | Reset the queue | Go back to the first training and offer the new-word cards again | `ResetCourseQueueUseCase` |
 | Change the course | Store new settings; a changed queue starts from its first training | `UpdateCourseSettingsUseCase` |
-| Create a conjugation course | Fix a set of verbs as a course | `CreateConjugationCourseUseCase` |
 | Restore the verbs | Re-seed the verb catalogue from its asset | `RestoreConjugationVerbsUseCase` |
 | Choose the numbers | Store the typed numbers and ranges as the numbers course, if they can be read | `SaveNumberCourseUseCase` |
 | Ask a number | Pick the next number form: not asked this session, not mastered, tried the fewest times | `NextNumberUseCase` |
@@ -303,7 +302,7 @@ These words carry different meanings in different contexts and must not be unifi
 
 | Word | In one context | In another |
 | --- | --- | --- |
-| **Course** | Course — a sequence of authored lessons (Polish for Beginners) | Conjugation course — a chosen set of verbs |
+| **Course** | Course — a sequence of authored lessons (Polish for Beginners) | Conjugation course — the study-set verbs |
 | | | Vocabulary course — the always-on queue over the learner's marked words |
 | | | Numbers course — the numbers the learner typed |
 | | | Countries course — the countries the learner ticked |
@@ -362,7 +361,9 @@ this document describes.
 | `ProgramQueue` | Moved out of the presentation module, then replaced | `NextCourseTrainingUseCase` |
 | `TrainingType.PASSAGE` | Removed — it stood in for both variants | `PASSAGE_WRITE`, `PASSAGE_BANK` |
 | Selection (conjugation) | Removed | A conjugation course |
-| Reset the course | Removed | Delete the course |
+| Reset the course | Removed | — |
+| Create a conjugation course | Removed — there is one built-in course over the study set | — |
+| Delete a conjugation course | Removed — there is one built-in course over the study set | — |
 
 ## Terminology Change History
 
@@ -383,6 +384,7 @@ this document describes.
 | 2026-09-18 | **Study set flag replaced by `WordStatus`** | The learner asked for four states — not defined, to learn, favourite, known — cycled by one tap |
 | 2026-09-19 | **Program replaced by the vocabulary course** | There was only ever one program, and the learner should not have to build, start or delete it. Its generic configuration — goals, scope, milestones, rewards, adaptation — had no editor and no reader |
 | 2026-09-19 | *Program day* replaced by **round** | The queue cycles; a day can no longer be finished |
+| 2026-10-21 | **User-created conjugation courses removed**; the conjugation course is the one built-in course over the study set | The app only ever showed the study-set course; creating and deleting courses was dead code and stored a second set of verb lists |
 
 ## Enforcement
 

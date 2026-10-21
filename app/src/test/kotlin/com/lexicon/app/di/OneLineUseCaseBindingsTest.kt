@@ -6,10 +6,8 @@ import com.lexicon.boundary.SettingsRepository
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.boundary.WordGrammarGenerator
-import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.DeleteConjugationVerbUseCase
 import com.lexicon.interactors.conjugation.HasDeletedVerbsUseCase
-import com.lexicon.interactors.conjugation.LoadStudySetVerbsUseCase
 import com.lexicon.interactors.conjugation.RestoreConjugationVerbsUseCase
 import com.lexicon.interactors.presets.DeletePresetUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
@@ -115,16 +113,12 @@ class OneLineUseCaseBindingsTest : KoinTest {
     fun `the verb use cases reach the conjugation store`() =
         runTest {
             get<DeleteConjugationVerbUseCase>()("robić")
-            get<DeleteConjugationCourseUseCase>()("course-1")
             get<RestoreConjugationVerbsUseCase>()()
             get<HasDeletedVerbsUseCase>()()
-            get<LoadStudySetVerbsUseCase>()(listOf("robić"))
 
             coVerify(exactly = 1) { conjugations.deleteVerb("robić") }
-            coVerify(exactly = 1) { conjugations.deleteCourse("course-1") }
             coVerify(exactly = 1) { conjugations.restoreVerbs() }
             coVerify(exactly = 1) { conjugations.hasDeletedVerbs() }
-            coVerify(exactly = 1) { vocabulary.studySetTextsAmong(listOf("robić")) }
         }
 
     @Test

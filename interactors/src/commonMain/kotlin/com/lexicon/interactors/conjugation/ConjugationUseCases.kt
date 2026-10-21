@@ -24,16 +24,8 @@ fun interface RestoreConjugationVerbsUseCase {
     suspend operator fun invoke()
 }
 
-interface CreateConjugationCourseUseCase {
-    suspend operator fun invoke(infinitives: List<String>): String
-}
-
 interface LoadConjugationCoursesUseCase {
     suspend operator fun invoke(): ImmutableList<ConjugationCourse>
-}
-
-fun interface DeleteConjugationCourseUseCase {
-    suspend operator fun invoke(courseId: String)
 }
 
 interface NextConjugationTableUseCase {
@@ -79,20 +71,4 @@ interface ChooseVerbImageUseCase {
         translation: String?,
         imageUrl: String,
     )
-}
-
-interface ToggleVerbInStudySetUseCase {
-    suspend operator fun invoke(
-        infinitive: String,
-        translation: String?,
-        isInStudySet: Boolean,
-    )
-}
-
-fun interface LoadStudySetVerbsUseCase {
-    suspend operator fun invoke(infinitives: List<String>): Set<String>
-}
-
-interface LoadConjugationProgressUseCase {
-    suspend operator fun invoke(courseId: String): ConjugationCourseProgress
 }
