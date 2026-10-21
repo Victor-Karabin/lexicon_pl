@@ -1,13 +1,9 @@
 package com.lexicon.shared
 
-import com.lexicon.interactors.conjugation.CreateConjugationCourseUseCase
-import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
-import com.lexicon.interactors.conjugation.LoadStudySetVerbsUseCase
 import com.lexicon.interactors.conjugation.NextConjugationTableUseCase
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
-import com.lexicon.interactors.conjugation.ToggleVerbInStudySetUseCase
 import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
 import com.lexicon.interactors.course.GetLessonProgressUseCase
 import com.lexicon.interactors.course.GetLessonScriptUseCase
@@ -184,13 +180,9 @@ object IosDependencies : KoinComponent {
     val submitCrossword: SubmitCrosswordUseCase by inject()
     val startMix: StartMixSessionUseCase by inject()
     val loadConjugationVerbs: LoadConjugationVerbsUseCase by inject()
-    val createConjugationCourse: CreateConjugationCourseUseCase by inject()
     val loadConjugationCourses: LoadConjugationCoursesUseCase by inject()
-    val deleteConjugationCourse: DeleteConjugationCourseUseCase by inject()
     val nextConjugationTable: NextConjugationTableUseCase by inject()
     val submitConjugationAnswer: SubmitConjugationAnswerUseCase by inject()
-    val toggleVerbInStudySet: ToggleVerbInStudySetUseCase by inject()
-    val loadStudySetVerbs: LoadStudySetVerbsUseCase by inject()
 
     val startFillword: StartFillwordSessionUseCase by inject()
     val startPassage: StartPassageSessionUseCase by inject()

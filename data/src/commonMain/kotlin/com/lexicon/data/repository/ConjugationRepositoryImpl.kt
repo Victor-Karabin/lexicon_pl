@@ -1,16 +1,12 @@
 package com.lexicon.data.repository
 
-import com.lexicon.boundary.ConjugationCourseBoundary
 import com.lexicon.boundary.ConjugationProgressBoundary
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.SeedOutcomeBoundary
 import com.lexicon.boundary.VerbConjugationBoundary
-import com.lexicon.common.Clock
 import com.lexicon.data.local.AttemptCounts
 import com.lexicon.data.local.CatalogSeedStore
 import com.lexicon.data.local.ConjugationAssetLoader
-import com.lexicon.data.local.ConjugationCourseEntity
-import com.lexicon.data.local.ConjugationCourseVerbEntity
 import com.lexicon.data.local.ConjugationDao
 import com.lexicon.data.local.ConjugationProgressEntity
 import com.lexicon.data.local.ConjugationVerbEntity
@@ -21,8 +17,6 @@ import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 private val formsSerializer = MapSerializer(String.serializer(), ListSerializer(String.serializer()))
 
@@ -30,7 +24,6 @@ class ConjugationRepositoryImpl(
     private val loader: ConjugationAssetLoader,
     private val dao: ConjugationDao,
     private val syncStore: CatalogSeedStore,
-    private val clock: Clock,
 ) : ConjugationRepository {
     private val json = Json { ignoreUnknownKeys = true }
     private val lock = Mutex()
@@ -89,25 +82,6 @@ class ConjugationRepositoryImpl(
     override suspend fun hasDeletedVerbs(): Boolean = dao.countBundledVerbs() < assetVerbCount()
 
     override suspend fun restoreVerbs() = lock.withLock { seed() }
-
-    override suspend fun courses(): List<ConjugationCourseBoundary> {
-        val verbsByCourse = dao.allCourseVerbs().groupBy({ it.courseId }, { it.infinitive })
-        return dao.courses().map { ConjugationCourseBoundary(id = it.id, infinitives = verbsByCourse[it.id].orEmpty()) }
-    }
-
-    @OptIn(ExperimentalUuidApi::class)
-    override suspend fun createCourse(infinitives: List<String>): String {
-        val id = Uuid.random().toString()
-        dao.saveCourse(ConjugationCourseEntity(id = id, createdAtEpochMillis = clock.nowEpochMillis()))
-        dao.addCourseVerbs(infinitives.distinct().map { ConjugationCourseVerbEntity(id, it) })
-        return id
-    }
-
-    override suspend fun deleteCourse(courseId: String) {
-        dao.clearProgress(courseId)
-        dao.clearCourseVerbs(courseId)
-        dao.deleteCourse(courseId)
-    }
 
     override suspend fun progress(courseId: String): List<ConjugationProgressBoundary> =
         dao.progress(courseId).map {

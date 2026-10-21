@@ -28,7 +28,7 @@ class ConjugationRepositoryImplTest {
     private val assets = mockk<AssetReader> { every { readText("conjugations.json") } returns asset }
     private val dao: ConjugationDao = mockk(relaxed = true)
 
-    private val repository = ConjugationRepositoryImpl(ConjugationAssetLoader(assets), dao, mockk(relaxed = true), mockk(relaxed = true))
+    private val repository = ConjugationRepositoryImpl(ConjugationAssetLoader(assets), dao, mockk(relaxed = true))
 
     private val userVerb = VerbConjugationBoundary("kotkować", mapOf("ja" to listOf("kotkuję")), "to kitten")
 

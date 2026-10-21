@@ -1,15 +1,12 @@
 package com.lexicon.application.di
 
 import com.lexicon.application.conjugation.ChooseVerbImageUseCaseImpl
-import com.lexicon.application.conjugation.CreateConjugationCourseUseCaseImpl
 import com.lexicon.application.conjugation.EnsureVerbWordUseCaseImpl
 import com.lexicon.application.conjugation.LoadConjugationCoursesUseCaseImpl
-import com.lexicon.application.conjugation.LoadConjugationProgressUseCaseImpl
 import com.lexicon.application.conjugation.LoadConjugationVerbsUseCaseImpl
 import com.lexicon.application.conjugation.LoadVerbImageChoicesUseCaseImpl
 import com.lexicon.application.conjugation.NextConjugationTableUseCaseImpl
 import com.lexicon.application.conjugation.SubmitConjugationAnswerUseCaseImpl
-import com.lexicon.application.conjugation.ToggleVerbInStudySetUseCaseImpl
 import com.lexicon.application.countries.LoadCountriesUseCaseImpl
 import com.lexicon.application.countries.LoadCountryChoiceUseCaseImpl
 import com.lexicon.application.countries.LoadCountryCourseUseCaseImpl
@@ -116,20 +113,15 @@ import com.lexicon.boundary.SettingsRepository
 import com.lexicon.boundary.VocabularyPresetRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.conjugation.ChooseVerbImageUseCase
-import com.lexicon.interactors.conjugation.CreateConjugationCourseUseCase
-import com.lexicon.interactors.conjugation.DeleteConjugationCourseUseCase
 import com.lexicon.interactors.conjugation.DeleteConjugationVerbUseCase
 import com.lexicon.interactors.conjugation.EnsureVerbWordUseCase
 import com.lexicon.interactors.conjugation.HasDeletedVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
-import com.lexicon.interactors.conjugation.LoadConjugationProgressUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
-import com.lexicon.interactors.conjugation.LoadStudySetVerbsUseCase
 import com.lexicon.interactors.conjugation.LoadVerbImageChoicesUseCase
 import com.lexicon.interactors.conjugation.NextConjugationTableUseCase
 import com.lexicon.interactors.conjugation.RestoreConjugationVerbsUseCase
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
-import com.lexicon.interactors.conjugation.ToggleVerbInStudySetUseCase
 import com.lexicon.interactors.countries.LoadCountriesUseCase
 import com.lexicon.interactors.countries.LoadCountryChoiceUseCase
 import com.lexicon.interactors.countries.LoadCountryCourseUseCase
@@ -326,21 +318,10 @@ val domainModule = module {
     }
     factoryOf(::NextConjugationTableUseCaseImpl) { bind<NextConjugationTableUseCase>() }
     factoryOf(::SubmitConjugationAnswerUseCaseImpl) { bind<SubmitConjugationAnswerUseCase>() }
-    factoryOf(::LoadConjugationProgressUseCaseImpl) { bind<LoadConjugationProgressUseCase>() }
-    factoryOf(::CreateConjugationCourseUseCaseImpl) { bind<CreateConjugationCourseUseCase>() }
     factoryOf(::LoadConjugationCoursesUseCaseImpl) { bind<LoadConjugationCoursesUseCase>() }
-    factory<DeleteConjugationCourseUseCase> {
-        val conjugations = get<ConjugationRepository>()
-        DeleteConjugationCourseUseCase { conjugations.deleteCourse(it) }
-    }
     factoryOf(::EnsureVerbWordUseCaseImpl) { bind<EnsureVerbWordUseCase>() }
     factoryOf(::LoadVerbImageChoicesUseCaseImpl) { bind<LoadVerbImageChoicesUseCase>() }
     factoryOf(::ChooseVerbImageUseCaseImpl) { bind<ChooseVerbImageUseCase>() }
-    factoryOf(::ToggleVerbInStudySetUseCaseImpl) { bind<ToggleVerbInStudySetUseCase>() }
-    factory<LoadStudySetVerbsUseCase> {
-        val vocabulary = get<VocabularyRepository>()
-        LoadStudySetVerbsUseCase { vocabulary.studySetTextsAmong(it) }
-    }
     factoryOf(::SubmitPassageAnswersUseCaseImpl) { bind<SubmitPassageAnswersUseCase>() }
     factoryOf(::CreateWordUseCaseImpl) { bind<CreateWordUseCase>() }
     factoryOf(::UpdateWordUseCaseImpl) { bind<UpdateWordUseCase>() }
