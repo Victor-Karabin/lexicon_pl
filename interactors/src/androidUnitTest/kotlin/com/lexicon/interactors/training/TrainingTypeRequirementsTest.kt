@@ -42,6 +42,11 @@ class TrainingTypeRequirementsTest {
     }
 
     @Test
+    fun `only Pronunciation of sentences leaves the review schedule alone`() {
+        assertEquals(listOf(TrainingType.PRONUNCIATION_SENTENCES), TrainingType.entries.filterNot { it.updatesSchedule })
+    }
+
+    @Test
     fun `every training needs at least one word`() {
         assertTrue(TrainingType.entries.all { it.minimumWords >= 1 })
     }

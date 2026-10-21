@@ -18,6 +18,7 @@ import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.model.training.SessionId
 import com.lexicon.model.training.Step
+import com.lexicon.model.training.StepOutcome
 import com.lexicon.model.training.TrainingType
 import com.lexicon.model.vocabulary.CefrLevel
 import com.lexicon.model.vocabulary.VocabularyId
@@ -88,11 +89,13 @@ class PronunciationSentencesRecordingTest {
         }
 
     @Test
-    fun `a session that was never stored is recorded as Pronunciation check`() =
+    fun `a session that was never stored records nothing, though the learner still gets the verdict`() =
         runTest {
-            submit(request("unknown", expected = "kot", recognized = "kot"))
+            val response = submit(request("unknown", expected = "kot", recognized = "kot"))
 
-            coVerify { recordAnswer(match<RecordedAnswer> { it.trainingType == TrainingType.PRONUNCIATION_CHECK }) }
+            coVerify(exactly = 0) { recordAnswer(any()) }
+            assertEquals(StepOutcome.CORRECT, response.outcome)
+            assertEquals("kot", response.expectedText)
         }
 
     @Test

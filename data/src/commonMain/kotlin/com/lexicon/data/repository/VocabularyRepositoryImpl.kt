@@ -198,9 +198,9 @@ class VocabularyRepositoryImpl(
         return wordDao.learningWordIds(limit)
     }
 
-    override suspend fun randomKnownWordIds(limit: Int): List<Long> {
+    override suspend fun unscheduledKnownWordIds(limit: Int): List<Long> {
         vocabularySeeder.ensureSeeded()
-        return wordDao.randomKnownWordIds(limit)
+        return wordDao.unscheduledKnownWordIds(limit)
     }
 
     override fun observeWordStatuses(): Flow<Map<Long, WordStatus>> =

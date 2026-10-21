@@ -2,6 +2,7 @@ package com.lexicon.application.vocabularycourse
 
 import com.lexicon.application.training.picturesFor
 import com.lexicon.boundary.ImageProvider
+import com.lexicon.boundary.ReviewScheduleRepository
 import com.lexicon.boundary.StudyRecordRepository
 import com.lexicon.boundary.VocabularyCourseBoundary
 import com.lexicon.boundary.VocabularyCourseRepository
@@ -20,6 +21,7 @@ import com.lexicon.interactors.vocabularycourse.ResetCourseQueueUseCase
 import com.lexicon.interactors.vocabularycourse.UpdateCourseSettingsUseCase
 import com.lexicon.interactors.vocabularycourse.VocabularyCourse
 import com.lexicon.interactors.vocabularycourse.WordCard
+import com.lexicon.model.scheduling.dueOn
 import com.lexicon.model.training.TrainingType
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.WordStatus
@@ -98,6 +100,8 @@ class UpdateCourseSettingsUseCaseImpl(
 class NextCourseTrainingUseCaseImpl(
     private val courses: VocabularyCourseRepository,
     private val vocabulary: VocabularyRepository,
+    private val reviews: ReviewScheduleRepository,
+    private val clock: Clock,
 ) : NextCourseTrainingUseCase {
     override suspend fun next(): CourseLaunch? = launchFrom(courses.current())
 
@@ -143,9 +147,11 @@ class NextCourseTrainingUseCaseImpl(
 
     private suspend fun sessionWords(course: VocabularyCourseBoundary): ImmutableList<VocabularyId> {
         val learning = vocabulary.learningWordIds(course.newWordsADay.coerceAtLeast(0))
-        val known = vocabulary
-            .randomKnownWordIds(course.reviewsADay.coerceAtLeast(0))
-            .filterNot { it in learning }
+        val reviewsADay = course.reviewsADay.coerceAtLeast(0)
+
+        val due = reviews.knownWordSchedules().dueOn(clock.todayEpochDay(), reviewsADay)
+        val unscheduled = if (due.size < reviewsADay) vocabulary.unscheduledKnownWordIds(reviewsADay - due.size) else emptyList()
+        val known = (due + unscheduled).filterNot { it in learning }
 
         return (learning + known).shuffled().map(::VocabularyId).toImmutableList()
     }
@@ -171,16 +177,21 @@ class MarkCourseCardsSeenUseCaseImpl(
 class GetCourseProgressUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val study: StudyRecordRepository,
+    private val reviews: ReviewScheduleRepository,
     private val clock: Clock,
 ) : GetCourseProgressUseCase {
     override suspend fun invoke(): CourseProgress {
         val known = vocabulary.countWithStatus(WordStatus.KNOWN)
         val learning = vocabulary.countWithStatus(WordStatus.TO_LEARN) + vocabulary.countWithStatus(WordStatus.FAVOURITE)
 
-        val today = study.day(clock.todayEpochDay())
+        val todayEpochDay = clock.todayEpochDay()
+        val dueWords = reviews.knownWordSchedules().values.count { it.isDueOn(todayEpochDay) }
+
+        val today = study.day(todayEpochDay)
         val answers = today?.answers ?: 0
 
         return CourseProgress(
+            dueWords = dueWords,
             metrics = persistentListOf(
                 ProgressMetric(type = ProgressMetricType.VOCABULARY, current = known, target = known + learning),
                 ProgressMetric(

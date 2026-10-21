@@ -14,7 +14,8 @@ Lexicon teaches Polish to an English speaker. The learner gives words a **status
 to learn, favourite, known — practises them through **trainings**, and their answers feed a
 **review schedule** that decides what comes back and when. Longer-running structures sit
 above that: the **vocabulary course** cycles a queue of trainings over the words the
-learner marked, and **courses** teach a fixed body of material.
+learner marked and the known words the schedule says are due, and **courses** teach a
+fixed body of material.
 
 Everything the learner practises comes from one of three sources: the shipped
 **vocabulary catalogue**, the **course** content, or the **verb catalogue**.
@@ -80,21 +81,22 @@ under [Context-Specific Terminology](#context-specific-terminology) and must not
 | Outcome | How one step was answered, or that it was only shown | Training | *score*, *status* | `StepOutcome` |
 | Training result | One recorded answer, kept for scheduling and statistics | Training / Scheduling | *history entry* | `TrainingResultBoundary` |
 | Review | A later encounter with a word the learner has already met | Scheduling | *repetition* | `ReviewScheduleRepository`, `ReviewState` |
-| Due | A word whose review interval has elapsed | Scheduling | *pending*, *expired* | `dueAtEpochDay`, `dueOn` |
+| Due | A word whose review interval has elapsed: its due day is today or earlier | Scheduling | *pending*, *expired* | `dueAtEpochDay`, `ReviewState.isDueOn`, `dueOn` |
+| Reviewed today | A word whose last answer was today, whether recalled or forgotten: its due day minus its interval is today | Scheduling | — | `ReviewState.isReviewedOn` |
 | Recall quality | How well a word was remembered, as the scheduler grades it | Scheduling | *score* | `RecallQuality` |
 | Review settings | The policy the scheduler applies: intervals, ease, mastery threshold | Scheduling | *config* | `ReviewSettings` |
 | Study time policy | How much of the gap between two answers counts as studying | Scheduling | — | `StudyTimePolicy` |
-| Word mastery | A word whose review interval has passed the settings' threshold | Scheduling | *learned* | `ReviewState.isMastered` |
+| Word mastery | A word whose review interval has passed the settings' threshold. A word marked to learn or favourite becomes known the first time it is mastered, and a later lapse does not take it back. Mastery is only reached through a schedule-moving answer, so it takes more than one day | Scheduling | *learned* | `ReviewState.isMastered` |
 | Study day | A calendar day on which the learner practised, with its totals | Scheduling | *session day* | `StudyDayBoundary` |
 | Streak | Consecutive study days. Shown on iOS only; Android no longer displays it | Scheduling | — | `GetStudyStreakUseCase` |
 | Vocabulary course | The one course that always runs on the dashboard, over the words the learner marked. There is nothing to create, start or stop | Vocabulary course | *program*, *plan* | `VocabularyCourse` |
 | Course settings | New words a day, reviews a day and the queue — all the learner configures | Vocabulary course | *config* | `CourseSettings` |
 | New words | The words being learnt this round: up to the day's number, favourites before words merely marked to learn. They stay the same until their status changes | Vocabulary course | *daily words* | `VocabularyCourse.newWords`, `learningWordIds()` |
-| Reviews | Known words drawn at random into each session | Vocabulary course | *due words* | `randomKnownWordIds()` |
+| Reviews | Known words in each session, up to the day's number: those already reviewed today first, then the due ones, most overdue first, then known words with no schedule yet, in word order. Nothing is drawn at random | Vocabulary course | *random words* | `ReviewScheduleRepository.knownWordSchedules()`, `dueOn`, `unscheduledKnownWordIds()` |
 | Queue | The ordered trainings the course runs, over and over | Vocabulary course | *playlist*, *day* | `CourseSettings.queue` |
 | Round | One pass through the queue. Finishing the last training starts the next round; there is no finished day | Vocabulary course | *day* | `VocabularyCourse.round` |
 | Reset | Going back to the first training of the queue, with the new-word cards offered again | Vocabulary course | *restart* | `ResetCourseQueueUseCase` |
-| Progress | Words known out of words known or being learnt, and today's accuracy | Vocabulary course | *score* | `CourseProgress`, `ProgressMetric` |
+| Progress | Words known out of words known or being learnt, the known words due, and today's accuracy | Vocabulary course | *score* | `CourseProgress`, `ProgressMetric` |
 | Word card | A word shown for learning rather than testing, before the first training of a round | Vocabulary course | *flashcard* | `WordCard` |
 | Course | Fixed teaching material — a sequence of lessons | Course | *program*, *class* | `Course`, `CourseId` |
 | Lesson | One unit of a course, with its words, audio and exercises | Course | *chapter*, *unit* | `Lesson`, `LessonId` |
@@ -226,7 +228,8 @@ indirection and buy nothing. What would be events are recorded facts or state tr
 | Event in the domain | How it is represented |
 | --- | --- |
 | A step was answered | `RecordAnswerUseCase` |
-| A word became due | derived from `dueAtEpochDay` |
+| A word became due | derived from `dueAtEpochDay` (`ReviewState.isDueOn`) |
+| A word was mastered | the first schedule-moving answer that reaches the threshold, for a word marked to learn or favourite, sets its status to known, inside `RecordAnswerUseCase` |
 | A round was completed | `VocabularyCourse.round` goes up |
 | A word's status changed | the `status` column; the course's new words follow it on the next read |
 | A catalogue changed | fingerprint mismatch |
@@ -241,7 +244,7 @@ Introducing an event type is a domain change and requires updating this document
 | Star a verb | Add a verb to the study set by its word status; `EnsureVerbWordUseCase` creates the word if it is missing | `SetWordStatusUseCase` |
 | Start a session | Draw words and open a session over them | `Start*SessionUseCase` |
 | Submit an answer | Mark one step against the session's expected answer | `Submit*UseCase` |
-| Record an answer | Store the result, advance the review schedule, credit the study day | `RecordAnswerUseCase` |
+| Record an answer | Store the result, advance the review schedule, credit the study day. Only a word's first answer of the day advances its schedule; later ones that day are history, accuracy and study time only. Pronunciation of sentences is history and accuracy only and leaves the schedule alone (`TrainingType.updatesSchedule`) | `RecordAnswerUseCase` |
 | Advance the course | Mark the current training done and find the next runnable one, starting a new round after the last | `NextCourseTrainingUseCase` |
 | Reset the queue | Go back to the first training and offer the new-word cards again | `ResetCourseQueueUseCase` |
 | Change the course | Store new settings; a changed queue starts from its first training | `UpdateCourseSettingsUseCase` |
@@ -384,6 +387,7 @@ this document describes.
 | 2026-09-18 | **Study set flag replaced by `WordStatus`** | The learner asked for four states — not defined, to learn, favourite, known — cycled by one tap |
 | 2026-09-19 | **Program replaced by the vocabulary course** | There was only ever one program, and the learner should not have to build, start or delete it. Its generic configuration — goals, scope, milestones, rewards, adaptation — had no editor and no reader |
 | 2026-09-19 | *Program day* replaced by **round** | The queue cycles; a day can no longer be finished |
+| 2026-10-21 | **The vocabulary course reads the review schedule**: reviews are the known words that are due, not a random draw; mastering a word makes it known; Pronunciation of sentences no longer moves the schedule; `isLearned` removed | The schedule was written on every answer and read by nothing, and the word *learned* is banned here |
 | 2026-10-21 | **User-created conjugation courses removed**; the conjugation course is the one built-in course over the study set | The app only ever showed the study-set course; creating and deleting courses was dead code and stored a second set of verb lists |
 
 ## Enforcement

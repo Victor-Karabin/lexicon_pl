@@ -78,7 +78,7 @@ interface VocabularyRepository {
 
     suspend fun learningWordIds(limit: Int): List<Long>
 
-    suspend fun randomKnownWordIds(limit: Int): List<Long>
+    suspend fun unscheduledKnownWordIds(limit: Int): List<Long>
 
     suspend fun studySetWordIds(): List<Long>
 

@@ -4,6 +4,7 @@ import com.lexicon.boundary.ReviewScheduleRepository
 import com.lexicon.boundary.StudyRecordRepository
 import com.lexicon.boundary.TrainingHistoryRepository
 import com.lexicon.boundary.TrainingResultBoundary
+import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.Clock
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
@@ -12,10 +13,12 @@ import com.lexicon.model.scheduling.ReviewState
 import com.lexicon.model.scheduling.StudyTimePolicy
 import com.lexicon.model.scheduling.next
 import com.lexicon.model.scheduling.recallQuality
+import com.lexicon.model.vocabulary.WordStatus
 
 class RecordAnswerUseCaseImpl(
     private val history: TrainingHistoryRepository,
     private val reviews: ReviewScheduleRepository,
+    private val vocabulary: VocabularyRepository,
     private val studyRecord: StudyRecordRepository,
     private val clock: Clock,
     private val reviewSettings: ReviewSettings = ReviewSettings(),
@@ -49,9 +52,11 @@ class RecordAnswerUseCaseImpl(
         val todayEpochDay = clock.todayEpochDay()
 
         val quality = answer.outcome.recallQuality(answer.tipUsed)
-        if (quality != null) {
+        val movesSchedule = answer.trainingType.updatesSchedule && schedule?.isReviewedOn(todayEpochDay) != true
+        if (quality != null && movesSchedule) {
             val nextState = (schedule ?: ReviewState()).next(quality, todayEpochDay, reviewSettings)
             reviews.save(answer.vocabularyItemId, nextState, answeredAtEpochMillis)
+            if (nextState.isMastered(reviewSettings)) markKnownIfLearning(answer.vocabularyItemId)
         }
 
         val addedSeconds = studyTimePolicy.creditedSeconds(answeredAtEpochMillis, previousAnswerAtEpochMillis)
@@ -59,7 +64,7 @@ class RecordAnswerUseCaseImpl(
             studyRecord.record(
                 epochDay = todayEpochDay,
                 addedSeconds = addedSeconds,
-                wasNew = !wasReview,
+                wasNew = answer.trainingType.updatesSchedule && !wasReview,
                 wasCorrect = answer.outcome.isCorrect,
                 atEpochMillis = answeredAtEpochMillis,
             )
@@ -69,6 +74,12 @@ class RecordAnswerUseCaseImpl(
                 addedSeconds = addedSeconds,
                 atEpochMillis = answeredAtEpochMillis,
             )
+        }
+    }
+
+    private suspend fun markKnownIfLearning(wordId: Long) {
+        if (vocabulary.getWord(wordId)?.status?.isLearning == true) {
+            vocabulary.setStatus(listOf(wordId), WordStatus.KNOWN)
         }
     }
 }

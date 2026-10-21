@@ -346,7 +346,8 @@ private fun CourseCard(
                     style = MaterialTheme.typography.bodyMedium,
                     color = skin.muted(),
                 )
-                val words = stringResource(R.string.vocabulary_course_learning, uiState.learningWords, uiState.knownWords)
+                val counts = stringResource(R.string.vocabulary_course_learning, uiState.learningWords, uiState.knownWords)
+                val words = uiState.dueWords?.let { stringResource(R.string.vocabulary_course_learning_due, counts, it) } ?: counts
                 Text(
                     text = uiState.accuracy?.let { stringResource(R.string.vocabulary_course_learning_accuracy, words, it) } ?: words,
                     style = MaterialTheme.typography.bodySmall,

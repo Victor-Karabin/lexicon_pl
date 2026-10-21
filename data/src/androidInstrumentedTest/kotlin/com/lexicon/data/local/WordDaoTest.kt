@@ -47,6 +47,19 @@ class WordDaoTest {
         example = example,
     )
 
+    private fun review(
+        wordId: Long,
+        dueAtEpochDay: Long,
+    ) = WordReviewEntity(
+        wordId = wordId,
+        repetitions = 2,
+        easeFactor = 2.5,
+        intervalDays = 6,
+        dueAtEpochDay = dueAtEpochDay,
+        lapses = 0,
+        lastReviewedAtEpochMillis = 0,
+    )
+
     @Test
     fun aSearchIsFoldedSoAccentsDoNotHideAWord() =
         runTest {
@@ -248,17 +261,54 @@ class WordDaoTest {
         }
 
     @Test
-    fun onlyKnownWordsAreDrawnForReview() =
+    fun theUnscheduledQueryReturnsOnlyKnownLiveWordsWithoutAScheduleRow() =
         runTest {
             words.insertAll(
                 listOf(
-                    word(1L, "kot", "cat").copy(status = "TO_LEARN"),
+                    word(1L, "kot", "cat").copy(status = "KNOWN"),
                     word(2L, "pies", "dog").copy(status = "KNOWN"),
-                    word(3L, "dom", "house").copy(status = "KNOWN"),
+                    word(3L, "dom", "house").copy(status = "TO_LEARN"),
+                    word(4L, "woda", "water").copy(status = "UNDEFINED"),
+                    word(5L, "chleb", "bread").copy(status = "KNOWN", isDeleted = true),
+                    word(6L, "mleko", "milk").copy(status = "KNOWN"),
+                    word(7L, "ser", "cheese").copy(status = "FAVOURITE"),
                 ),
             )
+            database.wordReviewDao().upsert(review(wordId = 2L, dueAtEpochDay = 10L))
 
-            assertEquals(listOf(2L, 3L), words.randomKnownWordIds(limit = 10).sorted())
+            assertEquals(listOf(1L, 6L), words.unscheduledKnownWordIds(limit = 10))
+        }
+
+    @Test
+    fun theUnscheduledQueryComesBackInIdOrderAndStopsAtItsLimit() =
+        runTest {
+            words.insertAll(listOf(5L, 3L, 9L, 1L, 7L).map { word(it, "word$it", "gloss$it").copy(status = "KNOWN") })
+
+            assertEquals(listOf(1L, 3L, 5L), words.unscheduledKnownWordIds(limit = 3))
+            assertEquals(listOf(1L, 3L, 5L, 7L, 9L), words.unscheduledKnownWordIds(limit = 10))
+            assertEquals(emptyList<Long>(), words.unscheduledKnownWordIds(limit = 0))
+        }
+
+    @Test
+    fun theKnownSchedulesQueryReturnsOnlyKnownLiveWordsThatHaveASchedule() =
+        runTest {
+            words.insertAll(
+                listOf(
+                    word(1L, "kot", "cat").copy(status = "KNOWN"),
+                    word(2L, "pies", "dog").copy(status = "TO_LEARN"),
+                    word(3L, "dom", "house").copy(status = "FAVOURITE"),
+                    word(4L, "woda", "water").copy(status = "UNDEFINED"),
+                    word(5L, "chleb", "bread").copy(status = "KNOWN", isDeleted = true),
+                    word(6L, "mleko", "milk").copy(status = "KNOWN"),
+                    word(7L, "ser", "cheese").copy(status = "KNOWN"),
+                ),
+            )
+            (1L..5L).plus(7L).forEach { database.wordReviewDao().upsert(review(wordId = it, dueAtEpochDay = it * 10)) }
+
+            val schedules = database.wordReviewDao().knownSchedules()
+
+            assertEquals(setOf(1L, 7L), schedules.map { it.wordId }.toSet())
+            assertEquals(70L, schedules.single { it.wordId == 7L }.dueAtEpochDay)
         }
 
     @Test

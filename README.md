@@ -23,14 +23,16 @@ True or False, Pronunciation Check, Read Aloud, Memory Cards, Crossword, Word Ca
 and Write, Read and Choose, Word Search, and a Mix that shuffles them together. Some read
 a word aloud and ask you to type it; some show a picture; some listen to you say it.
 
-**Spaced repetition underneath.** Every answer is graded and feeds an SM-2 schedule, so a
-word you know comes back in three weeks and a word you miss comes back tomorrow. Study
-days, streaks and accuracy are recorded as you go.
+**Spaced repetition underneath.** Every answer is graded, and a word's first answer of the
+day feeds an SM-2 schedule, so a word you know comes back in three weeks and a word you miss
+comes back tomorrow, and the vocabulary course reviews the known words whose turn has come.
+Study days, streaks and accuracy are recorded as you go.
 
-**A course that always runs.** The *vocabulary course* is on the dashboard from the first
-launch: the words you mark to learn, favourites first, plus known words for review, through
-a queue of trainings that repeats round after round. You tune it on the Plan tab. A
-*course* teaches a fixed body of material — *Polish for Beginners*, built from a printed
+**A course on the dashboard.** The *vocabulary course* is on the dashboard from the first
+launch: the words you mark to learn, favourites first, plus the known words that are due for
+review, through a queue of trainings that repeats round after round. A word you are learning
+becomes known once its review interval reaches three weeks. The home card counts the known
+words that are due. You tune it on the Plan tab. A *course* teaches a fixed body of material — *Polish for Beginners*, built from a printed
 A1 coursebook, with its own audio and exercises. A *conjugation course* drills the forms of
 verbs you pick from a catalogue of 4,545. A *numbers course* drills writing numbers in
 Polish words: you type the numbers and ranges to practise (`1-20, 35, 2024`), and each one

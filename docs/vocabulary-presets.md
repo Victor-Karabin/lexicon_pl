@@ -252,8 +252,8 @@ device.
 preset's own order (so "100 most common words" arrives in frequency order) and silently
 skips ids the store no longer holds, so a preset built against an older corpus stays usable.
 
-Trainings, Mix, Custom Builder, Search, the study set and any future spaced-repetition
-scheduler consume presets through that one call. **Not yet wired:** no training currently
+Trainings, Mix, Custom Builder, Search and the study set consume presets through that one
+call. **Not yet wired:** no training currently
 takes a preset as a session filter — that means threading a preset id through each
 training's session-start request, and is separate work.
 

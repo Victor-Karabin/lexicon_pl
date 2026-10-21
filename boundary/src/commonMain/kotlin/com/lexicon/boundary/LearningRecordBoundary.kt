@@ -20,10 +20,7 @@ interface ReviewScheduleRepository {
         reviewedAtEpochMillis: Long,
     )
 
-    suspend fun dueWordIds(
-        todayEpochDay: Long,
-        limit: Int,
-    ): List<Long>
+    suspend fun knownWordSchedules(): Map<Long, ReviewState>
 }
 
 interface StudyRecordRepository {

@@ -36,7 +36,9 @@ data class ReviewState(
     val dueAtEpochDay: Long = 0,
     val lapses: Int = 0,
 ) {
-    val isLearned: Boolean get() = repetitions > 0 || lapses > 0
+    fun isDueOn(todayEpochDay: Long): Boolean = dueAtEpochDay <= todayEpochDay
+
+    fun isReviewedOn(todayEpochDay: Long): Boolean = dueAtEpochDay - intervalDays == todayEpochDay
 
     fun isMastered(settings: ReviewSettings): Boolean = intervalDays >= settings.masteredIntervalDays
 }
@@ -89,7 +91,10 @@ fun <T> Map<T, ReviewState>.dueOn(
     limit: Int = Int.MAX_VALUE,
 ): List<T> =
     entries
-        .filter { it.value.dueAtEpochDay <= todayEpochDay }
-        .sortedByDescending { it.value.daysOverdue(todayEpochDay) }
+        .filter { it.value.isReviewedOn(todayEpochDay) || it.value.isDueOn(todayEpochDay) }
+        .sortedWith(
+            compareByDescending<Map.Entry<T, ReviewState>> { it.value.isReviewedOn(todayEpochDay) }
+                .thenByDescending { it.value.daysOverdue(todayEpochDay) },
+        )
         .take(min(limit, size))
         .map { it.key }
