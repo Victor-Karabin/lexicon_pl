@@ -24,6 +24,7 @@ from pathlib import Path
 from krok_paths import AUDIO_ARCHIVES, AUDIO_DIR, CACHE_DIR, KROK_ROOT
 
 COURSEBOOK_TRACK = re.compile(r"^(?P<book>[12])(?P<lesson>\d{2})(?P<section>[a-z])(?P<task>\d+)(?:-(?P<part>[0-9a-z]+))?$")
+NAMED_COURSEBOOK_TRACK = re.compile(r"^(?P<book>[12])(?P<lesson>\d{2})(?P<name>[a-z]+)$")
 WORKBOOK_TRACK = re.compile(r"^(?P<index>\d+)_L(?P<lesson>\d{2})_cwiczenie(?P<task>\d+)(?:_(?P<part>\w+))?$")
 
 # Malformed names in Audio_A1.docx. Each correction is the only numbering that
@@ -54,13 +55,23 @@ def track_id(book: str, stem: str) -> dict | None:
         }
 
     match = COURSEBOOK_TRACK.match(stem.lower())
-    if not match:
+    if match:
+        return {
+            "lesson": int(match.group("lesson")),
+            "section": match.group("section").upper(),
+            "task": int(match.group("task")),
+            "part": match.group("part"),
+            "order": None,
+        }
+
+    named = NAMED_COURSEBOOK_TRACK.match(stem.lower())
+    if not named:
         return None
     return {
-        "lesson": int(match.group("lesson")),
-        "section": match.group("section").upper(),
-        "task": int(match.group("task")),
-        "part": match.group("part"),
+        "lesson": int(named.group("lesson")),
+        "section": None,
+        "task": None,
+        "part": named.group("name"),
         "order": None,
     }
 

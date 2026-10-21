@@ -55,7 +55,6 @@ class CourseAssetTest {
                 val lessonId = script.name.removePrefix("lesson_").removeSuffix(".json")
                 asset(script.name).jsonObject.getValue("tracks").jsonArray
                     .map { it.jsonObject.getValue("file").jsonPrimitive.content }
-                    .filter { it.startsWith("a1_workbook_") }
                     .filter { remoteIds[lessonId]?.get(it) == null }
                     .map { "$lessonId: $it" }
             }

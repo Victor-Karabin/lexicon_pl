@@ -3,14 +3,14 @@ package com.lexicon.data.local
 import com.lexicon.model.course.GAP_PATTERN
 import com.lexicon.model.course.LessonScreen
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.File
 
 class LessonFourScriptTest {
     private val asset = lessonJson.decodeFromString<LessonScriptAsset>(File("src/androidMain/assets/lesson_krok-a1-04.json").readText())
-    private val script = asset.toModel(asset.tracks.associate { it.file to "remote-${it.id}".takeUnless { _ -> it.id == "104C7" } })
+    private val script = asset.toModel(asset.tracks.associate { it.file to "remote-${it.id}" })
 
     private fun screen(id: String) = script.screens.first { it.id == id }
 
@@ -66,10 +66,10 @@ class LessonFourScriptTest {
     }
 
     @Test
-    fun `the internationalisms keep their listening task with a placeholder player`() {
+    fun `the internationalisms keep their listening task with a downloadable recording`() {
         val track = screen("5B").tracks.single()
         assertEquals("a1_coursebook_104c7.mp3", track.file)
-        assertNull(track.remoteId)
+        assertNotNull(track.remoteId)
         assertTrue(screen("5B") is LessonScreen.Reference)
     }
 

@@ -41,6 +41,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+from extract_audio import track_id
 from krok_paths import ASSET_DIR, CACHE_DIR, COURSE_ASSET, REPO_ROOT
 
 VOCABULARY_ASSET = REPO_ROOT / "data" / "src" / "androidMain" / "assets" / "vocabulary_pl.json"
@@ -197,6 +198,21 @@ def audio_tag_of(track: dict) -> str:
     return f"1{track['lesson']:02d}{track['section'] or ''}{track['task']}"
 
 
+def uploaded_tracks(book: str, extracted: list[dict], remote: dict[str, str]) -> list[dict]:
+    prefix = f"{book}_"
+    present = {track["file"] for track in extracted}
+    tracks = []
+    for name in sorted(remote):
+        if not name.startswith(prefix) or name in present:
+            continue
+        parsed = track_id(book, name[len(prefix):].removesuffix(".mp3"))
+        if parsed is None:
+            print(f"{name}: on Drive but does not match the {book} numbering; skipped")
+            continue
+        tracks.append({"book": book, **parsed, "file": name})
+    return tracks
+
+
 def lesson_audio(
     tracks: list[dict],
     lesson_number: int,
@@ -225,6 +241,7 @@ def build_lesson(
     index: WordIndex,
     forms: dict[str, list[str]],
     coursebook_tracks: list[dict],
+    uploaded: list[dict],
     workbook_tracks: list[dict],
     remote: dict[str, str],
     exercises: dict[int, list[dict]],
@@ -262,7 +279,7 @@ def build_lesson(
         "title": lesson["title"],
         "vocabularyIds": vocabulary_ids,
         "vocabularyWords": [texts[word_id] for word_id in vocabulary_ids],
-        "audio": lesson_audio(coursebook_tracks + workbook_tracks, lesson["number"], remote),
+        "audio": lesson_audio(coursebook_tracks + uploaded + workbook_tracks, lesson["number"], remote),
         "exercises": [
             {
                 "id": f"{course['id']}-{lesson['number']:02d}-{e['tag']}",
@@ -325,6 +342,7 @@ def build(report_missing: bool) -> int:
 
         coursebook_tracks = audio_by_book.get(course["book"], [])
         workbook_tracks = audio_by_book.get(course["workbook"], []) if course["workbook"] else []
+        uploaded = uploaded_tracks(course["book"], coursebook_tracks, remote)
         courses.append(
             {
                 "id": course["id"],
@@ -333,7 +351,7 @@ def build(report_missing: bool) -> int:
                 "title": course["title"],
                 "lessons": [
                     build_lesson(
-                        course, lesson, index, forms, coursebook_tracks, workbook_tracks, remote, exercises, texts, missing
+                        course, lesson, index, forms, coursebook_tracks, uploaded, workbook_tracks, remote, exercises, texts, missing
                     )
                     for lesson in lessons
                 ],
