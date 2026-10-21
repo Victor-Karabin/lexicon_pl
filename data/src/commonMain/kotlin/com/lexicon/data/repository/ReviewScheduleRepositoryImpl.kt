@@ -19,8 +19,6 @@ class ReviewScheduleRepositoryImpl(
         wordReviewDao.upsert(state.toEntity(wordId, reviewedAtEpochMillis))
     }
 
-    override suspend fun dueWordIds(
-        todayEpochDay: Long,
-        limit: Int,
-    ): List<Long> = wordReviewDao.dueWordIds(todayEpochDay, limit)
+    override suspend fun knownWordSchedules(): Map<Long, ReviewState> =
+        wordReviewDao.knownSchedules().associate { it.wordId to it.toState() }
 }

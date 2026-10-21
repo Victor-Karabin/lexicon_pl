@@ -15,15 +15,10 @@ interface WordReviewDao {
 
     @Query(
         """
-        SELECT r.wordId FROM word_review r
+        SELECT r.* FROM word_review r
         INNER JOIN words w ON w.id = r.wordId
-        WHERE r.dueAtEpochDay <= :todayEpochDay AND w.isDeleted = 0
-        ORDER BY r.dueAtEpochDay ASC
-        LIMIT :limit
+        WHERE w.status = 'KNOWN' AND w.isDeleted = 0
         """,
     )
-    suspend fun dueWordIds(
-        todayEpochDay: Long,
-        limit: Int,
-    ): List<Long>
+    suspend fun knownSchedules(): List<WordReviewEntity>
 }

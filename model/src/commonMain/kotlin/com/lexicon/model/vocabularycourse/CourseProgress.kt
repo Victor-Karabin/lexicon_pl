@@ -16,6 +16,7 @@ data class ProgressMetric(
 
 data class CourseProgress(
     val metrics: ImmutableList<ProgressMetric> = persistentListOf(),
+    val dueWords: Int = 0,
 ) {
     fun metric(type: ProgressMetricType): ProgressMetric? = metrics.firstOrNull { it.type == type }
 }

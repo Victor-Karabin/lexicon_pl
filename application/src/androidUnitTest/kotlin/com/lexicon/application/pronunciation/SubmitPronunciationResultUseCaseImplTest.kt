@@ -2,10 +2,13 @@ package com.lexicon.application.pronunciation
 
 import com.lexicon.application.dictation.AnswerNormalizer
 import com.lexicon.application.training.FakeSessionStore
+import com.lexicon.application.training.open
 import com.lexicon.interactors.pronunciation.SubmitPronunciationResultRequest
 import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.model.training.StepOutcome
+import com.lexicon.model.training.TrainingType
+import com.lexicon.model.vocabulary.VocabularyId
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -14,15 +17,17 @@ import org.junit.Test
 
 class SubmitPronunciationResultUseCaseImplTest {
     private val recordAnswer: RecordAnswerUseCase = mockk(relaxed = true)
-    private val useCase = SubmitPronunciationResultUseCaseImpl(recordAnswer, AnswerNormalizer(), FakeSessionStore())
+    private val sessions = FakeSessionStore()
+    private val useCase = SubmitPronunciationResultUseCaseImpl(recordAnswer, AnswerNormalizer(), sessions)
 
     private fun request(
+        sessionId: String = "session-1",
         recognizedText: String = "kot",
         confidence: Float? = null,
         tipUsed: Boolean = false,
         skipped: Boolean = false,
     ) = SubmitPronunciationResultRequest(
-        sessionId = "session-1",
+        sessionId = sessionId,
         stepIndex = 0,
         vocabularyItemId = 1L,
         expectedText = "kot",
@@ -70,7 +75,10 @@ class SubmitPronunciationResultUseCaseImplTest {
     @Test
     fun `tip usage is recorded to history regardless of outcome`() =
         runTest {
-            useCase(request(confidence = 0.99f, tipUsed = true))
+            val id = sessions.open(TrainingType.PRONUNCIATION_CHECK, listOf(VocabularyId(1) to "kot"))
+
+            useCase(request(sessionId = id.value, confidence = 0.99f, tipUsed = true))
+
             coVerify { recordAnswer(match<RecordedAnswer> { it.tipUsed }) }
         }
 

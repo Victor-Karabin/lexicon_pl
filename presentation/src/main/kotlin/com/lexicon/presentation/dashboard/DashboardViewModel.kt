@@ -57,6 +57,8 @@ data class DashboardUiState(
 ) {
     val accuracy: Int? get() = progress?.metric(ProgressMetricType.ACCURACY)?.takeIf { it.isMeasured }?.current
 
+    val dueWords: Int? get() = progress?.dueWords?.takeIf { it > 0 }
+
     val knownWords: Int get() = progress?.metric(ProgressMetricType.VOCABULARY)?.current ?: 0
 
     val learningWords: Int

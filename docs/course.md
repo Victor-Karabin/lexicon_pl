@@ -153,6 +153,27 @@ is replaced by a spare course word while any is left; Sentences has no spares, s
 a sentence that does not come back leaves one step fewer. Fewer course words than
 the step count gives fewer steps in both.
 
+Sentences are practice for saying a whole sentence, not for knowing the word: an
+answer is kept in the history and the day's accuracy, but it does not move the
+word's review schedule, does not count as a new word, and cannot make a word known.
+
+### Which words the vocabulary course runs
+
+The words being learnt (to learn and favourite, favourites first) are always in.
+The reviews, up to the day's number, are known words chosen by the review schedule:
+those already reviewed today first, then the due ones, most overdue first, then known
+words that have no schedule yet, in word order. A word reviewed today stays in the
+course for the rest of the day, so a round does not change under the learner. Any
+answer that moves a word's schedule counts toward that, whichever training it came from,
+including one given outside the course. When nothing is being learnt, nothing is due and no known
+word is waiting without a schedule, the course has nothing to launch.
+
+Only a word's first answer of the day moves its review schedule. Later answers the same
+day, right or wrong, go to the history, the day's accuracy and the study record and
+leave the schedule where it is. A word marked to learn or favourite becomes known the
+first time one of those schedule-moving answers brings its review interval to the
+mastery threshold, and a later lapse does not take it back.
+
 ### Audio
 
 454 MB does not belong in an APK, so the tracks are side-loaded:

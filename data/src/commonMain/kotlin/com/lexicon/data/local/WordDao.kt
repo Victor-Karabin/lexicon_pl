@@ -52,8 +52,15 @@ interface WordDao {
     )
     suspend fun learningWordIds(limit: Int): List<Long>
 
-    @Query("SELECT id FROM words WHERE status = 'KNOWN' AND isDeleted = 0 ORDER BY RANDOM() LIMIT :limit")
-    suspend fun randomKnownWordIds(limit: Int): List<Long>
+    @Query(
+        """
+        SELECT id FROM words
+        WHERE status = 'KNOWN' AND isDeleted = 0 AND id NOT IN (SELECT wordId FROM word_review)
+        ORDER BY id
+        LIMIT :limit
+        """,
+    )
+    suspend fun unscheduledKnownWordIds(limit: Int): List<Long>
 
     @Query("SELECT id, status FROM words WHERE status != 'UNDEFINED' AND isDeleted = 0")
     fun observeStatuses(): Flow<List<WordStatusRow>>

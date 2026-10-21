@@ -10,7 +10,6 @@ import com.lexicon.interactors.training.RecordAnswerUseCase
 import com.lexicon.interactors.training.RecordedAnswer
 import com.lexicon.model.training.SessionId
 import com.lexicon.model.training.StepOutcome
-import com.lexicon.model.training.TrainingType
 
 class SubmitPronunciationResultUseCaseImpl(
     private val recordAnswer: RecordAnswerUseCase,
@@ -22,13 +21,12 @@ class SubmitPronunciationResultUseCaseImpl(
         val step = session?.question(request.stepIndex)
         val expectedText = step?.expectedAnswer ?: request.expectedText
         val outcome = resolveOutcome(request, expectedText)
-        val isFirstAnswer = sessions.recordOutcome(request.sessionId, request.stepIndex, outcome, request.tipUsed)
 
-        if (isFirstAnswer) {
+        if (session != null && sessions.recordOutcome(request.sessionId, request.stepIndex, outcome, request.tipUsed)) {
             recordAnswer(
                 RecordedAnswer(
                     sessionId = request.sessionId,
-                    trainingType = session?.training ?: TrainingType.PRONUNCIATION_CHECK,
+                    trainingType = session.training,
                     stepIndex = request.stepIndex,
                     vocabularyItemId = step?.wordId?.value ?: request.vocabularyItemId,
                     expectedAnswer = expectedText,

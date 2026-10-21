@@ -260,7 +260,7 @@
     <string name="create_translating">Translating…</string>
 
     <string name="dashboard_streak_unit">day streak</string>
-    <string name="dashboard_nothing_due">Nothing to practise yet. Mark words To learn or Known in the Words tab, or sort some in Review words.</string>
+    <string name="dashboard_nothing_due">Nothing to practise right now. Mark words To learn or Known in the Words tab, sort some in Review words, or come back when your known words are due.</string>
     <string name="dashboard_meet_words">Meet %1$d new words</string>
     <string name="cards_title">New words</string>
     <string name="cards_next">Next</string>
@@ -318,10 +318,11 @@
     <string name="vocabulary_course_title">Vocabulary course</string>
     <string name="vocabulary_course_round">Round %1$d · %2$d of %3$d trainings</string>
     <string name="vocabulary_course_learning">%1$d to learn · %2$d known</string>
+    <string name="vocabulary_course_learning_due">%1$s · %2$d due</string>
     <string name="vocabulary_course_learning_accuracy">%1$s · %2$d%% correct</string>
     <string name="vocabulary_course_reset">Start the queue again</string>
     <string name="vocabulary_course_settings_title">Vocabulary course</string>
-    <string name="vocabulary_course_settings_scope">Words you mark To learn come first, favourites before the rest. Reviews are picked at random from the words you know.</string>
+    <string name="vocabulary_course_settings_scope">Words you mark To learn come first, favourites before the rest. Reviews follow the schedule: the known words that are due come first, the most overdue before the rest, then known words with no schedule yet.</string>
     <string name="vocabulary_course_new_words">New words a day</string>
     <string name="vocabulary_course_reviews">Reviews a day</string>
     <string name="vocabulary_course_trainings">Trainings</string>

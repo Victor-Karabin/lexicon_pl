@@ -26,6 +26,8 @@ enum class TrainingType(
     CONJUGATION("conjugation", ONE_WORD_PER_STEP),
     ;
 
+    val updatesSchedule: Boolean get() = this != PRONUNCIATION_SENTENCES
+
     val excludesPhrases: Boolean get() = this == CROSSWORD
 
     fun admits(word: Word): Boolean = !excludesPhrases || !word.isPhrase
