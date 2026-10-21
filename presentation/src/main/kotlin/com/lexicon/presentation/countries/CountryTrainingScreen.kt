@@ -22,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -40,11 +39,6 @@ import com.lexicon.presentation.course.AnswerInputs
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.component.ProgressDots
 import org.koin.androidx.compose.koinViewModel
-
-object CountryTrainingTestTags {
-    const val FLAG = "country_training_flag"
-    const val EMPTY = "country_training_empty"
-}
 
 @Composable
 fun CountryTrainingScreen(
@@ -108,7 +102,6 @@ private fun CountryTrainingContent(
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.testTag(CountryTrainingTestTags.EMPTY),
                         )
                     }
 
@@ -165,7 +158,6 @@ private fun CountryBody(
             Text(
                 text = country.flag,
                 style = MaterialTheme.typography.displayMedium,
-                modifier = Modifier.testTag(CountryTrainingTestTags.FLAG),
             )
             VerbHeading(infinitive = country.english, translation = null)
         }

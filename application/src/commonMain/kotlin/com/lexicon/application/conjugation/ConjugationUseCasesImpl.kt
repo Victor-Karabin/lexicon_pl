@@ -31,17 +31,6 @@ import kotlinx.collections.immutable.toImmutableList
 class LoadConjugationVerbsUseCaseImpl(
     private val conjugations: ConjugationRepository,
 ) : LoadConjugationVerbsUseCase {
-    override suspend fun invoke(query: String): ImmutableList<VerbConjugation> {
-        val needle = query.trim()
-
-        return conjugations
-            .verbs()
-            .map { it.toVerb() }
-            .filter { it.isTeachable }
-            .filter { needle.isBlank() || it.matches(needle) }
-            .toImmutableList()
-    }
-
     /**
      * The store pages and filters, so only what the screen shows is decoded. Unteachable
      * verbs are the one thing SQL cannot judge — the forms live in a JSON column — so a
@@ -60,9 +49,6 @@ class LoadConjugationVerbsUseCaseImpl(
         )
         return VerbPage(verbs = page.items.toImmutableList(), nextOffset = page.nextOffset, isLast = page.isLast)
     }
-
-    private fun VerbConjugation.matches(needle: String): Boolean =
-        infinitive.contains(needle, ignoreCase = true) || translation?.contains(needle, ignoreCase = true) == true
 }
 
 class LoadConjugationCoursesUseCaseImpl(

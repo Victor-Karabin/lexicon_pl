@@ -57,8 +57,6 @@ import org.koin.androidx.compose.koinViewModel
 private val MinCellSize = 14.dp
 private val MaxCellSize = 40.dp
 
-private const val CELL_CORNER_FRACTION = 0.2f
-
 private const val LETTER_SIZE_RATIO = 0.5f
 
 private const val GRID_HEIGHT_FRACTION = 0.55f

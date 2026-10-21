@@ -23,5 +23,3 @@ sealed interface PassageSegment {
         val word: String,
     ) : PassageSegment
 }
-
-val CEFR_ORDER = listOf("A1", "A2", "B1", "B2", "C1", "C2")

@@ -6,5 +6,3 @@ data class SeedOutcomeBoundary(
     val updated: Int,
     val removed: Int,
 )
-
-val SeedOutcomeBoundary.wasAlreadyCurrent: Boolean get() = added == 0 && updated == 0 && removed == 0

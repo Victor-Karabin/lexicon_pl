@@ -22,7 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.conjugation.VerbConjugation
@@ -38,14 +37,6 @@ import com.lexicon.presentation.presets.WordRow
 import com.lexicon.presentation.presets.detailLine
 import com.lexicon.presentation.theme.Dimens
 import org.koin.androidx.compose.koinViewModel
-
-object VerbSelectionTestTags {
-    const val SEARCH = "verb_selection_search"
-    const val LIST = "verb_selection_list"
-    const val RESTORE = "verb_selection_restore"
-
-    fun verb(infinitive: String) = "verb_selection_item_$infinitive"
-}
 
 @Composable
 fun VerbSelectionScreen(
@@ -90,7 +81,6 @@ private fun VerbSelectionContent(
                     if (uiState.canRestore) {
                         TextButton(
                             onClick = onRestoreAll,
-                            modifier = Modifier.testTag(VerbSelectionTestTags.RESTORE),
                         ) {
                             Text(stringResource(R.string.conjugation_restore_all))
                         }
@@ -107,8 +97,7 @@ private fun VerbSelectionContent(
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = Dimens.spacingMedium)
-                    .testTag(VerbSelectionTestTags.SEARCH),
+                    .padding(horizontal = Dimens.spacingMedium),
             )
 
             Spacer(modifier = Modifier.height(Dimens.spacingSmall))
@@ -128,7 +117,7 @@ private fun VerbSelectionContent(
             ScrollToTopLayout(list = list, modifier = Modifier.weight(1f)) {
                 LazyColumn(
                     state = list,
-                    modifier = Modifier.fillMaxSize().testTag(VerbSelectionTestTags.LIST),
+                    modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(bottom = ScrollToTopClearance),
                 ) {
                     items(uiState.verbs, key = { it.infinitive }) { verb ->
@@ -147,8 +136,7 @@ private fun VerbSelectionContent(
                                 onPronounce = { onPronounce(verb) },
                                 detail = listOfNotNull(word?.detailLine(), partial).joinToString(" · ").ifEmpty { null },
                                 modifier = Modifier
-                                    .background(MaterialTheme.colorScheme.surface)
-                                    .testTag(VerbSelectionTestTags.verb(verb.infinitive)),
+                                    .background(MaterialTheme.colorScheme.surface),
                             )
                         }
                     }

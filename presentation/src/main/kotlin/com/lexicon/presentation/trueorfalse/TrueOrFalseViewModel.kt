@@ -153,8 +153,4 @@ class TrueOrFalseViewModel(
     private inline fun updateLoaded(transform: (TrueOrFalseUiState.Loaded) -> TrueOrFalseUiState.Loaded) {
         _uiState.update { current -> if (current is TrueOrFalseUiState.Loaded) transform(current) else current }
     }
-
-    override fun onCleared() {
-        timerJob?.cancel()
-    }
 }

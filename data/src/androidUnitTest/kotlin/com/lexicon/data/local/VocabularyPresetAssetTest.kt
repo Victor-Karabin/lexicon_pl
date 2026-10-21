@@ -12,7 +12,7 @@ class VocabularyPresetAssetTest {
     private val json = Json { ignoreUnknownKeys = true }
 
     @Test
-    fun `a catalogue parses into boundary types`() {
+    fun `a catalogue parses into its asset types`() {
         val raw = """
             {
               "categories": [{"id": "everyday-life", "order": 3, "title": {"en": "Everyday life"}}],
@@ -25,11 +25,11 @@ class VocabularyPresetAssetTest {
             }
         """.trimIndent()
 
-        val catalog = json.decodeFromString<VocabularyPresetCatalogAsset>(raw).toBoundary()
+        val catalog = json.decodeFromString<VocabularyPresetCatalogAsset>(raw)
 
         val preset = catalog.presets.single()
         assertEquals("food", preset.id)
-        assertEquals("everyday-life", preset.categoryId)
+        assertEquals("everyday-life", preset.category)
         assertEquals("Food", preset.title["en"])
         assertEquals(3480L, preset.estimatedSeconds)
         assertEquals(listOf(1L, 2L, 3L), preset.vocabularyIds)
@@ -40,7 +40,7 @@ class VocabularyPresetAssetTest {
     fun `a preset missing every optional field still parses`() {
         val raw = """{"presets": [{"id": "minimal", "category": "everyday-life"}]}"""
 
-        val preset = json.decodeFromString<VocabularyPresetCatalogAsset>(raw).toBoundary().presets.single()
+        val preset = json.decodeFromString<VocabularyPresetCatalogAsset>(raw).presets.single()
 
         assertNull(preset.icon)
         assertTrue(preset.vocabularyIds.isEmpty())
@@ -84,7 +84,7 @@ class VocabularyPresetAssetTest {
         val file = File("src/androidMain/assets/vocabulary_presets.json")
         assertTrue("expected the built asset at ${file.absolutePath}", file.exists())
 
-        val catalog = json.decodeFromString<VocabularyPresetCatalogAsset>(file.readText()).toBoundary()
+        val catalog = json.decodeFromString<VocabularyPresetCatalogAsset>(file.readText())
         val categoryIds = catalog.categories.map { it.id }.toSet()
         val vocabularyIds = json
             .decodeFromString<List<VocabularySeedItem>>(File("src/androidMain/assets/vocabulary_pl.json").readText())
@@ -98,7 +98,7 @@ class VocabularyPresetAssetTest {
             catalog.presets.map { it.id }.distinct().size,
         )
         catalog.presets.forEach { preset ->
-            assertTrue("${preset.id} names an unknown category", preset.categoryId in categoryIds)
+            assertTrue("${preset.id} names an unknown category", preset.category in categoryIds)
             assertTrue("${preset.id} is empty", preset.vocabularyIds.isNotEmpty())
             assertTrue("${preset.id} has no English title", !preset.title["en"].isNullOrBlank())
             assertTrue(

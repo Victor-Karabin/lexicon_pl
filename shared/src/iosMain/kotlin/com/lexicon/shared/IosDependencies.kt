@@ -4,7 +4,6 @@ import com.lexicon.interactors.conjugation.LoadConjugationCoursesUseCase
 import com.lexicon.interactors.conjugation.LoadConjugationVerbsUseCase
 import com.lexicon.interactors.conjugation.NextConjugationTableUseCase
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
-import com.lexicon.interactors.course.CheckExerciseAnswerUseCase
 import com.lexicon.interactors.course.GetLessonProgressUseCase
 import com.lexicon.interactors.course.GetLessonScriptUseCase
 import com.lexicon.interactors.course.GetLessonUseCase
@@ -33,25 +32,17 @@ import com.lexicon.interactors.passage.SubmitPassageAnswersUseCase
 import com.lexicon.interactors.presets.CountWordsToReviewUseCase
 import com.lexicon.interactors.presets.CreatePresetUseCase
 import com.lexicon.interactors.presets.CreateWordUseCase
-import com.lexicon.interactors.presets.DeletePresetUseCase
 import com.lexicon.interactors.presets.DeleteWordUseCase
-import com.lexicon.interactors.presets.FillWordGrammarUseCase
 import com.lexicon.interactors.presets.GetPinnedImageUseCase
-import com.lexicon.interactors.presets.GetPresetCategoriesUseCase
 import com.lexicon.interactors.presets.GetPresetVocabularyUseCase
-import com.lexicon.interactors.presets.GetVocabularyPresetUseCase
 import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.GetWordGrammarUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.GetWordUseCase
 import com.lexicon.interactors.presets.GetWordsToReviewUseCase
-import com.lexicon.interactors.presets.ObserveVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.ObserveWordStatusesUseCase
-import com.lexicon.interactors.presets.RestorePresetUseCase
-import com.lexicon.interactors.presets.RestoreWordUseCase
 import com.lexicon.interactors.presets.SearchImageCandidatesUseCase
 import com.lexicon.interactors.presets.SearchVocabularyUseCase
-import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.SetWordStatusUseCase
 import com.lexicon.interactors.presets.SuggestTranslationsUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
@@ -67,7 +58,6 @@ import com.lexicon.interactors.settings.UpdateStepCountUseCase
 import com.lexicon.interactors.settings.UpdateThemeModeUseCase
 import com.lexicon.interactors.sync.CatalogSeedStatus
 import com.lexicon.interactors.sync.SeedCatalogsUseCase
-import com.lexicon.interactors.training.CheckTrainingReadinessUseCase
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionRequest
 import com.lexicon.interactors.trueorfalse.StartTrueOrFalseSessionUseCase
 import com.lexicon.interactors.trueorfalse.SubmitTrueOrFalseAnswerUseCase
@@ -89,7 +79,6 @@ import com.lexicon.interactors.wordmatch.SubmitWordMatchStepResultUseCase
 import com.lexicon.model.course.Course
 import com.lexicon.model.vocabulary.ExampleSentence
 import com.lexicon.model.vocabulary.VocabularyId
-import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.model.vocabulary.WordStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -108,9 +97,6 @@ object IosDependencies : KoinComponent {
     val updateStepCount: UpdateStepCountUseCase by inject()
 
     val getPresets: GetVocabularyPresetsUseCase by inject()
-    val observePresets: ObserveVocabularyPresetsUseCase by inject()
-    val getPreset: GetVocabularyPresetUseCase by inject()
-    val getPresetCategories: GetPresetCategoriesUseCase by inject()
     val getPresetVocabulary: GetPresetVocabularyUseCase by inject()
     val searchVocabulary: SearchVocabularyUseCase by inject()
     val setWordStatus: SetWordStatusUseCase by inject()
@@ -118,24 +104,18 @@ object IosDependencies : KoinComponent {
     val countWordsToReview: CountWordsToReviewUseCase by inject()
     val observeWordStatuses: ObserveWordStatusesUseCase by inject()
     val getWordPresetMemberships: GetWordPresetMembershipsUseCase by inject()
-    val setWordPresetMembership: SetWordPresetMembershipUseCase by inject()
 
     val createWord: CreateWordUseCase by inject()
     val updateWord: UpdateWordUseCase by inject()
     val getWord: GetWordUseCase by inject()
     val deleteWord: DeleteWordUseCase by inject()
-    val restoreWord: RestoreWordUseCase by inject()
     val createPreset: CreatePresetUseCase by inject()
-    val deletePreset: DeletePresetUseCase by inject()
-    val restorePreset: RestorePresetUseCase by inject()
     val translateWord: TranslateWordUseCase by inject()
     val suggestTranslations: SuggestTranslationsUseCase by inject()
     val searchImageCandidates: SearchImageCandidatesUseCase by inject()
     val getPinnedImage: GetPinnedImageUseCase by inject()
 
     val getWordGrammar: GetWordGrammarUseCase by inject()
-
-    val fillWordGrammar: FillWordGrammarUseCase by inject()
 
     val observeCourses: ObserveCoursesUseCase by inject()
     val getLesson: GetLessonUseCase by inject()
@@ -145,7 +125,6 @@ object IosDependencies : KoinComponent {
     val getLessonProgress: GetLessonProgressUseCase by inject()
     val saveLessonProgress: SaveLessonProgressUseCase by inject()
     val reviewWriting: ReviewWritingUseCase by inject()
-    val checkExerciseAnswer: CheckExerciseAnswerUseCase by inject()
 
     val observeVocabularyCourse: ObserveVocabularyCourseUseCase by inject()
     val getVocabularyCourse: GetVocabularyCourseUseCase by inject()
@@ -157,8 +136,6 @@ object IosDependencies : KoinComponent {
     val getStudyStreak: GetStudyStreakUseCase by inject()
     val getDailyStudyTime: GetDailyStudyTimeUseCase by inject()
     val getWordCards: GetWordCardsUseCase by inject()
-
-    val checkTrainingReadiness: CheckTrainingReadinessUseCase by inject()
 
     val startDictation: StartDictationSessionUseCase by inject()
     val submitDictation: SubmitDictationAnswerUseCase by inject()
@@ -217,8 +194,6 @@ object IosDependencies : KoinComponent {
     fun editableExample(marked: String): String = ExampleSentence.editableText(marked)
 
     fun watchSettings(onEach: (AppSettings) -> Unit): Cancellable = observeSettings().watch(onEach)
-
-    fun watchPresets(onEach: (List<VocabularyPreset>) -> Unit): Cancellable = observePresets().watch(onEach)
 
     fun watchWordStatuses(onEach: (Map<VocabularyId, WordStatus>) -> Unit): Cancellable = observeWordStatuses().watch(onEach)
 

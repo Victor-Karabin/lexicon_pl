@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -67,7 +66,6 @@ fun MemoryCardsScreen(
         onClose = onClose,
         onCardSelected = viewModel::onCardSelected,
         onSkip = viewModel::onSkip,
-        onNext = viewModel::onNext,
         modifier = modifier,
     )
 }
@@ -79,7 +77,6 @@ private fun MemoryCardsScreenContent(
     onClose: () -> Unit,
     onCardSelected: (Int) -> Unit,
     onSkip: () -> Unit,
-    onNext: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -134,11 +131,6 @@ private fun MemoryCardsScreenContent(
                     ) {
                         TextButton(onClick = onSkip, enabled = uiState.canSkip) {
                             Text(stringResource(R.string.action_skip))
-                        }
-                        if (uiState.awaitingNext) {
-                            Button(onClick = onNext) {
-                                Text(stringResource(R.string.action_next))
-                            }
                         }
                     }
                 }
@@ -212,7 +204,6 @@ private fun MemoryCardsScreenPreview() {
             onClose = {},
             onCardSelected = {},
             onSkip = {},
-            onNext = {},
         )
     }
 }
@@ -234,7 +225,6 @@ private fun MemoryCardsScreenInProgressPreview() {
             onClose = {},
             onCardSelected = {},
             onSkip = {},
-            onNext = {},
         )
     }
 }

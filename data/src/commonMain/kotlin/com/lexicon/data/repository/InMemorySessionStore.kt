@@ -16,10 +16,6 @@ class InMemorySessionStore : SessionStore {
 
     override suspend fun find(id: SessionId): Session? = lock.withLock { sessions[id] }
 
-    override suspend fun remove(id: SessionId) {
-        lock.withLock { sessions.remove(id) }
-    }
-
     override suspend fun update(
         id: SessionId,
         transform: (Session) -> Session,

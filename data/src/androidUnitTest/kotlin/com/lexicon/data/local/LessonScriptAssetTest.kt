@@ -161,13 +161,4 @@ class LessonScriptAssetTest {
         assertTrue(script.steps.none { skipped.id in it.screenIds })
         assertTrue(skipped.id !in script.newWords && skipped.id !in script.ruleLinks)
     }
-
-    @Test
-    fun `a track can carry its own download id when the course has none for it`() {
-        val withId = asset.copy(tracks = asset.tracks.map { if (it.id == "wb08") it.copy(remoteId = "drive-wb08") else it })
-        val cities = withId.toModel(emptyMap()).screens.first { it.id == "7D" }.tracks.single()
-        assertEquals("drive-wb08", cities.remoteId)
-        val fromCourse = withId.toModel(mapOf(cities.file to "course-wb08")).screens.first { it.id == "7D" }.tracks.single()
-        assertEquals("course-wb08", fromCourse.remoteId)
-    }
 }

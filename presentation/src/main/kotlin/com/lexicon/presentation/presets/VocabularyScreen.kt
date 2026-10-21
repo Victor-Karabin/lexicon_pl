@@ -36,7 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.model.vocabulary.CefrLevel
 import com.lexicon.model.vocabulary.LocalizedText
@@ -61,8 +60,6 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import org.koin.androidx.compose.koinViewModel
 import kotlin.time.Duration.Companion.minutes
-
-private val IconBadgeSize = 44.dp
 
 @Composable
 fun VocabularyScreen(

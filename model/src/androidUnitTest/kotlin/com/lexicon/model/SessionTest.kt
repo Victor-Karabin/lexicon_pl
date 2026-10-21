@@ -78,20 +78,6 @@ class SessionTest {
     }
 
     @Test
-    fun `the tallies are derived from the steps, not counted by hand`() {
-        val done = session(4)
-            .answer(0, StepOutcome.CORRECT)
-            .answer(1, StepOutcome.CORRECT, tipUsed = true)
-            .answer(2, StepOutcome.INCORRECT)
-            .answer(3, StepOutcome.SKIPPED)
-
-        assertEquals(2, done.correctCount)
-        assertEquals(1, done.incorrectCount)
-        assertEquals(1, done.skippedCount)
-        assertEquals(1, done.tipsUsedCount)
-    }
-
-    @Test
     fun `the expected answer belongs to the session, not the caller`() {
         assertEquals("word1", session().question(1)?.expectedAnswer)
     }

@@ -23,15 +23,12 @@ import com.lexicon.presentation.theme.LexiconTheme
 
 enum class WordCardState { NEUTRAL, CORRECT, INCORRECT }
 
-enum class WordCardSize { COMPACT, EXPANDED }
-
 @Composable
 fun WordCard(
     word: String,
     modifier: Modifier = Modifier,
     sublabel: String? = null,
     state: WordCardState = WordCardState.NEUTRAL,
-    size: WordCardSize = WordCardSize.COMPACT,
 ) {
     val stateColor = when (state) {
         WordCardState.CORRECT -> LexiconSuccess
@@ -43,11 +40,6 @@ fun WordCard(
         WordCardState.INCORRECT -> LexiconErrorContainer
         WordCardState.NEUTRAL -> Color.Transparent
     }
-    val textStyle = if (size == WordCardSize.COMPACT) {
-        MaterialTheme.typography.displaySmall
-    } else {
-        MaterialTheme.typography.displayMedium
-    }
 
     Column(
         modifier = modifier
@@ -56,7 +48,7 @@ fun WordCard(
             .padding(Dimens.spacingMedium),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = word, style = textStyle, color = stateColor)
+        Text(text = word, style = MaterialTheme.typography.displaySmall, color = stateColor)
         sublabel?.let {
             Text(
                 text = it,
@@ -81,7 +73,6 @@ private fun WordCardStatesPreview() {
                 WordCardState.entries.forEach { state ->
                     WordCard(word = "praca", sublabel = state.name.lowercase(), state = state)
                 }
-                WordCard(word = "dzień dobry", size = WordCardSize.EXPANDED)
             }
         }
     }

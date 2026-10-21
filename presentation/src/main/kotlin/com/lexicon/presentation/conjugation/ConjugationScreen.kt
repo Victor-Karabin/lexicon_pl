@@ -22,7 +22,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -43,19 +42,6 @@ import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.component.ProgressDots
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
-
-object ConjugationTestTags {
-    const val INFINITIVE = "conjugation_infinitive"
-    const val TRANSLATION = "conjugation_translation"
-    const val IMAGE = "conjugation_image"
-    const val TRANSCRIPTION = "conjugation_transcription"
-    const val EDIT = "conjugation_edit"
-    const val IMAGE_PICKER = "conjugation_image_picker"
-    const val PROGRESS = "conjugation_progress"
-    const val EMPTY = "conjugation_empty"
-
-    fun person(label: String) = "conjugation_person_$label"
-}
 
 @Composable
 fun ConjugationScreen(
@@ -141,7 +127,6 @@ private fun ConjugationContent(
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.testTag(ConjugationTestTags.EMPTY),
                         )
                     }
 
@@ -158,7 +143,7 @@ private fun ConjugationContent(
                             ProgressDots(
                                 step = uiState.stepIndex,
                                 total = uiState.totalSteps,
-                                modifier = Modifier.fillMaxWidth().testTag(ConjugationTestTags.PROGRESS),
+                                modifier = Modifier.fillMaxWidth(),
                             )
 
                             Box(modifier = Modifier.fillMaxWidth()) {
@@ -166,13 +151,11 @@ private fun ConjugationContent(
                                     imageUrl = table.imageUrl,
                                     fallbackText = table.infinitive,
                                     height = DrillImageHeight,
-                                    modifier = Modifier.testTag(ConjugationTestTags.IMAGE),
                                 )
                                 IconButton(
                                     onClick = onEdit,
                                     modifier = Modifier
-                                        .align(Alignment.TopEnd)
-                                        .testTag(ConjugationTestTags.EDIT),
+                                        .align(Alignment.TopEnd),
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Edit,
@@ -195,7 +178,6 @@ private fun ConjugationContent(
                                         text = stringResource(R.string.pronunciation_ipa_format, ipa),
                                         style = MaterialTheme.typography.bodyMedium,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        modifier = Modifier.testTag(ConjugationTestTags.TRANSCRIPTION),
                                     )
                                 }
 
@@ -221,7 +203,6 @@ private fun ConjugationContent(
                                         onAnswerChanged = { onAnswerChanged(person, it) },
                                         onSpeak = { onSpeak(step.spokenForm) },
                                         imeAction = if (index == table.steps.lastIndex) ImeAction.Done else ImeAction.Next,
-                                        modifier = Modifier.testTag(ConjugationTestTags.person(person.label)),
                                     )
                                 }
                             }
