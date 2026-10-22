@@ -19,6 +19,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import kotlin.random.Random
 
 class DeclensionUseCasesImplTest {
     private val kot = Word(
@@ -89,6 +90,10 @@ class DeclensionUseCasesImplTest {
         }
     }
 
+    private val firstOfTies = object : Random() {
+        override fun nextBits(bitCount: Int): Int = 0
+    }
+
     private val noImages = object : ImageProvider {
         override suspend fun searchImage(query: String): String? = null
 
@@ -107,7 +112,7 @@ class DeclensionUseCasesImplTest {
     @Test
     fun `a noun is asked one number at a time, every case of it`() =
         runTest {
-            val table = NextDeclensionTableUseCaseImpl(FakeRepository(listOf(kot)), noImages)(DECLENSION_COURSE_ID)!!
+            val table = NextDeclensionTableUseCaseImpl(FakeRepository(listOf(kot)), noImages)(DECLENSION_COURSE_ID, random = firstOfTies)!!
             assertEquals(DeclensionColumn.SINGULAR, table.column)
             assertEquals(GrammaticalCase.entries, table.steps.map { it.variant.case })
             assertEquals("kocie", table.steps.last().spokenForm)
@@ -128,7 +133,7 @@ class DeclensionUseCasesImplTest {
             val submit = SubmitDeclensionAnswerUseCaseImpl(repository)
 
             repeat(2) {
-                val singular = next(DECLENSION_COURSE_ID)!!
+                val singular = next(DECLENSION_COURSE_ID, random = firstOfTies)!!
                 assertEquals(DeclensionColumn.SINGULAR, singular.column)
                 submit(
                     SubmitDeclensionAnswerRequest(
@@ -138,12 +143,31 @@ class DeclensionUseCasesImplTest {
                     ),
                 )
                 if (it == 0) {
-                    val plural = next(DECLENSION_COURSE_ID)!!
+                    val plural = next(DECLENSION_COURSE_ID, random = firstOfTies)!!
                     assertEquals(DeclensionColumn.PLURAL, plural.column)
                     submit(SubmitDeclensionAnswerRequest(DECLENSION_COURSE_ID, plural, emptyMap()))
                 }
             }
-            assertEquals(DeclensionColumn.PLURAL, next(DECLENSION_COURSE_ID)!!.column)
+            assertEquals(DeclensionColumn.PLURAL, next(DECLENSION_COURSE_ID, random = firstOfTies)!!.column)
+        }
+
+    @Test
+    fun `a word already asked this session waits while another can be asked`() =
+        runTest {
+            val repository = FakeRepository(listOf(kot, nozyczki))
+            val next = NextDeclensionTableUseCaseImpl(repository, noImages)
+            val practised = next(DECLENSION_COURSE_ID, asked = setOf("kot"))!!
+            SubmitDeclensionAnswerUseCaseImpl(repository)(SubmitDeclensionAnswerRequest(DECLENSION_COURSE_ID, practised, emptyMap()))
+
+            assertEquals("nożyczki", next(DECLENSION_COURSE_ID, asked = setOf("kot"))!!.word)
+        }
+
+    @Test
+    fun `once every word has been asked, the session goes on with the least practised`() =
+        runTest {
+            val table = NextDeclensionTableUseCaseImpl(FakeRepository(listOf(kot)), noImages)(DECLENSION_COURSE_ID, asked = setOf("kot"))
+
+            assertEquals("kot", table?.word)
         }
 
     @Test

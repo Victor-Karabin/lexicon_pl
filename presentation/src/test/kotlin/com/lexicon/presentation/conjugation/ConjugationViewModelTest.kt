@@ -41,7 +41,7 @@ class ConjugationViewModelTest {
         }
 
     private val nextQuestion: NextConjugationTableUseCase = mockk {
-        coEvery { this@mockk(any()) } returns null
+        coEvery { this@mockk(any(), any(), any()) } returns null
     }
     private val loadCourses: LoadConjugationCoursesUseCase = mockk()
     private val getStepCount: GetStepCountUseCase = mockk { coEvery { this@mockk() } returns AppSettings.DEFAULT_STEP_COUNT }

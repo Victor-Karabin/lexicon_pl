@@ -2,6 +2,7 @@ package com.lexicon.interactors.conjugation
 
 import com.lexicon.interactors.course.AnswerVerdict
 import kotlinx.collections.immutable.ImmutableList
+import kotlin.random.Random
 
 interface LoadConjugationVerbsUseCase {
     suspend fun page(
@@ -27,7 +28,11 @@ interface LoadConjugationCoursesUseCase {
 }
 
 interface NextConjugationTableUseCase {
-    suspend operator fun invoke(courseId: String): ConjugationTable?
+    suspend operator fun invoke(
+        courseId: String,
+        asked: Set<String> = emptySet(),
+        random: Random = Random.Default,
+    ): ConjugationTable?
 }
 
 data class SubmitConjugationAnswerRequest(

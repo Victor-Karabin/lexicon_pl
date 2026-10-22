@@ -1,6 +1,7 @@
 package com.lexicon.application.declension
 
 import com.lexicon.application.paging.filteredPage
+import com.lexicon.application.training.nextToPractise
 import com.lexicon.application.training.pictureOf
 import com.lexicon.boundary.DeclensionRepository
 import com.lexicon.boundary.ImageProvider
@@ -28,6 +29,7 @@ import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlin.random.Random
 
 class LoadDeclinableWordsUseCaseImpl(
     private val declension: DeclensionRepository,
@@ -66,7 +68,11 @@ class NextDeclensionTableUseCaseImpl(
     private val declension: DeclensionRepository,
     private val imageProvider: ImageProvider,
 ) : NextDeclensionTableUseCase {
-    override suspend fun invoke(courseId: String): DeclensionTable? {
+    override suspend fun invoke(
+        courseId: String,
+        asked: Set<String>,
+        random: Random,
+    ): DeclensionTable? {
         val studySet = declension.studySet()
         if (studySet.isEmpty()) return null
 
@@ -74,7 +80,12 @@ class NextDeclensionTableUseCaseImpl(
         val (word, declinable, column) = studySet
             .flatMap { (word, declinable) -> declinable.columns.map { Triple(word, declinable, it) } }
             .filterNot { (_, declinable, column) -> declinable.isMastered(column, progress) }
-            .minByOrNull { (_, declinable, column) -> declinable.attempts(column, progress) }
+            .nextToPractise(
+                wasAsked = { (_, declinable, _) -> declinable.text in asked },
+                isMastered = { false },
+                attempts = { (_, declinable, column) -> declinable.attempts(column, progress) },
+                random = random,
+            )
             ?: return null
 
         val table = declinable.question(column) ?: return null

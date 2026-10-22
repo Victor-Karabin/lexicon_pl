@@ -75,7 +75,7 @@ class DeclensionViewModel(
         recordStudy = recordStudy,
         getStepCount = getStepCount,
         keyOf = DeclensionTable::word,
-        pick = { nextQuestion(courseId) },
+        pick = { asked -> nextQuestion(courseId, asked) },
     )
 
     val navigationEvents: SharedFlow<SessionNavigationEvent> = session.navigationEvents

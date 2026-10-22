@@ -82,7 +82,7 @@ class ConjugationViewModel(
         recordStudy = recordStudy,
         getStepCount = getStepCount,
         keyOf = ConjugationTable::infinitive,
-        pick = { nextQuestion(courseId) },
+        pick = { asked -> nextQuestion(courseId, asked) },
     )
 
     val navigationEvents: SharedFlow<SessionNavigationEvent> = session.navigationEvents

@@ -76,7 +76,7 @@ class DeclensionViewModelTest {
         ),
     )
 
-    private val nextQuestion: NextDeclensionTableUseCase = mockk { coEvery { this@mockk(any()) } returns table }
+    private val nextQuestion: NextDeclensionTableUseCase = mockk { coEvery { this@mockk(any(), any(), any()) } returns table }
     private val submitAnswer: SubmitDeclensionAnswerUseCase = mockk()
     private val loadCourses: LoadDeclensionCoursesUseCase = mockk()
     private val results = LastSessionResultsHolder()
@@ -100,6 +100,23 @@ class DeclensionViewModelTest {
             getStepCount = getStepCount,
             dispatchers = dispatchers,
         )
+
+    @Test
+    fun `the next table is picked knowing which words this session has already asked`() =
+        runTest(testDispatcher) {
+            val seen = mutableListOf<Set<String>>()
+            coEvery { nextQuestion(any(), any(), any()) } answers {
+                seen += secondArg<Set<String>>().toSet()
+                table
+            }
+            val viewModel = viewModel()
+            advanceUntilIdle()
+
+            viewModel.onNext()
+            advanceUntilIdle()
+
+            assertEquals(listOf(emptySet(), setOf("kot")), seen)
+        }
 
     @Test
     fun `the session is as long as the Steps per session setting`() =
@@ -155,7 +172,7 @@ class DeclensionViewModelTest {
     @Test
     fun `a checked table keeps the verdicts and shows the answer as wrong when one case is wrong`() =
         runTest(testDispatcher) {
-            coEvery { nextQuestion(any()) } returns twoCaseTable
+            coEvery { nextQuestion(any(), any(), any()) } returns twoCaseTable
             val verdicts = mapOf(GrammaticalCase.GENITIVE to AnswerVerdict.CORRECT, GrammaticalCase.DATIVE to AnswerVerdict.WRONG)
             coEvery { submitAnswer(any()) } returns SubmitDeclensionAnswerResponse(verdicts)
             val viewModel = viewModel()
@@ -185,7 +202,7 @@ class DeclensionViewModelTest {
     @Test
     fun `the result lists every case with what was typed and the form it should have been`() =
         runTest(testDispatcher) {
-            coEvery { nextQuestion(any()) } returns twoCaseTable
+            coEvery { nextQuestion(any(), any(), any()) } returns twoCaseTable
             coEvery { submitAnswer(any()) } returns
                 SubmitDeclensionAnswerResponse(
                     mapOf(GrammaticalCase.GENITIVE to AnswerVerdict.CORRECT, GrammaticalCase.DATIVE to AnswerVerdict.WRONG),
@@ -248,7 +265,7 @@ class DeclensionViewModelTest {
     @Test
     fun `with nothing to practise and the course unfinished the screen shows none`() =
         runTest(testDispatcher) {
-            coEvery { nextQuestion(any()) } returns null
+            coEvery { nextQuestion(any(), any(), any()) } returns null
             coEvery { loadCourses() } returns persistentListOf()
 
             val viewModel = viewModel()
@@ -262,7 +279,7 @@ class DeclensionViewModelTest {
     @Test
     fun `with nothing left to practise in a finished course the screen says it is complete`() =
         runTest(testDispatcher) {
-            coEvery { nextQuestion(any()) } returns null
+            coEvery { nextQuestion(any(), any(), any()) } returns null
             coEvery { loadCourses() } returns persistentListOf(masteredCourse())
 
             val viewModel = viewModel()
