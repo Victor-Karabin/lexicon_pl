@@ -176,7 +176,9 @@ a splash screen over something they cannot fix would be the worse outcome.
   catalogue, so a hand-made membership survives an app update.
 - **Deleting a preset.** The preset and its memberships go, the words stay. The
   preset's id is recorded in `deleted_presets` so a re-seed does not bring a shipped one
-  back, and restoring it (the undo) clears that record and seeds again.
+  back, and restoring it (the undo) clears that record and seeds again. A preset the
+  learner made is not in the asset, so the seeder keeps it and its words in memory when it
+  is deleted, and the undo writes them back.
 
 ## Repository responsibilities
 
