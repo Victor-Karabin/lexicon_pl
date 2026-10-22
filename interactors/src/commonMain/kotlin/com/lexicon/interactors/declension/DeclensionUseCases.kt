@@ -3,6 +3,7 @@ package com.lexicon.interactors.declension
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.model.vocabulary.GrammaticalCase
 import kotlinx.collections.immutable.ImmutableList
+import kotlin.random.Random
 
 fun interface LoadDeclinableWordsUseCase {
     suspend fun page(
@@ -15,8 +16,12 @@ fun interface LoadDeclensionCoursesUseCase {
     suspend operator fun invoke(): ImmutableList<DeclensionCourse>
 }
 
-fun interface NextDeclensionTableUseCase {
-    suspend operator fun invoke(courseId: String): DeclensionTable?
+interface NextDeclensionTableUseCase {
+    suspend operator fun invoke(
+        courseId: String,
+        asked: Set<String> = emptySet(),
+        random: Random = Random.Default,
+    ): DeclensionTable?
 }
 
 data class SubmitDeclensionAnswerRequest(

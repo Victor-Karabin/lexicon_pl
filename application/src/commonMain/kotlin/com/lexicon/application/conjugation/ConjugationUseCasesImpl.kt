@@ -1,6 +1,7 @@
 package com.lexicon.application.conjugation
 
 import com.lexicon.application.paging.filteredPage
+import com.lexicon.application.training.nextToPractise
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.VocabularyRepository
@@ -27,6 +28,7 @@ import com.lexicon.interactors.presets.CreateWordUseCase
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlin.random.Random
 
 class LoadConjugationVerbsUseCaseImpl(
     private val conjugations: ConjugationRepository,
@@ -73,22 +75,35 @@ class NextConjugationTableUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val imageProvider: ImageProvider,
 ) : NextConjugationTableUseCase {
-    override suspend fun invoke(courseId: String): ConjugationTable? {
+    override suspend fun invoke(
+        courseId: String,
+        asked: Set<String>,
+        random: Random,
+    ): ConjugationTable? {
         val selected = conjugations.studySetVerbs(vocabulary)
         if (selected.isEmpty()) return null
 
         val progress = conjugations.courseProgress(courseId, selected).variants.associateBy { it.variant }
-        val verb = selected.leastPractised(progress) ?: return null
+        val verb = selected.leastPractised(progress, asked, random) ?: return null
 
         return verb.question()?.withLearningAids()
     }
 
-    private fun List<VerbConjugation>.leastPractised(progress: Map<ConjugationVariant, ConjugationVariantProgress>): VerbConjugation? {
+    private fun List<VerbConjugation>.leastPractised(
+        progress: Map<ConjugationVariant, ConjugationVariantProgress>,
+        asked: Set<String>,
+        random: Random,
+    ): VerbConjugation? {
         fun attempts(verb: VerbConjugation) = verb.persons.sumOf { progress[ConjugationVariant(verb.infinitive, it)]?.attempted ?: 0 }
 
         fun mastered(verb: VerbConjugation) = verb.persons.all { progress[ConjugationVariant(verb.infinitive, it)]?.isMastered == true }
 
-        return filterNot(::mastered).minByOrNull(::attempts)
+        return filterNot(::mastered).nextToPractise(
+            wasAsked = { it.infinitive in asked },
+            isMastered = { false },
+            attempts = ::attempts,
+            random = random,
+        )
     }
 
     private suspend fun ConjugationTable.withLearningAids(): ConjugationTable {

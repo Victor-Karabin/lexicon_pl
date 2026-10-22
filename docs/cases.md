@@ -69,10 +69,11 @@ the cases that ships as `rules.json` (`ReferenceRule`).
 - The unit is a **variant**: one word, one column and one case (`DeclensionVariant`).
 - **Mastered**: a variant answered correctly twice in a row (`TABLE_DRILL_MASTERY_STREAK`,
   shared with the conjugation course). A wrong answer resets the streak.
-- **Next table**: among the words in the study set, the column that is not fully mastered
-  and has been tried the fewest times (`NextDeclensionTableUseCase`). The training keeps no
-  list of what it already asked; the choice follows the stored attempt counts. When every
-  table is mastered, the training ends.
+- **Next table**: among the words in the study set, a column that is not fully mastered,
+  of a word not yet asked this session, tried the fewest times, at random among equals
+  (`NextDeclensionTableUseCase`, through `nextToPractise`). Once every word has been asked,
+  asked words count again. When every table is mastered, the training ends. Verb
+  Conjugation picks its next verb the same way (`NextConjugationTableUseCase`).
 - The dashboard card shows variants mastered out of all variants of the words in the course
   (`DeclensionCourseProgress`).
 

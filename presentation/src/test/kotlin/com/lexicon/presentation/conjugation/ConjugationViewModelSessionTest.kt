@@ -48,7 +48,7 @@ class ConjugationViewModelSessionTest {
         steps = persistentListOf(ConjugationStep(ConjugationVariant("czytać", GrammaticalPerson.JA), persistentListOf("czytam"))),
     )
 
-    private val nextQuestion: NextConjugationTableUseCase = mockk { coEvery { this@mockk(any()) } returns table }
+    private val nextQuestion: NextConjugationTableUseCase = mockk { coEvery { this@mockk(any(), any(), any()) } returns table }
     private val submitAnswer: SubmitConjugationAnswerUseCase = mockk()
     private val getStepCount: GetStepCountUseCase = mockk { coEvery { this@mockk() } returns STEPS }
 
@@ -124,6 +124,23 @@ class ConjugationViewModelSessionTest {
         }
 
     @Test
+    fun `the next table is picked knowing which verbs this session has already asked`() =
+        runTest(testDispatcher) {
+            val seen = mutableListOf<Set<String>>()
+            coEvery { nextQuestion(any(), any(), any()) } answers {
+                seen += secondArg<Set<String>>().toSet()
+                table
+            }
+            val viewModel = viewModel()
+            advanceUntilIdle()
+
+            viewModel.onNext()
+            advanceUntilIdle()
+
+            assertEquals(listOf(emptySet(), setOf("czytać")), seen)
+        }
+
+    @Test
     fun `pressing Next twice moves on by one table only`() =
         runTest(testDispatcher) {
             val viewModel = viewModel()
@@ -134,7 +151,7 @@ class ConjugationViewModelSessionTest {
             advanceUntilIdle()
 
             assertEquals(1, viewModel.uiState.value.stepIndex)
-            coVerify(exactly = 2) { nextQuestion(any()) }
+            coVerify(exactly = 2) { nextQuestion(any(), any(), any()) }
         }
 
     @Test
