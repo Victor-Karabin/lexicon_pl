@@ -21,7 +21,7 @@ Forms the books print with a conjugation or an aspect partner are mapped back to
 their headword by word_forms.tsv.
 
 A lesson with a guided script also links the phrases its vocabulary table teaches,
-after the book's own new words, so "Train this lesson" practises what the lesson
+after the book's own new words, so the lesson's word list covers what the lesson
 taught. Those phrases are authored, so one the corpus cannot resolve fails the build.
 
 Each lesson records the headword behind every id in vocabularyWords. Ids are handed

@@ -1,15 +1,19 @@
-# The course (Plan tab)
+# Courses (Plan tab)
 
-The Plan tab holds an ordered path through the vocabulary: the lesson sequence of
-an A1 coursebook and its workbook, shown in the app as **Polish for Beginners 1**
-(*Polski dla początkujących 1*) — the book's name appears nowhere in the app. Where the
-Vocabulary tab lets a learner pick any preset, the course answers "what should I study
-next".
+The Plan tab is where the learner's courses are. Its first tile is the **vocabulary course**,
+which runs on the dashboard and has its settings here: new words a day, reviews a day and the
+queue of trainings it cycles through. Under *Courses* come the **Polish for Beginners 1**
+course (*Polski dla początkujących 1*), and one tile each for the Verb Conjugation, Cases,
+Numbers and Countries courses; the last three have their own pages, [Cases](cases.md),
+[Numbers](numbers.md) and [Countries](countries.md).
 
-A lesson carries the book's own syllabus (what it teaches you to say, its topic
-vocabulary, its grammar point), the words it introduces, and the recordings that
-go with its exercises. **Train this lesson** runs the normal trainings over just
-those words.
+Polish for Beginners is the lesson sequence of an A1 coursebook and its workbook — the book's
+name appears nowhere in the app. Where the Words tab lets a learner pick any preset, the
+course answers "what should I study next".
+
+A lesson carries its title, the words it introduces, the recordings that go with its
+exercises and, for lessons 1 to 9, a guided script. A lesson without a script lists the
+book's exercises, each opening on its own screen. Every lesson is open from the start.
 
 ## Not distributable
 
@@ -17,18 +21,19 @@ The lesson text, titles and word lists are taken from commercial coursebooks. Th
 resulting APK must not be distributed. Everything book-derived is confined to:
 
 - `tools/course/` — the extraction scripts
-- `data/src/main/assets/course_krok.json` — the single generated asset
+- `data/src/androidMain/assets/course_krok.json` — the generated catalogue, and
+  `lesson_krok-a1-01.json` to `lesson_krok-a1-09.json`, the guided scripts
 - `krok/` — the books themselves, which live outside the repository and are never
   committed
 
-Dropping those three leaves a working app without a Plan tab, which is what a
-shippable variant would be.
+A shippable variant would drop those and take the course step out of the startup seeding
+(`SeedCatalogsUseCase`), which treats it like its other steps.
 
 ## What the sources actually give us
 
 | Source | Text quality | What we take | Shipped |
 | --- | --- | --- | --- |
-| A1 coursebook | native PDF text, exact | 26 lessons: title, syllabus, sections, new words, audio tags | yes |
+| A1 coursebook | native PDF text, exact | 26 lessons: title, syllabus, new words, audio tags | yes, except the syllabus |
 | A2 coursebook | 155-page scan, re-OCR'd | 23 lesson titles; word lists unreliable | **no — see below** |
 | A1 workbook | image-only scan | audio only | audio only |
 
@@ -67,11 +72,15 @@ brew install poppler tesseract tesseract-lang
 python3 tools/course/ocr_books.py          # once, ~45 min: A2 + A1 workbook
 python3 tools/course/extract_audio.py      # audio manifest
 python3 tools/course/extract_krok.py       # lesson structure
-python3 tools/course/build_course.py       # -> data/src/main/assets/course_krok.json
+python3 tools/course/fetch_drive_manifest.py   # Google Drive ids of the recordings
+python3 tools/course/build_course.py       # -> data/src/androidMain/assets/course_krok.json
 ```
 
-`ocr_books.py` caches to `krok/.cache/ocr/`, so it only runs once; the other three
-are fast and safe to re-run.
+The guided scripts are not generated: `lesson_krok-a1-NN.json` is written by hand beside the
+catalogue, and `build_course.py` reads it to link the phrases its vocabulary tables teach.
+
+`ocr_books.py` caches to `krok/.cache/ocr/`, so it only runs once; the others are fast and
+safe to re-run.
 
 ### How a lesson opener is parsed
 
@@ -113,8 +122,9 @@ python3 tools/course/build_course.py --report-missing
 
 New entries go into `tools/vocabulary/corpus/topics/zz-krok.tsv` — an ordinary
 topic file, so they pick up transcriptions from `g2p.py` and ids from
-`build_assets.py` for free. Its name keeps it last in the glob: ids are handed out
-in load order, so a file sorting earlier would renumber every word after it.
+`build_assets.py` for free. Ids are handed out in load order, so a file sorting
+earlier than an existing one would renumber every word after it; the phrases a guided
+lesson's vocabulary tables teach go in `zzzzzz-krok-lessons.tsv`, which sorts last.
 
 Forms the books print with a conjugation (`spać (śpię, śpisz)`), an aspect partner
 (`zamawiać/zamówić`) or in the gender a dialogue happens to use (`marudna`) are
@@ -125,23 +135,48 @@ mapped back to their headword by `tools/course/word_forms.tsv`.
 `course_krok.json` is imported into Room on first launch by `CourseSeeder`,
 fingerprint-guarded exactly like `VocabularyPresetSeeder`, and appears as a third
 step on the splash screen. Everything after that reads the database, not the
-asset.
+asset. The guided scripts are not imported: a lesson's script is read from its
+`lesson_<id>.json` asset when the lesson opens.
 
-The catalogue is replaced wholesale whenever the asset changes. `lesson_progress`
-is a separate table and is deliberately not part of that replace: it is the
+The catalogue is replaced wholesale whenever the asset changes. The progress tables
+(`lesson_progress`, `lesson_script_progress`, `lesson_last_results`) and
+`dashboard_courses` are separate and deliberately not part of that replace: they are the
 learner's, not the book's.
 
-`LessonUnlockRule` is the one place the progression lives — a lesson opens when
-the one before it is complete, the first is always open, and a completed lesson
-stays open so it can be revisited.
+There is no lock on the order: every lesson is open from the start. Finishing a guided
+lesson marks it done (`SetLessonCompletedUseCase`), and the lesson list can reset a
+lesson, clearing its answers, scores and done mark. The course tile can be pinned to the
+dashboard.
 
-### Training a single lesson
+### The guided lessons
+
+A lesson with a script (`LessonScript`) runs as a flow of screens rather than a list of
+exercises, and the lesson page offers *Start lesson* or *Continue lesson* where the exercise
+list would be.
+
+- The script is a sequence of **steps**, each a run of **screens**; a step can be a review
+  of the whole lesson or a grammar step. A screen has one of several shapes: reference
+  tables and phrases, grammar, typed answers, choices, a choice inside a line of dialogue,
+  ordering lines, a form, a verb table, filling gaps, a selection grid, or free writing.
+- A screen can carry recordings (see *Audio*), a transcript that opens always, after the
+  check or after another screen, and links to the grammar rules it practises. Each step
+  can list its new words.
+- Answers are checked by `LessonAnswerChecker`. A screen can be checked once every answer is
+  filled in; an exercise scored below the pass mark in Settings (80% by default) starts
+  again and keeps the right answers. At 0% it never repeats.
+- Free writing is read by OpenAI against a model answer and a checklist
+  (`WritingReviewer`); offline, or when the check is refused, the learner is shown the
+  model answer to compare with.
+- Progress is saved by screen, so *Continue lesson* resumes where the learner stopped.
+  The results screen scores each step, names what to work on and the rules to revisit,
+  and says how many answers were right on the first try.
+
+### Scoped trainings
 
 Every `Start*SessionRequest` takes an optional `vocabularyIds`; empty means the
-whole study set, which is what the Trainings tab passes. A lesson fills it in, and
-it travels as a `?words=` argument on the training route. Unlike the study set,
-a lesson-scoped session ignores the study-set flag: picking the lesson is already
-the choice of what to practise.
+whole study set, which is what the Trainings tab passes. Only the vocabulary course fills
+it in, and it travels as a `?words=` argument on the training route. A scoped session
+trains exactly the words it is given, whatever their status.
 
 When the vocabulary course launches Fillword, Passage or Sentences, they use the
 course's words too. Fillword packs the course words that fit the grid, and each
@@ -159,32 +194,40 @@ word's review schedule, does not count as a new word, and cannot make a word kno
 
 ### Which words the vocabulary course runs
 
-The words being learnt (to learn and favourite, favourites first) are always in.
-The reviews, up to the day's number, are known words chosen by the review schedule:
-those already reviewed today first, then the due ones, most overdue first, then known
-words that have no schedule yet, in word order. A word reviewed today stays in the
-course for the rest of the day, so a round does not change under the learner. Any
-answer that moves a word's schedule counts toward that, whichever training it came from,
-including one given outside the course. When nothing is being learnt, nothing is due and no known
-word is waiting without a schedule, the course has nothing to launch.
+The words being learnt (to learn and favourite, favourites first, then in word order) are
+always in, up to the day's number of new words. The reviews, up to the day's number, are
+known words chosen by the review schedule: those already reviewed today first, then the due
+ones, most overdue first, then, if the day's number is not yet reached, known words that
+have no schedule yet, in word order. The choice is never random; the session only deals
+the chosen words in a shuffled order. A word reviewed today stays in the course for the
+rest of the day, so a round does not change under the learner. Any answer that moves a
+word's schedule counts toward that, whichever training it came from, including one given
+outside the course. When nothing is being learnt, nothing is due and no known word is
+waiting without a schedule, the course has nothing to launch; a training that needs more
+words than the session has is skipped for the next one in the queue.
 
 Only a word's first answer of the day moves its review schedule. Later answers the same
 day, right or wrong, go to the history, the day's accuracy and the study record and
 leave the schedule where it is. A word marked to learn or favourite becomes known the
 first time one of those schedule-moving answers brings its review interval to the
-mastery threshold, and a later lapse does not take it back.
+mastery threshold (21 days), and a later lapse does not take it back.
+
+The Home card shows the counts as *N to learn · M known*, followed by *· K due* when any
+known word is due and the day's accuracy once there is an answer to measure.
 
 ### Audio
 
-454 MB does not belong in an APK, so the tracks are side-loaded:
+454 MB does not belong in an APK. The app downloads a recording from Google Drive the first
+time it is played, using the file id the catalogue records for it, and keeps it in the
+app's own external files directory (`lesson_audio`), where `LessonAudioLibrary` looks
+first. To have every track at once, side-load them:
 
 ```bash
 ./tools/course/install_audio.sh
 ```
 
-That pushes them to the app's own external files directory, where
-`LessonAudioLibrary` looks for them. A lesson works without them — the audio chips
-are simply disabled and the screen says so.
+A recording that is not on the device and cannot be downloaded shows only the plain
+player: no label, no disabled state and no error message.
 
 ## Caveats
 

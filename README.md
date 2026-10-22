@@ -6,15 +6,15 @@ through a range of trainings, and a review schedule decides what comes back and 
 
 ## What it does
 
-**Words you mark.** The app ships with 2,664 Polish words graded A1 to C2, grouped into
-74 presets across 11 categories by topic and frequency — among them 164 false friends that
+**Words you mark.** The app ships with 7,544 Polish words graded A1 to C2, grouped into
+75 presets across 11 categories by topic and frequency — among them 165 false friends that
 look like an English or Russian word and mean something else. Every word carries a status
 you change with one tap: to learn, favourite or known. *Review words* deals out the ones
 with no status yet, one card at a time. You can add words of your own; the IPA
 transcription and the CEFR level are worked out for you, and translations are suggested
 as you type.
 
-**Every word in a sentence.** 2,612 of the words and 4,464 of the verbs ship with an
+**Every word in a sentence.** 6,993 of the words and 4,905 of the verbs ship with an
 example showing the word in use, the word itself in bold and a button that reads the
 sentence aloud. You can rewrite one, or ask for another.
 
@@ -34,7 +34,8 @@ review, through a queue of trainings that repeats round after round. A word you 
 becomes known once its review interval reaches three weeks. The home card counts the known
 words that are due. You tune it on the Plan tab. A *course* teaches a fixed body of material — *Polish for Beginners*, built from a printed
 A1 coursebook, with its own audio and exercises. A *conjugation course* drills the forms of
-verbs you pick from a catalogue of 4,545. A *numbers course* drills writing numbers in
+the verbs you mark to learn, picked from a catalogue of 4,958. A *cases course* drills the
+seven cases of the nouns and adjectives you mark to learn, one table at a time. A *numbers course* drills writing numbers in
 Polish words: you type the numbers and ranges to practise (`1-20, 35, 2024`), and each one
 is shown in digits, read aloud on demand, and answered in words, with its transcription
 after the check. A *countries course* drills the 197 states of the official Polish list:
@@ -42,8 +43,9 @@ you tick the countries to practise, and each is shown as a flag and its English 
 answered in Polish, with the country, the word for a man and a woman from it, and the
 capital.
 
-**Written and spoken by machine where it helps.** Example sentences, and the passages the
-reading trainings use, are written by OpenAI around the word being practised. Translation
+**Written and spoken by machine where it helps.** Example sentences come from Tatoeba where
+it has a fitting one and are otherwise written by OpenAI around the word being practised;
+so are the passages the reading trainings use, and the sentence for a word you add. Translation
 looks in the shipped vocabulary first and asks Google Cloud Translation for whatever is not
 there. Speech is synthesised through Google Cloud Text-to-Speech, with the device's own
 engine as a fallback, and pronunciation is judged by Google Cloud Speech-to-Text. Pictures
@@ -89,7 +91,7 @@ the conjugation course are here too; what is not yet is listed in
 
 ## Layout
 
-Ten Gradle modules, layered so the domain depends on nothing:
+Eleven Gradle modules, layered so the domain depends on nothing:
 
 ```
 model          the domain — pure Kotlin, no framework of any kind
@@ -101,6 +103,10 @@ data android  application     adapters     use-case implementations
              presentation
                   ^
                  app          composition root and navigation
+
+common         clock, dispatchers, text folding — used by the layers above
+shared         the iOS framework, re-exporting everything except android, presentation and app
+baselineprofile  generates the app's baseline profile
 ```
 
 [docs/architecture.md](docs/architecture.md) explains the rules and where to find things.
@@ -153,11 +159,12 @@ by the Komisja Standaryzacji Nazw Geograficznych poza Granicami Rzeczypospolitej
 | [Architecture](docs/architecture.md) | Modules, layering rules, where things live, conventions |
 | [Universal DDD Language](docs/domain/universal-ddd-language.md) | The vocabulary: contexts, entities, aggregates, services |
 | [Vocabulary and presets](docs/vocabulary-presets.md) | How the catalogue, presets and the study set work |
-| [Course](docs/course.md) | The Polish for Beginners course: lessons, audio, exercises |
+| [Course](docs/course.md) | The Plan tab: the vocabulary course, and the Polish for Beginners course with its lessons, audio and exercises |
+| [Cases](docs/cases.md) | The cases course: choosing nouns and adjectives, the tables, progress |
 | [Numbers](docs/numbers.md) | The numbers course: choosing numbers, the words, transcriptions, progress |
 | [Countries](docs/countries.md) | The countries course: choosing countries, accepted answers, progress, the data and its source |
 
 ## Status
 
-Pre-release, version 0.1.0. 665 Kotlin files and 48 Swift files. 137 unit-test files,
-seven instrumented tests over real SQLite, and five end-to-end tests driving the app.
+Pre-release, version 0.1.0. 703 Kotlin files and 48 Swift files. 169 unit-test files,
+25 instrumented tests over real SQLite, and six end-to-end tests driving the app.

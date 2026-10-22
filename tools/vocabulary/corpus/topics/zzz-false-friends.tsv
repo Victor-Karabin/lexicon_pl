@@ -1,5 +1,5 @@
 # Words that look or sound like an English or Russian word but mean something else.
-# Kept last so the ids of every earlier word stay the same on installed apps.
+# Named to sort after zz-krok.tsv so the ids of every earlier word stay the same on installed apps.
 # Columns: polish <TAB> english <TAB> pos <TAB> cefr <TAB> topics (comma separated, may be empty)
 puszka	can, tin	n	A2	false-friends
 dynia	pumpkin	n	B1	false-friends

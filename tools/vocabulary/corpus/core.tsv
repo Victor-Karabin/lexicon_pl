@@ -1,5 +1,5 @@
 # Core Polish vocabulary, ordered by approximate frequency in modern spoken and written use.
-# Line order within this file IS the frequency rank, so inserting a word shifts everything after it.
+# Line order within this file gives the first word ids (the frequency rank comes from frequency.tsv), so inserting a word renumbers everything after it.
 # Columns: polish <TAB> english <TAB> pos <TAB> cefr <TAB> topics (comma separated, may be empty)
 # pos: n v adj adv prn num prep conj part interj expr
 być	to be	v	A1	daily-conversation
