@@ -1,9 +1,10 @@
 # Vocabulary introduced by the coursebook lessons and not already in the corpus.
 # Columns as in core.tsv.
 #
-# The file name keeps this list last in the topic glob. Ids are handed out in load
-# order, so a file sorting earlier would renumber every word after it and scramble
-# which word a stored favourite points at.
+# Ids are handed out in load order (core.tsv, then the topic files sorted by name), so a
+# file sorting earlier than an existing one would renumber every word after it and
+# scramble which word a stored favourite points at. Files named zzz-... and later sort
+# after this one; the newest is zzzzzz-krok-lessons.tsv.
 #
 # The coursebook is monolingual: the books print these words with no translation, so
 # every English gloss here is authored. Headwords are normalised — the books print

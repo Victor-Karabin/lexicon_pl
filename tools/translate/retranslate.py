@@ -15,7 +15,7 @@ authored gloss, so a rewrite gains no coverage and only trades one wording for
 another — and the trade measured badly: 273 glosses switched from the dictionary's
 person-neutral "to defend oneself" to "to defend myself", 1261 landed on a gloss
 another verb already answered to, and single-word requests turned "to corroborate"
-into "to work". Word senses in a 4545-verb list, most of them rare, are not
+into "to work". Word senses in a 4958-verb list, most of them rare, are not
 something one API call per infinitive can settle.
 
 Translations are cached in tools/translate/.cache.json, so a second run costs

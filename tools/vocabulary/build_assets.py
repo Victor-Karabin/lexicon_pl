@@ -4,8 +4,9 @@
 Run from anywhere:  python3 tools/vocabulary/build_assets.py
 
 Reads
-    tools/vocabulary/corpus/core.tsv        frequency-ordered core list (line order = rank)
+    tools/vocabulary/corpus/core.tsv        core list, loaded first (line order = word ids)
     tools/vocabulary/corpus/topics/*.tsv    topical vocabulary beyond the core list
+    tools/vocabulary/frequency.tsv          KWJP frequency per entry, which ranks the Top N presets
     tools/vocabulary/categories.tsv         preset categories
     tools/vocabulary/examples.tsv           generated example sentences, keyed by word
     tools/vocabulary/presets.tsv            preset metadata and selection rules

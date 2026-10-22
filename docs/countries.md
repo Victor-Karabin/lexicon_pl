@@ -5,8 +5,8 @@ each, and their capitals. The learner ticks the countries to practise; each trai
 one of them as a flag and its English name and asks for the Polish.
 
 It works the way the Numbers course does: a choice made on the Plan tab becomes a course
-with its own progress on the dashboard, and a training is ten steps followed by the usual
-results screen.
+with its own progress on the dashboard, and a training has as many steps as the *Steps per session* setting (ten by default),
+followed by the usual results screen.
 
 ## Choosing the countries
 
@@ -42,7 +42,7 @@ and an empty choice means no course.
 - After **Check** each row shows right or wrong; for a wrong one the correct answer appears
   with the letters the learner got wrong in bold. A play button beside each row reads the
   answer aloud with the app's voice.
-- A step is one country with all its fields; a training is ten steps, and a country is not
+- A step is one country with all its fields; a training has as many steps as the *Steps per session* setting (ten by default), and a country is not
   asked twice in one training while unasked ones remain.
 - The results screen lists every field of every country asked, marked right or wrong, with
   the country's English name and the field.

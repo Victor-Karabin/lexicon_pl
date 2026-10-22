@@ -5,7 +5,8 @@ practise; each training shows one of them in digits and asks for the words — a
 number, as an ordinal, or as a point in a list.
 
 A choice made on the Plan tab becomes a course with its own progress on the dashboard, and a
-training is ten steps followed by the usual results screen.
+training has as many steps as the *Steps per session* setting (ten by default), followed by
+the usual results screen.
 
 ## Choosing the numbers
 
@@ -132,7 +133,7 @@ pięćdziesiąt, sześćdziesiąt, dziewięćdziesiąt*.
 | Words, transcription, parsing, contracts | `interactors.numbers` — `PolishNumbers`, `NumberSelection`, `NumberQuestion`, the use cases |
 | Use cases | `application.numbers.NumberUseCasesImpl` |
 | Port | `boundary.NumberRepository` |
-| Storage | `data.local.NumberEntities` — tables `number_course` (the typed text, one row) and `number_progress` (one row per number and form tried, keyed by value and `kind`) |
+| Storage | `data.local.NumberEntities` — tables `number_course` (the typed text, one row) and `number_progress` (one row per number and form tried, keyed by value, `kind` and `gender`) |
 | Screens | `presentation.numbers` — `NumberCourseScreen` (the choice), `NumberTrainingScreen` |
 | Entry points | the **Numbers** tile on the Plan tab and the course card on the dashboard |
 

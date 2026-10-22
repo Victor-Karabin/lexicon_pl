@@ -17,8 +17,9 @@ above that: the **vocabulary course** cycles a queue of trainings over the words
 learner marked and the known words the schedule says are due, and **courses** teach a
 fixed body of material.
 
-Everything the learner practises comes from one of three sources: the shipped
-**vocabulary catalogue**, the **course** content, or the **verb catalogue**.
+Everything the learner practises comes from the shipped **vocabulary catalogue**, the
+**course** content, the **verb catalogue** or the list of countries — or, for numbers, from
+what the learner types.
 
 ## Where the model lives
 
@@ -92,7 +93,7 @@ under [Context-Specific Terminology](#context-specific-terminology) and must not
 | Vocabulary course | The one course that always runs on the dashboard, over the words the learner marked. There is nothing to create, start or stop | Vocabulary course | *program*, *plan* | `VocabularyCourse` |
 | Course settings | New words a day, reviews a day and the queue — all the learner configures | Vocabulary course | *config* | `CourseSettings` |
 | New words | The words being learnt this round: up to the day's number, favourites before words merely marked to learn. They stay the same until their status changes | Vocabulary course | *daily words* | `VocabularyCourse.newWords`, `learningWordIds()` |
-| Reviews | Known words in each session, up to the day's number: those already reviewed today first, then the due ones, most overdue first, then known words with no schedule yet, in word order. Nothing is drawn at random | Vocabulary course | *random words* | `ReviewScheduleRepository.knownWordSchedules()`, `dueOn`, `unscheduledKnownWordIds()` |
+| Reviews | Known words in each session, up to the day's number: those already reviewed today first, then the due ones, most overdue first, then known words with no schedule yet, in word order. The choice is never random; only the order in which a session deals its words is shuffled | Vocabulary course | *random words* | `ReviewScheduleRepository.knownWordSchedules()`, `dueOn`, `unscheduledKnownWordIds()` |
 | Queue | The ordered trainings the course runs, over and over | Vocabulary course | *playlist*, *day* | `CourseSettings.queue` |
 | Round | One pass through the queue. Finishing the last training starts the next round; there is no finished day | Vocabulary course | *day* | `VocabularyCourse.round` |
 | Reset | Going back to the first training of the queue, with the new-word cards offered again | Vocabulary course | *restart* | `ResetCourseQueueUseCase` |
@@ -106,8 +107,6 @@ under [Context-Specific Terminology](#context-specific-terminology) and must not
 | Conjugation variant | One verb paired with one grammatical person — the unit of progress | Conjugation | *step*, *cell* | `ConjugationVariant` |
 | Conjugation table | A verb's full set of forms, asked as one exercise | Conjugation | *question* | `ConjugationTable` |
 | Conjugated form | What a verb becomes for a given person | Conjugation | *answer*, *inflection* | `formsFor(person)` |
-| Ending | The part of a conjugated form that differs from the verb's shared stem | Conjugation | *termination* | `ConjugationSplit.endings` |
-| Stem | The longest prefix every usable form of a verb shares | Conjugation | *root*, *base* | `ConjugationSplit.stem` |
 | Variant mastery | A conjugation or declension variant answered correctly enough times in a row | Conjugation, Declension | *learned* | `TABLE_DRILL_MASTERY_STREAK` |
 | Conjugation course | The study-set verbs practised together, with one shared progress; there is exactly one (`study-set`) | Conjugation | *course* unqualified | `ConjugationCourse` |
 | Declension column | One number or gender of a declinable word — singular or plural for a noun; masculine, feminine, neuter, plural for men or other plural for an adjective — asked as one table of seven cases | Declension | *form group* | `DeclensionColumn` |
@@ -138,14 +137,15 @@ Objects with identity that persists across changes.
 | --- | --- | --- | --- |
 | Word | `VocabularyId` | Vocabulary | `withStatus`, `edited`, `isPhrase` |
 | Preset | `PresetId` | Vocabulary | `wordCount` |
-| Session | `SessionId` | Training | `answer`, `currentStep`, `isComplete`, the tallies |
+| Session | `SessionId` | Training | `answer`, `currentStep`, `isComplete` |
 | Vocabulary course | the single stored row | Vocabulary course | `nextTraining`, `showCardsNext`, `roundFraction` |
 | Course | `CourseId` | Course | `completedCount`, `currentLesson`, `isComplete` |
 | Lesson | `LessonId` | Course | — |
 | Conjugation course | `ConjugationCourse.id` | Conjugation | — |
+| Cases course | `DeclensionCourse.id` | Declension | — |
 | Numbers course | the single stored row | Numbers | — |
 | Country | country code | Countries | `fields`, `answers`, `flag` |
-| Verb | infinitive | Conjugation | `formsFor`, `split`, `isComplete` |
+| Verb | infinitive | Conjugation | `formsFor`, `isComplete` |
 
 ## Value Objects
 
@@ -163,8 +163,13 @@ Defined wholly by their values, with no identity.
 
 **Course** — `CourseId`, `LessonId`, `LessonSummary`, `LessonExercise` and its item types
 
-**Conjugation** — `GrammaticalPerson`, `ConjugationVariant`, `ConjugationSplit`,
-`ConjugationAnswerMode`, `ConjugationStep`, `ConjugationVariantProgress`
+**Conjugation** — `GrammaticalPerson`, `ConjugationVariant`, `ConjugationStep`,
+`ConjugationVariantProgress`
+
+**Declension** — `DeclensionColumn`, `DeclensionVariant`, `DeclensionStep`,
+`DeclensionVariantProgress`
+
+**Countries** — `CountryField`, `CountryFieldProgress`
 
 `ConjugationVariant` is a value object even though progress is tracked per variant: the
 pairing has no identity of its own, only the verb and the person.
@@ -183,6 +188,7 @@ reads its parts back out is ceremony.
 | Vocabulary course | its settings and its place in the queue | the queue is never empty; the place is always inside the queue | In the use cases: `UpdateCourseSettingsUseCase` keeps the previous queue rather than store an empty one, and the place is clamped on read |
 | Course | its lessons, their words, audio and exercises | lesson progress belongs to exactly one course | By the schema — progress is keyed by lesson |
 | Conjugation course | the study-set verbs and their per-variant progress | one course exists; its progress is keyed by its id | In `LoadConjugationCoursesUseCase`, which builds only the `study-set` course; by the schema — progress is keyed by course id |
+| Cases course | the study-set nouns and adjectives and their per-variant progress | one course exists; progress belongs to the word, column and case, so it survives a change of status | In `LoadDeclensionCoursesUseCase`, which builds only the `study-set` course; by the schema — progress is keyed by course, word, column and case |
 | Numbers course | the typed choice and per-number progress | only a readable choice is stored; progress belongs to the number form, so it survives a change of choice | In `SaveNumberCourseUseCase`, which parses before saving; by the schema — progress is keyed by number and form |
 | Countries course | the chosen country codes and per-field progress | a choice holds only codes that are in the list; progress belongs to the country and field, so it survives a change of choice | In `SaveCountryChoiceUseCase`, which drops unknown codes; by the schema — progress is keyed by country and field |
 | Verb | its forms per person | a form is never invented; absent means absent | By construction — forms are read from the asset, never derived |
@@ -198,7 +204,7 @@ Operations that belong to no single entity.
 | Study time policy | Decides how much of a gap between answers was studying | `StudyTimePolicy.creditedSeconds()` |
 | Queue resolver | Finds the next training the course can actually run with the words it has, and keeps the step over any it cannot | `NextCourseTrainingUseCase` |
 | Answer normaliser | Decides whether a written or spoken answer matches | `AnswerNormalizer` |
-| Conjugation splitter | Derives stem and endings from a verb's own forms | `VerbConjugation.split()` |
+| Adjective decliner | Builds the seven-case tables of a regular adjective from its five nominative forms | `PolishAdjectives.decline` |
 | Number speller | Writes a number in Polish words and transcribes it | `PolishNumbers` |
 | Practice picker | Picks the next item of a drill: not asked this session, not mastered, tried the fewest times, at random among equals | `nextToPractise` |
 | Voice choice | The voice the learner will hear: theirs, or the first on offer | `List<SpeechVoice>.chosen()` |
@@ -209,15 +215,17 @@ Everything the domain needs from the outside, declared in `boundary` and impleme
 `data` (persistence) or `android` (device and network).
 
 **Repositories** — `VocabularyRepository`, `VocabularyPresetRepository`,
-`CourseRepository`, `ConjugationRepository`, `NumberRepository`, `CountryRepository`, `VocabularyCourseRepository`,
-`TrainingHistoryRepository`, `ReviewScheduleRepository`, `StudyRecordRepository`,
-`SettingsRepository`, `SessionStore`
+`CourseRepository`, `ReferenceRuleRepository`, `ConjugationRepository`,
+`DeclensionRepository`, `NumberRepository`, `CountryRepository`,
+`VocabularyCourseRepository`, `TrainingHistoryRepository`, `ReviewScheduleRepository`,
+`StudyRecordRepository`, `SettingsRepository`, `SessionStore`
 
-**External services** — `Translator`, `SentenceGenerator`, `ImageProvider`,
-`SpeechSynthesizer`, `SpeechRecognizerService`, `AudioPlayer`, `LessonAudioPlayer`,
-`LessonAudioLibrary`
+**External services** — `Translator`, `TranslationSuggester`, `SentenceGenerator`,
+`ExampleSentenceGenerator`, `WordGrammarGenerator`, `WordLevelGuesser`, `WritingReviewer`,
+`ImageProvider`, `SpeechSynthesizer`, `SpeechRecognizerService`, `AudioPlayer`,
+`LessonAudioPlayer`, `LessonAudioLibrary`
 
-**Platform** — `AppVersionProvider`, `CatalogSeedGate`
+**Platform** — `AppVersionProvider`, `CatalogSeedGate`, `DeviceLanguageSupport`
 
 ## Domain Events
 
@@ -241,7 +249,7 @@ Introducing an event type is a domain change and requires updating this document
 | Operation | Meaning | Entry point |
 | --- | --- | --- |
 | Mark a word | Move a word to its next status | `SetWordStatusUseCase` |
-| Star a verb | Add a verb to the study set by its word status; `EnsureVerbWordUseCase` creates the word if it is missing | `SetWordStatusUseCase` |
+| Mark a verb | Give a verb a word status, which puts it in the verb course when it is to learn or favourite; `EnsureVerbWordUseCase` creates the word first if the verb has none | `EnsureVerbWordUseCase`, `SetWordStatusUseCase` |
 | Start a session | Draw words and open a session over them | `Start*SessionUseCase` |
 | Submit an answer | Mark one step against the session's expected answer | `Submit*UseCase` |
 | Record an answer | Store the result, advance the review schedule, credit the study day. Only a word's first answer of the day advances its schedule; later ones that day are history, accuracy and study time only. Pronunciation of sentences is history and accuracy only and leaves the schedule alone (`TrainingType.updatesSchedule`) | `RecordAnswerUseCase` |
@@ -266,7 +274,6 @@ Introducing an event type is a domain change and requires updating this document
 | Word status | `UNDEFINED`, `TO_LEARN`, `FAVOURITE`, `KNOWN`, in that cycle |
 | Catalogue step | `Pending`, `InProgress`, `Complete`, `Failed` |
 | Answer (UI) | `Unanswered`, `Correct`, `Incorrect`, `Skipped` |
-| Conjugation answer mode | `FULL_FORM`, `ENDING` |
 | Verb completeness | complete, partial, unusable |
 | Number selection | `Valid`, `Empty`, `Unreadable`, `TooLarge`, `TooMany` |
 
@@ -274,9 +281,11 @@ Introducing an event type is a domain change and requires updating this document
 verbs with only some (`boleć` has only the third persons), and verbs with none. Only
 usable forms become questions.
 
-**Frequency is the catalogue's own numbering.** The shipped vocabulary is ordered by how
-common a word is — the Top 100 preset is ids 1..100 — so the course's new words, taken in
-id order within each status, come most common first.
+**Frequency is a ranking, not the id.** The Top N presets take the N words with the best
+frequency rank, which `tools/vocabulary/build_assets.py` works out from the KWJP counts in
+`frequency.tsv`; the Top 100 is therefore not ids 1..100. Ids are handed out in corpus
+order, the core list first, which is roughly how common a word is, so the course's new
+words, taken in id order within each status, come roughly most common first.
 
 ## Relationships Between Concepts
 
@@ -297,7 +306,7 @@ Verb --< Conjugated form        Conjugation course --< Verb
 ```
 
 A **word** is the unit of vocabulary; a **verb** is not a word — verbs live in their own
-catalogue and only become words if the learner stars one.
+catalogue and only become words if the learner marks one.
 
 ## Context-Specific Terminology
 
@@ -328,8 +337,8 @@ These words carry different meanings in different contexts and must not be unifi
 Recorded rather than hidden. Each is a place where the code does not yet match the model
 this document describes.
 
-- **Conjugation has no model package.** `VerbConjugation`, `ConjugationVariant`,
-  `ConjugationSplit` and `MASTERY_STREAK` still live in `interactors.conjugation`. They
+- **Conjugation has no model package.** `VerbConjugation`, `ConjugationVariant` and
+  `MASTERY_STREAK` still live in `interactors.conjugation`. They
   are well modelled; they are simply in the application layer.
 - **Declension has no model package.** `DeclinableWord`, `PolishAdjectives` and
   `DeclensionVariant` live in `interactors.declension`, beside Conjugation's model.
@@ -367,6 +376,7 @@ this document describes.
 | Reset the course | Removed | — |
 | Create a conjugation course | Removed — there is one built-in course over the study set | — |
 | Delete a conjugation course | Removed — there is one built-in course over the study set | — |
+| Stem, ending (`ConjugationSplit`, `ConjugationAnswerMode`) | Removed — conjugation is typed as the full form | Conjugated form |
 
 ## Terminology Change History
 
@@ -389,6 +399,7 @@ this document describes.
 | 2026-09-19 | *Program day* replaced by **round** | The queue cycles; a day can no longer be finished |
 | 2026-10-21 | **The vocabulary course reads the review schedule**: reviews are the known words that are due, not a random draw; mastering a word makes it known; Pronunciation of sentences no longer moves the schedule; `isLearned` removed | The schedule was written on every answer and read by nothing, and the word *learned* is banned here |
 | 2026-10-21 | **User-created conjugation courses removed**; the conjugation course is the one built-in course over the study set | The app only ever showed the study-set course; creating and deleting courses was dead code and stored a second set of verb lists |
+| 2026-10-22 | **Stem and ending dropped from the language**; the Cases course, the declension and countries value objects and the missing ports added to the lists | `ConjugationSplit` left the code when conjugation became typed (#100); the entity, aggregate, value-object and port lists had not caught up with the Cases course and the ports added since |
 
 ## Enforcement
 

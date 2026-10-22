@@ -15,6 +15,10 @@ data android  application     adapters     use-case implementations
              presentation
                   ^
                  app          composition root and navigation
+
+common         clock, dispatchers, text folding — used by the layers above
+shared         the iOS framework, re-exporting everything except android, presentation and app
+baselineprofile  generates the app's baseline profile
 ```
 
 | Module | Holds | Depends on |
@@ -23,12 +27,13 @@ data android  application     adapters     use-case implementations
 | `boundary` | Ports: repository interfaces and external-service interfaces | `model` |
 | `interactors` | Use-case contracts and their request/response types | `model` |
 | `application` | Use-case implementations — orchestration over ports | `model`, `boundary`, `interactors`, `common` |
-| `data` | Room, DAOs, entities, asset seeding, mapping | `model`, `boundary`, `common` |
+| `data` | Room, DAOs, entities, asset seeding, mapping, the remote image, sentence, grammar and translation clients | `model`, `boundary`, `common` |
 | `android` | Text to speech, speech recognition, audio, Google Cloud clients | `model`, `boundary`, `common` |
 | `presentation` | Compose screens, ViewModels, UI state | `model`, `boundary`, `interactors`, `common` |
-| `app` | Koin modules, navigation, the single Activity | everything |
+| `app` | Koin modules, navigation, the single Activity | `common`, `boundary`, `interactors`, `application`, `data`, `android`, `presentation` (and `model` through them) |
 | `common` | Clock, dispatchers, text folding, Polish transcription | nothing |
-| `shared` | The framework the iOS app links against | everything |
+| `shared` | The framework the iOS app links against | `model`, `boundary`, `common`, `interactors`, `application`, `data` |
+| `baselineprofile` | The macrobenchmark that generates the app's baseline profile | the `app` it targets |
 
 ## Rules
 
@@ -42,8 +47,8 @@ synthesiser, a translator — and `data` and `android` implement them. Nothing i
 domain or the application knows which database or which cloud is behind a port.
 
 **Presentation talks to use cases, not to repositories.** It depends on `interactors` for
-contracts and on `boundary` only for the speech and audio ports it drives directly. It
-cannot see a repository, and it does not depend on `android`.
+contracts and on `boundary` only for the speech, audio and device-language ports it drives
+directly. It cannot see a repository, and it does not depend on `android`.
 
 **Business rules live in the model.** If a rule can be stated without mentioning a screen,
 a table or a network call, it belongs in `model` and is tested there. Orchestration —
@@ -60,7 +65,7 @@ into a screen.
 | What a word, session or review *is* | `model/<context>` |
 | What the app can *do* | `interactors/<context>` — one interface per use case |
 | How it does it | `application/<context>` |
-| SQL, assets, migrations | `data/local`, `data/repository` |
+| SQL, assets, seeding | `data/local`, `data/repository` |
 | Speech, audio, cloud | `android` |
 | Screens and their state | `presentation/<feature>` |
 | Wiring | `app/di`, `application/di`, `data/di` |
@@ -90,8 +95,9 @@ Three layers, each testing what the one below it cannot.
 
 **Instrumented tests** in `data/src/androidInstrumentedTest`, against real SQLite. They
 exist for the things a JVM test cannot see: how `LIKE` folds, whether pages follow one
-another without repeating, and what happens when a query binds more variables than SQLite
-takes — 999 on Android 8 to 11, which is fewer than a large study set.
+another without repeating, which known words the review queries return, and what happens
+when a query binds more variables than SQLite takes — 999 on Android 8 to 11, which is
+fewer than a large study set.
 
 **End-to-end tests** in `app/src/androidTest`, driving the built app through Compose over
 the real database and the shipped catalogues. They cover the journeys rather than the
@@ -113,7 +119,9 @@ Android no longer has, and every Compose test fails at the first `waitForIdle`.
 - **No comments in code.** Explanation goes in the commit message and the pull request,
   where it is read with the change that motivated it and cannot drift from it. Where
   something fails silently, it gets a log rather than a comment.
-- **One declaration per file**, named after it. ktlint enforces this.
+- **A file is named after its main declaration.** ktlint's `filename` rule enforces that for a
+  file holding a single top-level declaration; a file may hold several related ones, such as a
+  sealed hierarchy or a screen with its private parts.
 - **Immutable collections in UI state and domain types**, so Compose can skip and the
   model cannot be mutated from under a caller.
 - **Named arguments** for anything with more than a couple of parameters.
