@@ -50,4 +50,41 @@ class VocabularyPresetSeederTest {
             coVerify { vocabularySeeder.ensureSeeded() }
             coVerify(exactly = 0) { presetDao.replaceCatalog(any(), any(), any()) }
         }
+
+    @Test
+    fun `undoing the delete of the learner's own preset brings it back with its words in order`() =
+        runTest {
+            val mine = PresetEntity(
+                id = "my-kitchen",
+                categoryId = USER_PRESET_CATEGORY_ID,
+                titleJson = "{}",
+                descriptionJson = "{}",
+                icon = null,
+                color = null,
+                popularity = 0,
+                estimatedSeconds = 0,
+                isUserCreated = true,
+            )
+            coEvery { presetDao.getPreset("my-kitchen") } returns mine
+            coEvery { presetDao.getMembershipsOf("my-kitchen") } returns
+                listOf(PresetWordEntity("my-kitchen", 7L, position = 0), PresetWordEntity("my-kitchen", 3L, position = 1))
+
+            seeder.delete("my-kitchen")
+            seeder.restore("my-kitchen")
+
+            coVerify { presetDao.createUserPreset(mine, listOf(7L, 3L)) }
+        }
+
+    @Test
+    fun `undoing the delete of a shipped preset re-seeds it from the catalogue`() =
+        runTest {
+            coEvery { presetDao.getPreset("false-friends") } returns null
+
+            seeder.delete("false-friends")
+            seeder.restore("false-friends")
+
+            coVerify { presetDao.undeletePreset("false-friends") }
+            coVerify { presetDao.replaceCatalog(any(), any(), any()) }
+            coVerify(exactly = 0) { presetDao.createUserPreset(any(), any()) }
+        }
 }

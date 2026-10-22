@@ -16,6 +16,8 @@ class VocabularyPresetSeeder(
     @Volatile
     private var syncedThisProcess = false
 
+    private val deletedUserPresets = mutableMapOf<String, Pair<PresetEntity, List<Long>>>()
+
     suspend fun ensureSeeded() {
         if (syncedThisProcess) return
         sync()
@@ -23,12 +25,19 @@ class VocabularyPresetSeeder(
 
     suspend fun restore(presetId: String) {
         presetDao.undeletePreset(presetId)
+        deletedUserPresets.remove(presetId)?.let { (preset, wordIds) ->
+            presetDao.createUserPreset(preset, wordIds)
+            return
+        }
         syncStore.setSyncedPresetFingerprint("")
         syncedThisProcess = false
         ensureSeeded()
     }
 
     suspend fun delete(presetId: String) {
+        presetDao.getPreset(presetId)?.takeIf { it.isUserCreated }?.let { preset ->
+            deletedUserPresets[presetId] = preset to presetDao.getMembershipsOf(presetId).map { it.wordId }
+        }
         presetDao.insertDeletedPreset(DeletedPresetEntity(presetId))
         presetDao.deleteMemberships(presetId)
         presetDao.deletePreset(presetId)
