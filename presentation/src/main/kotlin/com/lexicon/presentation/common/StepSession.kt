@@ -34,7 +34,7 @@ class StepSession<T, K>(
     @Volatile
     private var isMoving = false
 
-    fun begin(onFirst: (T?) -> Unit) {
+    fun begin(onFirst: suspend (T?) -> Unit) {
         scope.launch(dispatchers.io) {
             totalSteps = getStepCount()
             val first = pick(asked)?.also { asked += keyOf(it) }
@@ -49,10 +49,12 @@ class StepSession<T, K>(
 
     fun advance(
         stepIndex: Int,
+        beforeMove: () -> Unit = {},
         onStep: (item: T, index: Int) -> Unit,
     ) {
         if (isMoving) return
         isMoving = true
+        beforeMove()
         scope.launch(dispatchers.io) {
             val nextIndex = stepIndex + 1
             val item = if (nextIndex < totalSteps) pick(asked) else null

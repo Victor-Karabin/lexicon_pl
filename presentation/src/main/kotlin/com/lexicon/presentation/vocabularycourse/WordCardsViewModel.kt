@@ -3,6 +3,7 @@ package com.lexicon.presentation.vocabularycourse
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lexicon.boundary.SpeechSynthesizer
+import com.lexicon.interactors.vocabularycourse.CourseLaunch
 import com.lexicon.interactors.vocabularycourse.GetVocabularyCourseUseCase
 import com.lexicon.interactors.vocabularycourse.GetWordCardsUseCase
 import com.lexicon.interactors.vocabularycourse.MarkCourseCardsSeenUseCase
@@ -10,7 +11,6 @@ import com.lexicon.interactors.vocabularycourse.NextCourseTrainingUseCase
 import com.lexicon.interactors.vocabularycourse.WordCard
 import com.lexicon.model.vocabulary.ExampleSentence
 import com.lexicon.presentation.common.speakQuietly
-import com.lexicon.presentation.dashboard.LaunchTraining
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +24,7 @@ data class WordCardsUiState(
     val cards: ImmutableList<WordCard> = persistentListOf(),
     val index: Int = 0,
     val isFinished: Boolean = false,
-    val launch: LaunchTraining? = null,
+    val launch: CourseLaunch? = null,
 ) {
     val current: WordCard? get() = cards.getOrNull(index)
 
@@ -62,10 +62,7 @@ class WordCardsViewModel(
             markSeen()
             val next = queue.next()
             _uiState.update {
-                it.copy(
-                    isFinished = true,
-                    launch = next?.let { launch -> LaunchTraining(launch.training, launch.wordIds) },
-                )
+                it.copy(isFinished = true, launch = next)
             }
         }
     }

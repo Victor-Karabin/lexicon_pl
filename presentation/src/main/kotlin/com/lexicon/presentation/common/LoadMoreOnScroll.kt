@@ -1,6 +1,7 @@
 package com.lexicon.presentation.common
 
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -19,17 +20,57 @@ fun LoadMoreOnScroll(
     onLoadMore: () -> Unit,
     rowsBeforeTheEnd: Int = ROWS_BEFORE_THE_END,
 ) {
-    val isNearTheEnd by remember(list, rowsBeforeTheEnd) {
+    LoadMoreNearTheEnd(
+        state = list,
+        isLoading = isLoading,
+        canLoadMore = true,
+        itemsBeforeTheEnd = rowsBeforeTheEnd,
+        lastVisibleIndex = { list.layoutInfo.visibleItemsInfo.lastOrNull()?.index },
+        totalItemsCount = { list.layoutInfo.totalItemsCount },
+        onLoadMore = onLoadMore,
+    )
+}
+
+@Composable
+fun LoadMoreOnScroll(
+    grid: LazyGridState,
+    isLoading: Boolean,
+    onLoadMore: () -> Unit,
+    itemsBeforeTheEnd: Int,
+    canLoadMore: Boolean = true,
+) {
+    LoadMoreNearTheEnd(
+        state = grid,
+        isLoading = isLoading,
+        canLoadMore = canLoadMore,
+        itemsBeforeTheEnd = itemsBeforeTheEnd,
+        lastVisibleIndex = { grid.layoutInfo.visibleItemsInfo.lastOrNull()?.index },
+        totalItemsCount = { grid.layoutInfo.totalItemsCount },
+        onLoadMore = onLoadMore,
+    )
+}
+
+@Composable
+private fun LoadMoreNearTheEnd(
+    state: Any,
+    isLoading: Boolean,
+    canLoadMore: Boolean,
+    itemsBeforeTheEnd: Int,
+    lastVisibleIndex: () -> Int?,
+    totalItemsCount: () -> Int,
+    onLoadMore: () -> Unit,
+) {
+    val isNearTheEnd by remember(state, itemsBeforeTheEnd) {
         derivedStateOf {
-            val lastVisible = list.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: return@derivedStateOf false
-            lastVisible >= list.layoutInfo.totalItemsCount - rowsBeforeTheEnd
+            val lastVisible = lastVisibleIndex() ?: return@derivedStateOf false
+            lastVisible >= totalItemsCount() - itemsBeforeTheEnd
         }
     }
 
-    LaunchedEffect(list, isLoading) {
+    LaunchedEffect(state, isLoading, canLoadMore) {
         snapshotFlow { isNearTheEnd }
             .distinctUntilChanged()
-            .filter { it && !isLoading }
+            .filter { it && !isLoading && canLoadMore }
             .collect { onLoadMore() }
     }
 }

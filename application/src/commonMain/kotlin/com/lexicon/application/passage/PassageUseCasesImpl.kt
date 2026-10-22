@@ -2,11 +2,13 @@ package com.lexicon.application.passage
 
 import com.lexicon.application.dictation.AnswerNormalizer
 import com.lexicon.application.settings.StepCountResolver
+import com.lexicon.application.training.failure
+import com.lexicon.application.training.maxLevel
 import com.lexicon.application.training.open
 import com.lexicon.application.training.recordOutcome
+import com.lexicon.application.training.sentencesFor
 import com.lexicon.application.training.wordsToStudy
 import com.lexicon.boundary.SentenceGenerator
-import com.lexicon.boundary.SentenceRequestBoundary
 import com.lexicon.boundary.SentenceResultBoundary
 import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.VocabularyRepository
@@ -27,12 +29,7 @@ import com.lexicon.model.training.SessionId
 import com.lexicon.model.training.Step
 import com.lexicon.model.training.StepOutcome
 import com.lexicon.model.training.TrainingType
-import com.lexicon.model.vocabulary.CefrLevel
-import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
 import kotlin.random.Random
 import kotlin.uuid.ExperimentalUuidApi
 
@@ -56,22 +53,7 @@ class StartPassageSessionUseCaseImpl(
         val wanted = stepCountResolver.resolve(request.stepCount).coerceAtMost(studySet.size)
         val targets = studySet.shuffled().take(wanted + SPARE_SENTENCES)
 
-        val generated = coroutineScope {
-            targets
-                .map { word ->
-                    async {
-                        word to generator.generate(
-                            SentenceRequestBoundary(
-                                word = word.text,
-                                translation = word.translation,
-                                level = level,
-                                context = "",
-                                requiredWords = emptyList(),
-                            ),
-                        )
-                    }
-                }.awaitAll()
-        }
+        val generated = generator.sentencesFor(targets, level)
 
         val sentences = generated.mapNotNull { (word, result) ->
             (result as? SentenceResultBoundary.Generated)?.sentence
@@ -79,11 +61,11 @@ class StartPassageSessionUseCaseImpl(
                 ?.let { PassageSentence(it.toImmutableList()) }
         }.take(wanted)
         if (sentences.isEmpty()) {
-            val results = generated.map { it.second }
-            if (results.any { it is SentenceResultBoundary.Offline }) return PassageSessionResult.Offline
-            results.firstNotNullOfOrNull { it as? SentenceResultBoundary.Refused }
-                ?.let { return PassageSessionResult.Refused(it.reason) }
-            return PassageSessionResult.Refused("no sentence used the word it was given")
+            return when (val failure = generated.map { it.second }.failure()) {
+                SentenceResultBoundary.Offline -> PassageSessionResult.Offline
+                is SentenceResultBoundary.Refused -> PassageSessionResult.Refused(failure.reason)
+                else -> PassageSessionResult.Refused("no sentence used the word it was given")
+            }
         }
 
         val passage = Passage(level = level, sentences = sentences.toImmutableList())
@@ -106,8 +88,6 @@ class StartPassageSessionUseCaseImpl(
         )
     }
 }
-
-internal fun List<Word>.maxLevel(): String = mapNotNull { it.cefr }.maxByOrNull { it.ordinal }?.name ?: CefrLevel.A1.name
 
 private fun String.gapping(target: String): List<PassageSegment>? {
     val stem = target.stem()

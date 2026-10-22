@@ -49,6 +49,7 @@ import com.lexicon.presentation.R
 import com.lexicon.presentation.common.LightDarkPreview
 import com.lexicon.presentation.common.ScrollToTopClearance
 import com.lexicon.presentation.common.ScrollToTopLayout
+import com.lexicon.presentation.common.SectionHeading
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.presets.VocabularyWordRow
 import com.lexicon.presentation.presets.WordRow
@@ -58,6 +59,13 @@ import com.lexicon.presentation.theme.LexiconTheme
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import org.koin.androidx.compose.koinViewModel
+
+private val LessonHeadingModifier = Modifier.fillMaxWidth().padding(
+    start = Dimens.spacingMedium,
+    end = Dimens.spacingMedium,
+    top = Dimens.spacingLarge,
+    bottom = Dimens.spacingSmall,
+)
 
 @Composable
 fun LessonScreen(
@@ -189,7 +197,7 @@ private fun LazyListScope.exercisesBlock(
     onExerciseSelected: (LessonExercise) -> Unit,
 ) {
     if (exercises.isEmpty()) return
-    item { SectionHeading(stringResource(R.string.exercises_heading)) }
+    item { SectionHeading(stringResource(R.string.exercises_heading), LessonHeadingModifier) }
     items(exercises, key = { it.id }) { exercise ->
         Row(
             modifier = Modifier
@@ -231,7 +239,7 @@ private fun LazyListScope.wordsBlock(
     onPronounce: (String) -> Unit,
     onEditWord: (VocabularyId) -> Unit,
 ) {
-    item { SectionHeading(stringResource(R.string.lesson_words)) }
+    item { SectionHeading(stringResource(R.string.lesson_words), LessonHeadingModifier) }
     if (uiState.isLoadingWords) {
         item {
             Box(
@@ -271,21 +279,6 @@ private fun LazyListScope.wordsBlock(
             HorizontalDivider(modifier = Modifier.padding(horizontal = Dimens.spacingMedium))
         }
     }
-}
-
-@Composable
-private fun SectionHeading(text: String) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.titleSmall,
-        fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.fillMaxWidth().padding(
-            start = Dimens.spacingMedium,
-            end = Dimens.spacingMedium,
-            top = Dimens.spacingLarge,
-            bottom = Dimens.spacingSmall,
-        ),
-    )
 }
 
 private val previewLesson = Lesson(

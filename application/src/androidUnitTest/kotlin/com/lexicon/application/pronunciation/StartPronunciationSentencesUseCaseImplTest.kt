@@ -249,4 +249,141 @@ class StartPronunciationSentencesUseCaseImplTest {
             val stored = checkNotNull(sessions.find(SessionId(session.sessionId)))
             assertEquals(session.steps.map { it.expectedText }, stored.steps.map { (it as Step.Question).expectedAnswer })
         }
+
+    private fun givenWords(vararg words: Word) {
+        givenStepCount()
+        coEvery { vocabulary.studySetWordIds() } returns words.map { it.id.value }
+        coEvery { vocabulary.getItemsByIds(any()) } returns words.toList()
+    }
+
+    private fun capturingRequests(): List<SentenceRequestBoundary> {
+        val requests = mutableListOf<SentenceRequestBoundary>()
+        coEvery { generator.generate(capture(requests)) } answers {
+            SentenceResultBoundary.Generated("To jest ${firstArg<SentenceRequestBoundary>().word}.")
+        }
+        return requests
+    }
+
+    @Test
+    fun `offline wins over a refusal`() =
+        runTest {
+            givenStudySet("okno", "dom")
+            coEvery { generator.generate(any()) } answers {
+                if (firstArg<SentenceRequestBoundary>().word == "okno") {
+                    SentenceResultBoundary.Offline
+                } else {
+                    SentenceResultBoundary.Refused("busy")
+                }
+            }
+
+            assertEquals(PronunciationSentencesResult.Offline, start())
+        }
+
+    @Test
+    fun `a refusal reason is passed on when the other sentences came back blank`() =
+        runTest {
+            givenStudySet("okno", "dom")
+            coEvery { generator.generate(any()) } answers {
+                if (firstArg<SentenceRequestBoundary>().word == "okno") {
+                    SentenceResultBoundary.Refused("busy")
+                } else {
+                    SentenceResultBoundary.Generated("   ")
+                }
+            }
+
+            assertEquals(PronunciationSentencesResult.Refused("busy"), start())
+        }
+
+    @Test
+    fun `a blank sentence is dropped and the rest keep their order`() =
+        runTest {
+            givenStudySet("okno", "dom", "kot")
+            coEvery { generator.generate(any()) } answers {
+                val word = firstArg<SentenceRequestBoundary>().word
+                if (word == "dom") SentenceResultBoundary.Generated(" \t ") else SentenceResultBoundary.Generated("To jest $word.")
+            }
+
+            val session = (start() as PronunciationSentencesResult.Ready).session
+
+            assertEquals(listOf(0, 1), session.steps.map { it.stepIndex })
+            assertTrue(session.steps.none { it.expectedText.contains("dom") })
+            assertEquals(2, session.steps.size)
+        }
+
+    @Test
+    fun `a sentence is trimmed before it is used`() =
+        runTest {
+            givenStudySet("okno")
+            coEvery { generator.generate(any()) } returns SentenceResultBoundary.Generated("  To jest okno.  ")
+
+            val session = (start() as PronunciationSentencesResult.Ready).session
+
+            assertEquals(listOf("To jest okno."), session.steps.map { it.expectedText })
+            assertEquals(listOf("To jest okno."), session.steps.map { it.clueText })
+        }
+
+    @Test
+    fun `when no sentence is usable the result is refused with a fixed reason`() =
+        runTest {
+            givenStudySet("okno", "dom")
+            coEvery { generator.generate(any()) } returns SentenceResultBoundary.Generated("   ")
+
+            assertEquals(PronunciationSentencesResult.Refused("no sentence came back"), start())
+        }
+
+    @Test
+    fun `sentences are asked for with no context and no required words`() =
+        runTest {
+            givenWords(Word(VocabularyId(1), "okno", "window", "x", cefr = CefrLevel.B2))
+            val requests = capturingRequests()
+
+            start()
+
+            assertEquals(
+                listOf(
+                    SentenceRequestBoundary(
+                        word = "okno",
+                        translation = "window",
+                        level = "B2",
+                        context = "",
+                        requiredWords = emptyList(),
+                    ),
+                ),
+                requests,
+            )
+        }
+
+    @Test
+    fun `the level is the highest level among the words asked about and A1 without any`() =
+        runTest {
+            givenWords(
+                Word(VocabularyId(1), "okno", "x", "x", cefr = CefrLevel.A2),
+                Word(VocabularyId(2), "dom", "x", "x", cefr = CefrLevel.C1),
+            )
+            val requests = capturingRequests()
+
+            start()
+
+            assertTrue(requests.all { it.level == "C1" })
+
+            givenWords(Word(VocabularyId(1), "okno", "x", "x"), Word(VocabularyId(2), "dom", "x", "x"))
+            val plainRequests = capturingRequests()
+
+            start()
+
+            assertTrue(plainRequests.all { it.level == "A1" })
+        }
+
+    @Test
+    fun `no spare sentences are asked for beyond the step count`() =
+        runTest {
+            stepCount = 3
+            givenStudySet("okno", "dom", "kot", "lampa", "stol", "zegar", "dywan")
+            val requests = capturingRequests()
+
+            start()
+
+            assertEquals(3, requests.size)
+            assertEquals(3, requests.map { it.word }.toSet().size)
+        }
 }

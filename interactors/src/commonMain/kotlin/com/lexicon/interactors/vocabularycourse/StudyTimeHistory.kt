@@ -4,17 +4,16 @@ import kotlinx.collections.immutable.ImmutableList
 
 private const val SECONDS_PER_MINUTE = 60
 
+private fun minutesOf(seconds: Long): Int =
+    if (seconds <= 0) 0 else maxOf(1, ((seconds + SECONDS_PER_MINUTE / 2) / SECONDS_PER_MINUTE).toInt())
+
 data class DailyStudyTime(
     val epochDay: Long,
     val studiedSeconds: Long,
 ) {
     val wasStudied: Boolean get() = studiedSeconds > 0
 
-    val studiedMinutes: Int
-        get() = when {
-            studiedSeconds <= 0 -> 0
-            else -> maxOf(1, ((studiedSeconds + SECONDS_PER_MINUTE / 2) / SECONDS_PER_MINUTE).toInt())
-        }
+    val studiedMinutes: Int get() = minutesOf(studiedSeconds)
 }
 
 data class StudyTimeHistory(
@@ -26,11 +25,7 @@ data class StudyTimeHistory(
 
     val isEmpty: Boolean get() = totalSeconds == 0L
 
-    val totalMinutes: Int
-        get() = when {
-            totalSeconds <= 0 -> 0
-            else -> maxOf(1, ((totalSeconds + SECONDS_PER_MINUTE / 2) / SECONDS_PER_MINUTE).toInt())
-        }
+    val totalMinutes: Int get() = minutesOf(totalSeconds)
 
     val busiest: DailyStudyTime? get() = days.maxByOrNull { it.studiedSeconds }?.takeIf { it.wasStudied }
 

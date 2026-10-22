@@ -1,9 +1,8 @@
-@file:OptIn(ExperimentalUuidApi::class)
-
 package com.lexicon.application.dictationpuzzle
 
 import com.lexicon.application.settings.StepCountResolver
 import com.lexicon.application.training.open
+import com.lexicon.application.training.randomWords
 import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.dictationpuzzle.DictationPuzzleSessionResponse
@@ -11,7 +10,6 @@ import com.lexicon.interactors.dictationpuzzle.DictationPuzzleStepResponse
 import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionRequest
 import com.lexicon.interactors.dictationpuzzle.StartDictationPuzzleSessionUseCase
 import com.lexicon.model.training.TrainingType
-import kotlin.uuid.ExperimentalUuidApi
 
 class StartDictationPuzzleSessionUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,
@@ -19,8 +17,7 @@ class StartDictationPuzzleSessionUseCaseImpl(
     private val sessions: SessionStore,
 ) : StartDictationPuzzleSessionUseCase {
     override suspend fun invoke(request: StartDictationPuzzleSessionRequest): DictationPuzzleSessionResponse {
-        val stepCount = stepCountResolver.resolve(request.stepCount)
-        val words = vocabularyRepository.getRandomItems(stepCount, request.vocabularyIds)
+        val words = vocabularyRepository.randomWords(stepCountResolver, request.stepCount, request.vocabularyIds)
         val steps =
             words.mapIndexed { index, word ->
                 DictationPuzzleStepResponse(
@@ -30,7 +27,7 @@ class StartDictationPuzzleSessionUseCaseImpl(
                     translationText = word.translation,
                 )
             }
-        val sessionId = sessions.open(TrainingType.DICTATION_PUZZLE, words.map { it.id to it.text })
+        val sessionId = sessions.open(TrainingType.DICTATION_PUZZLE, words)
         return DictationPuzzleSessionResponse(sessionId = sessionId.value, steps = steps)
     }
 }

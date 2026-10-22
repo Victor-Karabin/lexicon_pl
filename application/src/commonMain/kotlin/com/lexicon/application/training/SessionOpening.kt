@@ -9,7 +9,9 @@ import com.lexicon.model.training.Step
 import com.lexicon.model.training.StepOutcome
 import com.lexicon.model.training.TrainingType
 import com.lexicon.model.vocabulary.VocabularyId
+import com.lexicon.model.vocabulary.Word
 import kotlinx.collections.immutable.toImmutableList
+import kotlin.jvm.JvmName
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -31,6 +33,12 @@ suspend fun SessionStore.open(
     }
     return id
 }
+
+@JvmName("openForWords")
+internal suspend fun SessionStore.open(
+    training: TrainingType,
+    words: List<Word>,
+): SessionId = open(training, words.map { it.id to it.text })
 
 suspend fun SessionStore.stepAt(
     sessionId: String,

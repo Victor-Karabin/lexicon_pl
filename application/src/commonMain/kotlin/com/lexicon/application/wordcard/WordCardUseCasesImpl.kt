@@ -4,6 +4,7 @@ package com.lexicon.application.wordcard
 
 import com.lexicon.application.settings.StepCountResolver
 import com.lexicon.application.training.picturesFor
+import com.lexicon.application.training.randomWords
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.interactors.training.RecordAnswerUseCase
@@ -25,8 +26,7 @@ class StartWordCardSessionUseCaseImpl(
     private val stepCountResolver: StepCountResolver,
 ) : StartWordCardSessionUseCase {
     override suspend fun invoke(request: StartWordCardSessionRequest): WordCardSessionResponse {
-        val stepCount = stepCountResolver.resolve(null)
-        val words = vocabulary.getRandomItems(stepCount, request.vocabularyIds)
+        val words = vocabulary.randomWords(stepCountResolver, null, request.vocabularyIds)
 
         val pictures = imageProvider.picturesFor(words)
 

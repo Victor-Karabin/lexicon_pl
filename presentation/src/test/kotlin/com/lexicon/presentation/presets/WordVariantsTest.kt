@@ -8,7 +8,7 @@ import com.lexicon.interactors.presets.GetVocabularyPresetsUseCase
 import com.lexicon.interactors.presets.GetWordPresetMembershipsUseCase
 import com.lexicon.interactors.presets.GetWordUseCase
 import com.lexicon.interactors.presets.SearchImageCandidatesUseCase
-import com.lexicon.interactors.presets.SetWordPresetUseCase
+import com.lexicon.interactors.presets.SetWordPresetMembershipUseCase
 import com.lexicon.interactors.presets.SuggestTranslationsUseCase
 import com.lexicon.interactors.presets.TranslateWordUseCase
 import com.lexicon.interactors.presets.UpdateWordUseCase
@@ -62,7 +62,7 @@ class WordVariantsTest {
             getWordPresetMemberships = mockk<GetWordPresetMembershipsUseCase>(relaxed = true),
             getPinnedImage = mockk<GetPinnedImageUseCase>(relaxed = true),
             generateExample = mockk<GenerateWordExampleUseCase>(relaxed = true),
-            setWordPreset = mockk<SetWordPresetUseCase>(relaxed = true),
+            setWordPreset = mockk<SetWordPresetMembershipUseCase>(relaxed = true),
             speechSynthesizer = mockk(relaxed = true),
         )
 

@@ -72,7 +72,7 @@ under [Context-Specific Terminology](#context-specific-terminology) and must not
 | Review words | Sorting the words that have no status yet, one card at a time | Vocabulary | *inbox* | `GetWordsToReviewUseCase` |
 | Preset | A named, shipped or hand-made grouping of words by topic | Vocabulary | *category* | `VocabularyPreset`, `PresetId` |
 | Preset category | A grouping of presets | Vocabulary | *topic* | `PresetCategory` |
-| Membership | Whether a word belongs to a preset | Vocabulary | *link*, *relation* | `PresetMembership`, `SetWordPresetUseCase` |
+| Membership | Whether a word belongs to a preset | Vocabulary | *link*, *relation* | `PresetMembership`, `SetWordPresetMembershipUseCase` |
 | CEFR level | How hard a word is, A1 to C2 | Vocabulary | *difficulty* (that is an ordering) | `CefrLevel` |
 | Training | A kind of exercise — dictation, crossword, word search | Training | *game*, *test* | `TrainingType` |
 | Session | One run of one training, start to result screen | Training | *training*, *round* | `Session`, `SessionId` |

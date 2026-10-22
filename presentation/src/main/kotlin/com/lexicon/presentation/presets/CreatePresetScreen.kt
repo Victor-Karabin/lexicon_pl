@@ -27,7 +27,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.presets.PresetDraftProblem
@@ -38,6 +37,7 @@ import com.lexicon.model.vocabulary.VocabularyPreset
 import com.lexicon.presentation.R
 import com.lexicon.presentation.common.ExpandableFlowRow
 import com.lexicon.presentation.common.LightDarkPreview
+import com.lexicon.presentation.common.SectionHeading
 import com.lexicon.presentation.common.TrainingTopBar
 import com.lexicon.presentation.theme.Dimens
 import com.lexicon.presentation.theme.LexiconShapes
@@ -153,22 +153,13 @@ private fun CreatePresetContent(
                 shape = LexiconShapes.small,
             )
 
-            SectionLabel(stringResource(R.string.create_preset_icon))
+            SectionHeading(stringResource(R.string.create_preset_icon))
             IconChoices(selected = uiState.icon, accent = uiState.color, onSelected = onIconSelected)
 
-            SectionLabel(stringResource(R.string.create_preset_color))
+            SectionHeading(stringResource(R.string.create_preset_color))
             ColorChoices(selected = uiState.color, onSelected = onColorSelected)
         }
     }
-}
-
-@Composable
-private fun SectionLabel(text: String) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.titleSmall,
-        fontWeight = FontWeight.SemiBold,
-    )
 }
 
 @Composable

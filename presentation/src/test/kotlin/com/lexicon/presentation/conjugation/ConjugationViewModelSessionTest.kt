@@ -13,6 +13,7 @@ import com.lexicon.interactors.conjugation.SubmitConjugationAnswerResponse
 import com.lexicon.interactors.conjugation.SubmitConjugationAnswerUseCase
 import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.settings.GetStepCountUseCase
+import com.lexicon.interactors.training.RecordStudyActivityUseCase
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
 import io.mockk.coEvery
@@ -57,7 +58,7 @@ class ConjugationViewModelSessionTest {
     @After
     fun tearDown() = Dispatchers.resetMain()
 
-    private fun viewModel() =
+    private fun viewModel(recordStudy: RecordStudyActivityUseCase = mockk(relaxed = true)) =
         ConjugationViewModel(
             savedStateHandle = SavedStateHandle(mapOf(CONJUGATION_COURSE_ARG to "course-1")),
             nextQuestion = nextQuestion,
@@ -67,7 +68,7 @@ class ConjugationViewModelSessionTest {
             loadCourses = mockk<LoadConjugationCoursesUseCase>(),
             speechSynthesizer = mockk(relaxed = true),
             lastSessionResultsHolder = LastSessionResultsHolder(),
-            recordStudy = mockk(relaxed = true),
+            recordStudy = recordStudy,
             getStepCount = getStepCount,
             dispatchers = dispatchers,
         )
@@ -134,6 +135,20 @@ class ConjugationViewModelSessionTest {
 
             assertEquals(1, viewModel.uiState.value.stepIndex)
             coVerify(exactly = 2) { nextQuestion(any()) }
+        }
+
+    @Test
+    fun `pressing Next twice marks study activity once`() =
+        runTest(testDispatcher) {
+            val recordStudy = mockk<RecordStudyActivityUseCase>(relaxed = true)
+            val viewModel = viewModel(recordStudy)
+            advanceUntilIdle()
+
+            viewModel.onNext()
+            viewModel.onNext()
+            advanceUntilIdle()
+
+            coVerify(exactly = 1) { recordStudy() }
         }
 
     private companion object {

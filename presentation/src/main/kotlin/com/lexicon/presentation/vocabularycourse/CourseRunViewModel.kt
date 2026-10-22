@@ -2,9 +2,11 @@ package com.lexicon.presentation.vocabularycourse
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lexicon.interactors.vocabularycourse.CourseLaunch
 import com.lexicon.interactors.vocabularycourse.GetVocabularyCourseUseCase
 import com.lexicon.interactors.vocabularycourse.NextCourseTrainingUseCase
 import com.lexicon.interactors.vocabularycourse.ResetCourseQueueUseCase
+import com.lexicon.interactors.vocabularycourse.VocabularyCourse
 import com.lexicon.model.training.TrainingType
 import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.collections.immutable.ImmutableList
@@ -29,6 +31,15 @@ sealed interface CourseRunStep {
     data object NothingToPractise : CourseRunStep
 }
 
+fun CourseLaunch?.toStep(): CourseRunStep =
+    when (this) {
+        null -> CourseRunStep.NothingToPractise
+        else -> CourseRunStep.Next(training = training, wordIds = wordIds)
+    }
+
+suspend fun NextCourseTrainingUseCase.stepFor(course: VocabularyCourse): CourseRunStep =
+    if (course.showCardsNext) CourseRunStep.Cards else next().toStep()
+
 class CourseRunViewModel(
     private val queue: NextCourseTrainingUseCase,
     private val resetQueue: ResetCourseQueueUseCase,
@@ -42,7 +53,7 @@ class CourseRunViewModel(
     fun onReset() =
         run {
             resetQueue()
-            if (getCourse().showCardsNext) CourseRunStep.Cards else queue.next().toStep()
+            queue.stepFor(getCourse())
         }
 
     fun onStepHandled() = _step.update { CourseRunStep.Idle }
@@ -52,10 +63,4 @@ class CourseRunViewModel(
         _step.value = CourseRunStep.Working
         viewModelScope.launch { _step.value = work() }
     }
-
-    private fun com.lexicon.interactors.vocabularycourse.CourseLaunch?.toStep(): CourseRunStep =
-        when (this) {
-            null -> CourseRunStep.NothingToPractise
-            else -> CourseRunStep.Next(training = training, wordIds = wordIds)
-        }
 }

@@ -130,4 +130,54 @@ class VocabularyCourseViewModelsTest {
 
             assertEquals(CourseRunStep.NothingToPractise, viewModel.step.value)
         }
+
+    @Test
+    fun `finishing a training with another one queued goes on to it`() =
+        runTest(dispatcher) {
+            coEvery { queue.advance() } returns CourseLaunch(TrainingType.WORD_MATCH, words)
+            val viewModel = CourseRunViewModel(queue, resetQueue, getCourse)
+
+            viewModel.onTrainingFinished()
+            advanceUntilIdle()
+
+            assertEquals(CourseRunStep.Next(TrainingType.WORD_MATCH, words), viewModel.step.value)
+        }
+
+    @Test
+    fun `reset with nothing to run goes back home`() =
+        runTest(dispatcher) {
+            coEvery { queue.next() } returns null
+            val viewModel = CourseRunViewModel(queue, resetQueue, getCourse)
+
+            viewModel.onReset()
+            advanceUntilIdle()
+
+            assertEquals(CourseRunStep.NothingToPractise, viewModel.step.value)
+        }
+
+    @Test
+    fun `a handled step returns the run to idle so it can start again`() =
+        runTest(dispatcher) {
+            coEvery { queue.advance() } returns CourseLaunch(TrainingType.WORD_MATCH, words)
+            val viewModel = CourseRunViewModel(queue, resetQueue, getCourse)
+            viewModel.onTrainingFinished()
+            advanceUntilIdle()
+
+            viewModel.onStepHandled()
+
+            assertEquals(CourseRunStep.Idle, viewModel.step.value)
+        }
+
+    @Test
+    fun `a second request while one is running is ignored`() =
+        runTest(dispatcher) {
+            coEvery { queue.advance() } returns CourseLaunch(TrainingType.WORD_MATCH, words)
+            val viewModel = CourseRunViewModel(queue, resetQueue, getCourse)
+
+            viewModel.onTrainingFinished()
+            viewModel.onTrainingFinished()
+            advanceUntilIdle()
+
+            coVerify(exactly = 1) { queue.advance() }
+        }
 }

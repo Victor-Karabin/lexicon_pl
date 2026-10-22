@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -16,20 +15,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.lexicon.presentation.R
+import com.lexicon.presentation.common.LoadMoreOnScroll
 import com.lexicon.presentation.theme.Dimens
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
 
 private const val COLUMNS = 2
 
@@ -59,7 +52,13 @@ fun ImagePickerDialog(
     modifier: Modifier = Modifier,
 ) {
     val grid = rememberLazyGridState()
-    LoadWhenTheEndComesIntoView(grid = grid, isLoading = isLoading, canLoadMore = canLoadMore, onLoadMore = onLoadMore)
+    LoadMoreOnScroll(
+        grid = grid,
+        isLoading = isLoading,
+        onLoadMore = onLoadMore,
+        itemsBeforeTheEnd = COLUMNS,
+        canLoadMore = canLoadMore,
+    )
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -104,27 +103,5 @@ fun ImagePickerDialog(
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-    }
-}
-
-@Composable
-private fun LoadWhenTheEndComesIntoView(
-    grid: LazyGridState,
-    isLoading: Boolean,
-    canLoadMore: Boolean,
-    onLoadMore: () -> Unit,
-) {
-    val isNearTheEnd by remember(grid) {
-        derivedStateOf {
-            val lastVisible = grid.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: return@derivedStateOf false
-            lastVisible >= grid.layoutInfo.totalItemsCount - COLUMNS
-        }
-    }
-
-    LaunchedEffect(grid, isLoading, canLoadMore) {
-        snapshotFlow { isNearTheEnd }
-            .distinctUntilChanged()
-            .filter { it && !isLoading && canLoadMore }
-            .collect { onLoadMore() }
     }
 }

@@ -8,7 +8,10 @@ import com.lexicon.model.vocabulary.PresetId
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -127,5 +130,63 @@ class VocabularyPresetUseCasesImplTest {
             val memberships = GetWordPresetMembershipsUseCaseImpl(repository)(VocabularyId(1L))
 
             assertEquals(listOf("food"), memberships.map { it.preset.id.value })
+        }
+
+    @Test
+    fun `observed presets are grouped by category order, then by popularity within it`() =
+        runTest {
+            coEvery { presetRepository.observePresets() } returns flowOf(
+                listOf(
+                    preset("birds", categoryId = "nature", popularity = 2),
+                    preset("food", popularity = 9),
+                    preset("greetings", popularity = 4),
+                ),
+            )
+
+            val presets = ObserveVocabularyPresetsUseCaseImpl(presetRepository)().first()
+
+            assertEquals(listOf("greetings", "food", "birds"), presets.map { it.id.value })
+        }
+
+    @Test
+    fun `an observed preset naming an undefined category is dropped`() =
+        runTest {
+            coEvery { presetRepository.observePresets() } returns flowOf(
+                listOf(preset("orphan", categoryId = "invented"), preset("food")),
+            )
+
+            val presets = ObserveVocabularyPresetsUseCaseImpl(presetRepository)().first()
+
+            assertEquals(listOf("food"), presets.map { it.id.value })
+        }
+
+    @Test
+    fun `the change-presets list follows the preset order and marks the ones the word belongs to`() =
+        runTest {
+            coEvery { presetRepository.getPresetIdsForWord(1L) } returns listOf("birds", "greetings")
+            coEvery { presetRepository.getPresets() } returns listOf(
+                preset("birds", categoryId = "nature", popularity = 2),
+                preset("orphan", categoryId = "invented"),
+                preset("food", popularity = 9),
+                preset("greetings", popularity = 4),
+            )
+
+            val memberships = GetWordPresetMembershipsUseCaseImpl(presetRepository)(VocabularyId(1L))
+
+            assertEquals(listOf("greetings", "food", "birds"), memberships.map { it.preset.id.value })
+            assertEquals(listOf(true, false, true), memberships.map { it.isMember })
+        }
+
+    @Test
+    fun `setting a word in a preset hands the preset, the word and the membership to the repository`() =
+        runTest {
+            coEvery { presetRepository.setWordInPreset(any(), any(), any()) } returns Unit
+            val useCase = SetWordPresetMembershipUseCaseImpl(presetRepository)
+
+            useCase(PresetId("food"), VocabularyId(7L), true)
+            useCase(PresetId("birds"), VocabularyId(8L), false)
+
+            coVerify(exactly = 1) { presetRepository.setWordInPreset("food", 7L, true) }
+            coVerify(exactly = 1) { presetRepository.setWordInPreset("birds", 8L, false) }
         }
 }

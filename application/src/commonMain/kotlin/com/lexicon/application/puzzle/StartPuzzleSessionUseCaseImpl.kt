@@ -1,10 +1,9 @@
-@file:OptIn(ExperimentalUuidApi::class)
-
 package com.lexicon.application.puzzle
 
 import com.lexicon.application.settings.StepCountResolver
 import com.lexicon.application.training.open
 import com.lexicon.application.training.pictureOf
+import com.lexicon.application.training.randomWords
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.SessionStore
 import com.lexicon.boundary.VocabularyRepository
@@ -17,7 +16,6 @@ import com.lexicon.model.vocabulary.Word
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlin.uuid.ExperimentalUuidApi
 
 class StartPuzzleSessionUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,
@@ -26,14 +24,13 @@ class StartPuzzleSessionUseCaseImpl(
     private val sessions: SessionStore,
 ) : StartPuzzleSessionUseCase {
     override suspend fun invoke(request: StartPuzzleSessionRequest): PuzzleSessionResponse {
-        val stepCount = stepCountResolver.resolve(request.stepCount)
-        val words = vocabularyRepository.getRandomItems(stepCount, request.vocabularyIds)
+        val words = vocabularyRepository.randomWords(stepCountResolver, request.stepCount, request.vocabularyIds)
         val steps = coroutineScope {
             words.mapIndexed { index, word ->
                 async { buildStep(index, word) }
             }.awaitAll()
         }
-        val sessionId = sessions.open(TrainingType.PUZZLE, words.map { it.id to it.text })
+        val sessionId = sessions.open(TrainingType.PUZZLE, words)
         return PuzzleSessionResponse(sessionId = sessionId.value, steps = steps)
     }
 
