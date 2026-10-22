@@ -134,7 +134,7 @@ mapped back to their headword by `tools/course/word_forms.tsv`.
 
 `course_krok.json` is imported into Room on first launch by `CourseSeeder`,
 fingerprint-guarded exactly like `VocabularyPresetSeeder`, and appears as a third
-step on the splash screen. A build without `course_krok.json` reads it as an empty
+step on the splash screen. A build without `course_krok.json` (the file cannot be read) gets an empty
 catalogue: the step finishes with 0 lessons and the app opens without the course.
 Everything after that reads the database, not the asset. The guided scripts are not imported: a lesson's script is read from its
 `lesson_<id>.json` asset when the lesson opens.

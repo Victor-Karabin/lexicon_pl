@@ -13,5 +13,5 @@ class CourseAssetLoader(
 
     fun fingerprint(): String = readAsset().orEmpty().assetFingerprint()
 
-    private fun readAsset(): String? = if (assets.exists(COURSE_ASSET_PATH)) assets.readText(COURSE_ASSET_PATH) else null
+    private fun readAsset(): String? = runCatching { assets.readText(COURSE_ASSET_PATH) }.getOrNull()
 }

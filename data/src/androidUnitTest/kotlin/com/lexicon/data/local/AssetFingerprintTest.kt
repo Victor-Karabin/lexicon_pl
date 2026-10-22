@@ -8,11 +8,7 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Test
 
 class AssetFingerprintTest {
-    private fun reader(text: String): AssetReader =
-        mockk {
-            every { exists(any()) } returns true
-            every { readText(any()) } returns text
-        }
+    private fun reader(text: String): AssetReader = mockk { every { readText(any()) } returns text }
 
     private fun fingerprints(text: String): Map<String, String> {
         val assets = reader(text)
