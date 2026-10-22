@@ -9,9 +9,9 @@ class CourseAssetLoader(
 ) {
     private val json = Json { ignoreUnknownKeys = true }
 
-    fun load(): CourseCatalogAsset = json.decodeFromString(readAsset())
+    fun load(): CourseCatalogAsset = readAsset()?.let { json.decodeFromString<CourseCatalogAsset>(it) } ?: CourseCatalogAsset()
 
-    fun fingerprint(): String = readAsset().assetFingerprint()
+    fun fingerprint(): String = readAsset().orEmpty().assetFingerprint()
 
-    private fun readAsset(): String = assets.readText(COURSE_ASSET_PATH)
+    private fun readAsset(): String? = if (assets.exists(COURSE_ASSET_PATH)) assets.readText(COURSE_ASSET_PATH) else null
 }

@@ -45,6 +45,19 @@ class CourseSeederTest {
     }
 
     @Test
+    fun `without a course file the course step finishes empty instead of failing`() =
+        runTest {
+            every { loader.fingerprint() } returns ""
+            every { loader.load() } returns CourseCatalogAsset()
+            coEvery { courseDao.countLessons() } returns 0
+            coEvery { syncStore.syncedCourseFingerprint() } returns null
+
+            val outcome = seeder().sync()
+
+            assertEquals(0, outcome.total)
+        }
+
+    @Test
     fun `an empty database is filled from the asset`() =
         runTest {
             assetIs(lesson(1), lesson(2))
