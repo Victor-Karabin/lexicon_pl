@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TrueOrFalseViewModel(
     savedStateHandle: SavedStateHandle,
@@ -42,6 +43,7 @@ class TrueOrFalseViewModel(
     private lateinit var sessionId: String
     private var steps: List<TrueOrFalseStepResponse> = emptyList()
     private var timerJob: Job? = null
+    private var timeIsUp = false
 
     init {
         startSession()
@@ -69,7 +71,8 @@ class TrueOrFalseViewModel(
                 remaining--
                 updateLoaded { it.copy(timeRemainingSeconds = remaining) }
             }
-            completeSession()
+            timeIsUp = true
+            if ((_uiState.value as? TrueOrFalseUiState.Loaded)?.isSubmitting != true) completeSession()
         }
     }
 
@@ -90,8 +93,8 @@ class TrueOrFalseViewModel(
         if (!state.isEditable) return
         val step = currentStepOrNull() ?: return
         updateLoaded { it.copy(isSubmitting = true) }
-        viewModelScope.launch(dispatchers.io) {
-            val response =
+        viewModelScope.launch {
+            val response = withContext(dispatchers.io) {
                 submitAnswerUseCase(
                     SubmitTrueOrFalseAnswerRequest(
                         sessionId = sessionId,
@@ -101,6 +104,7 @@ class TrueOrFalseViewModel(
                         userAnsweredTrue = userAnsweredTrue,
                     ),
                 )
+            }
             applyOutcome(response.outcome, step)
         }
     }
@@ -123,7 +127,7 @@ class TrueOrFalseViewModel(
 
             StepOutcome.SEEN -> Unit
         }
-        advanceToNextStep()
+        if (timeIsUp) completeSession() else advanceToNextStep()
     }
 
     private suspend fun advanceToNextStep() {
