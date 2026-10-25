@@ -104,7 +104,8 @@ the real database and the shipped catalogues. They cover the journeys rather tha
 screens: the app seeds and lands on its tabs, search narrows to the word asked for and a
 word found that way can be marked to learn, every training is reachable, words sorted in
 Review words are what a training then runs, and the vocabulary course launches a training
-that offers its reset button.
+that offers its reset button. Beside them, `EnterAfterCheckTest` drives the answer field and
+the Check/Next button with a hardware keyboard: Enter checks, the next Enter moves on.
 
     ./gradlew connectedDebugAndroidTest    # both, on a connected device or emulator
 

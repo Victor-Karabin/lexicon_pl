@@ -9,8 +9,18 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.res.stringResource
 import com.lexicon.presentation.R
 import com.lexicon.presentation.theme.Dimens
@@ -29,6 +39,12 @@ fun TrainingActionRow(
     nextLabel: Int = R.string.action_next,
     modifier: Modifier = Modifier,
 ) {
+    val primary = remember { FocusRequester() }
+    val pressedHere = remember { mutableSetOf<Key>() }
+    LaunchedEffect(awaitingNext) {
+        if (awaitingNext) primary.requestFocus()
+    }
+
     BottomActionPanel(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall, Alignment.End),
@@ -54,6 +70,19 @@ fun TrainingActionRow(
                     if (awaitingNext) onNext() else onCheck()
                 },
             enabled = awaitingNext || checkEnabled,
+            modifier = Modifier
+                .focusRequester(primary)
+                .onFocusChanged { pressedHere.clear() }
+                .onPreviewKeyEvent { event ->
+                    when (event.type) {
+                        KeyEventType.KeyDown -> {
+                            pressedHere += event.key
+                            false
+                        }
+                        KeyEventType.KeyUp -> !pressedHere.remove(event.key)
+                        else -> false
+                    }
+                },
         ) {
             Text(stringResource(if (awaitingNext) nextLabel else checkLabel))
         }
