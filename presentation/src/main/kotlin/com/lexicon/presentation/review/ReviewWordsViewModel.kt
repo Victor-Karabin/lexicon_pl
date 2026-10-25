@@ -129,19 +129,17 @@ class ReviewWordsViewModel(
     }
 
     private suspend fun advance() {
+        val state = _uiState.value
+        val nextBatch = if (state.index + 1 >= state.words.size) getWordsToReview() else null
+
         _uiState.update {
             it.copy(
-                index = it.index + 1,
+                words = nextBatch ?: it.words,
+                index = if (nextBatch == null) it.index + 1 else 0,
                 reviewed = it.reviewed + 1,
                 waiting = (it.waiting - 1).coerceAtLeast(0),
                 chosen = null,
             )
-        }
-
-        val state = _uiState.value
-        if (state.index >= state.words.size) {
-            val next = getWordsToReview()
-            _uiState.update { it.copy(words = next.toImmutableList(), index = 0) }
         }
         loadPictures()
     }
