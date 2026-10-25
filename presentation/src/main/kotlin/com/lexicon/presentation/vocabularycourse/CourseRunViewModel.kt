@@ -29,6 +29,8 @@ sealed interface CourseRunStep {
     data object Cards : CourseRunStep
 
     data object NothingToPractise : CourseRunStep
+
+    data object Home : CourseRunStep
 }
 
 fun CourseLaunch?.toStep(): CourseRunStep =
@@ -54,6 +56,12 @@ class CourseRunViewModel(
             val launch = queue.advance()
             val course = getCourse()
             if (course.round != round && course.cardsDue) CourseRunStep.Cards else launch.toStep()
+        }
+
+    fun onResultsLeft() =
+        run {
+            queue.advance()
+            CourseRunStep.Home
         }
 
     fun onReset() =

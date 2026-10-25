@@ -1,5 +1,6 @@
 package com.lexicon.app.navigation
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -434,6 +435,7 @@ fun LexiconNavHost(
             val courseRun = args?.getString(LexiconDestinations.COURSE_RUN_ARG).orEmpty()
 
             CourseRunScope(courseRun = courseRun, navController = navController) { run ->
+                BackHandler(enabled = courseRun.isNotEmpty(), onBack = run::onResultsLeft)
                 SessionResultScreen(
                     correct = args?.getInt("correct").orDefault(),
                     incorrect = args?.getInt("incorrect").orDefault(),
@@ -618,7 +620,7 @@ private fun CourseRunScope(
                 run.onStepHandled()
             }
 
-            CourseRunStep.NothingToPractise -> {
+            CourseRunStep.NothingToPractise, CourseRunStep.Home -> {
                 navController.popBackStack(LexiconDestinations.MAIN, inclusive = false)
                 run.onStepHandled()
             }
