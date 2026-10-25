@@ -94,7 +94,7 @@ Three layers, each testing what the one below it cannot.
 - **`app`** — a test that every Koin module's dependency graph resolves.
 
 **Instrumented tests** in `data/src/androidInstrumentedTest`, against real SQLite. They
-exist for the things a JVM test cannot see: how `LIKE` folds, whether pages follow one
+exist for the things a JVM test cannot see: how the text search matches, whether pages follow one
 another without repeating, which known words the review queries return, and what happens
 when a query binds more variables than SQLite takes — 999 on Android 8 to 11, which is
 fewer than a large study set.

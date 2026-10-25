@@ -77,7 +77,7 @@ interface WordDao {
     @Query(
         """
         SELECT * FROM words
-        WHERE searchKey LIKE '%' || :foldedQuery || '%'
+        WHERE instr(searchKey, :foldedQuery) > 0
           AND isDeleted = 0
           AND (:ignoreLevels = 1 OR cefr IN (:levels))
           AND (:learningOnly = 0 OR status IN ('TO_LEARN', 'FAVOURITE'))
@@ -98,8 +98,8 @@ interface WordDao {
         """
         SELECT * FROM words
         WHERE isDeleted = 0
-          AND ((searchKey LIKE :foldedQuery || ' %' AND LENGTH(text) = LENGTH(:foldedQuery))
-            OR (searchKey LIKE '% ' || :foldedQuery AND LENGTH(translation) = LENGTH(:foldedQuery)))
+          AND ((substr(searchKey, 1, LENGTH(:foldedQuery) + 1) = :foldedQuery || ' ' AND LENGTH(text) = LENGTH(:foldedQuery))
+            OR (substr(searchKey, -LENGTH(:foldedQuery) - 1) = ' ' || :foldedQuery AND LENGTH(translation) = LENGTH(:foldedQuery)))
         ORDER BY text
         LIMIT :limit
         """,
@@ -109,13 +109,13 @@ interface WordDao {
         limit: Int,
     ): List<WordEntity>
 
-    @Query("SELECT * FROM words WHERE isDeleted = 0 AND translation LIKE '%' || :sense || '%' LIMIT :limit")
+    @Query("SELECT * FROM words WHERE isDeleted = 0 AND instr(lower(translation), lower(:sense)) > 0 LIMIT :limit")
     suspend fun withTranslationContaining(
         sense: String,
         limit: Int,
     ): List<WordEntity>
 
-    @Query("SELECT * FROM words WHERE isDeleted = 0 AND (searchKey LIKE :foldedText || ' %') LIMIT :limit")
+    @Query("SELECT * FROM words WHERE isDeleted = 0 AND substr(searchKey, 1, LENGTH(:foldedText) + 1) = :foldedText || ' ' LIMIT :limit")
     suspend fun withTextStarting(
         foldedText: String,
         limit: Int,

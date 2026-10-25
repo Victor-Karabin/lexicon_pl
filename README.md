@@ -167,4 +167,4 @@ by the Komisja Standaryzacji Nazw Geograficznych poza Granicami Rzeczypospolitej
 ## Status
 
 Pre-release, version 0.1.0. 703 Kotlin files and 48 Swift files. 169 unit-test files,
-26 instrumented tests over real SQLite, and six end-to-end tests driving the app.
+28 instrumented tests over real SQLite, and six end-to-end tests driving the app.
