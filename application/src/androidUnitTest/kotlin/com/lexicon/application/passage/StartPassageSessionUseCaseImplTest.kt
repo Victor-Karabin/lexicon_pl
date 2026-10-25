@@ -143,6 +143,22 @@ class StartPassageSessionUseCaseImplTest {
         }
 
     @Test
+    fun `a hyphenated word is gapped whole, inflected or not`() =
+        runTest {
+            givenStudySet("e-mail", "SMS-ować")
+            answering(
+                mapOf(
+                    "e-mail" to "Wysłałem ci wczoraj długiego e-maila.",
+                    "SMS-ować" to "Moja siostra lubi SMS-ować wieczorem.",
+                ),
+            )
+
+            val session = run() as PassageSessionResult.Ready
+
+            assertEquals(setOf("e-maila", "SMS-ować"), session.passage.gaps.map { it.answer }.toSet())
+        }
+
+    @Test
     fun `each gap remembers the starred word it was inflected from`() =
         runTest {
             givenStudySet("książka")
