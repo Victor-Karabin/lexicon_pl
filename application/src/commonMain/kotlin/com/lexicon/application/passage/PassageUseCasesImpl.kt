@@ -37,6 +37,10 @@ private const val SPARE_SENTENCES = 2
 
 private const val MIN_STEM = 4
 
+private val WORD = Regex("\\p{L}+")
+
+private val HYPHENATED_WORD = Regex("\\p{L}+(?:-\\p{L}+)+")
+
 class StartPassageSessionUseCaseImpl(
     private val vocabulary: VocabularyRepository,
     private val generator: SentenceGenerator,
@@ -90,8 +94,10 @@ class StartPassageSessionUseCaseImpl(
 }
 
 private fun String.gapping(target: String): List<PassageSegment>? {
-    val stem = target.stem()
-    val found = Regex("\\p{L}+").findAll(this).firstOrNull { it.value.grewFrom(stem) } ?: return null
+    val head = target.split(' ', '\'').maxByOrNull { it.length }.orEmpty().lowercase()
+    val stem = head.stem()
+    val words = if ('-' in head) HYPHENATED_WORD else WORD
+    val found = words.findAll(this).firstOrNull { it.value.grewFrom(stem) } ?: return null
 
     return buildList {
         if (found.range.first > 0) add(PassageSegment.Text(substring(0, found.range.first)))
@@ -101,8 +107,10 @@ private fun String.gapping(target: String): List<PassageSegment>? {
 }
 
 private fun String.stem(): String {
-    val head = split(' ', '-', '\'').maxByOrNull { it.length }.orEmpty().lowercase()
-    return head.take(maxOf(MIN_STEM, head.length * 2 / 3))
+    val joined = substringBeforeLast('-', missingDelimiterValue = "")
+    val last = substringAfterLast('-')
+    val prefix = if (joined.isEmpty()) "" else "$joined-"
+    return prefix + last.take(maxOf(MIN_STEM, last.length * 2 / 3))
 }
 
 private fun String.grewFrom(stem: String): Boolean {
