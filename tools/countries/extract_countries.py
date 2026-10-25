@@ -78,7 +78,7 @@ CODES = {
 CODES.update({
     "Antigua i Barbuda": ("AG", "Antigua and Barbuda"), "Barbados": ("BB", "Barbados"),
     "Bośnia i Hercegowina": ("BA", "Bosnia and Herzegovina"), "Kosowo": ("XK", "Kosovo"), "Niue": ("NU", "Niue"),
-    "Republika Zielonego Przylądka": ("CV", "Cabo Verde"), "Saint Kitts i Nevis": ("KN", "Saint Kitts and Nevis"),
+    "Saint Kitts i Nevis": ("KN", "Saint Kitts and Nevis"),
     "Saint Lucia": ("LC", "Saint Lucia"), "Saint Vincent i Grenadyny": ("VC", "Saint Vincent and the Grenadines"),
     "Trynidad i Tobago": ("TT", "Trinidad and Tobago"), "Wybrzeże Kości Słoniowej": ("CI", "Côte d'Ivoire"),
     "Wyspy Cooka": ("CK", "Cook Islands"), "Wyspy Marshalla": ("MH", "Marshall Islands"), "Wyspy Salomona": ("SB", "Solomon Islands"),
