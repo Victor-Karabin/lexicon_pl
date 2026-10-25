@@ -144,6 +144,52 @@ class VocabularyCourseViewModelsTest {
         }
 
     @Test
+    fun `finishing the last training of a round goes to the new round's word cards`() =
+        runTest(dispatcher) {
+            coEvery { getCourse() } returnsMany listOf(
+                VocabularyCourse(settings = settings, position = 1, round = 0, cardsSeen = true, newWords = words),
+                VocabularyCourse(settings = settings, position = 0, round = 1, cardsSeen = false, newWords = words),
+            )
+            coEvery { queue.advance() } returns CourseLaunch(TrainingType.DICTATION, words)
+            val viewModel = CourseRunViewModel(queue, resetQueue, getCourse)
+
+            viewModel.onTrainingFinished()
+            advanceUntilIdle()
+
+            assertEquals(CourseRunStep.Cards, viewModel.step.value)
+        }
+
+    @Test
+    fun `a new round without new words goes straight to its first training`() =
+        runTest(dispatcher) {
+            coEvery { getCourse() } returnsMany listOf(
+                VocabularyCourse(settings = settings, position = 1, round = 0, cardsSeen = true),
+                VocabularyCourse(settings = settings, position = 0, round = 1, cardsSeen = false),
+            )
+            coEvery { queue.advance() } returns CourseLaunch(TrainingType.DICTATION, words)
+            val viewModel = CourseRunViewModel(queue, resetQueue, getCourse)
+
+            viewModel.onTrainingFinished()
+            advanceUntilIdle()
+
+            assertEquals(CourseRunStep.Next(TrainingType.DICTATION, words), viewModel.step.value)
+        }
+
+    @Test
+    fun `finishing a training inside a round goes on even when the cards were not seen`() =
+        runTest(dispatcher) {
+            coEvery { getCourse() } returns
+                VocabularyCourse(settings = settings, position = 1, round = 0, cardsSeen = false, newWords = words)
+            coEvery { queue.advance() } returns CourseLaunch(TrainingType.WORD_MATCH, words)
+            val viewModel = CourseRunViewModel(queue, resetQueue, getCourse)
+
+            viewModel.onTrainingFinished()
+            advanceUntilIdle()
+
+            assertEquals(CourseRunStep.Next(TrainingType.WORD_MATCH, words), viewModel.step.value)
+        }
+
+    @Test
     fun `reset with nothing to run goes back home`() =
         runTest(dispatcher) {
             coEvery { queue.next() } returns null

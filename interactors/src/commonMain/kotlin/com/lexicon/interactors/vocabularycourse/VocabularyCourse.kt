@@ -34,7 +34,9 @@ data class VocabularyCourse(
 
     val nextTraining: TrainingType? get() = trainings.getOrNull(position)?.let(TrainingType::ofId)
 
-    val showCardsNext: Boolean get() = position == 0 && !cardsSeen && newWords.isNotEmpty()
+    val cardsDue: Boolean get() = !cardsSeen && newWords.isNotEmpty()
+
+    val showCardsNext: Boolean get() = position == 0 && cardsDue
 }
 
 val defaultCourseQueue: List<String> =
