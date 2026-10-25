@@ -27,6 +27,7 @@ import com.lexicon.presentation.common.TextResource
 import com.lexicon.presentation.common.WordResultEntry
 import com.lexicon.presentation.common.labelId
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableMap
@@ -77,7 +78,9 @@ class DeclensionViewModelTest {
     )
 
     private val nextQuestion: NextDeclensionTableUseCase = mockk { coEvery { this@mockk(any(), any(), any()) } returns table }
-    private val submitAnswer: SubmitDeclensionAnswerUseCase = mockk()
+    private val submitAnswer: SubmitDeclensionAnswerUseCase = mockk {
+        coEvery { this@mockk(any()) } returns SubmitDeclensionAnswerResponse(mapOf(GrammaticalCase.GENITIVE to AnswerVerdict.CORRECT))
+    }
     private val loadCourses: LoadDeclensionCoursesUseCase = mockk()
     private val results = LastSessionResultsHolder()
     private val getStepCount: GetStepCountUseCase = mockk { coEvery { this@mockk() } returns STEPS }
@@ -111,6 +114,7 @@ class DeclensionViewModelTest {
             }
             val viewModel = viewModel()
             advanceUntilIdle()
+            answer(viewModel)
 
             viewModel.onNext()
             advanceUntilIdle()
@@ -135,11 +139,13 @@ class DeclensionViewModelTest {
 
             viewModel.navigationEvents.test {
                 repeat(STEPS - 1) {
+                    answer(viewModel)
                     viewModel.onNext()
                     advanceUntilIdle()
                     expectNoEvents()
                 }
 
+                answer(viewModel)
                 viewModel.onNext()
                 advanceUntilIdle()
 
@@ -161,6 +167,12 @@ class DeclensionViewModelTest {
                 persistentListOf(DeclensionVariantProgress(table.steps.single().variant, streak = TABLE_DRILL_MASTERY_STREAK)),
             ),
         )
+
+    private fun TestScope.answer(viewModel: DeclensionViewModel) {
+        viewModel.onAnswerChanged(GrammaticalCase.GENITIVE, "kota")
+        viewModel.onCheck()
+        advanceUntilIdle()
+    }
 
     private fun TestScope.answerTwoCases(viewModel: DeclensionViewModel) {
         viewModel.onAnswerChanged(GrammaticalCase.GENITIVE, "kota")
@@ -207,15 +219,14 @@ class DeclensionViewModelTest {
                 SubmitDeclensionAnswerResponse(
                     mapOf(GrammaticalCase.GENITIVE to AnswerVerdict.CORRECT, GrammaticalCase.DATIVE to AnswerVerdict.WRONG),
                 )
+            coEvery { getStepCount() } returns 1
             val viewModel = viewModel()
             advanceUntilIdle()
             answerTwoCases(viewModel)
 
             viewModel.navigationEvents.test {
-                repeat(STEPS) {
-                    viewModel.onNext()
-                    advanceUntilIdle()
-                }
+                viewModel.onNext()
+                advanceUntilIdle()
 
                 assertEquals(SessionNavigationEvent.SessionComplete(correct = 1, incorrect = 1, skipped = 0, tipsUsed = 0), awaitItem())
             }
@@ -243,21 +254,17 @@ class DeclensionViewModelTest {
     @Test
     fun `the results are in place by the time the event arrives`() =
         runTest(testDispatcher) {
-            coEvery { submitAnswer(any()) } returns SubmitDeclensionAnswerResponse(mapOf(GrammaticalCase.GENITIVE to AnswerVerdict.CORRECT))
+            coEvery { getStepCount() } returns 1
             val viewModel = viewModel()
             advanceUntilIdle()
-            viewModel.onAnswerChanged(GrammaticalCase.GENITIVE, "kota")
-            viewModel.onCheck()
-            advanceUntilIdle()
+            answer(viewModel)
             var seen: List<WordResultEntry>? = null
             backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
                 viewModel.navigationEvents.collect { seen = results.wordResults }
             }
 
-            repeat(STEPS) {
-                viewModel.onNext()
-                advanceUntilIdle()
-            }
+            viewModel.onNext()
+            advanceUntilIdle()
 
             assertEquals(listOf("kota"), seen?.map { it.word })
         }
@@ -327,12 +334,29 @@ class DeclensionViewModelTest {
         runTest(testDispatcher) {
             val viewModel = viewModel()
             advanceUntilIdle()
+            answer(viewModel)
 
             viewModel.onNext()
             viewModel.onNext()
             advanceUntilIdle()
 
             assertEquals(1, viewModel.uiState.value.stepIndex)
+        }
+
+    @Test
+    fun `next does nothing while the table is unanswered`() =
+        runTest(testDispatcher) {
+            val viewModel = viewModel()
+            advanceUntilIdle()
+            answer(viewModel)
+            viewModel.onNext()
+            advanceUntilIdle()
+
+            viewModel.onNext()
+            advanceUntilIdle()
+
+            assertEquals(1, viewModel.uiState.value.stepIndex)
+            coVerify(exactly = 2) { nextQuestion(any(), any(), any()) }
         }
 
     private companion object {

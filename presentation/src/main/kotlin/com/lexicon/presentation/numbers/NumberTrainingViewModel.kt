@@ -93,6 +93,7 @@ class NumberTrainingViewModel(
     }
 
     fun onNext() {
+        if (!_uiState.value.isAnswered) return
         session.studied()
         session.advance(_uiState.value.stepIndex) { question, index ->
             _uiState.update { it.copy(question = question, stepIndex = index, answer = "", verdict = null) }

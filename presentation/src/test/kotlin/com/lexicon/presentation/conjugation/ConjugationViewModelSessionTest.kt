@@ -16,6 +16,7 @@ import com.lexicon.interactors.settings.GetStepCountUseCase
 import com.lexicon.interactors.training.RecordStudyActivityUseCase
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
+import io.mockk.clearMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -24,6 +25,7 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -49,7 +51,9 @@ class ConjugationViewModelSessionTest {
     )
 
     private val nextQuestion: NextConjugationTableUseCase = mockk { coEvery { this@mockk(any(), any(), any()) } returns table }
-    private val submitAnswer: SubmitConjugationAnswerUseCase = mockk()
+    private val submitAnswer: SubmitConjugationAnswerUseCase = mockk {
+        coEvery { this@mockk(any()) } returns SubmitConjugationAnswerResponse(mapOf(GrammaticalPerson.JA to AnswerVerdict.CORRECT))
+    }
     private val getStepCount: GetStepCountUseCase = mockk { coEvery { this@mockk() } returns STEPS }
 
     @Before
@@ -73,6 +77,12 @@ class ConjugationViewModelSessionTest {
             dispatchers = dispatchers,
         )
 
+    private fun TestScope.answer(viewModel: ConjugationViewModel) {
+        viewModel.onAnswerChanged(GrammaticalPerson.JA, "czytam")
+        viewModel.onCheck()
+        advanceUntilIdle()
+    }
+
     @Test
     fun `the session is as long as the Steps per session setting`() =
         runTest(testDispatcher) {
@@ -90,11 +100,13 @@ class ConjugationViewModelSessionTest {
 
             viewModel.navigationEvents.test {
                 repeat(STEPS - 1) {
+                    answer(viewModel)
                     viewModel.onNext()
                     advanceUntilIdle()
                     expectNoEvents()
                 }
 
+                answer(viewModel)
                 viewModel.onNext()
                 advanceUntilIdle()
 
@@ -133,6 +145,7 @@ class ConjugationViewModelSessionTest {
             }
             val viewModel = viewModel()
             advanceUntilIdle()
+            answer(viewModel)
 
             viewModel.onNext()
             advanceUntilIdle()
@@ -145,6 +158,7 @@ class ConjugationViewModelSessionTest {
         runTest(testDispatcher) {
             val viewModel = viewModel()
             advanceUntilIdle()
+            answer(viewModel)
 
             viewModel.onNext()
             viewModel.onNext()
@@ -160,12 +174,30 @@ class ConjugationViewModelSessionTest {
             val recordStudy = mockk<RecordStudyActivityUseCase>(relaxed = true)
             val viewModel = viewModel(recordStudy)
             advanceUntilIdle()
+            answer(viewModel)
+            clearMocks(recordStudy, answers = false)
 
             viewModel.onNext()
             viewModel.onNext()
             advanceUntilIdle()
 
             coVerify(exactly = 1) { recordStudy() }
+        }
+
+    @Test
+    fun `Next does nothing while the table is unanswered`() =
+        runTest(testDispatcher) {
+            val viewModel = viewModel()
+            advanceUntilIdle()
+            answer(viewModel)
+            viewModel.onNext()
+            advanceUntilIdle()
+
+            viewModel.onNext()
+            advanceUntilIdle()
+
+            assertEquals(1, viewModel.uiState.value.stepIndex)
+            coVerify(exactly = 2) { nextQuestion(any(), any(), any()) }
         }
 
     private companion object {

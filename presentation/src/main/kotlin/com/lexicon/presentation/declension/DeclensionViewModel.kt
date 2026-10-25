@@ -137,6 +137,7 @@ class DeclensionViewModel(
     }
 
     fun onNext() {
+        if (!_uiState.value.isAnswered) return
         session.studied()
         session.advance(_uiState.value.stepIndex) { table, index ->
             _uiState.update {
