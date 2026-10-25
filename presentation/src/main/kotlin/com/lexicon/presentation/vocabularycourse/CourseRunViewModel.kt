@@ -48,7 +48,13 @@ class CourseRunViewModel(
     private val _step = MutableStateFlow<CourseRunStep>(CourseRunStep.Idle)
     val step: StateFlow<CourseRunStep> = _step.asStateFlow()
 
-    fun onTrainingFinished() = run { queue.advance().toStep() }
+    fun onTrainingFinished() =
+        run {
+            val round = getCourse().round
+            val launch = queue.advance()
+            val course = getCourse()
+            if (course.round != round && course.cardsDue) CourseRunStep.Cards else launch.toStep()
+        }
 
     fun onReset() =
         run {
