@@ -36,6 +36,7 @@ class CloudSpeechRecognizerService(
 
         if (transcript == null) {
             Log.w(TAG, "Cloud returned no transcript; asking for the phrase again")
+            if (!File(path).delete()) Log.w(TAG, "The unrecognised recording could not be deleted")
             throw SpeechRecognitionFailed("Speech could not be recognised just now", SpeechRecognitionFailureReason.FAILED)
         }
 
