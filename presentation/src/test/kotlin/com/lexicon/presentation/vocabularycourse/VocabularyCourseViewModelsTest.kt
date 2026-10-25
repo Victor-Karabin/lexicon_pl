@@ -190,6 +190,33 @@ class VocabularyCourseViewModelsTest {
         }
 
     @Test
+    fun `leaving the results counts the training and goes home without opening the next one`() =
+        runTest(dispatcher) {
+            coEvery { queue.advance() } returns CourseLaunch(TrainingType.WORD_MATCH, words)
+            val viewModel = CourseRunViewModel(queue, resetQueue, getCourse)
+
+            viewModel.onResultsLeft()
+            advanceUntilIdle()
+
+            coVerify(exactly = 1) { queue.advance() }
+            assertEquals(CourseRunStep.Home, viewModel.step.value)
+        }
+
+    @Test
+    fun `leaving the results while the next training is opening is ignored`() =
+        runTest(dispatcher) {
+            coEvery { queue.advance() } returns CourseLaunch(TrainingType.WORD_MATCH, words)
+            val viewModel = CourseRunViewModel(queue, resetQueue, getCourse)
+
+            viewModel.onTrainingFinished()
+            viewModel.onResultsLeft()
+            advanceUntilIdle()
+
+            coVerify(exactly = 1) { queue.advance() }
+            assertEquals(CourseRunStep.Next(TrainingType.WORD_MATCH, words), viewModel.step.value)
+        }
+
+    @Test
     fun `reset with nothing to run goes back home`() =
         runTest(dispatcher) {
             coEvery { queue.next() } returns null
