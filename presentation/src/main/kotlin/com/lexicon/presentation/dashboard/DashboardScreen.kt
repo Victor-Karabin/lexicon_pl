@@ -42,6 +42,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lexicon.interactors.conjugation.ConjugationCourse
 import com.lexicon.interactors.countries.CountryCourse
@@ -109,9 +110,10 @@ fun DashboardScreen(
         }
     }
 
-    LaunchedEffect(Unit) {
+    LifecycleResumeEffect(Unit) {
         viewModel.onResumed()
         viewModel.refreshCourses()
+        onPauseOrDispose {}
     }
 
     DashboardContent(
