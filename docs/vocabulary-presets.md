@@ -173,7 +173,9 @@ a splash screen over something they cannot fix would be the worse outcome.
 - **Changing a word's presets.** A word can be added to or removed from any preset
   (`SetWordPresetMembershipUseCase`). Each change is also recorded as an override
   (`preset_word_overrides`), which the seeder re-applies after replacing the shipped
-  catalogue, so a hand-made membership survives an app update.
+  catalogue, so a hand-made membership survives an app update. Replaying an addition
+  leaves a word the shipped preset already holds at its catalogue place; only words the
+  catalogue lacks go to the end, in the order they were added.
 - **Deleting a preset.** The preset and its memberships go, the words stay. The
   preset's id is recorded in `deleted_presets` so a re-seed does not bring a shipped one
   back, and restoring it (the undo) clears that record and seeds again. A preset the

@@ -98,6 +98,9 @@ interface PresetDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMembership(membership: PresetWordEntity)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertMembershipIfAbsent(membership: PresetWordEntity)
+
     @Query("DELETE FROM preset_words WHERE presetId = :presetId AND wordId = :wordId")
     suspend fun deleteMembership(
         presetId: String,
@@ -107,7 +110,7 @@ interface PresetDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertOverride(override: PresetWordOverrideEntity)
 
-    @Query("SELECT * FROM preset_word_overrides")
+    @Query("SELECT * FROM preset_word_overrides ORDER BY rowid")
     suspend fun getOverrides(): List<PresetWordOverrideEntity>
 
     @Transaction
@@ -200,7 +203,7 @@ interface PresetDao {
         for (override in getOverrides()) {
             if (override.presetId !in livePresetIds) continue
             if (override.isMember) {
-                insertMembership(
+                insertMembershipIfAbsent(
                     PresetWordEntity(
                         presetId = override.presetId,
                         wordId = override.wordId,

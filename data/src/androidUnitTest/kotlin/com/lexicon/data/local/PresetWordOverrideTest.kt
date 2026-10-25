@@ -33,7 +33,7 @@ class PresetWordOverrideTest {
             dao.replaceCatalog(categories = emptyList(), presets = listOf(preset("food")), memberships = emptyList())
 
             val inserted = slot<PresetWordEntity>()
-            coVerify { dao.insertMembership(capture(inserted)) }
+            coVerify { dao.insertMembershipIfAbsent(capture(inserted)) }
             assertEquals(PresetWordEntity(presetId = "food", wordId = 1L, position = 7), inserted.captured)
         }
 
@@ -60,6 +60,6 @@ class PresetWordOverrideTest {
 
             dao.replaceCatalog(categories = emptyList(), presets = listOf(preset("food")), memberships = emptyList())
 
-            coVerify(exactly = 0) { dao.insertMembership(any()) }
+            coVerify(exactly = 0) { dao.insertMembershipIfAbsent(any()) }
         }
 }
