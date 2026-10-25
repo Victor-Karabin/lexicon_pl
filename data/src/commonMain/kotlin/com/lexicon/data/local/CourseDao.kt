@@ -36,10 +36,14 @@ interface CourseDao {
     @Query("DELETE FROM lesson_progress WHERE lessonId = :lessonId")
     suspend fun deleteProgress(lessonId: String)
 
+    @Query("DELETE FROM lesson_last_results WHERE lessonId = :lessonId")
+    suspend fun deleteLastResult(lessonId: String)
+
     @Transaction
     suspend fun resetLesson(lessonId: String) {
         deleteScriptProgress(lessonId)
         deleteProgress(lessonId)
+        deleteLastResult(lessonId)
     }
 
     @Query("SELECT * FROM lessons WHERE id = :lessonId")
