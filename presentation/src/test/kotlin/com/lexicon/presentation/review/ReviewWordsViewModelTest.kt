@@ -14,8 +14,10 @@ import com.lexicon.model.vocabulary.WordStatus
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,6 +29,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -195,6 +198,29 @@ class ReviewWordsViewModelTest {
             assertNull(viewModel.uiState.value.current)
             assertTrue(viewModel.uiState.value.isFinished)
             assertEquals(2, viewModel.uiState.value.reviewed)
+        }
+
+    @Test
+    fun `the finished screen is not shown while the next batch is loading`() =
+        runTest(dispatcher) {
+            val nextBatch = CompletableDeferred<ImmutableList<Word>>()
+            var batches = 0
+            coEvery { getWordsToReview(any()) } coAnswers { if (batches++ == 0) persistentListOf(kot) else nextBatch.await() }
+            val viewModel = viewModel()
+            advanceUntilIdle()
+
+            viewModel.onStatusChosen(WordStatus.KNOWN)
+            advanceTimeBy(AFTER_IT_SETTLES_MS)
+            advanceUntilIdle()
+
+            assertFalse(viewModel.uiState.value.isFinished)
+            assertEquals(kot, viewModel.uiState.value.current)
+
+            nextBatch.complete(persistentListOf(pies))
+            advanceUntilIdle()
+
+            assertEquals(pies, viewModel.uiState.value.current)
+            assertEquals(1, viewModel.uiState.value.reviewed)
         }
 
     @Test
