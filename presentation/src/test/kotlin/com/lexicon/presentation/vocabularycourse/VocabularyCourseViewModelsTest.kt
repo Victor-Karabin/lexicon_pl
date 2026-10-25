@@ -1,5 +1,6 @@
 package com.lexicon.presentation.vocabularycourse
 
+import android.util.Log
 import com.lexicon.interactors.vocabularycourse.CourseLaunch
 import com.lexicon.interactors.vocabularycourse.CourseSettings
 import com.lexicon.interactors.vocabularycourse.GetVocabularyCourseUseCase
@@ -12,8 +13,12 @@ import com.lexicon.model.vocabulary.VocabularyId
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.coVerifyOrder
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
 import io.mockk.slot
+import io.mockk.unmockkStatic
+import io.mockk.verify
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -214,6 +219,22 @@ class VocabularyCourseViewModelsTest {
 
             coVerify(exactly = 1) { queue.advance() }
             assertEquals(CourseRunStep.Next(TrainingType.WORD_MATCH, words), viewModel.step.value)
+        }
+
+    @Test
+    fun `a failing step is logged and leaves the run idle so it can be tried again`() =
+        runTest(dispatcher) {
+            mockkStatic(Log::class)
+            every { Log.e(any(), any(), any()) } returns 0
+            coEvery { queue.advance() } throws IllegalStateException("database is closed")
+            val viewModel = CourseRunViewModel(queue, resetQueue, getCourse)
+
+            viewModel.onTrainingFinished()
+            advanceUntilIdle()
+
+            assertEquals(CourseRunStep.Idle, viewModel.step.value)
+            verify { Log.e(any(), any(), any<IllegalStateException>()) }
+            unmockkStatic(Log::class)
         }
 
     @Test

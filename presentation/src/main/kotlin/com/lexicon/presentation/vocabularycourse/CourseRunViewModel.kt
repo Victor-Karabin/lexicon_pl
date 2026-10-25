@@ -1,7 +1,9 @@
 package com.lexicon.presentation.vocabularycourse
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lexicon.common.runSuspendCatching
 import com.lexicon.interactors.vocabularycourse.CourseLaunch
 import com.lexicon.interactors.vocabularycourse.GetVocabularyCourseUseCase
 import com.lexicon.interactors.vocabularycourse.NextCourseTrainingUseCase
@@ -42,6 +44,8 @@ fun CourseLaunch?.toStep(): CourseRunStep =
 suspend fun NextCourseTrainingUseCase.stepFor(course: VocabularyCourse): CourseRunStep =
     if (course.showCardsNext) CourseRunStep.Cards else next().toStep()
 
+private const val TAG = "CourseRunViewModel"
+
 class CourseRunViewModel(
     private val queue: NextCourseTrainingUseCase,
     private val resetQueue: ResetCourseQueueUseCase,
@@ -75,6 +79,10 @@ class CourseRunViewModel(
     private fun run(work: suspend () -> CourseRunStep) {
         if (_step.value != CourseRunStep.Idle) return
         _step.value = CourseRunStep.Working
-        viewModelScope.launch { _step.value = work() }
+        viewModelScope.launch {
+            _step.value = runSuspendCatching { work() }
+                .onFailure { Log.e(TAG, "The course run could not take its next step", it) }
+                .getOrDefault(CourseRunStep.Idle)
+        }
     }
 }
