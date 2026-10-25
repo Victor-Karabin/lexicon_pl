@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rewrites every shipped English gloss with Google Cloud Translation.
+"""Fills empty English glosses in the corpus with Google Cloud Translation.
 
 Run from anywhere:  python3 tools/translate/retranslate.py
 
@@ -9,6 +9,10 @@ Reads
 
 Writes the same corpus files back, then rebuilds vocabulary_pl.json through
 tools/vocabulary/build_assets.py.
+
+Only rows whose gloss column is empty are translated; a gloss that is already
+there is never sent or rewritten, so hand-written wordings survive every run. To
+have a word translated, add its corpus row with the gloss left empty.
 
 conjugations.json is deliberately left alone. Every verb in it already carries an
 authored gloss, so a rewrite gains no coverage and only trades one wording for
@@ -23,11 +27,11 @@ nothing and an interrupted run resumes. Pass --refresh to ignore the cache.
 
 Bare words translate poorly, so verbs go through the frame "chcę <verb>" and come
 back as "to <verb>". A reply that is empty or that echoes the Polish means the API
-had nothing to offer, and the existing gloss is kept.
+had nothing to offer, and the gloss stays empty for the asset build to report.
 
-A Polish word carrying two senses in the corpus keeps both authored glosses. One
-request cannot tell the senses apart, and collapsing them onto one gloss both loses
-a word and breaks the uniqueness the asset build enforces.
+A Polish word carrying two senses in the corpus is not translated. One request
+cannot tell the senses apart, and collapsing them onto one gloss both loses a word
+and breaks the uniqueness the asset build enforces.
 
 A gloss another word already answers to is refused for the same reason: the English
 side of the corpus has to stay distinguishable, or word match and true-or-false end
@@ -169,10 +173,11 @@ def phrases_for(path: Path) -> list[str]:
     return [
         (VERB_FRAME + columns[0].strip() if columns[2].strip() == "v" else columns[0].strip())
         for _, columns in corpus_rows(path)
+        if not columns[1].strip()
     ]
 
 
-def rewrite_corpus(
+def fill_corpus(
     path: Path,
     translator: Translator,
     ambiguous: set[str],
@@ -182,16 +187,13 @@ def rewrite_corpus(
     changed = 0
     for number, columns in corpus_rows(path):
         polish = columns[0].strip()
-        authored = columns[1].strip()
-        if polish.casefold() in ambiguous:
+        if columns[1].strip() or polish.casefold() in ambiguous:
             continue
 
-        gloss = translator.gloss(polish, authored, columns[2].strip() == "v")
-        if gloss.casefold() in taken:
-            gloss = authored
-        taken.add(gloss.casefold())
-        if gloss == authored:
+        gloss = translator.gloss(polish, "", columns[2].strip() == "v")
+        if not gloss or gloss.casefold() in taken:
             continue
+        taken.add(gloss.casefold())
 
         columns[1] = gloss
         lines[number] = "\t".join(column.rstrip("\n") for column in columns)
@@ -232,7 +234,7 @@ def main() -> int:
     total = 0
     ambiguous = ambiguous_words(files)
     if ambiguous:
-        print(f"keeping the authored glosses for {len(ambiguous)} words carrying two senses")
+        print(f"not translating {len(ambiguous)} words carrying two senses")
 
     taken = {
         columns[1].strip().casefold()
@@ -240,12 +242,12 @@ def main() -> int:
         for _, columns in corpus_rows(path)
     }
     for path in files:
-        changed = rewrite_corpus(path, translator, ambiguous, taken)
+        changed = fill_corpus(path, translator, ambiguous, taken)
         total += changed
         if changed:
             print(f"  {path.relative_to(ROOT)}: {changed} glosses")
 
-    print(f"{total} glosses rewritten")
+    print(f"{total} glosses filled")
 
     if not arguments.skip_build:
         print("Rebuilding vocabulary_pl.json…")
