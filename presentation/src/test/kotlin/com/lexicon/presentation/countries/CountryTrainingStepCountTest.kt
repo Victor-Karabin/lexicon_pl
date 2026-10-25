@@ -5,14 +5,18 @@ import com.lexicon.common.DispatcherProvider
 import com.lexicon.interactors.countries.Country
 import com.lexicon.interactors.countries.NextCountryUseCase
 import com.lexicon.interactors.countries.SubmitCountryAnswersUseCase
+import com.lexicon.interactors.course.AnswerVerdict
 import com.lexicon.interactors.settings.GetStepCountUseCase
 import com.lexicon.presentation.common.LastSessionResultsHolder
 import com.lexicon.presentation.common.SessionNavigationEvent
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -44,13 +48,21 @@ class CountryTrainingStepCountTest {
     private fun viewModel() =
         CountryTrainingViewModel(
             nextCountry = nextCountry,
-            submitAnswers = mockk<SubmitCountryAnswersUseCase>(),
+            submitAnswers = SubmitCountryAnswersUseCase { country, _ ->
+                country.fields.associateWith { AnswerVerdict.CORRECT }.toImmutableMap()
+            },
             speechSynthesizer = mockk(relaxed = true),
             lastSessionResultsHolder = LastSessionResultsHolder(),
             recordStudy = mockk(relaxed = true),
             getStepCount = getStepCount,
             dispatchers = dispatchers,
         )
+
+    private fun TestScope.answer(viewModel: CountryTrainingViewModel) {
+        viewModel.uiState.value.country?.fields?.forEach { viewModel.onAnswerChanged(it, "x") }
+        viewModel.onCheck()
+        advanceUntilIdle()
+    }
 
     private fun pool() =
         (0 until STEPS + 5).map {
@@ -79,16 +91,36 @@ class CountryTrainingStepCountTest {
 
             viewModel.navigationEvents.test {
                 repeat(STEPS - 1) {
+                    answer(viewModel)
                     viewModel.onNext()
                     advanceUntilIdle()
                     expectNoEvents()
                 }
 
+                answer(viewModel)
                 viewModel.onNext()
                 advanceUntilIdle()
 
                 awaitItem() as SessionNavigationEvent.SessionComplete
             }
+        }
+
+    @Test
+    fun `Next does nothing while the country is unanswered`() =
+        runTest(testDispatcher) {
+            val pool = pool()
+            coEvery { nextCountry(any(), any()) } answers { pool.first { it.code !in firstArg<Set<String>>() } }
+            val viewModel = viewModel()
+            advanceUntilIdle()
+            answer(viewModel)
+            viewModel.onNext()
+            advanceUntilIdle()
+
+            viewModel.onNext()
+            advanceUntilIdle()
+
+            assertEquals(1, viewModel.uiState.value.stepIndex)
+            coVerify(exactly = 2) { nextCountry(any(), any()) }
         }
 
     private companion object {

@@ -146,6 +146,7 @@ class ConjugationViewModel(
     }
 
     fun onNext() {
+        if (!_uiState.value.isAnswered) return
         session.advance(_uiState.value.stepIndex, beforeMove = session::studied) { table, index ->
             _uiState.update {
                 it.copy(

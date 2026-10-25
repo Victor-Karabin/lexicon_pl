@@ -112,6 +112,7 @@ class CountryTrainingViewModel(
     }
 
     fun onNext() {
+        if (!_uiState.value.isAnswered) return
         session.studied()
         session.advance(_uiState.value.stepIndex) { country, index ->
             _uiState.update {
