@@ -49,6 +49,15 @@ class ConjugationDaoTest {
     ) = ConjugationProgressEntity(COURSE, infinitive, person, attempted, correct, incorrect, streak)
 
     @Test
+    fun anUnderscoreInTheVerbFilterMatchesOnlyItself() =
+        runTest {
+            verbs.saveVerbs(listOf("czytać", "pisać").map(::verb))
+
+            assertEquals(emptyList<String>(), verbs.verbPage("_", limit = 10, offset = 0).map { it.infinitive })
+            assertEquals(listOf("czytać"), verbs.verbPage("CZY", limit = 10, offset = 0).map { it.infinitive })
+        }
+
+    @Test
     fun aVerbIsFoundByItsExactInfinitiveHoweverManyOthersContainIt() =
         runTest {
             verbs.saveVerbs(listOf("doznać", "poznać", "przyznać", "rozpoznać", "uznać", "wyznać", "znać").map(::verb))

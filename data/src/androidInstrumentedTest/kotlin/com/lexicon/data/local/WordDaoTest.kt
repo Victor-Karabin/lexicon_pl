@@ -324,6 +324,21 @@ class WordDaoTest {
         }
 
     @Test
+    fun percentAndUnderscoreInAQueryAreOrdinaryCharacters() =
+        runTest {
+            words.insertAll(listOf(word(1, "kot", "cat"), word(2, "sto procent", "100% sure")))
+
+            suspend fun search(query: String) =
+                words.search(foldedQuery = query, levels = emptyList(), ignoreLevels = 1, learningOnly = 0, limit = 10, offset = 0)
+
+            assertEquals(emptyList<String>(), search("_").map { it.text })
+            assertEquals(listOf("sto procent"), search("%").map { it.text })
+            assertEquals(listOf("sto procent"), words.withTranslationContaining("%", limit = 10).map { it.text })
+            assertEquals(emptyList<String>(), words.withTextStarting("_", limit = 10).map { it.text })
+            assertEquals(emptyList<String>(), words.withExactMatch(foldedQuery = "_", limit = 10).map { it.text })
+        }
+
+    @Test
     fun aPolishWordIsFoundByTheStartOfItsSearchKey() =
         runTest {
             words.insertAll(listOf(word(1, "dom", "house"), word(2, "domek", "little house"), word(3, "dom towarowy", "department store")))

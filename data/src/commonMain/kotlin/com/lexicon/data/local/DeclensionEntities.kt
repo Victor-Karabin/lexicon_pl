@@ -30,7 +30,7 @@ interface DeclensionDao {
         SELECT * FROM words
         WHERE isDeleted = 0
           AND (declension != '' OR (adjectiveForms != '' AND text NOT LIKE '% %'))
-          AND searchKey LIKE '%' || :foldedQuery || '%'
+          AND instr(searchKey, :foldedQuery) > 0
         ORDER BY text
         LIMIT :limit OFFSET :offset
         """,

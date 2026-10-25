@@ -53,7 +53,7 @@ interface ConjugationDao {
     @Query(
         """
         SELECT * FROM conjugation_verb
-        WHERE :needle = '' OR infinitive LIKE '%' || :needle || '%' OR translation LIKE '%' || :needle || '%'
+        WHERE :needle = '' OR instr(lower(infinitive), lower(:needle)) > 0 OR instr(lower(translation), lower(:needle)) > 0
         ORDER BY infinitive
         LIMIT :limit OFFSET :offset
         """,
