@@ -104,7 +104,7 @@ class UserCreatedSurvivalTest {
             presetDao.replaceCatalog(emptyList(), listOf(preset("food")), emptyList())
 
             val inserted = slot<PresetWordEntity>()
-            coVerify { presetDao.insertMembership(capture(inserted)) }
+            coVerify { presetDao.insertMembershipIfAbsent(capture(inserted)) }
             assertEquals(PresetWordEntity("my-kitchen", 9L, position = 3), inserted.captured)
         }
 
