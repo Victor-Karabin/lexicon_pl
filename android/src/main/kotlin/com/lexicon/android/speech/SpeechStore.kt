@@ -2,6 +2,8 @@ package com.lexicon.android.speech
 
 import android.content.Context
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
 import java.security.MessageDigest
 
 private const val SYNTHESIZE_DIR = ".synthesize"
@@ -42,7 +44,12 @@ class AndroidSpeechStore(
         val partial = File(file.parentFile, file.name + PARTIAL_SUFFIX)
         return runCatching {
             partial.writeBytes(audio)
-            check(partial.renameTo(file)) { "could not move ${partial.name} into place" }
+            Files.move(
+                partial.toPath(),
+                file.toPath(),
+                StandardCopyOption.REPLACE_EXISTING,
+                StandardCopyOption.ATOMIC_MOVE,
+            )
             file.absolutePath
         }.onFailure { partial.delete() }.getOrNull()
     }
