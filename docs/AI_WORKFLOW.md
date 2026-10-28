@@ -81,7 +81,7 @@ Required fields:
    history); before creating one again after a network error, `gh pr list --head <branch>`.
 10. Commits: small, finished, English, with the trailer
    `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`; never `git add -A` over
-   others' files; never commit `gradle.properties`.
+   others' files.
 
 ## 5. Tests
 

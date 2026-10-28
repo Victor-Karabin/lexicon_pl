@@ -39,7 +39,7 @@ The owner's decisions in chat outrank these files.
 - Commit, push and PR only when the owner asked. Gate every commit and push on the branch:
   `[ "$(git branch --show-current)" = "<branch>" ] && git commit …`; before pushing to an
   existing PR run `gh pr view <n> --json state`.
-- Never commit `gradle.properties` (local IDE change); keep `git status` clean at once.
+- Keep `git status` clean: ignore, untrack or discard strays at once.
 - A hung `git push` or `gh` is killed and retried; run `gh pr list --head <branch>` before
   creating a PR again.
 
