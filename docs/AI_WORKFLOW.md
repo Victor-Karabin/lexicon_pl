@@ -1,8 +1,10 @@
 # Claude workflow: code, review, tests, services
 
 Approved by the owner on 2026-10-28. `CLAUDE.md` is the short version every session reads;
-this file holds the details. The owner's decisions in chat outrank both. Numbers marked
-"[Claude]" were proposed by Claude and approved by the owner with this file.
+this file holds the details. Sessions open in the parent folder `learning_polish/`, whose own
+`CLAUDE.md` (outside the repo) imports this repo's `CLAUDE.md`. The owner's decisions in chat
+outrank both. Numbers marked "[Claude]" were proposed by Claude and approved by the owner
+with this file.
 
 ## 1. Who runs a task
 
@@ -75,7 +77,9 @@ Required fields:
 7. Database: destructive version bumps are fine before release; take the next free version.
 8. Licences: NC licences are allowed (the app is non-commercial); check the licence before
    downloading, record it in the PR, credit data sources in Settings › Sources.
-9. Commits: small, finished, English, with the trailer
+9. Pull requests: `gh pr create --base development`, never `main` (an old branch kept as
+   history); before creating one again after a network error, `gh pr list --head <branch>`.
+10. Commits: small, finished, English, with the trailer
    `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`; never `git add -A` over
    others' files; never commit `gradle.properties`.
 
@@ -88,7 +92,15 @@ Required fields:
 | One instrumented class | `./gradlew :<module>:assembleDebugAndroidTest`, `adb install -r -t` the test APK, `adb shell am instrument -w -e class <fqcn> <test package>/androidx.test.runner.AndroidJUnitRunner`, then uninstall it (fallback while `connectedDebugAndroidTest` skips the API 37 emulator) |
 | End, once | `./gradlew -q check --rerun-tasks`, exit code 0 (tests that read asset files are skipped without `--rerun-tasks`) |
 | Before a PR | the full run above, exit code checked |
+| After pushing | CI green on the PR (`gh pr checks <n>`) |
 
+- **CI** (`.github/workflows/check.yml`, GitHub Actions, `ubuntu-latest`, JDK 17) runs
+  `./gradlew -q check --rerun-tasks` on every pull request to `development` and on every push
+  to it; about 10 minutes; a newer push to the same PR cancels the older run. On failure the
+  `reports` artifact holds the Gradle reports for 7 days (`gh run download <run id>`). CI runs
+  without `local.properties`, so it has no API keys.
+- When the Mac is busy, the same full check runs on the owner's PC from the pushed branch
+  (§10).
 - A test fails before the code and passes after it. A test that passes at once proves
   nothing and is rewritten.
 - Hardware-key and timing behaviour is proven by a Compose instrumented test, not by adb

@@ -15,9 +15,10 @@ The owner's decisions in chat outrank these files.
 ## Where to look
 - Feature code sits in same-named packages across layers, e.g. `course`, `vocabularycourse`,
   `presets`, `training`, `pronunciation`, `conjugation`, `countries`, `numbers`.
-- Rules: `model` · use-case contracts: `interactors` · use cases: `application` · ports:
-  `boundary` · Room, assets, remote clients: `data` · speech, audio, Google Cloud: `android` ·
-  screens and ViewModels: `presentation` · DI, navigation, UI tests: `app`.
+- `model` rules · `interactors` use-case contracts · `application` use cases · `boundary` ports ·
+  `data` Room, assets, remote clients · `android` speech, audio, Google Cloud · `presentation`
+  screens, ViewModels · `app` DI, navigation, UI tests · `common` clock, dispatchers, text
+  folding · `shared` iOS framework (paused) · `baselineprofile` baseline profile.
 - UI text: `presentation/src/main/res/values/strings.xml`. Content pipelines: `tools/` (Python).
 
 ## Code and data
@@ -33,19 +34,20 @@ The owner's decisions in chat outrank these files.
   downloading and credit every data source in Settings › Sources.
 
 ## Git
-- Branch from fresh `development`; one PR per task, never stacked; the owner merges.
+- Branch from fresh `development`; one PR per task, never stacked; the owner merges; open PRs
+  with `gh pr create --base development` (`main` is old history: never branch from or target it).
 - Commit, push and PR only when the owner asked. Gate every commit and push on the branch:
   `[ "$(git branch --show-current)" = "<branch>" ] && git commit …`; before pushing to an
   existing PR run `gh pr view <n> --json state`.
-- `gradle.properties` carries a local IDE change: never commit it.
-- Keep `git status` clean: ignore, untrack or discard strays at once.
+- Never commit `gradle.properties` (local IDE change); keep `git status` clean at once.
 - A hung `git push` or `gh` is killed and retried; run `gh pr list --head <branch>` before
   creating a PR again.
 
 ## Verification
 - While working: only the affected module or class,
   `./gradlew -q :<module>:testDebugUnitTest --tests '<pattern>'`.
-- Once at the end: `./gradlew -q check --rerun-tasks`, exit code 0.
+- Once at the end: `./gradlew -q check --rerun-tasks`, exit code 0. CI runs the same check on
+  every PR and push to `development` (`docs/AI_WORKFLOW.md` §5); a PR is ready when it is green.
 - Devices: always `ANDROID_SERIAL=emulator-5554`, never the owner's phone.
 
 ## Workflow, models and effort
