@@ -173,20 +173,24 @@ Required fields:
 
   | Folder | Holds |
   |---|---|
-  | `tools\` | portable programs (`jdk-17`) and the scripts run over SSH |
+  | `tools\` | portable programs (`jdk-17`, `git` — MinGit) and the scripts run over SSH |
   | `sdk\android\` | Android SDK: cmdline-tools, platform-tools, platform 35, build-tools 34 and 35 |
   | `cache\gradle\`, `cache\android\` | `GRADLE_USER_HOME` and `ANDROID_USER_HOME`, kept off drive C |
-  | `repo\lexicon_pl\` | the code snapshot under test, replaced on every run |
+  | `repo\lexicon_pl\` | a read-only clone of the public GitHub repo (`core.autocrlf=false`) |
   | `models\`, `work\`, `out\` | AI models (ComfyUI is this project's own copy here), job inputs, results |
   | `downloads\`, `logs\` | installers and archives; run logs |
 
-  `env.ps1` sets `JAVA_HOME`, `ANDROID_HOME`, the caches and `PATH` for the current process
-  only; every script dot-sources it first.
+  `env.ps1` sets `JAVA_HOME`, `ANDROID_HOME`, the caches, `GIT_CONFIG_GLOBAL`
+  (`tools\gitconfig`, so Git writes nothing to the user profile) and `PATH` for the current
+  process only; every script dot-sources it first.
 - What goes there:
-  - full Gradle runs and Android builds when the Mac is busy: `git archive` of the commit →
-    `scp` to `downloads\lexicon_pl.tar` → `tools\check.ps1` unpacks it into `repo\`, runs
-    `gradlew.bat -q check --rerun-tasks`, stops the Gradle daemon and writes
-    `logs\check-result.txt`; the PC needs no GitHub access;
+  - full Gradle runs and Android builds when the Mac is busy: push the branch, then
+    `tools\check.ps1 -Ref <branch or commit>` (default `development`) fetches, checks it out
+    detached, cleans the tree, runs `gradlew.bat -q check --rerun-tasks`, stops the Gradle
+    daemon and writes `exit=… commit=… minutes=…` to `logs\check-result.txt`;
+    `tools\check-continue.ps1` and `tools\fails.ps1` list failing tasks and tests of the
+    current checkout. Only pushed commits can be checked; the clone reads GitHub over HTTPS
+    with no credentials;
   - TTS batches for words and sentences (Piper, Chatterbox, XTTS-v2), checked by a
     speech-recognition round trip (Whisper large-v3 / faster-whisper);
   - image batches (FLUX.1 schnell, SDXL in ComfyUI) after the style is chosen;
@@ -199,7 +203,8 @@ Required fields:
   - installing programs or models needs the owner's consent per task;
   - before a GPU job check `nvidia-smi`; if Trader is using the GPU, do not start and tell
     the owner; warn the owner before GPU jobs longer than 30 minutes [Claude];
-  - results go back to the Mac with `scp`; nothing is committed or pushed from the PC;
+  - results go back to the Mac with `scp`; nothing is committed or pushed from the PC, and
+    the clone holds no GitHub credentials;
   - stop every started process when done and check with `Get-Process`.
 
 **Cloud GPUs:** only for a job that does not fit in 16 GB VRAM, with the owner's approved
