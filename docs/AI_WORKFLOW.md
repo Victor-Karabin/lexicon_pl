@@ -166,13 +166,27 @@ Required fields:
 - Hardware (checked 2026-10-28): RTX 4070 Ti SUPER 16 GB VRAM, i5-13600K (20 threads),
   32 GB RAM, Windows 10 Home; D: has about 1.3 TB free.
 - Access: `ssh trader-pc` from the Mac (key `~/.ssh/trader_pc_ed25519`, local network only).
-  Never print or copy the key. The shell is `cmd`; send PowerShell scripts through
-  `powershell -NoProfile -Command -` on stdin.
-- Work only in `D:\lexicon\` (`tools`, `sdk`, `models`, `work`, `out`) [Claude]. Do not touch
-  `D:\AI` or other Trader folders; ComfyUI for this project is its own copy in `D:\lexicon\`.
+  Never print or copy the key. The shell is `cmd`: copy a PowerShell script with `scp` into
+  `tools\` and run it with `powershell -NoProfile -ExecutionPolicy Bypass -File <script>`
+  (multi-line blocks break when a script is piped to `-Command -`).
+- Work only in `D:\Workspace\Lexicon\`. Do not touch `D:\AI` or other Trader folders.
+
+  | Folder | Holds |
+  |---|---|
+  | `tools\` | portable programs (`jdk-17`) and the scripts run over SSH |
+  | `sdk\android\` | Android SDK: cmdline-tools, platform-tools, platform 35, build-tools 34 and 35 |
+  | `cache\gradle\`, `cache\android\` | `GRADLE_USER_HOME` and `ANDROID_USER_HOME`, kept off drive C |
+  | `repo\lexicon_pl\` | the code snapshot under test, replaced on every run |
+  | `models\`, `work\`, `out\` | AI models (ComfyUI is this project's own copy here), job inputs, results |
+  | `downloads\`, `logs\` | installers and archives; run logs |
+
+  `env.ps1` sets `JAVA_HOME`, `ANDROID_HOME`, the caches and `PATH` for the current process
+  only; every script dot-sources it first.
 - What goes there:
-  - full Gradle runs and Android builds when the Mac is busy (portable JDK 17 and Android
-    SDK; code moves as a `git bundle` over `scp`, so the PC needs no GitHub access);
+  - full Gradle runs and Android builds when the Mac is busy: `git archive` of the commit →
+    `scp` to `downloads\lexicon_pl.tar` → `tools\check.ps1` unpacks it into `repo\`, runs
+    `gradlew.bat -q check --rerun-tasks`, stops the Gradle daemon and writes
+    `logs\check-result.txt`; the PC needs no GitHub access;
   - TTS batches for words and sentences (Piper, Chatterbox, XTTS-v2), checked by a
     speech-recognition round trip (Whisper large-v3 / faster-whisper);
   - image batches (FLUX.1 schnell, SDXL in ComfyUI) after the style is chosen;
