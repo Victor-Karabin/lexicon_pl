@@ -101,6 +101,9 @@ Required fields:
   without `local.properties`, so it has no API keys.
 - When the Mac is busy, the same full check runs on the owner's PC from the pushed branch
   (§10).
+- Unit tests run for the debug variant only: the root `build.gradle.kts` switches off the
+  release variant's unit tests, so `check` does not compile and test the same code twice.
+  Release builds (`assembleRelease`, `bundleRelease`) are unchanged.
 - A test fails before the code and passes after it. A test that passes at once proves
   nothing and is rewritten.
 - Hardware-key and timing behaviour is proven by a Compose instrumented test, not by adb

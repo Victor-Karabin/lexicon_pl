@@ -15,6 +15,17 @@ plugins {
 }
 
 subprojects {
+    plugins.withId("com.android.library") {
+        extensions.configure<com.android.build.api.variant.LibraryAndroidComponentsExtension> {
+            beforeVariants(selector().withBuildType("release")) { it.enableUnitTest = false }
+        }
+    }
+    plugins.withId("com.android.application") {
+        extensions.configure<com.android.build.api.variant.ApplicationAndroidComponentsExtension> {
+            beforeVariants(selector().withBuildType("release")) { it.enableUnitTest = false }
+        }
+    }
+
     apply(plugin = "io.gitlab.arturbosch.detekt")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
