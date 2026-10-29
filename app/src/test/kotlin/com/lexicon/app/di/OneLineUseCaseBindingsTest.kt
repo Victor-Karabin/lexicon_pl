@@ -33,12 +33,6 @@ import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.get
 
-/**
- * A use case built as a lambda at the wiring site is invisible to Koin's `verify`, which
- * only reflects over constructors. These resolve each one from a real container and call
- * it, so a binding that asks for the wrong port, or forwards to the wrong repository
- * method, fails here rather than on a device.
- */
 class OneLineUseCaseBindingsTest : KoinTest {
     private val vocabulary: VocabularyRepository = mockk(relaxed = true)
     private val presets: VocabularyPresetRepository = mockk(relaxed = true)

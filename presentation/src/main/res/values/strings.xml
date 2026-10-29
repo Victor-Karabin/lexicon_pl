@@ -1,5 +1,4 @@
 <resources>
-    <!-- Shared across training screens -->
     <string name="action_tip">Tip</string>
     <string name="action_skip">Skip</string>
     <string name="action_undo">Undo</string>
@@ -17,35 +16,27 @@
     <string name="action_more">More</string>
     <string name="action_less">Less</string>
 
-    <!-- Dictation -->
     <string name="dictation_title">Dictation</string>
     <string name="dictation_type_what_you_heard">Type what you heard</string>
 
-    <!-- Dictation Puzzle -->
     <string name="dictation_puzzle_title">Dictation Puzzle</string>
 
-    <!-- Puzzle -->
     <string name="puzzle_title">Puzzle</string>
 
-    <!-- Image Test -->
     <string name="image_test_title">Image Test</string>
 
-    <!-- Word Match -->
     <string name="word_match_title">Word Match</string>
 
-    <!-- Crossword -->
     <string name="crossword_title">Crossword</string>
     <string name="crossword_across_format">Across · %1$d</string>
     <string name="crossword_down_format">Down · %1$d</string>
     <string name="crossword_check_failed">Couldn\'t save your answers. Change a letter to try again.</string>
 
-    <!-- True or False -->
     <string name="true_or_false_title">True or False</string>
     <string name="action_true">True</string>
     <string name="action_false">False</string>
     <string name="time_remaining_format">%1$ds</string>
 
-    <!-- Pronunciation Check -->
     <string name="pronunciation_title">Pronunciation Check</string>
     <string name="pronunciation_record">Record</string>
     <string name="pronunciation_listening">Listening…</string>
@@ -56,7 +47,6 @@
     <string name="pronunciation_recognition_unavailable">Speech recognition isn\'t available on this device. Try a real device or an emulator with Google Play services and on-device speech recognition set up.</string>
     <string name="pronunciation_recognition_failed">Couldn\'t hear that clearly. Try recording again.</string>
 
-    <!-- Settings -->
     <string name="settings_appearance">Appearance</string>
     <string name="settings_theme_system">System</string>
     <string name="settings_theme_light">Light</string>
@@ -83,7 +73,6 @@
     <string name="settings_sources_kwjp">Word frequencies, and many words and expressions of written Polish, come from the frequency lists of the balanced Corpus of Contemporary Polish (KWJP, kwjp.pl), Institute of Computer Science, Polish Academy of Sciences, shared under the Creative Commons Attribution 4.0 licence (CC BY 4.0).</string>
     <string name="settings_step_count_note">Sets how many words each training asks about, and how many sentences the reading trainings write. Takes effect next session.</string>
 
-    <!-- Verb conjugation course -->
     <string name="conjugation_title">Verb Conjugation</string>
     <string name="conjugation_medallion">V</string>
     <string name="training_conjugation_blurb">Pick verbs and learn how they change by person</string>
@@ -172,7 +161,6 @@
     <string name="countries_progress">%1$d of %2$d answers mastered</string>
     <string name="countries_none">Choose the countries to practise first.</string>
 
-    <!-- Mix -->
     <string name="mix_title">Mix</string>
     <string name="word_card_title">Word Card</string>
     <string name="word_card_done">Done</string>
@@ -214,7 +202,6 @@
     <string name="sync_changed">%1$s ready · %2$s added, %3$s updated, %4$s removed</string>
     <string name="sync_blocked">The bundled vocabulary could not be loaded, so there is nothing to study yet.</string>
     <string name="sync_retry">Try again</string>
-    <!-- The launcher label lives in the app module; this is the wordmark on the splash. -->
     <string name="splash_title">Lexicon</string>
     <string name="vocabulary_delete">Delete</string>
     <string name="word_change_presets">Presets</string>
@@ -222,7 +209,6 @@
     <string name="vocabulary_deleted">Deleted “%1$s”</string>
     <string name="vocabulary_undo">Undo</string>
     <string name="selection_cancel">Stop selecting</string>
-    <!-- Adding a word or a preset by hand. -->
     <string name="vocabulary_add">Add</string>
     <string name="vocabulary_add_word">Add word</string>
     <string name="vocabulary_add_preset">Add preset</string>

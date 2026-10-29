@@ -33,12 +33,6 @@ import kotlin.random.Random
 class LoadConjugationVerbsUseCaseImpl(
     private val conjugations: ConjugationRepository,
 ) : LoadConjugationVerbsUseCase {
-    /**
-     * The store pages and filters, so only what the screen shows is decoded. Unteachable
-     * verbs are the one thing SQL cannot judge — the forms live in a JSON column — so a
-     * page thinned by them is topped up from the next, and the walk stops rather than
-     * reading the whole table when a query matches almost nothing teachable.
-     */
     override suspend fun page(
         query: String,
         offset: Int,

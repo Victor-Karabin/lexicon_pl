@@ -1,9 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Pronunciation Check: on-device speech recognition -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!-- Image lookups and lesson-audio downloads. Declared here rather than relied on
-         transitively from a library that may later be dropped. -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application

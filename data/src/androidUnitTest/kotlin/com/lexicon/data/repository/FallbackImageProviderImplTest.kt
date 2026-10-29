@@ -79,7 +79,6 @@ class FallbackImageProviderImplTest {
 
             val result = provider.searchImages("kot", count = 3)
 
-            // One from each in turn, so the first row on screen is never one provider's.
             assertEquals(listOf("a", "c", "b"), result)
         }
 
@@ -101,12 +100,6 @@ class FallbackImageProviderImplTest {
             assertEquals(listOf("a", "b", "c"), provider.searchImages("kot", count = 3))
         }
 
-    /**
-     * Replaces an earlier test that asserted the opposite — that sources past the ones
-     * which filled the ask were left alone. Stopping early meant a page of ten was ten
-     * variations from whichever provider is listed first, so every source is asked now
-     * and the extra calls are the price of a spread.
-     */
     @Test
     fun `every source is asked, so a page is a spread rather than one provider's shelf`() =
         runTest {

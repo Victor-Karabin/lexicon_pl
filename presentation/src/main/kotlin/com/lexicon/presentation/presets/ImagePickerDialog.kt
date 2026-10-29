@@ -29,15 +29,6 @@ private const val COLUMNS = 2
 private val GridMinHeight = 240.dp
 private val GridMaxHeight = 420.dp
 
-/**
- * Choosing a picture, wherever it is chosen from. A grid rather than a row because a
- * single line shows three of what the web has for a word and hides the rest behind a
- * horizontal scroll nobody uses; and a dialog rather than a strip in the form because
- * picking a picture is its own decision, not a field to fill in passing.
- *
- * The next page is fetched when the last row comes into view, so the learner scrolls
- * instead of hunting for a More button.
- */
 @Composable
 fun ImagePickerDialog(
     candidates: ImmutableList<String>,
