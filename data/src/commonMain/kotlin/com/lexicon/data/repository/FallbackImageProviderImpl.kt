@@ -28,11 +28,6 @@ class FallbackImageProviderImpl(
         return if (anyUnavailable) ImageLookup.Unavailable else ImageLookup.NoneFound
     }
 
-    /**
-     * Takes from every source in turn rather than draining the first one that answers,
-     * so a page is a spread of what the web has for the word instead of ten variations
-     * from whichever provider happens to be listed first.
-     */
     override suspend fun searchImages(
         query: String,
         count: Int,

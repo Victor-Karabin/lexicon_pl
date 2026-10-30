@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  The Lexicon wordmark's initial, carried over from the earlier Lexicon app.
-
-  No tint is set on the vector: the same drawable is used as the monochrome layer, and a
-  hard-coded colour there would override the tint the launcher applies for themed icons.
--->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"

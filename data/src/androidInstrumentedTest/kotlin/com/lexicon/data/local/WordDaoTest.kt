@@ -156,11 +156,6 @@ class WordDaoTest {
             assertEquals(listOf("abstrakcyjny"), found.map { it.text })
         }
 
-    /**
-     * SQLite takes 999 bound variables on Android 8 to 11, and a study set can be larger
-     * than that. The batching this exercises is the reason starring a whole preset does
-     * not crash there; the JVM tests cannot see it because they never bind to SQLite.
-     */
     @Test
     fun aStudySetLargerThanSqlitesVariableLimitCanBeStarredAndReadBack() =
         runTest {

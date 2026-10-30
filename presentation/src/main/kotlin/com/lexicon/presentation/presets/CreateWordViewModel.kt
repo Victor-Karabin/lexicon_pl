@@ -208,11 +208,6 @@ class CreateWordViewModel(
         viewModelScope.launch { speechSynthesizer.speakQuietly(sentence.text) }
     }
 
-    /**
-     * The chip answers at once and the write follows. A word being created has nothing
-     * to attach to yet, so its memberships wait for the save; an existing one is written
-     * straight away and put back the way it was if the write fails.
-     */
     fun onPresetToggled(
         presetId: PresetId,
         isMember: Boolean,

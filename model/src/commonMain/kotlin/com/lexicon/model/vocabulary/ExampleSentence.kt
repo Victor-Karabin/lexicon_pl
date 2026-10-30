@@ -37,13 +37,6 @@ data class ExampleSentence(
 
 private const val SHORTEST_STEM = 3
 
-/**
- * Polish inflects, so the sentence rarely spells the word the way the entry does:
- * kobieta turns up as kobietę, zamek as zamku. Matching walks the word back a letter
- * at a time until a token in the sentence starts with what is left, which covers
- * endings but not stems that alternate outright — brać becoming biorę is beyond it,
- * and such a sentence simply reads without emphasis.
- */
 private fun String.emphasisFor(word: String): ImmutableList<IntRange> {
     val needle = word.trim().lowercase()
     if (needle.length < SHORTEST_STEM) return persistentListOf()
@@ -66,7 +59,6 @@ private fun List<IntRange>.matching(
     val first = indexOfFirst { text.substring(it).lowercase().startsWith(stem) }
     if (first < 0) return null
 
-    // A phrase entry such as "bać się" should light up both of its words.
     val last = (first + words.size - 1).coerceAtMost(lastIndex)
     return this[first].first..this[last].last
 }

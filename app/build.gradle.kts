@@ -86,7 +86,6 @@ dependencies {
     androidTestImplementation(libs.bundles.instrumented.test)
     androidTestImplementation(libs.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.uiautomator)
-    // Espresso before 3.7 calls InputManager.getInstance, which newer Android no longer has.
     androidTestImplementation(libs.androidx.espresso.core)
     debugImplementation(libs.compose.ui.test.manifest)
 
