@@ -1,5 +1,6 @@
 package com.lexicon.application.sync
 
+import com.lexicon.application.LoggedWarnings
 import com.lexicon.boundary.CatalogSeedGate
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.CourseRepository
@@ -19,9 +20,13 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Test
 
 class SeedCatalogsUseCaseImplTest {
+    @get:Rule
+    val warnings = LoggedWarnings()
+
     private val vocabularyRepository: VocabularyRepository = mockk(relaxed = true)
     private val presetRepository: VocabularyPresetRepository = mockk(relaxed = true)
     private val courseRepository: CourseRepository = mockk(relaxed = true)
@@ -198,6 +203,7 @@ class SeedCatalogsUseCaseImplTest {
             val failure = run().last().vocabulary as SeedStepStatus.Failed
 
             assertEquals("asset missing", failure.reason)
+            assertEquals("asset missing", warnings.entries.single().throwable?.message)
         }
 
     @Test

@@ -1,5 +1,6 @@
 package com.lexicon.application.presets
 
+import co.touchlab.kermit.Logger
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.VocabularyRepository
 import com.lexicon.common.runSuspendCatching
@@ -10,6 +11,8 @@ import com.lexicon.model.vocabulary.PartOfSpeech
 import com.lexicon.model.vocabulary.VocabularyId
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+
+private val log = Logger.withTag("WordDeletion")
 
 class DeleteWordUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,
@@ -33,7 +36,10 @@ class RestoreWordUseCaseImpl(
         vocabularyRepository.restoreWord(id.value)
         val word = vocabularyRepository.getWord(id.value) ?: return
         if (word.partOfSpeech == PartOfSpeech.VERB && conjugations.verb(word.text) == null) {
-            appScope.launch { runSuspendCatching { fillWordGrammar(id) } }
+            appScope.launch {
+                runSuspendCatching { fillWordGrammar(id) }
+                    .onFailure { log.w(it) { "The grammar of a restored verb could not be filled in" } }
+            }
         }
     }
 }

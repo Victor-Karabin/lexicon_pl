@@ -1,5 +1,6 @@
 package com.lexicon.application.sync
 
+import co.touchlab.kermit.Logger
 import com.lexicon.boundary.CatalogSeedGate
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.CourseRepository
@@ -15,6 +16,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 private const val SKIPPED = "Skipped because the vocabulary could not be loaded"
+
+private val log = Logger.withTag("SeedCatalogs")
 
 class SeedCatalogsUseCaseImpl(
     private val vocabularyRepository: VocabularyRepository,
@@ -97,7 +100,9 @@ class SeedCatalogsUseCaseImpl(
 
     private suspend fun settled(count: suspend () -> Int): SeedStepStatus =
         SeedStepStatus.Complete(
-            total = runSuspendCatching { count() }.getOrDefault(0),
+            total = runSuspendCatching { count() }
+                .onFailure { log.w(it) { "A catalogue could not be counted" } }
+                .getOrDefault(0),
             added = 0,
             updated = 0,
             removed = 0,
@@ -117,9 +122,12 @@ class SeedCatalogsUseCaseImpl(
                 )
             },
             onFailure = { error ->
+                log.w(error) { "A catalogue could not be seeded" }
                 SeedStepStatus.Failed(
                     reason = error.message ?: error::class.simpleName.orEmpty(),
-                    canContinue = runSuspendCatching { storeHasData() }.getOrDefault(false),
+                    canContinue = runSuspendCatching { storeHasData() }
+                        .onFailure { log.w(it) { "A catalogue store could not be checked for data" } }
+                        .getOrDefault(false),
                 )
             },
         )

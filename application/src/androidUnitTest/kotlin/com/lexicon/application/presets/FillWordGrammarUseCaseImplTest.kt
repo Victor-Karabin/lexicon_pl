@@ -1,5 +1,6 @@
 package com.lexicon.application.presets
 
+import com.lexicon.application.LoggedWarnings
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.GeneratedGrammarBoundary
 import com.lexicon.boundary.VerbConjugationBoundary
@@ -17,9 +18,14 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
+import org.junit.Rule
 import org.junit.Test
 
 class FillWordGrammarUseCaseImplTest {
+    @get:Rule
+    val warnings = LoggedWarnings()
+
     private val vocabulary: VocabularyRepository = mockk(relaxed = true)
     private val conjugations: ConjugationRepository = mockk(relaxed = true)
     private val generator: WordGrammarGenerator = mockk()
@@ -92,5 +98,6 @@ class FillWordGrammarUseCaseImplTest {
             fillWordGrammar(VocabularyId(-1))
 
             coVerify(exactly = 0) { vocabulary.setGrammar(any(), any(), any()) }
+            assertEquals("no network", warnings.entries.single().throwable?.message)
         }
 }

@@ -1,5 +1,6 @@
 package com.lexicon.application.presets
 
+import com.lexicon.application.LoggedWarnings
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.PresetCategoryBoundary
@@ -27,9 +28,13 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Test
 
 class CreateUseCasesImplTest {
+    @get:Rule
+    val warnings = LoggedWarnings()
+
     private val vocabularyRepository: VocabularyRepository = mockk(relaxed = true)
     private val presetRepository: VocabularyPresetRepository = mockk(relaxed = true)
     private val imageProvider: ImageProvider = mockk(relaxed = true)
@@ -78,6 +83,19 @@ class CreateUseCasesImplTest {
             coVerify(exactly = 1) { presetRepository.setWordInPreset("animals", -1, true) }
 
             coVerify { imageProvider.pinImage("dragon", "https://example.com/dragon.jpg") }
+        }
+
+    @Test
+    fun `a level that cannot be guessed leaves the word without one and is logged`() =
+        runTest {
+            wordExists(false)
+            coEvery { levelGuesser.guess(any(), any()) } throws IllegalStateException("no network")
+
+            val result = createWord(text = "smok", translation = "dragon", imageUrl = null, presetIds = emptyList())
+
+            assertTrue(result.isSuccess)
+            coVerify { vocabularyRepository.createWord("smok", "dragon", "smɔk", "", null) }
+            assertEquals("no network", warnings.entries.single().throwable?.message)
         }
 
     @Test
