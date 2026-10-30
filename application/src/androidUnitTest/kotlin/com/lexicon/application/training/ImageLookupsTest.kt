@@ -1,5 +1,6 @@
 package com.lexicon.application.training
 
+import com.lexicon.application.LoggedWarnings
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.model.vocabulary.VocabularyId
 import com.lexicon.model.vocabulary.Word
@@ -7,9 +8,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.currentTime
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Rule
 import org.junit.Test
 
 class ImageLookupsTest {
+    @get:Rule
+    val warnings = LoggedWarnings()
+
     private val asked = mutableListOf<String>()
 
     private val slowProvider = object : ImageProvider {
@@ -47,6 +52,7 @@ class ImageLookupsTest {
             val pictures = slowProvider.picturesFor(listOf(word("cat"), word("broken"), word("nothing")))
 
             assertEquals(listOf("https://img/cat.jpg", null, null), pictures)
+            assertEquals("the source fell over", warnings.entries.single().throwable?.message)
         }
 
     @Test

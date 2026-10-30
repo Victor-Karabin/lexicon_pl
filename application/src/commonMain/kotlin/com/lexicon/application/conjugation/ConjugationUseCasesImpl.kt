@@ -1,5 +1,6 @@
 package com.lexicon.application.conjugation
 
+import co.touchlab.kermit.Logger
 import com.lexicon.application.paging.filteredPage
 import com.lexicon.application.training.nextToPractise
 import com.lexicon.boundary.ConjugationRepository
@@ -29,6 +30,8 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlin.random.Random
+
+private val log = Logger.withTag("Conjugation")
 
 class LoadConjugationVerbsUseCaseImpl(
     private val conjugations: ConjugationRepository,
@@ -101,9 +104,13 @@ class NextConjugationTableUseCaseImpl(
     }
 
     private suspend fun ConjugationTable.withLearningAids(): ConjugationTable {
-        val word = runSuspendCatching { vocabulary.findWordByText(infinitive) }.getOrNull()
+        val word = runSuspendCatching { vocabulary.findWordByText(infinitive) }
+            .onFailure { log.w(it) { "The word of a verb could not be looked up" } }
+            .getOrNull()
         val subject = translation?.takeIf { it.isNotBlank() } ?: word?.translation ?: infinitive
-        val image = runSuspendCatching { imageProvider.searchImage(subject) }.getOrNull()
+        val image = runSuspendCatching { imageProvider.searchImage(subject) }
+            .onFailure { log.w(it) { "The picture of a verb could not be loaded" } }
+            .getOrNull()
 
         return copy(
             imageUrl = image,
@@ -126,7 +133,9 @@ class EnsureVerbWordUseCaseImpl(
         val english = translation?.trim().orEmpty()
         if (english.isEmpty()) return null
 
-        val image = runSuspendCatching { imageProvider.searchImage(english) }.getOrNull()
+        val image = runSuspendCatching { imageProvider.searchImage(english) }
+            .onFailure { log.w(it) { "The picture of a new verb word could not be loaded" } }
+            .getOrNull()
         createWord(text = infinitive, translation = english, imageUrl = image, presetIds = emptyList())
 
         return vocabulary.findWordByText(infinitive)?.id?.value
@@ -143,10 +152,13 @@ class LoadVerbImageChoicesUseCaseImpl(
         skip: Int,
     ): ImmutableList<String> {
         val subject = translation?.takeIf { it.isNotBlank() }
-            ?: runSuspendCatching { vocabulary.findWordByText(infinitive) }.getOrNull()?.translation
+            ?: runSuspendCatching { vocabulary.findWordByText(infinitive) }
+                .onFailure { log.w(it) { "The word of a verb could not be looked up" } }
+                .getOrNull()?.translation
             ?: infinitive
 
         return runSuspendCatching { imageProvider.searchImages(subject, CHOICE_COUNT, skip) }
+            .onFailure { log.w(it) { "Picture choices for a verb could not be loaded" } }
             .getOrDefault(emptyList())
             .toImmutableList()
     }

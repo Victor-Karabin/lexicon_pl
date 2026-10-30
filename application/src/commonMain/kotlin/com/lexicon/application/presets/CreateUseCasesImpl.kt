@@ -1,5 +1,6 @@
 package com.lexicon.application.presets
 
+import co.touchlab.kermit.Logger
 import com.lexicon.boundary.ConjugationRepository
 import com.lexicon.boundary.ImageProvider
 import com.lexicon.boundary.TranslationDirection
@@ -29,6 +30,8 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+
+private val log = Logger.withTag("WordEditing")
 
 private const val IMAGE_CANDIDATES = 3
 
@@ -61,7 +64,9 @@ class CreateWordUseCaseImpl(
             translation = english,
             transcription = polishTranscription(polish),
             example = example.trim(),
-            cefr = runSuspendCatching { levelGuesser.guess(polish, english) }.getOrNull(),
+            cefr = runSuspendCatching { levelGuesser.guess(polish, english) }
+                .onFailure { log.w(it) { "The CEFR level of a new word could not be guessed" } }
+                .getOrNull(),
         )
 
         for (presetId in presetIds.distinct()) {
@@ -69,7 +74,10 @@ class CreateWordUseCaseImpl(
         }
 
         if (!imageUrl.isNullOrBlank()) imageProvider.pinImage(query = english, imageUrl = imageUrl)
-        appScope.launch { runSuspendCatching { fillWordGrammar(word.id) } }
+        appScope.launch {
+            runSuspendCatching { fillWordGrammar(word.id) }
+                .onFailure { log.w(it) { "The grammar of a saved word could not be filled in" } }
+        }
 
         return Result.success(word)
     }
@@ -126,7 +134,10 @@ class UpdateWordUseCaseImpl(
         if (before?.text != polish || before.translation != english) {
             vocabularyRepository.setGrammar(id = id.value, partOfSpeech = null, forms = null)
             before?.text?.takeIf { it != polish }?.let { conjugations.deleteUserVerb(it) }
-            appScope.launch { runSuspendCatching { fillWordGrammar(word.id) } }
+            appScope.launch {
+                runSuspendCatching { fillWordGrammar(word.id) }
+                    .onFailure { log.w(it) { "The grammar of a saved word could not be filled in" } }
+            }
         }
 
         return Result.success(word)
@@ -187,7 +198,9 @@ class GetPinnedImageUseCaseImpl(
 ) : com.lexicon.interactors.presets.GetPinnedImageUseCase {
     override suspend fun invoke(id: VocabularyId): String? {
         val subject = vocabularyRepository.getWord(id.value)?.pictureSubject ?: return null
-        return runSuspendCatching { imageProvider.searchImage(subject) }.getOrNull()
+        return runSuspendCatching { imageProvider.searchImage(subject) }
+            .onFailure { log.w(it) { "The pinned image of a word could not be loaded" } }
+            .getOrNull()
     }
 }
 

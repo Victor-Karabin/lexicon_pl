@@ -22,6 +22,7 @@ kotlin {
             api(projects.boundary)
             api(projects.common)
             implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kermit)
             api(libs.kotlinx.collections.immutable)
 
             api(project.dependencies.platform(libs.koin.bom))
@@ -30,6 +31,7 @@ kotlin {
         androidUnitTest.dependencies {
             implementation(libs.bundles.unit.test)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kermit.test)
         }
     }
 }
